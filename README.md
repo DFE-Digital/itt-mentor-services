@@ -1,7 +1,8 @@
 # ITT mentor services
 
 This application has two main services:
-- A service where schools or training providers can claim funding for internal teacher training.  
+
+- A service where schools or training providers can claim funding for internal teacher training.
 - TODO: Add description for the other service
 
 ## Setup
@@ -10,11 +11,11 @@ This application has two main services:
 
 This project depends on:
 
-  - [Ruby](https://www.ruby-lang.org/)
-  - [Ruby on Rails](https://rubyonrails.org/)
-  - [NodeJS](https://nodejs.org/)
-  - [Yarn](https://yarnpkg.com/)
-  - [Postgres](https://www.postgresql.org/)
+- [Ruby](https://www.ruby-lang.org/)
+- [Ruby on Rails](https://rubyonrails.org/)
+- [NodeJS](https://nodejs.org/)
+- [Yarn](https://yarnpkg.com/)
+- [Postgres](https://www.postgresql.org/)
 
 ### asdf
 
@@ -50,6 +51,7 @@ To run the linters:
 ```bash
 bin/lint
 ```
+
 ### Intellisense
 
 [solargraph](https://github.com/castwide/solargraph) is bundled as part of the
@@ -68,6 +70,7 @@ You'll also need to configure your editor's `solargraph` plugin to
 ```diff
 +  "solargraph.useBundler": true,
 ```
+
 ## How the application works
 
 We keep track of architecture decisions in [Architecture Decision Records

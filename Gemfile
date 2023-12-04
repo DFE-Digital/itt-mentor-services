@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-git_source(:github) { |repo| 'https://github.com/#{repo}.git' }
+git_source(:github) { |_repo| "https://github.com/#{repo}.git" }
 
 ruby '3.2.2'
 
@@ -42,24 +42,19 @@ gem 'bootsnap', require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem 'image_processing', '~> 1.2'
 
-group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem 'debug', platforms: %i[ mri mingw x64_mingw ]
-end
-
 group :development do
-  gem 'rladr'
   gem 'annotate', require: false
+  gem 'prettier_print', require: false
+  gem 'rladr'
+  gem 'rubocop-govuk', require: false
   gem 'solargraph', require: false
   gem 'solargraph-rails', require: false
-  gem 'prettier_print', require: false
-  gem 'rubocop-govuk', require: false
   gem 'syntax_tree', require: false
   gem 'syntax_tree-haml', require: false
   gem 'syntax_tree-rbs', require: false
   # Use console on exceptions pages [https://github.com/rails/web-console]
-  gem 'web-console'
   gem 'rails-erd'
+  gem 'web-console'
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem 'rack-mini-profiler'
@@ -79,10 +74,11 @@ gem 'govuk_design_system_formbuilder'
 
 group :test, :development do
   gem 'brakeman'
-  gem 'rspec'
-  gem 'rspec-rails'
+  gem 'debug', platforms: %i[ mri mingw x64_mingw ]
+  gem 'factory_bot_rails'
+  gem 'pry'
   gem 'pry-byebug'
   gem 'pry-rails'
-  gem 'pry'
-  gem 'factory_bot_rails'
+  gem 'rspec'
+  gem 'rspec-rails'
 end
