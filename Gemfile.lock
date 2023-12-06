@@ -84,6 +84,13 @@ GEM
     backport (1.2.0)
     base64 (0.2.0)
     benchmark (0.3.0)
+    better_html (2.0.2)
+      actionview (>= 6.0)
+      activesupport (>= 6.0)
+      ast (~> 2.0)
+      erubi (~> 1.4)
+      parser (>= 2.4)
+      smart_properties
     bigdecimal (3.1.4)
     bindex (0.8.1)
     bootsnap (1.17.0)
@@ -119,6 +126,13 @@ GEM
     drb (2.2.0)
       ruby2_keywords
     e2mmap (0.1.0)
+    erb_lint (0.5.0)
+      activesupport
+      better_html (>= 2.0.1)
+      parser (>= 2.7.1.4)
+      rainbow
+      rubocop
+      smart_properties
     erubi (1.12.0)
     factory_bot (6.4.2)
       activesupport (>= 5.0.0)
@@ -329,6 +343,7 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    smart_properties (1.17.0)
     solargraph (0.49.0)
       backport (~> 1.2)
       benchmark
@@ -398,6 +413,7 @@ DEPENDENCIES
   cssbundling-rails
   debug
   dotenv-rails
+  erb_lint
   factory_bot_rails
   govuk-components
   govuk_design_system_formbuilder
