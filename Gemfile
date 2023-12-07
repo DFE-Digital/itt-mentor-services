@@ -24,6 +24,9 @@ gem "cssbundling-rails"
 # Build reusable view components [https://viewcomponent.org]
 gem "view_component"
 
+# GOV.UK Notify
+gem "mail-notify"
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 
