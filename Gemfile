@@ -81,6 +81,7 @@ group :test do
 end
 
 group :test, :development do
+  gem "better_html"
   gem "brakeman"
   gem "debug", platforms: %i[mri mingw x64_mingw]
   gem "dotenv-rails"

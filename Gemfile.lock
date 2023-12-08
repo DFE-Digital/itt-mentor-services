@@ -481,6 +481,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  better_html
   bootsnap
   brakeman
   capybara
