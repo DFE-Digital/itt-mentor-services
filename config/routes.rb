@@ -11,4 +11,8 @@ Rails.application.routes.draw do
     get "/429", to: "errors#too_many_requests"
     get "/500", to: "errors#internal_server_error"
   end
+
+  # Persona Sign In
+  get("/auth/developer/sign-out", to: "sessions#signout")
+  post("/auth/developer/callback", to: "sessions#callback")
 end
