@@ -48,6 +48,11 @@ gem "bootsnap", require: false
 gem "govuk-components"
 gem "govuk_design_system_formbuilder"
 
+# DfE Sign-in
+gem "omniauth"
+gem "omniauth_openid_connect"
+gem "omniauth-rails_csrf_protection"
+
 group :development do
   gem "annotate", require: false
   gem "prettier_print", require: false
