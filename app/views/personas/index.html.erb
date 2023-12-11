@@ -1,0 +1,34 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">Test Users</h1>
+
+    <% @personas.each do |persona| %>
+      <h2 class="govuk-heading-m">
+        <%= persona.first_name %>
+      </h2>
+      <strong class="govuk-tag govuk-tag--turquoise govuk-!-margin-bottom-5">
+        <%= t(".#{persona.first_name.downcase}.persona_type") %>
+      </strong>
+      <p class="govuk-body">
+        <%= t(".#{persona.first_name.downcase}.description") %>
+      </p>
+      <ul class="govuk-list govuk-list--bullet">
+        <% t(".#{persona.first_name.downcase}.roles").each do |role| %>
+          <li><%= role %></li>
+        <% end %>
+      </ul>
+
+      <%= form_tag("/auth/developer/callback", method: "post", data: {turbo: false}) do %>
+        <%= hidden_field_tag "email", persona.email %>
+        <%= hidden_field_tag "first_name", persona.first_name %>
+        <%= hidden_field_tag "last_name", persona.last_name %>
+        <button type='submit' class="govuk-button govuk-!-margin-bottom-2">
+          Sign In as <%= persona.first_name %>
+        </button>
+      <% end %>
+
+      <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
+    <% end %>
+  </div>
+
+</div>
