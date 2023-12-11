@@ -1,0 +1,6 @@
+en:
+  layouts:
+    application:
+      placements:
+        header:
+          service_name: Manage School Placements

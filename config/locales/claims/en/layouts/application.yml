@@ -1,0 +1,6 @@
+en:
+  layouts:
+    application:
+      claims:
+        header:
+          service_name: Claim Funding for General Mentors
