@@ -7,16 +7,22 @@
         <%= persona.first_name %>
       </h2>
       <strong class="govuk-tag govuk-tag--turquoise govuk-!-margin-bottom-5">
-        <%= t(".#{persona.first_name.downcase}.persona_type") %>
+        <%= t(".#{persona.first_name.downcase}.persona_type", default: "") %>
       </strong>
       <p class="govuk-body">
-        <%= t(".#{persona.first_name.downcase}.description") %>
+        <%= t(".#{persona.first_name.downcase}.description", default: "") %>
       </p>
-      <ul class="govuk-list govuk-list--bullet">
-        <% t(".#{persona.first_name.downcase}.roles").each do |role| %>
-          <li><%= role %></li>
-        <% end %>
-      </ul>
+
+      <% if t(".#{persona.first_name.downcase}.roles", default: "").present? %>
+        <p class="govuk-body">
+          <%= t(".roles_include", persona_name: persona.first_name, default: "") %>
+        </p>
+        <ul class="govuk-list govuk-list--bullet">
+          <% t(".#{persona.first_name.downcase}.roles").each do |role| %>
+            <li><%= role %></li>
+          <% end %>
+        </ul>
+      <% end %>
 
       <%= form_tag("/auth/developer/callback", method: "post", data: {turbo: false}) do %>
         <%= hidden_field_tag "email", persona.email %>

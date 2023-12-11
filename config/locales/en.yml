@@ -4,6 +4,7 @@ en:
     email: my-service@email
   personas:
     index:
+      roles_include: "%{persona_name}’s role includes:"
       anne:
         persona_type: School
         description: Anne is a lead mentor within a school.
