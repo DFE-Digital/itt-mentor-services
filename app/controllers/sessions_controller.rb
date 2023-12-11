@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   # setup inspired by register-trainee-teacher
   # TODO: Replace with commented code when DfE Sign In implemented
-  
+
   def callback
     DfESignInUser.begin_session!(session, request.env["omniauth.auth"])
     if current_user
