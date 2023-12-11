@@ -46,7 +46,7 @@ gem "bootsnap", require: false
 # gem 'image_processing', '~> 1.2'
 
 gem "govuk-components"
-gem "govuk_design_system_formbuilder"
+gem "govuk_design_system_formbuilder", "~> 5.0.0"
 
 # DfE Sign-in
 gem "omniauth"
