@@ -89,3 +89,14 @@ To run the application locally:
 1. Run `yarn` to install dependencies for the web app to run
 2. Run `bin/setup` to setup the database
 3. Run `bin/dev` to launch the app on <http://localhost:3000>
+
+### Seed Data
+
+To run the seed data to generate the following:
+
+- Persona
+  - Anne Wilson
+
+```bash
+  bin/bundle exec rails db:seed
+```
