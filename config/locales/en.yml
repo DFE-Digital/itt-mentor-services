@@ -2,3 +2,12 @@ en:
   service:
     name: GOV.UK Frontend on Rails
     email: my-service@email
+  personas:
+    index:
+      anne:
+        persona_type: School
+        description: Anne is a lead mentor within a school.
+        roles:
+          - "setting timetables for mentors within the school"
+          - "being the main point of contact for providers"
+          - "ensuring mentors’ training is up-to-date"
