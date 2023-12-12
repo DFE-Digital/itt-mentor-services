@@ -95,7 +95,10 @@ To run the application locally:
 To run the seed data to generate the following:
 
 - Persona
-  - Anne Wilson
+  - Anne Wilson - School
+  - Patricia Adebayo - University
+  - Mary Lawson - Multi-org
+  - Colin Chapman - Support
 
 ```bash
   bin/bundle exec rails db:seed
