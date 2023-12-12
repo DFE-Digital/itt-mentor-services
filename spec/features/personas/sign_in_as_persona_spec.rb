@@ -11,6 +11,33 @@ feature "Sign In as Persona" do
     and_i_visit_my_account_page
     then_i_see_persona_details_for_anne
   end
+
+  scenario "I sign in as persona Patricia" do
+    given_there_is_an_existing_persona_for("Patricia")
+    when_i_visit_the_personas_page
+    then_i_see_the_persona_for("Patricia")
+    when_i_click_sign_in_as("Patricia")
+    and_i_visit_my_account_page
+    then_i_see_persona_details_for_patricia
+  end
+
+  scenario "I sign in as persona Mary" do
+    given_there_is_an_existing_persona_for("Mary")
+    when_i_visit_the_personas_page
+    then_i_see_the_persona_for("Mary")
+    when_i_click_sign_in_as("Mary")
+    and_i_visit_my_account_page
+    then_i_see_persona_details_for_mary
+  end
+
+  scenario "I sign in as persona colin" do
+    given_there_is_an_existing_persona_for("Colin")
+    when_i_visit_the_personas_page
+    then_i_see_the_persona_for("Colin")
+    when_i_click_sign_in_as("Colin")
+    and_i_visit_my_account_page
+    then_i_see_persona_details_for_colin
+  end
 end
 
 private
@@ -40,6 +67,30 @@ def then_i_see_persona_details_for_anne
     first_name: "Anne",
     last_name: "Wilson",
     email: "anne_wilson@example.org"
+  )
+end
+
+def then_i_see_persona_details_for_patricia
+  page_has_persona_content(
+    first_name: "Patricia",
+    last_name: "Adebayo",
+    email: "patricia@example.com"
+  )
+end
+
+def then_i_see_persona_details_for_mary
+  page_has_persona_content(
+    first_name: "Mary",
+    last_name: "Lawson",
+    email: "mary@example.com"
+  )
+end
+
+def then_i_see_persona_details_for_colin
+  page_has_persona_content(
+    first_name: "Colin",
+    last_name: "Chapman",
+    email: "colin@example.com"
   )
 end
 
