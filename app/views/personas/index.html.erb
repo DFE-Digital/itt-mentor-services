@@ -6,7 +6,7 @@
       <h2 class="govuk-heading-m">
         <%= persona.first_name %>
       </h2>
-      <strong class="govuk-tag govuk-tag--turquoise govuk-!-margin-bottom-5">
+      <strong class="govuk-tag govuk-tag--<%= persona.type_tag_colour %> govuk-!-margin-bottom-5">
         <%= t(".#{persona.first_name.downcase}.persona_type", default: "") %>
       </strong>
       <p class="govuk-body">
