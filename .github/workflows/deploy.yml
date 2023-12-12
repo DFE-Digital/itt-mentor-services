@@ -1,0 +1,101 @@
+name: Build and Deploy
+concurrency: build_and_deploy_${{ github.ref_name }}
+
+on: push
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        tests: [rubocop, erblint, prettier]
+        include:
+          - tests: rubocop
+            command: bundle exec rubocop
+          - tests: erblint
+            command: bundle exec erblint app
+          - tests: prettier
+            command: yarn prettier --check app
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.2
+          bundler-cache: true
+      - name: Use Node.js 20.9.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.9.0
+          cache: 'npm'
+      - name: Install dependencies
+        run: |
+          sudo apt-get update && sudo apt-get -yqq install libpq-dev
+          bundle install --jobs 4 --retry 3
+          bundle exec rails assets:precompile
+        env:
+            DATABASE_URL: postgres://postgres:password@localhost:5432
+            GOVUK_NOTIFY_API_KEY: fake_key
+            SIGN_IN_METHOD: persona
+      - name: ${{ matrix.tests }}
+        run: ${{ env.COMMAND }}
+        env:
+          COMMAND: ${{ matrix.command }}
+          DATABASE_URL: postgres://postgres:password@localhost:5432
+          GOVUK_NOTIFY_API_KEY: fake_key
+          SIGN_IN_METHOD: persona
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    services:
+        postgres:
+          image: postgres:16
+          env:
+            POSTGRES_PASSWORD: password
+          ports: ['5432:5432']
+          options: >-
+            --health-cmd pg_isready
+            --health-interval 10s
+            --health-timeout 5s
+            --health-retries 5
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.2
+          bundler-cache: true
+      - name: Use Node.js 20.9.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.9.0
+          cache: 'npm'
+      - name: Install dependencies
+        run: |
+          sudo apt-get update && sudo apt-get -yqq install libpq-dev
+          bundle install --jobs 4 --retry 3
+          bundle exec rails assets:precompile
+        env:
+            DATABASE_URL: postgres://postgres:password@localhost:5432
+            GOVUK_NOTIFY_API_KEY: fake_key
+            SIGN_IN_METHOD: persona
+      - name: Run Tests
+        env:
+          RAILS_ENV: test
+          PGHOST: localhost
+          DISABLE_SPRING: 1
+          DATABASE_URL: postgres://postgres:password@localhost:5432
+          GOVUK_NOTIFY_API_KEY: fake_key
+          SIGN_IN_METHOD: persona
+        run: |
+          bundle exec rake db:create
+          bundle exec rails db:schema:load
+          bundle exec rspec --format progress
