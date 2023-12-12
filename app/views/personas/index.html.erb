@@ -1,6 +1,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l">Test Users</h1>
+    <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
     <% @personas.each do |persona| %>
       <h2 class="govuk-heading-m">
@@ -28,8 +28,8 @@
         <%= hidden_field_tag "email", persona.email %>
         <%= hidden_field_tag "first_name", persona.first_name %>
         <%= hidden_field_tag "last_name", persona.last_name %>
-        <button type='submit' class="govuk-button govuk-!-margin-bottom-2">
-          Sign In as <%= persona.first_name %>
+        <button type="submit" class="govuk-button govuk-!-margin-bottom-2">
+          <%= t(".sign_in_as", persona_name: persona.first_name) %>
         </button>
       <% end %>
 

@@ -1,10 +1,15 @@
 en:
+  account:
+    index:
+      email_address: Email address
+      first_name: First name
+      last_name: Last name
+      title: Your account
   service:
     name: GOV.UK Frontend on Rails
     email: my-service@email
   personas:
     index:
-      roles_include: "%{persona_name}’s role includes:"
       anne:
         persona_type: School
         description: Anne is a lead mentor within a school.
@@ -12,3 +17,6 @@ en:
           - "setting timetables for mentors within the school"
           - "being the main point of contact for providers"
           - "ensuring mentors’ training is up-to-date"
+      roles_include: "%{persona_name}’s role includes:"
+      sign_in_as: "Sign In as %{persona_name}"
+      title: Test users
