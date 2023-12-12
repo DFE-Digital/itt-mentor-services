@@ -53,6 +53,9 @@ gem "omniauth"
 gem "omniauth_openid_connect"
 gem "omniauth-rails_csrf_protection"
 
+# Decorators
+gem 'draper'
+
 group :development do
   gem "annotate", require: false
   gem "prettier_print", require: false

@@ -2,6 +2,6 @@
 
 class PersonasController < ApplicationController
   def index
-    @personas = Persona.all.order(:first_name)
+    @personas = Persona.all.decorate
   end
 end
