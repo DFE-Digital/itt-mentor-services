@@ -1,0 +1,5 @@
+URN,EstablishmentName,Town,Postcode,EstablishmentStatus (code),TypeOfEstablishment (code)
+123,School,Town,Postcode,1,7
+124,School,Town,Postcode,2,7
+124,School,Town,Postcode,1,8
+124,,Town,Postcode,1,7
