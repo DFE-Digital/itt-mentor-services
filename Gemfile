@@ -58,6 +58,9 @@ gem "omniauth-rails_csrf_protection"
 # Decorators
 gem "draper"
 
+# Download files safely
+gem "down", "~> 5.0"
+
 group :development do
   gem "annotate", require: false
   gem "prettier_print", require: false
