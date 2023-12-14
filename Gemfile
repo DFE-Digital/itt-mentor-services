@@ -46,6 +46,7 @@ gem "bootsnap", require: false
 # gem 'image_processing', '~> 1.2'
 
 gem "flipflop"
+gem "redcarpet", "~> 3.6"
 
 gem "govuk-components"
 gem "govuk_design_system_formbuilder", "~> 5.0.0"

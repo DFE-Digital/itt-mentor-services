@@ -79,7 +79,7 @@ GEM
       minitest (>= 5.1)
       mutex_m
       tzinfo (~> 2.0)
-    addressable (2.8.5)
+    addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
     aes_key_wrap (1.1.0)
     annotate (3.2.0)
@@ -165,16 +165,16 @@ GEM
       terminal-table (>= 1.8)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    govuk-components (4.1.2)
+    govuk-components (5.0.0)
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (~> 6.0)
-      view_component (>= 3.3, < 3.7)
+      view_component (>= 3.3, < 3.8)
     govuk_design_system_formbuilder (5.0.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
       html-attributes-utils (~> 1)
-    haml (6.2.3)
+    haml (6.3.0)
       temple (>= 0.8.2)
       thor
       tilt
@@ -183,7 +183,7 @@ GEM
       activesupport (>= 6.1.4.4)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
-    io-console (0.7.0)
+    io-console (0.6.0)
     irb (1.10.1)
       rdoc
       reline (>= 0.3.8)
@@ -225,7 +225,7 @@ GEM
     minitest (5.20.0)
     msgpack (1.7.2)
     mutex_m (0.2.0)
-    net-imap (0.4.7)
+    net-imap (0.4.8)
       date
       net-protocol
     net-pop (0.1.2)
@@ -235,7 +235,7 @@ GEM
     net-smtp (0.4.0)
       net-protocol
     nio4r (2.7.0)
-    nokogiri (1.15.5-arm64-darwin)
+    nokogiri (1.15.5-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.15.5-x86_64-linux)
       racc (~> 1.4)
@@ -290,7 +290,7 @@ GEM
     puma (6.4.0)
       nio4r (~> 2.0)
     racc (1.7.3)
-    rack (2.2.8)
+    rack (3.0.8)
     rack-oauth2 (2.2.0)
       activesupport
       attr_required
@@ -300,13 +300,13 @@ GEM
       rack (>= 2.1.0)
     rack-protection (3.0.6)
       rack
-    rack-session (1.0.2)
-      rack (< 3)
+    rack-session (2.0.0)
+      rack (>= 3.0.0)
     rack-test (2.1.0)
       rack (>= 1.3)
-    rackup (1.0.0)
-      rack (< 3)
-      webrick
+    rackup (2.1.0)
+      rack (>= 3)
+      webrick (~> 1.8)
     rails (7.1.2)
       actioncable (= 7.1.2)
       actionmailbox (= 7.1.2)
@@ -350,6 +350,7 @@ GEM
     rbs (2.8.4)
     rdoc (6.6.1)
       psych (>= 4.0.0)
+    redcarpet (3.6.0)
     regexp_parser (2.8.3)
     reline (0.4.1)
       io-console (~> 0.5)
@@ -475,7 +476,7 @@ GEM
     validate_url (1.0.15)
       activemodel (>= 3.0.0)
       public_suffix
-    view_component (3.6.0)
+    view_component (3.7.0)
       activesupport (>= 5.2.0, < 8.0)
       concurrent-ruby (~> 1.0)
       method_source (~> 1.0)
@@ -501,6 +502,7 @@ GEM
 PLATFORMS
   arm64-darwin-22
   arm64-darwin-23
+  x86_64-darwin-22
   x86_64-linux
 
 DEPENDENCIES
@@ -533,6 +535,7 @@ DEPENDENCIES
   rails (~> 7.1.2)
   rails-controller-testing
   rails-erd
+  redcarpet (~> 3.6)
   rladr
   rspec
   rspec-rails

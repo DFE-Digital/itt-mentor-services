@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get("/auth/developer/sign-out", to: "sessions#signout")
   post("/auth/developer/callback", to: "sessions#callback")
 
+  resources :service_updates, only: %i[index]
+
   draw :placements
   draw :claims
 end
