@@ -62,6 +62,19 @@ erDiagram
     string trn FK "Primary key for people in DQT"
   }
 
+  User {
+    uuid id PK
+    string email UK
+    enum service "Placements or Claims"
+  }
+
+  Membership {
+    uuid id PK
+    uuid user_id FK
+    string organisation_type FK "Polymorphic association with School or Provider"
+    string organisation_id FK "Polymorphic association with School or Provider"
+  }
+
   GiasSchool {
     uuid id PK
     string urn UK "Unique identifier for Schools"
@@ -83,6 +96,10 @@ erDiagram
 
   School ||--|{ Claim : "has many"
   Claim }|--|{ MentorTraining : "has and belongs to many"
+
+  User ||--|{ Membership : "has many"
+  Membership }|--o| Provider : "belongs to (polymorphic)"
+  Membership }|--o| School : "belongs to (polymorphic)"
 ```
 
 ## Onboarding Schools and Providers into the services
@@ -120,3 +137,28 @@ Onboarded Providers will have a record in the `providers` table.
 Providers are only onboarded into the School Placements service, because this is the only service Provider Users will need to sign in to. Providers will not sign in to the Track & Pay service.
 
 Both services will query the Provider endpoints on the [Teacher Training Courses API](https://api.publish-teacher-training-courses.service.gov.uk/docs/api-reference.html) to retrieve and display information about a Provider given its Accredited Provider ID.
+
+## Users and Organisations
+
+Users are members of Organisations.
+
+Organisation is a polymorphic association which represents either a School or a Provider.
+
+A User belonging to a School in the Track & Pay service won't automatically be able to sign in to the School Placements service and manage Placements for that same School. They'll need to be added to the User list of each service independently if they need to access both.
+
+Since the services will be on different hostnames, they will automatically have different session cookies. So it seems reasonable to consider Users as entirely independent within each service.
+
+### Users
+
+Users are scoped by `service`, which will be either `"placements"` or `"claims"`.
+
+We can consider Users to have the unique composite index:
+- `[service, email]`
+
+### Memberships
+
+Users can have many Memberships with Organisations (Schools or Providers). Membership acts as the join table between Users and Schools/Providers.
+
+We can therefore define the following non-unique composite index:
+
+- `[organisation_type, organisation_id]`
