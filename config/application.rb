@@ -35,6 +35,7 @@ module IttMentorServices
       "node_modules/govuk-frontend/dist/govuk/assets"
     )
 
+    config.autoload_paths += %W[#{config.root}/app/assets/components]
     config.exceptions_app = routes
   end
 end

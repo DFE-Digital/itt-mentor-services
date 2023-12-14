@@ -17,6 +17,8 @@ Rails.application.routes.draw do
     post("/auth/developer/callback", to: "sessions#callback")
   end
 
+  resources :service_updates, only: %i[index]
+
   draw :placements
   draw :claims
 

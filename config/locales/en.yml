@@ -38,3 +38,9 @@ en:
       roles_include: "%{persona_name}’s role includes:"
       sign_in_as: "Sign In as %{persona_name}"
       title: Test users
+  service_updates:
+    claims:
+      heading: Claims news and updates
+    placements:
+      heading: Placements news and updates
+    contents: Contents

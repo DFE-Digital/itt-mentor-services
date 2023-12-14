@@ -1,0 +1,11 @@
+# Example structure for adding service updates
+
+# - date:
+#     type: String
+#     format: YYYY-MM-DD
+#   title:
+#     type: String
+#     format: Short text
+#   content:
+#     type: String
+#     format: Multi-line text
