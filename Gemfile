@@ -47,7 +47,7 @@ gem "bootsnap", require: false
 
 gem "flipflop"
 
-gem "govuk-components"
+gem "govuk-components", "~> 5.0.0"
 gem "govuk_design_system_formbuilder", "~> 5.0.0"
 
 # DfE Sign-in
