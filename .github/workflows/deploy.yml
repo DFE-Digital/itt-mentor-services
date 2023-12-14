@@ -30,16 +30,16 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20.9.0
-          cache: 'npm'
+          cache: "npm"
       - name: Install dependencies
         run: |
           sudo apt-get update && sudo apt-get -yqq install libpq-dev
           bundle install --jobs 4 --retry 3
           bundle exec rails assets:precompile
         env:
-            DATABASE_URL: postgres://postgres:password@localhost:5432
-            GOVUK_NOTIFY_API_KEY: fake_key
-            SIGN_IN_METHOD: persona
+          DATABASE_URL: postgres://postgres:password@localhost:5432
+          GOVUK_NOTIFY_API_KEY: fake_key
+          SIGN_IN_METHOD: persona
       - name: ${{ matrix.tests }}
         run: ${{ env.COMMAND }}
         env:
@@ -52,16 +52,16 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     services:
-        postgres:
-          image: postgres:16
-          env:
-            POSTGRES_PASSWORD: password
-          ports: ['5432:5432']
-          options: >-
-            --health-cmd pg_isready
-            --health-interval 10s
-            --health-timeout 5s
-            --health-retries 5
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: password
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     strategy:
       fail-fast: false
     steps:
@@ -77,16 +77,16 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20.9.0
-          cache: 'npm'
+          cache: "npm"
       - name: Install dependencies
         run: |
           sudo apt-get update && sudo apt-get -yqq install libpq-dev
           bundle install --jobs 4 --retry 3
           bundle exec rails assets:precompile
         env:
-            DATABASE_URL: postgres://postgres:password@localhost:5432
-            GOVUK_NOTIFY_API_KEY: fake_key
-            SIGN_IN_METHOD: persona
+          DATABASE_URL: postgres://postgres:password@localhost:5432
+          GOVUK_NOTIFY_API_KEY: fake_key
+          SIGN_IN_METHOD: persona
       - name: Run Tests
         env:
           RAILS_ENV: test
