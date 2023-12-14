@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include ApplicationHelper
+
   default_form_builder(GOVUKDesignSystemFormBuilder::FormBuilder)
 
   helper_method :current_user
