@@ -22,12 +22,10 @@ RSpec.feature "Home Page" do
   private
 
   def given_i_am_on_the_claims_site
-    ENV["CLAIMS_HOST"] = "claims.localhost"
     Capybara.app_host = "http://#{ENV["CLAIMS_HOST"]}"
   end
 
   def given_i_am_on_the_placements_site
-    ENV["PLACEMENTS_HOST"] = "placements.localhost"
     Capybara.app_host = "http://#{ENV["PLACEMENTS_HOST"]}"
   end
 

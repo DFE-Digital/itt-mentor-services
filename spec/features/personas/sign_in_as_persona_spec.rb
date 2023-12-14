@@ -3,6 +3,12 @@
 require "rails_helper"
 
 feature "Sign In as Persona" do
+  around do |example|
+    Capybara.app_host = "https://#{ENV["PLACEMENTS_HOST"]}"
+    example.run
+    Capybara.app_host = nil
+  end
+
   scenario "I sign in as persona Anne" do
     given_there_is_an_existing_persona_for("Anne")
     when_i_visit_the_personas_page
