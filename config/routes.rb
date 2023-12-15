@@ -10,9 +10,12 @@ Rails.application.routes.draw do
   get("/account", to: "account#index")
 
   # Persona Sign In
-  get("/personas", to: "personas#index")
-  get("/auth/developer/sign-out", to: "sessions#signout")
-  post("/auth/developer/callback", to: "sessions#callback")
+  case ENV.fetch("SIGN_IN_METHOD")
+  when "persona"
+    get("/personas", to: "personas#index")
+    get("/auth/developer/sign-out", to: "sessions#signout")
+    post("/auth/developer/callback", to: "sessions#callback")
+  end
 
   draw :placements
   draw :claims
