@@ -15,23 +15,6 @@
 #
 #  index_users_on_service_and_email  (service,email) UNIQUE
 #
-FactoryBot.define do
-  factory :user do
-    sequence(:email) { |n| "user#{n}@example.com" }
-    first_name { "User" }
-    service { %w[placements claims].sample }
-    sequence(:last_name)
-
-    trait :support do
-      support_user { true }
-    end
-  end
-
-  factory :claims_user, class: "Claims::User", parent: :user do
-    service { "claims" }
-  end
-
-  factory :placements_user, class: "Placements::User", parent: :user do
-    service { "placements" }
-  end
+class Claims::User < User
+  default_scope { claims }
 end
