@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :persona do
     email { "anne_wilson@example.org" }
     first_name { "Persona" }
+    service { "claims" }
     sequence(:last_name)
 
     trait :anne do
@@ -25,6 +26,7 @@ FactoryBot.define do
       email { "colin@example.com" }
       first_name { "Colin" }
       last_name { "Chapman" }
+      support_user { true }
     end
   end
 end

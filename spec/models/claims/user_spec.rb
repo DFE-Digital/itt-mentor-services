@@ -15,23 +15,17 @@
 #
 #  index_users_on_service_and_email  (service,email) UNIQUE
 #
-FactoryBot.define do
-  factory :user do
-    sequence(:email) { |n| "user#{n}@example.com" }
-    first_name { "User" }
-    service { %w[placements claims].sample }
-    sequence(:last_name)
+require "rails_helper"
 
-    trait :support do
-      support_user { true }
+RSpec.describe Claims::User do
+  describe "default scope" do
+    let(:email) { "same_email@email.co.uk" }
+    let!(:user_with_claims_service) { create(:claims_user, email:) }
+    let!(:user_with_placements_service) { create(:placements_user, email:) }
+
+    it "is scoped to users of the claims service" do
+      user = described_class.find(user_with_claims_service.id)
+      expect(described_class.all).to contain_exactly(user)
     end
-  end
-
-  factory :claims_user, class: "Claims::User", parent: :user do
-    service { "claims" }
-  end
-
-  factory :placements_user, class: "Placements::User", parent: :user do
-    service { "placements" }
   end
 end

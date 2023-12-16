@@ -10,9 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_13_110952) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_16_102842) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "service", ["claims", "placements"]
 
   create_table "flipflop_features", force: :cascade do |t|
     t.string "key", null: false
@@ -37,13 +41,33 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_13_110952) do
     t.index ["urn"], name: "index_gias_schools_on_urn", unique: true
   end
 
+  create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "provider_code", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["provider_code"], name: "index_providers_on_provider_code", unique: true
+  end
+
+  create_table "schools", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "urn", null: false
+    t.boolean "placements", default: false
+    t.boolean "claims", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["claims"], name: "index_schools_on_claims"
+    t.index ["placements"], name: "index_schools_on_placements"
+    t.index ["urn"], name: "index_schools_on_urn", unique: true
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.boolean "support_user", default: false
+    t.enum "service", null: false, enum_type: "service"
+    t.index ["service", "email"], name: "index_users_on_service_and_email", unique: true
   end
 
 end

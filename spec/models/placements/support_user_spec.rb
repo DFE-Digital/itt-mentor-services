@@ -17,17 +17,19 @@
 #
 require "rails_helper"
 
-RSpec.describe User, type: :model do
-  subject { create(:user) }
-
-  describe "validations" do
-    it { is_expected.to validate_presence_of(:email) }
-    it do
-      is_expected.to validate_uniqueness_of(:email).scoped_to(
-        :service
-      ).case_insensitive
+RSpec.describe Placements::SupportUser do
+  describe "default scope" do
+    let(:email) { "same_email@email.co.uk" }
+    let!(:support_user_with_placements_service) do
+      create(:placements_user, :support, email:)
     end
-    it { is_expected.to validate_presence_of(:first_name) }
-    it { is_expected.to validate_presence_of(:last_name) }
+    let!(:support_user_with_claims_service) do
+      create(:claims_user, :support, email:)
+    end
+
+    it "is scoped to placement support users" do
+      user = described_class.find(support_user_with_placements_service.id)
+      expect(described_class.all).to contain_exactly(user)
+    end
   end
 end

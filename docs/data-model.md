@@ -116,11 +116,11 @@ The `placements_enabled` and `claims_enabled` boolean attributes will indicate w
 
 For example:
 
-| urn | name | placements_enabled | claims_enabled |
-| --- | --- | --- | --- |
-| 100000 | School A | 1 | 0 |
-| 100001 | School B | 0 | 1 |
-| 100002 | School C | 1 | 1 |
+| urn    | name     | placements_enabled | claims_enabled |
+| ------ | -------- | ------------------ | -------------- |
+| 100000 | School A | 1                  | 0              |
+| 100001 | School B | 0                  | 1              |
+| 100002 | School C | 1                  | 1              |
 
 - School A has only been onboarded into the School Placements service.
 - School B has only been onboarded into the Track & Pay service.
@@ -153,6 +153,7 @@ Since the services will be on different hostnames, they will automatically have 
 Users are scoped by `service`, which will be either `"placements"` or `"claims"`.
 
 We can consider Users to have the unique composite index:
+
 - `[service, email]`
 
 ### Memberships

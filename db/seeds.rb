@@ -4,14 +4,11 @@
 # Persona Creation (Dummy User Creation)
 Rails.logger.debug "Creating Personas"
 
-# For each persona...
-PERSONAS.each do |persona_attributes|
-  # Create the persona
-  Persona.find_or_create_by!(
-    first_name: persona_attributes[:first_name],
-    last_name: persona_attributes[:last_name],
-    email: persona_attributes[:email]
-  )
+# Create the same personas for each service
+%w[claims placements].each do |service|
+  PERSONAS.each do |persona_attributes|
+    Persona.find_or_create_by!(**persona_attributes, service:)
+  end
 end
 
 Rails.logger.debug "Personas successfully created!"

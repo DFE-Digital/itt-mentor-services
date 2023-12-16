@@ -9,7 +9,12 @@ PERSONAS = [
     email: "patricia@example.com"
   },
   { first_name: "Mary", last_name: "Lawson", email: "mary@example.com" },
-  { first_name: "Colin", last_name: "Chapman", email: "colin@example.com" }
+  {
+    first_name: "Colin",
+    last_name: "Chapman",
+    email: "colin@example.com",
+    support_user: true
+  }
 ].push((DEVELOPER_PERSONA if defined?(DEVELOPER_PERSONA))).compact.freeze
 
 PERSONA_EMAILS = PERSONAS.map { |persona| persona[:email] }
