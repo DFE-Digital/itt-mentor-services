@@ -2,6 +2,10 @@
 
 class PersonasController < ApplicationController
   def index
-    @personas = Persona.all.decorate
+    if current_service.present?
+      @personas = Persona.public_send(current_service).decorate
+    else
+      redirect_to :not_found
+    end
   end
 end
