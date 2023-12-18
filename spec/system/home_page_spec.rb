@@ -1,9 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "Home Page" do
-  after do
-    Capybara.app_host = nil
-  end
+  after { Capybara.app_host = nil }
 
   scenario "User visits the claims homepage" do
     given_i_am_on_the_claims_site
