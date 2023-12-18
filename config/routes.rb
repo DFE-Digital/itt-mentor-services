@@ -16,4 +16,6 @@ Rails.application.routes.draw do
 
   draw :placements
   draw :claims
+
+  get :healthcheck, controller: :heartbeat
 end
