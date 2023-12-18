@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "Sign In as Persona" do
+feature "Sign In as a Claims User Persona" do
   around do |example|
     Capybara.app_host = "https://#{ENV["CLAIMS_HOST"]}"
     example.run
@@ -49,7 +49,7 @@ end
 private
 
 def given_there_is_an_existing_persona_for(persona_name)
-  create(:persona, persona_name.downcase.to_sym)
+  create(:persona, persona_name.downcase.to_sym, service: "claims")
 end
 
 def when_i_visit_the_personas_page
