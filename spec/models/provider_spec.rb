@@ -18,6 +18,8 @@ RSpec.describe Provider, type: :model do
     subject { create(:provider) }
 
     it { is_expected.to validate_presence_of(:provider_code) }
-    it { is_expected.to validate_uniqueness_of(:provider_code).case_insensitive }
+    it do
+      is_expected.to validate_uniqueness_of(:provider_code).case_insensitive
+    end
   end
 end
