@@ -8,7 +8,7 @@ module RoutesHelper
 
   def support_root_path
     {
-      claims: root_path, # TODO: claims support path in another PR
+      claims: claims_support_root_path,
       placements: placements_support_root_path,
     }.fetch current_service
   end
