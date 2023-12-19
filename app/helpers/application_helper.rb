@@ -7,13 +7,4 @@ module ApplicationHelper
       :placements
     end
   end
-
-  def root_path
-    case current_service
-    when :claims
-      claims_root_path
-    when :placements
-      placements_root_path
-    end
-  end
 end

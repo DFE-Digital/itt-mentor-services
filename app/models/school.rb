@@ -16,9 +16,11 @@
 #  index_schools_on_urn         (urn) UNIQUE
 #
 class School < ApplicationRecord
-  has_one :gias_school, foreign_key: :urn, primary_key: :urn
+  belongs_to :gias_school, foreign_key: :urn, primary_key: :urn
   validates :urn, presence: true
   validates :urn, uniqueness: { case_sensitive: false }
+
+  delegate :name, to: :gias_school
 
   scope :placements, -> { where placements: true }
   scope :claims, -> { where claims: true }

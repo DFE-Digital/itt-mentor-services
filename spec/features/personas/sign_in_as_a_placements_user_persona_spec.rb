@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require "rails_helper"
 
 feature "Sign In as a Placements User Persona" do
@@ -60,9 +58,9 @@ def when_i_visit_the_personas_page
 end
 
 def and_there_are_placement_organisations
-  create(:gias_school, name: "Placement School")
-  create(:school, :placements)
-  create(:provider, id: 123_456_789)
+  gias_school = create(:gias_school, name: "Placement School")
+  create(:school, :placements, gias_school:)
+  create(:provider, provider_code: "PROVIDER_CODE")
 end
 
 def then_i_see_the_persona_for(persona_name)
@@ -78,10 +76,9 @@ def and_i_visit_my_account_page
 end
 
 def then_i_see_a_list_of_organisations
-  expect(path).to eq dashboard_path
-  expect(page).to have_content("Placements School")
-  # We won't have a name or data for the providers until after the Provider API integration is done
-  expect(page).to have_content("123456789")
+  expect(current_path).to eq placements_support_organisations_path
+  expect(page).to have_content("Placement School")
+  expect(page).to have_content("PROVIDER_CODE")
 end
 
 def then_i_see_persona_details_for_anne

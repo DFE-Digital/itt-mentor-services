@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class DfESignInUser
   attr_reader :email, :dfe_sign_in_uid
   attr_accessor :first_name, :last_name, :service
