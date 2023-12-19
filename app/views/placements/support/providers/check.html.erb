@@ -1,0 +1,101 @@
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: new_placements_support_provider_path) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with(model: @provider, url: placements_support_providers_path, method: "post", data: {turbo: false}) do |f| %>
+      <%= f.hidden_field :provider_code, value: @provider_details.dig("attributes", "code") %>
+
+      <label class="govuk-label govuk-label--l">
+        <span class="govuk-caption-l"><%= t(".add_organisation") %></span>
+        <%= t(".title") %>
+      </label>
+
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= t(".organisation_name") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @provider_details.dig("attributes", "name") %>
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+          <dt class="govuk-summary-list__key">
+            <%= t(".ukprn") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @provider_details.dig("attributes", "ukprn") %>
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+          <dt class="govuk-summary-list__key">
+            <%= t(".accredited_provider_id") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @provider_details.dig("attributes", "accredited_provider_id") %>
+          </dd>
+        </div>
+      </dl>
+
+      <h2 class="govuk-heading-m govuk-!-margin-top-7">Contact details</h2>
+        <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= t(".email") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @provider_details.dig("attributes", "email") %>
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= t(".telephone") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @provider_details.dig("attributes", "telephone") %>
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= t(".website") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @provider_details.dig("attributes", "website") %>
+          </dd>
+        </div>
+
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= t(".address") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <p class="govuk-body">
+              <%= @provider_details.dig("attributes", "street_address_1") %>
+              <br>
+              <%= @provider_details.dig("attributes", "street_address_2") %>
+              <br>
+              <%= @provider_details.dig("attributes", "street_address_3") %>
+              <br>
+              <%= @provider_details.dig("attributes", "city") %>
+              <br>
+              <%= @provider_details.dig("attributes", "county") %>
+              <br>
+              <%= @provider_details.dig("attributes", "postcode") %>
+            </p>
+          </dd>
+        </div>
+      </dl>
+      <%= f.govuk_submit t(".add_organisation") %>
+      <p class="govuk-body">
+        <%= govuk_link_to(t(".cancel"), root_path) %>
+      </p>
+    </div>
+    <% end %>
+  </div>
+</div>

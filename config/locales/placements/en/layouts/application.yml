@@ -4,3 +4,22 @@ en:
       placements:
         header:
           service_name: Manage School Placements
+  placements:
+    support:
+      providers:
+        new:
+          caption: Add organisation
+          cancel: Cancel
+          continue: Continue
+          title: Enter a provider name, UKPRN, URN or postcode
+        check:
+          accredited_provider_id: Accredited provider ID
+          add_organisation: Add organisation
+          address: Address
+          cancel: Cancel
+          email: Email address
+          organisation_name: Organisation name
+          telephone: Telephone number
+          title: Check your answers
+          ukprn: UK provider reference number (UKPRN)
+          website: Website
