@@ -9,6 +9,7 @@
     <%= govuk_summary_list(
       rows: [
         { key: { text: "Service" }, value: { text: "Claims" } },
+        { key: { text: "Signed in as" }, value: { text: current_user&.first_name } },
         { key: { text: "Rails version" }, value: { text: Rails.version } },
         { key: { text: "Ruby version" }, value: { text: RUBY_VERSION } },
         {
