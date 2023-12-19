@@ -1,4 +1,11 @@
 en:
+  activerecord:
+    errors:
+      models:
+        provider:
+          attributes:
+            provider_code:
+              taken: Provider already exists
   organisations: Organisations
   schools: Schools
   providers: Providers

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Service updates page" do
+RSpec.describe "Service updates page", type: :system do
   after { Capybara.app_host = nil }
 
   scenario "User visits the claims Service updates" do

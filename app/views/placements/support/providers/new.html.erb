@@ -1,0 +1,30 @@
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: root_path) %>
+<% end %>
+
+<%= form_with(model: @provider, url: check_placements_support_providers_path, method: "get", data: {turbo: false}) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-form-group">
+        <%= f.label :query, { class: "govuk-label govuk-label--l", for: "accredited-provider-search-form-query-field" } do %>
+          <span class="govuk-caption-l"><%= t(".caption") %></span>
+          <%= t(".title") %>
+        <% end %>
+
+        <%= f.text_field :query,
+                              id: "accredited-provider-search-form-query-field",
+                              value: params[:query],
+                              class: "govuk-input" %>
+        <div id="accredited-provider-autocomplete" class="govuk-!-margin-bottom-7"></div>
+      </div>
+
+      <%= f.govuk_submit t("continue") %>
+
+      <p class="govuk-body">
+        <%= govuk_link_to(t("cancel"), root_path) %>
+      </p>
+    </div>
+  </div>
+<% end %>

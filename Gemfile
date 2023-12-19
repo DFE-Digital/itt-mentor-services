@@ -62,6 +62,9 @@ gem "draper"
 # Download files safely
 gem "down", "~> 5.0"
 
+# HTTP Request
+gem "httparty"
+
 group :development do
   gem "annotate", require: false
   gem "prettier_print", require: false
@@ -91,6 +94,7 @@ group :test do
   gem "shoulda-matchers"
   # launch browser when inspecting capybara specs
   gem "launchy"
+  gem "webmock"
 end
 
 group :test, :development do

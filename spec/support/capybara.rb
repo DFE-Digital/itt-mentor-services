@@ -5,6 +5,8 @@ if ENV["TEST_ENV_NUMBER"]
   Capybara.server_port = 9887 + ENV["TEST_ENV_NUMBER"].to_i
 end
 
+Capybara.always_include_port = true
+
 Capybara.register_driver :chrome_headless do |app|
   options = Selenium::WebDriver::Chrome::Options.new
 

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Home Page" do
+RSpec.describe "Home Page", type: :system do
   after { Capybara.app_host = nil }
 
   scenario "User visits the claims homepage" do

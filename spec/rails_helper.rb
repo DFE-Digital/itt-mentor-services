@@ -7,6 +7,9 @@ if Rails.env.production?
   abort("The Rails environment is running in production mode!")
 end
 require "rspec/rails"
+require "webmock/rspec"
+
+WebMock.disable_net_connect!(allow_localhost: true)
 
 Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 
