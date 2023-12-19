@@ -2,19 +2,20 @@
 
 class DfESignInUser
   attr_reader :email, :dfe_sign_in_uid
-  attr_accessor :first_name, :last_name
+  attr_accessor :first_name, :last_name, :service
 
   # setup inspired by register-trainee-teacher
   # TODO: Replace with commented code when DfE Sign In implemented
 
-  # def initialize(email:, dfe_sign_in_uid:, first_name:, last_name:, id_token: nil, provider: "dfe")
-  def initialize(email:, first_name:, last_name:)
+  # def initialize(email:, dfe_sign_in_uid:, first_name:, last_name:, id_token: nil, provider: "dfe", service:)
+  def initialize(email:, first_name:, last_name:, service:)
     @email = email&.downcase
     # @dfe_sign_in_uid = dfe_sign_in_uid
     @first_name = first_name
     @last_name = last_name
     # @id_token = id_token
     # @provider = provider&.to_s
+    @service = service
   end
 
   def self.begin_session!(session, omniauth_payload)
@@ -37,13 +38,30 @@ class DfESignInUser
       email: dfe_sign_in_session["email"],
       # dfe_sign_in_uid: dfe_sign_in_session["dfe_sign_in_uid"],
       first_name: dfe_sign_in_session["first_name"],
-      last_name: dfe_sign_in_session["last_name"]
+      last_name: dfe_sign_in_session["last_name"],
       # id_token: dfe_sign_in_session["id_token"],
       # provider: dfe_sign_in_session["provider"],
+      service: session["service"]
     )
+  end
+
+  def user
+    # TODO: When dfe sign-in is fully implemented, we will be able to find the user by the id == id_token.
+    @user ||= user_klass.find_by(email:)
   end
 
   def self.end_session!(session)
     session.clear
+  end
+
+  private
+
+  def user_klass
+    case service
+    when :claims
+      Claims::User
+    when :placements
+      Placements::User
+    end
   end
 end

@@ -8,10 +8,11 @@ class ApplicationController < ActionController::Base
   private
 
   def sign_in_user
+    session["service"] = current_service
     @sign_in_user ||= DfESignInUser.load_from_session(session)
   end
 
   def current_user
-    @current_user ||= sign_in_user
+    @current_user ||= sign_in_user&.user
   end
 end

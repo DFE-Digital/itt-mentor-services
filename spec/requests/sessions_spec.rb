@@ -9,11 +9,12 @@ RSpec.describe "Sessions", type: :request do
 
   describe "POST /auth/developer/callback" do
     it "returns http success" do
+      placements_user = create(:placements_user)
       post auth_developer_callback_path,
            params: {
-             first_name: "Anne",
-             last_name: "Wilson",
-             email: "anne_wilson@example.com"
+             first_name: placements_user.first_name,
+             last_name: placements_user.last_name,
+             email: placements_user.email
            }
       follow_redirect!
 
