@@ -9,10 +9,12 @@ SCHOOLS = [
 Rails.logger.debug "Creating Personas"
 
 # Create the same personas for each service
-%w[claims placements].each do |service|
-  PERSONAS.each do |persona_attributes|
-    Persona.find_or_create_by!(**persona_attributes, service:)
-  end
+CLAIMS_PERSONAS.each do |persona_attributes|
+  Persona.find_or_create_by!(**persona_attributes)
+end
+
+PLACEMENTS_PERSONAS.each do |persona_attributes|
+  Persona.find_or_create_by!(**persona_attributes)
 end
 
 Rails.logger.debug "Personas successfully created!"
