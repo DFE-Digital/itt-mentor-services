@@ -34,14 +34,55 @@ describe DfESignInUser do
           "first_name" => "Example",
           "last_name" => "User",
           "email" => "example_user@example.com"
-        }
+        },
+        "service" => :placements
       }
-      user = DfESignInUser.load_from_session(session)
+      dfe_sign_in_user = DfESignInUser.load_from_session(session)
 
-      expect(user).not_to be_nil
-      expect(user.first_name).to eq("Example")
-      expect(user.last_name).to eq("User")
-      expect(user.email).to eq("example_user@example.com")
+      expect(dfe_sign_in_user).not_to be_nil
+      expect(dfe_sign_in_user.first_name).to eq("Example")
+      expect(dfe_sign_in_user.last_name).to eq("User")
+      expect(dfe_sign_in_user.email).to eq("example_user@example.com")
+    end
+  end
+
+  describe "#user" do
+    describe "claims service" do
+      it "returns the claims user" do
+        claims_user = create(:claims_user)
+
+        session = {
+          "dfe_sign_in_user" => {
+            "first_name" => claims_user.first_name,
+            "last_name" => claims_user.last_name,
+            "email" => claims_user.email
+          },
+          "service" => :claims
+        }
+
+        dfe_sign_in_user = DfESignInUser.load_from_session(session)
+
+        expect(dfe_sign_in_user.user).to eq claims_user
+      end
+    end
+
+    describe "placements service" do
+      it "returns the placements user" do
+        placements_user = create(:placements_user)
+
+        session = {
+          "dfe_sign_in_user" => {
+            "first_name" => placements_user.first_name,
+            "last_name" => placements_user.last_name,
+            "email" => placements_user.email
+          },
+          "service" => :placements
+        }
+
+        dfe_sign_in_user = DfESignInUser.load_from_session(session)
+
+        expect(dfe_sign_in_user.user).to eq placements_user
+      end
     end
   end
 

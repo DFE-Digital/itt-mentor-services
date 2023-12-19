@@ -4,7 +4,7 @@ require "rails_helper"
 
 feature "Sign In as Persona" do
   around do |example|
-    Capybara.app_host = "https://#{ENV["PLACEMENTS_HOST"]}"
+    Capybara.app_host = "https://#{ENV["CLAIMS_HOST"]}"
     example.run
     Capybara.app_host = nil
   end
