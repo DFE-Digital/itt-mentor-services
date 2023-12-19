@@ -20,7 +20,7 @@ require "rails_helper"
 RSpec.describe School, type: :model do
   context "associations" do
     it do
-      should have_one(:gias_school).with_foreign_key(:urn).with_primary_key(
+      should belong_to(:gias_school).with_foreign_key(:urn).with_primary_key(
                :urn
              )
     end

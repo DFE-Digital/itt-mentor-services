@@ -1,4 +1,7 @@
 en:
+  organisations: Organisations
+  schools: Schools
+  providers: Providers
   account:
     index:
       email_address: Email address

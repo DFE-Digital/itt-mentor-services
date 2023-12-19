@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require "rails_helper"
 
 feature "Sign In as a Claims User Persona" do
@@ -10,36 +8,36 @@ feature "Sign In as a Claims User Persona" do
   end
 
   scenario "I sign in as persona Anne" do
-    given_there_is_an_existing_persona_for("Anne")
-    when_i_visit_the_personas_page
-    then_i_see_the_persona_for("Anne")
+    given_there_is_an_existing_claims_persona_for("Anne")
+    when_i_visit_the_claims_personas_page
+    then_i_see_the_claims_persona_for("Anne")
     when_i_click_sign_in_as("Anne")
     and_i_visit_my_account_page
     then_i_see_persona_details_for_anne
   end
 
   scenario "I sign in as persona Patricia" do
-    given_there_is_an_existing_persona_for("Patricia")
-    when_i_visit_the_personas_page
-    then_i_see_the_persona_for("Patricia")
+    given_there_is_an_existing_claims_persona_for("Patricia")
+    when_i_visit_the_claims_personas_page
+    then_i_see_the_claims_persona_for("Patricia")
     when_i_click_sign_in_as("Patricia")
     and_i_visit_my_account_page
     then_i_see_persona_details_for_patricia
   end
 
   scenario "I sign in as persona Mary" do
-    given_there_is_an_existing_persona_for("Mary")
-    when_i_visit_the_personas_page
-    then_i_see_the_persona_for("Mary")
+    given_there_is_an_existing_claims_persona_for("Mary")
+    when_i_visit_the_claims_personas_page
+    then_i_see_the_claims_persona_for("Mary")
     when_i_click_sign_in_as("Mary")
     and_i_visit_my_account_page
     then_i_see_persona_details_for_mary
   end
 
   scenario "I sign in as persona colin" do
-    given_there_is_an_existing_persona_for("Colin")
-    when_i_visit_the_personas_page
-    then_i_see_the_persona_for("Colin")
+    given_there_is_an_existing_claims_persona_for("Colin")
+    when_i_visit_the_claims_personas_page
+    then_i_see_the_claims_persona_for("Colin")
     when_i_click_sign_in_as("Colin")
     and_i_visit_my_account_page
     then_i_see_persona_details_for_colin
@@ -48,15 +46,15 @@ end
 
 private
 
-def given_there_is_an_existing_persona_for(persona_name)
+def given_there_is_an_existing_claims_persona_for(persona_name)
   create(:persona, persona_name.downcase.to_sym, service: "claims")
 end
 
-def when_i_visit_the_personas_page
+def when_i_visit_the_claims_personas_page
   visit personas_path
 end
 
-def then_i_see_the_persona_for(persona_name)
+def then_i_see_the_claims_persona_for(persona_name)
   expect(page).to have_content(persona_name)
 end
 

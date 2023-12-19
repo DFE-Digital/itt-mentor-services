@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     if current_user
       # DfESignInUsers::Update.call(user: current_user, sign_in_user: sign_in_user)
 
-      redirect_to(root_path)
+      redirect_to after_sign_in_path
     else
       # session.delete(:requested_path)
       DfESignInUser.end_session!(session)

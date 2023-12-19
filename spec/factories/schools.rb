@@ -18,6 +18,7 @@
 FactoryBot.define do
   factory :school do
     sequence(:urn) { _1 }
+    association :gias_school
 
     trait :claims do
       claims { true }
