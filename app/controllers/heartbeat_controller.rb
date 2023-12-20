@@ -1,4 +1,6 @@
 class HeartbeatController < ApplicationController
+  skip_before_action :authenticate_user!
+
   def healthcheck
     checks = { database: database_alive? }
     status = checks.values.all? ? :ok : :service_unavailable
