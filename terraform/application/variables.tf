@@ -62,6 +62,6 @@ variable "placements_host" {
 
 locals {
   postgres_ssl_mode = var.enable_postgres_ssl ? "require" : "disable"
-      claims_host      = var.claims_host == null ? "manage-school-placements-${ var.environment }.test.teacherservices.cloud" : var.claims_host
-      placements_host  = var.placements_host == null ? "track-and-pay-${ var.environment }.test.teacherservices.cloud" : var.placements_host
+      placements_host      = var.claims_host == null ? "manage-school-placements-${ var.environment }.test.teacherservices.cloud" : var.claims_host
+      claims_host          = var.placements_host == null ? "track-and-pay-${ var.environment }.test.teacherservices.cloud" : var.placements_host
 }
