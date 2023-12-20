@@ -1,0 +1,54 @@
+<%= navigation_bar %>
+<div class="govuk-grid-row">
+<br><br>
+    <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= t("claims.schools.show.heading") %></h1>
+    <%= govuk_summary_list do |summary_list|
+          summary_list.with_row do |row|
+            row.with_key(text: t("claims.schools.show.organisation_name"))
+            row.with_value(text: "Hogwarts")
+          end
+          summary_list.with_row do |row|
+            row.with_key(text: t("claims.schools.show.uk_provider_reference_number"))
+            row.with_value(text: "fake_uprn")
+          end
+          summary_list.with_row do |row|
+            row.with_key(text: t("claims.schools.show.unique_reference_number"))
+            row.with_value(text: 1)
+          end
+        end %>
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-9">Contact details</h2>
+    <%= govuk_summary_list do |summary_list|
+        summary_list.with_row do |row|
+            row.with_key(text: t("claims.schools.show.email_address"))
+        row.with_value do %>
+        <a href="contact@example.com"><%= "mary@example.com" %></a>
+        <% end %>
+        <% row.with_action(text: t('claims.schools.show.change'), visually_hidden_text:  t("claims.schools.show.email_address"), href: '/contact-details')
+        end %>
+        <% summary_list.with_row do |row|
+             row.with_key(text: "Telephone number")
+             row.with_value(text: "0123456789")
+             row.with_action(text: t("claims.schools.show.change"), visually_hidden_text: t("claims.schools.show.email_address"), href: "/contact-details")
+           end %>
+        <% summary_list.with_row do |row|
+            row.with_key(text: 'Website')
+            row.with_value do %>
+            <a href="<%= "www.hogwarts.com" %>"><%= "www.hogwarts.com" %></a>
+            <% end;row.with_action(text: t('claims.schools.show.change'), visually_hidden_text:  t('claims.schools.show.email_address'), href: '/contact-details')
+            end %>
+            <% summary_list.with_row do |row|
+            row.with_key(text: t('claims.schools.show.address'))
+            row.with_value do %>
+            <p class="govuk-body">
+                <%= "Hogwarts Castle" %><br>
+                <%= "Scotland" %><br>
+                <%= "United Kingdom" %><br>
+            </p>
+            <% end %>
+            <% row.with_action(text:  t('claims.schools.show.change'), visually_hidden_text:  t('claims.schools.show.email_address'), href: '/contact-details')
+            end %>
+        <% end %>
+    </div>
+</div>

@@ -22,7 +22,13 @@
 #
 FactoryBot.define do
   factory :gias_school do
-    sequence(:urn) { _1 }
+    sequence(:urn) { |n| "fake_urn#{n}" }
     name { "Hogwarts" }
+    sequence(:ukprn) { |n| "fake_uprn_#{n}" }
+    telephone { "0123456789" }
+    website { "www.hogwarts.com" }
+    address1 { "Hogwarts Castle" }
+    address2 { "Scotland" }
+    address3 { "United Kingdom" }
   end
 end
