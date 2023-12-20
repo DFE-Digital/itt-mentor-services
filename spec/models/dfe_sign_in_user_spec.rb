@@ -48,7 +48,7 @@ describe DfESignInUser do
 
   describe "#user" do
     describe "claims service" do
-      it "returns the claims user" do
+      it "returns the current Claims::User" do
         claims_user = create(:claims_user)
 
         session = {
@@ -63,11 +63,12 @@ describe DfESignInUser do
         dfe_sign_in_user = DfESignInUser.load_from_session(session)
 
         expect(dfe_sign_in_user.user).to eq claims_user
+        expect(dfe_sign_in_user.user).to be_a Claims::User
       end
     end
 
     describe "placements service" do
-      it "returns the placements user" do
+      it "returns the current Placements::User" do
         placements_user = create(:placements_user)
 
         session = {
@@ -82,6 +83,25 @@ describe DfESignInUser do
         dfe_sign_in_user = DfESignInUser.load_from_session(session)
 
         expect(dfe_sign_in_user.user).to eq placements_user
+        expect(dfe_sign_in_user.user).to be_a Placements::User
+      end
+
+      it "returns a Placements::SupportUser for support users" do
+        support_user = create(:placements_user, :support)
+
+        session = {
+          "dfe_sign_in_user" => {
+            "first_name" => support_user.first_name,
+            "last_name" => support_user.last_name,
+            "email" => support_user.email
+          },
+          "service" => :placements
+        }
+
+        dfe_sign_in_user = DfESignInUser.load_from_session(session)
+
+        expect(dfe_sign_in_user.user.id).to eq support_user.id
+        expect(dfe_sign_in_user.user).to be_a Placements::SupportUser
       end
     end
   end
