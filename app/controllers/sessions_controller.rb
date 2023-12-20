@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  skip_before_action :authenticate_user!, only: %i[new callback]
   before_action :redirect_to_personas, only: [:new]
 
   # setup inspired by register-trainee-teacher

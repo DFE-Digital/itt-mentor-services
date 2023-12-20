@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   include RoutesHelper
 
+  before_action :authenticate_user!
+
   default_form_builder(GOVUKDesignSystemFormBuilder::FormBuilder)
 
   helper_method :current_user
