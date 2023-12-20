@@ -1,0 +1,22 @@
+<div class="app-primary-navigation">
+    <div class="app-primary-navigation govuk-!-display-none-print">
+    <div class="govuk-width-container app-primary-navigation--justify-between">
+        <nav class="app-primary-navigation__nav" aria-label="main menu">
+        <ul class="app-primary-navigation__list">
+            <li class="app-primary-navigation__item">
+                <a class="app-primary-navigation__link" href="#"><%= t("navigation_bar.claims") %></a>
+            </li>
+            <% items.each do |item| %>
+                <li class="app-primary-navigation__item">
+                <% if item[:active] %>
+                    <%= govuk_link_to item[:name], item[:href], class: "app-primary-navigation__link", aria: { current: "page" } %>
+                <% else %>
+                    <%= govuk_link_to item[:name], item[:href], class: "app-primary-navigation__link" %>
+                <% end %>
+                </li>
+            <% end %>
+        </ul>
+        </nav>
+    </div>
+    </div>
+</div>

@@ -71,6 +71,15 @@ en:
       heading: Placements news and updates
     contents: Contents
   claims:
+    schools:
+      show:
+        heading: Organisations
+        organisation_name: Organisation name
+        uk_provider_reference_number: UK provider reference number (UKPRN)
+        unique_reference_number: Unique reference number (URN)
+        email_address: email address
+        change: Change
+        address: address
     support:
       users:
         index:
@@ -79,3 +88,8 @@ en:
             users:
               name: Name
               email: Email
+  navigation_bar:
+    organisation_details: Organisation details
+    users: Users
+    claims: Claims
+
