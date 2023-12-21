@@ -9,4 +9,6 @@ scope module: :placements,
     root to: redirect("/support/organisations")
     resources :organisations, only: :index
   end
+
+  resources :organisations, only: [:index]
 end

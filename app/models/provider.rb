@@ -12,6 +12,8 @@
 #  index_providers_on_provider_code  (provider_code) UNIQUE
 #
 class Provider < ApplicationRecord
+  has_many :memberships, as: :organisation
+
   validates :provider_code, presence: true
   validates :provider_code, uniqueness: { case_sensitive: false }
 end

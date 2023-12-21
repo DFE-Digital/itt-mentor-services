@@ -20,11 +20,19 @@ require "rails_helper"
 RSpec.describe User, type: :model do
   subject { create(:user) }
 
+  context "associations" do
+    it do
+      should have_many(:memberships)
+      should have_many(:schools).through(:memberships).source(:organisation)
+      should have_many(:providers).through(:memberships).source(:organisation)
+    end
+  end
+
   describe "validations" do
     it { is_expected.to validate_presence_of(:email) }
     it do
       is_expected.to validate_uniqueness_of(:email).scoped_to(
-        :service
+        :service,
       ).case_insensitive
     end
     it { is_expected.to validate_presence_of(:first_name) }

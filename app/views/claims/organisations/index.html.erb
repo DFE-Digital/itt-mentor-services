@@ -1,0 +1,15 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= t("organisations") %></h1>
+
+    <% if @schools.any? %>
+      <ul class="govuk-list">
+        <% @schools.each do |school| %>
+          <li>
+           <%= govuk_link_to school.name, request.env["PATH_INFO"], no_visited_state: true %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>

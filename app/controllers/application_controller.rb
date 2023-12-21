@@ -21,9 +21,13 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path
-    return support_root_path if current_user.support_user?
-
-    root_path
+    if current_user.support_user?
+      support_root_path
+    elsif current_user.memberships.many?
+      organisation_index_path
+    else
+      root_path
+    end
   end
 
   def after_sign_out_path

@@ -205,6 +205,8 @@ GEM
     kramdown-parser-gfm (1.1.0)
       kramdown (~> 2.0)
     language_server-protocol (3.17.0.3)
+    launchy (2.5.2)
+      addressable (~> 2.8)
     loofah (2.22.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -525,6 +527,7 @@ DEPENDENCIES
   govuk-components (~> 5.0.0)
   govuk_design_system_formbuilder (~> 5.0.0)
   jsbundling-rails
+  launchy
   mail-notify
   omniauth
   omniauth-rails_csrf_protection
