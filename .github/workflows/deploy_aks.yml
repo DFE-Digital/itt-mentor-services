@@ -24,6 +24,20 @@ jobs:
       with:
         ruby-version: 3.2.2
         bundler-cache: true
+    - name: Use Node.js 20.9.0
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.9.0
+        cache: "npm"
+    - name: Install dependencies
+      run: |
+          sudo apt-get update && sudo apt-get -yqq install libpq-dev
+          bundle install --jobs 4 --retry 3
+          bundle exec rails assets:precompile
+      env:
+          DATABASE_URL: postgres://postgres:password@localhost:5432
+          GOVUK_NOTIFY_API_KEY: fake_key
+          SIGN_IN_METHOD: persona
 
     - name: Intellisense
       run: bin/bundle exec yard gems
