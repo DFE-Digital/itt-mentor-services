@@ -3,10 +3,10 @@ name: Build and deploy to AKS cluster
 on:
   push:
     branches:
-    - master
+    - main
   pull_request:
     branches:
-    - master
+    - main
 
 concurrency: deploy-${{ github.ref }}
 
