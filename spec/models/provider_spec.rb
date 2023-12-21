@@ -14,6 +14,10 @@
 require "rails_helper"
 
 RSpec.describe Provider, type: :model do
+  context "associations" do
+    it { should have_many(:memberships) }
+  end
+
   context "validations" do
     subject { create(:provider) }
 

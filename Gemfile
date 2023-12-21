@@ -89,6 +89,8 @@ group :test do
   gem "rails-controller-testing"
   gem "selenium-webdriver"
   gem "shoulda-matchers"
+  # launch browser when inspecting capybara specs
+  gem "launchy"
 end
 
 group :test, :development do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_16_102842) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_20_143008) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -39,6 +39,16 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_16_102842) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["urn"], name: "index_gias_schools_on_urn", unique: true
+  end
+
+  create_table "memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "organisation_type", null: false
+    t.uuid "organisation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organisation_type", "organisation_id"], name: "index_memberships_on_organisation"
+    t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
   create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -70,4 +80,5 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_16_102842) do
     t.index ["service", "email"], name: "index_users_on_service_and_email", unique: true
   end
 
+  add_foreign_key "memberships", "users"
 end

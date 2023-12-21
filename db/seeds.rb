@@ -1,6 +1,10 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
+SCHOOLS = [
+  { claims: true },
+  { placements: true },
+  { claims: true, placements: true },
+  { claims: true, placements: true },
+].freeze
+
 # Persona Creation (Dummy User Creation)
 Rails.logger.debug "Creating Personas"
 
@@ -12,3 +16,30 @@ Rails.logger.debug "Creating Personas"
 end
 
 Rails.logger.debug "Personas successfully created!"
+
+Rake::Task["gias_update"].invoke unless GiasSchool.any?
+gias_scools = GiasSchool.last(SCHOOLS.count)
+
+SCHOOLS.each.with_index do |school_attributes, index|
+  school = School.find_or_initialize_by(**school_attributes)
+  school.urn = gias_scools[index].urn
+
+  school.save!
+end
+
+User
+  .where(first_name: %w[Anne Patricia])
+  .each do |user|
+    school = School.public_send(user.service).first
+    user.memberships.find_or_create_by!(organisation: school)
+  end
+
+User
+  .where(first_name: %w[Mary Colin])
+  .each do |user|
+    schools = School.where("#{user.service}": true)
+
+    schools.each do |school|
+      user.memberships.find_or_create_by!(organisation: school)
+    end
+  end
