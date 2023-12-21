@@ -3,10 +3,8 @@ name: Build and deploy to AKS cluster
 on:
   push:
     branches:
-    - main
-  pull_request:
-    branches:
-    - main
+    - 827-deploy-review-apps-via-pipeline
+
 
 concurrency: deploy-${{ github.ref }}
 
