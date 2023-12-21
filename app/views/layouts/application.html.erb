@@ -25,7 +25,9 @@
 
     <%= govuk_skip_link %>
 
-    <%= govuk_header(homepage_url: "https://www.gov.uk", service_name: t(".#{current_service}.header.service_name"), service_url: "/") do |header| %>
+    <%= govuk_header(homepage_url: "/") do |header| %>
+      <% header.with_product_name(name: t(".#{current_service}.header.service_name")) %>
+
       <% if current_user %>
         <% header.with_navigation_item(text: "Your Account", href: account_path) %>
         <% header.with_navigation_item(text: "Sign Out", href: sign_out_path) %>
