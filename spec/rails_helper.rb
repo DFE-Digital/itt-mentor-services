@@ -66,6 +66,18 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  config.around(:each, type: :request) do |example|
+    host! ENV["CLAIMS_HOST"]
+    example.run
+    host! nil
+  end
+
+  config.around(:each, type: :system) do |example|
+    Capybara.app_host = "http://#{ENV["CLAIMS_HOST"]}"
+    example.run
+    Capybara.app_host = nil
+  end
 end
 
 Shoulda::Matchers.configure do |config|
