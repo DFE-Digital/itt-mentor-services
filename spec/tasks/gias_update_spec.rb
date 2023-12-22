@@ -11,7 +11,7 @@ describe "gias_update" do
     tempfile = Tempfile.new("foo")
 
     expect(Down).to receive(:download).with(
-      "#{ENV["GIAS_CSV_BASE_URL"]}/#{gias_filename}"
+      "#{ENV["GIAS_CSV_BASE_URL"]}/#{gias_filename}",
     ).and_return(tempfile)
 
     expect(GiasCsvImporter).to receive(:call).with(tempfile.path)

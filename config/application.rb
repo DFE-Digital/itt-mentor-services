@@ -33,7 +33,7 @@ module IttMentorServices
     config.autoload_lib(ignore: %w[])
 
     config.assets.paths << Rails.root.join(
-      "node_modules/govuk-frontend/dist/govuk/assets"
+      "node_modules/govuk-frontend/dist/govuk/assets",
     )
 
     config.autoload_paths += %W[#{config.root}/app/assets/components]

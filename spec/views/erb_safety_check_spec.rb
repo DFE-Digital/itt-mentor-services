@@ -7,7 +7,7 @@ RSpec.describe "ERB Safety Check" do
 
   erb_glob =
     Rails.root.join(
-      "app/views/**/{*.htm,*.html,*.htm.erb,*.html.erb,*.html+*.erb}"
+      "app/views/**/{*.htm,*.html,*.htm.erb,*.html.erb,*.html+*.erb}",
     )
 
   Dir[erb_glob].each do |filename|

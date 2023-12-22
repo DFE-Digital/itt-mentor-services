@@ -11,7 +11,7 @@ RSpec.describe PersonaDecorator do
     context "when the persona is Patricia" do
       it "returns orange" do
         expect(build(:persona, :patricia).decorate.type_tag_colour).to eq(
-          "orange"
+          "orange",
         )
       end
     end

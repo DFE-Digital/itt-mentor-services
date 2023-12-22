@@ -26,14 +26,14 @@ RSpec.describe HostingEnvironment do
     it "returns the banner description of the hosting environment for claims" do
       current_service = "claims"
       expect(described_class.banner_description(current_service)).to eq(
-        "Make a complaint or give feedback"
+        "Make a complaint or give feedback",
       )
     end
 
     it "returns the banner description of the hosting environment for placements" do
       current_service = "placements"
       expect(described_class.banner_description(current_service)).to eq(
-        "Make a complaint or give feedback"
+        "Make a complaint or give feedback",
       )
     end
   end

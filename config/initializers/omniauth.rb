@@ -9,7 +9,7 @@ when "persona"
       provider(
         :developer,
         fields: %i[uid email first_name last_name],
-        uid_field: :uid
+        uid_field: :uid,
       )
     end
 when "dfe-sign-in"

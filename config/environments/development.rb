@@ -25,7 +25,7 @@ Rails.application.configure do
 
     config.cache_store = :memory_store
     config.public_file_server.headers = {
-      "Cache-Control" => "public, max-age=#{2.days.to_i}"
+      "Cache-Control" => "public, max-age=#{2.days.to_i}",
     }
   else
     config.action_controller.perform_caching = false
@@ -35,7 +35,7 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :notify
   config.action_mailer.notify_settings = {
-    api_key: ENV.fetch("GOVUK_NOTIFY_API_KEY")
+    api_key: ENV.fetch("GOVUK_NOTIFY_API_KEY"),
   }
 
   # Store uploaded files on the local file system (see config/storage.yml for options).

@@ -15,8 +15,8 @@ RSpec.describe GiasCsvImporter do
   it "logs messages to STDOUT" do
     expect { subject }.to output(
       match(/Done!/).and(match(/Invalid rows - /)).and(
-        match(/Row 5 is invalid/)
-      )
+        match(/Row 5 is invalid/),
+      ),
     ).to_stdout
   end
 end

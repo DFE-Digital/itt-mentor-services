@@ -11,9 +11,9 @@ RSpec.describe ServiceUpdate do
             {
               date: "2023-12-14",
               title: "Claim Update",
-              content: "Some content"
-            }
-          ]
+              content: "Some content",
+            },
+          ],
         )
         updates = ServiceUpdate.where(service: :claims)
         expect(updates.length).to eq(1)
@@ -34,9 +34,9 @@ RSpec.describe ServiceUpdate do
             {
               date: "2023-12-14",
               title: "Placement Update",
-              content: "Some content"
-            }
-          ]
+              content: "Some content",
+            },
+          ],
         )
         updates = ServiceUpdate.where(service: :placements)
         expect(updates.length).to eq(1)
@@ -60,7 +60,7 @@ RSpec.describe ServiceUpdate do
     it "returns placements YAML file path" do
       file_path = ServiceUpdate.file_path(service: :placements)
       expect(file_path).to eq(
-        Rails.root.join("db/placements_service_updates.yml")
+        Rails.root.join("db/placements_service_updates.yml"),
       )
     end
 

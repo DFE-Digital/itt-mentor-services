@@ -8,8 +8,8 @@ describe DfESignInUser do
         "info" => {
           "first_name" => "Example",
           "last_name" => "User",
-          "email" => "example_user@example.com"
-        }
+          "email" => "example_user@example.com",
+        },
       }
       DfESignInUser.begin_session!(session, omniauth_payload)
 
@@ -18,9 +18,9 @@ describe DfESignInUser do
           "dfe_sign_in_user" => {
             "first_name" => "Example",
             "last_name" => "User",
-            "email" => "example_user@example.com"
-          }
-        }
+            "email" => "example_user@example.com",
+          },
+        },
       )
     end
   end
@@ -31,9 +31,9 @@ describe DfESignInUser do
         "dfe_sign_in_user" => {
           "first_name" => "Example",
           "last_name" => "User",
-          "email" => "example_user@example.com"
+          "email" => "example_user@example.com",
         },
-        "service" => :placements
+        "service" => :placements,
       }
       dfe_sign_in_user = DfESignInUser.load_from_session(session)
 
@@ -53,9 +53,9 @@ describe DfESignInUser do
           "dfe_sign_in_user" => {
             "first_name" => claims_user.first_name,
             "last_name" => claims_user.last_name,
-            "email" => claims_user.email
+            "email" => claims_user.email,
           },
-          "service" => :claims
+          "service" => :claims,
         }
 
         dfe_sign_in_user = DfESignInUser.load_from_session(session)
@@ -73,9 +73,9 @@ describe DfESignInUser do
           "dfe_sign_in_user" => {
             "first_name" => placements_user.first_name,
             "last_name" => placements_user.last_name,
-            "email" => placements_user.email
+            "email" => placements_user.email,
           },
-          "service" => :placements
+          "service" => :placements,
         }
 
         dfe_sign_in_user = DfESignInUser.load_from_session(session)
@@ -91,9 +91,9 @@ describe DfESignInUser do
           "dfe_sign_in_user" => {
             "first_name" => support_user.first_name,
             "last_name" => support_user.last_name,
-            "email" => support_user.email
+            "email" => support_user.email,
           },
-          "service" => :placements
+          "service" => :placements,
         }
 
         dfe_sign_in_user = DfESignInUser.load_from_session(session)
@@ -110,8 +110,8 @@ describe DfESignInUser do
         "dfe_sign_in_user" => {
           "first_name" => "Example",
           "last_name" => "User",
-          "email" => "example_user@example.com"
-        }
+          "email" => "example_user@example.com",
+        },
       }
 
       DfESignInUser.end_session!(session)

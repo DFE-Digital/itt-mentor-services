@@ -1,7 +1,7 @@
 module HostingEnvironment
   PRODUCTION_BANNER_NAME = {
     claims: "beta",
-    placements: "beta"
+    placements: "beta",
   }.with_indifferent_access.freeze
 
   def self.name(current_service)

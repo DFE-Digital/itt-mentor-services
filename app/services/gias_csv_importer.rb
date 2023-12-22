@@ -32,7 +32,7 @@ class GiasCsvImporter
           address2: school["Locality"].presence,
           address3: school["Address3"].presence,
           website: school["SchoolWebsite"].presence,
-          telephone: school["TelephoneNum"].presence
+          telephone: school["TelephoneNum"].presence,
         }
       end
 
