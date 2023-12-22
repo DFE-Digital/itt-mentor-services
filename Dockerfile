@@ -4,6 +4,8 @@
 
 # Build builder image
 FROM ruby:3.2.2-alpine as builder
+ARG SIGN_IN_METHOD
+ENV SIGN_IN_METHOD=${SIGN_IN_METHOD}
 
 # RUN apk -U upgrade && \
 #     apk add --update --no-cache gcc git libc6-compat libc-dev make nodejs \
