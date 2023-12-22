@@ -1,0 +1,101 @@
+name: Build and deploy to AKS cluster
+
+on:
+  push:
+    branches:
+      - 827-deploy-review-apps-via-pipeline
+
+
+concurrency: deploy-${{ github.ref }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      docker-image-tag: ${{ steps.build-image.outputs.tag }}
+      matrix-environments: ${{ toJSON(steps.*.outputs.matrix-environment) }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.2.2
+        bundler-cache: true
+    - name: Use Node.js 20.9.0
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.9.0
+        cache: "npm"
+    - name: Install dependencies
+      run: |
+          sudo apt-get update && sudo apt-get -yqq install libpq-dev
+          bundle install --jobs 4 --retry 3
+          bundle exec rails assets:precompile
+      env:
+          DATABASE_URL: postgres://postgres:password@localhost:5432
+          GOVUK_NOTIFY_API_KEY: fake_key
+          SIGN_IN_METHOD: persona
+
+    - name: Intellisense
+      run: bin/bundle exec yard gems
+
+    - name: Build and push docker image
+      id: build-image
+      uses: DFE-Digital/github-actions/build-docker-image@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        context: .
+      env:
+        SIGN_IN_METHOD: persona
+
+    - name: Prepare matrix environments review
+      id: matrix-env-review
+      run: echo "matrix-environment=review" >> $GITHUB_OUTPUT
+
+  deploy:
+        name: Deploy ${{ matrix.environment }}
+        runs-on: ubuntu-latest
+        needs: [build]
+        environment:
+          name: ${{ matrix.environment }}
+          url: ${{ steps.get-app-url.outputs.url }}
+        strategy:
+          max-parallel: 1
+          matrix:
+            environment: ${{ fromJSON(needs.build.outputs.matrix-environments) }}
+
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v3
+
+          - uses: hashicorp/setup-terraform@v3
+            with:
+              terraform_version: 1.6.4
+              terraform_wrapper: false
+
+          - uses: DFE-Digital/github-actions/set-arm-environment-variables@master
+            with:
+              azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+          - name: Terraform plan
+            run: |
+              make ${{ matrix.environment }} terraform-plan
+            env:
+              DOCKER_IMAGE_TAG: ${{ needs.build.outputs.docker-image-tag }}
+              PR_NUMBER: ${{ github.event.pull_request.number }}
+
+          - name: Get application URL
+            id: get-app-url
+            run: |
+              url=$(terraform -chdir=terraform/application output -raw url)
+              echo "url=${url}" >> $GITHUB_OUTPUT
+
+          - name: Post comment to Pull Request ${{ github.event.number }}
+            if: ${{ github.event_name == 'pull_request' }}
+            uses: marocchino/sticky-pull-request-comment@v2
+            with:
+              header: aks
+              message: Review app deployed to <${{ steps.get-app-url.outputs.url }}>
