@@ -85,7 +85,7 @@ jobs:
               make ${{ matrix.environment }} terraform-plan
             env:
               DOCKER_IMAGE_TAG: ${{ needs.build.outputs.docker-image-tag }}
-              PR_NUMBER: ${{ github.event.pull_request.number }}
+              PR_NUMBER: 123
 
           - name: Get application URL
             id: get-app-url
