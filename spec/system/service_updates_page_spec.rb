@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "Service updates page", type: :system do
-  after { Capybara.app_host = nil }
-
   scenario "User visits the claims Service updates" do
     given_i_am_on_the_claims_site
     and_i_am_on_the_service_updates_page
@@ -16,14 +14,6 @@ RSpec.describe "Service updates page", type: :system do
   end
 
   private
-
-  def given_i_am_on_the_claims_site
-    Capybara.app_host = "http://#{ENV["CLAIMS_HOST"]}"
-  end
-
-  def given_i_am_on_the_placements_site
-    Capybara.app_host = "http://#{ENV["PLACEMENTS_HOST"]}"
-  end
 
   def and_i_am_on_the_service_updates_page
     visit "/service_updates"
