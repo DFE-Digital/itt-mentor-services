@@ -85,7 +85,7 @@ def then_i_see_persona_details_for_anne
   page_has_persona_content(
     first_name: "Anne",
     last_name: "Wilson",
-    email: "anne_wilson@example.org"
+    email: "anne_wilson@example.org",
   )
 end
 
@@ -93,7 +93,7 @@ def then_i_see_persona_details_for_patricia
   page_has_persona_content(
     first_name: "Patricia",
     last_name: "Adebayo",
-    email: "patricia@example.com"
+    email: "patricia@example.com",
   )
 end
 
@@ -101,7 +101,7 @@ def then_i_see_persona_details_for_mary
   page_has_persona_content(
     first_name: "Mary",
     last_name: "Lawson",
-    email: "mary@example.com"
+    email: "mary@example.com",
   )
 end
 
@@ -109,7 +109,7 @@ def then_i_see_persona_details_for_colin
   page_has_persona_content(
     first_name: "Colin",
     last_name: "Chapman",
-    email: "colin@example.com"
+    email: "colin@example.com",
   )
 end
 

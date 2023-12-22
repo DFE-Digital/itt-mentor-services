@@ -3,7 +3,7 @@ return if Rails.env.production?
 
 BetterHtml.config =
   BetterHtml::Config.new(
-    YAML.safe_load(File.read(Rails.root.join(".better-html.yml")))
+    YAML.safe_load(File.read(Rails.root.join(".better-html.yml"))),
   )
 
 BetterHtml.configure do |config|

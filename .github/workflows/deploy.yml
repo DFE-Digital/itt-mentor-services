@@ -17,7 +17,7 @@ jobs:
           - tests: erblint
             command: bundle exec erblint app
           - tests: prettier
-            command: yarn prettier --check app
+            command: yarn prettier --check --ignore-unknown '**/*'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

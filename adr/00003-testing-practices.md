@@ -19,13 +19,13 @@ Use the following test types for our classes, modules, and functionalities.
   ```ruby
   RSpec.describe User, type: :model do
     subject { build(:user) }
-
+  
     describe ".class_method" do
       it "does something" do
         expect(User.class_method).to do_something
       end
     end
-
+  
     describe "#instance_method" do
       it "does something" do
         expect(subject.instance_method).to do_something
@@ -41,7 +41,7 @@ Use the following test types for our classes, modules, and functionalities.
         expect(User.class_method).to do_something
       end
     end
-
+  
     describe "#instance_method" do
       it "does something" do
         expect(subject.instance_method).to do_something
@@ -59,11 +59,11 @@ Use the following test types for our classes, modules, and functionalities.
       given_i_am_on_the_landing_page
       i_can_see_something
     end
-
+  
     def given_i_am_on_the_landing_page
       visit "/"
     end
-
+  
     def i_can_see_something
       expect(page).to have_content("Something")
     end
@@ -81,25 +81,19 @@ Use the following test types for our classes, modules, and functionalities.
       # Base happy path first
       it "returns a list of users" do
         get :index
-
-        expected_json = [
-          {
-            id: 1,
-            first_name: "John",
-            last_name: "Doe"
-          }
-        ]
-
+  
+        expected_json = [{ id: 1, first_name: "John", last_name: "Doe" }]
+  
         expect(response.body).to eq(expected_json)
       end
-
+  
       # Happy path variants next
       context "when given a 'name' query parameter" do
         it "returns a list of users filtered by name" do
           # Assertion
         end
       end
-
+  
       # Error paths
       context "without authentication" do
         it "returns a 401 error" do
@@ -107,7 +101,7 @@ Use the following test types for our classes, modules, and functionalities.
         end
       end
     end
-
+  
     context "POST /users" do
       it "returns a list of users" do
         get :index
