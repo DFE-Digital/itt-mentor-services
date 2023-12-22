@@ -1,4 +1,5 @@
 require "capybara/rspec"
+require "capybara-screenshot/rspec"
 
 # Use different Capybara ports when running tests in parallel
 if ENV["TEST_ENV_NUMBER"]
