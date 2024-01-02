@@ -21,8 +21,8 @@ RSpec.describe School, type: :model do
   context "associations" do
     it do
       should belong_to(:gias_school).with_foreign_key(:urn).with_primary_key(
-               :urn,
-             )
+        :urn,
+      )
       should have_many(:memberships)
     end
   end
