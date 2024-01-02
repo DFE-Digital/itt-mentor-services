@@ -1,9 +1,6 @@
 require "rails_helper"
 
-# Changing type from feature => system stops the javascript working.
-# Will attempt to resolve in another PR.
-RSpec.describe "Placements / Providers / Support User adds a Provider",
-               type: :feature do
+RSpec.describe "Placements / Providers / Support User adds a Provider", type: :system, js: true do
   before do
     next_year = Time.current.next_year.year
 
