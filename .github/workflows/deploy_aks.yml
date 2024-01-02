@@ -83,7 +83,7 @@ jobs:
 
           - name: Terraform Apply
             run: |
-              make ${{ matrix.environment }} terraform-apply
+              make ci ${{ matrix.environment }} terraform-apply
             env:
               DOCKER_IMAGE_TAG: ${{ needs.build.outputs.docker-image-tag }}
               PR_NUMBER: ${{ github.event.pull_request.number }}
