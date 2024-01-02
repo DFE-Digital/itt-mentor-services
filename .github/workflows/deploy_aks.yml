@@ -1,9 +1,9 @@
 name: Build and deploy to AKS cluster
 
 on:
-  push:
+  pull_request:
     branches:
-      - 827-deploy-review-apps-via-pipeline
+      - main
 
 
 concurrency: deploy-${{ github.ref }}
@@ -85,7 +85,7 @@ jobs:
               make ${{ matrix.environment }} terraform-plan
             env:
               DOCKER_IMAGE_TAG: ${{ needs.build.outputs.docker-image-tag }}
-              PR_NUMBER: 123
+              PR_NUMBER: ${{ github.event.pull_request.number }}
 
           - name: Get application URL
             id: get-app-url
