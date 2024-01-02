@@ -29,14 +29,14 @@ end
 
 User
   .where(first_name: %w[Anne Patricia])
-  .each do |user|
+  .find_each do |user|
     school = School.public_send(user.service).first
     user.memberships.find_or_create_by!(organisation: school)
   end
 
 User
   .where(first_name: %w[Mary Colin])
-  .each do |user|
+  .find_each do |user|
     schools = School.where("#{user.service}": true)
 
     schools.each do |school|
