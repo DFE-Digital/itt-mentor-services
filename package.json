@@ -3,7 +3,7 @@
   "private": "true",
   "dependencies": {
     "accessible-autocomplete": "^2.0.4",
-    "esbuild": "^0.19.9",
+    "esbuild": "^0.19.11",
     "govuk-frontend": "5.0.0",
     "lodash.debounce": "^4.0.8",
     "sass": "^1.69.5"
