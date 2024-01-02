@@ -99,4 +99,6 @@ jobs:
             uses: marocchino/sticky-pull-request-comment@v2
             with:
               header: aks
-              message: Review app deployed to <${{ steps.get-app-url.outputs.url }}>
+              message: |
+                      Review app  track and pay deployed to <https://track-and-pay-${{ github.event.number }}.test.teacherservices.cloud>
+                      Review app  school placements deployed to <https://track-and-pay-${{ github.event.number }}.test.teacherservices.cloud>
