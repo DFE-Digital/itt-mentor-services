@@ -5,11 +5,10 @@ class GiasCsvImporter
   OPEN_SCHOOL = "1".freeze
   NON_ENGLISH_ESTABLISHMENTS = %w[8 10 25 24 26 27 29 30 32 37 49 56 57].freeze
 
-  attr_reader :csv_path, :logger
+  attr_reader :csv_path
 
   def initialize(csv_path)
     @csv_path = csv_path
-    @logger = Logger.new($stdout)
   end
 
   def call
@@ -37,10 +36,13 @@ class GiasCsvImporter
       end
 
     if invalid_records.any?
-      logger.info "Invalid rows - #{invalid_records.inspect}"
+      Rails.logger.info "Invalid rows - #{invalid_records.inspect}"
     end
-    GiasSchool.upsert_all(records, unique_by: :urn)
-    logger.info "Done!"
+    Rails.logger.silence do
+      GiasSchool.upsert_all(records, unique_by: :urn)
+    end
+
+    Rails.logger.info "Done!"
   end
 
   private
