@@ -91,8 +91,10 @@ jobs:
           - name: Get application URL
             id: get-app-url
             run: |
-              url=$(terraform -chdir=terraform/application output -raw url)
-              echo "url=${url}" >> $GITHUB_OUTPUT
+              url1="https://track-and-pay-${{ github.event.number }}.test.teacherservices.cloud"
+              echo "url1=${url1}" >> $GITHUB_OUTPUT
+              url2="https://manage-school-placements-${{ github.event.number }}.test.teacherservices.cloud"
+              echo "url2=${url2}" >> $GITHUB_OUTPUT
 
           - name: Post comment to Pull Request ${{ github.event.number }}
             if: ${{ github.event_name == 'pull_request' }}
@@ -101,4 +103,4 @@ jobs:
               header: aks
               message: |
                       Review app  track and pay deployed to <https://track-and-pay-${{ github.event.number }}.test.teacherservices.cloud>
-                      Review app  school placements deployed to <https://track-and-pay-${{ github.event.number }}.test.teacherservices.cloud>
+                      Review app  school placements deployed to <https://manage-school-placements-${{ github.event.number }}.test.teacherservices.cloud>
