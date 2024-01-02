@@ -16,4 +16,24 @@ class Provider < ApplicationRecord
 
   validates :provider_code, presence: true
   validates :provider_code, uniqueness: { case_sensitive: false }
+
+  def method_missing(method, *args, &block)
+    if provider_details.keys.include?(method.to_s)
+      provider_details.fetch(method&.to_s, nil)
+    else
+      super
+    end
+  end
+
+  def respond_to_missing?(method, include_private = true)
+    provider_details.keys.include?(method.to_s) || super
+  end
+
+  def provider_details
+    provider_api.fetch("attributes", {})
+  end
+
+  def provider_api
+    @provider_api ||= AccreditedProviderApi.call(provider_code)
+  end
 end
