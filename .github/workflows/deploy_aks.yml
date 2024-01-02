@@ -62,7 +62,9 @@ jobs:
         needs: [build]
         environment:
           name: ${{ matrix.environment }}
-          url: ${{ steps.get-app-url.outputs.url }}
+          url: |
+                ${{ steps.get-app-url.outputs.url1 }}
+                ${{ steps.get-app-url.outputs.url2 }}
         strategy:
           max-parallel: 1
           matrix:
