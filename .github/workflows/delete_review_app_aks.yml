@@ -3,7 +3,7 @@ name: Delete review app on AKS
 on:
   pull_request:
     branches:
-    - master
+    - main
     types:
     - closed
 
