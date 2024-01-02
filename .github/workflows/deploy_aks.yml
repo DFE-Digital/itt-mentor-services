@@ -53,6 +53,7 @@ jobs:
 
     - name: Prepare matrix environments review
       id: matrix-env-review
+      if: github.event_name == 'pull_request'
       run: echo "matrix-environment=review" >> $GITHUB_OUTPUT
 
   deploy:
@@ -80,9 +81,9 @@ jobs:
             with:
               azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
-          - name: Terraform plan
+          - name: Terraform Apply
             run: |
-              make ${{ matrix.environment }} terraform-plan
+              make ${{ matrix.environment }} terraform-apply
             env:
               DOCKER_IMAGE_TAG: ${{ needs.build.outputs.docker-image-tag }}
               PR_NUMBER: ${{ github.event.pull_request.number }}
