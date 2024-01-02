@@ -23,7 +23,15 @@ class School < ApplicationRecord
   validates :urn, presence: true
   validates :urn, uniqueness: { case_sensitive: false }
 
-  delegate :name, to: :gias_school
+  delegate :name,
+           :postcode,
+           :town,
+           :telephone,
+           :website,
+           :address1,
+           :address2,
+           :address3,
+           to: :gias_school, allow_nil: true
 
   scope :placements, -> { where placements: true }
   scope :claims, -> { where claims: true }

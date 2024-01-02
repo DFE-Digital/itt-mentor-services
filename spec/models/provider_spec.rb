@@ -25,7 +25,7 @@ RSpec.describe Provider, type: :model do
     it do
       is_expected.to validate_uniqueness_of(
         :provider_code,
-      ).case_insensitive.with_message("Provider already exists")
+      ).case_insensitive.with_message("This provider has already been added. Try another provider")
     end
   end
 end

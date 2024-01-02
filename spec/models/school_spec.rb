@@ -36,6 +36,13 @@ RSpec.describe School, type: :model do
 
   context "delegations" do
     it { should delegate_method(:name).to(:gias_school) }
+    it { should delegate_method(:postcode).to(:gias_school) }
+    it { should delegate_method(:town).to(:gias_school) }
+    it { should delegate_method(:telephone).to(:gias_school) }
+    it { should delegate_method(:website).to(:gias_school) }
+    it { should delegate_method(:address1).to(:gias_school) }
+    it { should delegate_method(:address2).to(:gias_school) }
+    it { should delegate_method(:address3).to(:gias_school) }
   end
 
   context "scopes" do

@@ -1,7 +1,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= t("organisations") %></h1>
-    <%= govuk_button_to(t("add_organisation"), new_placements_support_provider_path, method: :get) %>
+    <%= govuk_button_to(t("add_organisation"), new_placements_support_organisation_path, method: :get) %>
 
     <% if @schools.any? %>
       <h2 class="govuk-heading-l"><%= t("schools") %></h2>

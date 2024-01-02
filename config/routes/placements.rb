@@ -7,7 +7,15 @@ scope module: :placements,
 
   namespace :support do
     root to: redirect("/support/organisations")
-    resources :organisations, only: :index
+    resources :organisations, only: %i[index new] do
+      collection { get :select_type }
+    end
+
+    resources :schools, expect: %i[edit update] do
+      collection { get :check }
+    end
+    resources :school_suggestions, only: [:index]
+
     resources :providers, expect: %i[edit update] do
       collection { get :check }
     end
