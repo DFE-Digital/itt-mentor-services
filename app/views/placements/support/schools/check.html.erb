@@ -4,8 +4,8 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with(model: @provider, url: placements_support_providers_path, method: "post", data: { turbo: false }) do |f| %>
-      <%= f.hidden_field :provider_code, value: @provider_details.dig("attributes", "code") %>
+    <%= form_with(model: @school, url: placements_support_schools_path, method: "post", data: { turbo: false }) do |f| %>
+      <%= f.hidden_field :urn, value: @school.urn %>
 
       <label class="govuk-label govuk-label--l">
         <span class="govuk-caption-l"><%= t(".add_organisation") %></span>
@@ -15,15 +15,11 @@
       <%= govuk_summary_list do |summary_list| %>
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t(".organisation_name")) %>
-          <% row.with_value(text: @provider_details.dig("attributes", "name")) %>
+          <% row.with_value(text: @school.name) %>
         <% end %>
         <% summary_list.with_row do |row| %>
-          <% row.with_key(text: t(".ukprn")) %>
-          <% row.with_value(text: @provider_details.dig("attributes", "ukprn")) %>
-        <% end %>
-        <% summary_list.with_row do |row| %>
-          <% row.with_key(text: t(".accredited_provider_id")) %>
-          <% row.with_value(text: @provider_details.dig("attributes", "accredited_provider_id")) %>
+          <% row.with_key(text: t(".urn")) %>
+          <% row.with_value(text: @school.urn) %>
         <% end %>
       <% end %>
 
@@ -33,25 +29,18 @@
 
       <%= govuk_summary_list do |summary_list| %>
         <% summary_list.with_row do |row| %>
-          <% row.with_key(text: t(".email")) %>
-          <% row.with_value(text: @provider_details.dig("attributes", "email")) %>
-        <% end %>
-        <% summary_list.with_row do |row| %>
           <% row.with_key(text: t(".telephone")) %>
-          <% row.with_value(text: @provider_details.dig("attributes", "telephone")) %>
+          <% row.with_value(text: @school.telephone) %>
         <% end %>
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t(".website")) %>
           <% row.with_value do %>
-            <%= govuk_link_to(@provider_details.dig("attributes", "website"),
-              external_link(@provider_details.dig("attributes", "website")),
-              target: "_blank",
-              rel: "noopener noreferrer") %>
+            <%= govuk_link_to(@school.website, external_link(@school.website), target: "_blank", rel: "noopener noreferrer") %>
           <% end %>
         <% end %>
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t(".address")) %>
-          <% row.with_value(text: @provider_address) %>
+          <% row.with_value(text: @school.formatted_address) %>
         <% end %>
       <% end %>
 
@@ -59,7 +48,6 @@
       <p class="govuk-body">
         <%= govuk_link_to(t(".cancel"), placements_support_organisations_path) %>
       </p>
-    </div>
     <% end %>
   </div>
 </div>

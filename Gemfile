@@ -65,6 +65,8 @@ gem "down", "~> 5.0"
 # HTTP Request
 gem "httparty"
 
+gem "pg_search"
+
 group :development do
   gem "annotate", require: false
   gem "prettier_print", require: false

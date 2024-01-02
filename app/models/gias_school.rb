@@ -21,9 +21,14 @@
 #  index_gias_schools_on_urn  (urn) UNIQUE
 #
 class GiasSchool < ApplicationRecord
+  include PgSearch::Model
   has_one :school, foreign_key: :urn, primary_key: :urn
 
   validates :urn, presence: true
   validates :urn, uniqueness: { case_sensitive: false }
   validates :name, presence: true
+
+  pg_search_scope :search_name_urn_postcode,
+                  against: %i[name postcode urn],
+                  using: { trigram: { word_similarity: true } }
 end

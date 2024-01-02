@@ -2,14 +2,28 @@ en:
   activerecord:
     errors:
       models:
+        organisation:
+          attributes:
+            type:
+              blank: Select an organisation type
         provider:
           attributes:
             provider_code:
-              taken: Provider already exists
+              taken: This provider has already been added. Try another provider
+              blank: Enter a provider name, UKPRN, URN or postcode
+        school:
+          attributes: 
+            urn: 
+              taken: This school has already been added. Try another school
+              blank: Enter a school name, URN or postcode
+            gias_school:
+              required: ""
   add_organisation: Add organisation
   organisations: Organisations
+  school: School
   schools: Schools
   organisation_details: Organisation details
+  itt_provider: ITT provider
   providers: Providers
   account:
     index:

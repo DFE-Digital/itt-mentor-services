@@ -68,7 +68,13 @@ RSpec.describe "Placements / Providers / Support User adds a Provider", type: :s
     then_i_see_a_dropdown_item_for("Provider 1")
     when_i_click_the_dropdown_item_for("Provider 1")
     and_i_click_continue
-    then_i_see_an_error("Provider already exists")
+    then_i_see_an_error("This provider has already been added. Try another provider")
+  end
+
+  scenario "Colin submits the search form without selecting a provider", js: true do
+    when_i_visit_the_add_provider_page
+    and_i_click_continue
+    then_i_see_an_error("Enter a provider name, UKPRN, URN or postcode")
   end
 
   private
@@ -136,10 +142,13 @@ RSpec.describe "Placements / Providers / Support User adds a Provider", type: :s
   end
 
   def then_i_see_an_error(error_message)
+    # Error summary
     expect(page.find(".govuk-error-summary")).to have_content(
       "There is a problem",
     )
     expect(page.find(".govuk-error-summary")).to have_content(error_message)
+    # Error above input
+    expect(page.find(".govuk-error-message")).to have_content(error_message)
   end
 
   def and_a_provider_code_is_listed(provider_code:)

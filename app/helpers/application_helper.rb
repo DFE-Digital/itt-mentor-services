@@ -7,4 +7,13 @@ module ApplicationHelper
       :placements
     end
   end
+
+  def external_link(link)
+    return if link.blank?
+
+    unless link.include?("http://") || link.include?("https://")
+      link.insert(0, "http://")
+    end
+    link
+  end
 end
