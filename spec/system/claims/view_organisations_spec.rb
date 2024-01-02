@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "View schools", type: :system do
   around do |example|
-    Capybara.app_host = "https://#{ENV["CLAIMS_HOST"]}"
+    Capybara.app_host = "http://#{ENV["CLAIMS_HOST"]}"
     example.run
     Capybara.app_host = nil
   end
