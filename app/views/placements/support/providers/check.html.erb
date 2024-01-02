@@ -4,7 +4,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with(model: @provider, url: placements_support_providers_path, method: "post", data: {turbo: false}) do |f| %>
+    <%= form_with(model: @provider, url: placements_support_providers_path, method: "post", data: { turbo: false }) do |f| %>
       <%= f.hidden_field :provider_code, value: @provider_details.dig("attributes", "code") %>
 
       <label class="govuk-label govuk-label--l">

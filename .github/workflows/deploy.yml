@@ -10,14 +10,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        tests: [rubocop, erblint, prettier]
+        tests: [rubocop, erblint]
         include:
           - tests: rubocop
             command: bundle exec rubocop
           - tests: erblint
             command: bundle exec erblint app
-          - tests: prettier
-            command: yarn prettier --check --ignore-unknown '**/*'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

@@ -2,7 +2,7 @@
   <%= govuk_back_link(href: root_path) %>
 <% end %>
 
-<%= form_with(model: @provider, url: check_placements_support_providers_path, method: "get", data: {turbo: false}) do |f| %>
+<%= form_with(model: @provider, url: check_placements_support_providers_path, method: "get", data: { turbo: false }) do |f| %>
   <%= f.govuk_error_summary %>
 
   <div class="govuk-grid-row">
