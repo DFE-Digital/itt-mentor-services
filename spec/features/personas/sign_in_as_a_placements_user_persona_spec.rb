@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature "Sign In as a Placements User Persona" do
+feature "Sign In as a Placements User Persona", :vcr do
   around do |example|
     Capybara.app_host = "https://#{ENV["PLACEMENTS_HOST"]}"
     example.run

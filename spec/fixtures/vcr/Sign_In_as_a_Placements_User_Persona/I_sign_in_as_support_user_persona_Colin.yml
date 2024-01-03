@@ -1,0 +1,75 @@
+---
+http_interactions:
+  - request:
+      method: get
+      uri: https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/2025/providers/PROVIDER_CODE
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+        Accept:
+          - "*/*"
+        User-Agent:
+          - Ruby
+    response:
+      status:
+        code: 404
+        message: Not Found
+      headers:
+        Date:
+          - Tue, 02 Jan 2024 19:27:28 GMT
+        Content-Type:
+          - application/json; charset=utf-8
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        X-Frame-Options:
+          - SAMEORIGIN
+        X-Xss-Protection:
+          - "0"
+        X-Content-Type-Options:
+          - nosniff
+        X-Download-Options:
+          - noopen
+        X-Permitted-Cross-Domain-Policies:
+          - none
+        Referrer-Policy:
+          - strict-origin-when-cross-origin
+        Cache-Control:
+          - no-cache
+        Content-Security-Policy:
+          - "default-src 'self'; font-src 'self' data: https://publish.localhost https://find.localhost
+            https://*.find-postgraduate-teacher-training.service.gov.uk https://*.publish-teacher-training-courses.service.gov.uk;
+            img-src 'self' https: data: https://2673654.fls.doubleclick.net; object-src
+            'none'; script-src 'self' https://www.google-analytics.com https://www.googletagmanager.com
+            https://publish.localhost https://find.localhost https://*.find-postgraduate-teacher-training.service.gov.uk
+            https://*.publish-teacher-training-courses.service.gov.uk 'nonce-'; connect-src
+            'self' https://stats.g.doubleclick.net https://*.sentry.io https://*.google-analytics.com
+            https://*.analytics.google.com https://publish.localhost https://find.localhost
+            https://*.find-postgraduate-teacher-training.service.gov.uk https://*.publish-teacher-training-courses.service.gov.uk;
+            style-src 'self' https://publish.localhost https://find.localhost https://*.find-postgraduate-teacher-training.service.gov.uk
+            https://*.publish-teacher-training-courses.service.gov.uk; frame-src 'self'
+            https://www.googletagmanager.com https://2673654.fls.doubleclick.net https://publish.localhost
+            https://find.localhost"
+        X-Request-Id:
+          - e15631fe1e18ac3d32ef797a28022733
+        X-Runtime:
+          - "0.009644"
+        Vary:
+          - Accept, Origin
+        Strict-Transport-Security:
+          - max-age=15724800; includeSubDomains
+        X-Azure-Ref:
+          - 20240102T192728Z-c559zqh2yx3wv2y020fyrv3ycw000000037g0000000201v3
+        X-Cache:
+          - CONFIG_NOCACHE
+      body:
+        encoding: UTF-8
+        string:
+          '{"errors":[{"status":404,"title":"NOT_FOUND","detail":"The requested
+          resource could not be found"}]}'
+    recorded_at: Tue, 02 Jan 2024 19:27:28 GMT
+recorded_with: VCR 6.2.0

@@ -110,4 +110,5 @@ group :test, :development do
   gem "pry-rails"
   gem "rspec"
   gem "rspec-rails"
+  gem "vcr"
 end

@@ -8,10 +8,19 @@ if Rails.env.production?
 end
 require "rspec/rails"
 require "webmock/rspec"
+require "vcr"
 
 WebMock.disable_net_connect!(allow_localhost: true)
 
 Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
+
+VCR.configure do |vcr|
+  vcr.cassette_library_dir = "spec/fixtures/vcr"
+  vcr.hook_into :webmock
+  vcr.ignore_localhost = true
+  vcr.configure_rspec_metadata!
+  vcr.allow_http_connections_when_no_cassette = true
+end
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
