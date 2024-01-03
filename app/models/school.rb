@@ -18,6 +18,7 @@
 class School < ApplicationRecord
   belongs_to :gias_school, foreign_key: :urn, primary_key: :urn
   has_many :memberships, as: :organisation
+  has_many :users, through: :memberships
 
   validates :urn, presence: true
   validates :urn, uniqueness: { case_sensitive: false }

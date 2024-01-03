@@ -1,5 +1,16 @@
-Support / Schools
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= t("organisations") %></h1>
 
-<ul>
-  <li><%= link_to "School 1", claims_support_school_path(1) %></li>
-</ul>
+    <% if @schools.any? %>
+      <h2 class="govuk-heading-l"><%= t("schools") %></h2>
+      <ul class="govuk-list">
+        <% @schools.each do |school| %>
+        <li>
+          <%= govuk_link_to school.name, request.env["PATH_INFO"], no_visited_state: true %>
+        </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>

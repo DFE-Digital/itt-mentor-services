@@ -37,4 +37,8 @@ class User < ApplicationRecord
   validates :email, uniqueness: { scope: :service, case_sensitive: false }
 
   scope :support_users, -> { where(support_user: true) }
+
+  def full_name
+    "#{first_name} #{last_name}".strip
+  end
 end

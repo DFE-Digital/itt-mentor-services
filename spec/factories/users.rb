@@ -40,4 +40,10 @@ FactoryBot.define do
           parent: :user do
     service { "placements" }
   end
+
+  factory :claims_support_user,
+          class: "Claims::SupportUser",
+          parent: :user do
+    service { "claims" }
+  end
 end

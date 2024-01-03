@@ -6,9 +6,9 @@ scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
   namespace :support do
     root to: redirect("/support/schools")
 
-    resources :schools do
+    resources :schools, only: %i[index show] do
       resources :claims
-      resources :users
+      resources :users, only: [:index]
     end
   end
 end
