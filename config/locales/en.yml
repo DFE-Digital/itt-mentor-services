@@ -9,6 +9,7 @@ en:
   add_organisation: Add organsiation
   organisations: Organisations
   schools: Schools
+  organisation_details: Organisation details
   providers: Providers
   account:
     index:
@@ -55,3 +56,12 @@ en:
     placements:
       heading: Placements news and updates
     contents: Contents
+  claims:
+    support:
+      users:
+        index:
+          heading: Users
+          attributes:
+            users:
+              name: Name
+              email: Email
