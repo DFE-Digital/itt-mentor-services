@@ -18,6 +18,7 @@ scope module: :placements,
       collection { get :check }
     end
     resources :provider_suggestions, only: [:index]
+    resources :schools, only: [:show]
   end
 
   resources :organisations, only: [:index]
