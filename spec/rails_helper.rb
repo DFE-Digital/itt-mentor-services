@@ -37,7 +37,9 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 
 RSpec.configure do |config|
+  # Include helper methods
   config.include ServicesTestHelper, type: :system
+  config.include TeacherTrainingCoursesApiHelper
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   # config.fixture_paths = [Rails.root.join("spec/fixtures")]
