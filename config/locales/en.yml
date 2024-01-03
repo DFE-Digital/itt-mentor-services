@@ -6,7 +6,7 @@ en:
           attributes:
             provider_code:
               taken: Provider already exists
-  add_organisation: Add organsiation
+  add_organisation: Add organisation
   organisations: Organisations
   schools: Schools
   providers: Providers
