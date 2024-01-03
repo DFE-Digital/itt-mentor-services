@@ -1,5 +1,5 @@
 class Claims::Support::ApplicationController < ApplicationController
-  before_action :authenticate_user!, :authorize_user!
+  before_action :authorize_user!
 
   private
 
