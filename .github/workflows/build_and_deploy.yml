@@ -18,6 +18,8 @@ jobs:
       docker-image-tag: ${{ steps.build-image.outputs.tag }}
       matrix-environments: ${{ toJSON(steps.*.outputs.matrix-environment) }}
 
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') }}
+
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -32,37 +34,10 @@ jobs:
       with:
         node-version: 20.9.0
         cache: "npm"
-    - name: Install dependencies
-      run: |
-          sudo apt-get update && sudo apt-get -yqq install libpq-dev
-          bundle install --jobs 4 --retry 3
-          bundle exec rails assets:precompile
-      env:
-          DATABASE_URL: postgres://postgres:password@localhost:5432
-          GOVUK_NOTIFY_API_KEY: fake_key
-          SIGN_IN_METHOD: persona
-
-    - name: Intellisense
-      run: bin/bundle exec yard gems
-
-    - name: Build and push docker image
-      id: build-image
-      uses: DFE-Digital/github-actions/build-docker-image@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        context: .
-      env:
-        SIGN_IN_METHOD: persona
-
-    - name: Prepare matrix environments review
-      id: matrix-env-review
-      if: github.event_name == 'pull_request'
-      run: echo "matrix-environment=review" >> $GITHUB_OUTPUT
 
   deploy:
         name: Deploy ${{ matrix.environment }}
         runs-on: ubuntu-latest
-        if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') }}
         needs: [build]
         environment:
           name: ${{ matrix.environment }}
@@ -71,6 +46,8 @@ jobs:
           max-parallel: 1
           matrix:
             environment: ${{ fromJSON(needs.build.outputs.matrix-environments) }}
+
+        if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') }}
 
         steps:
           - name: Checkout code
@@ -91,20 +68,3 @@ jobs:
             env:
               DOCKER_IMAGE_TAG: ${{ needs.build.outputs.docker-image-tag }}
               PR_NUMBER: ${{ github.event.pull_request.number }}
-
-          - name: Get application URL
-            id: get-app-url
-            run: |
-              url1="https://track-and-pay-${{ github.event.number }}.test.teacherservices.cloud"
-              echo "url1=${url1}" >> $GITHUB_OUTPUT
-              url2="https://manage-school-placements-${{ github.event.number }}.test.teacherservices.cloud"
-              echo "url2=${url2}" >> $GITHUB_OUTPUT
-
-          - name: Post comment to Pull Request ${{ github.event.number }}
-            if: ${{ github.event_name == 'pull_request' }}
-            uses: marocchino/sticky-pull-request-comment@v2
-            with:
-              header: aks
-              message: |
-                      Review app  track and pay deployed to <https://track-and-pay-${{ github.event.number }}.test.teacherservices.cloud>
-                      Review app  school placements deployed to <https://manage-school-placements-${{ github.event.number }}.test.teacherservices.cloud>
