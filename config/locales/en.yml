@@ -8,6 +8,9 @@ en:
               taken: Provider already exists
   add_organisation: Add organsiation
   organisations: Organisations
+  school: School
+  scitt: SCITT
+  university: University
   schools: Schools
   providers: Providers
   account:
