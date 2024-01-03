@@ -38,4 +38,8 @@ class Placements::Support::SchoolsController < Placements::Support::ApplicationC
   def urn_param
     params.dig(:gias_school, :urn) || params.dig(:school, :urn)
   end
+
+  def show
+    @school = Placements::School.find(params[:id])
+  end
 end

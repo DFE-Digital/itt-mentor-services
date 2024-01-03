@@ -1,0 +1,35 @@
+<%= content_for(:before_content) do %>
+<div class="govuk-grid-row govuk-!-padding-top-2">
+  <div class="govuk-grid-column-one-half">
+    <div class="govuk-heading-s"><%= @school.name %></div>
+  </div>
+  <div class="govuk-grid-column-one-half govuk-!-text-align-right">
+    <p class="govuk-body">
+      <%= govuk_link_to(t(".change_organisation"), placements_support_organisations_path) %>
+    </p>
+  </div>
+</div>
+<% end %>
+<main class="govuk-main-wrapper govuk-main-wrapper--l">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= t(".school_details")%></h1>
+      <%= govuk_summary_list do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".school_name")) %>
+          <% row.with_value(text: @school.name) %>
+        <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".ukprn")) %>
+          <% row.with_value(text: @school.ukprn) %>
+        <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".urn")) %>
+          <% row.with_value(text: @school.urn) %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+
+</main>
