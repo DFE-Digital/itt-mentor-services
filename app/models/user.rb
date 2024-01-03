@@ -17,18 +17,11 @@
 #
 class User < ApplicationRecord
   has_many :memberships
-  has_many :schools,
-           through: :memberships,
-           source: :organisation,
-           source_type: "School"
-  has_many :providers,
-           through: :memberships,
-           source: :organisation,
-           source_type: "Provider"
 
-  enum :service,
-       { no_service: "no_service", claims: "claims", placements: "placements" },
-       validate: true
+  has_many :schools,   through: :memberships, source: :organisation, source_type: "School"
+  has_many :providers, through: :memberships, source: :organisation, source_type: "Provider"
+
+  enum :service, { no_service: "no_service", claims: "claims", placements: "placements" }, validate: true
 
   validates :first_name, presence: true
   validates :last_name, presence: true
