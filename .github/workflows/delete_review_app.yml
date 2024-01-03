@@ -11,8 +11,8 @@ concurrency: deploy-${{ github.ref }}
 
 jobs:
   build:
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') }}
     runs-on: ubuntu-latest
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') }}
     environment: review
 
     steps:
