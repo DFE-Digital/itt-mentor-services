@@ -1,7 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Schools / Support User adds a School",
-               type: :system do
+RSpec.describe "Support User adds a School", type: :system do
   let(:gias_school) { create(:gias_school, name: "School 1") }
 
   before do
@@ -41,12 +40,12 @@ RSpec.describe "Placements / Schools / Support User adds a School",
 
   private
 
-  def given_i_am_on_the_placements_site
-    Capybara.app_host = "http://#{ENV["PLACEMENTS_HOST"]}"
+  def given_i_am_on_the_claims_site
+    Capybara.app_host = "http://#{ENV["CLAIMS_HOST"]}"
   end
 
   def and_there_is_an_existing_persona_for(persona_name)
-    create(:persona, persona_name.downcase.to_sym, service: :placements)
+    create(:persona, persona_name.downcase.to_sym, service: :claims)
   end
 
   def and_i_visit_the_personas_page
@@ -58,14 +57,14 @@ RSpec.describe "Placements / Schools / Support User adds a School",
   end
 
   def given_i_sign_in_as_colin
-    given_i_am_on_the_placements_site
+    given_i_am_on_the_claims_site
     and_there_is_an_existing_persona_for("Colin")
     and_i_visit_the_personas_page
     and_i_click_sign_in_as("Colin")
   end
 
   def when_i_visit_the_add_school_page
-    visit new_placements_support_school_path
+    visit new_claims_support_school_path
   end
 
   def and_i_enter_a_school_named(school_name)
@@ -100,16 +99,14 @@ RSpec.describe "Placements / Schools / Support User adds a School",
   end
 
   def given_a_school_already_exists_for(gias_school:)
-    create(:school, gias_school:, placements: true)
+    create(:school, gias_school:, claims: true)
   end
 
   def then_i_see_an_error(error_message)
-    # Error summary
     expect(page.find(".govuk-error-summary")).to have_content(
       "There is a problem",
     )
     expect(page.find(".govuk-error-summary")).to have_content(error_message)
-    # Error above input
     expect(page.find(".govuk-error-message")).to have_content(error_message)
   end
 
