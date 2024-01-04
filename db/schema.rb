@@ -40,6 +40,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_08_151908) do
     t.string "provider_code", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "placements", default: false
+    t.index ["placements"], name: "index_providers_on_placements"
     t.index ["provider_code"], name: "index_providers_on_provider_code", unique: true
   end
 
