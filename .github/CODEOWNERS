@@ -1,0 +1,5 @@
+app/*/claims @DFE-Digital/track-pay
+spec/*/claims @DFE-Digital/track-pay
+
+app/*/placements  @DFE-Digital/school-placements
+spec/*/placements @DFE-Digital/school-placements
