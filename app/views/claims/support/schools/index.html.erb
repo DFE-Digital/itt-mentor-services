@@ -2,6 +2,8 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= t("organisations") %></h1>
 
+    <%= govuk_button_to(t("add_organisation"), new_claims_support_school_path, method: :get) %>
+
     <% if @schools.any? %>
       <h2 class="govuk-heading-l"><%= t("schools") %></h2>
       <ul class="govuk-list">
