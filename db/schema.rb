@@ -17,6 +17,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_08_151908) do
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "provider_type", ["scitt", "lead_school", "university"]
   create_enum "service", ["claims", "placements"]
 
   create_table "flipflop_features", force: :cascade do |t|
@@ -41,6 +42,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_08_151908) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "placements", default: false
+    t.enum "provider_type", null: false, enum_type: "provider_type"
+    t.string "name", null: false
+    t.string "ukprn"
+    t.string "urn"
+    t.string "email"
+    t.string "telephone"
+    t.string "website"
+    t.string "street_address_1"
+    t.string "street_address_2"
+    t.string "street_address_3"
+    t.string "town"
+    t.string "city"
+    t.string "county"
+    t.string "postcode"
     t.index ["placements"], name: "index_providers_on_placements"
     t.index ["provider_code"], name: "index_providers_on_provider_code", unique: true
   end
