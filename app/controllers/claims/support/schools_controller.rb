@@ -12,17 +12,15 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
   end
 
   def check
-    if school.valid? && !school.claims?
+    if school.valid?
       @school = school.decorate
     else
-      school.errors.add(:urn, :taken) if school.claims?
       render :new
     end
   end
 
   def create
-    school.claims = true
-    if school.save
+    if school.update(claims: true)
       redirect_to claims_support_schools_path
     else
       render :new
@@ -32,15 +30,11 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
   private
 
   def school
-    @school ||=
-      begin
-        gias_school = GiasSchool.find_by(urn: urn_param)
-        if gias_school.blank?
-          Claims::School.new
-        else
-          gias_school.school || gias_school.build_school
-        end
-      end
+    @school ||= School.find_by(gias_school:, claims: false) || Claims::School.new(gias_school:)
+  end
+
+  def gias_school
+    @gias_school ||= GiasSchool.find_by(urn: urn_param)
   end
 
   def urn_param
