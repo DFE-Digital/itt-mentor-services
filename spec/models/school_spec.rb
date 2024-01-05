@@ -35,18 +35,12 @@ RSpec.describe School, type: :model do
   end
 
   context "delegations" do
-    it { should delegate_method(:name).to(:gias_school) }
-    it { should delegate_method(:postcode).to(:gias_school) }
-    it { should delegate_method(:town).to(:gias_school) }
-    it { should delegate_method(:telephone).to(:gias_school) }
-    it { should delegate_method(:website).to(:gias_school) }
-    it { should delegate_method(:address1).to(:gias_school) }
-    it { should delegate_method(:address2).to(:gias_school) }
-    it { should delegate_method(:address3).to(:gias_school) }
-    it { should delegate_method(:postcode).to(:gias_school) }
-    it { should delegate_method(:website).to(:gias_school) }
-    it { should delegate_method(:telephone).to(:gias_school) }
-    it { should delegate_method(:ukprn).to(:gias_school) }
+    subject { create(:school) }
+    it "delegates all missing methods to gias model" do
+      GIAS_METHODS.each do |gias_method|
+        expect(subject.respond_to?(gias_method)).to eq true
+      end
+    end
   end
 
   context "scopes" do
@@ -67,3 +61,41 @@ RSpec.describe School, type: :model do
     end
   end
 end
+
+GIAS_METHODS =
+  %i[name
+     town
+     postcode
+     ukprn
+     address1
+     address2
+     address3
+     website
+     telephone
+     group
+     type_of_establishment
+     phase
+     gender
+     minimum_age
+     maximum_age
+     religious_character
+     admissions_policy
+     urban_or_rural
+     school_capacity
+     total_pupils
+     total_boys
+     total_girls
+     percentage_free_school_meals
+     special_classes
+     send_provision
+     rating
+     last_inspection_date
+     email_address
+     training_with_disabilities
+     postcode
+     town
+     telephone
+     website
+     address1
+     address2
+     address3].freeze
