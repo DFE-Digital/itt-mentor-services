@@ -4,21 +4,3 @@ en:
       claims:
         header:
           service_name: Claim Funding for General Mentors
-  claims:
-    support:
-      schools:
-        new:
-          caption: Add organisation
-          cancel: Cancel
-          continue: Continue
-          title: Enter a school name, URN or postcode
-        check:
-          add_organisation: Add organisation
-          address: Address
-          cancel: Cancel
-          contact_details: Contact details
-          organisation_name: Organisation name
-          telephone: Telephone number
-          title: Check your answers
-          urn: Unique reference number (URN)
-          website: Website

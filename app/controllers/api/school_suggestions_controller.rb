@@ -1,4 +1,4 @@
-class Claims::Support::SchoolSuggestionsController < ApplicationController
+class Api::SchoolSuggestionsController < ApplicationController
   def index
     render json: GiasSchool.search_name_urn_postcode(query_params)
   end
