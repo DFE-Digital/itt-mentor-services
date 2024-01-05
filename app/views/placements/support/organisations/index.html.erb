@@ -7,7 +7,7 @@
       <h2 class="govuk-heading-l"><%= t("schools") %></h2>
       <ul class="govuk-list">
         <% @schools.each do |school| %>
-          <li><%= school.name %></li>
+          <li><%= govuk_link_to(school.name, placements_support_school_path(school)) %></li>
         <% end %>
       </ul>
     <% end %>

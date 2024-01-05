@@ -21,6 +21,10 @@ class Placements::Support::SchoolsController < Placements::Support::ApplicationC
     end
   end
 
+  def show
+    @school = Placements::School.find(params[:id])&.decorate
+  end
+
   private
 
   def school
@@ -37,9 +41,5 @@ class Placements::Support::SchoolsController < Placements::Support::ApplicationC
 
   def urn_param
     params.dig(:gias_school, :urn) || params.dig(:school, :urn)
-  end
-
-  def show
-    @school = Placements::School.find(params[:id])
   end
 end
