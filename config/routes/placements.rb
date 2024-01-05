@@ -14,8 +14,6 @@ scope module: :placements,
     resources :schools, expect: %i[edit update] do
       collection { get :check }
     end
-    resources :school_suggestions, only: [:index]
-
     resources :providers, expect: %i[edit update] do
       collection { get :check }
     end

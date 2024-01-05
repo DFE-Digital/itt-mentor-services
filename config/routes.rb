@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   end
 
   resources :service_updates, only: %i[index]
+  namespace :api do
+    resources :school_suggestions, only: [:index]
+  end
 
   draw :placements
   draw :claims
