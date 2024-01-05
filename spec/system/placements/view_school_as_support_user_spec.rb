@@ -8,8 +8,6 @@ RSpec.describe "Placements / Organisations / Support user views a School", type:
     Capybara.app_host = "http://#{ENV["PLACEMENTS_HOST"]}"
   end
 
-  after { Capybara.app_host = nil }
-
   scenario "Support user navigates to school from organisations list" do
     given_i_am_signed_in_as_a_support_user
     when_i_click_on_a_school_name
