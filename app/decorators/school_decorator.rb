@@ -8,6 +8,8 @@ class SchoolDecorator < Draper::Decorator
   end
 
   def formatted_inspection_date
-    last_inspection_date&.strftime("%e %B %Y")
+    return "" if last_inspection_date.blank?
+
+    I18n.l(last_inspection_date, format: :long)
   end
 end
