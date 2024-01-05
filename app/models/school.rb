@@ -23,7 +23,7 @@ class School < ApplicationRecord
   validates :urn, presence: true
   validates :urn, uniqueness: { case_sensitive: false }
 
-  delegate_missing_to :gias_school
+  delegate_missing_to :gias_school, allow_nil: true
 
   scope :placements, -> { where placements: true }
   scope :claims, -> { where claims: true }
