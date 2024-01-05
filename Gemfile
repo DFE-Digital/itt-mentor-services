@@ -92,6 +92,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "capybara-screenshot"
+  gem "faker"
   gem "rails-controller-testing"
   gem "selenium-webdriver"
   gem "shoulda-matchers"
