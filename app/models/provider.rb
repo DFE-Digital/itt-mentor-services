@@ -36,4 +36,6 @@ class Provider < ApplicationRecord
 
   validates :provider_code, :name, presence: true
   validates :provider_code, uniqueness: { case_sensitive: false }
+
+  alias_attribute :code, :provider_code
 end
