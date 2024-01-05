@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :service_updates, only: %i[index]
   namespace :api do
     resources :school_suggestions, only: [:index]
+    resources :provider_suggestions, only: [:index]
   end
 
   draw :placements
