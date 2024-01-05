@@ -17,4 +17,12 @@ RSpec.describe SchoolDecorator do
       )
     end
   end
+
+  describe "#formatted_inspection_date" do
+    it "returns nicely formatted date" do
+      gias_school = create(:gias_school, last_inspection_date: Date.new(2020, 10, 12))
+
+      expect(build(:school, gias_school:).decorate.formatted_inspection_date).to eq("12 October 2020")
+    end
+  end
 end

@@ -6,4 +6,8 @@ class SchoolDecorator < Draper::Decorator
     address_parts.reject!(&:blank?)
     address_parts.join("<br/>").html_safe
   end
+
+  def formatted_inspection_date
+    last_inspection_date&.strftime("%e %B %Y")
+  end
 end
