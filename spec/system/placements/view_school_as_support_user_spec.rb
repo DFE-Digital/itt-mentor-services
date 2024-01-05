@@ -1,0 +1,94 @@
+require "rails_helper"
+
+RSpec.describe "Placements / Organisations / Support user views a School", type: :system do
+  let(:school) { create(:school, :placements) }
+
+  before do
+    school
+    Capybara.app_host = "http://#{ENV["PLACEMENTS_HOST"]}"
+  end
+
+  after { Capybara.app_host = nil }
+
+  scenario "Support user navigates to school from organisations list" do
+    given_i_am_signed_in_as_a_support_user
+    when_i_click_on_a_school_name
+    then_i_see_the_school_details
+  end
+
+  private
+
+  def given_i_am_signed_in_as_a_support_user
+    create(:persona, :colin, service: :placements)
+    visit personas_path
+    click_on "Sign In as Colin"
+  end
+
+  def when_i_click_on_a_school_name
+    click_on school.name
+  end
+
+  def then_i_see_the_school_details
+    within(".govuk-heading-l") do
+      expect(page).to have_content school.name
+    end
+
+    expect(page).to have_content "Additional details"
+    expect(page).to have_content "Special educational needs and disabilities (SEND)"
+    expect(page).to have_content "Ofsted"
+    expect(page).to have_content "Contact details"
+
+    within("#school-details") do
+      expect(page).to have_content "Organisation name"
+      expect(page).to have_content "UK provider reference number (UKPRN)"
+      expect(page).to have_content "Unique reference number (URN)"
+    end
+
+    within("#additional-details") do
+      expect(page).to have_content "Group"
+      expect(page).to have_content "Type"
+      expect(page).to have_content "Phase"
+      expect(page).to have_content "Gender"
+      expect(page).to have_content "Minimum age"
+      expect(page).to have_content "Maximum age"
+      expect(page).to have_content "Religious character"
+      expect(page).to have_content "Admissions policy"
+      expect(page).to have_content "Urban or rural"
+      expect(page).to have_content "School capacity"
+      expect(page).to have_content "Total pupils"
+      expect(page).to have_content "Total girls"
+      expect(page).to have_content "Total boys"
+      expect(page).to have_content "Percentage free school meals"
+    end
+
+    within("#send-details") do
+      expect(page).to have_content "Special classes"
+      expect(page).to have_content "SEND provision"
+      expect(page).to have_content "Training with disabilities"
+    end
+
+    within("#ofsted-details") do
+      expect(page).to have_content "Rating"
+      expect(page).to have_content "Last inspection date"
+    end
+
+    within("#contact-details") do
+      expect(page).to have_content "Email address"
+      expect(page).to have_content "Telephone number"
+      expect(page).to have_content "Website"
+      expect(page).to have_content "Address"
+    end
+  end
+
+  def and_i_navigate_to_the_school_details_page
+    visit placements_support_school_path(school)
+  end
+
+  def when_i_click_on_change_organisation
+    click_on "Change organisation"
+  end
+
+  def then_i_see_the_organisation_list
+    expect(current_path).to eq placements_support_organisations_path
+  end
+end
