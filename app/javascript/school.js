@@ -8,7 +8,7 @@ const onConfirm = (input) => (option) =>
 
 function init() {
   const options = {
-    path: `/support/school_suggestions`,
+    path: `/school_suggestions`,
     template: {
       inputValue: providerTemplate,
       suggestion: providerSuggestionTemplate,
