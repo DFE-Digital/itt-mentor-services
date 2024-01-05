@@ -1,36 +1,36 @@
 class AccreditedProvider::Importer
   include ServicePattern
 
-  IMPORTABLE_KEYS = [
-    "code",
-    "name",
-    "provider_type",
-    "ukprn",
-    "urn",
-    "email",
-    "telephone",
-    "website",
-    "street_address_1",
-    "street_address_2",
-    "street_address_3",
-    "city",
-    "country",
-    "postcode",
+  IMPORTABLE_KEYS = %w[
+    code
+    name
+    provider_type
+    ukprn
+    urn
+    email
+    telephone
+    website
+    street_address_1
+    street_address_2
+    street_address_3
+    city
+    country
+    postcode
   ].freeze
 
-  def initialize(from_date = nil)
-    @from_date = from_date
+  def initialize(updated_since: nil)
+    @updated_since = updated_since
   end
 
-  attr_reader :from_date
+  attr_reader :updated_since
 
   def call
     errors = []
-    accredited_providers = ::AccreditedProvider::Api.call
+    accredited_providers = ::AccreditedProvider::Api.call(updated_since:)
     accredited_providers.each do |provider_details|
       provider = generate_provider(provider_details)
       unless provider.save
-        errors << provider_details.to_s
+        errors << provider.inspect + "Errors: #{provider.errors.full_messages.join(",")}"
       end
     end
 
