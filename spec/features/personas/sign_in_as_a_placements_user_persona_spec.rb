@@ -61,7 +61,7 @@ end
 
 def and_there_are_placement_organisations
   create(:school, :placements, name: "Placement School")
-  create(:provider, provider_code: "PROVIDER_CODE")
+  create(:placements_provider, name: "Provider 1")
 end
 
 def then_i_see_the_persona_for(persona_name)
@@ -79,7 +79,7 @@ end
 def then_i_see_a_list_of_organisations
   expect(current_path).to eq placements_support_organisations_path
   expect(page).to have_content("Placement School")
-  expect(page).to have_content("PROVIDER_CODE")
+  expect(page).to have_content("Provider 1")
 end
 
 def then_i_dont_get_redirected_to_support_organisations

@@ -1,51 +1,11 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Providers / Support User adds a Provider", type: :system, js: true do
+  let(:provider) { create(:provider, name: "Provider 1") }
+
   before do
-    next_year = Time.current.next_year.year
-
-    stub_request(
-      :get,
-      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/#{next_year}/providers?filter%5Bis_accredited_body%5D=true",
-    ).to_return(
-      status: 200,
-      body: {
-        "data" => [
-          {
-            "id" => 123,
-            "attributes" => {
-              name: "Provider 1",
-              code: "Prov1",
-            },
-          },
-          {
-            "id" => 234,
-            "attributes" => {
-              name: "Provider 2",
-              code: "Prov2",
-            },
-          },
-        ],
-      }.to_json,
-    )
-
-    stub_request(
-      :get,
-      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/#{next_year}/providers/Prov1",
-    ).to_return(
-      status: 200,
-      body: {
-        "data" => {
-          "id" => 123,
-          "attributes" => {
-            name: "Provider 1",
-            code: "Prov1",
-          },
-        },
-      }.to_json,
-    )
-
     given_i_sign_in_as_colin
+    provider
   end
   after { Capybara.app_host = nil }
 
@@ -58,11 +18,11 @@ RSpec.describe "Placements / Providers / Support User adds a Provider", type: :s
     then_i_see_the_check_details_page_for_provider("Provider 1")
     when_i_click_add_organisation
     then_i_return_to_support_organisations_index
-    and_a_provider_code_is_listed(provider_code: "Prov1")
+    and_a_provider_code_is_listed(code: "Provider 1")
   end
 
   scenario "Colin adds a Provider which already exists", js: true do
-    given_a_provider_already_exists(code: "Prov1")
+    given_a_provider_already_as_already_been_onboarded
     when_i_visit_the_add_provider_page
     and_i_enter_a_provider_named("Provider 1")
     then_i_see_a_dropdown_item_for("Provider 1")
@@ -137,8 +97,8 @@ RSpec.describe "Placements / Providers / Support User adds a Provider", type: :s
     expect(page).to have_content("Organisations")
   end
 
-  def given_a_provider_already_exists(code:)
-    create(:provider, provider_code: code)
+  def given_a_provider_already_as_already_been_onboarded
+    provider.update!(placements: true)
   end
 
   def then_i_see_an_error(error_message)
@@ -151,7 +111,7 @@ RSpec.describe "Placements / Providers / Support User adds a Provider", type: :s
     expect(page.find(".govuk-error-message")).to have_content(error_message)
   end
 
-  def and_a_provider_code_is_listed(provider_code:)
-    expect(page).to have_content(provider_code)
+  def and_a_provider_code_is_listed(code:)
+    expect(page).to have_content(code)
   end
 end
