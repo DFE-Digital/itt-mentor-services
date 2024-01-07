@@ -10,7 +10,9 @@ scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
       collection { get :check }
 
       resources :claims
-      resources :users, only: [:index]
+      resources :users, only: %i[index new create] do
+        collection { get :check }
+      end
     end
   end
 end
