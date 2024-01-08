@@ -36,18 +36,25 @@
 
     <div class="app-phase-banner app-phase-banner__env--<%= HostingEnvironment.name(current_service) %>">
       <div class="govuk-width-container">
-        <%= govuk_phase_banner(tag: { text: HostingEnvironment.name(current_service) }) do %>
+        <%= govuk_phase_banner(tag: { text: HostingEnvironment.name(current_service) }, classes: [class_names("govuk-phase-banner--no-border-bottom": support_controller?)]) do %>
           <%= govuk_link_to HostingEnvironment.banner_description(current_service), request.env["PATH_INFO"], class: "govuk-link--no-visited-state" %>
         <% end %>
       </div>
     </div>
 
-    <div class="govuk-width-container">
-      <%= yield :before_content %>
-      <main class="govuk-main-wrapper" id="main-content" role="main">
-        <%= yield %>
-      </main>
-    </div>
+    <% if support_controller? %>
+      <%= primary_navigation do |component| %>
+        <% component.with_navigation_item t(".primary_navigation.organisations"), support_organisations_path %>
+        <% component.with_navigation_item t(".primary_navigation.claims"), "#" if current_service == :claims %>
+        <% component.with_navigation_item t(".primary_navigation.users"), "#" %>
+      <% end %>
+    <% end %>
+
+    <%= yield :before_content %>
+
+    <main class="govuk-main-wrapper" id="main-content" role="main">
+      <%= yield %>
+    </main>
 
     <%= govuk_footer %>
   </body>

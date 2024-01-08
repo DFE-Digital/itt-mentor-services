@@ -5,15 +5,15 @@ RSpec.describe "School Page", type: :system do
     persona = given_there_is_an_existing_persona_for("Mary")
     when_i_visit_home_page
     when_i_click_sign_in(persona)
-    when_i_visit_a_school_page
+    when_i_visit_a_school_page(persona.schools.first)
     i_can_see_organisation_details
     i_can_see_contact_details
   end
 
   private
 
-  def when_i_visit_a_school_page
-    visit("/schools/fakeid")
+  def when_i_visit_a_school_page(school)
+    visit("/schools/#{school.id}")
   end
 
   def when_i_visit_home_page
