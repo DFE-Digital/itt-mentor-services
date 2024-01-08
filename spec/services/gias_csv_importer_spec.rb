@@ -8,8 +8,7 @@ RSpec.describe GiasCsvImporter do
   end
 
   it "updates the correct schools" do
-    gias_school = create(:gias_school, urn: "123")
-    school = create(:school, gias_school:)
+    school = create(:school, urn: "123")
     expect { subject }.to change { school.reload.name }.to "School"
   end
 

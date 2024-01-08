@@ -3,8 +3,9 @@ import initAutocomplete from "./autocomplete";
 const providerTemplate = (result) => result && result.name;
 const providerSuggestionTemplate = (result) =>
   result && `${result.name} (${result.town} ${result.postcode})`;
-const onConfirm = (input) => (option) =>
+const onConfirm = (input) => (option) =>{
   (input.value = option ? option.urn : "");
+}
 
 function init() {
   const options = {
@@ -14,7 +15,7 @@ function init() {
       suggestion: providerSuggestionTemplate,
     },
     minLength: 2,
-    inputName: "gias_school[urn]",
+    inputName: "selection[urn]",
     onConfirm,
   };
 

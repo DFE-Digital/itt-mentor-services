@@ -28,18 +28,10 @@ class Placements::Support::SchoolsController < Placements::Support::ApplicationC
   private
 
   def school
-    @school ||=
-      begin
-        gias_school = GiasSchool.find_by(urn: urn_param)
-        if gias_school.blank?
-          Placements::School.new
-        else
-          gias_school.school || gias_school.build_school
-        end
-      end
+    @school ||= School.find_by(urn: urn_param) || Placements::School.new
   end
 
   def urn_param
-    params.dig(:gias_school, :urn) || params.dig(:school, :urn)
+    params.dig(:selection, :urn) || params.dig(:school, :urn)
   end
 end

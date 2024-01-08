@@ -45,12 +45,6 @@ require "rails_helper"
 RSpec.describe GiasSchool, type: :model do
   subject { create(:gias_school) }
 
-  describe "associations" do
-    it do
-      should have_one(:school).with_foreign_key(:urn).with_primary_key(:urn)
-    end
-  end
-
   describe "validations" do
     it { is_expected.to validate_presence_of(:urn) }
     it { is_expected.to validate_uniqueness_of(:urn).case_insensitive }

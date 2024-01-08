@@ -1,7 +1,6 @@
 class Placements::Support::OrganisationsController < Placements::Support::ApplicationController
   def index
-    @schools =
-      Placements::School.includes(:gias_school).order("gias_schools.name")
+    @schools = Placements::School.order(:name)
     @providers = Provider.all
   end
 
