@@ -9,7 +9,7 @@
       <ul class="govuk-list">
         <% @schools.each do |school| %>
         <li>
-          <%= govuk_link_to school.name, request.env["PATH_INFO"], no_visited_state: true %>
+          <%= govuk_link_to school.name, claims_school_path(school), no_visited_state: true %>
         </li>
         <% end %>
       </ul>

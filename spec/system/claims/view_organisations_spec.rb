@@ -12,7 +12,7 @@ RSpec.describe "View schools", type: :system do
     and_persona_has_multiple_schools(persona)
     when_i_visit_claims_personas
     when_i_click_sign_in(persona)
-    i_can_see_a_list_marys_claims_schools(persona)
+    i_am_redirected_to_organisation_index(persona)
   end
 
   scenario "I sign in as persona Anne with one school" do
@@ -20,7 +20,7 @@ RSpec.describe "View schools", type: :system do
     and_persona_has_one_school(persona)
     when_i_visit_claims_personas
     when_i_click_sign_in(persona)
-    i_am_redirected_to_the_root_path
+    i_am_redirected_to_organisation_index(persona)
   end
 
   private
@@ -48,13 +48,15 @@ RSpec.describe "View schools", type: :system do
     click_on "Sign In as #{persona.first_name}"
   end
 
-  def i_can_see_a_list_marys_claims_schools(persona)
-    expect(page).to have_content("Organisations")
-    expect(page).to have_content(persona.schools.first.name)
-    expect(page).to have_content(persona.schools.last.name)
-  end
-
   def i_am_redirected_to_the_root_path
     expect(page).to have_content("Claim Funding for General Mentors")
+  end
+
+  def i_am_redirected_to_organisation_index(persona)
+    expect(page).to have_content("Organisations")
+
+    persona.schools.each do |school|
+      expect(page).to have_content(school.name)
+    end
   end
 end
