@@ -11,8 +11,7 @@ Rails.application.routes.draw do
   get "/sign-in", to: "sessions#new", as: :sign_in
 
   # Persona Sign In
-  case ENV.fetch("SIGN_IN_METHOD")
-  when "persona"
+  if ENV.fetch("SIGN_IN_METHOD", "persona") == "persona"
     get "/personas", to: "personas#index"
     get "/auth/developer/sign-out", to: "sessions#destroy", as: :sign_out
     post "/auth/developer/callback", to: "sessions#callback", as: :auth_callback

@@ -1,7 +1,7 @@
 OmniAuth.config.logger = Rails.logger
 
 # Implementation inspired by register-trainee-teachers repo
-case ENV.fetch("SIGN_IN_METHOD")
+case ENV.fetch("SIGN_IN_METHOD", "persona")
 when "persona"
   Rails
     .application
