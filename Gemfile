@@ -107,6 +107,7 @@ group :test, :development do
   gem "dotenv-rails"
   gem "erb_lint", require: false
   gem "factory_bot_rails"
+  gem "faker"
   gem "pry"
   gem "pry-byebug"
   gem "pry-rails"

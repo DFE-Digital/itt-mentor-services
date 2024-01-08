@@ -57,7 +57,7 @@ class GiasCsvImporter
       Rails.logger.info "Invalid rows - #{invalid_records.inspect}"
     end
     Rails.logger.silence do
-      GiasSchool.upsert_all(records, unique_by: :urn)
+      School.upsert_all(records, unique_by: :urn)
     end
 
     Rails.logger.info "Done!"
