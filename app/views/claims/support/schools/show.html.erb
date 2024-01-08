@@ -1,6 +1,14 @@
 <div class="govuk-width-container">
   <h1 class="govuk-heading-l"><%= @school.name %></h1>
 
+  <%= secondary_navigation do |component| %>
+    <% component.with_navigation_item t(".details"), claims_support_school_path(@school.id) %>
+    <% component.with_navigation_item t(".users"), claims_support_school_users_path(@school.id) %>
+    <% component.with_navigation_item t(".mentors"), "#" %>
+    <% component.with_navigation_item t(".providers"), "#" %>
+    <% component.with_navigation_item t(".claims"), claims_support_school_claims_path(@school.id) %>
+  <% end %>
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= govuk_summary_list do |summary_list| %>
