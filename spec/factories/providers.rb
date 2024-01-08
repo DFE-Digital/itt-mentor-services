@@ -48,4 +48,8 @@ FactoryBot.define do
       provider_type { "university" }
     end
   end
+
+  factory :placements_provider, class: "Placements::Provider", parent: :provider do
+    placements { true }
+  end
 end

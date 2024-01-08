@@ -1,4 +1,10 @@
 class SchoolDecorator < OrganisationDecorator
+  def formatted_inspection_date
+    return "" if last_inspection_date.blank?
+
+    I18n.l(last_inspection_date, format: :long)
+  end
+
   private
 
   def address_parts
@@ -9,11 +15,5 @@ class SchoolDecorator < OrganisationDecorator
       town,
       postcode,
     ]
-  end
-
-  def formatted_inspection_date
-    return "" if last_inspection_date.blank?
-
-    I18n.l(last_inspection_date, format: :long)
   end
 end

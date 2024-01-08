@@ -21,14 +21,14 @@ class Placements::Support::ProvidersController < Placements::Support::Applicatio
   private
 
   def provider
-    @provider ||= Provider.find_by(provider_id) || unknown_provider
+    @provider ||= Provider.find_by(provider_code:, placements: false) || unknown_provider
   end
 
   def unknown_provider
-    Provider.new(name: "Unknown Provider", provider_type: "university")
+    Provider.new(name: "Unknown Provider", provider_type: "university", provider_code:)
   end
 
-  def provider_id
-    params.require(:provider).permit(:id)
+  def provider_code
+    params.dig(:provider, :code)
   end
 end
