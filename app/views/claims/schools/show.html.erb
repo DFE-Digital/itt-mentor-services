@@ -9,23 +9,32 @@
   <% end %>
 <% end %>
 
-<%= content_for :page_title, @school.name %>
-<%= navigation_bar %>
+<% content_for :page_title, @school.name %>
 
-<div class="govuk-grid-row govuk-!-margin-top-7">
-  <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-l"><%= t("claims.schools.show.heading") %></h1>
-  </div>
+<% content_for(:before_content) do %>
+  <%= primary_navigation do |component| %>
+    <% component.with_navigation_item t(".primary_navigation.claims"), "#" %>
+    <% component.with_navigation_item t(".primary_navigation.users"), "#" %>
+    <% component.with_navigation_item t(".primary_navigation.details"), claims_school_path(@school) %>
+  <% end %>
+<% end %>
 
-    <div class="govuk-grid-column-two-thirds">
-    <%= render "school_details", school: @school %>
-    <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".additional_details") %></h2>
-    <%= render "additional_details", school: @school %>
-    <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".send") %></h2>
-    <%= render "send_details", school: @school %>
-    <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".ofsted") %></h2>
-    <%= render "ofsted_details", school: @school %>
-    <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".contact_details") %></h2>
-    <%= render "contact_details", school: @school %>
+<div class="govuk-width-container">
+  <div class="govuk-grid-row govuk-!-margin-top-7">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l"><%= t("claims.schools.show.heading") %></h1>
+    </div>
+
+      <div class="govuk-grid-column-two-thirds">
+      <%= render "school_details", school: @school %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".additional_details") %></h2>
+      <%= render "additional_details", school: @school %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".send") %></h2>
+      <%= render "send_details", school: @school %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".ofsted") %></h2>
+      <%= render "ofsted_details", school: @school %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".contact_details") %></h2>
+      <%= render "contact_details", school: @school %>
+    </div>
   </div>
 </div>

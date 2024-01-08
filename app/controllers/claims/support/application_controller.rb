@@ -8,4 +8,8 @@ class Claims::Support::ApplicationController < ApplicationController
 
     redirect_to claims_root_path, alert: "You cannot perform this action"
   end
+
+  def support_controller?
+    true
+  end
 end

@@ -1,23 +1,27 @@
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
-    <%= govuk_button_to(t("invite_user"), new_claims_support_school_user_path, method: :get) %>
+<div class="govuk-width-container">
+  <h1 class="govuk-heading-l"><%= @school.name %></h1>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-m"><%= t(".heading") %></h2>
+      <%= govuk_button_to(t("invite_user"), new_claims_support_school_user_path, method: :get) %>
+
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header"><%= t(".attributes.users.name") %></th>
+            <th scope="col" class="govuk-table__header"><%= t(".attributes.users.email") %></th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <% @users.each do |user| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><%= govuk_link_to user.full_name, claims_support_school_user_path(id: user.id) %></td>
+              <td class="govuk-table__cell"><%= user.email %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
-
-<table class="govuk-table">
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header"><%= t(".attributes.users.name") %></th>
-      <th scope="col" class="govuk-table__header"><%= t(".attributes.users.email") %></th>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    <% @users.each do |user| %>
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell"><%= govuk_link_to user.full_name, claims_support_school_user_path(id: user.id) %></td>
-        <td class="govuk-table__cell"><%= user.email %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>

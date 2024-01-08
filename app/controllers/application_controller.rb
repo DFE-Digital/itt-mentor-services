@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   default_form_builder(GOVUKDesignSystemFormBuilder::FormBuilder)
 
-  helper_method :current_user
+  helper_method :current_user, :support_controller?
 
   private
 
@@ -41,5 +41,9 @@ class ApplicationController < ActionController::Base
     session[:requested_path] = request.fullpath
 
     redirect_to sign_in_path
+  end
+
+  def support_controller?
+    false
   end
 end

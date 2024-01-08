@@ -1,15 +1,17 @@
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl"><%= t("organisations") %></h1>
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl"><%= t("organisations") %></h1>
 
-    <% if @schools.any? %>
-      <ul class="govuk-list">
-        <% @schools.each do |school| %>
-          <li>
-           <%= govuk_link_to school.name, claims_school_path(school), no_visited_state: true %>
-          </li>
-        <% end %>
-      </ul>
-    <% end %>
+      <% if @schools.any? %>
+        <ul class="govuk-list">
+          <% @schools.each do |school| %>
+            <li>
+              <%= govuk_link_to school.name, claims_school_path(school), no_visited_state: true %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
   </div>
 </div>
