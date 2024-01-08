@@ -37,7 +37,7 @@ RSpec.describe "View schools", type: :system do
   end
 
   def and_persona_has_one_school(persona)
-    create(:membership, user: persona, organisation: create(:school))
+    create(:membership, user: persona, organisation: create(:school, name: "Hogwarts"))
   end
 
   def when_i_visit_claims_personas
