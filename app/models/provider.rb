@@ -28,6 +28,8 @@
 #  index_providers_on_provider_code  (provider_code) UNIQUE
 #
 class Provider < ApplicationRecord
+  include PgSearch::Model
+
   has_many :memberships, as: :organisation
 
   enum :provider_type,
@@ -37,5 +39,11 @@ class Provider < ApplicationRecord
   validates :provider_code, :name, presence: true
   validates :provider_code, uniqueness: { case_sensitive: false }
 
+  scope :placements, -> { where placements: true }
+
   alias_attribute :code, :provider_code
+
+  pg_search_scope :search_name_urn_ukprn_postcode,
+                  against: %i[name postcode urn ukprn],
+                  using: { trigram: { word_similarity: true } }
 end

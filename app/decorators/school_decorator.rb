@@ -1,10 +1,14 @@
-class SchoolDecorator < Draper::Decorator
-  delegate_all
+class SchoolDecorator < OrganisationDecorator
+  private
 
-  def formatted_address
-    address_parts = [address1, address2, address3, town, postcode]
-    address_parts.reject!(&:blank?)
-    address_parts.join("<br/>").html_safe
+  def address_parts
+    [
+      address1,
+      address2,
+      address3,
+      town,
+      postcode,
+    ]
   end
 
   def formatted_inspection_date
