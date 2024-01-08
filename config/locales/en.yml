@@ -24,8 +24,6 @@ en:
             urn:
               taken: This school has already been added. Try another school
               blank: Enter a school name, URN or postcode
-            gias_school:
-              required: ""
         user:
           attributes:
             first_name:

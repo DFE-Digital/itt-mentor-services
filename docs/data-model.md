@@ -75,14 +75,6 @@ erDiagram
     string organisation_id FK "Polymorphic association with School or Provider"
   }
 
-  GiasSchool {
-    uuid id PK
-    string urn UK "Unique identifier for Schools"
-    string name
-  }
-
-  School ||--|| GiasSchool : "belongs to"
-
   School ||--|{ Mentor : "has many"
   Provider ||--|{ School : "has many"
   Trainee }|--|| Provider : "belongs to"
@@ -110,25 +102,25 @@ Additionally, Providers will need to be onboarded to use the School Placements s
 
 ### Schools
 
-An 'onboarded' School will have a record in the `schools` table (the `School` entity in our ERD).
+All schools from the gias import will have a record in the `schools` table (the `School` entity in our ERD).
 
-The `placements_enabled` and `claims_enabled` boolean attributes will indicate which service(s) the School has been onboarded into. It's possible for Schools to be onboarded to only one service, or both.
+The `placements` and `claims` boolean attributes will indicate which service(s) the School has been onboarded into. It's possible for Schools to be onboarded to only one service, or both.
 
 For example:
 
-| urn    | name     | placements_enabled | claims_enabled |
-| ------ | -------- | ------------------ | -------------- |
-| 100000 | School A | 1                  | 0              |
-| 100001 | School B | 0                  | 1              |
-| 100002 | School C | 1                  | 1              |
+| urn    | name     | placements | claims |
+|--------|----------|------------|--------|
+| 100000 | School A | 1          | 0      |
+| 100001 | School B | 0          | 1      |
+| 100002 | School C | 1          | 1      |
+| 100003 | School D | 0          | 0      |
 
 - School A has only been onboarded into the School Placements service.
 - School B has only been onboarded into the Track & Pay service.
 - School C has been onboarded into both services.
+- School D is a school from the Gias import, but it is not onboarded into either service
 
 If a School doesn't exist in the `schools` table, it hasn't been onboarded to either service yet.
-
-**Note:** the `gias_schools` table will contain all known schools, regardless of whether they've been onboarded into a service.
 
 ### Providers
 
