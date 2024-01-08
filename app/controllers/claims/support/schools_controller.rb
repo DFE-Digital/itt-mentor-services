@@ -1,6 +1,6 @@
 class Claims::Support::SchoolsController < Claims::Support::ApplicationController
   def index
-    @schools = Claims::School.includes(:gias_school).order("gias_schools.name ASC")
+    @schools = Claims::School.order(:name)
   end
 
   def show
@@ -12,9 +12,10 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
   end
 
   def check
-    if school.valid?
+    if school.valid? && !school.claims?
       @school = school.decorate
     else
+      school.errors.add(:urn, :taken) if school.claims?
       render :new
     end
   end
@@ -30,14 +31,10 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
   private
 
   def school
-    @school ||= School.find_by(gias_school:, claims: false) || Claims::School.new(gias_school:)
-  end
-
-  def gias_school
-    @gias_school ||= GiasSchool.find_by(urn: urn_param)
+    @school ||= School.find_by(urn: urn_param) || Claims::School.new
   end
 
   def urn_param
-    params.dig(:gias_school, :urn) || params.dig(:school, :urn)
+    params.dig(:selection, :urn) || params.dig(:school, :urn)
   end
 end

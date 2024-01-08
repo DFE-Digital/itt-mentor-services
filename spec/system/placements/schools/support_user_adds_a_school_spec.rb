@@ -2,10 +2,10 @@ require "rails_helper"
 
 RSpec.describe "Placements / Schools / Support User adds a School",
                type: :system do
-  let(:gias_school) { create(:gias_school, name: "School 1") }
+  let(:school) { create(:school, name: "School 1") }
 
   before do
-    gias_school
+    school
     given_i_sign_in_as_colin
   end
 
@@ -24,11 +24,11 @@ RSpec.describe "Placements / Schools / Support User adds a School",
   end
 
   scenario "Colin adds a school which already exists", js: true do
-    given_a_school_already_exists_for(gias_school:)
+    given_a_school_already_exists_for_placements
     when_i_visit_the_add_school_page
-    and_i_enter_a_school_named("School 1")
-    then_i_see_a_dropdown_item_for("School 1")
-    when_i_click_the_dropdown_item_for("School 1")
+    and_i_enter_a_school_named("Placements School")
+    then_i_see_a_dropdown_item_for("Placements School")
+    when_i_click_the_dropdown_item_for("Placements School")
     and_i_click_continue
     then_i_see_an_error("This school has already been added. Try another school")
   end
@@ -99,8 +99,8 @@ RSpec.describe "Placements / Schools / Support User adds a School",
     expect(page).to have_content("Organisations")
   end
 
-  def given_a_school_already_exists_for(gias_school:)
-    create(:school, gias_school:, placements: true)
+  def given_a_school_already_exists_for_placements
+    create(:school, :placements, name: "Placements School")
   end
 
   def then_i_see_an_error(error_message)

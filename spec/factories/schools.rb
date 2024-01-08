@@ -48,7 +48,6 @@ FactoryBot.define do
   factory :school do
     sequence(:urn) { _1 }
     name { Faker::Educator.primary_school }
-    association :gias_school
 
     trait :claims do
       claims { true }

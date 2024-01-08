@@ -45,6 +45,8 @@
 #  index_schools_on_urn         (urn) UNIQUE
 #
 class School < ApplicationRecord
+  include PgSearch::Model
+
   has_many :memberships, as: :organisation
   has_many :users, through: :memberships
 
@@ -54,4 +56,8 @@ class School < ApplicationRecord
 
   scope :placements, -> { where placements: true }
   scope :claims, -> { where claims: true }
+
+  pg_search_scope :search_name_urn_postcode,
+                  against: %i[name postcode urn],
+                  using: { trigram: { word_similarity: true } }
 end

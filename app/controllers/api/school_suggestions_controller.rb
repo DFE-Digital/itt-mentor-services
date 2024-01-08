@@ -1,6 +1,6 @@
 class Api::SchoolSuggestionsController < ApplicationController
   def index
-    render json: GiasSchool.search_name_urn_postcode(query_params)
+    render json: School.search_name_urn_postcode(query_params)
   end
 
   private
