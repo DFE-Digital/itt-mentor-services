@@ -14,7 +14,7 @@ class AccreditedProvider::Importer
     street_address_2
     street_address_3
     city
-    country
+    county
     postcode
   ].freeze
 
