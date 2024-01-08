@@ -22,6 +22,8 @@ School.first.update!(placements: true)
 School.second.update!(claims: true)
 
 Rails.logger.debug "Services added to schools"
+# Create Providers Imported from Publfish
+Rake::Task["provider_data:import"].invoke unless Provider.any?
 
 User
   .where(first_name: %w[Anne Patricia])
