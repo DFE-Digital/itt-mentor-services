@@ -42,7 +42,6 @@
 #
 class GiasSchool < ApplicationRecord
   include PgSearch::Model
-  has_one :school, foreign_key: :urn, primary_key: :urn
 
   validates :urn, presence: true
   validates :urn, uniqueness: { case_sensitive: false }

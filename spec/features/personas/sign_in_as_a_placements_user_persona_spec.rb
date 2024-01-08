@@ -60,8 +60,7 @@ def when_i_visit_the_personas_page
 end
 
 def and_there_are_placement_organisations
-  gias_school = create(:gias_school, name: "Placement School")
-  create(:school, :placements, gias_school:)
+  create(:school, :placements, name: "Placement School")
   create(:provider, provider_code: "PROVIDER_CODE")
 end
 

@@ -4,11 +4,12 @@ RSpec.describe GiasCsvImporter do
   subject { described_class.call("spec/fixtures/test_gias_import.csv") }
 
   it "inserts the correct schools" do
-    expect { subject }.to change(GiasSchool, :count).from(0).to(1)
+    expect { subject }.to change(School, :count).from(0).to(1)
   end
 
   it "updates the correct schools" do
-    school = create(:gias_school, urn: "123")
+    gias_school = create(:gias_school, urn: "123")
+    school = create(:school, gias_school:)
     expect { subject }.to change { school.reload.name }.to "School"
   end
 

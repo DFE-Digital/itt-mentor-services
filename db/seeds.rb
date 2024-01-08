@@ -1,10 +1,3 @@
-SCHOOLS = [
-  { claims: true },
-  { placements: true },
-  { claims: true, placements: true },
-  { claims: true, placements: true },
-].freeze
-
 # Persona Creation (Dummy User Creation)
 Rails.logger.debug "Creating Personas"
 
@@ -19,15 +12,16 @@ end
 
 Rails.logger.debug "Personas successfully created!"
 
-Rake::Task["gias_update"].invoke unless GiasSchool.any?
-gias_scools = GiasSchool.last(SCHOOLS.count)
+Rake::Task["gias_update"].invoke unless School.any?
 
-SCHOOLS.each.with_index do |school_attributes, index|
-  school = School.find_or_initialize_by(**school_attributes)
-  school.urn = gias_scools[index].urn
-
-  school.save!
+School.last(2).each do |school|
+  school.update!(claims: true, placements: true)
 end
+
+School.first.update!(placements: true)
+School.second.update!(claims: true)
+
+Rails.logger.debug "Services added to schools"
 
 User
   .where(first_name: %w[Anne Patricia])
@@ -45,3 +39,5 @@ User
       user.memberships.find_or_create_by!(organisation: school)
     end
   end
+
+Rails.logger.debug "Organisations assigned to users"
