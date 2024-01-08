@@ -4,7 +4,7 @@ const providerTemplate = (result) => result && result.name;
 const providerSuggestionTemplate = (result) =>
   result && `${result.name} (${result.provider_code})`;
 const onConfirm = (input) => (option) =>
-  (input.value = option ? option.id : "");
+  (input.value = option ? option.provider_code : "");
 
 function init() {
   const options = {
