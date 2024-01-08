@@ -11,7 +11,7 @@ RSpec.describe SchoolDecorator do
                      postcode: "LN12 1LN")
 
       expect(school.decorate.formatted_address).to eq(
-        "A School<br/>The School Road<br/>Somewhere<br/>London<br/>LN12 1LN",
+        "<p>A School\n<br />The School Road\n<br />Somewhere\n<br />London\n<br />LN12 1LN</p>",
       )
     end
   end

@@ -3,7 +3,7 @@ class OrganisationDecorator < Draper::Decorator
   delegate_all
 
   def formatted_address
-    address_string = address_parts.reject!(&:blank?).join("\n")
+    address_string = address_parts.reject(&:blank?)&.join("\n")
     simple_format(address_string)
   end
 end
