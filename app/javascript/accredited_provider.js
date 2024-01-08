@@ -2,9 +2,9 @@ import initAutocomplete from "./autocomplete";
 
 const providerTemplate = (result) => result && result.name;
 const providerSuggestionTemplate = (result) =>
-  result && `${result.name} (${result.code})`;
+  result && `${result.name} (${result.provider_code})`;
 const onConfirm = (input) => (option) =>
-  (input.value = option ? option.code : "");
+  (input.value = option ? option.id : "");
 
 function init() {
   const options = {
