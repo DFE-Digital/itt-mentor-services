@@ -17,7 +17,7 @@ RSpec.describe "Sessions", type: :request do
       expect(response).to have_http_status(:success)
       # TODO: Change render_template once redirect to service specific
       # roots implemented
-      expect(response).to render_template("claims/pages/index")
+      expect(response).to render_template("claims/schools/index")
     end
   end
 end

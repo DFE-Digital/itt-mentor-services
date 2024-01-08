@@ -13,7 +13,7 @@ module RoutesHelper
     }.fetch current_service
   end
 
-  def organisation_index_path
+  def organisations_path
     {
       claims: claims_schools_path,
       placements: placements_organisations_path,
