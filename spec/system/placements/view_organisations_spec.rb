@@ -70,7 +70,7 @@ RSpec.describe "View organisations", type: :system do
     expect(page).to have_content("Providers") if @persona.providers.any?
 
     @persona.providers.each do |provider|
-      expect(page).to have_content(provider.provider_code)
+      expect(page).to have_content(provider.name)
     end
   end
 end
