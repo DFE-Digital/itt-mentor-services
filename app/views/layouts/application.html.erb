@@ -36,31 +36,39 @@
 
     <div class="app-phase-banner app-phase-banner__env--<%= HostingEnvironment.name(current_service) %>">
       <div class="govuk-width-container">
-        <%= govuk_phase_banner(tag: { text: HostingEnvironment.name(current_service) }) do %>
+        <%= govuk_phase_banner(tag: { text: HostingEnvironment.name(current_service) }, classes: [class_names("govuk-phase-banner--no-border-bottom": support_controller?)]) do %>
           <%= govuk_link_to HostingEnvironment.banner_description(current_service), request.env["PATH_INFO"], class: "govuk-link--no-visited-state" %>
         <% end %>
       </div>
     </div>
 
+    <% if support_controller? %>
+      <%= primary_navigation do |component| %>
+        <% component.with_navigation_item t(".primary_navigation.organisations"), support_organisations_path %>
+        <% component.with_navigation_item t(".primary_navigation.claims"), "#" if current_service == :claims %>
+        <% component.with_navigation_item t(".primary_navigation.users"), "#" %>
+      <% end %>
+    <% end %>
+
     <div class="govuk-width-container">
       <%= yield :header_content %>
       <%= yield :before_content %>
-
-        <% flash.each do |key, message| %>
-          <div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-top-6 govuk-!-margin-bottom-0" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-            <div class="govuk-notification-banner__header">
-              <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-            </div>
-            <div class="govuk-notification-banner__content">
-              <h3 class="govuk-notification-banner__heading"><%= message %></h3>
-            </div>
-          </div>
-        <% end %>
-
-      <main class="govuk-main-wrapper" id="main-content" role="main">
-        <%= yield %>
-      </main>
     </div>
+
+    <% flash.each do |key, message| %>
+      <div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-top-6 govuk-!-margin-bottom-0" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+        <div class="govuk-notification-banner__header">
+          <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+        </div>
+        <div class="govuk-notification-banner__content">
+          <h3 class="govuk-notification-banner__heading"><%= message %></h3>
+        </div>
+      </div>
+    <% end %>
+
+    <main class="govuk-main-wrapper" id="main-content" role="main">
+      <%= yield %>
+    </main>
 
     <%= govuk_footer %>
   </body>

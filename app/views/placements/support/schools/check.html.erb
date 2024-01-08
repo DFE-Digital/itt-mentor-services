@@ -2,52 +2,54 @@
   <%= govuk_back_link(href: new_placements_support_provider_path) %>
 <% end %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= form_with(model: @school, url: placements_support_schools_path, method: "post", data: { turbo: false }) do |f| %>
-      <%= f.hidden_field :search_urn, value: @school.urn %>
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= form_with(model: @school, url: placements_support_schools_path, method: "post", data: { turbo: false }) do |f| %>
+        <%= f.hidden_field :search_urn, value: @school.urn %>
 
-      <label class="govuk-label govuk-label--l">
-        <span class="govuk-caption-l"><%= t(".add_organisation") %></span>
-        <%= t(".title") %>
-      </label>
+        <label class="govuk-label govuk-label--l">
+          <span class="govuk-caption-l"><%= t(".add_organisation") %></span>
+          <%= t(".title") %>
+        </label>
 
-      <%= govuk_summary_list do |summary_list| %>
-        <% summary_list.with_row do |row| %>
-          <% row.with_key(text: t(".organisation_name")) %>
-          <% row.with_value(text: @school.name) %>
-        <% end %>
-        <% summary_list.with_row do |row| %>
-          <% row.with_key(text: t(".urn")) %>
-          <% row.with_value(text: @school.urn) %>
-        <% end %>
-      <% end %>
-
-      <h2 class="govuk-heading-m govuk-!-margin-top-7">
-        <%= t(".contact_details") %>
-      </h2>
-
-      <%= govuk_summary_list do |summary_list| %>
-        <% summary_list.with_row do |row| %>
-          <% row.with_key(text: t(".telephone")) %>
-          <% row.with_value(text: @school.telephone) %>
-        <% end %>
-        <% summary_list.with_row do |row| %>
-          <% row.with_key(text: t(".website")) %>
-          <% row.with_value do %>
-            <%= govuk_link_to(@school.website, external_link(@school.website), target: "_blank", rel: "noopener noreferrer") %>
+        <%= govuk_summary_list do |summary_list| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".organisation_name")) %>
+            <% row.with_value(text: @school.name) %>
+          <% end %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".urn")) %>
+            <% row.with_value(text: @school.urn) %>
           <% end %>
         <% end %>
-        <% summary_list.with_row do |row| %>
-          <% row.with_key(text: t(".address")) %>
-          <% row.with_value(text: @school.formatted_address) %>
-        <% end %>
-      <% end %>
 
-      <%= f.govuk_submit t(".add_organisation") %>
-      <p class="govuk-body">
-        <%= govuk_link_to(t(".cancel"), placements_support_organisations_path) %>
-      </p>
-    <% end %>
+        <h2 class="govuk-heading-m govuk-!-margin-top-7">
+          <%= t(".contact_details") %>
+        </h2>
+
+        <%= govuk_summary_list do |summary_list| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".telephone")) %>
+            <% row.with_value(text: @school.telephone) %>
+          <% end %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".website")) %>
+            <% row.with_value do %>
+              <%= govuk_link_to(@school.website, external_link(@school.website), target: "_blank", rel: "noopener noreferrer") %>
+            <% end %>
+          <% end %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".address")) %>
+            <% row.with_value(text: @school.formatted_address) %>
+          <% end %>
+        <% end %>
+
+        <%= f.govuk_submit t(".add_organisation") %>
+        <p class="govuk-body">
+          <%= govuk_link_to(t(".cancel"), placements_support_organisations_path) %>
+        </p>
+      <% end %>
+    </div>
   </div>
 </div>

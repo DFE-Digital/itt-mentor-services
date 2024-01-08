@@ -2,22 +2,24 @@
   <%= govuk_back_link(href: placements_support_organisations_path) %>
 <% end %>
 
-<%= form_with(model: @organisation_form, scope: :organisation,
-              url: select_type_placements_support_organisations_path,
-              method: "get", data: { turbo: false }) do |f| %>
-  <%= f.govuk_error_summary %>
+<div class="govuk-width-container">
+  <%= form_with(model: @organisation_form, scope: :organisation,
+                url: select_type_placements_support_organisations_path,
+                method: "get", data: { turbo: false }) do |f| %>
+    <%= f.govuk_error_summary %>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l"><%= t(".caption") %></span>
-      <%= f.govuk_collection_radio_buttons :organisation_type, @organisation_form.options, :id,
-        :name, legend: { text: t(".title"), size: "l" } %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l"><%= t(".caption") %></span>
+        <%= f.govuk_collection_radio_buttons :organisation_type, @organisation_form.options, :id,
+          :name, legend: { text: t(".title"), size: "l" } %>
 
-      <%= f.govuk_submit t("continue") %>
+        <%= f.govuk_submit t("continue") %>
 
-      <p class="govuk-body">
-        <%= govuk_link_to(t("cancel"), placements_support_organisations_path) %>
-      </p>
+        <p class="govuk-body">
+          <%= govuk_link_to(t("cancel"), placements_support_organisations_path) %>
+        </p>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>
