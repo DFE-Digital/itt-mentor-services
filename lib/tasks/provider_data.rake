@@ -4,4 +4,3 @@ namespace :provider_data do
     AccreditedProvider::Importer.call
   end
 end
-
