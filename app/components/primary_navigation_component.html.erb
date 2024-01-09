@@ -1,0 +1,13 @@
+<div class="app-primary-navigation">
+  <div class="app-primary-navigation govuk-!-display-none-print">
+    <div class="govuk-width-container app-primary-navigation--justify-between">
+      <nav class="app-primary-navigation__nav" aria-label="main menu">
+        <ul class="app-primary-navigation__list">
+          <% navigation_items.each do |navigation_item| %>
+            <%= navigation_item %>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

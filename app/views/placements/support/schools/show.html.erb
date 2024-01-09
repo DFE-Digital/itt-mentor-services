@@ -1,17 +1,20 @@
 <%= content_for :page_title, @school.name %>
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-l"><%= @school.name %></h1>
-  </div>
-  <div class="govuk-grid-column-two-thirds">
-    <%= render "school_details", school: @school %>
-    <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".additional_details") %></h2>
-    <%= render "additional_details", school: @school %>
-    <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".send") %></h2>
-    <%= render "send_details", school: @school %>
-    <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".ofsted") %></h2>
-    <%= render "ofsted_details", school: @school %>
-    <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".contact_details") %></h2>
-    <%= render "contact_details", school: @school %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l"><%= @school.name %></h1>
+    </div>
+    <div class="govuk-grid-column-two-thirds">
+      <%= render "school_details", school: @school %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".additional_details") %></h2>
+      <%= render "additional_details", school: @school %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".send") %></h2>
+      <%= render "send_details", school: @school %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".ofsted") %></h2>
+      <%= render "ofsted_details", school: @school %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".contact_details") %></h2>
+      <%= render "contact_details", school: @school %>
+    </div>
   </div>
 </div>

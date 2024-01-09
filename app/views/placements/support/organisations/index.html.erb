@@ -1,7 +1,8 @@
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl"><%= t("organisations") %></h1>
-    <%= govuk_button_to(t("add_organisation"), new_placements_support_organisation_path, method: :get) %>
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl"><%= t("organisations") %></h1>
+      <%= govuk_button_to(t("add_organisation"), new_placements_support_organisation_path, method: :get) %>
 
     <% if @schools.any? %>
       <h2 class="govuk-heading-l"><%= t("schools") %></h2>
@@ -12,13 +13,14 @@
       </ul>
     <% end %>
 
-    <% if @providers.any? %>
-      <h2 class="govuk-heading-l"><%= t("providers") %></h2>
-      <ul class="govuk-list">
-        <% @providers.each do |provider| %>
-          <li><%= provider.provider_code %></li>
-        <% end %>
-      </ul>
-    <% end %>
+      <% if @providers.any? %>
+        <h2 class="govuk-heading-l"><%= t("providers") %></h2>
+        <ul class="govuk-list">
+          <% @providers.each do |provider| %>
+            <li><%= provider.provider_code %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
   </div>
 </div>

@@ -5,6 +5,10 @@
   font-weight: $govuk-font-weight-bold;
 }
 
+.app-phase-banner .govuk-phase-banner--no-border-bottom {
+  border-bottom: 0;
+}
+
 .app-phase-banner__env--development .govuk-tag {
   background: govuk-colour("dark-grey");
 }

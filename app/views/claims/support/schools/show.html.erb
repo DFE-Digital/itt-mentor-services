@@ -1,7 +1,32 @@
-Support / Schools / 1
+<div class="govuk-width-container">
+  <h1 class="govuk-heading-l"><%= @school.name %></h1>
 
-<ul>
-  <li><%= link_to "Organisation Details", claims_support_school_path(params[:id]) %></li>
-  <li><%= link_to "Users", claims_support_school_users_path(params[:id]) %></li>
-  <li><%= link_to "Claims", claims_support_school_claims_path(params[:id]) %></li>
-</ul>
+  <%= secondary_navigation do |component| %>
+    <% component.with_navigation_item t(".details"), claims_support_school_path(@school.id) %>
+    <% component.with_navigation_item t(".users"), claims_support_school_users_path(@school.id) %>
+    <% component.with_navigation_item t(".mentors"), "#" %>
+    <% component.with_navigation_item t(".providers"), "#" %>
+    <% component.with_navigation_item t(".claims"), claims_support_school_claims_path(@school.id) %>
+  <% end %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= govuk_summary_list do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".organisation_name")) %>
+          <% row.with_value(text: "Hogwarts") %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".uk_provider_reference_number")) %>
+          <% row.with_value(text: "fake_uprn") %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".unique_reference_number")) %>
+          <% row.with_value(text: 1) %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
