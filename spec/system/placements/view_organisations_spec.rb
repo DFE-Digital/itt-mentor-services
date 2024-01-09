@@ -40,8 +40,7 @@ RSpec.describe "View organisations", type: :system do
   end
 
   def and_persona_has_multiple_organisations
-    gias_school = create(:gias_school, name: "Placements School")
-    school = create(:school, gias_school:)
+    school = create(:school, name: "Placements School")
     provider = create(:provider, name: "Provider 1")
     create(:membership, user: @persona, organisation: school)
     create(:membership, user: @persona, organisation: provider)

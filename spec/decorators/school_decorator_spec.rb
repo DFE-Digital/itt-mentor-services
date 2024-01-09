@@ -17,14 +17,12 @@ RSpec.describe SchoolDecorator do
 
     context "when attributes are missing" do
       it "it returns a formatted address based on the present attributes" do
-        gias_school = create(:gias_school,
-                             address1: "A School",
-                             address2: "The School Road",
-                             address3: "Somewhere",
-                             postcode: "LN12 1LN")
-        expect(
-          build(:school, gias_school:).decorate.formatted_address,
-        ).to eq(
+        school = build(:school,
+                       address1: "A School",
+                       address2: "The School Road",
+                       address3: "Somewhere",
+                       postcode: "LN12 1LN")
+        expect(school.decorate.formatted_address).to eq(
           "<p>A School\n<br />The School Road\n<br />Somewhere\n<br />LN12 1LN</p>",
         )
       end
