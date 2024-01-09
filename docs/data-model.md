@@ -102,9 +102,9 @@ Additionally, Providers will need to be onboarded to use the School Placements s
 
 ### Schools
 
-All schools from the gias import will have a record in the `schools` table (the `School` entity in our ERD).
+All schools from the GIAS import will have a record in the `schools` table (the `School` entity in our ERD).
 
-The `placements` and `claims` boolean attributes will indicate which service(s) the School has been onboarded into. It's possible for Schools to be onboarded to only one service, or both.
+The `placements` and `claims` boolean attributes will indicate which service(s) the School has been onboarded into. It's possible for Schools to be onboarded to both services, one service, or neither service.
 
 For example:
 
@@ -118,9 +118,7 @@ For example:
 - School A has only been onboarded into the School Placements service.
 - School B has only been onboarded into the Track & Pay service.
 - School C has been onboarded into both services.
-- School D is a school from the Gias import, but it is not onboarded into either service
-
-If a School doesn't exist in the `schools` table, it hasn't been onboarded to either service yet.
+- School D is a school from the GIAS import, but it is not onboarded into either service
 
 ### Providers
 
