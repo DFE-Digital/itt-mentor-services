@@ -1,7 +1,7 @@
 class Placements::Support::OrganisationsController < Placements::Support::ApplicationController
   def index
     @schools = Placements::School.order(:name)
-    @providers = Provider.all
+    @providers = Placements::Provider.all
   end
 
   def new

@@ -16,7 +16,7 @@ en:
               blank: Select an organisation type
         provider:
           attributes:
-            provider_code:
+            code:
               taken: This provider has already been added. Try another provider
               blank: Enter a provider name, UKPRN, URN or postcode
         school:

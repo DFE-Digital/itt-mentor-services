@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_08_151908) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_09_110334) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "provider_type", ["scitt", "lead_school", "university"]
   create_enum "service", ["claims", "placements"]
 
   create_table "flipflop_features", force: :cascade do |t|
@@ -37,10 +38,26 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_08_151908) do
   end
 
   create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "provider_code", null: false
+    t.string "code", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["provider_code"], name: "index_providers_on_provider_code", unique: true
+    t.boolean "placements", default: false
+    t.enum "provider_type", null: false, enum_type: "provider_type"
+    t.string "name", null: false
+    t.string "ukprn"
+    t.string "urn"
+    t.string "email_address"
+    t.string "telephone"
+    t.string "website"
+    t.string "address1"
+    t.string "address2"
+    t.string "address3"
+    t.string "town"
+    t.string "city"
+    t.string "county"
+    t.string "postcode"
+    t.index ["code"], name: "index_providers_on_code", unique: true
+    t.index ["placements"], name: "index_providers_on_placements"
   end
 
   create_table "schools", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

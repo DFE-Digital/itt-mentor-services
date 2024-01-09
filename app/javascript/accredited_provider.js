@@ -8,13 +8,13 @@ const onConfirm = (input) => (option) =>
 
 function init() {
   const options = {
-    path: `/support/provider_suggestions`,
+    path: `/api/provider_suggestions`,
     template: {
       inputValue: providerTemplate,
       suggestion: providerSuggestionTemplate,
     },
     minLength: 2,
-    inputName: "accredited_provider_id",
+    inputName: "provider[search_code]",
     onConfirm,
   };
 

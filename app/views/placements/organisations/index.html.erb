@@ -18,7 +18,7 @@
       <ul class="govuk-list">
         <% @providers.each do |provider| %>
           <li>
-            <%= govuk_link_to provider.provider_code, request.env["PATH_INFO"], no_visited_state: true %>
+            <%= govuk_link_to provider.name, request.env["PATH_INFO"], no_visited_state: true %>
           </li>
         <% end %>
       </ul>

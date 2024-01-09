@@ -11,8 +11,21 @@ RSpec.describe SchoolDecorator do
                      postcode: "LN12 1LN")
 
       expect(school.decorate.formatted_address).to eq(
-        "A School<br/>The School Road<br/>Somewhere<br/>London<br/>LN12 1LN",
+        "<p>A School\n<br />The School Road\n<br />Somewhere\n<br />London\n<br />LN12 1LN</p>",
       )
+    end
+
+    context "when attributes are missing" do
+      it "it returns a formatted address based on the present attributes" do
+        school = build(:school,
+                       address1: "A School",
+                       address2: "The School Road",
+                       address3: "Somewhere",
+                       postcode: "LN12 1LN")
+        expect(school.decorate.formatted_address).to eq(
+          "<p>A School\n<br />The School Road\n<br />Somewhere\n<br />LN12 1LN</p>",
+        )
+      end
     end
   end
 

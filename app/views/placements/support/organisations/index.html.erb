@@ -16,7 +16,7 @@
       <h2 class="govuk-heading-l"><%= t("providers") %></h2>
       <ul class="govuk-list">
         <% @providers.each do |provider| %>
-          <li><%= provider.provider_code %></li>
+          <li><%= provider.name %></li>
         <% end %>
       </ul>
     <% end %>

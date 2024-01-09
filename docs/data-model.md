@@ -28,8 +28,8 @@ erDiagram
   School {
     uuid id PK
     string urn FK "Primary key for schools in GIAS"
-    bool placements_enabled "Indicates if the School has been onboarded into the School Placements service"
-    bool claims_enabled "Indicates if the School has been onboarded into the Track & Pay service"
+    bool placements "Indicates if the School has been onboarded into the School Placements service"
+    bool claims "Indicates if the School has been onboarded into the Track & Pay service"
   }
 
   Mentor {
@@ -39,7 +39,8 @@ erDiagram
 
   Provider {
     uuid id PK
-    string accredited_provider_id FK "Primary key for providers in the Teacher Training Courses API"
+    string code FK "Primary key for providers in the Teacher Training Courses API"
+    bool placements "Indicates if the Provider has been onboarded into the School Placements service"
   }
 
   MentorTraining {
@@ -122,11 +123,11 @@ For example:
 
 ### Providers
 
-Onboarded Providers will have a record in the `providers` table.
+The `providers` table will be populated with data sourced from the [Teacher Training Courses API](https://api.publish-teacher-training-courses.service.gov.uk/docs/api-reference.html). In its simplest form, this will serve as a 'lookup table' holding details of every known ITT Provider.
+
+Onboarded Providers will have their `placements` field set to `true`.
 
 Providers are only onboarded into the School Placements service, because this is the only service Provider Users will need to sign in to. Providers will not sign in to the Track & Pay service.
-
-Both services will query the Provider endpoints on the [Teacher Training Courses API](https://api.publish-teacher-training-courses.service.gov.uk/docs/api-reference.html) to retrieve and display information about a Provider given its Accredited Provider ID.
 
 ## Users and Organisations
 
