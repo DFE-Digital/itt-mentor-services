@@ -3,9 +3,9 @@ class ProviderDecorator < OrganisationDecorator
 
   def address_parts
     [
-      street_address_1,
-      street_address_2,
-      street_address_3,
+      address1,
+      address2,
+      address3,
       town,
       city,
       county,

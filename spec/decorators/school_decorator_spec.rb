@@ -14,6 +14,21 @@ RSpec.describe SchoolDecorator do
         "<p>A School\n<br />The School Road\n<br />Somewhere\n<br />London\n<br />LN12 1LN</p>",
       )
     end
+
+    context "when attributes are missing" do
+      it "it returns a formatted address based on the present attributes" do
+        gias_school = create(:gias_school,
+                             address1: "A School",
+                             address2: "The School Road",
+                             address3: "Somewhere",
+                             postcode: "LN12 1LN")
+        expect(
+          build(:school, gias_school:).decorate.formatted_address,
+        ).to eq(
+          "<p>A School\n<br />The School Road\n<br />Somewhere\n<br />LN12 1LN</p>",
+        )
+      end
+    end
   end
 
   describe "#formatted_inspection_date" do

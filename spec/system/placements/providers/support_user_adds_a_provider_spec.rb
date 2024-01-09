@@ -18,7 +18,7 @@ RSpec.describe "Placements / Providers / Support User adds a Provider", type: :s
     then_i_see_the_check_details_page_for_provider("Provider 1")
     when_i_click_add_organisation
     then_i_return_to_support_organisations_index
-    and_a_provider_code_is_listed(provider_code: "Provider 1")
+    and_a_provider_code_is_listed(code: "Provider 1")
   end
 
   scenario "Colin adds a Provider which already exists", js: true do
@@ -111,7 +111,7 @@ RSpec.describe "Placements / Providers / Support User adds a Provider", type: :s
     expect(page.find(".govuk-error-message")).to have_content(error_message)
   end
 
-  def and_a_provider_code_is_listed(provider_code:)
-    expect(page).to have_content(provider_code)
+  def and_a_provider_code_is_listed(code:)
+    expect(page).to have_content(code)
   end
 end

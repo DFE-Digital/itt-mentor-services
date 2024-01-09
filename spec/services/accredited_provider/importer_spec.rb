@@ -4,6 +4,7 @@ RSpec.describe AccreditedProvider::Importer do
   subject { described_class.call }
 
   let(:existing_provider) { create(:provider) }
+  let(:changeable_provider) { create(:provider, name: "Changeable Provider") }
 
   before do
     next_year = Time.current.next_year.year
@@ -42,17 +43,17 @@ RSpec.describe AccreditedProvider::Importer do
           {
             "id" => 456,
             "attributes" => {
-              "code" => existing_provider.provider_code,
+              "code" => existing_provider.code,
               "name" => existing_provider.name,
               "provider_type" => existing_provider.provider_type,
               "ukprn" => existing_provider.ukprn,
               "urn" => existing_provider.urn,
-              "email" => existing_provider.email,
+              "email" => existing_provider.email_address,
               "telephone" => existing_provider.telephone,
               "website" => existing_provider.website,
-              "street_address_1" => existing_provider.street_address_1,
-              "street_address_2" => existing_provider.street_address_2,
-              "street_address_3" => existing_provider.street_address_3,
+              "street_address_1" => existing_provider.address1,
+              "street_address_2" => existing_provider.address2,
+              "street_address_3" => existing_provider.address3,
               "city" => existing_provider.city,
               "county" => existing_provider.county,
               "postcode" => existing_provider.postcode,
@@ -60,6 +61,14 @@ RSpec.describe AccreditedProvider::Importer do
           },
           {
             "id" => 567,
+            "attributes" => {
+              "name" => "Changed Provider",
+              "code" => changeable_provider.code,
+              "provider_type" => changeable_provider.provider_type,
+            },
+          },
+          {
+            "id" => 678,
             "attributes" => {
               "name" => "Invalid Provider",
               "code" => "Inv",
@@ -77,6 +86,7 @@ RSpec.describe AccreditedProvider::Importer do
     expect(Provider.find_by(name: "Provider 2", code: "Prov2", provider_type: "university")).to be_present
     expect(Provider.find_by(name: "Provider 3", code: "Prov3", provider_type: "lead_school")).to be_present
     expect(Provider.find_by(name: "Invalid Provider", code: "Inv")).not_to be_present
-    expect(Provider.where(name: existing_provider.name, code: existing_provider.provider_code).count).to eq(1)
+    expect(Provider.where(name: existing_provider.name, code: existing_provider.code).count).to eq(1)
+    expect(Provider.find_by(code: changeable_provider.code).name).to eq("Changed Provider")
   end
 end

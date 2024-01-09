@@ -1,41 +1,40 @@
 class AccreditedProvider::Importer
   include ServicePattern
 
-  IMPORTABLE_KEYS = %w[
-    code
-    name
-    provider_type
-    ukprn
-    urn
-    email
-    telephone
-    website
-    street_address_1
-    street_address_2
-    street_address_3
-    city
-    county
-    postcode
-  ].freeze
-
-  def initialize(updated_since: nil)
-    @updated_since = updated_since
-  end
-
-  attr_reader :updated_since
-
   def call
-    errors = []
-    accredited_providers = ::AccreditedProvider::Api.call(updated_since:)
+    invalid_records = []
+    records = []
+
+    accredited_providers = ::AccreditedProvider::Api.call
     accredited_providers.each do |provider_details|
-      provider = generate_provider(provider_details)
-      unless provider.save
-        errors << provider.inspect + "Errors: #{provider.errors.full_messages.join(",")}"
-      end
+      provider_attributes = provider_details["attributes"]
+      invalid_records << "Provider with code #{provider_attributes["code"]} is invalid" if invalid?(provider_attributes)
+      next if invalid?(provider_attributes)
+
+      records << {
+        code: provider_attributes["code"],
+        name: provider_attributes["name"],
+        provider_type: provider_attributes["provider_type"],
+        ukprn: provider_attributes["ukprn"],
+        urn: provider_attributes["urn"],
+        email_address: provider_attributes["email"],
+        telephone: provider_attributes["telephone"],
+        website: provider_attributes["website"],
+        address1: provider_attributes["street_address_1"],
+        address2: provider_attributes["street_address_2"],
+        address3: provider_attributes["street_address_3"],
+        city: provider_attributes["city"],
+        county: provider_attributes["county"],
+        postcode: provider_attributes["postcode"],
+      }
     end
 
-    if errors.any?
-      Rails.logger.info "Invalid imports - #{errors.inspect}"
+    if invalid_records.any?
+      Rails.logger.info "Invalid Providers - #{invalid_records.inspect}"
+    end
+
+    Rails.logger.silence do
+      Provider.upsert_all(records, unique_by: :code)
     end
 
     Rails.logger.info "Done!"
@@ -43,11 +42,8 @@ class AccreditedProvider::Importer
 
   private
 
-  def generate_provider(provider_details)
-    api_provider_attributes = provider_details.fetch("attributes")
-    import_attributes = api_provider_attributes.slice(*IMPORTABLE_KEYS)
-    Provider.find_or_initialize_by(
-      import_attributes,
-    )
+  def invalid?(provider_attributes)
+    provider_attributes["name"].blank? || provider_attributes["provider_type"].blank? ||
+      provider_attributes["code"].blank?
   end
 end

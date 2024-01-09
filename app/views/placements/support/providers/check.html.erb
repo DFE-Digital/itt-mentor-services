@@ -5,7 +5,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with(model: @provider, url: placements_support_providers_path, method: "post", data: { turbo: false }) do |f| %>
-      <%= f.hidden_field :code, value: @provider.provider_code %>
+      <%= f.hidden_field :search_code, value: @provider.code %>
 
       <label class="govuk-label govuk-label--l">
         <span class="govuk-caption-l"><%= t(".add_organisation") %></span>
@@ -30,7 +30,7 @@
       <%= govuk_summary_list do |summary_list| %>
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t(".email")) %>
-          <% row.with_value(text: @provider.email) %>
+          <% row.with_value(text: @provider.email_address) %>
         <% end %>
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t(".telephone")) %>
