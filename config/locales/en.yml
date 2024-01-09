@@ -91,7 +91,8 @@ en:
       invite_user_to_school: "Dear %{user_name} \n\n You have been invited to join the claims service for %{school_name}.\n\n Sign in here %{sign_in_url}"
     schools:
       show:
-        heading: Organisations
+        change_organisation: Change organisation
+        heading: Organisation details
         organisation_name: Organisation name
         uk_provider_reference_number: UK provider reference number (UKPRN)
         unique_reference_number: Unique reference number (URN)

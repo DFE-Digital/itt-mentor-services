@@ -37,7 +37,11 @@ RSpec.describe "View schools", type: :system do
   end
 
   def and_persona_has_one_school(persona)
-    create(:membership, user: persona, organisation: create(:school, name: "Hogwarts"))
+    create(
+      :membership,
+      user: persona,
+      organisation: create(:school, :claims, name: "Hogwarts"),
+    )
   end
 
   def when_i_visit_claims_personas
@@ -53,7 +57,8 @@ RSpec.describe "View schools", type: :system do
   end
 
   def i_am_redirected_to_organisation_index(persona)
-    expect(page).to have_content("Organisations")
+    expected_content = persona.schools.many? ? "Organisations" : "Organisation details"
+    expect(page).to have_content(expected_content)
 
     persona.schools.each do |school|
       expect(page).to have_content(school.name)
