@@ -15,7 +15,7 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
     if school.valid? && !school.claims?
       @school = school.decorate
     else
-      school.errors.add(:urn, :taken) if school.claims?
+      school.errors.add(:urn, :already_added, school_name: school.name) if school.claims?
       render :new
     end
   end

@@ -22,7 +22,7 @@ en:
         school:
           attributes:
             urn:
-              taken: This school has already been added. Try another school
+              already_added: "%{school_name} has already been added. Try another school"
               blank: Enter a school name, URN or postcode
         user:
           attributes:
