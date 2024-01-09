@@ -1,0 +1,39 @@
+en:
+  claims:
+    schools:
+      show:
+        heading: Organisation details
+        change_organisation: Change organisation
+        unknown: Unknown
+        not_entered: Not entered
+        not_applicable: Not applicable
+        additional_details: Additional details
+        organisation_name: Organisation name
+        ukprn: UK provider reference number (UKPRN)
+        urn: Unique reference number (URN)
+        group: Group
+        type: Type
+        phase: Phase
+        gender: Gender
+        minimum_age: Minimum age
+        maximum_age: Maximum age
+        religious_character: Religious character
+        admissions_policy: Admissions policy
+        urban_or_rural: Urban or rural
+        school_capacity: School capacity
+        total_pupils: Total pupils
+        total_boys: Total boys
+        total_girls: Total girls
+        percentage_free_school_meals: Percentage free school meals
+        send: Special educational needs and disabilities (SEND)
+        special_classes: Special classes
+        send_provision: SEND provision
+        training_with_disabilities: Training with disabilities
+        ofsted: Ofsted
+        rating: Rating
+        last_inspection_date: Last inspection date
+        contact_details: Contact details
+        email_address: Email address
+        telephone_number: Telephone number
+        website: Website
+        address: Address

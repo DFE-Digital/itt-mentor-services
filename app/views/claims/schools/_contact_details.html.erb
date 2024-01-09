@@ -1,0 +1,33 @@
+<%= govuk_summary_list(html_attributes: { id: "contact-details" }) do |summary_list| %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t("claims.schools.show.email_address")) %>
+    <% if @school.email_address.present? %>
+      <% row.with_value do %>
+        <%= govuk_mail_to(@school.email_address, @school.email_address) %>
+      <% end %>
+    <% else %>
+      <% row.with_value(**details_field_args) %>
+    <% end %>
+  <% end %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t("claims.schools.show.telephone_number")) %>
+    <% row.with_value(**details_field_args(@school.telephone)) %>
+  <% end %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t("claims.schools.show.website")) %>
+    <% if @school.website.present? %>
+      <% row.with_value do %>
+        <%= govuk_link_to(@school.website,
+                          external_link(@school.website),
+                          target: "_blank",
+                          rel: "noopener noreferrer") %>
+      <% end %>
+    <% else %>
+      <% row.with_value(**details_field_args) %>
+    <% end %>
+  <% end %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t("claims.schools.show.address")) %>
+    <% row.with_value(**details_field_args(@school.formatted_address)) %>
+  <% end %>
+<% end %>

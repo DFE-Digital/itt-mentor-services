@@ -6,7 +6,7 @@ class Claims::SchoolsController < ApplicationController
   end
 
   def show
-    @school = Claims::School.find(params.require(:id))
+    @school = Claims::School.find(params.require(:id))&.decorate
   end
 
   private
