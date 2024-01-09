@@ -2,16 +2,37 @@ class AccreditedProvider::Importer
   include ServicePattern
 
   def call
-    invalid_records = []
-    records = []
+    @invalid_records = []
+    @records = []
 
-    accredited_providers = ::AccreditedProvider::Api.call
-    accredited_providers.each do |provider_details|
+    fetch_providers
+
+    if @invalid_records.any?
+      Rails.logger.info "Invalid Providers - #{@invalid_records.inspect}"
+    end
+
+    Rails.logger.silence do
+      Provider.upsert_all(@records, unique_by: :code)
+    end
+
+    Rails.logger.info "Done!"
+  end
+
+  private
+
+  def invalid?(provider_attributes)
+    provider_attributes["name"].blank? || provider_attributes["provider_type"].blank? ||
+      provider_attributes["code"].blank?
+  end
+
+  def fetch_providers(link = nil)
+    accredited_providers = ::AccreditedProvider::Api.call(link:)
+    accredited_providers.fetch("data").each do |provider_details|
       provider_attributes = provider_details["attributes"]
-      invalid_records << "Provider with code #{provider_attributes["code"]} is invalid" if invalid?(provider_attributes)
+      @invalid_records << "Provider with code #{provider_attributes["code"]} is invalid" if invalid?(provider_attributes)
       next if invalid?(provider_attributes)
 
-      records << {
+      @records << {
         code: provider_attributes["code"],
         name: provider_attributes["name"],
         provider_type: provider_attributes["provider_type"],
@@ -29,21 +50,8 @@ class AccreditedProvider::Importer
       }
     end
 
-    if invalid_records.any?
-      Rails.logger.info "Invalid Providers - #{invalid_records.inspect}"
+    if accredited_providers.dig("links", "next").present?
+      fetch_providers(accredited_providers.dig("links", "next"))
     end
-
-    Rails.logger.silence do
-      Provider.upsert_all(records, unique_by: :code)
-    end
-
-    Rails.logger.info "Done!"
-  end
-
-  private
-
-  def invalid?(provider_attributes)
-    provider_attributes["name"].blank? || provider_attributes["provider_type"].blank? ||
-      provider_attributes["code"].blank?
   end
 end
