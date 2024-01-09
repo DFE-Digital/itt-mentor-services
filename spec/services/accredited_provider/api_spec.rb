@@ -8,7 +8,7 @@ RSpec.describe AccreditedProvider::Api do
 
     stub_request(
       :get,
-      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/#{next_year}/providers?filter%5Bis_accredited_body%5D=true&per_page=500",
+      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/#{next_year}/providers?filter%5Bis_accredited_body%5D=true",
     ).to_return(
       status: 200,
       body: {
