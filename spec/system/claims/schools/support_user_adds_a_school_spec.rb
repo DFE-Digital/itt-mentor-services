@@ -29,7 +29,7 @@ RSpec.describe "Support User adds a School", type: :system do
     then_i_see_a_dropdown_item_for("Claims School")
     when_i_click_the_dropdown_item_for("Claims School")
     and_i_click_continue
-    then_i_see_an_error("This school has already been added. Try another school")
+    then_i_see_an_error("Claims School has already been added. Try another school")
   end
 
   scenario "Colin submits the search form without selecting a school", js: true do

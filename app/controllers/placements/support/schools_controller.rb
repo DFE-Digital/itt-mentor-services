@@ -7,7 +7,7 @@ class Placements::Support::SchoolsController < Placements::Support::ApplicationC
     if school.valid? && !school.placements?
       @school = school.decorate
     else
-      school.errors.add(:urn, :taken) if school.placements?
+      school.errors.add(:urn, :already_added, school_name: school.name) if school.placements?
       render :new
     end
   end

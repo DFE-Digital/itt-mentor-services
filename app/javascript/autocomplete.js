@@ -16,7 +16,6 @@ const initAutocomplete = (elementId, inputId, options = {}) => {
         id: input.id,
         showNoOptionsFound: true,
         name: input.name,
-        defaultValue: input.value,
         minLength,
         source: debounce(request(path), 900),
         templates: {
