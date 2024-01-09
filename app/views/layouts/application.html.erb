@@ -43,6 +43,7 @@
     </div>
 
     <div class="govuk-width-container">
+      <%= yield :header_content %>
       <%= yield :before_content %>
 
         <% flash.each do |key, message| %>

@@ -47,7 +47,11 @@ end
 private
 
 def given_there_is_an_existing_claims_persona_with_a_school_for(persona_name)
-  create(:membership, user: create(:persona, persona_name.downcase.to_sym, service: "claims"), organisation: create(:school))
+  create(
+    :membership,
+    user: create(:persona, persona_name.downcase.to_sym, service: "claims"),
+    organisation: create(:school, :claims),
+  )
 end
 
 def when_i_visit_the_claims_personas_page
