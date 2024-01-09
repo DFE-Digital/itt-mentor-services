@@ -8,7 +8,7 @@ RSpec.describe AccreditedProvider::Api do
 
     stub_request(
       :get,
-      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/#{next_year}/providers?filter%5Bis_accredited_body%5D=true&per_page=500",
+      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/#{next_year}/providers?filter%5Bis_accredited_body%5D=true",
     ).to_return(
       status: 200,
       body: {
@@ -36,7 +36,7 @@ RSpec.describe AccreditedProvider::Api do
 
   it "returns a list of providers from the publish-teacher-training-courses api" do
     response = subject
-    expect(response).to match_array(
+    expect(response.fetch("data")).to match_array(
       [
         {
           "id" => 123,
