@@ -1,20 +1,18 @@
 class Placements::Support::SchoolsController < Placements::Support::ApplicationController
   def new
-    @school = Placements::School.new
+    @school_form = SchoolOnboardingForm.new
   end
 
   def check
-    if school.valid? && !school.placements?
-      @school = school.decorate
+    if school_form.valid?
+      @school = school
     else
-      school.errors.add(:urn, :already_added, school_name: school.name) if school.placements?
       render :new
     end
   end
 
   def create
-    school.placements = true
-    if school.save
+    if school_form.onboard
       redirect_to placements_support_organisations_path
     else
       render :new
@@ -27,11 +25,15 @@ class Placements::Support::SchoolsController < Placements::Support::ApplicationC
 
   private
 
+  def school_form
+    @school_form ||= SchoolOnboardingForm.new(urn: urn_param, service: :placements)
+  end
+
   def school
-    @school ||= School.find_by(urn: urn_param) || Placements::School.new
+    @school ||= school_form.school.decorate
   end
 
   def urn_param
-    params.dig(:selection, :urn) || params.dig(:school, :urn)
+    params.dig(:school, :search_urn)
   end
 end

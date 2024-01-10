@@ -8,20 +8,19 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
   end
 
   def new
-    @school = Claims::School.new
+    @school_form = SchoolOnboardingForm.new
   end
 
   def check
-    if school.valid? && !school.claims?
-      @school = school.decorate
+    if school_form.valid?
+      @school = school
     else
-      school.errors.add(:urn, :already_added, school_name: school.name) if school.claims?
       render :new
     end
   end
 
   def create
-    if school.update(claims: true)
+    if school_form.onboard
       redirect_to claims_support_schools_path
     else
       render :new
@@ -30,11 +29,15 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
 
   private
 
+  def school_form
+    @school_form ||= SchoolOnboardingForm.new(urn: urn_param, service: :claims)
+  end
+
   def school
-    @school ||= School.find_by(urn: urn_param) || Claims::School.new
+    @school ||= school_form.school.decorate
   end
 
   def urn_param
-    params.dig(:selection, :urn) || params.dig(:school, :urn)
+    params.dig(:school, :search_urn)
   end
 end

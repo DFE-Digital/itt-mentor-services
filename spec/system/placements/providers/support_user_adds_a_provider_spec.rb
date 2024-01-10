@@ -28,7 +28,7 @@ RSpec.describe "Placements / Providers / Support User adds a Provider", type: :s
     then_i_see_a_dropdown_item_for("Provider 1")
     when_i_click_the_dropdown_item_for("Provider 1")
     and_i_click_continue
-    then_i_see_an_error("This provider has already been added. Try another provider")
+    then_i_see_an_error("Provider 1 has already been added. Try another provider")
   end
 
   scenario "Colin submits the search form without selecting a provider", js: true do
