@@ -7,6 +7,19 @@ en:
       long: "%e %B %Y %H:%M"
       long_with_seconds: "%e %B %Y %H:%M:%S"
       time: "%H:%M"
+  activemodel:
+    errors:
+      models:
+        provider_onboarding_form:
+          attributes:
+            code:
+              already_added: "%{provider_name} has already been added. Try another provider"
+              blank: Enter a provider name, UKPRN, URN or postcode
+        school_onboarding_form:
+          attributes:
+            urn:
+              already_added: "%{school_name} has already been added. Try another school"
+              blank: Enter a school name, URN or postcode
   activerecord:
     errors:
       models:
@@ -14,16 +27,6 @@ en:
           attributes:
             type:
               blank: Select an organisation type
-        provider:
-          attributes:
-            code:
-              taken: This provider has already been added. Try another provider
-              blank: Enter a provider name, UKPRN, URN or postcode
-        school:
-          attributes:
-            urn:
-              already_added: "%{school_name} has already been added. Try another school"
-              blank: Enter a school name, URN or postcode
         user:
           attributes:
             first_name:

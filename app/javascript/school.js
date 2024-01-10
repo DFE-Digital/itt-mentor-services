@@ -15,7 +15,7 @@ function init() {
       suggestion: providerSuggestionTemplate,
     },
     minLength: 2,
-    inputName: "selection[urn]",
+    inputName: "school[search_urn]",
     onConfirm,
   };
 

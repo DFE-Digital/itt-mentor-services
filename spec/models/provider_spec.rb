@@ -42,7 +42,7 @@ RSpec.describe Provider, type: :model do
     it do
       is_expected.to validate_uniqueness_of(
         :code,
-      ).case_insensitive.with_message("This provider has already been added. Try another provider")
+      ).case_insensitive
     end
     it { is_expected.to allow_values("scitt", "lead_school", "university").for(:provider_type) }
   end
