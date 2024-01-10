@@ -37,6 +37,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_12_104348) do
     t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
+  create_table "pg_search_documents", force: :cascade do |t|
+    t.text "content"
+    t.text "organisation_type"
+    t.string "searchable_type"
+    t.uuid "searchable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable"
+  end
+
   create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "code", null: false
     t.datetime "created_at", null: false

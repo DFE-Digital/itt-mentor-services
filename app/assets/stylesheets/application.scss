@@ -5,4 +5,5 @@ $govuk-assets-path: "";
 @import "govuk-frontend/dist/govuk/all";
 @import "components/all";
 @import "accessible-autocomplete/dist/accessible-autocomplete.min";
-@import "search-form"
+@import "search-form";
+@import "filter-form";

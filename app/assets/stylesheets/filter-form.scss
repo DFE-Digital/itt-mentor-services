@@ -1,0 +1,260 @@
+.app-filter {
+  background-color: govuk-colour("light-grey");
+}
+
+.app-filter-layout {
+  background-color: govuk-colour("light-grey");
+  @include govuk-clearfix;
+}
+
+.app-filter-layout__filter {
+  @include govuk-media-query($from: desktop) {
+    float: left;
+    margin-right: govuk-spacing(6);
+    max-width: 310px;
+    min-width: 260px;
+    width: 100%;
+  }
+}
+
+.app-filter-layout__filter:focus {
+
+  outline: $govuk-focus-width solid $govuk-focus-colour;
+  outline-offset: 0;
+
+  @include govuk-media-query(desktop) {
+    outline: none;
+  }
+
+}
+
+@include govuk-media-query($until: desktop) {
+  .js-enabled .app-filter-layout__filter {
+    background-color: govuk-colour("white");
+    position: fixed; top: govuk-spacing(1); right: govuk_spacing(1); bottom: govuk_spacing(1);
+    overflow-y: scroll;
+    z-index: 100;
+  }
+}
+
+.app-filter-layout__content {
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.app-filter__header {
+  background-color: govuk-colour("light-grey");
+  display: flex;
+  justify-content: space-between;
+  padding: govuk-spacing(2) govuk-spacing(3);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  [class^=govuk-heading-] {
+    margin-bottom: 0;
+  }
+
+  @include govuk-media-query($from: desktop) {
+    position: static;
+  }
+
+}
+
+// JavaScript
+.app-filter__legend {
+  overflow: visible; // Override govuk to allow for focus style to be seen
+  width: 100%;
+
+  button {
+    @include govuk-font($size: 24, $weight: bold);
+    background-color: transparent;
+    box-sizing: border-box;
+    border-radius: 0;
+    border: 0 none;
+    cursor: pointer; // Adam would not approve
+    display: block;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    text-align: left;
+    width: 100%;
+    -webkit-appearance: none;
+
+    // Fix unwanted button padding in Firefox
+    &::-moz-focus-inner {
+      padding: 0;
+      border: 0;
+    }
+
+    &::after {
+      background-image: ("icon-toggle-plus-minus.svg");
+      // Using specific px values for icon
+      background-position: 0 0;
+      content: "";
+      display: block;
+      height: 16px;
+      margin-top: -8px; // Half the height of the icon
+      position: absolute; top: 50%; right: 0;
+      width: 16px;
+    }
+
+    &[aria-expanded="true"] {
+      &::after {
+        background-position: 16px 16px;
+      }
+    }
+  }
+}
+
+.app-filter__header-title,
+.app-filter__header-action {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.app-filter__close {
+  @include govuk-font(19);
+
+  color: govuk-colour("black");
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  -webkit-appearance: none;
+
+  &:focus {
+    background-color: $govuk-focus-colour;
+    color: $govuk-focus-text-colour;
+    box-shadow: 0 -2px $govuk-focus-colour, 0 4px $govuk-focus-text-colour;
+    outline: none;
+  }
+
+  // Fix unwanted button padding in Firefox
+  &::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+  }
+
+  &::before {
+    background-image: url("icon-close-cross-black.svg");
+    // Using specific px values for icons.
+    content: '';
+    display: inline-block;
+    height: 14px;
+    margin-right: govuk-spacing(1);
+    position: relative;
+    top: -1px; // Alignment tweak
+    vertical-align: middle;
+    width: 14px;
+  }
+
+}
+
+.app-filter-layout__selected {
+  background-color: govuk-colour("light-grey");
+  padding: govuk-spacing(1);
+  padding-bottom: govuk-spacing(5);
+  margin: govuk-spacing(2);
+  border-top: 1px solid govuk-colour("mid-grey");
+  border-bottom: 1px solid govuk-colour("mid-grey");
+
+  ul:last-of-type {
+    margin-bottom: 0; // IE9 +
+  }
+
+}
+
+.app-filter__selected-heading {
+  font-size: 0; // Hide whitespace between elements
+  text-align: justify; // Trick to remove the need for floats
+
+  &:after {
+    content: '';
+    display: inline-block;
+    width: 100%;
+  }
+}
+
+.app-filter__heading-title,
+.app-filter__heading-action {
+  padding-top: govuk-spacing(3);
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+
+.app-filter-tags {
+  font-size: 0;
+  margin-bottom: govuk-spacing(2); // Needs to adjust to 15px on mobile
+  padding-left: 0;
+
+  li {
+    display: inline-block;
+    margin-right: govuk-spacing(1);
+  }
+}
+
+.app-filter__tag {
+  @include govuk-font(16);
+  background-color: govuk-colour("white");
+  border: 1px solid govuk-colour("black");
+  color: govuk-colour("black");
+  display: inline-block;
+  margin-top: govuk-spacing(1);
+  padding: govuk-spacing(1);
+  text-decoration: none;
+
+  &:link,
+  &:visited {
+    color: govuk-colour("black");
+  }
+
+  &:focus {
+    color: $govuk-focus-text-colour;
+    background-color: $govuk-focus-colour;
+  }
+
+  &:hover {
+    background-color: govuk-colour("black");
+    color: govuk-colour("white");
+  }
+
+  &:after {
+    background-image: url("icon-tag-remove-cross.svg");
+    content: '';
+    display: inline-block;
+    font-weight: bold;
+    height: govuk_spacing(2);
+    margin-left: govuk-spacing(1);
+    vertical-align: middle;
+    width: govuk_spacing(2);
+  }
+
+  &:hover:after {
+    background-image: url("icon-tag-remove-cross-white.svg");
+  }
+
+}
+
+.app-filter__options {
+  margin-top: -1px;
+  padding: govuk-spacing(4) govuk-spacing(3);
+
+  div:last-of-type {
+    margin-bottom: 0; // IE9 +
+  }
+
+  .govuk-checkboxes__label,
+  .govuk-radios__label {
+    @include govuk-font(16);
+
+    &::before {
+      background-color: govuk-colour("white");
+    }
+  }
+}

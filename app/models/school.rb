@@ -57,6 +57,10 @@ class School < ApplicationRecord
   scope :placements, -> { where placements: true }
   scope :claims, -> { where claims: true }
 
+  multisearchable against: %i[name postcode],
+                  if: :placements,
+                  additional_attributes: ->(_school) { { organisation_type: "school" } }
+
   pg_search_scope :search_name_urn_postcode,
                   against: %i[name postcode urn],
                   using: { trigram: { word_similarity: true } }
@@ -64,4 +68,8 @@ class School < ApplicationRecord
   pg_search_scope :search_name_postcode,
                   against: %i[name postcode],
                   using: { trigram: { word_similarity: true } }
+
+  def organisation_type
+    "school"
+  end
 end

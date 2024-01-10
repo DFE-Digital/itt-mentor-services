@@ -12,6 +12,19 @@ en:
           itt_provider: ITT provider
           school: School
           title: Organisation type
+        index:
+          title: "Organisations (%{organisation_count})"
+          clear_filters: Clear filters
+          remove_this_filter: Remove this filter
+          selected_filters: Selected filters
+          filter: Filter
+          apply_filters: Apply filters
+          scitt: SCITT
+          school: School
+          university: University
+          lead_school: Lead partner
+          no_organisations: There are no onboarded organisations
+          organisation_type: Organisation type
       schools:
         new:
           caption: Add organisation

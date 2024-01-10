@@ -1,7 +1,8 @@
 class Placements::Support::OrganisationsController < Placements::Support::ApplicationController
   def index
-    @schools = Placements::School.order(:name)
-    @providers = Placements::Provider.all
+    @pagy, @organisations = pagy(organisations)
+    @filters = filters_param
+    @search_param = search_param
   end
 
   def new
@@ -20,6 +21,18 @@ class Placements::Support::OrganisationsController < Placements::Support::Applic
   end
 
   private
+
+  def organisations
+    @organisations ||= Placements::OrganisationFinder.call(filters: filters_param, search_term: search_param)
+  end
+
+  def filters_param
+    params.fetch(:filters, []).compact.reject(&:blank?)
+  end
+
+  def search_param
+    params.fetch(:name_or_postcode, "")
+  end
 
   def organisation_type_param
     params.dig(:organisation, :organisation_type)
