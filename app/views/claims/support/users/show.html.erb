@@ -1,0 +1,25 @@
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: claims_support_school_users_path(@school)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l"><%= @school.name %></span>
+    <h2 class="govuk-heading-l"><%= @user.full_name %></h2>
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key"><%= t(".attributes.users.first_name") %></dt>
+        <dd class="govuk-summary-list__value"><%= @user.first_name %></dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key"><%= t(".attributes.users.last_name") %></dt>
+        <dd class="govuk-summary-list__value"><%= @user.last_name %></dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key"><%= t(".attributes.users.email") %></dt>
+        <dd class="govuk-summary-list__value"><%= @user.email %></dd>
+      </div>
+    </dl>
+  </div>
+</div>

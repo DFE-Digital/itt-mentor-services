@@ -117,6 +117,12 @@ en:
           title: Invite a new user
           caption: Add user
           description: Personal details
+        show:
+          attributes:
+            users:
+              first_name: First name
+              last_name: Last name
+              email: Email
         check:
           title: Check your answers
           caption: Add user

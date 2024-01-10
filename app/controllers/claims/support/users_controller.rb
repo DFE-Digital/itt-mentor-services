@@ -5,6 +5,10 @@ class Claims::Support::UsersController < Claims::Support::ApplicationController
     @users = @school.users
   end
 
+  def show
+    @user = Claims::User.find(params.require(:id))
+  end
+
   def new
     @user = Claims::User.new
   end
