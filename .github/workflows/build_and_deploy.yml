@@ -58,7 +58,7 @@ jobs:
             if: github.event.number != ''
             run: |
                 az aks get-credentials -g s189t01-tsc-ts-rg -n s189t01-tsc-test-aks
-                kubectl exec -n bat-qa deployment/itt-mentor-services-${{ github.event.number }} -- sh -c "export GIAS_CSV_BASE_URL=https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public  && export PUBLISH_BASE_URL=https://api.publish-teacher-training-courses.service.gov.uk/ && cd /app && /usr/local/bin/rake db:seed"
+                kubectl exec -n bat-qa deployment/itt-mentor-services-${{ github.event.number }} -- sh -c "export GIAS_CSV_BASE_URL=https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public  && export PUBLISH_BASE_URL=https://qa.api.publish-teacher-training-courses.service.gov.uk// && cd /app && /usr/local/bin/rake db:seed"
 
           - name: Get application URL
             id: get-app-url
