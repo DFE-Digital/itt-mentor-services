@@ -1,0 +1,56 @@
+<%# locals: (search_param: "", filters: []) -%>
+
+<div class="app-filter-layout">
+  <div class="app-filter-layout__filter">
+    <div class="app-filter__header">
+      <div class="app-filter__header-title">
+        <h2 class="govuk-heading-m"><%= t("placements.support.organisations.index.filter") %></h2>
+      </div>
+      <div class="app-filter__header-action"></div>
+    </div>
+    <div class="app-filter-layout__content">
+     <% if filters.any? %>
+       <div class="app-filter-layout__selected">
+         <div class="app-filter__selected-heading">
+           <div class="app-filter__heading-title">
+             <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><%= t("placements.support.organisations.index.selected_filters") %></h2>
+             <p class="govuk-body">
+               <%= govuk_link_to t("placements.support.organisations.index.clear_filters"),
+                                  placements_support_organisations_path(name_or_postcode: search_param),
+                                  no_visited_state: true %>
+             </p>
+           </div>
+         </div>
+         <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("placements.support.organisations.index.organisation_type") %></h3>
+         <ul class="app-filter-tags">
+           <% filters.each do |filter| %>
+             <li>
+               <%= govuk_link_to t("placements.support.organisations.index.#{filter}"),
+                                  placements_support_organisations_path(name_or_postcode: search_param,
+                                                                        filters: filters.reject { |f| f == filter }),
+                                  class: "app-filter__tag",
+                                  no_visited_state: true %>
+             </li>
+           <% end %>
+         </ul>
+       </div>
+     <% end %>
+     <div class="app-filter__options">
+       <%= form_with(url: placements_support_organisations_path,
+                     method: "get",
+                     data: { turbo: false }) do |form| %>
+         <%= form.govuk_submit t("placements.support.organisations.index.apply_filters") %>
+         <%= form.govuk_check_boxes_fieldset(:filters, legend: { text: t("placements.support.organisations.index.organisation_type"), size: "s" }, small: true) do %>
+           <% filter_options.each do |org_type| %>
+             <%= form.govuk_check_box(:filters,
+                                      org_type,
+                                      label: { text: t("placements.support.organisations.index.#{org_type}") },
+                                      checked: filters.include?(org_type)) %>
+           <% end %>
+         <% end %>
+         <%= form.hidden_field :name_or_postcode, value: @search_param %>
+       <% end %>
+     </div>
+    </div>
+  </div>
+</div>

@@ -1,25 +1,39 @@
+<%= content_for :page_title, t(".title", organisation_count: @pagy.count) %>
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl"><%= t("organisations") %></h1>
+      <h1 class="govuk-heading-l"><%= t(".title", organisation_count: @pagy.count) %></h1>
       <%= govuk_button_to(t("add_organisation"), new_placements_support_organisation_path, method: :get) %>
-
-    <% if @schools.any? %>
-      <h2 class="govuk-heading-l"><%= t("schools") %></h2>
-      <ul class="govuk-list">
-        <% @schools.each do |school| %>
-          <li><%= govuk_link_to(school.name, placements_support_school_path(school)) %></li>
-        <% end %>
-      </ul>
-    <% end %>
-
-    <% if @providers.any? %>
-      <h2 class="govuk-heading-l"><%= t("providers") %></h2>
-      <ul class="govuk-list">
-        <% @providers.each do |provider| %>
-          <li><%= provider.name %></li>
-        <% end %>
-      </ul>
-    <% end %>
+    </div>
   </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+      <%= render partial: "filter", locals: { filters: @filters, search_param: @search_param } %>
+    </div>
+    <div class="govuk-grid-column-two-thirds">
+      <%= render partial: "shared/search_form", locals: {
+        url: placements_support_organisations_path,
+        search_param: @search_param,
+        clear_search_url: placements_support_organisations_path(filters: @filters),
+        filters: @filters,
+      } %>
+      <% if @organisations.any? %>
+        <ul class="organisation-search-results">
+          <% @organisations.each do |org| %>
+            <% if org.searchable_type == "School" %>
+              <%= render OrganisationListItem.new(organisation: org.searchable, organisation_url: placements_support_school_path(org.searchable)) %>
+            <% end %>
+            <% if org.searchable_type == "Provider" %>
+              <%= render OrganisationListItem.new(organisation: org.searchable, organisation_url: "#") %>
+            <% end %>
+          <% end %>
+        </ul>
+        <%= govuk_pagination(pagy: @pagy) %>
+        <p><%= t("pagination_info", from: @pagy.from, to: @pagy.to, count: @pagy.count) %></p>
+      <% else %>
+        <p><%= no_results(@search_param, @filters) %></p>
+      <% end %>
+    </div>
+  </div>
+</div>
 </div>

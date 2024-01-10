@@ -1,3 +1,5 @@
+<%# locals: (url:, search_param:, clear_search_url: "", filters: []) -%>
+
 <div class="govuk-form-group">
   <%= form_with(
     url:,
@@ -6,8 +8,12 @@
     data: { turbo: false },
   ) do |f| %>
     <%= f.govuk_text_field :name_or_postcode, type: :search, value: search_param, label: { text: t(".search-header"), size: "m" } %>
-
     <%= f.govuk_submit t(".search") %>
+    <% if filters.present? %>
+      <% filters.each do |filter| %>
+        <%= f.hidden_field :filters, multiple: true, value: filter %>
+      <% end %>
+    <% end %>
   <% end %>
 </div>
 

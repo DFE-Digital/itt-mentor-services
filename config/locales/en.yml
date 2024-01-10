@@ -6,10 +6,15 @@ en:
       clear_search: Clear search
   components:
     organisation_list_item:
-      organisation_type: Organisation Type
+      organisation_type: Organisation type
       school: School
+      scitt: SCITT
+      university: University
+      lead_school: Lead partner
   pagination_info: Showing %{from} to %{to} of %{count} results
   no_results: There are no results for '%{for}'.
+  no_results_with_filter_and_search: There are no results for '%{for}' and the selected filter.
+  no_results_with_filter: There are no results for the selected filter.
   date:
     formats:
       long: "%e %B %Y"

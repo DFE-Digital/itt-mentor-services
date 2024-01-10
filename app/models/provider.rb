@@ -31,6 +31,8 @@
 class Provider < ApplicationRecord
   include PgSearch::Model
 
+  alias_attribute :organisation_type, :provider_type
+
   has_many :memberships, as: :organisation
 
   enum :provider_type,
@@ -42,6 +44,10 @@ class Provider < ApplicationRecord
 
   scope :accredited, -> { where accredited: true }
   scope :placements, -> { where placements: true }
+
+  multisearchable against: %i[name postcode],
+                  if: :placements,
+                  additional_attributes: ->(provider) { { organisation_type: provider.provider_type } }
 
   pg_search_scope :search_name_urn_ukprn_postcode,
                   against: %i[name postcode urn ukprn],

@@ -6,6 +6,7 @@ RSpec.describe "Placements / Schools / Support User adds a Provider",
     given_i_sign_in_as_colin
     when_i_click_add_organisation
   end
+
   after { Capybara.app_host = nil }
 
   scenario "Colin selects to add an ITT provider" do
