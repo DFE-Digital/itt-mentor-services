@@ -76,15 +76,38 @@ RSpec.describe AccreditedProvider::Importer do
             },
           },
         ],
+        "links" => {
+          "next" => "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/#{next_year}/providers?filter%5Bis_accredited_body%5D=true&page=2",
+        },
+      }.to_json,
+    )
+
+    stub_request(
+      :get,
+      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/#{next_year}/providers?filter%5Bis_accredited_body%5D=true&page=2",
+    ).to_return(
+      status: 200,
+      body: {
+        "data" => [
+          {
+            "id" => 212,
+            "attributes" => {
+              "name" => "Page 2 Provider",
+              "code" => "Pg2",
+              "provider_type" => "scitt",
+            },
+          },
+        ],
       }.to_json,
     )
   end
 
   it "creates new provider records for responses which don't already exist or are valid" do
-    expect { subject }.to change(Provider, :count).by(3)
+    expect { subject }.to change(Provider, :count).by(4)
     expect(Provider.find_by(name: "Provider 1", code: "Prov1", provider_type: "scitt")).to be_present
     expect(Provider.find_by(name: "Provider 2", code: "Prov2", provider_type: "university")).to be_present
     expect(Provider.find_by(name: "Provider 3", code: "Prov3", provider_type: "lead_school")).to be_present
+    expect(Provider.find_by(name: "Page 2 Provider", code: "Pg2", provider_type: "scitt")).to be_present
     expect(Provider.find_by(name: "Invalid Provider", code: "Inv")).not_to be_present
     expect(Provider.where(name: existing_provider.name, code: existing_provider.code).count).to eq(1)
     expect(Provider.find_by(code: changeable_provider.code).name).to eq("Changed Provider")
