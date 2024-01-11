@@ -10,6 +10,10 @@ en:
   activemodel:
     errors:
       models:
+        organisation_onboarding_form:
+          attributes:
+            organisation_type:
+              blank: Select an organisation type
         provider_onboarding_form:
           attributes:
             code:
@@ -23,10 +27,6 @@ en:
   activerecord:
     errors:
       models:
-        organisation:
-          attributes:
-            type:
-              blank: Select an organisation type
         user:
           attributes:
             first_name:
