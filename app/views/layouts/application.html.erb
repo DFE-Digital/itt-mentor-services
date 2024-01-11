@@ -43,7 +43,7 @@
     </div>
 
     <% if support_controller? %>
-      <%= primary_navigation do |component| %>
+      <%= render PrimaryNavigationComponent.new do |component| %>
         <% component.with_navigation_item t(".primary_navigation.organisations"), support_organisations_path %>
         <% component.with_navigation_item t(".primary_navigation.claims"), "#" if current_service == :claims %>
         <% component.with_navigation_item t(".primary_navigation.users"), "#" %>

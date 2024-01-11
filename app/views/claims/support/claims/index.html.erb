@@ -1,7 +1,7 @@
 <div class="govuk-width-container">
   <h1 class="govuk-heading-l"><%= @school.name %></h1>
 
-  <%= secondary_navigation do |component| %>
+  <%= render SecondaryNavigationComponent.new do |component| %>
     <% component.with_navigation_item t(".details"), claims_support_school_path(@school.id) %>
     <% component.with_navigation_item t(".users"), claims_support_school_users_path(@school.id) %>
     <% component.with_navigation_item t(".mentors"), "#" %>

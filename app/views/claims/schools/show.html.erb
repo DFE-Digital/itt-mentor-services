@@ -12,7 +12,7 @@
 <% content_for :page_title, @school.name %>
 
 <% content_for(:before_content) do %>
-  <%= primary_navigation do |component| %>
+  <%= render PrimaryNavigationComponent.new do |component| %>
     <% component.with_navigation_item t(".primary_navigation.claims"), "#" %>
     <% component.with_navigation_item t(".primary_navigation.users"), "#" %>
     <% component.with_navigation_item t(".primary_navigation.details"), claims_school_path(@school) %>
