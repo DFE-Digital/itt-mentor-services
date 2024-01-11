@@ -1,0 +1,18 @@
+<div class="govuk-form-group">
+  <%= form_with(
+    url:,
+    method: "get",
+    class: "search-form",
+    data: { turbo: false },
+  ) do |f| %>
+    <%= f.govuk_text_field :name_or_postcode, type: :search, value: search_param, label: { text: t(".search-header"), size: "m" } %>
+
+    <%= f.govuk_submit t(".search") %>
+  <% end %>
+</div>
+
+<% unless search_param.blank? %>
+  <p class="clear-search">
+    <%= govuk_link_to t(".clear_search"), clear_search_url, no_visited_state: true %>
+  </p>
+<% end %>

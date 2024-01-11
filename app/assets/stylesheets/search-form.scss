@@ -1,0 +1,18 @@
+.search-form {
+  display: flex;
+}
+
+.search-form .govuk-form-group{
+  flex: 1;
+}
+
+.search-form button {
+  margin-top: auto;
+  top: -2px;
+  margin-bottom: 0;
+  margin-left: govuk-spacing(2);
+}
+
+.clear-search {
+  margin-top: -20px;
+}

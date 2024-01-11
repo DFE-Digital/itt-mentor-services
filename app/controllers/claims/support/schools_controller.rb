@@ -1,6 +1,7 @@
 class Claims::Support::SchoolsController < Claims::Support::ApplicationController
   def index
-    @schools = Claims::School.order(:name)
+    @pagy, @schools = pagy(schools)
+    @search_param = params[:name_or_postcode]
   end
 
   def show
@@ -32,6 +33,14 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
 
   def school
     @school ||= School.find_by(urn: urn_param) || Claims::School.new
+  end
+
+  def schools
+    @schools ||= if params[:name_or_postcode].blank?
+                   Claims::School.order(:name)
+                 else
+                   Claims::School.search_name_postcode(params[:name_or_postcode]).order(:name)
+                 end
   end
 
   def urn_param

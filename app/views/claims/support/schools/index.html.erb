@@ -1,18 +1,36 @@
+<%= content_for :page_title, t(".heading", records: @pagy.count) %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
+    <h1 class="govuk-heading-l"><%= t(".heading", records: @pagy.count) %></h1>
 
     <%= govuk_button_to(t("add_organisation"), new_claims_support_school_path, method: :get) %>
 
+    <%= render partial: "shared/search_form", locals: {
+      url: claims_support_schools_path,
+      search_param: @search_param,
+      clear_search_url: claims_support_schools_path,
+    } %>
+
     <% if @schools.any? %>
-      <h2 class="govuk-heading-l"><%= t("schools") %></h2>
-      <ul class="govuk-list">
+      <ul class="organisation-search-results">
         <% @schools.each do |school| %>
-        <li>
-          <%= govuk_link_to school.name, claims_school_path(school), no_visited_state: true %>
-        </li>
+          <%= render(OrganisationListItem.new(
+            organisation: school,
+            organisation_type: "school",
+            organisation_url: claims_school_path(school),
+          )) %>
         <% end %>
+
+        <%= govuk_pagination(pagy: @pagy) %>
+        <p>
+          <%= t("pagination_info", from: @pagy.from, to: @pagy.to, count: @pagy.count) %>
+        </p>
       </ul>
+    <% else %>
+      <p>
+        <%= t("no_results", for: @search_param) %>
+      </p>
     <% end %>
   </div>
 </div>

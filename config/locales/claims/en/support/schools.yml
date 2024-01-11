@@ -3,7 +3,7 @@ en:
     support:
       schools:
         index:
-          heading: Organisations
+          heading: Organisations (%{records})
         new:
           caption: Add organisation
           cancel: Cancel
