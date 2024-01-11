@@ -1,0 +1,81 @@
+.organisation-search-results {
+  @include govuk-responsive-padding(4, "top");
+  margin: 0;
+  padding-left: 0;
+  border-top: 1px solid $govuk-border-colour;
+}
+
+.organisation-search-results__item {
+  @include govuk-responsive-margin(4, "bottom");
+  border-bottom: 1px solid $govuk-border-colour;
+  display: block;
+}
+
+.organisation-search-result__item-title {
+  @include govuk-font($size: 19, $weight: bold);
+  @include govuk-responsive-margin(4, "bottom");
+  margin-top: 0;
+}
+
+.organisation-search-results-header {
+  border-top: 1px solid $govuk-border-colour;
+  padding: govuk-spacing(2) 0;
+
+  @include govuk-media-query($from: "desktop") {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.app-result-detail {
+  @include govuk-font($size: 19);
+  @include govuk-text-colour;
+  @include govuk-responsive-margin(4, "bottom");
+  @include govuk-media-query($from: tablet) {
+    display: table;
+    width: 100%;
+    table-layout: fixed; // Required to allow us to wrap words that overflow.
+  }
+  margin: 0; // Reset default user agent styles
+}
+
+.app-result-detail__row {
+  @include govuk-media-query($until: tablet) {
+    margin-bottom: govuk-spacing(1);
+  }
+  @include govuk-media-query($from: tablet) {
+    display: table-row;
+  }
+}
+
+.app-result-detail__key,
+.app-result-detail__value {
+  margin: 0; // Reset default user agent styles
+  padding-bottom: govuk-spacing(1);
+
+  @include govuk-media-query($from: tablet) {
+    display: table-cell;
+    padding-top: 0;
+    padding-right: govuk-spacing(4);
+  }
+
+  .govuk-body {
+    margin-bottom: govuk-spacing(1);
+  }
+
+  .govuk-hint {
+    @include govuk-font($size: 16);
+    margin-bottom: govuk-spacing(1);
+  }
+}
+
+.app-result-detail__key {
+  font-weight: bold;
+
+  @include govuk-media-query($from: tablet) {
+    color: $govuk-secondary-text-colour;
+    font-weight: normal;
+    width: 200px;
+  }
+}

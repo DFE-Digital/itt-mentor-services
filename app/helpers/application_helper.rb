@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include Pagy::Frontend
+
   def current_service
     case request.host
     when ENV["CLAIMS_HOST"]

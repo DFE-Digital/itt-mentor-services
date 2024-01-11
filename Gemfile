@@ -56,6 +56,9 @@ gem "omniauth"
 gem "omniauth_openid_connect"
 gem "omniauth-rails_csrf_protection"
 
+# Pagination
+gem "pagy", "~> 6.3"
+
 # Decorators
 gem "draper"
 

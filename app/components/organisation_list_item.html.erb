@@ -1,0 +1,11 @@
+<li class="organisation-search-results__item">
+  <h2 class="organisation-search-result__item-title">
+    <%= govuk_link_to organisation.name, organisation_url, no_visited_state: true %>
+  </h2>
+  <dl class="app-result-detail">
+    <div class="app-result-detail__row">
+      <dt class="app-result-detail__key"><%= t("components.organisation_list_item.organisation_type") %></dt>
+      <dd class="app-result-detail__value"><%= t("components.organisation_list_item.#{organisation_type}") %></dd>
+    </div>
+  </dl>
+</li>

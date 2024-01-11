@@ -60,4 +60,8 @@ class School < ApplicationRecord
   pg_search_scope :search_name_urn_postcode,
                   against: %i[name postcode urn],
                   using: { trigram: { word_similarity: true } }
+
+  pg_search_scope :search_name_postcode,
+                  against: %i[name postcode],
+                  using: { trigram: { word_similarity: true } }
 end
