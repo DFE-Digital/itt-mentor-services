@@ -21,10 +21,6 @@ class Placements::Support::OrganisationsController < Placements::Support::Applic
 
   private
 
-  def organisation
-    @organisation ||= Placements::School.new
-  end
-
   def organisation_type_param
     params.dig(:organisation, :organisation_type)
   end
