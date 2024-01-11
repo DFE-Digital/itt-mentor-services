@@ -1,18 +1,8 @@
 .content-header {
   margin-top: govuk-spacing(2);
-}
 
-.content-header-title{
   @include govuk-media-query($from: tablet) {
-    float: left;
-    width: 50%;
-  }
-}
-
-.content-header-actions {
- @include govuk-media-query($from: tablet) {
-    width: 50%;
-    text-align: right;
-    float: right;
+    display: flex;
+    justify-content: space-between;
   }
 }
