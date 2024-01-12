@@ -1,0 +1,7 @@
+<%= render SecondaryNavigationComponent.new do |component| %>
+  <% component.with_navigation_item t(".details"), claims_support_school_path(school) %>
+  <% component.with_navigation_item t(".users"), claims_support_school_users_path(school) %>
+  <% component.with_navigation_item t(".mentors"), claims_support_school_mentors_path(school) %>
+  <% component.with_navigation_item t(".providers"), claims_support_school_providers_path(school) %>
+  <% component.with_navigation_item t(".claims"), claims_support_school_claims_path(school) %>
+<% end %>

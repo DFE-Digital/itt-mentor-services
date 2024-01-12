@@ -1,0 +1,11 @@
+en:
+  claims:
+    support:
+      users:
+        index:
+          invite_user: Invite User
+          heading: Users
+          attributes:
+            users:
+              name: Name
+              email: Email

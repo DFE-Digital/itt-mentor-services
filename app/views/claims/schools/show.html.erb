@@ -12,20 +12,14 @@
 <% content_for :page_title, @school.name %>
 
 <% content_for(:before_content) do %>
-  <%= render PrimaryNavigationComponent.new do |component| %>
-    <% component.with_navigation_item t(".primary_navigation.claims"), "#" %>
-    <% component.with_navigation_item t(".primary_navigation.users"), "#" %>
-    <% component.with_navigation_item t(".primary_navigation.details"), claims_school_path(@school) %>
-  <% end %>
+  <%= render "claims/schools/primary_navigation", school: @school %>
 <% end %>
 
 <div class="govuk-width-container">
-  <div class="govuk-grid-row govuk-!-margin-top-7">
-    <div class="govuk-grid-column-full">
-      <h1 class="govuk-heading-l"><%= t("claims.schools.show.heading") %></h1>
-    </div>
+  <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
-      <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-row govuk-!-margin-top-7">
+    <div class="govuk-grid-column-two-thirds">
       <%= render "school_details", school: @school %>
       <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".additional_details") %></h2>
       <%= render "additional_details", school: @school %>
