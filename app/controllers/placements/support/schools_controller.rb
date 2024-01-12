@@ -20,7 +20,7 @@ class Placements::Support::SchoolsController < Placements::Support::ApplicationC
   end
 
   def show
-    @school = Placements::School.find(params[:id])&.decorate
+    @school = Placements::School.find(params[:id]).decorate
   end
 
   private

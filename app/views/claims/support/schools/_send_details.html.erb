@@ -1,0 +1,14 @@
+<%= govuk_summary_list(html_attributes: { id: "send-details" }) do |summary_list| %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t("placements.support.schools.show.special_classes")) %>
+    <% row.with_value(**details_field_args(@school.special_classes)) %>
+  <% end %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t("placements.support.schools.show.send_provision")) %>
+    <% row.with_value(**details_field_args(@school.send_provision)) %>
+  <% end %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t("placements.support.schools.show.training_with_disabilities")) %>
+    <% row.with_value(**details_field_args(@school.training_with_disabilities)) %>
+  <% end %>
+<% end %>
