@@ -26,8 +26,8 @@ class Provider::Importer
   end
 
   def fetch_providers(link = nil)
-    accredited_providers = ::Provider::Api.call(link:)
-    accredited_providers.fetch("data").each do |provider_details|
+    providers = ::Provider::Api.call(link:)
+    providers.fetch("data").each do |provider_details|
       provider_attributes = provider_details["attributes"]
       @invalid_records << "Provider with code #{provider_attributes["code"]} is invalid" if invalid?(provider_attributes)
       next if invalid?(provider_attributes)
@@ -51,8 +51,8 @@ class Provider::Importer
       }
     end
 
-    if accredited_providers.dig("links", "next").present?
-      fetch_providers(accredited_providers.dig("links", "next"))
+    if providers.dig("links", "next").present?
+      fetch_providers(providers.dig("links", "next"))
     end
   end
 end
