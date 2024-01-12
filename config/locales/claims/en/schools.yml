@@ -37,3 +37,7 @@ en:
         telephone_number: Telephone number
         website: Website
         address: Address
+      primary_navigation:
+        claims: Claims
+        users: Users
+        details: Details
