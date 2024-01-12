@@ -33,7 +33,7 @@ class Claims::Support::UsersController < Claims::Support::ApplicationController
   private
 
   def set_school
-    @school = School.find(params.require(:school_id))
+    @school = Claims::School.find(params.require(:school_id))
   end
 
   def user
