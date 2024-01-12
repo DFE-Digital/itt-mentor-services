@@ -57,6 +57,7 @@ RSpec.describe Provider::Importer do
               "city" => existing_provider.city,
               "county" => existing_provider.county,
               "postcode" => existing_provider.postcode,
+              "accredited_body" => existing_provider.accredited,
             },
           },
           {
