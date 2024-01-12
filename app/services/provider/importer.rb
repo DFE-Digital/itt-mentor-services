@@ -1,4 +1,4 @@
-class AccreditedProvider::Importer
+class Provider::Importer
   include ServicePattern
 
   def call
@@ -26,7 +26,7 @@ class AccreditedProvider::Importer
   end
 
   def fetch_providers(link = nil)
-    accredited_providers = ::AccreditedProvider::Api.call(link:)
+    accredited_providers = ::Provider::Api.call(link:)
     accredited_providers.fetch("data").each do |provider_details|
       provider_attributes = provider_details["attributes"]
       @invalid_records << "Provider with code #{provider_attributes["code"]} is invalid" if invalid?(provider_attributes)
@@ -47,6 +47,7 @@ class AccreditedProvider::Importer
         city: provider_attributes["city"],
         county: provider_attributes["county"],
         postcode: provider_attributes["postcode"],
+        accredited: provider_attributes["accredited_body"],
       }
     end
 

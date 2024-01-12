@@ -3,6 +3,7 @@
 # Table name: providers
 #
 #  id            :uuid             not null, primary key
+#  accredited    :boolean          default(FALSE)
 #  address1      :string
 #  address2      :string
 #  address3      :string

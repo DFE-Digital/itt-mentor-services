@@ -1,17 +1,17 @@
 require "rails_helper"
 
-RSpec.describe AccreditedProvider::Importer do
+RSpec.describe Provider::Importer do
   subject { described_class.call }
 
   let(:existing_provider) { create(:provider) }
   let(:changeable_provider) { create(:provider, name: "Changeable Provider") }
 
   before do
-    next_year = Time.current.next_year.year
+    Timecop.freeze(Time.zone.local(2024, 1, 1, 1))
 
     stub_request(
       :get,
-      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/#{next_year}/providers?filter%5Bis_accredited_body%5D=true",
+      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/2024/providers",
     ).to_return(
       status: 200,
       body: {
@@ -77,14 +77,14 @@ RSpec.describe AccreditedProvider::Importer do
           },
         ],
         "links" => {
-          "next" => "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/#{next_year}/providers?filter%5Bis_accredited_body%5D=true&page=2",
+          "next" => "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/2024/providers?page=2",
         },
       }.to_json,
     )
 
     stub_request(
       :get,
-      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/#{next_year}/providers?filter%5Bis_accredited_body%5D=true&page=2",
+      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/2024/providers?page=2",
     ).to_return(
       status: 200,
       body: {
@@ -101,6 +101,8 @@ RSpec.describe AccreditedProvider::Importer do
       }.to_json,
     )
   end
+
+  after { Timecop.return }
 
   it "creates new provider records for responses which don't already exist or are valid" do
     expect { subject }.to change(Provider, :count).by(4)
