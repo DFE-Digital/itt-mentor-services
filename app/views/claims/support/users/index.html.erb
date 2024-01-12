@@ -1,6 +1,4 @@
 <div class="govuk-width-container">
-  <h1 class="govuk-heading-l"><%= @school.name %></h1>
-
   <%= render SecondaryNavigationComponent.new do |component| %>
     <% component.with_navigation_item t(".details"), claims_support_school_path(@school.id) %>
     <% component.with_navigation_item t(".users"), claims_support_school_users_path(@school.id) %>
@@ -9,6 +7,7 @@
     <% component.with_navigation_item t(".claims"), claims_support_school_claims_path(@school.id) %>
   <% end %>
 
+  <h1 class="govuk-heading-l"><%= @school.name %></h1>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h2 class="govuk-heading-m"><%= t(".heading") %></h2>

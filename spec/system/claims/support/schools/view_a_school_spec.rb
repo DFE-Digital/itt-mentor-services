@@ -7,6 +7,7 @@ RSpec.describe "View a school", type: :system do
     when_i_visit_the_school_page(school)
     i_see_the_school_details(school)
     and_i_see_the_secondary_navigation_links(school)
+    i_see_the_schools_details_sections
   end
 
   private
@@ -35,5 +36,12 @@ RSpec.describe "View a school", type: :system do
       expect(page).to have_link("Users", href: "/support/schools/#{school.id}/users")
       expect(page).to have_link("Claims", href: "/support/schools/#{school.id}/claims")
     end
+  end
+
+  def i_see_the_schools_details_sections
+    expect(page).to have_selector("h2", text: "Additional Details")
+    expect(page).to have_selector("h2", text: "Send")
+    expect(page).to have_selector("h2", text: "Ofsted")
+    expect(page).to have_selector("h2", text: "Contact Details")
   end
 end
