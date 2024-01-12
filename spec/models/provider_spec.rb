@@ -47,4 +47,24 @@ RSpec.describe Provider, type: :model do
     end
     it { is_expected.to allow_values("scitt", "lead_school", "university").for(:provider_type) }
   end
+
+  context "scopes" do
+    describe "#placements" do
+      let!(:onboarded_provider) { create(:provider, placements: true) }
+      let!(:provider) { create(:provider) }
+
+      it "only returns the providers which have been onboarded (placements: true)" do
+        expect(described_class.placements).to contain_exactly(onboarded_provider)
+      end
+    end
+
+    describe "#accredited" do
+      let!(:accredited_provider) { create(:provider, accredited: true) }
+      let!(:provider) { create(:provider) }
+
+      it "only returns the providers which have been onboarded (placements: true)" do
+        expect(described_class.accredited).to contain_exactly(accredited_provider)
+      end
+    end
+  end
 end

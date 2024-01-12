@@ -40,6 +40,7 @@ class Provider < ApplicationRecord
   validates :code, :name, presence: true
   validates :code, uniqueness: { case_sensitive: false }
 
+  scope :accredited, -> { where accredited: true }
   scope :placements, -> { where placements: true }
 
   pg_search_scope :search_name_urn_ukprn_postcode,
