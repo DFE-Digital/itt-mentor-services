@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_09_110334) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_12_104348) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -56,6 +56,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_09_110334) do
     t.string "city"
     t.string "county"
     t.string "postcode"
+    t.boolean "accredited", default: false
     t.index ["code"], name: "index_providers_on_code", unique: true
     t.index ["placements"], name: "index_providers_on_placements"
   end

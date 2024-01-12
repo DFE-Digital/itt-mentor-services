@@ -100,6 +100,7 @@ group :test do
   gem "shoulda-matchers"
   # launch browser when inspecting capybara specs
   gem "launchy"
+  gem "timecop"
   gem "webmock"
 end
 
