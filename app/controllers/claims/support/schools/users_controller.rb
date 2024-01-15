@@ -1,5 +1,5 @@
 class Claims::Support::Schools::UsersController < Claims::Support::ApplicationController
-  before_action :set_school
+  include Claims::BelongsToSchool
 
   def index
     @users = @school.users.claims
@@ -31,10 +31,6 @@ class Claims::Support::Schools::UsersController < Claims::Support::ApplicationCo
   end
 
   private
-
-  def set_school
-    @school = Claims::School.find(params.require(:school_id))
-  end
 
   def user
     @user ||= Claims::User.new(user_params)
