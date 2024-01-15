@@ -55,6 +55,12 @@ en:
           urn: Unique reference number (URN)
           website: Website
         show:
+          secondary_navigation:
+            details: Details
+            users: Users
+            mentors: Mentors
+            placements: Placements
+            providers: Providers
           unknown: Unknown
           not_entered: Not entered
           not_applicable: Not applicable
