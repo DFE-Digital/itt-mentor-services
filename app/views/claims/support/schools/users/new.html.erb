@@ -27,10 +27,10 @@
           <%= f.govuk_text_field :email, label: { text: t(".attributes.users.email"), size: "s" } %>
         </div>
 
-        <%= f.govuk_submit t("continue") %>
+        <%= f.govuk_submit t(".continue") %>
 
         <p class="govuk-body">
-          <%= govuk_link_to(t("cancel"), claims_support_school_users_path(@school)) %>
+          <%= govuk_link_to(t(".cancel"), claims_support_school_users_path(@school)) %>
         </p>
       </div>
     </div>

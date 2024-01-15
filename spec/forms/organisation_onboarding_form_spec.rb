@@ -16,11 +16,11 @@ describe OrganisationOnboardingForm, type: :model do
         [
           OpenStruct.new(
             id: described_class::ITT_PROVIDER,
-            name: I18n.t(described_class::ITT_PROVIDER),
+            name: "ITT provider",
           ),
           OpenStruct.new(
             id: described_class::SCHOOL,
-            name: I18n.t(described_class::SCHOOL),
+            name: "School",
           ),
         ],
       )

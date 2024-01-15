@@ -53,13 +53,6 @@ en:
               blank: Enter an email address
               taken: This email address is already in use. Try another email address
               invalid: Enter an email address in the correct format, like name@example.com
-  add_organisation: Add organisation
-  organisations: Organisations
-  school: School
-  schools: Schools
-  organisation_details: Organisation details
-  itt_provider: ITT provider
-  providers: Providers
   account:
     index:
       email_address: Email address
@@ -108,3 +101,47 @@ en:
   claims:
     notify_message:
       invite_user_to_school: "Dear %{user_name} \n\n You have been invited to join the claims service for %{school_name}.\n\n Sign in here %{sign_in_url}"
+    support:
+      users:
+        index:
+          secondary_navigation:
+            details: Details
+            users: Users
+            mentors: Mentors
+            providers: Providers
+            claims: Claims
+          invite_user: Invite user
+          heading: Users
+          attributes:
+            users:
+              name: Name
+              email: Email
+        new:
+          attributes:
+            users:
+              first_name: First name
+              last_name: Last name
+              email: Email
+          title: Invite a new user
+          cancel: Cancel
+          continue: Continue
+          caption: Add user
+          description: Personal details
+        show:
+          attributes:
+            users:
+              first_name: First name
+              last_name: Last name
+              email: Email
+        check:
+          title: Check your answers
+          caption: Add user
+          add_user: Add user
+          cancel: Cancel
+          first_name: First name
+          last_name: Last name
+          email: Email
+          warning: "The user will be sent an email to tell them you’ve added them to %{school_name}."
+  organisation_onboarding_form:
+    itt_provider: ITT provider
+    school: School

@@ -4,13 +4,15 @@ en:
       schools:
         users:
           index:
-            invite_user: Invite User
+            invite_user: Invite user
             heading: Users
             attributes:
               users:
                 name: Name
                 email: Email
           new:
+            continue: Continue
+            cancel: Cancel
             attributes:
               users:
                 first_name: First name
