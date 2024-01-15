@@ -1,7 +1,14 @@
 en:
   claims:
     schools:
+      index:
+        organisations: Organisations
       show:
+        primary_navigation:
+          users: Users
+          claims: Claims
+          organisations: Organisations
+          details: Details
         heading: Organisation details
         change_organisation: Change organisation
         unknown: Unknown

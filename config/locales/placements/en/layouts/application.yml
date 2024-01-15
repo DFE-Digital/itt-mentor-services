@@ -2,9 +2,19 @@ en:
   layouts:
     application:
       placements:
+        primary_navigation:
+          users: Users
+          placements: Placements
+          organisations: Organisations
         header:
           service_name: Manage School Placements
   placements:
+    organisations:
+      index:
+        organisations: Organisations
+        schools: Schools
+        providers: Providers
+        add_organisation: Add organisation
     support:
       organisations:
         new:
@@ -12,7 +22,10 @@ en:
           itt_provider: ITT provider
           school: School
           title: Organisation type
+          continue: Continue
+          cancel: Cancel
         index:
+          add_organisation: Add organisation
           title: "Organisations (%{organisation_count})"
           clear_filters: Clear filters
           remove_this_filter: Remove this filter

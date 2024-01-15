@@ -1,6 +1,10 @@
 en:
   layouts:
     application:
+      primary_navigation:
+        users: Users
+        claims: Claims
+        organisations: Organisations
       claims:
         header:
           service_name: Claim Funding for General Mentors

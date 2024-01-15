@@ -41,7 +41,7 @@ RSpec.describe "Invite a user to a school", type: :system do
   end
 
   def click_on_invite_user_button
-    click_on "Invite User"
+    click_on "Invite user"
   end
 
   def fill_in_user_details

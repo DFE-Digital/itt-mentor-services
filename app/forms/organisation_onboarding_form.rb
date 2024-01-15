@@ -22,7 +22,7 @@ class OrganisationOnboardingForm
 
   def options
     ORGANISATION_TYPES.map do |org_type|
-      OpenStruct.new(id: org_type, name: I18n.t(org_type))
+      OpenStruct.new(id: org_type, name: I18n.t("organisation_onboarding_form.#{org_type}"))
     end
   end
 end
