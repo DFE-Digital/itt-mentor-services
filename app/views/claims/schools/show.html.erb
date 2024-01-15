@@ -9,7 +9,7 @@
   <% end %>
 <% end %>
 
-<% content_for :page_title, @school.name %>
+<% content_for :page_title, sanitize(@school.name) %>
 
 <% content_for(:before_content) do %>
   <%= render PrimaryNavigationComponent.new do |component| %>
