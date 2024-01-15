@@ -2,7 +2,7 @@ class Claims::Support::Schools::UsersController < Claims::Support::ApplicationCo
   before_action :set_school
 
   def index
-    @users = @school.users
+    @users = @school.users.claims
   end
 
   def show
