@@ -9,6 +9,11 @@ scope module: :placements,
     root to: redirect("/support/organisations")
     resources :organisations, only: %i[index new] do
       collection { get :select_type }
+      scope module: :organisations do
+        resources :users, only: %i[index new create show] do
+          collection { get :check }
+        end
+      end
     end
 
     resources :schools, expect: %i[edit update] do
