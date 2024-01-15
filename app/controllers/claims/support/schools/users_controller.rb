@@ -2,11 +2,11 @@ class Claims::Support::Schools::UsersController < Claims::Support::ApplicationCo
   include Claims::BelongsToSchool
 
   def index
-    @users = @school.users.claims
+    @users = @school.users
   end
 
   def show
-    @user = Claims::User.find(params.require(:id))
+    @user = @school.users.find(params.require(:id))
   end
 
   def new
