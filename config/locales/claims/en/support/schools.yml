@@ -2,6 +2,8 @@ en:
   claims:
     support:
       schools:
+        school_options:
+          cancel: Cancel
         secondary_navigation:
           details: Details
           users: Users

@@ -2,9 +2,24 @@ require "rails_helper"
 
 describe SchoolOnboardingForm, type: :model do
   describe "validations" do
-    it { should validate_presence_of(:urn) }
     it { should validate_presence_of(:service) }
     it { should validate_inclusion_of(:service).in_array(%i[placements claims]) }
+
+    context "when urn is not present" do
+      it "returns invalid" do
+        form = described_class.new(urn: nil, service: :placements)
+        expect(form.valid?).to eq(false)
+        expect(form.errors.messages[:urn]).to include("Enter a school name, URN or postcode")
+      end
+    end
+
+    context "when urn is not present and javascript is disabled" do
+      it "returns invalid" do
+        form = described_class.new(urn: nil, service: :placements, javascript_disabled: true)
+        expect(form.valid?).to eq(false)
+        expect(form.errors.messages[:urn]).to include("Select a school")
+      end
+    end
 
     context "when given a urn not associated with a school" do
       it "returns invalid" do

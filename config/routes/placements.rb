@@ -12,7 +12,11 @@ scope module: :placements,
     end
 
     resources :schools, expect: %i[edit update] do
-      collection { get :check }
+      collection do
+        get :check
+        get :check_school_option
+        get :school_options
+      end
     end
     resources :providers, expect: %i[edit update] do
       collection { get :check }

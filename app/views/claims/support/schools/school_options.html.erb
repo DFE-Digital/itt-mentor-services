@@ -1,0 +1,17 @@
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: new_claims_support_school_path) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <%= render SchoolOptionsFormComponent.new(
+    model: school_form,
+    url: check_school_option_claims_support_schools_path,
+    search_param:,
+    schools:,
+    back_link: new_claims_support_school_path,
+  ) %>
+
+  <p class="govuk-body">
+    <%= govuk_link_to(t(".cancel"), claims_support_schools_path, no_visited_state: true) %>
+  </p>
+</div>
