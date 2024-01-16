@@ -120,7 +120,7 @@ GEM
       launchy
     choice (0.2.0)
     coderay (1.1.3)
-    concurrent-ruby (1.2.2)
+    concurrent-ruby (1.2.3)
     connection_pool (2.4.1)
     crack (0.4.5)
       rexml
@@ -175,10 +175,10 @@ GEM
       terminal-table (>= 1.8)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    govuk-components (5.0.1)
+    govuk-components (5.0.2)
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (~> 6.0)
-      view_component (>= 3.3, < 3.9)
+      view_component (>= 3.9, < 3.10)
     govuk_design_system_formbuilder (5.0.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
@@ -238,7 +238,7 @@ GEM
     matrix (0.4.2)
     method_source (1.0.0)
     mini_mime (1.1.5)
-    minitest (5.20.0)
+    minitest (5.21.1)
     msgpack (1.7.2)
     multi_xml (0.6.0)
     mutex_m (0.2.0)
@@ -500,7 +500,7 @@ GEM
     validate_url (1.0.15)
       activemodel (>= 3.0.0)
       public_suffix
-    view_component (3.8.0)
+    view_component (3.9.0)
       activesupport (>= 5.2.0, < 8.0)
       concurrent-ruby (~> 1.0)
       method_source (~> 1.0)
@@ -548,7 +548,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   flipflop
-  govuk-components (~> 5.0.1)
+  govuk-components (~> 5.0.2)
   govuk_design_system_formbuilder (~> 5.0.0)
   httparty
   jsbundling-rails
