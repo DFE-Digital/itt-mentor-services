@@ -8,12 +8,12 @@ const initAutocomplete = (elementId, inputId, options = {}) => {
     const input = document.getElementById(inputId);
 
     if (element && input) {
-      const { path, template, minLength, onConfirm, inputName } = options;
+      const { path, template, minLength, onConfirm, inputName, errorId = null } = options;
       const { inputValue, suggestion } = template;
 
       accessibleAutocomplete({
         element,
-        id: input.id,
+        id: errorId || input.id,
         showNoOptionsFound: true,
         name: input.name,
         minLength,
