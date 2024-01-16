@@ -1,0 +1,8 @@
+en:
+  placements:
+    mailers:
+      notify_mailer:
+        body: "Dear %{user_name} \n\n You have been invited to join the 
+          school placements service for %{organisation_name}.\n\n 
+          Sign in here %{sign_in_url}"
+        subject: "You have been invited to %{organisation_name}"
