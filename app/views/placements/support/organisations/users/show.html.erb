@@ -1,3 +1,5 @@
+<%= content_for :page_title, sanitize(@organisation.name) %>
+
 <%= content_for(:before_content) do %>
   <%= govuk_back_link(href: placements_support_organisation_users_path(@organisation)) %>
 <% end %>
