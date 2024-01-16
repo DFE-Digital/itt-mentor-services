@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Organisations / Support user views a School", type: :system do
+RSpec.describe "Placements / Support / Organisations / Support user views a School", type: :system do
   let(:school) { create(:school, :placements) }
 
   before do

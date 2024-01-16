@@ -71,6 +71,8 @@ RSpec.describe "Support user filters and searches for organisations", type: :sys
     and_i_do_not_see_schools
   end
 
+  private
+
   def when_i_filter_by(filters)
     filters.each { |filter| check filter }
     click_on "Apply filters"

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Providers / Support User adds a Provider", type: :system, js: true do
+RSpec.describe "Placements / Support / Providers / Support User adds a Provider", type: :system, js: true do
   let(:provider) { create(:provider, name: "Provider 1") }
 
   before do
