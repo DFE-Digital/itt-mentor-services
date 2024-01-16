@@ -11,6 +11,9 @@ on:
 
 concurrency: deploy-${{ github.ref }}
 
+permissions:
+  packages: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
