@@ -21,6 +21,7 @@ RSpec.describe "Placements / Schools / Support User adds a School",
     when_i_click_add_organisation
     then_i_return_to_support_organisations_index
     and_a_school_is_listed(school_name: "School 1")
+    and_i_see_success_message
   end
 
   scenario "Colin adds a school which already exists", js: true do
@@ -115,5 +116,9 @@ RSpec.describe "Placements / Schools / Support User adds a School",
 
   def and_a_school_is_listed(school_name:)
     expect(page).to have_content(school_name)
+  end
+
+  def and_i_see_success_message
+    expect(page).to have_content "Organisation added"
   end
 end

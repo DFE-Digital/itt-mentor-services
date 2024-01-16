@@ -19,6 +19,7 @@ RSpec.describe "Placements / Providers / Support User adds a Provider", type: :s
     when_i_click_add_organisation
     then_i_return_to_support_organisations_index
     and_a_provider_code_is_listed(code: "Provider 1")
+    and_i_see_success_message
   end
 
   scenario "Colin adds a Provider which already exists", js: true do
@@ -113,5 +114,9 @@ RSpec.describe "Placements / Providers / Support User adds a Provider", type: :s
 
   def and_a_provider_code_is_listed(code:)
     expect(page).to have_content(code)
+  end
+
+  def and_i_see_success_message
+    expect(page).to have_content "Organisation added"
   end
 end

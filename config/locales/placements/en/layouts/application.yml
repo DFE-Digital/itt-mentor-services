@@ -39,6 +39,8 @@ en:
           no_organisations: There are no onboarded organisations
           organisation_type: Organisation type
       schools:
+        create:
+          organisation_added: Organisation added
         new:
           caption: Add organisation
           cancel: Cancel
@@ -95,6 +97,8 @@ en:
           website: Website
           address: Address
       providers:
+        create:
+          organisation_added: Organisation added
         new:
           caption: Add organisation
           cancel: Cancel
