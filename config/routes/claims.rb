@@ -15,7 +15,11 @@ scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
     resources :users, only: %i[index show]
 
     resources :schools, except: %i[destroy update] do
-      get :check, on: :collection
+      collection do
+        get :check
+        get :check_school_option
+        get :school_options
+      end
 
       scope module: :schools do
         resources :claims

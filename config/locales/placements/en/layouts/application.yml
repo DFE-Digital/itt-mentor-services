@@ -39,6 +39,8 @@ en:
           no_organisations: There are no onboarded organisations
           organisation_type: Organisation type
       schools:
+        school_options:
+          cancel: Cancel
         create:
           organisation_added: Organisation added
         new:
