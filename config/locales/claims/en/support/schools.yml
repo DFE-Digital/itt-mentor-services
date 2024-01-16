@@ -8,6 +8,8 @@ en:
           mentors: Mentors
           providers: Providers
           claims: Claims
+        create:
+          organisation_added: Organisation added
         show:
           additional_details: Additional details
           send: Special educational needs and disabilities (SEND)
