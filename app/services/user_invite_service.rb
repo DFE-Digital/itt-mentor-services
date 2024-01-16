@@ -28,7 +28,7 @@ class UserInviteService
   end
 
   def attach_to_organisation
-    Membership.create!(user_id: user.id, organisation: organisation)
+    Membership.create!(user_id: user.id, organisation:)
   end
 
   def send_email

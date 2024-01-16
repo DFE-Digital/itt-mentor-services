@@ -109,8 +109,6 @@ en:
       heading: Placements news and updates
     contents: Contents
   claims:
-    notify_message:
-      invite_user_to_school: "Dear %{user_name} \n\n You have been invited to join the claims service for %{school_name}.\n\n Sign in here %{sign_in_url}"
     support:
       users:
         index:
