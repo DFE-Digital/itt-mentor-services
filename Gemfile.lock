@@ -283,7 +283,7 @@ GEM
       validate_email
       validate_url
       webfinger (~> 2.0)
-    pagy (6.3.0)
+    pagy (6.4.1)
     parallel (1.24.0)
     parser (3.2.2.4)
       ast (~> 2.4.1)
@@ -557,7 +557,7 @@ DEPENDENCIES
   omniauth
   omniauth-rails_csrf_protection
   omniauth_openid_connect
-  pagy (~> 6.3)
+  pagy (~> 6.4)
   pg (~> 1.1)
   pg_search
   prettier_print
