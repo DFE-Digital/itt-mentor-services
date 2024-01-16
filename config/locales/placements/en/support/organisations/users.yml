@@ -4,6 +4,12 @@ en:
       organisations:
         users:
           index:
+            secondary_navigation:
+              details: Details
+              users: Users
+              mentors: Mentors
+              placements: Placements
+              providers: Providers
             invite_user: Invite user
             heading: Users
             attributes:
