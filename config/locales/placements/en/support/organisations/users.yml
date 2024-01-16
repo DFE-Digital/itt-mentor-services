@@ -18,6 +18,8 @@ en:
                 email: Email
             title: Invite a new user
             caption: Add user
+            cancel: Cancel
+            continue: Continue
             description: Personal details
           show:
             attributes:
