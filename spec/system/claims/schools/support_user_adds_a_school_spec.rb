@@ -68,7 +68,7 @@ RSpec.describe "Support User adds a School", type: :system do
   end
 
   def and_i_enter_a_school_named(school_name)
-    fill_in "school-search-form-query-field", with: school_name
+    fill_in "school-urn-field-error", with: school_name
   end
 
   def then_i_see_a_dropdown_item_for(school_name)

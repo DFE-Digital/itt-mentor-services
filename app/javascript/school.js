@@ -17,6 +17,7 @@ function init() {
     minLength: 2,
     inputName: "school[search_urn]",
     onConfirm,
+    errorId: "school-urn-field-error"
   };
 
   initAutocomplete(
