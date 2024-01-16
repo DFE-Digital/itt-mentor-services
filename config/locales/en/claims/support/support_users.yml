@@ -6,3 +6,5 @@ en:
           page_title: Users
           add_user: Add User
           heading: Users
+        show:
+          change: Change
