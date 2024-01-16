@@ -67,7 +67,7 @@ RSpec.describe "Placements / Providers / Support User adds a Provider", type: :s
   end
 
   def and_i_enter_a_provider_named(provider_name)
-    fill_in "accredited-provider-search-form-query-field", with: provider_name
+    fill_in "provider-onboarding-form-code-field-error", with: provider_name
   end
 
   def then_i_see_a_dropdown_item_for(provider_name)
