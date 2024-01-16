@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Schools / Support User adds a Provider",
+RSpec.describe "Placements / Support / Organisations / Support User Selects An Organisation Type To Add",
                type: :system do
   before do
     given_i_sign_in_as_colin

@@ -14,11 +14,7 @@ class Placements::Support::Organisations::UsersController < Placements::Support:
   end
 
   def check
-    if user.valid?
-      @user = user
-    else
-      render :new
-    end
+    render :new unless user.valid?
   end
 
   def create
@@ -38,7 +34,7 @@ class Placements::Support::Organisations::UsersController < Placements::Support:
 
   def set_organisation
     @organisation = Placements::Provider.find_by(id: params[:organisation_id]).presence ||
-      School.find(params[:organisation_id])
+      Placements::School.find(params[:organisation_id])
   end
 
   def user

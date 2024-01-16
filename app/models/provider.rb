@@ -34,6 +34,7 @@ class Provider < ApplicationRecord
   alias_attribute :organisation_type, :provider_type
 
   has_many :memberships, as: :organisation
+  has_many :users, through: :memberships
 
   enum :provider_type,
        { scitt: "scitt", lead_school: "lead_school", university: "university" },

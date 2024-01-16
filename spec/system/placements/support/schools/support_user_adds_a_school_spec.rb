@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Schools / Support User adds a School",
+RSpec.describe "Placements / Support / Schools / Support User adds a School",
                type: :system do
   let(:school) { create(:school, name: "School 1") }
 

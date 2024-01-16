@@ -1,13 +1,13 @@
 class UserInviteService
   include ServicePattern
 
-  def initialize(user, school, sign_in_url)
+  def initialize(user, organisation, sign_in_url)
     @user = user
-    @school = school
+    @organisation = organisation
     @sign_in_url = sign_in_url
   end
 
-  attr_reader :user, :school, :sign_in_url
+  attr_reader :user, :organisation, :sign_in_url
 
   def call
     if save_user
@@ -23,15 +23,15 @@ class UserInviteService
   def save_user
     ActiveRecord::Base.transaction do
       user.save!
-      attach_to_school
+      attach_to_organisation
     end
   end
 
-  def attach_to_school
-    Membership.create!(user_id: user.id, organisation_type: "School", organisation_id: school.id)
+  def attach_to_organisation
+    Membership.create!(user_id: user.id, organisation: organisation)
   end
 
   def send_email
-    NotifyMailer.send_school_invite_email(user, school, sign_in_url).deliver_later
+    NotifyMailer.send_organisation_invite_email(user, organisation, sign_in_url).deliver_later
   end
 end
