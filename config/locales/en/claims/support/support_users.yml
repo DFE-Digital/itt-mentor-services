@@ -1,0 +1,8 @@
+en:
+  claims:
+    support:
+      support_users:
+        index:
+          page_title: Users
+          add_user: Add User
+          heading: Users

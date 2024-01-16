@@ -45,8 +45,8 @@
     <% if support_controller? && current_service == :claims %>
       <%= render PrimaryNavigationComponent.new do |component| %>
         <% component.with_navigation_item t(".claims.primary_navigation.organisations"), support_organisations_path %>
+        <% component.with_navigation_item t(".claims.primary_navigation.users"), support_support_users_path %>
         <% component.with_navigation_item t(".claims.primary_navigation.claims"), claims_support_claims_path %>
-        <% component.with_navigation_item t(".claims.primary_navigation.users"), support_users_path %>
       <% end %>
     <% else %>
       <%= yield :primary_navigation_content %>
