@@ -10,6 +10,9 @@ variable "environment" {
 variable "azure_resource_prefix" {
   description = "Standard resource prefix. Usually s189t01 (test) or s189p01 (production)"
 }
+variable "config" {
+  description = "The application configuration - should match the tfvars file name e.g. review, production..."
+}
 variable "config_short" {
   description = "Short name of the environment configuration, e.g. dv, st, pd..."
 }
@@ -38,18 +41,9 @@ variable "enable_monitoring" {
   default     = false
   description = "Enable monitoring and alerting"
 }
-variable "sign_in_method" {
-  default     = "persona"
-  description = "sign in method for the app"
-}
-variable "claims_host" {
-  default = null
-}
-variable "placements_host" {
-  default = null
-}
+
 locals {
+  //app_env_values    = yamldecode(file("${path.module}/../application/config/${var.config}_app_env.yml"))
+  app_env_values    = yamldecode(file("${path.module}/config/${var.config}_app_env.yml"))
   postgres_ssl_mode = var.enable_postgres_ssl ? "require" : "disable"
-  placements_host   = var.claims_host == null ? "manage-school-placements-${var.environment}.test.teacherservices.cloud" : var.claims_host
-  claims_host       = var.placements_host == null ? "track-and-pay-${var.environment}.test.teacherservices.cloud" : var.placements_host
 }

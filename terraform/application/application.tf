@@ -11,13 +11,12 @@ module "application_configuration" {
   # Delete for non rails apps
   is_rails_application = true
 
-  config_variables = {
+  config_variables = merge(
+    local.app_env_values,
+    {
     ENVIRONMENT_NAME = var.environment
     PGSSLMODE        = local.postgres_ssl_mode
-    SIGN_IN_METHOD   = var.sign_in_method
-    CLAIMS_HOST      = local.claims_host
-    PLACEMENTS_HOST  = local.placements_host
-  }
+    })
   secret_variables = {
     DATABASE_URL = module.postgres.url
   }
@@ -32,8 +31,8 @@ module "web_application" {
   environment  = var.environment
   service_name = var.service_name
   web_external_hostnames = [
-    local.claims_host,
-    local.placements_host
+    local.app_env_values["CLAIMS_HOST"],
+    local.app_env_values["PLACEMENTS_HOST"]
   ]
 
   cluster_configuration_map  = module.cluster_data.configuration_map
