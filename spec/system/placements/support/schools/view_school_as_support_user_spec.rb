@@ -1,17 +1,20 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Support / Organisations / Support user views a School", type: :system do
-  let(:school) { create(:school, :placements) }
+RSpec.describe "Placements / Organisations / Support user views a School", type: :system do
+  let!(:school) { create(:school, :placements) }
+  let!(:university) { create(:placements_provider) }
 
   before do
-    school
     Capybara.app_host = "http://#{ENV["PLACEMENTS_HOST"]}"
   end
 
-  scenario "Support user navigates to school from organisations list" do
+  scenario "Support user navigates to different organisations on the list" do
     given_i_am_signed_in_as_a_support_user
-    when_i_click_on_a_school_name
+    when_i_click_on_a_organisation_name(school.name)
     then_i_see_the_school_details
+    when_i_navigate_back_to_the_organisations_list
+    when_i_click_on_a_organisation_name(university.name)
+    then_i_see_the_provider_details
   end
 
   private
@@ -22,8 +25,35 @@ RSpec.describe "Placements / Support / Organisations / Support user views a Scho
     click_on "Sign In as Colin"
   end
 
-  def when_i_click_on_a_school_name
-    click_on school.name
+  def when_i_click_on_a_organisation_name(name)
+    click_on name
+  end
+
+  def then_i_see_the_provider_details
+    within(".govuk-heading-l") do
+      expect(page).to have_content university.name
+    end
+
+    expect(page).to have_content "Contact details"
+
+    within("#organisation-details") do
+      expect(page).to have_content "Organisation name"
+      expect(page).to have_content "UK provider reference number (UKPRN)"
+      expect(page).to have_content "Unique reference number (URN)"
+    end
+
+    within("#contact-details") do
+      expect(page).to have_content "Email address"
+      expect(page).to have_content "Telephone number"
+      expect(page).to have_content "Website"
+      expect(page).to have_content "Address"
+    end
+  end
+
+  def when_i_navigate_back_to_the_organisations_list
+    within(".app-primary-navigation__list") do
+      click_on "Organisations"
+    end
   end
 
   def then_i_see_the_school_details

@@ -3,6 +3,10 @@ class Placements::Support::ProvidersController < Placements::Support::Applicatio
     @provider_form = ProviderOnboardingForm.new
   end
 
+  def show
+    @provider = Placements::Provider.find(params.require(:id)).decorate
+  end
+
   def check
     if provider_form.valid?
       provider
