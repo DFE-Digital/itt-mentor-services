@@ -1,0 +1,9 @@
+en:
+  shared:
+    organisations:
+      contact_details:
+        contact_details: Contact details
+        email_address: Email address
+        telephone_number: Telephone number
+        website: Website
+        address: Address

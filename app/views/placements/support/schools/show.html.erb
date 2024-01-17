@@ -22,7 +22,7 @@
       <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".ofsted") %></h2>
       <%= render "ofsted_details", school: @school %>
       <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".contact_details") %></h2>
-      <%= render "contact_details", school: @school %>
+      <%= render "shared/organisations/contact_details", organisation: @school %>
     </div>
   </div>
 </div>
