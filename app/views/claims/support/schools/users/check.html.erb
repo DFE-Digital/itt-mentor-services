@@ -1,3 +1,5 @@
+<%= content_for :page_title, sanitize(t(".page_title", school_name: @school.name)) %>
+
 <%= content_for(:before_content) do %>
   <%= govuk_back_link(href: new_claims_support_school_user_path(@school)) %>
 <% end %>
@@ -11,7 +13,7 @@
         <%= f.hidden_field :email, value: @user.email %>
 
         <label class="govuk-label govuk-label--l">
-          <span class="govuk-caption-l"><%= t(".caption") %></span>
+          <span class="govuk-caption-l"><%= t(".caption", school_name: @school.name) %></span>
           <%= t(".title") %>
         </label>
 
