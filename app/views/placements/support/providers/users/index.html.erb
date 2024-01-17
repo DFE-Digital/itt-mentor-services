@@ -4,13 +4,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-l"><%= @provider.name %></h1>
-      <%= render SecondaryNavigationComponent.new do |component| %>
-        <% component.with_navigation_item t(".secondary_navigation.details"), "#" %>
-        <% component.with_navigation_item t(".secondary_navigation.users"), placements_support_provider_users_path(@provider) %>
-        <% component.with_navigation_item t(".secondary_navigation.mentors"), "#" %>
-        <% component.with_navigation_item t(".secondary_navigation.placements"), "#" %>
-        <% component.with_navigation_item t(".secondary_navigation.providers"), "#" %>
-      <% end %>
+      <%= render "placements/support/secondary_navigation", organisation: @provider %>
     </div>
 
     <div class="govuk-grid-column-two-thirds">
