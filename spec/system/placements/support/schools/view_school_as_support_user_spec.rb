@@ -36,7 +36,7 @@ RSpec.describe "Placements / Support / Organisations / Support user views a Scho
     expect(page).to have_content "Ofsted"
     expect(page).to have_content "Contact details"
 
-    within("#school-details") do
+    within("#organisation-details") do
       expect(page).to have_content "Organisation name"
       expect(page).to have_content "UK provider reference number (UKPRN)"
       expect(page).to have_content "Unique reference number (URN)"
