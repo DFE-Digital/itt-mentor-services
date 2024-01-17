@@ -20,12 +20,7 @@
       <% if @organisations.any? %>
         <ul class="organisation-search-results">
           <% @organisations.each do |org| %>
-            <% if org.searchable_type == "School" %>
-              <%= render OrganisationListItem.new(organisation: org.searchable, organisation_url: placements_support_school_path(org.searchable)) %>
-            <% end %>
-            <% if org.searchable_type == "Provider" %>
-              <%= render OrganisationListItem.new(organisation: org.searchable, organisation_url: "#") %>
-            <% end %>
+            <%= render OrganisationListItem.new(organisation: org.searchable, organisation_url: organisation_url(org)) %>
           <% end %>
         </ul>
         <%= govuk_pagination(pagy: @pagy) %>
@@ -35,5 +30,4 @@
       <% end %>
     </div>
   </div>
-</div>
 </div>
