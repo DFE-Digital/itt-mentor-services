@@ -1,5 +1,11 @@
 app/*/claims @DFE-Digital/track-pay
 spec/*/claims @DFE-Digital/track-pay
+config/locales/en/claims.yml @DFE-Digital/track-pay
+config/locales/en/claims/* @DFE-Digital/track-pay
 
 app/*/placements  @DFE-Digital/school-placements
 spec/*/placements @DFE-Digital/school-placements
+config/locales/en/placements.yml @DFE-Digital/school-placements
+config/locales/en/placements/* @DFE-Digital/school-placements
+
+config/locales/en.yml @DFE-Digital/track-pay @DFE-Digital/school-placements
