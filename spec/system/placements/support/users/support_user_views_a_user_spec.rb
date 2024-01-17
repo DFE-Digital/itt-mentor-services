@@ -78,7 +78,11 @@ RSpec.describe "Placements / Support / Users / Support User Views A User", type:
   end
 
   def when_i_visit_the_users_page_for(organisation:)
-    visit placements_support_organisation_users_path(organisation)
+    if organisation.is_a?(Provider)
+      visit placements_support_provider_users_path(organisation)
+    else
+      visit placements_support_school_users_path(organisation)
+    end
   end
 
   def then_i_see_the_users_names_listed

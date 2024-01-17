@@ -19,7 +19,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   describe "School" do
     scenario "Support User invites a new user to a school" do
       when_i_visit_the_users_page_for(organisation: school)
-      and_i_click("Invite user")
+      and_i_click("Add user")
       and_i_enter_the_details_for_a_new_user
       and_i_click("Continue")
       then_i_see_the_new_users_details
@@ -31,7 +31,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   describe "Provider" do
     scenario "Support User invites a new user to a school" do
       when_i_visit_the_users_page_for(organisation: provider)
-      and_i_click("Invite user")
+      and_i_click("Add user")
       and_i_enter_the_details_for_a_new_user
       and_i_click("Continue")
       then_i_see_the_new_users_details
@@ -44,7 +44,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
     scenario "Support User invites an existing user" do
       given_a_user_has_been_assigned_to_the(organisation: school)
       when_i_visit_the_users_page_for(organisation: school)
-      and_i_click("Invite user")
+      and_i_click("Add user")
       and_i_enter_the_details_for_a_new_user
       and_i_click("Continue")
       then_i_see_an_error("This email address is already in use. Try another email address")
@@ -52,7 +52,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
 
     scenario "Support User doesn't enter any user details" do
       when_i_visit_the_users_page_for(organisation: school)
-      and_i_click("Invite user")
+      and_i_click("Add user")
       and_i_click("Continue")
       then_i_see_an_error("Enter a first name")
       then_i_see_an_error("Enter a last name", 1)
@@ -82,7 +82,11 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   end
 
   def when_i_visit_the_users_page_for(organisation:)
-    visit placements_support_organisation_users_path(organisation)
+    if organisation.is_a?(Provider)
+      visit placements_support_provider_users_path(organisation)
+    else
+      visit placements_support_school_users_path(organisation)
+    end
   end
 
   def when_i_click(button_text)

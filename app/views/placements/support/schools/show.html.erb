@@ -6,7 +6,7 @@
       <h1 class="govuk-heading-l"><%= @school.name %></h1>
       <%= render SecondaryNavigationComponent.new do |component| %>
         <% component.with_navigation_item t(".secondary_navigation.details"), placements_support_school_path(@school) %>
-        <% component.with_navigation_item t(".secondary_navigation.users"), placements_support_organisation_users_path(@school) %>
+        <% component.with_navigation_item t(".secondary_navigation.users"), placements_support_school_users_path(@school) %>
         <% component.with_navigation_item t(".secondary_navigation.mentors"), "#" %>
         <% component.with_navigation_item t(".secondary_navigation.placements"), "#" %>
         <% component.with_navigation_item t(".secondary_navigation.providers"), "#" %>

@@ -1,0 +1,13 @@
+<%= content_for :page_title, sanitize(t(".page_title", provider_name: @provider.name)) %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: placements_support_provider_users_path(@provider)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <%= render "placements/support/organisations/users/new_form",
+    form_url: check_placements_support_provider_users_path,
+    cancel_url: placements_support_provider_users_path,
+    user: @user,
+    organisation: @provider %>
+</div>

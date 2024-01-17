@@ -19,7 +19,7 @@ class Placements::Support::Organisations::UsersController < Placements::Support:
 
   def create
     if UserInviteService.call(user, @organisation, sign_in_url)
-      redirect_to placements_support_organisation_users_path(@organisation)
+      redirect_to_index
       flash[:success] = t(".user_added")
     else
       render :new
@@ -30,11 +30,6 @@ class Placements::Support::Organisations::UsersController < Placements::Support:
 
   def users
     @users = @organisation.users.placements
-  end
-
-  def set_organisation
-    @organisation = Placements::Provider.find_by(id: params[:organisation_id]).presence ||
-      Placements::School.find(params[:organisation_id])
   end
 
   def user

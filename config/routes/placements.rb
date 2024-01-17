@@ -9,25 +9,29 @@ scope module: :placements,
     root to: redirect("/support/organisations")
     resources :organisations, only: %i[index new] do
       collection { get :select_type }
-      scope module: :organisations do
-        resources :users, only: %i[index new create show] do
-          collection { get :check }
-        end
-      end
     end
 
-    resources :schools, expect: %i[edit update] do
+    resources :schools, expect: %i[edit update show] do
       collection do
         get :check
         get :check_school_option
         get :school_options
       end
+
+      scope module: :schools do
+        resources :users, only: %i[index new create show] do
+          collection { get :check }
+        end
+      end
     end
     resources :providers, expect: %i[edit update] do
       collection { get :check }
+      scope module: :providers do
+        resources :users, only: %i[index new create show] do
+          collection { get :check }
+        end
+      end
     end
-    resources :provider_suggestions, only: [:index]
-    resources :schools, only: [:show]
   end
 
   resources :organisations, only: [:index]

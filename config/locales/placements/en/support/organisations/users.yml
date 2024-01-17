@@ -3,20 +3,13 @@ en:
     support:
       organisations:
         users:
-          index:
-            secondary_navigation:
-              details: Details
-              users: Users
-              mentors: Mentors
-              placements: Placements
-              providers: Providers
-            add_user: Add user
-            heading: Users
+          details:
             attributes:
               users:
-                name: Name
+                first_name: First name
+                last_name: Last name
                 email: Email
-          new:
+          new_form:
             attributes:
               users:
                 first_name: First name
@@ -26,13 +19,7 @@ en:
             cancel: Cancel
             continue: Continue
             title: Personal details
-          show:
-            attributes:
-              users:
-                first_name: First name
-                last_name: Last name
-                email: Email
-          check:
+          check_form:
             title: Check your answers
             caption: Add user - %{organisation_name}
             add_user: Add user
@@ -40,6 +27,4 @@ en:
             first_name: First name
             last_name: Last name
             email: Email
-            warning: "The user will be sent an email to tell them you’ve added them to %{school_name}."
-          create:
-            user_added: User added
+            warning: "The user will be sent an email to tell them you’ve added them to %{organisation_name}."
