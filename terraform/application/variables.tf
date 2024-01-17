@@ -41,9 +41,17 @@ variable "enable_monitoring" {
   default     = false
   description = "Enable monitoring and alerting"
 }
+variable "claims_host" {
+  default = null
+}
+variable "placements_host" {
+  default = null
+}
 
 locals {
   //app_env_values    = yamldecode(file("${path.module}/../application/config/${var.config}_app_env.yml"))
   app_env_values    = yamldecode(file("${path.module}/config/${var.config}_app_env.yml"))
   postgres_ssl_mode = var.enable_postgres_ssl ? "require" : "disable"
+  placements_host   = var.claims_host == null ? "manage-school-placements-${var.environment}.test.teacherservices.cloud" : var.claims_host
+  claims_host       = var.placements_host == null ? "track-and-pay-${var.environment}.test.teacherservices.cloud" : var.placements_host
 }
