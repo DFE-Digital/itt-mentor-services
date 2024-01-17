@@ -10,7 +10,7 @@ RSpec.describe "Invite a user to a school", type: :system do
   scenario "I sign in as a support user and invite a user to a school" do
     sign_in_as_support_user
     visit_claims_support_school_users_page
-    click_on_invite_user_button
+    click_on_add_user
     fill_in_user_details
     check_user_details
     click_on_add_user
@@ -20,7 +20,7 @@ RSpec.describe "Invite a user to a school", type: :system do
   scenario "I sign in as a support user and invalid bad user details" do
     sign_in_as_support_user
     visit_claims_support_school_users_page
-    click_on_invite_user_button
+    click_on_add_user
     fill_in_invalid_user_details
   end
 
@@ -38,10 +38,6 @@ RSpec.describe "Invite a user to a school", type: :system do
 
   def visit_claims_support_school_users_page
     visit claims_support_school_users_path(@school)
-  end
-
-  def click_on_invite_user_button
-    click_on "Invite user"
   end
 
   def fill_in_user_details
