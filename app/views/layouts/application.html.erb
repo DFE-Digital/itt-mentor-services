@@ -57,13 +57,10 @@
 
     <div class="govuk-width-container">
       <% flash.each do |key, message| %>
-        <div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-top-6 govuk-!-margin-bottom-0" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-          <div class="govuk-notification-banner__header">
-            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-          </div>
-          <div class="govuk-notification-banner__content">
-            <h3 class="govuk-notification-banner__heading"><%= message %></h3>
-          </div>
+        <div class="govuk-!-margin-top-6 govuk-!-margin-bottom-0">
+          <%= render(GovukComponent::NotificationBannerComponent.new(title_text: t(".success"), success: true)) do %>
+            <h3 class="govuk-heading-m"><%= message %></h3>
+          <% end %>
         </div>
       <% end %>
     </div>

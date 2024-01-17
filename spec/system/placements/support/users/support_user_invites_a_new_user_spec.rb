@@ -110,7 +110,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   alias_method :and_i_see_the_new_users_details, :then_i_see_the_new_users_details
 
   def then_i_see_the_new_user_has_been_added
-    expect(page.find(".govuk-notification-banner__heading")).to have_content("User added")
+    expect(page.find(".govuk-notification-banner__content")).to have_content("User added")
     and_i_see_the_new_users_details
   end
 
