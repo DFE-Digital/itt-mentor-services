@@ -6,8 +6,6 @@ en:
           users: Users
           placements: Placements
           organisations: Organisations
-        header:
-          service_name: Manage School Placements
   placements:
     organisations:
       index:
