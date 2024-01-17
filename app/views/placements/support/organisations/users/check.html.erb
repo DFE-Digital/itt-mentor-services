@@ -13,7 +13,7 @@
         <%= f.hidden_field :email, value: @user.email %>
 
         <label class="govuk-label govuk-label--l">
-          <span class="govuk-caption-l"><%= t(".caption") %></span>
+          <span class="govuk-caption-l"><%= t(".caption", organisation_name: @organisation.name) %></span>
           <%= t(".title") %>
         </label>
 
