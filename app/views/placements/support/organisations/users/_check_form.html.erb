@@ -1,19 +1,14 @@
-<%= content_for(:before_content) do %>
-  <%= govuk_back_link(href: new_placements_support_organisation_user_path(@organisation)) %>
-<% end %>
-
-<%= content_for :page_title, sanitize(@organisation.name) %>
-
+<%# locals: (form_url: "", cancel_url: "", user: nil, organisation: nil) -%>
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= form_with(model: @user, url: placements_support_organisation_users_path(@organisation), method: :post) do |f| %>
+      <%= form_with(model: user, url: form_url, method: :post) do |f| %>
         <%= f.hidden_field :first_name, value: @user.first_name %>
         <%= f.hidden_field :last_name, value: @user.last_name %>
         <%= f.hidden_field :email, value: @user.email %>
 
         <label class="govuk-label govuk-label--l">
-          <span class="govuk-caption-l"><%= t(".caption", organisation_name: @organisation.name) %></span>
+          <span class="govuk-caption-l"><%= t(".caption", organisation_name: organisation.name) %></span>
           <%= t(".title") %>
         </label>
 
@@ -21,32 +16,32 @@
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key"><%= t(".first_name") %></dt>
             <dd class="govuk-summary-list__value">
-              <p class="govuk-body"><%= @user.first_name %></p>
+              <p class="govuk-body"><%= user.first_name %></p>
             </dd>
           </div>
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key"><%= t(".last_name") %></dt>
             <dd class="govuk-summary-list__value">
-              <p class="govuk-body"><%= @user.last_name %></p>
+              <p class="govuk-body"><%= user.last_name %></p>
             </dd>
           </div>
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key"><%= t(".email") %></dt>
             <dd class="govuk-summary-list__value">
-              <p class="govuk-body"><%= @user.email %></p>
+              <p class="govuk-body"><%= user.email %></p>
             </dd>
           </div>
         </dl>
 
         <div class="govuk-warning-text">
           <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-          <strong class="govuk-warning-text__text"><%= t(".warning", school_name: @organisation.name) %></strong>
+          <strong class="govuk-warning-text__text"><%= t(".warning", organisation_name: organisation.name) %></strong>
         </div>
 
         <%= f.govuk_submit t(".add_user") %>
 
         <p class="govuk-body">
-          <%= govuk_link_to(t(".cancel"), placements_support_organisation_users_path(@organisation)) %>
+          <%= govuk_link_to(t(".cancel"), cancel_url) %>
         </p>
       <% end %>
     <div>

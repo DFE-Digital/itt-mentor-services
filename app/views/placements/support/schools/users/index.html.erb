@@ -1,12 +1,12 @@
-<%= content_for :page_title, sanitize(@organisation.name) %>
+<%= content_for :page_title, sanitize(@school.name) %>
 
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <h1 class="govuk-heading-l"><%= @organisation.name %></h1>
+      <h1 class="govuk-heading-l"><%= @school.name %></h1>
       <%= render SecondaryNavigationComponent.new do |component| %>
-        <% component.with_navigation_item t(".secondary_navigation.details"), placements_support_school_path(@organisation) %>
-        <% component.with_navigation_item t(".secondary_navigation.users"), placements_support_organisation_users_path(@organisation) %>
+        <% component.with_navigation_item t(".secondary_navigation.details"), placements_support_school_path(@school) %>
+        <% component.with_navigation_item t(".secondary_navigation.users"), placements_support_school_users_path(@school) %>
         <% component.with_navigation_item t(".secondary_navigation.mentors"), "#" %>
         <% component.with_navigation_item t(".secondary_navigation.placements"), "#" %>
         <% component.with_navigation_item t(".secondary_navigation.providers"), "#" %>
@@ -15,7 +15,7 @@
 
     <div class="govuk-grid-column-two-thirds">
       <h2 class="govuk-heading-m"><%= t(".heading") %></h2>
-      <%= govuk_button_to(t(".add_user"), new_placements_support_organisation_user_path(@organisation), method: :get) %>
+      <%= govuk_button_to(t(".add_user"), new_placements_support_school_user_path(@school), method: :get) %>
 
       <table class="govuk-table">
         <thead class="govuk-table__head">
@@ -27,7 +27,7 @@
         <tbody class="govuk-table__body">
           <% @users.each do |user| %>
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell"><%= govuk_link_to user.full_name, placements_support_organisation_user_path(id: user.id) %></td>
+              <td class="govuk-table__cell"><%= govuk_link_to user.full_name, placements_support_school_user_path(id: user.id) %></td>
               <td class="govuk-table__cell"><%= user.email %></td>
             </tr>
           <% end %>
