@@ -68,9 +68,6 @@ en:
           not_entered: Not entered
           not_applicable: Not applicable
           additional_details: Additional details
-          organisation_name: Organisation name
-          ukprn: UK provider reference number (UKPRN)
-          urn: Unique reference number (URN)
           group: Group
           type: Type
           phase: Phase
