@@ -12,26 +12,20 @@
           <%= t(".title") %>
         </label>
 
-        <dl class="govuk-summary-list">
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key"><%= t(".first_name") %></dt>
-            <dd class="govuk-summary-list__value">
-              <p class="govuk-body"><%= user.first_name %></p>
-            </dd>
-          </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key"><%= t(".last_name") %></dt>
-            <dd class="govuk-summary-list__value">
-              <p class="govuk-body"><%= user.last_name %></p>
-            </dd>
-          </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key"><%= t(".email") %></dt>
-            <dd class="govuk-summary-list__value">
-              <p class="govuk-body"><%= user.email %></p>
-            </dd>
-          </div>
-        </dl>
+        <%= govuk_summary_list do |summary_list| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".first_name")) %>
+            <% row.with_value(text: user.first_name) %>
+          <% end %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".last_name")) %>
+            <% row.with_value(text: user.last_name) %>
+          <% end %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".email")) %>
+            <% row.with_value(text: user.email) %>
+          <% end %>
+        <% end %>
 
         <div class="govuk-warning-text">
           <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
