@@ -1,10 +1,12 @@
 require "rails_helper"
 
 RSpec.describe "View a school", type: :system do
+  let!(:support_user) { create(:persona, :colin, service: :claims) }
+  let!(:school) { create(:school, :claims) }
+
   scenario "View a school's details as a support user" do
-    when_i_sign_in_as_a_support_user
-    school = and_there_is_a_school
-    when_i_visit_the_school_page(school)
+    when_i_sign_in_as_a_support_user(support_user)
+    and_i_visit_the_school_page(school)
     i_see_the_school_details(school)
     and_i_see_the_secondary_navigation_links(school)
     i_see_the_schools_details_sections
@@ -12,18 +14,13 @@ RSpec.describe "View a school", type: :system do
 
   private
 
-  def when_i_sign_in_as_a_support_user
-    create(:persona, :colin, service: "claims")
-    visit personas_path
-    click_on "Sign In as Colin"
+  def when_i_sign_in_as_a_support_user(support_user)
+    visit claims_root_path
+    click_on "Sign In as #{support_user.first_name}"
   end
 
-  def and_there_is_a_school
-    create(:school, :claims, urn: "123456")
-  end
-
-  def when_i_visit_the_school_page(school)
-    visit "/support/schools/#{school.id}"
+  def and_i_visit_the_school_page(school)
+    click_on school.name
   end
 
   def i_see_the_school_details(school)
