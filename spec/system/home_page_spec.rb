@@ -21,13 +21,13 @@ RSpec.describe "Home Page", type: :system do
 
   def i_can_see_the_claims_service_name_in_the_header
     within(".govuk-header") do
-      expect(page).to have_content("Claim Funding for General Mentors")
+      expect(page).to have_content("Claim funding for mentors")
     end
   end
 
   def i_can_see_the_placements_service_name_in_the_header
     within(".govuk-header") do
-      expect(page).to have_content("Manage School Placements")
+      expect(page).to have_content("Manage school placements")
     end
   end
 end
