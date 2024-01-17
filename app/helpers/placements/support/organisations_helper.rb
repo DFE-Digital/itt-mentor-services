@@ -11,6 +11,15 @@ module Placements::Support::OrganisationsHelper
     end
   end
 
+  def organisation_url(organisation)
+    case organisation.searchable_type
+    when "School"
+      placements_support_school_path(organisation.searchable)
+    when "Provider"
+      placements_support_provider_path(organisation.searchable)
+    end
+  end
+
   def filter_options
     (Provider.provider_types.keys << "school").sort
   end
