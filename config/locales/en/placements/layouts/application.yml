@@ -1,6 +1,7 @@
 en:
   layouts:
     application:
+      success: Success
       placements:
         primary_navigation:
           users: Users
