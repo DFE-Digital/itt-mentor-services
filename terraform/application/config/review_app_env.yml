@@ -1,0 +1,5 @@
+SIGN_IN_METHOD: persona
+PLACEMENTS_HOST: placements.localhost
+CLAIMS_HOST: claims.localhost
+GIAS_CSV_BASE_URL: https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public
+PUBLISH_BASE_URL: https://qa.api.publish-teacher-training-courses.service.gov.uk
