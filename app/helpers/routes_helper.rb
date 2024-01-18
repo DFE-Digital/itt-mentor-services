@@ -33,4 +33,22 @@ module RoutesHelper
       placements: placements_organisations_path,
     }.fetch current_service
   end
+
+  def placements_support_organisation_path(organisation)
+    case organisation
+    when School
+      placements_support_school_path(organisation)
+    when Provider
+      placements_support_provider_path(organisation)
+    end
+  end
+
+  def placements_support_users_path(organisation)
+    case organisation
+    when School
+      placements_support_school_users_path(organisation)
+    when Provider
+      placements_support_provider_users_path(organisation)
+    end
+  end
 end
