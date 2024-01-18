@@ -10,7 +10,7 @@ class Claims::Support::Schools::UsersController < Claims::Support::ApplicationCo
   end
 
   def new
-    @user = Claims::User.new
+    @user = params[:claims_user].present? ? user : Claims::User.new
   end
 
   def check

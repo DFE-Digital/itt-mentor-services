@@ -1,7 +1,11 @@
 <%= content_for :page_title, sanitize(t(".page_title", school_name: @school.name)) %>
 
 <%= content_for(:before_content) do %>
-  <%= govuk_back_link(href: new_claims_support_school_user_path(@school)) %>
+  <%= govuk_back_link(
+    href: new_claims_support_school_user_path(
+      params.permit(claims_user: {}).merge(school_id: @school.id),
+    ),
+  ) %>
 <% end %>
 
 <div class="govuk-width-container">
@@ -25,7 +29,13 @@
             </dd>
             <dd class="govuk-summary-list__actions">
               <ul class="govuk-summary-list__actions-list">
-                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"></span></a></li>
+                <li class="govuk-summary-list__actions-list-item">
+                  <%= govuk_link_to("Change",
+                    new_claims_support_school_user_path(
+                      params.permit(claims_user: {}).merge(school_id: @school.id),
+                    ),
+                    no_visited_state: true) %>
+                </li>
               </ul>
             </dd>
           </div>
@@ -36,7 +46,13 @@
             </dd>
             <dd class="govuk-summary-list__actions">
               <ul class="govuk-summary-list__actions-list">
-                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"></span></a></li>
+                <li class="govuk-summary-list__actions-list-item">
+                  <%= govuk_link_to("Change",
+                    new_claims_support_school_user_path(
+                      params.permit(claims_user: {}).merge(school_id: @school.id),
+                    ),
+                    no_visited_state: true) %>
+                </li>
               </ul>
             </dd>
           </div>
@@ -47,7 +63,13 @@
             </dd>
             <dd class="govuk-summary-list__actions">
               <ul class="govuk-summary-list__actions-list">
-                <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"></span></a></li>
+                <li class="govuk-summary-list__actions-list-item">
+                  <%= govuk_link_to("Change",
+                    new_claims_support_school_user_path(
+                      params.permit(claims_user: {}).merge(school_id: @school.id),
+                    ),
+                    no_visited_state: true) %>
+                </li>
               </ul>
             </dd>
           </div>

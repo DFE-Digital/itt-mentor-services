@@ -8,6 +8,9 @@
 
 <%= render "placements/support/organisations/users/check_form",
   form_url: placements_support_provider_users_path(@provider),
-  cancel_url: placements_support_school_users_path(@provider),
+  cancel_url: placements_support_provider_users_path(@provider),
+  change_url: new_placements_support_provider_user_path(
+    params.permit(placements_user: {}).merge(provider_id: @provider.id),
+  ),
   user: @user,
   organisation: @provider %>

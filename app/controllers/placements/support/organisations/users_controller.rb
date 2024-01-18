@@ -10,7 +10,7 @@ class Placements::Support::Organisations::UsersController < Placements::Support:
   end
 
   def new
-    @user = Placements::User.new
+    @user = params[:placements_user].present? ? user : Placements::User.new
   end
 
   def check
