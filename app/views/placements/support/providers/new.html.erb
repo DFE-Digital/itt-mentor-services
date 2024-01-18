@@ -10,14 +10,14 @@
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <div class="govuk-form-group<%= " govuk-form-group--error" if f.object.errors.present? %>">
+        <%= content_tag(:div, class: class_names("govuk-form-group", "govuk-form-group--error": f.object.errors.present?)) do %>
           <%= f.govuk_text_field :code, value: nil,
                                         label: { text: t(".title"), size: "l" },
                                         caption: { text: t(".caption") },
                                         id: "accredited-provider-search-form-query-field" %>
 
           <div id="accredited-provider-autocomplete" class="govuk-!-margin-bottom-7"></div>
-        </div>
+        <% end %>
 
         <%= f.govuk_submit t(".continue") %>
 
