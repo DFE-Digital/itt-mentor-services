@@ -43,7 +43,13 @@ variable "enable_monitoring" {
 }
 
 locals {
-  //app_env_values    = yamldecode(file("${path.module}/../application/config/${var.config}_app_env.yml"))
-  app_env_values    = yamldecode(file("${path.module}/config/${var.config}_app_env.yml"))
-  postgres_ssl_mode = var.enable_postgres_ssl ? "require" : "disable"
+  postgres_ssl_mode             = var.enable_postgres_ssl ? "require" : "disable"
+  app_env_values_from_yml       = yamldecode(file("${path.module}/config/${var.config}_app_env.yml"))
+  ingress_claims_domain_map     = contains(keys(local.app_env_values_from_yml), "CLAIMS_HOST") ? {} : { CLAIMS_HOST = "track-and-pay-${var.environment}.test.teacherservices.cloud" }
+  ingress_placements_domain_map = contains(keys(local.app_env_values_from_yml), "PLACEMENTS_HOST") ? {} : { PLACEMENTS_HOST = "manage-school-placements-${var.environment}.test.teacherservices.cloud" }
+  app_env_values = merge(
+    local.app_env_values_from_yml,
+    local.ingress_claims_domain_map,
+    local.ingress_placements_domain_map
+  )
 }
