@@ -28,3 +28,4 @@ en:
             last_name: Last name
             email: Email
             warning: "The user will be sent an email to tell them you’ve added them to %{organisation_name}."
+            change: Change
