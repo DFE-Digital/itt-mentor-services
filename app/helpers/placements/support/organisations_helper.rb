@@ -11,19 +11,6 @@ module Placements::Support::OrganisationsHelper
     end
   end
 
-  def organisation_url(organisation)
-    case organisation.class.name
-    when "Placements::School"
-      placements_support_school_path(organisation)
-    when "School"
-      placements_support_school_path(organisation)
-    when "Placements::Provider"
-      placements_support_provider_path(organisation)
-    when "Provider"
-      placements_support_provider_path(organisation)
-    end
-  end
-
   def filter_options
     (Provider.provider_types.keys << "school").sort
   end

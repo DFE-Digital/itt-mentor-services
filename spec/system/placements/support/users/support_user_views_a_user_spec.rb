@@ -78,10 +78,10 @@ RSpec.describe "Placements / Support / Users / Support User Views A User", type:
   end
 
   def when_i_visit_the_users_page_for(organisation:)
-    if organisation.is_a?(Provider)
-      visit placements_support_provider_users_path(organisation)
-    else
-      visit placements_support_school_users_path(organisation)
+    visit placements_support_root_path
+    click_on organisation.name
+    within(".app-secondary-navigation__list") do
+      click_on "Users"
     end
   end
 
