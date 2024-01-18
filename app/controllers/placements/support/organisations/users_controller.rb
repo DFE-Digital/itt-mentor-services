@@ -14,11 +14,7 @@ class Placements::Support::Organisations::UsersController < Placements::Support:
   end
 
   def check
-    if user.valid?
-      @user = user.decorate
-    else
-      render :new
-    end
+    render :new unless user.valid?
   end
 
   def create
@@ -37,7 +33,14 @@ class Placements::Support::Organisations::UsersController < Placements::Support:
   end
 
   def user
-    @user ||= Placements::User.new(user_params)
+    @user ||=
+      begin
+        user = Placements::User.find_or_initialize_by(email: user_params[:email])
+        debugger
+        user.assign_attributes(first_name: user_params[:first_name], last_name: user_params[:last_name])
+        user.memberships.new(organisation: @organisation)
+        user
+      end
   end
 
   def user_params

@@ -11,8 +11,9 @@
 #
 # Indexes
 #
-#  index_memberships_on_organisation  (organisation_type,organisation_id)
-#  index_memberships_on_user_id       (user_id)
+#  index_memberships_on_organisation                 (organisation_type,organisation_id)
+#  index_memberships_on_user_id                      (user_id)
+#  index_memberships_on_user_id_and_organisation_id  (user_id,organisation_id) UNIQUE
 #
 # Foreign Keys
 #
