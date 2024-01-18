@@ -1,7 +1,9 @@
 <%= content_for :page_title, sanitize(t(".page_title", school_name: @school.name)) %>
 
 <%= content_for(:before_content) do %>
-  <%= govuk_back_link(href: new_placements_support_school_user_path(@school)) %>
+  <%= govuk_back_link(href: new_placements_support_school_user_path(
+    params.permit(placements_user: {}).merge(school_id: @school.id),
+  )) %>
 <% end %>
 
 <%= content_for :page_title, sanitize(@school.name) %>
@@ -9,5 +11,8 @@
 <%= render "placements/support/organisations/users/check_form",
   form_url: placements_support_school_users_path(@school),
   cancel_url: placements_support_school_users_path(@school),
+  change_url: new_placements_support_school_user_path(
+    params.permit(placements_user: {}).merge(school_id: @school.id),
+  ),
   user: @user,
   organisation: @school %>
