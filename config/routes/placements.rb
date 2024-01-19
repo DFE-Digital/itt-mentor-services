@@ -7,6 +7,7 @@ scope module: :placements,
 
   namespace :support do
     root to: redirect("/support/organisations")
+
     resources :organisations, only: %i[index new] do
       collection { get :select_type }
     end
@@ -24,8 +25,14 @@ scope module: :placements,
         end
       end
     end
-    resources :providers, expect: %i[edit update] do
-      collection { get :check }
+
+    resources :providers, expect: %i[edit update show] do
+      collection do
+        get :check
+        get :check_provider_option
+        get :provider_options
+      end
+
       scope module: :providers do
         resources :users, only: %i[index new create show] do
           collection { get :check }
@@ -33,6 +40,4 @@ scope module: :placements,
       end
     end
   end
-
-  resources :organisations, only: [:index]
 end

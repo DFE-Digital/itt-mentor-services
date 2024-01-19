@@ -5,7 +5,7 @@
 <% end %>
 
 <div class="govuk-width-container">
-  <%= form_with(model: @provider_form, url: check_placements_support_providers_path, method: "get", data: { turbo: false }) do |f| %>
+  <%= form_with(model: @provider_form, scope: :provider, url: check_placements_support_providers_path, method: "get", data: { turbo: false }) do |f| %>
     <%= f.govuk_error_summary %>
 
     <div class="govuk-grid-row">
