@@ -27,11 +27,10 @@ RSpec.describe User, type: :model do
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:email) }
-    it do
-      is_expected.to validate_uniqueness_of(:email).scoped_to(
-        :type,
-      ).case_insensitive
-    end
+    it { is_expected.to validate_uniqueness_of(:email).scoped_to(:type).case_insensitive }
+    it { is_expected.to allow_value("name@education.gov.uk").for(:email) }
+    it { is_expected.to allow_value("name@example.com").for(:email) }
+
     it { is_expected.to validate_presence_of(:first_name) }
     it { is_expected.to validate_presence_of(:last_name) }
     it { is_expected.to validate_presence_of(:type) }

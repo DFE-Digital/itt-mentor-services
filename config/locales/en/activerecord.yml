@@ -30,3 +30,4 @@ en:
               blank: Enter an email address
               taken: Email address already in use
               invalid: Enter an email address in the correct format, like name@example.com
+              invalid_support_email: Enter a Department for Education email address in the correct format, like name@education.gov.uk

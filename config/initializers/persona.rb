@@ -16,7 +16,7 @@ CLAIMS_PERSONAS = [
   {
     first_name: "Colin",
     last_name: "Chapman",
-    email: "colin@example.com",
+    email: "colin.chapman@education.gov.uk",
     type: "Claims::SupportUser",
   },
 ].freeze
@@ -43,7 +43,7 @@ PLACEMENTS_PERSONAS = [
   {
     first_name: "Colin",
     last_name: "Chapman",
-    email: "colin@example.com",
+    email: "colin.chapman@education.gov.uk",
     type: "Placements::SupportUser",
   },
 ].freeze
