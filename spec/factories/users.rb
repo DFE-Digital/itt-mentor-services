@@ -44,19 +44,24 @@ FactoryBot.define do
     trait :colin do
       first_name { "Colin" }
       last_name { "Chapman" }
-      email { "colin@example.com" }
+      email { "colin.chapman@education.gov.uk" }
+    end
+
+    trait :support do
+      sequence(:email) { |n| "user#{n}@education.gov.uk" }
     end
   end
 
   factory :claims_user, class: "Claims::User", parent: :user
+  factory :support_user, traits: [:support], parent: :user
 
   factory :placements_user, class: "Placements::User", parent: :user
 
   factory :placements_support_user,
           class: "Placements::SupportUser",
-          parent: :user
+          parent: :support_user
 
   factory :claims_support_user,
           class: "Claims::SupportUser",
-          parent: :user
+          parent: :support_user
 end

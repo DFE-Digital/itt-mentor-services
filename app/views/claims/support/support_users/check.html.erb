@@ -1,0 +1,54 @@
+<% content_for(:page_title) { t(".page_title") } %>
+<% back_href = new_claims_support_support_user_path({ support_user: @support_user_params }) %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: back_href) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= form_with(model: @support_user, scope: :support_user, url: claims_support_support_users_path, method: :post) do |f| %>
+        <%= f.hidden_field :first_name, value: f.object.first_name %>
+        <%= f.hidden_field :last_name, value: f.object.last_name %>
+        <%= f.hidden_field :email, value: f.object.email %>
+
+        <label class="govuk-label govuk-label--l">
+          <span class="govuk-caption-l"><%= t(".caption") %></span>
+          <%= t(".title") %>
+        </label>
+
+        <%= govuk_summary_list do |summary_list| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: User.human_attribute_name(:first_name)) %>
+            <% row.with_value(text: f.object.first_name) %>
+            <% row.with_action(text: t(".change"), href: back_href, visually_hidden_text: f.object.first_name) %>
+          <% end %>
+
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: User.human_attribute_name(:last_name)) %>
+            <% row.with_value(text: f.object.last_name) %>
+            <% row.with_action(text: t(".change"), href: back_href, visually_hidden_text: f.object.last_name) %>
+          <% end %>
+
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: User.human_attribute_name(:email)) %>
+            <% row.with_value(text: f.object.email) %>
+            <% row.with_action(text: t(".change"), href: back_href, visually_hidden_text: f.object.email) %>
+          <% end %>
+        <% end %>
+
+        <div class="govuk-warning-text">
+          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+          <strong class="govuk-warning-text__text"><%= t(".warning") %></strong>
+        </div>
+
+        <%= f.govuk_submit t(".submit") %>
+
+        <p class="govuk-body">
+          <%= govuk_link_to(t(".cancel"), claims_support_support_users_path) %>
+        </p>
+      <% end %>
+    <div>
+  <div>
+</div>
