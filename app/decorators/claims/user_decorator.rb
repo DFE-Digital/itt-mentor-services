@@ -1,3 +1,3 @@
-class Claims::UserDecorator < Draper::Decorator
+class Claims::UserDecorator < UserDecorator
   delegate_all
 end
