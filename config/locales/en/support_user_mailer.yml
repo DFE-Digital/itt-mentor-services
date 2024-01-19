@@ -1,0 +1,10 @@
+en:
+  support_user_mailer:
+    support_user_invitation:
+      subject: "Invitation to join %{service_name}"
+      body: |
+        Dear %{user_name},
+
+        You have been invited to join %{service_name}.
+
+        Sign in here %{sign_in_url}

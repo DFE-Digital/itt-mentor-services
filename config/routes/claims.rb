@@ -23,7 +23,9 @@ scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
     root to: redirect("/support/schools")
 
     resources :claims, only: %i[index show]
-    resources :support_users
+    resources :support_users do
+      get :check, on: :collection
+    end
 
     resources :schools, except: %i[destroy update] do
       collection do
