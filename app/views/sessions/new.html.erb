@@ -1,1 +1,15 @@
-DfE Sign In button goes here.
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l"><%= t(".heading", service_name:) %></h1>
+
+      <p class="govuk-body"><%= t(".description") %></p>
+
+      <%= govuk_button_to t(".sign_in"), "#" %>
+
+      <p class="govuk-body">
+        <%= sanitize t(".disclaimer", service_name:, support_email: mail_to("becomingateacher@digital.education.gov.uk")) %>
+      </p>
+    </div>
+  </div>
+</div>

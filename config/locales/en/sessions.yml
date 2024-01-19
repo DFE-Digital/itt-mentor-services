@@ -1,0 +1,7 @@
+en:
+  sessions:
+    new:
+      heading: Sign in to %{service_name}
+      description: Use DfE Sign-in to access your account.
+      sign_in: Sign in using DfE Sign In
+      disclaimer: If you do not have a DfE Sign-in account but need access to %{service_name}, email %{support_email}.
