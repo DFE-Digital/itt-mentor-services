@@ -10,15 +10,15 @@ class Placements::Support::Organisations::UsersController < Placements::Support:
   end
 
   def new
-    @user = params[:placements_user].present? ? user : Placements::User.new
+    @user_form = params[:user_invite_form].present? ? user_form : UserInviteForm.new
   end
 
   def check
-    render :new unless user.valid?
+    render :new unless user_form.valid?
   end
 
   def create
-    if UserInviteService.call(user, @organisation, sign_in_url)
+    if user_form.invite
       redirect_to_index
       flash[:success] = t(".user_added")
     else
@@ -32,18 +32,13 @@ class Placements::Support::Organisations::UsersController < Placements::Support:
     @users = @organisation.users.placements
   end
 
-  def user
-    @user ||=
-      begin
-        user = Placements::User.find_or_initialize_by(email: user_params[:email])
-        debugger
-        user.assign_attributes(first_name: user_params[:first_name], last_name: user_params[:last_name])
-        user.memberships.new(organisation: @organisation)
-        user
-      end
+  def user_params
+    params.require(:user_invite_form)
+          .permit(:first_name, :last_name, :email)
+          .merge({ service: current_service, organisation: @organisation })
   end
 
-  def user_params
-    params.require(:placements_user).permit(:first_name, :last_name, :email)
+  def user_form
+    @user_form ||= UserInviteForm.new(user_params)
   end
 end

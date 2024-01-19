@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Support / Users / Support User Invites A New User", type: :system do
-  let(:school) { create(:school, :placements, name: "School 1") }
-  let(:provider) { create(:placements_provider, name: "Provider 1") }
+  let!(:school) { create(:school, :placements, name: "School 1") }
+  let!(:provider) { create(:placements_provider, name: "Provider 1") }
   let(:new_user) do
     create(:placements_user,
            first_name: "New",
@@ -12,7 +12,8 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
 
   before do
     given_i_am_signed_in_as_a_support_user
-    mailer_double = instance_double(ActionMailer::MessageDelivery, deliver_later: nil)
+    mailer_double = double(:mailer_double)
+    allow(mailer_double).to receive(:deliver_later).and_return true
     allow(NotifyMailer).to receive(:send_organisation_invite_email).and_return(mailer_double)
   end
 
@@ -26,6 +27,21 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
       and_i_click("Add user")
       then_i_see_the_new_user_has_been_added
     end
+
+    scenario "Support user edits new user details before submitting" do
+      when_i_visit_the_users_page_for(organisation: school)
+      and_i_click("Add user")
+      and_i_enter_the_details_for_a_new_user
+      and_i_click("Continue")
+      then_i_see_the_new_users_details
+      and_i_click("Back")
+      then_i_see_a_populated_form
+      then_i_change_the_first_name
+      and_i_click("Continue")
+      then_i_see_edited_details
+      when_i_click("Add user")
+      then_i_see_edited_new_user_details
+    end
   end
 
   describe "Provider" do
@@ -37,6 +53,29 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
       then_i_see_the_new_users_details
       and_i_click("Add user")
       then_i_see_the_new_user_has_been_added
+    end
+  end
+
+  describe "User can be member of multiple organisations" do
+    scenario "Support user invites the same user to multiple organisations" do
+      when_i_visit_the_users_page_for(organisation: provider)
+      and_i_click("Add user")
+      and_i_enter_the_details_for_a_new_user
+      and_i_click("Continue")
+      then_i_see_the_new_users_details
+      and_i_click("Add user")
+      then_i_see_the_new_user_has_been_added
+
+      when_i_return_to_organisations_page
+      when_i_visit_the_users_page_for(organisation: school)
+      and_i_click("Add user")
+      and_i_enter_the_details_for_a_new_user
+      and_i_click("Continue")
+      then_i_see_the_new_users_details
+      and_i_click("Add user")
+      then_i_see_the_new_user_has_been_added
+
+      and_the_user_has_multiple_memberships
     end
   end
 
@@ -82,11 +121,14 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   end
 
   def when_i_visit_the_users_page_for(organisation:)
-    if organisation.is_a?(Provider)
-      visit placements_support_provider_users_path(organisation)
-    else
-      visit placements_support_school_users_path(organisation)
+    click_on organisation.name
+    within(".app-secondary-navigation__list") do
+      click_on "Users"
     end
+  end
+
+  def when_i_return_to_organisations_page
+    visit placements_support_organisations_path
   end
 
   def when_i_click(button_text)
@@ -96,9 +138,32 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   alias_method :and_i_click, :when_i_click
 
   def and_i_enter_the_details_for_a_new_user
-    fill_in "placements-user-first-name-field", with: "New"
-    fill_in "placements-user-last-name-field", with: "User"
-    fill_in "placements-user-email-field", with: "test@example.com"
+    fill_in "user-invite-form-first-name-field", with: "New"
+    fill_in "user-invite-form-last-name-field", with: "User"
+    fill_in "user-invite-form-email-field", with: "test@example.com"
+  end
+
+  def then_i_see_a_populated_form
+    expect(page).to have_field("First name", with: "New")
+    expect(page).to have_field("Last name", with: "User")
+    expect(page).to have_field("Email", with: "test@example.com")
+  end
+
+  def then_i_change_the_first_name
+    fill_in "First name", with: "Firsty"
+  end
+
+  def then_i_see_edited_details
+    expect(page).to have_content("Firsty")
+    expect(page).to have_content("User")
+    expect(page).to have_content("test@example.com")
+  end
+
+  def then_i_see_edited_new_user_details
+    expect(page.find(".govuk-notification-banner__content")).to have_content("User added")
+    expect(page).to have_content("Firsty")
+    expect(page).to have_content("User")
+    expect(page).to have_content("test@example.com")
   end
 
   def then_i_see_the_new_users_details
@@ -112,6 +177,12 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   def then_i_see_the_new_user_has_been_added
     expect(page.find(".govuk-notification-banner__content")).to have_content("User added")
     and_i_see_the_new_users_details
+  end
+
+  def and_the_user_has_multiple_memberships
+    user = Placements::User.find_by(email: "test@example.com")
+    expect(user.schools).to include(school)
+    expect(user.providers).to include(provider)
   end
 
   def given_a_user_has_been_assigned_to_the(organisation:)
