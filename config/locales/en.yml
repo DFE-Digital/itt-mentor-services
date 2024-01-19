@@ -4,22 +4,6 @@ en:
       search-header: Search by organisation name or postcode
       search: Search
       clear_search: Clear search
-  components:
-    organisation_list_item:
-      organisation_type: Organisation type
-      school: School
-      scitt: SCITT
-      university: University
-      lead_school: Lead partner
-    school_options_form_component:
-      add_organisation: Add organisation
-      continue: Continue
-      paginated_form_description_html: Showing the first %{school_count} results. %{link_to} if the school you’re looking for is not listed.
-      form_description_html: '%{link_to} if the school you’re looking for is not listed.'
-      change_your_search: Change your search
-      narrow_your_search: Try narrowing down your search
-      no_results: No results found for '%{search_param}'
-      legend: "%{school_count} results found for '%{search_param}'"
   pagination_info: Showing %{from} to %{to} of %{count} results
   no_results: There are no results for '%{for}'.
   no_results_with_filter_and_search: There are no results for '%{for}' and the selected filter.
@@ -44,6 +28,7 @@ en:
             code:
               already_added: "%{provider_name} has already been added. Try another provider"
               blank: Enter a provider name, UKPRN, URN or postcode
+              option_blank: Select a provider
         school_onboarding_form:
           attributes:
             urn:

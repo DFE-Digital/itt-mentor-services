@@ -1,0 +1,51 @@
+<% if providers.present? %>
+  <%= form_with(
+    model:,
+    scope: :provider,
+    url:,
+    method: "get",
+    data: { turbo: false },
+    builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+  ) do |f| %>
+    <%= f.govuk_error_summary %>
+    <%= f.hidden_field :search_param, value: search_param %>
+
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-0">
+      <span class="govuk-caption-l"><%= t("components.provider_options_form_component.add_organisation") %></span>
+    </h1>
+
+    <%= f.govuk_radio_buttons_fieldset(
+      :code,
+      scope: :provider,
+      legend: {
+        text: t(
+          "components.provider_options_form_component.legend",
+          provider_count: providers.count,
+          search_param:,
+        ),
+        size: "l",
+      },
+      hint: { text: form_description },
+    ) do %>
+
+      <% providers.first(OPTIONS_PER_PAGE).each do |provider| %>
+        <%= f.govuk_radio_button :code,
+          provider.code,
+          label: { text: provider.name },
+          link_errors: true,
+          hint: { text: provider.town_and_postcode } %>
+      <% end %>
+    <% end %>
+
+    <%= f.govuk_submit t("components.provider_options_form_component.continue") %>
+  <% end %>
+<% else %>
+  <h1 class="govuk-heading-l">
+    <span class="govuk-caption-l"><%= t("components.provider_options_form_component.add_organisation") %></span>
+    <%= t("components.provider_options_form_component.no_results", search_param:) %>
+  </h1>
+
+  <div class="govuk-hint">
+    <%= govuk_link_to(t("components.provider_options_form_component.narrow_your_search"), back_link, no_visited_state: true) %>
+  </div>
+<% end %>

@@ -106,3 +106,6 @@ en:
           title: Check your answers
           ukprn: UK provider reference number (UKPRN)
           website: Website
+        provider_options:
+          cancel: Cancel
+

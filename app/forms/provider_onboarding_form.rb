@@ -1,7 +1,7 @@
 class ProviderOnboardingForm
   include ActiveModel::Model
 
-  attr_accessor :code
+  attr_accessor :code, :javascript_disabled
 
   validates :code, presence: true
   validate :provider_exists?
@@ -20,12 +20,20 @@ class ProviderOnboardingForm
   private
 
   def provider_exists?
-    errors.add(:code, :blank) if provider.blank?
+    errors.add(:code, urn_error_message) if provider.blank?
   end
 
   def provider_already_onboarded?
     if provider&.placements?
       errors.add(:code, :already_added, provider_name: provider.name)
+    end
+  end
+
+  def urn_error_message
+    if javascript_disabled == true
+      :option_blank
+    else
+      :blank
     end
   end
 end

@@ -71,7 +71,7 @@ class Placements::Support::SchoolsController < Placements::Support::ApplicationC
   end
 
   def javascript_disabled?
-    params.dig(:school, :search_urn).nil? && school_params[:urn].present?
+    school_params[:search_urn].nil? && school_params[:urn].present?
   end
 
   def school_params
