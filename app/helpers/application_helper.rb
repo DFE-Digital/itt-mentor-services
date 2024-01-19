@@ -10,6 +10,10 @@ module ApplicationHelper
     end
   end
 
+  def service_name
+    t("#{current_service}.service_name")
+  end
+
   def external_link(link)
     return if link.blank?
 
