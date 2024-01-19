@@ -14,7 +14,11 @@ class Placements::Support::Organisations::UsersController < Placements::Support:
   end
 
   def check
-    render :new unless user.valid?
+    if user.valid?
+      @user = user.decorate
+    else
+      render :new
+    end
   end
 
   def create
