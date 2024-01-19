@@ -103,7 +103,7 @@ def then_i_see_persona_details_for_colin
   page_has_persona_content(
     first_name: "Colin",
     last_name: "Chapman",
-    email: "colin@example.com",
+    email: "colin.chapman@education.gov.uk",
   )
 end
 

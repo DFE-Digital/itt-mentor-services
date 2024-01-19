@@ -13,7 +13,7 @@ RSpec.describe "Add a support user", type: :system do
     when_i_sign_in_as_a_support_user(support_user)
     and_i_visit_the_support_users_page
     and_i_click_on_add_a_support_user
-    then_i_fill_in_the_support_user_form
+    then_i_fill_in_the_support_user_form(email_address: "john.doe@education.gov.uk")
     i_am_redirected_to_check_the_support_user_details
     then_i_click_on_add_user
     i_see_the_support_user_has_been_added(email_address: "john.doe@education.gov.uk")
@@ -74,10 +74,10 @@ RSpec.describe "Add a support user", type: :system do
     click_on "Add user"
   end
 
-  def then_i_fill_in_the_support_user_form
+  def then_i_fill_in_the_support_user_form(email_address:)
     fill_in "First name", with: "John"
     fill_in "Last name", with: "Doe"
-    fill_in "Email address", with: "john.doe@education.gov.uk"
+    fill_in "Email address", with: email_address
 
     click_on "Continue"
   end
