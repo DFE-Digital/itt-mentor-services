@@ -19,6 +19,10 @@ en:
   activemodel:
     errors:
       models:
+        user_invite_form:
+          attributes:
+            email:
+              taken: This email address is already in use. Try another email address
         organisation_onboarding_form:
           attributes:
             organisation_type:

@@ -3,9 +3,9 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= form_with(model: user, url: form_url, method: :post) do |f| %>
-        <%= f.hidden_field :first_name, value: @user.first_name %>
-        <%= f.hidden_field :last_name, value: @user.last_name %>
-        <%= f.hidden_field :email, value: @user.email %>
+        <%= f.hidden_field :first_name, value: user.first_name %>
+        <%= f.hidden_field :last_name, value: user.last_name %>
+        <%= f.hidden_field :email, value: user.email %>
 
         <label class="govuk-label govuk-label--l">
           <span class="govuk-caption-l"><%= t(".caption", organisation_name: organisation.name) %></span>

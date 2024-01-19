@@ -10,21 +10,17 @@ class Claims::Support::Schools::UsersController < Claims::Support::ApplicationCo
   end
 
   def new
-    @user = params[:claims_user].present? ? user : Claims::User.new
+    @user_form = params[:user_invite_form].present? ? user_form : UserInviteForm.new
   end
 
   def check
-    if user.valid?
-      @user = user.decorate
-    else
-      render :new
-    end
+    render :new unless user_form.valid?
   end
 
   def create
-    if UserInviteService.call(user, @school, sign_in_url)
+    if user_form.invite
       redirect_to claims_support_school_users_path(@school)
-      flash[:success] = "User added"
+      flash[:success] = t(".user_added")
     else
       render :new
     end
@@ -32,11 +28,13 @@ class Claims::Support::Schools::UsersController < Claims::Support::ApplicationCo
 
   private
 
-  def user
-    @user ||= Claims::User.new(user_params)
+  def user_params
+    params.require(:user_invite_form)
+          .permit(:first_name, :last_name, :email)
+          .merge({ service: current_service, organisation: @school })
   end
 
-  def user_params
-    params.require(:claims_user).permit(:first_name, :last_name, :email)
+  def user_form
+    @user_form ||= UserInviteForm.new(user_params)
   end
 end

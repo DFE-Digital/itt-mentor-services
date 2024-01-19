@@ -23,5 +23,5 @@ class Membership < ApplicationRecord
   belongs_to :user
   belongs_to :organisation, polymorphic: true
 
-  validates :organisation_id, uniqueness: { scope: :user }
+  validates :user, uniqueness: { scope: :organisation_id }
 end

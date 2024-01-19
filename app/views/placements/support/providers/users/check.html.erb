@@ -2,7 +2,7 @@
 
 <%= content_for(:before_content) do %>
   <%= govuk_back_link(href: new_placements_support_provider_user_path(
-    @user.as_form_params.merge(provider_id: @provider.id),
+    @user_form.as_form_params.merge(provider_id: @provider.id),
   )) %>
 <% end %>
 
@@ -12,7 +12,7 @@
   form_url: placements_support_provider_users_path(@provider),
   cancel_url: placements_support_provider_users_path(@provider),
   change_url: new_placements_support_provider_user_path(
-    @user.as_form_params.merge(provider_id: @provider.id),
+    @user_form.as_form_params.merge(provider_id: @provider.id),
   ),
-  user: @user,
+  user: @user_form,
   organisation: @provider %>

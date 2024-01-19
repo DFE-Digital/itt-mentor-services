@@ -3,7 +3,7 @@
 <%= content_for(:before_content) do %>
   <%= govuk_back_link(
     href: new_claims_support_school_user_path(
-      @user.as_form_params.merge(school_id: @school.id),
+      @user_form.as_form_params.merge(school_id: @school.id),
     ),
   ) %>
 <% end %>
@@ -11,10 +11,10 @@
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= form_with(model: @user, url: claims_support_school_users_path, method: :post) do |f| %>
-        <%= f.hidden_field :first_name, value: @user.first_name %>
-        <%= f.hidden_field :last_name, value: @user.last_name %>
-        <%= f.hidden_field :email, value: @user.email %>
+      <%= form_with(model: @user_form, url: claims_support_school_users_path, method: :post) do |f| %>
+        <%= f.hidden_field :first_name, value: @user_form.first_name %>
+        <%= f.hidden_field :last_name, value: @user_form.last_name %>
+        <%= f.hidden_field :email, value: @user_form.email %>
 
         <label class="govuk-label govuk-label--l">
           <span class="govuk-caption-l"><%= t(".caption", school_name: @school.name) %></span>
@@ -25,14 +25,14 @@
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key"><%= t(".first_name") %></dt>
             <dd class="govuk-summary-list__value">
-              <p class="govuk-body"><%= @user.first_name %></p>
+              <p class="govuk-body"><%= @user_form.first_name %></p>
             </dd>
             <dd class="govuk-summary-list__actions">
               <ul class="govuk-summary-list__actions-list">
                 <li class="govuk-summary-list__actions-list-item">
                   <%= govuk_link_to(t(".change"),
                     new_claims_support_school_user_path(
-                      @user.as_form_params.merge(school_id: @school.id),
+                      @user_form.as_form_params.merge(school_id: @school.id),
                     ),
                     no_visited_state: true) %>
                 </li>
@@ -42,14 +42,14 @@
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key"><%= t(".last_name") %></dt>
             <dd class="govuk-summary-list__value">
-              <p class="govuk-body"><%= @user.last_name %></p>
+              <p class="govuk-body"><%= @user_form.last_name %></p>
             </dd>
             <dd class="govuk-summary-list__actions">
               <ul class="govuk-summary-list__actions-list">
                 <li class="govuk-summary-list__actions-list-item">
                   <%= govuk_link_to(t(".change"),
                     new_claims_support_school_user_path(
-                      @user.as_form_params.merge(school_id: @school.id),
+                      @user_form.as_form_params.merge(school_id: @school.id),
                     ),
                     no_visited_state: true) %>
                 </li>
@@ -59,14 +59,14 @@
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key"><%= t(".email") %></dt>
             <dd class="govuk-summary-list__value">
-              <p class="govuk-body"><%= @user.email %></p>
+              <p class="govuk-body"><%= @user_form.email %></p>
             </dd>
             <dd class="govuk-summary-list__actions">
               <ul class="govuk-summary-list__actions-list">
                 <li class="govuk-summary-list__actions-list-item">
                   <%= govuk_link_to(t(".change"),
                     new_claims_support_school_user_path(
-                      @user.as_form_params.merge(school_id: @school.id),
+                      @user_form.as_form_params.merge(school_id: @school.id),
                     ),
                     no_visited_state: true) %>
                 </li>
