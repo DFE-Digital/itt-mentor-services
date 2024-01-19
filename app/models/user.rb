@@ -17,7 +17,7 @@
 #  index_users_on_type_and_email  (type,email) UNIQUE
 #
 class User < ApplicationRecord
-  has_many :memberships
+  has_many :memberships, dependent: :destroy
 
   validates :first_name, presence: true
   validates :last_name, presence: true
