@@ -48,6 +48,10 @@ class Placements::Support::ProvidersController < Placements::Support::Applicatio
 
   private
 
+  def javascript_disabled?
+    provider_params[:search_code].nil? && provider_params[:code].present?
+  end
+
   def redirect_to_provider_options
     redirect_to provider_options_placements_support_providers_path(
       provider: { search_param: provider_params[:code] },
@@ -60,28 +64,23 @@ class Placements::Support::ProvidersController < Placements::Support::Applicatio
     )
   end
 
-  def provider_param
-    provider_params[:search_param] || params[:search_param]
-  end
-
-  def javascript_disabled?
-    provider_params[:search_code].nil? && provider_params[:code].present?
-  end
-
-  def provider_form(javascript_disabled: false)
-    @provider_form ||= ProviderOnboardingForm.new(code: provider_code)
-  end
-
-  def provider
-    @provider ||= provider_form.provider.decorate
-  end
-
   def provider_code
-    params.dig(:provider, :search_code) || provider_params[:code]
+    provider_params[:search_code] || provider_params[:code]
   end
 
   def search_param
     provider_params[:search_param] || params[:search_param]
+  end
+
+  def provider_form(javascript_disabled: false)
+    @provider_form ||= ProviderOnboardingForm.new(
+      code: provider_code,
+      javascript_disabled:,
+    )
+  end
+
+  def provider
+    @provider ||= provider_form.provider.decorate
   end
 
   def decorated_provider_options
