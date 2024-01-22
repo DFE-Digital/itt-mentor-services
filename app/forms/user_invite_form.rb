@@ -11,7 +11,7 @@ class UserInviteForm
   def invite
     return false unless valid?
 
-    send_invite_email if save_user
+    UserInviteService.call(user, organisation) if save_user
   end
 
   def as_form_params
@@ -52,16 +52,6 @@ class UserInviteForm
 
   def membership
     @membership ||= user.memberships.new(organisation:)
-  end
-
-  def send_invite_email
-    url = Rails.application.routes.url_helpers.sign_in_url(host:)
-    NotifyMailer.send_organisation_invite_email(user, organisation, url).deliver_later
-  end
-
-  def host
-    { claims: ENV["CLAIMS_HOST"],
-      placements: ENV["PLACEMENTS_HOST"] }.fetch service
   end
 
   def user_klass
