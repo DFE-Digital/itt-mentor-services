@@ -11,7 +11,7 @@
     <%= f.hidden_field :search_param, value: search_param %>
 
     <h1 class="govuk-heading-l govuk-!-margin-bottom-0">
-      <span class="govuk-caption-l"><%= t("components.school_options_form_component.add_organisation") %></span>
+      <span class="govuk-caption-l"><%= t(".add_organisation") %></span>
     </h1>
 
     <%= f.govuk_radio_buttons_fieldset(
@@ -19,7 +19,7 @@
       scope: :school,
       legend: {
         text: t(
-          "components.school_options_form_component.legend",
+          ".legend",
           school_count: schools.count,
           search_param:,
         ),
@@ -37,15 +37,15 @@
       <% end %>
     <% end %>
 
-    <%= f.govuk_submit t("components.school_options_form_component.continue") %>
+    <%= f.govuk_submit t(".continue") %>
   <% end %>
 <% else %>
   <h1 class="govuk-heading-l">
-    <span class="govuk-caption-l"><%= t("components.school_options_form_component.add_organisation") %></span>
-    <%= t("components.school_options_form_component.no_results", search_param:) %>
+    <span class="govuk-caption-l"><%= t(".add_organisation") %></span>
+    <%= t(".no_results", search_param:) %>
   </h1>
 
   <div class="govuk-hint">
-    <%= govuk_link_to(t("components.school_options_form_component.narrow_your_search"), back_link, no_visited_state: true) %>
+    <%= govuk_link_to(t(".narrow_your_search"), back_link, no_visited_state: true) %>
   </div>
 <% end %>
