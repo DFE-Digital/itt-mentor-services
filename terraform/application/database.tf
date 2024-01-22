@@ -10,6 +10,7 @@ module "postgres" {
   cluster_configuration_map   = module.cluster_data.configuration_map
   use_azure                   = var.deploy_azure_backing_services
   azure_enable_monitoring     = var.enable_monitoring
+  azure_extensions            = ["pg_trgm", "plpgsql"]
   azure_enable_backup_storage = var.enable_postgres_backup_storage
   server_version              = "14"
 }

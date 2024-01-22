@@ -2,14 +2,13 @@ name: Build and deploy to AKS cluster
 
 on:
   push:
-    branches:
-    - main
+    branches: [main]
   pull_request:
-    branches:
-    - main
+    types: [labeled, opened, reopened, synchronize]
 
 
 concurrency: deploy-${{ github.ref }}
+
 
 permissions:
   packages: write
@@ -21,6 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       docker-image-tag: ${{ steps.build-image.outputs.tag }}
+      commit_sha: ${{ env.COMMIT_SHA }}
 
     steps:
     - name: Checkout
@@ -103,37 +103,31 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - uses: ./.github/actions/deploy-environment
-        id: deploy
-        with:
-          environment: ${{ matrix.environment }}
-          docker_image: ${{ needs.build.outputs.docker-image-tag }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
-
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Seed ${{ matrix.environment }}
-        shell: bash
-        run: |
-            az aks get-credentials -g s189t01-tsc-ts-rg -n s189t01-tsc-test-aks
-            kubectl exec -n bat-qa deployment/itt-mentor-services-${{ matrix.environment }} -- sh -c "export GIAS_CSV_BASE_URL=https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public  && export PUBLISH_BASE_URL=https://qa.api.publish-teacher-training-courses.service.gov.uk// && cd /app && /usr/local/bin/rake db:seed"
-
-      - name: Get application URL
-        id: get-app-url
-        shell: bash
-        run: |
-          url1="https://track-and-pay-${{ matrix.environment }}.test.teacherservices.cloud"
-          echo "url1=${url1}" >> $GITHUB_OUTPUT
-          url2="https://manage-school-placements-${{ matrix.environment }}.test.teacherservices.cloud"
-          echo "url2=${url2}" >> $GITHUB_OUTPUT
-
-      - name: Post comment to Pull Request ${{ matrix.environment  }}
-        if: ${{ github.event_name == 'pull_request' }}
-        uses: marocchino/sticky-pull-request-comment@v2
+      - name: Fetch secrets from key vault
+        uses: azure/CLI@v1
+        id: keyvault-yaml-secret
         with:
-          header: aks
-          message: |
-                  Review app  track and pay deployed to <https://track-and-pay-${{ matrix.environment  }}.test.teacherservices.cloud>
-                  Review app  school placements deployed to <https://manage-school-placements-${{ matrix.environment  }}.test.teacherservices.cloud>
+          inlineScript: |
+            SLACK_WEBHOOK=$(az keyvault secret show --name "SLACK-WEBHOOK" --vault-name "${{ secrets.INF_KEY_VAULT }}" --query "value" -o tsv)
+            echo "::add-mask::$SLACK_WEBHOOK"
+            echo "SLACK_WEBHOOK=$SLACK_WEBHOOK" >> $GITHUB_OUTPUT
+
+      - uses: ./.github/actions/deploy-environment
+        id: deploy
+        with:
+          environment: ${{ matrix.environment }}
+          docker-image: ${{ needs.build.outputs.docker-image-tag }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Slack Notification
+        if: failure()
+        uses: rtCamp/action-slack-notify@master
+        env:
+          SLACK_COLOR: ${{ env.SLACK_FAILURE }}
+          SLACK_TITLE: ${{ matrix.environment }} Release ${{ github.event.title }}
+          SLACK_MESSAGE: Failure deploying ${{ matrix.environment }} release
+          SLACK_WEBHOOK: ${{ steps.keyvault-yaml-secret.outputs.SLACK_WEBHOOK }}
