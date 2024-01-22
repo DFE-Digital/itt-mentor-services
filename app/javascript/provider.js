@@ -16,7 +16,7 @@ function init() {
     minLength: 2,
     inputName: "provider[search_code]",
     onConfirm,
-    errorId: "provider-onboarding-form-code-field-error"
+    errorId: "provider-code-field-error"
   };
 
   initAutocomplete(
