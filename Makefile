@@ -16,6 +16,12 @@ review: test-cluster
 	$(eval export TF_VAR_environment=${ENVIRONMENT})
 	$(eval include global_config/review.sh)
 
+.PHONY: qa
+qa: test-cluster
+		$(eval ENVIRONMENT=qa)
+		$(eval export TF_VAR_environment=${ENVIRONMENT})
+		$(eval include global_config/qa.sh)
+
 composed-variables:
 	$(eval RESOURCE_GROUP_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg)
 	$(eval KEYVAULT_NAMES='("${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-app-kv", "${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-inf-kv")')
