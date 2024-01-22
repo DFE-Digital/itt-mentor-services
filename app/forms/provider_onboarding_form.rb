@@ -3,7 +3,7 @@ class ProviderOnboardingForm
 
   attr_accessor :code, :javascript_disabled
 
-  validates :code, presence: true
+  validate :code_presence
   validate :provider_exists?
   validate :provider_already_onboarded?
 
@@ -20,7 +20,7 @@ class ProviderOnboardingForm
   private
 
   def provider_exists?
-    errors.add(:code, urn_error_message) if provider.blank?
+    errors.add(:code, :blank) if provider.blank?
   end
 
   def provider_already_onboarded?
@@ -29,8 +29,12 @@ class ProviderOnboardingForm
     end
   end
 
-  def urn_error_message
-    if javascript_disabled == true
+  def code_presence
+    errors.add(:code, code_error_message) if code.blank?
+  end
+
+  def code_error_message
+    if javascript_disabled
       :option_blank
     else
       :blank

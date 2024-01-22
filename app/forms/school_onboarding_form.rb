@@ -35,7 +35,7 @@ class SchoolOnboardingForm
   end
 
   def urn_error_message
-    if javascript_disabled == true
+    if javascript_disabled
       :option_blank
     else
       :blank
