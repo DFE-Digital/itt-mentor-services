@@ -17,9 +17,3 @@ en:
       first_name: First name
       last_name: Last name
       title: Your account
-  service_updates:
-    claims:
-      heading: Claims news and updates
-    placements:
-      heading: Placements news and updates
-    contents: Contents

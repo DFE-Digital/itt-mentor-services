@@ -1,0 +1,8 @@
+en:
+  service_updates:
+    index:
+      claims:
+        heading: Claims news and updates
+      placements:
+        heading: Placements news and updates
+      contents: Contents
