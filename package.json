@@ -6,7 +6,7 @@
     "esbuild": "^0.19.11",
     "govuk-frontend": "5.0.0",
     "lodash.debounce": "^4.0.8",
-    "sass": "^1.69.7"
+    "sass": "^1.70.0"
   },
   "scripts": {
     "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --quiet-deps",
