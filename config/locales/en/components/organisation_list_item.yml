@@ -1,0 +1,8 @@
+en:
+  components:
+    organisation_list_item:
+      organisation_type: Organisation type
+      school: School
+      scitt: SCITT
+      university: University
+      lead_school: Lead partner
