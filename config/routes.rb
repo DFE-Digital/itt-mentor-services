@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   end
 
   # User Account Details
-  get "/account", to: "account#index"
+  get "/account", to: "account#show"
   get "/sign-in", to: "sessions#new", as: :sign_in
 
   # Persona Sign In
