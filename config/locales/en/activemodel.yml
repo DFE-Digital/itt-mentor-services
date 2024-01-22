@@ -1,0 +1,24 @@
+en:
+  activemodel:
+    errors:
+      models:
+        user_invite_form:
+          attributes:
+            email:
+              taken: This email address is already in use. Try another email address
+        organisation_onboarding_form:
+          attributes:
+            organisation_type:
+              blank: Select an organisation type
+        provider_onboarding_form:
+          attributes:
+            code:
+              already_added: "%{provider_name} has already been added. Try another provider"
+              blank: Enter a provider name, UKPRN, URN or postcode
+              option_blank: Select a provider
+        school_onboarding_form:
+          attributes:
+            urn:
+              already_added: "%{school_name} has already been added. Try another school"
+              blank: Enter a school name, URN or postcode
+              option_blank: Select a school
