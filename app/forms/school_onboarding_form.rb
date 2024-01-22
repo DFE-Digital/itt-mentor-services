@@ -1,6 +1,4 @@
-class SchoolOnboardingForm
-  include ActiveModel::Model
-
+class SchoolOnboardingForm < ApplicationForm
   attr_accessor :urn, :service, :javascript_disabled
 
   validate :urn_presence

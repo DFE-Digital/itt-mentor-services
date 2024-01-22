@@ -1,6 +1,4 @@
-class ProviderOnboardingForm
-  include ActiveModel::Model
-
+class ProviderOnboardingForm < ApplicationForm
   attr_accessor :code, :javascript_disabled
 
   validate :code_presence
