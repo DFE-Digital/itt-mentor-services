@@ -17,6 +17,7 @@ permissions:
 
 jobs:
   build:
+    if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     outputs:
       docker-image-tag: ${{ steps.build-image.outputs.tag }}
@@ -81,3 +82,58 @@ jobs:
               message: |
                       Review app  track and pay deployed to <https://track-and-pay-${{ github.event.number }}.test.teacherservices.cloud>
                       Review app  school placements deployed to <https://manage-school-placements-${{ github.event.number }}.test.teacherservices.cloud>
+
+  deploy_nonprod:
+    name: Deploy to ${{ matrix.environment }} environment
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    concurrency: deploy_${{ matrix.environment }}
+    needs: [build]
+    strategy:
+      max-parallel: 1
+      matrix:
+        environment: [qa] ## add future nonprod environments here
+    environment:
+      name: ${{ matrix.environment }}
+      url: ${{ steps.deploy.outputs.environment_url }}
+    outputs:
+      environment_url: ${{ steps.deploy.outputs.environment_url }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/deploy-environment
+        id: deploy
+        with:
+          environment: ${{ matrix.environment }}
+          docker_image: ${{ needs.build.outputs.docker-image-tag }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Seed ${{ matrix.environment }}
+        shell: bash
+        run: |
+            az aks get-credentials -g s189t01-tsc-ts-rg -n s189t01-tsc-test-aks
+            kubectl exec -n bat-qa deployment/itt-mentor-services-${{ matrix.environment }} -- sh -c "export GIAS_CSV_BASE_URL=https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public  && export PUBLISH_BASE_URL=https://qa.api.publish-teacher-training-courses.service.gov.uk// && cd /app && /usr/local/bin/rake db:seed"
+
+      - name: Get application URL
+        id: get-app-url
+        shell: bash
+        run: |
+          url1="https://track-and-pay-${{ matrix.environment }}.test.teacherservices.cloud"
+          echo "url1=${url1}" >> $GITHUB_OUTPUT
+          url2="https://manage-school-placements-${{ matrix.environment }}.test.teacherservices.cloud"
+          echo "url2=${url2}" >> $GITHUB_OUTPUT
+
+      - name: Post comment to Pull Request ${{ matrix.environment  }}
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: aks
+          message: |
+                  Review app  track and pay deployed to <https://track-and-pay-${{ matrix.environment  }}.test.teacherservices.cloud>
+                  Review app  school placements deployed to <https://manage-school-placements-${{ matrix.environment  }}.test.teacherservices.cloud>
