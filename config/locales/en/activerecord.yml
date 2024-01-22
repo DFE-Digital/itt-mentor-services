@@ -1,0 +1,14 @@
+en:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            first_name:
+              blank: Enter a first name
+            last_name:
+              blank: Enter a last name
+            email:
+              blank: Enter an email address
+              taken: This email address is already in use. Try another email address
+              invalid: Enter an email address in the correct format, like name@example.com
