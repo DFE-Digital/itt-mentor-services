@@ -40,4 +40,6 @@ scope module: :placements,
       end
     end
   end
+
+  resources :organisations, only: [:index]
 end
