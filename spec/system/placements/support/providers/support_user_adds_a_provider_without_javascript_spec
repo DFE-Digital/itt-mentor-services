@@ -1,0 +1,128 @@
+require "rails_helper"
+
+RSpec.describe "Support User adds a Provider without JavaScript", type: :system do
+  let!(:schools) do
+    [
+      create(:provider, name: "Manchester 1"),
+      create(:provider, name: "Manchester 2"),
+      create(:provider, name: "London"),
+    ]
+  end
+
+  before do
+    given_i_sign_in_as_colin
+  end
+
+  scenario "Colin adds a new Provider" do
+    when_i_visit_the_add_provider_page
+    and_i_enter_a_provider_named("Manch")
+    and_i_click_continue
+    then_i_see_list_of_providers
+    then_i_choose("Manchester 1")
+    and_i_click_continue
+    then_i_see_the_check_details_page_for_provider("Manchester 1")
+    when_i_click_add_organisation
+    then_i_return_to_support_organisations_index
+    and_a_provider_is_listed(provider_name: "Manchester 1")
+  end
+
+  scenario "Colin adds a provider which already exists" do
+    given_a_provider_already_exists_for_placements
+    when_i_visit_the_add_provider_page
+    and_i_enter_a_provider_named("Manch")
+    and_i_click_continue
+    then_i_see_list_of_providers
+    then_i_choose("Manchester 1")
+    and_i_click_continue
+    then_i_see_an_error("Manchester 1 has already been added. Try another provider")
+  end
+
+  scenario "Colin submits the search form without selecting a provider", js: true do
+    when_i_visit_the_add_provider_page
+    and_i_click_continue
+    then_i_see_an_error("Enter a provider name, UKPRN, URN or postcode")
+  end
+
+  scenario "Colin submits the options form without selecting a provider" do
+    when_i_visit_the_add_provider_page
+    and_i_enter_a_provider_named("Manch")
+    and_i_click_continue
+    then_i_see_list_of_providers
+    and_i_click_continue
+    then_i_see_an_error("Select a provider")
+  end
+
+  private
+
+  def and_there_is_an_existing_persona_for(persona_name)
+    create(:persona, persona_name.downcase.to_sym, service: :placements)
+  end
+
+  def and_i_visit_the_personas_page
+    visit personas_path
+  end
+
+  def and_i_click_sign_in_as(persona_name)
+    click_on "Sign In as #{persona_name}"
+  end
+
+  def given_i_sign_in_as_colin
+    given_i_am_on_the_placements_site
+    and_there_is_an_existing_persona_for("Colin")
+    and_i_visit_the_personas_page
+    and_i_click_sign_in_as("Colin")
+  end
+
+  def when_i_visit_the_add_provider_page
+    visit new_placements_support_provider_path
+  end
+
+  def and_i_enter_a_provider_named(provider_name)
+    fill_in "provider-search-form-query-field", with: provider_name
+  end
+
+  def and_i_click_continue
+    click_on "Continue"
+  end
+
+  def then_i_see_list_of_providers
+    expect(page).to have_content("Manchester 1")
+    expect(page).to have_content("Manchester 2")
+    expect(page).not_to have_content("London")
+  end
+
+  def then_i_choose(selection_name)
+    choose selection_name
+  end
+
+  def then_i_see_the_check_details_page_for_provider(provider_name)
+    expect(page).to have_content("Manchester 1")
+    expect(page).to have_content("Check your answers")
+    org_name_row = page.all(".govuk-summary-list__row")[0]
+    expect(org_name_row).to have_content(provider_name)
+  end
+
+  def when_i_click_add_organisation
+    click_on "Add organisation"
+  end
+
+  def then_i_return_to_support_organisations_index
+    expect(page).to have_content("Organisations")
+  end
+
+  def given_a_provider_already_exists_for_placements
+    Provider.find_by(name: "Manchester 1").update!(placements: true)
+  end
+
+  def then_i_see_an_error(error_message)
+    expect(page.find(".govuk-error-summary")).to have_content(
+      "There is a problem",
+    )
+    expect(page.find(".govuk-error-summary")).to have_content(error_message)
+    expect(page.find(".govuk-error-message")).to have_content(error_message)
+  end
+
+  def and_a_provider_is_listed(provider_name:)
+    expect(page).to have_content(provider_name)
+  end
+end
