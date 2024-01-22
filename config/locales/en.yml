@@ -139,6 +139,3 @@ en:
           last_name: Last name
           email: Email
           warning: "The user will be sent an email to tell them you’ve added them to %{school_name}."
-  organisation_onboarding_form:
-    itt_provider: ITT provider
-    school: School
