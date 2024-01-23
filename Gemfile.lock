@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/citizensadvice/capybara_accessible_selectors
+  revision: 679abc42cce81b43ed81d31bbe7ad6a96dbe7fef
+  branch: main
+  specs:
+    capybara_accessible_selectors (0.11.0)
+      capybara (~> 3.36)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -541,6 +549,7 @@ DEPENDENCIES
   brakeman
   capybara
   capybara-screenshot
+  capybara_accessible_selectors!
   cssbundling-rails
   debug
   dotenv-rails
