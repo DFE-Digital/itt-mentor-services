@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_18_141808) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_23_143138) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -74,8 +74,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_18_141808) do
 
   create_table "schools", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "urn", null: false
-    t.boolean "placements", default: false
-    t.boolean "claims", default: false
+    t.boolean "placements_service", default: false
+    t.boolean "claims_service", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
@@ -107,8 +107,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_18_141808) do
     t.string "rating"
     t.date "last_inspection_date"
     t.string "email_address"
-    t.index ["claims"], name: "index_schools_on_claims"
-    t.index ["placements"], name: "index_schools_on_placements"
+    t.index ["claims_service"], name: "index_schools_on_claims_service"
+    t.index ["placements_service"], name: "index_schools_on_placements_service"
     t.index ["urn"], name: "index_schools_on_urn", unique: true
   end
 
