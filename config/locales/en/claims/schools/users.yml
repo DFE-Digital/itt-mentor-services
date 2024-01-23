@@ -4,3 +4,21 @@ en:
       users:
         index:
           heading: Users
+          add_user: Add user
+          no_users: There are no users for %{school_name}.
+        new:
+          page_title: Invite a new user
+          cancel: Cancel
+          continue: Continue
+          caption: Add user
+          description: Personal details
+        check:
+          page_title: Check your answers
+          title: Check your answers
+          caption: Add user
+          add_user: Add user
+          cancel: Cancel
+          warning: "The user will be sent an email to tell them you’ve added them to %{school_name}."
+          change: Change
+        create:
+            user_added: User added

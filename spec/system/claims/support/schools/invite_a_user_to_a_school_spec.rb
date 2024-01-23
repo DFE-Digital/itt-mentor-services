@@ -3,15 +3,14 @@ require "rails_helper"
 RSpec.describe "Invite a user to a school", type: :system do
   before do
     setup_school
-    setup_school_and_anne_membership
     mailer_double = double(:mailer_double)
     allow(mailer_double).to receive(:deliver_later).and_return true
     allow(NotifyMailer).to receive(:send_organisation_invite_email).and_return(mailer_double)
   end
 
-  scenario "I sign in as a lead mentor user and invite a user to a school" do
-    sign_in_as_lead_mentor_user
-    visit_claims_school_users_page
+  scenario "I sign in as a support user and invite a user to a school" do
+    sign_in_as_support_user
+    visit_claims_support_school_users_page
     click_on_add_user
     fill_in_user_details
     check_user_details
@@ -19,24 +18,17 @@ RSpec.describe "Invite a user to a school", type: :system do
     verify_user_added
   end
 
-  scenario "I sign in as a lead mentor user and enter invalid user details" do
-    sign_in_as_lead_mentor_user
-    visit_claims_school_users_page
+  scenario "I sign in as a support user and enter invalid user details" do
+    sign_in_as_support_user
+    visit_claims_support_school_users_page
     click_on_add_user
     fill_in_invalid_user_details
     then_see_error_message
   end
 
-  scenario "I sign in as a lead mentor user with no users" do
-    sign_in_as_support_user
-    remove_all_users_from_school
-    visit_claims_school_users_page
-    then_see_no_users_message
-  end
-
   scenario "I try to add a user who already exists" do
-    sign_in_as_lead_mentor_user
-    visit_claims_school_users_page
+    sign_in_as_support_user
+    visit_claims_support_school_users_page
     click_on_add_user
     fill_in_user_details
     check_user_details
@@ -47,15 +39,27 @@ RSpec.describe "Invite a user to a school", type: :system do
     then_see_error_message_for_existing_user
   end
 
-  scenario "I CANT access another schools users list" do
+  scenario "I add a user to different schools" do
     another_school_exists
-    sign_in_as_lead_mentor_user
-    verify_i_cant_access_another_schools_users_list
+    sign_in_as_support_user
+    visit_claims_support_school_users_page
+    click_on_add_user
+    fill_in_user_details
+    check_user_details
+    click_on_add_user
+    verify_user_added
+
+    visit_another_claims_support_school_users_page
+    click_on_add_user
+    fill_in_user_details
+    check_user_details
+    click_on_add_user
+    verify_user_added_to_another_school
   end
 
   scenario "I use back or change to edit my answers" do
-    sign_in_as_lead_mentor_user
-    visit_claims_school_users_page
+    sign_in_as_support_user
+    visit_claims_support_school_users_page
     click_on_add_user
     fill_in_user_details
     check_user_details
@@ -77,37 +81,18 @@ RSpec.describe "Invite a user to a school", type: :system do
     @another_school = create(:school, :claims)
   end
 
-  def setup_school_and_anne_membership
-    @anne_persona = create(:persona, :anne, service: "claims")
-    create(:membership, user: @anne_persona, organisation: @school)
-  end
-
   def sign_in_as_support_user
     create(:persona, :colin, service: "claims")
     visit personas_path
     click_on "Sign In as Colin"
   end
 
-  def remove_all_users_from_school
-    @school.users.each { |user| user.memberships.destroy_all }
+  def visit_claims_support_school_users_page
+    visit claims_support_school_users_path(@school)
   end
 
-  def verify_i_cant_access_another_schools_users_list
-    visit claims_school_users_path(@another_school)
-    expect(page).to have_content("Page not found")
-  end
-
-  def sign_in_as_lead_mentor_user
-    visit personas_path
-    click_on "Sign In as Anne"
-  end
-
-  def visit_claims_school_users_page
-    visit claims_school_users_path(@school)
-  end
-
-  def visit_another_claims_school_users_page
-    visit claims_school_users_path(@another_school)
+  def visit_another_claims_support_school_users_page
+    visit claims_support_school_users_path(@another_school)
   end
 
   def fill_in_user_details
@@ -158,10 +143,6 @@ RSpec.describe "Invite a user to a school", type: :system do
     expect(page).to have_content("Enter an email address in the correct format, like name@example.com")
   end
 
-  def then_see_no_users_message
-    expect(page).to have_content("There are no users for #{@school.name}")
-  end
-
   def check_user_details
     expect(page).to have_content("Barry")
     expect(page).to have_content("Garlow")
@@ -177,7 +158,7 @@ RSpec.describe "Invite a user to a school", type: :system do
   end
 
   def verify_user_added
-    visit_claims_school_users_page
+    visit_claims_support_school_users_page
     check_user_details
   end
 
@@ -186,7 +167,7 @@ RSpec.describe "Invite a user to a school", type: :system do
   end
 
   def verify_user_added_to_another_school
-    visit_another_claims_school_users_page
+    visit_another_claims_support_school_users_page
     check_user_details
   end
 end
