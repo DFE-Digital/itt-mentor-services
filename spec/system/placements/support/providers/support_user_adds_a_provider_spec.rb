@@ -11,6 +11,7 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
 
   scenario "Colin adds a new Provider", js: true do
     when_i_visit_the_add_provider_page
+    then_i_see_support_navigation_with_organisation_selected
     and_i_enter_a_provider_named("Provider 1")
     then_i_see_a_dropdown_item_for("Provider 1")
     when_i_click_the_dropdown_item_for("Provider 1")
@@ -25,6 +26,7 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
   scenario "Colin adds a Provider which already exists", js: true do
     given_a_provider_already_as_already_been_onboarded
     when_i_visit_the_add_provider_page
+    then_i_see_support_navigation_with_organisation_selected
     and_i_enter_a_provider_named("Provider 1")
     then_i_see_a_dropdown_item_for("Provider 1")
     when_i_click_the_dropdown_item_for("Provider 1")
@@ -34,6 +36,7 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
 
   scenario "Colin submits the search form without selecting a provider", js: true do
     when_i_visit_the_add_provider_page
+    then_i_see_support_navigation_with_organisation_selected
     and_i_click_continue
     then_i_see_an_error("Enter a provider name, UKPRN, URN or postcode")
   end
@@ -58,6 +61,13 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
 
   def when_i_visit_the_add_provider_page
     visit new_placements_support_provider_path
+  end
+
+  def then_i_see_support_navigation_with_organisation_selected
+    within(".app-primary-navigation__nav") do
+      expect(page).to have_link "Organisations", current: "page"
+      expect(page).to have_link "Users", current: "false"
+    end
   end
 
   def given_i_sign_in_as_colin

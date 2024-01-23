@@ -20,11 +20,15 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   describe "School" do
     scenario "Support User invites a new user to a school" do
       when_i_visit_the_users_page_for(organisation: school)
+      then_i_see_the_navigation_bars_with_organisations_and_users_selected
       and_i_click("Add user")
+      then_i_see_support_navigation_with_organisation_selected
       and_i_enter_the_details_for_a_new_user
       and_i_click("Continue")
+      then_i_see_support_navigation_with_organisation_selected
       then_i_see_the_new_users_details
       and_i_click("Add user")
+      then_i_see_support_navigation_with_organisation_selected
       then_i_see_the_new_user_has_been_added
     end
 
@@ -47,11 +51,15 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   describe "Provider" do
     scenario "Support User invites a new user to a school" do
       when_i_visit_the_users_page_for(organisation: provider)
+      then_i_see_the_navigation_bars_with_organisations_and_users_selected
       and_i_click("Add user")
+      then_i_see_support_navigation_with_organisation_selected
       and_i_enter_the_details_for_a_new_user
       and_i_click("Continue")
+      then_i_see_support_navigation_with_organisation_selected
       then_i_see_the_new_users_details
       and_i_click("Add user")
+      then_i_see_support_navigation_with_organisation_selected
       then_i_see_the_new_user_has_been_added
     end
   end
@@ -143,6 +151,21 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
     fill_in "user-invite-form-email-field", with: "test@example.com"
   end
 
+  def then_i_see_the_navigation_bars_with_organisations_and_users_selected
+    within(".app-primary-navigation__nav") do
+      expect(page).to have_link "Organisations", current: "page"
+      expect(page).to have_link "Users", current: "false"
+    end
+
+    within(".app-secondary-navigation") do
+      expect(page).to have_link "Details", current: "false"
+      expect(page).to have_link "Users", current: "page"
+      expect(page).to have_link "Mentors", current: "false"
+      expect(page).to have_link "Placements", current: "false"
+      expect(page).to have_link "Providers", current: "false"
+    end
+  end
+
   def then_i_see_a_populated_form
     expect(page).to have_field("First name", with: "New")
     expect(page).to have_field("Last name", with: "User")
@@ -176,6 +199,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
 
   def then_i_see_the_new_user_has_been_added
     expect(page.find(".govuk-notification-banner__content")).to have_content("User added")
+    then_i_see_support_navigation_with_organisation_selected
     and_i_see_the_new_users_details
   end
 
@@ -198,5 +222,12 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
     # Error above input
     input_error_messages = page.all(".govuk-error-message")
     expect(input_error_messages[error_index]).to have_content(error_message)
+  end
+
+  def then_i_see_support_navigation_with_organisation_selected
+    within(".app-primary-navigation__nav") do
+      expect(page).to have_link "Organisations", current: "page"
+      expect(page).to have_link "Users", current: "false"
+    end
   end
 end

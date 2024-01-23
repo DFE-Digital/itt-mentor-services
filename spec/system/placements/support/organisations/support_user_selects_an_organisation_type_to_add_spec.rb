@@ -5,6 +5,7 @@ RSpec.describe "Placements / Support / Organisations / Support User Selects An O
   before do
     given_i_sign_in_as_colin
     when_i_click_add_organisation
+    then_i_see_support_navigation_with_organisation_selected
   end
 
   after { Capybara.app_host = nil }
@@ -57,6 +58,13 @@ RSpec.describe "Placements / Support / Organisations / Support User Selects An O
 
   def when_i_click_add_organisation
     click_on "Add organisation"
+  end
+
+  def then_i_see_support_navigation_with_organisation_selected
+    within(".app-primary-navigation__nav") do
+      expect(page).to have_link "Organisations", current: "page"
+      expect(page).to have_link "Users", current: "false"
+    end
   end
 
   def when_i_select_the_radio_option(organisation_type)
