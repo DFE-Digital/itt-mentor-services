@@ -4,7 +4,9 @@ scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
   resources :schools, only: %i[index show] do
     scope module: :schools do
       resources :claims, only: %i[index show]
-      resources :users, only: %i[index show]
+      resources :users, only: %i[index new create show] do
+        get :check, on: :collection
+      end
     end
   end
 
