@@ -1,14 +1,10 @@
 class ApplicationForm
   include ActiveModel::Model
+  include ActionView::Helpers::TranslationHelper
 
-  def translate(key, options = {})
-    I18n.t(key, scope: key.starts_with?(".") ? i18n_scope : nil, **options)
-  end
-  alias_method :t, :translate
+  def initialize(attributes = {})
+    @virtual_path = "forms/#{self.class.name.underscore}"
 
-  private
-
-  def i18n_scope
-    "forms.#{self.class.name.underscore}"
+    super
   end
 end
