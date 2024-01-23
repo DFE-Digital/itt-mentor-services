@@ -15,6 +15,7 @@ RSpec.describe "Support User adds a Provider without JavaScript", type: :system 
 
   scenario "Colin adds a new Provider" do
     when_i_visit_the_add_provider_page
+    then_i_see_support_navigation_with_organisation_selected
     and_i_enter_a_provider_named("Manch")
     and_i_click_continue
     then_i_see_list_of_providers
@@ -29,6 +30,7 @@ RSpec.describe "Support User adds a Provider without JavaScript", type: :system 
   scenario "Colin adds a provider which already exists" do
     given_a_provider_already_exists_for_placements
     when_i_visit_the_add_provider_page
+    then_i_see_support_navigation_with_organisation_selected
     and_i_enter_a_provider_named("Manch")
     and_i_click_continue
     then_i_see_list_of_providers
@@ -39,12 +41,14 @@ RSpec.describe "Support User adds a Provider without JavaScript", type: :system 
 
   scenario "Colin submits the search form without selecting a provider", js: true do
     when_i_visit_the_add_provider_page
+    then_i_see_support_navigation_with_organisation_selected
     and_i_click_continue
     then_i_see_an_error("Enter a provider name, UKPRN, URN or postcode")
   end
 
   scenario "Colin submits the options form without selecting a provider" do
     when_i_visit_the_add_provider_page
+    then_i_see_support_navigation_with_organisation_selected
     and_i_enter_a_provider_named("Manch")
     and_i_click_continue
     then_i_see_list_of_providers
@@ -75,6 +79,13 @@ RSpec.describe "Support User adds a Provider without JavaScript", type: :system 
 
   def when_i_visit_the_add_provider_page
     visit new_placements_support_provider_path
+  end
+
+  def then_i_see_support_navigation_with_organisation_selected
+    within(".app-primary-navigation__nav") do
+      expect(page).to have_link "Organisations", current: "page"
+      expect(page).to have_link "Users", current: "false"
+    end
   end
 
   def and_i_enter_a_provider_named(provider_name)

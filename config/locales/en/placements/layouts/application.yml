@@ -1,8 +1,0 @@
-en:
-  layouts:
-    application:
-      placements:
-        primary_navigation:
-          users: Users
-          placements: Placements
-          organisations: Organisations

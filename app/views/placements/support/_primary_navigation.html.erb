@@ -1,0 +1,10 @@
+<%# locals: (current_navigation: nil) -%>
+
+<%= content_for(:primary_navigation_content) do %>
+  <%= render PrimaryNavigationComponent.new do |component| %>
+    <% component.with_navigation_item t(".organisations"),
+                                      support_organisations_path,
+                                      current: current_navigation == :organisations %>
+    <% component.with_navigation_item t(".users"), support_users_path, current: current_navigation == :users %>
+  <% end %>
+<% end %>

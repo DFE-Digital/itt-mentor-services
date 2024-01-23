@@ -4,6 +4,7 @@ RSpec.describe "Support user filters and searches for organisations", type: :sys
   before do
     given_i_am_signed_in_as_a_support_user
     and_placement_schools_and_providers_exist
+    then_i_see_support_navigation_with_organisation_selected
   end
 
   after { Capybara.app_host = nil }
@@ -187,6 +188,13 @@ RSpec.describe "Support user filters and searches for organisations", type: :sys
     create(:persona, :colin, service: :placements)
     visit personas_path
     click_on "Sign In as Colin"
+  end
+
+  def then_i_see_support_navigation_with_organisation_selected
+    within(".app-primary-navigation__nav") do
+      expect(page).to have_link "Organisations", current: "page"
+      expect(page).to have_link "Users", current: "false"
+    end
   end
 
   def and_placement_schools_and_providers_exist

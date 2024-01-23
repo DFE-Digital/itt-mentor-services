@@ -1,5 +1,5 @@
 <%= content_for :page_title, sanitize(t(".page_title", provider_name: @provider.name)) %>
-
+<%= render "placements/support/primary_navigation", current_navigation: :organisations %>
 <%= content_for(:before_content) do %>
   <%= govuk_back_link(href: new_placements_support_provider_user_path(
     @user_form.as_form_params.merge(provider_id: @provider.id),
