@@ -7,7 +7,7 @@
 #  address2                     :string
 #  address3                     :string
 #  admissions_policy            :string
-#  claims                       :boolean          default(FALSE)
+#  claims_service               :boolean          default(FALSE)
 #  email_address                :string
 #  gender                       :string
 #  group                        :string
@@ -17,7 +17,7 @@
 #  name                         :string
 #  percentage_free_school_meals :integer
 #  phase                        :string
-#  placements                   :boolean          default(FALSE)
+#  placements_service           :boolean          default(FALSE)
 #  postcode                     :string
 #  rating                       :string
 #  religious_character          :string
@@ -40,9 +40,9 @@
 #
 # Indexes
 #
-#  index_schools_on_claims      (claims)
-#  index_schools_on_placements  (placements)
-#  index_schools_on_urn         (urn) UNIQUE
+#  index_schools_on_claims_service      (claims_service)
+#  index_schools_on_placements_service  (placements_service)
+#  index_schools_on_urn                 (urn) UNIQUE
 #
 class Claims::School < School
   default_scope { claims }
