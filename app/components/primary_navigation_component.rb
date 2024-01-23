@@ -14,13 +14,13 @@ class PrimaryNavigationComponent < ApplicationComponent
 
     def call
       content_tag(:li, class: "app-primary-navigation__item") do
-        link_to name, url, class: "app-primary-navigation__link", aria: { current: show_as_current?(url) && "page" }
+        link_to name, url, class: "app-primary-navigation__link", aria: { current: current?(url) && "page" }
       end
     end
 
     private
 
-    def show_as_current?(url)
+    def current?(url)
       current || current_page?(url)
     end
   end

@@ -96,6 +96,7 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
+  # The accessible selectors gem is maintained by Citizens Advice, not yet a registered gem.
   gem "capybara_accessible_selectors", git: "https://github.com/citizensadvice/capybara_accessible_selectors", branch: "main"
   gem "capybara-screenshot"
   gem "rails-controller-testing"
