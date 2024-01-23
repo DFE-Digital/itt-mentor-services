@@ -7,11 +7,9 @@ RSpec.describe Provider::Importer do
   let(:changeable_provider) { create(:provider, name: "Changeable Provider") }
 
   before do
-    Timecop.freeze(Time.zone.local(2024, 1, 1, 1))
-
     stub_request(
       :get,
-      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/2024/providers",
+      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/current/providers",
     ).to_return(
       status: 200,
       body: {
@@ -78,14 +76,14 @@ RSpec.describe Provider::Importer do
           },
         ],
         "links" => {
-          "next" => "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/2024/providers?page=2",
+          "next" => "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/current/providers?page=2",
         },
       }.to_json,
     )
 
     stub_request(
       :get,
-      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/2024/providers?page=2",
+      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/current/providers?page=2",
     ).to_return(
       status: 200,
       body: {
@@ -102,8 +100,6 @@ RSpec.describe Provider::Importer do
       }.to_json,
     )
   end
-
-  after { Timecop.return }
 
   it "creates new provider records for responses which don't already exist or are valid" do
     expect { subject }.to change(Provider, :count).by(4)
