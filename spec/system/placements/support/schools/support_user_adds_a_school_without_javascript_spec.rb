@@ -111,7 +111,7 @@ RSpec.describe "Support User adds a School without JavaScript", type: :system do
   end
 
   def given_a_school_already_exists_for_placements
-    School.find_by_name("Manchester 1").update!(placements: true)
+    School.find_by_name("Manchester 1").update!(placements_service: true)
   end
 
   def then_i_see_an_error(error_message)
