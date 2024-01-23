@@ -9,7 +9,7 @@ class SchoolOnboardingForm < ApplicationForm
   def onboard
     return false unless valid?
 
-    school.update!(service => true)
+    school.update!("#{service}_service" => true)
   end
 
   def school
@@ -23,7 +23,7 @@ class SchoolOnboardingForm < ApplicationForm
   end
 
   def school_already_onboarded?
-    if school&.try(service.to_s)
+    if school&.try("#{service}_service?")
       errors.add(:urn, :already_added, school_name: school.name)
     end
   end

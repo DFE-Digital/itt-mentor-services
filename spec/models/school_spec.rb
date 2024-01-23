@@ -58,22 +58,4 @@ RSpec.describe School, type: :model do
     it { is_expected.to validate_presence_of(:urn) }
     it { is_expected.to validate_uniqueness_of(:urn).case_insensitive }
   end
-
-  context "scopes" do
-    describe "services" do
-      let!(:placements_on) { create(:school, placements: true) }
-      let!(:claims_on) { create(:school, claims: true) }
-      describe "#placements" do
-        it "only returns schools in the placements service" do
-          expect(described_class.placements).to contain_exactly(placements_on)
-        end
-      end
-
-      describe "#claims" do
-        it "only returns schools in the claims service" do
-          expect(described_class.claims).to contain_exactly(claims_on)
-        end
-      end
-    end
-  end
 end

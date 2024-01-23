@@ -50,11 +50,11 @@ FactoryBot.define do
     name { Faker::Educator.primary_school }
 
     trait :claims do
-      claims { true }
+      claims_service { true }
     end
 
     trait :placements do
-      placements { true }
+      placements_service { true }
     end
   end
 end

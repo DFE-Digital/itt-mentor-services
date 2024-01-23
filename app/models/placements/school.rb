@@ -45,5 +45,5 @@
 #  index_schools_on_urn                 (urn) UNIQUE
 #
 class Placements::School < School
-  default_scope { placements }
+  default_scope { where placements_service: true }
 end

@@ -54,11 +54,8 @@ class School < ApplicationRecord
   validates :urn, uniqueness: { case_sensitive: false }
   validates :name, presence: true
 
-  scope :placements, -> { where placements: true }
-  scope :claims, -> { where claims: true }
-
   multisearchable against: %i[name postcode],
-                  if: :placements,
+                  if: :placements_service?,
                   additional_attributes: ->(_school) { { organisation_type: "school" } }
 
   pg_search_scope :search_name_urn_postcode,

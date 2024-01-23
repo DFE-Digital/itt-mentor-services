@@ -45,7 +45,7 @@
 #  index_schools_on_urn                 (urn) UNIQUE
 #
 class Claims::School < School
-  default_scope { claims }
+  default_scope { where claims_service: true }
 
   has_many :users, -> { claims }, through: :memberships
 end

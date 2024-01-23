@@ -69,7 +69,7 @@ describe SchoolOnboardingForm, type: :model do
         described_class.new(urn: school.urn, service: :placements).onboard
         school.reload
       end
-      onboarding.to change(school, :placements).from(false).to(true)
+      onboarding.to change(school, :placements_service).from(false).to(true)
     end
   end
 end
