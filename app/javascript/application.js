@@ -7,3 +7,4 @@ initAll();
 autocompleteSetup();
 providerAutocompleteSetup();
 schoolAutocompleteSetup();
+import "./controllers"

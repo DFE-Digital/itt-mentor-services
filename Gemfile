@@ -69,6 +69,8 @@ gem "down", "~> 5.0"
 gem "httparty"
 
 gem "pg_search"
+# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+gem "stimulus-rails"
 
 group :development do
   gem "annotate", require: false
