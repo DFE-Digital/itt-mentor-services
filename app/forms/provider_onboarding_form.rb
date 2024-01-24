@@ -8,7 +8,7 @@ class ProviderOnboardingForm < ApplicationForm
   def onboard
     return false unless valid?
 
-    provider.update!(placements: true)
+    provider.update!(placements_service: true)
   end
 
   def provider
@@ -22,7 +22,7 @@ class ProviderOnboardingForm < ApplicationForm
   end
 
   def provider_already_onboarded?
-    if provider&.placements?
+    if provider&.placements_service?
       errors.add(:code, :already_added, provider_name: provider.name)
     end
   end

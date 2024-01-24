@@ -2,31 +2,31 @@
 #
 # Table name: providers
 #
-#  id            :uuid             not null, primary key
-#  accredited    :boolean          default(FALSE)
-#  address1      :string
-#  address2      :string
-#  address3      :string
-#  city          :string
-#  code          :string           not null
-#  county        :string
-#  email_address :string
-#  name          :string           not null
-#  placements    :boolean          default(FALSE)
-#  postcode      :string
-#  provider_type :enum             not null
-#  telephone     :string
-#  town          :string
-#  ukprn         :string
-#  urn           :string
-#  website       :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id                 :uuid             not null, primary key
+#  accredited         :boolean          default(FALSE)
+#  address1           :string
+#  address2           :string
+#  address3           :string
+#  city               :string
+#  code               :string           not null
+#  county             :string
+#  email_address      :string
+#  name               :string           not null
+#  placements_service :boolean          default(FALSE)
+#  postcode           :string
+#  provider_type      :enum             not null
+#  telephone          :string
+#  town               :string
+#  ukprn              :string
+#  urn                :string
+#  website            :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
 #
 # Indexes
 #
-#  index_providers_on_code        (code) UNIQUE
-#  index_providers_on_placements  (placements)
+#  index_providers_on_code                (code) UNIQUE
+#  index_providers_on_placements_service  (placements_service)
 #
 require "rails_helper"
 
@@ -50,15 +50,6 @@ RSpec.describe Provider, type: :model do
   end
 
   context "scopes" do
-    describe "#placements" do
-      let!(:onboarded_provider) { create(:provider, placements: true) }
-      let!(:provider) { create(:provider) }
-
-      it "only returns the providers which have been onboarded (placements: true)" do
-        expect(described_class.placements).to contain_exactly(onboarded_provider)
-      end
-    end
-
     describe "#accredited" do
       let!(:accredited_provider) { create(:provider, accredited: true) }
       let!(:provider) { create(:provider) }

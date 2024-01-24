@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_23_143138) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_24_095111) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -52,7 +52,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_23_143138) do
     t.string "code", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "placements", default: false
+    t.boolean "placements_service", default: false
     t.enum "provider_type", null: false, enum_type: "provider_type"
     t.string "name", null: false
     t.string "ukprn"
@@ -69,7 +69,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_23_143138) do
     t.string "postcode"
     t.boolean "accredited", default: false
     t.index ["code"], name: "index_providers_on_code", unique: true
-    t.index ["placements"], name: "index_providers_on_placements"
+    t.index ["placements_service"], name: "index_providers_on_placements_service"
   end
 
   create_table "schools", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
