@@ -28,8 +28,8 @@ erDiagram
   School {
     uuid id PK
     string urn FK "Primary key for schools in GIAS"
-    bool placements "Indicates if the School has been onboarded into the School Placements service"
-    bool claims "Indicates if the School has been onboarded into the Track & Pay service"
+    bool placements_service "Indicates if the School has been onboarded into the School Placements service"
+    bool claims_service "Indicates if the School has been onboarded into the Track & Pay service"
   }
 
   Mentor {
@@ -40,7 +40,7 @@ erDiagram
   Provider {
     uuid id PK
     string code FK "Primary key for providers in the Teacher Training Courses API"
-    bool placements "Indicates if the Provider has been onboarded into the School Placements service"
+    bool placements_service "Indicates if the Provider has been onboarded into the School Placements service"
   }
 
   MentorTraining {
@@ -105,16 +105,16 @@ Additionally, Providers will need to be onboarded to use the School Placements s
 
 All schools from the GIAS import will have a record in the `schools` table (the `School` entity in our ERD).
 
-The `placements` and `claims` boolean attributes will indicate which service(s) the School has been onboarded into. It's possible for Schools to be onboarded to both services, one service, or neither service.
+The `placements_service` and `claims_service` boolean attributes will indicate which service(s) the School has been onboarded into. It's possible for Schools to be onboarded to both services, one service, or neither service.
 
 For example:
 
-| urn    | name     | placements | claims |
-|--------|----------|------------|--------|
-| 100000 | School A | 1          | 0      |
-| 100001 | School B | 0          | 1      |
-| 100002 | School C | 1          | 1      |
-| 100003 | School D | 0          | 0      |
+| urn    | name     | placements_service | claims_service |
+| ------ | -------- | ------------------ | -------------- |
+| 100000 | School A | 1                  | 0              |
+| 100001 | School B | 0                  | 1              |
+| 100002 | School C | 1                  | 1              |
+| 100003 | School D | 0                  | 0              |
 
 - School A has only been onboarded into the School Placements service.
 - School B has only been onboarded into the Track & Pay service.
@@ -125,7 +125,7 @@ For example:
 
 The `providers` table will be populated with data sourced from the [Teacher Training Courses API](https://api.publish-teacher-training-courses.service.gov.uk/docs/api-reference.html). In its simplest form, this will serve as a 'lookup table' holding details of every known ITT Provider.
 
-Onboarded Providers will have their `placements` field set to `true`.
+Onboarded Providers will have their `placements_service` field set to `true`.
 
 Providers are only onboarded into the School Placements service, because this is the only service Provider Users will need to sign in to. Providers will not sign in to the Track & Pay service.
 
