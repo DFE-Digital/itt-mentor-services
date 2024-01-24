@@ -42,4 +42,6 @@ scope module: :placements,
   end
 
   resources :organisations, only: [:index]
+  resources :schools, only: [:show]
+  resources :providers, only: [:show]
 end

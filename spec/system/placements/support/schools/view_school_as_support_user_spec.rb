@@ -111,12 +111,4 @@ RSpec.describe "Placements / Organisations / Support user views a School", type:
   def and_i_navigate_to_the_school_details_page
     visit placements_support_school_path(school)
   end
-
-  def when_i_click_on_change_organisation
-    click_on "Change organisation"
-  end
-
-  def then_i_see_the_organisation_list
-    expect(current_path).to eq placements_support_organisations_path
-  end
 end

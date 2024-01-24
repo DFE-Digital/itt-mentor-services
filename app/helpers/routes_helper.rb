@@ -43,6 +43,15 @@ module RoutesHelper
     end
   end
 
+  def placements_organisation_path(organisation)
+    case organisation
+    when School
+      placements_school_path(organisation)
+    when Provider
+      placements_provider_path(organisation)
+    end
+  end
+
   def placements_support_users_path(organisation)
     case organisation
     when School

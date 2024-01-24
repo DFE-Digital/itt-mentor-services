@@ -42,6 +42,10 @@
       </div>
     </div>
 
+    <div class="govuk-width-container">
+      <%= yield :header_content %>
+    </div>
+
     <% if support_controller? && current_service == :claims %>
       <%= render PrimaryNavigationComponent.new do |component| %>
         <% component.with_navigation_item t(".claims.primary_navigation.organisations"), support_organisations_path %>
@@ -53,7 +57,6 @@
     <% end %>
 
     <div class="govuk-width-container">
-      <%= yield :header_content %>
       <%= yield :before_content %>
     </div>
 

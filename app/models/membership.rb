@@ -24,4 +24,6 @@ class Membership < ApplicationRecord
   belongs_to :organisation, polymorphic: true
 
   validates :user, uniqueness: { scope: :organisation_id }
+
+  delegate :name, :placements_service, to: :organisation
 end
