@@ -28,6 +28,16 @@
 #  index_providers_on_code                (code) UNIQUE
 #  index_providers_on_placements_service  (placements_service)
 #
-class Placements::Provider < Provider
-  default_scope { where placements_service: true }
+require "rails_helper"
+
+RSpec.describe Placements::Provider do
+  describe "default scope" do
+    let!(:provider_with_placements) { create(:provider, :placements) }
+    let!(:provider_without_placements) { create(:provider) }
+
+    it "is scoped to providers using the placement service" do
+      provider = described_class.find(provider_with_placements.id)
+      expect(described_class.all).to contain_exactly(provider)
+    end
+  end
 end

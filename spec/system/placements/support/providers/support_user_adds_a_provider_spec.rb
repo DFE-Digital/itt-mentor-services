@@ -109,7 +109,7 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
   end
 
   def given_a_provider_already_as_already_been_onboarded
-    provider.update!(placements: true)
+    provider.update!(placements_service: true)
   end
 
   def then_i_see_an_error(error_message)

@@ -52,7 +52,7 @@ describe ProviderOnboardingForm, type: :model do
         described_class.new(code: provider.code).onboard
         provider.reload
       end
-      onboarding.to change(provider, :placements).from(false).to(true)
+      onboarding.to change(provider, :placements_service).from(false).to(true)
     end
   end
 end

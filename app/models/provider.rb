@@ -2,31 +2,31 @@
 #
 # Table name: providers
 #
-#  id            :uuid             not null, primary key
-#  accredited    :boolean          default(FALSE)
-#  address1      :string
-#  address2      :string
-#  address3      :string
-#  city          :string
-#  code          :string           not null
-#  county        :string
-#  email_address :string
-#  name          :string           not null
-#  placements    :boolean          default(FALSE)
-#  postcode      :string
-#  provider_type :enum             not null
-#  telephone     :string
-#  town          :string
-#  ukprn         :string
-#  urn           :string
-#  website       :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id                 :uuid             not null, primary key
+#  accredited         :boolean          default(FALSE)
+#  address1           :string
+#  address2           :string
+#  address3           :string
+#  city               :string
+#  code               :string           not null
+#  county             :string
+#  email_address      :string
+#  name               :string           not null
+#  placements_service :boolean          default(FALSE)
+#  postcode           :string
+#  provider_type      :enum             not null
+#  telephone          :string
+#  town               :string
+#  ukprn              :string
+#  urn                :string
+#  website            :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
 #
 # Indexes
 #
-#  index_providers_on_code        (code) UNIQUE
-#  index_providers_on_placements  (placements)
+#  index_providers_on_code                (code) UNIQUE
+#  index_providers_on_placements_service  (placements_service)
 #
 class Provider < ApplicationRecord
   include PgSearch::Model
@@ -44,10 +44,9 @@ class Provider < ApplicationRecord
   validates :code, uniqueness: { case_sensitive: false }
 
   scope :accredited, -> { where accredited: true }
-  scope :placements, -> { where placements: true }
 
   multisearchable against: %i[name postcode],
-                  if: :placements,
+                  if: :placements_service?,
                   additional_attributes: ->(provider) { { organisation_type: provider.provider_type } }
 
   pg_search_scope :search_name_urn_ukprn_postcode,
