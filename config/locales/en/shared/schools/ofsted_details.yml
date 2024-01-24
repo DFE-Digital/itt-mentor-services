@@ -1,0 +1,6 @@
+en:
+  shared:
+    schools:
+      ofsted_details:
+        rating: Rating
+        last_inspection_date: Last inspection date

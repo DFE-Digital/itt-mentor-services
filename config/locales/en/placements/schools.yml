@@ -1,0 +1,10 @@
+en:
+  placements:
+    schools:
+      show:
+        change_organisation: Change organisation
+        organisation_details: Organisation details
+        additional_details: Additional details
+        ofsted: Ofsted
+        send: Special educational needs and disabilities (SEND)
+        contact_details: Contact details

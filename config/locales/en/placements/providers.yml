@@ -1,0 +1,7 @@
+en:
+  placements:
+    providers:
+      show:
+        change_organisation: Change organisation
+        organisation_details: Organisation details
+        contact_details: Contact details

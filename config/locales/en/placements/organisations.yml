@@ -3,6 +3,5 @@ en:
     organisations:
       index:
         organisations: Organisations
-        schools: Schools
-        providers: Providers
         add_organisation: Add organisation
+        empty_state: You are not a member of any placement organisations
