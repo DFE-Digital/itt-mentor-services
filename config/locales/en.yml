@@ -3,6 +3,7 @@ en:
   no_results: There are no results for '%{for}'.
   no_results_with_filter_and_search: There are no results for '%{for}' and the selected filter.
   no_results_with_filter: There are no results for the selected filter.
+  you_cannot_perform_this_action: You cannot perform this action
   date:
     formats:
       long: "%e %B %Y"

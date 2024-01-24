@@ -6,7 +6,7 @@ class Placements::Support::ApplicationController < ApplicationController
   def authorize_user!
     return if current_user.support_user?
 
-    redirect_to placements_root_path, alert: "You cannot perform this action"
+    redirect_to placements_root_path, alert: t("you_cannot_perform_this_action")
   end
 
   def support_controller?
