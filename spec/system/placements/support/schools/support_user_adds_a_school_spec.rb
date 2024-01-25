@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Support / Schools / Support User adds a School",
-               type: :system do
+               type: :system, service: :placements do
   let(:school) { create(:school, name: "School 1") }
 
   before do
@@ -42,10 +42,6 @@ RSpec.describe "Placements / Support / Schools / Support User adds a School",
 
   private
 
-  def given_i_am_on_the_placements_site
-    Capybara.app_host = "http://#{ENV["PLACEMENTS_HOST"]}"
-  end
-
   def and_there_is_an_existing_persona_for(persona_name)
     create(:persona, persona_name.downcase.to_sym, service: :placements)
   end
@@ -59,7 +55,6 @@ RSpec.describe "Placements / Support / Schools / Support User adds a School",
   end
 
   def given_i_sign_in_as_colin
-    given_i_am_on_the_placements_site
     and_there_is_an_existing_persona_for("Colin")
     and_i_visit_the_personas_page
     and_i_click_sign_in_as("Colin")
