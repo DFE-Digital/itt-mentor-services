@@ -49,8 +49,32 @@ require "rails_helper"
 RSpec.describe School, type: :model do
   context "associations" do
     it { should have_many(:memberships) }
-    it { should have_many(:users).through(:memberships) }
     it { should have_many(:mentors) }
+  end
+
+  context "scopes" do
+    describe "#placements_service" do
+      it "only returns placements schools" do
+        create(:school, :claims)
+        create(:school)
+        placements_school = create(:school, :placements)
+
+        expect(described_class.placements_service).to contain_exactly(placements_school)
+      end
+    end
+
+    describe "#claims_school" do
+      it "only returns claims schools" do
+        create(:school, :placements)
+        create(:school)
+        claims_school = create(:school, :claims)
+
+        expect(described_class.claims_service).to contain_exactly(claims_school)
+      end
+    end
+
+    describe "#claims_service" do
+    end
   end
 
   context "validations" do

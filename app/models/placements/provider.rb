@@ -29,5 +29,7 @@
 #  index_providers_on_placements_service  (placements_service)
 #
 class Placements::Provider < Provider
-  default_scope { where placements_service: true }
+  default_scope { placements_service }
+
+  has_many :users, -> { placements }, through: :memberships
 end

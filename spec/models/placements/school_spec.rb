@@ -47,6 +47,10 @@
 require "rails_helper"
 
 RSpec.describe Placements::School do
+  describe "#assocations" do
+    it { should have_many(:users).through(:memberships) }
+  end
+
   describe "default scope" do
     let!(:school_with_placements) { create(:school, :placements) }
     let!(:school_without_placements) { create(:school) }

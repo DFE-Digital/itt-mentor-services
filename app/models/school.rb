@@ -48,12 +48,14 @@ class School < ApplicationRecord
   include PgSearch::Model
 
   has_many :memberships, as: :organisation
-  has_many :users, through: :memberships
   has_many :mentors
 
   validates :urn, presence: true
   validates :urn, uniqueness: { case_sensitive: false }
   validates :name, presence: true
+
+  scope :placements_service, -> { where placements_service: true }
+  scope :claims_service, -> { where claims_service: true }
 
   multisearchable against: %i[name postcode],
                   if: :placements_service?,

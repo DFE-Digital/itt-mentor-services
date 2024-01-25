@@ -18,6 +18,16 @@
 require "rails_helper"
 
 RSpec.describe Placements::User do
+  describe "associations" do
+    it { should have_many(:schools).through(:memberships).source(:organisation) }
+
+    it "association returns Placements::Schools objects" do
+      placements_user = create(:placements_user)
+      placements_user.memberships.create!(organisation: create(:school, :placements))
+      expect(placements_user.schools.first.class.name).to eq "Placements::School"
+    end
+  end
+
   describe "default scope" do
     let(:email) { "same_email@email.co.uk" }
     let!(:user_with_placements_service) { create(:placements_user, email:) }

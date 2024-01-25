@@ -45,5 +45,7 @@
 #  index_schools_on_urn                 (urn) UNIQUE
 #
 class Placements::School < School
-  default_scope { where placements_service: true }
+  default_scope { placements_service }
+
+  has_many :users, -> { placements }, through: :memberships
 end

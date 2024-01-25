@@ -45,6 +45,7 @@ class Provider < ApplicationRecord
   validates :code, uniqueness: { case_sensitive: false }
 
   scope :accredited, -> { where accredited: true }
+  scope :placements_service, -> { where placements_service: true }
 
   multisearchable against: %i[name postcode],
                   if: :placements_service?,

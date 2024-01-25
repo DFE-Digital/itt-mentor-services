@@ -37,6 +37,17 @@ RSpec.describe Provider, type: :model do
     it { should have_many(:mentor_trainings) }
   end
 
+  context "scopes" do
+    describe "#placements_service" do
+      it "only returns placements providers" do
+        create(:provider)
+        placements_provider = create(:provider, :placements)
+
+        expect(described_class.placements_service).to contain_exactly(placements_provider)
+      end
+    end
+  end
+
   context "validations" do
     subject { build(:provider) }
 
