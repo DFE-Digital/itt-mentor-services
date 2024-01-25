@@ -14,8 +14,12 @@
 #
 #  index_users_on_type_and_email  (type,email) UNIQUE
 #
-class Placements::SupportUser < User
-  def is_support_user?
-    true
+require "rails_helper"
+
+RSpec.describe Claims::SupportUser do
+  describe "#is_support_user?" do
+    it "returns true" do
+      expect(described_class.new.is_support_user?).to eq(true)
+    end
   end
 end

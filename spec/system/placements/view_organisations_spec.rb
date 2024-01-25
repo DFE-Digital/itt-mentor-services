@@ -51,7 +51,7 @@ RSpec.describe "View organisations", type: :system do
   private
 
   def persona(persona_name)
-    @persona ||= create(:persona, persona_name.downcase.to_sym, service: "placements")
+    @persona ||= create(:placements_user, persona_name.downcase.to_sym)
   end
 
   def given_the_placements_persona(persona_name)

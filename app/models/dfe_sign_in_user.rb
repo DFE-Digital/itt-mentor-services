@@ -45,30 +45,10 @@ class DfESignInUser
 
   def user
     # TODO: When dfe sign-in is fully implemented, we will be able to find the user by the id == id_token.
-    @user ||=
-      begin
-        user = user_klass.find_by(email:)
-
-        if service == :placements && user&.support_user?
-          user = user.becomes(Placements::SupportUser)
-        end
-
-        user
-      end
+    @user ||= User.find_by(email:)
   end
 
   def self.end_session!(session)
     session.clear
-  end
-
-  private
-
-  def user_klass
-    case service
-    when :claims
-      Claims::User
-    when :placements
-      Placements::User
-    end
   end
 end

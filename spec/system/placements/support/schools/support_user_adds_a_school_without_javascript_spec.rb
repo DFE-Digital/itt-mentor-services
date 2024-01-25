@@ -55,7 +55,7 @@ RSpec.describe "Support User adds a School without JavaScript", type: :system, s
   private
 
   def and_there_is_an_existing_persona_for(persona_name)
-    create(:persona, persona_name.downcase.to_sym, service: :placements)
+    create(:placements_support_user, persona_name.downcase.to_sym)
   end
 
   def and_i_visit_the_personas_page

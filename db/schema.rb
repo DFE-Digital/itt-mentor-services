@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_24_095111) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_26_114650) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -151,9 +151,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_24_095111) do
     t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "support_user", default: false
-    t.enum "service", null: false, enum_type: "service"
-    t.index ["service", "email"], name: "index_users_on_service_and_email", unique: true
+    t.string "type"
+    t.index ["type", "email"], name: "index_users_on_type_and_email", unique: true
   end
 
   add_foreign_key "claims", "schools"

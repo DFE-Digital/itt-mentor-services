@@ -85,7 +85,7 @@ describe DfESignInUser do
       end
 
       it "returns a Placements::SupportUser for support users" do
-        support_user = create(:placements_user, :support)
+        support_user = create(:placements_support_user)
 
         session = {
           "dfe_sign_in_user" => {

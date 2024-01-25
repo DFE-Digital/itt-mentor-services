@@ -1,31 +1,4 @@
 en:
   personas:
     index:
-      anne:
-        persona_type: SCHOOL
-        description: Anne is a lead mentor within a school.
-        roles:
-          - "setting timetables for mentors within the school"
-          - "being the main point of contact for providers"
-          - "ensuring mentors’ training is up-to-date"
-      colin:
-        persona_type: SUPPORT
-        description: Colin is a DfE support agent who has administrator access to all organisations.
-        roles: ""
-      mary:
-        persona_type: MULTI-ORG
-        description: Mary is a part-time teacher in a multi academy trust (MAT), but also leads a SCITT.
-        roles:
-          - "recruiting and training mentors"
-          - "setting timetables for mentors within the school"
-          - "organising placements for trainees"
-      patricia:
-        persona_type: UNIVERSITY
-        description: Patricia is a placements manager at a higher education institute (HEI).
-        roles:
-          - recruiting and training mentors
-          - organising placements for trainees
-          - keeping track of known mentors
-      roles_include: "%{persona_name}’s role includes:"
-      sign_in_as: "Sign In as %{persona_name}"
       title: Test users

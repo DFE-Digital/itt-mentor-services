@@ -3,11 +3,11 @@ Rails.logger.debug "Creating Personas"
 
 # Create the same personas for each service
 CLAIMS_PERSONAS.each do |persona_attributes|
-  Persona.find_or_create_by!(**persona_attributes)
+  User.find_or_create_by!(**persona_attributes)
 end
 
 PLACEMENTS_PERSONAS.each do |persona_attributes|
-  Persona.find_or_create_by!(**persona_attributes)
+  User.find_or_create_by!(**persona_attributes)
 end
 
 Rails.logger.debug "Personas successfully created!"
@@ -25,36 +25,47 @@ Rails.logger.debug "Services added to schools"
 # Create Providers Imported from Publfish
 Rake::Task["provider_data:import"].invoke unless Provider.any?
 
-User
-  .where(first_name: %w[Anne Patricia])
-  .find_each do |user|
-    school = School.where("#{user.service}_service": true).first
-    user.memberships.find_or_create_by!(organisation: school)
-  end
+# Associate Placements Users with Organisations
+# Single School Anne
+placements_anne = Placements::User.find_by!(email: "anne_wilson@example.org")
+placements_anne.memberships.find_or_create_by!(organisation: Placements::School.first)
 
-User
-  .where(first_name: %w[Mary Colin])
-  .find_each do |user|
-    schools = School.where("#{user.service}_service": true)
+# Multi-school Mary
+placements_mary = Placements::User.find_by!(email: "mary@example.com")
+schools = Placements::School.all
+schools.each do |school|
+  placements_mary.memberships.find_or_create_by!(organisation: school)
+end
 
-    schools.each do |school|
-      user.memberships.find_or_create_by!(organisation: school)
-    end
-  end
+# Provider Patrica
+placements_patrica = Placements::User.find_by!(email: "patricia@example.com")
+provider = Provider.first
+provider.update!(placements_service: true)
+placements_patrica.memberships.find_or_create_by!(organisation: provider)
+
+# Associate Claims Users with Schools
+# Single School Anne
+claims_anne = Claims::User.find_by!(email: "anne_wilson@example.org")
+claims_anne.memberships.find_or_create_by!(organisation: Claims::School.first)
+
+# Multi-school Mary
+claims_mary = Claims::User.find_by!(email: "mary@example.com")
+schools = Claims::School.all
+schools.each do |school|
+  claims_mary.memberships.find_or_create_by!(organisation: school)
+end
 
 # Create dummy mentors
-User.where(first_name: %w[Anne Patricia Mary Colin]).find_each do |user|
-  schools = School.where("#{user.service}_service": true)
-
-  schools.each do |school|
-    %w[Sarah John Pomona].each_with_index do |first_name, index|
-      Mentor.find_or_create_by(
-        first_name:,
-        last_name: "Doe",
-        school:,
-        trn: index,
-      )
-    end
+schools = School.where(claims_service: true)
+  .or(School.where(placements_service: true))
+schools.each do |school|
+  %w[Sarah John Pomona].each_with_index do |first_name, index|
+    Mentor.find_or_create_by(
+      first_name:,
+      last_name: "Doe",
+      school:,
+      trn: index,
+    )
   end
 end
 

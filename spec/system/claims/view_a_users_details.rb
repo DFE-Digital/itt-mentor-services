@@ -28,7 +28,7 @@ RSpec.describe "View a users details", type: :system do
   end
 
   def sign_in_as_support_user
-    create(:persona, :colin, service: "claims")
+    create(:claims_support_user, :colin)
     visit personas_path
     click_on "Sign In as Colin"
   end
