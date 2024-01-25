@@ -23,6 +23,14 @@ end
 Capybara.javascript_driver = :selenium_chrome_headless
 
 RSpec.configure do |config|
+  config.around(:each, type: :system, smoke_test: true) do |example|
+    Capybara.current_driver = Capybara.javascript_driver
+    Capybara.run_server = false
+    example.run
+    Capybara.run_server = true
+    Capybara.current_driver = Capybara.default_driver
+  end
+
   config.before(:each, type: :system) do
     driven_by Capybara.current_driver
   end
