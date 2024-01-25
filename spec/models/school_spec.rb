@@ -50,6 +50,7 @@ RSpec.describe School, type: :model do
   context "associations" do
     it { should have_many(:memberships) }
     it { should have_many(:users).through(:memberships) }
+    it { should have_many(:mentors) }
   end
 
   context "validations" do

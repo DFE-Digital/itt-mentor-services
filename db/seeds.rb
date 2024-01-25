@@ -42,4 +42,20 @@ User
     end
   end
 
+# Create dummy mentors
+User.where(first_name: %w[Anne Patricia Mary Colin]).find_each do |user|
+  schools = School.where("#{user.service}_service": true)
+
+  schools.each do |school|
+    %w[Sarah John Pomona].each_with_index do |first_name, index|
+      Mentor.find_or_create_by(
+        first_name:,
+        last_name: "Doe",
+        school:,
+        trn: index,
+      )
+    end
+  end
+end
+
 Rails.logger.debug "Organisations assigned to users"

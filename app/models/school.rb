@@ -49,6 +49,7 @@ class School < ApplicationRecord
 
   has_many :memberships, as: :organisation
   has_many :users, through: :memberships
+  has_many :mentors
 
   validates :urn, presence: true
   validates :urn, uniqueness: { case_sensitive: false }
