@@ -35,6 +35,7 @@ class Provider < ApplicationRecord
 
   has_many :memberships, as: :organisation
   has_many :users, through: :memberships
+  has_many :mentor_trainings
 
   enum :provider_type,
        { scitt: "scitt", lead_school: "lead_school", university: "university" },

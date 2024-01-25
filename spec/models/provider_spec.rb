@@ -34,6 +34,7 @@ RSpec.describe Provider, type: :model do
   context "associations" do
     it { should have_many(:memberships) }
     it { should have_many(:users).through(:memberships) }
+    it { should have_many(:mentor_trainings) }
   end
 
   context "validations" do

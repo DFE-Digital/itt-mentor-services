@@ -47,6 +47,10 @@
 require "rails_helper"
 
 RSpec.describe Claims::School do
+  context "associations" do
+    it { should have_many(:claims) }
+  end
+
   describe "default scope" do
     let!(:school_with_claims) { create(:school, :claims) }
     let!(:school_without_claims) { create(:school) }

@@ -17,8 +17,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_24_095111) do
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "mentor_training_type", ["refresher", "initial"]
   create_enum "provider_type", ["scitt", "lead_school", "university"]
   create_enum "service", ["claims", "placements"]
+
+  create_table "claims", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "school_id", null: false
+    t.boolean "draft", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["school_id"], name: "index_claims_on_school_id"
+  end
 
   create_table "flipflop_features", force: :cascade do |t|
     t.string "key", null: false
@@ -36,6 +45,30 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_24_095111) do
     t.index ["organisation_type", "organisation_id"], name: "index_memberships_on_organisation"
     t.index ["user_id", "organisation_id"], name: "index_memberships_on_user_id_and_organisation_id", unique: true
     t.index ["user_id"], name: "index_memberships_on_user_id"
+  end
+
+  create_table "mentor_trainings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.enum "training_type", enum_type: "mentor_training_type"
+    t.integer "hours_completed"
+    t.datetime "date_completed"
+    t.uuid "claim_id"
+    t.uuid "mentor_id"
+    t.uuid "provider_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["claim_id"], name: "index_mentor_trainings_on_claim_id"
+    t.index ["mentor_id"], name: "index_mentor_trainings_on_mentor_id"
+    t.index ["provider_id"], name: "index_mentor_trainings_on_provider_id"
+  end
+
+  create_table "mentors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "school_id", null: false
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "trn", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["school_id"], name: "index_mentors_on_school_id"
   end
 
   create_table "pg_search_documents", force: :cascade do |t|
@@ -123,5 +156,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_24_095111) do
     t.index ["service", "email"], name: "index_users_on_service_and_email", unique: true
   end
 
+  add_foreign_key "claims", "schools"
   add_foreign_key "memberships", "users"
+  add_foreign_key "mentor_trainings", "claims"
+  add_foreign_key "mentor_trainings", "mentors"
+  add_foreign_key "mentor_trainings", "providers"
+  add_foreign_key "mentors", "schools"
 end
