@@ -31,6 +31,10 @@
 require "rails_helper"
 
 RSpec.describe Placements::Provider do
+  describe "#assocations" do
+    it { should have_many(:users).through(:memberships) }
+  end
+
   describe "default scope" do
     let!(:provider_with_placements) { create(:provider, :placements) }
     let!(:provider_without_placements) { create(:provider) }

@@ -21,11 +21,7 @@ RSpec.describe User, type: :model do
   subject { create(:user) }
 
   context "associations" do
-    it do
-      should have_many(:memberships)
-      should have_many(:schools).through(:memberships).source(:organisation)
-      should have_many(:providers).through(:memberships).source(:organisation)
-    end
+    it { should have_many(:memberships) }
   end
 
   describe "validations" do

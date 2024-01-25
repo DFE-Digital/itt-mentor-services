@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Support / Users / Support User Invites A New User", type: :system, service: :placements do
-  let!(:school) { create(:school, :placements, name: "School 1") }
+  let!(:school) { create(:placements_school) }
   let!(:provider) { create(:placements_provider, name: "Provider 1") }
   let(:new_user) do
     create(:placements_user,

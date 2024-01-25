@@ -18,6 +18,16 @@
 require "rails_helper"
 
 RSpec.describe Claims::User do
+  describe "associations" do
+    it { should have_many(:schools).through(:memberships).source(:organisation) }
+
+    it "association returns Claims::Schools objects" do
+      claims_user = create(:claims_user)
+      claims_user.memberships.create!(organisation: create(:school, :claims))
+      expect(claims_user.schools.first.class.name).to eq "Claims::School"
+    end
+  end
+
   describe "default scope" do
     let(:email) { "same_email@email.co.uk" }
     let!(:user_with_claims_service) { create(:claims_user, email:) }

@@ -70,11 +70,11 @@ RSpec.describe "Invite a user to a school", type: :system do
   private
 
   def setup_school
-    @school = create(:school, :claims, urn: "123456")
+    @school = create(:claims_school, :claims, urn: "123456")
   end
 
   def another_school_exists
-    @another_school = create(:school, :claims)
+    @another_school = create(:claims_school, :claims)
   end
 
   def setup_school_and_anne_membership

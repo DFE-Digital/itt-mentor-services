@@ -17,4 +17,10 @@
 #
 class Claims::User < User
   default_scope { claims }
+
+  has_many :schools,
+           -> { claims_service },
+           through: :memberships,
+           source: :organisation,
+           source_type: "School"
 end

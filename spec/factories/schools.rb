@@ -56,5 +56,13 @@ FactoryBot.define do
     trait :placements do
       placements_service { true }
     end
+
+    factory :claims_school,
+            class: "Claims::School",
+            parent: :school, traits: %i[claims]
+
+    factory :placements_school,
+            class: "Placements::School",
+            parent: :school, traits: %i[placements]
   end
 end

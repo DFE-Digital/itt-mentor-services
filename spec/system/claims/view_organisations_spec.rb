@@ -12,7 +12,7 @@ RSpec.describe "View schools", type: :system do
     and_persona_has_multiple_schools(persona)
     when_i_visit_claims_personas
     when_i_click_sign_in(persona)
-    i_am_redirected_to_organisation_index(persona)
+    and_i_see_marys_schools
   end
 
   scenario "I sign in as persona Anne with one school" do
@@ -20,7 +20,7 @@ RSpec.describe "View schools", type: :system do
     and_persona_has_one_school(persona)
     when_i_visit_claims_personas
     when_i_click_sign_in(persona)
-    i_am_redirected_to_organisation_index(persona)
+    and_i_see_annes_schools
   end
 
   private
@@ -30,10 +30,16 @@ RSpec.describe "View schools", type: :system do
   end
 
   def and_persona_has_multiple_schools(persona)
-    school1 = create(:school)
-    school2 = create(:school)
-    create(:membership, user: persona, organisation: school1)
-    create(:membership, user: persona, organisation: school2)
+    @school1 = create(:claims_school)
+    @school2 = create(:claims_school)
+    create(:membership, user: persona, organisation: @school1)
+    create(:membership, user: persona, organisation: @school2)
+  end
+
+  def and_i_see_marys_schools
+    expect(page).to have_content "Organisations"
+    expect(page).to have_content @school1.name
+    expect(page).to have_content @school2.name
   end
 
   def and_persona_has_one_school(persona)
@@ -42,6 +48,11 @@ RSpec.describe "View schools", type: :system do
       user: persona,
       organisation: create(:school, :claims, name: "Hogwarts"),
     )
+  end
+
+  def and_i_see_annes_schools
+    expect(page).to have_content "Organisation details"
+    expect(page).to have_content "Hogwarts"
   end
 
   def when_i_visit_claims_personas
@@ -54,14 +65,5 @@ RSpec.describe "View schools", type: :system do
 
   def i_am_redirected_to_the_root_path
     expect(page).to have_content("Claim Funding for General Mentors")
-  end
-
-  def i_am_redirected_to_organisation_index(persona)
-    expected_content = persona.schools.many? ? "Organisations" : "Organisation details"
-    expect(page).to have_content(expected_content)
-
-    persona.schools.each do |school|
-      expect(page).to have_content(school.name)
-    end
   end
 end
