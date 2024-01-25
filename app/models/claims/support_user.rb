@@ -14,7 +14,7 @@
 #
 #  index_users_on_type_and_email  (type,email) UNIQUE
 #
-class Placements::SupportUser < User
+class Claims::SupportUser < User
   def is_support_user?
     true
   end

@@ -7,8 +7,13 @@ feature "Sign In as a Claims User Persona" do
     Capybara.app_host = nil
   end
 
+  let(:anne) { create(:claims_user, :anne) }
+  let(:patricia) { create(:claims_user, :patricia) }
+  let(:mary) { create(:claims_user, :mary) }
+  let(:colin) { create(:claims_support_user, :colin) }
+
   scenario "I sign in as persona Anne" do
-    given_there_is_an_existing_claims_persona_with_a_school_for("Anne")
+    given_there_is_an_existing_claims_persona_with_a_school_for(anne)
     when_i_visit_the_claims_personas_page
     then_i_see_the_claims_persona_for("Anne")
     when_i_click_sign_in_as("Anne")
@@ -17,7 +22,7 @@ feature "Sign In as a Claims User Persona" do
   end
 
   scenario "I sign in as persona Patricia" do
-    given_there_is_an_existing_claims_persona_with_a_school_for("Patricia")
+    given_there_is_an_existing_claims_persona_with_a_school_for(patricia)
     when_i_visit_the_claims_personas_page
     then_i_see_the_claims_persona_for("Patricia")
     when_i_click_sign_in_as("Patricia")
@@ -26,7 +31,7 @@ feature "Sign In as a Claims User Persona" do
   end
 
   scenario "I sign in as persona Mary" do
-    given_there_is_an_existing_claims_persona_with_a_school_for("Mary")
+    given_there_is_an_existing_claims_persona_with_a_school_for(mary)
     when_i_visit_the_claims_personas_page
     then_i_see_the_claims_persona_for("Mary")
     when_i_click_sign_in_as("Mary")
@@ -35,7 +40,7 @@ feature "Sign In as a Claims User Persona" do
   end
 
   scenario "I sign in as persona colin" do
-    given_there_is_an_existing_claims_persona_with_a_school_for("Colin")
+    given_there_is_an_existing_claims_persona_with_a_school_for(colin)
     when_i_visit_the_claims_personas_page
     then_i_see_the_claims_persona_for("Colin")
     when_i_click_sign_in_as("Colin")
@@ -46,10 +51,10 @@ end
 
 private
 
-def given_there_is_an_existing_claims_persona_with_a_school_for(persona_name)
+def given_there_is_an_existing_claims_persona_with_a_school_for(user)
   create(
     :membership,
-    user: create(:persona, persona_name.downcase.to_sym, service: "claims"),
+    user:,
     organisation: create(:school, :claims),
   )
 end

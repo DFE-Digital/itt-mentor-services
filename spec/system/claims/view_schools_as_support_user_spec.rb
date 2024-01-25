@@ -37,7 +37,7 @@ RSpec.describe "View schools as support user", type: :system do
   end
 
   def given_i_am_signed_in_as_support_user
-    create(:persona, :colin, service: "claims")
+    create(:claims_support_user, :colin)
     visit personas_path
     click_on "Sign In as Colin"
   end

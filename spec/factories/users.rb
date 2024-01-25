@@ -2,48 +2,58 @@
 #
 # Table name: users
 #
-#  id           :uuid             not null, primary key
-#  email        :string           not null
-#  first_name   :string           not null
-#  last_name    :string           not null
-#  service      :enum             not null
-#  support_user :boolean          default(FALSE)
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
+#  id         :uuid             not null, primary key
+#  email      :string           not null
+#  first_name :string           not null
+#  last_name  :string           not null
+#  type       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 # Indexes
 #
-#  index_users_on_service_and_email  (service,email) UNIQUE
+#  index_users_on_type_and_email  (type,email) UNIQUE
 #
 FactoryBot.define do
   factory :user do
     sequence(:email) { |n| "user#{n}@example.com" }
     first_name { "User" }
-    service { %w[placements claims].sample }
     sequence(:last_name)
 
-    trait :support do
-      support_user { true }
+    trait :anne do
+      first_name { "Anne" }
+      last_name { "Wilson" }
+      email { "anne_wilson@example.org" }
+    end
+
+    trait :patricia do
+      first_name { "Patricia" }
+      last_name { "Adebayo" }
+      email { "patricia@example.com" }
+    end
+
+    trait :mary do
+      first_name { "Mary" }
+      last_name { "Lawson" }
+      email { "mary@example.com" }
+    end
+
+    trait :colin do
+      first_name { "Colin" }
+      last_name { "Chapman" }
+      email { "colin@example.com" }
     end
   end
 
-  factory :claims_user, class: "Claims::User", parent: :user do
-    service { "claims" }
-  end
+  factory :claims_user, class: "Claims::User", parent: :user
 
-  factory :placements_user, class: "Placements::User", parent: :user do
-    service { "placements" }
-  end
+  factory :placements_user, class: "Placements::User", parent: :user
 
   factory :placements_support_user,
           class: "Placements::SupportUser",
-          parent: :user do
-    service { "placements" }
-  end
+          parent: :user
 
   factory :claims_support_user,
           class: "Claims::SupportUser",
-          parent: :user do
-    service { "claims" }
-  end
+          parent: :user
 end

@@ -15,12 +15,12 @@ RSpec.describe "View users for school", type: :system do
 
   def setup_school_and_anne_membership
     @school = create(:school, :claims, urn: "123456")
-    @anne_persona = create(:persona, :anne, service: "claims")
+    @anne_persona = create(:claims_user, :anne)
     create(:membership, user: @anne_persona, organisation: @school)
   end
 
   def sign_in_as_support_user
-    create(:persona, :colin, service: "claims")
+    create(:claims_support_user, :colin)
     visit personas_path
     click_on "Sign In as Colin"
   end

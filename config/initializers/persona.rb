@@ -5,20 +5,19 @@ CLAIMS_PERSONAS = [
     first_name: "Anne",
     last_name: "Wilson",
     email: "anne_wilson@example.org",
-    service: :claims,
+    type: "Claims::User",
   },
   {
     first_name: "Mary",
     last_name: "Lawson",
     email: "mary@example.com",
-    service: :claims,
+    type: "Claims::User",
   },
   {
     first_name: "Colin",
     last_name: "Chapman",
     email: "colin@example.com",
-    support_user: true,
-    service: :claims,
+    type: "Claims::SupportUser",
   },
 ].freeze
 
@@ -27,26 +26,25 @@ PLACEMENTS_PERSONAS = [
     first_name: "Anne",
     last_name: "Wilson",
     email: "anne_wilson@example.org",
-    service: :placements,
+    type: "Placements::User",
   },
   {
     first_name: "Patricia",
     last_name: "Adebayo",
     email: "patricia@example.com",
-    service: :placements,
+    type: "Placements::User",
   },
   {
     first_name: "Mary",
     last_name: "Lawson",
     email: "mary@example.com",
-    service: :placements,
+    type: "Placements::User",
   },
   {
     first_name: "Colin",
     last_name: "Chapman",
     email: "colin@example.com",
-    support_user: true,
-    service: :placements,
+    type: "Placements::SupportUser",
   },
 ].freeze
 

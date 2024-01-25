@@ -4,9 +4,8 @@ RSpec.describe "Create claim", type: :system, js: true, service: :claims do
   let!(:school) { create(:school, :claims) }
   let!(:anne) do
     create(
-      :persona,
+      :claims_user, 
       :anne,
-      service: "claims",
       memberships: [create(:membership, organisation: school)],
     )
   end

@@ -18,7 +18,7 @@ feature "Sign In as a Placements User Persona" do
   end
 
   scenario "I sign in as persona Patricia" do
-    given_there_is_an_existing_persona_for("Patricia")
+    given_there_is_an_existing_persona_for("Patrica")
     when_i_visit_the_personas_page
     then_i_see_the_persona_for("Patricia")
     when_i_click_sign_in_as("Patricia")
@@ -52,7 +52,7 @@ end
 private
 
 def given_there_is_an_existing_persona_for(persona_name)
-  create(:persona, persona_name.downcase.to_sym, service: "placements")
+  create(:placements_user, persona_name.downcase.to_sym)
 end
 
 def when_i_visit_the_personas_page

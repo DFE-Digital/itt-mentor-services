@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "View a school", type: :system do
-  let!(:support_user) { create(:persona, :colin, service: :claims) }
+  let!(:support_user) { create(:claims_support_user, :colin) }
   let!(:school) { create(:school, :claims) }
 
   scenario "View a school's details as a support user" do

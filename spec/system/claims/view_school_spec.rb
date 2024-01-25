@@ -36,7 +36,7 @@ RSpec.describe "School Page", type: :system do
   end
 
   def given_the_claims_persona(persona_name)
-    create(:persona, persona_name.downcase.to_sym, service: "claims")
+    create(:claims_user, persona_name.downcase.to_sym)
   end
 
   def and_persona_has_multiple_schools(persona)
@@ -45,7 +45,7 @@ RSpec.describe "School Page", type: :system do
   end
 
   def given_there_is_an_existing_persona_for(persona_name)
-    user = create(:persona, persona_name.downcase.to_sym, service: "claims")
+    user = create(:claims_user, persona_name.downcase.to_sym)
     create(:membership, user:, organisation: school1)
     user
   end

@@ -4,6 +4,8 @@ class PersonasController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index]
 
   def index
-    @personas = Persona.public_send(current_service).decorate
+    @personas = User.where(email: PERSONA_EMAILS)
+      .where(type: ["#{current_service.to_s.titleize}::User",
+                    "#{current_service.to_s.titleize}::SupportUser"])
   end
 end

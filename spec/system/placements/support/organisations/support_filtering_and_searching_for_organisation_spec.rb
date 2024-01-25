@@ -185,7 +185,7 @@ RSpec.describe "Support user filters and searches for organisations", type: :sys
 
   def given_i_am_signed_in_as_a_support_user
     Capybara.app_host = "http://#{ENV["PLACEMENTS_HOST"]}"
-    create(:persona, :colin, service: :placements)
+    create(:placements_support_user, :colin)
     visit personas_path
     click_on "Sign In as Colin"
   end

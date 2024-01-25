@@ -21,7 +21,7 @@
 #
 FactoryBot.define do
   factory :membership do
-    association :user
+    association :user, factory: :claims_user
     association :organisation, factory: :school
   end
 end

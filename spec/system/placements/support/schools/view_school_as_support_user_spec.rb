@@ -20,7 +20,7 @@ RSpec.describe "Placements / Organisations / Support user views a School", type:
   private
 
   def given_i_am_signed_in_as_a_support_user
-    create(:persona, :colin, service: :placements)
+    create(:placements_support_user, :colin)
     visit personas_path
     click_on "Sign In as Colin"
   end

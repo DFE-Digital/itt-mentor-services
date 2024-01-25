@@ -2,11 +2,12 @@ require "rails_helper"
 
 RSpec.describe NotifyMailer, type: :mailer do
   describe "#send_organisation_invite_email" do
-    subject { described_class.send_organisation_invite_email(user, organisation, "") }
+    subject { described_class.send_organisation_invite_email(user, organisation, service, "") }
 
     context "when the user's service is Claims" do
       let(:user) { create(:claims_user, first_name: "Anne", last_name: "Wilson") }
       let(:organisation) { create(:school, :claims, name: "School 1") }
+      let(:service) { "claims" }
 
       it "invites the user to the organsation" do
         expect(subject.to).to contain_exactly(user.email)
@@ -21,6 +22,7 @@ RSpec.describe NotifyMailer, type: :mailer do
 
     context "when the user's service is Placements" do
       let(:user) { create(:placements_user, first_name: "Anne", last_name: "Wilson") }
+      let(:service) { "placements" }
 
       context "when the organisation is a school" do
         let(:organisation) { create(:school, :placements, name: "School 1") }
@@ -37,6 +39,7 @@ RSpec.describe NotifyMailer, type: :mailer do
 
       context "when the organisation is a Provider" do
         let(:organisation) { create(:placements_provider, name: "School 1") }
+        let(:service) { "placements" }
 
         it "invites the user to the organsation" do
           expect(subject.to).to contain_exactly(user.email)

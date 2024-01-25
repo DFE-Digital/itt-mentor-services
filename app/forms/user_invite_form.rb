@@ -11,7 +11,7 @@ class UserInviteForm
   def invite
     return false unless valid?
 
-    UserInviteService.call(user, organisation) if save_user
+    UserInviteService.call(user, organisation, service) if save_user
   end
 
   def as_form_params

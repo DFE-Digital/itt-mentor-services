@@ -26,7 +26,7 @@ RSpec.describe "View schools", type: :system do
   private
 
   def given_the_claims_persona(persona_name)
-    create(:persona, persona_name.downcase.to_sym, service: "claims")
+    create(:claims_user, persona_name.downcase.to_sym)
   end
 
   def and_persona_has_multiple_schools(persona)
