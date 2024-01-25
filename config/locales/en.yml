@@ -1,6 +1,7 @@
 en:
   pagination_info: Showing %{from} to %{to} of %{count} results
   no_results: There are no results for '%{for}'.
+  no_users: There are no users for %{school_name}.
   no_results_with_filter_and_search: There are no results for '%{for}' and the selected filter.
   no_results_with_filter: There are no results for the selected filter.
   date:

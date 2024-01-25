@@ -5,7 +5,6 @@ en:
         index:
           heading: Users
           add_user: Add user
-          no_users: There are no users for %{school_name}.
         new:
           page_title: Invite a new user
           cancel: Cancel
