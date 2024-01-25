@@ -4,3 +4,23 @@ en:
       claims:
         index:
           heading: Claims
+          add_claim: Add claim
+        update:
+          claim_updated: Claim updated
+        show:
+          heading: Claim general mentor training funding
+          providers_heading: 1. ITT providers
+          mentors_heading: 2. General mentors
+          itt_providers: ITT providers
+          general_mentors: General mentors
+        edit:
+          cancel: Cancel
+        providers_form:
+          title: Select a provider
+          heading: Enter a provider name
+          continue: Continue
+        mentors_form:
+          title: Select a mentor
+          heading: Enter a mentor's name
+          continue: Continue
+

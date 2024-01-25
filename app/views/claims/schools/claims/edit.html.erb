@@ -1,0 +1,10 @@
+<div class="govuk-width-container">
+  <%= render(
+    partial: "#{step}_form",
+    locals: { claim:, mentor_trainings:, school: },
+  ) %>
+
+  <p class="govuk-body">
+    <%= govuk_link_to(t(".cancel"), claims_school_claims_path) %>
+  </p>
+</div>

@@ -1,0 +1,5 @@
+en:
+  decorators:
+    claim:
+      completed: Completed 
+      not_started: Not started 
