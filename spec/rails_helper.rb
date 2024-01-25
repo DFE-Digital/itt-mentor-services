@@ -71,15 +71,30 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.around(:each, type: :request) do |example|
-    host! ENV["CLAIMS_HOST"]
+    service = self.class.metadata[:service] || :claims
+
+    host! service_host(service)
     example.run
     host! nil
   end
 
   config.around(:each, type: :system) do |example|
-    Capybara.app_host = "http://#{ENV["CLAIMS_HOST"]}"
+    service = self.class.metadata[:service] || :claims
+
+    Capybara.app_host = "http://#{service_host(service)}"
     example.run
     Capybara.app_host = nil
+  end
+
+  private
+
+  def service_host(service)
+    case service.to_s
+    when "claims"
+      ENV["CLAIMS_HOST"]
+    when "placements"
+      ENV["PLACEMENTS_HOST"]
+    end
   end
 end
 
