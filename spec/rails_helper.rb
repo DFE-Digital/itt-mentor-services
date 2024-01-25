@@ -86,6 +86,14 @@ RSpec.configure do |config|
     Capybara.app_host = nil
   end
 
+  config.around(:each, type: :system, smoke_test: true) do |example|
+    service = self.class.metadata[:service] || :claims
+
+    Capybara.app_host = "http://#{service_external_host(service)}"
+    example.run
+    Capybara.app_host = nil
+  end
+
   private
 
   def service_host(service)
@@ -94,6 +102,15 @@ RSpec.configure do |config|
       ENV["CLAIMS_HOST"]
     when "placements"
       ENV["PLACEMENTS_HOST"]
+    end
+  end
+
+  def service_external_host(service)
+    case service.to_s
+    when "claims"
+      "claims.localhost:3000"
+    when "placements"
+      "placements.localhost:3000"
     end
   end
 end
