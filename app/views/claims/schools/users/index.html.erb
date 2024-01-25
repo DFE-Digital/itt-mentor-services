@@ -8,11 +8,7 @@
     <div class="govuk-grid-column-two-thirds">
       <%= govuk_button_to(t(".add_user"), new_claims_school_user_path, method: :get) %>
 
-      <%= render partial: "shared/users_list", locals: {
-        users: @users,
-        school_or_org: @school,
-        user_show_path: "claims_school_user_path",
-      } %>
+      <%= render "shared/users_list", users: @users, organisation: @school %>
     </div>
   </div>
 </div>

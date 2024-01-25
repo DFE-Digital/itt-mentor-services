@@ -20,6 +20,20 @@ module RoutesHelper
     }.fetch current_service
   end
 
+  def user_path(user, organisation)
+    if current_user.support_user?
+      {
+        claims: claims_support_school_user_path(id: user.id, school_id: organisation.id),
+        placements: placements_support_school_user_path(id: user.id),
+      }.fetch current_service
+    else
+      {
+        claims: claims_school_user_path(id: user.id),
+        placements: placements_school_user_path(id: user.id),
+      }.fetch current_service
+    end
+  end
+
   def support_users_path
     {
       claims: claims_support_users_path,

@@ -12,12 +12,7 @@
       <h2 class="govuk-heading-m"><%= t(".heading") %></h2>
       <%= govuk_button_to(t(".add_user"), new_placements_support_school_user_path(@school), method: :get) %>
 
-      <%= render partial: "shared/users_list", locals: {
-        users: @users,
-        school_or_org: @school,
-        user_show_path: "placements_support_school_user_path",
-      } %>
-
+      <%= render "shared/users_list", users: @users, organisation: @school %>
     </div>
   </div>
 </div>

@@ -9,12 +9,12 @@
     <% table.with_body do |body| %>
       <% users.each do |user| %>
         <% body.with_row do |row| %>
-          <% row.with_cell(text: govuk_link_to(user.full_name, public_send(user_show_path, id: user.id))) %>
+          <% row.with_cell(text: govuk_link_to(user.full_name, user_path(user, organisation))) %>
           <% row.with_cell(text: user.email) %>
         <% end %>
       <% end %>
     <% end %>
   <% end %>
 <% else %>
-  <p><%= t("no_users", school_name: school_or_org.name) %></p>
+  <p><%= t("no_users", organisation_name: organisation.name) %></p>
 <% end %>
