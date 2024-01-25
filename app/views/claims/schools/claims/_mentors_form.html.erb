@@ -1,0 +1,40 @@
+<% content_for :page_title, t(".title") %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: claims_school_claim_path(id: claim.id)) %>
+<% end %>
+
+<%= form_with(
+  model: claim,
+  url: update_claims_school_claim_path(claim.school_id, claim, "mentors"),
+  data: { turbo: false },
+) do |f| %>
+
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
+
+  <%= f.fields_for :mentor_trainings do |mentor_form| %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-form-group">
+
+          <%= mentor_form.govuk_collection_select(
+            :mentor_id,
+            school.mentors,
+            :id,
+            :first_name,
+            data: {
+              controller: "select-autocomplete",
+              select_autocomplete_target: "input",
+            },
+            label: nil,
+            options: { include_blank: true },
+          ) %>
+        </div>
+
+        <%= f.govuk_submit t(".continue") %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

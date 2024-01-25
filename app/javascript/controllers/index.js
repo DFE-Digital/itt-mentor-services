@@ -3,3 +3,6 @@
 // ./bin/rails generate stimulus controllerName
 
 import { application } from "./application"
+
+import SelectAutocompleteController from "./select_autocomplete_controller"
+application.register("select-autocomplete", SelectAutocompleteController)

@@ -9,6 +9,17 @@ en:
 
     errors:
       models:
+        claim:
+          attributes:
+            base:
+              enter_provider_name: Enter a provider name 
+              enter_mentor_name: Enter a mentor's name 
+        mentor_training:
+          attributes:
+            provider_id: 
+              blank: Enter a provider name
+            mentor_id: 
+              blank: Enter a mentor's name
         user:
           attributes:
             first_name:

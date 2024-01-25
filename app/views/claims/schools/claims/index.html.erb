@@ -4,4 +4,15 @@
 
 <div class="govuk-width-container">
   <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
+  <%= govuk_button_to(t(".add_claim"), new_claims_school_claim_path, method: :get) %>
+
+  <% if @claims.any? %>
+    <ul class="govuk-list">
+      <% @claims.each_with_index do |claim, index| %>
+        <li>
+          <%= govuk_link_to "Claim #{index + 1}", claims_school_claim_path(id: claim.id), no_visited_state: true %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
 </div>
