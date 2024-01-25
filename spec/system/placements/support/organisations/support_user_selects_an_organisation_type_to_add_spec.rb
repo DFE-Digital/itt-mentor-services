@@ -1,14 +1,12 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Support / Organisations / Support User Selects An Organisation Type To Add",
-               type: :system do
+               type: :system, service: :placements do
   before do
     given_i_sign_in_as_colin
     when_i_click_add_organisation
     then_i_see_support_navigation_with_organisation_selected
   end
-
-  after { Capybara.app_host = nil }
 
   scenario "Colin selects to add an ITT provider" do
     when_i_select_the_radio_option("ITT provider")
@@ -29,10 +27,6 @@ RSpec.describe "Placements / Support / Organisations / Support User Selects An O
 
   private
 
-  def given_i_am_on_the_placements_site
-    Capybara.app_host = "http://#{ENV["PLACEMENTS_HOST"]}"
-  end
-
   def and_there_is_an_existing_persona_for(persona_name)
     create(:persona, persona_name.downcase.to_sym, service: :placements)
   end
@@ -46,7 +40,6 @@ RSpec.describe "Placements / Support / Organisations / Support User Selects An O
   end
 
   def given_i_sign_in_as_colin
-    given_i_am_on_the_placements_site
     and_there_is_an_existing_persona_for("Colin")
     and_i_visit_the_personas_page
     and_i_click_sign_in_as("Colin")

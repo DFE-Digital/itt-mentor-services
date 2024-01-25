@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Support / Users / Support User Invites A New User", type: :system do
+RSpec.describe "Placements / Support / Users / Support User Invites A New User", type: :system, service: :placements do
   let!(:school) { create(:school, :placements, name: "School 1") }
   let!(:provider) { create(:placements_provider, name: "Provider 1") }
   let(:new_user) do
@@ -122,7 +122,6 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   end
 
   def given_i_am_signed_in_as_a_support_user
-    given_i_am_on_the_placements_site
     and_there_is_an_existing_persona_for("Colin")
     and_i_visit_the_personas_page
     and_i_click_sign_in_as("Colin")

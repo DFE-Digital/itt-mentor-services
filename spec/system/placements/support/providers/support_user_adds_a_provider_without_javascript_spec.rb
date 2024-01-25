@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support User adds a Provider without JavaScript", type: :system do
+RSpec.describe "Support User adds a Provider without JavaScript", type: :system, service: :placements do
   let!(:schools) do
     [
       create(:provider, name: "Manchester 1"),
@@ -71,7 +71,6 @@ RSpec.describe "Support User adds a Provider without JavaScript", type: :system 
   end
 
   def given_i_sign_in_as_colin
-    given_i_am_on_the_placements_site
     and_there_is_an_existing_persona_for("Colin")
     and_i_visit_the_personas_page
     and_i_click_sign_in_as("Colin")

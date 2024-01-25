@@ -1,16 +1,18 @@
 require "rails_helper"
 
 RSpec.describe "Service updates page", type: :system do
-  scenario "User visits the claims Service updates" do
-    given_i_am_on_the_claims_site
-    and_i_am_on_the_service_updates_page
-    i_can_see_the_claims_service_title
+  context "User is on the Claims site", service: :claims do
+    scenario "User visits the Service updates page" do
+      and_i_am_on_the_service_updates_page
+      i_can_see_the_claims_service_title
+    end
   end
 
-  scenario "User visits the placements Service updates" do
-    given_i_am_on_the_placements_site
-    and_i_am_on_the_service_updates_page
-    i_can_see_the_placements_service_title
+  context "User is on the Placements site", service: :placements do
+    scenario "User visits the Service updates page" do
+      and_i_am_on_the_service_updates_page
+      i_can_see_the_placements_service_title
+    end
   end
 
   private
