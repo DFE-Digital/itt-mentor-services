@@ -8,6 +8,7 @@ export default class extends Controller {
   static targets = [ "serverInput", "input" ]
   static values = {
     path: String,
+    returnAttributes: Array,
   }
 
   connect() {
@@ -30,6 +31,7 @@ export default class extends Controller {
    });
 
     // Hijack the original input to submit the selected value.
+    this.serverInputTarget.id = `old-${this.serverInputTarget.id}`;
     this.serverInputTarget.type = "hidden";
   }
 
@@ -40,7 +42,15 @@ export default class extends Controller {
   }
 
   resultTemplate(result) {
-    if (result) return `${result.name} (${result.town} ${result.postcode})`;
+    if (result) {
+      var returnString = `${result.name}`
+      var attributesString = ''
+      this.returnAttributesValue.forEach(function(attribute) {
+        attributesString = attributesString.concat(`${result[attribute]} `)
+      });
+
+      return returnString.concat(` (${attributesString.trim()})`)
+    }
   }
 
   onConfirm(option) {

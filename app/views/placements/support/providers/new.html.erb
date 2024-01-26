@@ -5,18 +5,29 @@
 <% end %>
 
 <div class="govuk-width-container">
-  <%= form_with(model: @provider_form, scope: :provider, url: check_placements_support_providers_path, method: "get", data: { turbo: false }) do |f| %>
+  <%= form_with(
+    model: @provider_form,
+    scope: :provider,
+    url: check_placements_support_providers_path,
+    method: "get",
+    data: {
+      turbo: false,
+      controller: "autocomplete",
+      autocomplete_path_value: "/api/provider_suggestions",
+      autocomplete_return_attributes_value: %w[code],
+    },
+  ) do |f| %>
     <%= f.govuk_error_summary %>
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <%= content_tag(:div, class: class_names("govuk-form-group", "govuk-form-group--error": f.object.errors.present?)) do %>
-          <%= f.govuk_text_field :code, value: nil,
-                                        label: { text: t(".title"), size: "l" },
-                                        caption: { text: t(".caption"), size: "l" },
-                                        id: "accredited-provider-search-form-query-field" %>
+          <%= f.govuk_text_field :id, value: nil,
+                                      label: { text: t(".title"), size: "l" },
+                                      caption: { text: t(".caption"), size: "l" },
+                                      data: { autocomplete_target: "serverInput" } %>
 
-          <div id="accredited-provider-autocomplete" class="govuk-!-margin-bottom-7"></div>
+          <div class="govuk-!-margin-bottom-7" data-autocomplete-target="input" data-input-name="provider[name]"></div>
         <% end %>
 
         <%= f.govuk_submit t(".continue") %>

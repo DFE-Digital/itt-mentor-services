@@ -78,7 +78,7 @@ RSpec.describe "Support User adds a School without JavaScript", type: :system do
   end
 
   def and_i_enter_a_school_named(school_name)
-    fill_in "school-search-form-query-field", with: school_name
+    fill_in "school-id-field", with: school_name
   end
 
   def and_i_click_continue

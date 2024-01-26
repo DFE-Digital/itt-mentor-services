@@ -24,7 +24,9 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
 
   def check_school_option
     if school_form(javascript_disabled: true).valid?
-      redirect_to check_claims_support_schools_path(school: { search_urn: urn_param })
+      redirect_to check_claims_support_schools_path(
+        school: { id: school_params.fetch(:id), name: search_param },
+      )
     else
       render :school_options, locals: {
         search_param:,
@@ -55,13 +57,13 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
 
   def redirect_to_school_options
     redirect_to school_options_claims_support_schools_path(
-      school: { search_param: urn_param },
+      school: { search_param: },
     )
   end
 
   def school_form(javascript_disabled: false)
     @school_form ||= SchoolOnboardingForm.new(
-      urn: urn_param,
+      id: school_params[:id],
       service: :claims,
       javascript_disabled:,
     )
@@ -79,20 +81,16 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
                  end
   end
 
-  def urn_param
-    params.dig(:school, :search_urn) || school_params[:urn]
-  end
-
   def javascript_disabled?
-    params.dig(:school, :search_urn).nil? && school_params[:urn].present?
+    params.dig(:school, :name).nil? && school_params[:id].present?
   end
 
   def school_params
-    params.require(:school).permit(:urn, :search_param, :search_urn)
+    params.require(:school).permit(:id, :search_param, :name)
   end
 
   def search_param
-    school_params[:search_param] || params[:search_param]
+    school_params[:search_param] || school_params[:id]
   end
 
   def decorated_school_options

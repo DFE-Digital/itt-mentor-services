@@ -1,8 +1,7 @@
 class ProviderOnboardingForm < ApplicationForm
-  attr_accessor :code, :javascript_disabled
+  attr_accessor :id, :javascript_disabled
 
-  validate :code_presence
-  validate :provider_exists?
+  validate :id_presence
   validate :provider_already_onboarded?
 
   def onboard
@@ -12,26 +11,25 @@ class ProviderOnboardingForm < ApplicationForm
   end
 
   def provider
-    @provider ||= Provider.find_by(code:)
+    @provider ||= Provider.find(id)
+  rescue ActiveRecord::RecordNotFound
+    errors.add(:id, :blank)
+    nil
   end
 
   private
 
-  def provider_exists?
-    errors.add(:code, :blank) if provider.blank?
-  end
-
   def provider_already_onboarded?
     if provider&.placements_service?
-      errors.add(:code, :already_added, provider_name: provider.name)
+      errors.add(:id, :already_added, provider_name: provider.name)
     end
   end
 
-  def code_presence
-    errors.add(:code, code_error_message) if code.blank?
+  def id_presence
+    errors.add(:id, id_error_message) if id.blank?
   end
 
-  def code_error_message
+  def id_error_message
     if javascript_disabled
       :option_blank
     else

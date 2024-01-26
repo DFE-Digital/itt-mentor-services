@@ -2,29 +2,36 @@ require "rails_helper"
 
 describe ProviderOnboardingForm, type: :model do
   describe "validations" do
-    it { should validate_presence_of(:code) }
-
-    context "when given a code not associated with a provider" do
+    context "when id is not present" do
       it "returns invalid" do
-        form = described_class.new(code: "random")
+        form = described_class.new(id: nil)
         expect(form.valid?).to eq(false)
-        expect(form.errors.messages[:code]).to include("Enter a provider name, UKPRN, URN or postcode")
+        expect(form.valid?).to eq(false)
+        expect(form.errors.messages[:id]).to include("Enter a provider name, UKPRN, URN or postcode")
       end
     end
 
-    context "when given a code for a provider already onboarded" do
+    context "when given an id not associated with a provider" do
+      it "returns invalid" do
+        form = described_class.new(id: "1231")
+        expect(form.valid?).to eq(false)
+        expect(form.errors.messages[:id]).to include("Enter a provider name, UKPRN, URN or postcode")
+      end
+    end
+
+    context "when given an id for a provider already onboarded" do
       it "returns invalid" do
         provider = create(:placements_provider)
-        form = described_class.new(code: provider.code)
+        form = described_class.new(id: provider.id)
         expect(form.valid?).to eq(false)
-        expect(form.errors.messages[:code]).to include("#{provider.name} has already been added. Try another provider")
+        expect(form.errors.messages[:id]).to include("#{provider.name} has already been added. Try another provider")
       end
     end
 
     context "when given a urn for a provider not onboarded" do
       it "returns valid" do
         provider = create(:provider)
-        form = described_class.new(code: provider.code)
+        form = described_class.new(id: provider.id)
         expect(form.valid?).to eq(true)
       end
     end
@@ -34,13 +41,13 @@ describe ProviderOnboardingForm, type: :model do
     context "when given the urn of an existing provider" do
       it "returns the provider associated with that urn" do
         provider = create(:provider)
-        expect(described_class.new(code: provider.code).provider).to eq(provider)
+        expect(described_class.new(id: provider.id).provider).to eq(provider)
       end
     end
 
     context "when given a urn not associated with a provider" do
       it "returns nil" do
-        expect(described_class.new(code: "random").provider).to eq(nil)
+        expect(described_class.new(id: "123").provider).to eq(nil)
       end
     end
   end
@@ -49,7 +56,7 @@ describe ProviderOnboardingForm, type: :model do
     it "enables the boolean flag for placements" do
       provider = create(:provider)
       onboarding = expect do
-        described_class.new(code: provider.code).onboard
+        described_class.new(id: provider.id).onboard
         provider.reload
       end
       onboarding.to change(provider, :placements_service).from(false).to(true)
