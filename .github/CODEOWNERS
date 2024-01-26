@@ -1,11 +1,25 @@
-app/*/claims @DFE-Digital/track-pay
-spec/*/claims @DFE-Digital/track-pay
-config/locales/en/claims.yml @DFE-Digital/track-pay
-config/locales/en/claims/* @DFE-Digital/track-pay
+adr                               @DFE-Digital/school-placements  @DFE-Digital/track-pay
+app                               @DFE-Digital/school-placements  @DFE-Digital/track-pay
+bin                               @DFE-Digital/school-placements  @DFE-Digital/track-pay
+config                            @DFE-Digital/school-placements  @DFE-Digital/track-pay
+db                                @DFE-Digital/school-placements  @DFE-Digital/track-pay
+docs                              @DFE-Digital/school-placements  @DFE-Digital/track-pay
+lib                               @DFE-Digital/school-placements  @DFE-Digital/track-pay
+log                               @DFE-Digital/school-placements  @DFE-Digital/track-pay
+public                            @DFE-Digital/school-placements  @DFE-Digital/track-pay
+spec                              @DFE-Digital/school-placements  @DFE-Digital/track-pay
+storage                           @DFE-Digital/school-placements  @DFE-Digital/track-pay
+tmp                               @DFE-Digital/school-placements  @DFE-Digital/track-pay
+vendor                            @DFE-Digital/school-placements  @DFE-Digital/track-pay
 
-app/*/placements  @DFE-Digital/school-placements
-spec/*/placements @DFE-Digital/school-placements
-config/locales/en/placements.yml @DFE-Digital/school-placements
-config/locales/en/placements/* @DFE-Digital/school-placements
+app/*/claims                      @DFE-Digital/track-pay
+spec/*/claims                     @DFE-Digital/track-pay
+config/locales/*/claims           @DFE-Digital/track-pay
+config/locales/*/claims.yml       @DFE-Digital/track-pay
+config/routes/claims.rb           @DFE-Digital/track-pay
 
-config/locales/en.yml @DFE-Digital/track-pay @DFE-Digital/school-placements
+app/*/placements                  @DFE-Digital/school-placements
+spec/*/placements                 @DFE-Digital/school-placements
+config/locales/en/placements      @DFE-Digital/school-placements
+config/locales/en/placements.yml  @DFE-Digital/school-placements
+config/routes/placements.rb       @DFE-Digital/school-placements
