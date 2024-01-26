@@ -16,6 +16,7 @@ en:
               users:
                 name: Name
                 email: Email
+            empty_state: There are no users for %{school_name}.
           create:
             user_added: User added
           new:
