@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Create claim", type: :system, js: true do
+RSpec.describe "Create claim", type: :system, js: true, service: :claims do
   let!(:school) { create(:school, :claims) }
   let!(:anne) do
     create(
@@ -99,7 +99,6 @@ RSpec.describe "Create claim", type: :system, js: true do
   private
 
   def given_i_sign_in_as_anne
-    given_i_am_on_the_claims_site
     and_i_visit_the_personas_page
     and_i_click_sign_in_as("Anne")
   end
