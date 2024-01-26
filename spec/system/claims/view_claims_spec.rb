@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "View claims", type: :system do
+RSpec.describe "View claims", type: :system, service: :claims do
   let!(:school) { create(:school, :claims).becomes(Claims::School) }
   let!(:mentor_trainings) do
     [
@@ -39,7 +39,6 @@ RSpec.describe "View claims", type: :system do
   end
 
   def given_i_sign_in_as_anne
-    given_i_am_on_the_claims_site
     and_i_visit_the_personas_page
     and_i_click_sign_in_as("Anne")
   end
