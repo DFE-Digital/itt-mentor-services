@@ -20,4 +20,8 @@ class Claims::User < User
            through: :memberships,
            source: :organisation,
            source_type: "School"
+
+  def service
+    :claims
+  end
 end

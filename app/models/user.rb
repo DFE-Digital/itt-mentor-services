@@ -30,7 +30,7 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}".strip
   end
 
-  def is_support_user?
+  def support_user?
     false
   end
 end

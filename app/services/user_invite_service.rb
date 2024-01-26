@@ -1,16 +1,16 @@
 class UserInviteService
   include ServicePattern
 
-  def initialize(user, organisation, service)
+  def initialize(user, organisation)
     @user = user
     @organisation = organisation
-    @service = service
+    @service = user.service
   end
 
   attr_reader :user, :organisation, :service
 
   def call
-    NotifyMailer.send_organisation_invite_email(user, organisation, service.to_s, url).deliver_later
+    NotifyMailer.send_organisation_invite_email(user, organisation, url).deliver_later
   end
 
   private

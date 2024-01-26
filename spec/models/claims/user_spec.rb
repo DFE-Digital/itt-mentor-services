@@ -37,4 +37,10 @@ RSpec.describe Claims::User do
       expect(described_class.all).to contain_exactly(user)
     end
   end
+
+  describe "#service" do
+    it "returns :claims" do
+      expect(described_class.new.service).to eq(:claims)
+    end
+  end
 end

@@ -11,7 +11,7 @@ module Claims::BelongsToSchool
     end
 
     def scoped_schools
-      return Claims::School.all if current_user.is_support_user?
+      return Claims::School.all if current_user.support_user?
 
       current_user.schools
     end

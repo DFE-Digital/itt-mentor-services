@@ -15,7 +15,11 @@
 #  index_users_on_type_and_email  (type,email) UNIQUE
 #
 class Claims::SupportUser < User
-  def is_support_user?
+  def support_user?
     true
+  end
+
+  def service
+    :claims
   end
 end
