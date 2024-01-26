@@ -5,7 +5,11 @@
 
       <p class="govuk-body"><%= t(".description") %></p>
 
-      <%= govuk_button_to t(".sign_in"), "#" %>
+      <% if ENV["SIGN_IN_METHOD"] == "persona" %>
+        <%= govuk_button_to t(".sign_in_with_persona"), personas_path, method: :get %>
+      <% else %>
+        <%= govuk_button_to t(".sign_in_with_dsi"), "#" %>
+      <% end %>
 
       <p class="govuk-body">
         <%= sanitize t(".disclaimer", service_name:, support_email: mail_to("becomingateacher@digital.education.gov.uk")) %>

@@ -16,6 +16,7 @@ RSpec.describe "View a school", type: :system do
 
   def when_i_sign_in_as_a_support_user(support_user)
     visit claims_root_path
+    click_on "Sign in using a Persona"
     click_on "Sign In as #{support_user.first_name}"
   end
 
