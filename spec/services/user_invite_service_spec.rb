@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe UserInviteService do
-  subject { described_class.call(user, organisation, service) }
+  subject { described_class.call(user, organisation) }
 
   describe "call" do
     context "when the user's service is Claims" do
@@ -12,7 +12,7 @@ RSpec.describe UserInviteService do
 
         it "calls mailer with correct prams" do
           notify_mailer = double(:notify_mailer)
-          expect(NotifyMailer).to receive(:send_organisation_invite_email).with(user, organisation, service, "http://claims.localhost/sign-in") { notify_mailer }
+          expect(NotifyMailer).to receive(:send_organisation_invite_email).with(user, organisation, "http://claims.localhost/sign-in") { notify_mailer }
           expect(notify_mailer).to receive(:deliver_later)
           subject
         end
@@ -28,7 +28,7 @@ RSpec.describe UserInviteService do
 
         it "calls mailer with correct prams" do
           notify_mailer = double(:notify_mailer)
-          expect(NotifyMailer).to receive(:send_organisation_invite_email).with(user, organisation, service, "http://placements.localhost/sign-in") { notify_mailer }
+          expect(NotifyMailer).to receive(:send_organisation_invite_email).with(user, organisation, "http://placements.localhost/sign-in") { notify_mailer }
           expect(notify_mailer).to receive(:deliver_later)
           subject
         end
@@ -40,7 +40,7 @@ RSpec.describe UserInviteService do
 
         it "calls mailer with correct prams" do
           notify_mailer = double(:notify_mailer)
-          expect(NotifyMailer).to receive(:send_organisation_invite_email).with(user, organisation, service, "http://placements.localhost/sign-in") { notify_mailer }
+          expect(NotifyMailer).to receive(:send_organisation_invite_email).with(user, organisation, "http://placements.localhost/sign-in") { notify_mailer }
           expect(notify_mailer).to receive(:deliver_later)
           subject
         end
