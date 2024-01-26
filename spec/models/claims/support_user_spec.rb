@@ -17,9 +17,15 @@
 require "rails_helper"
 
 RSpec.describe Claims::SupportUser do
-  describe "#is_support_user?" do
+  describe "#support_user?" do
     it "returns true" do
-      expect(described_class.new.is_support_user?).to eq(true)
+      expect(described_class.new.support_user?).to eq(true)
+    end
+  end
+
+  describe "#service" do
+    it "returns :claims" do
+      expect(described_class.new.service).to eq(:claims)
     end
   end
 end

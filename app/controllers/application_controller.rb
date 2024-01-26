@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path
-    if current_user.is_support_user?
+    if current_user.support_user?
       support_root_path
     else
       organisations_path

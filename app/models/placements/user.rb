@@ -25,4 +25,8 @@ class Placements::User < User
            through: :memberships,
            source: :organisation,
            source_type: "Provider"
+
+  def service
+    :placements
+  end
 end

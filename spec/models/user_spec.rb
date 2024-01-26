@@ -59,9 +59,9 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe "#is_support_user?" do
+  describe "#support_user?" do
     it "returns false" do
-      expect(subject.is_support_user?).to eq(false)
+      expect(subject.support_user?).to eq(false)
     end
   end
 end

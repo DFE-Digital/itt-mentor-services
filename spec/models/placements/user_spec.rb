@@ -37,4 +37,10 @@ RSpec.describe Placements::User do
       expect(described_class.all).to contain_exactly(user)
     end
   end
+
+  describe "#service" do
+    it "returns :placements" do
+      expect(described_class.new.service).to eq(:placements)
+    end
+  end
 end
