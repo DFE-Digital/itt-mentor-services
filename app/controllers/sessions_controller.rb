@@ -1,6 +1,5 @@
 class SessionsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[new callback]
-  before_action :redirect_to_personas, only: [:new]
 
   # setup inspired by register-trainee-teacher
   # TODO: Replace with commented code when DfE Sign In implemented
@@ -25,11 +24,5 @@ class SessionsController < ApplicationController
     DfESignInUser.end_session!(session)
 
     redirect_to after_sign_out_path
-  end
-
-  private
-
-  def redirect_to_personas
-    redirect_to personas_path if ENV["SIGN_IN_METHOD"] == "persona"
   end
 end
