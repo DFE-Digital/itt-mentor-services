@@ -11,6 +11,7 @@ en:
               placements: Placements
               providers: Providers
             add_user: Add user
+            empty_state: There are no users for %{provider_name}.
             heading: Users
             attributes:
               users:
