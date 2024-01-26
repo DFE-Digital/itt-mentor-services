@@ -88,7 +88,7 @@ RSpec.describe "Support User adds a Provider without JavaScript", type: :system,
   end
 
   def and_i_enter_a_provider_named(provider_name)
-    fill_in "accredited-provider-search-form-query-field", with: provider_name
+    fill_in "provider-id-field", with: provider_name
   end
 
   def and_i_click_continue

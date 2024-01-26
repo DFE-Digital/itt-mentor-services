@@ -15,7 +15,7 @@
     </h1>
 
     <%= f.govuk_radio_buttons_fieldset(
-      :code,
+      :id,
       scope: :provider,
       legend: {
         text: t(
@@ -29,8 +29,8 @@
     ) do %>
 
       <% providers.first(OPTIONS_PER_PAGE).each do |provider| %>
-        <%= f.govuk_radio_button :code,
-          provider.code,
+        <%= f.govuk_radio_button :id,
+          provider.id,
           label: { text: provider.name },
           link_errors: true,
           hint: { text: provider.town_and_postcode } %>

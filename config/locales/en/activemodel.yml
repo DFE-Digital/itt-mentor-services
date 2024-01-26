@@ -12,13 +12,13 @@ en:
               blank: Select an organisation type
         provider_onboarding_form:
           attributes:
-            code:
+            id:
               already_added: "%{provider_name} has already been added. Try another provider"
               blank: Enter a provider name, UKPRN, URN or postcode
               option_blank: Select a provider
         school_onboarding_form:
           attributes:
-            urn:
+            id:
               already_added: "%{school_name} has already been added. Try another school"
               blank: Enter a school name, URN or postcode
               option_blank: Select a school

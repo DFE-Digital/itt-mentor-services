@@ -1,9 +1,8 @@
 class SchoolOnboardingForm < ApplicationForm
-  attr_accessor :urn, :service, :javascript_disabled
+  attr_accessor :id, :service, :javascript_disabled
 
-  validate :urn_presence
+  validate :id_presence
   validates :service, presence: true, inclusion: { in: %i[placements claims] }
-  validate :school_exists?
   validate :school_already_onboarded?
 
   def onboard
@@ -13,26 +12,25 @@ class SchoolOnboardingForm < ApplicationForm
   end
 
   def school
-    @school ||= School.find_by(urn:)
+    @school ||= School.find(id)
+  rescue ActiveRecord::RecordNotFound
+    errors.add(:id, :blank)
+    nil
   end
 
   private
 
-  def school_exists?
-    errors.add(:urn, :blank) if school.blank?
-  end
-
   def school_already_onboarded?
     if school&.try("#{service}_service?")
-      errors.add(:urn, :already_added, school_name: school.name)
+      errors.add(:id, :already_added, school_name: school.name)
     end
   end
 
-  def urn_presence
-    errors.add(:urn, urn_error_message) if urn.blank?
+  def id_presence
+    errors.add(:id, id_error_message) if id.blank?
   end
 
-  def urn_error_message
+  def id_error_message
     if javascript_disabled
       :option_blank
     else

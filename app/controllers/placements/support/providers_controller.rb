@@ -27,7 +27,9 @@ class Placements::Support::ProvidersController < Placements::Support::Applicatio
 
   def check_provider_option
     if provider_form(javascript_disabled: true).valid?
-      redirect_to check_placements_support_providers_path(provider: { search_code: provider_code })
+      redirect_to check_placements_support_providers_path(
+        provider: { id: provider_params.fetch(:id), name: search_param },
+      )
     else
       render :provider_options, locals: {
         search_param:,
@@ -49,32 +51,26 @@ class Placements::Support::ProvidersController < Placements::Support::Applicatio
   private
 
   def javascript_disabled?
-    provider_params[:search_code].nil? && provider_params[:code].present?
+    provider_params[:name].nil? && provider_params[:id].present?
   end
 
   def redirect_to_provider_options
     redirect_to provider_options_placements_support_providers_path(
-      provider: { search_param: provider_params[:code] },
+      provider: { search_param: },
     )
   end
 
   def provider_params
-    @provider_params ||= params.require(:provider).permit(
-      :code, :search_param, :search_code
-    )
-  end
-
-  def provider_code
-    provider_params[:search_code] || provider_params[:code]
+    @provider_params ||= params.require(:provider).permit(:id, :search_param, :name)
   end
 
   def search_param
-    provider_params[:search_param] || params[:search_param]
+    provider_params[:search_param] || provider_params[:id]
   end
 
   def provider_form(javascript_disabled: false)
     @provider_form ||= ProviderOnboardingForm.new(
-      code: provider_code,
+      id: provider_params[:id],
       javascript_disabled:,
     )
   end

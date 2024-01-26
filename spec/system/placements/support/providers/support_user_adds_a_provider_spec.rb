@@ -73,7 +73,7 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
   end
 
   def and_i_enter_a_provider_named(provider_name)
-    fill_in "provider-code-field-error", with: provider_name
+    fill_in "provider-id-field", with: provider_name
   end
 
   def then_i_see_a_dropdown_item_for(provider_name)
