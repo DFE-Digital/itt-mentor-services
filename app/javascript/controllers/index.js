@@ -4,5 +4,8 @@
 
 import { application } from "./application"
 
+import AutocompleteController from "./autocomplete_controller"
+application.register("autocomplete", AutocompleteController)
+
 import SelectAutocompleteController from "./select_autocomplete_controller"
 application.register("select-autocomplete", SelectAutocompleteController)
