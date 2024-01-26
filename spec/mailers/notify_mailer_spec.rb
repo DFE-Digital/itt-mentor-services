@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe NotifyMailer, type: :mailer do
   describe "#send_organisation_invite_email" do
-    subject { described_class.send_organisation_invite_email(user, organisation, service, "") }
+    subject { described_class.send_organisation_invite_email(user, organisation, "") }
 
     context "when the user's service is Claims" do
       let(:user) { create(:claims_user, first_name: "Anne", last_name: "Wilson") }
