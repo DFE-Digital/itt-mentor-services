@@ -1,0 +1,6 @@
+en:
+  components:
+    claim:
+      status_tag_component:
+        draft: Draft
+        submitted: Submitted
