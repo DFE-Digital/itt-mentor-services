@@ -5,3 +5,4 @@ en:
         claims:
           index:
             heading: Claims
+            claim_id: ID

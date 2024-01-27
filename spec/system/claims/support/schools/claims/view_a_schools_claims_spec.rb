@@ -1,0 +1,46 @@
+require "rails_helper"
+
+RSpec.describe "View a schools claims", type: :system, service: :claims do
+  let!(:school) { create(:school, :claims).becomes(Claims::School) }
+  let!(:another_school) { create(:school, :claims).becomes(Claims::School) }
+
+  let!(:colin) { create(:persona, :colin, service: "claims") }
+
+  let!(:submitted_claim) { create(:claim, school_id: school.id, draft: false) }
+  let!(:draft_claim) { create(:claim, school_id: school.id, draft: true) }
+  let!(:claim_from_another_school) { create(:claim, school_id: another_school.id, draft: true) }
+
+  scenario "View a school's claims as a support user" do
+    given_i_sign_in_as_colin
+    when_i_visit_the_claims_support_school_claims_page
+    i_see_a_list_of_the_schools_claims
+    i_dont_see_claims_from_other_schools
+  end
+
+  private
+
+  def given_i_sign_in_as_colin
+    and_i_visit_the_personas_page
+    and_i_click_sign_in_as("Colin")
+  end
+
+  def and_i_visit_the_personas_page
+    visit personas_path
+  end
+
+  def and_i_click_sign_in_as(persona_name)
+    click_on "Sign In as #{persona_name}"
+  end
+
+  def when_i_visit_the_claims_support_school_claims_page
+    visit claims_support_school_claims_path(school)
+  end
+
+  def i_see_a_list_of_the_schools_claims
+    expect(page).to have_content("#{draft_claim.id}\nDraft\n#{submitted_claim.id}\nSubmitted")
+  end
+
+  def i_dont_see_claims_from_other_schools
+    expect(page).not_to have_content("#{claim_from_another_school.id}\nDraft")
+  end
+end
