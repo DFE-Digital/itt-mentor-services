@@ -16,12 +16,10 @@
 #
 class Placements::User < User
   has_many :schools,
-           -> { placements_service },
            through: :memberships,
            source: :organisation,
            source_type: "School"
   has_many :providers,
-           -> { placements_service },
            through: :memberships,
            source: :organisation,
            source_type: "Provider"
