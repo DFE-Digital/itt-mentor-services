@@ -15,9 +15,7 @@
 #  index_users_on_type_and_email  (type,email) UNIQUE
 #
 class Claims::SupportUser < User
-  def support_user?
-    true
-  end
+  include ActsAsSupportUser
 
   def service
     :claims
