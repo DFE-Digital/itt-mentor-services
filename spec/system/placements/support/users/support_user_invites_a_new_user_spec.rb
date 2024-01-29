@@ -94,7 +94,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
       and_i_click("Add user")
       and_i_enter_the_details_for_a_new_user
       and_i_click("Continue")
-      then_i_see_an_error("This email address is already in use. Try another email address")
+      then_i_see_an_error("Email address already in use")
     end
 
     scenario "Support User doesn't enter any user details" do

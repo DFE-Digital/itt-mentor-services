@@ -54,7 +54,7 @@ describe UserInviteForm, type: :model do
           expect(user_invite_form.invite).to eq false
 
           expect(user_invite_form.errors.messages)
-            .to match(email: ["This email address is already in use. Try another email address"])
+            .to match(email: ["Email address already in use"])
         end
       end
     end

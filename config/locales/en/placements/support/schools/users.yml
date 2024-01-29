@@ -4,12 +4,6 @@ en:
       schools:
         users:
           index:
-            secondary_navigation:
-              details: Details
-              users: Users
-              mentors: Mentors
-              placements: Placements
-              providers: Providers
             add_user: Add user
             heading: Users
             attributes:
@@ -23,3 +17,5 @@ en:
             page_title: "Personal details - Add user - %{school_name}"
           check:
             page_title: "Check your answers - Add user - %{school_name}"
+            caption: Add user - %{organisation_name}
+            check_your_answers: Check your answers

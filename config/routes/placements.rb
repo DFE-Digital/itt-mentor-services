@@ -42,6 +42,19 @@ scope module: :placements,
   end
 
   resources :organisations, only: [:index]
-  resources :schools, only: [:show]
-  resources :providers, only: [:show]
+  resources :schools, only: %i[show] do
+    scope module: :schools do
+      resources :users, only: %i[index new create show] do
+        get :check, on: :collection
+      end
+    end
+  end
+
+  resources :providers, only: [:show] do
+    scope module: :providers do
+      resources :users, only: %i[index new create show] do
+        get :check, on: :collection
+      end
+    end
+  end
 end

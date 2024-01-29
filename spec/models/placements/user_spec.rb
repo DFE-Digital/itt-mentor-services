@@ -50,4 +50,25 @@ RSpec.describe Placements::User do
       expect(described_class.new.service).to eq(:placements)
     end
   end
+
+  describe "#organisation_count" do
+    describe "returns the count of only placements organisations" do
+      it "returns 0 if user has no placement organisations" do
+        user = create(:placements_user)
+        expect(user.organisation_count).to eq 0
+
+        create(:membership, user:, organisation: create(:claims_school))
+        expect(user.organisation_count).to eq 0
+      end
+
+      it "returns combined provider and school count" do
+        user = create(:placements_user)
+        create(:membership, user:, organisation: create(:placements_school))
+        create(:membership, user:, organisation: create(:placements_provider))
+        create(:membership, user:, organisation: create(:placements_provider))
+
+        expect(user.organisation_count).to eq 3
+      end
+    end
+  end
 end
