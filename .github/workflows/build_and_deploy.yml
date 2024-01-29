@@ -16,7 +16,6 @@ permissions:
 
 jobs:
   build:
-    if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     outputs:
       docker-image-tag: ${{ steps.build-image.outputs.tag }}
