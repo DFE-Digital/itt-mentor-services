@@ -127,6 +127,6 @@ jobs:
         uses: rtCamp/action-slack-notify@master
         env:
           SLACK_COLOR: ${{ env.SLACK_FAILURE }}
-          SLACK_TITLE: ${{ matrix.environment }} Release ${{ github.event.title }}
-          SLACK_MESSAGE: Failure deploying ${{ matrix.environment }} release
+          SLACK_TITLE: Failure deploying release to ${{ matrix.environment }}
+          SLACK_MESSAGE: Failure deploying release to ${{ matrix.environment }} - commit_sha ${{ env.COMMIT_SHA }}
           SLACK_WEBHOOK: ${{ steps.keyvault-yaml-secret.outputs.SLACK_WEBHOOK }}
