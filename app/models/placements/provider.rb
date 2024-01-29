@@ -31,5 +31,5 @@
 class Placements::Provider < Provider
   default_scope { placements_service }
 
-  has_many :users, -> { placements }, through: :memberships
+  has_many :users, through: :memberships
 end

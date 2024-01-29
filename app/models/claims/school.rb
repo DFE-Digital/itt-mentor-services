@@ -47,6 +47,6 @@
 class Claims::School < School
   default_scope { claims_service }
 
-  has_many :users, -> { claims }, through: :memberships
+  has_many :users, through: :memberships
   has_many :claims
 end

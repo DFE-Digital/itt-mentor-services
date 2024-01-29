@@ -49,6 +49,21 @@ require "rails_helper"
 RSpec.describe Claims::School do
   context "associations" do
     it { should have_many(:claims) }
+
+    context "#users" do
+      it { should have_many(:users).through(:memberships) }
+
+      it "returns only Claims::User records" do
+        claims_school = create(:claims_school)
+        claims_user = create(:claims_user)
+
+        claims_school.users << claims_user
+        claims_school.users << create(:placements_user)
+
+        expect(claims_school.users).to contain_exactly(claims_user)
+        expect(claims_school.users).to all(be_a(Claims::User))
+      end
+    end
   end
 
   describe "default scope" do

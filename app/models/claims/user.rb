@@ -16,7 +16,6 @@
 #
 class Claims::User < User
   has_many :schools,
-           -> { claims_service },
            through: :memberships,
            source: :organisation,
            source_type: "School"

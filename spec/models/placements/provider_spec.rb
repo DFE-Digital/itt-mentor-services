@@ -31,8 +31,21 @@
 require "rails_helper"
 
 RSpec.describe Placements::Provider do
-  describe "#assocations" do
-    it { should have_many(:users).through(:memberships) }
+  context "assocations" do
+    context "#users" do
+      it { should have_many(:users).through(:memberships) }
+
+      it "returns only Placements::User records" do
+        placements_provider = create(:placements_provider)
+        placements_user = create(:placements_user)
+
+        placements_provider.users << create(:claims_user)
+        placements_provider.users << placements_user
+
+        expect(placements_provider.users).to contain_exactly(placements_user)
+        expect(placements_provider.users).to all(be_a(Placements::User))
+      end
+    end
   end
 
   describe "default scope" do

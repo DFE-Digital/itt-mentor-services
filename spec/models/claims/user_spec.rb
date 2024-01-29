@@ -18,12 +18,19 @@ require "rails_helper"
 
 RSpec.describe Claims::User do
   describe "associations" do
-    it { should have_many(:schools).through(:memberships).source(:organisation) }
+    context "#schools" do
+      it { should have_many(:schools).through(:memberships).source(:organisation) }
 
-    it "association returns Claims::Schools objects" do
-      claims_user = create(:claims_user)
-      claims_user.memberships.create!(organisation: create(:school, :claims))
-      expect(claims_user.schools.first.class.name).to eq "Claims::School"
+      it "returns only Claims::School records" do
+        claims_user = create(:claims_user)
+        claims_school = create(:claims_school)
+
+        claims_user.schools << claims_school
+        claims_user.schools << create(:placements_school)
+
+        expect(claims_user.schools).to contain_exactly(claims_school)
+        expect(claims_user.schools).to all(be_a(Claims::School))
+      end
     end
   end
 
