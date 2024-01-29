@@ -16,8 +16,4 @@
 #
 class Placements::SupportUser < User
   include ActsAsSupportUser
-
-  def service
-    :placements
-  end
 end

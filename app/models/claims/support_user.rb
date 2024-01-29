@@ -16,8 +16,4 @@
 #
 class Claims::SupportUser < User
   include ActsAsSupportUser
-
-  def service
-    :claims
-  end
 end
