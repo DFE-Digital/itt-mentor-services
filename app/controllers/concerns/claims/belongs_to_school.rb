@@ -5,7 +5,7 @@ module Claims::BelongsToSchool
     before_action :set_school
 
     def set_school
-      @school = scoped_schools.find(params.require(:school_id)).becomes(Claims::School)
+      @school = scoped_schools.find(params.require(:school_id))
     rescue ActiveRecord::RecordNotFound
       redirect_to not_found_path
     end

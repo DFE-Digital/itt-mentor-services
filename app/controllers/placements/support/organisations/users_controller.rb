@@ -29,7 +29,7 @@ class Placements::Support::Organisations::UsersController < Placements::Support:
   private
 
   def users
-    @users = @organisation.users.placements
+    @users = @organisation.users
   end
 
   def user_params

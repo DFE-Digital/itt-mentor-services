@@ -35,30 +35,6 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_presence_of(:type) }
   end
 
-  context "scopes" do
-    describe "#claims" do
-      it "only returns users of type Claims::User" do
-        claims_user = create(:claims_user)
-        create(:claims_support_user)
-        create(:placements_user)
-        create(:placements_support_user)
-
-        expect(described_class.claims).to contain_exactly(claims_user)
-      end
-    end
-
-    describe "#placements" do
-      it "only returns users of type Placements::User" do
-        create(:claims_user)
-        create(:claims_support_user)
-        create(:placements_support_user)
-        placements_user = create(:placements_user)
-
-        expect(described_class.placements).to contain_exactly(placements_user)
-      end
-    end
-  end
-
   describe "#support_user?" do
     it "returns false" do
       expect(subject.support_user?).to eq(false)
