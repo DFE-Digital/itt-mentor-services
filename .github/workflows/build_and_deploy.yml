@@ -19,7 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       docker-image-tag: ${{ steps.build-image.outputs.tag }}
-      commit_sha: ${{ env.COMMIT_SHA }}
 
     steps:
     - name: Checkout
