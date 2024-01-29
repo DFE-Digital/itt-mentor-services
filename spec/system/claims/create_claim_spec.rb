@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Create claim", type: :system, js: true, service: :claims do
-  let!(:school) { create(:school, :claims) }
+  let!(:school) { create(:claims_school) }
   let!(:anne) do
     create(
       :claims_user,

@@ -23,9 +23,6 @@ class User < ApplicationRecord
   validates :type, presence: true
   validates :email, uniqueness: { scope: :type, case_sensitive: false }
 
-  scope :claims, -> { where(type: "Claims::User") }
-  scope :placements, -> { where(type: "Placements::User") }
-
   def full_name
     "#{first_name} #{last_name}".strip
   end
