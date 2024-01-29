@@ -127,5 +127,5 @@ jobs:
         env:
           SLACK_COLOR: ${{ env.SLACK_FAILURE }}
           SLACK_TITLE: Failure deploying release to ${{ matrix.environment }}
-          SLACK_MESSAGE: Failure deploying release to ${{ matrix.environment }} - commit_sha ${{ env.COMMIT_SHA }}
+          SLACK_MESSAGE: Failure deploying release to ${{ matrix.environment }} - Docker tag ${{ needs.build.outputs.docker-image-tag }}
           SLACK_WEBHOOK: ${{ steps.keyvault-yaml-secret.outputs.SLACK_WEBHOOK }}
