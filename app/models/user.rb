@@ -33,4 +33,12 @@ class User < ApplicationRecord
   def support_user?
     false
   end
+
+  # Extracts the namespace of the class as a symbol to determine the service
+  # e.g.
+  # - Placements::User => :placements
+  # - Claims::User => :claims
+  def service
+    self.class.name.deconstantize.downcase.to_sym
+  end
 end
