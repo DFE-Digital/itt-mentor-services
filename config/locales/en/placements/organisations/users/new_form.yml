@@ -1,0 +1,9 @@
+en:
+  placements:
+    organisations:
+      users:
+        new_form:
+          add_user: Add user
+          personal_details: Personal details
+          continue: Continue
+          cancel: Cancel

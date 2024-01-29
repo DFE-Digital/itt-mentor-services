@@ -1,5 +1,5 @@
 <%= content_for :page_title, t(".organisation_details") %>
-<% if current_user.memberships.many? %>
+<% if current_user.organisation_count > 1 %>
   <%= content_for(:header_content) do %>
     <%= render(ContentHeaderComponent.new(
       title: @school.name,

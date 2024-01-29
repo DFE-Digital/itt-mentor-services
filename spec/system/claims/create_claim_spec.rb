@@ -102,10 +102,6 @@ RSpec.describe "Create claim", type: :system, js: true, service: :claims do
     and_i_click_sign_in_as("Anne")
   end
 
-  def and_there_is_an_existing_persona_for(persona_name)
-    create(:persona, persona_name.downcase.to_sym, service: :claims)
-  end
-
   def and_i_visit_the_personas_page
     visit personas_path
   end

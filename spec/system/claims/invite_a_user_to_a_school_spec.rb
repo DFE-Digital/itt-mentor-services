@@ -151,7 +151,7 @@ RSpec.describe "Invite a user to a school", type: :system do
   end
 
   def then_see_error_message_for_existing_user
-    expect(page).to have_content("This email address is already in use. Try another email address").twice
+    expect(page).to have_content("Email address already in use").twice
   end
 
   def show_error_messages

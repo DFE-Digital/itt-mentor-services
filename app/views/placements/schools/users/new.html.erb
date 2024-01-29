@@ -1,0 +1,18 @@
+<%= content_for :page_title, @user_form.errors.any? ? t(".page_title_with_error") : t(".page_title") %>
+<%= render "placements/primary_navigation", current_navigation: :users, organisation: @organisation %>
+<% if current_user.organisation_count > 1 %>
+  <%= content_for(:header_content) do %>
+    <%= render(ContentHeaderComponent.new(
+      title: @organisation.name,
+      actions: [govuk_link_to(t(".change_organisation"), placements_organisations_path, no_visited_state: true)],
+    )) %>
+  <% end %>
+<% end %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: placements_school_users_path(@organisation)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <%= render "placements/organisations/users/new_form", user: @user_form, organisation: @organisation %>
+</div>

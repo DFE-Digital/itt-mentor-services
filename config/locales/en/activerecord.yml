@@ -28,5 +28,5 @@ en:
               blank: Enter a last name
             email:
               blank: Enter an email address
-              taken: This email address is already in use. Try another email address
+              taken: Email address already in use
               invalid: Enter an email address in the correct format, like name@example.com
