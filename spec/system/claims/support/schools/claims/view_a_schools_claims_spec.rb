@@ -4,7 +4,7 @@ RSpec.describe "View a schools claims", type: :system, service: :claims do
   let!(:school) { create(:school, :claims).becomes(Claims::School) }
   let!(:another_school) { create(:school, :claims).becomes(Claims::School) }
 
-  let!(:colin) { create(:persona, :colin, service: "claims") }
+  let!(:colin) { create(:claims_support_user, :colin) }
 
   let!(:submitted_claim) { create(:claim, school_id: school.id, draft: false) }
   let!(:draft_claim) { create(:claim, school_id: school.id, draft: true) }
