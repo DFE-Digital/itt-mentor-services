@@ -1,6 +1,10 @@
 scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
   root to: redirect("/schools")
 
+  scope module: :pages do
+    get :feedback
+  end
+
   resources :schools, only: %i[index show] do
     scope module: :schools do
       resources :claims, only: %i[index new show] do

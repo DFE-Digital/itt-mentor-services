@@ -5,6 +5,10 @@ scope module: :placements,
       } do
   root to: "pages#index"
 
+  scope module: :pages do
+    get :feedback
+  end
+
   namespace :support do
     root to: redirect("/support/organisations")
 
