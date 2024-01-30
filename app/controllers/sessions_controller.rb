@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[new callback]
+  before_action :redirect_to_after_sign_in_path, only: %i[new], if: :user_signed_in?
 
   # setup inspired by register-trainee-teacher
   # TODO: Replace with commented code when DfE Sign In implemented
@@ -24,5 +25,11 @@ class SessionsController < ApplicationController
     DfESignInUser.end_session!(session)
 
     redirect_to after_sign_out_path
+  end
+
+  private
+
+  def redirect_to_after_sign_in_path
+    redirect_to after_sign_in_path
   end
 end
