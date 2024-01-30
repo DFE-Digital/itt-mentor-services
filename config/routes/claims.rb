@@ -1,5 +1,5 @@
 scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
-  root to: redirect("/schools")
+  root to: redirect("/sign-in")
 
   scope module: :pages do
     get :feedback

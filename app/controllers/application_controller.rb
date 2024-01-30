@@ -23,6 +23,10 @@ class ApplicationController < ActionController::Base
     @current_user ||= sign_in_user&.user
   end
 
+  def user_signed_in?
+    current_user.present?
+  end
+
   def after_sign_in_path
     if current_user.support_user?
       support_root_path
