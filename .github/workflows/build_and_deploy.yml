@@ -36,7 +36,6 @@ jobs:
     needs: [build]
     environment:
       name: review
-      url: ${{ steps.get-app-url.outputs.url1 }}
 
     steps:
       - name: Checkout code
@@ -60,15 +59,6 @@ jobs:
         run: |
           az aks get-credentials -g s189t01-tsc-ts-rg -n s189t01-tsc-test-aks
           kubectl exec -n bat-qa deployment/itt-mentor-services-${{ github.event.number }} -- sh -c "export GIAS_CSV_BASE_URL=https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public  && export PUBLISH_BASE_URL=https://qa.api.publish-teacher-training-courses.service.gov.uk// && cd /app && /usr/local/bin/rake db:seed"
-
-      - name: Get application URL
-        id: get-app-url
-        shell: bash
-        run: |
-          url1="https://track-and-pay-${{ github.event.number }}.test.teacherservices.cloud"
-          echo "url1=${url1}" >> $GITHUB_OUTPUT
-          url2="https://manage-school-placements-${{ github.event.number }}.test.teacherservices.cloud"
-          echo "url2=${url2}" >> $GITHUB_OUTPUT
 
       - name: Post comment to Pull Request ${{ github.event.number }}
         if: ${{ github.event_name == 'pull_request' }}
