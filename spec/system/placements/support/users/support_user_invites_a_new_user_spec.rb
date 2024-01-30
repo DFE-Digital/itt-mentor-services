@@ -14,7 +14,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
     given_i_am_signed_in_as_a_support_user
     mailer_double = double(:mailer_double)
     allow(mailer_double).to receive(:deliver_later).and_return true
-    allow(NotifyMailer).to receive(:send_organisation_invite_email).and_return(mailer_double)
+    allow(UserMailer).to receive(:invitation_email).and_return(mailer_double)
   end
 
   describe "School" do

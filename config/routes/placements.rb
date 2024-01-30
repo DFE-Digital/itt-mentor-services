@@ -24,7 +24,8 @@ scope module: :placements,
       end
 
       scope module: :schools do
-        resources :users, only: %i[index new create show] do
+        resources :users, only: %i[index new create show destroy] do
+          member { get :remove }
           collection { get :check }
         end
       end
@@ -38,7 +39,8 @@ scope module: :placements,
       end
 
       scope module: :providers do
-        resources :users, only: %i[index new create show] do
+        resources :users, only: %i[index new create show destroy] do
+          member { get :remove }
           collection { get :check }
         end
       end

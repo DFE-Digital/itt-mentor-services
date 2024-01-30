@@ -1,0 +1,23 @@
+en:
+  mailers:
+    user:
+      claims:
+        invitation_email:
+          body: "Dear %{user_name} \n\n You have been invited to join the
+            claims service for %{organisation_name}.\n\n 
+            Sign in here %{sign_in_url}"
+          subject: "You have been invited to %{organisation_name}"
+        removal_email:
+          body: "Dear %{user_name} \n\n You have been removed from the 
+            claims service for %{organisation_name}."
+          subject: You have been removed from %{organisation_name}
+      placements:
+        removal_email:
+          body: "Dear %{user_name} \n\n You have been removed from the 
+            school placements service for %{organisation_name}."
+          subject: You have been removed from %{organisation_name}
+        invitation_email:
+          body: "Dear %{user_name} \n\n You have been invited to join the 
+            school placements service for %{organisation_name}.\n\n 
+            Sign in here %{sign_in_url}"
+          subject: "You have been invited to %{organisation_name}"

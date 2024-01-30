@@ -21,7 +21,7 @@ describe UserInviteForm, type: :model do
   describe "#invite" do
     context "with invalid params" do
       before "it does not send invitation" do
-        expect(NotifyMailer).to_not receive(:send_organisation_invite_email)
+        expect(UserMailer).to_not receive(:invitation_email)
       end
 
       context "with invalid user params" do
@@ -72,9 +72,9 @@ describe UserInviteForm, type: :model do
       end
 
       before "it sends invitation" do
-        notify_mailer = double(:notify_mailer)
-        expect(NotifyMailer).to receive(:send_organisation_invite_email) { notify_mailer }
-        expect(notify_mailer).to receive(:deliver_later)
+        user_mailer = double(:user_mailer)
+        expect(UserMailer).to receive(:invitation_email) { user_mailer }
+        expect(user_mailer).to receive(:deliver_later)
       end
 
       it "creates user" do
@@ -104,9 +104,9 @@ describe UserInviteForm, type: :model do
         }
 
         before "it sends invitation" do
-          notify_mailer = double(:notify_mailer)
-          expect(NotifyMailer).to receive(:send_organisation_invite_email) { notify_mailer }
-          expect(notify_mailer).to receive(:deliver_later)
+          user_mailer = double(:user_mailer)
+          expect(UserMailer).to receive(:invitation_email) { user_mailer }
+          expect(user_mailer).to receive(:deliver_later)
         end
 
         it "updates user first name" do

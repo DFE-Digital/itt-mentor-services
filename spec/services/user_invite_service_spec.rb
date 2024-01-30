@@ -11,9 +11,9 @@ RSpec.describe UserInviteService do
         let(:service) { "claims" }
 
         it "calls mailer with correct prams" do
-          notify_mailer = double(:notify_mailer)
-          expect(NotifyMailer).to receive(:send_organisation_invite_email).with(user, organisation, "http://claims.localhost/sign-in") { notify_mailer }
-          expect(notify_mailer).to receive(:deliver_later)
+          user_mailer = double(:user_mailer)
+          expect(UserMailer).to receive(:invitation_email).with(user, organisation, "http://claims.localhost/sign-in") { user_mailer }
+          expect(user_mailer).to receive(:deliver_later)
           subject
         end
       end
@@ -27,9 +27,9 @@ RSpec.describe UserInviteService do
         let(:organisation) { create(:school, :placements) }
 
         it "calls mailer with correct prams" do
-          notify_mailer = double(:notify_mailer)
-          expect(NotifyMailer).to receive(:send_organisation_invite_email).with(user, organisation, "http://placements.localhost/sign-in") { notify_mailer }
-          expect(notify_mailer).to receive(:deliver_later)
+          user_mailer = double(:user_mailer)
+          expect(UserMailer).to receive(:invitation_email).with(user, organisation, "http://placements.localhost/sign-in") { user_mailer }
+          expect(user_mailer).to receive(:deliver_later)
           subject
         end
       end
@@ -39,9 +39,9 @@ RSpec.describe UserInviteService do
         let(:organisation) { create(:placements_provider) }
 
         it "calls mailer with correct prams" do
-          notify_mailer = double(:notify_mailer)
-          expect(NotifyMailer).to receive(:send_organisation_invite_email).with(user, organisation, "http://placements.localhost/sign-in") { notify_mailer }
-          expect(notify_mailer).to receive(:deliver_later)
+          user_mailer = double(:user_mailer)
+          expect(UserMailer).to receive(:invitation_email).with(user, organisation, "http://placements.localhost/sign-in") { user_mailer }
+          expect(user_mailer).to receive(:deliver_later)
           subject
         end
       end
