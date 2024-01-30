@@ -11,9 +11,9 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
   describe "Ann invites a member successfully " do
     context "provider" do
       before "user is sent an invitation" do
-        notify_mailer = double(:notify_mailer)
-        expect(NotifyMailer).to receive(:send_organisation_invite_email).with(kind_of(Placements::User), one_provider, "http://placements.localhost/sign-in") { notify_mailer }
-        expect(notify_mailer).to receive(:deliver_later).and_return true
+        user_mailer = double(:user_mailer)
+        expect(UserMailer).to receive(:invitation_email).with(kind_of(Placements::User), one_provider, "http://placements.localhost/sign-in") { user_mailer }
+        expect(user_mailer).to receive(:deliver_later).and_return true
       end
 
       scenario "user invites a member to a provider" do
@@ -34,9 +34,9 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
 
     context "school" do
       before "user is sent an invitation" do
-        notify_mailer = double(:notify_mailer)
-        expect(NotifyMailer).to receive(:send_organisation_invite_email).with(kind_of(Placements::User), one_school, "http://placements.localhost/sign-in") { notify_mailer }
-        expect(notify_mailer).to receive(:deliver_later).and_return true
+        user_mailer = double(:user_mailer)
+        expect(UserMailer).to receive(:invitation_email).with(kind_of(Placements::User), one_school, "http://placements.localhost/sign-in") { user_mailer }
+        expect(user_mailer).to receive(:deliver_later).and_return true
       end
 
       scenario "user invites a member to a school" do
@@ -62,12 +62,12 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
       create(:membership, user: mary, organisation: another_school)
       create(:membership, user: mary, organisation: one_provider)
 
-      notify_mailer = double(:notify_mailer)
-      expect(NotifyMailer).to receive(:send_organisation_invite_email).with(kind_of(Placements::User), another_school, "http://placements.localhost/sign-in") { notify_mailer }
-      expect(notify_mailer).to receive(:deliver_later).and_return true
+      user_mailer = double(:user_mailer)
+      expect(UserMailer).to receive(:invitation_email).with(kind_of(Placements::User), another_school, "http://placements.localhost/sign-in") { user_mailer }
+      expect(user_mailer).to receive(:deliver_later).and_return true
 
-      expect(NotifyMailer).to receive(:send_organisation_invite_email).with(kind_of(Placements::User), one_provider, "http://placements.localhost/sign-in") { notify_mailer }
-      expect(notify_mailer).to receive(:deliver_later).and_return true
+      expect(UserMailer).to receive(:invitation_email).with(kind_of(Placements::User), one_provider, "http://placements.localhost/sign-in") { user_mailer }
+      expect(user_mailer).to receive(:deliver_later).and_return true
     end
 
     scenario "user adds a user to multiple organisations" do

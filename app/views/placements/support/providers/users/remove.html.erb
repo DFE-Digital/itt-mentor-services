@@ -1,0 +1,25 @@
+<%= content_for :page_title, sanitize(t(".page_title", user_name: @user.full_name, organisation_name: @organisation.name)) %>
+<%= render "placements/support/primary_navigation", current_navigation: :organisations %>
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: placements_support_provider_user_path(@organisation, @user)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <label class="govuk-label govuk-label--l">
+        <span class="govuk-caption-l"><%= "#{@user.full_name} - #{@organisation.name}" %></span>
+        <%= t(".are_you_sure") %>
+      </label>
+      <%= render GovukComponent::WarningTextComponent.new(
+        text: t(".user_will_be_sent_an_email", organisation_name: @organisation.name),
+      ) %>
+
+      <%= govuk_button_to t(".remove_user"), placements_support_provider_user_path(@organisation, @user), warning: true, method: :delete %>
+
+      <p class="govuk-body">
+        <%= govuk_link_to(t(".cancel"), placements_support_provider_user_path(@organisation, @user)) %>
+      </p>
+    </div>
+  </div>
+</div>

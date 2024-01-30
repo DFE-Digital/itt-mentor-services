@@ -10,7 +10,7 @@ class UserInviteService
   attr_reader :user, :organisation, :service
 
   def call
-    NotifyMailer.send_organisation_invite_email(user, organisation, url).deliver_later
+    UserMailer.invitation_email(user, organisation, url).deliver_later
   end
 
   private

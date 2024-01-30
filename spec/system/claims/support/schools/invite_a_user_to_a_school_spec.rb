@@ -5,7 +5,7 @@ RSpec.describe "Invite a user to a school", type: :system do
     setup_school
     mailer_double = double(:mailer_double)
     allow(mailer_double).to receive(:deliver_later).and_return true
-    allow(NotifyMailer).to receive(:send_organisation_invite_email).and_return(mailer_double)
+    allow(UserMailer).to receive(:invitation_email).and_return(mailer_double)
   end
 
   scenario "I sign in as a support user and invite a user to a school" do

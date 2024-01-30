@@ -7,3 +7,13 @@
 <%= render "placements/support/organisations/users/details",
   user: @user,
   organisation: @school %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= link_to(t(".remove_user"),
+                  remove_placements_support_school_user_path(@school, @user),
+                  class: "govuk-link govuk-link--no-visited-state app-link--destructive") %>
+    </div>
+  </div>
+</div>

@@ -1,13 +1,12 @@
 class Placements::Support::Organisations::UsersController < Placements::Support::ApplicationController
   before_action :set_organisation
+  before_action :set_user, only: %i[show remove destroy]
 
   def index
     users
   end
 
-  def show
-    @user = users.find(params[:id]).becomes(Placements::User)
-  end
+  def show; end
 
   def new
     @user_form = params[:user_invite_form].present? ? user_form : UserInviteForm.new
@@ -26,7 +25,19 @@ class Placements::Support::Organisations::UsersController < Placements::Support:
     end
   end
 
+  def remove; end
+
+  def destroy
+    RemoveUserService.call(@user, @organisation)
+    redirect_to_index
+    flash[:success] = t(".user_removed")
+  end
+
   private
+
+  def set_user
+    @user = users.find(params.require(:id))
+  end
 
   def users
     @users = @organisation.users
