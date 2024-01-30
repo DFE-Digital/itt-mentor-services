@@ -34,6 +34,13 @@ module RoutesHelper
     }.fetch current_service
   end
 
+  def feedback_path
+    {
+      claims: claims_feedback_path,
+      placements: placements_feedback_path,
+    }.fetch current_service
+  end
+
   def organisation_users_path(organisation)
     case organisation
     when School
