@@ -1,40 +1,66 @@
 require "rails_helper"
 
 RSpec.describe HostingEnvironment do
-  describe ".name" do
-    it "returns the name of the hosting environment" do
-      current_service = "claims"
-      expect(described_class.name(current_service)).to eq("test")
-    end
+  before do
+    HostingEnvironment.instance_variable_set :@env, nil
+    HostingEnvironment.instance_variable_set :@phase, nil
+  end
 
-    context "when environment is production" do
-      it "returns the name of the hosting environment for claims" do
-        allow(Rails.env).to receive(:production?).and_return(true)
-        current_service = "claims"
-        expect(described_class.name(current_service)).to eq("beta")
-      end
+  describe ".env" do
+    subject(:env) { described_class.env }
 
-      it "returns the name of the hosting environment for placements" do
-        allow(Rails.env).to receive(:production?).and_return(true)
-        current_service = "placements"
-        expect(described_class.name(current_service)).to eq("beta")
+    test_matrix = %w[production sandbox staging qa review development test]
+
+    test_matrix.each do |environment|
+      context "when HOSTING_ENV is '#{environment}'" do
+        it "returns '#{environment}'" do
+          ClimateControl.modify HOSTING_ENV: environment do
+            expect(env).to eq(environment)
+          end
+        end
       end
     end
   end
 
-  describe ".banner_description" do
-    it "returns the banner description of the hosting environment for claims" do
-      current_service = "claims"
-      expect(described_class.banner_description(current_service)).to eq(
-        "Make a complaint or give feedback",
-      )
+  describe ".phase" do
+    subject(:phase) { described_class.phase(current_service) }
+
+    context "when environment is 'production'" do
+      context "and service is 'claims'" do
+        let(:current_service) { :claims }
+
+        it "returns 'beta'" do
+          ClimateControl.modify HOSTING_ENV: "production" do
+            expect(phase).to eq("beta")
+          end
+        end
+      end
+
+      context "and service is 'placements'" do
+        let(:current_service) { :placements }
+
+        it "returns 'beta'" do
+          ClimateControl.modify HOSTING_ENV: "production" do
+            expect(phase).to eq("beta")
+          end
+        end
+      end
     end
 
-    it "returns the banner description of the hosting environment for placements" do
-      current_service = "placements"
-      expect(described_class.banner_description(current_service)).to eq(
-        "Make a complaint or give feedback",
-      )
+    context "when environment is not 'production'" do
+      test_matrix = %w[sandbox staging qa review development test]
+
+      test_matrix.each do |environment|
+        context "when environment is '#{environment}'" do
+          let(:current_service) { :claims }
+
+          it "returns '#{environment}'" do
+            ClimateControl.modify HOSTING_ENV: environment do
+              expect(phase).to eq(environment)
+            end
+          end
+        end
+      end
     end
   end
 end

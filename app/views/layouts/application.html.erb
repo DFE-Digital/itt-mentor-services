@@ -25,24 +25,20 @@
 
     <%= govuk_skip_link %>
 
-    <%= govuk_header(homepage_url: "/") do |header| %>
+    <%= govuk_header(homepage_url: "/", classes: "app-header app-header--#{hosting_environment_color} app-header--full-border") do |header| %>
       <% header.with_product_name(name: service_name) %>
 
       <% if current_user %>
-        <% header.with_navigation_item(text: "Your Account", href: account_path) %>
-        <% header.with_navigation_item(text: "Sign Out", href: sign_out_path) %>
+        <% header.with_navigation_item(text: t(".your_account"), href: account_path) %>
+        <% header.with_navigation_item(text: t(".sign_out"), href: sign_out_path) %>
       <% end %>
     <% end %>
 
-    <div class="app-phase-banner app-phase-banner__env--<%= HostingEnvironment.name(current_service) %>">
-      <div class="govuk-width-container">
-        <%= govuk_phase_banner(tag: { text: HostingEnvironment.name(current_service) }, classes: [class_names("govuk-phase-banner--no-border-bottom": support_controller?)]) do %>
-          <%= govuk_link_to HostingEnvironment.banner_description(current_service), request.env["PATH_INFO"], class: "govuk-link--no-visited-state" %>
-        <% end %>
-      </div>
-    </div>
-
     <div class="govuk-width-container">
+      <%= govuk_phase_banner(tag: { text: hosting_environment_phase(current_service), colour: hosting_environment_color }, classes: [class_names("app-phase-banner", "app-phase-banner__env--#{HostingEnvironment.env}", "app-phase-banner--no-border-bottom": support_controller?)]) do %>
+        <%== t(".#{current_service}.phase_banner.description", feedback_link: govuk_link_to(t(".#{current_service}.phase_banner.feedback"), feedback_path, class: "govuk-link--no-visited-state")) %>
+      <% end %>
+
       <%= yield :header_content %>
     </div>
 

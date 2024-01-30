@@ -1,8 +1,0 @@
-en:
-  layouts:
-    application:
-      claims:
-        primary_navigation:
-          organisations: Organisations
-          claims: Claims
-          users: Users

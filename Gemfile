@@ -99,6 +99,7 @@ group :test do
   # The accessible selectors gem is maintained by Citizens Advice, not yet a registered gem.
   gem "capybara_accessible_selectors", git: "https://github.com/citizensadvice/capybara_accessible_selectors", branch: "main"
   gem "capybara-screenshot"
+  gem "climate_control"
   gem "rails-controller-testing"
   gem "selenium-webdriver"
   gem "shoulda-matchers"

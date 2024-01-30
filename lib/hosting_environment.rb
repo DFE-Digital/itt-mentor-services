@@ -4,15 +4,15 @@ module HostingEnvironment
     placements: "beta",
   }.with_indifferent_access.freeze
 
-  def self.name(current_service)
-    if Rails.env.production?
-      PRODUCTION_BANNER_NAME.fetch(current_service)
-    else
-      Rails.env
-    end
+  def self.env
+    @env ||= ActiveSupport::EnvironmentInquirer.new(ENV["HOSTING_ENV"].presence || "development")
   end
 
-  def self.banner_description(current_service)
-    I18n.t(".models.hosting_environment.#{current_service}.banner.description")
+  def self.phase(current_service)
+    @phase ||= if env.production?
+                 PRODUCTION_BANNER_NAME.fetch(current_service)
+               else
+                 env
+               end
   end
 end
