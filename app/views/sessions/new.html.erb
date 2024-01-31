@@ -8,7 +8,7 @@
       <% if ENV["SIGN_IN_METHOD"] == "persona" %>
         <%= govuk_button_to t(".sign_in_with_persona"), personas_path, method: :get %>
       <% else %>
-        <%= govuk_button_to t(".sign_in_with_dsi"), "#" %>
+        <%= govuk_button_to t(".sign_in_with_dsi"), omniauth_sign_in_path("dfe") %>
       <% end %>
 
       <p class="govuk-body">

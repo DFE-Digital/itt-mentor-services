@@ -2,6 +2,7 @@ en:
   layouts:
     application:
       success: Success
+      alert: Important
       your_account: Your account
       sign_out: Sign out
 

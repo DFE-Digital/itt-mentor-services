@@ -15,5 +15,36 @@ when "persona"
       )
     end
 when "dfe-sign-in"
-  # TODO: Add DfE SignIn setup
+  dfe_sign_in_issuer_uri = URI(ENV["DFE_SIGN_IN_ISSUER_URL"])
+
+  Rails.application.config.middleware.use OmniAuth::Builder do
+    provider :openid_connect, {
+      name: :dfe,
+      discovery: true,
+      scope: %i[email profile],
+      response_type: :code,
+      path_prefix: "/auth",
+      callback_path: "/auth/dfe/callback",
+      issuer: "#{dfe_sign_in_issuer_uri}:#{dfe_sign_in_issuer_uri.port}",
+      setup: SETUP_PROC,
+    }
+  end
+
+  SETUP_PROC = lambda do |env|
+    service = HostingEnvironment.current_service(Rack::Request.new(env))
+
+    dfe_sign_in_redirect_uri = URI.join(
+      HostingEnvironment.application_url(service),
+      "/auth/dfe/callback",
+    )
+
+    env["omniauth.strategy"].options.client_options = {
+      port: dfe_sign_in_issuer_uri&.port,
+      scheme: dfe_sign_in_issuer_uri&.scheme,
+      host: dfe_sign_in_issuer_uri&.host,
+      identifier: HostingEnvironment.dfe_sign_in_client_id(service),
+      secret: HostingEnvironment.dfe_sign_in_secret(service),
+      redirect_uri: dfe_sign_in_redirect_uri,
+    }
+  end
 end
