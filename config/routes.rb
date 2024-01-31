@@ -15,6 +15,9 @@ Rails.application.routes.draw do
     get "/personas", to: "personas#index"
     get "/auth/developer/sign-out", to: "sessions#destroy", as: :sign_out
     post "/auth/developer/callback", to: "sessions#callback", as: :auth_callback
+  else
+    get("/auth/dfe/callback" => "sessions#callback")
+    get("/auth/dfe/sign-out" => "sessions#destroy", as: :sign_out)
   end
 
   resources :service_updates, only: %i[index]

@@ -63,4 +63,76 @@ RSpec.describe HostingEnvironment do
       end
     end
   end
+
+  describe ".dfe_sign_in_client_id" do
+    it "returns the dfe sign in client id for claims" do
+      current_service = "claims"
+      expect(described_class.dfe_sign_in_client_id(current_service)).to eq("123")
+    end
+
+    it "returns the dfe sign in client id for placements" do
+      current_service = "placements"
+      expect(described_class.dfe_sign_in_client_id(current_service)).to eq("123")
+    end
+  end
+
+  describe ".dfe_sign_in_secret" do
+    it "returns the dfe sign in secret for claims" do
+      current_service = "claims"
+      expect(described_class.dfe_sign_in_secret(current_service)).to eq("secret")
+    end
+
+    it "returns the dfe sign in secret for placements" do
+      current_service = "placements"
+      expect(described_class.dfe_sign_in_secret(current_service)).to eq("secret")
+    end
+  end
+
+  describe ".application_url" do
+    it "returns the application url for claims" do
+      current_service = "claims"
+      expect(described_class.application_url(current_service)).to eq(
+        "https://claims.localhost",
+      )
+    end
+
+    it "returns the application url for placements" do
+      current_service = "placements"
+      expect(described_class.application_url(current_service)).to eq(
+        "https://placements.localhost",
+      )
+    end
+
+    context "when env is development" do
+      it "returns the application url for claims with port" do
+        allow(Rails.env).to receive(:development?).and_return(true)
+        current_service = "claims"
+
+        expect(described_class.application_url(current_service)).to eq(
+          "http://claims.localhost:3000",
+        )
+      end
+
+      it "returns the application url for placements with port" do
+        allow(Rails.env).to receive(:development?).and_return(true)
+        current_service = "placements"
+
+        expect(described_class.application_url(current_service)).to eq(
+          "http://placements.localhost:3000",
+        )
+      end
+    end
+  end
+
+  describe ".current_service" do
+    it "returns the current service for claims" do
+      request = double(host: ENV["CLAIMS_HOST"])
+      expect(described_class.current_service(request)).to eq(:claims)
+    end
+
+    it "returns the current service for placements" do
+      request = double(host: ENV["PLACEMENTS_HOST"])
+      expect(described_class.current_service(request)).to eq(:placements)
+    end
+  end
 end

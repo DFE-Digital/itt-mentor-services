@@ -112,4 +112,8 @@ module RoutesHelper
       new_placements_provider_user_path(organisation, params)
     end
   end
+
+  def omniauth_sign_in_path(provider)
+    "/auth/#{provider}"
+  end
 end
