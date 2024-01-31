@@ -39,6 +39,14 @@ RSpec.describe "Support User adds a School", type: :system, service: :claims do
     then_i_see_an_error("Enter a school name, URN or postcode")
   end
 
+  scenario "Colin reconsiders onboarding a school", js: true do
+    given_i_have_completed_the_form_to_onboard(school:)
+    when_i_click_back
+    then_i_see_the_search_input_pre_filled_with("School 1")
+    and_i_click_continue
+    then_i_see_the_check_details_page_for_school("School 1")
+  end
+
   private
 
   def and_there_is_an_existing_persona_for(persona_name)
@@ -79,6 +87,10 @@ RSpec.describe "Support User adds a School", type: :system, service: :claims do
     click_on "Continue"
   end
 
+  def when_i_click_back
+    click_on "Back"
+  end
+
   def then_i_see_the_check_details_page_for_school(school_name)
     expect(page).to have_css(".govuk-caption-l", text: "Add organisation")
     expect(page).to have_content("Check your answers")
@@ -112,5 +124,16 @@ RSpec.describe "Support User adds a School", type: :system, service: :claims do
 
   def and_i_see_success_message
     expect(page).to have_content "Organisation added"
+  end
+
+  def given_i_have_completed_the_form_to_onboard(school:)
+    params = { school: { id: school.id, name: school.name } }
+    visit check_claims_support_schools_path(params)
+  end
+
+  def then_i_see_the_search_input_pre_filled_with(school_name)
+    within(".autocomplete__wrapper") do
+      expect(page.find("#school-id-field").value).to eq(school_name)
+    end
   end
 end

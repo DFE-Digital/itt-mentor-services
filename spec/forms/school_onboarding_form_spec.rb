@@ -72,4 +72,21 @@ describe SchoolOnboardingForm, type: :model do
       onboarding.to change(school, :placements_service).from(false).to(true)
     end
   end
+
+  describe "as_form_params" do
+    it "returns form params" do
+      expect(described_class.new(
+        id: "1234",
+        javascript_disabled: true,
+        service: "claims",
+      ).as_form_params).to eq({
+        "school" =>
+          {
+            id: "1234",
+            javascript_disabled: true,
+            service: "claims",
+          },
+      })
+    end
+  end
 end

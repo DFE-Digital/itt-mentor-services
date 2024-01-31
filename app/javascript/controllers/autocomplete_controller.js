@@ -19,6 +19,7 @@ export default class extends Controller {
      id: this.serverInputTarget.id,
      showNoOptionsFound: true,
      name: this.inputTarget.dataset.inputName,
+     defaultValue: this.serverInputTarget.value,
      minLength,
      source: debounce(request(this.pathValue), 900),
      templates: {
@@ -33,16 +34,33 @@ export default class extends Controller {
     // Hijack the original input to submit the selected value.
     this.serverInputTarget.id = `old-${this.serverInputTarget.id}`;
     this.serverInputTarget.type = "hidden";
+    this.serverInputTarget.value = this.serverInputTarget.dataset.previousSearch || '';
+  }
+
+  clearUndefinedSuggestions() {
+    const autocompleteElement = this.element.getElementsByClassName("autocomplete__wrapper")[0];
+    if (autocompleteElement) {
+      const autocompleteOptions = autocompleteElement.getElementsByClassName("autocomplete__option");
+      for (const option of autocompleteOptions) {
+        if ( option.innerHTML === ""){
+          option.remove();
+        }
+      }
+    }
   }
 
   private
 
   inputValueTemplate(result) {
-    if (result) return result.name;
+    if (result && typeof result === "object") {
+      return result.name;
+    } else {
+      return ""
+    }
   }
 
   resultTemplate(result) {
-    if (result) {
+    if (result && typeof result === "object") {
       var returnString = `${result.name}`
       var attributesString = ''
       this.returnAttributesValue.forEach(function(attribute) {
@@ -50,6 +68,8 @@ export default class extends Controller {
       });
 
       return returnString.concat(` (${attributesString.trim()})`)
+    } else {
+      return ""
     }
   }
 
