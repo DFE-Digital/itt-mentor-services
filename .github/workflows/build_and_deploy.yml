@@ -59,6 +59,8 @@ jobs:
         run: |
           make ci review get-cluster-credentials
           kubectl exec -n bat-qa deployment/itt-mentor-services-${{ github.event.number }} -- sh -c "export GIAS_CSV_BASE_URL=https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public  && export PUBLISH_BASE_URL=https://qa.api.publish-teacher-training-courses.service.gov.uk// && cd /app && /usr/local/bin/rake db:seed"
+        env:
+          PR_NUMBER: ${{ github.event.number }}
 
       - name: Post comment to Pull Request ${{ github.event.number }}
         if: ${{ github.event_name == 'pull_request' }}
