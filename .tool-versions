@@ -1,3 +1,12 @@
-ruby 3.2.2
-nodejs 20.9.0
-yarn 1.22.1
+# App dependencies
+nodejs    20.9.0
+ruby      3.2.2
+yarn      1.22.1
+
+# Cloud infrastructure dependencies
+# https://github.com/DFE-Digital/teacher-services-cloud/blob/main/documentation/developer-onboarding.md#software-requirements
+azure-cli 2.56.0
+jq        1.7.1
+kubectl   1.29.1
+python    3.10.11 # required by azure-cli
+terraform 1.6.4 # should match terraform_version in .github/actions/deploy-environment/action.yml
