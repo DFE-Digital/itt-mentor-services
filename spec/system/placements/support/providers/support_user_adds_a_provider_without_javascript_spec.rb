@@ -56,6 +56,17 @@ RSpec.describe "Support User adds a Provider without JavaScript", type: :system,
     then_i_see_an_error("Select a provider")
   end
 
+  scenario "Colin reconsiders onboarding a provider" do
+    given_i_have_completed_the_form_to_onboard("Manchester 1")
+    when_i_click_back
+    then_i_see_the_search_input_pre_filled_with("Manchester 1")
+    and_i_click_continue
+    then_i_see_list_of_providers
+    then_i_choose("Manchester 1")
+    and_i_click_continue
+    then_i_see_the_check_details_page_for_provider("Manchester 1")
+  end
+
   private
 
   def and_there_is_an_existing_persona_for(persona_name)
@@ -93,6 +104,10 @@ RSpec.describe "Support User adds a Provider without JavaScript", type: :system,
 
   def and_i_click_continue
     click_on "Continue"
+  end
+
+  def when_i_click_back
+    click_on "Back"
   end
 
   def then_i_see_list_of_providers
@@ -134,5 +149,15 @@ RSpec.describe "Support User adds a Provider without JavaScript", type: :system,
 
   def and_a_provider_is_listed(provider_name:)
     expect(page).to have_content(provider_name)
+  end
+
+  def given_i_have_completed_the_form_to_onboard(provider_name)
+    provider = Provider.find_by(name: provider_name)
+    params = { provider: { id: provider.id, name: provider.name } }
+    visit check_placements_support_providers_path(params)
+  end
+
+  def then_i_see_the_search_input_pre_filled_with(provider_name)
+    expect(page.find("#provider-id-field").value).to eq(provider_name)
   end
 end

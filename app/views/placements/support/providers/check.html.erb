@@ -1,7 +1,7 @@
 <% content_for :page_title, t(".title") %>
 <%= render "placements/support/primary_navigation", current_navigation: :organisations %>
 <%= content_for(:before_content) do %>
-  <%= govuk_back_link(href: new_placements_support_provider_path) %>
+  <%= govuk_back_link(href: new_placements_support_provider_path(@provider_form.as_form_params)) %>
 <% end %>
 
 <div class="govuk-width-container">

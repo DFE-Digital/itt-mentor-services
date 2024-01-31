@@ -2,7 +2,11 @@ class Placements::Support::SchoolsController < Placements::Support::ApplicationC
   before_action :redirect_to_school_options, only: :check, if: -> { javascript_disabled? }
 
   def new
-    @school_form = SchoolOnboardingForm.new
+    @school_form = if params[:school].present?
+                     school_form
+                   else
+                     SchoolOnboardingForm.new
+                   end
   end
 
   def school_options

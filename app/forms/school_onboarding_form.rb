@@ -3,6 +3,7 @@ class SchoolOnboardingForm < ApplicationForm
 
   validate :id_presence
   validates :service, presence: true, inclusion: { in: %i[placements claims] }
+  validate :school_exists?
   validate :school_already_onboarded?
 
   def onboard
@@ -12,13 +13,18 @@ class SchoolOnboardingForm < ApplicationForm
   end
 
   def school
-    @school ||= School.find(id)
-  rescue ActiveRecord::RecordNotFound
-    errors.add(:id, :blank)
-    nil
+    @school ||= School.find_by(id:)
+  end
+
+  def as_form_params
+    { "school" => { id:, service:, javascript_disabled: } }
   end
 
   private
+
+  def school_exists?
+    errors.add(:id, :blank) if school.blank?
+  end
 
   def school_already_onboarded?
     if school&.try("#{service}_service?")

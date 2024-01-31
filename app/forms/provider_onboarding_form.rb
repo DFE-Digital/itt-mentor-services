@@ -2,6 +2,7 @@ class ProviderOnboardingForm < ApplicationForm
   attr_accessor :id, :javascript_disabled
 
   validate :id_presence
+  validate :provider_exists?
   validate :provider_already_onboarded?
 
   def onboard
@@ -11,13 +12,18 @@ class ProviderOnboardingForm < ApplicationForm
   end
 
   def provider
-    @provider ||= Provider.find(id)
-  rescue ActiveRecord::RecordNotFound
-    errors.add(:id, :blank)
-    nil
+    @provider ||= Provider.find_by(id:)
+  end
+
+  def as_form_params
+    { "provider" => { id:, javascript_disabled: } }
   end
 
   private
+
+  def provider_exists?
+    errors.add(:id, :blank) if provider.blank?
+  end
 
   def provider_already_onboarded?
     if provider&.placements_service?

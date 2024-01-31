@@ -52,6 +52,17 @@ RSpec.describe "Support User adds a School without JavaScript", type: :system, s
     then_i_see_an_error("Select a school")
   end
 
+  scenario "Colin reconsiders onboarding a school" do
+    given_i_have_completed_the_form_to_onboard("Manchester 1")
+    when_i_click_back
+    then_i_see_the_search_input_pre_filled_with("Manchester 1")
+    and_i_click_continue
+    then_i_see_list_of_schools
+    then_i_choose("Manchester 1")
+    and_i_click_continue
+    then_i_see_the_check_details_page_for_school("Manchester 1")
+  end
+
   private
 
   def and_there_is_an_existing_persona_for(persona_name)
@@ -82,6 +93,10 @@ RSpec.describe "Support User adds a School without JavaScript", type: :system, s
 
   def and_i_click_continue
     click_on "Continue"
+  end
+
+  def when_i_click_back
+    click_on "Back"
   end
 
   def then_i_see_list_of_schools
@@ -123,5 +138,15 @@ RSpec.describe "Support User adds a School without JavaScript", type: :system, s
 
   def and_a_school_is_listed(school_name:)
     expect(page).to have_content(school_name)
+  end
+
+  def given_i_have_completed_the_form_to_onboard(school_name)
+    school = School.find_by(name: school_name)
+    params = { school: { id: school.id, name: school.name } }
+    visit check_placements_support_schools_path(params)
+  end
+
+  def then_i_see_the_search_input_pre_filled_with(school_name)
+    expect(page.find("#school-id-field").value).to eq(school_name)
   end
 end

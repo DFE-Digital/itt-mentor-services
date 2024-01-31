@@ -2,7 +2,11 @@ class Placements::Support::ProvidersController < Placements::Support::Applicatio
   before_action :redirect_to_provider_options, only: :check, if: -> { javascript_disabled? }
 
   def new
-    @provider_form = ProviderOnboardingForm.new
+    @provider_form = if params[:provider].present?
+                       provider_form
+                     else
+                       ProviderOnboardingForm.new
+                     end
   end
 
   def show

@@ -40,6 +40,14 @@ RSpec.describe "Placements / Support / Schools / Support User adds a School",
     then_i_see_an_error("Enter a school name, URN or postcode")
   end
 
+  scenario "Colin reconsiders onboarding a school", js: true do
+    given_i_have_completed_the_form_to_onboard(school:)
+    when_i_click_back
+    then_i_see_the_search_input_pre_filled_with("School 1")
+    and_i_click_continue
+    then_i_see_the_check_details_page_for_school("School 1")
+  end
+
   private
 
   def and_there_is_an_existing_persona_for(persona_name)
@@ -91,6 +99,10 @@ RSpec.describe "Placements / Support / Schools / Support User adds a School",
     click_on "Add organisation"
   end
 
+  def when_i_click_back
+    click_on "Back"
+  end
+
   def then_i_return_to_support_organisations_index
     expect(page).to have_content("Organisations")
   end
@@ -115,5 +127,16 @@ RSpec.describe "Placements / Support / Schools / Support User adds a School",
 
   def and_i_see_success_message
     expect(page).to have_content "Organisation added"
+  end
+
+  def given_i_have_completed_the_form_to_onboard(school:)
+    params = { school: { id: school.id, name: school.name } }
+    visit check_placements_support_schools_path(params)
+  end
+
+  def then_i_see_the_search_input_pre_filled_with(school_name)
+    within(".autocomplete__wrapper") do
+      expect(page.find("#school-id-field").value).to eq(school_name)
+    end
   end
 end

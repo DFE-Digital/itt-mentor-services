@@ -11,7 +11,11 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
   end
 
   def new
-    @school_form = SchoolOnboardingForm.new
+    @school_form = if params[:school].present?
+                     school_form
+                   else
+                     SchoolOnboardingForm.new
+                   end
   end
 
   def school_options

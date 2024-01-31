@@ -41,6 +41,14 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
     then_i_see_an_error("Enter a provider name, UKPRN, URN or postcode")
   end
 
+  scenario "Colin reconsiders onboarding a provider", js: true do
+    given_i_have_completed_the_form_to_onboard(provider:)
+    when_i_click_back
+    then_i_see_the_search_input_pre_filled_with("Provider 1")
+    and_i_click_continue
+    then_i_see_the_check_details_page_for_provider("Provider 1")
+  end
+
   private
 
   def and_there_is_an_existing_persona_for(persona_name)
@@ -88,6 +96,10 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
     click_on "Continue"
   end
 
+  def when_i_click_back
+    click_on "Back"
+  end
+
   def then_i_see_the_check_details_page_for_provider(provider_name)
     expect(page).to have_css(".govuk-caption-l", text: "Add organisation")
     expect(page).to have_content("Check your answers")
@@ -123,5 +135,16 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
 
   def and_i_see_success_message
     expect(page).to have_content "Organisation added"
+  end
+
+  def given_i_have_completed_the_form_to_onboard(provider:)
+    params = { provider: { id: provider.id, name: provider.name } }
+    visit check_placements_support_providers_path(params)
+  end
+
+  def then_i_see_the_search_input_pre_filled_with(provider_name)
+    within(".autocomplete__wrapper") do
+      expect(page.find("#provider-id-field").value).to eq(provider_name)
+    end
   end
 end
