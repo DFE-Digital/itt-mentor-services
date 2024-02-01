@@ -4,6 +4,7 @@
 #
 #  id                :uuid             not null, primary key
 #  dfe_sign_in_uid   :string
+#  discarded_at      :datetime
 #  email             :string           not null
 #  first_name        :string           not null
 #  last_name         :string           not null
@@ -14,7 +15,8 @@
 #
 # Indexes
 #
-#  index_users_on_type_and_email  (type,email) UNIQUE
+#  index_users_on_type_and_discarded_at_and_email  (type,discarded_at,email)
+#  index_users_on_type_and_email                   (type,email) UNIQUE
 #
 FactoryBot.define do
   factory :user do
@@ -49,6 +51,10 @@ FactoryBot.define do
 
     trait :support do
       sequence(:email) { |n| "user#{n}@education.gov.uk" }
+    end
+
+    trait :discarded do
+      discarded_at { Time.current }
     end
   end
 

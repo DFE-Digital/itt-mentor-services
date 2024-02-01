@@ -1,0 +1,26 @@
+<% content_for(:page_title) { t(".page_title", user_name: @support_user.full_name) } %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: claims_support_support_user_path(@support_user)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= form_with(model: @support_user, scope: :support_user, url: claims_support_support_user_path(@support_user), method: :delete) do |f| %>
+        <label class="govuk-label govuk-label--l">
+          <span class="govuk-caption-l"><%= @support_user.full_name %></span>
+          <%= t(".title") %>
+        </label>
+
+        <%= govuk_warning_text(text: t(".warning")) %>
+
+        <%= f.govuk_submit t(".submit"), warning: true %>
+
+        <p class="govuk-body">
+          <%= govuk_link_to(t(".cancel"), claims_support_support_users_path) %>
+        </p>
+      <% end %>
+    <div>
+  <div>
+</div>
