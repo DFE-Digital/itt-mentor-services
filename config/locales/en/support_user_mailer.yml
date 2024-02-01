@@ -8,3 +8,10 @@ en:
         You have been invited to join %{service_name}.
 
         Sign in here %{sign_in_url}
+
+    support_user_removal_notification:
+      subject: "You have been removed from %{service_name}"
+      body: |
+        Dear %{user_name},
+
+        You have been removed from %{service_name}.

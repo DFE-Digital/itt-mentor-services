@@ -4,6 +4,7 @@
 #
 #  id                :uuid             not null, primary key
 #  dfe_sign_in_uid   :string
+#  discarded_at      :datetime
 #  email             :string           not null
 #  first_name        :string           not null
 #  last_name         :string           not null
@@ -14,9 +15,12 @@
 #
 # Indexes
 #
-#  index_users_on_type_and_email  (type,email) UNIQUE
+#  index_users_on_type_and_discarded_at_and_email  (type,discarded_at,email)
+#  index_users_on_type_and_email                   (type,email) UNIQUE
 #
 class User < ApplicationRecord
+  include Discard::Model
+
   has_many :memberships, dependent: :destroy
 
   validates :first_name, presence: true
@@ -24,6 +28,8 @@ class User < ApplicationRecord
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, unless: :support_user?
   validates :type, presence: true
   validates :email, uniqueness: { scope: :type, case_sensitive: false }
+
+  default_scope -> { kept }
 
   def full_name
     "#{first_name} #{last_name}".strip

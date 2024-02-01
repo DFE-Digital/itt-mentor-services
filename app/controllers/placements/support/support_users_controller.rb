@@ -1,5 +1,5 @@
 class Placements::Support::SupportUsersController < Placements::Support::ApplicationController
-  before_action :set_support_user, only: %i[show]
+  before_action :set_support_user, only: %i[show remove destroy]
 
   def index
     @support_users = Placements::SupportUser.order(created_at: :desc)
@@ -34,9 +34,10 @@ class Placements::Support::SupportUsersController < Placements::Support::Applica
   def remove; end
 
   def destroy
-    RemoveUserService.call(@user, @organisation)
-    redirect_to_index
-    flash[:success] = t(".user_removed")
+    authorize @support_user
+
+    SupportUser::Remove.call(support_user: @support_user)
+    redirect_to claims_support_support_users_path, flash: { success: t(".success") }
   end
 
   private

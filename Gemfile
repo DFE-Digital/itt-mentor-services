@@ -81,6 +81,9 @@ gem "pundit"
 
 gem "sentry-rails"
 
+# Soft deletion
+gem "discard"
+
 group :development do
   gem "annotate", require: false
   gem "prettier_print", require: false

@@ -14,6 +14,7 @@ scope module: :placements,
 
     resources :support_users do
       collection { get :check }
+      member { get :remove }
     end
 
     resources :organisations, only: %i[index new] do
