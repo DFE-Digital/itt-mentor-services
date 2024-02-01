@@ -3,7 +3,7 @@ scope module: :placements,
       constraints: {
         host: ENV["PLACEMENTS_HOST"],
       } do
-  root to: "pages#index"
+  root to: redirect("/sign-in")
 
   scope module: :pages do
     get :feedback
