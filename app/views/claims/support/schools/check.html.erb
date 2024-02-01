@@ -1,4 +1,5 @@
-<%= content_for(:before_content) do %>
+<% render "claims/support/primary_navigation", current: :organisations %>
+<% content_for(:before_content) do %>
   <%= govuk_back_link(href: new_claims_support_school_path(
     @school_form.as_form_params,
   )) %>

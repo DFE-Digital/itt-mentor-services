@@ -1,0 +1,8 @@
+en:
+  claims:
+    schools:
+      primary_navigation:
+        users: Users
+        claims: Claims
+        details: Details
+        change_organisation: Change organisation

@@ -1,5 +1,20 @@
-<%= render PrimaryNavigationComponent.new do |component| %>
-  <% component.with_navigation_item t(".claims"), claims_school_claims_path(school) %>
-  <% component.with_navigation_item t(".users"), claims_school_users_path(school) %>
-  <% component.with_navigation_item t(".details"), claims_school_path(school) %>
+<% content_for(:primary_navigation_content) do %>
+  <% if current_user.schools.many? %>
+    <%= content_for(:header_content) do %>
+      <%= render(ContentHeaderComponent.new(
+        title: @school.name,
+        actions: [
+          govuk_link_to(t(".change_organisation"), claims_schools_path, no_visited_state: true),
+        ],
+      )) %>
+    <% end %>
+  <% else %>
+    <% content_for(:no_phase_banner_border, true) %>
+  <% end %>
+
+  <%= render PrimaryNavigationComponent.new do |component| %>
+    <% component.with_navigation_item t(".claims"), claims_school_claims_path(school), current: local_assigns[:current] == :claims %>
+    <% component.with_navigation_item t(".users"), claims_school_users_path(school), current: local_assigns[:current] == :users %>
+    <% component.with_navigation_item t(".details"), claims_school_path(school) %>
+  <% end %>
 <% end %>

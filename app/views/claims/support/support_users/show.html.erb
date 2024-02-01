@@ -1,4 +1,5 @@
 <% content_for(:page_title) { @support_user.full_name } %>
+<% render "claims/support/primary_navigation", current: :users %>
 
 <% content_for(:before_content) do %>
   <%= govuk_back_link href: claims_support_support_users_path %>

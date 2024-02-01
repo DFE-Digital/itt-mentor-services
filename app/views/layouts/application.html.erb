@@ -35,22 +35,14 @@
     <% end %>
 
     <div class="govuk-width-container">
-      <%= govuk_phase_banner(tag: { text: hosting_environment_phase(current_service), colour: hosting_environment_color }, classes: [class_names("app-phase-banner", "app-phase-banner__env--#{HostingEnvironment.env}", "app-phase-banner--no-border-bottom": support_controller?)]) do %>
+      <%= govuk_phase_banner(tag: { text: hosting_environment_phase(current_service), colour: hosting_environment_color }, classes: [class_names("app-phase-banner", "app-phase-banner__env--#{HostingEnvironment.env}", "app-phase-banner--no-border-bottom": content_for(:no_phase_banner_border) || support_controller?)]) do %>
         <%== t(".#{current_service}.phase_banner.description", feedback_link: govuk_link_to(t(".#{current_service}.phase_banner.feedback"), feedback_path, class: "govuk-link--no-visited-state")) %>
       <% end %>
 
       <%= yield :header_content %>
     </div>
 
-    <% if support_controller? && current_service == :claims %>
-      <%= render PrimaryNavigationComponent.new do |component| %>
-        <% component.with_navigation_item t(".claims.primary_navigation.organisations"), support_organisations_path %>
-        <% component.with_navigation_item t(".claims.primary_navigation.users"), support_support_users_path %>
-        <% component.with_navigation_item t(".claims.primary_navigation.claims"), claims_support_claims_path %>
-      <% end %>
-    <% else %>
-      <%= yield :primary_navigation_content %>
-    <% end %>
+    <%= yield :primary_navigation_content %>
 
     <div class="govuk-width-container">
       <%= yield :before_content %>
@@ -59,13 +51,14 @@
     <main class="govuk-main-wrapper" id="main-content" role="main">
       <div class="govuk-width-container">
         <% flash.each do |key, message| %>
-          <div class="govuk-!-margin-top-6 govuk-!-margin-bottom-0">
+          <div class="govuk-!-margin-bottom-0">
             <%= render(GovukComponent::NotificationBannerComponent.new(title_text: t(".#{key}"), success: key == "success")) do %>
               <h3 class="govuk-heading-m"><%= message %></h3>
             <% end %>
           </div>
         <% end %>
       </div>
+
       <%= yield %>
     </main>
 

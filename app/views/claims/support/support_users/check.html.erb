@@ -1,4 +1,6 @@
 <% content_for(:page_title) { t(".page_title") } %>
+<% render "claims/support/primary_navigation", current: :users %>
+
 <% back_href = new_claims_support_support_user_path({ support_user: @support_user_params }) %>
 
 <%= content_for(:before_content) do %>

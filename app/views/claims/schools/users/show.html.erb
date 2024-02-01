@@ -1,3 +1,5 @@
+<% render "claims/schools/primary_navigation", school: @school, current: :users %>
+
 <%= content_for(:before_content) do %>
   <%= govuk_back_link(href: claims_school_users_path(@school)) %>
 <% end %>
