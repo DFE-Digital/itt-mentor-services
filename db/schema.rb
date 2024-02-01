@@ -154,6 +154,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_01_101735) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "type"
+    t.string "dfe_sign_in_uid"
+    t.datetime "last_signed_in_at"
     t.index ["type", "email"], name: "index_users_on_type_and_email", unique: true
   end
 
