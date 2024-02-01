@@ -37,14 +37,50 @@ You need to grant yourself permission to access Azure resources in the test envi
    >
    > ![](images/connect-to-azure/azure-resource-activation.png)
 
-5. Open a console and run:
+5. Open a console. Navigate to the `itt-mentor-services` repo directory and run:
 
    ```
-   $ cd ~/path/to/itt-mentor-services
+   $ az login
+   ```
+
+   > If you have trouble logging in, try switching browser. Chrome is known to be buggy with this step, so copy & paste the URL into Safari instead.
+   >
+   > Otherwise you might have more success with this command:
+   >
+   > ```
+   > $ az login --use-device-code
+   > ```
+
+6. Then run:
+
+   ```
    $ make qa get-cluster-credentials
    ```
 
-6. Assuming everything worked correctly, you should now be able to access the Kubernetes cluster using the `kubectl` command.
+   > There might be some error output like this:
+   >
+   > ```
+   > make: kubelogin: No such file or directory
+   > make: *** [get-cluster-credentials] Error 1
+   > ```
+   >
+   > **This error is safe to ignore.**
+   >
+   > The command ran successfully so long as the output contains a line like this, highlighted in yellow:
+   >
+   > ```
+   > Merged "s189t01-tsc-test-aks" as current context in ~/.kube/config
+   > ```
+
+7. Assuming everything worked correctly, you should now be able to access the Kubernetes cluster using the `kubectl` command.
+
+   > You can test you have access by running this command:
+   >
+   > ```
+   > kubectl get namespaces
+   > ```
+   >
+   > You should see a list of Kubernetes namespaces. If you don't, something is wrong.
 
 ## 2. Get the Kubernetes Deployment name
 
@@ -98,7 +134,7 @@ $ kubectl -n bat-qa exec -it deployment/itt-mentor-services-qa -- sh
 Run Rake tasks using this command:
 
 ```
-$ kubectl -n bat-qa exec -it deployment/itt-mentor-services-qa -- rake {name_of_task}
+$ kubectl -n bat-qa exec -it deployment/itt-mentor-services-qa -- rake [TASK_TO_RUN]
 ```
 
 Or list all available Rake tasks with:
