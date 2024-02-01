@@ -24,24 +24,23 @@ This project uses `asdf`. Use the following to install the required tools:
 ```sh
 # The first time
 brew install asdf # Mac-specific
-asdf plugin add ruby
 asdf plugin add nodejs
+asdf plugin add ruby
 asdf plugin add yarn
-asdf plugin add postgres
+asdf plugin add azure-cli
+asdf plugin add jq
+asdf plugin add kubectl
+asdf plugin add python
+asdf plugin add terraform
 
 # To install (or update, following a change to .tool-versions)
 asdf install
 ```
 
-When installing the `pg` gem, bundle changes directory outside of this
-project directory, causing it lose track of which version of postgres has
-been selected in the project's `.tool-versions` file. To ensure the `pg` gem
-installs correctly, you'll want to set the version of postgres that `asdf`
-will use:
+You will need to install Postgres manually – this is not installed via `asdf`. You can install it on a Mac with Homebrew by running:
 
 ```sh
-# Temporarily set the version of postgres to use to build the pg gem
-ASDF_POSTGRES_VERSION=13.5 bundle install
+brew install postgresql@16
 ```
 
 ### Linting
