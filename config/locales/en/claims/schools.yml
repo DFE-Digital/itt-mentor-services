@@ -4,13 +4,7 @@ en:
       index:
         organisations: Organisations
       show:
-        primary_navigation:
-          users: Users
-          claims: Claims
-          organisations: Organisations
-          details: Details
         heading: Organisation details
-        change_organisation: Change organisation
         unknown: Unknown
         not_entered: Not entered
         not_applicable: Not applicable
@@ -37,7 +31,3 @@ en:
         rating: Rating
         last_inspection_date: Last inspection date
         contact_details: Contact details
-      primary_navigation:
-        claims: Claims
-        users: Users
-        details: Details

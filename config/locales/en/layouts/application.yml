@@ -7,10 +7,6 @@ en:
       sign_out: Sign out
 
       claims:
-        primary_navigation:
-          claims: Claims
-          organisations: Organisations
-          users: Users
         phase_banner:
           description: This is a new service &ndash; your %{feedback_link} will help us to improve it.
           feedback: feedback

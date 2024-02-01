@@ -1,0 +1,9 @@
+<% content_for(:primary_navigation_content) do %>
+  <%= render PrimaryNavigationComponent.new do |component| %>
+    <% component.with_navigation_item t(".organisations"), claims_support_schools_path, current: local_assigns[:current] == :organisations %>
+    <% component.with_navigation_item t(".users"), claims_support_support_users_path, current: local_assigns[:current] == :users %>
+    <% component.with_navigation_item t(".claims"), claims_support_claims_path, current: local_assigns[:current] == :claims %>
+  <% end %>
+
+  <% content_for(:no_phase_banner_border, true) %>
+<% end %>

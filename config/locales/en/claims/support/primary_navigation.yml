@@ -1,0 +1,7 @@
+en:
+  claims:
+    support:
+      primary_navigation:
+        claims: Claims
+        organisations: Organisations
+        users: Users
