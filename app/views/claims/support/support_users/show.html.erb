@@ -25,6 +25,10 @@
           <% row.with_value(text: @support_user.email) %>
         <% end %>
       <% end %>
+
+      <% if current_user != @support_user %>
+        <%= govuk_link_to t(".remove_user"), remove_claims_support_support_user_path(@support_user), class: "app-link app-link--destructive" %>
+      <% end %>
     </div>
   </div>
 </div>

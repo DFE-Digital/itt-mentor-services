@@ -1,5 +1,5 @@
 class Claims::Support::SupportUsersController < Claims::Support::ApplicationController
-  before_action :set_support_user, only: %i[show]
+  before_action :set_support_user, only: %i[show remove destroy]
 
   def index
     @support_users = Claims::SupportUser.order(created_at: :desc)
@@ -30,6 +30,16 @@ class Claims::Support::SupportUsersController < Claims::Support::ApplicationCont
   end
 
   def show; end
+
+  def remove; end
+
+  def destroy
+    if SupportUser::Remove.call(support_user: @support_user)
+      redirect_to claims_support_support_users_path, notice: t(".success")
+    else
+      render :remove, alert: t(".failure")
+    end
+  end
 
   private
 
