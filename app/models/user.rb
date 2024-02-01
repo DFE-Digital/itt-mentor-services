@@ -2,13 +2,15 @@
 #
 # Table name: users
 #
-#  id         :uuid             not null, primary key
-#  email      :string           not null
-#  first_name :string           not null
-#  last_name  :string           not null
-#  type       :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                :uuid             not null, primary key
+#  dfe_sign_in_uid   :string
+#  email             :string           not null
+#  first_name        :string           not null
+#  last_name         :string           not null
+#  last_signed_in_at :datetime
+#  type              :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
 #
 # Indexes
 #
