@@ -8,6 +8,8 @@
 #  address3                     :string
 #  admissions_policy            :string
 #  claims_service               :boolean          default(FALSE)
+#  district_admin_code          :string
+#  district_admin_name          :string
 #  email_address                :string
 #  gender                       :string
 #  group                        :string
