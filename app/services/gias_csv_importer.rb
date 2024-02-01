@@ -24,6 +24,8 @@ class GiasCsvImporter
         records << {
           urn: school["URN"],
           name: school["EstablishmentName"],
+          district_admin_name: school["DistrictAdministrative (name)"],
+          district_admin_code: school["DistrictAdministrative (code)"],
           town: school["Town"].presence,
           postcode: school["Postcode"].presence,
           ukprn: school["UKPRN"].presence,
