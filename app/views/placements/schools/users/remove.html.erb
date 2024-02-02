@@ -1,12 +1,4 @@
 <%= content_for :page_title, sanitize(t(".page_title", user_name: @user.full_name, organisation_name: @organisation.name)) %>
-<% if current_user.organisation_count > 1 %>
-  <%= content_for(:header_content) do %>
-    <%= render(ContentHeaderComponent.new(
-      title: @organisation.name,
-      actions: [govuk_link_to(t(".change_organisation"), placements_organisations_path, no_visited_state: true)],
-    )) %>
-  <% end %>
-<% end %>
 <%= render "placements/primary_navigation", organisation: @organisation, current_navigation: :users %>
 <%= content_for(:before_content) do %>
   <%= govuk_back_link(href: placements_school_user_path(@organisation, @user)) %>
