@@ -23,7 +23,7 @@ module RoutesHelper
   def support_support_users_path
     {
       claims: claims_support_support_users_path,
-      placements: placements_support_root_path,
+      placements: placements_support_support_users_path,
     }.fetch current_service
   end
 

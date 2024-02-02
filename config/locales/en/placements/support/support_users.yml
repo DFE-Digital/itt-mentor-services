@@ -1,0 +1,30 @@
+en:
+  placements:
+    support:
+      support_users:
+        index:
+          page_title: Users
+          add_user: Add user
+          heading: Users
+        new:
+          page_title: Personal details - Add user
+          page_title_with_errors: "Error: Personal details - Add user"
+          caption: Add user
+          title: Personal details
+          submit: Continue
+          cancel: Cancel
+          attributes:
+            email:
+              hint: Email must be a valid Department for Education address, like name@education.gov.uk
+        check:
+          page_title: Check your answers - Add user
+          caption: Add user
+          title: Check your answers
+          submit: Add user
+          cancel: Cancel
+          change: Change
+          warning: The user will be sent an email to tell them you’ve added them to Manage school placements.
+        create:
+          success: User added
+        show:
+          change: Change
