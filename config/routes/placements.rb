@@ -12,6 +12,10 @@ scope module: :placements,
   namespace :support do
     root to: redirect("/support/organisations")
 
+    resources :support_users do
+      collection { get :check }
+    end
+
     resources :organisations, only: %i[index new] do
       collection { get :select_type }
     end
