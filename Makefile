@@ -1,6 +1,6 @@
 TERRAFILE_VERSION=0.8
 ARM_TEMPLATE_TAG=1.1.10
-RG_TAGS={"Product" : "Teacher services cloud"}
+RG_TAGS={"Product": "ITT mentor services"}
 REGION=UK South
 SERVICE_NAME=itt-mentor-services
 SERVICE_SHORT=ittms
