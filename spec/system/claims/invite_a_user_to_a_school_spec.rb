@@ -95,8 +95,7 @@ RSpec.describe "Invite a user to a school", type: :system do
   end
 
   def verify_i_cant_access_another_schools_users_list
-    visit claims_school_users_path(@another_school)
-    expect(page).to have_content("Page not found")
+    expect { visit claims_school_users_path(@another_school) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
   def sign_in_as_lead_mentor_user

@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   include RoutesHelper
   include Pagy::Backend
+  include Pundit::Authorization
 
   before_action :authenticate_user!
 
