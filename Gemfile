@@ -76,6 +76,9 @@ gem "pg_search"
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
 
+# User-Resource Permissions and Scoping
+gem "pundit"
+
 group :development do
   gem "annotate", require: false
   gem "prettier_print", require: false

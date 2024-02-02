@@ -1,5 +1,5 @@
 <% content_for(:primary_navigation_content) do %>
-  <% if current_user.schools.many? %>
+  <% if policy_scope(Claims::School.all).many? %>
     <%= content_for(:header_content) do %>
       <%= render(ContentHeaderComponent.new(
         title: @school.name,
