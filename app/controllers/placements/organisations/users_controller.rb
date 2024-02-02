@@ -1,13 +1,13 @@
 class Placements::Organisations::UsersController < ApplicationController
   before_action :set_organisation
+  before_action :set_user, only: %i[show remove destroy]
+  before_action :redirect_if_not_allowed, only: %i[remove destroy]
 
   def index
     users
   end
 
-  def show
-    @user = users.find(params.require(:id))
-  end
+  def show; end
 
   def new
     @user_form = params[:user_invite_form].present? ? user_form : UserInviteForm.new
@@ -26,10 +26,29 @@ class Placements::Organisations::UsersController < ApplicationController
     end
   end
 
+  def remove; end
+
+  def destroy
+    RemoveUserService.call(@user, @organisation)
+    redirect_to_index
+    flash[:success] = t(".user_removed")
+  end
+
   private
+
+  def set_user
+    @user = users.find(params.require(:id))
+  end
 
   def users
     @users = @organisation.users.order("LOWER(first_name)")
+  end
+
+  def redirect_if_not_allowed
+    if current_user == @user
+      redirect_to_index
+      flash[:alert] = t(".you_cannot_perform_this_action")
+    end
   end
 
   def user_params

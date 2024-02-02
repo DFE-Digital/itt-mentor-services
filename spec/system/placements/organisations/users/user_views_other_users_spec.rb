@@ -14,6 +14,11 @@ RSpec.describe "Placements user views other users in their organisation", type: 
       then_i_see_the_organisation_users
       when_i_click_on_a_users_name(mary.full_name)
       then_i_see_user_details(user: mary)
+      and_i_do_not_see_the_remove_user_link
+      when_i_click_back
+      when_i_click_on_a_users_name(anne.full_name)
+      then_i_see_user_details(user: anne)
+      and_i_see_the_remove_user_link
     end
   end
 
@@ -23,8 +28,13 @@ RSpec.describe "Placements user views other users in their organisation", type: 
       given_users_have_been_assigned_to_the(organisation: provider)
       when_i_visit_the_users_page
       then_i_see_the_organisation_users
+      when_i_click_on_a_users_name(mary.full_name)
+      then_i_see_user_details(user: mary)
+      and_i_see_the_remove_user_link
+      when_i_click_back
       when_i_click_on_a_users_name(anne.full_name)
       then_i_see_user_details(user: anne)
+      and_i_do_not_see_the_remove_user_link
     end
   end
 
@@ -57,6 +67,10 @@ RSpec.describe "Placements user views other users in their organisation", type: 
     click_on user_name
   end
 
+  def when_i_click_back
+    click_on "Back"
+  end
+
   def then_i_see_user_details(user:)
     users_is_selected_in_navigation
     expect(page).to have_content "First name"
@@ -67,6 +81,14 @@ RSpec.describe "Placements user views other users in their organisation", type: 
 
     expect(page).to have_content "Email address"
     expect(page).to have_content user.email
+  end
+
+  def and_i_see_the_remove_user_link
+    expect(page).to have_link "Remove user"
+  end
+
+  def and_i_do_not_see_the_remove_user_link
+    expect(page).to_not have_link "Remove user"
   end
 
   def users_is_selected_in_navigation
