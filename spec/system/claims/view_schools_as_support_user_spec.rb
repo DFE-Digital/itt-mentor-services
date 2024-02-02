@@ -37,9 +37,10 @@ RSpec.describe "View schools as support user", type: :system do
   end
 
   def given_i_am_signed_in_as_support_user
-    create(:claims_support_user, :colin)
-    visit personas_path
-    click_on "Sign In as Colin"
+    user = create(:claims_support_user, :colin)
+    user_exists_in_dfe_sign_in(user:)
+    visit sign_in_path
+    click_on "Sign in using DfE Sign In"
   end
 
   def then_i_see_all_schools_in_claims

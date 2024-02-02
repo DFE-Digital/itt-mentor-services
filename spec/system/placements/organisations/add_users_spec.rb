@@ -120,14 +120,16 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
   end
 
   def given_i_am_logged_in_as_a_user_with_one_organisation(organisation)
+    user_exists_in_dfe_sign_in(user: anne)
     create(:membership, user: anne, organisation:)
-    visit personas_path
-    click_on "Sign In as Anne"
+    visit sign_in_path
+    click_on "Sign in using DfE Sign In"
   end
 
   def given_i_am_logged_in_as_a_user_with_multiple_organisations
-    visit personas_path
-    click_on "Sign In as Mary"
+    user_exists_in_dfe_sign_in(user: mary)
+    visit sign_in_path
+    click_on "Sign in using DfE Sign In"
   end
 
   def and_user_is_already_assigned_to_a_school

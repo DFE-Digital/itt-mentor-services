@@ -5,7 +5,8 @@ RSpec.describe "View a school", type: :system do
   let!(:school) { create(:school, :claims) }
 
   scenario "View a school's details as a support user" do
-    when_i_sign_in_as_a_support_user(support_user)
+    user_exists_in_dfe_sign_in(user: support_user)
+    when_i_sign_in
     and_i_visit_the_school_page(school)
     i_see_the_school_details(school)
     and_i_see_the_secondary_navigation_links(school)
@@ -14,10 +15,9 @@ RSpec.describe "View a school", type: :system do
 
   private
 
-  def when_i_sign_in_as_a_support_user(support_user)
+  def when_i_sign_in
     visit claims_root_path
-    click_on "Sign in using a Persona"
-    click_on "Sign In as #{support_user.first_name}"
+    click_on "Sign in using DfE Sign In"
   end
 
   def and_i_visit_the_school_page(school)

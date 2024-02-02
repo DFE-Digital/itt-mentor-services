@@ -1,16 +1,12 @@
 require "rails_helper"
 
 RSpec.describe "Sessions", type: :request do
-  describe "POST /auth/developer/callback" do
+  describe "GET /auth/dfe/callback" do
     it "returns http success" do
       claims_user = create(:claims_user)
+      user_exists_in_dfe_sign_in(user: claims_user)
 
-      post "/auth/developer/callback",
-           params: {
-             first_name: claims_user.first_name,
-             last_name: claims_user.last_name,
-             email: claims_user.email,
-           }
+      get "/auth/dfe/callback"
 
       follow_redirect!
 
