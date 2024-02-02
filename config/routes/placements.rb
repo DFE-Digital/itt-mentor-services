@@ -54,16 +54,18 @@ scope module: :placements,
   resources :organisations, only: [:index]
   resources :schools, only: %i[show] do
     scope module: :schools do
-      resources :users, only: %i[index new create show] do
-        get :check, on: :collection
+      resources :users, only: %i[index new create show destroy] do
+        member { get :remove }
+        collection { get :check }
       end
     end
   end
 
   resources :providers, only: [:show] do
     scope module: :providers do
-      resources :users, only: %i[index new create show] do
-        get :check, on: :collection
+      resources :users, only: %i[index new create show destroy] do
+        member { get :remove }
+        collection { get :check }
       end
     end
   end

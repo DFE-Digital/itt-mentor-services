@@ -1,0 +1,33 @@
+<%= content_for :page_title, sanitize(t(".page_title", user_name: @user.full_name, organisation_name: @organisation.name)) %>
+<% if current_user.organisation_count > 1 %>
+  <%= content_for(:header_content) do %>
+    <%= render(ContentHeaderComponent.new(
+      title: @organisation.name,
+      actions: [govuk_link_to(t(".change_organisation"), placements_organisations_path, no_visited_state: true)],
+    )) %>
+  <% end %>
+<% end %>
+<%= render "placements/primary_navigation", organisation: @organisation, current_navigation: :users %>
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: placements_school_user_path(@organisation, @user)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <label class="govuk-label govuk-label--l">
+        <span class="govuk-caption-l"><%= @user.full_name.to_s %></span>
+        <%= t(".are_you_sure") %>
+      </label>
+      <%= render GovukComponent::WarningTextComponent.new(
+        text: t(".user_will_be_sent_an_email", organisation_name: @organisation.name),
+      ) %>
+
+      <%= govuk_button_to t(".remove_user"), placements_school_user_path(@organisation, @user), warning: true, method: :delete %>
+
+      <p class="govuk-body">
+        <%= govuk_link_to(t(".cancel"), placements_school_user_path(@organisation, @user)) %>
+      </p>
+    </div>
+  </div>
+</div>
