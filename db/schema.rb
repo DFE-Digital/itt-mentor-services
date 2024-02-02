@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_01_101735) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_02_070544) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -105,6 +105,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_01_101735) do
     t.index ["placements_service"], name: "index_providers_on_placements_service"
   end
 
+  create_table "regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "claims_funding_available_per_hour_pence", default: 0, null: false
+    t.string "claims_funding_available_per_hour_currency", default: "GBP", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_regions_on_name", unique: true
+  end
+
   create_table "schools", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "urn", null: false
     t.boolean "placements_service", default: false
@@ -142,8 +151,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_01_101735) do
     t.string "email_address"
     t.string "district_admin_name"
     t.string "district_admin_code"
+    t.uuid "region_id"
     t.index ["claims_service"], name: "index_schools_on_claims_service"
     t.index ["placements_service"], name: "index_schools_on_placements_service"
+    t.index ["region_id"], name: "index_schools_on_region_id"
     t.index ["urn"], name: "index_schools_on_urn", unique: true
   end
 
@@ -165,4 +176,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_01_101735) do
   add_foreign_key "mentor_trainings", "mentors"
   add_foreign_key "mentor_trainings", "providers"
   add_foreign_key "mentors", "schools"
+  add_foreign_key "schools", "regions"
 end

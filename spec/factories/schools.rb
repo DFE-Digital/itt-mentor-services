@@ -39,15 +39,22 @@
 #  website                      :string
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
+#  region_id                    :uuid
 #
 # Indexes
 #
 #  index_schools_on_claims_service      (claims_service)
 #  index_schools_on_placements_service  (placements_service)
+#  index_schools_on_region_id           (region_id)
 #  index_schools_on_urn                 (urn) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (region_id => regions.id)
 #
 FactoryBot.define do
   factory :school do
+    association :region
     sequence(:urn) { _1 }
     name { Faker::Educator.primary_school }
 
