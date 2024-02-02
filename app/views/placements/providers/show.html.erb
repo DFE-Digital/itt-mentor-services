@@ -1,13 +1,4 @@
 <%= content_for :page_title, t(".organisation_details") %>
-<% if current_user.memberships.many? %>
-  <%= content_for(:header_content) do %>
-    <%= render(ContentHeaderComponent.new(
-      title: @provider.name,
-      actions: [govuk_link_to(t(".change_organisation"), placements_organisations_path, no_visited_state: true)],
-    )) %>
-  <% end %>
-<% end %>
-
 <%= render "placements/primary_navigation", organisation: @provider, current_navigation: :organisation_details %>
 
 <div class="govuk-width-container">

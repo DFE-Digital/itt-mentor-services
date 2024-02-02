@@ -1,12 +1,4 @@
 <%= content_for :page_title, t(".page_title") %>
-<% if current_user.organisation_count > 1 %>
-  <%= content_for(:header_content) do %>
-    <%= render(ContentHeaderComponent.new(
-      title: @organisation.name,
-      actions: [govuk_link_to(t(".change_organisation"), placements_organisations_path, no_visited_state: true)],
-    )) %>
-  <% end %>
-<% end %>
 <%= render "placements/primary_navigation", current_navigation: :users, organisation: @organisation %>
 <%= content_for(:before_content) do %>
   <%= govuk_back_link(href: new_placements_provider_user_path(
