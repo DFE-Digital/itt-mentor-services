@@ -1,39 +1,35 @@
 require "rails_helper"
 
-RSpec.describe "View schools", type: :system do
-  around do |example|
-    Capybara.app_host = "http://#{ENV["CLAIMS_HOST"]}"
-    example.run
-    Capybara.app_host = nil
-  end
-
-  scenario "I sign in as persona Mary with multiple schools" do
-    persona = given_the_claims_persona("Mary")
-    and_persona_has_multiple_schools(persona)
-    when_i_visit_claims_personas
-    when_i_click_sign_in(persona)
+RSpec.describe "View schools", type: :system, service: :claims do
+  scenario "I sign in as Mary with multiple schools" do
+    user = given_the_claims_user("Mary")
+    user_exists_in_dfe_sign_in(user:)
+    and_user_has_multiple_schools(user)
+    when_i_visit_the_sign_in_page
+    when_i_click_sign_in
     and_i_see_marys_schools
   end
 
-  scenario "I sign in as persona Anne with one school" do
-    persona = given_the_claims_persona("Anne")
-    and_persona_has_one_school(persona)
-    when_i_visit_claims_personas
-    when_i_click_sign_in(persona)
+  scenario "I sign in as Anne with one school" do
+    user = given_the_claims_user("Anne")
+    user_exists_in_dfe_sign_in(user:)
+    and_user_has_one_school(user)
+    when_i_visit_the_sign_in_page
+    when_i_click_sign_in
     and_i_see_annes_schools
   end
 
   private
 
-  def given_the_claims_persona(persona_name)
-    create(:claims_user, persona_name.downcase.to_sym)
+  def given_the_claims_user(user_name)
+    create(:claims_user, user_name.downcase.to_sym)
   end
 
-  def and_persona_has_multiple_schools(persona)
+  def and_user_has_multiple_schools(user)
     @school1 = create(:claims_school)
     @school2 = create(:claims_school)
-    create(:membership, user: persona, organisation: @school1)
-    create(:membership, user: persona, organisation: @school2)
+    create(:membership, user:, organisation: @school1)
+    create(:membership, user:, organisation: @school2)
   end
 
   def and_i_see_marys_schools
@@ -42,10 +38,10 @@ RSpec.describe "View schools", type: :system do
     expect(page).to have_content @school2.name
   end
 
-  def and_persona_has_one_school(persona)
+  def and_user_has_one_school(user)
     create(
       :membership,
-      user: persona,
+      user:,
       organisation: create(:school, :claims, name: "Hogwarts"),
     )
   end
@@ -55,12 +51,12 @@ RSpec.describe "View schools", type: :system do
     expect(page).to have_content "Hogwarts"
   end
 
-  def when_i_visit_claims_personas
-    visit personas_path
+  def when_i_visit_the_sign_in_page
+    visit sign_in_path
   end
 
-  def when_i_click_sign_in(persona)
-    click_on "Sign In as #{persona.first_name}"
+  def when_i_click_sign_in
+    click_on "Sign in using DfE Sign In"
   end
 
   def i_am_redirected_to_the_root_path

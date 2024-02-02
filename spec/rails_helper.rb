@@ -92,6 +92,19 @@ RSpec.configure do |config|
     Capybara.app_host = nil
   end
 
+  config.include DfESignInUserHelper
+
+  config.around(:each, type: :system, persona_sign_in: true) do |example|
+    ClimateControl.modify SIGN_IN_METHOD: "persona" do
+      Rails.application.reload_routes!
+      example.run
+    end
+
+    ClimateControl.modify SIGN_IN_METHOD: "dfe-sign-in" do
+      Rails.application.reload_routes!
+    end
+  end
+
   private
 
   def service_host(service)

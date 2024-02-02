@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support user filters and searches for organisations", type: :system do
+RSpec.describe "Support user filters and searches for organisations", type: :system, service: :placements do
   before do
     given_i_am_signed_in_as_a_support_user
     and_placement_schools_and_providers_exist
@@ -184,10 +184,10 @@ RSpec.describe "Support user filters and searches for organisations", type: :sys
   end
 
   def given_i_am_signed_in_as_a_support_user
-    Capybara.app_host = "http://#{ENV["PLACEMENTS_HOST"]}"
-    create(:placements_support_user, :colin)
-    visit personas_path
-    click_on "Sign In as Colin"
+    user = create(:placements_support_user, :colin)
+    user_exists_in_dfe_sign_in(user:)
+    visit sign_in_path
+    click_on "Sign in using DfE Sign In"
   end
 
   def then_i_see_support_navigation_with_organisation_selected

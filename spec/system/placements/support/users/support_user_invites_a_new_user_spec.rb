@@ -109,8 +109,9 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
 
   private
 
-  def and_there_is_an_existing_persona_for(persona_name)
-    create(:placements_support_user, persona_name.downcase.to_sym)
+  def and_there_is_an_existing_user_for(user_name)
+    user = create(:placements_support_user, user_name.downcase.to_sym)
+    user_exists_in_dfe_sign_in(user:)
   end
 
   def and_i_visit_root_path
@@ -118,18 +119,13 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   end
 
   def and_i_click_on_sign_in
-    click_on "Sign in using a Persona"
-  end
-
-  def and_i_click_sign_in_as(persona_name)
-    click_on "Sign In as #{persona_name}"
+    click_on "Sign in using DfE Sign In"
   end
 
   def given_i_am_signed_in_as_a_support_user
-    and_there_is_an_existing_persona_for("Colin")
+    and_there_is_an_existing_user_for("Colin")
     and_i_visit_root_path
     and_i_click_on_sign_in
-    and_i_click_sign_in_as("Colin")
   end
 
   def when_i_visit_the_users_page_for(organisation:)

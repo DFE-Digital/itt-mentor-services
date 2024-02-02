@@ -5,17 +5,20 @@ RSpec.describe "School Page", type: :system do
   let(:school2) { create(:school, :claims, name: "School2") }
 
   scenario "User visits his school" do
-    persona = given_there_is_an_existing_persona_for("Anne")
-    when_i_visit_claims_personas
-    when_i_click_sign_in(persona)
+    user_exists_in_dfe_sign_in(
+      user: given_there_is_an_existing_user_for("Anne"),
+    )
+    when_i_visit_the_sign_in_page
+    when_i_click_sign_in
     then_i_see_the_school_details
   end
 
   scenario "User with multiple schools changes between them" do
-    persona = given_the_claims_persona("Mary")
-    and_persona_has_multiple_schools(persona)
-    when_i_visit_claims_personas
-    when_i_click_sign_in(persona)
+    user = given_there_is_an_existing_user_for("Mary")
+    user_exists_in_dfe_sign_in(user:)
+    and_user_has_multiple_schools(user)
+    when_i_visit_the_sign_in_page
+    when_i_click_sign_in
 
     i_go_to_school_details_page("School1")
     then_i_see_the_school_details
@@ -27,25 +30,24 @@ RSpec.describe "School Page", type: :system do
 
   private
 
-  def when_i_click_sign_in(persona)
-    click_on "Sign In as #{persona.first_name}"
+  def when_i_click_sign_in
+    click_on "Sign in using DfE Sign In"
   end
 
-  def when_i_visit_claims_personas
-    visit personas_path
+  def when_i_visit_the_sign_in_page
+    visit sign_in_path
   end
 
   def given_the_claims_persona(persona_name)
     create(:claims_user, persona_name.downcase.to_sym)
   end
 
-  def and_persona_has_multiple_schools(persona)
-    create(:membership, user: persona, organisation: school1)
-    create(:membership, user: persona, organisation: school2)
+  def and_user_has_multiple_schools(user)
+    create(:membership, user:, organisation: school2)
   end
 
-  def given_there_is_an_existing_persona_for(persona_name)
-    user = create(:claims_user, persona_name.downcase.to_sym)
+  def given_there_is_an_existing_user_for(user_name)
+    user = create(:claims_user, user_name.downcase.to_sym)
     create(:membership, user:, organisation: school1)
     user
   end

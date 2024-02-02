@@ -8,6 +8,7 @@ RSpec.describe "Placements user views other users in their organisation", type: 
 
   describe "schools" do
     scenario "user can view other school users" do
+      user_exists_in_dfe_sign_in(user: mary)
       given_users_have_been_assigned_to_the(organisation: school)
       when_i_visit_the_users_page
       then_i_see_the_organisation_users
@@ -18,6 +19,7 @@ RSpec.describe "Placements user views other users in their organisation", type: 
 
   describe "providers" do
     scenario "users can view other provider users" do
+      user_exists_in_dfe_sign_in(user: anne)
       given_users_have_been_assigned_to_the(organisation: provider)
       when_i_visit_the_users_page
       then_i_see_the_organisation_users
@@ -35,8 +37,8 @@ RSpec.describe "Placements user views other users in their organisation", type: 
   end
 
   def when_i_visit_the_users_page
-    visit personas_path
-    click_on "Sign In as Anne"
+    visit sign_in_path
+    click_on "Sign in using DfE Sign In"
     within(".app-primary-navigation__nav") do
       click_on "Users"
     end

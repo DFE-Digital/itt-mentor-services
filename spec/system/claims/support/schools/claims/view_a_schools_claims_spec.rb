@@ -11,7 +11,8 @@ RSpec.describe "View a schools claims", type: :system, service: :claims do
   let!(:claim_from_another_school) { create(:claim, school_id: another_school.id, draft: true) }
 
   scenario "View a school's claims as a support user" do
-    given_i_sign_in_as_colin
+    user_exists_in_dfe_sign_in(user: colin)
+    given_i_sign_in
     when_i_visit_the_claims_support_school_claims_page
     i_see_a_list_of_the_schools_claims
     i_dont_see_claims_from_other_schools
@@ -19,17 +20,9 @@ RSpec.describe "View a schools claims", type: :system, service: :claims do
 
   private
 
-  def given_i_sign_in_as_colin
-    and_i_visit_the_personas_page
-    and_i_click_sign_in_as("Colin")
-  end
-
-  def and_i_visit_the_personas_page
-    visit personas_path
-  end
-
-  def and_i_click_sign_in_as(persona_name)
-    click_on "Sign In as #{persona_name}"
+  def given_i_sign_in
+    visit sign_in_path
+    click_on "Sign in using DfE Sign In"
   end
 
   def when_i_visit_the_claims_support_school_claims_page

@@ -78,14 +78,16 @@ RSpec.describe "Invite a user to a school", type: :system do
   end
 
   def setup_school_and_anne_membership
-    @anne_persona = create(:claims_user, :anne)
-    create(:membership, user: @anne_persona, organisation: @school)
+    @anne = create(:claims_user, :anne)
+    create(:membership, user: @anne, organisation: @school)
+    user_exists_in_dfe_sign_in(user: @anne)
   end
 
   def sign_in_as_support_user
-    create(:claims_support_user, :colin)
-    visit personas_path
-    click_on "Sign In as Colin"
+    user = create(:claims_support_user, :colin)
+    user_exists_in_dfe_sign_in(user:)
+    visit sign_in_path
+    click_on "Sign in using DfE Sign In"
   end
 
   def remove_all_users_from_school
@@ -98,8 +100,9 @@ RSpec.describe "Invite a user to a school", type: :system do
   end
 
   def sign_in_as_lead_mentor_user
-    visit personas_path
-    click_on "Sign In as Anne"
+    user_exists_in_dfe_sign_in(user: @anne)
+    visit sign_in_path
+    click_on "Sign in using DfE Sign In"
   end
 
   def visit_claims_school_users_page

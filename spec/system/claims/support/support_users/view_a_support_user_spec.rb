@@ -4,7 +4,8 @@ RSpec.describe "View a support user", type: :system do
   let!(:support_user) { create(:claims_support_user, :colin) }
 
   scenario "View a support user" do
-    when_i_sign_in_as_a_support_user(support_user)
+    user_exists_in_dfe_sign_in(user: support_user)
+    when_i_sign_in_as_a_support_user
     and_i_visit_the_support_users_page
     and_i_click_on_a_support_user(support_user)
     i_see_the_details_of_the_support_user(support_user)
@@ -12,10 +13,9 @@ RSpec.describe "View a support user", type: :system do
 
   private
 
-  def when_i_sign_in_as_a_support_user(support_user)
+  def when_i_sign_in_as_a_support_user
     visit claims_root_path
-    click_on "Sign in using a Persona"
-    click_on "Sign In as #{support_user.first_name}"
+    click_on "Sign in using DfE Sign In"
   end
 
   def and_i_visit_the_support_users_page

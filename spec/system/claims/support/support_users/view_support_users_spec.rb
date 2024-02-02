@@ -5,17 +5,17 @@ RSpec.describe "View support users", type: :system do
   let!(:support_user_2) { create(:claims_support_user, created_at: "2024-01-01") }
 
   scenario "View list of all support users" do
-    when_i_sign_in_as_a_support_user(support_user)
+    user_exists_in_dfe_sign_in(user: support_user)
+    when_i_sign_in_as_a_support_user
     and_i_visit_the_support_users_page
     i_see_the_list_of_all_support_users_ordered_by_latest_created_at_first
   end
 
   private
 
-  def when_i_sign_in_as_a_support_user(support_user)
+  def when_i_sign_in_as_a_support_user
     visit claims_root_path
-    click_on "Sign in using a Persona"
-    click_on "Sign In as #{support_user.first_name}"
+    click_on "Sign in using DfE Sign In"
   end
 
   def and_i_visit_the_support_users_page

@@ -17,7 +17,8 @@ RSpec.describe "View claims", type: :system, service: :claims do
   end
 
   before do
-    given_i_sign_in_as_anne
+    user_exists_in_dfe_sign_in(user: anne)
+    given_i_sign_in
   end
 
   scenario "Anne visits the claims index page" do
@@ -37,16 +38,8 @@ RSpec.describe "View claims", type: :system, service: :claims do
     end
   end
 
-  def given_i_sign_in_as_anne
-    and_i_visit_the_personas_page
-    and_i_click_sign_in_as("Anne")
-  end
-
-  def and_i_visit_the_personas_page
-    visit personas_path
-  end
-
-  def and_i_click_sign_in_as(persona_name)
-    click_on "Sign In as #{persona_name}"
+  def given_i_sign_in
+    visit sign_in_path
+    click_on "Sign in using DfE Sign In"
   end
 end

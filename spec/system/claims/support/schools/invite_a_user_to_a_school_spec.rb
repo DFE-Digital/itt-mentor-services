@@ -82,9 +82,10 @@ RSpec.describe "Invite a user to a school", type: :system do
   end
 
   def sign_in_as_support_user
-    create(:claims_support_user, :colin)
-    visit personas_path
-    click_on "Sign In as Colin"
+    user = create(:claims_support_user, :colin)
+    user_exists_in_dfe_sign_in(user:)
+    visit sign_in_path
+    click_on "Sign in using DfE Sign In"
   end
 
   def visit_claims_support_school_users_page
