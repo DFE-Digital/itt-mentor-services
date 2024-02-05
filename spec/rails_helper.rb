@@ -28,12 +28,16 @@ Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 #
 # Rails.root.glob('spec/support/**/*.rb').sort.each { |f| require f }
 
-# Checks for pending migrations and applies them before tests are run.
-# If you are not using ActiveRecord, you can remove these lines.
-begin
-  ActiveRecord::Migration.maintain_test_schema!
-rescue ActiveRecord::PendingMigrationError => e
-  abort e.to_s.strip
+if ENV["SMOKE_TEST"] == "true"
+  ActiveRecord::Base.establish_connection adapter: :nulldb
+else
+  # Checks for pending migrations and applies them before tests are run.
+  # If you are not using ActiveRecord, you can remove these lines.
+  begin
+    ActiveRecord::Migration.maintain_test_schema!
+  rescue ActiveRecord::PendingMigrationError => e
+    abort e.to_s.strip
+  end
 end
 
 RSpec.configure do |config|
@@ -119,9 +123,9 @@ RSpec.configure do |config|
   def service_external_host(service)
     case service.to_s
     when "claims"
-      "claims.localhost:3000"
+      ENV["CLAIMS_EXTERNAL_HOST"]
     when "placements"
-      "placements.localhost:3000"
+      ENV["PLACEMENTS_EXTERNAL_HOST"]
     end
   end
 end

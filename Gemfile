@@ -106,6 +106,8 @@ group :development do
 end
 
 group :test do
+  # Return null object for active record connection rather than raising error
+  gem "activerecord-nulldb-adapter"
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   # The accessible selectors gem is maintained by Citizens Advice, not yet a registered gem.
