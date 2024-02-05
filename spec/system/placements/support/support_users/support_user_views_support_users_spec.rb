@@ -15,9 +15,9 @@ RSpec.describe "Placements / Support Users / Support user views support users",
   private
 
   def when_i_sign_in_as_a_support_user(support_user)
-    visit placements_root_path
-    click_on "Sign in using a Persona"
-    click_on "Sign In as #{support_user.first_name}"
+    user_exists_in_dfe_sign_in(user: support_user)
+    visit sign_in_path
+    click_on "Sign in using DfE Sign In"
   end
 
   def and_i_visit_the_support_users_page
