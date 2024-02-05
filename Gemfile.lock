@@ -208,6 +208,8 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
+    imagen (0.1.8)
+      parser (>= 2.5, != 2.5.1.1)
     io-console (0.7.2)
     irb (1.11.1)
       rdoc
@@ -464,6 +466,7 @@ GEM
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
+    rugged (1.7.1)
     selenium-webdriver (4.17.0)
       base64 (~> 0.2)
       rexml (~> 3.2, >= 3.2.5)
@@ -476,6 +479,7 @@ GEM
       simplecov-html (~> 0.11)
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
+    simplecov-lcov (0.8.0)
     simplecov_json_formatter (0.1.4)
     smart_properties (1.17.0)
     solargraph (0.50.0)
@@ -524,6 +528,11 @@ GEM
     timeout (0.4.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    undercover (0.5.0)
+      bigdecimal
+      imagen (>= 0.1.8)
+      rainbow (>= 2.1, < 4.0)
+      rugged (>= 0.27, < 1.8)
     unicode-display_width (2.5.0)
     validate_email (0.1.6)
       activemodel (>= 3.0)
@@ -613,6 +622,7 @@ DEPENDENCIES
   selenium-webdriver
   shoulda-matchers
   simplecov
+  simplecov-lcov
   solargraph
   solargraph-rails
   stimulus-rails
@@ -621,6 +631,7 @@ DEPENDENCIES
   syntax_tree-rbs
   timecop
   tzinfo-data
+  undercover
   view_component
   web-console
   webmock
