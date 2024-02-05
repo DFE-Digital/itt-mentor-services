@@ -59,6 +59,8 @@ jobs:
         with:
           node-version: 20.9.0
           cache: "npm"
+      - name: List gems
+        run: bundle list
       - name: Run Tests
         run: |
           bundle exec rails test:prepare db:test:prepare
