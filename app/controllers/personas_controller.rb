@@ -7,5 +7,6 @@ class PersonasController < ApplicationController
     @personas = User.where(email: PERSONA_EMAILS)
       .where(type: ["#{current_service.to_s.titleize}::User",
                     "#{current_service.to_s.titleize}::SupportUser"])
+      .order(:created_at)
   end
 end
