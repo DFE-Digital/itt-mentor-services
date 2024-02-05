@@ -111,9 +111,11 @@ group :test do
   gem "selenium-webdriver"
   gem "shoulda-matchers"
   gem "simplecov", require: false
+  gem "simplecov-lcov", require: false
   # launch browser when inspecting capybara specs
   gem "launchy"
   gem "timecop"
+  gem "undercover"
   gem "webmock"
 end
 
