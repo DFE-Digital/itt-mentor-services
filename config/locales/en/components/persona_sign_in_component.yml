@@ -27,5 +27,5 @@ en:
           - organising placements for trainees
           - keeping track of known mentors
       roles_include: "%{persona_name}’s role includes:"
-      sign_in_as: "Sign In as %{persona_name}"
+      sign_in_as: "Sign in as %{persona_name}"
       title: Test users
