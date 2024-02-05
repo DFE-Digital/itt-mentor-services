@@ -49,6 +49,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -63,6 +65,13 @@ jobs:
         run: |
           bundle exec rails test:prepare db:test:prepare
           bundle exec rspec --format progress
+      - name: Upload code coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage
+          path: coverage/
+      - name: Detect missing code coverage
+        run: bundle exec undercover --compare origin/main
       - name: Upload failure screenshots
         if: failure()
         uses: actions/upload-artifact@v4
