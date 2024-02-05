@@ -35,7 +35,7 @@ class Claims::Support::SupportUsersController < Claims::Support::ApplicationCont
 
   def destroy
     if SupportUser::Remove.call(support_user: @support_user)
-      redirect_to claims_support_support_users_path, notice: t(".success")
+      redirect_to claims_support_support_users_path, flash: { success: t(".success") }
     else
       render :remove, alert: t(".failure")
     end

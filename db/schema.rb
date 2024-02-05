@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_01_101735) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_05_155801) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -156,6 +156,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_01_101735) do
     t.string "type"
     t.string "dfe_sign_in_uid"
     t.datetime "last_signed_in_at"
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_users_on_discarded_at"
     t.index ["type", "email"], name: "index_users_on_type_and_email", unique: true
   end
 

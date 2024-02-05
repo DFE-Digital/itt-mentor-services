@@ -4,6 +4,7 @@
 #
 #  id                :uuid             not null, primary key
 #  dfe_sign_in_uid   :string
+#  discarded_at      :datetime
 #  email             :string           not null
 #  first_name        :string           not null
 #  last_name         :string           not null
@@ -14,8 +15,12 @@
 #
 # Indexes
 #
+#  index_users_on_discarded_at    (discarded_at)
 #  index_users_on_type_and_email  (type,email) UNIQUE
 #
 class Claims::SupportUser < User
   include ActsAsSupportUser
+  include Discard::Model
+
+  default_scope -> { kept }
 end

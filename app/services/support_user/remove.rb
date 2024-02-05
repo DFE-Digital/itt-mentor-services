@@ -8,7 +8,8 @@ class SupportUser::Remove
   end
 
   def call
-    if support_user.destroy
+    # Support users are soft deleted
+    if support_user.discard
       send_email_notification
 
       true
