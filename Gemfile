@@ -110,6 +110,7 @@ group :test do
   gem "rails-controller-testing"
   gem "selenium-webdriver"
   gem "shoulda-matchers"
+  gem "simplecov", require: false
   # launch browser when inspecting capybara specs
   gem "launchy"
   gem "timecop"

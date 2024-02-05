@@ -26,6 +26,8 @@ tmp/pids/*
 !tmp/pids/
 !tmp/pids/.keep
 
+coverage/
+
 .yarn/*
 # Ignore terraform files
 bin/terrafile
