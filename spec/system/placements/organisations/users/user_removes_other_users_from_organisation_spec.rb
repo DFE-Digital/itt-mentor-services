@@ -28,7 +28,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
 
     scenario "I try to remove myself from a school" do
       given_i_am_signed_in_as_mary
-      when_i_try_to_visit_the_remove_path_form_myself(mary, school)
+      when_i_try_to_visit_the_remove_path_for(mary, school)
       then_i_am_redirected_to_the_index_page(school)
     end
   end
@@ -60,7 +60,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
 
     scenario "I try to remove myself from a school" do
       given_i_am_signed_in_as_mary
-      when_i_try_to_visit_the_remove_path_form_myself(mary, provider)
+      when_i_try_to_visit_the_remove_path_for(mary, provider)
       then_i_am_redirected_to_the_index_page(provider)
     end
   end
@@ -90,7 +90,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     click_on user.full_name
   end
 
-  def when_i_try_to_visit_the_remove_path_form_myself(user, organisation)
+  def when_i_try_to_visit_the_remove_path_for(user, organisation)
     case organisation
     when School
       visit remove_placements_school_user_path(organisation, user)

@@ -9,7 +9,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= render "placements/organisations/users/details", user: @user %>
-      <% unless current_user == @user %>
+      <% if policy(@user).destroy? %>
         <%= link_to(t(".remove_user"),
                     remove_placements_school_user_path(@organisation, @user),
                     class: "govuk-link govuk-link--no-visited-state app-link--destructive") %>
