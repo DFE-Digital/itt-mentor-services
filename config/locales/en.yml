@@ -1,10 +1,12 @@
 en:
   pagination_info: Showing %{from} to %{to} of %{count} results
   no_results: There are no results for '%{for}'.
+  no_records: There are no %{records}
   no_results_with_filter_and_search: There are no results for '%{for}' and the selected filter.
   no_results_with_filter: There are no results for the selected filter.
   you_cannot_perform_this_action: You cannot perform this action
   you_do_not_have_access_to_this_service: You do not have access to this service
+  none: None
   date:
     formats:
       long: "%e %B %Y"

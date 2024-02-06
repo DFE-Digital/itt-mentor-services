@@ -22,4 +22,8 @@ class Mentor < ApplicationRecord
   belongs_to :school
 
   validates :first_name, :last_name, :trn, presence: true
+
+  def full_name
+    "#{first_name} #{last_name}".strip
+  end
 end

@@ -6,6 +6,8 @@ en:
         last_name: Last name
         full_name: Full name
         email: Email address
+      claim:
+          id: ID
 
     errors:
       models:
