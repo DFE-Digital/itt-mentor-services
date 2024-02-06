@@ -55,6 +55,7 @@ RSpec.describe Placements::Provider do
     it "is scoped to providers using the placement service" do
       provider = described_class.find(provider_with_placements.id)
       expect(described_class.all).to contain_exactly(provider)
+      expect(described_class.all).not_to include(provider_without_placements)
     end
   end
 end

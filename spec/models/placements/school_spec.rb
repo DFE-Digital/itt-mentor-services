@@ -79,6 +79,7 @@ RSpec.describe Placements::School do
     it "is scoped to schools using the placement service" do
       school = described_class.find(school_with_placements.id)
       expect(described_class.all).to contain_exactly(school)
+      expect(described_class.all).not_to include(school_without_placements)
     end
   end
 end
