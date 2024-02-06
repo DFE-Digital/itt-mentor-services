@@ -39,7 +39,7 @@ RSpec.describe "Support User adds a Provider without JavaScript", type: :system,
     then_i_see_an_error("Manchester 1 has already been added. Try another provider")
   end
 
-  scenario "Colin submits the search form without selecting a provider", js: true do
+  scenario "Colin submits the search form without selecting a provider" do
     when_i_visit_the_add_provider_page
     then_i_see_support_navigation_with_organisation_selected
     and_i_click_continue
