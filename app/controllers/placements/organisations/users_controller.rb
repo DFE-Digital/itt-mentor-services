@@ -45,7 +45,7 @@ class Placements::Organisations::UsersController < ApplicationController
   end
 
   def redirect_if_not_allowed
-    if current_user == @user
+    unless policy(@user).destroy?
       redirect_to_index
       flash[:alert] = t(".you_cannot_perform_this_action")
     end
