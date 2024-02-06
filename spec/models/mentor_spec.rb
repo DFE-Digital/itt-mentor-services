@@ -32,4 +32,11 @@ RSpec.describe Mentor, type: :model do
     it { is_expected.to validate_presence_of(:last_name) }
     it { is_expected.to validate_presence_of(:trn) }
   end
+
+  describe "#full_name" do
+    it "returns the mentors full name" do
+      mentor = build(:mentor, first_name: "Jane", last_name: "Doe")
+      expect(mentor.full_name).to eq("Jane Doe")
+    end
+  end
 end

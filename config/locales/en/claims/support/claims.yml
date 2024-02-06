@@ -4,3 +4,11 @@ en:
       claims:
         index:
           heading: Claims
+          status: Status
+        show:
+          heading: Claim
+          status: Status
+          provider_with_index: Provider %{index}
+          provider: Provider
+          mentor_with_index: Mentor %{index}
+          mentor: Mentor
