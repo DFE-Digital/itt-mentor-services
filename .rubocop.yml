@@ -2,6 +2,7 @@ inherit_gem:
   rubocop-govuk:
     - config/default.yml
     - config/rails.yml
+    - config/rspec.yml
 
 inherit_mode:
   merge:
@@ -16,3 +17,21 @@ Style/StringLiteralsInInterpolation:
 
 Layout/AccessModifierIndentation:
   EnforcedStyle: indent
+
+RSpec/Capybara/FeatureMethods:
+  EnabledMethods:
+    - scenario
+
+# Switch off deprecated cop
+RSpec/FilePath:
+  Enabled: false
+
+# And replace with the preferred cops
+RSpec/SpecFilePathFormat:
+  Enabled: true
+  CustomTransform:
+    DfESignInUser: dfe_sign_in_user
+    DfESignIn: dfe_sign_in
+
+RSpec/SpecFilePathSuffix:
+  Enabled: true
