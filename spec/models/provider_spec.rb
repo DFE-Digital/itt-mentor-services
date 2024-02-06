@@ -37,17 +37,6 @@ RSpec.describe Provider, type: :model do
     it { is_expected.to have_many(:mentor_trainings) }
   end
 
-  context "scopes" do
-    describe "#placements_service" do
-      it "only returns placements providers" do
-        create(:provider)
-        placements_provider = create(:provider, :placements)
-
-        expect(described_class.placements_service).to contain_exactly(placements_provider)
-      end
-    end
-  end
-
   context "validations" do
     subject { build(:provider) }
 
@@ -70,6 +59,15 @@ RSpec.describe Provider, type: :model do
 
       it "only returns the providers which have been onboarded (placements: true)" do
         expect(described_class.accredited).to contain_exactly(accredited_provider)
+      end
+    end
+
+    describe "#placements_service" do
+      it "only returns placements providers" do
+        create(:provider)
+        placements_provider = create(:provider, :placements)
+
+        expect(described_class.placements_service).to contain_exactly(placements_provider)
       end
     end
   end
