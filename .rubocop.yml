@@ -51,5 +51,3 @@ RSpec/InstanceVariable:
   Enabled: false
 RSpec/NamedSubject:
   Enabled: false
-RSpec/LetSetup:
-  Enabled: false

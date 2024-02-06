@@ -81,6 +81,7 @@ RSpec.describe Claims::School do
     it "is scoped to schools using the claims service" do
       school = described_class.find(school_with_claims.id)
       expect(described_class.all).to contain_exactly(school)
+      expect(described_class.all).not_to include(school_without_claims)
     end
   end
 end

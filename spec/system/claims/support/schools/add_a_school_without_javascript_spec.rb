@@ -1,15 +1,11 @@
 require "rails_helper"
 
 RSpec.describe "Support User adds a School without JavaScript", type: :system, service: :claims do
-  let!(:schools) do
-    [
-      create(:school, name: "Manchester 1"),
-      create(:school, name: "Manchester 2"),
-      create(:school, name: "London"),
-    ]
-  end
-
   before do
+    create(:school, name: "Manchester 1")
+    create(:school, name: "Manchester 2")
+    create(:school, name: "London")
+
     given_i_sign_in_as_colin
   end
 

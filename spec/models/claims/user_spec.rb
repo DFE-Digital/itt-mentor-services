@@ -44,6 +44,7 @@ RSpec.describe Claims::User do
     it "is scoped to users of the claims service" do
       user = described_class.find(user_with_claims_service.id)
       expect(described_class.all).to contain_exactly(user)
+      expect(described_class.all).not_to include(user_with_placements_service)
     end
   end
 

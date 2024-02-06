@@ -55,10 +55,11 @@ RSpec.describe Provider, type: :model do
   context "scopes" do
     describe "#accredited" do
       let!(:accredited_provider) { create(:provider, accredited: true) }
-      let!(:provider) { create(:provider) }
+      let!(:non_accredited_provider) { create(:provider) }
 
       it "only returns the providers which have been onboarded (placements: true)" do
         expect(described_class.accredited).to contain_exactly(accredited_provider)
+        expect(described_class.accredited).not_to include(non_accredited_provider)
       end
     end
 
