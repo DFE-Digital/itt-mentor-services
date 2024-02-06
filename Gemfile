@@ -108,6 +108,7 @@ group :test do
   gem "capybara-screenshot"
   gem "climate_control"
   gem "rails-controller-testing"
+  gem "rspec-retry"
   gem "selenium-webdriver"
   gem "shoulda-matchers"
   gem "simplecov", require: false
