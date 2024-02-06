@@ -28,7 +28,9 @@ This project depends on:
 
 ### asdf
 
-This project uses `asdf`. Use the following to install the required tools:
+Most dependencies are defined in the `.tool-versions` file and can be installed using [asdf](https://asdf-vm.com/) (or a compatible alternative like [mise](https://mise.jdx.dev/)).
+
+To install them with asdf, run:
 
 ```sh
 # The first time
@@ -46,7 +48,17 @@ asdf plugin add terraform
 asdf install
 ```
 
-You will need to install Postgres manually – this is not installed via `asdf`. You can install it on a Mac with Homebrew by running:
+### Homebrew
+
+You'll also need a couple of packages which asdf can't reliably install. (For some reason asdf installs them as unsigned binaries, so they won't run on macOS.)
+
+Install them using Homebrew:
+
+```sh
+brew install cmake pkg-config
+```
+
+Finally, you will need a running Postgres 16 server. You can install it with Homebrew by running:
 
 ```sh
 brew install postgresql@16
