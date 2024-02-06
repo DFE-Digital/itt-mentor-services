@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/DFE-Digital/rspec-retry.git
+  revision: 306b42b8d5853303982e1a165e82d04744c20ea3
+  branch: main
+  specs:
+    rspec-retry (0.7.0)
+      rspec-core (> 3.3)
+
+GIT
   remote: https://github.com/citizensadvice/capybara_accessible_selectors
   revision: 8e9748e1655f8c51e9b6f914e630bb6415813a57
   branch: main
@@ -426,8 +434,6 @@ GEM
       rspec-expectations (~> 3.12)
       rspec-mocks (~> 3.12)
       rspec-support (~> 3.12)
-    rspec-retry (0.6.2)
-      rspec-core (> 3.3)
     rspec-support (3.13.0)
     rubocop (1.60.2)
       json (~> 2.3)
@@ -620,7 +626,7 @@ DEPENDENCIES
   rladr
   rspec
   rspec-rails
-  rspec-retry
+  rspec-retry!
   rubocop-govuk
   selenium-webdriver
   shoulda-matchers
