@@ -37,7 +37,7 @@ RSpec.describe "Support User adds a School without JavaScript", type: :system, s
     then_i_see_an_error("Manchester 1 has already been added. Try another school")
   end
 
-  scenario "Colin submits the search form without selecting a school", js: true do
+  scenario "Colin submits the search form without selecting a school" do
     when_i_visit_the_add_school_page
     and_i_click_continue
     then_i_see_an_error("Enter a school name, URN or postcode")
