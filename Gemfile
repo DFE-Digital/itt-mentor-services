@@ -79,6 +79,8 @@ gem "stimulus-rails"
 # User-Resource Permissions and Scoping
 gem "pundit"
 
+gem "sentry-rails"
+
 group :development do
   gem "annotate", require: false
   gem "prettier_print", require: false
