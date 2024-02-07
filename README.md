@@ -41,6 +41,7 @@ asdf plugin add yarn
 asdf plugin add azure-cli
 asdf plugin add jq
 asdf plugin add kubectl
+asdf plugin add kubelogin
 asdf plugin add python
 asdf plugin add terraform
 
