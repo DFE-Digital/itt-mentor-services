@@ -35,3 +35,21 @@ RSpec/SpecFilePathFormat:
 
 RSpec/SpecFilePathSuffix:
   Enabled: true
+
+# The following cops are temporarily disabled so we can incrementally
+# introduce RSpec rules while incrementally fixing up the codebase.
+# They should eventually all be re-enabled.
+RSpec/VerifiedDoubles:
+  Enabled: false
+RSpec/ExpectInHook:
+  Enabled: false
+RSpec/StubbedMock:
+  Enabled: false
+RSpec/ContextWording:
+  Enabled: false
+RSpec/InstanceVariable:
+  Enabled: false
+RSpec/NamedSubject:
+  Enabled: false
+RSpec/LetSetup:
+  Enabled: false
