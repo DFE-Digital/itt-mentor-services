@@ -25,8 +25,8 @@ RSpec.describe Claims::SupportUser do
     it { is_expected.to validate_presence_of(:email) }
     it { is_expected.to validate_uniqueness_of(:email).scoped_to(:type).case_insensitive }
     it { is_expected.to allow_value("name@education.gov.uk").for(:email).with_message(:invalid_support_email) }
-    it { is_expected.to_not allow_value("name@example.com").for(:email).with_message(:invalid_support_email) }
-    it { is_expected.to_not allow_value("name@education.gov.ukk").for(:email).with_message(:invalid_support_email) }
+    it { is_expected.not_to allow_value("name@example.com").for(:email).with_message(:invalid_support_email) }
+    it { is_expected.not_to allow_value("name@education.gov.ukk").for(:email).with_message(:invalid_support_email) }
     it { is_expected.to validate_presence_of(:first_name) }
     it { is_expected.to validate_presence_of(:last_name) }
     it { is_expected.to validate_presence_of(:type) }

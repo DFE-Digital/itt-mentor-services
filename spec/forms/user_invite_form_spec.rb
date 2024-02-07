@@ -21,7 +21,7 @@ describe UserInviteForm, type: :model do
   describe "#invite" do
     context "with invalid params" do
       before "it does not send invitation" do
-        expect(UserMailer).to_not receive(:invitation_email)
+        expect(UserMailer).not_to receive(:invitation_email)
       end
 
       context "with invalid user params" do

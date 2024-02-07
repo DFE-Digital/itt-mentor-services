@@ -20,8 +20,8 @@ require "rails_helper"
 
 RSpec.describe Placements::User do
   describe "associations" do
-    context "#schools" do
-      it { should have_many(:schools).through(:memberships).source(:organisation) }
+    describe "#schools" do
+      it { is_expected.to have_many(:schools).through(:memberships).source(:organisation) }
 
       it "returns only Placements::School records" do
         placements_user = create(:placements_user)

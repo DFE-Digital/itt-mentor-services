@@ -16,7 +16,7 @@ RSpec.describe SchoolDecorator do
     end
 
     context "when attributes are missing" do
-      it "it returns a formatted address based on the present attributes" do
+      it "returns a formatted address based on the present attributes" do
         school = build(:school,
                        address1: "A School",
                        address2: "The School Road",

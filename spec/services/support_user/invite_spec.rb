@@ -14,11 +14,11 @@ RSpec.describe SupportUser::Invite do
       end
 
       it "creates a user" do
-        expect { subject }.to change { User.count }.by(1)
+        expect { subject }.to change(User, :count).by(1)
       end
 
       it "enqueues an invitation email" do
-        expect { subject }.to change { enqueued_jobs.size }.by(1)
+        expect { subject }.to change(enqueued_jobs, :size).by(1)
       end
     end
 
@@ -30,11 +30,11 @@ RSpec.describe SupportUser::Invite do
       end
 
       it "does not create a user" do
-        expect { subject }.to_not(change { User.count })
+        expect { subject }.not_to(change(User, :count))
       end
 
       it "does not send an email" do
-        expect { subject }.to_not(change { enqueued_jobs.size })
+        expect { subject }.not_to(change(enqueued_jobs, :size))
       end
     end
   end

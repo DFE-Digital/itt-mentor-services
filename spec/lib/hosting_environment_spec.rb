@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe HostingEnvironment do
   before do
-    HostingEnvironment.instance_variable_set :@env, nil
-    HostingEnvironment.instance_variable_set :@phase, nil
+    described_class.instance_variable_set :@env, nil
+    described_class.instance_variable_set :@phase, nil
   end
 
   describe ".env" do

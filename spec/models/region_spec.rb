@@ -17,7 +17,7 @@ require "rails_helper"
 
 RSpec.describe Region, type: :model do
   context "associations" do
-    it { should have_many(:schools) }
+    it { is_expected.to have_many(:schools) }
   end
 
   context "validations" do

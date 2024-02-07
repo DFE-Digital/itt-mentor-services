@@ -78,7 +78,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
       delivery.to.include?(user.email) && delivery.subject == "You have been removed from #{organisation.name}"
     end
 
-    expect(email).to_not be_nil
+    expect(email).not_to be_nil
   end
 
   def when_i_click_on(text)
@@ -102,9 +102,9 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
   def then_i_am_redirected_to_the_index_page(organisation)
     case organisation
     when School
-      expect(current_path).to eq placements_school_users_path(organisation)
+      expect(page).to have_current_path placements_school_users_path(organisation), ignore_query: true
     when Provider
-      expect(current_path).to eq placements_provider_users_path(organisation)
+      expect(page).to have_current_path placements_provider_users_path(organisation), ignore_query: true
     end
 
     expect(page).to have_content "You cannot perform this action"
@@ -133,9 +133,9 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     users_is_selected_in_primary_nav
     case organisation
     when School
-      expect(current_path).to eq placements_school_user_path(organisation, user)
+      expect(page).to have_current_path placements_school_user_path(organisation, user), ignore_query: true
     when Provider
-      expect(current_path).to eq placements_provider_user_path(organisation, user)
+      expect(page).to have_current_path placements_provider_user_path(organisation, user), ignore_query: true
     end
   end
 
@@ -146,6 +146,6 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
       expect(page).to have_content "User removed"
     end
 
-    expect(page).to_not have_content user.full_name
+    expect(page).not_to have_content user.full_name
   end
 end

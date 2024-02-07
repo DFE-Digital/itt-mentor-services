@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe Provider::Api do
+  subject { described_class.call }
+
   before do
     stub_request(
       :get,
@@ -27,8 +29,6 @@ RSpec.describe Provider::Api do
       }.to_json,
     )
   end
-
-  subject { described_class.call }
 
   it "returns a list of providers from the current recruitment cycle publish-teacher-training-courses api" do
     response = subject

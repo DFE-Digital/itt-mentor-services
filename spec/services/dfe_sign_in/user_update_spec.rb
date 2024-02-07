@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe DfESignIn::UserUpdate do
+  subject { described_class.call(current_user:, sign_in_user:) }
+
   let(:current_user) { create(:claims_user) }
   let(:sign_in_user) do
     instance_double(
@@ -12,13 +14,11 @@ RSpec.describe DfESignIn::UserUpdate do
     )
   end
 
-  subject { described_class.call(current_user:, sign_in_user:) }
-
   it "updates the user's sign in attributes" do
     expect { subject }.to change(current_user, :email).to("test@gmail.com")
       .and change(current_user, :first_name).to("John")
       .and change(current_user, :last_name).to("Doe")
       .and change(current_user, :dfe_sign_in_uid).to("123")
-    expect(current_user.last_signed_in_at).to_not be_nil
+    expect(current_user.last_signed_in_at).not_to be_nil
   end
 end

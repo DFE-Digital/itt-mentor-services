@@ -2,8 +2,8 @@ require "rails_helper"
 
 describe SchoolOnboardingForm, type: :model do
   describe "validations" do
-    it { should validate_presence_of(:service) }
-    it { should validate_inclusion_of(:service).in_array(%i[placements claims]) }
+    it { is_expected.to validate_presence_of(:service) }
+    it { is_expected.to validate_inclusion_of(:service).in_array(%i[placements claims]) }
 
     context "when id is not present" do
       it "returns invalid" do

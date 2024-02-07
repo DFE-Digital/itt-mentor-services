@@ -20,10 +20,10 @@ require "rails_helper"
 
 RSpec.describe Claim, type: :model do
   context "associations" do
-    it { should belong_to(:school) }
-    it { should have_many(:mentor_trainings) }
-    it { should have_many(:mentors).through(:mentor_trainings) }
-    it { should have_many(:providers).through(:mentor_trainings) }
-    it { should accept_nested_attributes_for(:mentor_trainings) }
+    it { is_expected.to belong_to(:school) }
+    it { is_expected.to have_many(:mentor_trainings) }
+    it { is_expected.to have_many(:mentors).through(:mentor_trainings) }
+    it { is_expected.to have_many(:providers).through(:mentor_trainings) }
+    it { is_expected.to accept_nested_attributes_for(:mentor_trainings) }
   end
 end

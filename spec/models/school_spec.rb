@@ -56,9 +56,9 @@ require "rails_helper"
 
 RSpec.describe School, type: :model do
   context "associations" do
-    it { should have_many(:memberships) }
-    it { should have_many(:mentors) }
-    it { should belong_to(:region) }
+    it { is_expected.to have_many(:memberships) }
+    it { is_expected.to have_many(:mentors) }
+    it { is_expected.to belong_to(:region) }
   end
 
   context "scopes" do
@@ -80,9 +80,6 @@ RSpec.describe School, type: :model do
 
         expect(described_class.claims_service).to contain_exactly(claims_school)
       end
-    end
-
-    describe "#claims_service" do
     end
   end
 
