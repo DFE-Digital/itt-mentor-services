@@ -1,23 +1,25 @@
 require "rails_helper"
 
 RSpec.describe Placements::UserPolicy do
-  subject { described_class.new(current_user, user).destroy? }
+  subject { described_class }
 
-  context "where current user and user are the the same user" do
-    let(:current_user) { create(:placements_user) }
-    let(:user) { current_user }
+  permissions :destroy? do
+    context "when current user and user are the the same user" do
+      let(:current_user) { create(:placements_user) }
+      let(:user) { current_user }
 
-    it "returns false, user cannot destroy themselves" do
-      expect(subject).to eq false
+      it "denies access" do
+        expect(subject).not_to permit(current_user, user)
+      end
     end
-  end
 
-  context "where current user and user are different users" do
-    let(:current_user) { create(:placements_user) }
-    let(:user) { create(:placements_user) }
+    context "when current user and user are different users" do
+      let(:current_user) { create(:placements_user) }
+      let(:user) { create(:placements_user) }
 
-    it "returns true, user can destroy other users" do
-      expect(subject).to eq true
+      it "grants access" do
+        expect(subject).to permit(current_user, user)
+      end
     end
   end
 end
