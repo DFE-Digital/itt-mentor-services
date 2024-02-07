@@ -56,10 +56,10 @@ require "rails_helper"
 
 RSpec.describe Claims::School do
   context "associations" do
-    it { should have_many(:claims) }
+    it { is_expected.to have_many(:claims) }
 
-    context "#users" do
-      it { should have_many(:users).through(:memberships) }
+    describe "#users" do
+      it { is_expected.to have_many(:users).through(:memberships) }
 
       it "returns only Claims::User records" do
         claims_school = create(:claims_school)

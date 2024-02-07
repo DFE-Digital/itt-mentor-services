@@ -16,7 +16,7 @@ describe DfESignInUser do
           "credentials" => { "id_token" => "123" },
           "provider" => "dfe",
         }
-        DfESignInUser.begin_session!(session, omniauth_payload)
+        described_class.begin_session!(session, omniauth_payload)
 
         expect(session).to eq(
           {
@@ -49,7 +49,7 @@ describe DfESignInUser do
         },
         "service" => :placements,
       }
-      dfe_sign_in_user = DfESignInUser.load_from_session(session)
+      dfe_sign_in_user = described_class.load_from_session(session)
 
       expect(dfe_sign_in_user).not_to be_nil
       expect(dfe_sign_in_user.first_name).to eq("Example")
@@ -67,7 +67,7 @@ describe DfESignInUser do
             "last_active_at" => 3.hours.ago,
           },
         }
-        dfe_sign_in_user = DfESignInUser.load_from_session(session)
+        dfe_sign_in_user = described_class.load_from_session(session)
 
         expect(dfe_sign_in_user).to be_nil
       end
@@ -92,7 +92,7 @@ describe DfESignInUser do
           "service" => :claims,
         }
 
-        dfe_sign_in_user = DfESignInUser.load_from_session(session)
+        dfe_sign_in_user = described_class.load_from_session(session)
 
         expect(dfe_sign_in_user.user).to eq claims_user
         expect(dfe_sign_in_user.user).to be_a Claims::User
@@ -114,7 +114,7 @@ describe DfESignInUser do
           "service" => :claims,
         }
 
-        dfe_sign_in_user = DfESignInUser.load_from_session(session)
+        dfe_sign_in_user = described_class.load_from_session(session)
 
         expect(dfe_sign_in_user.user.id).to eq support_user.id
         expect(dfe_sign_in_user.user).to be_a Claims::SupportUser
@@ -137,7 +137,7 @@ describe DfESignInUser do
             "service" => :claims,
           }
 
-          dfe_sign_in_user = DfESignInUser.load_from_session(session)
+          dfe_sign_in_user = described_class.load_from_session(session)
 
           expect(dfe_sign_in_user.user).to eq claims_user
           expect(dfe_sign_in_user.user).to be_a Claims::User
@@ -159,7 +159,7 @@ describe DfESignInUser do
             "service" => :claims,
           }
 
-          dfe_sign_in_user = DfESignInUser.load_from_session(session)
+          dfe_sign_in_user = described_class.load_from_session(session)
 
           expect(dfe_sign_in_user.user).to eq claims_user
           expect(dfe_sign_in_user.user).to be_a Claims::User
@@ -181,7 +181,7 @@ describe DfESignInUser do
             "service" => :claims,
           }
 
-          dfe_sign_in_user = DfESignInUser.load_from_session(session)
+          dfe_sign_in_user = described_class.load_from_session(session)
 
           expect(dfe_sign_in_user.user.id).to eq support_user.id
           expect(dfe_sign_in_user.user).to be_a Claims::SupportUser
@@ -206,7 +206,7 @@ describe DfESignInUser do
           "service" => :placements,
         }
 
-        dfe_sign_in_user = DfESignInUser.load_from_session(session)
+        dfe_sign_in_user = described_class.load_from_session(session)
 
         expect(dfe_sign_in_user.user).to eq placements_user
         expect(dfe_sign_in_user.user).to be_a Placements::User
@@ -228,7 +228,7 @@ describe DfESignInUser do
           "service" => :placements,
         }
 
-        dfe_sign_in_user = DfESignInUser.load_from_session(session)
+        dfe_sign_in_user = described_class.load_from_session(session)
 
         expect(dfe_sign_in_user.user.id).to eq support_user.id
         expect(dfe_sign_in_user.user).to be_a Placements::SupportUser
@@ -251,7 +251,7 @@ describe DfESignInUser do
             "service" => :placements,
           }
 
-          dfe_sign_in_user = DfESignInUser.load_from_session(session)
+          dfe_sign_in_user = described_class.load_from_session(session)
 
           expect(dfe_sign_in_user.user).to eq placements_user
           expect(dfe_sign_in_user.user).to be_a Placements::User
@@ -273,7 +273,7 @@ describe DfESignInUser do
             "service" => :placements,
           }
 
-          dfe_sign_in_user = DfESignInUser.load_from_session(session)
+          dfe_sign_in_user = described_class.load_from_session(session)
 
           expect(dfe_sign_in_user.user).to eq placements_user
           expect(dfe_sign_in_user.user).to be_a Placements::User
@@ -295,7 +295,7 @@ describe DfESignInUser do
             "service" => :placements,
           }
 
-          dfe_sign_in_user = DfESignInUser.load_from_session(session)
+          dfe_sign_in_user = described_class.load_from_session(session)
 
           expect(dfe_sign_in_user.user.id).to eq support_user.id
           expect(dfe_sign_in_user.user).to be_a Placements::SupportUser
@@ -318,7 +318,7 @@ describe DfESignInUser do
         },
       }
 
-      DfESignInUser.end_session!(session)
+      described_class.end_session!(session)
 
       expect(session).to eq({})
     end

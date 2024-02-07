@@ -32,9 +32,9 @@ require "rails_helper"
 
 RSpec.describe Provider, type: :model do
   context "associations" do
-    it { should have_many(:memberships) }
-    it { should have_many(:users).through(:memberships) }
-    it { should have_many(:mentor_trainings) }
+    it { is_expected.to have_many(:memberships) }
+    it { is_expected.to have_many(:users).through(:memberships) }
+    it { is_expected.to have_many(:mentor_trainings) }
   end
 
   context "scopes" do
@@ -53,11 +53,13 @@ RSpec.describe Provider, type: :model do
 
     it { is_expected.to validate_presence_of(:code) }
     it { is_expected.to validate_presence_of(:name) }
+
     it do
-      is_expected.to validate_uniqueness_of(
+      expect(subject).to validate_uniqueness_of(
         :code,
       ).case_insensitive
     end
+
     it { is_expected.to allow_values("scitt", "lead_school", "university").for(:provider_type) }
   end
 

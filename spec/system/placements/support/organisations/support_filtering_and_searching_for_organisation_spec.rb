@@ -92,18 +92,18 @@ RSpec.describe "Support user filters and searches for organisations", type: :sys
     expect(page).to have_content("A School")
     expect(page).to have_content("University of Westminster")
 
-    expect(page).to_not have_content("Lead Partner London")
-    expect(page).to_not have_content("School London")
-    expect(page).to_not have_content("1 Primary")
+    expect(page).not_to have_content("Lead Partner London")
+    expect(page).not_to have_content("School London")
+    expect(page).not_to have_content("1 Primary")
   end
 
   def then_i_see_only_the_organisation_with_lead_partner_as_provider_type
     expect(page).to have_content("Lead Partner London")
 
-    expect(page).to_not have_content("School London")
-    expect(page).to_not have_content("University of Westminster")
-    expect(page).to_not have_content("A School")
-    expect(page).to_not have_content("1 Primary")
+    expect(page).not_to have_content("School London")
+    expect(page).not_to have_content("University of Westminster")
+    expect(page).not_to have_content("A School")
+    expect(page).not_to have_content("1 Primary")
   end
 
   def then_i_see_the_no_results_message(message)
@@ -135,7 +135,7 @@ RSpec.describe "Support user filters and searches for organisations", type: :sys
       expect(page).to have_content "SCITT"
       expect(page).to have_content "University"
 
-      expect(page).to_not have_content "School"
+      expect(page).not_to have_content "School"
     end
   end
 
@@ -143,9 +143,9 @@ RSpec.describe "Support user filters and searches for organisations", type: :sys
     expect(page).to have_content("University of Westminster")
     expect(page).to have_content("Lead Partner London")
 
-    expect(page).to_not have_content("School London")
-    expect(page).to_not have_content("A School")
-    expect(page).to_not have_content("1 Primary")
+    expect(page).not_to have_content("School London")
+    expect(page).not_to have_content("A School")
+    expect(page).not_to have_content("1 Primary")
   end
 
   def then_i_see_all_organisations
@@ -159,19 +159,19 @@ RSpec.describe "Support user filters and searches for organisations", type: :sys
   def then_i_see_the_london_school_only
     expect(page).to have_content("School London")
 
-    expect(page).to_not have_content("University of Westminster")
-    expect(page).to_not have_content("Lead Partner London")
-    expect(page).to_not have_content("A School")
-    expect(page).to_not have_content("1 Primary")
+    expect(page).not_to have_content("University of Westminster")
+    expect(page).not_to have_content("Lead Partner London")
+    expect(page).not_to have_content("A School")
+    expect(page).not_to have_content("1 Primary")
   end
 
   def then_i_see_all_london_organisations
     expect(page).to have_content("School London")
     expect(page).to have_content("Lead Partner London")
 
-    expect(page).to_not have_content("University of Westminster")
-    expect(page).to_not have_content("A School")
-    expect(page).to_not have_content("1 Primary")
+    expect(page).not_to have_content("University of Westminster")
+    expect(page).not_to have_content("A School")
+    expect(page).not_to have_content("1 Primary")
   end
 
   def then_i_see_all_schools
@@ -179,8 +179,8 @@ RSpec.describe "Support user filters and searches for organisations", type: :sys
     expect(page).to have_content("1 Primary")
     expect(page).to have_content("A School")
 
-    expect(page).to_not have_content("University of Westminster")
-    expect(page).to_not have_content("Lead Partner London")
+    expect(page).not_to have_content("University of Westminster")
+    expect(page).not_to have_content("Lead Partner London")
   end
 
   def given_i_am_signed_in_as_a_support_user

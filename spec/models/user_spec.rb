@@ -22,7 +22,7 @@ RSpec.describe User, type: :model do
   subject { build(:user) }
 
   context "associations" do
-    it { should have_many(:memberships).dependent(:destroy) }
+    it { is_expected.to have_many(:memberships).dependent(:destroy) }
   end
 
   describe "validations" do

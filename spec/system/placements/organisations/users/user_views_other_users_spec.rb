@@ -88,7 +88,7 @@ RSpec.describe "Placements user views other users in their organisation", type: 
   end
 
   def and_i_do_not_see_the_remove_user_link
-    expect(page).to_not have_link "Remove user"
+    expect(page).not_to have_link "Remove user"
   end
 
   def users_is_selected_in_navigation

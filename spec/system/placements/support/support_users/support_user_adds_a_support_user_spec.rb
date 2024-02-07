@@ -106,7 +106,7 @@ RSpec.describe "Placements / Support Users / Support user adds a support user",
       delivery.to.include?(email_address) && delivery.subject == "Invitation to join Manage school placements"
     end
 
-    expect(email).to_not be_nil
+    expect(email).not_to be_nil
   end
 
   def then_i_click_on_a_change_link

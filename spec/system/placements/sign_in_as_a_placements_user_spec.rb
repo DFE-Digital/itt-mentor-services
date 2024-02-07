@@ -69,13 +69,13 @@ def and_i_visit_my_account_page
 end
 
 def then_i_see_a_list_of_organisations
-  expect(current_path).to eq placements_support_organisations_path
+  expect(page).to have_current_path placements_support_organisations_path, ignore_query: true
   expect(page).to have_content("Placement School")
   expect(page).to have_content("Provider 1")
 end
 
 def then_i_dont_get_redirected_to_support_organisations
-  expect(current_path).not_to eq placements_support_organisations_path
+  expect(page).to have_no_current_path placements_support_organisations_path, ignore_query: true
 end
 
 def then_i_see_user_details_for_anne

@@ -7,6 +7,7 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
     given_i_sign_in_as_colin
     provider
   end
+
   after { Capybara.app_host = nil }
 
   scenario "Colin adds a new Provider", js: true, retry: 3 do

@@ -15,14 +15,14 @@ RSpec.describe ServiceUpdate do
             },
           ],
         )
-        updates = ServiceUpdate.where(service: :claims)
+        updates = described_class.where(service: :claims)
         expect(updates.length).to eq(1)
         expect(updates.first.title).to eq("Claim Update")
       end
 
       it "returns an empty hash when no updates for claims" do
         allow(YAML).to receive(:load_file).and_return(nil)
-        updates = ServiceUpdate.where(service: :claims)
+        updates = described_class.where(service: :claims)
         expect(updates).to eq([])
       end
     end
@@ -38,14 +38,14 @@ RSpec.describe ServiceUpdate do
             },
           ],
         )
-        updates = ServiceUpdate.where(service: :placements)
+        updates = described_class.where(service: :placements)
         expect(updates.length).to eq(1)
         expect(updates.first.title).to eq("Placement Update")
       end
 
       it "returns an empty hash when no updates for placements" do
         allow(YAML).to receive(:load_file).and_return(nil)
-        updates = ServiceUpdate.where(service: :placements)
+        updates = described_class.where(service: :placements)
         expect(updates).to eq([])
       end
     end
@@ -53,19 +53,19 @@ RSpec.describe ServiceUpdate do
 
   describe ".yaml_file" do
     it "returns claims YAML file path" do
-      file_path = ServiceUpdate.file_path(service: :claims)
+      file_path = described_class.file_path(service: :claims)
       expect(file_path).to eq(Rails.root.join("db/claims_service_updates.yml"))
     end
 
     it "returns placements YAML file path" do
-      file_path = ServiceUpdate.file_path(service: :placements)
+      file_path = described_class.file_path(service: :placements)
       expect(file_path).to eq(
         Rails.root.join("db/placements_service_updates.yml"),
       )
     end
 
     it "returns nil for unknown service" do
-      file_path = ServiceUpdate.file_path(service: :some_other_random_service)
+      file_path = described_class.file_path(service: :some_other_random_service)
       expect(file_path).to be_nil
     end
   end

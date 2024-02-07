@@ -89,7 +89,7 @@ RSpec.describe "View organisations", type: :system, service: :placements do
   end
 
   def then_i_see_the_school_page(school)
-    expect(current_path).to eq placements_school_path(school)
+    expect(page).to have_current_path placements_school_path(school), ignore_query: true
     within(".app-primary-navigation__nav") do
       expect(page).to have_link "Organisation details", current: "page"
       expect(page).to have_link "Users", current: "false"
@@ -116,7 +116,7 @@ RSpec.describe "View organisations", type: :system, service: :placements do
   end
 
   def then_i_see_provider_page(provider)
-    expect(current_path).to eq placements_provider_path(provider)
+    expect(page).to have_current_path placements_provider_path(provider), ignore_query: true
     within(".govuk-main-wrapper") do
       expect(page).to have_content provider.name
       expect(page).to have_content "Organisation details"
@@ -135,12 +135,12 @@ RSpec.describe "View organisations", type: :system, service: :placements do
   end
 
   def then_i_see_the_one_school
-    expect(page).to_not have_content "Change organisation"
+    expect(page).not_to have_content "Change organisation"
     then_i_see_the_school_page(@school)
   end
 
   def then_i_see_the_one_provider
-    expect(page).to_not have_content "Change organisation"
+    expect(page).not_to have_content "Change organisation"
     then_i_see_provider_page(@provider)
   end
 
@@ -156,12 +156,12 @@ RSpec.describe "View organisations", type: :system, service: :placements do
     expect(page).to have_content "Placements School"
     expect(page).to have_content "Provider 1"
 
-    expect(page).to_not have_content "Claims School"
-    expect(page).to_not have_content "No service school"
+    expect(page).not_to have_content "Claims School"
+    expect(page).not_to have_content "No service school"
   end
 
   def i_am_redirected_to_organisation_index
     expect(page).to have_content("Organisations")
-    expect(current_path).to eq placements_organisations_path
+    expect(page).to have_current_path placements_organisations_path, ignore_query: true
   end
 end

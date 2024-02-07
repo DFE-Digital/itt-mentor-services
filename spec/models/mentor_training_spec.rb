@@ -28,8 +28,8 @@ require "rails_helper"
 
 RSpec.describe MentorTraining, type: :model do
   context "associations" do
-    it { should belong_to(:claim) }
-    it { should belong_to(:mentor).optional }
-    it { should belong_to(:provider).optional }
+    it { is_expected.to belong_to(:claim) }
+    it { is_expected.to belong_to(:mentor).optional }
+    it { is_expected.to belong_to(:provider).optional }
   end
 end

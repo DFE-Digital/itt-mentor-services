@@ -2,9 +2,10 @@ require "rails_helper"
 
 describe OrganisationOnboardingForm, type: :model do
   describe "validations" do
-    it { should validate_presence_of(:organisation_type) }
+    it { is_expected.to validate_presence_of(:organisation_type) }
+
     it {
-      should validate_inclusion_of(:organisation_type).in_array(
+      expect(subject).to validate_inclusion_of(:organisation_type).in_array(
         described_class::ORGANISATION_TYPES,
       )
     }

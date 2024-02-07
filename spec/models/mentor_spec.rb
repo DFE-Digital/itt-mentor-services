@@ -22,7 +22,7 @@ require "rails_helper"
 
 RSpec.describe Mentor, type: :model do
   context "associations" do
-    it { should belong_to(:school) }
+    it { is_expected.to belong_to(:school) }
   end
 
   context "validations" do

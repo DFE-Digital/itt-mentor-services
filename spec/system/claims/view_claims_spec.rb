@@ -3,10 +3,7 @@ require "rails_helper"
 RSpec.describe "View claims", type: :system, service: :claims do
   let!(:school) { create(:claims_school) }
   let!(:mentor_trainings) do
-    [
-      create(:mentor_training, claim: create(:claim, school:)),
-      create(:mentor_training, claim: create(:claim, school:)),
-    ]
+    2.times.map { create(:mentor_training, claim: create(:claim, school:)) }
   end
   let!(:anne) do
     create(
