@@ -13,6 +13,7 @@
 # it.
 
 require "rspec/retry"
+require "pundit/rspec"
 require "simplecov"
 require "simplecov-html"
 require "simplecov-lcov"
