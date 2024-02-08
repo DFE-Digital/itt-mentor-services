@@ -16,12 +16,10 @@
           <% row.with_value(text: render(Claim::StatusTagComponent.new(claim: @claim))) %>
         <% end %>
 
-        <% if @claim.providers.any? %>
-          <%= @claim.providers.each_with_index do |provider, index| %>
-            <% summary_list.with_row do |row| %>
-              <% row.with_key(text: t(".provider_with_index", index: index + 1)) %>
-              <% row.with_value(text: provider.name) %>
-            <% end %>
+        <% if @claim.provider %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".provider")) %>
+            <% row.with_value(text: @claim.provider.name) %>
           <% end %>
         <% else %>
           <% summary_list.with_row do |row| %>

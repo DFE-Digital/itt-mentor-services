@@ -12,19 +12,16 @@ class ClaimForm
   end
 
   def valid?
-    claim.valid? && valid_providers? && valid_mentors?
+    claim.valid? && valid_provider? && valid_mentors?
   end
 
   private
 
-  def valid_providers?
+  def valid_provider?
     return true unless step == "providers"
 
-    claim.mentor_trainings.each do |mentor_training|
-      if mentor_training.provider_id.nil?
-        mentor_training.errors.add(:provider_id, :blank)
-        claim.errors.add(:base, :enter_provider_name)
-      end
+    if claim.provider_id.nil?
+      claim.errors.add(:provider_id)
     end
 
     claim.errors.blank?
