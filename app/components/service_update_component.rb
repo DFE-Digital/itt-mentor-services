@@ -1,12 +1,13 @@
-class ServiceUpdate::View < GovukComponent::Base
+class ServiceUpdateComponent < ApplicationComponent
   attr_reader :service_update
 
   delegate :title, :content, :date, to: :service_update
 
-  TITLE_CLASS = "govuk-heading-m govuk-!-margin-bottom-2"
+  TITLE_CLASS = "govuk-heading-m govuk-!-margin-bottom-2".freeze
 
-  def initialize(service_update:)
+  def initialize(service_update:, classes: [], html_attributes: {})
     @service_update = service_update
+    super(classes:, html_attributes:)
   end
 
   def title_element
