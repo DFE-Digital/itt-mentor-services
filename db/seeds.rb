@@ -42,10 +42,18 @@ Rails.logger.debug "Services added to schools"
 # Create Providers Imported from Publfish
 Rake::Task["provider_data:import"].invoke unless Provider.any?
 
+Rails.logger.debug "Importing schools from GIAS..."
+Rake::Task["gias_update"].invoke
+
 # Associate Placements Users with Organisations
 # Single School Anne
 placements_anne = Placements::User.find_by!(email: "anne_wilson@example.org")
 placements_anne.memberships.find_or_create_by!(organisation: Placements::School.first)
+
+# Associate Claims Users with Organisations
+# Single School Anne
+claims_anne = Claims::User.find_by!(email: "anne_wilson@example.org")
+claims_anne.memberships.find_or_create_by!(organisation: Claims::School.first)
 
 # Multi-school Mary
 placements_mary = Placements::User.find_by!(email: "mary@example.com")

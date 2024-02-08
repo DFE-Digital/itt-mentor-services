@@ -134,28 +134,27 @@ class GiasCsvImporter
     end
     Rails.logger.silence do
       School.upsert_all(records, unique_by: :urn)
-      associate_schools_to_regions
     end
 
+    associate_schools_to_regions
     Rails.logger.info "Done!"
   end
 
   private
 
   def associate_schools_to_regions
-    Rails.logger.debug "Associating schools to regions... "
+    Rails.logger.info "Associating the first 1000 schools to regions"
 
-    Region.find_or_create_by!(name: "Inner London") { |region| region.claims_funding_available_per_hour = 53.60 }
-    Region.find_or_create_by!(name: "Outer London") { |region| region.claims_funding_available_per_hour = 48.25 }
-    Region.find_or_create_by!(name: "Fringe") { |region| region.claims_funding_available_per_hour = 45.10 }
-    Region.find_or_create_by!(name: "Rest of England") { |region| region.claims_funding_available_per_hour = 43.18 }
+    Rails.logger.silence do
+      Region.find_or_create_by!(name: "Inner London") { |region| region.claims_funding_available_per_hour = 53.60 }
+      Region.find_or_create_by!(name: "Outer London") { |region| region.claims_funding_available_per_hour = 48.25 }
+      Region.find_or_create_by!(name: "Fringe") { |region| region.claims_funding_available_per_hour = 45.10 }
+      Region.find_or_create_by!(name: "Rest of England") { |region| region.claims_funding_available_per_hour = 43.18 }
+    end
 
-    School.find_each do |school|
+    School.first(1000).each do |school|
       region = determine_region(school.district_admin_code)
-
-      unless school.update(region:)
-        Rails.logger.info "Failed to update region for school with ID #{school.id}"
-      end
+      school.update!(region:)
     end
   end
 

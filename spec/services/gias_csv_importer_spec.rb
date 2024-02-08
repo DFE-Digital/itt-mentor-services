@@ -14,6 +14,7 @@ RSpec.describe GiasCsvImporter do
 
   it "logs messages to STDOUT" do
     expect(Rails.logger).to receive(:info).with("Invalid rows - [\"Row 8 is invalid\"]")
+    expect(Rails.logger).to receive(:info).with("Associating the first 1000 schools to regions")
     expect(Rails.logger).to receive(:info).with("Done!")
 
     subject
