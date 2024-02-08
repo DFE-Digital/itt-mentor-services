@@ -65,7 +65,7 @@ describe UserInviteForm, type: :model do
             first_name: ["Enter a first name"],
             email: ["Enter an email address", "Enter an email address in the correct format, like name@example.com"],
           )
-          expect { user_invite_form.save! }.to raise_error ActiveRecord::RecordInvalid
+          expect { user_invite_form.save! }.to raise_error ActiveModel::ValidationError
         end
       end
 
@@ -88,7 +88,7 @@ describe UserInviteForm, type: :model do
 
           expect(user_invite_form.errors.messages)
             .to match(email: ["Email address already in use"])
-          expect { user_invite_form.save! }.to raise_error ActiveRecord::RecordInvalid
+          expect { user_invite_form.save! }.to raise_error ActiveModel::ValidationError
         end
       end
     end
