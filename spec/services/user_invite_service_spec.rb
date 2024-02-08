@@ -11,10 +11,7 @@ RSpec.describe UserInviteService do
         let(:service) { "claims" }
 
         it "calls mailer with correct prams" do
-          user_mailer = double(:user_mailer)
-          expect(UserMailer).to receive(:invitation_email).with(user, organisation, "http://claims.localhost/sign-in") { user_mailer }
-          expect(user_mailer).to receive(:deliver_later)
-          subject
+          expect { subject }.to have_enqueued_mail(UserMailer, :invitation_email).with(user, organisation, "http://claims.localhost/sign-in")
         end
       end
     end
@@ -27,10 +24,7 @@ RSpec.describe UserInviteService do
         let(:organisation) { create(:school, :placements) }
 
         it "calls mailer with correct prams" do
-          user_mailer = double(:user_mailer)
-          expect(UserMailer).to receive(:invitation_email).with(user, organisation, "http://placements.localhost/sign-in") { user_mailer }
-          expect(user_mailer).to receive(:deliver_later)
-          subject
+          expect { subject }.to have_enqueued_mail(UserMailer, :invitation_email).with(user, organisation, "http://placements.localhost/sign-in")
         end
       end
 
@@ -39,10 +33,7 @@ RSpec.describe UserInviteService do
         let(:organisation) { create(:placements_provider) }
 
         it "calls mailer with correct prams" do
-          user_mailer = double(:user_mailer)
-          expect(UserMailer).to receive(:invitation_email).with(user, organisation, "http://placements.localhost/sign-in") { user_mailer }
-          expect(user_mailer).to receive(:deliver_later)
-          subject
+          expect { subject }.to have_enqueued_mail(UserMailer, :invitation_email).with(user, organisation, "http://placements.localhost/sign-in")
         end
       end
     end
