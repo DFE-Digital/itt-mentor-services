@@ -26,6 +26,6 @@ class ApplicationForm
   private
 
   def raise_validation_error
-    raise ActiveRecord::RecordInvalid, self
+    raise ActiveModel::ValidationError, self
   end
 end
