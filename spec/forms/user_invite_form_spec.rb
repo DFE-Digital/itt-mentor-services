@@ -71,10 +71,9 @@ describe UserInviteForm, type: :model do
         }
       end
 
-      before "it sends invitation" do
-        user_mailer = double(:user_mailer)
-        expect(UserMailer).to receive(:invitation_email) { user_mailer }
-        expect(user_mailer).to receive(:deliver_later)
+      it "sends invitation" do
+        user_invite_form = described_class.new(form_params)
+        expect { user_invite_form.invite }.to have_enqueued_mail(UserMailer, :invitation_email)
       end
 
       it "creates user" do
@@ -103,10 +102,9 @@ describe UserInviteForm, type: :model do
           service: :placements,
         }
 
-        before "it sends invitation" do
-          user_mailer = double(:user_mailer)
-          expect(UserMailer).to receive(:invitation_email) { user_mailer }
-          expect(user_mailer).to receive(:deliver_later)
+        it "sends invitation" do
+          user_invite_form = described_class.new(form_params)
+          expect { user_invite_form.invite }.to have_enqueued_mail(UserMailer, :invitation_email)
         end
 
         it "updates user first name" do

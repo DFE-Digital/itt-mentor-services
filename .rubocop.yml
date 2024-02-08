@@ -40,7 +40,7 @@ RSpec/SpecFilePathSuffix:
 # introduce RSpec rules while incrementally fixing up the codebase.
 # They should eventually all be re-enabled.
 RSpec/VerifiedDoubles:
-  Enabled: false
+  Enabled: true
 RSpec/ExpectInHook:
   Enabled: false
 RSpec/StubbedMock:

@@ -10,11 +10,8 @@ RSpec.describe RemoveUserService do
       let!(:membership) { create(:membership, user:, organisation:) }
 
       it "calls mailer with correct params" do
-        user_mailer = double(:user_mailer)
-        expect(UserMailer).to receive(:removal_email).with(user, organisation) { user_mailer }
-        expect(user_mailer).to receive(:deliver_later)
+        expect { subject }.to have_enqueued_mail(UserMailer, :removal_email).with(user, organisation)
 
-        subject
         expect { membership.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -25,11 +22,7 @@ RSpec.describe RemoveUserService do
       let!(:membership) { create(:membership, user:, organisation:) }
 
       it "calls mailer with correct params" do
-        user_mailer = double(:user_mailer)
-        expect(UserMailer).to receive(:removal_email).with(user, organisation) { user_mailer }
-        expect(user_mailer).to receive(:deliver_later)
-
-        subject
+        expect { subject }.to have_enqueued_mail(UserMailer, :removal_email).with(user, organisation)
 
         expect { membership.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
