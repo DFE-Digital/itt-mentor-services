@@ -70,7 +70,7 @@ describe SupportUserInviteForm, type: :model do
             ],
           )
 
-          expect { support_user_invite_form.save! }.to raise_error ActiveRecord::RecordInvalid
+          expect { support_user_invite_form.save! }.to raise_error ActiveModel::ValidationError
         end
       end
     end
