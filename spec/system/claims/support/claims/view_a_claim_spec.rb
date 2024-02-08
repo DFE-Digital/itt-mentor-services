@@ -9,7 +9,7 @@ RSpec.describe "View claims", type: :system, service: :claims do
     create(
       :claim,
       draft: false,
-      providers: [provider],
+      provider:,
       mentors: [mentor],
     )
   end
@@ -74,7 +74,7 @@ RSpec.describe "View claims", type: :system, service: :claims do
     end
 
     within(".govuk-summary-list__row:nth-child(2)") do
-      expect(page).to have_content("Provider 1")
+      expect(page).to have_content("Provider")
       expect(page).to have_content(provider.name)
     end
 

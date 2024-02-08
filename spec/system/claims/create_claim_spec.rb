@@ -24,7 +24,7 @@ RSpec.describe "Create claim", type: :system, js: true, retry: 3, service: :clai
       providers_status: "Not started",
       mentors_status: "Not started",
     )
-    and_i_click("ITT providers")
+    and_i_click("ITT provider")
     and_i_input_a_provider(provider.name.first(3))
     then_i_see_a_dropdown_item_for(provider.name)
     when_i_click_the_dropdown_item_for(provider.name)
@@ -52,7 +52,7 @@ RSpec.describe "Create claim", type: :system, js: true, retry: 3, service: :clai
       providers_status: "Not started",
       mentors_status: "Not started",
     )
-    and_i_click("ITT providers")
+    and_i_click("ITT provider")
     and_i_click_continue
     then_i_see_an_error_message("Enter a provider name")
   end
@@ -64,7 +64,7 @@ RSpec.describe "Create claim", type: :system, js: true, retry: 3, service: :clai
       providers_status: "Not started",
       mentors_status: "Not started",
     )
-    and_i_click("ITT providers")
+    and_i_click("ITT provider")
     and_i_input_a_provider("non existent")
     and_i_click_continue
     then_i_see_an_error_message("Enter a provider name")
@@ -113,9 +113,9 @@ RSpec.describe "Create claim", type: :system, js: true, retry: 3, service: :clai
 
   def then_i_see_my_claim_check_list(providers_status:, mentors_status:)
     expect(page).to have_content("Claim general mentor training funding")
-    expect(page).to have_content("1. ITT providers")
+    expect(page).to have_content("1. ITT provider")
     within(".providers-task-list") do
-      expect(page).to have_content("ITT providers")
+      expect(page).to have_content("ITT provider")
       expect(page).to have_content(providers_status)
     end
 
@@ -127,7 +127,7 @@ RSpec.describe "Create claim", type: :system, js: true, retry: 3, service: :clai
   end
 
   def and_i_input_a_provider(string)
-    fill_in("claim-mentor-trainings-attributes-0-provider-id-field", with: string)
+    fill_in("claim-provider-id-field", with: string)
   end
 
   def and_i_input_a_mentor(string)

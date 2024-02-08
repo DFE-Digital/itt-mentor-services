@@ -10,11 +10,11 @@
 
   <%= govuk_task_list(id_prefix: "providers", classes: "providers-task-list") do |task_list| %>
     <%= task_list.with_item(
-      title: t(".itt_providers"),
+      title: t(".itt_provider"),
       href: edit_claims_school_claim_path(@school, @claim, "providers"),
       status: govuk_tag(
-        text: @claim.item_status_tag("providers").fetch(:text),
-        colour: @claim.item_status_tag("providers").fetch(:colour),
+        text: @claim.item_status_tag("provider").fetch(:text),
+        colour: @claim.item_status_tag("provider").fetch(:colour),
       ),
     ) %>
   <% end %>

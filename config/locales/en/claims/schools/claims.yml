@@ -9,9 +9,9 @@ en:
           claim_updated: Claim updated
         show:
           heading: Claim general mentor training funding
-          providers_heading: 1. ITT providers
+          providers_heading: 1. ITT provider
           mentors_heading: 2. General mentors
-          itt_providers: ITT providers
+          itt_provider: ITT provider
           general_mentors: General mentors
         edit:
           cancel: Cancel

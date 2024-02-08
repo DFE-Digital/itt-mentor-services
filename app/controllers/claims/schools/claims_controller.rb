@@ -37,6 +37,7 @@ class Claims::Schools::ClaimsController < ApplicationController
 
   def claim_params
     params.require(:claim).permit(
+      :provider_id,
       mentor_trainings_attributes: %i[provider_id mentor_id id],
     )
   end

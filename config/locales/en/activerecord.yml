@@ -13,8 +13,9 @@ en:
       models:
         claim:
           attributes:
+            provider_id: 
+              invalid: Enter a provider name
             base:
-              enter_provider_name: Enter a provider name 
               enter_mentor_name: Enter a mentor's name 
         mentor_training:
           attributes:
