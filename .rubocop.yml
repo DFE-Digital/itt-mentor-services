@@ -43,5 +43,3 @@ RSpec/ExpectInHook:
   Enabled: false
 RSpec/InstanceVariable:
   Enabled: false
-RSpec/NamedSubject:
-  Enabled: false

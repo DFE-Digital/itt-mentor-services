@@ -4,11 +4,7 @@ describe OrganisationOnboardingForm, type: :model do
   describe "validations" do
     it { is_expected.to validate_presence_of(:organisation_type) }
 
-    it {
-      expect(subject).to validate_inclusion_of(:organisation_type).in_array(
-        described_class::ORGANISATION_TYPES,
-      )
-    }
+    it { is_expected.to validate_inclusion_of(:organisation_type).in_array(described_class::ORGANISATION_TYPES) }
   end
 
   describe "#options" do

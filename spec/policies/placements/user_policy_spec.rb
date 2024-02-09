@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Placements::UserPolicy do
-  subject { described_class }
+  subject(:user_policy) { described_class }
 
   permissions :destroy? do
     context "when current user and user are the the same user" do
@@ -9,7 +9,7 @@ RSpec.describe Placements::UserPolicy do
       let(:user) { current_user }
 
       it "denies access" do
-        expect(subject).not_to permit(current_user, user)
+        expect(user_policy).not_to permit(current_user, user)
       end
     end
 
@@ -18,7 +18,7 @@ RSpec.describe Placements::UserPolicy do
       let(:user) { create(:placements_user) }
 
       it "grants access" do
-        expect(subject).to permit(current_user, user)
+        expect(user_policy).to permit(current_user, user)
       end
     end
   end

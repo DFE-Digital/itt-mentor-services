@@ -38,13 +38,13 @@ RSpec.describe Provider, type: :model do
   end
 
   context "with validations" do
-    subject { build(:provider) }
+    subject(:test_provider) { build(:provider) }
 
     it { is_expected.to validate_presence_of(:code) }
     it { is_expected.to validate_presence_of(:name) }
 
     it do
-      expect(subject).to validate_uniqueness_of(
+      expect(test_provider).to validate_uniqueness_of(
         :code,
       ).case_insensitive
     end

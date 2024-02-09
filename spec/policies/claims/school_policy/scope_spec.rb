@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Claims::SchoolPolicy::Scope do
-  subject { described_class.new(user, Claims::School).resolve }
+  subject(:school_policy) { described_class.new(user, Claims::School).resolve }
 
   let!(:non_associated_school) { create(:claims_school) }
   let!(:associated_school) { create(:claims_school) }
@@ -10,7 +10,7 @@ RSpec.describe Claims::SchoolPolicy::Scope do
     let(:user) { create(:claims_support_user) }
 
     it "returns all schools" do
-      expect(subject).to match_array([non_associated_school, associated_school])
+      expect(school_policy).to match_array([non_associated_school, associated_school])
     end
   end
 
@@ -22,7 +22,7 @@ RSpec.describe Claims::SchoolPolicy::Scope do
     end
 
     it "returns schools that the user is associated with" do
-      expect(subject).to match_array([associated_school])
+      expect(school_policy).to match_array([associated_school])
     end
   end
 end
