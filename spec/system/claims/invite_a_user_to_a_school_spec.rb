@@ -7,8 +7,11 @@ RSpec.describe "Invite a user to a school", type: :system do
     perform_enqueued_jobs { example.run }
   end
 
+  let(:school) { create(:claims_school, :claims, urn: "123456") }
+  let(:anne) { create(:claims_user, :anne) }
+  let(:another_school) { create(:claims_school, :claims) }
+
   before do
-    setup_school
     setup_school_and_anne_membership
   end
 
@@ -51,7 +54,6 @@ RSpec.describe "Invite a user to a school", type: :system do
   end
 
   scenario "I CANT access another schools users list" do
-    another_school_exists
     sign_in_as_lead_mentor_user
     verify_i_cant_access_another_schools_users_list
   end
@@ -72,18 +74,9 @@ RSpec.describe "Invite a user to a school", type: :system do
 
   private
 
-  def setup_school
-    @school = create(:claims_school, :claims, urn: "123456")
-  end
-
-  def another_school_exists
-    @another_school = create(:claims_school, :claims)
-  end
-
   def setup_school_and_anne_membership
-    @anne = create(:claims_user, :anne)
-    create(:membership, user: @anne, organisation: @school)
-    user_exists_in_dfe_sign_in(user: @anne)
+    create(:membership, user: anne, organisation: school)
+    user_exists_in_dfe_sign_in(user: anne)
   end
 
   def sign_in_as_support_user
@@ -94,25 +87,25 @@ RSpec.describe "Invite a user to a school", type: :system do
   end
 
   def remove_all_users_from_school
-    @school.users.each { |user| user.memberships.destroy_all }
+    school.users.each { |user| user.memberships.destroy_all }
   end
 
   def verify_i_cant_access_another_schools_users_list
-    expect { visit claims_school_users_path(@another_school) }.to raise_error(ActiveRecord::RecordNotFound)
+    expect { visit claims_school_users_path(another_school) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
   def sign_in_as_lead_mentor_user
-    user_exists_in_dfe_sign_in(user: @anne)
+    user_exists_in_dfe_sign_in(user: anne)
     visit sign_in_path
     click_on "Sign in using DfE Sign In"
   end
 
   def visit_claims_school_users_page
-    visit claims_school_users_path(@school)
+    visit claims_school_users_path(school)
   end
 
   def visit_another_claims_school_users_page
-    visit claims_school_users_path(@another_school)
+    visit claims_school_users_path(another_school)
   end
 
   def fill_in_user_details
@@ -164,7 +157,7 @@ RSpec.describe "Invite a user to a school", type: :system do
   end
 
   def then_see_no_users_message
-    expect(page).to have_content("There are no users for #{@school.name}")
+    expect(page).to have_content("There are no users for #{school.name}")
   end
 
   def check_user_details
@@ -182,7 +175,7 @@ RSpec.describe "Invite a user to a school", type: :system do
   end
 
   def verify_user_added
-    email_is_sent("barry.garlow@eduction.gov.uk", @school)
+    email_is_sent("barry.garlow@eduction.gov.uk", school)
     visit_claims_school_users_page
     check_user_details
   end
@@ -192,7 +185,7 @@ RSpec.describe "Invite a user to a school", type: :system do
   end
 
   def verify_user_added_to_another_school
-    email_is_sent("barry.garlow@eduction.gov.uk", @another_school)
+    email_is_sent("barry.garlow@eduction.gov.uk", another_school)
     visit_another_claims_school_users_page
     check_user_details
   end

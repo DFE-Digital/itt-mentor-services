@@ -7,9 +7,8 @@ RSpec.describe "Invite a user to a school", type: :system do
     perform_enqueued_jobs { example.run }
   end
 
-  before do
-    setup_school
-  end
+  let(:school) { create(:school, :claims, urn: "123456") }
+  let(:another_school) { create(:school, :claims) }
 
   scenario "I sign in as a support user and invite a user to a school" do
     sign_in_as_support_user
@@ -43,7 +42,6 @@ RSpec.describe "Invite a user to a school", type: :system do
   end
 
   scenario "I add a user to different schools" do
-    another_school_exists
     sign_in_as_support_user
     visit_claims_support_school_users_page
     click_on_add_user
@@ -76,14 +74,6 @@ RSpec.describe "Invite a user to a school", type: :system do
 
   private
 
-  def setup_school
-    @school = create(:school, :claims, urn: "123456")
-  end
-
-  def another_school_exists
-    @another_school = create(:school, :claims)
-  end
-
   def sign_in_as_support_user
     user = create(:claims_support_user, :colin)
     user_exists_in_dfe_sign_in(user:)
@@ -92,11 +82,11 @@ RSpec.describe "Invite a user to a school", type: :system do
   end
 
   def visit_claims_support_school_users_page
-    visit claims_support_school_users_path(@school)
+    visit claims_support_school_users_path(school)
   end
 
   def visit_another_claims_support_school_users_page
-    visit claims_support_school_users_path(@another_school)
+    visit claims_support_school_users_path(another_school)
   end
 
   def fill_in_user_details
@@ -162,7 +152,7 @@ RSpec.describe "Invite a user to a school", type: :system do
   end
 
   def verify_user_added
-    email_is_sent("barry.garlow@eduction.gov.uk", @school)
+    email_is_sent("barry.garlow@eduction.gov.uk", school)
     visit_claims_support_school_users_page
     check_user_details
   end
@@ -172,7 +162,7 @@ RSpec.describe "Invite a user to a school", type: :system do
   end
 
   def verify_user_added_to_another_school
-    email_is_sent("barry.garlow@eduction.gov.uk", @another_school)
+    email_is_sent("barry.garlow@eduction.gov.uk", another_school)
     visit_another_claims_support_school_users_page
     check_user_details
   end

@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "View users for school", type: :system do
+  let(:school) { create(:school, :claims, urn: "123456") }
+
   before do
     setup_school_and_anne_membership
   end
@@ -14,9 +16,8 @@ RSpec.describe "View users for school", type: :system do
   private
 
   def setup_school_and_anne_membership
-    @school = create(:school, :claims, urn: "123456")
     user = create(:claims_user, :anne)
-    create(:membership, user:, organisation: @school)
+    create(:membership, user:, organisation: school)
   end
 
   def sign_in_as_support_user
@@ -27,7 +28,7 @@ RSpec.describe "View users for school", type: :system do
   end
 
   def visit_claims_support_school_users_page
-    visit claims_support_school_users_path(@school)
+    visit claims_support_school_users_path(school)
   end
 
   def verify_users_list_for_school
