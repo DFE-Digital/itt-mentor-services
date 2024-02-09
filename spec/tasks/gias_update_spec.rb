@@ -10,7 +10,7 @@ describe "gias_update" do
     gias_filename = "edubasealldata#{today}.csv"
     tempfile = Tempfile.new("foo")
 
-    expect(Down).to receive(:download).with(
+    allow(Down).to receive(:download).with(
       "#{ENV["GIAS_CSV_BASE_URL"]}/#{gias_filename}",
     ).and_return(tempfile)
 
