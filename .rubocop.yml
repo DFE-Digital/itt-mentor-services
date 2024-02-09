@@ -39,7 +39,5 @@ RSpec/SpecFilePathSuffix:
 # The following cops are temporarily disabled so we can incrementally
 # introduce RSpec rules while incrementally fixing up the codebase.
 # They should eventually all be re-enabled.
-RSpec/ExpectInHook:
-  Enabled: false
 RSpec/InstanceVariable:
   Enabled: false
