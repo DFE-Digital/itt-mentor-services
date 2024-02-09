@@ -1,4 +1,4 @@
-<%= content_for :page_title, sanitize(t(".page_title", provider_name: @provider.name)) %>
+<%= content_for :page_title, @user_form.errors.any? ? sanitize(t(".page_title_with_error", provider_name: @provider.name)) : sanitize(t(".page_title", provider_name: @provider.name)) %>
 <%= render "placements/support/primary_navigation", current_navigation: :organisations %>
 <%= content_for(:before_content) do %>
   <%= govuk_back_link(href: placements_support_provider_users_path(@provider)) %>
