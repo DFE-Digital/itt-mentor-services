@@ -1,16 +1,18 @@
 require "rails_helper"
 
 RSpec.describe "Placements support user removes a user from an organisation", type: :system, service: :placements do
+  include ActiveJob::TestHelper
+
+  around do |example|
+    perform_enqueued_jobs { example.run }
+  end
+
   describe "schools" do
     let(:school) { create(:placements_school) }
     let(:user) { create(:placements_user) }
 
-    before "message is sent to user" do
+    before do
       create(:membership, user:, organisation: school)
-
-      user_mailer = double(:user_mailer)
-      expect(UserMailer).to receive(:removal_email).with(user, school) { user_mailer }
-      expect(user_mailer).to receive(:deliver_later)
     end
 
     scenario "user is removed from a school" do
@@ -31,12 +33,8 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     let(:provider) { create(:placements_provider) }
     let(:user) { create(:placements_user) }
 
-    before "email is sent to user notifying them of the removal" do
+    before do
       create(:membership, user:, organisation: provider)
-
-      user_mailer = double(:user_mailer)
-      expect(UserMailer).to receive(:removal_email).with(user, provider) { user_mailer }
-      expect(user_mailer).to receive(:deliver_later)
     end
 
     scenario "user is removed from a provider" do
@@ -58,13 +56,9 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     let(:provider) { create(:placements_provider) }
     let(:user) { create(:placements_user) }
 
-    before "user is sent an email to notify them of the removal" do
+    before do
       create(:membership, user:, organisation: school)
       create(:membership, user:, organisation: provider)
-
-      user_mailer = double(:user_mailer)
-      expect(UserMailer).to receive(:removal_email).with(user, school) { user_mailer }
-      expect(user_mailer).to receive(:deliver_later)
     end
 
     scenario "user is removed from one organisation but when other memberships exist" do
@@ -147,6 +141,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
   end
 
   def then_the_the_user_is_removed_from_the_organisation(organisation)
+    email_is_sent(user.email, organisation)
     organisations_is_selected_in_primary_nav
     users_is_selected_in_secondary_nav
     expect(user.memberships.find_by(organisation:)).to eq nil
@@ -155,5 +150,13 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     end
 
     expect(page).not_to have_content user.full_name
+  end
+
+  def email_is_sent(email, organisation)
+    email = ActionMailer::Base.deliveries.find do |delivery|
+      delivery.to.include?(email) && delivery.subject == "You have been removed from #{organisation.name}"
+    end
+
+    expect(email).not_to be_nil
   end
 end

@@ -1,6 +1,12 @@
 require "rails_helper"
 
 RSpec.describe "Placements support user removes a user from an organisation", type: :system, service: :placements do
+  include ActiveJob::TestHelper
+
+  around do |example|
+    perform_enqueued_jobs { example.run }
+  end
+
   describe "schools" do
     let(:school) { create(:placements_school) }
     let(:anne) { create(:placements_user, :anne) }
@@ -44,7 +50,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
       end
     end
 
-    scenario "user is removed from a school" do
+    scenario "user is removed from a provider" do
       given_i_am_signed_in_as_mary
       and_i_visit_the_user_page(anne)
       when_i_click_on("Remove user")

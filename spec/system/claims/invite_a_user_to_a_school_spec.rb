@@ -1,12 +1,15 @@
 require "rails_helper"
 
 RSpec.describe "Invite a user to a school", type: :system do
+  include ActiveJob::TestHelper
+
+  around do |example|
+    perform_enqueued_jobs { example.run }
+  end
+
   before do
     setup_school
     setup_school_and_anne_membership
-    mailer_double = double(:mailer_double)
-    allow(mailer_double).to receive(:deliver_later).and_return true
-    allow(UserMailer).to receive(:invitation_email).and_return(mailer_double)
   end
 
   scenario "I sign in as a lead mentor user and invite a user to a school" do
@@ -179,6 +182,7 @@ RSpec.describe "Invite a user to a school", type: :system do
   end
 
   def verify_user_added
+    email_is_sent("barry.garlow@eduction.gov.uk", @school)
     visit_claims_school_users_page
     check_user_details
   end
@@ -188,7 +192,16 @@ RSpec.describe "Invite a user to a school", type: :system do
   end
 
   def verify_user_added_to_another_school
+    email_is_sent("barry.garlow@eduction.gov.uk", @another_school)
     visit_another_claims_school_users_page
     check_user_details
+  end
+
+  def email_is_sent(email, school)
+    email = ActionMailer::Base.deliveries.find do |delivery|
+      delivery.to.include?(email) && delivery.subject == "You have been invited to #{school.name}"
+    end
+
+    expect(email).not_to be_nil
   end
 end
