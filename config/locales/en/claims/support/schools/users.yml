@@ -21,6 +21,7 @@ en:
             title: Personal details
             caption: Add user - %{school_name}
             page_title: "Personal details - Add user - %{school_name}"
+            page_title_with_error: "Error: Personal details - Add user - %{school_name}"
           show:
             attributes:
               users:

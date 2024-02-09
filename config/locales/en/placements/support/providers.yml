@@ -10,6 +10,7 @@ en:
           caption: Add organisation
           cancel: Cancel
           continue: Continue
+          title_with_error: "Error: Enter a provider name, UKPRN, URN or postcode"
           title: Enter a provider name, UKPRN, URN or postcode
         check:
           accredited_provider_id: Accredited provider ID

@@ -7,6 +7,7 @@ en:
           itt_provider: ITT provider
           school: School
           title: Organisation type
+          title_with_error: "Error: Organisation type"
           continue: Continue
           cancel: Cancel
         index:

@@ -1,4 +1,4 @@
-<% content_for :page_title, t(".title") %>
+<% content_for :page_title, @school_form.errors.any? ? t(".title_with_error") : t(".title") %>
 <%= render "placements/support/primary_navigation", current_navigation: :organisations %>
 <%= content_for(:before_content) do %>
   <%= govuk_back_link(href: new_placements_support_organisation_path) %>

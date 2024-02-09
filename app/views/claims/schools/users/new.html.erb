@@ -1,4 +1,4 @@
-<%= content_for :page_title, sanitize(t(".page_title", school_name: @school.name)) %>
+<%= content_for :page_title, @user_form.errors.any? ? sanitize(t(".page_title_with_error", school_name: @school.name)) : sanitize(t(".page_title", school_name: @school.name)) %>
 <% render "claims/schools/primary_navigation", school: @school, current: :users %>
 
 <%= content_for(:before_content) do %>

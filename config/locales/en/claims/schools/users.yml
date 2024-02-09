@@ -7,6 +7,7 @@ en:
           add_user: Add user
           no_users: There are no users for %{school_name}.
         new:
+          page_title_with_error: "Error: Invite a new user"
           page_title: Invite a new user
           cancel: Cancel
           continue: Continue
