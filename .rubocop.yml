@@ -15,6 +15,10 @@ Style/NumericLiterals:
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
 
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: never
+
 Layout/AccessModifierIndentation:
   EnforcedStyle: indent
 
