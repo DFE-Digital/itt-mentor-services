@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 CLAIMS_PERSONAS = [
   {
     first_name: "Anne",
