@@ -41,8 +41,6 @@ RSpec/SpecFilePathSuffix:
 # They should eventually all be re-enabled.
 RSpec/ExpectInHook:
   Enabled: false
-RSpec/StubbedMock:
-  Enabled: false
 RSpec/InstanceVariable:
   Enabled: false
 RSpec/NamedSubject:
