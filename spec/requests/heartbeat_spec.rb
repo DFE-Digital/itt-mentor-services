@@ -20,7 +20,7 @@ RSpec.describe "Heartbeats", type: :request do
       end
     end
 
-    context "there's no db connection" do
+    context "when there's no db connection" do
       before do
         allow(ActiveRecord::Base).to receive(:connected?).and_return(false)
       end

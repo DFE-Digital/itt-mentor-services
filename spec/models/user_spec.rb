@@ -21,7 +21,7 @@ require "rails_helper"
 RSpec.describe User, type: :model do
   subject { build(:user) }
 
-  context "associations" do
+  context "with associations" do
     it { is_expected.to have_many(:memberships).dependent(:destroy) }
   end
 

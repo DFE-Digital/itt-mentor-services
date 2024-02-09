@@ -4,7 +4,7 @@ RSpec.describe UserMailer, type: :mailer do
   describe "#invitation_email" do
     subject { described_class.invitation_email(user, organisation, "sign_in_url") }
 
-    context "user's service is Claims" do
+    context "when user's service is Claims" do
       let(:user) { create(:claims_user) }
       let(:organisation) { create(:claims_school) }
 
@@ -19,8 +19,8 @@ RSpec.describe UserMailer, type: :mailer do
       end
     end
 
-    context "user's service is Placements" do
-      context "organisation is school" do
+    context "when user's service is Placements" do
+      context "when organisation is school" do
         let(:user) { create(:placements_user) }
         let(:organisation) { create(:placements_school) }
 
@@ -34,7 +34,7 @@ RSpec.describe UserMailer, type: :mailer do
         end
       end
 
-      context "organisation is provider" do
+      context "when organisation is provider" do
         let(:user) { create(:placements_user) }
         let(:organisation) { create(:placements_provider) }
 
@@ -54,7 +54,7 @@ RSpec.describe UserMailer, type: :mailer do
     subject { described_class.removal_email(user, organisation) }
 
     context "when user's service is Placements" do
-      context "organisation is a school" do
+      context "when organisation is a school" do
         let(:user) { create(:placements_user) }
         let(:organisation) { create(:placements_school) }
 
@@ -66,7 +66,7 @@ RSpec.describe UserMailer, type: :mailer do
         end
       end
 
-      context "organisation is a provider" do
+      context "when organisation is a provider" do
         let(:user) { create(:placements_user) }
         let(:organisation) { create(:placements_provider) }
 

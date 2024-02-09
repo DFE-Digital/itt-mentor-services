@@ -120,7 +120,7 @@ describe DfESignInUser do
         expect(dfe_sign_in_user.user).to be_a Claims::SupportUser
       end
 
-      context "DFE provider" do
+      context "with DFE provider" do
         it "returns the current Claims::User by dfe_sign_in_uid" do
           claims_user = create(:claims_user)
 
@@ -234,7 +234,7 @@ describe DfESignInUser do
         expect(dfe_sign_in_user.user).to be_a Placements::SupportUser
       end
 
-      context "DFE provider" do
+      context "with DFE provider" do
         it "returns the current Placements::User by dfe_sign_in_uid" do
           placements_user = create(:placements_user)
 

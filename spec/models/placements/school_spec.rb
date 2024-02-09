@@ -55,7 +55,7 @@
 require "rails_helper"
 
 RSpec.describe Placements::School do
-  context "assocations" do
+  context "with assocations" do
     describe "#users" do
       it { is_expected.to have_many(:users).through(:memberships) }
 

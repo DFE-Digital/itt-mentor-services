@@ -55,7 +55,7 @@
 require "rails_helper"
 
 RSpec.describe Claims::School do
-  context "associations" do
+  context "with associations" do
     it { is_expected.to have_many(:claims) }
 
     describe "#users" do

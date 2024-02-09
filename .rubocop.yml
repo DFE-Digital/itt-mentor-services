@@ -45,8 +45,6 @@ RSpec/ExpectInHook:
   Enabled: false
 RSpec/StubbedMock:
   Enabled: false
-RSpec/ContextWording:
-  Enabled: false
 RSpec/InstanceVariable:
   Enabled: false
 RSpec/NamedSubject:

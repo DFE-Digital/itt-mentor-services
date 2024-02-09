@@ -21,11 +21,11 @@
 require "rails_helper"
 
 RSpec.describe Mentor, type: :model do
-  context "associations" do
+  context "with associations" do
     it { is_expected.to belong_to(:school) }
   end
 
-  context "validations" do
+  context "with validations" do
     subject { build(:mentor) }
 
     it { is_expected.to validate_presence_of(:first_name) }

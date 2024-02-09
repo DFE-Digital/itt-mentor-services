@@ -11,7 +11,7 @@ RSpec.describe Placements::OrganisationFinder do
     create(:school, :placements, name: "1 Primary", postcode: "SW12 H3B")
   end
 
-  context "no search or filter" do
+  context "with no search or filter" do
     subject { described_class.call }
 
     it "returns all placement schools and providers, ordered by name" do
@@ -25,7 +25,7 @@ RSpec.describe Placements::OrganisationFinder do
     end
   end
 
-  context "search without filters" do
+  context "with search without filters" do
     describe "search postcode" do
       subject { described_class.call(search_term: "HA4") }
 
@@ -58,7 +58,7 @@ RSpec.describe Placements::OrganisationFinder do
   end
 
   describe "filters without search" do
-    context "schools only" do
+    context "with schools only" do
       subject { described_class.call(filters: %w[school]) }
 
       it "returns only schools ordered by name" do
@@ -69,7 +69,7 @@ RSpec.describe Placements::OrganisationFinder do
       end
     end
 
-    context "school and provider" do
+    context "with school and provider" do
       subject { described_class.call(filters: %w[school university]) }
 
       it "returns only schools and specified provider type" do

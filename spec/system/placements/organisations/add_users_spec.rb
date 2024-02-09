@@ -9,7 +9,7 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
   let(:new_user) { create(:placements_user) }
 
   describe "Ann invites a member successfully " do
-    context "provider" do
+    context "with provider" do
       before "user is sent an invitation" do
         user_mailer = double(:user_mailer)
         expect(UserMailer).to receive(:invitation_email).with(kind_of(Placements::User), one_provider, "http://placements.localhost/sign-in") { user_mailer }
@@ -32,7 +32,7 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
       end
     end
 
-    context "school" do
+    context "with school" do
       before "user is sent an invitation" do
         user_mailer = double(:user_mailer)
         expect(UserMailer).to receive(:invitation_email).with(kind_of(Placements::User), one_school, "http://placements.localhost/sign-in") { user_mailer }

@@ -31,13 +31,13 @@
 require "rails_helper"
 
 RSpec.describe Provider, type: :model do
-  context "associations" do
+  context "with associations" do
     it { is_expected.to have_many(:memberships) }
     it { is_expected.to have_many(:users).through(:memberships) }
     it { is_expected.to have_many(:mentor_trainings) }
   end
 
-  context "validations" do
+  context "with validations" do
     subject { build(:provider) }
 
     it { is_expected.to validate_presence_of(:code) }
@@ -52,7 +52,7 @@ RSpec.describe Provider, type: :model do
     it { is_expected.to allow_values("scitt", "lead_school", "university").for(:provider_type) }
   end
 
-  context "scopes" do
+  context "with scopes" do
     describe "#accredited" do
       let!(:accredited_provider) { create(:provider, accredited: true) }
       let!(:non_accredited_provider) { create(:provider) }
