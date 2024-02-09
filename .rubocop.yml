@@ -35,7 +35,3 @@ RSpec/SpecFilePathFormat:
 
 RSpec/SpecFilePathSuffix:
   Enabled: true
-
-# The following cops are temporarily disabled so we can incrementally
-# introduce RSpec rules while incrementally fixing up the codebase.
-# They should eventually all be re-enabled.
