@@ -21,7 +21,7 @@
 require "rails_helper"
 
 RSpec.describe User, type: :model do
-  subject { build(:user) }
+  subject(:test_user) { build(:user) }
 
   context "with associations" do
     it { is_expected.to have_many(:memberships).dependent(:destroy) }
@@ -65,7 +65,7 @@ RSpec.describe User, type: :model do
 
   describe "#support_user?" do
     it "returns false" do
-      expect(subject.support_user?).to eq(false)
+      expect(test_user.support_user?).to eq(false)
     end
   end
 

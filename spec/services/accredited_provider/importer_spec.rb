@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Provider::Importer do
-  subject { described_class.call }
+  subject(:importer) { described_class.call }
 
   let(:existing_provider) { create(:provider) }
   let(:changeable_provider) { create(:provider, name: "Changeable Provider") }
@@ -102,7 +102,7 @@ RSpec.describe Provider::Importer do
   end
 
   it "creates new provider records for responses which don't already exist or are valid" do
-    expect { subject }.to change(Provider, :count).by(4)
+    expect { importer }.to change(Provider, :count).by(4)
     expect(Provider.find_by(name: "Provider 1", code: "Prov1", provider_type: "scitt")).to be_present
     expect(Provider.find_by(name: "Provider 2", code: "Prov2", provider_type: "university")).to be_present
     expect(Provider.find_by(name: "Provider 3", code: "Prov3", provider_type: "lead_school")).to be_present

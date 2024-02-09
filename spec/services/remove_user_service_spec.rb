@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe RemoveUserService do
-  subject { described_class.call(user, organisation) }
+  subject(:remove_user_service) { described_class.call(user, organisation) }
 
   describe "#call" do
     context "when the user is a placements user" do
@@ -10,7 +10,7 @@ RSpec.describe RemoveUserService do
       let!(:membership) { create(:membership, user:, organisation:) }
 
       it "calls mailer with correct params" do
-        expect { subject }.to have_enqueued_mail(UserMailer, :removal_email).with(user, organisation)
+        expect { remove_user_service }.to have_enqueued_mail(UserMailer, :removal_email).with(user, organisation)
 
         expect { membership.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
@@ -22,7 +22,7 @@ RSpec.describe RemoveUserService do
       let!(:membership) { create(:membership, user:, organisation:) }
 
       it "calls mailer with correct params" do
-        expect { subject }.to have_enqueued_mail(UserMailer, :removal_email).with(user, organisation)
+        expect { remove_user_service }.to have_enqueued_mail(UserMailer, :removal_email).with(user, organisation)
 
         expect { membership.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end

@@ -22,18 +22,18 @@
 require "rails_helper"
 
 RSpec.describe Membership, type: :model do
-  subject { create(:membership) }
+  subject(:test_membership) { create(:membership) }
 
   context "with validations" do
     it do
-      expect(subject).to validate_uniqueness_of(:user).scoped_to(:organisation_id)
+      expect(test_membership).to validate_uniqueness_of(:user).scoped_to(:organisation_id)
     end
   end
 
   context "with associations" do
     it do
-      expect(subject).to belong_to(:user)
-      expect(subject).to belong_to(:organisation)
+      expect(test_membership).to belong_to(:user)
+      expect(test_membership).to belong_to(:organisation)
     end
   end
 end

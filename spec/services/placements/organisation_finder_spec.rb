@@ -12,10 +12,10 @@ RSpec.describe Placements::OrganisationFinder do
   end
 
   context "with no search or filter" do
-    subject { described_class.call }
+    subject(:organisations_finder) { described_class.call }
 
     it "returns all placement schools and providers, ordered by name" do
-      results = subject
+      results = organisations_finder
       expect(results.pluck(:content))
         .to eq ["1 Primary SW12 H3B",
                 "A School HA4 2FW",
@@ -27,30 +27,30 @@ RSpec.describe Placements::OrganisationFinder do
 
   context "with search without filters" do
     describe "search postcode" do
-      subject { described_class.call(search_term: "HA4") }
+      subject(:organisations_finder) { described_class.call(search_term: "HA4") }
 
       it "returns a provider and school matching the search term" do
-        results = subject
+        results = organisations_finder
         expect(results.pluck(:content))
           .to match_array ["A School HA4 2FW", "University of Westminster HA4 9JZ"]
       end
     end
 
     describe "search name" do
-      subject { described_class.call(search_term: "London") }
+      subject(:organisations_finder) { described_class.call(search_term: "London") }
 
       it "returns a provider and school with 'London' in the name" do
-        results = subject
+        results = organisations_finder
         expect(results.pluck(:content))
           .to match_array ["School London EC12 5BN", "Provider London SE3 5SL"]
       end
     end
 
     describe "search partial name" do
-      subject { described_class.call(search_term: "Lond") }
+      subject(:organisations_finder) { described_class.call(search_term: "Lond") }
 
       it "returns a provider and school with 'London' in the name" do
-        results = subject
+        results = organisations_finder
         expect(results.pluck(:content))
           .to match_array ["School London EC12 5BN", "Provider London SE3 5SL"]
       end
@@ -59,10 +59,10 @@ RSpec.describe Placements::OrganisationFinder do
 
   describe "filters without search" do
     context "with schools only" do
-      subject { described_class.call(filters: %w[school]) }
+      subject(:organisations_finder) { described_class.call(filters: %w[school]) }
 
       it "returns only schools ordered by name" do
-        results = subject
+        results = organisations_finder
         expect(results.pluck(:content)).to eq ["1 Primary SW12 H3B",
                                                "A School HA4 2FW",
                                                "School London EC12 5BN"]
@@ -70,10 +70,10 @@ RSpec.describe Placements::OrganisationFinder do
     end
 
     context "with school and provider" do
-      subject { described_class.call(filters: %w[school university]) }
+      subject(:organisations_finder) { described_class.call(filters: %w[school university]) }
 
       it "returns only schools and specified provider type" do
-        results = subject
+        results = organisations_finder
         expect(results.pluck(:content)).to eq ["1 Primary SW12 H3B",
                                                "A School HA4 2FW",
                                                "School London EC12 5BN",
@@ -83,10 +83,10 @@ RSpec.describe Placements::OrganisationFinder do
   end
 
   describe "filters and search" do
-    subject { described_class.call(filters: %w[school], search_term: "HA4") }
+    subject(:organisations_finder) { described_class.call(filters: %w[school], search_term: "HA4") }
 
     it "only returns school (not provider) with the given postcode" do
-      results = subject
+      results = organisations_finder
       expect(results.pluck(:content)).to eq ["A School HA4 2FW"]
     end
   end

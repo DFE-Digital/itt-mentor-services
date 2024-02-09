@@ -3,7 +3,7 @@ require "rake"
 
 describe "gias_update" do
   Rails.application.load_tasks if Rake::Task.tasks.empty?
-  subject { Rake::Task["gias_update"].invoke }
+  subject(:gias_update) { Rake::Task["gias_update"].invoke }
 
   it "calls GiasCsvImporter service" do
     today = Time.zone.today.strftime("%Y%m%d")
@@ -15,6 +15,6 @@ describe "gias_update" do
     ).and_return(tempfile)
 
     expect(GiasCsvImporter).to receive(:call).with(tempfile.path)
-    subject
+    gias_update
   end
 end

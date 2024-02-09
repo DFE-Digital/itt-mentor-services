@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe UserInviteService do
-  subject { described_class.call(user, organisation) }
+  subject(:user_invite_service) { described_class.call(user, organisation) }
 
   describe "call" do
     context "when the user's service is Claims" do
@@ -11,7 +11,7 @@ RSpec.describe UserInviteService do
         let(:service) { "claims" }
 
         it "calls mailer with correct prams" do
-          expect { subject }.to have_enqueued_mail(UserMailer, :invitation_email).with(user, organisation, "http://claims.localhost/sign-in")
+          expect { user_invite_service }.to have_enqueued_mail(UserMailer, :invitation_email).with(user, organisation, "http://claims.localhost/sign-in")
         end
       end
     end
@@ -24,7 +24,7 @@ RSpec.describe UserInviteService do
         let(:organisation) { create(:school, :placements) }
 
         it "calls mailer with correct prams" do
-          expect { subject }.to have_enqueued_mail(UserMailer, :invitation_email).with(user, organisation, "http://placements.localhost/sign-in")
+          expect { user_invite_service }.to have_enqueued_mail(UserMailer, :invitation_email).with(user, organisation, "http://placements.localhost/sign-in")
         end
       end
 
@@ -33,7 +33,7 @@ RSpec.describe UserInviteService do
         let(:organisation) { create(:placements_provider) }
 
         it "calls mailer with correct prams" do
-          expect { subject }.to have_enqueued_mail(UserMailer, :invitation_email).with(user, organisation, "http://placements.localhost/sign-in")
+          expect { user_invite_service }.to have_enqueued_mail(UserMailer, :invitation_email).with(user, organisation, "http://placements.localhost/sign-in")
         end
       end
     end
