@@ -1,8 +1,11 @@
 require "rails_helper"
 
 RSpec.describe "View schools as support user", type: :system do
-  before do
-    schools
+  let!(:schools) do
+    [
+      create(:school, :claims, name: "Manchester School", postcode: "M1234"),
+      create(:school, :claims, name: "London School", postcode: "L5678"),
+    ]
   end
 
   scenario "I sign in as a support user to view schools and search by name" do
@@ -29,13 +32,6 @@ RSpec.describe "View schools as support user", type: :system do
 
   private
 
-  def schools
-    @schools ||= [
-      create(:school, :claims, name: "Manchester School", postcode: "M1234"),
-      create(:school, :claims, name: "London School", postcode: "L5678"),
-    ]
-  end
-
   def given_i_am_signed_in_as_support_user
     user = create(:claims_support_user, :colin)
     user_exists_in_dfe_sign_in(user:)
@@ -44,9 +40,9 @@ RSpec.describe "View schools as support user", type: :system do
   end
 
   def then_i_see_all_schools_in_claims
-    expect(page).to have_content("Organisations (#{@schools.count})")
+    expect(page).to have_content("Organisations (#{schools.count})")
 
-    @schools.each do |school|
+    schools.each do |school|
       expect(page).to have_content(school.name)
     end
   end

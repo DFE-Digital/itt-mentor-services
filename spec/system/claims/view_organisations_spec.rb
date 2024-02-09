@@ -1,6 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "View schools", type: :system, service: :claims do
+  let(:school1) { create(:claims_school) }
+  let(:school2) { create(:claims_school) }
+
   scenario "I sign in as Mary with multiple schools" do
     user = given_the_claims_user("Mary")
     user_exists_in_dfe_sign_in(user:)
@@ -26,16 +29,14 @@ RSpec.describe "View schools", type: :system, service: :claims do
   end
 
   def and_user_has_multiple_schools(user)
-    @school1 = create(:claims_school)
-    @school2 = create(:claims_school)
-    create(:membership, user:, organisation: @school1)
-    create(:membership, user:, organisation: @school2)
+    create(:membership, user:, organisation: school1)
+    create(:membership, user:, organisation: school2)
   end
 
   def and_i_see_marys_schools
     expect(page).to have_content "Organisations"
-    expect(page).to have_content @school1.name
-    expect(page).to have_content @school2.name
+    expect(page).to have_content school1.name
+    expect(page).to have_content school2.name
   end
 
   def and_user_has_one_school(user)
