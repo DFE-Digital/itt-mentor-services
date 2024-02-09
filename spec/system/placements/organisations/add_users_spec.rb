@@ -1,6 +1,12 @@
 require "rails_helper"
 
 RSpec.describe "Placements users invite other users to organisations", type: :system, service: :placements do
+  include ActiveJob::TestHelper
+
+  around do |example|
+    perform_enqueued_jobs { example.run }
+  end
+
   let(:anne) { create(:placements_user, :anne) }
   let(:one_school) { create(:placements_school, name: "One School") }
   let(:one_provider) { create(:placements_provider, name: "One Provider") }
@@ -10,12 +16,6 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
 
   describe "Ann invites a member successfully " do
     context "with provider" do
-      before "user is sent an invitation" do
-        user_mailer = double(:user_mailer)
-        expect(UserMailer).to receive(:invitation_email).with(kind_of(Placements::User), one_provider, "http://placements.localhost/sign-in") { user_mailer }
-        expect(user_mailer).to receive(:deliver_later).and_return true
-      end
-
       scenario "user invites a member to a provider" do
         given_i_am_logged_in_as_a_user_with_one_organisation(one_provider)
         when_i_click_users
@@ -28,17 +28,11 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
         when_i_change_user_details
         then_i_see_changes_in_check_form
         when_i_click_add_user
-        then_the_user_is_added
+        then_the_user_is_added(one_provider)
       end
     end
 
     context "with school" do
-      before "user is sent an invitation" do
-        user_mailer = double(:user_mailer)
-        expect(UserMailer).to receive(:invitation_email).with(kind_of(Placements::User), one_school, "http://placements.localhost/sign-in") { user_mailer }
-        expect(user_mailer).to receive(:deliver_later).and_return true
-      end
-
       scenario "user invites a member to a school" do
         given_i_am_logged_in_as_a_user_with_one_organisation(one_school)
         when_i_click_users
@@ -51,7 +45,7 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
         when_i_change_user_details
         then_i_see_changes_in_check_form
         when_i_click_add_user
-        then_the_user_is_added
+        then_the_user_is_added(one_school)
       end
     end
   end
@@ -61,13 +55,6 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
       create(:membership, user: mary, organisation: one_school)
       create(:membership, user: mary, organisation: another_school)
       create(:membership, user: mary, organisation: one_provider)
-
-      user_mailer = double(:user_mailer)
-      expect(UserMailer).to receive(:invitation_email).with(kind_of(Placements::User), another_school, "http://placements.localhost/sign-in") { user_mailer }
-      expect(user_mailer).to receive(:deliver_later).and_return true
-
-      expect(UserMailer).to receive(:invitation_email).with(kind_of(Placements::User), one_provider, "http://placements.localhost/sign-in") { user_mailer }
-      expect(user_mailer).to receive(:deliver_later).and_return true
     end
 
     scenario "user adds a user to multiple organisations" do
@@ -77,10 +64,10 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
       then_i_see_the_user_on_that_schools_user_list
       when_i_change_organisation(another_school)
       and_i_try_to_add_the_user
-      then_the_user_is_added_successfully
+      then_the_user_is_added_successfully(another_school)
       when_i_change_organisation(one_provider)
       and_i_try_to_add_the_user
-      then_the_user_is_added_successfully
+      then_the_user_is_added_successfully(one_provider)
     end
   end
 
@@ -171,7 +158,8 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
     click_on "Add user"
   end
 
-  def then_the_user_is_added_successfully
+  def then_the_user_is_added_successfully(organisation)
+    email_is_sent(new_user.email, organisation)
     users_is_selected_in_navigation
 
     expect(page.find(".govuk-notification-banner__content")).to have_content("User added")
@@ -232,7 +220,8 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
     expect(page).to have_content "firsty_lasty@email.co.uk"
   end
 
-  def then_the_user_is_added
+  def then_the_user_is_added(organisation)
+    email_is_sent("firsty_lasty@email.co.uk", organisation)
     users_is_selected_in_navigation
     expect(page.find(".govuk-notification-banner__content")).to have_content("User added")
     expect(page).to have_content "New First Name Last Namey"
@@ -246,5 +235,13 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
       expect(page).to have_link "Users", current: "page"
       expect(page).to have_link "Organisation details", current: "false"
     end
+  end
+
+  def email_is_sent(email, organisation)
+    email = ActionMailer::Base.deliveries.find do |delivery|
+      delivery.to.include?(email) && delivery.subject == "You have been invited to #{organisation.name}"
+    end
+
+    expect(email).not_to be_nil
   end
 end

@@ -1,6 +1,12 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Support / Users / Support User Invites A New User", type: :system, service: :placements do
+  include ActiveJob::TestHelper
+
+  around do |example|
+    perform_enqueued_jobs { example.run }
+  end
+
   let!(:school) { create(:placements_school) }
   let!(:provider) { create(:placements_provider, name: "Provider 1") }
   let(:new_user) do
@@ -12,9 +18,6 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
 
   before do
     given_i_am_signed_in_as_a_support_user
-    mailer_double = double(:mailer_double)
-    allow(mailer_double).to receive(:deliver_later).and_return true
-    allow(UserMailer).to receive(:invitation_email).and_return(mailer_double)
   end
 
   describe "School" do
@@ -29,7 +32,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
       then_i_see_the_new_users_details
       and_i_click("Add user")
       then_i_see_support_navigation_with_organisation_selected
-      then_i_see_the_new_user_has_been_added
+      then_i_see_the_new_user_has_been_added(school)
     end
 
     scenario "Support user edits new user details before submitting" do
@@ -60,7 +63,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
       then_i_see_the_new_users_details
       and_i_click("Add user")
       then_i_see_support_navigation_with_organisation_selected
-      then_i_see_the_new_user_has_been_added
+      then_i_see_the_new_user_has_been_added(provider)
     end
   end
 
@@ -72,7 +75,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
       and_i_click("Continue")
       then_i_see_the_new_users_details
       and_i_click("Add user")
-      then_i_see_the_new_user_has_been_added
+      then_i_see_the_new_user_has_been_added(provider)
 
       when_i_return_to_organisations_page
       when_i_visit_the_users_page_for(organisation: school)
@@ -81,7 +84,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
       and_i_click("Continue")
       then_i_see_the_new_users_details
       and_i_click("Add user")
-      then_i_see_the_new_user_has_been_added
+      then_i_see_the_new_user_has_been_added(school)
 
       and_the_user_has_multiple_memberships
     end
@@ -197,10 +200,19 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
 
   alias_method :and_i_see_the_new_users_details, :then_i_see_the_new_users_details
 
-  def then_i_see_the_new_user_has_been_added
+  def then_i_see_the_new_user_has_been_added(organisation)
+    and_email_is_sent("test@example.com", organisation)
     expect(page.find(".govuk-notification-banner__content")).to have_content("User added")
     then_i_see_support_navigation_with_organisation_selected
     and_i_see_the_new_users_details
+  end
+
+  def and_email_is_sent(email, organisation)
+    email = ActionMailer::Base.deliveries.find do |delivery|
+      delivery.to.include?(email) && delivery.subject == "You have been invited to #{organisation.name}"
+    end
+
+    expect(email).not_to be_nil
   end
 
   def and_the_user_has_multiple_memberships
