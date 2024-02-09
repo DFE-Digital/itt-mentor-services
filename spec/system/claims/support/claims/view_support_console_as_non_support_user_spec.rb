@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "View support console as a non support user", type: :system, service: :claims do
-  let(:school1) { create(:school, :claims, name: "School1") }
+  let(:school1) { create(:claims_school, name: "School1") }
 
   scenario "As a non support user I cant access a support page" do
     user_exists_in_dfe_sign_in(
