@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Service updates page", type: :system do
-  context "User is on the Claims site", service: :claims do
+  context "when user is on the Claims site", service: :claims do
     before do
       allow(YAML).to receive(:load_file).with(Rails.root.join("db/claims_service_updates.yml"), symbolize_names: true).and_return([
         {
@@ -19,7 +19,7 @@ RSpec.describe "Service updates page", type: :system do
     end
   end
 
-  context "User is on the Placements site", service: :placements do
+  context "when user is on the Placements site", service: :placements do
     before do
       allow(YAML).to receive(:load_file).with(Rails.root.join("db/placements_service_updates.yml"), symbolize_names: true).and_return([
         {

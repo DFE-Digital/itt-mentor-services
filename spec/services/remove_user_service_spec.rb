@@ -4,7 +4,7 @@ RSpec.describe RemoveUserService do
   subject { described_class.call(user, organisation) }
 
   describe "#call" do
-    context "the user is a placements user" do
+    context "when the user is a placements user" do
       let(:user) { create(:placements_user) }
       let(:organisation) { create(:placements_school) }
       let!(:membership) { create(:membership, user:, organisation:) }
@@ -19,7 +19,7 @@ RSpec.describe RemoveUserService do
       end
     end
 
-    context "the user is a claims user" do
+    context "when the user is a claims user" do
       let(:user) { create(:claims_user) }
       let(:organisation) { create(:claims_school) }
       let!(:membership) { create(:membership, user:, organisation:) }

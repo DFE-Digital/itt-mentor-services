@@ -19,7 +19,7 @@
 require "rails_helper"
 
 RSpec.describe Claims::SupportUser do
-  context "validations" do
+  context "with validations" do
     subject { build(:claims_support_user) }
 
     it { is_expected.to validate_presence_of(:email) }

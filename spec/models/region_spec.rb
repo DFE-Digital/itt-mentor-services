@@ -16,11 +16,11 @@
 require "rails_helper"
 
 RSpec.describe Region, type: :model do
-  context "associations" do
+  context "with associations" do
     it { is_expected.to have_many(:schools) }
   end
 
-  context "validations" do
+  context "with validations" do
     subject { create(:region) }
 
     it { is_expected.to validate_presence_of(:name) }

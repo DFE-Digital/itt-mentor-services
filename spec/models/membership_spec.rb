@@ -24,13 +24,13 @@ require "rails_helper"
 RSpec.describe Membership, type: :model do
   subject { create(:membership) }
 
-  context "validations" do
+  context "with validations" do
     it do
       expect(subject).to validate_uniqueness_of(:user).scoped_to(:organisation_id)
     end
   end
 
-  context "associations" do
+  context "with associations" do
     it do
       expect(subject).to belong_to(:user)
       expect(subject).to belong_to(:organisation)

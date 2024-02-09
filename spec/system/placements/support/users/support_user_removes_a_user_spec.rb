@@ -53,7 +53,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     end
   end
 
-  context "user is a member of more than one organisation" do
+  context "when user is a member of more than one organisation" do
     let(:school) { create(:placements_school) }
     let(:provider) { create(:placements_provider) }
     let(:user) { create(:placements_user) }

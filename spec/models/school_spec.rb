@@ -55,13 +55,13 @@
 require "rails_helper"
 
 RSpec.describe School, type: :model do
-  context "associations" do
+  context "with associations" do
     it { is_expected.to have_many(:memberships) }
     it { is_expected.to have_many(:mentors) }
     it { is_expected.to belong_to(:region) }
   end
 
-  context "scopes" do
+  context "with scopes" do
     describe "#placements_service" do
       it "only returns placements schools" do
         create(:school, :claims)
@@ -83,7 +83,7 @@ RSpec.describe School, type: :model do
     end
   end
 
-  context "validations" do
+  context "with validations" do
     subject { create(:school) }
 
     it { is_expected.to validate_presence_of(:urn) }

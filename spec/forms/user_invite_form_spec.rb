@@ -38,7 +38,7 @@ describe UserInviteForm, type: :model do
         end
       end
 
-      context "where membership already exists" do
+      context "when membership already exists" do
         it "returns membership error on the email attribute of the for and does not send invite" do
           user = create(:placements_user)
           organisation = create(:school, :placements)

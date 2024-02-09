@@ -19,7 +19,7 @@
 require "rails_helper"
 
 RSpec.describe Claim, type: :model do
-  context "associations" do
+  context "with associations" do
     it { is_expected.to belong_to(:school) }
     it { is_expected.to have_many(:mentor_trainings) }
     it { is_expected.to have_many(:mentors).through(:mentor_trainings) }
