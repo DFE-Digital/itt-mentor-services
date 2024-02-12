@@ -17,3 +17,11 @@ en:
       instructions:
         - Try again later.
       support_message: "If you continue to see this error contact the %{service_name} team: %{email_link}"
+    too_many_requests:
+      page_title: "Sorry, there’s a problem with the service"
+      instructions:
+        - Try again later.
+        - "You’re seeing this message as you’ve tried to access this page repeatedly, please wait a few moments before trying again."
+      support_message: If you have any questions, please email us at %{email_link}
+
+
