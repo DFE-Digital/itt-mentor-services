@@ -8,13 +8,9 @@ class SupportUser::Invite
   end
 
   def call
-    if support_user.save
-      send_email_notification
-
-      true
-    else
-      false
-    end
+    support_user.save!
+    send_email_notification
+    true
   end
 
   private

@@ -18,12 +18,9 @@ class Claims::Schools::UsersController < ApplicationController
   end
 
   def create
-    if user_form.invite
-      redirect_to claims_school_users_path(@school)
-      flash[:success] = t(".user_added")
-    else
-      render :new
-    end
+    user_form.invite!
+    redirect_to claims_school_users_path(@school)
+    flash[:success] = t(".user_added")
   end
 
   private

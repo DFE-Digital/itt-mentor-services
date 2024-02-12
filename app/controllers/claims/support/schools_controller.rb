@@ -49,12 +49,9 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
   end
 
   def create
-    if school_form.onboard
-      flash[:success] = I18n.t("claims.support.schools.create.organisation_added")
-      redirect_to claims_support_schools_path
-    else
-      render :new
-    end
+    school_form.onboard!
+    flash[:success] = I18n.t("claims.support.schools.create.organisation_added")
+    redirect_to claims_support_schools_path
   end
 
   private

@@ -40,12 +40,9 @@ class Placements::Support::SchoolsController < Placements::Support::ApplicationC
   end
 
   def create
-    if school_form.onboard
-      flash[:success] = I18n.t("placements.support.schools.create.organisation_added")
-      redirect_to placements_support_organisations_path
-    else
-      render :new
-    end
+    school_form.onboard!
+    flash[:success] = I18n.t("placements.support.schools.create.organisation_added")
+    redirect_to placements_support_organisations_path
   end
 
   def show

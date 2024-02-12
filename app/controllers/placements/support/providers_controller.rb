@@ -44,12 +44,9 @@ class Placements::Support::ProvidersController < Placements::Support::Applicatio
   end
 
   def create
-    if provider_form.onboard
-      flash[:success] = I18n.t("placements.support.providers.create.organisation_added")
-      redirect_to placements_support_organisations_path
-    else
-      render :new
-    end
+    provider_form.onboard!
+    flash[:success] = I18n.t("placements.support.providers.create.organisation_added")
+    redirect_to placements_support_organisations_path
   end
 
   private

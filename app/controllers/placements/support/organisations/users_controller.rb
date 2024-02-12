@@ -17,12 +17,9 @@ class Placements::Support::Organisations::UsersController < Placements::Support:
   end
 
   def create
-    if user_form.invite
-      redirect_to_index
-      flash[:success] = t(".user_added")
-    else
-      render :new
-    end
+    user_form.invite!
+    redirect_to_index
+    flash[:success] = t(".user_added")
   end
 
   def remove; end

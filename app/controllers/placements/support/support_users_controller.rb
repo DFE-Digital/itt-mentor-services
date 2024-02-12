@@ -22,11 +22,8 @@ class Placements::Support::SupportUsersController < Placements::Support::Applica
   def create
     @support_user = Placements::SupportUser.new(support_user_params)
 
-    if SupportUser::Invite.call(support_user: @support_user)
-      redirect_to placements_support_support_users_path, flash: { success: t(".success") }
-    else
-      render :check
-    end
+    SupportUser::Invite.call(support_user: @support_user)
+    redirect_to placements_support_support_users_path, flash: { success: t(".success") }
   end
 
   def show; end
