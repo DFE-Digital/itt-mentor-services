@@ -1,0 +1,21 @@
+<%= content_for :page_title, t(".page_title") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= t(".page_title") %></h1>
+
+    <% t(".instructions").each do |instruction| %>
+      <p class="govuk-body">
+        <%= instruction %>
+      </p>
+    <% end %>
+
+    <p class="govuk-body">
+      <%= t(".support_message") %>
+    </p>
+
+    <p class="govuk-body">
+      <%== t(".support_message", email_link: mail_to(t("#{current_service}.support_email"), class: "govuk-link")) %>
+    </p>
+  </div>
+</div>
