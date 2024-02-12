@@ -10,6 +10,13 @@ module DfESignInUserHelper
     )
   end
 
+  def invalid_dfe_sign_in_response
+    {
+      "provider" => "dfe",
+      "uid" => nil,
+    }
+  end
+
   private
 
   def fake_dfe_sign_in_auth_hash(email:, dfe_sign_in_uid:, first_name:, last_name:)
