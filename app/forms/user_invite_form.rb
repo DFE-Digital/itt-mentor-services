@@ -8,10 +8,12 @@ class UserInviteForm
   validate :validate_membership
   validates :service, :organisation, presence: true
 
-  def invite
-    return false unless valid?
-
-    UserInviteService.call(user, organisation) if save_user
+  def invite!
+    ActiveRecord::Base.transaction do
+      user.save!
+      membership.save!
+    end
+    UserInviteService.call(user, organisation)
   end
 
   def as_form_params
@@ -27,13 +29,6 @@ class UserInviteForm
         user.assign_attributes(first_name:, last_name:)
         user
       end
-  end
-
-  def save_user
-    ActiveRecord::Base.transaction do
-      user.save!
-      membership.save!
-    end
   end
 
   def validate_user
