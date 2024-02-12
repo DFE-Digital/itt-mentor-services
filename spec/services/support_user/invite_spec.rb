@@ -25,16 +25,8 @@ RSpec.describe SupportUser::Invite do
     context "when given an invalid Support User" do
       let(:support_user) { build(:claims_support_user, first_name: nil) }
 
-      it "returns false" do
-        expect(invite_support_user).to be(false)
-      end
-
-      it "does not create a user" do
-        expect { invite_support_user }.not_to(change(User, :count))
-      end
-
-      it "does not send an email" do
-        expect { invite_support_user }.not_to(change(enqueued_jobs, :size))
+      it "raises error" do
+        expect { invite_support_user }.to raise_error ActiveRecord::RecordInvalid
       end
     end
   end

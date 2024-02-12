@@ -56,7 +56,7 @@ describe ProviderOnboardingForm, type: :model do
     it "enables the boolean flag for placements" do
       provider = create(:provider)
       onboarding = expect do
-        described_class.new(id: provider.id).onboard
+        described_class.new(id: provider.id).onboard!
         provider.reload
       end
       onboarding.to change(provider, :placements_service).from(false).to(true)

@@ -18,7 +18,7 @@ describe UserInviteForm, type: :model do
     end
   end
 
-  describe "#invite" do
+  describe "#invite!" do
     context "with invalid params" do
       it "does not send invitation" do
         expect(UserMailer).not_to receive(:invitation_email)
@@ -29,12 +29,12 @@ describe UserInviteForm, type: :model do
           organisation = create(:school, :placements)
           form_params = { last_name: "Last Name", organisation:, service: :placements }
           user_invite_form = described_class.new(form_params)
-          expect(user_invite_form.invite).to eq false
-
+          expect(user_invite_form.valid?).to eq false
           expect(user_invite_form.errors.messages).to match(
             first_name: ["Enter a first name"],
             email: ["Enter an email address", "Enter an email address in the correct format, like name@example.com"],
           )
+          expect { user_invite_form.invite! }.to raise_error ActiveRecord::RecordInvalid
         end
       end
 
@@ -51,10 +51,10 @@ describe UserInviteForm, type: :model do
             service: :placements,
           }
           user_invite_form = described_class.new(form_params)
-          expect(user_invite_form.invite).to eq false
-
+          expect(user_invite_form.valid?).to eq false
           expect(user_invite_form.errors.messages)
             .to match(email: ["Email address already in use"])
+          expect { user_invite_form.invite! }.to raise_error ActiveRecord::RecordInvalid
         end
       end
     end
@@ -73,49 +73,50 @@ describe UserInviteForm, type: :model do
 
       it "sends invitation" do
         user_invite_form = described_class.new(form_params)
-        expect { user_invite_form.invite }.to have_enqueued_mail(UserMailer, :invitation_email)
+        expect { user_invite_form.invite! }.to have_enqueued_mail(UserMailer, :invitation_email)
       end
 
       it "creates user" do
         user_invite_form = described_class.new(form_params)
-        expect { user_invite_form.invite }.to change(User, :count).by 1
+        expect { user_invite_form.invite! }.to change(User, :count).by 1
       end
 
       it "creates membership" do
         user_invite_form = described_class.new(form_params)
-        expect { user_invite_form.invite }.to change(Membership, :count).by 1
+        expect { user_invite_form.invite! }.to change(Membership, :count).by 1
       end
     end
 
     context "with user belonging to another organisation" do
       let(:organisation) { create(:placements_provider) }
-      let(:membership) { create(:membership, organisation:) }
-      let(:user) { membership.user }
+      let(:user) { create(:placements_user) }
+      let(:membership) { create(:membership, organisation:, user:) }
       let(:another_organisation) { create(:placements_provider) }
 
       let(:form_params) do
         {
-          first_name: "First name",
+          first_name: "New first name",
           last_name: user.last_name,
           email: user.email,
           organisation: another_organisation,
           service: :placements,
         }
+      end
 
-        it "sends invitation" do
-          user_invite_form = described_class.new(form_params)
-          expect { user_invite_form.invite }.to have_enqueued_mail(UserMailer, :invitation_email)
-        end
+      it "sends invitation" do
+        user_invite_form = described_class.new(form_params)
+        expect { user_invite_form.invite! }.to have_enqueued_mail(UserMailer, :invitation_email)
+      end
 
-        it "updates user first name" do
-          user_invite_form = described_class.new(form_params)
-          expect { user_invite_form.invite }.to change(user.reload.first_name).to "First Name"
-        end
+      it "updates user first name" do
+        user_invite_form = described_class.new(form_params)
+        user_invite_form.invite!
+        expect(user.reload.first_name).to eq "New first name"
+      end
 
-        it "creates membership" do
-          user_invite_form = described_class.new(form_params)
-          expect { user_invite_form.invite }.to change(Membership, :count).by 1
-        end
+      it "creates membership" do
+        user_invite_form = described_class.new(form_params)
+        expect { user_invite_form.invite! }.to change(Membership, :count).by 1
       end
     end
   end
