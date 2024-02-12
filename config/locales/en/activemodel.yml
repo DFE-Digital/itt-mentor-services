@@ -1,6 +1,8 @@
 en:
   activemodel:
     errors:
+      messages:
+        record_invalid: "Validation failed: %{errors}"
       models:
         user_invite_form:
           attributes:

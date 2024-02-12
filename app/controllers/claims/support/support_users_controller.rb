@@ -6,23 +6,16 @@ class Claims::Support::SupportUsersController < Claims::Support::ApplicationCont
   end
 
   def new
-    @support_user = if params[:support_user].present?
-                      Claims::SupportUser.new(support_user_params)
-                    else
-                      Claims::SupportUser.new
-                    end
+    @support_user_form = params[:support_user].present? ? support_user_form : SupportUserInviteForm.new
   end
 
   def check
-    @support_user = Claims::SupportUser.new(support_user_params)
-
-    render :new unless @support_user.valid?
+    render :new unless support_user_form.valid?
   end
 
   def create
-    @support_user = Claims::SupportUser.new(support_user_params)
-
-    SupportUser::Invite.call(support_user: @support_user)
+    support_user_form.save!
+    SupportUser::Invite.call(support_user: support_user_form.support_user)
     redirect_to claims_support_support_users_path, flash: { success: t(".success") }
   end
 
@@ -40,10 +33,16 @@ class Claims::Support::SupportUsersController < Claims::Support::ApplicationCont
   private
 
   def support_user_params
-    @support_user_params ||= params.require(:support_user).permit(:first_name, :last_name, :email)
+    @support_user_params ||= params.require(:support_user)
+      .permit(:first_name, :last_name, :email)
+      .merge({ service: current_service })
   end
 
   def set_support_user
     @support_user = Claims::SupportUser.find(params.require(:id))
+  end
+
+  def support_user_form
+    @support_user_form ||= SupportUserInviteForm.new(support_user_params)
   end
 end

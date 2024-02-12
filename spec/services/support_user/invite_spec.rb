@@ -6,27 +6,21 @@ RSpec.describe SupportUser::Invite do
   describe ".call" do
     subject(:invite_support_user) { described_class.call(support_user:) }
 
-    context "when given a valid Support User" do
-      let(:support_user) { build(:claims_support_user) }
-
-      it "returns true" do
-        expect(invite_support_user).to be(true)
-      end
-
-      it "creates a user" do
-        expect { invite_support_user }.to change(User, :count).by(1)
-      end
+    context "when given a valid Claims Support User" do
+      let(:support_user) { create(:claims_support_user) }
 
       it "enqueues an invitation email" do
-        expect { invite_support_user }.to change(enqueued_jobs, :size).by(1)
+        expect { invite_support_user }.to have_enqueued_mail(SupportUserMailer, :support_user_invitation)
+          .with(params: { service: :claims }, args: [support_user])
       end
     end
 
-    context "when given an invalid Support User" do
-      let(:support_user) { build(:claims_support_user, first_name: nil) }
+    context "when given a valid Placements Support User" do
+      let(:support_user) { create(:placements_support_user) }
 
-      it "raises error" do
-        expect { invite_support_user }.to raise_error ActiveRecord::RecordInvalid
+      it "enqueues an invitation email" do
+        expect { invite_support_user }.to have_enqueued_mail(SupportUserMailer, :support_user_invitation)
+          .with(params: { service: :placements }, args: [support_user])
       end
     end
   end

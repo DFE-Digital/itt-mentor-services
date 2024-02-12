@@ -1,4 +1,4 @@
-<% content_for(:page_title) { @support_user.errors.empty? ? t(".page_title") : t(".page_title_with_errors") } %>
+<% content_for(:page_title) { @support_user_form.errors.empty? ? t(".page_title") : t(".page_title_with_errors") } %>
 <% render "claims/support/primary_navigation", current: :users %>
 
 <%= content_for(:before_content) do %>
@@ -6,7 +6,7 @@
 <% end %>
 
 <div class="govuk-width-container">
-  <%= form_with(model: @support_user, scope: :support_user, url: check_claims_support_support_users_path, method: "get") do |f| %>
+  <%= form_with(model: @support_user_form, scope: :support_user, url: check_claims_support_support_users_path, method: "get") do |f| %>
     <%= f.govuk_error_summary %>
 
     <div class="govuk-grid-row">
