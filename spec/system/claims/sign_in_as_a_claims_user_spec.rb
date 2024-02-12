@@ -37,6 +37,15 @@ RSpec.describe "Sign In as a Claims User", type: :system, service: :claims do
     and_i_visit_my_account_page
     then_i_see_user_details_for_colin
   end
+
+  context "when response from dfe sign in is invalid" do
+    scenario "I sign in as user colin" do
+      invalid_dfe_sign_in_response
+      when_i_visit_the_sign_in_path
+      when_i_click_sign_in
+      i_do_not_have_access_to_the_service
+    end
+  end
 end
 
 private
@@ -98,4 +107,8 @@ def page_has_user_content(first_name:, last_name:, email:)
   expect(page).to have_content(first_name)
   expect(page).to have_content(last_name)
   expect(page).to have_content(email)
+end
+
+def i_do_not_have_access_to_the_service
+  expect(page).to have_content("You do not have access to this service")
 end
