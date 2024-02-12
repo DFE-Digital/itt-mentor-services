@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_09_105926) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_12_125607) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -47,6 +47,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_09_105926) do
     t.index ["organisation_type", "organisation_id"], name: "index_memberships_on_organisation"
     t.index ["user_id", "organisation_id"], name: "index_memberships_on_user_id_and_organisation_id", unique: true
     t.index ["user_id"], name: "index_memberships_on_user_id"
+  end
+
+  create_table "mentor_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "type"
+    t.uuid "mentor_id", null: false
+    t.uuid "school_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mentor_id"], name: "index_mentor_memberships_on_mentor_id"
+    t.index ["school_id"], name: "index_mentor_memberships_on_school_id"
   end
 
   create_table "mentor_trainings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -177,6 +187,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_09_105926) do
   add_foreign_key "claims", "providers"
   add_foreign_key "claims", "schools"
   add_foreign_key "memberships", "users"
+  add_foreign_key "mentor_memberships", "mentors"
+  add_foreign_key "mentor_memberships", "schools"
   add_foreign_key "mentor_trainings", "claims"
   add_foreign_key "mentor_trainings", "mentors"
   add_foreign_key "mentor_trainings", "providers"

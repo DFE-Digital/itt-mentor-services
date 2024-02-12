@@ -21,6 +21,9 @@
 class Mentor < ApplicationRecord
   belongs_to :school
 
+  has_many :mentor_memberships
+  has_many :schools, through: :mentor_memberships
+
   validates :first_name, :last_name, :trn, presence: true
 
   def full_name

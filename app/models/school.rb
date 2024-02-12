@@ -58,7 +58,9 @@ class School < ApplicationRecord
   belongs_to :region
 
   has_many :memberships, as: :organisation
-  has_many :mentors
+  has_many :mentor_memberships
+  has_many :mentors, through: :mentor_memberships
+  # has_many :mentors
 
   validates :urn, presence: true
   validates :urn, uniqueness: { case_sensitive: false }
