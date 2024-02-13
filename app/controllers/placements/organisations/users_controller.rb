@@ -18,7 +18,8 @@ class Placements::Organisations::UsersController < ApplicationController
   end
 
   def create
-    user_form.invite!
+    user_form.save!
+    UserInviteService.call(user_form.user, @organisation)
     redirect_to_index
     flash[:success] = t(".user_added")
   end

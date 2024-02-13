@@ -1,4 +1,4 @@
-class UserInviteForm
+class UserInviteForm < ApplicationForm
   FORM_PARAMS = %i[first_name last_name email].freeze
   include ActiveModel::Model
 
@@ -8,19 +8,16 @@ class UserInviteForm
   validate :validate_membership
   validates :service, :organisation, presence: true
 
-  def invite!
+  def persist
     ActiveRecord::Base.transaction do
       user.save!
       membership.save!
     end
-    UserInviteService.call(user, organisation)
   end
 
   def as_form_params
     { "user_invite_form" => slice(FORM_PARAMS) }
   end
-
-  private
 
   def user
     @user ||=
@@ -30,6 +27,8 @@ class UserInviteForm
         user
       end
   end
+
+  private
 
   def validate_user
     if user.invalid?
