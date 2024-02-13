@@ -28,6 +28,9 @@ SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
 SimpleCov.start "rails" do
   enable_coverage :branch
 
+  # Ignore test coverage for these files
+  add_filter "lib/tasks/auto_annotate_models.rake"
+
   add_group "Components", "app/components"
   add_group "Decorators", "app/decorators"
   add_group "Forms", "app/forms"
