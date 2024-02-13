@@ -19,8 +19,7 @@ class Claims::Schools::UsersController < ApplicationController
 
   def create
     user_form.invite!
-    redirect_to claims_school_users_path(@school)
-    flash[:success] = t(".user_added")
+    redirect_to claims_school_users_path(@school), flash: { success: t(".user_added") }
   end
 
   private
