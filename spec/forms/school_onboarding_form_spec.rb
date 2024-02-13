@@ -62,11 +62,11 @@ describe SchoolOnboardingForm, type: :model do
     end
   end
 
-  describe "onboard" do
+  describe "save!" do
     it "enables the boolean flag for the given service" do
       school = create(:school)
       onboarding = expect do
-        described_class.new(id: school.id, service: :placements).onboard!
+        described_class.new(id: school.id, service: :placements).save!
         school.reload
       end
       onboarding.to change(school, :placements_service).from(false).to(true)

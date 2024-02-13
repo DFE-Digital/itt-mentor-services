@@ -49,7 +49,7 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
   end
 
   def create
-    school_form.onboard!
+    school_form.save!
     flash[:success] = I18n.t("claims.support.schools.create.organisation_added")
     redirect_to claims_support_schools_path
   end
