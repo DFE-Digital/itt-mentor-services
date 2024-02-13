@@ -6,7 +6,7 @@ class SchoolOnboardingForm < ApplicationForm
   validate :school_exists?
   validate :school_already_onboarded?
 
-  def onboard!
+  def persist
     school.update!("#{service}_service" => true)
   end
 

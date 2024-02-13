@@ -40,7 +40,7 @@ class Placements::Support::SchoolsController < Placements::Support::ApplicationC
   end
 
   def create
-    school_form.onboard!
+    school_form.save!
     flash[:success] = I18n.t("placements.support.schools.create.organisation_added")
     redirect_to placements_support_organisations_path
   end
