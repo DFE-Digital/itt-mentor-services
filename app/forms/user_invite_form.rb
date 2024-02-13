@@ -1,6 +1,5 @@
 class UserInviteForm < ApplicationForm
   FORM_PARAMS = %i[first_name last_name email].freeze
-  include ActiveModel::Model
 
   attr_accessor :email, :first_name, :last_name, :service, :organisation
 
