@@ -1,42 +1,46 @@
-class ClaimForm
-  include ActiveModel::Model
+class ClaimForm < ApplicationForm
   STEPS = %w[providers mentors].freeze
 
   attr_accessor :claim, :step, :claim_params
 
-  def save
-    claim.assign_attributes(claim_params)
-    return false unless valid?
+  validates :claim, :step, :claim_params, presence: true
+  validates :step, inclusion: { in: STEPS }
+  validate :validate_provider, if: proc { |form| form.step == "providers" }
+  validate :validate_mentor, if: proc { |form| form.step == "mentors" }
 
-    claim.save!
-  end
-
-  def valid?
-    claim.valid? && valid_provider? && valid_mentors?
+  def persist
+    updated_claim.save!
   end
 
   private
 
-  def valid_provider?
-    return true unless step == "providers"
-
-    if claim.provider_id.nil?
-      claim.errors.add(:provider_id)
+  def updated_claim
+    @updated_claim ||= begin
+      claim.assign_attributes(claim_params)
+      claim
     end
-
-    claim.errors.blank?
   end
 
-  def valid_mentors?
-    return true unless step == "mentors"
-
-    claim.mentor_trainings.each do |mentor_training|
-      if mentor_training.mentor_id.nil?
-        mentor_training.errors.add(:mentor_id, :blank)
-        claim.errors.add(:base, :enter_mentor_name)
-      end
+  def validate_provider
+    if updated_claim.provider_id.nil?
+      updated_claim.errors.add(:provider_id)
+      add_errors_to_form
     end
+  end
 
-    claim.errors.blank?
+  def validate_mentor
+    updated_claim.mentor_trainings.each do |mentor_training|
+      next unless mentor_training.mentor_id.nil?
+
+      mentor_training.errors.add(:mentor_id, :blank)
+      updated_claim.errors.add(:base, :enter_mentor_name)
+      add_errors_to_form
+    end
+  end
+
+  def add_errors_to_form
+    updated_claim.errors.each do |err|
+      errors.add(err.attribute, err.message)
+    end
   end
 end
