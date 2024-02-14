@@ -152,10 +152,7 @@ class GiasCsvImporter
 
     School.find_each do |school|
       region = determine_region(school.district_admin_code)
-
-      unless school.update(region:)
-        Rails.logger.info "Failed to update region for school with ID #{school.id}"
-      end
+      school.update!(region:)
     end
   end
 
