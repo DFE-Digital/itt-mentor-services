@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template">
+  <head>
+    <title><%= [yield(:page_title).presence, service_name, "GOV.UK"].compact.join(" - ") %></title>
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= tag.meta(name: "viewport", content: "width=device-width, initial-scale=1") %>
+    <%= tag.meta(property: "og:image", content: asset_path("images/govuk-opengraph-image.png")) %>
+    <%= tag.meta(name: "theme-color", content: "#0b0c0c") %>
+    <%= favicon_link_tag asset_path("images/favicon.ico"), type: nil, sizes: "48x48" %>
+    <%= favicon_link_tag asset_path("images/favicon.svg"), type: "image/svg+xml", sizes: "any" %>
+    <%= favicon_link_tag asset_path("images/govuk-icon-mask.svg"), rel: "mask-icon", color: "#0b0c0c", type: nil %>
+    <%= favicon_link_tag asset_path("images/govuk-icon-180.png"), rel: "apple-touch-icon", type: nil %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  </head>
+
+  <body class="govuk-template__body">
+    <script>
+      document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
+    </script>
+
+    <%= govuk_skip_link %>
+
+    <%= govuk_header(homepage_url: "/", classes: "app-header app-header--#{hosting_environment_color} app-header--full-border") do |header| %>
+      <% header.with_product_name(name: service_name) %>
+    <% end %>
+
+    <div class="govuk-width-container">
+      <%= yield :header_content %>
+    </div>
+
+    <%= yield :primary_navigation_content %>
+
+    <div class="govuk-width-container">
+      <%= yield :before_content %>
+    </div>
+
+    <main class="govuk-main-wrapper" id="main-content" role="main">
+      <div class="govuk-width-container">
+        <% flash.each do |key, message| %>
+          <div class="govuk-!-margin-bottom-0">
+            <%= render(GovukComponent::NotificationBannerComponent.new(title_text: t(".#{key}"), success: key == "success")) do %>
+              <h3 class="govuk-heading-m"><%= message %></h3>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="govuk-width-container">
+        <%= yield %>
+      </div>
+    </main>
+
+    <%= govuk_footer %>
+  </body>
+</html>
