@@ -1,0 +1,9 @@
+en:
+  placements:
+    schools:
+      primary_navigation:
+        change_organisation: Change organisation
+        placements: Placements
+        mentors: Mentors
+        users: Users
+        organisation_details: Organisation details

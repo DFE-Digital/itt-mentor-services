@@ -117,7 +117,13 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
   end
 
   def then_i_am_asked_to_confirm(user, organisation)
-    users_is_selected_in_primary_nav
+    case organisation
+    when School
+      users_is_selected_in_schools_primary_nav
+    when Provider
+      users_is_selected_in_providers_primary_nav
+    end
+
     expect(page).to have_title(
       "Are you sure you want to remove this user? - #{user.full_name} - #{organisation.name} - Manage school placements",
     )
@@ -126,7 +132,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     expect(page).to have_content "The user will be sent an email to tell them you removed them from #{organisation.name}"
   end
 
-  def users_is_selected_in_primary_nav
+  def users_is_selected_in_schools_primary_nav
     within(".app-primary-navigation__nav") do
       expect(page).to have_link "Placements", current: "false"
       expect(page).to have_link "Mentors", current: "false"
@@ -135,18 +141,33 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     end
   end
 
+  def users_is_selected_in_providers_primary_nav
+    within(".app-primary-navigation__nav") do
+      expect(page).to have_link "Placements", current: "false"
+      expect(page).to have_link "Users", current: "page"
+      expect(page).to have_link "Organisation details", current: "false"
+    end
+  end
+
   def then_i_return_to_user_page(user, organisation)
-    users_is_selected_in_primary_nav
     case organisation
     when School
+      users_is_selected_in_schools_primary_nav
       expect(page).to have_current_path placements_school_user_path(organisation, user), ignore_query: true
     when Provider
+      users_is_selected_in_providers_primary_nav
       expect(page).to have_current_path placements_provider_user_path(organisation, user), ignore_query: true
     end
   end
 
   def then_the_the_user_is_removed_from_the_organisation(user, organisation)
-    users_is_selected_in_primary_nav
+    case organisation
+    when School
+      users_is_selected_in_schools_primary_nav
+    when Provider
+      users_is_selected_in_providers_primary_nav
+    end
+
     expect(user.memberships.find_by(organisation:)).to eq nil
     within(".govuk-notification-banner__content") do
       expect(page).to have_content "User removed"

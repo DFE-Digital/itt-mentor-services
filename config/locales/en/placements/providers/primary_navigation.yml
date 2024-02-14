@@ -1,0 +1,8 @@
+en:
+  placements:
+    providers:
+      primary_navigation:
+        change_organisation: Change organisation
+        placements: Placements
+        users: Users
+        organisation_details: Organisation details

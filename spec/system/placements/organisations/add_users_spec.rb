@@ -22,13 +22,16 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
         then_i_see_the_users_page
         when_i_click_add_user
         and_i_enter_valid_user_details
+        and_user_is_selected_in_provider_primary_navigation
         then_i_can_check_my_answers(one_provider)
         when_i_click_back
         then_i_see_prepopulated_form
         when_i_change_user_details
         then_i_see_changes_in_check_form
+        and_user_is_selected_in_provider_primary_navigation
         when_i_click_add_user
         then_the_user_is_added(one_provider)
+        and_user_is_selected_in_provider_primary_navigation
       end
     end
 
@@ -37,13 +40,17 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
         given_i_am_logged_in_as_a_user_with_one_organisation(one_school)
         when_i_click_users
         then_i_see_the_users_page
+        and_user_is_selected_in_school_primary_navigation
         when_i_click_add_user
+        and_user_is_selected_in_school_primary_navigation
         and_i_enter_valid_user_details
         then_i_can_check_my_answers(one_school)
         when_i_click_back
         then_i_see_prepopulated_form
+        and_user_is_selected_in_school_primary_navigation
         when_i_change_user_details
         then_i_see_changes_in_check_form
+        and_user_is_selected_in_school_primary_navigation
         when_i_click_add_user
         then_the_user_is_added(one_school)
       end
@@ -138,7 +145,6 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
   end
 
   def then_i_see_the_user_on_that_schools_user_list
-    users_is_selected_in_navigation
     expect(page).to have_content(new_user.full_name)
     expect(page).to have_content(new_user.email)
   end
@@ -160,7 +166,6 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
 
   def then_the_user_is_added_successfully(organisation)
     email_is_sent(new_user.email, organisation)
-    users_is_selected_in_navigation
 
     expect(page.find(".govuk-notification-banner__content")).to have_content("User added")
     expect(page).to have_content new_user.full_name
@@ -172,8 +177,6 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
   end
 
   def then_i_see_the_users_page
-    users_is_selected_in_navigation
-
     expect(page).to have_content "Anne Wilson"
     expect(page).to have_content "anne_wilson@example.org"
   end
@@ -183,7 +186,6 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
   end
 
   def and_i_enter_valid_user_details
-    users_is_selected_in_navigation
     fill_in "First name", with: "First Namey"
     fill_in "Last name", with: "Last Namey"
     fill_in "Email", with: "firsty_lasty@email.co.uk"
@@ -191,7 +193,6 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
   end
 
   def then_i_can_check_my_answers(organisation)
-    users_is_selected_in_navigation
     expect(page).to have_content "First Namey"
     expect(page).to have_content "Last Namey"
     expect(page).to have_content "firsty_lasty@email.co.uk"
@@ -203,7 +204,6 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
   end
 
   def then_i_see_prepopulated_form
-    users_is_selected_in_navigation
     expect(page).to have_field("First name", with: "First Namey")
     expect(page).to have_field("Last name", with: "Last Namey")
     expect(page).to have_field("Email", with: "firsty_lasty@email.co.uk")
@@ -222,16 +222,23 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
 
   def then_the_user_is_added(organisation)
     email_is_sent("firsty_lasty@email.co.uk", organisation)
-    users_is_selected_in_navigation
     expect(page.find(".govuk-notification-banner__content")).to have_content("User added")
     expect(page).to have_content "New First Name Last Namey"
     expect(page).to have_content "firsty_lasty@email.co.uk"
   end
 
-  def users_is_selected_in_navigation
+  def and_user_is_selected_in_school_primary_navigation
     within(".app-primary-navigation__nav") do
       expect(page).to have_link "Placements", current: "false"
       expect(page).to have_link "Mentors", current: "false"
+      expect(page).to have_link "Users", current: "page"
+      expect(page).to have_link "Organisation details", current: "false"
+    end
+  end
+
+  def and_user_is_selected_in_provider_primary_navigation
+    within(".app-primary-navigation__nav") do
+      expect(page).to have_link "Placements", current: "false"
       expect(page).to have_link "Users", current: "page"
       expect(page).to have_link "Organisation details", current: "false"
     end

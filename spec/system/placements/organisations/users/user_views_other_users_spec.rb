@@ -12,12 +12,15 @@ RSpec.describe "Placements user views other users in their organisation", type: 
       given_users_have_been_assigned_to_the(organisation: school)
       when_i_visit_the_users_page
       then_i_see_the_organisation_users
+      and_users_is_selected_in_schools_primary_nav
       when_i_click_on_a_users_name(mary.full_name)
-      then_i_see_user_details(user: mary)
+      then_i_see_user_details(:school, user: mary)
+      and_users_is_selected_in_schools_primary_nav
       and_i_do_not_see_the_remove_user_link
       when_i_click_back
       when_i_click_on_a_users_name(anne.full_name)
-      then_i_see_user_details(user: anne)
+      then_i_see_user_details(:school, user: anne)
+      and_users_is_selected_in_schools_primary_nav
       and_i_see_the_remove_user_link
     end
   end
@@ -28,12 +31,15 @@ RSpec.describe "Placements user views other users in their organisation", type: 
       given_users_have_been_assigned_to_the(organisation: provider)
       when_i_visit_the_users_page
       then_i_see_the_organisation_users
+      and_users_is_selected_in_providers_primary_nav
       when_i_click_on_a_users_name(mary.full_name)
-      then_i_see_user_details(user: mary)
+      then_i_see_user_details(:provider, user: mary)
+      and_users_is_selected_in_providers_primary_nav
       and_i_see_the_remove_user_link
       when_i_click_back
       when_i_click_on_a_users_name(anne.full_name)
-      then_i_see_user_details(user: anne)
+      then_i_see_user_details(:provider, user: anne)
+      and_users_is_selected_in_providers_primary_nav
       and_i_do_not_see_the_remove_user_link
     end
   end
@@ -55,7 +61,6 @@ RSpec.describe "Placements user views other users in their organisation", type: 
   end
 
   def then_i_see_the_organisation_users
-    users_is_selected_in_navigation
     expect(page).to have_content anne.full_name
     expect(page).to have_content anne.email
 
@@ -71,8 +76,7 @@ RSpec.describe "Placements user views other users in their organisation", type: 
     click_on "Back"
   end
 
-  def then_i_see_user_details(user:)
-    users_is_selected_in_navigation
+  def then_i_see_user_details(_organisation_type, user:)
     expect(page).to have_content "First name"
     expect(page).to have_content user.first_name
 
@@ -91,10 +95,18 @@ RSpec.describe "Placements user views other users in their organisation", type: 
     expect(page).not_to have_link "Remove user"
   end
 
-  def users_is_selected_in_navigation
+  def and_users_is_selected_in_schools_primary_nav
     within(".app-primary-navigation__nav") do
       expect(page).to have_link "Placements", current: "false"
       expect(page).to have_link "Mentors", current: "false"
+      expect(page).to have_link "Users", current: "page"
+      expect(page).to have_link "Organisation details", current: "false"
+    end
+  end
+
+  def and_users_is_selected_in_providers_primary_nav
+    within(".app-primary-navigation__nav") do
+      expect(page).to have_link "Placements", current: "false"
       expect(page).to have_link "Users", current: "page"
       expect(page).to have_link "Organisation details", current: "false"
     end

@@ -1,8 +1,8 @@
-<%# locals: (current_navigation: nil, organisation:) -%>
+<%# locals: (current_navigation: nil, provider:) -%>
 <% if current_user.organisation_count > 1 %>
   <%= content_for(:header_content) do %>
     <%= render(ContentHeaderComponent.new(
-      title: organisation.name,
+      title: provider.name,
       actions: [govuk_link_to(t(".change_organisation"), placements_organisations_path, no_visited_state: true)],
     )) %>
   <% end %>
@@ -11,10 +11,9 @@
 <%= content_for(:primary_navigation_content) do %>
   <%= render PrimaryNavigationComponent.new do |component| %>
     <% component.with_navigation_item t(".placements"), "#", current: current_navigation == :placements %>
-    <% component.with_navigation_item t(".mentors"), "#", current: current_navigation == :mentors %>
-    <% component.with_navigation_item t(".users"), organisation_users_path(organisation), current: current_navigation == :users %>
+    <% component.with_navigation_item t(".users"), placements_provider_users_path(provider), current: current_navigation == :users %>
     <% component.with_navigation_item t(".organisation_details"),
-                                      placements_organisation_path(organisation),
+                                      placements_provider_path(provider),
                                       current: current_navigation == :organisation_details %>
   <% end %>
 <% end %>
