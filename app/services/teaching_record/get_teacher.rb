@@ -1,4 +1,4 @@
-module Dqt
+module TeachingRecord
   class GetTeacher
     include ServicePattern
 
@@ -7,7 +7,7 @@ module Dqt
     end
 
     def call
-      Client.get("/v3/teachers/#{trn}")
+      RestClient.get("/v3/teachers/#{trn}")
     end
 
     attr_reader :trn

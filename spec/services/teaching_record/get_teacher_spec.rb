@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Dqt::GetTeacher do
+RSpec.describe TeachingRecord::GetTeacher do
   context "with invalid trn" do
     subject(:get_teacher) { described_class.call(trn: "2222222") }
 
@@ -24,7 +24,7 @@ RSpec.describe Dqt::GetTeacher do
     end
 
     it "raises error" do
-      expect { get_teacher }.to raise_error(Dqt::Client::HttpError)
+      expect { get_teacher }.to raise_error(TeachingRecord::RestClient::HttpError)
     end
   end
 

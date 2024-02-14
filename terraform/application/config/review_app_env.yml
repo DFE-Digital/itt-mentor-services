@@ -3,5 +3,5 @@ SIGN_IN_METHOD: persona
 GIAS_CSV_BASE_URL: https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public
 PUBLISH_BASE_URL: https://qa.api.publish-teacher-training-courses.service.gov.uk
 HOSTING_ENV: review
-DQT_BASE_URL: https://preprod.teacher-qualifications-api.education.gov.uk
-DQT_API_MINOR_VERSION: 20240101
+TEACHING_RECORD_BASE_URL: https://preprod.teacher-qualifications-api.education.gov.uk
+TEACHING_RECORD_API_MINOR_VERSION: 20240101
