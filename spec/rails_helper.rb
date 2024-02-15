@@ -9,7 +9,6 @@ end
 require "rspec/rails"
 require "webmock/rspec"
 require "view_component/test_helpers"
-require "capybara/rspec"
 
 WebMock.disable_net_connect!(allow_localhost: true)
 
@@ -44,7 +43,7 @@ end
 
 RSpec.configure do |config|
   config.include ViewComponent::TestHelpers, type: :component
-  config.include Capybara::RSpecMatchers, type: :component
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   # config.fixture_paths = [Rails.root.join("spec/fixtures")]
 
