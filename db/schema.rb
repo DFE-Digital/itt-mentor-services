@@ -76,13 +76,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_14_093104) do
   end
 
   create_table "mentors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "school_id", null: false
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "trn", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["school_id"], name: "index_mentors_on_school_id"
   end
 
   create_table "pg_search_documents", force: :cascade do |t|
@@ -194,6 +192,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_14_093104) do
   add_foreign_key "mentor_trainings", "claims"
   add_foreign_key "mentor_trainings", "mentors"
   add_foreign_key "mentor_trainings", "providers"
-  add_foreign_key "mentors", "schools"
   add_foreign_key "schools", "regions"
 end
