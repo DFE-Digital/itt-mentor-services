@@ -57,4 +57,6 @@ class Claims::School < School
 
   has_many :users, through: :memberships
   has_many :claims
+  has_many :mentor_memberships
+  has_many :mentors, through: :mentor_memberships
 end
