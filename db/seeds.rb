@@ -73,17 +73,12 @@ schools.each do |school|
 end
 
 # Create dummy mentors
-schools = School.where(claims_service: true)
-  .or(School.where(placements_service: true))
-schools.each do |school|
-  %w[Sarah John Pomona].each_with_index do |first_name, index|
-    Mentor.find_or_create_by(
-      first_name:,
-      last_name: "Doe",
-      school:,
-      trn: index,
-    )
-  end
+mentors = %w[Sarah John Pomona].each_with_index.map do |first_name, index|
+  Mentor.find_or_create_by!(first_name:, last_name: "Doe", trn: index)
+end
+
+(Claims::School.all + Placements::School.all).each do |school|
+  school.mentors = mentors
 end
 
 Rails.logger.debug "Organisations assigned to users"
