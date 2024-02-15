@@ -57,6 +57,8 @@ require "rails_helper"
 RSpec.describe Claims::School do
   context "with associations" do
     it { is_expected.to have_many(:claims) }
+    it { is_expected.to have_many(:mentor_memberships) }
+    it { is_expected.to have_many(:mentors).through(:mentor_memberships) }
 
     describe "#users" do
       it { is_expected.to have_many(:users).through(:memberships) }

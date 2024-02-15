@@ -26,4 +26,11 @@ FactoryBot.define do
     last_name { Faker::Name.last_name }
     sequence(:trn) { _1 }
   end
+  factory :claims_mentor,
+          class: "Claims::Mentor",
+          parent: :mentor
+
+  factory :placements_mentor,
+          class: "Placements::Mentor",
+          parent: :mentor
 end

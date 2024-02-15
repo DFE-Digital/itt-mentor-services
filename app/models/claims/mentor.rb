@@ -8,24 +8,10 @@
 #  trn        :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  school_id  :uuid             not null
 #
-# Indexes
-#
-#  index_mentors_on_school_id  (school_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (school_id => schools.id)
-#
-class Mentor < ApplicationRecord
-  belongs_to :school
+class Claims::Mentor < Mentor
   has_many :mentor_memberships
   has_many :schools, through: :mentor_memberships
 
-  validates :first_name, :last_name, :trn, presence: true
-
-  def full_name
-    "#{first_name} #{last_name}".strip
-  end
+  default_scope { joins(:mentor_memberships).distinct }
 end

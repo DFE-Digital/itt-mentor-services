@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Create claim", type: :system, js: true, retry: 3, service: :claims do
-  let!(:school) { create(:claims_school) }
+  let!(:school) { create(:claims_school, mentors: [mentor]) }
   let!(:anne) do
     create(
       :claims_user,
@@ -10,7 +10,7 @@ RSpec.describe "Create claim", type: :system, js: true, retry: 3, service: :clai
     )
   end
   let!(:provider) { create(:provider) }
-  let!(:mentor) { create(:mentor, school:) }
+  let!(:mentor) { create(:mentor) }
 
   before do
     user_exists_in_dfe_sign_in(user: anne)
