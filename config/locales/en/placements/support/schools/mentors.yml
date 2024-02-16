@@ -4,6 +4,7 @@ en:
       schools:
         mentors:
           show:
+            caption: "Mentors - %{school_name}"
             attributes:
               mentors:
                 first_name: First name
