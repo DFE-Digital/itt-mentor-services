@@ -4,6 +4,10 @@ en:
       messages:
         record_invalid: "Validation failed: %{errors}"
       models:
+        mentor_form:
+          attributes:
+            trn:
+              taken: The mentor has already been added
         user_invite_form:
           attributes:
             email:

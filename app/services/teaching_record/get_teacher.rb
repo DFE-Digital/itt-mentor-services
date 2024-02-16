@@ -7,7 +7,7 @@ module TeachingRecord
     end
 
     def call
-      RestClient.get("/v3/teachers/#{trn}")
+      RestClient.get("teachers/#{trn}")
     end
 
     attr_reader :trn

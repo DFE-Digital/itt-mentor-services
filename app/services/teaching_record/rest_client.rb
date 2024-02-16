@@ -12,7 +12,7 @@ module TeachingRecord
     class HttpError < StandardError; end
 
     def self.get(path)
-      response = Request.get(path)
+      response = Request.get("/v3/#{path}")
 
       if response.ok?
         JSON.parse(response.body || "{}")
