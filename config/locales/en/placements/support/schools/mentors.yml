@@ -11,3 +11,26 @@ en:
             attributes:
               mentors:
                 trn: Teacher reference number (TRN)
+          index:
+            add_mentor: Add mentor
+            page_title: Mentors
+          new:
+            add_mentor_with_school_name: Add mentor - %{school_name}
+            back: Back
+            cancel: Cancel
+            continue: Continue
+            enter_a_trn: Enter a teacher reference number (TRN)
+            help_text: If you don’t have a TRN, read the Teacher reference number (TRN) guidance to find a lost TRN, or apply for one.
+            help_with_the_trn: Help with the teacher reference number (TRN)
+          check:
+            add_mentor: Add mentor
+            add_mentor_with_school_name: Add mentor - %{school_name}
+            back: Back
+            cancel: Cancel
+            check_your_answers: Check your answers
+          no_results:
+            add_mentor_with_school_name: Add mentor - %{school_name}
+            back: Back
+            change_your_search: Change your search
+            help_text: Check that you typed in the teacher reference number (TRN) correctly.
+            no_results_found: No results found for ‘%{trn}’
