@@ -1,0 +1,47 @@
+<% content_for :page_title, t(".page_title", school_name: @school.name) %>
+<%= render "placements/support/primary_navigation", current_navigation: :organisations %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: new_placements_support_school_mentor_path(@school, params: @mentor_form.as_form_params)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= form_with(model: @mentor_form, url: placements_support_school_mentors_path, method: :post) do |f| %>
+        <%= f.hidden_field :first_name, value: @mentor_form.first_name %>
+        <%= f.hidden_field :last_name, value: @mentor_form.last_name %>
+        <%= f.hidden_field :trn, value: @mentor_form.trn %>
+
+        <label class="govuk-label govuk-label--l">
+          <span class="govuk-caption-l"><%= t(".add_mentor_with_school_name", school_name: @school.name) %></span>
+          <%= t(".check_your_answers") %>
+        </label>
+
+        <%= govuk_summary_list do |summary_list| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: Mentor.human_attribute_name("first_name")) %>
+            <% row.with_value(text: @mentor_form.first_name) %>
+          <% end %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: Mentor.human_attribute_name("last_name")) %>
+            <% row.with_value(text: @mentor_form.last_name) %>
+          <% end %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".trn")) %>
+            <% row.with_value(text: @mentor_form.trn) %>
+            <% row.with_action(text: t(".change"),
+                               href: new_placements_support_school_mentor_path(params: @mentor_form.as_form_params),
+                               html_attributes: {
+                                 class: "govuk-link--no-visited-state",
+                               }) %>
+          <% end %>
+        <% end %>
+        <%= f.govuk_submit t(".add_mentor") %>
+        <p class="govuk-body">
+          <%= govuk_link_to(t(".cancel"), placements_support_school_mentors_path(@school)) %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>

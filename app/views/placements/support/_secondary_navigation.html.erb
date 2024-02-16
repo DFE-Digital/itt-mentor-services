@@ -1,9 +1,8 @@
 <%= render SecondaryNavigationComponent.new do |component| %>
   <% component.with_navigation_item t(".details"), placements_support_organisation_path(organisation) %>
   <% component.with_navigation_item t(".users"), placements_support_users_path(organisation) %>
-  <% unless organisation.is_a?(Provider) %>
-    <% component.with_navigation_item t(".mentors"), placements_support_school_mentors_path(organisation) %>
-  <% end %>
+  <% component.with_navigation_item t(".mentors"), placements_support_school_mentors_path(organisation) %>
+  <% component.with_navigation_item t(".mentors"), placements_support_school_mentors_path(organisation) %>
   <% component.with_navigation_item t(".placements"), "#" %>
   <% component.with_navigation_item t(".providers"), "#" %>
 <% end %>
