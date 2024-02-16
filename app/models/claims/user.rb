@@ -20,7 +20,7 @@
 #
 class Claims::User < User
   has_many :schools,
-           through: :memberships,
+           through: :user_memberships,
            source: :organisation,
            source_type: "School"
 end

@@ -23,7 +23,7 @@ require "rails_helper"
 RSpec.describe Claims::User do
   describe "associations" do
     describe "#schools" do
-      it { is_expected.to have_many(:schools).through(:memberships).source(:organisation) }
+      it { is_expected.to have_many(:schools).through(:user_memberships).source(:organisation) }
 
       it "returns only Claims::School records" do
         claims_user = create(:claims_user)

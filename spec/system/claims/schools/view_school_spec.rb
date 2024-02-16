@@ -43,12 +43,12 @@ RSpec.describe "School Page", type: :system do
   end
 
   def and_user_has_multiple_schools(user)
-    create(:membership, user:, organisation: school2)
+    create(:user_membership, user:, organisation: school2)
   end
 
   def given_there_is_an_existing_user_for(user_name)
     user = create(:claims_user, user_name.downcase.to_sym)
-    create(:membership, user:, organisation: school1)
+    create(:user_membership, user:, organisation: school1)
     user
   end
 

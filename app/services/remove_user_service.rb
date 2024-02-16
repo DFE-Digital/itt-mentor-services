@@ -9,7 +9,7 @@ class RemoveUserService
   attr_reader :user, :organisation
 
   def call
-    membership = user.memberships.find_by(organisation:)
+    membership = user.user_memberships.find_by(organisation:)
     ActiveRecord::Base.transaction do
       membership.destroy!
       UserMailer.removal_email(user, organisation).deliver_later

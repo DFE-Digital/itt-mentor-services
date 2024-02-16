@@ -56,7 +56,7 @@ require "rails_helper"
 
 RSpec.describe School, type: :model do
   context "with associations" do
-    it { is_expected.to have_many(:memberships) }
+    it { is_expected.to have_many(:user_memberships) }
     it { is_expected.to have_many(:mentors) }
     it { is_expected.to belong_to(:region) }
   end

@@ -17,7 +17,7 @@ RSpec.describe "View a users details", type: :system do
   private
 
   def attach_user_to_school
-    create(:membership, user:, organisation: school)
+    create(:user_membership, user:, organisation: school)
   end
 
   def sign_in_as_support_user

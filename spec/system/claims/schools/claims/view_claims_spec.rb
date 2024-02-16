@@ -6,7 +6,7 @@ RSpec.describe "View claims", type: :system, service: :claims do
     create(
       :claims_user,
       :anne,
-      memberships: [create(:membership, organisation: school)],
+      user_memberships: [create(:user_membership, organisation: school)],
     )
   end
 

@@ -21,7 +21,7 @@
 class User < ApplicationRecord
   include Discard::Model
 
-  has_many :memberships, dependent: :destroy
+  has_many :user_memberships, dependent: :destroy
 
   validates :first_name, presence: true
   validates :last_name, presence: true

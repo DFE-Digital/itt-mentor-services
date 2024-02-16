@@ -24,7 +24,7 @@ RSpec.describe User, type: :model do
   subject(:test_user) { build(:user) }
 
   context "with associations" do
-    it { is_expected.to have_many(:memberships).dependent(:destroy) }
+    it { is_expected.to have_many(:user_memberships).dependent(:destroy) }
   end
 
   describe "validations" do

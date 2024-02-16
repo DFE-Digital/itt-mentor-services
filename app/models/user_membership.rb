@@ -19,7 +19,7 @@
 #
 #  fk_rails_...  (user_id => users.id)
 #
-class Membership < ApplicationRecord
+class UserMembership < ApplicationRecord
   belongs_to :user
   belongs_to :organisation, polymorphic: true
 

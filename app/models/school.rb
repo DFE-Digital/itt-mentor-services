@@ -57,7 +57,7 @@ class School < ApplicationRecord
 
   belongs_to :region
 
-  has_many :memberships, as: :organisation
+  has_many :user_memberships, as: :organisation
   has_many :mentor_memberships
   has_many :mentors, through: :mentor_memberships
 

@@ -20,11 +20,11 @@
 #
 class Placements::User < User
   has_many :schools,
-           through: :memberships,
+           through: :user_memberships,
            source: :organisation,
            source_type: "School"
   has_many :providers,
-           through: :memberships,
+           through: :user_memberships,
            source: :organisation,
            source_type: "Provider"
 

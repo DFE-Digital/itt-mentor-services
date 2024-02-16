@@ -12,7 +12,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     let(:user) { create(:placements_user) }
 
     before do
-      create(:membership, user:, organisation: school)
+      create(:user_membership, user:, organisation: school)
     end
 
     scenario "user is removed from a school" do
@@ -34,7 +34,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     let(:user) { create(:placements_user) }
 
     before do
-      create(:membership, user:, organisation: provider)
+      create(:user_membership, user:, organisation: provider)
     end
 
     scenario "user is removed from a provider" do
@@ -57,8 +57,8 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     let(:user) { create(:placements_user) }
 
     before do
-      create(:membership, user:, organisation: school)
-      create(:membership, user:, organisation: provider)
+      create(:user_membership, user:, organisation: school)
+      create(:user_membership, user:, organisation: provider)
     end
 
     scenario "user is removed from one organisation but when other memberships exist" do
@@ -75,7 +75,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     click_on "Remove user"
     click_on "Remove user"
     expect(page).to have_content "User removed"
-    expect(user.memberships.find_by(organisation: school)).to eq nil
+    expect(user.user_memberships.find_by(organisation: school)).to eq nil
   end
 
   def then_user_is_still_member_of_provider
@@ -144,7 +144,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     email_is_sent(user.email, organisation)
     organisations_is_selected_in_primary_nav
     users_is_selected_in_secondary_nav
-    expect(user.memberships.find_by(organisation:)).to eq nil
+    expect(user.user_memberships.find_by(organisation:)).to eq nil
     within(".govuk-notification-banner__content") do
       expect(page).to have_content "User removed"
     end

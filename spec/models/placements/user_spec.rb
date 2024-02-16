@@ -23,7 +23,7 @@ require "rails_helper"
 RSpec.describe Placements::User do
   describe "associations" do
     describe "#schools" do
-      it { is_expected.to have_many(:schools).through(:memberships).source(:organisation) }
+      it { is_expected.to have_many(:schools).through(:user_memberships).source(:organisation) }
 
       it "returns only Placements::School records" do
         placements_user = create(:placements_user)
@@ -62,15 +62,15 @@ RSpec.describe Placements::User do
         user = create(:placements_user)
         expect(user.organisation_count).to eq 0
 
-        create(:membership, user:, organisation: create(:claims_school))
+        create(:user_membership, user:, organisation: create(:claims_school))
         expect(user.organisation_count).to eq 0
       end
 
       it "returns combined provider and school count" do
         user = create(:placements_user)
-        create(:membership, user:, organisation: create(:placements_school))
-        create(:membership, user:, organisation: create(:placements_provider))
-        create(:membership, user:, organisation: create(:placements_provider))
+        create(:user_membership, user:, organisation: create(:placements_school))
+        create(:user_membership, user:, organisation: create(:placements_provider))
+        create(:user_membership, user:, organisation: create(:placements_provider))
 
         expect(user.organisation_count).to eq 3
       end

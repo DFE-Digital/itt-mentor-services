@@ -33,8 +33,8 @@ class Provider < ApplicationRecord
 
   alias_attribute :organisation_type, :provider_type
 
-  has_many :memberships, as: :organisation
-  has_many :users, through: :memberships
+  has_many :user_memberships, as: :organisation
+  has_many :users, through: :user_memberships
   has_many :mentor_trainings
 
   enum :provider_type,
