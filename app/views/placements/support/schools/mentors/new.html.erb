@@ -1,0 +1,26 @@
+<% content_for :page_title, @mentor_form.errors.any? ? t(".page_title_with_error") : t(".page_title") %>
+<%= render "placements/support/primary_navigation", current_navigation: :organisations %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: placements_support_school_mentors_path(@school)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <%= form_with(model: @mentor_form, url: check_placements_support_school_mentors_path, method: "get") do |f| %>
+    <%= f.govuk_error_summary %>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l"><%= t(".add_mentor_with_school_name", school_name: @school.name) %></span>
+        <h2 class="govuk-heading-l"><%= t(".enter_a_trn") %></h2>
+        <div class="govuk-form-group">
+          <%= f.govuk_text_field :trn %>
+        </div>
+        <%= f.govuk_submit t(".continue") %>
+        <p class="govuk-body">
+          <%= govuk_link_to(t(".cancel"), placements_support_school_mentors_path(@school)) %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+</div>

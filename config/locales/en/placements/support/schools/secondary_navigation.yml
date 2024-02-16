@@ -1,0 +1,10 @@
+en:
+  placements:
+    support:
+      schools:
+        secondary_navigation:
+          details: Details
+          users: Users
+          mentors: Mentors
+          placements: Placements
+          providers: Providers
