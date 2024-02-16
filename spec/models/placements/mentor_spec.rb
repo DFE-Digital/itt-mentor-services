@@ -9,6 +9,10 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+# Indexes
+#
+#  index_mentors_on_trn  (trn) UNIQUE
+#
 require "rails_helper"
 
 RSpec.describe Placements::Mentor, type: :model do

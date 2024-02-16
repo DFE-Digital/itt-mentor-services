@@ -9,6 +9,10 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+# Indexes
+#
+#  index_mentors_on_trn  (trn) UNIQUE
+#
 require "rails_helper"
 
 RSpec.describe Mentor, type: :model do
@@ -22,7 +26,21 @@ RSpec.describe Mentor, type: :model do
 
     it { is_expected.to validate_presence_of(:first_name) }
     it { is_expected.to validate_presence_of(:last_name) }
-    it { is_expected.to validate_presence_of(:trn) }
+    it { is_expected.to validate_presence_of(:trn).with_message("Enter a teacher reference number (TRN)") }
+
+    it "allows only turns that are seven numeric characters long" do
+      mentor_with_alpha_trn = build(:mentor, trn: "a12345b")
+      expect(mentor_with_alpha_trn.valid?).to eq false
+      expect(mentor_with_alpha_trn.errors.messages[:trn]).to include "Enter a valid teacher reference number (TRN)"
+
+      mentor_with_too_few_chars = build(:mentor, trn: "123")
+      expect(mentor_with_too_few_chars.valid?).to eq false
+      expect(mentor_with_too_few_chars.errors.messages[:trn]).to include "Enter a valid teacher reference number (TRN)"
+
+      mentor_with_too_many_chars = build(:mentor, trn: "123456789")
+      expect(mentor_with_too_many_chars.valid?).to eq false
+      expect(mentor_with_too_many_chars.errors.messages[:trn]).to include "Enter a valid teacher reference number (TRN)"
+    end
   end
 
   describe "#full_name" do

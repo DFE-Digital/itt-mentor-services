@@ -9,6 +9,10 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+# Indexes
+#
+#  index_mentors_on_trn  (trn) UNIQUE
+#
 class Placements::Mentor < Mentor
   has_many :mentor_memberships
   has_many :schools, through: :mentor_memberships
