@@ -1,4 +1,4 @@
-class Claims::Support::Schools::MentorsController < Claims::Support::ApplicationController
+class Claims::Schools::MentorsController < ApplicationController
   include Claims::BelongsToSchool
 
   def index
