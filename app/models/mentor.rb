@@ -9,11 +9,16 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+# Indexes
+#
+#  index_mentors_on_trn  (trn) UNIQUE
+#
 class Mentor < ApplicationRecord
   has_many :mentor_memberships
   has_many :schools, through: :mentor_memberships
 
-  validates :first_name, :last_name, :trn, presence: true
+  validates :first_name, :last_name, presence: true
+  validates :trn, presence: true, uniqueness: true, format: /\A\d{7}\z/
 
   def full_name
     "#{first_name} #{last_name}".strip

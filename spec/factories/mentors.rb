@@ -9,11 +9,15 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+# Indexes
+#
+#  index_mentors_on_trn  (trn) UNIQUE
+#
 FactoryBot.define do
   factory :mentor do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
-    sequence(:trn) { _1 }
+    trn { (0...9).to_a.sample(7).join }
   end
 
   factory :claims_mentor,

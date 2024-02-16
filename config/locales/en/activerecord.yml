@@ -11,6 +11,11 @@ en:
 
     errors:
       models:
+        mentor:
+          attributes:
+            trn:
+              blank: Enter a teacher reference number (TRN)
+              invalid: Enter a valid teacher reference number (TRN)
         claim:
           attributes:
             provider_id: 

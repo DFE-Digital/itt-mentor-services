@@ -74,7 +74,7 @@ end
 
 # Create dummy mentors
 mentors = %w[Sarah John Pomona].each_with_index.map do |first_name, index|
-  Mentor.find_or_create_by!(first_name:, last_name: "Doe", trn: index)
+  Mentor.find_or_create_by!(first_name:, last_name: "Doe", trn: "#{index}000000")
 end
 
 (Claims::School.all + Placements::School.all).each do |school|
