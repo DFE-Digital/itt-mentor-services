@@ -14,11 +14,11 @@
 
       <%= govuk_summary_list do |summary_list| %>
         <% summary_list.with_row do |row| %>
-          <% row.with_key(text: t(".attributes.mentors.first_name")) %>
+          <% row.with_key(text: Mentor.human_attribute_name("first_name")) %>
           <% row.with_value(text: @mentor.first_name) %>
         <% end %>
         <% summary_list.with_row do |row| %>
-          <% row.with_key(text: t(".attributes.mentors.last_name")) %>
+          <% row.with_key(text: Mentor.human_attribute_name("last_name")) %>
           <% row.with_value(text: @mentor.last_name) %>
         <% end %>
         <% summary_list.with_row do |row| %>
