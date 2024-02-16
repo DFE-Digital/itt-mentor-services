@@ -4,7 +4,6 @@ en:
       claims:
         index:
           heading: Claims
-          status: Status
         show:
           heading: Claim
           status: Status

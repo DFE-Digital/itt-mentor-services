@@ -4,5 +4,6 @@ en:
       primary_navigation:
         users: Users
         claims: Claims
+        mentors: Mentors
         details: Details
         change_organisation: Change organisation

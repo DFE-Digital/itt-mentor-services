@@ -1,0 +1,7 @@
+en:
+  claims:
+    schools:
+      mentors:
+        index:
+          heading: Mentors
+          trn: Teacher reference number (TRN)

@@ -16,6 +16,7 @@ scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
       resources :users, only: %i[index new create show] do
         get :check, on: :collection
       end
+      resources :mentors, only: %i[index]
     end
   end
 
