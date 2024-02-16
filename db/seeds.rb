@@ -45,31 +45,31 @@ Rake::Task["provider_data:import"].invoke unless Provider.any?
 # Associate Placements Users with Organisations
 # Single School Anne
 placements_anne = Placements::User.find_by!(email: "anne_wilson@example.org")
-placements_anne.memberships.find_or_create_by!(organisation: Placements::School.first)
+placements_anne.user_memberships.find_or_create_by!(organisation: Placements::School.first)
 
 # Multi-school Mary
 placements_mary = Placements::User.find_by!(email: "mary@example.com")
 schools = Placements::School.all
 schools.each do |school|
-  placements_mary.memberships.find_or_create_by!(organisation: school)
+  placements_mary.user_memberships.find_or_create_by!(organisation: school)
 end
 
 # Provider Patrica
 placements_patrica = Placements::User.find_by!(email: "patricia@example.com")
 provider = Provider.first
 provider.update!(placements_service: true)
-placements_patrica.memberships.find_or_create_by!(organisation: provider)
+placements_patrica.user_memberships.find_or_create_by!(organisation: provider)
 
 # Associate Claims Users with Schools
 # Single School Anne
 claims_anne = Claims::User.find_by!(email: "anne_wilson@example.org")
-claims_anne.memberships.find_or_create_by!(organisation: Claims::School.first)
+claims_anne.user_memberships.find_or_create_by!(organisation: Claims::School.first)
 
 # Multi-school Mary
 claims_mary = Claims::User.find_by!(email: "mary@example.com")
 schools = Claims::School.all
 schools.each do |school|
-  claims_mary.memberships.find_or_create_by!(organisation: school)
+  claims_mary.user_memberships.find_or_create_by!(organisation: school)
 end
 
 # Create dummy mentors
