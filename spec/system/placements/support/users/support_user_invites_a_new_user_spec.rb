@@ -222,7 +222,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   end
 
   def given_a_user_has_been_assigned_to_the(organisation:)
-    create(:membership, user: new_user, organisation:)
+    create(:user_membership, user: new_user, organisation:)
   end
 
   def then_i_see_an_error(error_message, error_index = 0)

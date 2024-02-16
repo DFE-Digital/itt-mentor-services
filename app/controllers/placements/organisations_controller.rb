@@ -13,10 +13,10 @@ class Placements::OrganisationsController < ApplicationController
   end
 
   def set_memberships
-    @memberships = current_user.memberships.filter(&:placements_service).sort_by(&:name)
+    @memberships = current_user.user_memberships.filter(&:placements_service).sort_by(&:name)
   end
 
   def organisation
-    @organisation ||= current_user.memberships.first.organisation
+    @organisation ||= current_user.user_memberships.first.organisation
   end
 end

@@ -83,7 +83,7 @@ describe UserInviteForm, type: :model do
         end
 
         it "returns membership error on the email attribute of the for and does not send invite" do
-          create(:membership, user:, organisation:)
+          create(:user_membership, user:, organisation:)
           expect(user_invite_form.valid?).to eq false
 
           expect(user_invite_form.errors.messages)
@@ -110,14 +110,14 @@ describe UserInviteForm, type: :model do
       end
 
       it "creates membership" do
-        expect { user_invite_form.save! }.to change(Membership, :count).by 1
+        expect { user_invite_form.save! }.to change(UserMembership, :count).by 1
       end
     end
 
     context "with user belonging to another organisation" do
       let(:organisation) { create(:placements_provider) }
       let(:user) { create(:placements_user) }
-      let(:membership) { create(:membership, organisation:, user:) }
+      let(:membership) { create(:user_membership, organisation:, user:) }
       let(:another_organisation) { create(:placements_provider) }
 
       let(:form_params) do
@@ -135,7 +135,7 @@ describe UserInviteForm, type: :model do
       end
 
       it "creates membership" do
-        expect { user_invite_form.save! }.to change(Membership, :count).by 1
+        expect { user_invite_form.save! }.to change(UserMembership, :count).by 1
       end
     end
   end

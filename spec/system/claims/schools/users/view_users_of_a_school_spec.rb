@@ -17,7 +17,7 @@ RSpec.describe "View users for school", type: :system do
 
   def setup_school_and_anne_membership
     user = create(:claims_user, :anne)
-    create(:membership, user:, organisation: school)
+    create(:user_membership, user:, organisation: school)
   end
 
   def sign_in_as_support_user

@@ -62,7 +62,7 @@ RSpec.describe "Sign In as a Claims User", type: :system, service: :claims do
   def given_there_is_an_existing_claims_user_with_a_school_for(user)
     user_exists_in_dfe_sign_in(user:)
     create(
-      :membership,
+      :user_membership,
       user:,
       organisation: create(:school, :claims),
     )

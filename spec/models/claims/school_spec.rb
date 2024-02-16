@@ -61,7 +61,7 @@ RSpec.describe Claims::School do
     it { is_expected.to have_many(:mentors).through(:mentor_memberships) }
 
     describe "#users" do
-      it { is_expected.to have_many(:users).through(:memberships) }
+      it { is_expected.to have_many(:users).through(:user_memberships) }
 
       it "returns only Claims::User records" do
         claims_school = create(:claims_school)

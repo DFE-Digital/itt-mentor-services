@@ -73,7 +73,7 @@ RSpec.describe "Placements / Support / Users / Support User Views A User", type:
 
   def given_users_have_been_assigned_to_the(organisation:)
     [mary, anne].each do |user|
-      create(:membership, user:, organisation:)
+      create(:user_membership, user:, organisation:)
     end
   end
 

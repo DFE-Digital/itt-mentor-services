@@ -21,8 +21,8 @@
 #
 require "rails_helper"
 
-RSpec.describe Membership, type: :model do
-  subject(:test_membership) { create(:membership) }
+RSpec.describe UserMembership, type: :model do
+  subject(:test_membership) { create(:user_membership) }
 
   context "with validations" do
     it do

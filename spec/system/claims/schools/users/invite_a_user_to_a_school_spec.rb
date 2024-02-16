@@ -75,7 +75,7 @@ RSpec.describe "Invite a user to a school", type: :system do
   private
 
   def setup_school_and_anne_membership
-    create(:membership, user: anne, organisation: school)
+    create(:user_membership, user: anne, organisation: school)
     user_exists_in_dfe_sign_in(user: anne)
   end
 
@@ -87,7 +87,7 @@ RSpec.describe "Invite a user to a school", type: :system do
   end
 
   def remove_all_users_from_school
-    school.users.each { |user| user.memberships.destroy_all }
+    school.users.each { |user| user.user_memberships.destroy_all }
   end
 
   def verify_i_cant_access_another_schools_users_list

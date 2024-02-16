@@ -59,9 +59,9 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
 
   describe "Mary invites a members to second organisation" do
     before "user is sent an invitation" do
-      create(:membership, user: mary, organisation: one_school)
-      create(:membership, user: mary, organisation: another_school)
-      create(:membership, user: mary, organisation: one_provider)
+      create(:user_membership, user: mary, organisation: one_school)
+      create(:user_membership, user: mary, organisation: another_school)
+      create(:user_membership, user: mary, organisation: one_provider)
     end
 
     scenario "user adds a user to multiple organisations" do
@@ -115,7 +115,7 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
 
   def given_i_am_logged_in_as_a_user_with_one_organisation(organisation)
     user_exists_in_dfe_sign_in(user: anne)
-    create(:membership, user: anne, organisation:)
+    create(:user_membership, user: anne, organisation:)
     visit sign_in_path
     click_on "Sign in using DfE Sign In"
   end
@@ -127,7 +127,7 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
   end
 
   def and_user_is_already_assigned_to_a_school
-    create(:membership, user: new_user, organisation: one_school)
+    create(:user_membership, user: new_user, organisation: one_school)
   end
 
   def when_i_try_to_add_the_user_to_the_same_school

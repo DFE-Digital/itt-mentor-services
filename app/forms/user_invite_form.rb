@@ -44,7 +44,7 @@ class UserInviteForm < ApplicationForm
   end
 
   def membership
-    @membership ||= user.memberships.new(organisation:)
+    @membership ||= user.user_memberships.new(organisation:)
   end
 
   def user_klass

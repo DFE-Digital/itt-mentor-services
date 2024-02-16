@@ -6,7 +6,7 @@ RSpec.describe "Create claim", type: :system, js: true, retry: 3, service: :clai
     create(
       :claims_user,
       :anne,
-      memberships: [create(:membership, organisation: school)],
+      user_memberships: [create(:user_membership, organisation: school)],
     )
   end
   let!(:provider) { create(:provider) }

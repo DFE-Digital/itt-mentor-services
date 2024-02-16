@@ -55,7 +55,7 @@
 class Placements::School < School
   default_scope { placements_service }
 
-  has_many :users, through: :memberships
+  has_many :users, through: :user_memberships
   has_many :mentor_memberships
   has_many :mentors, through: :mentor_memberships
 end

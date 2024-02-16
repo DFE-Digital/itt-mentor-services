@@ -65,8 +65,8 @@ RSpec.describe "View organisations", type: :system, service: :placements do
   end
 
   def and_user_has_a_school_without_a_service(user:)
-    create(:membership, user:, organisation: create(:school, :placements))
-    create(:membership, user:, organisation: school_without_placement)
+    create(:user_membership, user:, organisation: create(:school, :placements))
+    create(:user_membership, user:, organisation: school_without_placement)
   end
 
   def then_i_am_redirected_to_404_when_i_visit_the_school
@@ -78,10 +78,10 @@ RSpec.describe "View organisations", type: :system, service: :placements do
   end
 
   def and_user_has_multiple_organisations(user:)
-    create(:membership, user:, organisation: multi_org_school)
-    create(:membership, user:, organisation: multi_org_provider)
-    create(:membership, user:, organisation: claims_school)
-    create(:membership, user:, organisation: no_service_school)
+    create(:user_membership, user:, organisation: multi_org_school)
+    create(:user_membership, user:, organisation: multi_org_provider)
+    create(:user_membership, user:, organisation: claims_school)
+    create(:user_membership, user:, organisation: no_service_school)
   end
 
   def when_i_click_on_school_name
@@ -125,11 +125,11 @@ RSpec.describe "View organisations", type: :system, service: :placements do
   end
 
   def and_user_has_one_school(user:)
-    create(:membership, user:, organisation: one_school)
+    create(:user_membership, user:, organisation: one_school)
   end
 
   def and_user_has_one_provider(user:)
-    create(:membership, user:, organisation: one_provider)
+    create(:user_membership, user:, organisation: one_provider)
   end
 
   def then_i_see_the_one_school(school)

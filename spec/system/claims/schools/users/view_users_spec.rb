@@ -21,7 +21,7 @@ RSpec.describe "Invite and view a users details", type: :system do
   private
 
   def setup_school_and_anne_membership
-    create(:membership, user: anne, organisation: school)
+    create(:user_membership, user: anne, organisation: school)
     user_exists_in_dfe_sign_in(user: anne)
   end
 

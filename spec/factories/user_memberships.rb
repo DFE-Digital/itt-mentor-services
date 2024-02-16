@@ -20,7 +20,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 FactoryBot.define do
-  factory :membership do
+  factory :user_membership do
     association :user, factory: :claims_user
     association :organisation, factory: :school
   end

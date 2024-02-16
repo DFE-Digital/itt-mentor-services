@@ -14,7 +14,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
 
     before do
       [anne, mary].each do |user|
-        create(:membership, user:, organisation: school)
+        create(:user_membership, user:, organisation: school)
       end
     end
 
@@ -46,7 +46,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
 
     before "message is sent to user" do
       [anne, mary].each do |user|
-        create(:membership, user:, organisation: provider)
+        create(:user_membership, user:, organisation: provider)
       end
     end
 
@@ -168,7 +168,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
       users_is_selected_in_providers_primary_nav
     end
 
-    expect(user.memberships.find_by(organisation:)).to eq nil
+    expect(user.user_memberships.find_by(organisation:)).to eq nil
     within(".govuk-notification-banner__content") do
       expect(page).to have_content "User removed"
     end
