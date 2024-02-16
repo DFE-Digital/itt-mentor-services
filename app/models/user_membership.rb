@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: memberships
+# Table name: user_memberships
 #
 #  id                :uuid             not null, primary key
 #  organisation_type :string           not null
@@ -11,9 +11,9 @@
 #
 # Indexes
 #
-#  index_memberships_on_organisation                 (organisation_type,organisation_id)
-#  index_memberships_on_user_id                      (user_id)
-#  index_memberships_on_user_id_and_organisation_id  (user_id,organisation_id) UNIQUE
+#  index_memberships_on_organisation                      (organisation_type,organisation_id)
+#  index_user_memberships_on_user_id                      (user_id)
+#  index_user_memberships_on_user_id_and_organisation_id  (user_id,organisation_id) UNIQUE
 #
 # Foreign Keys
 #

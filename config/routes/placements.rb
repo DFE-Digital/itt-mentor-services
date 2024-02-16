@@ -33,6 +33,8 @@ scope module: :placements,
           member { get :remove }
           collection { get :check }
         end
+
+        resources :mentors
       end
     end
 
@@ -59,6 +61,8 @@ scope module: :placements,
         member { get :remove }
         collection { get :check }
       end
+
+      resources :mentors
     end
   end
 

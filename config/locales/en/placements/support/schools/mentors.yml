@@ -1,0 +1,11 @@
+en:
+  placements:
+    support:
+      schools:
+        mentors:
+          show:
+            attributes:
+              mentors:
+                first_name: First name
+                last_name: Last name
+                trn: Teacher reference number (TRN)
