@@ -1,16 +1,51 @@
+<% content_for :page_title, t(".heading") %>
 <% render "claims/schools/primary_navigation", school: @school, current: :claims %>
 
 <div class="govuk-width-container">
   <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
-  <%= govuk_button_to(t(".add_claim"), new_claims_school_claim_path, method: :get) %>
+
+  <% if @school.mentors.any? %>
+    <p class="govuk-inset-text"><%= t(".guidance") %></p>
+    <%= govuk_button_to(t(".add_claim"), new_claims_school_claim_path, method: :get) %>
+  <% else %>
+    <p class="govuk-inset-text"><%= t(".add_mentor_guidance_html", link_to: govuk_link_to(t(".add_a_mentor"), claims_school_mentors_path(@school))) %></p>
+  <% end %>
 
   <% if @claims.any? %>
-    <ul class="govuk-list">
-      <% @claims.each_with_index do |claim, index| %>
-        <li>
-          <%= govuk_link_to "Claim #{index + 1}", claims_school_claim_path(id: claim.id), no_visited_state: true %>
-        </li>
+    <%= govuk_table do |table| %>
+      <% table.with_head do |head| %>
+        <% head.with_row do |row| %>
+          <% row.with_cell(header: true, text: Claim.human_attribute_name(:reference)) %>
+          <% row.with_cell(header: true, text: Claim.human_attribute_name(:provider)) %>
+          <% row.with_cell(header: true, text: Claim.human_attribute_name(:mentors)) %>
+          <% row.with_cell(header: true, text: Claim.human_attribute_name(:submitted_at)) %>
+          <% row.with_cell(header: true, text: Claim.human_attribute_name(:status)) %>
+        <% end %>
       <% end %>
-    </ul>
+
+      <% table.with_body do |body| %>
+        <% @claims.each do |claim| %>
+          <% body.with_row do |row| %>
+            <% row.with_cell(text: govuk_link_to(claim.id.first(8), claims_school_claim_path(id: claim.id))) %>
+            <% row.with_cell(text: claim.provider_name) %>
+            <% row.with_cell do %>
+              <ul class="govuk-list">
+                <% claim.mentors.each do |mentor| %>
+                  <li><%= mentor.full_name %></li>
+                <% end %>
+              </ul>
+            <% end %>
+            <% row.with_cell(text: l(claim.created_at.to_date, format: :short)) %>
+            <% row.with_cell(text: render(Claim::StatusTagComponent.new(claim:))) %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= govuk_pagination(pagy: @pagy) %>
+  <% else %>
+    <p>
+      <%= t("no_records_for", records: "claims", for: @school.name) %>
+    </p>
   <% end %>
 </div>

@@ -21,7 +21,7 @@
 #
 FactoryBot.define do
   factory :claim do
-    association :school
+    association :school, factory: :claims_school
 
     trait :draft do
       draft { true }

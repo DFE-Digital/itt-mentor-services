@@ -29,4 +29,8 @@ RSpec.describe Claim, type: :model do
     it { is_expected.to have_many(:mentors).through(:mentor_trainings) }
     it { is_expected.to accept_nested_attributes_for(:mentor_trainings) }
   end
+
+  context "with delegations" do
+    it { is_expected.to delegate_method(:name).to(:provider).with_prefix }
+  end
 end

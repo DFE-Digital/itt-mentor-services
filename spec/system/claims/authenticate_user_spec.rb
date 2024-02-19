@@ -13,7 +13,7 @@ RSpec.describe "Authentication", type: :system, service: :claims do
     given_there_is_an_existing_claims_user_with_a_school_for(anne)
     when_i_visit_the_sign_in_path
     and_i_click_sign_in
-    and_i_visit_claims_schools_details_path
+    and_i_click_on_school_details
     then_i_am_able_to_access_the_page
   end
 
@@ -45,6 +45,10 @@ RSpec.describe "Authentication", type: :system, service: :claims do
     click_on "Sign in using DfE Sign In"
   end
 
+  def and_i_click_on_school_details
+    click_on "Details"
+  end
+
   def given_there_is_an_existing_claims_user_with_a_school_for(user)
     user_exists_in_dfe_sign_in(user:)
     create(
@@ -55,5 +59,4 @@ RSpec.describe "Authentication", type: :system, service: :claims do
   end
 
   alias_method :and_i_click_sign_in, :when_i_click_sign_in
-  alias_method :and_i_visit_claims_schools_details_path, :when_i_visit_claims_schools_details_path
 end

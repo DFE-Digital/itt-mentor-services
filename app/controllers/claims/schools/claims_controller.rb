@@ -2,7 +2,7 @@ class Claims::Schools::ClaimsController < ApplicationController
   include Claims::BelongsToSchool
 
   def index
-    @claims = @school.claims
+    @pagy, @claims = pagy(@school.claims)
   end
 
   def new
