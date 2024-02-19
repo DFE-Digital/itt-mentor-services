@@ -66,7 +66,7 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
     when_i_click_on("Continue")
     then_i_see_check_page_for(claims_mentor, school)
     when_i_click_on("Add mentor")
-    then_mentor_is_added
+    then_mentor_is_added(claims_mentor.full_name)
   end
 
   scenario "I enter the trn of an existing placements mentor from another school" do
@@ -81,7 +81,7 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
     when_i_click_on("Continue")
     then_i_see_check_page_for(placements_mentor, school)
     when_i_click_on("Add mentor")
-    then_mentor_is_added
+    then_mentor_is_added(placements_mentor.full_name)
   end
 
   describe "when trn is valid-looking, but does not exists in Teaching Record Service" do
@@ -116,7 +116,7 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
       and_i_click_on("Continue")
       then_i_see_check_page_for(new_mentor, school)
       when_i_click_on("Add mentor")
-      then_mentor_is_added
+      then_mentor_is_added(new_mentor.full_name)
     end
   end
 
@@ -168,11 +168,11 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
     end
   end
 
-  def then_mentor_is_added
-    # TODO: expect to see mentor in list when list is implemented
+  def then_mentor_is_added(mentor_name)
     within(".govuk-notification-banner--success") do
       expect(page).to have_content "Mentor added"
     end
+    expect(page).to have_content mentor_name
   end
 
   def when_i_enter_trn(trn)
@@ -202,7 +202,6 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
     expect(page).to have_title "No results found for ‘#{trn}’"
     expect(page).to have_content "Add mentor - #{school.name}"
     expect(page).to have_content "No results found for ‘#{trn}’"
-    "Check that you typed in the teacher reference number (TRN) correctly."
   end
 
   def teaching_record_valid_response(mentor)
