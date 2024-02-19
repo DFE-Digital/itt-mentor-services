@@ -50,8 +50,8 @@ gem "bootsnap", require: false
 gem "flipflop"
 gem "redcarpet", "~> 3.6"
 
-gem "govuk-components", "~> 5.0.2"
-gem "govuk_design_system_formbuilder", "~> 5.0.0"
+gem "govuk-components", "~> 5.1"
+gem "govuk_design_system_formbuilder", "~> 5.1"
 
 # DfE Sign-in
 gem "omniauth"
