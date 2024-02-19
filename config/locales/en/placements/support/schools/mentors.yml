@@ -21,7 +21,9 @@ en:
             cancel: Cancel
             continue: Continue
             enter_a_trn: Enter a teacher reference number (TRN)
-            help_text: If you don’t have a TRN, read the Teacher reference number (TRN) guidance to find a lost TRN, or apply for one.
+            if_you_dont_have_a_trn: If you don’t have a TRN, read the
+            trn_guidance: Teacher reference number (TRN) guidance
+            to_find_a_list_trn: to find a lost TRN, or apply for one.
             help_with_the_trn: Help with the teacher reference number (TRN)
           check:
             page_title: Check your answers - Add mentor - %{school_name}
