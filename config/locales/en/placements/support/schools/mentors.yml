@@ -6,14 +6,13 @@ en:
           index:
             heading: Mentors
             trn: Teacher reference number (TRN)
+            add_mentor: Add mentor
+            page_title: Mentors
           show:
             caption: "Mentors - %{school_name}"
             attributes:
               mentors:
                 trn: Teacher reference number (TRN)
-          index:
-            add_mentor: Add mentor
-            page_title: Mentors
           new:
             page_title: Enter a teacher reference number (TRN)
             page_title_with_error: "Error: Enter a teacher reference number (TRN)"

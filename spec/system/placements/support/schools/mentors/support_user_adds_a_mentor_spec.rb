@@ -88,7 +88,7 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
     before do
       allow(TeachingRecord::GetTeacher).to receive(:call)
                                              .with(trn: new_mentor.trn)
-                                             .and_raise TeachingRecord::RestClient::HttpError
+                                             .and_raise TeachingRecord::RestClient::TeacherNotFoundError
     end
 
     scenario "I enter a a valid-looking trn that does not exist in the Teaching Record service" do
@@ -215,8 +215,8 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
   end
 
   def then_i_see_link_to_trn_guidance
-    expect(page).to have_content "If you don’t have a TRN, read the Teacher reference number (TRN) guidance to find a lost TRN, or apply for one."
-    expect(page).to have_link("Teacher reference number (TRN) guidance", href: "https://www.gov.uk/guidance/teacher-reference-number-trn")
+    expect(page).to have_content "If you don’t have a TRN, read the Teacher reference number (TRN) guidance (opens in new tab) to find a lost TRN, or apply for one."
+    expect(page).to have_link("Teacher reference number (TRN) guidance (opens in new tab)", href: "https://www.gov.uk/guidance/teacher-reference-number-trn")
   end
 
   alias_method :and_i_click_on, :when_i_click_on
