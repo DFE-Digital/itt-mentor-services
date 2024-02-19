@@ -1,38 +1,27 @@
 require "rails_helper"
 
-RSpec.describe "View a school's mentors", type: :system, service: :claims do
+RSpec.describe "Placements / Support / Schools / Mentor / Support User views mentors",
+               type: :system,
+               service: :placements do
   let!(:mentor1) { create(:mentor, first_name: "Bilbo", last_name: "Baggins") }
   let!(:mentor2) { create(:mentor, first_name: "Bilbo", last_name: "Test") }
   let!(:mentor3) { create(:mentor, trn: "123") }
-  let!(:school) { create(:claims_school, mentors: [mentor1, mentor2]) }
-  let!(:another_school) { create(:claims_school) }
-  let!(:anne) do
-    create(
-      :claims_user,
-      :anne,
-      user_memberships: [create(:user_membership, organisation: school)],
-    )
-  end
-  let!(:mary) do
-    create(
-      :claims_user,
-      :mary,
-      user_memberships: [create(:user_membership, organisation: another_school)],
-    )
-  end
+  let!(:school) { create(:placements_school, mentors: [mentor1, mentor2]) }
+  let!(:another_school) { create(:placements_school) }
+  let!(:colin) { create(:placements_support_user, :colin) }
 
-  scenario "View a school's mentors as a user" do
-    user_exists_in_dfe_sign_in(user: anne)
+  scenario "View a school's mentors as a support user" do
+    user_exists_in_dfe_sign_in(user: colin)
     given_i_sign_in
-    when_i_visit_the_school_mentors_page(school)
+    when_i_visit_the_support_school_mentors_page(school)
     then_i_see_a_list_of_the_schools_mentors
     and_i_dont_see_mentors_from_another_school
   end
 
   scenario "View a school's empty mentors list" do
-    user_exists_in_dfe_sign_in(user: mary)
+    user_exists_in_dfe_sign_in(user: colin)
     given_i_sign_in
-    when_i_visit_the_school_mentors_page(another_school)
+    when_i_visit_the_support_school_mentors_page(another_school)
     then_i_see_no_results
   end
 
@@ -43,8 +32,8 @@ RSpec.describe "View a school's mentors", type: :system, service: :claims do
     click_on "Sign in using DfE Sign In"
   end
 
-  def when_i_visit_the_school_mentors_page(school)
-    visit claims_school_mentors_path(school)
+  def when_i_visit_the_support_school_mentors_page(school)
+    visit placements_support_school_mentors_path(school)
   end
 
   def then_i_see_a_list_of_the_schools_mentors

@@ -2,6 +2,9 @@ en:
   placements:
     schools:
       mentors:
+        index:
+          heading: Mentors
+          trn: Teacher reference number (TRN)
         show:
           attributes:
             mentors:

@@ -2,6 +2,10 @@ class Placements::Support::Schools::MentorsController < Placements::Support::App
   before_action :set_school
   before_action :set_mentor, only: [:show]
 
+  def index
+    @pagy, @mentors = pagy(@school.mentors.order(:first_name, :last_name))
+  end
+
   def show; end
 
   private

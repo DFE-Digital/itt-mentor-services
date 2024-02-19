@@ -120,11 +120,13 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     end
   end
 
-  def users_is_selected_in_secondary_nav
+  def users_is_selected_in_secondary_nav(organisation)
     within(".app-secondary-navigation__list") do
       expect(page).to have_link "Details", current: "false"
       expect(page).to have_link "Users", current: "page"
-      expect(page).to have_link "Mentors", current: "false"
+      unless organisation.is_a?(Provider)
+        expect(page).to have_link "Mentors", current: "false"
+      end
       expect(page).to have_link "Placements", current: "false"
       expect(page).to have_link "Providers", current: "false"
     end
@@ -143,7 +145,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
   def then_the_the_user_is_removed_from_the_organisation(organisation)
     email_is_sent(user.email, organisation)
     organisations_is_selected_in_primary_nav
-    users_is_selected_in_secondary_nav
+    users_is_selected_in_secondary_nav(organisation)
     expect(user.user_memberships.find_by(organisation:)).to eq nil
     within(".govuk-notification-banner__content") do
       expect(page).to have_content "User removed"

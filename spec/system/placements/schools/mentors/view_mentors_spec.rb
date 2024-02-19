@@ -1,21 +1,21 @@
 require "rails_helper"
 
-RSpec.describe "View a school's mentors", type: :system, service: :claims do
+RSpec.describe "Placements / Schools / Mentors / View mentors", type: :system, service: :placements do
   let!(:mentor1) { create(:mentor, first_name: "Bilbo", last_name: "Baggins") }
   let!(:mentor2) { create(:mentor, first_name: "Bilbo", last_name: "Test") }
   let!(:mentor3) { create(:mentor, trn: "123") }
-  let!(:school) { create(:claims_school, mentors: [mentor1, mentor2]) }
-  let!(:another_school) { create(:claims_school) }
+  let!(:school) { create(:placements_school, mentors: [mentor1, mentor2]) }
+  let!(:another_school) { create(:placements_school) }
   let!(:anne) do
     create(
-      :claims_user,
+      :placements_user,
       :anne,
       user_memberships: [create(:user_membership, organisation: school)],
     )
   end
   let!(:mary) do
     create(
-      :claims_user,
+      :placements_user,
       :mary,
       user_memberships: [create(:user_membership, organisation: another_school)],
     )
@@ -44,7 +44,7 @@ RSpec.describe "View a school's mentors", type: :system, service: :claims do
   end
 
   def when_i_visit_the_school_mentors_page(school)
-    visit claims_school_mentors_path(school)
+    visit placements_school_mentors_path(school)
   end
 
   def then_i_see_a_list_of_the_schools_mentors
