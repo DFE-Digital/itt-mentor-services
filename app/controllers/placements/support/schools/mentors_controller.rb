@@ -11,12 +11,11 @@ class Placements::Support::Schools::MentorsController < Placements::Support::App
   def index; end
 
   def new
-    @mentor_form = mentor_form
+    mentor_form
   end
 
   def check
-    @mentor_form = mentor_form
-    render :new unless @mentor_form.valid?
+    render :new unless mentor_form.valid?
   rescue TeachingRecord::RestClient::HttpError
     render :no_results
   end
@@ -36,7 +35,7 @@ class Placements::Support::Schools::MentorsController < Placements::Support::App
   end
 
   def default_params
-    { service: current_service, school: @school }
+    { service: :placements, school: @school }
   end
 
   def mentor_form
