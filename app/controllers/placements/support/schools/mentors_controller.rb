@@ -8,15 +8,13 @@ class Placements::Support::Schools::MentorsController < Placements::Support::App
 
   def show; end
 
-  def index; end
-
   def new
     mentor_form
   end
 
   def check
     render :new unless mentor_form.valid?
-  rescue TeachingRecord::RestClient::HttpError
+  rescue TeachingRecord::RestClient::TeacherNotFoundError
     render :no_results
   end
 

@@ -9,6 +9,7 @@ module TeachingRecord
               "X-Api-Version" => ENV.fetch("TEACHING_RECORD_API_MINOR_VERSION", "20240101")
     end
 
+    class TeacherNotFoundError < StandardError; end
     class HttpError < StandardError; end
 
     def self.get(path)
@@ -16,6 +17,8 @@ module TeachingRecord
 
       if response.ok?
         JSON.parse(response.body || "{}")
+      elsif response.not_found?
+        raise(TeacherNotFoundError, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}")
       else
         raise(HttpError, "status: #{response.code}, body: #{response.body}, headers: #{response.headers}")
       end
