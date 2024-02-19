@@ -19,6 +19,13 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
     then_i_see_the_index_page(school)
   end
 
+  scenario "I can view help with the trn" do
+    given_i_navigate_to_schools_mentors_list(school)
+    and_i_click_on "Add mentor"
+    when_i_click_on_help_text
+    then_i_see_link_to_trn_guidance
+  end
+
   scenario "I do not enter a trn" do
     given_i_navigate_to_schools_mentors_list(school)
     and_i_click_on("Add mentor")
@@ -139,6 +146,10 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
     click_on text
   end
 
+  def when_i_click_on_help_text
+    find("span", text: "Help with the teacher reference number (TRN)").click
+  end
+
   def then_i_see_check_page_for(mentor, school)
     expect_organisations_to_be_selected_in_primary_navigation
     expect(page).to have_content "Add mentor - #{school.name}"
@@ -201,6 +212,11 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
       "middleName" => "",
       "lastName" => mentor.last_name.to_s,
     }
+  end
+
+  def then_i_see_link_to_trn_guidance
+    expect(page).to have_content "If you don’t have a TRN, read the Teacher reference number (TRN) guidance to find a lost TRN, or apply for one."
+    expect(page).to have_link("Teacher reference number (TRN) guidance", href: "https://www.gov.uk/guidance/teacher-reference-number-trn")
   end
 
   alias_method :and_i_click_on, :when_i_click_on
