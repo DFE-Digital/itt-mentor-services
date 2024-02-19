@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "View a school's mentors", type: :system, service: :claims do
   let!(:mentor1) { create(:mentor, first_name: "Bilbo", last_name: "Baggins") }
   let!(:mentor2) { create(:mentor, first_name: "Bilbo", last_name: "Test") }
-  let!(:mentor3) { create(:mentor, trn: "123") }
+  let!(:mentor3) { create(:mentor, trn: "1234567") }
   let!(:school) { create(:claims_school, mentors: [mentor1, mentor2]) }
   let!(:another_school) { create(:claims_school) }
   let!(:colin) { create(:claims_support_user, :colin) }
