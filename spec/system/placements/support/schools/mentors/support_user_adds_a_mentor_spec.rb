@@ -34,6 +34,15 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
     then_i_see_the_error("Enter a valid teacher reference number (TRN)")
   end
 
+  scenario "I enter a trn of mentor who already exists for this school" do
+    given_a_placements_mentor_exists(school, placements_mentor)
+    given_i_navigate_to_schools_mentors_list(school)
+    and_i_click_on("Add mentor")
+    when_i_enter_trn(placements_mentor.trn)
+    and_i_click_on("Continue")
+    then_i_see_the_error("The mentor has already been added")
+  end
+
   scenario "I enter the trn of an existing claims mentor" do
     given_a_claims_mentor_exists
     given_i_navigate_to_schools_mentors_list(school)
@@ -53,8 +62,8 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
     then_mentor_is_added
   end
 
-  scenario "I enter the trn of an existing placements mentor" do
-    given_a_placements_mentor_exists
+  scenario "I enter the trn of an existing placements mentor from another school" do
+    given_a_placements_mentor_exists(another_school, placements_mentor)
     given_i_navigate_to_schools_mentors_list(school)
     and_i_click_on("Add mentor")
     when_i_enter_trn(placements_mentor.trn)
@@ -76,7 +85,6 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
     end
 
     scenario "I enter a a valid-looking trn that does not exist in the Teaching Record service" do
-      given_a_placements_mentor_exists
       given_i_navigate_to_schools_mentors_list(school)
       and_i_click_on("Add mentor")
       when_i_enter_trn(new_mentor.trn)
@@ -95,7 +103,6 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
     end
 
     scenario "I enter a valid-looking trn that does exist on the Teaching Record Service" do
-      given_a_placements_mentor_exists
       given_i_navigate_to_schools_mentors_list(school)
       and_i_click_on("Add mentor")
       when_i_enter_trn(new_mentor.trn)
@@ -117,8 +124,8 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
     create(:claims_mentor_membership, school: another_school, mentor: claims_mentor)
   end
 
-  def given_a_placements_mentor_exists
-    create(:placements_mentor_membership, school: another_school, mentor: placements_mentor)
+  def given_a_placements_mentor_exists(school, mentor)
+    create(:placements_mentor_membership, school:, mentor:)
   end
 
   def given_i_navigate_to_schools_mentors_list(school)
