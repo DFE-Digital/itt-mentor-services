@@ -45,16 +45,16 @@ erDiagram
 
   MentorTraining {
     uuid id PK
+    uuid claim_id FK
     uuid provider_id FK
     uuid mentor_id FK
-    enum training_type "Refresher or Initial"
     int hours_completed
-    date date_completed
   }
 
   Claim {
     uuid id PK
     uuid school_id FK
+    uuid provider_id FK
   }
 
   Trainee {
@@ -65,18 +65,27 @@ erDiagram
 
   User {
     uuid id PK
+    string type "Placements::User or Claims::User"
     string email UK
-    enum service "Placements or Claims"
   }
 
-  Membership {
+  UserMembership {
     uuid id PK
     uuid user_id FK
     string organisation_type FK "Polymorphic association with School or Provider"
     string organisation_id FK "Polymorphic association with School or Provider"
   }
 
-  School ||--|{ Mentor : "has many"
+  MentorMembership {
+    uuid id PK
+    string type "This is used to define which service this particular membership belongs to. Placements::MentorMembership or Claims::MentorMembership"
+    uuid mentor_id FK
+    uuid school_id FK
+  }
+
+  School ||--|{ MentorMembership : "has many"
+  Mentor ||--|{ MentorMembership : "has many"
+
   Provider ||--|{ School : "has many"
   Trainee }|--|| Provider : "belongs to"
 
@@ -89,10 +98,11 @@ erDiagram
 
   School ||--|{ Claim : "has many"
   Claim }|--|{ MentorTraining : "has and belongs to many"
+  Claim }|--|| Provider : "groups Mentor Trainings belonging to Provider"
 
-  User ||--|{ Membership : "has many"
-  Membership }|--o| Provider : "belongs to (polymorphic)"
-  Membership }|--o| School : "belongs to (polymorphic)"
+  User ||--|{ UserMembership : "has many"
+  UserMembership }|--o| Provider : "belongs to (polymorphic)"
+  UserMembership }|--o| School : "belongs to (polymorphic)"
 ```
 
 ## Onboarding Schools and Providers into the services
