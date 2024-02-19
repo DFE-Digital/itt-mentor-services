@@ -12,15 +12,15 @@ RSpec.describe "View a school's mentors", type: :system, service: :claims do
     user_exists_in_dfe_sign_in(user: colin)
     given_i_sign_in
     when_i_visit_the_support_school_mentors_page(school)
-    i_see_a_list_of_the_schools_mentors
-    i_dont_see_mentors_from_another_school
+    then_i_see_a_list_of_the_schools_mentors
+    and_i_dont_see_mentors_from_another_school
   end
 
   scenario "View a school's empty mentors list" do
     user_exists_in_dfe_sign_in(user: colin)
     given_i_sign_in
     when_i_visit_the_support_school_mentors_page(another_school)
-    i_see_no_results
+    then_i_see_no_results
   end
 
   private
@@ -34,7 +34,7 @@ RSpec.describe "View a school's mentors", type: :system, service: :claims do
     visit claims_support_school_mentors_path(school)
   end
 
-  def i_see_a_list_of_the_schools_mentors
+  def then_i_see_a_list_of_the_schools_mentors
     expect(page).to have_content("Name")
     expect(page).to have_content("Teacher reference number (TRN)")
 
@@ -49,12 +49,12 @@ RSpec.describe "View a school's mentors", type: :system, service: :claims do
     end
   end
 
-  def i_dont_see_mentors_from_another_school
+  def and_i_dont_see_mentors_from_another_school
     expect(page).not_to have_content(mentor3.full_name)
     expect(page).not_to have_content(mentor3.trn)
   end
 
-  def i_see_no_results
+  def then_i_see_no_results
     expect(page).to have_content("There are no mentors for #{another_school.name}")
   end
 end

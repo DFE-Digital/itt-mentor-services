@@ -3,6 +3,9 @@ en:
     support:
       schools:
         mentors:
+          index:
+            heading: Mentors
+            trn: Teacher reference number (TRN)
           show:
             caption: "Mentors - %{school_name}"
             attributes:

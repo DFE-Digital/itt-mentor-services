@@ -23,7 +23,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   describe "School" do
     scenario "Support User invites a new user to a school" do
       when_i_visit_the_users_page_for(organisation: school)
-      then_i_see_the_navigation_bars_with_organisations_and_users_selected
+      then_i_see_the_navigation_bars_with_organisations_and_users_selected(school)
       and_i_click("Add user")
       then_i_see_support_navigation_with_organisation_selected
       and_i_enter_the_details_for_a_new_user
@@ -54,7 +54,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   describe "Provider" do
     scenario "Support User invites a new user to a school" do
       when_i_visit_the_users_page_for(organisation: provider)
-      then_i_see_the_navigation_bars_with_organisations_and_users_selected
+      then_i_see_the_navigation_bars_with_organisations_and_users_selected(provider)
       and_i_click("Add user")
       then_i_see_support_navigation_with_organisation_selected
       and_i_enter_the_details_for_a_new_user
@@ -154,7 +154,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
     fill_in "user-invite-form-email-field", with: "test@example.com"
   end
 
-  def then_i_see_the_navigation_bars_with_organisations_and_users_selected
+  def then_i_see_the_navigation_bars_with_organisations_and_users_selected(organisation)
     within(".app-primary-navigation__nav") do
       expect(page).to have_link "Organisations", current: "page"
       expect(page).to have_link "Users", current: "false"
@@ -163,7 +163,9 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
     within(".app-secondary-navigation") do
       expect(page).to have_link "Details", current: "false"
       expect(page).to have_link "Users", current: "page"
-      expect(page).to have_link "Mentors", current: "false"
+      unless organisation.is_a?(Provider)
+        expect(page).to have_link "Mentors", current: "false"
+      end
       expect(page).to have_link "Placements", current: "false"
       expect(page).to have_link "Providers", current: "false"
     end
