@@ -2,7 +2,7 @@ en:
   pagination_info: Showing %{from} to %{to} of %{count} results
   no_results: There are no results for '%{for}'.
   no_records: There are no %{records}
-  no_records_for: There are no %{records} for %{for}
+  no_records_for: There are no %{records} for %{for}.
   no_results_with_filter_and_search: There are no results for '%{for}' and the selected filter.
   no_results_with_filter: There are no results for the selected filter.
   you_cannot_perform_this_action: You cannot perform this action
@@ -11,6 +11,7 @@ en:
   date:
     formats:
       long: "%e %B %Y"
+      short: "%d/%m/%Y"
   time:
     formats:
       long: "%e %B %Y %H:%M"

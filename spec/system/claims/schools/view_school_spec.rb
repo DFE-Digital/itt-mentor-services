@@ -10,6 +10,7 @@ RSpec.describe "School Page", type: :system do
     )
     when_i_visit_the_sign_in_page
     when_i_click_sign_in
+    when_i_click_on_school_details
     then_i_see_the_school_details
   end
 
@@ -21,10 +22,12 @@ RSpec.describe "School Page", type: :system do
     when_i_click_sign_in
 
     i_go_to_school_details_page("School1")
+    when_i_click_on_school_details
     then_i_see_the_school_details
 
     i_click_on_change_organisation
     i_go_to_school_details_page("School2")
+    when_i_click_on_school_details
     then_i_see_the_school_details
   end
 
@@ -36,6 +39,10 @@ RSpec.describe "School Page", type: :system do
 
   def when_i_visit_the_sign_in_page
     visit sign_in_path
+  end
+
+  def when_i_click_on_school_details
+    click_on "Details"
   end
 
   def given_the_claims_persona(persona_name)

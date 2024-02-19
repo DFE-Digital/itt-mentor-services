@@ -27,4 +27,6 @@ class Claim < ApplicationRecord
   has_many :mentors, through: :mentor_trainings
 
   accepts_nested_attributes_for :mentor_trainings
+
+  delegate :name, to: :provider, prefix: true, allow_nil: true
 end

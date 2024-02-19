@@ -5,6 +5,9 @@ en:
         index:
           heading: Claims
           add_claim: Add claim
+          guidance: You can only claim for the academic year September 2023 to July 2024.
+          add_mentor_guidance_html: You need to %{link_to} before creating a claim.</p>
+          add_a_mentor: add a mentor
         update:
           claim_updated: Claim updated
         show:
