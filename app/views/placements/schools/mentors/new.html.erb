@@ -1,0 +1,41 @@
+<% content_for :page_title, @mentor_form.errors.any? ? t(".page_title_with_error") : t(".page_title") %>
+<%= render "placements/schools/primary_navigation", current_navigation: :mentors, school: @school %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: placements_school_mentors_path(@school)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <%= form_with(model: @mentor_form, url: check_placements_school_mentors_path, method: "get") do |f| %>
+    <%= f.govuk_error_summary %>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-form-group">
+          <%= f.govuk_text_field :trn, label: -> do %>
+            <span class="govuk-caption-l"><%= t(".add_mentor") %></span>
+            <h2 class="govuk-heading-l"><%= t(".enter_a_trn") %></h2>
+          <% end %>
+        </div>
+
+        <%= govuk_details(summary_text: t(".help_with_the_trn")) do %>
+          <p>
+            <%= t(".if_you_dont_have_a_trn") %>
+            <%= govuk_link_to(
+                  t(".trn_guidance"),
+                  "https://www.gov.uk/guidance/teacher-reference-number-trn",
+                  new_tab: true,
+                  no_visited_state: true,
+                ) %>
+            <%= t(".to_find_a_list_trn") %>
+          </p>
+        <% end %>
+
+        <%= f.govuk_submit t(".continue") %>
+        <p class="govuk-body">
+          <%= govuk_link_to(t(".cancel"), placements_school_mentors_path(@school)) %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+</div>
