@@ -50,7 +50,7 @@
         <%= f.govuk_submit t(".add_user") %>
 
         <p class="govuk-body">
-          <%= govuk_link_to(t(".cancel"), cancel_url) %>
+          <%= govuk_link_to(t(".cancel"), cancel_url, no_visited_state: true) %>
         </p>
       <% end %>
     </div>
