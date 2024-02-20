@@ -1,4 +1,4 @@
-<%= content_for :page_title, sanitize("#{@mentor.full_name} - #{@school.name}") %>
+<%= content_for :page_title, sanitize(t(".page_title", mentor_name: @mentor.full_name, school_name: @school.name)) %>
 
 <%= render "placements/support/primary_navigation", current_navigation: :organisations %>
 

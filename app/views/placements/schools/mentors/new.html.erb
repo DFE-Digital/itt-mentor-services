@@ -12,7 +12,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <div class="govuk-form-group">
-          <%= f.govuk_text_field :trn, label: -> do %>
+          <%= f.govuk_text_field :trn, width: "two-thirds", label: -> do %>
             <span class="govuk-caption-l"><%= t(".add_mentor") %></span>
             <h2 class="govuk-heading-l"><%= t(".enter_a_trn") %></h2>
           <% end %>
@@ -33,7 +33,7 @@
 
         <%= f.govuk_submit t(".continue") %>
         <p class="govuk-body">
-          <%= govuk_link_to(t(".cancel"), placements_school_mentors_path(@school)) %>
+          <%= govuk_link_to(t(".cancel"), placements_school_mentors_path(@school), no_visited_state: true) %>
         </p>
       </div>
     </div>

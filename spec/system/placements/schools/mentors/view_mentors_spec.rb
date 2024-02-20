@@ -68,6 +68,6 @@ RSpec.describe "Placements / Schools / Mentors / View mentors", type: :system, s
   end
 
   def then_i_see_no_results
-    expect(page).to have_content("There are no mentors for #{another_school.name}")
+    expect(page).to have_content("There are no mentors for #{another_school.name}.")
   end
 end

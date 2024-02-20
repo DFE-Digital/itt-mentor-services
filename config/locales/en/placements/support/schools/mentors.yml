@@ -9,14 +9,15 @@ en:
             add_mentor: Add mentor
             page_title: Mentors
           show:
+            page_title: "%{mentor_name} - Mentors - %{school_name}"
             caption: "Mentors - %{school_name}"
             remove_mentor: Remove mentor
             attributes:
               mentors:
                 trn: Teacher reference number (TRN)
           new:
-            page_title: Enter a teacher reference number (TRN)
-            page_title_with_error: "Error: Enter a teacher reference number (TRN)"
+            page_title: Enter a teacher reference number (TRN) - Add mentor - %{school_name}
+            page_title_with_error: "Error: Enter a teacher reference number (TRN) - Add mentor - %{school_name}"
             add_mentor_with_school_name: Add mentor - %{school_name}
             cancel: Cancel
             continue: Continue
