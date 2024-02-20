@@ -1,4 +1,5 @@
-<% content_for :page_title, t(".heading") %>
+<% content_for :page_title, "#{@school.name} - #{t(".heading")}" %>
+
 <% render "claims/support/primary_navigation", current: :organisations %>
 
 <div class="govuk-width-container">
@@ -22,7 +23,7 @@
           <% table.with_body do |body| %>
             <% @mentors.each do |mentor| %>
               <% body.with_row do |row| %>
-                <% row.with_cell(text: govuk_link_to(mentor.full_name, "#")) %>
+                <% row.with_cell(text: govuk_link_to(mentor.full_name, claims_support_school_mentor_path(id: mentor.id))) %>
                 <% row.with_cell(text: mentor.trn) %>
               <% end %>
             <% end %>

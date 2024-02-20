@@ -1,0 +1,32 @@
+<% content_for :page_title, "#{@mentor.full_name} - #{t(".heading")} - #{@school.name}" %>
+
+<% render "claims/support/primary_navigation", current: :organisations %>
+<% content_for(:before_content) do %>
+  <%= govuk_back_link(href: claims_support_school_mentors_path(@school)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".heading") %> <%= @school.name %></span>
+      <h2 class="govuk-heading-l"><%= @mentor.full_name %></h2>
+
+        <%= govuk_summary_list do |summary_list| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: Mentor.human_attribute_name(:first_name)) %>
+            <% row.with_value(text: @mentor.first_name) %>
+          <% end %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: Mentor.human_attribute_name(:last_name)) %>
+            <% row.with_value(text: @mentor.last_name) %>
+          <% end %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".attributes.mentors.trn")) %>
+            <% row.with_value(text: @mentor.trn) %>
+          <% end %>
+        <% end %>
+    </div>
+  </div>
+
+  <%= govuk_link_to t(".remove_mentor"), remove_claims_support_school_mentor_path, class: "app-link app-link--destructive" %>
+</div>
