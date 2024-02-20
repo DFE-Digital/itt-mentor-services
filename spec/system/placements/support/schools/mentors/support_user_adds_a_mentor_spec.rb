@@ -30,7 +30,7 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
     given_i_navigate_to_schools_mentors_list(school)
     and_i_click_on("Add mentor")
     when_i_click_on("Continue")
-    then_i_see_the_error("Enter a teacher reference number (TRN)")
+    then_i_see_the_error("Enter a teacher reference number (TRN)", school.name)
   end
 
   scenario "I enter an invalid trn" do
@@ -38,7 +38,7 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
     and_i_click_on("Add mentor")
     when_i_enter_trn("12a")
     and_i_click_on("Continue")
-    then_i_see_the_error("Enter a valid teacher reference number (TRN)")
+    then_i_see_the_error("Enter a valid teacher reference number (TRN)", school.name)
   end
 
   scenario "I enter a trn of mentor who already exists for this school" do
@@ -47,7 +47,7 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
     and_i_click_on("Add mentor")
     when_i_enter_trn(placements_mentor.trn)
     and_i_click_on("Continue")
-    then_i_see_the_error("The mentor has already been added")
+    then_i_see_the_error("The mentor has already been added", school.name)
   end
 
   scenario "I enter the trn of an existing claims mentor" do
@@ -183,8 +183,8 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
     expect(page).to have_current_path placements_support_school_mentors_path(school), ignore_query: true
   end
 
-  def then_i_see_the_error(message)
-    expect(page).to have_title "Error: Enter a teacher reference number (TRN)"
+  def then_i_see_the_error(message, school_name)
+    expect(page).to have_title "Error: Enter a teacher reference number (TRN) - Add mentor - #{school_name}"
     within(".govuk-error-summary") do
       expect(page).to have_content message
     end

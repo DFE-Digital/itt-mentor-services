@@ -57,6 +57,6 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User views men
   end
 
   def then_i_see_no_results
-    expect(page).to have_content("There are no mentors for #{another_school.name}")
+    expect(page).to have_content("There are no mentors for #{another_school.name}.")
   end
 end
