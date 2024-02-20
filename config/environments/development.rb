@@ -33,6 +33,9 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  # Use GoodJob adapter for Active Job.
+  config.active_job.queue_adapter = :good_job
+
   config.action_mailer.delivery_method = :notify
   config.action_mailer.notify_settings = {
     api_key: ENV.fetch("GOVUK_NOTIFY_API_KEY"),
