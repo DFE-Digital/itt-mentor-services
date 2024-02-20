@@ -1,6 +1,5 @@
 class DfESignInUser
-  attr_reader :email, :dfe_sign_in_uid, :id_token, :provider
-  attr_accessor :first_name, :last_name, :service
+  attr_reader :email, :dfe_sign_in_uid, :id_token, :provider, :service, :first_name, :last_name
 
   def initialize(email:, dfe_sign_in_uid:, first_name:, last_name:, service:, id_token: nil, provider: nil)
     @email = email&.downcase
@@ -24,7 +23,7 @@ class DfESignInUser
     }
   end
 
-  def self.load_from_session(session)
+  def self.load_from_session(session, service:)
     dfe_sign_in_session = session["dfe_sign_in_user"]
     return unless dfe_sign_in_session
 
@@ -43,7 +42,7 @@ class DfESignInUser
       last_name: dfe_sign_in_session["last_name"],
       id_token: dfe_sign_in_session["id_token"],
       provider: dfe_sign_in_session["provider"],
-      service: session["service"],
+      service:,
     )
   end
 
