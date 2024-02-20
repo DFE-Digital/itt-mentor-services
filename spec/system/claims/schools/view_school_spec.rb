@@ -42,7 +42,7 @@ RSpec.describe "School Page", type: :system do
   end
 
   def when_i_click_on_school_details
-    click_on "Details"
+    click_on "Organisation details"
   end
 
   def given_the_claims_persona(persona_name)
