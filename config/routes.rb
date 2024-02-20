@@ -1,3 +1,11 @@
+class SupportUserConstraint
+  def self.matches?(request)
+    service = HostingEnvironment.current_service(request)
+    current_user = DfESignInUser.load_from_session(request.session, service:)&.user
+    current_user&.support_user?
+  end
+end
+
 Rails.application.routes.draw do
   scope via: :all do
     get "/404", to: "errors#not_found", as: :not_found
@@ -30,4 +38,8 @@ Rails.application.routes.draw do
   draw :claims
 
   get :healthcheck, controller: :heartbeat
+
+  # GoodJob admin interface – only accessible to support users
+  mount GoodJob::Engine => "/good_job", constraints: SupportUserConstraint
+  get "/good_job", to: redirect("/support")
 end
