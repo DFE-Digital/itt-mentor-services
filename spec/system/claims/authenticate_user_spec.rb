@@ -46,7 +46,7 @@ RSpec.describe "Authentication", type: :system, service: :claims do
   end
 
   def and_i_click_on_school_details
-    click_on "Details"
+    click_on "Organisation details"
   end
 
   def given_there_is_an_existing_claims_user_with_a_school_for(user)
