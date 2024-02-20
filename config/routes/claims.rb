@@ -38,10 +38,11 @@ scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
 
       scope module: :schools do
         resources :claims
+
         resources :mentors, only: %i[index show destroy] do
           get :remove, on: :member
         end
-        resources :providers, only: %i[index]
+
         resources :users, only: %i[index new create show] do
           get :check, on: :collection
         end
