@@ -26,7 +26,7 @@
       <%= f.govuk_submit t(".continue") %>
 
       <p class="govuk-body">
-        <%= govuk_link_to(t(".cancel"), cancel_url) %>
+        <%= govuk_link_to(t(".cancel"), cancel_url, no_visited_state: true) %>
       </p>
     </div>
   </div>

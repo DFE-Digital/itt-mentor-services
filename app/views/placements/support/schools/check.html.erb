@@ -49,7 +49,7 @@
 
         <%= f.govuk_submit t(".add_organisation") %>
         <p class="govuk-body">
-          <%= govuk_link_to(t(".cancel"), placements_support_organisations_path) %>
+          <%= govuk_link_to(t(".cancel"), placements_support_organisations_path, no_visited_state: true) %>
         </p>
       <% end %>
     </div>
