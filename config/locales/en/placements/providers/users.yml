@@ -24,7 +24,7 @@ en:
         destroy:
           user_removed: User removed
         remove:
-          page_title: Are you sure you want to remove this user? - %{user_name} - %{organisation_name}
+          page_title: Are you sure you want to remove this user? - %{user_name}
           are_you_sure: Are you sure you want to remove this user?
           remove_user: Remove user
           cancel: Cancel

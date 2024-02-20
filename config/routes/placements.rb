@@ -34,7 +34,8 @@ scope module: :placements,
           collection { get :check }
         end
 
-        resources :mentors, only: %i[index new create show] do
+        resources :mentors, only: %i[index new create show destroy] do
+          member { get :remove }
           collection { get :check }
         end
       end
@@ -64,7 +65,9 @@ scope module: :placements,
         collection { get :check }
       end
 
-      resources :mentors
+      resources :mentors, only: %i[index new create show destroy] do
+        member { get :remove }
+      end
     end
   end
 

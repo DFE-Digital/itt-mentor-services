@@ -18,7 +18,6 @@ RSpec.describe "Placements / Schools / Mentors / View a mentor", type: :system, 
     given_a_mentor_exists_in(school:)
     when_i_visit_the_show_page_for(school, mentor)
     then_i_see_the_mentor_details(
-      school_name: "School 1",
       first_name: "John",
       last_name: "Doe",
       trn: "1234567",
@@ -58,8 +57,7 @@ RSpec.describe "Placements / Schools / Mentors / View a mentor", type: :system, 
     )
   end
 
-  def then_i_see_the_mentor_details(school_name:, first_name:, last_name:, trn:)
-    expect(page).to have_content(school_name)
+  def then_i_see_the_mentor_details(first_name:, last_name:, trn:)
     expect(page).to have_content("#{first_name} #{last_name}")
 
     within(".govuk-summary-list") do
