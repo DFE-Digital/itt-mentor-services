@@ -10,6 +10,7 @@ en:
             page_title: Mentors
           show:
             caption: "Mentors - %{school_name}"
+            remove_mentor: Remove mentor
             attributes:
               mentors:
                 trn: Teacher reference number (TRN)
@@ -40,3 +41,10 @@ en:
             no_results_found: No results found for ‘%{trn}’
           create:
             mentor_added: Mentor added
+          remove:
+            page_title: Are you sure you want to remove this mentor? - %{user_name} - %{school_name}
+            are_you_sure: Are you sure you want to remove this mentor?
+            cancel: Cancel
+            remove_mentor: Remove mentor
+          destroy:
+            mentor_removed: Mentor removed

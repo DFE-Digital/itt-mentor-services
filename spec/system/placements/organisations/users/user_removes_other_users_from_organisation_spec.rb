@@ -125,7 +125,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     end
 
     expect(page).to have_title(
-      "Are you sure you want to remove this user? - #{user.full_name} - #{organisation.name} - Manage school placements",
+      "Are you sure you want to remove this user? - #{user.full_name} - Manage school placements",
     )
     expect(page).to have_content user.full_name.to_s
     expect(page).to have_content "Are you sure you want to remove this user?"

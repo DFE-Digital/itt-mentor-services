@@ -6,6 +6,15 @@ en:
           heading: Mentors
           trn: Teacher reference number (TRN)
         show:
+          remove_mentor: Remove mentor
           attributes:
             mentors:
               trn: Teacher reference number (TRN)
+        remove:
+          page_title: Are you sure you want to remove this mentor? - %{user_name}
+          are_you_sure: Are you sure you want to remove this mentor?
+          remove_mentor: Remove mentor
+          cancel: Cancel
+        destroy:
+            mentor_removed: Mentor removed
+      

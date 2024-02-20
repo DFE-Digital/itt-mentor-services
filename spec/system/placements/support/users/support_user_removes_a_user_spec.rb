@@ -25,7 +25,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
       when_i_click_on("Remove user")
       then_i_am_asked_to_confirm(school)
       when_i_click_on("Remove user")
-      then_the_the_user_is_removed_from_the_organisation(school)
+      then_the_user_is_removed_from_the_organisation(school)
     end
   end
 
@@ -47,7 +47,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
       when_i_click_on("Remove user")
       then_i_am_asked_to_confirm(provider)
       when_i_click_on("Remove user")
-      then_the_the_user_is_removed_from_the_organisation(provider)
+      then_the_user_is_removed_from_the_organisation(provider)
     end
   end
 
@@ -142,7 +142,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     end
   end
 
-  def then_the_the_user_is_removed_from_the_organisation(organisation)
+  def then_the_user_is_removed_from_the_organisation(organisation)
     email_is_sent(user.email, organisation)
     organisations_is_selected_in_primary_nav
     users_is_selected_in_secondary_nav(organisation)
