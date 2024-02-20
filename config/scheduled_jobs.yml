@@ -1,0 +1,8 @@
+# Define scheduled jobs (cron jobs) in this file.
+#
+# EXAMPLE CONFIG
+#
+# name-of-job:
+#   cron: "* * * * * *" # also accepts natural language, e.g. "every second"
+#   class: NameOfAJob
+#   description: Description is shown in the GoodJob dashboard.
