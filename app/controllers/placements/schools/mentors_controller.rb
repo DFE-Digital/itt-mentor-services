@@ -18,7 +18,42 @@ class Placements::Schools::MentorsController < ApplicationController
     flash[:success] = t(".mentor_removed")
   end
 
+  def new
+    mentor_form
+  end
+
+  def check
+    render :new unless mentor_form.valid?
+  rescue TeachingRecord::RestClient::TeacherNotFoundError
+    render :no_results
+  end
+
+  def create
+    mentor_form.save!
+
+    redirect_to placements_school_mentors_path(@school), flash: { success: t(".mentor_added") }
+  end
+
   private
+
+  def mentor_params
+    params.require(:mentor_form)
+          .permit(:first_name, :last_name, :trn)
+          .merge(default_params)
+  end
+
+  def default_params
+    { service: :placements, school: @school }
+  end
+
+  def mentor_form
+    @mentor_form ||=
+      if params[:mentor_form].present?
+        MentorForm.new(mentor_params)
+      else
+        MentorForm.new(default_params)
+      end
+  end
 
   def set_school
     @school = current_user.schools.find(params.require(:school_id))
