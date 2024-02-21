@@ -13,10 +13,13 @@ scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
           patch "/update/:step", to: "claims#update", as: "update"
         end
       end
-      resources :users, only: %i[index new create show] do
-        get :check, on: :collection
-      end
+
       resources :mentors, only: %i[index]
+
+      resources :users, only: %i[index new create show destroy] do
+        get :check, on: :collection
+        get :remove, on: :member
+      end
     end
   end
 

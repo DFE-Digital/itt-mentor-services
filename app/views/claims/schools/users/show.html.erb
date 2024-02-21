@@ -12,19 +12,24 @@
 
       <%= govuk_summary_list do |summary_list| %>
         <% summary_list.with_row do |row| %>
-          <% row.with_key(text: User.human_attribute_name("first_name")) %>
+          <% row.with_key(text: User.human_attribute_name(:first_name)) %>
           <% row.with_value(text: @user.first_name) %>
         <% end %>
+
         <% summary_list.with_row do |row| %>
-          <% row.with_key(text: User.human_attribute_name("last_name")) %>
+          <% row.with_key(text: User.human_attribute_name(:last_name)) %>
           <% row.with_value(text: @user.last_name) %>
         <% end %>
+
         <% summary_list.with_row do |row| %>
-          <% row.with_key(text: User.human_attribute_name("email")) %>
+          <% row.with_key(text: User.human_attribute_name(:email)) %>
           <% row.with_value(text: @user.email) %>
         <% end %>
       <% end %>
 
+      <% if policy(@user).destroy? %>
+        <%= govuk_link_to t(".remove_user"), remove_claims_school_user_path(@school, @user), class: "app-link app-link--destructive" %>
+      <% end %>
     </div>
   </div>
 </div>
