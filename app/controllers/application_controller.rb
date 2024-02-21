@@ -10,6 +10,8 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user, :support_controller?
 
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   private
 
   def sign_in_user
@@ -46,5 +48,9 @@ class ApplicationController < ActionController::Base
 
   def support_controller?
     false
+  end
+
+  def user_not_authorized
+    redirect_back fallback_location: root_path, alert: t("you_cannot_perform_this_action")
   end
 end
