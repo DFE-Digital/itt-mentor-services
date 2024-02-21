@@ -1,7 +1,7 @@
-class MentorForm < ApplicationForm
+class Placements::MentorForm < ApplicationForm
   FORM_PARAMS = %i[trn].freeze
 
-  attr_accessor :service, :school, :trn, :first_name, :last_name
+  attr_accessor :school, :trn, :first_name, :last_name
 
   validate :validate_mentor
   validate :validate_membership
@@ -15,11 +15,11 @@ class MentorForm < ApplicationForm
   end
 
   def as_form_params
-    { "mentor_form" => slice(FORM_PARAMS) }
+    { "placements_mentor_form" => slice(FORM_PARAMS) }
   end
 
   def mentor
-    @mentor ||= MentorBuilder.call(trn:, first_name:, last_name:).becomes(mentor_klass)
+    @mentor ||= MentorBuilder.call(trn:, first_name:, last_name:).becomes(Placements::Mentor)
   end
 
   def validate_mentor
@@ -38,10 +38,5 @@ class MentorForm < ApplicationForm
 
   def mentor_membership
     @mentor_membership ||= mentor.mentor_memberships.new(school:)
-  end
-
-  def mentor_klass
-    { claims: Claims::Mentor,
-      placements: Placements::Mentor }.fetch service
   end
 end
