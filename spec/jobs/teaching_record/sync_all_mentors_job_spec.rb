@@ -10,7 +10,7 @@ RSpec.describe TeachingRecord::SyncAllMentorsJob, type: :job do
   end
 
   describe "#perform" do
-    it "enqueues a TRSUpdateMentorDetailsJob per Mentor in our database" do
+    it "enqueues a TeachingRecord::SyncMentorJob per Mentor in our database" do
       expect { described_class.perform_now }.to have_enqueued_job(
         TeachingRecord::SyncMentorJob,
       ).exactly(:twice)
