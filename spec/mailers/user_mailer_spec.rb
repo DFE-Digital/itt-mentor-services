@@ -58,8 +58,23 @@ RSpec.describe UserMailer, type: :mailer do
     end
   end
 
-  describe "#removal_email" do
-    subject(:removal_email) { described_class.removal_email(user, organisation) }
+  describe "#user_removal_notification" do
+    subject(:removal_email) { described_class.with(service: user.service).user_removal_notification(user, organisation) }
+
+    context "when user's service is Claims" do
+      let(:user) { create(:claims_user) }
+      let(:organisation) { create(:claims_school) }
+
+      it "sends expected message to user" do
+        expect(removal_email.to).to contain_exactly user.email
+        expect(removal_email.subject).to eq "You have been removed from #{organisation.name}"
+        expect(removal_email.body).to have_content <<~EMAIL
+          Dear #{user.full_name},
+
+          You have been removed from the Claim funding for mentors service for #{organisation.name}.
+        EMAIL
+      end
+    end
 
     context "when user's service is Placements" do
       context "when organisation is a school" do
@@ -69,8 +84,11 @@ RSpec.describe UserMailer, type: :mailer do
         it "sends expected message to user" do
           expect(removal_email.to).to contain_exactly user.email
           expect(removal_email.subject).to eq "You have been removed from #{organisation.name}"
-          expect(removal_email.body.encoded).to eq("Dear #{user.full_name} \r\n\r\n You have been removed from the " \
-                                         "school placements service for #{organisation.name}.")
+          expect(removal_email.body).to have_content <<~EMAIL
+            Dear #{user.full_name},
+
+            You have been removed from the Manage school placements service for #{organisation.name}.
+          EMAIL
         end
       end
 
@@ -81,21 +99,12 @@ RSpec.describe UserMailer, type: :mailer do
         it "sends expected message to user" do
           expect(removal_email.to).to contain_exactly user.email
           expect(removal_email.subject).to eq "You have been removed from #{organisation.name}"
-          expect(removal_email.body.encoded).to eq("Dear #{user.full_name} \r\n\r\n You have been removed from the " \
-            "school placements service for #{organisation.name}.")
+          expect(removal_email.body).to have_content <<~EMAIL
+            Dear #{user.full_name},
+
+            You have been removed from the Manage school placements service for #{organisation.name}.
+          EMAIL
         end
-      end
-    end
-
-    context "when user's service is Claims" do
-      let(:user) { create(:claims_user) }
-      let(:organisation) { create(:claims_school) }
-
-      it "sends expected message to user" do
-        expect(removal_email.to).to contain_exactly user.email
-        expect(removal_email.subject).to eq "You have been removed from #{organisation.name}"
-        expect(removal_email.body.encoded).to eq("Dear #{user.full_name} \r\n\r\n You have been removed from the claims" \
-          " service for #{organisation.name}.")
       end
     end
   end

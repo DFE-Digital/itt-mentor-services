@@ -26,7 +26,7 @@ class Placements::Support::Organisations::UsersController < Placements::Support:
   def remove; end
 
   def destroy
-    RemoveUserService.call(@user, @organisation)
+    User::Remove.call(user: @user, organisation: @organisation)
     redirect_to_index
     flash[:success] = t(".user_removed")
   end
