@@ -25,6 +25,8 @@
           <% row.with_value(text: @user.email) %>
         <% end %>
       <% end %>
+
+      <%= govuk_link_to t(".remove_user"), remove_claims_support_school_user_path(@school, @user), class: "app-link app-link--destructive" %>
     </div>
   </div>
 </div>
