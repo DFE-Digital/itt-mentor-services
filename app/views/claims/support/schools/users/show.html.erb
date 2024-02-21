@@ -9,20 +9,22 @@
       <span class="govuk-caption-l"><%= @school.name %></span>
       <h2 class="govuk-heading-l"><%= @user.full_name %></h2>
 
-      <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key"><%= t(".attributes.users.first_name") %></dt>
-          <dd class="govuk-summary-list__value"><%= @user.first_name %></dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key"><%= t(".attributes.users.last_name") %></dt>
-          <dd class="govuk-summary-list__value"><%= @user.last_name %></dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key"><%= t(".attributes.users.email") %></dt>
-          <dd class="govuk-summary-list__value"><%= @user.email %></dd>
-        </div>
-      </dl>
+      <%= govuk_summary_list do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: User.human_attribute_name(:first_name)) %>
+          <% row.with_value(text: @user.first_name) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: User.human_attribute_name(:last_name)) %>
+          <% row.with_value(text: @user.last_name) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: User.human_attribute_name(:email)) %>
+          <% row.with_value(text: @user.email) %>
+        <% end %>
+      <% end %>
     </div>
   </div>
 </div>

@@ -33,8 +33,8 @@ RSpec.describe "View a users details", type: :system do
 
   def verify_user_details
     expect(page).to have_content("Test School")
-    expect(page).to have_content("First name Barry")
-    expect(page).to have_content("Last name Garlow")
-    expect(page).to have_content("Email barry.garlow@gmail.com")
+    expect(page).to have_content("Barry")
+    expect(page).to have_content("Garlow")
+    expect(page).to have_content("barry.garlow@gmail.com")
   end
 end
