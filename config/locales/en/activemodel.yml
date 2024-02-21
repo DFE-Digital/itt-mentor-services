@@ -4,7 +4,7 @@ en:
       messages:
         record_invalid: "Validation failed: %{errors}"
       models:
-        mentor_form:
+        placements/mentor_form:
           attributes:
             trn:
               taken: The mentor has already been added

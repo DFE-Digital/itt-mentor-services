@@ -176,7 +176,7 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
   end
 
   def when_i_enter_trn(trn)
-    fill_in "mentor-form-trn-field", with: trn
+    fill_in "placements-mentor-form-trn-field", with: trn
   end
 
   def then_i_see_the_index_page(school)
@@ -195,7 +195,7 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
   end
 
   def then_i_see_form_with_trn(trn)
-    expect(page.find("#mentor-form-trn-field").value).to eq(trn)
+    expect(page.find("#placements-mentor-form-trn-field").value).to eq(trn)
   end
 
   def then_i_see_no_results_page(_school_name, trn)

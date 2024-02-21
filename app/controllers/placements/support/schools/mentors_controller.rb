@@ -37,21 +37,21 @@ class Placements::Support::Schools::MentorsController < Placements::Support::App
   private
 
   def mentor_params
-    params.require(:mentor_form)
+    params.require(:placements_mentor_form)
           .permit(:first_name, :last_name, :trn)
           .merge(default_params)
   end
 
   def default_params
-    { service: :placements, school: @school }
+    { school: @school }
   end
 
   def mentor_form
     @mentor_form ||=
-      if params[:mentor_form].present?
-        MentorForm.new(mentor_params)
+      if params[:placements_mentor_form].present?
+        Placements::MentorForm.new(mentor_params)
       else
-        MentorForm.new(default_params)
+        Placements::MentorForm.new(default_params)
       end
   end
 
