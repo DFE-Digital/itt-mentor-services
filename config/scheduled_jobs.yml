@@ -6,3 +6,7 @@
 #   cron: "* * * * * *" # also accepts natural language, e.g. "every second"
 #   class: NameOfAJob
 #   description: Description is shown in the GoodJob dashboard.
+teaching_record_mentor_sync:
+  cron: "0 0 * * *"
+  class: "TeachingRecord::SyncAllMentorsJob"
+  description: "Sync all mentor first and last name attributes"
