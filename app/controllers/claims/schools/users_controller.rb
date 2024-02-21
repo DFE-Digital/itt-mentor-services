@@ -1,12 +1,11 @@
 class Claims::Schools::UsersController < ApplicationController
   include Claims::BelongsToSchool
 
+  before_action :set_user, only: %i[show remove destroy]
+  before_action :authorize_user
+
   def index
     @users = @school.users
-  end
-
-  def show
-    @user = @school.users.find(params.require(:id))
   end
 
   def new
@@ -20,7 +19,17 @@ class Claims::Schools::UsersController < ApplicationController
   def create
     user_form.save!
     User::Invite.call(user: user_form.user, organisation: @school)
-    redirect_to claims_school_users_path(@school), flash: { success: t(".user_added") }
+    redirect_to claims_school_users_path(@school), flash: { success: t(".success") }
+  end
+
+  def show; end
+
+  def remove; end
+
+  def destroy
+    User::Remove.call(user: @user, organisation: @school)
+
+    redirect_to claims_school_users_path(@school), flash: { success: t(".success") }
   end
 
   private
@@ -31,7 +40,15 @@ class Claims::Schools::UsersController < ApplicationController
           .merge({ service: current_service, organisation: @school })
   end
 
+  def set_user
+    @user = @school.users.find(params.require(:id))
+  end
+
   def user_form
     @user_form ||= UserInviteForm.new(user_params)
+  end
+
+  def authorize_user
+    authorize @user || Claims::User
   end
 end
