@@ -1,0 +1,10 @@
+en:
+  user_mailer:
+    user_invitation_notification:
+      subject: You have been invited to %{organisation_name}
+      body: |
+        Dear %{user_name},
+
+        You have been invited to join the %{service_name} service for %{organisation_name}.
+
+        Sign in here %{sign_in_url}

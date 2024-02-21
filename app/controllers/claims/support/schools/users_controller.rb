@@ -19,9 +19,10 @@ class Claims::Support::Schools::UsersController < Claims::Support::ApplicationCo
 
   def create
     user_form.save!
-    UserInviteService.call(user_form.user, @school)
-    redirect_to claims_support_school_users_path(@school)
-    flash[:success] = t(".user_added")
+
+    User::Invite.call(user: user_form.user, organisation: @school)
+
+    redirect_to claims_support_school_users_path(@school), flash: { success: t(".success") }
   end
 
   private

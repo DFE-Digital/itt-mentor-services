@@ -40,4 +40,4 @@ en:
             page_title: "Check your answers - Add user - %{school_name}"
             change: Change
           create:
-            user_added: User added
+            success: User added

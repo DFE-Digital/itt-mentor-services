@@ -10,6 +10,10 @@ class ApplicationMailer < Mail::Notify::Mailer
 
   private
 
+  def service_name
+    I18n.t("#{params[:service]}.service_name")
+  end
+
   def default_url_options
     { host:, port: ENV["PORT"] }
   end

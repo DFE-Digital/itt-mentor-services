@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe UserMailer, type: :mailer do
-  describe "#invitation_email" do
-    subject(:invite_email) { described_class.invitation_email(user, organisation, "sign_in_url") }
+  describe "#user_invitation_notification" do
+    subject(:invite_email) { described_class.with(service: user.service).user_invitation_notification(user, organisation) }
 
     context "when user's service is Claims" do
       let(:user) { create(:claims_user) }
@@ -11,11 +11,13 @@ RSpec.describe UserMailer, type: :mailer do
       it "sends the invitation" do
         expect(invite_email.to).to contain_exactly(user.email)
         expect(invite_email.subject).to eq("You have been invited to #{organisation.name}")
+        expect(invite_email.body).to have_content <<~EMAIL
+          Dear #{user.full_name},
 
-        expect(invite_email.body.encoded).to eq(
-          "Dear #{user.full_name} \r\n\r\n You have been invited to join the claims" \
-            " service for #{organisation.name}.\r\n\r\n Sign in here sign_in_url",
-        )
+          You have been invited to join the Claim funding for mentors service for #{organisation.name}.
+
+          Sign in here http://claims.localhost:3000/sign-in
+        EMAIL
       end
     end
 
@@ -27,10 +29,13 @@ RSpec.describe UserMailer, type: :mailer do
         it "sends invitation email" do
           expect(invite_email.to).to contain_exactly(user.email)
           expect(invite_email.subject).to eq("You have been invited to #{organisation.name}")
-          expect(invite_email.body.encoded).to eq(
-            "Dear #{user.full_name} \r\n\r\n You have been invited to join the school placements" \
-            " service for #{organisation.name}.\r\n\r\n Sign in here sign_in_url",
-          )
+          expect(invite_email.body).to have_content <<~EMAIL
+            Dear #{user.full_name},
+
+            You have been invited to join the Manage school placements service for #{organisation.name}.
+
+            Sign in here http://placements.localhost:3000/sign-in
+          EMAIL
         end
       end
 
@@ -41,10 +46,13 @@ RSpec.describe UserMailer, type: :mailer do
         it "sends invitation email" do
           expect(invite_email.to).to contain_exactly(user.email)
           expect(invite_email.subject).to eq("You have been invited to #{organisation.name}")
-          expect(invite_email.body.encoded).to eq(
-            "Dear #{user.full_name} \r\n\r\n You have been invited to join the school placements" \
-              " service for #{organisation.name}.\r\n\r\n Sign in here sign_in_url",
-          )
+          expect(invite_email.body).to have_content <<~EMAIL
+            Dear #{user.full_name},
+
+            You have been invited to join the Manage school placements service for #{organisation.name}.
+
+            Sign in here http://placements.localhost:3000/sign-in
+          EMAIL
         end
       end
     end
