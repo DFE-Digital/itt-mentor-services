@@ -16,13 +16,32 @@ There are a few things to bear in mind when reading this:
 
 ```mermaid
 erDiagram
+  Subject {
+    uuid id PK
+    string subject_area "primary or secondary"
+    string name
+    string code "code comes from publish API, but it is not a FK"
+  }
+  
+  PlacementSubjectJoin {
+    uuid id PK
+    uuid placement_id FK
+    uuid subject_id FK
+  }
+  
+  PlacementMentorJoin {
+    uuid id PK
+    uuid placement_id FK
+    uuid mentor_id FK
+  }
+  
   Placement {
     uuid id PK
-    uuid mentor_id FK
     uuid trainee_id FK
     uuid school_id FK
     date start_date
     date end_date
+    enum status "draft or published"
   }
 
   School {
@@ -89,11 +108,15 @@ erDiagram
   Provider ||--|{ School : "has many"
   Trainee }|--|| Provider : "belongs to"
 
-  Placement }|--|| Mentor : "has many"
+  Placement }|--|| PlacementMentorJoin : "has many"
+  Placement }|--|| PlacementSubjectJoin : "has many"
   Placement }|--|| Trainee : "has many"
-  Placement }|--|| School : "has many"
+  Placement }|--|| School : "belongs to"
+  
+  Subject }|--|| PlacementSubjectJoin : "has many"
 
   Mentor }|--|{ MentorTraining : "has many"
+  Mentor }|--|{ PlacementMentorJoin : "has many"
   Provider }|--|{ MentorTraining : "has many"
 
   School ||--|{ Claim : "has many"
