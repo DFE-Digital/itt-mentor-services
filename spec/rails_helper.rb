@@ -87,7 +87,9 @@ RSpec.configure do |config|
     service = self.class.metadata[:service] || :claims
 
     Capybara.app_host = "http://#{service_host(service)}"
+    Capybara.asset_host = "http://#{service_host(service)}:#{ENV["PORT"]}"
     example.run
+    Capybara.asset_host = nil
     Capybara.app_host = nil
   end
 
