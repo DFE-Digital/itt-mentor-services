@@ -183,7 +183,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_22_135527) do
   end
 
   create_table "placements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.enum "status", enum_type: "placement_status"
+    t.enum "status", default: "draft", enum_type: "placement_status"
     t.date "start_date"
     t.date "end_date"
     t.uuid "school_id"
