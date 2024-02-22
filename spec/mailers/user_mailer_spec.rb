@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe UserMailer, type: :mailer do
-  describe "#user_invitation_notification" do
-    subject(:invite_email) { described_class.with(service: user.service).user_invitation_notification(user, organisation) }
+  describe "#user_membership_created_notification" do
+    subject(:invite_email) { described_class.with(service: user.service).user_membership_created_notification(user, organisation) }
 
     context "when user's service is Claims" do
       let(:user) { create(:claims_user) }
@@ -58,8 +58,8 @@ RSpec.describe UserMailer, type: :mailer do
     end
   end
 
-  describe "#user_removal_notification" do
-    subject(:removal_email) { described_class.with(service: user.service).user_removal_notification(user, organisation) }
+  describe "#user_membership_destroyed_notification" do
+    subject(:removal_email) { described_class.with(service: user.service).user_membership_destroyed_notification(user, organisation) }
 
     context "when user's service is Claims" do
       let(:user) { create(:claims_user) }
