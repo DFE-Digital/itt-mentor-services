@@ -4,6 +4,8 @@
 
 > A framework for creating reusable, testable & encapsulated view components, built to integrate seamlessly with Ruby on Rails. - https://viewcomponent.org/
 
+## File Structure
+
 ```
 app
 └── components
