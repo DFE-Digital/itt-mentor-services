@@ -11,7 +11,7 @@ class User::Remove
   def call
     user_membership.destroy!
 
-    UserMailer.with(service: user.service).user_removal_notification(user, organisation).deliver_later
+    UserMailer.with(service: user.service).user_membership_destroyed_notification(user, organisation).deliver_later
   end
 
   private

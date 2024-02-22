@@ -9,6 +9,6 @@ class User::Invite
   attr_reader :user, :organisation, :service
 
   def call
-    UserMailer.with(service: user.service).user_invitation_notification(user, organisation).deliver_later
+    UserMailer.with(service: user.service).user_membership_created_notification(user, organisation).deliver_later
   end
 end

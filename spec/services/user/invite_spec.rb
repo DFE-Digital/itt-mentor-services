@@ -10,7 +10,7 @@ RSpec.describe User::Invite do
         let(:organisation) { create(:claims_school) }
 
         it "calls mailer with correct prams" do
-          expect { user_invite_service }.to have_enqueued_mail(UserMailer, :user_invitation_notification).with(params: { service: :claims }, args: [user, organisation])
+          expect { user_invite_service }.to have_enqueued_mail(UserMailer, :user_membership_created_notification).with(params: { service: :claims }, args: [user, organisation])
         end
       end
     end
@@ -21,7 +21,7 @@ RSpec.describe User::Invite do
         let(:organisation) { create(:placements_school) }
 
         it "calls mailer with correct prams" do
-          expect { user_invite_service }.to have_enqueued_mail(UserMailer, :user_invitation_notification).with(params: { service: :placements }, args: [user, organisation])
+          expect { user_invite_service }.to have_enqueued_mail(UserMailer, :user_membership_created_notification).with(params: { service: :placements }, args: [user, organisation])
         end
       end
 
@@ -30,7 +30,7 @@ RSpec.describe User::Invite do
         let(:organisation) { create(:placements_provider) }
 
         it "calls mailer with correct prams" do
-          expect { user_invite_service }.to have_enqueued_mail(UserMailer, :user_invitation_notification).with(params: { service: :placements }, args: [user, organisation])
+          expect { user_invite_service }.to have_enqueued_mail(UserMailer, :user_membership_created_notification).with(params: { service: :placements }, args: [user, organisation])
         end
       end
     end

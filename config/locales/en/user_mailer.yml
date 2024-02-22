@@ -1,6 +1,6 @@
 en:
   user_mailer:
-    user_invitation_notification:
+    user_membership_created_notification:
       subject: You have been invited to %{organisation_name}
       body: |
         Dear %{user_name},
@@ -9,7 +9,7 @@ en:
 
         Sign in here %{sign_in_url}
 
-    user_removal_notification:
+    user_membership_destroyed_notification:
       subject: You have been removed from %{organisation_name}
       body: |
         Dear %{user_name},
