@@ -6,42 +6,6 @@ class ApplicationPolicy
     @record = record
   end
 
-  def index?
-    true
-  end
-
-  def show?
-    true
-  end
-
-  def create?
-    true
-  end
-
-  def new?
-    create?
-  end
-
-  def check?
-    new?
-  end
-
-  def update?
-    false
-  end
-
-  def edit?
-    update?
-  end
-
-  def destroy?
-    false
-  end
-
-  def remove?
-    destroy?
-  end
-
   class Scope
     def initialize(user, scope)
       @user = user

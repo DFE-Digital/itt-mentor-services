@@ -2,7 +2,7 @@ class Claims::Schools::UsersController < ApplicationController
   include Claims::BelongsToSchool
 
   before_action :set_user, only: %i[show remove destroy]
-  before_action :authorize_user
+  before_action :authorize_user, only: %i[remove destroy]
 
   def index
     @users = @school.users
@@ -49,6 +49,6 @@ class Claims::Schools::UsersController < ApplicationController
   end
 
   def authorize_user
-    authorize @user || Claims::User
+    authorize @user
   end
 end

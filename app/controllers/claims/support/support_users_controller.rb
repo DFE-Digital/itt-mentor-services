@@ -1,5 +1,6 @@
 class Claims::Support::SupportUsersController < Claims::Support::ApplicationController
   before_action :set_support_user, only: %i[show remove destroy]
+  before_action :authorize_support_user, only: %i[remove destroy]
 
   def index
     @support_users = Claims::SupportUser.order(created_at: :desc)
@@ -24,9 +25,8 @@ class Claims::Support::SupportUsersController < Claims::Support::ApplicationCont
   def remove; end
 
   def destroy
-    authorize @support_user
-
     SupportUser::Remove.call(support_user: @support_user)
+
     redirect_to claims_support_support_users_path, flash: { success: t(".success") }
   end
 
@@ -44,5 +44,9 @@ class Claims::Support::SupportUsersController < Claims::Support::ApplicationCont
 
   def support_user_form
     @support_user_form ||= SupportUserInviteForm.new(support_user_params)
+  end
+
+  def authorize_support_user
+    authorize @support_user
   end
 end
