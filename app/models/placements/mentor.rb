@@ -17,5 +17,8 @@ class Placements::Mentor < Mentor
   has_many :mentor_memberships
   has_many :schools, through: :mentor_memberships
 
+  has_many :placement_mentor_joins
+  has_many :placements, through: :placement_mentor_joins
+
   default_scope { joins(:mentor_memberships).distinct }
 end
