@@ -1,8 +1,8 @@
-<% content_for :page_title, "#{@mentor.full_name} - #{t(".heading")} - #{@school.name}" %>
+<% content_for :page_title, "#{@mentor.full_name} - #{t(".heading")}" %>
 
 <% render "claims/support/primary_navigation", current: :organisations %>
 <% content_for(:before_content) do %>
-  <%= govuk_back_link(href: claims_support_school_mentors_path(@school)) %>
+  <%= govuk_back_link(href: claims_school_mentors_path(@school)) %>
 <% end %>
 
 <div class="govuk-width-container">
@@ -26,7 +26,7 @@
         <% end %>
       <% end %>
 
-      <%= govuk_link_to t(".remove_mentor"), remove_claims_support_school_mentor_path(@school, @mentor), class: "app-link app-link--destructive" %>
+      <%= govuk_link_to t(".remove_mentor"), remove_claims_school_mentor_path(@school, @mentor), class: "app-link app-link--destructive" %>
     </div>
   </div>
 </div>

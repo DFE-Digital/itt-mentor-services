@@ -11,11 +11,10 @@ class Claims::Support::Schools::MentorsController < Claims::Support::Application
   def remove; end
 
   def destroy
-    mentor_membership = @mentor.mentor_memberships.find_by(school: @school)
+    mentor_membership = @mentor.mentor_memberships.find_by!(school: @school)
     mentor_membership.destroy!
 
-    redirect_to claims_support_school_mentors_path(@school)
-    flash[:success] = t(".mentor_removed")
+    redirect_to claims_support_school_mentors_path(@school), flash: { success: t(".success") }
   end
 
   private

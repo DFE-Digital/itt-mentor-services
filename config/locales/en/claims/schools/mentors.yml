@@ -5,3 +5,16 @@ en:
         index:
           heading: Mentors
           trn: Teacher reference number (TRN)
+        show:
+          heading: Mentors
+          remove_mentor: Remove mentor
+          attributes:
+            mentors:
+              trn: Teacher reference number (TRN)
+        remove:
+          confirm_removal: Are you sure you want to remove this mentor?
+          cancel: Cancel
+          remove_mentor: Remove mentor
+          header_info: Are you sure you want to remove this mentor?
+        destroy:
+          success: Mentor removed
