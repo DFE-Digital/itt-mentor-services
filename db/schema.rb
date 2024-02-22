@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_19_162226) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_22_135527) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -18,8 +18,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_19_162226) do
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
   create_enum "mentor_training_type", ["refresher", "initial"]
+  create_enum "placement_status", ["draft", "published"]
   create_enum "provider_type", ["scitt", "lead_school", "university"]
   create_enum "service", ["claims", "placements"]
+  create_enum "subject_area", ["primary", "secondary"]
 
   create_table "claims", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "school_id", null: false
@@ -162,6 +164,34 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_19_162226) do
     t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable"
   end
 
+  create_table "placement_mentor_joins", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "mentor_id", null: false
+    t.uuid "placement_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mentor_id"], name: "index_placement_mentor_joins_on_mentor_id"
+    t.index ["placement_id"], name: "index_placement_mentor_joins_on_placement_id"
+  end
+
+  create_table "placement_subject_joins", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "subject_id", null: false
+    t.uuid "placement_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["placement_id"], name: "index_placement_subject_joins_on_placement_id"
+    t.index ["subject_id"], name: "index_placement_subject_joins_on_subject_id"
+  end
+
+  create_table "placements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.enum "status", enum_type: "placement_status"
+    t.date "start_date"
+    t.date "end_date"
+    t.uuid "school_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["school_id"], name: "index_placements_on_school_id"
+  end
+
   create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "code", null: false
     t.datetime "created_at", null: false
@@ -239,6 +269,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_19_162226) do
     t.index ["urn"], name: "index_schools_on_urn", unique: true
   end
 
+  create_table "subjects", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.enum "subject_area", enum_type: "subject_area"
+    t.string "name", null: false
+    t.string "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "user_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.string "organisation_type", null: false
@@ -271,6 +309,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_19_162226) do
   add_foreign_key "mentor_trainings", "claims"
   add_foreign_key "mentor_trainings", "mentors"
   add_foreign_key "mentor_trainings", "providers"
+  add_foreign_key "placement_mentor_joins", "mentors"
+  add_foreign_key "placement_mentor_joins", "placements"
+  add_foreign_key "placement_subject_joins", "placements"
+  add_foreign_key "placement_subject_joins", "subjects"
+  add_foreign_key "placements", "schools"
   add_foreign_key "schools", "regions"
   add_foreign_key "user_memberships", "users"
 end
