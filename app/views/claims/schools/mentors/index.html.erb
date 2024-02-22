@@ -18,7 +18,7 @@
           <% table.with_body do |body| %>
             <% @mentors.each do |mentor| %>
               <% body.with_row do |row| %>
-                <% row.with_cell(text: govuk_link_to(mentor.full_name, "#")) %>
+                <% row.with_cell(text: govuk_link_to(mentor.full_name, claims_school_mentor_path(@school, mentor))) %>
                 <% row.with_cell(text: mentor.trn) %>
               <% end %>
             <% end %>

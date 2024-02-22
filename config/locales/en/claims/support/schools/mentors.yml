@@ -18,5 +18,5 @@ en:
             remove_mentor: Remove mentor
             header_info: Are you sure you want to remove this mentor?
           destroy:
-            mentor_removed: Mentor removed
+            success: Mentor removed
 
