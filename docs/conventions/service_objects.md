@@ -4,6 +4,8 @@
 
 > Service Objects provide a reusable interface to manipulating data and performing side effects.
 
+## File Structure
+
 ```
 app
 └── services
