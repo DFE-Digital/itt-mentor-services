@@ -1,6 +1,7 @@
 class Placements::Support::Organisations::UsersController < Placements::Support::ApplicationController
   before_action :set_organisation
   before_action :set_user, only: %i[show remove destroy]
+  before_action :authorize_user, only: %i[remove destroy]
 
   def index
     users
@@ -49,5 +50,9 @@ class Placements::Support::Organisations::UsersController < Placements::Support:
 
   def user_form
     @user_form ||= UserInviteForm.new(user_params)
+  end
+
+  def authorize_user
+    authorize @user
   end
 end

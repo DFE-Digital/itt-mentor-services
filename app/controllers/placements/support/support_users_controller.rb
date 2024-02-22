@@ -1,5 +1,6 @@
 class Placements::Support::SupportUsersController < Placements::Support::ApplicationController
   before_action :set_support_user, only: %i[show remove destroy]
+  before_action :authorize_support_user, only: %i[remove destroy]
 
   def index
     @support_users = Placements::SupportUser.order(created_at: :desc)
@@ -44,5 +45,9 @@ class Placements::Support::SupportUsersController < Placements::Support::Applica
 
   def support_user_form
     @support_user_form ||= SupportUserInviteForm.new(support_user_params)
+  end
+
+  def authorize_support_user
+    authorize @support_user
   end
 end
