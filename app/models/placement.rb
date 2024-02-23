@@ -29,12 +29,5 @@ class Placement < ApplicationRecord
 
   validates :school, :status, :start_date, :end_date, presence: true
 
-  validate :start_date_before_end_date
-
-  def start_date_before_end_date
-    return if start_date.blank? || end_date.blank?
-    return if start_date.before?(end_date)
-
-    errors.add(:end_date, :before_start_date)
-  end
+  validates :end_date, comparison: { greater_than: :start_date }
 end
