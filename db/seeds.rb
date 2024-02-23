@@ -91,13 +91,15 @@ mentors = Mentor.where(trn: %w[1234567 1212121 1313131])
 end
 
 # Create subjects
-# TODO: this method will be created with actual subject data after the Publish Api data is integrated
-Subject.upsert_all([{ subject_area: "primary", name: "Primary with English", code: "01" },
-                    { subject_area: "primary", name: "Primary with geography and history", code: "02" },
-                    { subject_area: "secondary", name: "Biology", code: "C1" },
-                    { subject_area: "secondary", name: "Classics", code: "Q8" }])
+PublishTeacherTraining::Subject::Import.call
 
 # Create placements
-placement = Placement.create!(school: Placements::School.first, start_date: 1.month.from_now, end_date: 2.months.from_now)
-PlacementSubjectJoin.create!(placement:, subject: Subject.first)
-PlacementMentorJoin.create!(placement:, mentor: Placements::Mentor.first)
+Placements::School.find_each do |school|
+  next if school.placements.any?
+
+  placement = Placement.create!(school:, start_date: 1.month.from_now, end_date: 2.months.from_now)
+
+  subject = school.phase == "Primary" ? Subject.primary.first : Subject.secondary.first
+  PlacementSubjectJoin.create!(placement:, subject:)
+  PlacementMentorJoin.create!(placement:, mentor: Placements::Mentor.first)
+end

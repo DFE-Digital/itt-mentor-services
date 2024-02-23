@@ -13,5 +13,9 @@ class Subject < ApplicationRecord
   has_many :placement_subject_joins
   has_many :placements, through: :placement_subject_joins
 
+  enum :subject_area,
+       { primary: "primary", secondary: "secondary" },
+       validate: true
+
   validates :subject_area, :name, presence: true
 end

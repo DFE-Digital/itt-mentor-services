@@ -7,6 +7,11 @@
 #   class: NameOfAJob
 #   description: Description is shown in the GoodJob dashboard.
 teaching_record_mentor_sync:
-  cron: "0 0 * * *"
+  cron: "5 0 * * *"
   class: "TeachingRecord::SyncAllMentorsJob"
   description: "Sync all mentor first and last name attributes"
+
+publish_subject_sync:
+  cron: "0 0 * * *"
+  class: "PublishTeacherTraining::Subject::SyncAllJob"
+  description: "Sync all subjects with data imported from Publish Teacher Training"
