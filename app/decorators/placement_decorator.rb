@@ -10,7 +10,7 @@ class PlacementDecorator < Draper::Decorator
   end
 
   def subject_names
-    subjects.map(&:name).sort.to_sentence
+    subjects.pluck(:name).sort.to_sentence
   end
 
   def formatted_start_date

@@ -23,6 +23,12 @@ RSpec.describe "Placement school user views a list of placements", type: :system
       given_i_sign_in_as_anne
       then_i_see_published_status_tag
     end
+
+    scenario "where placement has no mentors attached" do
+      given_a_published_placement_exists
+      given_i_sign_in_as_anne
+      then_i_see_mentor_names("Not entered")
+    end
   end
 
   private
