@@ -1,4 +1,4 @@
-class Claims::Support::ApplicationController < ApplicationController
+class Claims::Support::ApplicationController < Claims::ApplicationController
   before_action :authorize_user!
 
   private

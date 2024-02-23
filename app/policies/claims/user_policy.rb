@@ -1,9 +1,5 @@
-class Claims::UserPolicy < ApplicationPolicy
+class Claims::UserPolicy < Claims::ApplicationPolicy
   def destroy?
     user != record
-  end
-
-  def remove?
-    destroy?
   end
 end

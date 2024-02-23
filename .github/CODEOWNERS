@@ -13,6 +13,7 @@ tmp                               @DFE-Digital/school-placements  @DFE-Digital/t
 vendor                            @DFE-Digital/school-placements  @DFE-Digital/track-pay
 
 app/*/claims                      @DFE-Digital/track-pay
+app/policies/claim_policy.rb      @DFE-Digital/track-pay
 spec/*/claims                     @DFE-Digital/track-pay
 config/locales/*/claims           @DFE-Digital/track-pay
 config/locales/*/claims.yml       @DFE-Digital/track-pay

@@ -1,14 +1,14 @@
 class Claims::Support::SchoolsController < Claims::Support::ApplicationController
   before_action :redirect_to_school_options, only: :check, if: -> { javascript_disabled? }
+  before_action :set_school, only: %i[show]
+  before_action :authorize_school
 
   def index
     @pagy, @schools = pagy(schools)
     @search_param = params[:name_or_postcode]
   end
 
-  def show
-    @school = Claims::School.find(params.require(:id)).decorate
-  end
+  def show; end
 
   def new
     @school_form = if params[:school].present?
@@ -98,5 +98,13 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
     @decorated_school_options ||= School.search_name_urn_postcode(
       search_param.downcase,
     ).map(&:decorate)
+  end
+
+  def set_school
+    @school = Claims::School.find(params.require(:id)).decorate
+  end
+
+  def authorize_school
+    authorize @school || Claims::School, policy_class: Claims::SchoolPolicy
   end
 end

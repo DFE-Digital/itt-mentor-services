@@ -1,6 +1,8 @@
 class Claims::Support::Schools::MentorsController < Claims::Support::ApplicationController
   include Claims::BelongsToSchool
+
   before_action :set_mentor, only: %i[show remove destroy]
+  before_action :authorize_mentor
 
   def index
     @pagy, @mentors = pagy(@school.mentors.order(:first_name, :last_name))
@@ -21,5 +23,9 @@ class Claims::Support::Schools::MentorsController < Claims::Support::Application
 
   def set_mentor
     @mentor = @school.mentors.find(params.require(:id))
+  end
+
+  def authorize_mentor
+    authorize @mentor || Claims::Mentor
   end
 end
