@@ -73,9 +73,18 @@ schools.each do |school|
 end
 
 # Create dummy mentors
-mentors = %w[Sarah John Pomona].each_with_index.map do |first_name, index|
-  Mentor.find_or_create_by!(first_name:, last_name: "Doe", trn: "#{index}000000")
+mentors_data = [{ first_name: "Sarah", last_name: "Doe", trn: "1234567" },
+                { first_name: "John", last_name: "Doe", trn: "1212121" },
+                { first_name: "Pomona", last_name: "Doe", trn: "1313131" }]
+
+mentors_data.each do |mentor|
+  Mentor.find_or_create_by!(trn: mentor[:trn]) do |new_mentor|
+    new_mentor.first_name = mentor[:first_name]
+    new_mentor.last_name = mentor[:last_name]
+  end
 end
+
+mentors = Mentor.where(trn: %w[1234567 1212121 1313131])
 
 (Claims::School.all + Placements::School.all).each do |school|
   school.mentors = mentors
