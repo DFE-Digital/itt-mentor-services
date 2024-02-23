@@ -17,7 +17,7 @@ RSpec.describe "View claims", type: :system, service: :claims do
     )
   end
 
-  let!(:draft_claim) { create(:claim, :draft, school: school_with_mentors) }
+  let!(:draft_claim) { create(:claim, :draft, school:) }
   let!(:submitted_claim) do
     create(
       :claim,
@@ -49,7 +49,23 @@ RSpec.describe "View claims", type: :system, service: :claims do
     i_see_a_list_of_the_schools_claims
   end
 
+  scenario "Anne visits the claims index page with draft claims" do
+    user_exists_in_dfe_sign_in(user: anne)
+    given_i_sign_in
+    vist_claims_index_page
+    i_do_not_see_any_draft_claims
+  end
+
   private
+
+  def i_do_not_see_any_draft_claims
+    expect(page).not_to have_content(draft_claim.id)
+    expect(page).to have_content("There are no claims for #{school.name}")
+  end
+
+  def vist_claims_index_page
+    click_on "Claims"
+  end
 
   def i_can_see_the_add_a_mentor_guidance
     within(".govuk-inset-text") do
@@ -86,12 +102,6 @@ RSpec.describe "View claims", type: :system, service: :claims do
     expect(page).to have_content("Status")
 
     within("tbody tr:nth-child(1)") do
-      expect(page).to have_content(draft_claim.id.first(8))
-      expect(page).to have_content(I18n.l(draft_claim.created_at.to_date, format: :short))
-      expect(page).to have_content("Draft")
-    end
-
-    within("tbody tr:nth-child(2)") do
       expect(page).to have_content(submitted_claim.id.first(8))
       expect(page).to have_content(submitted_claim.provider_name)
       expect(page).to have_content(submitted_claim.mentors.map(&:full_name).join(""))
