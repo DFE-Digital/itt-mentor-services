@@ -2,6 +2,7 @@ class Claims::Support::Schools::UsersController < Claims::Support::ApplicationCo
   include Claims::BelongsToSchool
 
   before_action :set_user, only: %i[show remove destroy]
+  before_action :authorize_user
 
   def index
     @users = @school.users
@@ -47,5 +48,9 @@ class Claims::Support::Schools::UsersController < Claims::Support::ApplicationCo
 
   def user_form
     @user_form ||= UserInviteForm.new(user_params)
+  end
+
+  def authorize_user
+    authorize @user || Claims::User
   end
 end

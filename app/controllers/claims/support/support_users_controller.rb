@@ -1,6 +1,6 @@
 class Claims::Support::SupportUsersController < Claims::Support::ApplicationController
   before_action :set_support_user, only: %i[show remove destroy]
-  before_action :authorize_support_user, only: %i[remove destroy]
+  before_action :authorize_support_user
 
   def index
     @support_users = Claims::SupportUser.order(created_at: :desc)
@@ -47,6 +47,6 @@ class Claims::Support::SupportUsersController < Claims::Support::ApplicationCont
   end
 
   def authorize_support_user
-    authorize @support_user
+    authorize @support_user || Claims::SupportUser
   end
 end
