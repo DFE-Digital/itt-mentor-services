@@ -19,15 +19,15 @@ You need to grant yourself permission to access Azure resources in the test envi
    >
    > Make sure it says "DfE Platform Identity" in the top right corner of the screen below your name. If not, click the settings/cog icon and choose it from the list of directories.
 
-2. Go to [PIM > My roles > Azure resources](https://portal.azure.com/?feature.msaljs=true#view/Microsoft_Azure_PIMCommon/ActivationMenuBlade/~/azurerbac)
+2. Go to [PIM > My roles > Groups](https://portal.azure.com/?feature.msaljs=true#view/Microsoft_Azure_PIMCommon/ActivationMenuBlade/~/aadgroup)
 
-3. Find the resource named `s189-teacher-services-cloud-test` from the list.
+3. Find the group named `s189 AKS admin test PIM` from the list.
 
-   > You may need to widen the "Resource" column to see the full name.
+   > You may need to widen the "Group" column to see the full name.
    >
    > Alternatively type "test" into the search box to filter the list.
    >
-   > ![](images/connect-to-azure/azure-resources.png)
+   > ![](images/connect-to-azure/azure-groups.png)
 
 4. Click "Active" on `s189-teacher-services-cloud-test`.
 
@@ -35,7 +35,7 @@ You need to grant yourself permission to access Azure resources in the test envi
    >
    > Click the "Activate" button at the bottom of the pane.
    >
-   > ![](images/connect-to-azure/azure-resource-activation.png)
+   > ![](images/connect-to-azure/azure-group-activation.png)
 
 5. Open a console. Navigate to the `itt-mentor-services` repo directory and run:
 
@@ -56,21 +56,6 @@ You need to grant yourself permission to access Azure resources in the test envi
    ```
    $ make qa get-cluster-credentials
    ```
-
-   > There might be some error output like this:
-   >
-   > ```
-   > make: kubelogin: No such file or directory
-   > make: *** [get-cluster-credentials] Error 1
-   > ```
-   >
-   > **This error is safe to ignore.**
-   >
-   > The command ran successfully so long as the output contains a line like this, highlighted in yellow:
-   >
-   > ```
-   > Merged "s189t01-tsc-test-aks" as current context in ~/.kube/config
-   > ```
 
 7. Assuming everything worked correctly, you should now be able to access the Kubernetes cluster using the `kubectl` command.
 
