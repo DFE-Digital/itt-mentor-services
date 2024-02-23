@@ -71,7 +71,7 @@ module RoutesHelper
   def placements_organisation_path(organisation)
     case organisation
     when School
-      placements_school_mentors_path(organisation)
+      placements_school_placements_path(organisation)
     when Provider
       placements_provider_path(organisation)
     end

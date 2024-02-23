@@ -89,18 +89,17 @@ RSpec.describe "View organisations", type: :system, service: :placements do
   end
 
   def then_i_see_the_school_page(school)
-    expect(page).to have_current_path placements_school_mentors_path(school), ignore_query: true
+    expect(page).to have_current_path placements_school_placements_path(school), ignore_query: true
     within(".app-primary-navigation__nav") do
-      expect(page).to have_link "Placements", current: "false"
-      expect(page).to have_link "Mentors", current: "page"
+      expect(page).to have_link "Placements", current: "page"
+      expect(page).to have_link "Mentors", current: "false"
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Organisation details", current: "false"
     end
 
     within(".govuk-main-wrapper") do
       expect(page).to have_content school.name
-      expect(page).to have_content "Mentors"
-      expect(page).to have_content "Add mentor"
+      expect(page).to have_content "Placements"
     end
   end
 
