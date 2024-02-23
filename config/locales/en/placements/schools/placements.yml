@@ -1,0 +1,13 @@
+en:
+  placements:
+    schools:
+      placements:
+        not_entered: Not entered
+        index:
+          page_title: Placements
+          placements: Placements
+          subject: Subject
+          mentor: Mentor
+          start_date: Start date
+          status: Status
+          not_entered: Not entered
