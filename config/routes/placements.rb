@@ -69,6 +69,8 @@ scope module: :placements,
         member { get :remove }
         collection { get :check }
       end
+
+      resources :placements, only: [:index]
     end
   end
 
