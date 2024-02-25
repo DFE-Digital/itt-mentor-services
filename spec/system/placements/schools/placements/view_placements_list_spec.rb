@@ -2,10 +2,17 @@ require "rails_helper"
 
 RSpec.describe "Placement school user views a list of placements", type: :system, service: :placements do
   let!(:school) { create(:placements_school) }
+  let!(:another_school) { create(:placements_school) }
 
   scenario "View school placements page where school has no placements" do
     given_i_sign_in_as_anne
     then_i_see_the_placements_page
+    then_i_see_the_empty_state
+  end
+
+  scenario "where placements for another school exists" do
+    given_placement_exists_for_another_school
+    given_i_sign_in_as_anne
     then_i_see_the_empty_state
   end
 
@@ -106,6 +113,10 @@ RSpec.describe "Placement school user views a list of placements", type: :system
     maths = create(:subject, name: "Maths")
     subjects = [maths, biology]
     create(:placement, status: "draft", school:, mentors:, subjects:)
+  end
+
+  def given_placement_exists_for_another_school
+    create(:placement, school: another_school)
   end
 
   def and_i_see_published_status_tag
