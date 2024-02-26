@@ -91,7 +91,7 @@ RSpec.describe "View claims", type: :system, service: :claims do
   end
 
   def i_can_see_the_add_claim_button
-    expect(page).to have_button("Add claim")
+    expect(page).to have_link("Add claim")
   end
 
   def i_see_a_list_of_the_schools_claims

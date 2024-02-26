@@ -2,15 +2,15 @@
 <% render "claims/schools/primary_navigation", school: @school, current: :claims %>
 
 <%= content_for(:before_content) do %>
-  <%= govuk_back_link(href: check_claims_school_claim_path(@school, claim_provider_form.claim)) %>
+  <%= govuk_back_link(href: check_claims_school_claim_path(@school, claim_mentors_form.claim)) %>
 <% end %>
 
 <div class="govuk-width-container">
   <%= render(
     partial: "form",
     locals: {
-      claim_provider_form:,
-      form_url: claims_school_claim_path(@school, claim_provider_form.claim),
+      claim_mentors_form:,
+      form_url: claims_school_claim_mentor_path(@school, claim_mentors_form.claim),
       method: :patch,
       school: @school,
     },

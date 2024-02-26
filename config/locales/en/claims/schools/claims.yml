@@ -2,6 +2,18 @@ en:
   claims:
     schools:
       claims:
+        check:
+          page_title: Check your answers
+          warning: You will not be able to change any of the claim details once you have submitted it.
+          submit: Submit claim
+          page_title: Check your answers
+          add_claim: Add claim
+          disclaimer: By submitting this claim, you confirm that the details provided are correct to the best of your knowledge.
+        form:
+          add_claim: Add claim
+          heading: Provider
+        new:
+          page_title: Provider - Add claim
         index:
           heading: Claims
           add_claim: Add claim
@@ -17,13 +29,4 @@ en:
           itt_provider: ITT provider
           general_mentors: General mentors
         edit:
-          cancel: Cancel
-        providers_form:
-          title: Select a provider
-          heading: Enter a provider name
-          continue: Continue
-        mentors_form:
-          title: Select a mentor
-          heading: Enter a mentor's name
-          continue: Continue
-
+          page_title: Provider - Add claim

@@ -21,7 +21,7 @@
 #
 class Claim < ApplicationRecord
   belongs_to :school
-  belongs_to :provider, optional: true
+  belongs_to :provider
 
   has_many :mentor_trainings
   has_many :mentors, through: :mentor_trainings

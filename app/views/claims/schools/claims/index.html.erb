@@ -6,7 +6,7 @@
 
   <% if @school.mentors.any? %>
     <p class="govuk-inset-text"><%= t(".guidance") %></p>
-    <%= govuk_button_to(t(".add_claim"), new_claims_school_claim_path, method: :get) %>
+    <%= govuk_link_to t(".add_claim"), new_claims_school_claim_path, class: "govuk-button" %>
   <% else %>
     <p class="govuk-inset-text"><%= t(".add_mentor_guidance_html", link_to: govuk_link_to(t(".add_a_mentor"), claims_school_mentors_path(@school))) %></p>
   <% end %>

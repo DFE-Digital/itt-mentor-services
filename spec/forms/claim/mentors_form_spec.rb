@@ -1,0 +1,38 @@
+require "rails_helper"
+
+describe Claim::MentorsForm, type: :model do
+  let!(:claim) { create(:claim) }
+  let!(:mentor1) { create(:mentor) }
+  let!(:mentor2) { create(:mentor) }
+
+  describe "validations" do
+    context "when mentors is blank" do
+      it "returns invalid" do
+        form = described_class.new(claim:)
+        expect(form.valid?).to eq(false)
+        expect(form.errors.messages[:mentor_ids]).to include("Select a mentor")
+      end
+    end
+  end
+
+  describe "#to_model" do
+    it "returns an instance of a Claim" do
+      form = described_class.new(claim:)
+      expect(form.to_model).to be_a Claim
+    end
+  end
+
+  describe "save" do
+    it "creates mentor trainings on the claim" do
+      mentor_ids = [mentor1, mentor2].map(&:id)
+      form = described_class.new(claim:, mentor_ids:)
+
+      expect {
+        form.save!
+      }.to change { claim.reload.mentor_trainings }.to match_array([
+        have_attributes(mentor_id: mentor1.id, provider_id: claim.provider_id),
+        have_attributes(mentor_id: mentor2.id, provider_id: claim.provider_id),
+      ])
+    end
+  end
+end

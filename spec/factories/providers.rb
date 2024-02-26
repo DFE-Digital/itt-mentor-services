@@ -52,6 +52,14 @@ FactoryBot.define do
     trait :placements do
       placements_service { true }
     end
+
+    trait :best_practice_network do
+      name { "Best Practice Network" }
+    end
+
+    trait :niot do
+      name { "NIoT: National Institute of Teaching, founded by the School-Led Development Trust" }
+    end
   end
 
   factory :placements_provider, class: "Placements::Provider", parent: :provider, traits: %i[placements]

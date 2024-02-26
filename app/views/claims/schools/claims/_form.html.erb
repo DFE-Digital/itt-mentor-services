@@ -1,0 +1,22 @@
+<%= form_with(model: claim_provider_form, url: form_url, method:) do |f| %>
+  <%= f.govuk_error_summary %>
+  <%= f.hidden_field :id, value: claim_provider_form.claim.id %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".add_claim") %></span>
+
+      <%= f.govuk_collection_radio_buttons(
+        :provider_id,
+        Provider.private_beta_providers,
+        :id,
+        :name,
+        legend: { text: t(".heading"), size: "l" },
+      ) %>
+
+      <%= f.govuk_submit t("continue") %>
+      <p class="govuk-body">
+        <%= govuk_link_to(t("cancel"), claims_school_claims_path(school), no_visited_state: true) %>
+      </p>
+  </div>
+<% end %>
