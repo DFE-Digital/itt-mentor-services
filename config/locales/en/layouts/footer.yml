@@ -1,0 +1,14 @@
+en:
+  layouts:
+    footer:
+      get_help: Get help
+
+      email:
+        heading: Email
+        disclaimer: You'll get a response within 5 working days, or one working day for urgent requests.
+
+      guidance: Guidance
+      accessibility: Accessibility
+      cookies: Cookies
+      privacy_policy: Privacy policy
+      terms_and_conditions: Terms and conditions
