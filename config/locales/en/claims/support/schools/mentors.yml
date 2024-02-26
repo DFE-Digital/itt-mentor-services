@@ -6,17 +6,46 @@ en:
           index:
             heading: Mentors
             trn: Teacher reference number (TRN)
+            add_mentor: Add mentor
+            page_title: Mentors
           show:
-            heading: Mentors
+            page_title: "%{mentor_name} - Mentors - %{school_name}"
+            caption: "Mentors - %{school_name}"
             remove_mentor: Remove mentor
             attributes:
               mentors:
                 trn: Teacher reference number (TRN)
+          new:
+            page_title: Enter a teacher reference number (TRN) - Add mentor - %{school_name}
+            page_title_with_error: "Error: Enter a teacher reference number (TRN) - Add mentor - %{school_name}"
+            add_mentor_with_school_name: Add mentor - %{school_name}
+            cancel: Cancel
+            continue: Continue
+            enter_a_trn: Enter a teacher reference number (TRN)
+            help_with_the_trn: Help with the teacher reference number (TRN)
+            guidance_html: If you don’t have a TRN, read the %{guidance_link} to find a lost TRN, or apply for one.
+            guidance_link_text: Teacher reference number (TRN) guidance
+          check:
+            page_title: Check your answers - Add mentor - %{school_name}
+            add_mentor: Add mentor
+            add_mentor_with_school_name: Add mentor - %{school_name}
+            cancel: Cancel
+            change: Change
+            check_your_answers: Check your answers
+            trn: Teacher reference number (TRN)
+          no_results:
+            page_title: No results found for ‘%{trn}’ - Add mentor - %{school_name}
+            add_mentor_with_school_name: Add mentor - %{school_name}
+            change_your_search: Change your search
+            help_text: Check that you typed in the teacher reference number (TRN) correctly.
+            no_results_found: No results found for ‘%{trn}’
+          create:
+            success: Mentor added
           remove:
-            confirm_removal: Are you sure you want to remove this mentor?
+            page_title: Are you sure you want to remove this mentor? - %{user_name} - %{school_name}
+            are_you_sure: Are you sure you want to remove this mentor?
             cancel: Cancel
             remove_mentor: Remove mentor
-            header_info: Are you sure you want to remove this mentor?
           destroy:
             success: Mentor removed
 

@@ -1,0 +1,19 @@
+<% content_for :page_title, t(".page_title", trn: @mentor_form.trn, school_name: @school.name) %>
+<% render "claims/support/primary_navigation", current: :organisations %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: new_claims_support_school_mentor_path(@school, params: @mentor_form.as_form_params)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <h1 class="govuk-heading-l">
+    <span class="govuk-caption-l"><%= t(".add_mentor_with_school_name", school_name: @school.name) %></span>
+    <%= t(".no_results_found", trn: @mentor_form.trn) %>
+  </h1>
+  <p class="govuk-body">
+    <%= t(".help_text") %>
+  </p>
+  <p class="govuk-body">
+    <%= govuk_link_to(t(".change_your_search"), new_claims_support_school_mentor_path(@school, params: @mentor_form.as_form_params)) %>
+  </p>
+</div>

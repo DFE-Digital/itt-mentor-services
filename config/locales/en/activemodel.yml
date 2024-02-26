@@ -8,6 +8,10 @@ en:
           attributes:
             trn:
               taken: The mentor has already been added
+        claims/mentor_form:
+          attributes:
+            trn:
+              taken: The mentor has already been added
         user_invite_form:
           attributes:
             email:
