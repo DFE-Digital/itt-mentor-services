@@ -11,6 +11,8 @@
     <div class="govuk-grid-column-two-thirds">
       <h2 class="govuk-heading-m"><%= t(".heading") %></h2>
 
+      <%= govuk_button_to(t(".add_mentor"), new_claims_support_school_mentor_path, method: :get) %>
+
       <% if @mentors.any? %>
         <%= govuk_table do |table| %>
           <% table.with_head do |head| %>
