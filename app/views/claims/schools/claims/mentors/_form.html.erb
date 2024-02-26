@@ -1,0 +1,24 @@
+  <%= form_with model: claim_mentors_form, url: form_url, method: do |f| %>
+    <%= f.govuk_error_summary %>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l"><%= t(".add_claim", provider: claim_mentors_form.claim.provider_name) %></span>
+
+        <%= f.govuk_collection_check_boxes(
+          :mentor_ids,
+          school.mentors,
+          :id,
+          :full_name,
+          :trn,
+          include_hidden: false,
+          legend: { text: t(".heading"), size: "l" },
+          hint: { text: t(".select_all_that_apply") },
+        ) %>
+
+        <%= f.govuk_submit t("continue") %>
+        <p class="govuk-body">
+          <%= govuk_link_to(t("cancel"), claims_school_claims_path(school), no_visited_state: true) %>
+        </p>
+    </div>
+  <% end %>

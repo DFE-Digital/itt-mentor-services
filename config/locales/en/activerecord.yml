@@ -25,7 +25,9 @@ en:
         claim:
           attributes:
             provider_id: 
-              invalid: Enter a provider name
+              blank: Select a provider
+            mentor_ids:
+              blank: Select a mentor
             base:
               enter_mentor_name: Enter a mentor's name 
         mentor_training:

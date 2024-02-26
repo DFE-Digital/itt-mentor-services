@@ -1,54 +1,65 @@
 class Claims::Schools::ClaimsController < Claims::ApplicationController
   include Claims::BelongsToSchool
-
-  before_action :set_claim, only: %i[show edit update]
+  before_action :set_claim, only: %i[show check]
   before_action :authorize_claim
+
+  helper_method :claim_provider_form
 
   def index
     @pagy, @claims = pagy(@school.claims.where(draft: false))
   end
 
-  def new
-    claim = @school.claims.create!(draft: true)
-    redirect_to claims_school_claim_path(id: claim.id)
+  def new; end
+
+  def create
+    if claim_provider_form.save
+      redirect_to new_claims_school_claim_mentor_path(@school, claim_provider_form.claim)
+    else
+      render :new
+    end
   end
 
   def show; end
 
-  def edit
-    render locals: { claim: @claim, mentor_trainings:, school: @school, step: }
-  end
+  def check; end
+
+  def edit; end
 
   def update
-    claim_form = ClaimForm.new(claim: @claim, step:, claim_params:)
-
-    if claim_form.save
-      redirect_to claims_school_claim_path(id: @claim.id)
-      flash[:success] = t(".claim_updated")
+    if claim_provider_form.save
+      redirect_to check_claims_school_claim_path(@school, claim_provider_form.claim)
     else
-      render :edit, locals: { claim: @claim, mentor_trainings:, school: @school, step: }
+      render :edit
     end
   end
 
   private
 
-  def mentor_trainings
-    @claim.mentor_trainings.build if @claim.mentor_trainings.blank?
+  def claim_params
+    params.require(:claim)
+      .permit(:id, :provider_id)
+      .merge(default_params)
   end
 
-  def claim_params
-    params.require(:claim).permit(
-      :provider_id,
-      mentor_trainings_attributes: %i[provider_id mentor_id id],
-    )
+  def default_params
+    { school: @school }
+  end
+
+  def claim_provider_form
+    @claim_provider_form ||=
+      if params[:claim].present?
+        Claim::ProviderForm.new(claim_params)
+      else
+        Claim::ProviderForm.new(default_params.merge(id: claim_id))
+      end
   end
 
   def set_claim
-    @claim = @school.claims.find(params.require(:id)).decorate
+    @claim = @school.claims.find(claim_id).decorate
   end
 
-  def step
-    params.require(:step)
+  def claim_id
+    params[:claim_id] || params[:id]
   end
 
   def authorize_claim

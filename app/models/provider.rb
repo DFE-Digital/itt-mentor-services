@@ -30,6 +30,10 @@
 #
 class Provider < ApplicationRecord
   include PgSearch::Model
+  PRIVATE_BETA_PROVIDERS = [
+    "Best Practice Network",
+    "NIoT: National Institute of Teaching, founded by the School-Led Development Trust",
+  ].freeze
 
   alias_attribute :organisation_type, :provider_type
 
@@ -46,6 +50,7 @@ class Provider < ApplicationRecord
 
   scope :accredited, -> { where accredited: true }
   scope :placements_service, -> { where placements_service: true }
+  scope :private_beta_providers, -> { where(name: PRIVATE_BETA_PROVIDERS) }
 
   multisearchable against: %i[name postcode],
                   if: :placements_service?,

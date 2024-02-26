@@ -7,10 +7,11 @@ scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
 
   resources :schools, only: %i[index show] do
     scope module: :schools do
-      resources :claims, only: %i[index new show] do
+      resources :claims, only: %i[index new create show edit update] do
+        resources :mentors, only: %i[new create edit update], module: :claims
+
         member do
-          get "/edit/:step", to: "claims#edit", as: "edit"
-          patch "/update/:step", to: "claims#update", as: "update"
+          get :check
         end
       end
 

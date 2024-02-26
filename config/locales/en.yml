@@ -8,6 +8,9 @@ en:
   you_cannot_perform_this_action: You cannot perform this action
   you_do_not_have_access_to_this_service: You do not have access to this service
   none: None
+  cancel: Cancel
+  continue: Continue
+  change: Change
   date:
     formats:
       long: "%e %B %Y"
