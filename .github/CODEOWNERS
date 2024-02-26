@@ -20,7 +20,10 @@ config/locales/*/claims.yml       @DFE-Digital/track-pay
 config/routes/claims.rb           @DFE-Digital/track-pay
 
 app/*/placements                  @DFE-Digital/school-placements
+app/models/placement*.rb          @DFE-Digital/school-placements
 spec/*/placements                 @DFE-Digital/school-placements
+spec/models/placement*.rb         @DFE-Digital/school-placements
+spec/factories/placements.rb      @DFE-Digital/school-placements
 config/locales/en/placements      @DFE-Digital/school-placements
 config/locales/en/placements.yml  @DFE-Digital/school-placements
 config/routes/placements.rb       @DFE-Digital/school-placements
