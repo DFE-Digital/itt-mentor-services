@@ -3,6 +3,7 @@ en:
     schools:
       placements:
         not_entered: Not entered
+        window_date: "%{start_month} to %{end_month}"
         index:
           page_title: Placements
           placements: Placements
@@ -11,3 +12,10 @@ en:
           start_date: Start date
           status: Status
           not_entered: Not entered
+        show:
+          attributes:
+            placements:
+              school_level: School level
+              subject: Subject
+              mentor: Mentor
+              window: Window
