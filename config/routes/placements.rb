@@ -21,7 +21,7 @@ scope module: :placements,
       collection { get :select_type }
     end
 
-    resources :schools, expect: %i[edit update show] do
+    resources :schools, except: %i[edit update] do
       collection do
         get :check
         get :check_school_option
@@ -41,7 +41,7 @@ scope module: :placements,
       end
     end
 
-    resources :providers, expect: %i[edit update show] do
+    resources :providers, except: %i[edit update] do
       collection do
         get :check
         get :check_provider_option
