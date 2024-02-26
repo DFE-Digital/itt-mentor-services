@@ -1,5 +1,6 @@
 .content-header {
   margin-top: govuk-spacing(2);
+  margin-bottom: govuk-spacing(2);
 
   @include govuk-media-query($from: tablet) {
     display: flex;
