@@ -1,0 +1,37 @@
+<%= content_for :page_title, sanitize(@placement.subject_names) %>
+
+<%= render "placements/schools/primary_navigation", school: @school, current_navigation: :placements %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: placements_school_placements_path(school_id: @school.id)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-l">
+        <%= @placement.subject_names %>
+        <%= render Placement::StatusTagComponent.new(@placement.status) %>
+      </h2>
+
+      <%= govuk_summary_list do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".attributes.placements.school_level")) %>
+          <% row.with_value(text: @placement.school_level) %>
+        <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".attributes.placements.subject")) %>
+          <% row.with_value(text: @placement.subject_names) %>
+        <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".attributes.placements.mentor")) %>
+          <% row.with_value(text: @placement.mentor_names) %>
+        <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".attributes.placements.window")) %>
+          <% row.with_value(text: @placement.window) %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

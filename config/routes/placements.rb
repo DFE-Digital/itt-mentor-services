@@ -70,7 +70,7 @@ scope module: :placements,
         collection { get :check }
       end
 
-      resources :placements, only: [:index]
+      resources :placements, only: [:index, :show]
     end
   end
 

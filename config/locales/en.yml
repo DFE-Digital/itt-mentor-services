@@ -13,6 +13,7 @@ en:
   change: Change
   date:
     formats:
+      month: "%B"
       long: "%e %B %Y"
       short: "%d/%m/%Y"
   time:
