@@ -9,13 +9,14 @@ en:
           placements: Placements
           subject: Subject
           mentor: Mentor
-          start_date: Start date
+          placement_window: Placement window
           status: Status
           not_entered: Not entered
         show:
+          not_known_yet: Not known yet
           attributes:
             placements:
               school_level: School level
               subject: Subject
               mentor: Mentor
-              window: Window
+              placement_window: Placement window

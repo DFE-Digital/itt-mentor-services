@@ -14,7 +14,7 @@ RSpec.describe "Placements / Schools / Mentors / View a mentor", type: :system, 
     given_i_sign_in_as_anne
   end
 
-  scenario "Support User views a school mentor's details" do
+  scenario "User views a school mentor's details" do
     given_a_mentor_exists_in(school:)
     when_i_visit_the_show_page_for(school, mentor)
     then_i_see_the_mentor_details(
