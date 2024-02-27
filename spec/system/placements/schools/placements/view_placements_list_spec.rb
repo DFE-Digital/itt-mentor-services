@@ -34,7 +34,7 @@ RSpec.describe "Placement school user views a list of placements", type: :system
     scenario "where placement has no mentors attached" do
       given_a_published_placement_exists
       given_i_sign_in_as_anne
-      then_i_see_mentor_names("Not entered")
+      then_i_see_mentor_names("Not known yet")
     end
   end
 
