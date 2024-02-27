@@ -57,6 +57,7 @@ Install them using Homebrew:
 
 ```sh
 brew install cmake pkg-config
+brew install graphviz
 ```
 
 Finally, you will need a running Postgres 16 server. You can install it with Homebrew by running:
@@ -102,6 +103,17 @@ We use `rladr` to generate the boilerplate for new records:
 ```bash
 bin/bundle exec rladr new title
 ```
+
+### GOV.UK Notify
+
+The application requires you to add your API key for `GOVUK_NOTIFY_API_KEY`, to gain access to this service ask your
+team lead to invite you to GOV.UK Notify.
+
+Once you have access, navigate to [API integration](https://www.notifications.service.gov.uk/services/022acc23-c40a-4077-bbd6-fc98b2155534/api) -> [API Keys](https://www.notifications.service.gov.uk/services/022acc23-c40a-4077-bbd6-fc98b2155534/api/keys) -> [Create an API Key](https://www.notifications.service.gov.uk/services/022acc23-c40a-4077-bbd6-fc98b2155534/api/keys/create)
+
+Name your key in a sensible and identifiable way, e.g. `[YOUR-NAME] Local Test Key` and set the type of key to **Test**.
+
+Create your key and then add it to `.env.test` and `.env.development` where it says `GOVUK_NOTIFY_API_KEY=`.
 
 ### Running the app
 
