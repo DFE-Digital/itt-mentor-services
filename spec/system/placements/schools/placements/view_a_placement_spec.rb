@@ -54,7 +54,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     end
   end
 
-  context "without a mentors" do
+  context "without a mentor" do
     before do
       given_a_placement_has_one_subject(subject_1)
     end

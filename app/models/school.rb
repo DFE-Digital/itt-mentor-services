@@ -80,7 +80,14 @@ class School < ApplicationRecord
                   against: %i[name postcode],
                   using: { trigram: { word_similarity: true } }
 
+  PRIMARY_PHASE = "Primary".freeze
+  SECONDARY_PHASE = "Secondary".freeze
+
   def organisation_type
     "school"
+  end
+
+  def primary_or_secondary_only?
+    [PRIMARY_PHASE, SECONDARY_PHASE].include?(phase)
   end
 end
