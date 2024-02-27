@@ -1,9 +1,10 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Schools / Placements / View a placement", type: :system, service: :placements do
-  let!(:school) { create(:placements_school, name: "School 1") }
+RSpec.describe "Placements / Schools / Placements / View a placement",
+               type: :system, service: :placements do
+  let!(:school) { create(:placements_school, name: "School 1", phase: "Primary") }
   let!(:placement) { create(:placement, school:) }
-  let!(:subject_1) { create(:subject, name: "Subject 1") }
+  let!(:subject_1) { create(:subject, name: "Subject 1", subject_area: "primary") }
 
   before do
     given_i_sign_in_as_anne
@@ -70,10 +71,41 @@ RSpec.describe "Placements / Schools / Placements / View a placement", type: :sy
       given_a_placement_has_one_subject(subject_1)
     end
 
+    # TODO: This may change when design history is published
     scenario "User views a placement with a placement window" do
       given_a_placement_with_a_placement_window("01/09/2024", "31/12/2024")
       when_i_visit_the_placement_show_page
       then_i_the_placement_window_in_the_placement_details("September to December")
+    end
+  end
+
+  context "with school level" do
+    before do
+      given_a_placement_has_one_subject(subject_1)
+    end
+
+    scenario "User views a placement in a school with phase All-through" do
+      given_a_placement_in_a_school_with_phase("All-through")
+      when_i_visit_the_placement_show_page
+      then_i_see_the_school_level_in_the_placement_details(school_level: "")
+    end
+  end
+
+  context "without school level" do
+    before do
+      given_a_placement_has_one_subject(subject_1)
+    end
+
+    scenario "User views a placement in a primary only school" do
+      given_a_placement_in_a_school_with_phase("Primary")
+      when_i_visit_the_placement_show_page
+      then_i_do_not_see_the_school_level_in_the_placement_details(school_level: "Primary")
+    end
+
+    scenario "User views a placement in a secondary only school" do
+      given_a_placement_in_a_school_with_phase("Secondary")
+      when_i_visit_the_placement_show_page
+      then_i_do_not_see_the_school_level_in_the_placement_details(school_level: "Secondary")
     end
   end
 
@@ -176,6 +208,22 @@ RSpec.describe "Placements / Schools / Placements / View a placement", type: :sy
   def then_i_the_placement_window_in_the_placement_details(placement_window_text)
     within(".govuk-summary-list") do
       expect(page).to have_content(placement_window_text)
+    end
+  end
+
+  def given_a_placement_in_a_school_with_phase(phase)
+    school.update!(phase:)
+  end
+
+  def then_i_do_not_see_the_school_level_in_the_placement_details(school_level:)
+    within(".govuk-summary-list") do
+      expect(page).not_to have_content(school_level)
+    end
+  end
+
+  def then_i_see_the_school_level_in_the_placement_details(school_level:)
+    within(".govuk-summary-list") do
+      expect(page).to have_content(school_level)
     end
   end
 end

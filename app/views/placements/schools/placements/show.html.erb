@@ -15,9 +15,11 @@
       </h2>
 
       <%= govuk_summary_list do |summary_list| %>
-        <% summary_list.with_row do |row| %>
-          <% row.with_key(text: t(".attributes.placements.school_level")) %>
-          <% row.with_value(text: @placement.school_level) %>
+        <% if !Subject.subject_areas.values.include?(@school.phase&.downcase) %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".attributes.placements.school_level")) %>
+            <% row.with_value(text: @placement.school_level) %>
+          <% end %>
         <% end %>
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t(".attributes.placements.subject")) %>
