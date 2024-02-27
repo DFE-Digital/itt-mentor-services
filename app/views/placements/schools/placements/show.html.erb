@@ -11,7 +11,6 @@
     <div class="govuk-grid-column-two-thirds">
       <h2 class="govuk-heading-l">
         <%= @placement.subject_names %>
-        <%= render Placement::StatusTagComponent.new(@placement.status) %>
       </h2>
 
       <%= govuk_summary_list do |summary_list| %>
@@ -41,13 +40,19 @@
                 <% end %>
               </ul>
             <% else %>
-              <%= t(".not_known_yet") %>
+              <%= t("placements.schools.placements.not_known_yet") %>
             <% end %>
           <% end %>
         <% end %>
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t(".attributes.placements.placement_window")) %>
           <% row.with_value(text: @placement.window) %>
+        <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".attributes.placements.status")) %>
+          <% row.with_value do %>
+            <%= render Placement::StatusTagComponent.new(@placement.status) %>
+          <% end %>
         <% end %>
       <% end %>
     </div>

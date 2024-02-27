@@ -2,7 +2,11 @@ en:
   placements:
     schools:
       placements:
-        not_entered: Not entered
+        terms:
+          autumn: Autumn
+          spring: Spring
+          summer: Summer
+        not_known_yet: Not known yet
         window_date: "%{start_month} to %{end_month}"
         index:
           page_title: Placements
@@ -13,10 +17,10 @@ en:
           status: Status
           not_entered: Not entered
         show:
-          not_known_yet: Not known yet
           attributes:
             placements:
               school_level: School level
               subject: Subject
               mentor: Mentor
               placement_window: Placement window
+              status: Status

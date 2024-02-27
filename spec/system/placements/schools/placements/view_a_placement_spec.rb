@@ -66,16 +66,35 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     end
   end
 
+  # TODO: This may change when design history is published
+
   context "with placement window" do
     before do
       given_a_placement_has_one_subject(subject_1)
     end
 
-    # TODO: This may change when design history is published
-    scenario "User views a placement with a placement window" do
+    scenario "User views a placement with a placement window in Autumn (September to December)" do
       given_a_placement_with_a_placement_window("01/09/2024", "31/12/2024")
       when_i_visit_the_placement_show_page
-      then_i_the_placement_window_in_the_placement_details("September to December")
+      then_i_the_placement_window_in_the_placement_details("Autumn")
+    end
+
+    scenario "User views a placement with a placement window in Spring (January to March)" do
+      given_a_placement_with_a_placement_window("01/01/2024", "31/03/2024")
+      when_i_visit_the_placement_show_page
+      then_i_the_placement_window_in_the_placement_details("Spring")
+    end
+
+    scenario "User views a placement with a placement window in Spring (April to July)" do
+      given_a_placement_with_a_placement_window("01/04/2024", "31/07/2024")
+      when_i_visit_the_placement_show_page
+      then_i_the_placement_window_in_the_placement_details("Summer")
+    end
+
+    scenario "User views a placement with a placement window not in a defined term" do
+      given_a_placement_with_a_placement_window("01/09/2024", "30/11/2024")
+      when_i_visit_the_placement_show_page
+      then_i_the_placement_window_in_the_placement_details("September to November")
     end
   end
 
@@ -106,6 +125,24 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
       given_a_placement_in_a_school_with_phase("Secondary")
       when_i_visit_the_placement_show_page
       then_i_do_not_see_the_school_level_in_the_placement_details(school_level: "Secondary")
+    end
+  end
+
+  context "with a status" do
+    before do
+      given_a_placement_has_one_subject(subject_1)
+    end
+
+    scenario "User views a placement in draft state" do
+      given_a_placement_with_status("draft")
+      when_i_visit_the_placement_show_page
+      then_see_the_status_in_the_placement_details(status: "Draft")
+    end
+
+    scenario "User views a placement in published state" do
+      given_a_placement_with_status("published")
+      when_i_visit_the_placement_show_page
+      then_see_the_status_in_the_placement_details(status: "Published")
     end
   end
 
@@ -224,6 +261,16 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
   def then_i_see_the_school_level_in_the_placement_details(school_level:)
     within(".govuk-summary-list") do
       expect(page).to have_content(school_level)
+    end
+  end
+
+  def given_a_placement_with_status(status)
+    placement.update!(status:)
+  end
+
+  def then_see_the_status_in_the_placement_details(status:)
+    within(".govuk-summary-list") do
+      expect(page.find(".govuk-tag")).to have_content(status)
     end
   end
 end
