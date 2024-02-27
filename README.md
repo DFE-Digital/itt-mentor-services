@@ -56,8 +56,7 @@ You'll also need a couple of packages which asdf can't reliably install. (For so
 Install them using Homebrew:
 
 ```sh
-brew install cmake pkg-config
-brew install graphviz
+brew install cmake pkg-config graphviz
 ```
 
 Finally, you will need a running Postgres 16 server. You can install it with Homebrew by running:
