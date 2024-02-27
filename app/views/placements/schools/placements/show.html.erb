@@ -3,7 +3,7 @@
 <%= render "placements/schools/primary_navigation", school: @school, current_navigation: :placements %>
 
 <%= content_for(:before_content) do %>
-  <%= govuk_back_link(href: placements_school_placements_path(school_id: @school.id)) %>
+  <%= govuk_back_link(href: placements_school_placements_path(@school.id)) %>
 <% end %>
 
 <div class="govuk-width-container">
@@ -14,7 +14,7 @@
       </h2>
 
       <%= govuk_summary_list do |summary_list| %>
-        <% if !Subject.subject_areas.values.include?(@school.phase&.downcase) %>
+        <% if !@school.primary_or_secondary_only? %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".attributes.placements.school_level")) %>
             <% row.with_value(text: @placement.school_level) %>
@@ -45,7 +45,7 @@
           <% end %>
         <% end %>
         <% summary_list.with_row do |row| %>
-          <% row.with_key(text: t(".attributes.placements.placement_window")) %>
+          <% row.with_key(text: t(".attributes.placements.window")) %>
           <% row.with_value(text: @placement.window) %>
         <% end %>
         <% summary_list.with_row do |row| %>
