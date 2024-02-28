@@ -36,6 +36,10 @@ en:
               blank: Enter a provider name
             mentor_id: 
               blank: Enter a mentor's name
+            hours_completed:
+              greater_than: Enter the number of hours between 1 and 20
+              less_than_or_equal_to: Enter the number of hours between 1 and 20
+              not_an_integer: Enter the number of hours between 1 and 20
         user:
           attributes:
             first_name:

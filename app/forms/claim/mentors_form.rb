@@ -11,6 +11,18 @@ class Claim::MentorsForm < ApplicationForm
     claim
   end
 
+  def update_success_path
+    if claim.mentor_trainings.without_hours.any?
+      edit_claims_school_claim_mentor_training_path(
+        claim.school,
+        claim,
+        claim.mentor_trainings.without_hours.first,
+      )
+    else
+      check_claims_school_claim_path(claim.school, claim)
+    end
+  end
+
   private
 
   def updated_claim
@@ -22,7 +34,11 @@ class Claim::MentorsForm < ApplicationForm
 
   def mentor_trainings
     @mentor_trainings ||= Array.wrap(mentor_ids).map do |mentor_id|
-      claim.mentor_trainings.build(mentor_id:, provider_id: claim.provider_id)
+      claim.mentor_trainings.find_or_initialize_by(
+        mentor_id:,
+        provider_id: claim.provider_id,
+        claim_id: claim.id,
+      )
     end
   end
 

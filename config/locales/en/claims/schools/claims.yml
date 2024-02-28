@@ -9,6 +9,8 @@ en:
           page_title: Check your answers
           add_claim: Add claim
           disclaimer: By submitting this claim, you confirm that the details provided are correct to the best of your knowledge.
+          hours: "%{hours} hours"
+          hours_of_training: Hours of training
         form:
           add_claim: Add claim
           heading: Provider
