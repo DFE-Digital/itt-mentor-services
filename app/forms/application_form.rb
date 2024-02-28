@@ -1,6 +1,7 @@
 class ApplicationForm
   include ActiveModel::Model
   include ActionView::Helpers::TranslationHelper
+  include Rails.application.routes.url_helpers
 
   def initialize(attributes = {})
     @virtual_path = "forms/#{self.class.name.underscore}"

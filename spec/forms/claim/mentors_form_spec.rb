@@ -35,4 +35,34 @@ describe Claim::MentorsForm, type: :model do
       ])
     end
   end
+
+  describe "#update_success_path" do
+    context "when there are mentors without mentor training hours" do
+      it "returns the path to the mentor training hours form" do
+        mentor_training = create(
+          :mentor_training,
+          claim:,
+          mentor: mentor1,
+        )
+        form = described_class.new(claim:)
+
+        expect(form.update_success_path).to eq(
+          "/schools/#{claim.school_id}/claims/#{claim.id}/mentor_trainings/#{mentor_training.id}/edit",
+        )
+      end
+    end
+
+    context "when all mentors have mentor training hours" do
+      it "returns the path to the claim check page" do
+        if claim.mentor_trainings
+          claim.mentor_trainings.update_all(hours_completed: 20)
+        end
+        form = described_class.new(claim:)
+
+        expect(form.update_success_path).to eq(
+          "/schools/#{claim.school_id}/claims/#{claim.id}/check",
+        )
+      end
+    end
+  end
 end
