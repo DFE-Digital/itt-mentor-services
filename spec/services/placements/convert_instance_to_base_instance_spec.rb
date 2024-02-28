@@ -21,7 +21,7 @@ RSpec.describe Placements::ConvertInstanceToBaseInstance do
 
     context "when the object does not respond to base_class" do
       it "raises an ArgumentError" do
-        expect { described_class.call("not an object") }
+        expect { described_class.call("not a valid object") }
           .to raise_error(Placements::ConvertInstanceToBaseInstance::ArgumentError, "Object must respond to base_class.")
       end
     end
