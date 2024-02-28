@@ -1,89 +1,42 @@
 module Placements::Routes::OrganisationsHelper
   def organisation_users_path(organisation)
-    case organisation
-    when School
-      placements_school_users_path(organisation)
-    when Provider
-      placements_provider_users_path(organisation)
-    else
-      raise NotImplementedError
-    end
+    polymorphic_path([:placements, Placements::ConvertInstanceToBaseInstance.call(organisation), :users])
   end
 
   def placements_support_organisation_path(organisation)
-    case organisation
-    when School
-      placements_support_school_path(organisation)
-    when Provider
-      placements_support_provider_path(organisation)
-    else
-      raise NotImplementedError
-    end
+    polymorphic_path([:placements, :support, Placements::ConvertInstanceToBaseInstance.call(organisation)])
   end
 
   def placements_organisation_user_path(organisation, user)
-    case organisation
-    when School
-      placements_school_user_path(organisation, user)
-    when Provider
-      placements_provider_user_path(organisation, user)
-    else
-      raise NotImplementedError
-    end
+    polymorphic_path([:placements,
+                      Placements::ConvertInstanceToBaseInstance.call(organisation),
+                      Placements::ConvertInstanceToBaseInstance.call(user)])
   end
 
   def placements_organisation_path(organisation)
     case organisation
     when School
-      placements_school_placements_path(organisation)
+      polymorphic_path([:placements, Placements::ConvertInstanceToBaseInstance.call(organisation), :placements])
     when Provider
-      placements_provider_path(organisation)
+      polymorphic_path([:placements, Placements::ConvertInstanceToBaseInstance.call(organisation)])
     else
       raise NotImplementedError
     end
   end
 
   def placements_support_users_path(organisation)
-    case organisation
-    when School
-      placements_support_school_users_path(organisation)
-    when Provider
-      placements_support_provider_users_path(organisation)
-    else
-      raise NotImplementedError
-    end
+    polymorphic_path([:placements, :support, Placements::ConvertInstanceToBaseInstance.call(organisation), :users])
   end
 
   def check_placements_organisation_users_path(organisation)
-    case organisation
-    when School
-      check_placements_school_users_path(organisation)
-    when Provider
-      check_placements_provider_users_path(organisation)
-    else
-      raise NotImplementedError
-    end
+    polymorphic_path([:check, :placements, Placements::ConvertInstanceToBaseInstance.call(organisation), :users])
   end
 
   def placements_organisation_users_path(organisation)
-    case organisation
-    when School
-      placements_school_users_path(organisation)
-    when Provider
-      placements_provider_users_path(organisation)
-    else
-      raise NotImplementedError
-    end
+    polymorphic_path([:placements, Placements::ConvertInstanceToBaseInstance.call(organisation), :users])
   end
 
   def new_placements_organisation_user_path(organisation, params = {})
-    case organisation
-    when School
-      new_placements_school_user_path(organisation, params)
-    when Provider
-      new_placements_provider_user_path(organisation, params)
-    else
-      raise NotImplementedError
-    end
+    new_polymorphic_path([:placements, Placements::ConvertInstanceToBaseInstance.call(organisation), :user], params)
   end
 end
