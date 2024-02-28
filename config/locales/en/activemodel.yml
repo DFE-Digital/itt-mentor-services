@@ -4,6 +4,12 @@ en:
       messages:
         record_invalid: "Validation failed: %{errors}"
       models:
+        claim/mentor_training_form:
+          attributes:
+            custom_hours_completed:
+              blank: Enter the number of hours
+            hours_completed:
+              blank: Select the number of hours
         placements/mentor_form:
           attributes:
             trn:

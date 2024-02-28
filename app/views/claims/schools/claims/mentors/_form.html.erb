@@ -7,7 +7,7 @@
 
         <%= f.govuk_collection_check_boxes(
           :mentor_ids,
-          school.mentors,
+          school.mentors.order_by_full_name,
           :id,
           :full_name,
           :trn,

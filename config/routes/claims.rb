@@ -9,6 +9,7 @@ scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
     scope module: :schools do
       resources :claims, only: %i[index new create show edit update] do
         resources :mentors, only: %i[new create edit update], module: :claims
+        resources :mentor_trainings, only: %i[edit update], module: :claims
 
         member do
           get :check

@@ -5,7 +5,7 @@ class Claims::Schools::MentorsController < Claims::ApplicationController
   before_action :authorize_mentor
 
   def index
-    @pagy, @mentors = pagy(@school.mentors.order(:first_name, :last_name))
+    @pagy, @mentors = pagy(@school.mentors.order_by_full_name)
   end
 
   def show; end

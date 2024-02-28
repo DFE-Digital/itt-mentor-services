@@ -43,6 +43,20 @@ RSpec.describe Mentor, type: :model do
     end
   end
 
+  context "with scopes" do
+    describe "#order_by_full_name" do
+      it "returns the mentors ordered by full name" do
+        mentor1 = create(:mentor, first_name: "Anne", last_name: "Smith")
+        mentor2 = create(:mentor, first_name: "Anne", last_name: "Doe")
+        mentor3 = create(:mentor, first_name: "John", last_name: "Doe")
+
+        expect(described_class.order_by_full_name).to eq(
+          [mentor2, mentor1, mentor3],
+        )
+      end
+    end
+  end
+
   describe "#full_name" do
     it "returns the mentors full name" do
       mentor = build(:mentor, first_name: "Jane", last_name: "Doe")

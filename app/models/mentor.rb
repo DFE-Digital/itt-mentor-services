@@ -20,6 +20,8 @@ class Mentor < ApplicationRecord
   validates :first_name, :last_name, presence: true
   validates :trn, presence: true, uniqueness: true, format: /\A\d{7}\z/
 
+  scope :order_by_full_name, -> { order(:first_name, :last_name) }
+
   def full_name
     "#{first_name} #{last_name}".strip
   end

@@ -44,6 +44,29 @@
         <% end %>
       <% end %>
 
+      <h2 class="govuk-heading-m"><%= t(".hours_of_training") %></h2>
+
+      <%= govuk_summary_list do |summary_list| %>
+        <% @claim.mentor_trainings.order_by_mentor_full_name.each do |mentor_training| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: mentor_training.mentor.full_name) %>
+            <% row.with_value(text: t(".hours", hours: mentor_training.hours_completed)) %>
+            <% row.with_action(text: t("change"),
+                               href: edit_claims_school_claim_mentor_training_path(
+                                 @school,
+                                 @claim,
+                                 mentor_training,
+                                 params: {
+                                   claim_mentor_training_form: { hours_completed: mentor_training.hours_completed },
+                                 },
+                               ),
+                               html_attributes: {
+                                 class: "govuk-link--no-visited-state",
+                               }) %>
+            <% end %>
+          <% end %>
+      <% end %>
+
       <p class="govuk-body"><%= t(".disclaimer") %></p>
 
       <div class="govuk-warning-text">

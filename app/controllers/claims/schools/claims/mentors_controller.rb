@@ -8,7 +8,13 @@ class Claims::Schools::Claims::MentorsController < Claims::ApplicationController
 
   def create
     if claim_mentors_form.save
-      redirect_to check_claims_school_claim_path(@school, claim)
+      redirect_to(
+        edit_claims_school_claim_mentor_training_path(
+          @school,
+          claim,
+          claim.mentor_trainings.without_hours.first,
+        ),
+      )
     else
       render :new
     end
@@ -18,7 +24,7 @@ class Claims::Schools::Claims::MentorsController < Claims::ApplicationController
 
   def update
     if claim_mentors_form.save
-      redirect_to check_claims_school_claim_path(@school, claim)
+      redirect_to claim_mentors_form.update_success_path
     else
       render :edit
     end
@@ -44,6 +50,6 @@ class Claims::Schools::Claims::MentorsController < Claims::ApplicationController
   end
 
   def authorize_claim
-    authorize @claim || Claim
+    authorize claim
   end
 end

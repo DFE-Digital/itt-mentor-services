@@ -28,4 +28,15 @@ class MentorTraining < ApplicationRecord
   belongs_to :claim
   belongs_to :mentor, optional: true
   belongs_to :provider, optional: true
+
+  validates(
+    :hours_completed,
+    numericality: { greater_than: 0, less_than_or_equal_to: 20, only_integer: true },
+    allow_nil: true,
+  )
+
+  scope :without_hours, -> { where(hours_completed: nil).order_by_mentor_full_name }
+  scope :order_by_mentor_full_name, -> { joins(:mentor).merge(Mentor.order_by_full_name) }
+
+  delegate :full_name, to: :mentor, prefix: true, allow_nil: true
 end
