@@ -1,4 +1,4 @@
-class Claim::Submit
+class Claims::Submit
   include ServicePattern
 
   def initialize(claim:)

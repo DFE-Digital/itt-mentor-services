@@ -36,7 +36,7 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   def confirm; end
 
   def submit
-    Claim::Submit.call(claim: @claim)
+    Claims::Submit.call(claim: @claim)
 
     redirect_to confirm_claims_school_claim_path(@school, @claim)
   end

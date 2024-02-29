@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Claim::Submit do
+describe Claims::Submit do
   subject(:submit_service) { described_class.call(claim:) }
 
   let!(:claim) { create(:claim, :draft) }
