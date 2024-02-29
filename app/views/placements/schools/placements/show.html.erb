@@ -55,6 +55,10 @@
           <% end %>
         <% end %>
       <% end %>
+
+      <%= govuk_link_to t(".remove_placement"),
+        remove_placements_school_placement_path(@school, @placement),
+        class: "app-link app-link--destructive" %>
     </div>
   </div>
 </div>

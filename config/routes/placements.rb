@@ -70,7 +70,9 @@ scope module: :placements,
         collection { get :check }
       end
 
-      resources :placements, only: %i[index show]
+      resources :placements, only: %i[index show destroy] do
+        member { get :remove }
+      end
     end
   end
 

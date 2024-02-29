@@ -17,6 +17,7 @@ en:
           status: Status
           not_entered: Not entered
         show:
+          remove_placement: Remove placement
           attributes:
             placements:
               school_level: School level
@@ -24,3 +25,10 @@ en:
               mentor: Mentor
               window: Window
               status: Status
+        remove:
+          page_title: "Are you sure you want to remove this placement? - %{subject_names}"
+          are_you_sure: Are you sure you want to remove this placement?
+          cancel: Cancel
+          remove_placement: Remove placement
+        destroy:
+          placement_removed: Placement removed
