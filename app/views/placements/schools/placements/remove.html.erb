@@ -1,0 +1,25 @@
+<%= content_for :page_title, sanitize(t(".page_title", subject_names: @placement.subject_names)) %>
+<%= render "placements/schools/primary_navigation", school: @school, current_navigation: :placements %>
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: placements_school_placement_path(@school, @placement)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <label class="govuk-label govuk-label--l">
+        <span class="govuk-caption-l"><%= @placement.subject_names %></span>
+        <%= t(".are_you_sure") %>
+      </label>
+
+      <%= govuk_button_to t(".remove_placement"),
+        placements_school_placement_path(@school, @placement),
+        warning: true,
+        method: :delete %>
+
+      <p class="govuk-body">
+        <%= govuk_link_to(t(".cancel"), placements_school_placement_path(@school, @placement), no_visited_state: true) %>
+      </p>
+    </div>
+  </div>
+</div>

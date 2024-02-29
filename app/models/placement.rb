@@ -19,10 +19,10 @@
 #  fk_rails_...  (school_id => schools.id)
 #
 class Placement < ApplicationRecord
-  has_many :placement_mentor_joins
+  has_many :placement_mentor_joins, dependent: :destroy
   has_many :mentors, through: :placement_mentor_joins, class_name: "Placements::Mentor"
 
-  has_many :placement_subject_joins
+  has_many :placement_subject_joins, dependent: :destroy
   has_many :subjects, through: :placement_subject_joins
 
   belongs_to :school, class_name: "Placements::School"

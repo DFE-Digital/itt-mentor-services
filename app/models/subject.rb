@@ -10,7 +10,7 @@
 #  updated_at   :datetime         not null
 #
 class Subject < ApplicationRecord
-  has_many :placement_subject_joins
+  has_many :placement_subject_joins, dependent: :restrict_with_exception
   has_many :placements, through: :placement_subject_joins
 
   enum :subject_area,
