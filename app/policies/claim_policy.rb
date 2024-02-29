@@ -10,4 +10,8 @@ class ClaimPolicy < Claims::ApplicationPolicy
   def confirm?
     true
   end
+
+  def download_csv?
+    true
+  end
 end

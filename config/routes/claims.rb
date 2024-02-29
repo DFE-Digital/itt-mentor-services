@@ -33,7 +33,10 @@ scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
   namespace :support do
     root to: redirect("/support/schools")
 
-    resources :claims, only: %i[index show]
+    resources :claims, only: %i[index show] do
+      get :download_csv, on: :collection
+    end
+
     resources :support_users do
       get :check, on: :collection
       get :remove, on: :member

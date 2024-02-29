@@ -8,6 +8,12 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
 
   def show; end
 
+  def download_csv
+    csv_data = Claims::GenerateClaimsCsv.call
+
+    send_data csv_data, filename: "claims.csv", type: "text/csv", disposition: "attachment"
+  end
+
   private
 
   def set_claim

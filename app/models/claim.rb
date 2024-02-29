@@ -36,4 +36,8 @@ class Claim < ApplicationRecord
   def submitted_on
     submitted_at&.to_date
   end
+
+  def amount
+    Claims::CalculateAmount.call(claim: self)
+  end
 end
