@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :subject do
     subject_area { %w[primary secondary].sample }
     name { Faker::Educator.subject }
-    code { Faker::String.random(length: 2) }
+    code { Faker::Alphanumeric.alpha(number: 2) }
   end
 
   trait :primary do
