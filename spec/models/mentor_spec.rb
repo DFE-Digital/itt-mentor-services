@@ -31,7 +31,7 @@ RSpec.describe Mentor, type: :model do
     it { is_expected.to validate_presence_of(:last_name) }
     it { is_expected.to validate_presence_of(:trn).with_message("Enter a teacher reference number (TRN)") }
 
-    it "allows only turns that are seven numeric characters long" do
+    it "allows only TRNs that are seven numeric characters long" do
       mentor_with_alpha_trn = build(:mentor, trn: "a12345b")
       expect(mentor_with_alpha_trn.valid?).to eq false
       expect(mentor_with_alpha_trn.errors.messages[:trn]).to include "Enter a valid teacher reference number (TRN)"

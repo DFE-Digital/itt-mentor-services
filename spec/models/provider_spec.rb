@@ -37,6 +37,16 @@ RSpec.describe Provider, type: :model do
     it { is_expected.to have_many(:mentor_trainings) }
   end
 
+  describe "enums" do
+    subject(:test_provider) { build(:provider) }
+
+    it "defines the expected values" do
+      expect(test_provider).to define_enum_for(:provider_type)
+       .with_values(scitt: "scitt", lead_school: "lead_school", university: "university")
+       .backed_by_column_of_type(:enum)
+    end
+  end
+
   context "with validations" do
     subject(:test_provider) { build(:provider) }
 
