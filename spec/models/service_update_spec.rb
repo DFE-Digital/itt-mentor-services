@@ -3,6 +3,17 @@
 require "rails_helper"
 
 RSpec.describe ServiceUpdate do
+  describe "#id" do
+    it "returns a parameterized title" do
+      service_update = described_class.new(
+        title: "Some Title",
+        date: "2023-12-14",
+        content: "Some content",
+      )
+      expect(service_update.id).to eq("some-title")
+    end
+  end
+
   describe ".where" do
     context "when service is :claims" do
       it "returns updates for claims" do
@@ -51,7 +62,7 @@ RSpec.describe ServiceUpdate do
     end
   end
 
-  describe ".yaml_file" do
+  describe ".file_path" do
     it "returns claims YAML file path" do
       file_path = described_class.file_path(service: :claims)
       expect(file_path).to eq(Rails.root.join("db/claims_service_updates.yml"))

@@ -27,6 +27,8 @@ RSpec.describe Placement, type: :model do
 
     it { is_expected.to have_many(:placement_subject_joins) }
     it { is_expected.to have_many(:subjects).through(:placement_subject_joins) }
+
+    it { is_expected.to belong_to(:school) }
   end
 
   describe "validations" do

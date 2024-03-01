@@ -75,4 +75,11 @@ RSpec.describe User, type: :model do
       expect(user.full_name).to eq("Jane Doe")
     end
   end
+
+  describe "#service" do
+    it "returns the service name" do
+      user = build(:claims_user)
+      expect(user.service).to eq(:claims)
+    end
+  end
 end
