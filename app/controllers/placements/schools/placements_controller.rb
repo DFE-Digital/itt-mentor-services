@@ -4,7 +4,7 @@ class Placements::Schools::PlacementsController < ApplicationController
   before_action :set_decorated_placement, only: %i[show remove]
 
   def index
-    @pagy, placements = pagy(@school.placements.includes(:mentors).order_by_subject_name)
+    @pagy, placements = pagy(@school.placements.includes(:subjects, :mentors).order("subjects.name"))
     @placements = placements.decorate
   end
 

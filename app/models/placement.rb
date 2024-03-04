@@ -30,6 +30,4 @@ class Placement < ApplicationRecord
   validates :school, :status, :start_date, :end_date, presence: true
 
   validates :end_date, comparison: { greater_than: :start_date }
-
-  scope :order_by_subject_name, -> { includes(:subjects).order("subjects.name") }
 end
