@@ -40,4 +40,18 @@ RSpec.describe ApplicationHelper do
       expect(current_service).to eq(:pineapple)
     end
   end
+
+  describe "#safe_l" do
+    it "returns the translation" do
+      value = Date.new(2024, 2, 4)
+
+      expect(safe_l(value, format: :short)).to eq("04/02/2024")
+    end
+
+    context "when value is nil" do
+      it "returns nil" do
+        expect(safe_l(nil, format: :short)).to eq(nil)
+      end
+    end
+  end
 end

@@ -74,7 +74,7 @@
         <strong class="govuk-warning-text__text"><%= t(".warning") %></strong>
       </div>
 
-      <%= govuk_link_to t(".submit"), claims_school_claims_path(@school), class: "govuk-button" %>
+      <%= govuk_button_to t(".submit"), submit_claims_school_claim_path(@school, @claim) %>
 
       <p class="govuk-body">
         <%= govuk_link_to t("cancel"), claims_school_claims_path(@school), no_visited_state: true %>
