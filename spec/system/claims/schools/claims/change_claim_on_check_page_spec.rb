@@ -14,7 +14,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
 
   let(:mentor1) { create(:mentor, first_name: "Anne") }
   let(:mentor2) { create(:mentor, first_name: "Joe") }
-  let!(:claim) { create(:claim, school:, provider: provider1) }
+  let!(:claim) { create(:claim, :draft, school:, provider: provider1) }
 
   before do
     user_exists_in_dfe_sign_in(user: anne)
@@ -32,7 +32,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
     when_i_click("Continue")
     then_i_check_my_answers(provider2, [mentor1, mentor2], [20, 12])
     when_i_click("Submit claim")
-    # then_i_get_a_claim_reference
+    then_i_get_a_claim_reference(claim)
   end
 
   scenario "Anne does not have a provider selected when editing a claim from check page" do
@@ -60,7 +60,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
     when_i_click("Continue")
     then_i_check_my_answers(provider1, [mentor2], [20])
     when_i_click("Submit claim")
-    # then_i_get_a_claim_reference
+    then_i_get_a_claim_reference(claim)
   end
 
   scenario "Anne changes the training hours for a mentor on check page" do
@@ -192,6 +192,12 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
 
     within(".govuk-form-group--error") do
       expect(page).to have_content message
+    end
+  end
+
+  def then_i_get_a_claim_reference(claim)
+    within(".govuk-panel") do
+      expect(page).to have_content("Claim submitted\nYour reference number\n#{claim.reference}")
     end
   end
 

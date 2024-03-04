@@ -17,4 +17,8 @@ module ApplicationHelper
     end
     link
   end
+
+  def safe_l(value, **options)
+    l(value, **options) if value
+  end
 end

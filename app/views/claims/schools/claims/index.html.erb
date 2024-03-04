@@ -26,7 +26,7 @@
       <% table.with_body do |body| %>
         <% @claims.each do |claim| %>
           <% body.with_row do |row| %>
-            <% row.with_cell(text: govuk_link_to(claim.id.first(8), claims_school_claim_path(id: claim.id))) %>
+            <% row.with_cell(text: govuk_link_to(claim.reference, claims_school_claim_path(id: claim.id))) %>
             <% row.with_cell(text: claim.provider_name) %>
             <% row.with_cell do %>
               <ul class="govuk-list">
@@ -35,7 +35,7 @@
                 <% end %>
               </ul>
             <% end %>
-            <% row.with_cell(text: l(claim.created_at.to_date, format: :short)) %>
+            <% row.with_cell(text: safe_l(claim.submitted_on, format: :short)) %>
             <% row.with_cell(text: render(Claim::StatusTagComponent.new(claim:))) %>
           <% end %>
         <% end %>

@@ -32,7 +32,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     when_i_click("Continue")
     then_i_check_my_answers
     when_i_click("Submit claim")
-    # then_i_get_a_claim_reference
+    then_i_get_a_claim_reference(Claim.where(draft: false).first)
   end
 
   scenario "Anne does not fill the form correctly" do
@@ -125,6 +125,12 @@ RSpec.describe "Create claim", type: :system, service: :claims do
         expect(page).to have_content(mentor2.full_name)
         expect(page).to have_content("12 hours")
       end
+    end
+  end
+
+  def then_i_get_a_claim_reference(claim)
+    within(".govuk-panel") do
+      expect(page).to have_content("Claim submitted\nYour reference number\n#{claim.reference}")
     end
   end
 

@@ -13,6 +13,8 @@ scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
 
         member do
           get :check
+          get :confirm
+          post :submit
         end
       end
 

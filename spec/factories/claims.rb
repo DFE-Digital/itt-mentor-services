@@ -2,16 +2,19 @@
 #
 # Table name: claims
 #
-#  id          :uuid             not null, primary key
-#  draft       :boolean          default(FALSE)
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  provider_id :uuid
-#  school_id   :uuid             not null
+#  id           :uuid             not null, primary key
+#  draft        :boolean          default(FALSE)
+#  reference    :string
+#  submitted_at :datetime
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  provider_id  :uuid
+#  school_id    :uuid             not null
 #
 # Indexes
 #
 #  index_claims_on_provider_id  (provider_id)
+#  index_claims_on_reference    (reference) UNIQUE
 #  index_claims_on_school_id    (school_id)
 #
 # Foreign Keys

@@ -1,6 +1,6 @@
 class Claims::Schools::ClaimsController < Claims::ApplicationController
   include Claims::BelongsToSchool
-  before_action :set_claim, only: %i[show check]
+  before_action :set_claim, only: %i[show check confirm submit]
   before_action :authorize_claim
 
   helper_method :claim_provider_form
@@ -31,6 +31,14 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
     else
       render :edit
     end
+  end
+
+  def confirm; end
+
+  def submit
+    Claim::Submit.call(claim: @claim)
+
+    redirect_to confirm_claims_school_claim_path(@school, @claim)
   end
 
   private

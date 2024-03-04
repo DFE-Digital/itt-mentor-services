@@ -2,6 +2,13 @@ en:
   claims:
     schools:
       claims:
+        confirm:
+          page_title: Claim submitted
+          claim_submitted: Claim submitted
+          your_reference_number_id: Your reference number
+          what_happens_next: What happens next
+          view_claims: View claims
+          guidance: We will check your claim before processing payment. If we need to contact you for further information, we will use the email you used to access this service.
         check:
           page_title: Check your answers
           warning: You will not be able to change any of the claim details once you have submitted it.

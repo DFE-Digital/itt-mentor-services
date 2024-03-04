@@ -24,6 +24,7 @@ RSpec.describe "View claims", type: :system, service: :claims do
       school: school_with_mentors,
       provider: create(:provider),
       mentors: [create(:claims_mentor)],
+      submitted_at: Time.current,
     )
   end
   let(:mary) do
