@@ -38,4 +38,21 @@ RSpec.describe Placement, type: :model do
     it { is_expected.to validate_presence_of(:end_date) }
     it { is_expected.to validate_comparison_of(:end_date).is_greater_than(:start_date) }
   end
+
+  describe "scopes" do
+    describe "#order_by_subject_name" do
+      it "returns the placements ordered by subject name" do
+        subject1 = create(:subject, name: "English")
+        placement1 = create(:placement, subjects: [subject1])
+        subject2 = create(:subject, name: "Art")
+        placement2 = create(:placement, subjects: [subject2])
+        subject3 = create(:subject, name: "Science")
+        placement3 = create(:placement, subjects: [subject3])
+
+        expect(described_class.order_by_subject_name).to eq(
+          [placement2, placement1, placement3],
+        )
+      end
+    end
+  end
 end

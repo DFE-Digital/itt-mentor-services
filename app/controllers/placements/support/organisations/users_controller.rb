@@ -4,7 +4,7 @@ class Placements::Support::Organisations::UsersController < Placements::Support:
   before_action :authorize_user, only: %i[remove destroy]
 
   def index
-    users
+    @users = users.order_by_full_name
   end
 
   def show; end

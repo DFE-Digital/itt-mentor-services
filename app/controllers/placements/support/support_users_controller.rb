@@ -3,7 +3,7 @@ class Placements::Support::SupportUsersController < Placements::Support::Applica
   before_action :authorize_support_user, only: %i[remove destroy]
 
   def index
-    @support_users = Placements::SupportUser.order(created_at: :desc)
+    @support_users = Placements::SupportUser.order_by_full_name
   end
 
   def new

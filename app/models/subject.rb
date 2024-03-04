@@ -18,4 +18,6 @@ class Subject < ApplicationRecord
        validate: true
 
   validates :subject_area, :name, presence: true
+
+  scope :order_by_name, -> { order(:name) }
 end
