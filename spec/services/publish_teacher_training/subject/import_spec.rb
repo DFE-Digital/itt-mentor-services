@@ -9,8 +9,7 @@ RSpec.describe PublishTeacherTraining::Subject::Import do
 
   describe ".call" do
     context "when the response contains only valid subject data" do
-      it "runs a PublishTeacherTraining::Subject::SyncJob per API response,
-        creating a subject for each valid subject in the API" do
+      it "creates a subject for each valid subject in the API response" do
         expect {
           described_class.call
         }.to change(Subject.primary, :count).by(2).and change(

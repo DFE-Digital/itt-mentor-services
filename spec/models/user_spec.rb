@@ -61,6 +61,18 @@ RSpec.describe User, type: :model do
         end
       end
     end
+
+    describe "#order_by_full_name" do
+      it "returns the users ordered by full name" do
+        user1 = create(:claims_user, first_name: "Anne", last_name: "Smith")
+        user2 = create(:placements_user, first_name: "Anne", last_name: "Doe")
+        user3 = create(:placements_support_user, first_name: "John", last_name: "Doe")
+
+        expect(described_class.order_by_full_name).to eq(
+          [user2, user1, user3],
+        )
+      end
+    end
   end
 
   describe "#support_user?" do

@@ -30,6 +30,7 @@ class User < ApplicationRecord
   validates :email, uniqueness: { scope: :type, case_sensitive: false }
 
   default_scope -> { kept }
+  scope :order_by_full_name, -> { order(:first_name, :last_name) }
 
   def full_name
     "#{first_name} #{last_name}".strip

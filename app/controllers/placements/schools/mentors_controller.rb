@@ -3,7 +3,7 @@ class Placements::Schools::MentorsController < ApplicationController
   before_action :set_mentor, only: %i[show remove destroy]
 
   def index
-    @pagy, @mentors = pagy(@school.mentors.order(:first_name, :last_name))
+    @pagy, @mentors = pagy(@school.mentors.order_by_full_name)
   end
 
   def show; end
