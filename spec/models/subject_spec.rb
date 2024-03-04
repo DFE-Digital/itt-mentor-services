@@ -13,7 +13,7 @@ require "rails_helper"
 
 RSpec.describe Subject, type: :model do
   describe "associations" do
-    it { is_expected.to have_many(:placement_subject_joins) }
+    it { is_expected.to have_many(:placement_subject_joins).dependent(:restrict_with_exception) }
     it { is_expected.to have_many(:placements).through(:placement_subject_joins) }
   end
 
