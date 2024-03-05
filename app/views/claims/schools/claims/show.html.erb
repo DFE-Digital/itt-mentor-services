@@ -1,3 +1,5 @@
+<% content_for :page_title, t(".page_title", reference: @claim.reference) %>
+
 <% render "claims/schools/primary_navigation", school: @school, current: :claims %>
 
 <%= content_for(:before_content) do %>
@@ -5,29 +7,59 @@
 <% end %>
 
 <div class="govuk-width-container">
-  <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
-  <h2 class="govuk-heading-m"><%= t(".providers_heading") %></h2>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l"><%= t(".page_title", reference: @claim.reference) %></h1>
 
-  <%= govuk_task_list(id_prefix: "providers", classes: "providers-task-list") do |task_list| %>
-    <%= task_list.with_item(
-      title: t(".itt_provider"),
-      href: edit_claims_school_claim_path(@school, @claim, "providers"),
-      status: govuk_tag(
-        text: @claim.item_status_tag("provider").fetch(:text),
-        colour: @claim.item_status_tag("provider").fetch(:colour),
-      ),
-    ) %>
-  <% end %>
+      <%= govuk_summary_list do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: Claim.human_attribute_name(:school)) %>
+          <% row.with_value(text: @school.name) %>
+        <% end %>
 
-  <h2 class="govuk-heading-m"><%= t(".mentors_heading") %></h2>
-  <%= govuk_task_list(id_prefix: "mentors", classes: "mentors-task-list") do |task_list| %>
-    <%= task_list.with_item(
-      title: t(".general_mentors"),
-      href: edit_claims_school_claim_path(@school, @claim, "mentors"),
-      status: govuk_tag(
-        text: @claim.item_status_tag("mentors").fetch(:text),
-        colour: @claim.item_status_tag("mentors").fetch(:colour),
-      ),
-    ) %>
-  <% end %>
+        <% if @claim.provider %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: Claim.human_attribute_name(:provider)) %>
+            <% row.with_value(text: @claim.provider.name) %>
+          <% end %>
+        <% else %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: Claim.human_attribute_name(:provider)) %>
+            <% row.with_value(text: t("none")) %>
+          <% end %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".mentors")) %>
+          <% row.with_value do %>
+            <ul class="govuk-list">
+              <% @claim.mentors.each do |mentor| %>
+                <li><%= mentor.full_name %></li>
+              <% end %>
+            </ul>
+          <% end %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: Claim.human_attribute_name(:date_submitted)) %>
+          <% row.with_value(text: safe_l(@claim.submitted_on, format: :long)) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: Claim.human_attribute_name(:status)) %>
+          <% row.with_value(text: render(Claim::StatusTagComponent.new(claim: @claim))) %>
+        <% end %>
+      <% end %>
+
+      <h2 class="govuk-heading-m"><%= t(".hours_of_training") %></h2>
+        <%= govuk_summary_list do |summary_list| %>
+         <%= @claim.mentor_trainings.order_by_mentor_full_name.each do |mentor_training| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: mentor_training.mentor.full_name) %>
+            <% row.with_value(text: "#{mentor_training.hours_completed} #{t(".hours")}") %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
 </div>
