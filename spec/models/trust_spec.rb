@@ -20,6 +20,8 @@ RSpec.describe Trust, type: :model do
   end
 
   describe "validations" do
+    subject { create(:trust) }
+
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:uid) }
     it { is_expected.to validate_uniqueness_of(:uid).case_insensitive }
