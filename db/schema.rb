@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_05_124239) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_05_131042) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -266,9 +266,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_05_124239) do
     t.string "district_admin_name"
     t.string "district_admin_code"
     t.uuid "region_id"
+    t.uuid "trust_id"
     t.index ["claims_service"], name: "index_schools_on_claims_service"
     t.index ["placements_service"], name: "index_schools_on_placements_service"
     t.index ["region_id"], name: "index_schools_on_region_id"
+    t.index ["trust_id"], name: "index_schools_on_trust_id"
     t.index ["urn"], name: "index_schools_on_urn", unique: true
   end
 
@@ -326,5 +328,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_05_124239) do
   add_foreign_key "placement_subject_joins", "subjects"
   add_foreign_key "placements", "schools"
   add_foreign_key "schools", "regions"
+  add_foreign_key "schools", "trusts"
   add_foreign_key "user_memberships", "users"
 end

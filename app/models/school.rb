@@ -40,22 +40,26 @@
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
 #  region_id                    :uuid
+#  trust_id                     :uuid
 #
 # Indexes
 #
 #  index_schools_on_claims_service      (claims_service)
 #  index_schools_on_placements_service  (placements_service)
 #  index_schools_on_region_id           (region_id)
+#  index_schools_on_trust_id            (trust_id)
 #  index_schools_on_urn                 (urn) UNIQUE
 #
 # Foreign Keys
 #
 #  fk_rails_...  (region_id => regions.id)
+#  fk_rails_...  (trust_id => trusts.id)
 #
 class School < ApplicationRecord
   include PgSearch::Model
 
   belongs_to :region
+  belongs_to :trust, optional: true
 
   has_many :user_memberships, as: :organisation
   has_many :mentor_memberships
