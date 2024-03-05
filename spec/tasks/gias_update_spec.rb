@@ -5,16 +5,10 @@ describe "gias_update" do
   Rails.application.load_tasks if Rake::Task.tasks.empty?
   subject(:gias_update) { Rake::Task["gias_update"].invoke }
 
-  it "calls GiasCsvImporter service" do
-    today = Time.zone.today.strftime("%Y%m%d")
-    gias_filename = "edubasealldata#{today}.csv"
-    tempfile = Tempfile.new("foo")
+  it "runs Gias::SyncAllSchoolsJob" do
+    allow(Gias::SyncAllSchoolsJob).to receive(:perform_now)
+                                   .and_raise("Gias::SyncAllSchoolsJob running")
 
-    allow(Down).to receive(:download).with(
-      "#{ENV["GIAS_CSV_BASE_URL"]}/#{gias_filename}",
-    ).and_return(tempfile)
-
-    expect(GiasCsvImporter).to receive(:call).with(tempfile.path)
-    gias_update
+    expect { gias_update }.to raise_error "Gias::SyncAllSchoolsJob running"
   end
 end

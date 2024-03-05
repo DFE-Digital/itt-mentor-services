@@ -6,6 +6,11 @@
 #   cron: "* * * * * *" # also accepts natural language, e.g. "every second"
 #   class: NameOfAJob
 #   description: Description is shown in the GoodJob dashboard.
+gias_school_sync:
+  cron: "10 0 * * *"
+  class: "Gias::SyncAllSchoolsJob"
+  description: "Import/Update Schools using GIAS data"
+
 teaching_record_mentor_sync:
   cron: "5 0 * * *"
   class: "TeachingRecord::SyncAllMentorsJob"
