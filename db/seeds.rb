@@ -14,7 +14,7 @@ Rails.logger.debug "Personas successfully created!"
 
 Money.locale_backend = nil
 
-Rake::Task["gias_update"].invoke unless School.any?
+Gias::SyncAllSchoolsJob.perform_now unless School.any?
 
 School.last(2).each do |school|
   school.update!(claims_service: true, placements_service: true)
