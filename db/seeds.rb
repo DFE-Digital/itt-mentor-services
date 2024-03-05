@@ -14,29 +14,14 @@ Rails.logger.debug "Personas successfully created!"
 
 Money.locale_backend = nil
 
-regions = [
-  { name: "Inner London", claims_funding_available_per_hour: Money.from_amount(53.60, "GBP") },
-  { name: "Outer London", claims_funding_available_per_hour: Money.from_amount(48.25, "GBP") },
-  { name: "Fringe", claims_funding_available_per_hour: Money.from_amount(45.10, "GBP") },
-  { name: "Rest of England", claims_funding_available_per_hour: Money.from_amount(43.18, "GBP") },
-]
-
-regions.each do |region|
-  Region.find_or_create_by(name: region[:name]) do |r|
-    r.claims_funding_available_per_hour = region[:claims_funding_available_per_hour]
-  end
-end
-
-region = Region.first
-
 Rake::Task["gias_update"].invoke unless School.any?
 
 School.last(2).each do |school|
-  school.update!(claims_service: true, placements_service: true, region:)
+  school.update!(claims_service: true, placements_service: true)
 end
 
-School.first.update!(placements_service: true, region:)
-School.second.update!(claims_service: true, region:)
+School.first.update!(placements_service: true)
+School.second.update!(claims_service: true)
 
 Rails.logger.debug "Services added to schools"
 # Create Providers Imported from Publfish
