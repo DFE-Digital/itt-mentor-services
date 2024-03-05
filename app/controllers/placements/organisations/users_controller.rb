@@ -4,7 +4,7 @@ class Placements::Organisations::UsersController < ApplicationController
   before_action :redirect_if_not_allowed, only: %i[remove destroy]
 
   def index
-    users
+    @users = users.order_by_full_name
   end
 
   def show; end
@@ -39,7 +39,7 @@ class Placements::Organisations::UsersController < ApplicationController
   end
 
   def users
-    @users = @organisation.users.order("LOWER(first_name)")
+    @users = @organisation.users
   end
 
   def redirect_if_not_allowed

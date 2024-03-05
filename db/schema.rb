@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_22_135527) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_29_140214) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -29,7 +29,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_22_135527) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "provider_id"
+    t.string "reference"
+    t.datetime "submitted_at"
     t.index ["provider_id"], name: "index_claims_on_provider_id"
+    t.index ["reference"], name: "index_claims_on_reference", unique: true
     t.index ["school_id"], name: "index_claims_on_school_id"
   end
 

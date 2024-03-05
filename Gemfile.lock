@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/citizensadvice/capybara_accessible_selectors
-  revision: 67bbac702fd039a81ce858f1157701b5a5b70cd1
+  revision: 0c78a39ec6b8895858612896cc5695dcee0e6159
   branch: main
   specs:
     capybara_accessible_selectors (0.11.0)
@@ -335,7 +335,7 @@ GEM
     parser (3.3.0.5)
       ast (~> 2.4.1)
       racc
-    pg (1.5.5)
+    pg (1.5.6)
     pg_search (2.3.6)
       activerecord (>= 5.2)
       activesupport (>= 5.2)
@@ -584,7 +584,7 @@ GEM
       activesupport
       faraday (~> 2.0)
       faraday-follow_redirects
-    webmock (3.20.0)
+    webmock (3.23.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
