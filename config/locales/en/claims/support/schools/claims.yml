@@ -3,6 +3,29 @@ en:
     support:
       schools:
         claims:
+          submit:
+            success: Claim added
+          edit:
+            page_title: Provider - Add claim
+          check:
+            page_title: Check your answers
+            warning: You will not be able to change any of the claim details once you have submitted it.
+            submit: Add claim
+            page_title: Check your answers
+            add_claim: Add claim - %{school}
+            disclaimer: By submitting this claim, you confirm that the details provided are correct to the best of your knowledge.
+            hours: "%{hours} hours"
+            hours_of_training: Hours of training
           index:
             heading: Claims
             claim_id: ID
+            add_claim: Add claim
+            guidance: You can only claim for the academic year September 2023 to July 2024.
+            add_mentor_guidance_html: You need to %{link_to} before creating a claim.</p>
+            add_a_mentor: add a mentor
+          new:
+            page_title: Provider - Add claim
+          form:
+            add_claim: Add claim - %{school}
+            heading: Provider
+

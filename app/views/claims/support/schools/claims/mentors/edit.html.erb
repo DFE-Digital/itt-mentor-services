@@ -1,0 +1,18 @@
+<% content_for :page_title, t(".page_title") %>
+<% render "claims/support/primary_navigation", current: :organisations %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: edit_claims_support_school_claim_path(@school, claim_mentors_form.claim)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <%= render(
+    partial: "form",
+    locals: {
+      claim_mentors_form:,
+      form_url: claims_support_school_claim_mentor_path(@school, claim_mentors_form.claim),
+      method: :patch,
+      school: @school,
+    },
+  ) %>
+</div>

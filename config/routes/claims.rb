@@ -7,7 +7,7 @@ scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
 
   resources :schools, only: %i[index show] do
     scope module: :schools do
-      resources :claims, only: %i[index new create show edit update] do
+      resources :claims, except: %i[destroy] do
         resources :mentors, only: %i[new create edit update], module: :claims
         resources :mentor_trainings, only: %i[edit update], module: :claims
 
@@ -50,7 +50,15 @@ scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
       end
 
       scope module: :schools do
-        resources :claims
+        resources :claims, except: %i[destroy] do
+          resources :mentors, only: %i[new create edit update], module: :claims
+          resources :mentor_trainings, only: %i[edit update], module: :claims
+
+          member do
+            get :check
+            post :submit
+          end
+        end
 
         resources :mentors, only: %i[index new create show destroy] do
           member { get :remove }
