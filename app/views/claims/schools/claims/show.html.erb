@@ -60,6 +60,14 @@
           <% end %>
         <% end %>
       <% end %>
+
+      <h2 class="govuk-heading-m"><%= t(".grant_funding") %></h2>
+        <%= govuk_summary_list do |summary_list| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: Claim.human_attribute_name(:claim_amount)) %>
+            <% row.with_value(text: humanized_money_with_symbol(@claim.amount)) %>
+          <% end %>
+        <% end %>
     </div>
   </div>
 </div>
