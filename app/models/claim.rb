@@ -36,4 +36,8 @@ class Claim < ApplicationRecord
   def submitted_on
     submitted_at&.to_date
   end
+
+  def ready_to_be_checked?
+    provider.present? && mentors.present? && mentor_trainings.without_hours.blank?
+  end
 end
