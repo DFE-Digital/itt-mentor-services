@@ -34,6 +34,7 @@ en:
           mentors: Mentors
           page_title: Claim - %{reference}
           hours_of_training: Hours of training
+          grant_funding: Grant funding
           hours: hours
         edit:
           page_title: Provider - Add claim
