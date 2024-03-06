@@ -15,6 +15,14 @@ class Claim::ProviderForm < ApplicationForm
     @claim ||= school.claims.find_or_initialize_by(id:)
   end
 
+  def back_path
+    if claim.ready_to_be_checked?
+      check_claims_school_claim_path(claim.school, claim)
+    else
+      claims_school_claims_path(claim.school)
+    end
+  end
+
   private
 
   def updated_claim

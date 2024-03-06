@@ -21,7 +21,18 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
 
   def show; end
 
-  def check; end
+  def check
+    last_mentor_training = @claim.mentor_trainings.order_by_mentor_full_name.last
+
+    @back_path = edit_claims_school_claim_mentor_training_path(
+      @school,
+      @claim,
+      last_mentor_training,
+      params: {
+        claim_mentor_training_form: { hours_completed: last_mentor_training.hours_completed },
+      },
+    )
+  end
 
   def edit; end
 
