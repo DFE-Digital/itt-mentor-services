@@ -6,9 +6,7 @@ describe "gias_update" do
   subject(:gias_update) { Rake::Task["gias_update"].invoke }
 
   it "runs Gias::SyncAllSchoolsJob" do
-    allow(Gias::SyncAllSchoolsJob).to receive(:perform_now)
-                                   .and_raise("Gias::SyncAllSchoolsJob running")
-
-    expect { gias_update }.to raise_error "Gias::SyncAllSchoolsJob running"
+    expect(Gias::SyncAllSchoolsJob).to receive(:perform_now)
+    gias_update
   end
 end
