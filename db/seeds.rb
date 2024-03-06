@@ -25,7 +25,7 @@ School.second.update!(claims_service: true)
 
 Rails.logger.debug "Services added to schools"
 # Create Providers Imported from Publfish
-Rake::Task["provider_data:import"].invoke unless Provider.any?
+PublishTeacherTraining::Provider::Importer.call unless Provider.any?
 
 # Associate Placements Users with Organisations
 # Single School Anne

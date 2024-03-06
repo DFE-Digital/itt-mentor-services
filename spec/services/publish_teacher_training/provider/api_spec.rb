@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Provider::Api do
+RSpec.describe PublishTeacherTraining::Provider::Api do
   subject(:provider_api) { described_class.call }
 
   before do
