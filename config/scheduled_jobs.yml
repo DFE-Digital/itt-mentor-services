@@ -6,6 +6,11 @@
 #   cron: "* * * * * *" # also accepts natural language, e.g. "every second"
 #   class: NameOfAJob
 #   description: Description is shown in the GoodJob dashboard.
+publish_provider_sync:
+  cron: "15 0 * * *"
+  class: "PublishTeacherTraining::Provider::SyncAllJob"
+  description: "Sync all providers with data imported from Publish Teacher Training"
+
 gias_school_sync:
   cron: "10 0 * * *"
   class: "Gias::SyncAllSchoolsJob"
