@@ -43,12 +43,19 @@ erDiagram
     date end_date
     enum status "draft or published"
   }
+  
+  Trust {
+    uuid id PK
+    string name
+    string uid FK "Primary key for trusts in GIAS"
+  }
 
   School {
     uuid id PK
     string urn FK "Primary key for schools in GIAS"
     bool placements_service "Indicates if the School has been onboarded into the School Placements service"
     bool claims_service "Indicates if the School has been onboarded into the Track & Pay service"
+    string trust_id FK "Optional association to a Trust"
   }
 
   Mentor {
@@ -102,6 +109,8 @@ erDiagram
     uuid school_id FK
   }
 
+  Trust ||--|{ School : "has many"
+
   School ||--|{ MentorMembership : "has many"
   Mentor ||--|{ MentorMembership : "has many"
 
@@ -153,6 +162,12 @@ For example:
 - School B has only been onboarded into the Track & Pay service.
 - School C has been onboarded into both services.
 - School D is a school from the GIAS import, but it is not onboarded into either service
+
+### Trusts
+
+A Trust or Multi-Academy Trust (MAT) is a group of schools, and is represented by the `trusts` table.
+
+Currently all Trusts are created by the GIAS import, and there is no manual intervention required. Schools are added to their respective trusts automatically by the GIAS import.
 
 ### Providers
 
