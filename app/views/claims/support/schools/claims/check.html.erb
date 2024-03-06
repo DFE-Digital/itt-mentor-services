@@ -1,5 +1,5 @@
 <% content_for :page_title, t(".page_title") %>
-<% render "claims/schools/primary_navigation", school: @school, current: :claims %>
+<% render "claims/support/primary_navigation", current: :organisations %>
 
 <%= content_for(:before_content) do %>
   <%= govuk_back_link(href: @back_path) %>
@@ -9,7 +9,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <label class="govuk-label govuk-label--l">
-        <span class="govuk-caption-l"><%= t(".add_claim") %></span>
+        <span class="govuk-caption-l"><%= t(".add_claim", school: @school.name) %></span>
         <%= t(".page_title") %>
       </label>
 
@@ -18,7 +18,7 @@
           <% row.with_key(text: Claim.human_attribute_name(:provider)) %>
           <% row.with_value(text: @claim.provider_name) %>
           <% row.with_action(text: t("change"),
-                             href: edit_claims_school_claim_path(
+                             href: edit_claims_support_school_claim_path(
                                @school,
                                @claim,
                              ),
@@ -37,7 +37,7 @@
             </ul>
           <% end %>
           <% row.with_action(text: t("change"),
-                             href: edit_claims_school_claim_mentor_path(@school, @claim),
+                             href: edit_claims_support_school_claim_mentor_path(@school, @claim),
                              html_attributes: {
                                class: "govuk-link--no-visited-state",
                              }) %>
@@ -52,7 +52,7 @@
             <% row.with_key(text: mentor_training.mentor.full_name) %>
             <% row.with_value(text: t(".hours", hours: mentor_training.hours_completed)) %>
             <% row.with_action(text: t("change"),
-                               href: edit_claims_school_claim_mentor_training_path(
+                               href: edit_claims_support_school_claim_mentor_training_path(
                                  @school,
                                  @claim,
                                  mentor_training,
@@ -74,10 +74,10 @@
         <strong class="govuk-warning-text__text"><%= t(".warning") %></strong>
       </div>
 
-      <%= govuk_button_to t(".submit"), submit_claims_school_claim_path(@school, @claim) %>
+      <%= govuk_button_to t(".submit"), submit_claims_support_school_claim_path(@school, @claim) %>
 
       <p class="govuk-body">
-        <%= govuk_link_to t("cancel"), claims_school_claims_path(@school), no_visited_state: true %>
+        <%= govuk_link_to t("cancel"), claims_support_school_claims_path(@school), no_visited_state: true %>
       </p>
     <div>
   <div>

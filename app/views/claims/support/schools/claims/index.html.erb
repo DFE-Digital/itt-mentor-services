@@ -5,6 +5,13 @@
 
   <%= render "claims/support/schools/secondary_navigation", school: @school %>
 
+  <% if @school.mentors.any? %>
+    <p class="govuk-inset-text"><%= t(".guidance") %></p>
+    <%= govuk_link_to t(".add_claim"), new_claims_support_school_claim_path, class: "govuk-button" %>
+  <% else %>
+    <p class="govuk-inset-text"><%= t(".add_mentor_guidance_html", link_to: govuk_link_to(t(".add_a_mentor"), claims_support_school_mentors_path(@school))) %></p>
+  <% end %>
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h2 class="govuk-heading-m"><%= t(".heading") %></h2>
