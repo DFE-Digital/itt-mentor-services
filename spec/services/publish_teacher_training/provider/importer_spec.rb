@@ -62,10 +62,14 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
 
   private
 
+  def publish_url
+    "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/current/providers"
+  end
+
   def non_existing_providers_request
     stub_request(
       :get,
-      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/current/providers",
+      publish_url,
     ).to_return(
       status: 200,
       body: {
@@ -102,7 +106,7 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
   def pre_existing_providers_request
     stub_request(
       :get,
-      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/current/providers",
+      publish_url,
     ).to_return(
       status: 200,
       body: {
@@ -151,7 +155,7 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
   def with_invalid_providers_request
     stub_request(
       :get,
-      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/current/providers",
+      publish_url,
     ).to_return(
       status: 200,
       body: {
@@ -180,7 +184,7 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
   def first_page_request
     stub_request(
       :get,
-      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/current/providers",
+      publish_url,
     ).to_return(
       status: 200,
       body: {
@@ -195,7 +199,7 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
           },
         ],
         "links" => {
-          "next" => "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/current/providers?page=2",
+          "next" => "#{publish_url}?page=2",
         },
       }.to_json,
     )
@@ -204,7 +208,7 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
   def second_page_request
     stub_request(
       :get,
-      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/current/providers?page=2",
+      "#{publish_url}?page=2",
     ).to_return(
       status: 200,
       body: {
