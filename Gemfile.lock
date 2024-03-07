@@ -106,7 +106,6 @@ GEM
       rake (>= 10.4, < 14.0)
     ast (2.4.2)
     attr_required (1.0.1)
-    awesome_print (1.9.2)
     backport (1.2.0)
     base64 (0.2.0)
     benchmark (0.3.0)
@@ -614,7 +613,6 @@ DEPENDENCIES
   activerecord-nulldb-adapter
   amazing_print
   annotate
-  awesome_print
   better_html
   bootsnap
   brakeman
