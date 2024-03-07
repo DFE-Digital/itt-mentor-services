@@ -1,5 +1,5 @@
 class Claim::ProviderForm < ApplicationForm
-  attr_accessor :id, :provider_id, :school
+  attr_accessor :id, :provider_id, :school, :current_user
 
   validate :validate_provider
 
@@ -21,6 +21,7 @@ class Claim::ProviderForm < ApplicationForm
     @updated_claim ||= begin
       claim.provider_id = provider_id
       claim.draft = true
+      claim.created_by = current_user
       claim
     end
   end
