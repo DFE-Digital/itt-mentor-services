@@ -23,6 +23,13 @@ en:
             guidance: You can only claim for the academic year September 2023 to July 2024.
             add_mentor_guidance_html: You need to %{link_to} before creating a claim.</p>
             add_a_mentor: add a mentor
+          show:
+            mentors: Mentors
+            page_title: Claim - %{reference}
+            hours_of_training: Hours of training
+            grant_funding: Grant funding
+            hours: hours
+            page_caption: Claims - %{school_name}
           new:
             page_title: Provider - Add claim
           form:

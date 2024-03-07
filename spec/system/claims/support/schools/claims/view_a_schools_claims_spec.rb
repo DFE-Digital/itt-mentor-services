@@ -30,7 +30,8 @@ RSpec.describe "View a schools claims", type: :system, service: :claims do
   end
 
   def i_see_a_list_of_the_schools_claims
-    expect(page).to have_content("#{draft_claim.id}\nDraft\n#{submitted_claim.id}\nSubmitted")
+    expect(page).to have_content("Claim reference#{draft_claim.reference}")
+    expect(page).to have_content("Claim reference#{submitted_claim.reference}")
   end
 
   def i_dont_see_claims_from_other_schools

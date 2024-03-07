@@ -143,7 +143,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
       expect(page).to have_content "Claim added"
     end
 
-    expect(page).to have_content(claim.id)
+    expect(page).to have_content(claim.reference)
   end
 
   def then_i_see_the_error(message)

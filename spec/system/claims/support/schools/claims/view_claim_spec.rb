@@ -3,13 +3,7 @@ require "rails_helper"
 RSpec.describe "View a claim", type: :system, service: :claims do
   let(:school) { create(:claims_school, name: "A School") }
 
-  let(:anne) do
-    create(
-      :claims_user,
-      :anne,
-      user_memberships: [create(:user_membership, organisation: school)],
-    )
-  end
+  let!(:colin) { create(:claims_support_user, :colin) }
 
   let!(:provider) { create(:provider, :best_practice_network) }
   let!(:claims_mentor) { create(:claims_mentor, first_name: "Barry", last_name: "Garlow") }
@@ -17,14 +11,26 @@ RSpec.describe "View a claim", type: :system, service: :claims do
   let!(:claim) { create(:claim, school:, reference: "12345678", submitted_at: Time.new(2024, 3, 5, 12, 31, 52, "+00:00"), provider:) }
   let!(:mentor_training) { create(:mentor_training, claim:, mentor: claims_mentor, hours_completed: 6) }
 
-  scenario "Anne visits the claims index page with a submited" do
-    user_exists_in_dfe_sign_in(user: anne)
+  scenario "A support user visits the claims index page with a submited claim" do
+    user_exists_in_dfe_sign_in(user: colin)
     given_i_sign_in
+    when_i_select_a_school
+    when_i_click_on_claims
     when_i_visit_the_claim_show_page
     then_i_can_then_see_the_claim_details
   end
 
   private
+
+  def when_i_select_a_school
+    click_on "A School"
+  end
+
+  def when_i_click_on_claims
+    within(".app-secondary-navigation__list") do
+      click_on("Claims")
+    end
+  end
 
   def when_i_visit_the_claim_show_page
     click_on claim.reference
