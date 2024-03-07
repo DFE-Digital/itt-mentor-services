@@ -12,7 +12,7 @@ gem "propshaft"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.5"
 
-gem "awesome_print"
+gem "amazing_print"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 6.4"
@@ -147,6 +147,5 @@ end
 
 group :development, :production do
   # Semantic logger
-  gem "amazing_print"
   gem "rails_semantic_logger"
 end
