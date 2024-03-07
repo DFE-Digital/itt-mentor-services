@@ -1,7 +1,7 @@
 class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationController
   include Claims::BelongsToSchool
 
-  before_action :set_claim, only: %i[check submit]
+  before_action :set_claim, only: %i[check submit show]
   before_action :authorize_claim
   helper_method :claim_provider_form
 
@@ -10,6 +10,8 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
   end
 
   def new; end
+
+  def show; end
 
   def create
     if claim_provider_form.save

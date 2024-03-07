@@ -24,7 +24,7 @@ RSpec.describe "View claims", type: :system, service: :claims do
       school: school_with_mentors,
       provider: create(:provider),
       mentors: [create(:claims_mentor)],
-      submitted_at: Time.current,
+      submitted_at: Time.new(2024, 3, 5, 12, 31, 52, "+00:00"),
     )
   end
   let(:mary) do
@@ -106,7 +106,7 @@ RSpec.describe "View claims", type: :system, service: :claims do
       expect(page).to have_content(submitted_claim.id.first(8))
       expect(page).to have_content(submitted_claim.provider_name)
       expect(page).to have_content(submitted_claim.mentors.map(&:full_name).join(""))
-      expect(page).to have_content(I18n.l(submitted_claim.created_at.to_date, format: :short))
+      expect(page).to have_content("05/03/2024")
       expect(page).to have_content("Submitted")
     end
   end

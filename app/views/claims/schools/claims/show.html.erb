@@ -19,12 +19,12 @@
 
         <% if @claim.provider %>
           <% summary_list.with_row do |row| %>
-            <% row.with_key(text: Claim.human_attribute_name(:provider)) %>
+            <% row.with_key(text: Claim.human_attribute_name(:accredited_provider)) %>
             <% row.with_value(text: @claim.provider.name) %>
           <% end %>
         <% else %>
           <% summary_list.with_row do |row| %>
-            <% row.with_key(text: Claim.human_attribute_name(:provider)) %>
+            <% row.with_key(text: Claim.human_attribute_name(:accredited_provider)) %>
             <% row.with_value(text: t("none")) %>
           <% end %>
         <% end %>
@@ -42,7 +42,7 @@
 
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: Claim.human_attribute_name(:date_submitted)) %>
-          <% row.with_value(text: safe_l(@claim.submitted_on, format: :long)) %>
+          <% row.with_value(text: safe_l(@claim.submitted_on, format: :short)) %>
         <% end %>
 
         <% summary_list.with_row do |row| %>

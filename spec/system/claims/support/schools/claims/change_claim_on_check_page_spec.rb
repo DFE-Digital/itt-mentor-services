@@ -208,7 +208,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
       expect(page).to have_content "Claim added"
     end
 
-    expect(page).to have_content(claim.id)
+    expect(page).to have_content(claim.reference)
   end
 
   def when_i_remove_the_provider_from_the_claim
