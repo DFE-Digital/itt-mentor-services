@@ -73,4 +73,8 @@ Rails.application.configure do
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
+
+  config.log_level = :info                        # Or :debug
+  config.log_format = :color                      # Console colorised non-json output
+  config.semantic_logger.backtrace_level = :debug # Show file and line number (expensive: not for production)
 end

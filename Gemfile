@@ -144,3 +144,9 @@ group :test, :development do
   gem "rspec"
   gem "rspec-rails"
 end
+
+group :development, :production do
+  # Semantic logger
+  gem "amazing_print"
+  gem "rails_semantic_logger"
+end
