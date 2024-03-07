@@ -61,7 +61,7 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   end
 
   def default_params
-    { school: @school }
+    { school: @school, current_user: }
   end
 
   def claim_provider_form

@@ -2,17 +2,20 @@
 #
 # Table name: claims
 #
-#  id           :uuid             not null, primary key
-#  draft        :boolean          default(FALSE)
-#  reference    :string
-#  submitted_at :datetime
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  provider_id  :uuid
-#  school_id    :uuid             not null
+#  id              :uuid             not null, primary key
+#  created_by_type :string
+#  draft           :boolean          default(FALSE)
+#  reference       :string
+#  submitted_at    :datetime
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  created_by_id   :uuid
+#  provider_id     :uuid
+#  school_id       :uuid             not null
 #
 # Indexes
 #
+#  index_claims_on_created_by   (created_by_type,created_by_id)
 #  index_claims_on_provider_id  (provider_id)
 #  index_claims_on_reference    (reference) UNIQUE
 #  index_claims_on_school_id    (school_id)
@@ -28,6 +31,7 @@ RSpec.describe Claim, type: :model do
   context "with associations" do
     it { is_expected.to belong_to(:school) }
     it { is_expected.to belong_to(:provider) }
+    it { is_expected.to belong_to(:created_by) }
     it { is_expected.to have_many(:mentor_trainings) }
     it { is_expected.to have_many(:mentors).through(:mentor_trainings) }
   end
