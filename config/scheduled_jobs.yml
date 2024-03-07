@@ -7,7 +7,7 @@
 #   class: NameOfAJob
 #   description: Description is shown in the GoodJob dashboard.
 gias_school_sync:
-  cron: "10 0 * * *"
+  cron: "30 23 * * *"
   class: "Gias::SyncAllSchoolsJob"
   description: "Import/Update Schools using GIAS data"
 
