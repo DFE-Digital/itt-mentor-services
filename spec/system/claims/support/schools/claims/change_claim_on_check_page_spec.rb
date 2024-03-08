@@ -14,7 +14,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
 
   let(:mentor1) { create(:mentor, first_name: "Anne") }
   let(:mentor2) { create(:mentor, first_name: "Joe") }
-  let!(:claim) { create(:claim, :draft, school:, provider: provider1) }
+  let!(:claim) { create(:claim, :draft, school:, provider: provider1, reference: "12345678") }
 
   before do
     user_exists_in_dfe_sign_in(user: colin)
@@ -68,7 +68,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
     when_i_click_change_mentors
     then_i_expect_the_mentors_to_be_checked([mentor1, mentor2])
     when_i_click("Continue")
-    then_i_check_my_answers(provider1, [mentor1, mentor2], [20])
+    then_i_check_my_answers(provider1, [mentor1, mentor2], [20, 12])
   end
 
   scenario "Colin changes the training hours for a mentor on check page" do
