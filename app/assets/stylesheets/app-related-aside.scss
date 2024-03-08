@@ -1,0 +1,10 @@
+.app-related {
+  border-top: 2px solid govuk-colour("blue");
+  padding-top: govuk_spacing(3);
+}
+
+.app-related__list-item {
+  @include govuk-font(16);
+  font-weight: bold;
+  margin-top: govuk-spacing(3);
+}

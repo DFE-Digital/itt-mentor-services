@@ -1,13 +1,13 @@
 require "rails_helper"
 
-RSpec.describe "Home Page", type: :system, service: :claims do
-  scenario "User visits the claims homepage with dfe sign in" do
+RSpec.describe "Sign in Page", type: :system, service: :claims do
+  scenario "User visits the claims sign in page with dfe sign in" do
     given_i_am_on_the_start_page
     i_can_see_the_claims_service_name_in_the_header
     i_can_see_the_dfe_sign_in_button
   end
 
-  scenario "User visits the claims homepage with person sign in", persona_sign_in: true do
+  scenario "User visits the claims sign in page with person sign in", persona_sign_in: true do
     given_i_am_on_the_start_page
     i_can_see_the_claims_service_name_in_the_header
     i_can_see_the_persona_sign_in_button
@@ -16,7 +16,7 @@ RSpec.describe "Home Page", type: :system, service: :claims do
   private
 
   def given_i_am_on_the_start_page
-    visit "/"
+    visit sign_in_path
   end
 
   def i_can_see_the_claims_service_name_in_the_header
