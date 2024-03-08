@@ -5,7 +5,7 @@ describe RoutesHelper do
     context "when the current service is claims" do
       it "returns the correct path" do
         allow(HostingEnvironment).to receive(:current_service).and_return(:claims)
-        expect(helper.root_path).to eq(claims_root_path)
+        expect(helper.root_path).to eq(sign_in_path)
       end
     end
 
