@@ -14,7 +14,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
 
   let(:mentor1) { create(:mentor, first_name: "Anne") }
   let(:mentor2) { create(:mentor, first_name: "Joe") }
-  let!(:claim) { create(:claim, :draft, school:, provider: provider1, reference: "12345678") }
+  let!(:claim) { create(:claim, :draft, school:, provider: provider1) }
 
   before do
     user_exists_in_dfe_sign_in(user: colin)
@@ -32,7 +32,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
     when_i_click("Continue")
     then_i_check_my_answers(provider2, [mentor1, mentor2], [20, 12])
     when_i_click("Add claim")
-    then_i_am_redirectd_to_index_page(claim)
+    then_i_am_redirected_to_index_page(claim)
   end
 
   scenario "Colin does not have a provider selected when editing a claim from check page" do
@@ -60,7 +60,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
     when_i_click("Continue")
     then_i_check_my_answers(provider1, [mentor2], [20])
     when_i_click("Add claim")
-    then_i_am_redirectd_to_index_page(claim)
+    then_i_am_redirected_to_index_page(claim)
   end
 
   scenario "Colin clicks change mentors the check page and is redirected back to check page" do
@@ -203,12 +203,12 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
     end
   end
 
-  def then_i_am_redirectd_to_index_page(claim)
+  def then_i_am_redirected_to_index_page(claim)
     within(".govuk-notification-banner--success") do
       expect(page).to have_content "Claim added"
     end
 
-    expect(page).to have_content(claim.reference)
+    expect(page).to have_content(claim.reload.reference)
   end
 
   def when_i_remove_the_provider_from_the_claim
