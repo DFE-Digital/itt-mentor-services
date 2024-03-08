@@ -3,7 +3,7 @@ module RoutesHelper
 
   def root_path
     {
-      claims: claims_root_path,
+      claims: sign_in_path,
       placements: placements_root_path,
     }.fetch current_service
   end

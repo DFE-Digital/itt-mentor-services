@@ -4,6 +4,7 @@ module DfESignInUserHelper
     visit sign_in_path
     click_on "Sign in using DfE Sign In"
   end
+  alias_method :given_i_sign_in_as, :sign_in_as
 
   def user_exists_in_dfe_sign_in(user:)
     OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
