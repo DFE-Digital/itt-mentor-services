@@ -57,7 +57,8 @@ require "rails_helper"
 RSpec.describe School, type: :model do
   context "with associations" do
     it { is_expected.to have_many(:user_memberships) }
-    it { is_expected.to have_many(:mentors) }
+    it { is_expected.to have_many(:mentor_memberships) }
+    it { is_expected.to have_many(:mentors).through(:mentor_memberships) }
     it { is_expected.to belong_to(:region) }
   end
 
@@ -72,7 +73,7 @@ RSpec.describe School, type: :model do
       end
     end
 
-    describe "#claims_school" do
+    describe "#claims_service" do
       it "only returns claims schools" do
         create(:school, :placements)
         create(:school)
@@ -88,6 +89,14 @@ RSpec.describe School, type: :model do
 
     it { is_expected.to validate_presence_of(:urn) }
     it { is_expected.to validate_uniqueness_of(:urn).case_insensitive }
+    it { is_expected.to validate_presence_of(:name) }
+  end
+
+  describe "#organisation_type" do
+    subject { school.organisation_type }
+    let(:school) { create(:school) }
+
+    it { is_expected.to eq("school") }
   end
 
   describe "#primary_or_secondary_only?" do
