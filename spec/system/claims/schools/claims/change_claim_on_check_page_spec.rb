@@ -1,7 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "Change claim on check page", type: :system, service: :claims do
-  let!(:school) { create(:claims_school, mentors: [mentor1, mentor2]) }
+  let!(:region) { create(:region, name: "Inner London", claims_funding_available_per_hour: Money.from_amount(53.60, "GBP")) }
+
+  let!(:school) { create(:claims_school, mentors: [mentor1, mentor2], region:) }
   let!(:anne) do
     create(
       :claims_user,
@@ -88,7 +90,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
 
   def when_i_click_change_provider
     within("dl.govuk-summary-list:nth(1)") do
-      within(".govuk-summary-list__row:nth(1)") do
+      within(".govuk-summary-list__row:nth(2)") do
         click_on("Change")
       end
     end
@@ -96,7 +98,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
 
   def when_i_click_change_mentors
     within("dl.govuk-summary-list:nth(1)") do
-      within(".govuk-summary-list__row:nth(2)") do
+      within(".govuk-summary-list__row:nth(3)") do
         click_on("Change")
       end
     end
@@ -162,14 +164,16 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
 
   def then_i_check_my_answers(provider, mentors, mentor_hours)
     expect(page).to have_content("Check your answers")
+    expect(page).to have_content("Hours of training")
+    expect(page).to have_content("Grant funding")
 
     within("dl.govuk-summary-list:nth(1)") do
-      within(".govuk-summary-list__row:nth(1)") do
-        expect(page).to have_content("Provider")
+      within(".govuk-summary-list__row:nth(2)") do
+        expect(page).to have_content("Accredited provider")
         expect(page).to have_content(provider.name)
       end
 
-      within(".govuk-summary-list__row:nth(2)") do
+      within(".govuk-summary-list__row:nth(3)") do
         expect(page).to have_content("Mentors")
         mentors.each do |mentor|
           expect(page).to have_content(mentor.full_name)
@@ -181,6 +185,13 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
       claim.mentor_trainings.each_with_index do |mentor_training, index|
         expect(page).to have_content(mentor_training.mentor.full_name)
         expect(page).to have_content(mentor_hours[index])
+      end
+    end
+
+    within("dl.govuk-summary-list:nth(3)") do
+      within(".govuk-summary-list__row:nth(1)") do
+        expect(page).to have_content("Claim amount")
+        expect(page).to have_content(claim.amount.format(symbol: true, decimal_mark: ".", no_cents: true))
       end
     end
   end

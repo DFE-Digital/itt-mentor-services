@@ -28,4 +28,11 @@ RSpec.describe Region, type: :model do
     it { is_expected.to validate_presence_of(:claims_funding_available_per_hour_pence) }
     it { is_expected.to validate_uniqueness_of(:name).case_insensitive }
   end
+
+  describe "#funding_available_per_hour" do
+    it "returns the funding available per hour" do
+      region = create(:region, claims_funding_available_per_hour_currency: "GBP", claims_funding_available_per_hour_pence: 4510)
+      expect(region.funding_available_per_hour).to eq(Money.new(4510, "GBP"))
+    end
+  end
 end

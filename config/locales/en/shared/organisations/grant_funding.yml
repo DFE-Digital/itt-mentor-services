@@ -1,0 +1,7 @@
+en:
+  shared:
+    organisations:
+      grant_funding:
+        region: Region
+        hourly_rate: Hourly rate
+

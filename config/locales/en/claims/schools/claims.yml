@@ -14,8 +14,13 @@ en:
           warning: You will not be able to change any of the claim details once you have submitted it.
           submit: Submit claim
           add_claim: Add claim
-          disclaimer: By submitting this claim, you confirm that the details provided are correct to the best of your knowledge.
+          declaration: Declaration
+          disclaimer: "By submitting this claim, I confirm that:"
+          claim_on_behalf_of_school: I am authorised to claim on behalf of the school
+          accurate_information: The information detailed above is accurate and the total I am claiming back has been used to support the cost of the mentor training
+          provide_evidence: I will provide evidence to support this claim if requested by the Department for Education
           hours: "%{hours} hours"
+          grant_funding: Grant funding
           hours_of_training: Hours of training
         form:
           add_claim: Add claim
