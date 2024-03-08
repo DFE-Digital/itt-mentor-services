@@ -23,6 +23,6 @@ require "rails_helper"
 RSpec.describe PlacementMentorJoin, type: :model do
   describe "associations" do
     it { is_expected.to belong_to(:placement) }
-    it { is_expected.to belong_to(:mentor) }
+    it { is_expected.to belong_to(:mentor).class_name("Placements::Mentor") }
   end
 end
