@@ -20,4 +20,8 @@ class Region < ApplicationRecord
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :claims_funding_available_per_hour_currency, presence: true
   validates :claims_funding_available_per_hour_pence, presence: true
+
+  def funding_available_per_hour
+    Money.new(claims_funding_available_per_hour_pence, claims_funding_available_per_hour_currency)
+  end
 end

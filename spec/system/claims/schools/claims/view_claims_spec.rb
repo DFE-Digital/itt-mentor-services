@@ -97,7 +97,7 @@ RSpec.describe "View claims", type: :system, service: :claims do
 
   def i_see_a_list_of_the_schools_claims
     expect(page).to have_content("Claim reference")
-    expect(page).to have_content("Provider")
+    expect(page).to have_content("Accredited provider")
     expect(page).to have_content("Mentors")
     expect(page).to have_content("Date submitted")
     expect(page).to have_content("Status")

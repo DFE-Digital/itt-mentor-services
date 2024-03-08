@@ -1,7 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "Create claim", type: :system, service: :claims do
-  let!(:school) { create(:claims_school, mentors: [mentor1, mentor2]) }
+  let!(:region) { create(:region, name: "Inner London", claims_funding_available_per_hour: Money.from_amount(53.60, "GBP")) }
+
+  let!(:school) { create(:claims_school, mentors: [mentor1, mentor2], region:) }
   let!(:anne) do
     create(
       :claims_user,
@@ -101,14 +103,15 @@ RSpec.describe "Create claim", type: :system, service: :claims do
   def then_i_check_my_answers
     expect(page).to have_content("Check your answers")
     expect(page).to have_content("Hours of training")
+    expect(page).to have_content("Grant funding")
 
     within("dl.govuk-summary-list:nth(1)") do
-      within(".govuk-summary-list__row:nth(1)") do
-        expect(page).to have_content("Provider")
+      within(".govuk-summary-list__row:nth(2)") do
+        expect(page).to have_content("Accredited provider")
         expect(page).to have_content(provider.name)
       end
 
-      within(".govuk-summary-list__row:nth(2)") do
+      within(".govuk-summary-list__row:nth(3)") do
         expect(page).to have_content("Mentors")
         expect(page).to have_content(mentor1.full_name)
         expect(page).to have_content(mentor2.full_name)
@@ -124,6 +127,13 @@ RSpec.describe "Create claim", type: :system, service: :claims do
       within(".govuk-summary-list__row:nth(2)") do
         expect(page).to have_content(mentor2.full_name)
         expect(page).to have_content("12 hours")
+      end
+    end
+
+    within("dl.govuk-summary-list:nth(3)") do
+      within(".govuk-summary-list__row:nth(1)") do
+        expect(page).to have_content("Claim amount")
+        expect(page).to have_content("£1715.20")
       end
     end
   end

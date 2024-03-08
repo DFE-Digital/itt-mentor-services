@@ -1,7 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "View a claim", type: :system, service: :claims do
-  let(:school) { create(:claims_school, name: "A School") }
+  let!(:region) { create(:region, name: "Inner London", claims_funding_available_per_hour: Money.from_amount(53.60, "GBP")) }
+
+  let(:school) { create(:claims_school, name: "A School", region:) }
 
   let(:anne) do
     create(
@@ -39,7 +41,7 @@ RSpec.describe "View a claim", type: :system, service: :claims do
     expect(page).to have_content("Hours of training")
     expect(page).to have_content("Status\nSubmitted")
     expect(page).to have_content("Barry Garlow#{mentor_training.hours_completed} hours")
-    expect(page).to have_content("Claim amount£289.50")
+    expect(page).to have_content("Claim amount£321.60")
   end
 
   def given_i_sign_in
