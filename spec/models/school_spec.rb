@@ -94,6 +94,7 @@ RSpec.describe School, type: :model do
 
   describe "#organisation_type" do
     subject { school.organisation_type }
+
     let(:school) { create(:school) }
 
     it { is_expected.to eq("school") }
