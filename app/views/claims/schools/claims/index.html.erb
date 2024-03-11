@@ -42,7 +42,7 @@
       <% end %>
     <% end %>
 
-    <%= govuk_pagination(pagy: @pagy) %>
+    <%= render PaginationComponent.new(pagy: @pagy) %>
   <% else %>
     <p>
       <%= t("no_records_for", records: "claims", for: @school.name) %>
