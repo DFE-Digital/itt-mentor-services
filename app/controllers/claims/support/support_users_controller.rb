@@ -3,7 +3,7 @@ class Claims::Support::SupportUsersController < Claims::Support::ApplicationCont
   before_action :authorize_support_user
 
   def index
-    @support_users = Claims::SupportUser.order(created_at: :desc)
+    @pagy, @support_users = pagy(Claims::SupportUser.order(created_at: :desc))
   end
 
   def new
