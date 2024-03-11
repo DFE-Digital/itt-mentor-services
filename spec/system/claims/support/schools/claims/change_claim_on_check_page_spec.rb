@@ -173,7 +173,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
 
     within("dl.govuk-summary-list:nth(1)") do
       within(".govuk-summary-list__row:nth(1)") do
-        expect(page).to have_content("Provider")
+        expect(page).to have_content("Accredited provider")
         expect(page).to have_content(provider.name)
       end
 
