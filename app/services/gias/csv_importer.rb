@@ -76,7 +76,7 @@ module Gias
 
       Rails.logger.silence do
         School.upsert_all(school_records, unique_by: :urn)
-        Trust.upsert_all(trust_records, unique_by: :uid)
+        Trust.upsert_all(trust_records.uniq, unique_by: :uid)
 
         associate_schools_to_regions
         associate_schools_to_trusts(trust_associations)
