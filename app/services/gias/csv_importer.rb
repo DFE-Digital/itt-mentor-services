@@ -111,7 +111,7 @@ module Gias
       Rails.logger.debug "Associating schools to trusts... "
 
       trust_data.each do |uid, urns|
-        trust = Trust.find_by(uid:)
+        trust = Trust.find_by!(uid:)
         School.where(urn: urns).update_all(trust_id: trust.id)
       end
     end
