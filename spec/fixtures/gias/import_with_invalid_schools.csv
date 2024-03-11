@@ -1,8 +1,9 @@
-URN,EstablishmentName,Town,Postcode,EstablishmentStatus (code),TypeOfEstablishment (code),DistrictAdministrative (code)
-130,InnerLondonSchool,InnerLondonTown,Postcode,1,7,E09000007
-131,OuterLondonSchool,OuterLondonTown,Postcode,1,7,E09000004
-123,FringeSchool,FringeTown,Postcode,1,7,E06000039
-132,RestOfEnglandSchool,RestOfEnglandTown,Postcode,1,7,E09000099
-124,School,Town,Postcode,2,7,E06000031
-124,School,Town,Postcode,1,8,E06000031
-124,,Town,Postcode,1,7,E06000031
+URN,EstablishmentName,Town,Postcode,EstablishmentStatus (code),TypeOfEstablishment (code),DistrictAdministrative (code),TrustSchoolFlag (code),Trusts (code),Trusts (name)
+130,InnerLondonSchool,InnerLondonTown,Postcode,1,7,E09000007,,
+131,OuterLondonSchool,OuterLondonTown,Postcode,1,7,E09000004,,
+123,FringeSchool,FringeTown,Postcode,1,7,E06000039,,
+132,RestOfEnglandSchool,RestOfEnglandTown,Postcode,1,7,E09000099,,
+124,School,Town,Postcode,2,7,E06000031,,
+124,School,Town,Postcode,1,8,E06000031,,
+124,,Town,Postcode,1,7,E06000031,,
+140,TrustSchool,TrustTown,Postcode,1,7,E09000007,1,12345,Department for Education Trust
