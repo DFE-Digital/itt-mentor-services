@@ -8,6 +8,6 @@ en:
         show:
           heading: Claim
           status: Status
-          provider: Provider
+          provider: Accredited provider
           mentor_with_index: Mentor %{index}
           mentor: Mentor

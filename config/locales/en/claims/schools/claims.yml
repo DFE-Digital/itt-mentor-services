@@ -5,6 +5,8 @@ en:
         confirm:
           page_title: Claim submitted
           claim_submitted: Claim submitted
+          processing_your_claim: Processing your claim
+          processing_your_claim_guidance: We will process this claim at the end of July 2025 and all payments will be paid by the end of September 2025.
           your_reference_number_id: Your reference number
           what_happens_next: What happens next
           view_claims: View claims
@@ -24,9 +26,9 @@ en:
           hours_of_training: Hours of training
         form:
           add_claim: Add claim
-          heading: Provider
+          heading: Accredited provider
         new:
-          page_title: Provider - Add claim
+          page_title: Accredited provider - Add claim
         index:
           heading: Claims
           add_claim: Add claim
@@ -42,4 +44,4 @@ en:
           grant_funding: Grant funding
           hours: hours
         edit:
-          page_title: Provider - Add claim
+          page_title: Accredited provider - Add claim

@@ -6,14 +6,12 @@ en:
           submit:
             success: Claim added
           edit:
-            page_title: Provider - Add claim
+            page_title: Accredited provider - Add claim
           check:
             page_title: Check your answers
-            warning: You will not be able to change any of the claim details once you have submitted it.
             submit: Add claim
-            page_title: Check your answers
+            grant_funding: Grant funding
             add_claim: Add claim - %{school}
-            disclaimer: By submitting this claim, you confirm that the details provided are correct to the best of your knowledge.
             hours: "%{hours} hours"
             hours_of_training: Hours of training
           index:
@@ -31,8 +29,8 @@ en:
             hours: hours
             page_caption: Claims - %{school_name}
           new:
-            page_title: Provider - Add claim
+            page_title: Accredited provider - Add claim
           form:
             add_claim: Add claim - %{school}
-            heading: Provider
+            heading: Accredited provider
 

@@ -48,7 +48,7 @@ RSpec.describe "View claims", type: :system, service: :claims do
     end
 
     within(".govuk-summary-list__row:nth-child(2)") do
-      expect(page).to have_content("Provider")
+      expect(page).to have_content("Accredited provider")
       expect(page).to have_content(provider.name)
     end
 
