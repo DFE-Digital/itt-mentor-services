@@ -6,6 +6,7 @@ module Gias
     include RegionalAreas
 
     OPEN_SCHOOL = "1".freeze
+    SUPPORTED_BY_A_TRUST = "1".freeze
     NON_ENGLISH_ESTABLISHMENTS = %w[8 10 25 24 26 27 29 30 32 37 49 56 57].freeze
 
     attr_reader :csv_path
@@ -16,54 +17,69 @@ module Gias
 
     def call
       invalid_records = []
-      records = []
+      school_records = []
+      trust_records = []
+      trust_associations = Hash.new { |h, k| h[k] = [] }
 
       CSV
         .foreach(csv_path, headers: true, encoding: "iso-8859-1:utf-8")
         .with_index(2) do |school, row_number|
-          invalid_records << "Row #{row_number} is invalid" if invalid?(school)
-          next if school_excluded?(school) || invalid?(school)
+        invalid_records << "Row #{row_number} is invalid" if invalid?(school)
+        next if school_excluded?(school) || invalid?(school)
 
-          records << {
-            urn: school["URN"],
-            name: school["EstablishmentName"],
-            district_admin_name: school["DistrictAdministrative (name)"],
-            district_admin_code: school["DistrictAdministrative (code)"],
-            town: school["Town"].presence,
-            postcode: school["Postcode"].presence,
-            ukprn: school["UKPRN"].presence,
-            address1: school["Street"].presence,
-            address2: school["Locality"].presence,
-            address3: school["Address3"].presence,
-            website: school["SchoolWebsite"].presence,
-            telephone: school["TelephoneNum"].presence,
-            group: school["EstablishmentTypeGroup (name)"].presence,
-            type_of_establishment: school["TypeOfEstablishment (name)"].presence,
-            phase: school["PhaseOfEducation (name)"].presence,
-            gender: school["Gender (name)"].presence,
-            minimum_age: school["StatutoryLowAge"].presence,
-            maximum_age: school["StatutoryHighAge"].presence,
-            religious_character: school["ReligiousCharacter (name)"].presence,
-            admissions_policy: school["AdmissionsPolicy (name)"].presence,
-            urban_or_rural: school["UrbanRural (name)"].presence,
-            school_capacity: school["SchoolCapacity"].presence,
-            total_pupils: school["NumberOfPupils"].presence,
-            total_boys: school["NumberOfBoys"].presence,
-            total_girls: school["NumberOfGirls"].presence,
-            percentage_free_school_meals: school["PercentageFSM"].presence,
-            special_classes: school["SpecialClasses (name)"].presence,
-            send_provision: school["TypeOfResourcedProvision (name)"].presence,
-            rating: school["OfstedRating (name)"].presence,
-            last_inspection_date: school["OfstedLastInsp"].presence,
+        school_records << {
+          urn: school["URN"],
+          name: school["EstablishmentName"],
+          district_admin_name: school["DistrictAdministrative (name)"],
+          district_admin_code: school["DistrictAdministrative (code)"],
+          town: school["Town"].presence,
+          postcode: school["Postcode"].presence,
+          ukprn: school["UKPRN"].presence,
+          address1: school["Street"].presence,
+          address2: school["Locality"].presence,
+          address3: school["Address3"].presence,
+          website: school["SchoolWebsite"].presence,
+          telephone: school["TelephoneNum"].presence,
+          group: school["EstablishmentTypeGroup (name)"].presence,
+          type_of_establishment: school["TypeOfEstablishment (name)"].presence,
+          phase: school["PhaseOfEducation (name)"].presence,
+          gender: school["Gender (name)"].presence,
+          minimum_age: school["StatutoryLowAge"].presence,
+          maximum_age: school["StatutoryHighAge"].presence,
+          religious_character: school["ReligiousCharacter (name)"].presence,
+          admissions_policy: school["AdmissionsPolicy (name)"].presence,
+          urban_or_rural: school["UrbanRural (name)"].presence,
+          school_capacity: school["SchoolCapacity"].presence,
+          total_pupils: school["NumberOfPupils"].presence,
+          total_boys: school["NumberOfBoys"].presence,
+          total_girls: school["NumberOfGirls"].presence,
+          percentage_free_school_meals: school["PercentageFSM"].presence,
+          special_classes: school["SpecialClasses (name)"].presence,
+          send_provision: school["TypeOfResourcedProvision (name)"].presence,
+          rating: school["OfstedRating (name)"].presence,
+          last_inspection_date: school["OfstedLastInsp"].presence,
+        }
+
+        if school["TrustSchoolFlag (code)"] == SUPPORTED_BY_A_TRUST
+          trust_records << {
+            uid: school["Trusts (code)"],
+            name: school["Trusts (name)"],
           }
+
+          trust_associations[school["Trusts (code)"]] << school["URN"]
         end
+      end
 
       if invalid_records.any?
         Rails.logger.info "Invalid rows - #{invalid_records.inspect}"
       end
+
       Rails.logger.silence do
-        School.upsert_all(records, unique_by: :urn)
+        School.upsert_all(school_records, unique_by: :urn)
+        Trust.upsert_all(trust_records, unique_by: :uid)
+
         associate_schools_to_regions
+        associate_schools_to_trusts(trust_associations)
       end
 
       Rails.logger.info "GIAS Data Imported!"
@@ -89,6 +105,17 @@ module Gias
       # Rest of England Schools
       rest_of_england = Region.find_or_create_by!(name: "Rest of England") { |region| region.claims_funding_available_per_hour = 43.18 }
       School.where(region_id: nil).update_all(region_id: rest_of_england.id)
+    end
+
+    def associate_schools_to_trusts(trust_data)
+      Rails.logger.debug "Associating schools to trusts... "
+
+      trust_data.each do |uid, urns|
+        trust = Trust.find_by(uid:)
+        next unless trust
+
+        School.where(urn: urns).update_all(trust_id: trust.id)
+      end
     end
 
     def invalid?(school)
