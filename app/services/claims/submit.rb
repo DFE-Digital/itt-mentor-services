@@ -1,9 +1,9 @@
 class Claims::Submit
   include ServicePattern
 
-  def initialize(claim:, draft:)
+  def initialize(claim:, claim_params:)
     @claim = claim
-    @draft = draft
+    @claim_params = claim_params
   end
 
   def call
@@ -12,12 +12,11 @@ class Claims::Submit
 
   private
 
-  attr_reader :claim, :draft
+  attr_reader :claim, :claim_params
 
   def updated_claim
     @updated_claim ||= begin
-      claim.draft = draft
-      claim.submitted_at = Time.current
+      claim.assign_attributes(claim_params)
       claim.reference = generate_reference
       claim
     end

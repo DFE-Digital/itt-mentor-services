@@ -31,6 +31,8 @@ FactoryBot.define do
     association :provider
     association :created_by, factory: :claims_user
 
+    reference { SecureRandom.random_number(99_999_999) }
+
     trait :draft do
       draft { true }
     end

@@ -19,6 +19,10 @@ module ApplicationHelper
   end
 
   def safe_l(value, **options)
-    l(value, **options) if value
+    if value
+      l(value, **options) if value
+    else
+      "-"
+    end
   end
 end
