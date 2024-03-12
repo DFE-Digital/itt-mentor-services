@@ -45,7 +45,10 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
   end
 
   def submit
-    Claims::Submit.call(claim: @claim, draft: true)
+    Claims::Submit.call(
+      claim: @claim,
+      claim_params: { draft: true },
+    )
 
     redirect_to claims_support_school_claims_path(@school), flash: { success: t(".success") }
   end

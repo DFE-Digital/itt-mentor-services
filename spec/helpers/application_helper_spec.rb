@@ -49,8 +49,8 @@ RSpec.describe ApplicationHelper do
     end
 
     context "when value is nil" do
-      it "returns nil" do
-        expect(safe_l(nil, format: :short)).to eq(nil)
+      it "returns '-'" do
+        expect(safe_l(nil, format: :short)).to eq("-")
       end
     end
   end

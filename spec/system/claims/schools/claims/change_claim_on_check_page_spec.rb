@@ -208,7 +208,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
 
   def then_i_get_a_claim_reference(claim)
     within(".govuk-panel") do
-      expect(page).to have_content("Claim submitted\nYour reference number\n#{claim.reference}")
+      expect(page).to have_content("Claim submitted\nYour reference number\n#{claim.reload.reference}")
     end
   end
 

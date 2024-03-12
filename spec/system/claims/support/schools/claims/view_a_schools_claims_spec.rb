@@ -6,7 +6,14 @@ RSpec.describe "View a schools claims", type: :system, service: :claims do
 
   let!(:colin) { create(:claims_support_user, :colin) }
 
-  let!(:submitted_claim) { create(:claim, school_id: school.id, draft: false) }
+  let!(:submitted_claim) do
+    create(
+      :claim,
+      school_id: school.id,
+      draft: false,
+      submitted_at: Time.new(2024, 3, 5, 12, 31, 52, "+00:00"),
+    )
+  end
   let!(:draft_claim) { create(:claim, school_id: school.id, draft: true) }
   let!(:claim_from_another_school) { create(:claim, school_id: another_school.id, draft: true) }
 
@@ -30,8 +37,28 @@ RSpec.describe "View a schools claims", type: :system, service: :claims do
   end
 
   def i_see_a_list_of_the_schools_claims
-    expect(page).to have_content("Claim reference#{draft_claim.reference}")
-    expect(page).to have_content("Claim reference#{submitted_claim.reference}")
+    expect(page).to have_content("Claim reference")
+    expect(page).to have_content("Accredited provider")
+    expect(page).to have_content("Mentors")
+    expect(page).to have_content("Date submitted")
+    expect(page).to have_content("Status")
+    expect(page).to have_content("Date submitted")
+
+    within("tbody tr:nth-child(1)") do
+      expect(page).to have_content(draft_claim.reference)
+      expect(page).to have_content(draft_claim.provider_name)
+      expect(page).to have_content(draft_claim.mentors.map(&:full_name).join(""))
+      expect(page).to have_content("-")
+      expect(page).to have_content("Draft")
+    end
+
+    within("tbody tr:nth-child(2)") do
+      expect(page).to have_content(submitted_claim.reference)
+      expect(page).to have_content(submitted_claim.provider_name)
+      expect(page).to have_content(submitted_claim.mentors.map(&:full_name).join(""))
+      expect(page).to have_content("05/03/2024")
+      expect(page).to have_content("Submitted")
+    end
   end
 
   def i_dont_see_claims_from_other_schools

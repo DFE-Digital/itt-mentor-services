@@ -1,44 +1,42 @@
 require "rails_helper"
 
 describe Claims::Submit do
-  subject(:submit_service) { described_class.call(claim:, draft:) }
+  subject(:submit_service) { described_class.call(claim:, claim_params:) }
 
-  let(:draft) { false }
-  let!(:claim) { create(:claim, :draft) }
+  let!(:claim) { create(:claim, :draft, reference: nil) }
+  let(:claim_params) { { draft: false, submitted_at: } }
+  let(:submitted_at) { Time.new("2024-03-04 10:32:04 UTC") }
 
   describe "#call" do
     it "submits the claim" do
       allow(SecureRandom).to receive(:random_number).with(99_999_999).and_return(123)
-      allow(Time).to receive(:current).and_return("2024-03-04 10:32:04 UTC")
 
       expect { submit_service }.to change(claim, :reference).from(nil).to("123")
       expect(claim.draft).to eq(false)
-      expect(claim.submitted_at).to eq(Time.current)
+      expect(claim.submitted_at).to eq(submitted_at)
     end
 
     context "when claim reference is already taken" do
       it "submits the claim with a new reference" do
         create(:claim, reference: "123")
         allow(SecureRandom).to receive(:random_number).with(99_999_999).and_return(123, 456)
-        allow(Time).to receive(:current).and_return("2024-03-04 10:32:04 UTC")
 
         expect { submit_service }.to change(claim, :reference).from(nil).to("456")
 
         expect(claim.draft).to eq(false)
-        expect(claim.submitted_at).to eq(Time.current)
+        expect(claim.submitted_at).to eq(submitted_at)
       end
     end
 
     context "when draft value is true" do
-      let(:draft) { true }
+      let(:claim_params) { { draft: true } }
 
       it "submits the claim" do
         allow(SecureRandom).to receive(:random_number).with(99_999_999).and_return(123)
-        allow(Time).to receive(:current).and_return("2024-03-04 10:32:04 UTC")
 
         expect { submit_service }.to change(claim, :reference).from(nil).to("123")
         expect(claim.draft).to eq(true)
-        expect(claim.submitted_at).to eq(Time.current)
+        expect(claim.submitted_at).to be_nil
       end
     end
   end
