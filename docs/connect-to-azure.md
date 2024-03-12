@@ -29,7 +29,7 @@ You need to grant yourself permission to access Azure resources in the test envi
    >
    > ![](images/connect-to-azure/azure-groups.png)
 
-4. Click "Active" on `s189-teacher-services-cloud-test`.
+4. Click "Activate" on `s189-teacher-services-cloud-test`.
 
    > Enter a reason for needing access. For example, "Running a Rake task".
    >
