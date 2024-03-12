@@ -14,7 +14,7 @@ RSpec.describe UserMailer, type: :mailer do
         expect(invite_email.body).to have_content <<~EMAIL
           Dear #{user.full_name},
 
-          You have been invited to join the Claim funding for mentors service for #{organisation.name}.
+          You have been invited to join the Claim funding for mentor training service for #{organisation.name}.
 
           Sign in here http://claims.localhost:3000/sign-in
         EMAIL
@@ -71,7 +71,7 @@ RSpec.describe UserMailer, type: :mailer do
         expect(removal_email.body).to have_content <<~EMAIL
           Dear #{user.full_name},
 
-          You have been removed from the Claim funding for mentors service for #{organisation.name}.
+          You have been removed from the Claim funding for mentor training service for #{organisation.name}.
         EMAIL
       end
     end

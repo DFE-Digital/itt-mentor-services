@@ -3,7 +3,7 @@
 > [!NOTE]
 > This is a _draft_ document. It will change as we develop our understanding of the services that this application encapsulates.
 
-This application will power two user-facing services: 'Manage school placements' and 'Claim funding for mentors' (a.k.a. Track & Pay). Some data entities will be used by both services – for example, Mentors, Providers and Schools. Others will only be relevant to one service – for example, Funding Claims and School Placements.
+This application will power two user-facing services: 'Manage school placements' and 'Claim funding for mentor training' (a.k.a. Track & Pay). Some data entities will be used by both services – for example, Mentors, Providers and Schools. Others will only be relevant to one service – for example, Funding Claims and School Placements.
 
 ## Entity Relationship Diagram (ERD)
 

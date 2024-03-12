@@ -4,12 +4,12 @@ RSpec.describe "Error pages", type: :system do
   describe "Claims errors", service: :claims do
     it "shows the 404 error page" do
       when_i_visit("/404")
-      then_i_see_404_content_for("Claim funding for mentors")
+      then_i_see_404_content_for("Claim funding for mentor training")
     end
 
     it "shows the 422 error page" do
       when_i_visit("/422")
-      then_i_see_422_content_for("Claim funding for mentors")
+      then_i_see_422_content_for("Claim funding for mentor training")
     end
 
     it "shows the 500 error page" do
