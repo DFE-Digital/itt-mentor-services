@@ -39,7 +39,7 @@ RSpec.describe Claim, type: :model do
   context "with validations" do
     subject { build(:claim) }
 
-    it { is_expected.to validate_uniqueness_of(:reference).allow_nil }
+    it { is_expected.to validate_uniqueness_of(:reference).case_insensitive.allow_nil }
   end
 
   context "with delegations" do

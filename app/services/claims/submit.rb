@@ -17,7 +17,7 @@ class Claims::Submit
   def updated_claim
     @updated_claim ||= begin
       claim.assign_attributes(claim_params)
-      claim.reference = generate_reference
+      claim.reference = generate_reference if claim.reference.nil?
       claim
     end
   end

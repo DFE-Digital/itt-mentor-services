@@ -16,6 +16,15 @@ describe Claims::Submit do
       expect(claim.submitted_at).to eq(submitted_at)
     end
 
+    context "when claim has a reference already" do
+      it "submits the claim with a new reference" do
+        claim_with_reference = create(:claim, reference: "123")
+        service = described_class.call(claim: claim_with_reference, claim_params:)
+
+        expect { service }.not_to change(claim, :reference)
+      end
+    end
+
     context "when claim reference is already taken" do
       it "submits the claim with a new reference" do
         create(:claim, reference: "123")
