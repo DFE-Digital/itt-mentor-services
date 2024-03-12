@@ -40,7 +40,7 @@ RSpec.describe "Sign out as a Claims User", type: :system, service: :claims do
   end
 
   def i_expect_to_be_on_sign_in_page
-    expect(page).to have_content("Sign in to Claim funding for mentors")
+    expect(page).to have_content("Sign in to Claim funding for mentor training")
     expect(page).to have_content("Sign in using DfE Sign In")
   end
 end

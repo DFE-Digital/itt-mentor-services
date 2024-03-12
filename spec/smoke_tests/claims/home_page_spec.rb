@@ -14,7 +14,7 @@ RSpec.describe "Home Page", type: :system, smoke_test: true, service: :claims do
 
   def i_can_see_the_claims_service_name_in_the_header
     within(".govuk-header") do
-      expect(page).to have_content("Claim funding for mentors")
+      expect(page).to have_content("Claim funding for mentor training")
     end
   end
 end

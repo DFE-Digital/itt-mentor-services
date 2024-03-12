@@ -2,7 +2,7 @@
 
 This application has two main services:
 
-- A service where schools or training providers can claim funding for internal teacher training.
+- A service where schools or training providers can claim funding for mentor training.
 - TODO: Add description for the other service
 
 ## Live Environments

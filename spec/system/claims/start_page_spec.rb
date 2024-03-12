@@ -16,7 +16,7 @@ RSpec.describe "Sign in Page", type: :system, service: :claims do
 
   def then_i_can_see_the_start_page
     within(".govuk-header") do
-      expect(page).to have_content("Claim funding for mentors")
+      expect(page).to have_content("Claim funding for mentor training")
     end
 
     expect(page).to have_content(

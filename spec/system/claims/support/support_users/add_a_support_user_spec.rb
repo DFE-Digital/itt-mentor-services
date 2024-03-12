@@ -26,7 +26,7 @@ RSpec.describe "Add a support user", type: :system do
     and_i_click_on_add_a_support_user
     and_i_fill_in_the_support_user_form(email_address: "john.doe@example.com")
     then_i_see_an_error("Enter a Department for Education email address in the correct format, like name@education.gov.uk")
-    and_the_page_title_is("Error: Personal details - Add user - Claim funding for mentors")
+    and_the_page_title_is("Error: Personal details - Add user - Claim funding for mentor training")
   end
 
   scenario "Attempt to add a support user with an email that already exists in the system" do
@@ -36,7 +36,7 @@ RSpec.describe "Add a support user", type: :system do
     and_i_click_on_add_a_support_user
     and_i_fill_in_the_support_user_form(email_address: "john.doe@education.gov.uk")
     then_i_see_an_error("Email address already in use")
-    and_the_page_title_is("Error: Personal details - Add user - Claim funding for mentors")
+    and_the_page_title_is("Error: Personal details - Add user - Claim funding for mentor training")
   end
 
   scenario "Make changes while adding a support user" do
@@ -97,7 +97,7 @@ RSpec.describe "Add a support user", type: :system do
 
   def and_an_email_is_sent_to_the_support_user(email_address:)
     email = ActionMailer::Base.deliveries.find do |delivery|
-      delivery.to.include?(email_address) && delivery.subject == "Invitation to join Claim funding for mentors"
+      delivery.to.include?(email_address) && delivery.subject == "Invitation to join Claim funding for mentor training"
     end
 
     expect(email).not_to be_nil
