@@ -33,7 +33,7 @@ class Claim < ApplicationRecord
   has_many :mentor_trainings
   has_many :mentors, through: :mentor_trainings
 
-  validates :reference, uniqueness: true, allow_nil: true
+  validates :reference, uniqueness: { case_sensitive: false }, allow_nil: true
 
   delegate :name, to: :provider, prefix: true, allow_nil: true
 
