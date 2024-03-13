@@ -17,10 +17,19 @@ RSpec.describe "View claims", type: :system, service: :claims do
     )
   end
 
-  let!(:draft_claim) { create(:claim, :draft, school:) }
+  let!(:draft_claim) do
+    create(
+      :claim,
+      :draft,
+      school: school_with_mentors,
+      provider: create(:provider),
+      mentors: [create(:claims_mentor)],
+    )
+  end
   let!(:submitted_claim) do
     create(
       :claim,
+      :submitted,
       school: school_with_mentors,
       provider: create(:provider),
       mentors: [create(:claims_mentor)],
@@ -33,6 +42,10 @@ RSpec.describe "View claims", type: :system, service: :claims do
       :anne,
       user_memberships: [create(:user_membership, organisation: school_with_mentors)],
     )
+  end
+
+  before do
+    create(:claim, status: "internal", school:)
   end
 
   scenario "Anne visits the claims index page with no mentors" do
@@ -50,17 +63,16 @@ RSpec.describe "View claims", type: :system, service: :claims do
     i_see_a_list_of_the_schools_claims
   end
 
-  scenario "Anne visits the claims index page with draft claims" do
+  scenario "Anne visits the claims index page with internal claims" do
     user_exists_in_dfe_sign_in(user: anne)
     given_i_sign_in
     vist_claims_index_page
-    i_do_not_see_any_draft_claims
+    i_do_not_see_any_internal_claims
   end
 
   private
 
-  def i_do_not_see_any_draft_claims
-    expect(page).not_to have_content(draft_claim.id)
+  def i_do_not_see_any_internal_claims
     expect(page).to have_content("There are no claims for #{school.name}")
   end
 
@@ -103,6 +115,13 @@ RSpec.describe "View claims", type: :system, service: :claims do
     expect(page).to have_content("Status")
 
     within("tbody tr:nth-child(1)") do
+      expect(page).to have_content(draft_claim.reference)
+      expect(page).to have_content(draft_claim.provider_name)
+      expect(page).to have_content(draft_claim.mentors.map(&:full_name).join(""))
+      expect(page).to have_content("Draft")
+    end
+
+    within("tbody tr:nth-child(2)") do
       expect(page).to have_content(submitted_claim.reference)
       expect(page).to have_content(submitted_claim.provider_name)
       expect(page).to have_content(submitted_claim.mentors.map(&:full_name).join(""))

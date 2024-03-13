@@ -20,7 +20,7 @@ class Claim::ProviderForm < ApplicationForm
   def updated_claim
     @updated_claim ||= begin
       claim.provider_id = provider_id
-      claim.draft = true
+      claim.status = :internal
       claim.created_by = current_user
       claim
     end

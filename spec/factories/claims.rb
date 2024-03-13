@@ -4,8 +4,8 @@
 #
 #  id              :uuid             not null, primary key
 #  created_by_type :string
-#  draft           :boolean          default(FALSE)
 #  reference       :string
+#  status          :enum
 #  submitted_at    :datetime
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
@@ -31,10 +31,17 @@ FactoryBot.define do
     association :provider
     association :created_by, factory: :claims_user
 
-    reference { SecureRandom.random_number(99_999_999) }
+    status { "internal" }
 
     trait :draft do
-      draft { true }
+      status { "draft" }
+      reference { SecureRandom.random_number(99_999_999) }
+    end
+
+    trait :submitted do
+      status { "submitted" }
+      submitted_at { Time.current }
+      reference { SecureRandom.random_number(99_999_999) }
     end
   end
 end

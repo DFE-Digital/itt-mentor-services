@@ -4,8 +4,8 @@
 #
 #  id              :uuid             not null, primary key
 #  created_by_type :string
-#  draft           :boolean          default(FALSE)
 #  reference       :string
+#  status          :enum
 #  submitted_at    :datetime
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
@@ -39,11 +39,36 @@ RSpec.describe Claim, type: :model do
   context "with validations" do
     subject { build(:claim) }
 
+    it { is_expected.to validate_presence_of(:status) }
     it { is_expected.to validate_uniqueness_of(:reference).case_insensitive.allow_nil }
   end
 
   context "with delegations" do
     it { is_expected.to delegate_method(:name).to(:provider).with_prefix }
+  end
+
+  describe "enums" do
+    subject(:claim) { build(:claim) }
+
+    it "defines the expected values" do
+      expect(claim).to define_enum_for(:status)
+        .with_values(internal: "internal", draft: "draft", submitted: "submitted")
+        .backed_by_column_of_type(:enum)
+    end
+  end
+
+  describe "scopes" do
+    describe "#not_internal" do
+      it "returns the claims that dont have status internal" do
+        create(:claim)
+        claim1 = create(:claim, :draft)
+        claim2 = create(:claim, :submitted)
+
+        expect(described_class.not_internal).to eq(
+          [claim1, claim2],
+        )
+      end
+    end
   end
 
   describe "#submitted_on" do

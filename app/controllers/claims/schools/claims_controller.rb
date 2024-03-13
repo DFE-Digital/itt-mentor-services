@@ -6,7 +6,7 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   helper_method :claim_provider_form
 
   def index
-    @pagy, @claims = pagy(@school.claims.where(draft: false))
+    @pagy, @claims = pagy(@school.claims.not_internal)
   end
 
   def new; end
@@ -49,7 +49,7 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   def submit
     Claims::Submit.call(
       claim: @claim,
-      claim_params: { draft: false, submitted_at: Time.current },
+      claim_params: { status: :submitted, submitted_at: Time.current },
     )
 
     redirect_to confirm_claims_school_claim_path(@school, @claim)

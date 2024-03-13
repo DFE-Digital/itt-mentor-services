@@ -9,13 +9,13 @@ RSpec.describe "View a schools claims", type: :system, service: :claims do
   let!(:submitted_claim) do
     create(
       :claim,
+      :submitted,
       school_id: school.id,
-      draft: false,
       submitted_at: Time.new(2024, 3, 5, 12, 31, 52, "+00:00"),
     )
   end
-  let!(:draft_claim) { create(:claim, school_id: school.id, draft: true) }
-  let!(:claim_from_another_school) { create(:claim, school_id: another_school.id, draft: true) }
+  let!(:draft_claim) { create(:claim, :draft, school_id: school.id) }
+  let!(:claim_from_another_school) { create(:claim, :draft, school_id: another_school.id) }
 
   scenario "View a school's claims as a support user" do
     user_exists_in_dfe_sign_in(user: colin)

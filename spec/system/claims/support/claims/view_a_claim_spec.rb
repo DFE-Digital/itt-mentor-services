@@ -7,7 +7,7 @@ RSpec.describe "View claims", type: :system, service: :claims do
   let!(:claim) do
     create(
       :claim,
-      draft: false,
+      :submitted,
       provider:,
       mentors: [mentor],
     )

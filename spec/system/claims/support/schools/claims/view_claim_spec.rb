@@ -10,7 +10,16 @@ RSpec.describe "View a claim", type: :system, service: :claims do
   let!(:provider) { create(:provider, :best_practice_network) }
   let!(:claims_mentor) { create(:claims_mentor, first_name: "Barry", last_name: "Garlow") }
 
-  let!(:claim) { create(:claim, school:, reference: "12345678", submitted_at: Time.new(2024, 3, 5, 12, 31, 52, "+00:00"), provider:) }
+  let!(:claim) do
+    create(
+      :claim,
+      :submitted,
+      school:,
+      reference: "12345678",
+      submitted_at: Time.new(2024, 3, 5, 12, 31, 52, "+00:00"),
+      provider:,
+    )
+  end
   let!(:mentor_training) { create(:mentor_training, claim:, mentor: claims_mentor, hours_completed: 6) }
 
   scenario "A support user visits the claims index page with a submited claim" do
