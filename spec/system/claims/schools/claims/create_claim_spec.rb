@@ -34,7 +34,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     when_i_click("Continue")
     then_i_check_my_answers
     when_i_click("Submit claim")
-    then_i_get_a_claim_reference(Claim.where(draft: false).first)
+    then_i_get_a_claim_reference(Claim.submitted.first)
   end
 
   scenario "Anne does not fill the form correctly" do

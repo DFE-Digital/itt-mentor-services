@@ -6,7 +6,7 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
   helper_method :claim_provider_form
 
   def index
-    @pagy, @claims = pagy(@school.claims.order("created_at DESC"))
+    @pagy, @claims = pagy(@school.claims.not_internal.order("created_at DESC"))
   end
 
   def new; end
@@ -47,7 +47,7 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
   def submit
     Claims::Submit.call(
       claim: @claim,
-      claim_params: { draft: true },
+      claim_params: { status: :draft },
     )
 
     redirect_to claims_support_school_claims_path(@school), flash: { success: t(".success") }

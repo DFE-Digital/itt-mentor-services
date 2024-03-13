@@ -8,9 +8,19 @@ class Claim::StatusTagComponent < ApplicationComponent
   end
 
   def call
-    css_class = claim.draft ? "govuk-tag--grey" : "govuk-tag--blue"
-    text = claim.draft ? t(".draft") : t(".submitted")
+    content_tag(:p, claim.status.humanize, class: "govuk-tag #{css_class}")
+  end
 
-    content_tag(:p, text, class: "govuk-tag #{css_class}")
+  private
+
+  def css_class
+    style_status_classes.fetch(claim.status)
+  end
+
+  def style_status_classes
+    {
+      draft: "govuk-tag--grey",
+      submitted: "govuk-tag--blue",
+    }.with_indifferent_access
   end
 end

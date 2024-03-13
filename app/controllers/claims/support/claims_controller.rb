@@ -3,7 +3,7 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
   before_action :authorize_claim
 
   def index
-    @pagy, @claims = pagy(Claim.all.order(created_at: :desc))
+    @pagy, @claims = pagy(Claim.not_internal.order(created_at: :desc))
   end
 
   def show; end

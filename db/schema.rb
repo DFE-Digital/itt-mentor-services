@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_11_101900) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_13_104342) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "claim_status", ["internal", "draft", "submitted"]
   create_enum "mentor_training_type", ["refresher", "initial"]
   create_enum "placement_status", ["draft", "published"]
   create_enum "provider_type", ["scitt", "lead_school", "university"]
@@ -25,7 +26,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_11_101900) do
 
   create_table "claims", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "school_id", null: false
-    t.boolean "draft", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "provider_id"
@@ -33,6 +33,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_11_101900) do
     t.datetime "submitted_at"
     t.string "created_by_type"
     t.uuid "created_by_id"
+    t.enum "status", enum_type: "claim_status"
     t.index ["created_by_type", "created_by_id"], name: "index_claims_on_created_by"
     t.index ["provider_id"], name: "index_claims_on_provider_id"
     t.index ["reference"], name: "index_claims_on_reference", unique: true

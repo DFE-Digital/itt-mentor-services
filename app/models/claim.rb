@@ -4,8 +4,8 @@
 #
 #  id              :uuid             not null, primary key
 #  created_by_type :string
-#  draft           :boolean          default(FALSE)
 #  reference       :string
+#  status          :enum
 #  submitted_at    :datetime
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
@@ -33,7 +33,14 @@ class Claim < ApplicationRecord
   has_many :mentor_trainings
   has_many :mentors, through: :mentor_trainings
 
+  validates :status, presence: true
   validates :reference, uniqueness: { case_sensitive: false }, allow_nil: true
+
+  scope :not_internal, -> { where.not(status: :internal) }
+
+  enum :status,
+       { internal: "internal", draft: "draft", submitted: "submitted" },
+       validate: true
 
   delegate :name, to: :provider, prefix: true, allow_nil: true
 

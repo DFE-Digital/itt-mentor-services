@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe "View claims", type: :system, service: :claims do
   let!(:support_user) { create(:claims_support_user) }
-  let!(:claim_2) { create(:claim, draft: false) }
-  let!(:claim_1) { create(:claim, draft: true) }
+  let!(:claim_2) { create(:claim, :submitted) }
+  let!(:claim_1) { create(:claim, :draft) }
 
   before do
     user_exists_in_dfe_sign_in(user: support_user)
