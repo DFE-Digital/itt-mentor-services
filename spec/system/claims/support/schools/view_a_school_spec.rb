@@ -31,9 +31,7 @@ RSpec.describe "View a school", type: :system do
   end
 
   def i_see_the_schools_details_sections
-    expect(page).to have_selector("h2", text: "Additional details")
-    expect(page).to have_selector("h2", text: "Special educational needs and disabilities (SEND)")
-    expect(page).to have_selector("h2", text: "Ofsted")
+    expect(page).to have_selector("h2", text: "Grant funding")
     expect(page).to have_selector("h2", text: "Contact details")
   end
 end

@@ -13,9 +13,6 @@ en:
         create:
           organisation_added: Organisation added
         show:
-          additional_details: Additional details
-          send: Special educational needs and disabilities (SEND)
-          ofsted: Ofsted
           contact_details: Contact details
           grant_funding: Grant funding
         index:
