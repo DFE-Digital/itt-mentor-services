@@ -115,18 +115,18 @@ RSpec.describe "View claims", type: :system, service: :claims do
     expect(page).to have_content("Status")
 
     within("tbody tr:nth-child(1)") do
-      expect(page).to have_content(draft_claim.reference)
-      expect(page).to have_content(draft_claim.provider_name)
-      expect(page).to have_content(draft_claim.mentors.map(&:full_name).join(""))
-      expect(page).to have_content("Draft")
-    end
-
-    within("tbody tr:nth-child(2)") do
       expect(page).to have_content(submitted_claim.reference)
       expect(page).to have_content(submitted_claim.provider_name)
       expect(page).to have_content(submitted_claim.mentors.map(&:full_name).join(""))
       expect(page).to have_content("05/03/2024")
       expect(page).to have_content("Submitted")
+    end
+
+    within("tbody tr:nth-child(2)") do
+      expect(page).to have_content(draft_claim.reference)
+      expect(page).to have_content(draft_claim.provider_name)
+      expect(page).to have_content(draft_claim.mentors.map(&:full_name).join(""))
+      expect(page).to have_content("Draft")
     end
   end
 
