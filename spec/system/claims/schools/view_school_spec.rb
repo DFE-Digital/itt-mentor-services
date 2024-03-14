@@ -64,43 +64,13 @@ RSpec.describe "School Page", type: :system do
       expect(page).to have_content "Organisation details"
     end
 
-    expect(page).to have_content "Additional details"
-    expect(page).to have_content "Special educational needs and disabilities (SEND)"
-    expect(page).to have_content "Ofsted"
+    expect(page).to have_content "Grant funding"
     expect(page).to have_content "Contact details"
 
     within("#organisation-details") do
       expect(page).to have_content "Organisation name"
       expect(page).to have_content "UK provider reference number (UKPRN)"
       expect(page).to have_content "Unique reference number (URN)"
-    end
-
-    within("#additional-details") do
-      expect(page).to have_content "Group"
-      expect(page).to have_content "Type"
-      expect(page).to have_content "Phase"
-      expect(page).to have_content "Gender"
-      expect(page).to have_content "Minimum age"
-      expect(page).to have_content "Maximum age"
-      expect(page).to have_content "Religious character"
-      expect(page).to have_content "Admissions policy"
-      expect(page).to have_content "Urban or rural"
-      expect(page).to have_content "School capacity"
-      expect(page).to have_content "Total pupils"
-      expect(page).to have_content "Total girls"
-      expect(page).to have_content "Total boys"
-      expect(page).to have_content "Percentage free school meals"
-    end
-
-    within("#send-details") do
-      expect(page).to have_content "Special classes"
-      expect(page).to have_content "SEND provision"
-      expect(page).to have_content "Training with disabilities"
-    end
-
-    within("#ofsted-details") do
-      expect(page).to have_content "Rating"
-      expect(page).to have_content "Last inspection date"
     end
 
     within("#contact-details") do
