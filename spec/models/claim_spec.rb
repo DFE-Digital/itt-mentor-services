@@ -69,6 +69,18 @@ RSpec.describe Claim, type: :model do
         )
       end
     end
+
+    describe "order_by_created_at" do
+      it "returns the claims ordered by created at" do
+        claim1 = create(:claim, :draft, created_at: Time.current)
+        claim2 = create(:claim, :draft, created_at: 2.hours.ago)
+        claim3 = create(:claim, :submitted, created_at: 1.hour.ago)
+
+        expect(described_class.order_created_at_desc).to eq(
+          [claim1, claim3, claim2],
+        )
+      end
+    end
   end
 
   describe "#submitted_on" do

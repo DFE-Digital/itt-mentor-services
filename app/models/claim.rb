@@ -37,6 +37,7 @@ class Claim < ApplicationRecord
   validates :reference, uniqueness: { case_sensitive: false }, allow_nil: true
 
   scope :not_internal, -> { where.not(status: :internal) }
+  scope :order_created_at_desc, -> { order(created_at: :desc) }
 
   enum :status,
        { internal: "internal", draft: "draft", submitted: "submitted" },
