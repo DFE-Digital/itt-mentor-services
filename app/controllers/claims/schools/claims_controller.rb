@@ -50,6 +50,7 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
     Claims::Submit.call(
       claim: @claim,
       claim_params: { status: :submitted, submitted_at: Time.current },
+      user: current_user,
     )
 
     redirect_to confirm_claims_school_claim_path(@school, @claim)

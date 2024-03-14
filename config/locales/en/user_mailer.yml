@@ -15,3 +15,11 @@ en:
         Dear %{user_name},
 
         You have been removed from the %{service_name} service for %{organisation_name}.
+
+    claim_submitted_notification:
+      subject: Your ITT mentor training claim has been submitted
+      body: |
+        Reference: %{reference}
+        Amount: %{amount}
+
+        Link to claim: %{link_to_claim}

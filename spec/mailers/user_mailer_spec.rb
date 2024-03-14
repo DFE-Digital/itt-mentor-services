@@ -108,4 +108,27 @@ RSpec.describe UserMailer, type: :mailer do
       end
     end
   end
+
+  describe "#claim_submitted_notification" do
+    subject(:claim_confirmation_email) { described_class.with(service: user.service).claim_submitted_notification(user, claim) }
+
+    context "when a claim has been submitted" do
+      let(:region) { create(:region, name: "A region", claims_funding_available_per_hour: Money.from_amount(53.60, "GBP")) }
+      let(:user) { create(:claims_user) }
+      let(:school) { create(:claims_school, region:) }
+      let(:claim) { create(:claim, reference: "123") }
+
+      it "sends the confirmation email" do
+        create(:mentor_training, claim:, hours_completed: 10)
+
+        expect(claim_confirmation_email.to).to contain_exactly(user.email)
+        expect(claim_confirmation_email.subject).to eq("Your ITT mentor training claim has been submitted")
+        expect(claim_confirmation_email.body.to_s.strip).to eq(<<~EMAIL.strip)
+          Reference: 123\r
+          Amount: £536.00\r\n\r
+          Link to claim: http://claims.localhost:3000/schools/#{claim.school.id}/claims/#{claim.id}
+        EMAIL
+      end
+    end
+  end
 end
