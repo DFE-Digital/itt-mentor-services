@@ -10,4 +10,15 @@ class UserMailer < ApplicationMailer
                  subject: t(".subject", organisation_name: organisation.name),
                  body: t(".body", user_name: user.full_name, organisation_name: organisation.name, service_name:)
   end
+
+  def claim_submitted_notification(user, claim)
+    link_to_claim = claims_school_claim_url(id: claim.id, school_id: claim.school.id)
+
+    notify_email to: user.email,
+                 subject: t(".subject"),
+                 body: t(".body",
+                         reference: claim.reference,
+                         amount: claim.amount.format(symbol: true, decimal_mark: ".", no_cents: false),
+                         link_to_claim:)
+  end
 end
