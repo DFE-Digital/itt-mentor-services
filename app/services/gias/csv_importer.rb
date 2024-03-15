@@ -42,6 +42,8 @@ module Gias
           telephone: school["TelephoneNum"].presence,
           group: school["EstablishmentTypeGroup (name)"].presence,
           type_of_establishment: school["TypeOfEstablishment (name)"].presence,
+          local_authority_name: school["LA (name)"].presence,
+          local_authority_code: school["LA (code)"].presence,
           phase: school["PhaseOfEducation (name)"].presence,
           gender: school["Gender (name)"].presence,
           minimum_age: school["StatutoryLowAge"].presence,
