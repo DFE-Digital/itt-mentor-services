@@ -30,6 +30,8 @@ RSpec.describe PublishTeacherTraining::Provider::Api do
     )
   end
 
+  include_examples "ServicePatternExamples"
+
   it "returns a list of providers from the current recruitment cycle publish-teacher-training-courses api" do
     response = provider_api
     expect(response.fetch("data")).to match_array(

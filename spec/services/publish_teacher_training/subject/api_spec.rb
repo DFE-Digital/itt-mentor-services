@@ -5,6 +5,8 @@ RSpec.describe PublishTeacherTraining::Subject::Api do
     success_stub_request
   end
 
+  include_examples "ServicePatternExamples"
+
   describe ".call" do
     it "returns the API data from the Publish Subject Area endpoint" do
       expect(described_class.call).to eq(response_body)

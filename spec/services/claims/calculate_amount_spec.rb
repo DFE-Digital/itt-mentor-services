@@ -1,6 +1,8 @@
 require "rails_helper"
 
 describe Claims::CalculateAmount do
+  include_examples "ServicePatternExamples"
+
   let!(:claim) { create(:claim, school_id: school.id, reference: "12345678") }
 
   let!(:region) { create(:region, name: "Inner London", claims_funding_available_per_hour: Money.from_amount(53.60, "GBP")) }

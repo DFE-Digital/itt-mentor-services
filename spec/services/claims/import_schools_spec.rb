@@ -8,6 +8,8 @@ describe Claims::ImportSchools do
     create(:school, name: "Yeo Moor Primary School", region:, urn: "141361", claims_service: false)
   end
 
+  include_examples "ServicePatternExamples"
+
   describe "#call" do
     it "increases the number of claims schools by 3" do
       csv_file_path = Rails.root.join("spec/fixtures/import_schools.csv")

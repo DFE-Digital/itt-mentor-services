@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.describe PublishTeacherTraining::Provider::Importer do
   subject(:importer) { described_class.call }
 
+  include_examples "ServicePatternExamples"
+
   context "with only providers in API response which don't exist" do
     before do
       non_existing_providers_request

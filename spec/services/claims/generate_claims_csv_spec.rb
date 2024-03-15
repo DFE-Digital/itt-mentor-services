@@ -28,6 +28,8 @@ RSpec.describe Claims::GenerateClaimsCsv do
     create(:mentor_training, claim: claim4, hours_completed: 1)
   end
 
+  include_examples "ServicePatternExamples"
+
   it "inserts the correct headers" do
     expect(generate_claims_csv.lines.first.chomp).to eq("reference,urn,school_name,local_authority_name,amount_to_pay,type")
   end
