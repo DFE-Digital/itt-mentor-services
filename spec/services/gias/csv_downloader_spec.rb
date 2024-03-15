@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.describe Gias::CsvDownloader do
   subject(:gias_csv_downloader) { described_class.call }
 
+  include_examples "ServicePatternExamples"
+
   it "downloads the GIAS CSV" do
     today = Time.zone.today.strftime("%Y%m%d")
     gias_filename = "edubasealldata#{today}.csv"

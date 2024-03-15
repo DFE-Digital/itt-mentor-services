@@ -5,7 +5,7 @@ module ServicePattern
   end
 
   def call
-    raise NotImplementedError("#call must be implemented")
+    raise NoMethodError, "#call must be implemented"
   end
 
   module ClassMethods

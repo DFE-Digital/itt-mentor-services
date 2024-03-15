@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.describe Gias::CsvImporter do
   subject(:gias_importer) { described_class.call(file_path) }
 
+  include_examples "ServicePatternExamples"
+
   context "with an invalid row in the csv" do
     # CSV contains 4 valid schools and 3 invalid schools
     let(:file_path) { "spec/fixtures/gias/import_with_invalid_schools.csv" }
