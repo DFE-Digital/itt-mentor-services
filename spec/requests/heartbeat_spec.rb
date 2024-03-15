@@ -31,5 +31,31 @@ RSpec.describe "Heartbeats", type: :request do
         expect(response).to have_http_status :service_unavailable
       end
     end
+
+    context "when there's an error connecting to the DB" do
+      context "when the error is ActiveRecord::ConnectionNotEstablished" do
+        before do
+          allow(ActiveRecord::Base).to receive(:connected?).and_raise(ActiveRecord::ConnectionNotEstablished)
+        end
+
+        it("returns 503") do
+          get "/healthcheck"
+
+          expect(response).to have_http_status :service_unavailable
+        end
+      end
+
+      context "when the error is ActiveRecord::NoDatabaseError" do
+        before do
+          allow(ActiveRecord::Base).to receive(:connected?).and_raise(PG::ConnectionBad)
+        end
+
+        it("returns 503") do
+          get "/healthcheck"
+
+          expect(response).to have_http_status :service_unavailable
+        end
+      end
+    end
   end
 end
