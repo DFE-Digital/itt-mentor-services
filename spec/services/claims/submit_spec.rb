@@ -3,14 +3,14 @@ require "rails_helper"
 describe Claims::Submit do
   subject(:submit_service) { described_class.call(claim:, claim_params:, user:) }
 
-  include_examples "ServicePatternExamples"
-
   let!(:claim) { create(:claim, reference: nil, status: :internal, school:) }
 
   let(:claim_params) { { status: :submitted, submitted_at: } }
   let(:submitted_at) { Time.new("2024-03-04 10:32:04 UTC") }
   let(:school) { create(:claims_school, urn: "1234") }
   let(:user) { create(:claims_user) }
+
+  include_examples "ServicePatternExamples"
 
   describe "#call" do
     it "submits the claim" do
