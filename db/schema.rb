@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_13_104342) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_15_130549) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -271,6 +271,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_13_104342) do
     t.string "district_admin_code"
     t.uuid "region_id"
     t.uuid "trust_id"
+    t.string "local_authority_name"
+    t.string "local_authority_code"
     t.index ["claims_service"], name: "index_schools_on_claims_service"
     t.index ["placements_service"], name: "index_schools_on_placements_service"
     t.index ["region_id"], name: "index_schools_on_region_id"

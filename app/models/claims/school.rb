@@ -14,6 +14,8 @@
 #  gender                       :string
 #  group                        :string
 #  last_inspection_date         :date
+#  local_authority_code         :string
+#  local_authority_name         :string
 #  maximum_age                  :integer
 #  minimum_age                  :integer
 #  name                         :string
