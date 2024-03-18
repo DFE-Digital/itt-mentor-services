@@ -13,12 +13,6 @@ class SchoolDecorator < OrganisationDecorator
   private
 
   def address_parts
-    [
-      address1,
-      address2,
-      address3,
-      town,
-      postcode,
-    ]
+    attributes.slice(*School::ADDRESS_FIELDS).values
   end
 end

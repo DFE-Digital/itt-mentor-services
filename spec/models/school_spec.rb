@@ -157,4 +157,40 @@ RSpec.describe School, type: :model do
       end
     end
   end
+
+  describe "#address" do
+    context "when all address attributes are present" do
+      let!(:uxbridge_school) do
+        create(:school,
+               name: "Uxbridge School",
+               address1: "Uxbridge School",
+               address2: "Uxbridge",
+               address3: "Greater London",
+               town: "London",
+               postcode: "UB8 1SB")
+      end
+
+      it "returns the full address of the school" do
+        expect(uxbridge_school.address).to eq(
+          "Uxbridge School, Uxbridge, Greater London, London, UB8 1SB, United Kingdom",
+        )
+      end
+    end
+
+    context "when not all address attributes are present" do
+      let!(:uxbridge_school) do
+        create(:school,
+               name: "Uxbridge School",
+               address1: "Uxbridge School",
+               town: "London",
+               postcode: "UB8 1SB")
+      end
+
+      it "concatenate the present address attributes" do
+        expect(uxbridge_school.address).to eq(
+          "Uxbridge School, London, UB8 1SB, United Kingdom",
+        )
+      end
+    end
+  end
 end
