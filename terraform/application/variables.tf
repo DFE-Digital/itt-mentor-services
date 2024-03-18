@@ -47,11 +47,11 @@ locals {
   app_env_values_from_yml = yamldecode(file("${path.module}/config/${var.config}_app_env.yml"))
   ingress_claims_domain_map = (
     contains(keys(local.app_env_values_from_yml), "CLAIMS_HOST") ?
-    {} : { CLAIMS_HOST = "track-and-pay-${var.environment}.test.teacherservices.cloud" }
+    {} : { CLAIMS_HOST = "track-and-pay-${var.environment}.${module.cluster_data.ingress_domain}" }
   )
   ingress_placements_domain_map = (
     contains(keys(local.app_env_values_from_yml), "PLACEMENTS_HOST") ?
-    {} : { PLACEMENTS_HOST = "manage-school-placements-${var.environment}.test.teacherservices.cloud" }
+    {} : { PLACEMENTS_HOST = "manage-school-placements-${var.environment}.${module.cluster_data.ingress_domain}" }
   )
   app_env_values = merge(
     local.app_env_values_from_yml,
