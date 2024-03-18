@@ -5,7 +5,7 @@ describe Claims::CalculateAmount do
   let!(:region) { create(:region, name: "Inner London", claims_funding_available_per_hour: Money.from_amount(53.60, "GBP")) }
   let!(:school) { create(:claims_school, :claims, name: "School name 1", region_id: region.id, urn: "1234") }
 
-  include_examples "ServicePatternExamples"
+  it_behaves_like "a service object"
 
   describe "#call" do
     it "calculates the claim amount" do

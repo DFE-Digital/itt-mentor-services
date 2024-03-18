@@ -1,12 +1,13 @@
 require "rails_helper"
 
 RSpec.describe PublishTeacherTraining::Subject::Import do
+  include ActiveJob::TestHelper
+
   before do
     success_stub_request
   end
 
-  include_examples "ServicePatternExamples"
-  include ActiveJob::TestHelper
+  it_behaves_like "a service object"
 
   describe ".call" do
     context "when the response contains only valid subject data" do

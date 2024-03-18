@@ -14,7 +14,7 @@ RSpec.describe DfESignIn::UserUpdate do
     )
   end
 
-  include_examples "ServicePatternExamples"
+  it_behaves_like "a service object"
 
   it "updates the user's sign in attributes" do
     expect { dfe_sign_in }.to change(current_user, :email).to("test@gmail.com")

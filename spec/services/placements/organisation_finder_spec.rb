@@ -11,7 +11,7 @@ RSpec.describe Placements::OrganisationFinder do
     create(:school, :placements, name: "1 Primary", postcode: "SW12 H3B")
   end
 
-  include_examples "ServicePatternExamples"
+  it_behaves_like "a service object"
 
   context "with no search or filter" do
     subject(:organisations_finder) { described_class.call }
