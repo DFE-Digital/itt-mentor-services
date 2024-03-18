@@ -9,7 +9,6 @@ module Geocoder
         school.geocode
         school.save!
       rescue ActiveRecord::RecordInvalid => e
-        binding.pry
         Sentry.capture_exception(e)
       end
 
