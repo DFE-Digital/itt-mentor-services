@@ -1,4 +1,5 @@
 require "rails_helper"
+require "./spec/support/geocoder_stub"
 
 RSpec.describe Geocoder::UpdateAllSchools do
   subject(:geocode_all_schools) { described_class.call }
@@ -42,6 +43,19 @@ RSpec.describe Geocoder::UpdateAllSchools do
 
     it "does not update the latitude of geocoded schools" do
       expect { geocode_all_schools }.not_to(change { brixton_school.reload.latitude })
+    end
+  end
+
+  context "when a school is invalid" do
+    before do
+      School.upsert({ urn: "1234567", town: "York", postcode: "YO1 6SG" })
+      GeocoderStub.stub_with(School.find_by(urn: "1234567"))
+    end
+
+    it "reports an error to sentry" do
+      allow(Sentry).to receive(:capture_exception)
+      geocode_all_schools
+      expect(Sentry).to have_received(:capture_exception)
     end
   end
 end
