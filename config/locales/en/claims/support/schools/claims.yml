@@ -3,7 +3,7 @@ en:
     support:
       schools:
         claims:
-          submit:
+          draft:
             success: Claim added
           edit:
             page_title: Accredited provider - Add claim

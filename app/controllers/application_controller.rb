@@ -51,6 +51,13 @@ class ApplicationController < ActionController::Base
   end
 
   def user_not_authorized
-    redirect_back fallback_location: root_path, alert: t("you_cannot_perform_this_action")
+    flash[:alert] = t("you_cannot_perform_this_action")
+    can_be_infinite_redirect = request.url == request.referer
+
+    if can_be_infinite_redirect
+      redirect_to root_path
+    else
+      redirect_back(fallback_location: root_path)
+    end
   end
 end

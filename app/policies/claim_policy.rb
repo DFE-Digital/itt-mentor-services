@@ -1,17 +1,29 @@
 class ClaimPolicy < Claims::ApplicationPolicy
+  def edit?
+    !record.submitted?
+  end
+
   def update?
-    true
+    edit?
   end
 
   def submit?
-    true
+    !user.support_user? && !record.submitted?
   end
 
   def confirm?
-    true
+    !user.support_user? && record.submitted?
+  end
+
+  def draft?
+    user.support_user? && record.internal?
+  end
+
+  def check?
+    record.draft? || record.internal?
   end
 
   def download_csv?
-    true
+    user.support_user?
   end
 end

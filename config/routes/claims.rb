@@ -59,7 +59,7 @@ scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
 
           member do
             get :check
-            post :submit
+            post :draft
           end
         end
 

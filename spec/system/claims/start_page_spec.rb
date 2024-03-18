@@ -24,7 +24,7 @@ RSpec.describe "Start Page", type: :system, service: :claims do
        "September 2023 to July 2024.",
     )
     expect(page).to have_content(
-      "Training that took place for April 2024 for the school year starting "\
+      "Training that took place from April 2024 for the school year starting "\
       "September 2024 can only be claimed for from May 2025.",
     )
     expect(page).to have_content(

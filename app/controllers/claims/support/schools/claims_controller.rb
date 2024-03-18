@@ -1,7 +1,7 @@
 class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationController
   include Claims::BelongsToSchool
 
-  before_action :set_claim, only: %i[check submit show]
+  before_action :set_claim, only: %i[check draft show edit update]
   before_action :authorize_claim
   helper_method :claim_provider_form
 
@@ -44,7 +44,7 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
     end
   end
 
-  def submit
+  def draft
     Claims::Submit.call(
       claim: @claim,
       claim_params: { status: :draft },
@@ -84,6 +84,6 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
   end
 
   def authorize_claim
-    authorize Claim
+    authorize @claim || Claim
   end
 end
