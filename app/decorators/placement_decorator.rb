@@ -10,7 +10,11 @@ class PlacementDecorator < Draper::Decorator
   end
 
   def subject_names
-    subjects.pluck(:name).sort.to_sentence
+    if subjects.any?
+      subjects.pluck(:name).sort.to_sentence
+    else
+      I18n.t("placements.schools.placements.not_known_yet")
+    end
   end
 
   def school_level
