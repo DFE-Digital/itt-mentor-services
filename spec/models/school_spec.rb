@@ -16,6 +16,8 @@
 #  last_inspection_date         :date
 #  local_authority_code         :string
 #  local_authority_name         :string
+#  latitude                     :float
+#  longitude                    :float
 #  maximum_age                  :integer
 #  minimum_age                  :integer
 #  name                         :string
@@ -47,6 +49,8 @@
 # Indexes
 #
 #  index_schools_on_claims_service      (claims_service)
+#  index_schools_on_latitude            (latitude)
+#  index_schools_on_longitude           (longitude)
 #  index_schools_on_placements_service  (placements_service)
 #  index_schools_on_region_id           (region_id)
 #  index_schools_on_trust_id            (trust_id)
@@ -126,6 +130,31 @@ RSpec.describe School, type: :model do
       let(:school) { create(:school, phase: "All-through") }
 
       it { is_expected.to eq(false) }
+    end
+  end
+
+  describe "geocoder" do
+    describe "#near" do
+      let!(:uxbridge_school) do
+        create(:school, name: "Uxbridge School", latitude: 51.5449509, longitude: -0.4816672)
+      end
+      let!(:brixton_school) do
+        create(:school, name: "Brixton School", latitude: 51.4626818, longitude: -0.1147325)
+      end
+      let(:york_school) do
+        create(:school, name: "York School", latitude: 53.9590555, longitude: -1.0815361)
+      end
+      let(:london_coordinates) { [51.4893335, -0.14405508452768728] }
+
+      before do
+        york_school
+      end
+
+      it "returns the schools near the search for area" do
+        expect(
+          described_class.near(london_coordinates, 20),
+        ).to match_array([uxbridge_school, brixton_school])
+      end
     end
   end
 end

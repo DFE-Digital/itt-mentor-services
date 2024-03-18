@@ -87,6 +87,9 @@ gem "sentry-rails"
 # Soft deletion
 gem "discard"
 
+# Geocoding
+gem "geocoder"
+
 group :development do
   gem "annotate", require: false
   gem "prettier_print", require: false
