@@ -4,7 +4,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
                type: :system, service: :placements do
   let!(:school) { create(:placements_school, name: "School 1", phase: "Primary") }
   let!(:placement) { create(:placement, school:) }
-  let!(:subject_1) { create(:subject, name: "Subject 1", subject_area: "primary") }
+  let!(:subject_1) { create(:subject, name: "Subject 1", subject_area: :primary) }
 
   before do
     given_i_sign_in_as_anne
