@@ -1,6 +1,6 @@
 class Claims::Schools::ClaimsController < Claims::ApplicationController
   include Claims::BelongsToSchool
-  before_action :set_claim, only: %i[show check confirm submit]
+  before_action :set_claim, only: %i[show check confirm submit edit update]
   before_action :authorize_claim
 
   helper_method :claim_provider_form
