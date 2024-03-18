@@ -45,7 +45,7 @@ RSpec.describe "Heartbeats", type: :request do
         end
       end
 
-      context "when the error is ActiveRecord::NoDatabaseError" do
+      context "when the error is PG::ConnectionBad" do
         before do
           allow(ActiveRecord::Base).to receive(:connected?).and_raise(PG::ConnectionBad)
         end
