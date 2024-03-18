@@ -65,6 +65,8 @@ class School < ApplicationRecord
   include PgSearch::Model
   extend Geocoder::Model::ActiveRecord
 
+  ADDRESS_FIELDS = %w[address1 address2 address3 town postcode].freeze
+
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
 
@@ -107,11 +109,7 @@ class School < ApplicationRecord
 
   def address
     [
-      address1,
-      address2,
-      address3,
-      town,
-      postcode,
+      *attributes.slice(*ADDRESS_FIELDS).values,
       "United Kingdom",
     ].compact.join(", ")
   end
@@ -119,6 +117,6 @@ class School < ApplicationRecord
   private
 
   def address_changed?
-    (changed & %w[address1 address2 address3 town postcode]).any?
+    changed.any? { |attribute| ADDRESS_FIELDS.include?(attribute) }
   end
 end
