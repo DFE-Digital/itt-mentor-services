@@ -38,15 +38,15 @@ FactoryBot.define do
     provider_type { Provider.provider_types.keys.sample }
 
     trait :scitt do
-      provider_type { "scitt" }
+      provider_type { :scitt }
     end
 
     trait :lead_school do
-      provider_type { "lead_school" }
+      provider_type { :lead_school }
     end
 
     trait :university do
-      provider_type { "university" }
+      provider_type { :university }
     end
 
     trait :placements do

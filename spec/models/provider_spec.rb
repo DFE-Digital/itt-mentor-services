@@ -59,7 +59,7 @@ RSpec.describe Provider, type: :model do
       ).case_insensitive
     end
 
-    it { is_expected.to allow_values("scitt", "lead_school", "university").for(:provider_type) }
+    it { is_expected.to allow_values(:scitt, :lead_school, :university).for(:provider_type) }
   end
 
   context "with scopes" do
