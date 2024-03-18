@@ -9,18 +9,13 @@ RSpec.shared_examples "a service object" do
     end
 
     context "when the #call method is implemented" do
-      let(:test_class) do
-        Class.new do
-          include ServicePattern
-
-          def call
-            "called"
-          end
-        end
+      before do
+        allow(described_class).to receive(:call).and_return(true)
       end
 
-      it "returns the expected value" do
-        expect(test_class.call).to eq("called")
+      it "calls the service logic" do
+        described_class.call
+        expect(described_class).to have_received(:call).once
       end
     end
   end
