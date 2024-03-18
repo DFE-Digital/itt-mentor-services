@@ -31,15 +31,15 @@ FactoryBot.define do
     association :provider
     association :created_by, factory: :claims_user
 
-    status { "internal" }
+    status { :internal }
 
     trait :draft do
-      status { "draft" }
+      status { :draft }
       reference { SecureRandom.random_number(99_999_999) }
     end
 
     trait :submitted do
-      status { "submitted" }
+      status { :submitted }
       submitted_at { Time.current }
       reference { SecureRandom.random_number(99_999_999) }
     end

@@ -5,7 +5,7 @@ describe Claims::Submit do
 
   let!(:claim) { create(:claim, reference: nil, status: "internal") }
 
-  let(:claim_params) { { status: "submitted", submitted_at: } }
+  let(:claim_params) { { status: :submitted, submitted_at: } }
   let(:submitted_at) { Time.new("2024-03-04 10:32:04 UTC") }
   let(:user) { create(:claims_user) }
 
@@ -40,7 +40,7 @@ describe Claims::Submit do
     end
 
     context "when claim params contains draft status" do
-      let(:claim_params) { { status: "draft" } }
+      let(:claim_params) { { status: :draft } }
 
       it "submits the claim" do
         allow(SecureRandom).to receive(:random_number).with(99_999_999).and_return(123)

@@ -45,7 +45,7 @@ RSpec.describe "View claims", type: :system, service: :claims do
   end
 
   before do
-    create(:claim, status: "internal", school:)
+    create(:claim, status: :internal, school:)
   end
 
   scenario "Anne visits the claims index page with no mentors" do
