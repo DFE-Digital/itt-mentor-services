@@ -8,6 +8,7 @@ module Gias
 
       Rails.logger.info "Importing GIAS data"
       Gias::CsvImporter.call(tempfile.path)
+      Geocoder::UpdateAllSchoolsJob.perform_later
 
       tempfile.unlink
     end

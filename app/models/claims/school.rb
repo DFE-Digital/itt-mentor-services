@@ -16,6 +16,8 @@
 #  last_inspection_date         :date
 #  local_authority_code         :string
 #  local_authority_name         :string
+#  latitude                     :float
+#  longitude                    :float
 #  maximum_age                  :integer
 #  minimum_age                  :integer
 #  name                         :string
@@ -47,6 +49,8 @@
 # Indexes
 #
 #  index_schools_on_claims_service      (claims_service)
+#  index_schools_on_latitude            (latitude)
+#  index_schools_on_longitude           (longitude)
 #  index_schools_on_placements_service  (placements_service)
 #  index_schools_on_region_id           (region_id)
 #  index_schools_on_trust_id            (trust_id)

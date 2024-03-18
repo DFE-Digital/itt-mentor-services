@@ -16,6 +16,8 @@
 #  last_inspection_date         :date
 #  local_authority_code         :string
 #  local_authority_name         :string
+#  latitude                     :float
+#  longitude                    :float
 #  maximum_age                  :integer
 #  minimum_age                  :integer
 #  name                         :string
@@ -47,6 +49,8 @@
 # Indexes
 #
 #  index_schools_on_claims_service      (claims_service)
+#  index_schools_on_latitude            (latitude)
+#  index_schools_on_longitude           (longitude)
 #  index_schools_on_placements_service  (placements_service)
 #  index_schools_on_region_id           (region_id)
 #  index_schools_on_trust_id            (trust_id)
@@ -59,6 +63,10 @@
 #
 class School < ApplicationRecord
   include PgSearch::Model
+  extend Geocoder::Model::ActiveRecord
+
+  geocoded_by :address
+  after_validation :geocode, if: :address_changed?
 
   belongs_to :region
   belongs_to :trust, optional: true
@@ -95,5 +103,24 @@ class School < ApplicationRecord
 
   def primary_or_secondary_only?
     [PRIMARY_PHASE, SECONDARY_PHASE].include?(phase)
+  end
+
+  def address
+    [
+      address1,
+      address2,
+      address3,
+      town,
+      postcode,
+      "United Kingdom",
+    ].compact.join(", ")
+  end
+
+  private
+
+  def address_changed?
+    address1_changed? || address2_changed? ||
+      address3_changed? || town_changed? ||
+      postcode_changed?
   end
 end
