@@ -22,14 +22,14 @@ module PublishTeacherTraining
         subjects_data = api_response.fetch("included")
         # Sync Primary Subjects
         sync_subjects(
-          subject_area: "primary",
+          subject_area: :primary,
           subject_ids: primary_subject_ids,
           subjects_data:,
         )
 
         # Sync Secondary Subjects
         sync_subjects(
-          subject_area: "secondary",
+          subject_area: :secondary,
           subject_ids: secondary_subject_ids,
           subjects_data:,
         )
