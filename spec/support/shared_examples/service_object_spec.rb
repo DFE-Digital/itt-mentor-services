@@ -1,4 +1,4 @@
-RSpec.shared_examples "ServicePatternExamples" do
+RSpec.shared_examples "a service object" do
   describe "#call" do
     context "when the #call method is not implemented" do
       let(:test_class) { Class.new { include ServicePattern } }
