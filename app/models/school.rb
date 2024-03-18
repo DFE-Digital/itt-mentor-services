@@ -62,6 +62,8 @@ class School < ApplicationRecord
   belongs_to :trust, optional: true
 
   has_many :user_memberships, as: :organisation
+  has_many :users, through: :user_memberships
+
   has_many :mentor_memberships
   has_many :mentors, through: :mentor_memberships
 

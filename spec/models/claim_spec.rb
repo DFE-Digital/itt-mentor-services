@@ -45,6 +45,7 @@ RSpec.describe Claim, type: :model do
 
   context "with delegations" do
     it { is_expected.to delegate_method(:name).to(:provider).with_prefix }
+    it { is_expected.to delegate_method(:users).to(:school).with_prefix }
   end
 
   describe "enums" do

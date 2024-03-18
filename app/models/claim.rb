@@ -44,6 +44,7 @@ class Claim < ApplicationRecord
        validate: true
 
   delegate :name, to: :provider, prefix: true, allow_nil: true
+  delegate :users, to: :school, prefix: true
 
   def submitted_on
     submitted_at&.to_date

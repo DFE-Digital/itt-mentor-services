@@ -116,13 +116,38 @@ RSpec.describe UserMailer, type: :mailer do
       let(:region) { create(:region, name: "A region", claims_funding_available_per_hour: Money.from_amount(53.60, "GBP")) }
       let(:user) { create(:claims_user) }
       let(:school) { create(:claims_school, region:) }
-      let(:claim) { create(:claim, reference: "123") }
+      let(:claim) { create(:claim, reference: "123", school:) }
 
       it "sends the confirmation email" do
         create(:mentor_training, claim:, hours_completed: 10)
 
         expect(claim_confirmation_email.to).to contain_exactly(user.email)
         expect(claim_confirmation_email.subject).to eq("Your ITT mentor training claim has been submitted")
+        expect(claim_confirmation_email.body.to_s.strip).to eq(<<~EMAIL.strip)
+          Reference: 123\r
+          Amount: £536.00\r\n\r
+          Link to claim: http://claims.localhost:3000/schools/#{claim.school.id}/claims/#{claim.id}
+        EMAIL
+      end
+    end
+  end
+
+  describe "#claim_created_support_notification" do
+    subject(:claim_confirmation_email) { described_class.with(service: support_user.service).claim_created_support_notification(claim, email) }
+
+    context "when a claim has been created" do
+      let(:region) { create(:region, name: "A region", claims_funding_available_per_hour: Money.from_amount(53.60, "GBP")) }
+      let(:support_user) { create(:claims_support_user, :colin) }
+      let(:school) { create(:claims_school, region:) }
+      let(:claim) { create(:claim, reference: "123", school:) }
+      let(:user_of_a_school) { create(:claims_user, email: "babagoli@gmail.com", user_memberships: [build(:user_membership, organisation: school)]) }
+      let(:email) { user_of_a_school.email }
+
+      it "sends a notification email to every user for the school" do
+        create(:mentor_training, claim:, hours_completed: 10)
+
+        expect(claim_confirmation_email.to).to contain_exactly(user_of_a_school.email)
+        expect(claim_confirmation_email.subject).to eq("A support user created your ITT mentor training claim")
         expect(claim_confirmation_email.body.to_s.strip).to eq(<<~EMAIL.strip)
           Reference: 123\r
           Amount: £536.00\r\n\r
