@@ -49,7 +49,7 @@ RSpec.describe "Placement school user views a list of placements", type: :system
   end
 
   def given_a_published_placement_exists
-    create(:placement, status: "published", school:)
+    create(:placement, status: :published, school:)
   end
 
   def then_i_see_published_status_tag
@@ -112,7 +112,7 @@ RSpec.describe "Placement school user views a list of placements", type: :system
     biology = create(:subject, name: "Biology")
     maths = create(:subject, name: "Maths")
     subjects = [maths, biology]
-    create(:placement, status: "draft", school:, mentors:, subjects:)
+    create(:placement, status: :draft, school:, mentors:, subjects:)
   end
 
   def given_placement_exists_for_another_school

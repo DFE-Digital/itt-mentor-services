@@ -5,8 +5,8 @@ RSpec.describe "Placements / Schools / Placements / Remove a placement",
   let!(:placement_1) { create(:placement, school:, subjects: [subject_1]) }
   let(:placement_2) { create(:placement, school:, subjects: [subject_2]) }
   let(:school) { build(:placements_school, name: "School 1", phase: "Primary") }
-  let(:subject_1) { build(:subject, name: "Subject 1", subject_area: "primary") }
-  let(:subject_2) { build(:subject, name: "Subject 2", subject_area: "primary") }
+  let(:subject_1) { build(:subject, name: "Subject 1", subject_area: :primary) }
+  let(:subject_2) { build(:subject, name: "Subject 2", subject_area: :primary) }
 
   before do
     given_i_sign_in_as_anne

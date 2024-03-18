@@ -23,10 +23,10 @@ FactoryBot.define do
     association :school, factory: :placements_school
     start_date { 1.month.from_now }
     end_date { 4.months.from_now }
-    status { "published" }
+    status { :published }
 
     trait :draft do
-      status { "draft" }
+      status { :draft }
     end
   end
 end
