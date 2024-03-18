@@ -46,4 +46,25 @@ module RoutesHelper
   def omniauth_sign_in_path(provider)
     "/auth/#{provider}"
   end
+
+  def accessibility_path
+    {
+      claims: claims_accessibility_path,
+      placements: "#",
+    }.fetch HostingEnvironment.current_service(request)
+  end
+
+  def cookies_path
+    {
+      claims: claims_cookies_path,
+      placements: "#",
+    }.fetch HostingEnvironment.current_service(request)
+  end
+
+  def terms_path
+    {
+      claims: claims_terms_path,
+      placements: "#",
+    }.fetch HostingEnvironment.current_service(request)
+  end
 end

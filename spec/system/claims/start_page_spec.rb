@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Sign in Page", type: :system, service: :claims do
+RSpec.describe "Start Page", type: :system, service: :claims do
   scenario "User visits the start page" do
     given_i_am_on_the_start_page
     then_i_can_see_the_start_page
