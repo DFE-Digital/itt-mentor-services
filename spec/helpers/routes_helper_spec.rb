@@ -101,5 +101,53 @@ describe RoutesHelper do
         expect(helper.omniauth_sign_in_path("dfe")).to eq("/auth/dfe")
       end
     end
+
+    describe "#accessibility_path" do
+      context "when the current service is claims" do
+        it "returns the correct path" do
+          allow(HostingEnvironment).to receive(:current_service).and_return(:claims)
+          expect(helper.accessibility_path).to eq(claims_accessibility_path)
+        end
+      end
+
+      context "when the current service is placements" do
+        it "returns the correct path" do
+          allow(HostingEnvironment).to receive(:current_service).and_return(:placements)
+          expect(helper.accessibility_path).to eq("#")
+        end
+      end
+    end
+
+    describe "#cookies_path" do
+      context "when the current service is claims" do
+        it "returns the correct path" do
+          allow(HostingEnvironment).to receive(:current_service).and_return(:claims)
+          expect(helper.cookies_path).to eq(claims_cookies_path)
+        end
+      end
+
+      context "when the current service is placements" do
+        it "returns the correct path" do
+          allow(HostingEnvironment).to receive(:current_service).and_return(:placements)
+          expect(helper.cookies_path).to eq("#")
+        end
+      end
+    end
+
+    describe "#terms_path" do
+      context "when the current service is claims" do
+        it "returns the correct path" do
+          allow(HostingEnvironment).to receive(:current_service).and_return(:claims)
+          expect(helper.terms_path).to eq(claims_terms_path)
+        end
+      end
+
+      context "when the current service is placements" do
+        it "returns the correct path" do
+          allow(HostingEnvironment).to receive(:current_service).and_return(:placements)
+          expect(helper.terms_path).to eq("#")
+        end
+      end
+    end
   end
 end
