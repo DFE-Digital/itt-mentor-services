@@ -10,9 +10,9 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
 
     it "creates new provider records for responses" do
       expect { importer }.to change(Provider, :count).by(3)
-      expect(Provider.find_by(name: "Provider 1", code: "Prov1", provider_type: "scitt")).to be_present
-      expect(Provider.find_by(name: "Provider 2", code: "Prov2", provider_type: "university")).to be_present
-      expect(Provider.find_by(name: "Provider 3", code: "Prov3", provider_type: "lead_school")).to be_present
+      expect(Provider.find_by(name: "Provider 1", code: "Prov1", provider_type: :scitt)).to be_present
+      expect(Provider.find_by(name: "Provider 2", code: "Prov2", provider_type: :university)).to be_present
+      expect(Provider.find_by(name: "Provider 3", code: "Prov3", provider_type: :lead_school)).to be_present
     end
   end
 
@@ -27,7 +27,7 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
     it "creates new provider records for responses which don't already exist or are valid,
       and updates any pre-existing providers" do
       expect { importer }.to change(Provider, :count).by(1)
-      expect(Provider.find_by(name: "Provider 1", code: "Prov1", provider_type: "scitt")).to be_present
+      expect(Provider.find_by(name: "Provider 1", code: "Prov1", provider_type: :scitt)).to be_present
       expect(Provider.where(name: existing_provider.name, code: existing_provider.code).count).to eq(1)
       expect(Provider.find_by(code: changeable_provider.code).name).to eq("Changed Provider")
     end
@@ -42,7 +42,7 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
       expect(Rails.logger).to receive(:info).with("Invalid Providers - [\"Provider with code Inv is invalid\"]")
       expect(Rails.logger).to receive(:info).with("Done!")
       expect { importer }.to change(Provider, :count).by(1)
-      expect(Provider.find_by(name: "Provider 1", code: "Prov1", provider_type: "scitt")).to be_present
+      expect(Provider.find_by(name: "Provider 1", code: "Prov1", provider_type: :scitt)).to be_present
       expect(Provider.find_by(name: "Invalid Provider", code: "Inv")).not_to be_present
     end
   end
@@ -55,8 +55,8 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
 
     it "iterates over the links in the API response to create records for providers across all pages" do
       expect { importer }.to change(Provider, :count).by(2)
-      expect(Provider.find_by(name: "Page 1 Provider", code: "Pg1", provider_type: "scitt")).to be_present
-      expect(Provider.find_by(name: "Page 2 Provider", code: "Pg2", provider_type: "scitt")).to be_present
+      expect(Provider.find_by(name: "Page 1 Provider", code: "Pg1", provider_type: :scitt)).to be_present
+      expect(Provider.find_by(name: "Page 2 Provider", code: "Pg2", provider_type: :scitt)).to be_present
     end
   end
 
