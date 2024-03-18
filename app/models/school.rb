@@ -119,8 +119,6 @@ class School < ApplicationRecord
   private
 
   def address_changed?
-    address1_changed? || address2_changed? ||
-      address3_changed? || town_changed? ||
-      postcode_changed?
+    (changed & %w[address1 address2 address3 town postcode]).any?
   end
 end
