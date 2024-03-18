@@ -23,3 +23,11 @@ en:
         Amount: %{amount}
 
         Link to claim: %{link_to_claim}
+
+    claim_created_support_notification:
+      subject: A support user created your ITT mentor training claim
+      body: |
+        Reference: %{reference}
+        Amount: %{amount}
+
+        Link to claim: %{link_to_claim}

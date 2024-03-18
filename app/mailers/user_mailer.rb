@@ -21,4 +21,15 @@ class UserMailer < ApplicationMailer
                          amount: claim.amount.format(symbol: true, decimal_mark: ".", no_cents: false),
                          link_to_claim:)
   end
+
+  def claim_created_support_notification(claim, email)
+    link_to_claim = claims_school_claim_url(id: claim.id, school_id: claim.school.id)
+
+    notify_email(to: email,
+                 subject: t(".subject"),
+                 body: t(".body",
+                         reference: claim.reference,
+                         amount: claim.amount.format(symbol: true, decimal_mark: ".", no_cents: false),
+                         link_to_claim:))
+  end
 end

@@ -10,8 +10,9 @@ class Claims::Submit
   def call
     updated_claim.save!
 
-    # We will be implementing a different email for support users in another ticket
-    if !user.support_user? && status_changed_to_submitted?
+    if user.support_user? && status_changed_to_draft?
+      send_claim_created_support_notification_email
+    elsif !user.support_user? && status_changed_to_submitted?
       send_claim_submitted_notification_email
     end
   end
@@ -24,8 +25,20 @@ class Claims::Submit
     UserMailer.with(service: user.service).claim_submitted_notification(user, claim).deliver_later
   end
 
+  def send_claim_created_support_notification_email
+    user_emails = claim.school_users.pluck(:email)
+
+    user_emails.each do |email|
+      UserMailer.with(service: user.service).claim_created_support_notification(claim, email).deliver_later
+    end
+  end
+
   def status_changed_to_submitted?
     updated_claim.saved_change_to_status? && updated_claim.submitted?
+  end
+
+  def status_changed_to_draft?
+    updated_claim.saved_change_to_status? && updated_claim.draft?
   end
 
   def updated_claim
