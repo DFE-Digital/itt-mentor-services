@@ -16,6 +16,14 @@ review: test-cluster
 	$(eval export TF_VAR_environment=${ENVIRONMENT})
 	$(eval include global_config/review.sh)
 
+dv_review: dev-cluster
+	$(if ${PR_NUMBER},,$(error Missing PR_NUMBER))
+	$(if ${CLUSTER},,$(error Missing CLUSTER))
+	$(eval export TF_VAR_cluster=${CLUSTER})
+	$(eval ENVIRONMENT=${PR_NUMBER})
+	$(eval export TF_VAR_environment=${ENVIRONMENT})
+	$(eval include global_config/dv_review.sh)
+
 .PHONY: qa
 qa: test-cluster
 		$(eval ENVIRONMENT=qa)
@@ -84,6 +92,10 @@ arm-deployment: composed-variables set-azure-account
 deploy-arm-resources: arm-deployment ## Validate ARM resource deployment. Usage: make domains validate-arm-resources
 
 validate-arm-resources: set-what-if arm-deployment ## Validate ARM resource deployment. Usage: make domains validate-arm-resources
+
+dev-cluster:
+	$(eval CLUSTER_RESOURCE_GROUP_NAME=s189d01-tsc-dv-rg)
+	$(eval CLUSTER_NAME=s189d01-tsc-${CLUSTER}-aks)
 
 test-cluster:
 	$(eval CLUSTER_RESOURCE_GROUP_NAME=s189t01-tsc-ts-rg)
