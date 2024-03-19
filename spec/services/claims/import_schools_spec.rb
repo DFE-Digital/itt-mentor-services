@@ -8,7 +8,9 @@ describe Claims::ImportSchools do
     create(:school, name: "Yeo Moor Primary School", region:, urn: "141361", claims_service: false)
   end
 
-  it_behaves_like "a service object"
+  it_behaves_like "a service object" do
+    let(:params) { { csv_file_path: Rails.root.join("spec/fixtures/import_schools.csv") } }
+  end
 
   describe "#call" do
     it "increases the number of claims schools by 3" do

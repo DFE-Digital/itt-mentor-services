@@ -1,6 +1,10 @@
 require "rails_helper"
 
 RSpec.describe MentorBuilder do
+  it_behaves_like "a service object" do
+    let(:params) { { trn: "1234567" } }
+  end
+
   context "with invalid trn provided" do
     let(:trn) { "ab" }
 

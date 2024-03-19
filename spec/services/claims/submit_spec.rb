@@ -10,7 +10,9 @@ describe Claims::Submit do
   let(:school) { create(:claims_school, urn: "1234") }
   let(:user) { create(:claims_user) }
 
-  it_behaves_like "a service object"
+  it_behaves_like "a service object" do
+    let(:params) { { claim:, claim_params:, user: } }
+  end
 
   describe "#call" do
     it "submits the claim" do

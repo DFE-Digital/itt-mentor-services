@@ -3,6 +3,10 @@ require "rails_helper"
 RSpec.describe User::Remove do
   subject(:remove_user_service) { described_class.call(user:, organisation:) }
 
+  it_behaves_like "a service object" do
+    let(:params) { { user: create(:claims_user), organisation: create(:claims_school) } }
+  end
+
   describe "#call" do
     context "when the user is a claims user" do
       let(:user) { create(:claims_user) }

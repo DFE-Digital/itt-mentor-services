@@ -3,6 +3,10 @@ require "rails_helper"
 RSpec.describe SupportUser::Invite do
   include ActiveJob::TestHelper
 
+  it_behaves_like "a service object" do
+    let(:params) { { support_user: build(:claims_support_user) } }
+  end
+
   describe ".call" do
     subject(:invite_support_user) { described_class.call(support_user:) }
 
