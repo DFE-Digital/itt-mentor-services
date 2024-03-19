@@ -1,6 +1,10 @@
 require "rails_helper"
 
 RSpec.describe TeachingRecord::GetTeacher do
+  it_behaves_like "a service object" do
+    let(:params) { { trn: "1234567" } }
+  end
+
   context "with invalid trn" do
     subject(:get_teacher) { described_class.call(trn: "2222222") }
 

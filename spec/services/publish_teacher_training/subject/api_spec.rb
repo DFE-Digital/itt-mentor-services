@@ -5,7 +5,9 @@ RSpec.describe PublishTeacherTraining::Subject::Api do
     success_stub_request
   end
 
-  it_behaves_like "a service object"
+  it_behaves_like "a service object" do
+    let(:params) { {} }
+  end
 
   describe ".call" do
     it "returns the API data from the Publish Subject Area endpoint" do

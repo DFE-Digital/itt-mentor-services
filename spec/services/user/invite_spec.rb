@@ -3,6 +3,10 @@ require "rails_helper"
 RSpec.describe User::Invite do
   subject(:user_invite_service) { described_class.call(user:, organisation:) }
 
+  it_behaves_like "a service object" do
+    let(:params) { { user: create(:claims_user), organisation: create(:claims_school) } }
+  end
+
   describe "call" do
     context "when the user's service is Claims" do
       describe "when the organisation is a school" do

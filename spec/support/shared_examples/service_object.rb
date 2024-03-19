@@ -1,21 +1,16 @@
 RSpec.shared_examples "a service object" do
   describe "#call" do
-    context "when the #call method is not implemented" do
-      let(:test_class) { Class.new { include ServicePattern } }
+    context "when .call is called on the class" do
+      let(:described_class_instance) { instance_double(described_class) }
 
-      it "raises a NotImplementedError" do
-        expect { test_class.call }.to raise_error(NoMethodError, "#call must be implemented")
-      end
-    end
-
-    context "when the #call method is implemented" do
       before do
-        allow(described_class).to receive(:call).and_return(true)
+        allow(described_class).to receive(:new).and_return(described_class_instance)
+        allow(described_class_instance).to receive(:call)
       end
 
-      it "calls the service logic" do
-        described_class.call
-        expect(described_class).to have_received(:call).once
+      it "calls #call method on an instance of the class" do
+        described_class.call(**params)
+        expect(described_class_instance).to have_received(:call).once
       end
     end
   end

@@ -11,6 +11,10 @@ RSpec.describe Geocoder::UpdateAllSchools do
     create(:school, name: "York School", town: "York", postcode: "YO1 8SG")
   end
 
+  it_behaves_like "a service object" do
+    let(:params) { {} }
+  end
+
   context "when no schools have been geocoded" do
     before do
       uxbridge_school.update!(longitude: nil, latitude: nil)
