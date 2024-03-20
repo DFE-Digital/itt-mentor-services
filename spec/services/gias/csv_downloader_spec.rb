@@ -3,9 +3,7 @@ require "rails_helper"
 RSpec.describe Gias::CsvDownloader do
   subject(:gias_csv_downloader) { described_class.call }
 
-  it_behaves_like "a service object" do
-    let(:params) { {} }
-  end
+  it_behaves_like "a service object"
 
   it "downloads the GIAS CSV" do
     today = Time.zone.today.strftime("%Y%m%d")

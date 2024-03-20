@@ -7,9 +7,7 @@ RSpec.describe PublishTeacherTraining::Subject::Import do
     success_stub_request
   end
 
-  it_behaves_like "a service object" do
-    let(:params) { {} }
-  end
+  it_behaves_like "a service object"
 
   describe ".call" do
     context "when the response contains only valid subject data" do
