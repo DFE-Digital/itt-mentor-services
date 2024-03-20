@@ -6,10 +6,11 @@ en:
           page_title: Claim submitted
           claim_submitted: Claim submitted
           processing_your_claim: Processing your claim
-          processing_your_claim_guidance: We will process this claim at the end of July 2024 and all payments will be paid by the end of September 2024.
+          processing_your_claim_guidance: We will process this claim at the end of July 2024 and all payments will be paid from September 2024.
           your_reference_number_id: Your reference number
           what_happens_next: What happens next
           view_claims: View claims
+          sent_email: We have sent you a confirmation email.
           guidance: We will check your claim before processing payment. If we need to contact you for further information, we will use the email you used to access this service.
         check:
           page_title: Check your answers
