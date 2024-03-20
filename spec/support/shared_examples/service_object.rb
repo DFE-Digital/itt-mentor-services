@@ -9,7 +9,9 @@ RSpec.shared_examples "a service object" do
       end
 
       it "calls #call method on an instance of the class" do
-        described_class.call(**params)
+        service_params = defined?(params) ? params : {}
+
+        described_class.call(**service_params)
         expect(described_class_instance).to have_received(:call).once
       end
     end

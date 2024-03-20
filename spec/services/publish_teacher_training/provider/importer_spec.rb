@@ -3,9 +3,7 @@ require "rails_helper"
 RSpec.describe PublishTeacherTraining::Provider::Importer do
   subject(:importer) { described_class.call }
 
-  it_behaves_like "a service object" do
-    let(:params) { {} }
-  end
+  it_behaves_like "a service object"
 
   context "with only providers in API response which don't exist" do
     before do

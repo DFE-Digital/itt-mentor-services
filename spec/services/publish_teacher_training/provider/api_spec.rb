@@ -30,9 +30,7 @@ RSpec.describe PublishTeacherTraining::Provider::Api do
     )
   end
 
-  it_behaves_like "a service object" do
-    let(:params) { {} }
-  end
+  it_behaves_like "a service object"
 
   it "returns a list of providers from the current recruitment cycle publish-teacher-training-courses api" do
     response = provider_api
