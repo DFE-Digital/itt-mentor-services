@@ -29,7 +29,7 @@
 #  fk_rails_...  (school_id => schools.id)
 #
 class Claims::Claim < ApplicationRecord
-  belongs_to :school, class_name: "Claims::School"
+  belongs_to :school
   belongs_to :provider
   belongs_to :created_by, polymorphic: true
   belongs_to :submitted_by, polymorphic: true, optional: true
