@@ -3,6 +3,7 @@ scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
   get :accessibility, to: "pages#accessibility"
   get :cookies, to: "pages#cookies"
   get :terms, to: "pages#terms"
+  get :privacy, to: "pages#privacy"
 
   scope module: :pages do
     get :feedback
