@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ClaimDecorator do
+RSpec.describe Claims::ClaimDecorator do
   describe "item_status_tag" do
     context "when the claim association is present" do
       it "returns the completed status tag for a claim item" do

@@ -9,7 +9,7 @@ class Claims::GenerateClaimsCsv
     CSV.generate(headers: true) do |csv|
       csv << HEADERS
 
-      Claim.find_each do |claim|
+      Claims::Claim.find_each do |claim|
         csv << [
           claim.reference,
           claim.school.urn,

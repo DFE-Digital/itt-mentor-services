@@ -34,7 +34,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     when_i_click("Continue")
     then_i_check_my_answers
     when_i_click("Add claim")
-    then_i_am_redirectd_to_index_page(Claim.draft.first)
+    then_i_am_redirectd_to_index_page(Claims::Claim.draft.first)
   end
 
   scenario "Colin does not fill the form correctly" do

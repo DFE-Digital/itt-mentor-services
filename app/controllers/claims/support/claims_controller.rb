@@ -3,7 +3,7 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
   before_action :authorize_claim
 
   def index
-    @pagy, @claims = pagy(Claim.not_internal.order_created_at_desc)
+    @pagy, @claims = pagy(Claims::Claim.not_internal.order_created_at_desc)
   end
 
   def show; end
@@ -17,10 +17,10 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
   private
 
   def set_claim
-    @claim = Claim.find(params.require(:id))
+    @claim = Claims::Claim.find(params.require(:id))
   end
 
   def authorize_claim
-    authorize @claim || Claim
+    authorize @claim || Claims::Claim
   end
 end

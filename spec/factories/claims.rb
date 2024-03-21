@@ -29,7 +29,7 @@
 #  fk_rails_...  (school_id => schools.id)
 #
 FactoryBot.define do
-  factory :claim do
+  factory :claim, class: "Claims::Claim" do
     association :school, factory: :claims_school
     association :provider
     association :created_by, factory: :claims_user

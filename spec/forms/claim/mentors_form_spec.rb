@@ -16,9 +16,9 @@ describe Claim::MentorsForm, type: :model do
   end
 
   describe "#to_model" do
-    it "returns an instance of a Claim" do
+    it "returns an instance of a Claims::Claim" do
       form = described_class.new(claim:)
-      expect(form.to_model).to be_a Claim
+      expect(form.to_model).to be_a Claims::Claim
     end
   end
 

@@ -43,7 +43,7 @@ class Claims::Support::Schools::Claims::MentorsController < Claims::ApplicationC
   private
 
   def claim_params
-    params.require(:claim).permit(mentor_ids: [])
+    params.require(:claims_claim).permit(mentor_ids: [])
   end
 
   def claim
@@ -52,7 +52,7 @@ class Claims::Support::Schools::Claims::MentorsController < Claims::ApplicationC
 
   def claim_mentors_form
     @claim_mentors_form ||=
-      if params[:claim].present?
+      if params[:claims_claim].present?
         Claim::MentorsForm.new(claim:, mentor_ids: claim_params[:mentor_ids])
       else
         Claim::MentorsForm.new(claim:)

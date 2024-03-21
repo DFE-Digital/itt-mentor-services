@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe ClaimPolicy do
+describe Claims::ClaimPolicy do
   subject(:claim_policy) { described_class }
 
   let(:user) { build(:claims_user) }

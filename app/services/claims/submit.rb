@@ -50,7 +50,7 @@ class Claims::Submit
   end
 
   def generate_reference
-    reference = SecureRandom.random_number(99_999_999) while Claim.exists?(reference:)
+    reference = SecureRandom.random_number(99_999_999) while Claims::Claim.exists?(reference:)
     reference
   end
 end

@@ -57,7 +57,7 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
   private
 
   def claim_params
-    params.require(:claim)
+    params.require(:claims_claim)
       .permit(:id, :provider_id)
       .merge(default_params)
   end
@@ -76,7 +76,7 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
 
   def claim_provider_form
     @claim_provider_form ||=
-      if params[:claim].present?
+      if params[:claims_claim].present?
         Claim::ProviderForm.new(claim_params)
       else
         Claim::ProviderForm.new(default_params.merge(id: claim_id))
@@ -84,6 +84,6 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
   end
 
   def authorize_claim
-    authorize @claim || Claim
+    authorize @claim || Claims::Claim
   end
 end

@@ -30,7 +30,7 @@
 #
 require "rails_helper"
 
-RSpec.describe Claim, type: :model do
+RSpec.describe Claims::Claim, type: :model do
   context "with associations" do
     it { is_expected.to belong_to(:school).class_name("Claims::School") }
     it { is_expected.to belong_to(:provider) }
