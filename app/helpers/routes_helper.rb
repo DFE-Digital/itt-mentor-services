@@ -67,4 +67,11 @@ module RoutesHelper
       placements: "#",
     }.fetch HostingEnvironment.current_service(request)
   end
+
+  def privacy_path
+    {
+      claims: claims_privacy_path,
+      placements: "#",
+    }.fetch HostingEnvironment.current_service(request)
+  end
 end
