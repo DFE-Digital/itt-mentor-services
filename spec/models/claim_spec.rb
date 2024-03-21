@@ -53,19 +53,19 @@ RSpec.describe Claim, type: :model do
 
     it "defines the expected values" do
       expect(claim).to define_enum_for(:status)
-        .with_values(internal: "internal", draft: "draft", submitted: "submitted")
+        .with_values(internal: "internal", draft: "draft", submitted: "submitted", archived: "archived", discarded: "discarded")
         .backed_by_column_of_type(:enum)
     end
   end
 
   describe "scopes" do
-    describe "#not_internal" do
+    describe "#not_internal_archived_or_discarded" do
       it "returns the claims that dont have status internal" do
         create(:claim)
         claim1 = create(:claim, :draft)
         claim2 = create(:claim, :submitted)
 
-        expect(described_class.not_internal).to eq(
+        expect(described_class.not_internal_archived_or_discarded).to eq(
           [claim1, claim2],
         )
       end

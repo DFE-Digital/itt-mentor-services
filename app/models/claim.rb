@@ -36,11 +36,11 @@ class Claim < ApplicationRecord
   validates :status, presence: true
   validates :reference, uniqueness: { case_sensitive: false }, allow_nil: true
 
-  scope :not_internal, -> { where.not(status: :internal) }
+  scope :not_internal_archived_or_discarded, -> { where.not(status: %i[internal archived discarded]) }
   scope :order_created_at_desc, -> { order(created_at: :desc) }
 
   enum :status,
-       { internal: "internal", draft: "draft", submitted: "submitted" },
+       { internal: "internal", draft: "draft", submitted: "submitted", archived: "archived", discarded: "discarded" },
        validate: true
 
   delegate :name, to: :provider, prefix: true, allow_nil: true

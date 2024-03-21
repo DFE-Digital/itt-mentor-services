@@ -11,6 +11,10 @@ class ClaimPolicy < Claims::ApplicationPolicy
     true
   end
 
+  def destroy?
+    true
+  end
+
   def download_csv?
     true
   end

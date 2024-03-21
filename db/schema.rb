@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_15_130549) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_21_095050) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
-  create_enum "claim_status", ["internal", "draft", "submitted"]
+  create_enum "claim_status", ["internal", "draft", "submitted", "archived", "discarded"]
   create_enum "mentor_training_type", ["refresher", "initial"]
   create_enum "placement_status", ["draft", "published"]
   create_enum "provider_type", ["scitt", "lead_school", "university"]
@@ -271,10 +271,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_130549) do
     t.string "district_admin_code"
     t.uuid "region_id"
     t.uuid "trust_id"
-    t.float "longitude"
-    t.float "latitude"
     t.string "local_authority_name"
     t.string "local_authority_code"
+    t.float "longitude"
+    t.float "latitude"
     t.index ["claims_service"], name: "index_schools_on_claims_service"
     t.index ["latitude"], name: "index_schools_on_latitude"
     t.index ["longitude"], name: "index_schools_on_longitude"

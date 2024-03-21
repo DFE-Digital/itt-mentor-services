@@ -53,11 +53,12 @@ scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
       end
 
       scope module: :schools do
-        resources :claims, except: %i[destroy] do
+        resources :claims do
           resources :mentors, only: %i[new create edit update], module: :claims
           resources :mentor_trainings, only: %i[edit update], module: :claims
 
           member do
+            get :remove
             get :check
             post :submit
           end
