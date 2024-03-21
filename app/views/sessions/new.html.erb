@@ -12,7 +12,7 @@
       <% end %>
 
       <p class="govuk-body">
-        <%= sanitize t(".disclaimer", service_name:, support_email: mail_to("becomingateacher@digital.education.gov.uk")) %>
+        <%= sanitize t(".disclaimer", service_name:, support_email: mail_to(t("#{current_service}.support_email"))) %>
       </p>
     </div>
   </div>

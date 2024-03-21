@@ -38,7 +38,7 @@ RSpec.describe "Start Page", type: :system, service: :claims do
       "Get an account to claim funding for mentor training\n"\
       "Ask a colleague within your organisation to add you if you do not have an account.\n"\
       "If your organisation has not been set up to claim funding for mentor training, "\
-      "send an email to becomingateacher@digital.education.gov.uk.",
+      "send an email to ittmentor.funding@education.gov.uk.",
     )
     expect(page).to have_content("Related content")
     expect(page).to have_link(

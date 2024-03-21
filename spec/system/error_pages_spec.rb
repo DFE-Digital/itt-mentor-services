@@ -56,7 +56,7 @@ RSpec.describe "Error pages", type: :system do
     expect(page).to have_content "Page not found"
     expect(page).to have_content "If you entered a web address, check it is correct."
     expect(page).to have_content "If you pasted the web address, check you copied the entire address."
-    expect(page).to have_content "If the web address is correct or you selected a link or button and you need to speak to someone about this problem, contact the #{service_name} team: becomingateacher@digital.education.gov.uk"
+    expect(page).to have_content "If the web address is correct or you selected a link or button and you need to speak to someone about this problem, contact the #{service_name} team: #{support_email}"
     expect(page.driver.status_code).to eq 404
   end
 
@@ -64,7 +64,7 @@ RSpec.describe "Error pages", type: :system do
     expect(page).to have_title "Sorry, there’s a problem with the service"
     expect(page).to have_content "Sorry, there’s a problem with the service"
     expect(page).to have_content "Try again later."
-    expect(page).to have_content "If you continue to see this error contact the #{service_name} team: becomingateacher@digital.education.gov.uk"
+    expect(page).to have_content "If you continue to see this error contact the #{service_name} team: #{support_email}"
     expect(page.driver.status_code).to eq 422
   end
 
@@ -80,7 +80,15 @@ RSpec.describe "Error pages", type: :system do
     expect(page).to have_title "Sorry, there’s a problem with the service"
     expect(page).to have_content "Sorry, there’s a problem with the service"
     expect(page).to have_content "Try again later."
-    expect(page).to have_content "If you have any questions, please email us at becomingateacher@digital.education.gov.uk"
+    expect(page).to have_content "If you have any questions, please email us at "
     expect(page.driver.status_code).to eq 429
+  end
+
+  def support_email
+    if self.class.metadata[:service] == :claims
+      "ittmentor.funding@education.gov.uk"
+    else
+      "becomingateacher@digital.education.gov.uk"
+    end
   end
 end
