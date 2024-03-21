@@ -34,13 +34,15 @@ class Claims::Claim < ApplicationRecord
   belongs_to :created_by, polymorphic: true
   belongs_to :submitted_by, polymorphic: true, optional: true
 
-  has_many :mentor_trainings
+  has_many :mentor_trainings, dependent: :destroy
   has_many :mentors, through: :mentor_trainings
 
   validates :status, presence: true
   validates :reference, uniqueness: { case_sensitive: false }, allow_nil: true
 
-  scope :not_internal, -> { where.not(status: :internal) }
+  VISIBLE_STATUSES = %i[draft submitted].freeze
+
+  scope :visible, -> { where(status: VISIBLE_STATUSES) }
   scope :order_created_at_desc, -> { order(created_at: :desc) }
 
   enum :status,

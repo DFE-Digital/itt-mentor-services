@@ -36,7 +36,7 @@ RSpec.describe Claims::Claim, type: :model do
     it { is_expected.to belong_to(:provider) }
     it { is_expected.to belong_to(:created_by) }
     it { is_expected.to belong_to(:submitted_by).optional }
-    it { is_expected.to have_many(:mentor_trainings) }
+    it { is_expected.to have_many(:mentor_trainings).dependent(:destroy) }
     it { is_expected.to have_many(:mentors).through(:mentor_trainings) }
   end
 
@@ -64,13 +64,14 @@ RSpec.describe Claims::Claim, type: :model do
   end
 
   describe "scopes" do
-    describe "#not_internal" do
+    describe "#visible" do
       it "returns the claims that dont have status internal" do
         create(:claim)
         claim1 = create(:claim, :draft)
         claim2 = create(:claim, :submitted)
+        create(:claim, :internal)
 
-        expect(described_class.not_internal).to eq(
+        expect(described_class.visible).to eq(
           [claim1, claim2],
         )
       end
