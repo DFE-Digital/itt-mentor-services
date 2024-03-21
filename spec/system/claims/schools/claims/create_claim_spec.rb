@@ -34,7 +34,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     when_i_click("Continue")
     then_i_check_my_answers
     when_i_click("Submit claim")
-    then_i_get_a_claim_reference(Claim.submitted.first)
+    then_i_get_a_claim_reference(Claims::Claim.submitted.first)
   end
 
   scenario "Anne does not fill the form correctly" do
@@ -72,8 +72,8 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     when_i_add_training_hours("20 hours")
     when_i_click("Continue")
     when_i_click("Submit claim")
-    then_i_get_a_claim_reference(Claim.submitted.last)
-    given_i_visit_claim_check_page_after_submitting(Claim.submitted.last)
+    then_i_get_a_claim_reference(Claims::Claim.submitted.last)
+    given_i_visit_claim_check_page_after_submitting(Claims::Claim.submitted.last)
     then_i_am_redirected_to_root_path_with_alert
   end
 

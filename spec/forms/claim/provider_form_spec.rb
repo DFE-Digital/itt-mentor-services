@@ -17,16 +17,16 @@ describe Claim::ProviderForm, type: :model do
   end
 
   describe "#to_model" do
-    it "returns an instance of a Claim" do
+    it "returns an instance of a Claims::Claim" do
       form = described_class.new(school:)
-      expect(form.to_model).to be_a Claim
+      expect(form.to_model).to be_a Claims::Claim
     end
   end
 
   describe "#claim" do
-    it "returns an instance of a Claim" do
+    it "returns an instance of a Claims::Claim" do
       form = described_class.new(school:)
-      expect(form.claim).to be_a Claim
+      expect(form.claim).to be_a Claims::Claim
     end
 
     context "when claim already exists" do

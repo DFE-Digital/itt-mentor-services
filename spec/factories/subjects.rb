@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: subjects
+#
+#  id           :uuid             not null, primary key
+#  code         :string
+#  name         :string           not null
+#  subject_area :enum
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
 FactoryBot.define do
   factory :subject do
     subject_area { %i[primary secondary].sample }

@@ -15,7 +15,7 @@
 
       <%= govuk_summary_list do |summary_list| %>
         <% summary_list.with_row do |row| %>
-          <% row.with_key(text: Claim.human_attribute_name(:accredited_provider)) %>
+          <% row.with_key(text: Claims::Claim.human_attribute_name(:accredited_provider)) %>
           <% row.with_value(text: @claim.provider_name) %>
           <% row.with_action(text: t("change"),
                              href: edit_claims_support_school_claim_path(
@@ -28,7 +28,7 @@
         <% end %>
 
         <% summary_list.with_row do |row| %>
-          <% row.with_key(text: Claim.human_attribute_name(:mentors)) %>
+          <% row.with_key(text: Claims::Claim.human_attribute_name(:mentors)) %>
           <% row.with_value do %>
             <ul class="govuk-list">
               <% @claim.mentors.each do |mentor| %>
@@ -70,7 +70,7 @@
       <h2 class="govuk-heading-m"><%= t(".grant_funding") %></h2>
         <%= govuk_summary_list do |summary_list| %>
           <% summary_list.with_row do |row| %>
-            <% row.with_key(text: Claim.human_attribute_name(:claim_amount)) %>
+            <% row.with_key(text: Claims::Claim.human_attribute_name(:claim_amount)) %>
             <% row.with_value(text: humanized_money_with_symbol(@claim.amount)) %>
           <% end %>
         <% end %>

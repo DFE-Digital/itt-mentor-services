@@ -28,14 +28,14 @@
 #  fk_rails_...  (provider_id => providers.id)
 #  fk_rails_...  (school_id => schools.id)
 #
-class Claim < ApplicationRecord
+class Claims::Claim < ApplicationRecord
   belongs_to :school, class_name: "Claims::School"
   belongs_to :provider
   belongs_to :created_by, polymorphic: true
   belongs_to :submitted_by, polymorphic: true, optional: true
 
   has_many :mentor_trainings
-  has_many :mentors, through: :mentor_trainings
+  has_many :mentors, through: :mentor_trainings, class_name: "::Mentor"
 
   validates :status, presence: true
   validates :reference, uniqueness: { case_sensitive: false }, allow_nil: true

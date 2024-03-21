@@ -1,4 +1,4 @@
-class ClaimPolicy < Claims::ApplicationPolicy
+class Claims::ClaimPolicy < Claims::ApplicationPolicy
   def edit?
     !record.submitted?
   end

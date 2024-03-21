@@ -25,7 +25,7 @@
 #  fk_rails_...  (provider_id => providers.id)
 #
 class MentorTraining < ApplicationRecord
-  belongs_to :claim
+  belongs_to :claim, class_name: "Claims::Claim"
   belongs_to :mentor, optional: true
   belongs_to :provider, optional: true
 

@@ -14,18 +14,18 @@
 
       <%= govuk_summary_list do |summary_list| %>
         <% summary_list.with_row do |row| %>
-          <% row.with_key(text: Claim.human_attribute_name(:school)) %>
+          <% row.with_key(text: Claims::Claim.human_attribute_name(:school)) %>
           <% row.with_value(text: @school.name) %>
         <% end %>
 
         <% if @claim.provider %>
           <% summary_list.with_row do |row| %>
-            <% row.with_key(text: Claim.human_attribute_name(:accredited_provider)) %>
+            <% row.with_key(text: Claims::Claim.human_attribute_name(:accredited_provider)) %>
             <% row.with_value(text: @claim.provider.name) %>
           <% end %>
         <% else %>
           <% summary_list.with_row do |row| %>
-            <% row.with_key(text: Claim.human_attribute_name(:accredited_provider)) %>
+            <% row.with_key(text: Claims::Claim.human_attribute_name(:accredited_provider)) %>
             <% row.with_value(text: t("none")) %>
           <% end %>
         <% end %>
@@ -42,17 +42,17 @@
         <% end %>
 
         <% summary_list.with_row do |row| %>
-          <% row.with_key(text: Claim.human_attribute_name(:status)) %>
+          <% row.with_key(text: Claims::Claim.human_attribute_name(:status)) %>
           <% row.with_value(text: render(Claim::StatusTagComponent.new(claim: @claim))) %>
         <% end %>
 
         <% summary_list.with_row do |row| %>
-          <% row.with_key(text: Claim.human_attribute_name(:date_submitted)) %>
+          <% row.with_key(text: Claims::Claim.human_attribute_name(:date_submitted)) %>
           <% row.with_value(text: safe_l(@claim.submitted_on, format: :long)) %>
         <% end %>
 
         <% summary_list.with_row do |row| %>
-          <% row.with_key(text: Claim.human_attribute_name(:submitted_by)) %>
+          <% row.with_key(text: Claims::Claim.human_attribute_name(:submitted_by)) %>
           <% row.with_value(text: text_or_dash(@claim.submitted_by_full_name)) %>
         <% end %>
       <% end %>
@@ -70,7 +70,7 @@
       <h2 class="govuk-heading-m"><%= t(".grant_funding") %></h2>
         <%= govuk_summary_list do |summary_list| %>
           <% summary_list.with_row do |row| %>
-            <% row.with_key(text: Claim.human_attribute_name(:claim_amount)) %>
+            <% row.with_key(text: Claims::Claim.human_attribute_name(:claim_amount)) %>
             <% row.with_value(text: humanized_money_with_symbol(@claim.amount)) %>
           <% end %>
         <% end %>
