@@ -1,17 +1,25 @@
 class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationController
   include Claims::BelongsToSchool
 
-  before_action :set_claim, only: %i[check draft show edit update]
+  before_action :set_claim, only: %i[check draft show edit update remove destroy]
   before_action :authorize_claim
   helper_method :claim_provider_form
 
   def index
-    @pagy, @claims = pagy(@school.claims.not_internal.order_created_at_desc)
+    @pagy, @claims = pagy(@school.claims.visible.order_created_at_desc)
   end
 
   def new; end
 
   def show; end
+
+  def remove; end
+
+  def destroy
+    @claim.destroy!
+
+    redirect_to claims_support_school_claims_path(@school, @claim), flash: { success: t(".success") }
+  end
 
   def create
     if claim_provider_form.save

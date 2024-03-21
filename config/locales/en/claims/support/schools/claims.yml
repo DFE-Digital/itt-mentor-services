@@ -28,9 +28,17 @@ en:
             grant_funding: Grant funding
             hours: hours
             page_caption: Claims - %{school_name}
+            remove_claim: Remove claim
           new:
             page_title: Accredited provider - Add claim
+          remove:
+            page_title: Are you sure you want to remove this claim?
+            caption: Claim - %{reference} - %{school_name}
+            warning: Are you sure you want to remove this claim?
+            cancel: Cancel
+            remove_claim: Remove claim
+          destroy:
+            success: Claim has been removed
           form:
             add_claim: Add claim - %{school}
             heading: Accredited provider
-

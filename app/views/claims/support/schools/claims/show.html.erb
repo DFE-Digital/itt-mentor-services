@@ -76,4 +76,8 @@
         <% end %>
     </div>
   </div>
+
+  <% if policy(@claim).remove? %>
+    <%= govuk_link_to t(".remove_claim"), remove_claims_support_school_claim_path(@school, @claim), class: "app-link app-link--destructive" %>
+  <% end %>
 </div>
