@@ -22,9 +22,13 @@ FactoryBot.define do
 
   factory :claims_mentor,
           class: "Claims::Mentor",
-          parent: :mentor
+          parent: :mentor do
+            schools { [association(:claims_school)] }
+          end
 
   factory :placements_mentor,
           class: "Placements::Mentor",
-          parent: :mentor
+          parent: :mentor do
+            schools { [association(:placements_school)] }
+          end
 end
