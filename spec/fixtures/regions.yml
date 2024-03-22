@@ -1,0 +1,19 @@
+inner_london:
+  name: Inner London
+  claims_funding_available_per_hour_pence: 5360
+  claims_funding_available_per_hour_currency: GBP
+
+outer_london:
+  name: Outer London
+  claims_funding_available_per_hour_pence: 4825
+  claims_funding_available_per_hour_currency: GBP
+
+fringe:
+  name: Fringe
+  claims_funding_available_per_hour_pence: 4510
+  claims_funding_available_per_hour_currency: GBP
+
+rest_of_england:
+  name: Rest of England
+  claims_funding_available_per_hour_pence: 4380
+  claims_funding_available_per_hour_currency: GBP

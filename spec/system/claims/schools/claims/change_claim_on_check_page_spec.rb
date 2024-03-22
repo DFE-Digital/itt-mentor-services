@@ -1,9 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Change claim on check page", type: :system, service: :claims do
-  let!(:region) { create(:region, name: "Inner London", claims_funding_available_per_hour: Money.from_amount(53.60, "GBP")) }
-
-  let!(:school) { create(:claims_school, mentors: [mentor1, mentor2], region:) }
+  let!(:school) { create(:claims_school, mentors: [mentor1, mentor2], region: regions(:inner_london)) }
   let!(:anne) do
     create(
       :claims_user,

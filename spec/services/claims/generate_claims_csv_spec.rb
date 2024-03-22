@@ -4,13 +4,9 @@ RSpec.describe Claims::GenerateClaimsCsv do
   subject(:generate_claims_csv) { described_class.call }
 
   before do
-    region1 = create(:region, name: "Inner London", claims_funding_available_per_hour: Money.from_amount(53.60, "GBP"))
-    region2 = create(:region, name: "Outer London", claims_funding_available_per_hour: Money.from_amount(48.25, "GBP"))
-    region3 = create(:region, name: "Fringe", claims_funding_available_per_hour: Money.from_amount(45.10, "GBP"))
-
-    school1 = create(:claims_school, :claims, name: "School name 1", region: region1, urn: "1234", local_authority_name: "blah", local_authority_code: "BLA", group: "Academy")
-    school2 = create(:claims_school, :claims, name: "School name 2", region: region2, urn: "5678", local_authority_name: "blah", local_authority_code: "BLA", group: "Academy")
-    school3 = create(:claims_school, :claims, name: "School name 3", region: region3, urn: "5679", local_authority_name: "blah", local_authority_code: "BLA", group: "Academy")
+    school1 = create(:claims_school, :claims, name: "School name 1", region: regions(:inner_london), urn: "1234", local_authority_name: "blah", local_authority_code: "BLA", group: "Academy")
+    school2 = create(:claims_school, :claims, name: "School name 2", region: regions(:outer_london), urn: "5678", local_authority_name: "blah", local_authority_code: "BLA", group: "Academy")
+    school3 = create(:claims_school, :claims, name: "School name 3", region: regions(:fringe), urn: "5679", local_authority_name: "blah", local_authority_code: "BLA", group: "Academy")
 
     claim1 = create(:claim, school: school1, reference: "12345678")
     claim2 = create(:claim, school: school2, reference: "12345679")
