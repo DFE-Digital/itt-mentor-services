@@ -1,11 +1,30 @@
 module FooterHelper
   def footer_meta_items
+    {
+      claims: claims_footer_meta_items,
+      placements: placements_footer_meta_items,
+    }.fetch current_service
+  end
+
+  private
+
+  def claims_footer_meta_items
     [
-      { text: t(".#{current_service}_guidance"), href: guidance_path },
-      { text: t(".accessibility"), href: accessibility_path },
-      { text: t(".cookies"), href: cookies_path },
-      { text: t(".privacy_policy"), href: privacy_path },
-      { text: t(".terms_and_conditions"), href: terms_path },
+      { text: t(".grant_conditions"), href: claims_grant_conditions_path },
+      { text: t(".accessibility"), href: claims_accessibility_path },
+      { text: t(".cookies"), href: claims_cookies_path },
+      { text: t(".privacy_policy"), href: claims_privacy_path },
+      { text: t(".terms_and_conditions"), href: claims_terms_path },
+    ]
+  end
+
+  def placements_footer_meta_items
+    [
+      { text: t(".guidance"), href: "#" },
+      { text: t(".accessibility"), href: "#" },
+      { text: t(".cookies"), href: "#" },
+      { text: t(".privacy_policy"), href: "#" },
+      { text: t(".terms_and_conditions"), href: "#" },
     ]
   end
 end
