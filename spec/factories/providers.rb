@@ -62,5 +62,6 @@ FactoryBot.define do
     end
   end
 
+  factory :claims_provider, class: "Claims::Provider", parent: :provider
   factory :placements_provider, class: "Placements::Provider", parent: :provider, traits: %i[placements]
 end

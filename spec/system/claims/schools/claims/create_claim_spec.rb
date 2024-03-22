@@ -9,9 +9,9 @@ RSpec.describe "Create claim", type: :system, service: :claims do
       user_memberships: [create(:user_membership, organisation: school)],
     )
   end
-  let!(:provider) { create(:provider, :best_practice_network) }
-  let(:mentor1) { create(:mentor, first_name: "Anne") }
-  let(:mentor2) { create(:mentor, first_name: "Joe") }
+  let!(:provider) { create(:claims_provider, :best_practice_network) }
+  let(:mentor1) { create(:claims_mentor, first_name: "Anne") }
+  let(:mentor2) { create(:claims_mentor, first_name: "Joe") }
 
   before do
     user_exists_in_dfe_sign_in(user: anne)

@@ -25,7 +25,7 @@
 #  fk_rails_...  (provider_id => providers.id)
 #
 FactoryBot.define do
-  factory :mentor_training do
+  factory :mentor_training, class: "Claims::MentorTraining" do
     association :claim
     association :mentor
     association :provider

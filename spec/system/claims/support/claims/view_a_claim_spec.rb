@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe "View claims", type: :system, service: :claims do
   let!(:support_user) { create(:claims_support_user) }
-  let(:provider) { create(:provider) }
-  let(:mentor) { create(:mentor) }
+  let(:provider) { create(:claims_provider) }
+  let(:mentor) { create(:claims_mentor) }
   let!(:claim) do
     create(
       :claim,
