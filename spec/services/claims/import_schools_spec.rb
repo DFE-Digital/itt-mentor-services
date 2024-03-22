@@ -2,10 +2,9 @@ require "rails_helper"
 
 describe Claims::ImportSchools do
   before do
-    region = create(:region, name: "Inner London", claims_funding_available_per_hour: Money.from_amount(53.60, "GBP"))
-    create(:school, name: "Newton Farm Nursery, Infant and Junior School", region:, urn: "102181", claims_service: false)
-    create(:school, name: "Adderley CofE Primary School", region:, urn: "123457", claims_service: false)
-    create(:school, name: "Yeo Moor Primary School", region:, urn: "141361", claims_service: false)
+    create(:school, name: "Newton Farm Nursery, Infant and Junior School", region: regions(:inner_london), urn: "102181", claims_service: false)
+    create(:school, name: "Adderley CofE Primary School", region: regions(:inner_london), urn: "123457", claims_service: false)
+    create(:school, name: "Yeo Moor Primary School", region: regions(:inner_london), urn: "141361", claims_service: false)
   end
 
   it_behaves_like "a service object" do

@@ -113,9 +113,8 @@ RSpec.describe UserMailer, type: :mailer do
     subject(:claim_confirmation_email) { described_class.with(service: user.service).claim_submitted_notification(user, claim) }
 
     context "when a claim has been submitted" do
-      let(:region) { create(:region, name: "A region", claims_funding_available_per_hour: Money.from_amount(53.60, "GBP")) }
       let(:user) { create(:claims_user) }
-      let(:school) { create(:claims_school, region:) }
+      let(:school) { create(:claims_school, region: regions(:inner_london)) }
       let(:claim) { create(:claim, reference: "123", school:) }
 
       it "sends the confirmation email" do
@@ -136,9 +135,8 @@ RSpec.describe UserMailer, type: :mailer do
     subject(:claim_confirmation_email) { described_class.with(service: support_user.service).claim_created_support_notification(claim, email) }
 
     context "when a claim has been created" do
-      let(:region) { create(:region, name: "A region", claims_funding_available_per_hour: Money.from_amount(53.60, "GBP")) }
       let(:support_user) { create(:claims_support_user, :colin) }
-      let(:school) { create(:claims_school, region:) }
+      let(:school) { create(:claims_school, region: regions(:inner_london)) }
       let(:claim) { create(:claim, reference: "123", school:) }
       let(:user_of_a_school) { create(:claims_user, email: "babagoli@gmail.com", user_memberships: [build(:user_membership, organisation: school)]) }
       let(:email) { user_of_a_school.email }

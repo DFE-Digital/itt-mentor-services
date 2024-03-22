@@ -1,9 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "View a claim", type: :system, service: :claims do
-  let!(:region) { create(:region, name: "Inner London", claims_funding_available_per_hour: Money.from_amount(53.60, "GBP")) }
-
-  let(:school) { create(:claims_school, name: "A School", region:) }
+  let(:school) { create(:claims_school, name: "A School", region: regions(:inner_london)) }
 
   let!(:colin) { create(:claims_support_user, :colin) }
 

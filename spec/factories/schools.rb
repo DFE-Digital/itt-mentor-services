@@ -65,7 +65,7 @@ require "./spec/support/geocoder_stub"
 
 FactoryBot.define do
   factory :school do
-    association :region
+    region { Region.all.sample }
     sequence(:urn) { _1 }
     name { Faker::Educator.primary_school }
 

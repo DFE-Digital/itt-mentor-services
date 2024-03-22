@@ -21,8 +21,6 @@ RSpec.describe Region, type: :model do
   end
 
   context "with validations" do
-    subject { create(:region) }
-
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:claims_funding_available_per_hour_currency) }
     it { is_expected.to validate_presence_of(:claims_funding_available_per_hour_pence) }
@@ -30,9 +28,10 @@ RSpec.describe Region, type: :model do
   end
 
   describe "#funding_available_per_hour" do
+    subject(:region) { described_class.new(claims_funding_available_per_hour_currency: "GBP", claims_funding_available_per_hour_pence: 4510) }
+
     it "returns the funding available per hour" do
-      region = create(:region, claims_funding_available_per_hour_currency: "GBP", claims_funding_available_per_hour_pence: 4510)
-      expect(region.funding_available_per_hour).to eq(Money.new(4510, "GBP"))
+      expect(region.funding_available_per_hour).to eq(Money.from_amount(45.10, "GBP"))
     end
   end
 end
