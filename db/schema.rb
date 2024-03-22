@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_15_130549) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_22_145705) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -34,10 +34,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_130549) do
     t.string "created_by_type"
     t.uuid "created_by_id"
     t.enum "status", enum_type: "claim_status"
+    t.string "submitted_by_type"
+    t.uuid "submitted_by_id"
     t.index ["created_by_type", "created_by_id"], name: "index_claims_on_created_by"
     t.index ["provider_id"], name: "index_claims_on_provider_id"
     t.index ["reference"], name: "index_claims_on_reference", unique: true
     t.index ["school_id"], name: "index_claims_on_school_id"
+    t.index ["submitted_by_type", "submitted_by_id"], name: "index_claims_on_submitted_by"
   end
 
   create_table "flipflop_features", force: :cascade do |t|

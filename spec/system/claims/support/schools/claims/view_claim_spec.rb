@@ -18,6 +18,7 @@ RSpec.describe "View a claim", type: :system, service: :claims do
       reference: "12345678",
       submitted_at: Time.new(2024, 3, 5, 12, 31, 52, "+00:00"),
       provider:,
+      submitted_by: colin,
     )
   end
   let!(:mentor_training) { create(:mentor_training, claim:, mentor: claims_mentor, hours_completed: 6) }
@@ -52,7 +53,8 @@ RSpec.describe "View a claim", type: :system, service: :claims do
     expect(page).to have_content("SchoolA School")
     expect(page).to have_content("Accredited providerBest Practice Network")
     expect(page).to have_content("Mentors\nBarry Garlow")
-    expect(page).to have_content("Date submitted05/03/2024")
+    expect(page).to have_content("Submitted by#{colin.full_name}")
+    expect(page).to have_content("Date submitted 5 March 2024")
     expect(page).to have_content("Hours of training")
     expect(page).to have_content("Status\nSubmitted")
     expect(page).to have_content("Barry Garlow#{mentor_training.hours_completed} hours")

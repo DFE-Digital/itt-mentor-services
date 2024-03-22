@@ -49,7 +49,11 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   def submit
     Claims::Submit.call(
       claim: @claim,
-      claim_params: { status: :submitted, submitted_at: Time.current },
+      claim_params: {
+        status: :submitted,
+        submitted_at: Time.current,
+        submitted_by: current_user,
+      },
       user: current_user,
     )
 
