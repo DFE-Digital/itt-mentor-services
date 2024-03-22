@@ -1,0 +1,16 @@
+.list--dash {
+  li {
+    $contents-spacing: govuk-spacing(3);
+    position: relative;
+    padding-left: $contents-spacing;
+    padding-right: $contents-spacing;
+
+    &:before {
+      content: "\2013";
+      position: absolute;
+      left: 0;
+      width: govuk-spacing(3);
+      overflow: hidden;
+    }
+  }
+}

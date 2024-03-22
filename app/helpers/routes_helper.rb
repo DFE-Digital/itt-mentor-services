@@ -74,4 +74,11 @@ module RoutesHelper
       placements: "#",
     }.fetch HostingEnvironment.current_service(request)
   end
+
+  def guidance_path
+    {
+      claims: claims_grant_conditions_path,
+      placements: "#",
+    }.fetch HostingEnvironment.current_service(request)
+  end
 end
