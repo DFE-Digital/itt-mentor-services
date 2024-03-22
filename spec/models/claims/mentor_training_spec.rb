@@ -26,7 +26,7 @@
 #
 require "rails_helper"
 
-RSpec.describe MentorTraining, type: :model do
+RSpec.describe Claims::MentorTraining, type: :model do
   subject(:mentor_training) { described_class.new }
 
   context "with associations" do

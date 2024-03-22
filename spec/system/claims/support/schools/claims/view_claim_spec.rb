@@ -5,7 +5,7 @@ RSpec.describe "View a claim", type: :system, service: :claims do
 
   let!(:colin) { create(:claims_support_user, :colin) }
 
-  let!(:provider) { create(:provider, :best_practice_network) }
+  let!(:provider) { create(:claims_provider, :best_practice_network) }
   let!(:claims_mentor) { create(:claims_mentor, first_name: "Barry", last_name: "Garlow") }
 
   let!(:claim) do

@@ -34,7 +34,6 @@ RSpec.describe Provider, type: :model do
   context "with associations" do
     it { is_expected.to have_many(:user_memberships) }
     it { is_expected.to have_many(:users).through(:user_memberships) }
-    it { is_expected.to have_many(:mentor_trainings) }
   end
 
   describe "enums" do

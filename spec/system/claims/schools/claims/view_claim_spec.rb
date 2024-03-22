@@ -11,8 +11,8 @@ RSpec.describe "View a claim", type: :system, service: :claims do
     )
   end
 
-  let!(:provider) { create(:provider, :best_practice_network) }
-  let!(:claims_mentor) { create(:claims_mentor, first_name: "Barry", last_name: "Garlow") }
+  let!(:provider) { create(:claims_provider, :best_practice_network) }
+  let!(:mentor) { create(:claims_mentor, first_name: "Barry", last_name: "Garlow") }
 
   let!(:submitted_claim) do
     create(
@@ -25,6 +25,7 @@ RSpec.describe "View a claim", type: :system, service: :claims do
       submitted_by: anne,
     )
   end
+
   let!(:draft_claim) do
     create(
       :claim,
@@ -34,8 +35,9 @@ RSpec.describe "View a claim", type: :system, service: :claims do
       provider:,
     )
   end
-  let!(:mentor_training) { create(:mentor_training, claim: submitted_claim, mentor: claims_mentor, hours_completed: 6) }
-  let!(:draft_mentor_training) { create(:mentor_training, claim: draft_claim, mentor: claims_mentor, hours_completed: 6) }
+
+  let!(:mentor_training) { create(:mentor_training, claim: submitted_claim, mentor:, hours_completed: 6) }
+  let!(:draft_mentor_training) { create(:mentor_training, claim: draft_claim, mentor:, hours_completed: 6) }
 
   scenario "Anne visits the show page of a submitted claim" do
     user_exists_in_dfe_sign_in(user: anne)

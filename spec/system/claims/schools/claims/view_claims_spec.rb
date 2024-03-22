@@ -11,10 +11,9 @@ RSpec.describe "View claims", type: :system, service: :claims do
   end
 
   let(:school_with_mentors) do
-    create(
-      :claims_school,
-      mentors: create_list(:claims_mentor, 2),
-    )
+    create(:claims_school) do |school|
+      create_list(:claims_mentor, 2, schools: [school])
+    end
   end
 
   let!(:draft_claim) do
@@ -22,8 +21,8 @@ RSpec.describe "View claims", type: :system, service: :claims do
       :claim,
       :draft,
       school: school_with_mentors,
-      provider: create(:provider),
-      mentors: [create(:claims_mentor)],
+      provider: create(:claims_provider),
+      mentors: [school_with_mentors.mentors.first],
     )
   end
   let!(:submitted_claim) do
@@ -31,8 +30,8 @@ RSpec.describe "View claims", type: :system, service: :claims do
       :claim,
       :submitted,
       school: school_with_mentors,
-      provider: create(:provider),
-      mentors: [create(:claims_mentor)],
+      provider: create(:claims_provider),
+      mentors: [school_with_mentors.mentors.first],
       submitted_at: Time.new(2024, 3, 5, 12, 31, 52, "+00:00"),
     )
   end
