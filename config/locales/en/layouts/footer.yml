@@ -7,8 +7,8 @@ en:
         heading: Email
         disclaimer: You'll get a response within 5 working days, or one working day for urgent requests.
 
-      claims_guidance: Grant conditions
-      placements_guidance: Guidance
+      grant_conditions: Grant conditions
+      guidance: Guidance
       accessibility: Accessibility
       cookies: Cookies
       privacy_policy: Privacy policy
