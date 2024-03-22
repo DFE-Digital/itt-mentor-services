@@ -41,13 +41,18 @@
         <% end %>
 
         <% summary_list.with_row do |row| %>
-          <% row.with_key(text: Claim.human_attribute_name(:date_submitted)) %>
-          <% row.with_value(text: safe_l(@claim.submitted_on, format: :short)) %>
+          <% row.with_key(text: Claim.human_attribute_name(:status)) %>
+          <% row.with_value(text: render(Claim::StatusTagComponent.new(claim: @claim))) %>
         <% end %>
 
         <% summary_list.with_row do |row| %>
-          <% row.with_key(text: Claim.human_attribute_name(:status)) %>
-          <% row.with_value(text: render(Claim::StatusTagComponent.new(claim: @claim))) %>
+          <% row.with_key(text: Claim.human_attribute_name(:submitted_by)) %>
+          <% row.with_value(text: text_or_dash(@claim.submitted_by_full_name)) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: Claim.human_attribute_name(:date_submitted)) %>
+          <% row.with_value(text: safe_l(@claim.submitted_on, format: :long)) %>
         <% end %>
       <% end %>
 

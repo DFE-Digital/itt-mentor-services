@@ -2,23 +2,26 @@
 #
 # Table name: claims
 #
-#  id              :uuid             not null, primary key
-#  created_by_type :string
-#  reference       :string
-#  status          :enum
-#  submitted_at    :datetime
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  created_by_id   :uuid
-#  provider_id     :uuid
-#  school_id       :uuid             not null
+#  id                :uuid             not null, primary key
+#  created_by_type   :string
+#  reference         :string
+#  status            :enum
+#  submitted_at      :datetime
+#  submitted_by_type :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  created_by_id     :uuid
+#  provider_id       :uuid
+#  school_id         :uuid             not null
+#  submitted_by_id   :uuid
 #
 # Indexes
 #
-#  index_claims_on_created_by   (created_by_type,created_by_id)
-#  index_claims_on_provider_id  (provider_id)
-#  index_claims_on_reference    (reference) UNIQUE
-#  index_claims_on_school_id    (school_id)
+#  index_claims_on_created_by    (created_by_type,created_by_id)
+#  index_claims_on_provider_id   (provider_id)
+#  index_claims_on_reference     (reference) UNIQUE
+#  index_claims_on_school_id     (school_id)
+#  index_claims_on_submitted_by  (submitted_by_type,submitted_by_id)
 #
 # Foreign Keys
 #
@@ -29,6 +32,7 @@ class Claim < ApplicationRecord
   belongs_to :school, class_name: "Claims::School"
   belongs_to :provider
   belongs_to :created_by, polymorphic: true
+  belongs_to :submitted_by, polymorphic: true, optional: true
 
   has_many :mentor_trainings
   has_many :mentors, through: :mentor_trainings
@@ -45,6 +49,7 @@ class Claim < ApplicationRecord
 
   delegate :name, to: :provider, prefix: true, allow_nil: true
   delegate :users, to: :school, prefix: true
+  delegate :full_name, to: :submitted_by, prefix: true, allow_nil: true
 
   def submitted_on
     submitted_at&.to_date
