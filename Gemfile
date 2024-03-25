@@ -90,6 +90,9 @@ gem "discard"
 # Geocoding
 gem "geocoder"
 
+# Audit trail
+gem "audited"
+
 group :development do
   gem "annotate", require: false
   gem "prettier_print", require: false

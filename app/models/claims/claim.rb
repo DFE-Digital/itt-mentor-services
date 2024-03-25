@@ -29,6 +29,9 @@
 #  fk_rails_...  (school_id => schools.id)
 #
 class Claims::Claim < ApplicationRecord
+  audited
+  has_associated_audits
+
   belongs_to :school
   belongs_to :provider
   belongs_to :created_by, polymorphic: true

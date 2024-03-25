@@ -29,6 +29,8 @@ class Claims::MentorTraining < ApplicationRecord
   belongs_to :mentor, optional: true
   belongs_to :provider, optional: true
 
+  audited associated_with: :claim
+
   validates(
     :hours_completed,
     numericality: { greater_than: 0, less_than_or_equal_to: 20, only_integer: true },

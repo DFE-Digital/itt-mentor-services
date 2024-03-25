@@ -14,6 +14,7 @@
 
 require "rspec/retry"
 require "pundit/rspec"
+require "audited-rspec"
 require "simplecov"
 require "simplecov-html"
 require "simplecov-lcov"
