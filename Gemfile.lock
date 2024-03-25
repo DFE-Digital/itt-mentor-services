@@ -180,7 +180,7 @@ GEM
       rubocop
       smart_properties
     erubi (1.12.0)
-    et-orbi (1.2.9)
+    et-orbi (1.2.11)
       tzinfo
     factory_bot (6.4.5)
       activesupport (>= 5.0.0)
@@ -205,7 +205,7 @@ GEM
     geocoder (1.8.2)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    good_job (3.26.2)
+    good_job (3.27.1)
       activejob (>= 6.0.0)
       activerecord (>= 6.0.0)
       concurrent-ruby (>= 1.0.2)
@@ -364,7 +364,7 @@ GEM
       activesupport (>= 3.0.0)
     raabro (1.4.0)
     racc (1.7.3)
-    rack (3.0.9.1)
+    rack (3.0.10)
     rack-oauth2 (2.2.0)
       activesupport
       attr_required
@@ -426,11 +426,11 @@ GEM
     rainbow (3.1.1)
     rake (13.1.0)
     rbs (2.8.4)
-    rdoc (6.6.2)
+    rdoc (6.6.3.1)
       psych (>= 4.0.0)
     redcarpet (3.6.0)
     regexp_parser (2.9.0)
-    reline (0.4.3)
+    reline (0.5.0)
       io-console (~> 0.5)
     request_store (1.5.1)
       rack (>= 1.4)
@@ -635,7 +635,7 @@ DEPENDENCIES
   faker
   flipflop
   geocoder
-  good_job (~> 3.26)
+  good_job (~> 3.27)
   govuk-components (~> 5.2)
   govuk_design_system_formbuilder (~> 5.2)
   httparty
