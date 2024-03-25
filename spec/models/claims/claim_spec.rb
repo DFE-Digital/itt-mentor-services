@@ -53,6 +53,11 @@ RSpec.describe Claims::Claim, type: :model do
     it { is_expected.to delegate_method(:full_name).to(:submitted_by).with_prefix.allow_nil }
   end
 
+  describe "auditing" do
+    it { is_expected.to be_audited }
+    it { is_expected.to have_associated_audits }
+  end
+
   describe "enums" do
     subject(:claim) { build(:claim) }
 

@@ -35,6 +35,10 @@ RSpec.describe Claims::MentorTraining, type: :model do
     it { is_expected.to belong_to(:provider).optional }
   end
 
+  describe "auditing" do
+    it { is_expected.to be_audited.associated_with(:claim) }
+  end
+
   context "with validations" do
     it {
       expect(mentor_training).to validate_numericality_of(:hours_completed)
