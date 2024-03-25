@@ -47,15 +47,7 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   def confirm; end
 
   def submit
-    Claims::Submit.call(
-      claim: @claim,
-      claim_params: {
-        status: :submitted,
-        submitted_at: Time.current,
-        submitted_by: current_user,
-      },
-      user: current_user,
-    )
+    Claims::Claim::Submit.call(claim: @claim, user: current_user)
 
     redirect_to confirm_claims_school_claim_path(@school, @claim)
   end
