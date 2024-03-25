@@ -183,7 +183,7 @@ GEM
       rubocop
       smart_properties
     erubi (1.12.0)
-    et-orbi (1.2.9)
+    et-orbi (1.2.11)
       tzinfo
     factory_bot (6.4.5)
       activesupport (>= 5.0.0)
@@ -208,7 +208,7 @@ GEM
     geocoder (1.8.2)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    good_job (3.26.2)
+    good_job (3.27.1)
       activejob (>= 6.0.0)
       activerecord (>= 6.0.0)
       concurrent-ruby (>= 1.0.2)
@@ -639,7 +639,7 @@ DEPENDENCIES
   faker
   flipflop
   geocoder
-  good_job (~> 3.26)
+  good_job (~> 3.27)
   govuk-components (~> 5.2)
   govuk_design_system_formbuilder (~> 5.2)
   httparty
