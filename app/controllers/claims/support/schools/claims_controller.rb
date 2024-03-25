@@ -53,11 +53,7 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
   end
 
   def draft
-    Claims::Submit.call(
-      claim: @claim,
-      claim_params: { status: :draft },
-      user: current_user,
-    )
+    Claims::Claim::CreateDraft.call(claim: @claim)
 
     redirect_to claims_support_school_claims_path(@school), flash: { success: t(".success") }
   end
