@@ -1,0 +1,46 @@
+<% content_for(:page_title) { t(".page_title") } %>
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l"><%= t(".page_title") %></h1>
+
+      <%= form_with(model: @feedback_form, as: :feedback, url: claims_feedback_index_path, method: :post, scope: :feedback) do |f| %>
+        <%= f.govuk_error_summary %>
+
+        <%= f.govuk_collection_radio_buttons :option, feedback_options,
+            :first,
+            :second,
+            legend: { text: t(".service_rating") } %>
+
+        <div class="govuk-character-count" data-module="govuk-character-count" data-maxwords="200">
+          <div class="govuk-form-group">
+            <%= f.govuk_text_area :improve_comment,
+                                    class: "govuk-input--width-40 govuk-textarea govuk-js-character-count",
+                                    id: "improve_comment",
+                                    hint: { text: t(".improve_hint"), size: "s" },
+                                    label: { text: t(".improve"), size: "s" } %>
+          </div>
+          <div id="improve_comment-info" class="govuk-hint govuk-character-count__message">
+            <%= t(".improve") %>
+          </div>
+        </div>
+
+        <h2 class="govuk-heading-m"><%= t(".reply") %></h2>
+        <h1 class="govuk-body"><%= t(".reply_info") %></h1>
+
+        <div class="govuk-form-group">
+          <%= f.govuk_text_field :full_name,
+                                  class: "govuk-input--width-40",
+                                  label: { text: t(".your_name"), size: "s" } %>
+
+          <%= f.govuk_text_field :email,
+                                  class: "govuk-input--width-40",
+                                  hint: { text: t(".your_email_hint"), size: "s" },
+                                  label: { text: t(".your_email"), size: "s" } %>
+        </div>
+
+        <%= f.govuk_submit t(".submit") %>
+      <% end %>
+    </div>
+  </div>
+</div>
