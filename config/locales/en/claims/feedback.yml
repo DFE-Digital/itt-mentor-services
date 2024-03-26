@@ -1,0 +1,26 @@
+en:
+  claims:
+    feedback:
+      new:
+        options:
+          very_satisfied: Very satisfied
+          satisfied: Satisfied
+          neutral: Neither satisfied nor dissatisfied
+          dissatisfied: Dissatisfied
+          very_dissatisfied: Very dissatisfied
+        page_title: Give feedback on Claim funding for mentor training
+        submit: Send feedback
+        service_rating: Overall, how do you feel about this service?
+        improve: How could we improve this service?
+        improve_hint: Do not include any personal or sensitive information
+        text_field_count_text: You can enter up to 200 words
+        your_name: Your name
+        your_email: Your email address
+        your_email_hint: We’ll only use this to reply to your message
+        reply: If you want a reply (optional)
+        reply_info: If you’d like us to get back to you, please leave your details below.
+      confirmation:
+        page_title: Thank you for submitting feedback
+        feedback_response_time: If you gave us your name and email, we will respond within 5 working days.
+        return_home: Return to the home page
+
