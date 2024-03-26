@@ -110,10 +110,11 @@
       <p class="govuk-body">Check the location of your school in <a href="#annex-a--definition-of-areas">Annex A</a>.</p>
       <p class="govuk-body">For each mentor that completes the full 20 hours of training, the table below sets out how much a school can claim.</p>
       <p class="govuk-body">If a mentor undertakes fewer than 20 hours of training, the funding is calculated per hour. For example, if a mentor in a school outside London completed 10 hours of training, the school can claim £438. This is calculated at £43.80 (per hour) x 10 (hours of training).</p>
+
       <%= govuk_table do |table| %>
         <% table.with_head do |head| %>
           <% head.with_row do |row| %>
-            <% row.with_cell(header: true, text: "Funding available") %>
+            <% row.with_cell(header: true, text: "Funding available per mentor") %>
             <% row.with_cell(header: true, text: "Funding period") %>
             <% row.with_cell(header: true, text: "Recipient of funding") %>
             <% row.with_cell(header: true, text: "How is it paid") %>
