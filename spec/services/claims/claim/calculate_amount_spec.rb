@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Claims::CalculateAmount do
+describe Claims::Claim::CalculateAmount do
   let!(:claim) { create(:claim, school_id: school.id, reference: "12345678") }
   let!(:school) { create(:claims_school, :claims, name: "School name 1", region: regions(:inner_london), urn: "1234") }
 

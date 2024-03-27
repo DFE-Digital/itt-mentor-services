@@ -1,4 +1,4 @@
-class Claims::CalculateAmount
+class Claims::Claim::CalculateAmount
   include ServicePattern
 
   def initialize(claim:)

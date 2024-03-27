@@ -61,6 +61,6 @@ class Claims::Claim < ApplicationRecord
   end
 
   def amount
-    Claims::CalculateAmount.call(claim: self)
+    Claims::Claim::CalculateAmount.call(claim: self)
   end
 end
