@@ -1,6 +1,8 @@
 require "rails_helper"
 
 describe Placements::PlacementsQuery do
+  it_behaves_like "a query object", Placement, "by_status"
+
   describe "#filter" do
     context "when given no filters" do
       let!(:placements) { create_list(:placement, 5) }

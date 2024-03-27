@@ -6,7 +6,7 @@ module Placements
       new(scope).filter_by(filters)
     end
 
-    def initialize(scope)
+    def initialize(scope = nil)
       @scope = scope || Placement.all
     end
 
