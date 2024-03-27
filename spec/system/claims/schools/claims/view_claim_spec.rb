@@ -44,6 +44,7 @@ RSpec.describe "View a claim", type: :system, service: :claims do
     given_i_sign_in
     when_i_visit_the_claim_show_page(submitted_claim)
     then_i_can_then_see_the_submitted_claim_details
+    then_i_cant_see_submit_button
   end
 
   scenario "Anne visits the show page of a draft claim" do
@@ -51,6 +52,8 @@ RSpec.describe "View a claim", type: :system, service: :claims do
     given_i_sign_in
     when_i_visit_the_claim_show_page(draft_claim)
     then_i_can_then_see_the_draft_claim_details
+    when_i_click_submit_button
+    then_i_get_a_claim_reference(draft_claim)
   end
 
   private
@@ -88,5 +91,19 @@ RSpec.describe "View a claim", type: :system, service: :claims do
   def given_i_sign_in
     visit sign_in_path
     click_on "Sign in using DfE Sign In"
+  end
+
+  def then_i_cant_see_submit_button
+    expect(page).not_to have_button("Submit claim")
+  end
+
+  def when_i_click_submit_button
+    click_on "Submit claim"
+  end
+
+  def then_i_get_a_claim_reference(claim)
+    within(".govuk-panel") do
+      expect(page).to have_content("Claim submitted\nYour reference number\n#{claim.reference}")
+    end
   end
 end
