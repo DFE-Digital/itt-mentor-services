@@ -4,4 +4,4 @@ en:
       grant_funding:
         region: Region
         hourly_rate: Hourly rate
-
+        funding_link_text: View grant conditions
