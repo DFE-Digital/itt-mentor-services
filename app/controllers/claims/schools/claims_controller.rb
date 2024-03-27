@@ -74,7 +74,7 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   end
 
   def set_claim
-    @claim = @school.claims.find(claim_id).decorate
+    @claim = @school.claims.find(claim_id)
   end
 
   def claim_id
