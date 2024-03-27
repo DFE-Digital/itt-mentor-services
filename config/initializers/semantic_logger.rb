@@ -7,7 +7,7 @@ if Rails.env.development? || Rails.env.production?
     # }
     config.log_tags = [
       :request_id,
-      "Ollie is testing",
+      "from semantic_logger.rb",
     ]
   end
 
