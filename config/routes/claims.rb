@@ -1,10 +1,13 @@
 scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
   root to: "pages#start"
-  get :accessibility, to: "pages#accessibility"
-  get :cookies, to: "pages#cookies"
-  get :terms, to: "pages#terms"
-  get :privacy, to: "pages#privacy"
-  get :grant_conditions, to: "pages#grant_conditions"
+
+  scope module: :pages do
+    get :accessibility
+    get :cookies
+    get :terms
+    get :privacy
+    get :grant_conditions
+  end
 
   resources :feedback, only: %i[new create]
 
