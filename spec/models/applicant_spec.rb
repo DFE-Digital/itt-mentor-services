@@ -44,7 +44,8 @@ RSpec.describe Applicant, type: :model do
             "Accept" => "*/*",
             "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
             "User-Agent" => "Ruby",
-          })
+          },
+        )
         .to_return(status: 200, body: "{}", headers: {})
     end
 
@@ -52,7 +53,7 @@ RSpec.describe Applicant, type: :model do
 
     it "geocodes the address" do
       expect(applicant).to receive(:geocode)
-      applicant.save
+      applicant.save!
     end
   end
 end
