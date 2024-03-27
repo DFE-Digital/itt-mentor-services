@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_22_145705) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_26_145246) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -23,6 +23,27 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_145705) do
   create_enum "provider_type", ["scitt", "lead_school", "university"]
   create_enum "service", ["claims", "placements"]
   create_enum "subject_area", ["primary", "secondary"]
+
+  create_table "applicants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "apply_id"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email_address"
+    t.string "address1"
+    t.string "address2"
+    t.string "address3"
+    t.string "address4"
+    t.string "postcode"
+    t.float "longitude"
+    t.float "latitude"
+    t.uuid "provider_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["apply_id"], name: "index_applicants_on_apply_id", unique: true
+    t.index ["latitude"], name: "index_applicants_on_latitude"
+    t.index ["longitude"], name: "index_applicants_on_longitude"
+    t.index ["provider_id"], name: "index_applicants_on_provider_id"
+  end
 
   create_table "claims", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "school_id", null: false
@@ -328,6 +349,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_145705) do
     t.index ["type", "email"], name: "index_users_on_type_and_email", unique: true
   end
 
+  add_foreign_key "applicants", "providers"
   add_foreign_key "claims", "providers"
   add_foreign_key "claims", "schools"
   add_foreign_key "mentor_memberships", "mentors"
