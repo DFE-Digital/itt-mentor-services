@@ -1,6 +1,14 @@
 if Rails.env.development? || Rails.env.production?
   Rails.application.configure do
-    config.log_tags = [:request_id] # Prepend all log lines with the following tags
+    # Prepend all log lines with the following tags
+    # config.log_tags = {
+    #   request_id: :request_id,
+    #   some_other_tag: "some other value",
+    # }
+    config.log_tags = [
+      :request_id,
+      "Ollie is testing",
+    ]
   end
 
   SemanticLogger.add_appender(io: $stdout, level: Rails.application.config.log_level, formatter: Rails.application.config.log_format)
