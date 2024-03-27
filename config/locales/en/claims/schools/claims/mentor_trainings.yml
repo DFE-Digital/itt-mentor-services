@@ -9,8 +9,6 @@ en:
             hours_of_training: Hours of training for %{mentor}
             20_hours: 20 hours
             20_hours_hint: The full amount of hours for standard training
-            6_hours: 6 hours
-            6_hours_hint: The amount of hours for top up training
-            other_amount: Other amount
+            other_amount: Another amount
             enter_whole_numbers: Enter whole numbers up to a maximum of 20 hours
             number_of_hours: Number of hours

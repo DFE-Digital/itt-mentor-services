@@ -119,11 +119,11 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
   end
 
   def when_i_choose_other_amount
-    page.choose("Other amount")
+    page.choose("Another amount")
   end
 
   def when_i_choose_other_amount_and_input_hours(hours, with_error: false)
-    page.choose("Other amount")
+    page.choose("Another amount")
 
     if with_error
       fill_in("claim-mentor-training-form-custom-hours-completed-field-error", with: hours)
