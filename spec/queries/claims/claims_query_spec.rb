@@ -8,10 +8,10 @@ describe Claims::ClaimsQuery do
   describe "#call" do
     it "returns all visible claims, ordered by created at date descending" do
       _internal_claim = create(:claim)
-      draft_claim = create(:claim, :draft, created_at: Date.parse("29 March 2024"))
+      _draft_claim = create(:claim, :draft, created_at: Date.parse("29 March 2024"))
       submitted_claim = create(:claim, :submitted, created_at: Date.parse("28 March 2024"))
 
-      expect(claims_query).to eq([draft_claim, submitted_claim])
+      expect(claims_query).to eq([submitted_claim])
     end
 
     context "when given school ids" do

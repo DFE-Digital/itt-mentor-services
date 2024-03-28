@@ -1,6 +1,6 @@
 class Claims::ClaimsQuery < ApplicationQuery
   def call
-    scope = Claims::Claim.visible
+    scope = Claims::Claim.submitted
     scope = school_condition(scope)
     scope = provider_condition(scope)
     scope.order_created_at_desc
