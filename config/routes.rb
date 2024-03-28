@@ -42,4 +42,7 @@ Rails.application.routes.draw do
   # GoodJob admin interface – only accessible to support users
   mount GoodJob::Engine => "/good_job", constraints: SupportUserConstraint
   get "/good_job", to: redirect("/support")
+
+  # Deliberately cause a stack trace so Colin can test how it gets logged
+  get "/explode" => ->(_env) { BOOM! }
 end
