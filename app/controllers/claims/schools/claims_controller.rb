@@ -38,7 +38,7 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
 
   def update
     if claim_provider_form.save
-      redirect_to check_claims_school_claim_path(@school, claim_provider_form.claim)
+      redirect_to claim_provider_form.update_success_path
     else
       render :edit
     end
