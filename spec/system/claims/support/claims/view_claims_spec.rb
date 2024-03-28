@@ -12,7 +12,7 @@ RSpec.describe "View claims", type: :system, service: :claims do
 
   scenario "Support user visits the claims index page" do
     when_i_visit_claim_index_page
-    i_see_a_list_of_claims
+    then_i_see_a_list_of_submitted_claims
   end
 
   private
@@ -26,17 +26,14 @@ RSpec.describe "View claims", type: :system, service: :claims do
     click_on("Claims")
   end
 
-  def i_see_a_list_of_claims
+  def then_i_see_a_list_of_submitted_claims
     expect(page).to have_content("ID")
     expect(page).to have_content("Status")
-    expect(page).to have_selector("tbody tr", count: 2)
+    expect(page).to have_selector("tbody tr", count: 1)
+
+    expect(page).not_to have_selector("td", text: claim_1.id)
 
     within("tbody tr:nth-child(1)") do
-      expect(page).to have_selector("td", text: claim_1.id)
-      expect(page).to have_selector("td", text: "Draft")
-    end
-
-    within("tbody tr:nth-child(2)") do
       expect(page).to have_selector("td", text: claim_2.id)
       expect(page).to have_selector("td", text: "Submitted")
     end
