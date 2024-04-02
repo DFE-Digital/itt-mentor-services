@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Change claim on check page", type: :system, service: :claims do
-  let!(:school) { create(:claims_school, mentors: [mentor1, mentor2], region: regions(:inner_london)) }
+  let!(:school) { create(:claims_school, mentors: [mentor1, mentor2, mentor3], region: regions(:inner_london)) }
   let!(:anne) do
     create(
       :claims_user,
@@ -14,6 +14,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
 
   let(:mentor1) { create(:mentor, first_name: "Anne") }
   let(:mentor2) { create(:mentor, first_name: "Joe") }
+  let(:mentor3) { create(:mentor, first_name: "Joeana") }
   let!(:claim) { create(:claim, :draft, school:, provider: provider1, reference: nil) }
 
   before do
@@ -63,6 +64,23 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
     then_i_get_a_claim_reference(claim)
   end
 
+  scenario "Anne changes the mentors on claim without inputting hours" do
+    given_i_visit_claim_check_page
+    when_i_click_change_mentors
+    then_i_expect_the_mentors_to_be_checked([mentor1, mentor2])
+    when_i_check_the_mentor(mentor3)
+    when_i_click("Continue")
+    when_i_click("Back")
+    then_i_expect_the_training_hours_for(20, mentor2)
+    when_i_click("Back")
+    then_i_expect_the_training_hours_for(20, mentor1)
+    when_i_click("Back")
+    then_i_expect_the_mentors_to_be_checked([mentor1, mentor2, mentor3])
+    when_i_click("Back")
+    then_i_check_my_answers(provider1, [mentor1, mentor2], [20, 12])
+    then_i_cant_see_the_mentor(mentor3)
+  end
+
   scenario "Anne changes the training hours for a mentor on check page" do
     given_i_visit_claim_check_page
     when_i_click_change_training_hours_for_mentor
@@ -73,6 +91,14 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
     when_i_choose_other_amount_and_input_hours(6, with_error: true)
     when_i_click("Continue")
     then_i_check_my_answers(provider1, [mentor1, mentor2], [6, 12])
+  end
+
+  scenario "Anne intends to change the training hours but clicks back link" do
+    given_i_visit_claim_check_page
+    when_i_click_change_training_hours_for_mentor
+    then_i_expect_the_training_hours_to_be_selected("20")
+    when_i_click("Back")
+    then_i_check_my_answers(provider1, [mentor1, mentor2], [20, 12])
   end
 
   private
@@ -160,6 +186,11 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
     find("#claim-mentor-training-form-hours-completed-#{hours}-field").checked?
   end
 
+  def then_i_expect_the_training_hours_for(hours, mentor)
+    expect(page).to have_content("Hours of training for #{mentor.full_name}")
+    find("#claim-mentor-training-form-hours-completed-#{hours}-field").checked?
+  end
+
   def then_i_check_my_answers(provider, mentors, mentor_hours)
     expect(page).to have_content("Check your answers")
     expect(page).to have_content("Hours of training")
@@ -192,6 +223,10 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
         expect(page).to have_content(claim.amount.format(symbol: true, decimal_mark: ".", no_cents: true))
       end
     end
+  end
+
+  def then_i_cant_see_the_mentor(mentor)
+    expect(page).not_to have_content(mentor.full_name)
   end
 
   def then_i_see_the_error(message)
