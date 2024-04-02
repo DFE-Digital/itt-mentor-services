@@ -39,25 +39,25 @@ describe Claim::ProviderForm, type: :model do
 
   describe "save" do
     context "when claim doesn't exist" do
-      it "creates an internal claim with a provider" do
+      it "creates an internal draft claim with a provider" do
         form = described_class.new(provider_id: provider.id, school:, current_user:)
 
         expect {
           form.save!
         }.to change { form.claim.provider }.to provider
-        expect(form.claim.internal?).to be(true)
+        expect(form.claim.internal_draft?).to be(true)
         expect(form.claim.created_by).to eq(current_user)
       end
     end
 
     context "when claim does exist" do
-      it "creates an internal claim with a provider" do
+      it "creates an internal draft claim with a provider" do
         form = described_class.new(id: claim.id, provider_id: provider.id, school:, current_user:)
 
         expect {
           form.save!
         }.to change { claim.reload.provider }.to provider
-        expect(claim.internal?).to be(true)
+        expect(claim.internal_draft?).to be(true)
         expect(form.claim.created_by).to eq(current_user)
       end
     end

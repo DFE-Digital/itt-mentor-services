@@ -20,11 +20,11 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
   end
 
   def draft?
-    user.support_user? && record.internal?
+    user.support_user? && record.internal_draft?
   end
 
   def check?
-    record.draft? || record.internal?
+    record.draft? || record.internal_draft?
   end
 
   def download_csv?

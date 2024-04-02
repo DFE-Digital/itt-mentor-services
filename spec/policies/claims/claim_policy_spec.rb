@@ -5,14 +5,14 @@ describe Claims::ClaimPolicy do
 
   let(:user) { build(:claims_user) }
   let(:support_user) { build(:claims_support_user) }
-  let(:internal_claim) { build(:claim) }
+  let(:internal_draft_claim) { build(:claim) }
   let(:draft_claim) { build(:claim, :draft) }
   let(:submitted_claim) { build(:claim, :submitted) }
 
   permissions :edit? do
-    context "when user has an internal claim" do
+    context "when user has an internal draft claim" do
       it "grants access" do
-        expect(claim_policy).to permit(user, internal_claim)
+        expect(claim_policy).to permit(user, internal_draft_claim)
       end
     end
 
@@ -30,9 +30,9 @@ describe Claims::ClaimPolicy do
   end
 
   permissions :update? do
-    context "when user has an internal claim" do
+    context "when user has an internal draft claim" do
       it "grants access" do
-        expect(claim_policy).to permit(user, internal_claim)
+        expect(claim_policy).to permit(user, internal_draft_claim)
       end
     end
 
@@ -50,9 +50,9 @@ describe Claims::ClaimPolicy do
   end
 
   permissions :submit? do
-    context "when user has an internal claim" do
+    context "when user has an internal draft claim" do
       it "grants access" do
-        expect(claim_policy).to permit(user, internal_claim)
+        expect(claim_policy).to permit(user, internal_draft_claim)
       end
     end
 
@@ -82,9 +82,9 @@ describe Claims::ClaimPolicy do
       end
     end
 
-    context "when user has an internal claim" do
+    context "when user has an internal draft claim" do
       it "grants access" do
-        expect(claim_policy).not_to permit(user, internal_claim)
+        expect(claim_policy).not_to permit(user, internal_draft_claim)
       end
     end
 
@@ -102,9 +102,9 @@ describe Claims::ClaimPolicy do
   end
 
   permissions :draft? do
-    context "when user has an internal claim" do
+    context "when user has an internal draft claim" do
       it "grants access" do
-        expect(claim_policy).to permit(support_user, internal_claim)
+        expect(claim_policy).to permit(support_user, internal_draft_claim)
       end
     end
 
@@ -134,9 +134,9 @@ describe Claims::ClaimPolicy do
       end
     end
 
-    context "when user has an internal claim" do
+    context "when user has an internal draft claim" do
       it "grants access" do
-        expect(claim_policy).to permit(user, internal_claim)
+        expect(claim_policy).to permit(user, internal_draft_claim)
       end
     end
 
