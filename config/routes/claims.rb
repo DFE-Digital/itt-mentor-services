@@ -7,9 +7,8 @@ scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
     get :terms
     get :privacy
     get :grant_conditions
+    get :feedback
   end
-
-  resources :feedback, only: %i[new create]
 
   resources :schools, only: %i[index show] do
     scope module: :schools do
