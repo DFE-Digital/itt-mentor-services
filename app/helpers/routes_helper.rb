@@ -38,7 +38,7 @@ module RoutesHelper
 
   def feedback_path
     {
-      claims: new_claims_feedback_path,
+      claims: claims_feedback_path,
       placements: placements_feedback_path,
     }.fetch HostingEnvironment.current_service(request)
   end
