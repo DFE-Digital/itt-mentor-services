@@ -152,3 +152,5 @@ group :development, :production do
   # Semantic logger
   gem "rails_semantic_logger"
 end
+
+gem "google_distance_matrix", "~> 0.6.7"

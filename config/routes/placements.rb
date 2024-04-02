@@ -53,6 +53,8 @@ scope module: :placements,
           member { get :remove }
           collection { get :check }
         end
+
+        resources :applicants, only: %i[index show]
       end
     end
   end

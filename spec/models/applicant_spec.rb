@@ -20,10 +20,11 @@
 #
 # Indexes
 #
-#  index_applicants_on_apply_id     (apply_id) UNIQUE
-#  index_applicants_on_latitude     (latitude)
-#  index_applicants_on_longitude    (longitude)
-#  index_applicants_on_provider_id  (provider_id)
+#  index_applicants_on_apply_id                (apply_id) UNIQUE
+#  index_applicants_on_latitude                (latitude)
+#  index_applicants_on_latitude_and_longitude  (latitude,longitude)
+#  index_applicants_on_longitude               (longitude)
+#  index_applicants_on_provider_id             (provider_id)
 #
 # Foreign Keys
 #

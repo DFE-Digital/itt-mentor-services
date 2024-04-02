@@ -20,10 +20,11 @@
 #
 # Indexes
 #
-#  index_applicants_on_apply_id     (apply_id) UNIQUE
-#  index_applicants_on_latitude     (latitude)
-#  index_applicants_on_longitude    (longitude)
-#  index_applicants_on_provider_id  (provider_id)
+#  index_applicants_on_apply_id                (apply_id) UNIQUE
+#  index_applicants_on_latitude                (latitude)
+#  index_applicants_on_latitude_and_longitude  (latitude,longitude)
+#  index_applicants_on_longitude               (longitude)
+#  index_applicants_on_provider_id             (provider_id)
 #
 # Foreign Keys
 #
@@ -43,6 +44,20 @@ class Applicant < ApplicationRecord
     [
       *attributes.slice(*ADDRESS_FIELDS).values,
     ].compact.join(", ")
+  end
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
+  def driving_duration(destination)
+    matrix = GoogleMatrixApi.call(origin: self, destination:, travel_type: "driving")
+    matrix.shortest_route_by_duration_to(matrix.destinations.first).duration_text
+  end
+
+  def transit_duration(destination)
+    matrix = GoogleMatrixApi.call(origin: self, destination:, travel_type: "transit")
+    matrix.shortest_route_by_duration_to(matrix.destinations.first).duration_text
   end
 
   private

@@ -1,0 +1,59 @@
+<%= content_for :page_title, sanitize(applicant.full_name) %>
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: placements_support_provider_applicants_path(provider)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <h1 class="govuk-heading-l"><%= applicant.full_name %></h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= govuk_summary_list do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: Applicant.human_attribute_name(:first_name)) %>
+          <% row.with_value(text: applicant.first_name) %>
+        <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: Applicant.human_attribute_name(:last_name)) %>
+          <% row.with_value(text: applicant.last_name) %>
+        <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: Applicant.human_attribute_name(:email_address)) %>
+          <% row.with_value(text: applicant.email_address) %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <h2 class="govuk-heading-m">Nearby Schools</h2>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <ul class="organisation-search-results">
+        <% nearby_schools.each do |school| %>
+          <li class="organisation-search-results__item">
+            <h2 class="organisation-search-result__item-title">
+              <%= school.name %>
+            </h2>
+            <dl class="app-result-detail">
+              <div class="app-result-detail__row">
+                <dt class="app-result-detail__key">Address</dt>
+                <dd class="app-result-detail__value"><%= school.address %></dd>
+              </div>
+              <div class="app-result-detail__row">
+                <dt class="app-result-detail__key">Distance</dt>
+                <dd class="app-result-detail__value"><%= "#{applicant.distance_to(school).round(2)} miles" %></dd>
+              </div>
+              <div class="app-result-detail__row">
+                <dt class="app-result-detail__key">Driving TTD</dt>
+                <dd class="app-result-detail__value"><%= applicant.driving_duration(school) %></dd>
+              </div>
+              <div class="app-result-detail__row">
+                <dt class="app-result-detail__key">Public Transport TTD</dt>
+                <dd class="app-result-detail__value"><%= applicant.transit_duration(school) %></dd>
+              </div>
+            </dl>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

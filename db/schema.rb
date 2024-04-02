@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_26_145246) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_02_095439) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -40,6 +40,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_26_145246) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["apply_id"], name: "index_applicants_on_apply_id", unique: true
+    t.index ["latitude", "longitude"], name: "index_applicants_on_latitude_and_longitude"
     t.index ["latitude"], name: "index_applicants_on_latitude"
     t.index ["longitude"], name: "index_applicants_on_longitude"
     t.index ["provider_id"], name: "index_applicants_on_provider_id"
@@ -300,6 +301,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_26_145246) do
     t.string "local_authority_name"
     t.string "local_authority_code"
     t.index ["claims_service"], name: "index_schools_on_claims_service"
+    t.index ["latitude", "longitude"], name: "index_schools_on_latitude_and_longitude"
     t.index ["latitude"], name: "index_schools_on_latitude"
     t.index ["longitude"], name: "index_schools_on_longitude"
     t.index ["placements_service"], name: "index_schools_on_placements_service"
