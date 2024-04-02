@@ -72,6 +72,16 @@ scope module: :placements,
       resources :placements, only: %i[index show destroy] do
         member { get :remove }
       end
+
+      resources :partner_providers, only: %i[index new create show destroy] do
+        member { get :remove }
+
+        collection do
+          get :check
+          get :check_provider_option
+          get :provider_options
+        end
+      end
     end
   end
 
@@ -80,6 +90,16 @@ scope module: :placements,
       resources :users, only: %i[index new create show destroy] do
         member { get :remove }
         collection { get :check }
+      end
+
+      resources :partner_schools, only: %i[index new create show destroy] do
+        member { get :remove }
+
+        collection do
+          get :check
+          get :check_school_option
+          get :school_options
+        end
       end
     end
   end

@@ -186,6 +186,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_144630) do
     t.index ["trn"], name: "index_mentors_on_trn", unique: true
   end
 
+  create_table "partnerships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "school_id", null: false
+    t.uuid "provider_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["provider_id"], name: "index_partnerships_on_provider_id"
+    t.index ["school_id", "provider_id"], name: "index_partnerships_on_school_id_and_provider_id", unique: true
+    t.index ["school_id"], name: "index_partnerships_on_school_id"
+  end
+
   create_table "pg_search_documents", force: :cascade do |t|
     t.text "content"
     t.text "organisation_type"
@@ -357,6 +367,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_144630) do
   add_foreign_key "mentor_trainings", "claims"
   add_foreign_key "mentor_trainings", "mentors"
   add_foreign_key "mentor_trainings", "providers"
+  add_foreign_key "partnerships", "providers"
+  add_foreign_key "partnerships", "schools"
   add_foreign_key "placement_mentor_joins", "mentors"
   add_foreign_key "placement_mentor_joins", "placements"
   add_foreign_key "placement_subject_joins", "placements"

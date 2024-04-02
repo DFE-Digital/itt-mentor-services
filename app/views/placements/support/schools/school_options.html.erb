@@ -1,3 +1,10 @@
+<% if school_form.errors.any? %>
+  <% content_for :page_title, t(".title_with_error", school_count: schools.count, search_param:) %>
+<% else %>
+  <% content_for :page_title, t(".title", school_count: schools.count, search_param:) %>
+<% end %>
+
+<%= render "placements/support/primary_navigation", current_navigation: :organisations %>
 <%= content_for(:before_content) do %>
   <%= govuk_back_link(href: new_placements_support_school_path) %>
 <% end %>

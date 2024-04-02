@@ -1,10 +1,10 @@
 <%= govuk_summary_list(html_attributes: { id: "ofsted-details" }) do |summary_list| %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".rating")) %>
-    <% row.with_value(**ofsted_field_args(@school.rating)) %>
+    <% row.with_value(**ofsted_field_args(school.rating)) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".last_inspection_date")) %>
-    <% row.with_value(**ofsted_field_args(@school.formatted_inspection_date)) %>
+    <% row.with_value(**ofsted_field_args(school.formatted_inspection_date)) %>
   <% end %>
 <% end %>

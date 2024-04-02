@@ -30,3 +30,7 @@ en:
           send: Special educational needs and disabilities (SEND)
           ofsted: Ofsted
           contact_details: Contact details
+        school_options:
+          title: "%{school_count} results found for ‘%{search_param}’ - Add organisation"
+          title_with_error: "Error: %{school_count} results found for ‘%{search_param}’ - Add organisation"
+          cancel: Cancel

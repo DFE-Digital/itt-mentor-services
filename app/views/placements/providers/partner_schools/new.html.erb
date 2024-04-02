@@ -1,0 +1,44 @@
+<% content_for :page_title, @partnership_form.errors.any? ? t(".page_title_with_error") : t(".page_title") %>
+<%= render "placements/providers/primary_navigation", provider: @provider, current_navigation: :partner_schools %>
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: placements_provider_partner_schools_path) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <%= form_with(
+    model: @partnership_form,
+    scope: :partnership,
+    url: check_placements_provider_partner_schools_path,
+    method: "get",
+    data: {
+      turbo: false,
+      controller: "autocomplete",
+      autocomplete_path_value: "/api/placements/school_suggestions",
+      autocomplete_return_attributes_value: %w[town postcode],
+    },
+  ) do |f| %>
+    <%= f.govuk_error_summary %>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <%= content_tag(:div, class: class_names("govuk-form-group", "govuk-form-group--error": f.object.errors.present?)) do %>
+          <%= f.govuk_text_field :school_id, value: @partnership_form&.school&.name,
+                                             label: { text: t(".title"), size: "l" },
+                                             caption: { text: t(".caption"), size: "l" },
+                                             data: { autocomplete_target: "serverInput",
+                                                     previous_search: @partnership_form.school&.id } %>
+
+          <div class="govuk-!-margin-bottom-7" data-autocomplete-target="input" data-input-name="partnership[school_name]"
+            data-action="focusin->autocomplete#clearUndefinedSuggestions click->autocomplete#clearUndefinedSuggestions">
+          </div>
+        <% end %>
+
+        <%= f.govuk_submit t(".continue") %>
+
+        <p class="govuk-body">
+          <%= govuk_link_to(t(".cancel"), placements_provider_partner_schools_path, no_visited_state: true) %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+</div>

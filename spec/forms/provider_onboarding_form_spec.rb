@@ -57,14 +57,14 @@ describe ProviderOnboardingForm, type: :model do
   end
 
   describe "#provider" do
-    context "when given the urn of an existing provider" do
-      it "returns the provider associated with that urn" do
+    context "when given the id of an existing provider" do
+      it "returns the provider associated with that id" do
         provider = create(:provider)
         expect(described_class.new(id: provider.id).provider).to eq(provider)
       end
     end
 
-    context "when given a urn not associated with a provider" do
+    context "when given an id not associated with a provider" do
       it "returns nil" do
         expect(described_class.new(id: "123").provider).to eq(nil)
       end
