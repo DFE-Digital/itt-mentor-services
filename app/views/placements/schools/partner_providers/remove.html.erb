@@ -1,0 +1,25 @@
+<% content_for :page_title, t(".page_title", provider_name: @partner_provider.name) %>
+<%= render "placements/schools/primary_navigation", school: @school, current_navigation: :partner_providers %>
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: placements_school_partner_provider_path(@school, @partner_provider)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <label class="govuk-label govuk-label--l">
+        <span class="govuk-caption-l"><%= @partner_provider.name %></span>
+        <%= t(".are_you_sure") %>
+      </label>
+      <%#= render GovukComponent::WarningTextComponent.new(
+        text: t(".user_will_be_sent_an_email", organisation_name: @partner_provider.name),
+      ) %>
+
+      <%= govuk_button_to t(".remove_partner_provider"), placements_school_partner_provider_path(@school, @partner_provider), warning: true, method: :delete %>
+
+      <p class="govuk-body">
+        <%= govuk_link_to(t(".cancel"), placements_school_partner_provider_path(@school, @partner_provider), no_visited_state: true) %>
+      </p>
+    </div>
+  </div>
+</div>

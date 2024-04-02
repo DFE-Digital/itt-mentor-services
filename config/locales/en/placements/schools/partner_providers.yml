@@ -1,0 +1,54 @@
+en:
+  placements:
+    schools:
+      partner_providers:
+        index:
+          partner_providers: Partner providers
+          add_partner_provider: Add partner provider
+          empty_state: There are no partner providers for %{school_name}.
+          change_organisation: Change organisation
+          attributes:
+            partner_providers:
+              name: Name
+              urn: Unique reference number (URN)
+        new:
+          change_organisation: Change organisation
+          page_title: Enter a provider name, UKPRN, URN or postcode - Add partner provider
+          page_title_with_error: "Errors:  Enter a provider name, UKPRN, URN or postcode - Add partner provider"
+          caption: Add partner provider
+          title: Enter a provider name, UKPRN, URN or postcode
+          continue: Continue
+          cancel: Cancel
+        check:
+          continue: Continue
+          cancel: Cancel
+          page_title: Check your answers - Add partner provider
+          contact_details: Contact details
+          add_partner_provider: Add partner provider
+          title: Check your answers
+          name: Name
+          ukprn: UK provider reference number (UKPRN)
+          telephone: Telephone
+          address: Address
+          website: Website
+          email: Email address
+        provider_options:
+          page_title: "%{provider_count} results found for ‘%{search_param}’ - Add partner provider"
+          page_title_with_error: "Error: %{provider_count} results found for ‘%{search_param}’- Add partner provider"
+          title: Add partner provider
+          cancel: Cancel
+        create:
+          partner_provider_added: Partner provider added
+        show:
+          page_title: Partner schools
+          change_organisation: Change organisation
+          contact_details: Contact details
+          remove_partner_provider: Remove partner provider
+        remove:
+          page_title: Are you sure you want to remove this partner provider? - %{provider_name}
+          cancel: Cancel
+          remove_partner_provider: Remove partner provider
+          are_you_sure: Are you sure you want to remove this partner provider?
+        destroy:
+          partner_provider_removed: Partner provider removed
+

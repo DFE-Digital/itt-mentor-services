@@ -16,5 +16,8 @@
     <% component.with_navigation_item t(".organisation_details"),
                                       placements_school_path(school),
                                       current: current_navigation == :organisation_details %>
+    <% component.with_navigation_item t(".partner_providers"),
+                                      placements_school_partner_providers_path(school),
+                                      current: current_navigation == :partner_providers %>
   <% end %>
 <% end %>

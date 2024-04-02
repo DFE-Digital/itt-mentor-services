@@ -18,7 +18,7 @@ RSpec.describe "Placements / Schools / Mentors / Remove a mentor", type: :system
     given_i_sign_in_as_anne
   end
 
-  scenario "Support User removes a mentor from a school" do
+  scenario "User removes a mentor from a school" do
     when_i_visit_the_show_page_for(school, mentor_1)
     and_i_click_on("Remove mentor")
     then_i_am_asked_to_confirm(school, mentor_1)

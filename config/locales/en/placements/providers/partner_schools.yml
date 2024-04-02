@@ -1,0 +1,58 @@
+en:
+  placements:
+    providers:
+      partner_schools:
+        index:
+          partner_schools: Partner schools
+          add_partner_school: Add partner school
+          change_organisation: Change organisation
+          empty_state: There are no partner schools for %{provider_name}.
+          attributes: 
+            partner_schools:
+              name: Name
+              urn: Unique reference number (URN)
+        new:
+          change_organisation: Change organisation
+          page_title: Enter a school name, URN or postcode - Add partner school
+          page_title_with_error: "Errors: Enter a school name, URN or postcode - Add partner school"
+          caption: Add partner school
+          title: Enter a school name, URN or postcode
+          continue: Continue
+          cancel: Cancel
+        check:
+          continue: Continue
+          cancel: Cancel
+          page_title: Check your answers - Add partner school
+          contact_details: Contact details
+          add_partner_school: Add partner school
+          title: Check your answers
+          name: Name
+          urn: Unique reference number (URN)
+          telephone: Telephone
+          address: Address
+          website: Website
+        create:
+          partner_school_added: Partner school added
+        school_options:
+          page_title: "%{school_count} results found for ‘%{search_param}’ - Add partner school"
+          page_title_with_error: "Error: %{school_count} results found for ‘%{search_param}’- Add partner school"
+          title: Add partner school
+          cancel: Cancel
+        show:
+          page_title: Partner schools
+          change_organisation: Change organisation
+          partner_school_details: Partner school details
+          additional_details: Additional details
+          ofsted: Ofsted
+          send: Special educational needs and disabilities (SEND)
+          contact_details: Contact details
+          remove_partner_school: Remove partner school
+        remove:
+          page_title: Are you sure you want to remove this partner school? - %{school_name}
+          cancel: Cancel
+          remove_partner_school: Remove partner school
+          are_you_sure: Are you sure you want to remove this partner school?
+        destroy: 
+          partner_school_removed: Partner school removed
+
+

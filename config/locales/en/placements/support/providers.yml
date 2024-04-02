@@ -25,4 +25,6 @@ en:
           ukprn: UK provider reference number (UKPRN)
           website: Website
         provider_options:
+          title: "%{provider_count} results found for ‘%{search_param}’ - Add organisation"
+          title_with_error: "Error: %{provider_count} results found for ‘%{search_param}’- Add organisation"
           cancel: Cancel

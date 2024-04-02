@@ -46,6 +46,25 @@ RSpec.describe Placements::Provider do
         expect(placements_provider.users).to all(be_a(Placements::User))
       end
     end
+
+    describe "#partnerships" do
+      it { is_expected.to have_many(:partnerships) }
+    end
+
+    describe "#parnter_schools" do
+      it { is_expected.to have_many(:partner_schools).through(:partnerships) }
+
+      it "returns only Placements::School records" do
+        placements_provider = create(:placements_provider)
+        placements_school = create(:placements_school)
+
+        placements_provider.partner_schools << create(:claims_school)
+        placements_provider.partner_schools << placements_school
+
+        expect(placements_provider.partner_schools).to contain_exactly(placements_school)
+        expect(placements_provider.partner_schools).to all(be_a(Placements::School))
+      end
+    end
   end
 
   describe "default scope" do
