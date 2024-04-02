@@ -27,7 +27,7 @@
 FactoryBot.define do
   factory :mentor_training, class: "Claims::MentorTraining" do
     association :claim
-    association :mentor
+    association :mentor, factory: :claims_mentor
     association :provider
   end
 end

@@ -63,4 +63,8 @@ class Claims::Claim < ApplicationRecord
   def amount
     Claims::Claim::CalculateAmount.call(claim: self)
   end
+
+  def ready_to_be_checked?
+    mentors.present? && mentor_trainings.without_hours.blank?
+  end
 end

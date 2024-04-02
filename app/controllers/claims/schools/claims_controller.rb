@@ -32,6 +32,7 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
         claim_mentor_training_form: { hours_completed: last_mentor_training.hours_completed },
       },
     )
+    Claims::Claim::RemoveEmptyMentorTrainingHours.call(claim: @claim)
   end
 
   def edit; end
