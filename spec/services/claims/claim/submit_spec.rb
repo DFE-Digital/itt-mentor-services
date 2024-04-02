@@ -3,7 +3,7 @@ require "rails_helper"
 describe Claims::Claim::Submit do
   subject(:submit_service) { described_class.call(claim:, user:) }
 
-  let!(:claim) { create(:claim, reference: nil, status: :internal, school:) }
+  let!(:claim) { create(:claim, reference: nil, status: :internal_draft, school:) }
 
   let(:submitted_at) { Time.new("2024-03-04 10:32:04 UTC") }
   let(:school) { create(:claims_school, urn: "1234") }

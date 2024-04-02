@@ -34,7 +34,7 @@ FactoryBot.define do
     association :provider
     association :created_by, factory: :claims_user
 
-    status { :internal }
+    status { :internal_draft }
 
     trait :draft do
       status { :draft }

@@ -44,7 +44,7 @@ RSpec.describe "View claims", type: :system, service: :claims do
   end
 
   before do
-    create(:claim, status: :internal, school:)
+    create(:claim, status: :internal_draft, school:)
   end
 
   scenario "Anne visits the claims index page with no mentors" do
@@ -62,16 +62,16 @@ RSpec.describe "View claims", type: :system, service: :claims do
     i_see_a_list_of_the_schools_claims
   end
 
-  scenario "Anne visits the claims index page with internal claims" do
+  scenario "Anne visits the claims index page with internal draft claims" do
     user_exists_in_dfe_sign_in(user: anne)
     given_i_sign_in
     vist_claims_index_page
-    i_do_not_see_any_internal_claims
+    i_do_not_see_any_internal_draft_claims
   end
 
   private
 
-  def i_do_not_see_any_internal_claims
+  def i_do_not_see_any_internal_draft_claims
     expect(page).to have_content("There are no claims for #{school.name}")
   end
 

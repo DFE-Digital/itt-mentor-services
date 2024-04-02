@@ -14,7 +14,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
 
   let(:mentor1) { create(:mentor, first_name: "Anne") }
   let(:mentor2) { create(:mentor, first_name: "Joe") }
-  let!(:claim) { create(:claim, :internal, school:, provider: provider1) }
+  let!(:claim) { create(:claim, :internal_draft, school:, provider: provider1) }
 
   before do
     user_exists_in_dfe_sign_in(user: colin)

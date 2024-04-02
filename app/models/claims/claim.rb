@@ -49,7 +49,7 @@ class Claims::Claim < ApplicationRecord
   scope :order_created_at_desc, -> { order(created_at: :desc) }
 
   enum :status,
-       { internal: "internal", draft: "draft", submitted: "submitted" },
+       { internal_draft: "internal_draft", draft: "draft", submitted: "submitted" },
        validate: true
 
   delegate :name, to: :provider, prefix: true, allow_nil: true
