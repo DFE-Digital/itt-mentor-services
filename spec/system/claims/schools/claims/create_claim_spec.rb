@@ -29,6 +29,11 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     when_i_click("Continue")
     then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor2)
     when_i_choose_other_amount_and_input_hours(12)
+    when_i_click("Back")
+    then_i_expect_the_training_hours_for(20, mentor1)
+    when_i_click("Continue")
+    then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor2)
+    when_i_choose_other_amount_and_input_hours(12)
     when_i_click("Continue")
     then_i_check_my_answers
     when_i_click("Submit claim")
@@ -158,6 +163,11 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     within(".govuk-panel") do
       expect(page).to have_content("Claim submitted\nYour reference number\n#{claim.reference}")
     end
+  end
+
+  def then_i_expect_the_training_hours_for(hours, mentor)
+    expect(page).to have_content("Hours of training for #{mentor.full_name}")
+    find("#claims-claim-mentor-training-form-hours-completed-#{hours}-field").checked?
   end
 
   def then_i_see_the_error(message)
