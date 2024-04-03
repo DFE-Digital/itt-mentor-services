@@ -3,7 +3,7 @@ en:
     support:
       support_users:
         index:
-          page_title: Users
+          page_title: Support users
           add_user: Add user
           heading: Users
         new:
