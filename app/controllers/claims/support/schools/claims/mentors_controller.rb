@@ -24,17 +24,7 @@ class Claims::Support::Schools::Claims::MentorsController < Claims::ApplicationC
 
   def update
     if claim_mentors_form.save
-      path = if claim.mentor_trainings.without_hours.any?
-               edit_claims_support_school_claim_mentor_training_path(
-                 claim.school,
-                 claim,
-                 claim.mentor_trainings.without_hours.first,
-               )
-             else
-               check_claims_support_school_claim_path(claim.school, claim)
-             end
-
-      redirect_to path
+      redirect_to claim_mentors_form.update_success_path
     else
       render :edit
     end
@@ -53,9 +43,9 @@ class Claims::Support::Schools::Claims::MentorsController < Claims::ApplicationC
   def claim_mentors_form
     @claim_mentors_form ||=
       if params[:claims_claim].present?
-        Claims::Claim::MentorsForm.new(claim:, mentor_ids: claim_params[:mentor_ids])
+        Claims::Support::Claim::MentorsForm.new(claim:, mentor_ids: claim_params[:mentor_ids])
       else
-        Claims::Claim::MentorsForm.new(claim:)
+        Claims::Support::Claim::MentorsForm.new(claim:)
       end
   end
 

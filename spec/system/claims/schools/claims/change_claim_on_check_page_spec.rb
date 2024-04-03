@@ -101,6 +101,12 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
     then_i_check_my_answers(provider1, [mentor1, mentor2], [20, 12])
   end
 
+  scenario "Anne click the back link on the check page" do
+    given_i_visit_claim_check_page
+    when_i_click("Back")
+    then_i_expect_the_training_hours_for(20, mentor2)
+  end
+
   private
 
   def given_i_sign_in
