@@ -80,18 +80,18 @@ describe RoutesHelper do
       end
     end
 
-    describe "#feedback_path" do
+    describe "#feedback_url" do
       context "when the current service is claims" do
-        it "returns the correct path" do
+        it "returns the correct url" do
           allow(HostingEnvironment).to receive(:current_service).and_return(:claims)
-          expect(helper.feedback_path).to eq(claims_feedback_path)
+          expect(helper.feedback_url).to eq("https://forms.office.com/e/0E3277Kqpi")
         end
       end
 
       context "when the current service is placements" do
-        it "returns the correct path" do
+        it "returns the correct url" do
           allow(HostingEnvironment).to receive(:current_service).and_return(:placements)
-          expect(helper.feedback_path).to eq(placements_feedback_path)
+          expect(helper.feedback_url).to eq(placements_feedback_url)
         end
       end
     end
