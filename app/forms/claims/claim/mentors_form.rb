@@ -1,4 +1,4 @@
-class Claim::MentorsForm < ApplicationForm
+class Claims::Claim::MentorsForm < ApplicationForm
   attr_accessor :claim, :mentor_ids
 
   validate :mentor_presence

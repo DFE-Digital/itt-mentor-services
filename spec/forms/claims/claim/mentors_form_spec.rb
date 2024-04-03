@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Claim::MentorsForm, type: :model do
+describe Claims::Claim::MentorsForm, type: :model do
   let!(:claim) { create(:claim) }
   let!(:mentor1) { create(:mentor) }
   let!(:mentor2) { create(:mentor) }

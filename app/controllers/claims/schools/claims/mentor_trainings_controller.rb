@@ -17,15 +17,15 @@ class Claims::Schools::Claims::MentorTrainingsController < Claims::ApplicationCo
 
   def mentor_training_form
     @mentor_training_form ||=
-      if params[:claim_mentor_training_form].present?
-        Claim::MentorTrainingForm.new(mentor_training_params)
+      if params[:claims_claim_mentor_training_form].present?
+        Claims::Claim::MentorTrainingForm.new(mentor_training_params)
       else
-        Claim::MentorTrainingForm.new(default_params)
+        Claims::Claim::MentorTrainingForm.new(default_params)
       end
   end
 
   def mentor_training_params
-    params.require(:claim_mentor_training_form).permit(
+    params.require(:claims_claim_mentor_training_form).permit(
       :hours_completed,
       :custom_hours_completed,
     ).merge(default_params)

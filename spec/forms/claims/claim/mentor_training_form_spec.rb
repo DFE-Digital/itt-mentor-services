@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Claim::MentorTrainingForm, type: :model do
+describe Claims::Claim::MentorTrainingForm, type: :model do
   let!(:claim) { create(:claim) }
   let!(:mentor_training) { create(:mentor_training, claim:, mentor:, hours_completed: 6) }
   let(:mentor) { create(:mentor, first_name: "Anne") }
@@ -86,7 +86,7 @@ describe Claim::MentorTrainingForm, type: :model do
           form = described_class.new(claim:, mentor_training: second_mentor_training)
 
           expect(form.back_path).to eq(
-            "/schools/#{claim.school_id}/claims/#{claim.id}/mentor_trainings/#{mentor_training.id}/edit?claim_mentor_training_form%5Bhours_completed%5D=#{mentor_training.hours_completed}",
+            "/schools/#{claim.school_id}/claims/#{claim.id}/mentor_trainings/#{mentor_training.id}/edit?claims_claim_mentor_training_form%5Bhours_completed%5D=#{mentor_training.hours_completed}",
           )
         end
       end

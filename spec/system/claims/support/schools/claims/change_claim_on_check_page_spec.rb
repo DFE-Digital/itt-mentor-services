@@ -126,9 +126,9 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
     page.choose("Another amount")
 
     if with_error
-      fill_in("claim-mentor-training-form-custom-hours-completed-field-error", with: hours)
+      fill_in("claims-claim-mentor-training-form-custom-hours-completed-field-error", with: hours)
     else
-      fill_in("claim-mentor-training-form-custom-hours-completed-field", with: hours)
+      fill_in("claims-claim-mentor-training-form-custom-hours-completed-field", with: hours)
     end
   end
 
@@ -165,7 +165,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
   end
 
   def then_i_expect_the_training_hours_to_be_selected(hours)
-    find("#claim-mentor-training-form-hours-completed-#{hours}-field").checked?
+    find("#claims-claim-mentor-training-form-hours-completed-#{hours}-field").checked?
   end
 
   def then_i_check_my_answers(provider, mentors, mentor_hours)
