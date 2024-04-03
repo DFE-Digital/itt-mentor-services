@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Claim::ProviderForm, type: :model do
+describe Claims::Claim::ProviderForm, type: :model do
   let!(:school) { create(:claims_school) }
   let!(:provider) { create(:claims_provider, :best_practice_network) }
   let!(:claim) { create(:claim, school:) }

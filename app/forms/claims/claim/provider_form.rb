@@ -1,4 +1,4 @@
-class Claim::ProviderForm < ApplicationForm
+class Claims::Claim::ProviderForm < ApplicationForm
   attr_accessor :id, :provider_id, :school, :current_user
 
   validate :validate_provider

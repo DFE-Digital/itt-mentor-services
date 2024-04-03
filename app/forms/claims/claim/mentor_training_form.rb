@@ -1,4 +1,4 @@
-class Claim::MentorTrainingForm < ApplicationForm
+class Claims::Claim::MentorTrainingForm < ApplicationForm
   DEFAULT_HOURS_COMPLETED = %w[6 20].freeze
   attr_accessor :claim, :mentor_training, :hours_completed, :custom_hours_completed
 
@@ -25,7 +25,7 @@ class Claim::MentorTrainingForm < ApplicationForm
         claim,
         previous_mentor_training,
         params: {
-          claim_mentor_training_form: { hours_completed: previous_mentor_training.hours_completed },
+          claims_claim_mentor_training_form: { hours_completed: previous_mentor_training.hours_completed },
         },
       )
     end

@@ -144,19 +144,19 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
     page.choose("Another amount")
 
     if with_error
-      fill_in("claim-mentor-training-form-custom-hours-completed-field-error", with: hours)
+      fill_in("claims-claim-mentor-training-form-custom-hours-completed-field-error", with: hours)
     else
-      fill_in("claim-mentor-training-form-custom-hours-completed-field", with: hours)
+      fill_in("claims-claim-mentor-training-form-custom-hours-completed-field", with: hours)
     end
   end
 
   def then_i_expect_the_provider_to_be_checked(provider)
-    has_checked_field?("#claim-provider-form-provider-id-#{provider.id}-field")
+    has_checked_field?("#claims-claim-provider-form-provider-id-#{provider.id}-field")
   end
 
   def then_i_expect_the_mentors_to_be_checked(mentors)
     mentors.each do |mentor|
-      has_checked_field?("#claim-mentor-ids-#{mentor.id}-field")
+      has_checked_field?("#claims-claim-mentor-ids-#{mentor.id}-field")
     end
   end
 
@@ -183,12 +183,12 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
   end
 
   def then_i_expect_the_training_hours_to_be_selected(hours)
-    find("#claim-mentor-training-form-hours-completed-#{hours}-field").checked?
+    find("#claims-claim-mentor-training-form-hours-completed-#{hours}-field").checked?
   end
 
   def then_i_expect_the_training_hours_for(hours, mentor)
     expect(page).to have_content("Hours of training for #{mentor.full_name}")
-    find("#claim-mentor-training-form-hours-completed-#{hours}-field").checked?
+    find("#claims-claim-mentor-training-form-hours-completed-#{hours}-field").checked?
   end
 
   def then_i_check_my_answers(provider, mentors, mentor_hours)

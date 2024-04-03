@@ -37,7 +37,7 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
       @claim,
       last_mentor_training,
       params: {
-        claim_mentor_training_form: { hours_completed: last_mentor_training.hours_completed },
+        claims_claim_mentor_training_form: { hours_completed: last_mentor_training.hours_completed },
       },
     )
   end
@@ -81,9 +81,9 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
   def claim_provider_form
     @claim_provider_form ||=
       if params[:claims_claim].present?
-        Claim::ProviderForm.new(claim_params)
+        Claims::Claim::ProviderForm.new(claim_params)
       else
-        Claim::ProviderForm.new(default_params.merge(id: claim_id))
+        Claims::Claim::ProviderForm.new(default_params.merge(id: claim_id))
       end
   end
 
