@@ -8,11 +8,55 @@ RSpec.describe "Start Page", type: :system, service: :claims do
     then_i_land_on_the_sign_in_page
   end
 
+  context "when signed in as a single-org user" do
+    let(:single_org_user) do
+      create(:claims_user) do |user|
+        user.schools << create(:claims_school)
+      end
+    end
+
+    scenario "User visits the start page" do
+      given_i_am_signed_in_as(single_org_user)
+      and_i_visit_the_start_page
+      then_i_am_redirected_to_the_users_first_school_claims_page(single_org_user)
+    end
+  end
+
+  context "when signed in as a multi-org user" do
+    let(:multi_org_user) do
+      create(:claims_user) do |user|
+        user.schools << create(:claims_school)
+        user.schools << create(:claims_school)
+      end
+    end
+
+    scenario "User visits the start page" do
+      given_i_am_signed_in_as(multi_org_user)
+      and_i_visit_the_start_page
+      then_i_am_redirected_to_the_users_school_list_page
+    end
+  end
+
+  context "when signed in as a support user" do
+    let(:support_user) { create(:claims_support_user) }
+
+    scenario "User visits the start page" do
+      given_i_am_signed_in_as(support_user)
+      and_i_visit_the_start_page
+      then_i_am_redirected_to_the_support_school_list_page
+    end
+  end
+
   private
+
+  def given_i_am_signed_in_as(user)
+    sign_in_as user
+  end
 
   def given_i_am_on_the_start_page
     visit claims_root_path
   end
+  alias_method :and_i_visit_the_start_page, :given_i_am_on_the_start_page
 
   def then_i_can_see_the_start_page
     within(".govuk-header") do
@@ -57,5 +101,17 @@ RSpec.describe "Start Page", type: :system, service: :claims do
 
   def then_i_land_on_the_sign_in_page
     expect(page.current_url).to eq("http://claims.localhost/sign-in")
+  end
+
+  def then_i_am_redirected_to_the_users_first_school_claims_page(user)
+    expect(page.current_url).to eq("http://claims.localhost/schools/#{user.schools.first.id}/claims")
+  end
+
+  def then_i_am_redirected_to_the_users_school_list_page
+    expect(page.current_url).to eq("http://claims.localhost/schools")
+  end
+
+  def then_i_am_redirected_to_the_support_school_list_page
+    expect(page.current_url).to eq("http://claims.localhost/support/schools")
   end
 end
