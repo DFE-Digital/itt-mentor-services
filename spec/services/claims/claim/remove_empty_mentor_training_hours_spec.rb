@@ -3,7 +3,7 @@ require "rails_helper"
 describe Claims::Claim::RemoveEmptyMentorTrainingHours do
   subject(:service) { described_class.call(claim:) }
 
-  let!(:claim) { create(:claim, reference: nil, status: :internal, school:) }
+  let!(:claim) { create(:claim, reference: nil, status: :internal_draft, school:) }
   let(:school) { create(:claims_school, urn: "1234") }
 
   it_behaves_like "a service object" do
