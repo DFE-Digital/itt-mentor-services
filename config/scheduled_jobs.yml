@@ -25,3 +25,8 @@ publish_subject_sync:
   cron: "0 0 * * *"
   class: "PublishTeacherTraining::Subject::SyncAllJob"
   description: "Sync all subjects with data imported from Publish Teacher Training"
+
+remove_internal_draft_claims:
+  cron: "10 0 * * *"
+  class: "Claims::RemoveInternalDraftClaimsJob"
+  description: "Remove all internal_draft claims"
