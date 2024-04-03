@@ -11,7 +11,7 @@ Follow these instructions to [run a Rake task](#run-a-rake-task) or [open a Rail
 
 ## 1. Authenticate to the Kubernetes cluster
 
-You need to grant yourself permission to access Azure resources in the test environment. This is a temporary grant – it'll expire after 8 hours, then you'll need to do it again.
+You'll need to configure your command line console so it can connect to the Kubernetes cluster. Your authenticated state should persist for several days, but you may need to re-authenticate every once in a while.
 
 1. Login to the [Microsoft Azure portal](https://portal.azure.com)
 
@@ -19,25 +19,7 @@ You need to grant yourself permission to access Azure resources in the test envi
    >
    > Make sure it says "DfE Platform Identity" in the top right corner of the screen below your name. If not, click the settings/cog icon and choose it from the list of directories.
 
-2. Go to [PIM > My roles > Groups](https://portal.azure.com/?feature.msaljs=true#view/Microsoft_Azure_PIMCommon/ActivationMenuBlade/~/aadgroup)
-
-3. Find the group named `s189 AKS admin test PIM` from the list.
-
-   > You may need to widen the "Group" column to see the full name.
-   >
-   > Alternatively type "test" into the search box to filter the list.
-   >
-   > ![](images/connect-to-azure/azure-groups.png)
-
-4. Click "Activate" on `s189-teacher-services-cloud-test`.
-
-   > Enter a reason for needing access. For example, "Running a Rake task".
-   >
-   > Click the "Activate" button at the bottom of the pane.
-   >
-   > ![](images/connect-to-azure/azure-group-activation.png)
-
-5. Open a console. Navigate to the `itt-mentor-services` repo directory and run:
+2. Open a console. Navigate to the `itt-mentor-services` repo directory and run:
 
    ```
    $ az login
@@ -51,21 +33,21 @@ You need to grant yourself permission to access Azure resources in the test envi
    > $ az login --use-device-code
    > ```
 
-6. Then run:
+3. Then run:
 
    ```
    $ make qa get-cluster-credentials
    ```
 
-7. Assuming everything worked correctly, you should now be able to access the Kubernetes cluster using the `kubectl` command.
+4. Assuming everything worked correctly, you should now be able to access the Kubernetes cluster using the `kubectl` command.
 
    > You can test you have access by running this command:
    >
    > ```
-   > kubectl get namespaces
+   > kubectl -n bat-qa get deployments
    > ```
    >
-   > You should see a list of Kubernetes namespaces. If you don't, something is wrong.
+   > You should see a list of Kubernetes deployments. If you don't, something is wrong.
 
 ## 2. Get the Kubernetes Deployment name
 
