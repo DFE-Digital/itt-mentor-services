@@ -38,6 +38,10 @@ class ApplicationController < ActionController::Base
     sign_in_path
   end
 
+  def redirect_to_after_sign_in_path
+    redirect_to after_sign_in_path
+  end
+
   def authenticate_user!
     return if current_user
 

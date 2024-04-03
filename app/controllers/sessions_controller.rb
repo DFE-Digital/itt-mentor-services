@@ -23,10 +23,4 @@ class SessionsController < ApplicationController
 
     redirect_to after_sign_out_path
   end
-
-  private
-
-  def redirect_to_after_sign_in_path
-    redirect_to after_sign_in_path
-  end
 end
