@@ -1,5 +1,5 @@
-<%= render FooterComponent.new meta_items: footer_meta_items, meta_licence: false do |footer| %>
-  <% footer.with_meta_pre_content do %>
+<%= govuk_footer meta_items: footer_meta_items, meta_licence: false do |footer| %>
+  <%= footer.with_content_before_meta_items do %>
     <h2 class="govuk-heading-m"><%= t(".get_help") %></h2>
 
     <div class="govuk-grid-row">
