@@ -10,7 +10,8 @@
 
       <%= render partial: "shared/search_form", locals: {
         url: claims_support_schools_path,
-        search_param: @search_param,
+        label: { text: t(".search_label"), size: "m" },
+        name: :name_or_postcode,
         clear_search_url: claims_support_schools_path,
       } %>
 
@@ -30,7 +31,7 @@
         </ul>
       <% else %>
         <p>
-          <%= t("no_results", for: @search_param) %>
+          <%= t("no_results", for: params[:name_or_postcode]) %>
         </p>
       <% end %>
     </div>
