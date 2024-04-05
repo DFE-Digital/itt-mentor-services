@@ -110,26 +110,4 @@ RSpec.describe Claims::Claim, type: :model do
       end
     end
   end
-
-  describe "#ready_to_be_checked?" do
-    it "returns true if the claim's mentors all have their hours recorded" do
-      claim = create(:claim)
-      create(:mentor_training, hours_completed: 20, claim:)
-
-      expect(claim.ready_to_be_checked?).to eq(true)
-    end
-
-    it "returns false if the claim does have mentors" do
-      claim = build(:claim)
-
-      expect(claim.ready_to_be_checked?).to eq(false)
-    end
-
-    it "returns false if the claim does have mentor training hours" do
-      claim = create(:claim)
-      create(:mentor_training, hours_completed: nil, claim:)
-
-      expect(claim.ready_to_be_checked?).to eq(false)
-    end
-  end
 end

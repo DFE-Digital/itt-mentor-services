@@ -75,7 +75,7 @@
           <% end %>
         <% end %>
 
-      <%= govuk_button_to t(".submit"), draft_claims_support_school_claim_path(@school, @claim) %>
+      <%= govuk_button_to (@claim.draft? ? t(".update") : t(".submit")), draft_claims_support_school_claim_path(@school, @claim) %>
 
       <p class="govuk-body">
         <%= govuk_link_to t("cancel"), claims_support_school_claims_path(@school), no_visited_state: true %>

@@ -19,8 +19,9 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
     !user.support_user? && record.submitted?
   end
 
+  # TODO: Remove record.draft? and not create drafts for existing drafts
   def draft?
-    user.support_user? && record.internal_draft?
+    user.support_user? && (record.internal_draft? || record.draft?)
   end
 
   def check?
