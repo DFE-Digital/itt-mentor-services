@@ -1,10 +1,10 @@
 <%= govuk_footer meta_items: footer_meta_items, meta_licence: false do |footer| %>
   <%= footer.with_content_before_meta_items do %>
-    <h2 class="govuk-heading-m"><%= t(".get_help") %></h2>
+    <h3 class="govuk-heading-m"><%= t(".get_help") %></h3>
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <h3 class="govuk-heading-3 govuk-!-margin-top-0 govuk-!-margin-bottom-1"><%= t(".email.heading") %></h3>
+        <h4 class="govuk-heading-3 govuk-!-margin-top-0 govuk-!-margin-bottom-1"><%= t(".email.heading") %></h4>
 
         <p class="govuk-!-font-size-16 govuk-!-margin-bottom-1">
           <%= govuk_footer_link_to t("#{current_service}.support_email"), "mailto:#{t("#{current_service}.support_email")}?subject=#{t("#{current_service}.service_name")}%20support" %>
