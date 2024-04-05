@@ -8,19 +8,23 @@ class Claim::StatusTagComponent < ApplicationComponent
   end
 
   def call
-    content_tag(:p, claim.status.humanize, class: "govuk-tag #{css_class}")
+    govuk_tag(text: claim.status.humanize, colour:)
   end
 
   private
 
-  def css_class
-    style_status_classes.fetch(claim.status)
+  def default_attributes
+    super.merge!(class: super.class)
   end
 
-  def style_status_classes
+  def colour
+    status_colours.fetch(claim.status)
+  end
+
+  def status_colours
     {
-      draft: "govuk-tag--grey",
-      submitted: "govuk-tag--blue",
+      draft: "grey",
+      submitted: "blue",
     }.with_indifferent_access
   end
 end
