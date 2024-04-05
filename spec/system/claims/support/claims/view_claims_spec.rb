@@ -13,6 +13,7 @@ RSpec.describe "View claims", type: :system, service: :claims do
   scenario "Support user visits the claims index page" do
     when_i_visit_claim_index_page
     then_i_see_a_list_of_submitted_claims
+    and_i_see_no_draft_claims
   end
 
   private
@@ -27,15 +28,17 @@ RSpec.describe "View claims", type: :system, service: :claims do
   end
 
   def then_i_see_a_list_of_submitted_claims
-    expect(page).to have_content("ID")
-    expect(page).to have_content("Status")
-    expect(page).to have_selector("tbody tr", count: 1)
-
-    expect(page).not_to have_selector("td", text: claim_1.id)
-
-    within("tbody tr:nth-child(1)") do
-      expect(page).to have_selector("td", text: claim_2.id)
-      expect(page).to have_selector("td", text: "Submitted")
+    within(".claim-card:nth-child(1)") do
+      expect(page).to have_content(claim_2.school.name)
+      expect(page).to have_content(claim_2.reference)
+      expect(page).to have_content("Submitted")
+      expect(page).to have_content(claim_2.provider.name)
+      expect(page).to have_content(I18n.l(claim_2.created_at.to_date, format: :short))
+      expect(page).to have_content(claim_2.amount.format(no_cents_if_whole: true))
     end
+  end
+
+  def and_i_see_no_draft_claims
+    expect(page).not_to have_content(claim_1.reference)
   end
 end

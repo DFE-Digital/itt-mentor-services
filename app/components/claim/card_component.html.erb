@@ -1,0 +1,20 @@
+<div class="claim-card">
+  <div class="claim-card__header">
+    <div class="claim-card__header__name govuk-heading-s">
+      <%= govuk_link_to claim.school.name, claims_support_claim_path(claim), no_visited_state: true %>
+      <span class="govuk-caption-m"><%= claim.reference %></span>
+    </div>
+    <div><%= render Claim::StatusTagComponent.new(claim:, classes: %w[govuk-body-s]) %></div>
+  </div>
+
+  <div class="claim-card__body">
+    <div class="claim-card__body__provider">
+      <div class="govuk-body-s"><%= claim.provider.name %></div>
+    </div>
+
+    <div class="claim-card__body__right">
+      <div class="govuk-body-s"><%= l(claim.created_at.to_date, format: :short) %></div>
+      <div class="govuk-body-s"><%= humanized_money_with_symbol(claim.amount) %></div>
+    </div>
+  </div>
+</div>
