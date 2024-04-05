@@ -106,7 +106,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
     when_i_click_change_training_hours_for_mentor
     then_i_expect_the_training_hours_to_be_selected("20")
     when_i_click("Back")
-    then_i_check_my_answers(provider1, [mentor1, mentor2], [20, 12])
+    then_i_see_the_list_of_mentors
   end
 
   scenario "Collin click the back link on the check page" do
@@ -116,6 +116,12 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
   end
 
   private
+
+  def then_i_see_the_list_of_mentors
+    expect(page).to have_content("#{mentor1.full_name}\n#{mentor1.trn}")
+    expect(page).to have_content("#{mentor2.full_name}\n#{mentor2.trn}")
+    expect(page).to have_content("#{mentor3.full_name}\n#{mentor3.trn}")
+  end
 
   def given_i_sign_in
     visit sign_in_path

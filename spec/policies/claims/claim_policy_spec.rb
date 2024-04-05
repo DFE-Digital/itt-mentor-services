@@ -110,7 +110,7 @@ describe Claims::ClaimPolicy do
 
     context "when user has a draft claim" do
       it "grants access" do
-        expect(claim_policy).not_to permit(support_user, draft_claim)
+        expect(claim_policy).to permit(support_user, draft_claim)
       end
     end
 

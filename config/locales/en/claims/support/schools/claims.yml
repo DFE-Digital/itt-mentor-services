@@ -4,12 +4,14 @@ en:
       schools:
         claims:
           draft:
-            success: Claim added
+            add_success:  Claim added
+            update_success: Claim updated
           edit:
             page_title: Accredited provider - Add claim
           check:
             page_title: Check your answers
             submit: Add claim
+            update: Update claim
             grant_funding: Grant funding
             add_claim: Add claim - %{school}
             hours: "%{hours} hours"

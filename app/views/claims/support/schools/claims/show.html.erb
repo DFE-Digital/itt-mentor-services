@@ -22,6 +22,13 @@
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: Claims::Claim.human_attribute_name(:accredited_provider)) %>
             <% row.with_value(text: @claim.provider.name) %>
+            <% if policy(@claim).edit? %>
+              <% row.with_action(text: t("change"),
+                                 href: edit_claims_support_school_claim_path(@school, @claim),
+                                 html_attributes: {
+                                    class: "govuk-link--no-visited-state",
+                                    }) %>
+            <% end %>
           <% end %>
         <% else %>
           <% summary_list.with_row do |row| %>
@@ -38,6 +45,13 @@
                 <li><%= mentor.full_name %></li>
               <% end %>
             </ul>
+          <% end %>
+          <% if policy(@claim).edit? %>
+            <% row.with_action(text: t("change"),
+                               href: edit_claims_support_school_claim_mentor_path(@school, @claim),
+                               html_attributes: {
+                        class: "govuk-link--no-visited-state",
+                      }) %>
           <% end %>
         <% end %>
 
@@ -63,6 +77,20 @@
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: mentor_training.mentor.full_name) %>
             <% row.with_value(text: "#{mentor_training.hours_completed} #{t(".hours")}") %>
+            <% if policy(@claim).edit? %>
+              <% row.with_action(text: t("change"),
+                                 href: edit_claims_support_school_claim_mentor_training_path(
+                                  @school,
+                                  @claim,
+                                  mentor_training,
+                                  params: {
+                                    claims_support_claim_mentor_training_form: { hours_completed: mentor_training.hours_completed },
+                                  },
+                                ),
+                                 html_attributes: {
+                                  class: "govuk-link--no-visited-state",
+                                }) %>
+            <% end %>
           <% end %>
         <% end %>
       <% end %>
