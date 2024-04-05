@@ -1,0 +1,46 @@
+.claim-card {
+  display: flex;
+  flex-direction: column;
+  gap: govuk-spacing(1);
+  border-bottom: 1px solid $govuk-border-colour;
+  padding: govuk-spacing(2) 0;
+  margin-bottom: govuk-spacing(1);
+
+  .claim-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+    .claim-card__header__name {
+      display: flex;
+      gap: govuk-spacing(1);
+
+      &.govuk-heading-s {
+        margin-bottom: govuk-spacing(1);
+      }
+    }
+  }
+
+  .claim-card__body {
+    display: flex;
+    justify-content: space-between;
+    gap: govuk-spacing(2);
+
+    .claim-card__body__provider {
+      flex-grow: 1;
+      max-width: 66%;
+    }
+
+    .claim-card__body__right {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .govuk-body-s {
+      margin-bottom: govuk-spacing(1);
+    }
+  }
+}

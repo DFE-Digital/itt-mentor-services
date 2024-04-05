@@ -14,6 +14,17 @@ describe Claims::ClaimsQuery do
       expect(claims_query).to eq([submitted_claim])
     end
 
+    context "when given a search query" do
+      let(:params) { { search: "1234" } }
+
+      it "filters the results by provided school ids" do
+        claim_with_partial_reference = create(:claim, :submitted, reference: "12345678")
+        _claim_without_partial_reference = create(:claim, :submitted, reference: "87654321")
+
+        expect(claims_query).to match_array([claim_with_partial_reference])
+      end
+    end
+
     context "when given school ids" do
       let(:school) { create(:claims_school) }
       let(:params) { { school_ids: [school.id] } }

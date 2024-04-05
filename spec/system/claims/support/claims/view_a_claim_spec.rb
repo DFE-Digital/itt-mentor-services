@@ -36,7 +36,7 @@ RSpec.describe "View claims", type: :system, service: :claims do
   end
 
   def when_i_click_on_claim(claim)
-    click_on(claim.id)
+    click_on(claim.school.name)
   end
 
   def then_i_can_see_the_details_of_a_submitted_claim

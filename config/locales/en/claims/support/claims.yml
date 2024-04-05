@@ -3,7 +3,7 @@ en:
     support:
       claims:
         index:
-          heading: Claims
+          heading: Claims (%{count})
           download_csv: Download claims
           search_label: Search by claim reference
         show:
