@@ -84,7 +84,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        environment: [qa] ## add future nonprod environments here
+        environment: [qa, sandbox] ## add future nonprod environments here
     environment:
       name: ${{ matrix.environment }}
       url: ${{ steps.deploy.outputs.environment_url }}
