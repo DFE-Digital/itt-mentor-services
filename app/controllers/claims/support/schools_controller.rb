@@ -5,7 +5,6 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
 
   def index
     @pagy, @schools = pagy(schools)
-    @search_param = params[:name_or_postcode]
   end
 
   def show; end

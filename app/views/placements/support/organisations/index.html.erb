@@ -9,12 +9,13 @@
   </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-third">
-      <%= render partial: "filter", locals: { filters: @filters, search_param: @search_param } %>
+      <%= render partial: "filter", locals: { filters: @filters, search_param: params[:name_or_postcode] } %>
     </div>
     <div class="govuk-grid-column-two-thirds">
       <%= render partial: "shared/search_form", locals: {
         url: placements_support_organisations_path,
-        search_param: @search_param,
+        label: { text: t(".search_label"), size: "m" },
+        name: :name_or_postcode,
         clear_search_url: placements_support_organisations_path(filters: @filters),
         filters: @filters,
       } %>
@@ -27,7 +28,7 @@
         <%= govuk_pagination(pagy: @pagy) %>
         <p><%= t("pagination_info", from: @pagy.from, to: @pagy.to, count: @pagy.count) %></p>
       <% else %>
-        <p><%= no_results(@search_param, @filters) %></p>
+        <p><%= no_results(params[:name_or_postcode], @filters) %></p>
       <% end %>
     </div>
   </div>

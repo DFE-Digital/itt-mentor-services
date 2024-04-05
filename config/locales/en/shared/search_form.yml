@@ -1,6 +1,5 @@
 en:
   shared:
     search_form:
-      search-header: Search by organisation name or postcode
-      search: Search
-      clear_search: Clear search
+      submit: Search
+      clear: Clear search

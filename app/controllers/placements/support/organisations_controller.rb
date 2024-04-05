@@ -2,7 +2,6 @@ class Placements::Support::OrganisationsController < Placements::Support::Applic
   def index
     @pagy, @organisations = pagy(organisations)
     @filters = filters_param
-    @search_param = search_param
   end
 
   def new

@@ -5,6 +5,7 @@ en:
         index:
           heading: Claims
           download_csv: Download claims
+          search_label: Search by claim reference
         show:
           heading: Claim
           status: Status
