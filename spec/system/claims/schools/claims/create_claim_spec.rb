@@ -154,7 +154,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     within("dl.govuk-summary-list:nth(3)") do
       within(".govuk-summary-list__row:nth(1)") do
         expect(page).to have_content("Claim amount")
-        expect(page).to have_content("£1715.20")
+        expect(page).to have_content("£1,715.20")
       end
     end
   end
