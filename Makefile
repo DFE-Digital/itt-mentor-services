@@ -30,6 +30,12 @@ qa: test-cluster
 		$(eval export TF_VAR_environment=${ENVIRONMENT})
 		$(eval include global_config/qa.sh)
 
+.PHONY: sandbox
+sandbox: production-cluster
+		$(eval ENVIRONMENT=sandbox)
+		$(eval export TF_VAR_environment=${ENVIRONMENT})
+		$(eval include global_config/sandbox.sh)
+
 .PHONY: staging
 staging: test-cluster
 		$(eval ENVIRONMENT=staging)
