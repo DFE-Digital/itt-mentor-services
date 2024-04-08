@@ -32,6 +32,7 @@ en:
           address: Address
           website: Website
           email: Email address
+          provider_will_be_sent_an_email: The provider will be sent an email to tell them you have added them as a partner provider for %{school}.
         provider_options:
           page_title: "%{provider_count} results found for ‘%{search_param}’ - Add partner provider"
           page_title_with_error: "Error: %{provider_count} results found for ‘%{search_param}’- Add partner provider"
@@ -49,6 +50,7 @@ en:
           cancel: Cancel
           remove_partner_provider: Remove partner provider
           are_you_sure: Are you sure you want to remove this partner provider?
+          provider_will_be_sent_an_email: The provider will be sent an email to tell them you have removed them as a partner provider for %{school}.
         destroy:
           partner_provider_removed: Partner provider removed
 

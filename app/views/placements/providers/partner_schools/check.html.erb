@@ -55,6 +55,10 @@
           <% end %>
         <% end %>
 
+        <%= render GovukComponent::WarningTextComponent.new(
+          text: t(".school_will_be_sent_an_email", provider: @provider.name),
+        ) %>
+
         <%= f.govuk_submit t(".add_partner_school") %>
         <p class="govuk-body">
           <%= govuk_link_to(t(".cancel"), placements_provider_partner_schools_path, no_visited_state: true) %>
