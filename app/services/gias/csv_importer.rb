@@ -22,7 +22,7 @@ module Gias
       trust_associations = Hash.new { |h, k| h[k] = [] }
 
       CSV
-        .foreach(csv_path, headers: true, encoding: "iso-8859-1:utf-8")
+        .foreach(csv_path, headers: true)
         .with_index(2) do |school, row_number|
         invalid_records << "Row #{row_number} is invalid" if invalid?(school)
         next if school_excluded?(school) || invalid?(school)
