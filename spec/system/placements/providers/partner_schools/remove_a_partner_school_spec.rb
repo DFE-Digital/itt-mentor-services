@@ -3,6 +3,12 @@ require "rails_helper"
 RSpec.describe "Placements / Providers / Partner schools / Remove a partner school",
                type: :system,
                service: :placements do
+  include ActiveJob::TestHelper
+
+  around do |example|
+    perform_enqueued_jobs { example.run }
+  end
+
   let!(:provider) { create(:placements_provider) }
   let!(:school) { create(:placements_school, name: "School 1") }
   let!(:another_school) { create(:placements_school, name: "Another school") }
@@ -10,6 +16,7 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
   let(:another_partnership) do
     create(:placements_partnership, provider:, school: another_school)
   end
+  let!(:school_user) { create(:placements_user, schools: [school]) }
 
   before do
     partnership
@@ -28,6 +35,7 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
     when_i_click_on("Remove partner school")
     then_the_partner_school_is_removed(school)
     and_a_partner_provider_remains_called("Another school")
+    and_a_notification_email_is_sent_to(school_user)
   end
 
   private
@@ -80,6 +88,15 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
 
   def and_a_partner_provider_remains_called(provider_name)
     expect(page).to have_content(provider_name)
+  end
+
+  def and_a_notification_email_is_sent_to(user)
+    email = ActionMailer::Base.deliveries.find do |delivery|
+      delivery.to.include?(user.email) &&
+        delivery.subject == "#{school.name} has been removed as a partner school"
+    end
+
+    expect(email).not_to be_nil
   end
 
   def expect_partner_schools_to_be_selected_in_primary_navigation

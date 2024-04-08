@@ -80,3 +80,31 @@ en:
         Regards
 
         Claim funding for mentor training team
+
+    partnership_created_notification:
+      subject:
+        provider: "%{organisation} has been added as a partner provider"
+        school: "%{organisation} has been added as a partner school"
+      body:
+        provider: |
+          Dear %{user_name},
+
+          %{partner_organisation} has been added as a partner provider to %{source_organisation}.
+        school: |
+          Dear %{user_name},
+
+          %{partner_organisation} has been added as a partner school to %{source_organisation}.
+
+    partnership_destroyed_notification:
+      subject:
+        provider: "%{organisation} has been removed as a partner provider"
+        school: "%{organisation} has been removed as a partner school"
+      body:
+        provider: |
+          Dear %{user_name},
+
+          %{partner_organisation} has been removed as a partner provider to %{source_organisation}.
+        school: |
+          Dear %{user_name},
+
+          %{partner_organisation} has been removed as a partner school to %{source_organisation}.
