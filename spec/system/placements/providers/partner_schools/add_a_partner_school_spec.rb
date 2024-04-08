@@ -3,11 +3,17 @@ require "rails_helper"
 RSpec.describe "Placements / Providers / Partner schools / Add a partner school",
                type: :system,
                service: :placements do
+  include ActiveJob::TestHelper
+
+  around do |example|
+    perform_enqueued_jobs { example.run }
+  end
+
   let!(:school) { create(:placements_school, name: "School 1") }
   let(:provider) { create(:placements_provider, name: "Provider") }
+  let!(:school_user) { create(:placements_user, schools: [school]) }
 
   before do
-    provider
     given_i_sign_in_as_patricia
   end
 
@@ -23,6 +29,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
     then_i_return_to_partner_school_index
     and_a_school_is_listed(school_name: "School 1")
     and_i_see_success_message
+    and_a_notification_email_is_sent_to(school_user)
   end
 
   scenario "User adds a partner school which already exists", js: true, retry: 3 do
@@ -133,6 +140,15 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
     within(".autocomplete__wrapper") do
       expect(page.find("#partnership-school-id-field").value).to eq(school_name)
     end
+  end
+
+  def and_a_notification_email_is_sent_to(user)
+    email = ActionMailer::Base.deliveries.find do |delivery|
+      delivery.to.include?(user.email) &&
+        delivery.subject == "#{school.name} has been added as a partner school"
+    end
+
+    expect(email).not_to be_nil
   end
 
   def expect_partner_schools_to_be_selected_in_primary_navigation

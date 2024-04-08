@@ -413,4 +413,92 @@ RSpec.describe UserMailer, type: :mailer do
       end
     end
   end
+
+  describe "#partnership_created_notification" do
+    subject(:partnership_created_notification_email) do
+      described_class.with(service: :placements)
+        .partnership_created_notification(user, source_organisation, partner_organisation)
+    end
+
+    context "when partner organisation is a provider" do
+      let(:source_organisation) { create(:placements_school, name: "School 1") }
+      let(:partner_organisation) { create(:placements_provider, name: "Provider 1") }
+      let(:user) { create(:placements_user, providers: [partner_organisation]) }
+
+      it "sends a notification email to the user of the provider" do
+        expect(partnership_created_notification_email.to).to contain_exactly(user.email)
+        expect(partnership_created_notification_email.subject).to eq(
+          "#{partner_organisation.name} has been added as a partner provider",
+        )
+        expect(partnership_created_notification_email.body).to have_content <<~EMAIL
+          Dear #{user.full_name},
+
+          #{partner_organisation.name} has been added as a partner provider to #{source_organisation.name}.
+        EMAIL
+      end
+    end
+
+    context "when partner organisation is a school" do
+      let(:source_organisation) { create(:placements_provider, name: "Provider 1") }
+      let(:partner_organisation) { create(:placements_school, name: "School 1") }
+
+      let(:user) { create(:placements_user, schools: [partner_organisation]) }
+
+      it "sends a notification email to the user of the school" do
+        expect(partnership_created_notification_email.to).to contain_exactly(user.email)
+        expect(partnership_created_notification_email.subject).to eq(
+          "#{partner_organisation.name} has been added as a partner school",
+        )
+        expect(partnership_created_notification_email.body).to have_content <<~EMAIL
+          Dear #{user.full_name},
+
+          #{partner_organisation.name} has been added as a partner school to #{source_organisation.name}.
+        EMAIL
+      end
+    end
+  end
+
+  describe "#partnership_destroyed_notification" do
+    subject(:partnership_destroyed_notification_email) do
+      described_class.with(service: :placements)
+        .partnership_destroyed_notification(user, source_organisation, partner_organisation)
+    end
+
+    context "when partner organisation is a provider" do
+      let(:source_organisation) { create(:placements_school, name: "School 1") }
+      let(:partner_organisation) { create(:placements_provider, name: "Provider 1") }
+      let(:user) { create(:placements_user, providers: [partner_organisation]) }
+
+      it "sends a notification email to the user of the provider" do
+        expect(partnership_destroyed_notification_email.to).to contain_exactly(user.email)
+        expect(partnership_destroyed_notification_email.subject).to eq(
+          "#{partner_organisation.name} has been removed as a partner provider",
+        )
+        expect(partnership_destroyed_notification_email.body).to have_content <<~EMAIL
+          Dear #{user.full_name},
+
+          #{partner_organisation.name} has been removed as a partner provider to #{source_organisation.name}.
+        EMAIL
+      end
+    end
+
+    context "when partner organisation is a school" do
+      let(:source_organisation) { create(:placements_provider, name: "Provider 1") }
+      let(:partner_organisation) { create(:placements_school, name: "School 1") }
+
+      let(:user) { create(:placements_user, schools: [partner_organisation]) }
+
+      it "sends a notification email to the user of the school" do
+        expect(partnership_destroyed_notification_email.to).to contain_exactly(user.email)
+        expect(partnership_destroyed_notification_email.subject).to eq(
+          "#{partner_organisation.name} has been removed as a partner school",
+        )
+        expect(partnership_destroyed_notification_email.body).to have_content <<~EMAIL
+          Dear #{user.full_name},
+
+          #{partner_organisation.name} has been removed as a partner school to #{source_organisation.name}.
+        EMAIL
+      end
+    end
+  end
 end

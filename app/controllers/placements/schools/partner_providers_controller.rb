@@ -51,6 +51,10 @@ class Placements::Schools::PartnerProvidersController < ApplicationController
 
   def create
     partnership_form.save!
+    Placements::Partnerships::Notify::Creation.call(
+      source_organisation: @school,
+      partner_organisation: partner_provider,
+    )
     flash[:success] = t(".partner_provider_added")
     redirect_to placements_school_partner_providers_path(@school)
   end
@@ -62,7 +66,13 @@ class Placements::Schools::PartnerProvidersController < ApplicationController
   def destroy
     authorize @partnership
 
+    provider = @partnership.provider
     @partnership.destroy!
+    Placements::Partnerships::Notify::Removal.call(
+      source_organisation: @school,
+      partner_organisation: provider,
+    )
+
     redirect_to placements_school_partner_providers_path(@school),
                 flash: { success: t(".partner_provider_removed") }
   end

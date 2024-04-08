@@ -3,11 +3,17 @@ require "rails_helper"
 RSpec.describe "Placements / Schools / Partner providers / Add a partner provider",
                type: :system,
                service: :placements do
+  include ActiveJob::TestHelper
+
+  around do |example|
+    perform_enqueued_jobs { example.run }
+  end
+
   let!(:school) { create(:placements_school) }
-  let(:provider) { create(:placements_provider, name: "Provider 1") }
+  let!(:provider) { create(:placements_provider, name: "Provider 1") }
+  let!(:provider_user) { create(:placements_user, providers: [provider]) }
 
   before do
-    provider
     given_i_sign_in_as_anne
   end
 
@@ -23,6 +29,7 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
     then_i_return_to_partner_provider_index
     and_a_provider_is_listed(provider_name: "Provider 1")
     and_i_see_success_message
+    and_a_notification_email_is_sent_to(provider_user)
   end
 
   scenario "User adds a partner provider which already exists", js: true, retry: 3 do
@@ -127,6 +134,15 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
       school_id: school.id,
     }
     visit check_placements_school_partner_providers_path(params)
+  end
+
+  def and_a_notification_email_is_sent_to(user)
+    email = ActionMailer::Base.deliveries.find do |delivery|
+      delivery.to.include?(user.email) &&
+        delivery.subject == "#{provider.name} has been added as a partner provider"
+    end
+
+    expect(email).not_to be_nil
   end
 
   def then_i_see_the_search_input_pre_filled_with(provider_name)
