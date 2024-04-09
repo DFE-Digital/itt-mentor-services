@@ -48,5 +48,27 @@ describe Claims::ClaimsQuery do
         expect(claims_query).to match_array([claim_belonging_to_filtered_provider])
       end
     end
+
+    context "when given submitted_after" do
+      let(:params) { { submitted_after: 2.days.ago } }
+
+      it "filters the results by provided provider ids" do
+        expected_claim = create(:claim, :submitted, submitted_at: 1.day.ago)
+        _unexpected_claim = create(:claim, :submitted, submitted_at: 3.days.ago)
+
+        expect(claims_query).to match_array([expected_claim])
+      end
+    end
+
+    context "when given submitted_before" do
+      let(:params) { { submitted_before: 2.days.ago } }
+
+      it "filters the results by provided provider ids" do
+        expected_claim = create(:claim, :submitted, submitted_at: 3.days.ago)
+        _unexpected_claim = create(:claim, :submitted, submitted_at: 1.day.ago)
+
+        expect(claims_query).to match_array([expected_claim])
+      end
+    end
   end
 end

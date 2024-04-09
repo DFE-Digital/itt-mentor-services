@@ -8,20 +8,40 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-third">
-      <div class="app-filter">
-        <div class="app-filter__header">
-          <div class="govuk-heading-m">Filter</div>
-        </div>
-      </div>
+      <%= render partial: "filter" %>
     </div>
 
     <div class="govuk-grid-column-two-thirds">
-      <%= render partial: "shared/search_form", locals: {
-        url: claims_support_claims_path,
-        label: { text: t(".search_label"), size: "s" },
-        name: :search,
-        clear_search_url: claims_support_claims_path,
-      } %>
+      <div class="govuk-form-group">
+        <%= form_with(
+          url: claims_support_claims_path,
+          scope: :claims_support_claims_filter_form,
+          class: "search-form",
+          method: :get,
+          data: { turbo: false },
+        ) do |f| %>
+          <%= f.govuk_text_field :search, type: :search, value: filter_form.search, label: { text: t(".search_label"), size: "s" } %>
+          <%= f.govuk_submit t(".submit") %>
+
+          <% filter_form.attributes.except("search", "school_ids", "provider_ids").each do |key, value| %>
+            <%= f.hidden_field key, value: %>
+          <% end %>
+
+          <% filter_form.school_ids.each do |school_id| %>
+            <%= f.hidden_field :school_ids, value: school_id, multiple: true %>
+          <% end %>
+
+          <% filter_form.provider_ids.each do |provider_id| %>
+            <%= f.hidden_field :provider_ids, value: provider_id, multiple: true %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <% unless filter_form.search.blank? %>
+        <p class="clear-search">
+          <%= govuk_link_to t(".clear"), filter_form.clear_search_path, no_visited_state: true %>
+        </p>
+      <% end %>
 
       <div class="govuk-section-break govuk-section-break--m govuk-section-break--visible"></div>
 

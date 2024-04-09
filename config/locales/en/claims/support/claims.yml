@@ -6,6 +6,17 @@ en:
           heading: Claims (%{count})
           download_csv: Download claims
           search_label: Search by claim reference
+          school: School
+          accredited_provider: Accredited provider
+          submitted_after: Submitted after
+          submitted_after_hint: For example, 31 3 2024
+          submitted_before: Submitted before
+          submitted_before_hint: For example, 31 7 2024
+          school_ids: School
+          provider_ids: Accredited prvoider
+          provider: Accredited prvoider
+          submit: Search
+          clear: Clear search
         show:
           heading: Claim
           status: Status

@@ -1,0 +1,159 @@
+<div class="app-filter-layout">
+  <div class="app-filter-layout__filter">
+    <div class="app-filter__header">
+      <div class="app-filter__header-title">
+        <h2 class="govuk-heading-m"><%= t("filter") %></h2>
+      </div>
+      <div class="app-filter__header-action"></div>
+    </div>
+    <div class="app-filter-layout__content">
+      <% if filter_form.filters_selected? %>
+        <div class="app-filter-layout__selected">
+          <div class="app-filter__selected-heading">
+            <div class="app-filter__heading-title">
+              <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><%= t("selected_filters") %></h2>
+              <p class="govuk-body">
+                <%= govuk_link_to(
+                  t("clear_filters"),
+                  filter_form.clear_filters_path,
+                  no_visited_state: true,
+                ) %>
+              </p>
+            </div>
+          </div>
+
+          <% if filter_form.school_ids.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.school") %></h3>
+            <ul class="app-filter-tags">
+              <% filter_form.schools.each do |school| %>
+                <li>
+                 <%= govuk_link_to(
+                   school.name,
+                   filter_form.index_path_without_filter(filter: "school_ids", value: school.id),
+                   class: "app-filter__tag",
+                   no_visited_state: true,
+                 ) %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+
+           <% if filter_form.provider_ids.present? %>
+             <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.accredited_provider") %></h3>
+             <ul class="app-filter-tags">
+               <% filter_form.providers.each do |provider| %>
+                 <li>
+                  <%= govuk_link_to(
+                    provider.name,
+                    filter_form.index_path_without_filter(filter: "provider_ids", value: provider.id),
+                    class: "app-filter__tag",
+                    no_visited_state: true,
+                  ) %>
+                 </li>
+               <% end %>
+             </ul>
+           <% end %>
+
+           <% if filter_form.submitted_after.present? %>
+             <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.submitted_after") %></h3>
+              <%= govuk_link_to(
+                safe_l(filter_form.submitted_after, format: :short),
+                filter_form.index_path_without_submitted_dates("submitted_after"),
+                class: "app-filter__tag",
+                no_visited_state: true,
+              ) %>
+           <% end %>
+
+           <% if filter_form.submitted_before.present? %>
+             <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.submitted_before") %></h3>
+              <%= govuk_link_to(
+                safe_l(filter_form.submitted_before, format: :short),
+                filter_form.index_path_without_submitted_dates("submitted_before"),
+                class: "app-filter__tag",
+                no_visited_state: true,
+              ) %>
+           <% end %>
+         </div>
+       <% end %>
+
+      <div class="app-filter__options">
+        <%= form_with(
+          model: filter_form,
+          url: claims_support_claims_path,
+          method: "get",
+          data: { turbo: false, controller: "claims-support-filter-search" },
+        ) do |form| %>
+          <%= form.govuk_submit t("apply_filters") %>
+
+          <%= form.hidden_field :search, value: filter_form.search %>
+
+          <div class="app-filter__option">
+            <%= form.govuk_text_field(
+              :search_school,
+              type: :search,
+              data: {
+                claims_support_filter_search_target: "schoolInput",
+                action: "input->claims-support-filter-search#searchSchool",
+              },
+              label: { text: t("claims.support.claims.index.school"), size: "s" },
+            ) %>
+
+            <%= form.govuk_check_boxes_fieldset(
+              :school_ids,
+              legend: { hidden: "true" },
+              data: { claims_support_filter_search_target: "schoolList" },
+              small: true,
+            ) do %>
+
+              <% @schools.find_each do |school| %>
+                <%= form.govuk_check_box :school_ids, school.id, label: { text: school.name } %>
+               <% end %>
+             <% end %>
+          </div>
+
+          <div class="app-filter__option">
+            <%= form.govuk_text_field(
+              :search_provider,
+              data: {
+                claims_support_filter_search_target: "providerInput",
+                action: "input->claims-support-filter-search#searchProvider",
+              },
+              type: :search,
+              label: { text: t("claims.support.claims.index.provider"), size: "s" },
+            ) %>
+
+            <%= form.govuk_check_boxes_fieldset(
+              :provider_ids,
+              legend: { hidden: "true" },
+              small: true,
+              data: { claims_support_filter_search_target: "providerList" },
+            ) do %>
+              <% @providers.each do |provider| %>
+                <%= form.govuk_check_box :provider_ids, provider.id, label: { text: provider.name } %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <div class="app-filter__option">
+            <%= form.govuk_date_field(
+              :submitted_after,
+              date_of_birth: true,
+              maxlength_enabled: true,
+              legend: { text: t("claims.support.claims.index.submitted_after") },
+              hint: { text: t("claims.support.claims.index.submitted_after_hint") },
+            ) %>
+          </div>
+
+          <div class="app-filter__option">
+            <%= form.govuk_date_field(
+              :submitted_before,
+              maxlength_enabled: true,
+              legend: { text: t("claims.support.claims.index.submitted_before") },
+              hint: { text: t("claims.support.claims.index.submitted_before_hint") },
+            ) %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

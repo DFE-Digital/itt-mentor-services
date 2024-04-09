@@ -238,7 +238,6 @@
   &:hover:after {
     background-image: url("icon-tag-remove-cross-white.svg");
   }
-
 }
 
 .app-filter__options {
@@ -258,3 +257,26 @@
     }
   }
 }
+
+.app-filter__option .govuk-checkboxes {
+  position: relative;
+  max-height: 200px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.app-filter__option input[type=search] {
+  background: url("icon-magnifying-glass.svg") no-repeat;
+  background-color: govuk-colour("white");
+  padding-left: govuk-spacing(6);
+}
+
+.app-filter__option:not(:last-of-type) {
+  border-bottom: 1px solid $govuk-border-colour;
+  margin-bottom: govuk-spacing(4);
+
+  div:last-of-type {
+    margin-bottom: govuk-spacing(1);
+  }
+}
+

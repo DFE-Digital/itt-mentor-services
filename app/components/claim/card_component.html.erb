@@ -13,7 +13,7 @@
     </div>
 
     <div class="claim-card__body__right">
-      <div class="govuk-body-s"><%= l(claim.created_at.to_date, format: :short) %></div>
+      <div class="govuk-body-s"><%= l(claim.submitted_at.to_date, format: :short) %></div>
       <div class="govuk-body-s"><%= humanized_money_with_symbol(claim.amount) %></div>
     </div>
   </div>

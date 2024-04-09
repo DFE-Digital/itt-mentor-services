@@ -4,6 +4,9 @@ class Claims::ClaimsQuery < ApplicationQuery
     scope = search_condition(scope)
     scope = school_condition(scope)
     scope = provider_condition(scope)
+    scope = submitted_after(scope)
+    scope = submitted_before(scope)
+
     scope.order_created_at_desc
   end
 
@@ -25,5 +28,17 @@ class Claims::ClaimsQuery < ApplicationQuery
     return scope if params[:provider_ids].blank?
 
     scope.where(provider_id: params[:provider_ids])
+  end
+
+  def submitted_after(scope)
+    return scope if params[:submitted_after].nil?
+
+    scope.where(submitted_at: params[:submitted_after]..)
+  end
+
+  def submitted_before(scope)
+    return scope if params[:submitted_before].nil?
+
+    scope.where(submitted_at: ..params[:submitted_before])
   end
 end
