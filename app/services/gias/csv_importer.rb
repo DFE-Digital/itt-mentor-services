@@ -5,9 +5,7 @@ module Gias
     include ServicePattern
     include RegionalAreas
 
-    OPEN_SCHOOL = "1".freeze
     SUPPORTED_BY_A_TRUST = "1".freeze
-    NON_ENGLISH_ESTABLISHMENTS = %w[8 10 25 24 26 27 29 30 32 37 49 56 57].freeze
 
     attr_reader :csv_path
 
@@ -16,17 +14,11 @@ module Gias
     end
 
     def call
-      invalid_records = []
       school_records = []
       trust_records = []
       trust_associations = Hash.new { |h, k| h[k] = [] }
 
-      CSV
-        .foreach(csv_path, headers: true)
-        .with_index(2) do |school, row_number|
-        invalid_records << "Row #{row_number} is invalid" if invalid?(school)
-        next if school_excluded?(school) || invalid?(school)
-
+      CSV.foreach(csv_path, headers: true) do |school|
         school_records << {
           urn: school["URN"],
           name: school["EstablishmentName"],
@@ -72,10 +64,6 @@ module Gias
         end
       end
 
-      if invalid_records.any?
-        Rails.logger.info "Invalid rows - #{invalid_records.inspect}"
-      end
-
       Rails.logger.silence do
         School.upsert_all(school_records, unique_by: :urn)
         Trust.upsert_all(trust_records.uniq, unique_by: :uid)
@@ -116,15 +104,6 @@ module Gias
         trust = Trust.find_by!(uid:)
         School.where(urn: urns).update_all(trust_id: trust.id)
       end
-    end
-
-    def invalid?(school)
-      school["URN"].blank? || school["EstablishmentName"].blank?
-    end
-
-    def school_excluded?(school)
-      school["EstablishmentStatus (code)"] != OPEN_SCHOOL ||
-        NON_ENGLISH_ESTABLISHMENTS.include?(school["TypeOfEstablishment (code)"])
     end
   end
 end
