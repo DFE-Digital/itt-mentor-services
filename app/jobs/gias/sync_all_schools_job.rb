@@ -3,14 +3,19 @@ module Gias
     queue_as :default
 
     def perform
-      tempfile = Gias::CsvDownloader.call
-      Rails.logger.info "GIAS CSV Downloaded!"
+      Rails.logger.info "Downloading GIAS CSV file..."
+      gias_csv = Gias::CsvDownloader.call
+
+      Rails.logger.info "Transforming GIAS CSV file..."
+      transformed_csv = Gias::CsvTransformer.call(gias_csv)
 
       Rails.logger.info "Importing GIAS data"
-      Gias::CsvImporter.call(tempfile.path)
+      Gias::CsvImporter.call(transformed_csv.path)
       Geocoder::UpdateAllSchoolsJob.perform_later
 
-      tempfile.unlink
+      gias_csv.unlink
+      transformed_csv.unlink
+      Rails.logger.info "Done"
     end
   end
 end

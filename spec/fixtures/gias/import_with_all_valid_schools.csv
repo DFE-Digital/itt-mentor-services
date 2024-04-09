@@ -1,5 +1,0 @@
-URN,EstablishmentName,Town,Postcode,EstablishmentStatus (code),TypeOfEstablishment (code),DistrictAdministrative (code)
-130,InnerLondonSchool,InnerLondonTown,Postcode,1,7,E09000007
-131,OuterLondonSchool,OuterLondonTown,Postcode,1,7,E09000004
-123,FringeSchool,FringeTown,Postcode,1,7,E06000039
-132,RestOfEnglandSchool,RestOfEnglandTown,Postcode,1,7,E09000099

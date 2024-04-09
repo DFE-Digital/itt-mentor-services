@@ -1,21 +1,18 @@
 require "rails_helper"
 
 RSpec.describe Gias::SyncAllSchoolsJob, type: :job do
-  describe "#perform" do
-    it "calls Gias::CsvDownloader and Gias::CsvImporter service" do
-      # Testing Gias::CsvDownloader
-      today = Time.zone.today.strftime("%Y%m%d")
-      gias_filename = "edubasealldata#{today}.csv"
-      tempfile = Tempfile.new("foo")
+  it "calls Gias::CsvDownloader, then Gias::CsvTransformer, then Gias::CsvImporter" do
+    downloaded_csv = instance_double(Tempfile)
+    transformed_csv = instance_double(Tempfile, path: "/fake/path/to/stubbed/file.csv")
 
-      allow(Down).to receive(:download).with(
-        "#{ENV["GIAS_CSV_BASE_URL"]}/#{gias_filename}",
-      ).and_return(tempfile)
+    allow(Gias::CsvDownloader).to receive(:call).and_return(downloaded_csv)
+    allow(Gias::CsvTransformer).to receive(:call).with(downloaded_csv).and_return(transformed_csv)
 
-      # Testing Gias::CsvImporter
-      expect(Gias::CsvImporter).to receive(:call).with(tempfile.path)
-      described_class.perform_now
-    end
+    expect(Gias::CsvImporter).to receive(:call).with(transformed_csv.path).ordered
+    expect(downloaded_csv).to receive(:unlink).ordered
+    expect(transformed_csv).to receive(:unlink).ordered
+
+    described_class.perform_now
   end
 
   describe "integration test" do
