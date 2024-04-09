@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import ClaimsSupportFilterSearchController from "./claims_support_filter_search_controller"
+application.register("claims-support-filter-search", ClaimsSupportFilterSearchController )
+
 import AutocompleteController from "./autocomplete_controller"
 application.register("autocomplete", AutocompleteController)
 

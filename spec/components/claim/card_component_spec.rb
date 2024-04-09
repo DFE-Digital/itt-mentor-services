@@ -6,7 +6,7 @@ RSpec.describe Claim::CardComponent, type: :component do
   subject(:component) { described_class.new(claim:) }
 
   let(:claim) do
-    create(:claim, :submitted, created_at: "2024/04/08", school:) do |claim|
+    create(:claim, :submitted, submitted_at: "2024/04/08", school:) do |claim|
       claim.mentor_trainings << create(:mentor_training, hours_completed: 20)
     end
   end
