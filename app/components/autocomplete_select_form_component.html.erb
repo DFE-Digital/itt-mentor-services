@@ -1,0 +1,38 @@
+<%= form_with(
+  model:,
+  scope:,
+  url:,
+  method: "get",
+  data: {
+    turbo: data[:turbo],
+    controller: data[:controller],
+    autocomplete_path_value: data[:autocomplete_path_value],
+    autocomplete_return_attributes_value: data[:autocomplete_return_attributes_value],
+  },
+  builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= content_tag(:div, class: class_names("govuk-form-group", "govuk-form-group--error": f.object.errors.present?)) do %>
+        <%= f.govuk_text_field input[:field_name], value: input[:value],
+                                                   label: { text: input[:label], size: "l" },
+                                                   caption: { text: input[:caption], size: "l" },
+                                                   data: { autocomplete_target: "serverInput",
+                                                           previous_search: input[:previous_search] } %>
+
+        <div class="govuk-!-margin-bottom-7" data-autocomplete-target="input"
+          data-input-name="<%= data[:input_name] %>"
+          data-action="focusin->autocomplete#clearUndefinedSuggestions click->autocomplete#clearUndefinedSuggestions">
+        </div>
+      <% end %>
+
+      <%= f.govuk_submit t(".continue") %>
+
+      <p class="govuk-body">
+        <%= govuk_link_to(t(".cancel"), back_link, no_visited_state: true) %>
+      </p>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,13 @@
+en:
+  components:
+    autocomplete_select_form_component:
+      errors:
+        data:
+          autocomplete_path_value:
+            blank: "data[:autocomplete_path_value] can't be blank."
+          autocomplete_return_attributes_value:
+            blank: "data[:autocomplete_return_attributes_value] can't be blank."
+      continue: Continue
+      cancel: Cancel
+      caption: Caption
+      label: Label
