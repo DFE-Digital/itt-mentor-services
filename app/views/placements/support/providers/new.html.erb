@@ -5,40 +5,20 @@
 <% end %>
 
 <div class="govuk-width-container">
-  <%= form_with(
+  <%= render AutocompleteSelectFormComponent.new(
     model: @provider_form,
     scope: :provider,
     url: check_placements_support_providers_path,
-    method: "get",
+    back_link: placements_support_organisations_path,
     data: {
-      turbo: false,
-      controller: "autocomplete",
       autocomplete_path_value: "/api/provider_suggestions",
       autocomplete_return_attributes_value: %w[code],
     },
-  ) do |f| %>
-    <%= f.govuk_error_summary %>
-
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
-        <%= content_tag(:div, class: class_names("govuk-form-group", "govuk-form-group--error": f.object.errors.present?)) do %>
-          <%= f.govuk_text_field :id, value: @provider_form&.provider&.name,
-                                      label: { text: t(".title"), size: "l" },
-                                      caption: { text: t(".caption"), size: "l" },
-                                      data: { autocomplete_target: "serverInput",
-                                              previous_search: @provider_form&.provider&.id } %>
-
-          <div class="govuk-!-margin-bottom-7" data-autocomplete-target="input"
-            data-input-name="provider[name]"
-            data-action="focusin->autocomplete#clearUndefinedSuggestions click->autocomplete#clearUndefinedSuggestions"></div>
-        <% end %>
-
-        <%= f.govuk_submit t(".continue") %>
-
-        <p class="govuk-body">
-          <%= govuk_link_to(t(".cancel"), placements_support_organisations_path, no_visited_state: true) %>
-        </p>
-      </div>
-    </div>
-  <% end %>
+    input: {
+      value: @provider_form&.provider&.name,
+      label: t(".title"),
+      caption: t(".caption"),
+      previous_search: @provider_form&.provider&.id,
+    },
+  ) %>
 </div>
