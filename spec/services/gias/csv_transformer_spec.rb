@@ -16,6 +16,20 @@ RSpec.describe Gias::CsvTransformer do
     expect(actual_output).to eq(expected_output)
   end
 
+  it "converts Easting/Northing to Latitude/Longitude" do
+    output_csv = CSV.read(output_file, headers: true)
+
+    easting_northing = output_csv.values_at("Easting", "Northing")
+    latitude_longitude = output_csv.values_at("Latitude", "Longitude")
+
+    expect(easting_northing.zip(latitude_longitude).to_h).to eq({
+      # Easting, Northing => Latitude, Longitude
+      %w[533498 181201] => %w[51.5139702631 -0.0775045667],
+      %w[284509 77456] => %w[50.5853706802 -3.6327567586],
+      %w[417927 305209] => %w[52.6443444763	-1.7364805658],
+    })
+  end
+
   it "filters out schools which are Closed or not in England" do
     output_csv = CSV.read(output_file, headers: true)
     urns = output_csv.values_at("URN").flatten

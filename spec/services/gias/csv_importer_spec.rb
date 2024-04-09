@@ -79,4 +79,30 @@ RSpec.describe Gias::CsvImporter do
       end
     end
   end
+
+  describe "geocoding schools" do
+    subject(:school) { School.find_by!(urn:) }
+
+    before { gias_importer }
+
+    context "when the CSV has a Latitude/Longitude for the school" do
+      let(:urn) { "130" }
+
+      it "geocodes the school" do
+        expect(school).to be_geocoded
+        expect(school.latitude).to eq(51.5139702631)
+        expect(school.longitude).to eq(-0.0775045667)
+      end
+    end
+
+    context "when the CSV doesn't provide a Latitude/Longitude for the school" do
+      let(:urn) { "131" }
+
+      it "imports the school but does not geocode it" do
+        expect(school).not_to be_geocoded
+        expect(school.latitude).to be_nil
+        expect(school.longitude).to be_nil
+      end
+    end
+  end
 end

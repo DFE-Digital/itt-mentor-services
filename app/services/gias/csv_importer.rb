@@ -52,6 +52,8 @@ module Gias
           send_provision: school["TypeOfResourcedProvision (name)"].presence,
           rating: school["OfstedRating (name)"].presence,
           last_inspection_date: school["OfstedLastInsp"].presence,
+          latitude: school["Latitude"].presence,
+          longitude: school["Longitude"].presence,
         }
 
         if school["TrustSchoolFlag (code)"] == SUPPORTED_BY_A_TRUST

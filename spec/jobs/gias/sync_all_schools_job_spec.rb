@@ -31,10 +31,10 @@ RSpec.describe Gias::SyncAllSchoolsJob, type: :job do
     it "downloads and imports school data from GIAS" do
       expect { described_class.perform_now }.to change(School, :count).from(0).to(3)
 
-      expect(School.pluck(:urn, :name)).to eq [
-        ["100000", "The Aldgate School"],
-        ["137666", "Chudleigh Knighton Church of England Primary School"],
-        ["124087", "Thomas Barnes Primary School"],
+      expect(School.pluck(:urn, :name, :latitude, :longitude)).to eq [
+        ["100000", "The Aldgate School", 51.5139702631, -0.0775045667],
+        ["137666", "Chudleigh Knighton Church of England Primary School", 50.5853706802, -3.6327567586],
+        ["124087", "Thomas Barnes Primary School", 52.6443444763, -1.7364805658],
       ]
     end
   end
