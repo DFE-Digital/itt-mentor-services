@@ -19,9 +19,7 @@ class Placements::PartnershipForm < ApplicationForm
   end
 
   def persist
-    ActiveRecord::Base.transaction do
-      Placements::Partnership.create!(school:, provider:)
-    end
+    Placements::Partnership.create!(school:, provider:)
   end
 
   private
