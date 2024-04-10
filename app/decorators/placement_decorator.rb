@@ -22,6 +22,8 @@ class PlacementDecorator < Draper::Decorator
   end
 
   def window
+    return "Not known" unless start_date && end_date
+
     if start_date.month == 9 && end_date.month == 12
       I18n.t("placements.schools.placements.terms.autumn")
     elsif start_date.month == 1 && end_date.month == 3
