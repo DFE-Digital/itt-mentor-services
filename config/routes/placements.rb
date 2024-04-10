@@ -72,6 +72,17 @@ scope module: :placements,
 
       resources :placements, only: %i[index show destroy] do
         member { get :remove }
+
+        scope module: :placements do
+          resources :build do
+            collection do
+              get :add_phase
+              get :add_subject
+              get :add_mentors
+              get :check_your_answers
+            end
+          end
+        end
       end
     end
   end
