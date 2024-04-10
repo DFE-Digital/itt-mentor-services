@@ -1,0 +1,51 @@
+<% if records.present? %>
+  <%= form_with(
+    model:,
+    scope:,
+    url:,
+    method: "get",
+    data: { turbo: false },
+    builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+  ) do |f| %>
+    <%= f.govuk_error_summary %>
+    <%= f.hidden_field :search_param, value: search_param %>
+
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-0">
+      <span class="govuk-caption-l"><%= title %></span>
+    </h1>
+
+    <%= f.govuk_radio_buttons_fieldset(
+      input_field_name,
+      scope:,
+      legend: {
+        text: t(
+          ".legend",
+          record_count: records.count,
+          search_param:,
+        ),
+        size: "l",
+      },
+      hint: { text: form_description },
+    ) do %>
+
+      <% records.first(OPTIONS_PER_PAGE).each do |record| %>
+        <%= f.govuk_radio_button input_field_name,
+          record.id,
+          label: { text: record.name },
+          link_errors: true,
+          hint: { text: record.town_and_postcode } %>
+      <% end %>
+    <% end %>
+
+    <%= f.govuk_submit t(".continue") %>
+  <% end %>
+<% else %>
+  <h1 class="govuk-heading-l">
+    <span class="govuk-caption-l"><%= t(".add_organisation") %></span>
+    <%= t(".no_results", search_param:) %>
+  </h1>
+
+  <div class="govuk-hint">
+    <%= govuk_link_to(t(".narrow_your_search"), back_link, no_visited_state: true) %>
+  </div>
+<% end %>
