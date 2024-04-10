@@ -27,7 +27,12 @@ class Placement < ApplicationRecord
 
   belongs_to :school, class_name: "Placements::School"
 
-  validates :school, :status, :start_date, :end_date, presence: true
+  accepts_nested_attributes_for :mentors, allow_destroy: true
+  accepts_nested_attributes_for :subjects, allow_destroy: true
 
-  validates :end_date, comparison: { greater_than: :start_date }
+  # enum :status, %i[draft submitted approved rejected]
+
+  validates :school, :status, presence: true
+
+  attr_accessor :phase
 end
