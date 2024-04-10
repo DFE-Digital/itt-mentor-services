@@ -9,7 +9,6 @@
     model: @provider_form,
     scope: :provider,
     url: check_placements_support_providers_path,
-    back_link: placements_support_organisations_path,
     data: {
       autocomplete_path_value: "/api/provider_suggestions",
       autocomplete_return_attributes_value: %w[code],
@@ -21,4 +20,8 @@
       previous_search: @provider_form&.provider&.id,
     },
   ) %>
+
+  <p class="govuk-body">
+    <%= govuk_link_to(t(".cancel"), placements_support_organisations_path, no_visited_state: true) %>
+  </p>
 </div>
