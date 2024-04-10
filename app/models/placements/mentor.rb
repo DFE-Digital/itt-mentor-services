@@ -21,4 +21,8 @@ class Placements::Mentor < Mentor
   has_many :placements, through: :placement_mentor_joins
 
   default_scope { joins(:mentor_memberships).distinct }
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 end
