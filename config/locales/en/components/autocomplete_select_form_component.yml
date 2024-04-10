@@ -8,6 +8,5 @@ en:
           autocomplete_return_attributes_value:
             blank: "data[:autocomplete_return_attributes_value] can't be blank."
       continue: Continue
-      cancel: Cancel
       caption: Caption
       label: Label
