@@ -14,7 +14,7 @@ en:
           guidance: We will check your claim before processing payment. If we need to contact you for further information, we will use the email you used to access this service.
         check:
           page_title: Check your answers
-          warning: You will not be able to change any of the claim details once you have submitted it.
+          warning: You will be able to change the details of this claim up to and including July 19 2024
           submit: Submit claim
           add_claim: Add claim
           declaration: Declaration
@@ -33,8 +33,9 @@ en:
         index:
           heading: Claims
           add_claim: Add claim
-          guidance: You can only claim for the academic year September 2023 to July 2024.
-          add_mentor_guidance_html: You need to %{link_to} before creating a claim.</p>
+          guidance: Claims can only be made for the school year September 2023 to July 2024.
+          final_date: The final date to submit a claim is 19 July 2024.
+          add_mentor_guidance_html: Before you can start a claim, you need to %{link_to}.</p>
           add_a_mentor: add a mentor
         update:
           claim_updated: Claim updated
