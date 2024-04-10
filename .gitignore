@@ -36,3 +36,6 @@ terraform/application/vendor
 terraform/domains/environment_domains/vendor
 terraform/domains/infrastructure/vendor
 terraform.tfstate*
+
+# Brewfile.lock.json is machine-specific
+Brewfile.lock.json

@@ -51,19 +51,23 @@ asdf install
 
 ### Homebrew
 
-You'll also need a couple of packages which asdf can't reliably install. (For some reason asdf installs them as unsigned binaries, so they won't run on macOS.)
+You'll also need a few packages which asdf either doesn't have plugins for, or it can't reliably install them. For example, for some reason asdf installs `cmake` as an unsigned binary so it won't run on macOS.
 
 Install them using Homebrew:
 
 ```sh
-brew install cmake pkg-config graphviz
+brew bundle
 ```
+
+This will install the packages listed in [Brewfile](Brewfile).
 
 Finally, you will need a running Postgres 16 server. You can install it with Homebrew by running:
 
 ```sh
 brew install postgresql@16
 ```
+
+or you may prefer to use [Postgres.app](https://postgresapp.com/), [Docker](https://hub.docker.com/_/postgres), or some other [installation method](https://www.postgresql.org/download/).
 
 ### Linting
 
