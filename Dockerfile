@@ -68,6 +68,9 @@ RUN apk add --update --no-cache tzdata && \
 # libpq: required to run postgres
 RUN apk add --no-cache libpq
 
+# proj-util: provides cs2cs, required by Gias::CsvTransformer::CoordinateTransformer
+RUN apk add --no-cache proj-util
+
 # Copy files generated in the builder image
 COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
