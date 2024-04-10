@@ -88,7 +88,7 @@ RSpec.describe Placements::School do
       it { is_expected.to have_many(:partnerships) }
     end
 
-    describe "#parnter_providers" do
+    describe "#partner_providers" do
       it { is_expected.to have_many(:partner_providers).through(:partnerships) }
 
       it "returns only Placements::Provider records" do

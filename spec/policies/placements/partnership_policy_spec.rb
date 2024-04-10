@@ -13,7 +13,7 @@ describe Placements::PartnershipPolicy do
     )
   end
 
-  permissions :destroy? do
+  permissions :destroy?, :remove? do
     context "when the user is associated with the partnership provider" do
       it "grants access" do
         current_user = create(:placements_user, providers: [placements_provider])
