@@ -5,10 +5,6 @@ scope module: :placements,
       } do
   root to: redirect("/sign-in")
 
-  scope module: :pages do
-    get :feedback
-  end
-
   namespace :support do
     root to: redirect("/support/organisations")
 
