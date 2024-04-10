@@ -63,6 +63,8 @@ RSpec.describe "Start Page", type: :system, service: :claims do
       expect(page).to have_content("Claim funding for mentor training")
     end
 
+    expect(page).to have_content("Final closing date for claims: 19 July 2024 11:59pm")
+
     expect(page).to have_content(
       "You can claim funding for mentors who supported trainee teachers from "\
        "September 2023 to July 2024.",
@@ -74,15 +76,9 @@ RSpec.describe "Start Page", type: :system, service: :claims do
     expect(page).to have_content(
       "Before you start\n"\
       "You’ll be asked for:\n"\
-      "initial teacher training (ITT) provider details "\
-      "your mentors’ teacher reference numbers (TRN) "\
-      "hours of training each mentor completed",
-    )
-    expect(page).to have_content(
-      "Get an account to claim funding for mentor training\n"\
-      "Ask a colleague within your organisation to add you if you do not have an account.\n"\
-      "If your organisation has not been set up to claim funding for mentor training, "\
-      "send an email to ittmentor.funding@education.gov.uk.",
+      "Initial Teacher Training provider name "\
+      "the mentors’ Teacher Reference Numbers (TRN) "\
+      "hours of training the mentor completed",
     )
     expect(page).to have_content("Related content")
     expect(page).to have_link(

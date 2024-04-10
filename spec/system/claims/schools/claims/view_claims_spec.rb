@@ -82,7 +82,7 @@ RSpec.describe "View claims", type: :system, service: :claims do
   def i_can_see_the_add_a_mentor_guidance
     within(".govuk-inset-text") do
       expect(page).to have_content(
-        "You need to add a mentor before creating a claim.",
+        "Before you can start a claim, you need to add a mentor.",
       )
       expect(page).to have_link("add a mentor", href: "/schools/#{school.id}/mentors")
     end
@@ -95,9 +95,9 @@ RSpec.describe "View claims", type: :system, service: :claims do
   end
 
   def i_can_see_the_claim_guidance
-    within(".govuk-inset-text") do
+    within(first(".govuk-body")) do
       expect(page).to have_content(
-        "You can only claim for the academic year September 2023 to July 2024.",
+        "Claims can only be made for the school year September 2023 to July 2024.",
       )
     end
   end
