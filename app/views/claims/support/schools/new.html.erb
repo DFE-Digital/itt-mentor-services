@@ -10,7 +10,6 @@
     model: @school_form,
     scope: :school,
     url: check_claims_support_schools_path,
-    back_link: claims_support_schools_path,
     data: {
       autocomplete_path_value: "/api/school_suggestions",
       autocomplete_return_attributes_value: %w[town postcode],
@@ -22,4 +21,8 @@
       previous_search: @school_form&.school&.id,
     },
   ) %>
+
+  <p class="govuk-body">
+    <%= govuk_link_to(t(".cancel"), claims_support_schools_path, no_visited_state: true) %>
+  </p>
 </div>

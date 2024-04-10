@@ -6,7 +6,6 @@ RSpec.describe AutocompleteSelectFormComponent, type: :component do
       model:,
       scope:,
       url:,
-      back_link:,
       data:,
       input:,
     )
@@ -16,7 +15,6 @@ RSpec.describe AutocompleteSelectFormComponent, type: :component do
     let(:model) { User.new }
     let(:scope) { :form }
     let(:url) { "" }
-    let(:back_link) { "" }
     let(:input) { {} }
 
     describe "data attribute validation" do
@@ -63,7 +61,6 @@ RSpec.describe AutocompleteSelectFormComponent, type: :component do
     let(:model) { SchoolOnboardingForm.new }
     let(:scope) { :school }
     let(:url) { "" }
-    let(:back_link) { "" }
     let(:data) do
       {
         turbo: false,
@@ -102,7 +99,6 @@ RSpec.describe AutocompleteSelectFormComponent, type: :component do
     let(:model) { ProviderOnboardingForm.new }
     let(:scope) { :provider }
     let(:url) { "" }
-    let(:back_link) { "" }
     let(:data) do
       {
         turbo: false,

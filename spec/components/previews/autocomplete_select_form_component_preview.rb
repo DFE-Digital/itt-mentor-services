@@ -4,7 +4,6 @@ class AutocompleteSelectFormComponentPreview < ApplicationComponentPreview
       model: SchoolOnboardingForm.new,
       scope: :school,
       url: "#",
-      back_link: "#",
       data: {
         turbo: false,
         controller: "autocomplete",
@@ -27,7 +26,6 @@ class AutocompleteSelectFormComponentPreview < ApplicationComponentPreview
       model: ProviderOnboardingForm.new,
       scope: :provider,
       url: "#",
-      back_link: "#",
       data: {
         turbo: false,
         controller: "autocomplete",
