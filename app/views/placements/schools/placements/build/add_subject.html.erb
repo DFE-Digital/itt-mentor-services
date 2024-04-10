@@ -1,0 +1,31 @@
+<%= render "header_content" %>
+
+<%= content_for(:before_content) do %>
+  <% if @school.primary_or_secondary_only? %>
+    <%= govuk_back_link(href: placements_school_placements_path(@school)) %>
+  <% else %>
+    <%= govuk_back_link(href: add_phase_placements_school_placement_build_index_path(@school, :add_phase)) %>
+  <% end %>
+<% end %>
+
+<div class="govuk-width-container">
+  <%= form_for(@placement, url: placements_school_placement_build_path(@school, id: :add_subject), method: :put) do |f| %>
+    <%= f.govuk_error_summary %>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">Add placement</span>
+
+        <%= f.fields_for(:subjects) do |subject_form| %>
+          <%= subject_form.govuk_collection_radio_buttons :id, @subjects, :id, :name, legend: { size: "l", text: "Subject" } %>
+        <% end %>
+
+        <%= f.govuk_submit "Continue" %>
+
+        <p class="govuk-body">
+          <%= govuk_link_to("Cancel", placements_school_placements_path(@school), no_visited_state: true) %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+</div>
