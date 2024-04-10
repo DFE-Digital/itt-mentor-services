@@ -2,6 +2,7 @@ module RoutesHelper
   include Placements::Routes::OrganisationsHelper
 
   CLAIMS_FEEDBACK_URL = "https://forms.office.com/e/0E3277Kqpi".freeze
+  PLACEMENTS_FEEDBACK_URL = "https://forms.office.com/e/iVBfSXWPDb".freeze
 
   def root_path
     {
@@ -41,7 +42,7 @@ module RoutesHelper
   def feedback_url
     {
       claims: CLAIMS_FEEDBACK_URL,
-      placements: placements_feedback_url,
+      placements: PLACEMENTS_FEEDBACK_URL,
     }.fetch HostingEnvironment.current_service(request)
   end
 
