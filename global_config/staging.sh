@@ -1,4 +1,5 @@
 CONFIG=staging
+ENVIRONMENT=staging
 CONFIG_SHORT=stg
 AZURE_SUBSCRIPTION=s189-teacher-services-cloud-test
 AZURE_RESOURCE_PREFIX=s189t01
