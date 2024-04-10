@@ -1,0 +1,33 @@
+<%= render "header_content" %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: add_subject_placements_school_placement_build_index_path(@school, :add_subject)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <%= form_for(@placement, url: placements_school_placement_build_path(@school, id: :add_mentors), method: :put) do |f| %>
+    <%= f.govuk_error_summary %>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">Add placement</span>
+
+        <%= f.govuk_check_boxes_fieldset :id, legend: { size: "l", text: "Mentors" } do %>
+          <%= f.fields_for(:mentors) do |mentor_form| %>
+            <% @school.mentors.each do |mentor| %>
+              <%= mentor_form.govuk_check_box :id, mentor.id, label: { text: mentor.full_name } %>
+            <% end %>
+            <%= mentor_form.govuk_check_box_divider %>
+            <%= mentor_form.govuk_check_box :id, :not_known, label: { text: "Not Known Yet" }, exclusive: true %>
+          <% end %>
+        <% end %>
+
+        <%= f.govuk_submit "Continue" %>
+
+        <p class="govuk-body">
+          <%= govuk_link_to("Cancel", placements_school_placements_path(@school), no_visited_state: true) %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+</div>
