@@ -12,7 +12,7 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
   def show; end
 
   def download_csv
-    csv_data = Claims::GenerateClaimsCsv.call(claims: Claims::ClaimsQuery.call(params:))
+    csv_data = Claims::GenerateClaimsCsv.call(claims: Claims::ClaimsQuery.call(params: filter_form.query_params))
 
     send_data csv_data, filename: "claims-#{Date.current}.csv", type: "text/csv", disposition: "attachment"
   end
