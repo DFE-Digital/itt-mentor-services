@@ -1,17 +1,19 @@
 require "rails_helper"
 
 RSpec.describe Claims::GenerateClaimsCsv do
-  subject(:generate_claims_csv) { described_class.call }
+  subject(:generate_claims_csv) { described_class.call(claims:) }
+
+  let(:claims) { Claims::Claim.all }
 
   before do
     school1 = create(:claims_school, :claims, name: "School name 1", region: regions(:inner_london), urn: "1234", local_authority_name: "blah", local_authority_code: "BLA", group: "Academy")
     school2 = create(:claims_school, :claims, name: "School name 2", region: regions(:outer_london), urn: "5678", local_authority_name: "blah", local_authority_code: "BLA", group: "Academy")
     school3 = create(:claims_school, :claims, name: "School name 3", region: regions(:fringe), urn: "5679", local_authority_name: "blah", local_authority_code: "BLA", group: "Academy")
 
-    claim1 = create(:claim, school: school1, reference: "12345678")
-    claim2 = create(:claim, school: school2, reference: "12345679")
-    claim3 = create(:claim, school: school3, reference: "12345677")
-    claim4 = create(:claim, school: school3, reference: "12345671")
+    claim1 = create(:claim, status: :submitted, school: school1, reference: "12345678")
+    claim2 = create(:claim, status: :submitted,  school: school2, reference: "12345679")
+    claim3 = create(:claim, status: :submitted,  school: school3, reference: "12345677")
+    claim4 = create(:claim, status: :submitted,  school: school3, reference: "12345671")
 
     create(:mentor_training, claim: claim1, hours_completed: 10)
     create(:mentor_training, claim: claim2, hours_completed: 10)
@@ -24,7 +26,9 @@ RSpec.describe Claims::GenerateClaimsCsv do
     create(:mentor_training, claim: claim4, hours_completed: 1)
   end
 
-  it_behaves_like "a service object"
+  it_behaves_like "a service object" do
+    let(:params) { { claims: } }
+  end
 
   it "inserts the correct headers" do
     expect(generate_claims_csv.lines.first.chomp).to eq("reference,urn,school_name,local_authority_name,amount_to_pay,type")

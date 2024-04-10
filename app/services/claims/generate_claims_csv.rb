@@ -5,11 +5,15 @@ class Claims::GenerateClaimsCsv
 
   HEADERS = %w[reference urn school_name local_authority_name amount_to_pay type].freeze
 
+  def initialize(claims:)
+    @claims = claims
+  end
+
   def call
     CSV.generate(headers: true) do |csv|
       csv << HEADERS
 
-      Claims::Claim.find_each do |claim|
+      @claims.each do |claim|
         csv << [
           claim.reference,
           claim.school.urn,
