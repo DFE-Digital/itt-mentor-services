@@ -1,4 +1,4 @@
-<%= content_for :page_title, sanitize("Add subject") %>
+<%= content_for :page_title, sanitize(t(".title")) %>
 <%= render "placements/schools/primary_navigation", school: @school, current_navigation: :placements %>
 
 <%= content_for(:before_content) do %>
@@ -16,16 +16,16 @@
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <span class="govuk-caption-l">Add placement</span>
+        <span class="govuk-caption-l"><%= t(".add_placement") %></span>
 
         <%= f.fields_for(:subjects) do |subject_form| %>
-          <%= subject_form.govuk_collection_radio_buttons :id, @subjects, :id, :name, legend: { size: "l", text: "Subject" } %>
+          <%= subject_form.govuk_collection_radio_buttons :id, @subjects, :id, :name, legend: { size: "l", text: t(".subject") } %>
         <% end %>
 
-        <%= f.govuk_submit "Continue" %>
+        <%= f.govuk_submit t(".continue") %>
 
         <p class="govuk-body">
-          <%= govuk_link_to("Cancel", placements_school_placements_path(@school), no_visited_state: true) %>
+          <%= govuk_link_to(t(".cancel"), placements_school_placements_path(@school), no_visited_state: true) %>
         </p>
       </div>
     </div>

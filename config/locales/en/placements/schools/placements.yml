@@ -2,6 +2,42 @@ en:
   placements:
     schools:
       placements:
+        build:
+          add_phase:
+            title: Phase
+            add_placement: Add placement
+            phase: Phase
+            primary: Primary
+            secondary: Secondary
+            continue: Continue
+            cancel: Cancel
+          add_subject:
+            title: Subject
+            add_placement: Add placement
+            subject: Subject
+            continue: Continue
+            cancel: Cancel
+          add_mentors:
+            title: Mentors
+            add_placement: Add placement
+            mentor: Mentor
+            continue: Continue
+            cancel: Cancel
+            mentors: Mentors
+            not_known: Not known yet
+          check_your_answers:
+            title: Check your answers
+            add_placement: Add placement
+            phase: Phase
+            add_phase: Add phase
+            subject: Subject
+            add_subject: Add subject
+            mentors: Mentors
+            add_mentors: Add mentors
+            change: Change
+            info_text: When a placement is published, it will be visible to accredited providers and lead partners.
+            publish_placement: Publish placement
+            cancel: Cancel
         terms:
           autumn: Autumn
           spring: Spring
@@ -16,6 +52,7 @@ en:
           window: Window
           status: Status
           not_entered: Not entered
+          add_placement: Add placement
         show:
           remove_placement: Remove placement
           attributes:
@@ -32,3 +69,4 @@ en:
           remove_placement: Remove placement
         destroy:
           placement_removed: Placement removed
+

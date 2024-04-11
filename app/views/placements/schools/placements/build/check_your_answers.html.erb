@@ -1,4 +1,5 @@
-<%= render "header_content" %>
+<%= content_for :page_title, sanitize(t(".title")) %>
+<%= render "placements/schools/primary_navigation", school: @school, current_navigation: :placements %>
 
 <%= content_for(:before_content) do %>
   <%= govuk_back_link(href: add_mentors_placements_school_placement_build_index_path(@school, :add_mentors)) %>
@@ -10,37 +11,40 @@
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <span class="govuk-caption-l">Add placement</span>
-        <span class="govuk-heading-l">
-          Check your answers
+        <span class="govuk-caption-l">
+          <%= t(".add_placement") %>
         </span>
 
-        <%= govuk_summary_list do |summary_list|
-              summary_list.with_row do |row|
-                row.with_key { "Subject level" }
-                row.with_value(text: @phase)
-                # row.with_action(text: "Change", href: link_to wizard_path(:add_phase), visually_hidden_text: 'add phase')
-              end
+        <span class="govuk-heading-l">
+          <%= t(".title") %>
+        </span>
 
-              summary_list.with_row do |row|
-                row.with_key(text: "Subject")
-                row.with_value(text: @placement.subjects.first.name)
-                # row.with_action(text: "Change", href: link_to wizard_path(:add_subject), visually_hidden_text: 'add subject')
-              end
+        <%= govuk_summary_list do |summary_list| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key { t(".phase") } %>
+            <% row.with_value(text: @phase) %>
+            <% row.with_action(text: t(".change"), href: add_phase_placements_school_placement_build_index_path(@school, :add_phase), visually_hidden_text: t(".add_phase")) %>
+          <% end %>
 
-              summary_list.with_row do |row|
-                row.with_key(text: "Mentors")
-                row.with_value(text: @placement.mentors.map(&:full_name).to_sentence)
-                # row.with_action(text: "Change", href: link_to wizard_path(:add_mentors), visually_hidden_text: 'add mentors')
-              end
-            end %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".subject")) %>
+            <% row.with_value(text: @placement.subjects.first.name) %>
+            <% row.with_action(text: t(".change"), href: add_subject_placements_school_placement_build_index_path(@school, :add_subject), visually_hidden_text: t(".add_subject")) %>
+          <% end %>
 
-        <%= govuk_inset_text(text: "When a placement is published, it will be visible to accredited providers and lead partners.") %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".mentors")) %>
+            <% row.with_value(text: @placement.mentors.map(&:full_name).to_sentence) %>
+            <% row.with_action(text: t(".change"), href: add_mentors_placements_school_placement_build_index_path(@school, :add_mentors), visually_hidden_text: t(".add_mentors")) %>
+          <% end %>
+        <% end %>
 
-        <%= f.govuk_submit "Publish placement" %>
+        <%= govuk_inset_text(text: t(".info_text")) %>
+
+        <%= f.govuk_submit t(".publish_placement") %>
 
         <p class="govuk-body">
-          <%= govuk_link_to("Cancel", placements_school_placements_path(@school), no_visited_state: true) %>
+          <%= govuk_link_to(t(".cancel"), placements_school_placements_path(@school), no_visited_state: true) %>
         </p>
       </div>
     </div>
