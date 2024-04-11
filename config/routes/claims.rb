@@ -1,4 +1,6 @@
-scope module: :claims, as: :claims, constraints: { host: ENV["CLAIMS_HOST"] } do
+scope module: :claims, as: :claims, constraints: {
+  host: [ENV["CLAIMS_HOST"], *ENV.fetch("CLAIMS_HOSTS", "").split(",")],
+} do
   root to: "pages#start"
 
   scope module: :pages do
