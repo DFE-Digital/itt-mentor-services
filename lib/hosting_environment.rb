@@ -49,9 +49,9 @@ module HostingEnvironment
 
   def self.current_service(request)
     case request.host
-    when ENV["CLAIMS_HOST"]
+    when ENV["CLAIMS_HOST"], *ENV.fetch("CLAIMS_HOSTS", "").split(",")
       :claims
-    when ENV["PLACEMENTS_HOST"]
+    when ENV["PLACEMENTS_HOST"], *ENV.fetch("PLACEMENTS_HOSTS", "").split(",")
       :placements
     end
   end

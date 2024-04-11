@@ -1,7 +1,10 @@
 scope module: :placements,
       as: :placements,
       constraints: {
-        host: ENV["PLACEMENTS_HOST"],
+        host: [
+          ENV["PLACEMENTS_HOST"],
+          *ENV.fetch("PLACEMENTS_HOSTS", "").split(","),
+        ],
       } do
   root to: redirect("/sign-in")
 
