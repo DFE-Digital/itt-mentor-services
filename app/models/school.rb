@@ -67,8 +67,10 @@ class School < ApplicationRecord
 
   ADDRESS_FIELDS = %w[address1 address2 address3 town postcode].freeze
 
+  # School latitudes/longitudes are populated by the GIAS import (see Gias::SyncAllSchoolsJob).
+  # This is only here to make sure geocoder is initialised on the model. While the address could be
+  # used _as a fallback_ for geocoding, you should never normally need to call #geocode on a school.
   geocoded_by :address
-  after_validation :geocode, if: :address_changed?
 
   belongs_to :region
   belongs_to :trust, optional: true
@@ -114,11 +116,5 @@ class School < ApplicationRecord
       *attributes.slice(*ADDRESS_FIELDS).values,
       "United Kingdom",
     ].compact.join(", ")
-  end
-
-  private
-
-  def address_changed?
-    changed.any? { |attribute| ADDRESS_FIELDS.include?(attribute) }
   end
 end
