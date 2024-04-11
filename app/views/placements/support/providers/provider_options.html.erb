@@ -3,11 +3,13 @@
 <% end %>
 
 <div class="govuk-width-container">
-  <%= render ProviderOptionsFormComponent.new(
+  <%= render OptionsFormComponent.new(
     model: provider_form,
+    scope: :provider,
     url: check_provider_option_placements_support_providers_path,
     search_param:,
-    providers:,
+    records: providers,
+    records_klass: "provider",
     back_link: new_placements_support_provider_path,
   ) %>
 

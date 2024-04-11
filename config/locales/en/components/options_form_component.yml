@@ -1,0 +1,11 @@
+en:
+  components:
+    options_form_component:
+      add_organisation: Add organisation
+      continue: Continue
+      paginated_form_description_html: Showing the first %{results_count} results. %{link_to} if the %{klass} you’re looking for is not listed.
+      form_description_html: "%{link_to} if the %{klass} you’re looking for is not listed."
+      change_your_search: Change your search
+      narrow_your_search: Try narrowing down your search
+      no_results: No results found for '%{search_param}'
+      legend: "%{results_count} results found for '%{search_param}'"

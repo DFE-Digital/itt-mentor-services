@@ -1,7 +1,7 @@
 class OptionsFormComponent < ApplicationComponent
   OPTIONS_PER_PAGE = 15
 
-  attr_reader :model, :url, :search_param, :records,
+  attr_reader :model, :url, :search_param, :records, :records_klass,
               :back_link, :scope, :input_field_name, :title
 
   def initialize(
@@ -9,10 +9,11 @@ class OptionsFormComponent < ApplicationComponent
     url:,
     search_param:,
     records:,
+    records_klass:,
     back_link:,
     scope:,
-    input_field_name:,
-    title:,
+    input_field_name: :id,
+    title: I18n.t("components.options_form_component.add_organisation"),
     classes: [],
     html_attributes: {}
   )
@@ -22,6 +23,7 @@ class OptionsFormComponent < ApplicationComponent
     @url = url
     @search_param = search_param
     @records = records
+    @records_klass = records_klass.to_s.downcase
     @back_link = back_link
     @scope = scope
     @input_field_name = input_field_name
@@ -32,7 +34,7 @@ class OptionsFormComponent < ApplicationComponent
     if records.count > OPTIONS_PER_PAGE
       t(
         "components.options_form_component.paginated_form_description_html",
-        record_count: OPTIONS_PER_PAGE,
+        results_count: OPTIONS_PER_PAGE,
         klass: records_klass,
         link_to: govuk_link_to(
           t("components.options_form_component.narrow_your_search"),
@@ -51,11 +53,5 @@ class OptionsFormComponent < ApplicationComponent
         ),
       )
     end
-  end
-
-  private
-
-  def records_klass
-    @records_klass ||= records.base_class.to_s.downcase
   end
 end

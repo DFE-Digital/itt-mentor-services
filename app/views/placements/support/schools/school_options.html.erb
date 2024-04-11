@@ -3,11 +3,13 @@
 <% end %>
 
 <div class="govuk-width-container">
-  <%= render SchoolOptionsFormComponent.new(
+  <%= render OptionsFormComponent.new(
     model: school_form,
+    scope: :school,
     url: check_school_option_placements_support_schools_path,
     search_param:,
-    schools:,
+    records: schools,
+    records_klass: "school",
     back_link: new_placements_support_school_path,
   ) %>
 
