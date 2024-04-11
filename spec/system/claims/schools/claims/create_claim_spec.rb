@@ -190,7 +190,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
   end
 
   def then_i_am_redirected_to_root_path_with_alert
-    expect(page.current_url).to eq(claims_school_claims_url(school))
+    expect(page).to have_current_path(claims_school_claims_path(school))
     expect(page).to have_content "You cannot perform this action"
   end
 end
