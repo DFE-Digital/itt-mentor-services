@@ -56,6 +56,10 @@ jobs:
         with:
           ruby-version: 3.3.0
           bundler-cache: true
+      - name: Setup PROJ
+        run: |
+          sudo apt-get update
+          sudo apt-get install proj-bin
       - name: Use Node.js 20.9.0
         uses: actions/setup-node@v4
         with:
