@@ -1,4 +1,5 @@
-<%= render "header_content" %>
+<%= content_for :page_title, sanitize("Add mentors") %>
+<%= render "placements/schools/primary_navigation", school: @school, current_navigation: :placements %>
 
 <%= content_for(:before_content) do %>
   <%= govuk_back_link(href: add_subject_placements_school_placement_build_index_path(@school, :add_subject)) %>
@@ -12,14 +13,12 @@
       <div class="govuk-grid-column-two-thirds">
         <span class="govuk-caption-l">Add placement</span>
 
-        <%= f.govuk_check_boxes_fieldset :id, legend: { size: "l", text: "Mentors" } do %>
-          <%= f.fields_for(:mentors) do |mentor_form| %>
-            <% @school.mentors.each do |mentor| %>
-              <%= mentor_form.govuk_check_box :id, mentor.id, label: { text: mentor.full_name } %>
-            <% end %>
-            <%= mentor_form.govuk_check_box_divider %>
-            <%= mentor_form.govuk_check_box :id, :not_known, label: { text: "Not Known Yet" }, exclusive: true %>
+        <%= f.govuk_check_boxes_fieldset :mentor_ids, legend: { size: "l", text: "Mentors" }, required: true do %>
+          <% @school.mentors.each do |mentor| %>
+            <%= f.govuk_check_box :mentor_ids, mentor.id, label: { text: mentor.full_name }, checked: @selected_mentors.include?(mentor) %>
           <% end %>
+          <%= f.govuk_check_box_divider %>
+          <%= f.govuk_check_box :mentor_ids, :not_known, label: { text: "Not Known Yet" }, exclusive: true %>
         <% end %>
 
         <%= f.govuk_submit "Continue" %>
