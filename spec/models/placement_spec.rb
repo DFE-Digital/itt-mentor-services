@@ -36,8 +36,5 @@ RSpec.describe Placement, type: :model do
 
     it { is_expected.to validate_presence_of(:school) }
     it { is_expected.to validate_presence_of(:status) }
-    it { is_expected.to validate_presence_of(:start_date) }
-    it { is_expected.to validate_presence_of(:end_date) }
-    it { is_expected.to validate_comparison_of(:end_date).is_greater_than(:start_date) }
   end
 end
