@@ -1,3 +1,4 @@
+
 en:
   placements:
     schools:
@@ -38,6 +39,8 @@ en:
             info_text: When a placement is published, it will be visible to accredited providers and lead partners.
             publish_placement: Publish placement
             cancel: Cancel
+          update:
+            success: Placement added
         terms:
           autumn: Autumn
           spring: Spring
