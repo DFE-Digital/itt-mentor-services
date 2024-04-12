@@ -30,9 +30,5 @@ class Placement < ApplicationRecord
   accepts_nested_attributes_for :mentors, allow_destroy: true
   accepts_nested_attributes_for :subjects, allow_destroy: true
 
-  # enum :status, %i[draft submitted approved rejected]
-
   validates :school, :status, presence: true
-
-  attr_accessor :phase
 end
