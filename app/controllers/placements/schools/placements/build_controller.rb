@@ -183,8 +183,6 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   def build_placement
     if session[:add_a_placement]["placement"].present?
       Placements::Schools::Placements::Build::Placement.new(school:, phase: session[:add_a_placement]["phase"])
-    elsif @placement.present?
-      @placement
     else
       Placements::Schools::Placements::Build::Placement.new(school:)
     end
