@@ -164,6 +164,17 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
         and_i_see_my_placement("Secondary")
       end
     end
+
+    context "and I do not choose a phase" do
+      scenario "I see an error message" do
+        school.update!(phase: "Nursery")
+        when_i_visit_the_placements_page
+        and_i_click_on("Add placement")
+        and_i_click_on("Continue")
+        then_i_see_the_add_a_placement_add_phase_page
+        and_i_see_the_error_message("Select a phase")
+      end
+    end
   end
 
   private
