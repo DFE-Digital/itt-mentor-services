@@ -14,10 +14,10 @@
       autocomplete_return_attributes_value: %w[town postcode],
     },
     input: {
-      value: @school_form&.school&.name,
+      value: @school_form.school_name,
       label: t(".title"),
       caption: t(".caption"),
-      previous_search: @school_form&.school&.id,
+      previous_search: @school_form.school_id,
     },
   ) %>
 
