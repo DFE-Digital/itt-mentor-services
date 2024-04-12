@@ -47,6 +47,25 @@ describe SchoolOnboardingForm, type: :model do
     end
   end
 
+  describe "delegations" do
+    describe "#name" do
+      context "when school is nil" do
+        it "returns nil" do
+          form = described_class.new
+          expect(form.name).to eq(nil)
+        end
+      end
+
+      context "when school exists" do
+        it "returns then name of the school" do
+          school = create(:school, name: "School 1")
+          form = described_class.new(id: school.id)
+          expect(form.name).to eq("School 1")
+        end
+      end
+    end
+  end
+
   describe "#school" do
     context "when given the id of an existing school" do
       it "returns the school associated with that id" do
