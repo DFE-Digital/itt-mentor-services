@@ -188,8 +188,4 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   def mentor_ids_params
     params.dig(:placements_schools_placements_build_placement, :mentor_ids).compact_blank
   end
-
-  def placement_params
-    params.require(:placements_schools_placements_build_placement).permit(:subject_attributes, :mentors_attributes)
-  end
 end
