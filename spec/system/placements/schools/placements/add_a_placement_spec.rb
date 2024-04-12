@@ -83,6 +83,20 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
         when_i_click_on("Back")
         then_my_chosen_mentor_is_checked(mentor_1.full_name)
       end
+
+      scenario "when I do not enter valid options" do
+        when_i_visit_the_placements_page
+        and_i_click_on("Add placement")
+        and_i_click_on("Continue")
+        then_i_see_the_add_a_placement_subject_page(school.phase)
+        and_i_see_the_error_message("Select a subject")
+
+        when_i_choose_a_subject("Primary subject")
+        and_i_click_on("Continue")
+        and_i_click_on("Continue")
+        then_i_see_the_add_a_placement_mentor_page
+        and_i_see_the_error_message("Select a mentor or not known")
+      end
     end
   end
 
@@ -259,6 +273,10 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
 
   def and_i_see_my_placement(phase)
     expect(page).to have_content("#{phase} subject")
+  end
+
+  def and_i_see_the_error_message(message)
+    expect(page).to have_content(message)
   end
 
   def when_i_click_on(text)
