@@ -70,7 +70,8 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
       end
 
       scenario "my selected options are rendered when navigating using the back button" do
-        when_i_visit_the_add_subject_page
+        when_i_visit_the_placements_page
+        and_i_click_on("Add placement")
         when_i_choose_a_subject("Primary subject")
         and_i_click_on("Continue")
         when_i_click_on("Back")
@@ -91,7 +92,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
       when_i_visit_the_placements_page
       and_i_click_on("Add placement")
       then_i_see_the_add_a_placement_subject_page(school.phase)
-      when_i_choose_a_subject("Secondary subject")
+      when_i_check_a_subject("Secondary subject")
       and_i_click_on("Continue")
       then_i_see_the_add_a_placement_mentor_page
       when_i_check_a_mentor(mentor_1.full_name)
@@ -136,9 +137,9 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
         when_i_choose_a_phase("Secondary")
         and_i_click_on("Continue")
         then_i_see_the_add_a_placement_subject_page("Secondary")
-        when_i_choose_a_subject("Secondary")
+        when_i_check_a_subject("Secondary")
         then_i_see_the_add_a_placement_subject_page("Secondary")
-        when_i_choose_a_subject("Secondary subject")
+        when_i_check_a_subject("Secondary subject")
         and_i_click_on("Continue")
         then_i_see_the_add_a_placement_mentor_page
         when_i_check_a_mentor(mentor_1.full_name)
@@ -224,6 +225,10 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
 
   def when_i_choose_a_subject(subject_name)
     page.choose subject_name
+  end
+
+  def when_i_check_a_subject(subject_name)
+    page.check subject_name
   end
 
   def then_i_see_the_add_a_placement_mentor_page
