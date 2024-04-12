@@ -43,6 +43,8 @@ end
 
 RSpec.configure do |config|
   config.include ViewComponent::TestHelpers, type: :component
+  config.include DfESignInUserHelper
+  config.include GeocodingHelper
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = [Rails.root.join("spec/fixtures")]
@@ -102,8 +104,6 @@ RSpec.configure do |config|
     example.run
     Capybara.app_host = nil
   end
-
-  config.include DfESignInUserHelper
 
   config.around(:each, type: :system, persona_sign_in: true) do |example|
     ClimateControl.modify SIGN_IN_METHOD: "persona" do

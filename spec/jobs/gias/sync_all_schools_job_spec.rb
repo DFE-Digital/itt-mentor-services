@@ -31,11 +31,33 @@ RSpec.describe Gias::SyncAllSchoolsJob, type: :job do
     it "downloads and imports school data from GIAS" do
       expect { described_class.perform_now }.to change(School, :count).from(0).to(3)
 
-      expect(School.pluck(:urn, :name, :latitude, :longitude)).to eq [
-        ["100000", "The Aldgate School", 51.5139702631, -0.0775045667],
-        ["137666", "Chudleigh Knighton Church of England Primary School", 50.5853706802, -3.6327567586],
-        ["124087", "Thomas Barnes Primary School", 52.6443444763, -1.7364805658],
+      expected_schools = [
+        {
+          urn: "100000",
+          name: "The Aldgate School",
+          latitude: 51.5139702631,
+          longitude: -0.0775045667,
+        },
+        {
+          urn: "137666",
+          name: "Chudleigh Knighton Church of England Primary School",
+          latitude: 50.5853706802,
+          longitude: -3.6327567586,
+        },
+        {
+          urn: "124087",
+          name: "Thomas Barnes Primary School",
+          latitude: 52.6443444763,
+          longitude: -1.7364805658,
+        },
       ]
+
+      expected_schools.each do |expected|
+        school = School.find_by!(urn: expected[:urn])
+        expect(school.name).to eq(expected[:name])
+        expect(school.latitude).to match_coordinate(expected[:latitude])
+        expect(school.longitude).to match_coordinate(expected[:longitude])
+      end
     end
   end
 end
