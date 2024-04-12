@@ -46,6 +46,14 @@ class DfESignInUser
     )
   end
 
+  def logout_url(request)
+    if signed_in_from_dfe?
+      dfe_logout_url(request)
+    else
+      "/auth/developer/sign-out"
+    end
+  end
+
   def user
     @user ||= user_by_uid || user_by_email
   end
@@ -86,5 +94,18 @@ class DfESignInUser
     when :claims
       Claims::User
     end
+  end
+
+  def signed_in_from_dfe?
+    @provider == "dfe"
+  end
+
+  def dfe_logout_url(request)
+    uri = URI("#{ENV["DFE_SIGN_IN_ISSUER_URL"]}/session/end")
+    uri.query = {
+      id_token_hint: @id_token,
+      post_logout_redirect_uri: "#{request.base_url}/auth/dfe/sign-out",
+    }.to_query
+    uri.to_s
   end
 end
