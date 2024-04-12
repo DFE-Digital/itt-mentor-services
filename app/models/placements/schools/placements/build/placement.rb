@@ -19,10 +19,9 @@ class Placements::Schools::Placements::Build::Placement < Placement
   end
 
   def valid_mentor_ids?
-    return false if mentor_ids.blank?
-    return true if mentor_ids.include?("not_known")
+    return true if mentor_ids.present? && mentor_ids.include?("not_known")
 
-    if mentor_ids.all? { |id| Placements::Mentor.exists?(id:) && school.mentors.exists?(id:) }
+    if mentor_ids.present? && mentor_ids.all? { |id| Placements::Mentor.exists?(id:) && school.mentors.exists?(id:) }
       true
     else
       errors.add(:mentor_ids, "Select a mentor or not known")
@@ -31,11 +30,8 @@ class Placements::Schools::Placements::Build::Placement < Placement
   end
 
   def valid_subjects?
-    return false if subject_ids.blank?
-
     converted_subject_ids = subject_ids.is_a?(Array) ? subject_ids : [subject_ids]
-
-    if converted_subject_ids.all? { |id| Subject.exists?(id:) && Subject.find(id).subject_area.downcase == phase.downcase }
+    if subject_ids.present? && converted_subject_ids.all? { |id| Subject.exists?(id:) && Subject.find(id).subject_area.downcase == phase.downcase }
       true
     else
       errors.add(:subject_ids, "Select a subject")

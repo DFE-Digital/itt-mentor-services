@@ -32,7 +32,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   def update
     case params[:id].to_sym
     when :check_your_answers
-      @placement = Placements::Schools::Placements::Build::Placement.new(school:, phase: :published)
+      @placement = Placements::Schools::Placements::Build::Placement.new(school:, phase: session[:add_a_placement]["phase"], status: :published)
       @placement.mentor_ids = session[:add_a_placement]["mentor_ids"]
       @placement.subject_ids = session[:add_a_placement]["subject_ids"]
       build_subjects(@placement)
@@ -61,6 +61,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
       if @placement.valid_subjects?
         session[:add_a_placement][:subject_ids] = subject_ids
       else
+        assign_subjects_based_on_phase
         render :add_subject and return
       end
     when :add_mentors
@@ -69,7 +70,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
       @placement.mentor_ids = mentor_ids if mentor_ids.present?
 
       if @placement.valid_mentor_ids?
-        session[:add_a_placement][:mentor_ids] = mentor_ids_params
+        session[:add_a_placement][:mentor_ids] = mentor_ids
       else
         render :add_mentors and return
       end
