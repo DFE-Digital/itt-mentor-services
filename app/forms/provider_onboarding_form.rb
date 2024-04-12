@@ -5,6 +5,8 @@ class ProviderOnboardingForm < ApplicationForm
   validate :provider_exists?
   validate :provider_already_onboarded?
 
+  delegate :id, :name, to: :provider, allow_nil: true, prefix: true
+
   def persist
     provider.update!(placements_service: true)
   end
