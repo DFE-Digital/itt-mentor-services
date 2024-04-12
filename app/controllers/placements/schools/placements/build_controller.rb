@@ -1,81 +1,83 @@
 class Placements::Schools::Placements::BuildController < ApplicationController
-  def new
-    session[:add_a_placement] = {}
-    @placement = school.placements.new(status: :draft)
+  before_action :setup_session, except: :new
 
-    if school.primary_or_secondary_only?
-      session[:add_a_placement][:placement] = @placement.attributes
-      session[:add_a_placement][:phase] = school.phase
-      redirect_to add_subject_placements_school_placement_build_index_path(school_id: school.id)
-    else
-      redirect_to add_phase_placements_school_placement_build_index_path(school_id: school.id)
-    end
+  def new
+    reset_session
+    @placement = build_placement
+    school.primary_or_secondary_only? ? handle_primary_or_secondary : handle_other
   end
 
   def add_phase
-    session[:add_a_placement] = {} if session[:add_a_placement].blank?
-    @placement = school.placements.new(session[:add_a_placement][:placement])
-    @next_step = next_step(:add_phase)
+    @placement = build_placement
+    @selected_phase = session[:add_a_placement]["phase"] || school.phase
   end
 
   def add_subject
-    session[:add_a_placement] = {} if session[:add_a_placement].blank?
-    session[:add_a_placement][:previous_step] = :add_phase
-    @placement = school.placements.new(session[:add_a_placement][:placement])
-    session[:add_a_placement]["subjects_attributes"].present? ? build_subject : @placement.subjects.build
-    @next_step = next_step(:add_subject)
-    @previous_step = previous_step(:add_subject)
-
-    phase = school.primary_or_secondary_only? ? school.phase : session[:add_a_placement]["phase"]
-    @subjects = phase == "Primary" ? Subject.primary : Subject.secondary
+    setup_phase_navigation
+    build_or_retrieve_placement
+    assign_subjects_based_on_phase
   end
 
   def add_mentors
-    session[:add_a_placement] = {} if session[:add_a_placement].blank?
-    session[:add_a_placement][:previous_step] = :add_subject
-    @placement = school.placements.new(session[:add_a_placement][:placement])
-    session[:add_a_placement]["mentors_attributes"].present? ? build_mentors : @placement.mentors.build
-    @next_step = next_step(:add_subject)
-    @previous_step = previous_step(:add_subject)
+    @placement = build_placement
+    @selected_mentors = find_mentors
   end
 
   def check_your_answers
-    @placement = school.placements.new(status: :draft)
-
-    build_mentors
-    build_subject
-
-    session[:add_a_placement] = {} if session[:add_a_placement].blank?
-    session[:add_a_placement][:previous_step] = :add_mentors
+    session[:add_a_placement][:enable_phase_navigation] = true
+    @placement = initialize_placement
     @phase = session[:add_a_placement]["phase"]
-    @next_step = next_step(:add_subject)
-    @previous_step = previous_step(:add_subject)
   end
 
   def update
-    session[:add_a_placement][:placement] = {} if session[:add_a_placement][:placement].blank?
-
     case params[:id].to_sym
-    when :add_phase
-      session[:add_a_placement][:phase] = params[:placement][:phase]
-    when :add_subject
-      session[:add_a_placement][:subjects_attributes] = params[:placement][:subjects_attributes]
-    when :add_mentors
-      session[:add_a_placement][:mentors_attributes] = params[:placement][:mentors_attributes]
     when :check_your_answers
-      @placement = school.placements.new(session[:add_a_placement][:placement])
-      build_mentors
-      build_subject
+      @placement = Placements::Schools::Placements::Build::Placement.new(school:, phase: :published)
+      @placement.mentor_ids = session[:add_a_placement]["mentor_ids"]
+      @placement.subject_ids = session[:add_a_placement]["subject_ids"]
+      build_subjects(@placement)
+      build_mentors(@placement)
 
-      @placement.save!
+      if @placement.all_valid?
+        @placement.save!
+
+        session.delete(:add_a_placement)
+        redirect_to placements_school_placements_path(school), flash: { success: t(".success") } and return
+      else
+        render :check_your_answers and return
+      end
+    when :add_phase
+      if Placements::Schools::Placements::Build::Placement.new(school:, phase: phase_params).valid_phase?
+        session[:add_a_placement][:phase] = phase_params
+      else
+        render :add_phase and return
+      end
+    when :add_subject
+      subject_ids = subject_ids_params
+      subject_ids.compact_blank! if subject_ids.instance_of?(Array)
+      @placement = Placements::Schools::Placements::Build::Placement.new(school:, phase: session[:add_a_placement]["phase"])
+      @placement.subject_ids = subject_ids if subject_ids.present?
+
+      if @placement.valid_subjects?
+        session[:add_a_placement][:subject_ids] = subject_ids
+      else
+        render :add_subject and return
+      end
+    when :add_mentors
+      mentor_ids = mentor_ids_params
+      @placement = Placements::Schools::Placements::Build::Placement.new(school:, phase: session[:add_a_placement]["phase"])
+      @placement.mentor_ids = mentor_ids if mentor_ids.present?
+
+      if @placement.valid_mentor_ids?
+        session[:add_a_placement][:mentor_ids] = mentor_ids_params
+      else
+        render :add_mentors and return
+      end
     else
-      # type code here
+      raise ActionController::RoutingError, "Not Found"
     end
 
-    return redirect_to placements_school_placements_path(school) if params[:id].to_sym == :check_your_answers
-
     @placement = school.placements.new(placement_params) if @placement.blank?
-
     redirect_to public_send(next_step(params[:id]))
   end
 
@@ -83,31 +85,123 @@ class Placements::Schools::Placements::BuildController < ApplicationController
 
   STEPS = %i[add_phase add_subject add_mentors check_your_answers].freeze
 
-  def next_step(step)
-    index = STEPS.index(step.to_sym) + 1
-    "#{STEPS[index]}_placements_school_placement_build_index_path"
+  def reset_session
+    session.delete(:add_a_placement)
+    setup_session
   end
 
-  def previous_step(step)
-    index = STEPS.index(step) - 1
-    "#{STEPS[index]}_placements_school_placement_build_index_path"
+  def handle_primary_or_secondary
+    session[:add_a_placement][:placement] = @placement.attributes
+    session[:add_a_placement][:phase] = school.phase
+    redirect_to add_subject_placements_school_placement_build_index_path(school_id: school.id)
+  end
+
+  def handle_other
+    redirect_to add_phase_placements_school_placement_build_index_path(school_id: school.id)
+  end
+
+  def setup_session
+    session[:add_a_placement] = {} if session[:add_a_placement].blank?
+  end
+
+  def setup_phase_navigation
+    @enable_phase_navigation = session[:add_a_placement]["enable_phase_navigation"]
+  end
+
+  def build_or_retrieve_placement
+    @placement = build_placement
+    session[:add_a_placement]["subject_ids"].present? ? build_subjects : @placement.subjects.build
+  end
+
+  def assign_subjects_based_on_phase
+    @phase = session[:add_a_placement]["phase"].presence || (school.primary_or_secondary_only? ? school.phase : "Primary")
+    @subjects = @phase == "Primary" ? Subject.primary : Subject.secondary
+    @selected_subjects = find_subjects
+  end
+
+  def find_mentors
+    session[:add_a_placement]["mentor_ids"].present? ? school.mentors.find(session[:add_a_placement]["mentor_ids"].compact_blank) : []
+  end
+
+  def find_subjects
+    subject_ids = session[:add_a_placement]["subject_ids"]
+    if subject_ids.instance_of?(String)
+      subject_ids.present? ? [Subject.find(subject_ids)] : []
+    else
+      subject_ids.present? ? Subject.find(subject_ids.compact_blank) : []
+    end
+  end
+
+  def initialize_placement
+    placement = Placements::Schools::Placements::Build::Placement.new(school:, status: :draft)
+    build_mentors(placement)
+    build_subjects(placement)
+    placement
+  end
+
+  def build_mentors(placement = nil)
+    placement ||= @placement
+    session[:add_a_placement]["mentor_ids"].compact_blank.each do |mentor_id|
+      placement.mentors << Placements::Mentor.find(mentor_id)
+    end
+  end
+
+  def build_subjects(placement = nil)
+    placement ||= @placement
+    subject_ids = session[:add_a_placement]["subject_ids"]
+    if subject_ids.instance_of?(String)
+      placement.subjects << Subject.find(subject_ids)
+    elsif subject_ids.present?
+      subject_ids.each do |subject_id|
+        placement.subjects << Subject.find(subject_id)
+      end
+    end
+  end
+
+  def handle_other_updates
+    case params[:id].to_sym
+    when :add_phase
+      handle_add_phase
+    when :add_subject
+      handle_add_subject
+    when :add_mentors
+      handle_add_mentors
+    else
+      raise ActionController::RoutingError, "Not Found"
+    end
+  end
+
+  def next_step(step)
+    "#{STEPS[STEPS.index(step.to_sym) + 1]}_placements_school_placement_build_index_path"
   end
 
   def school
     @school ||= current_user.schools.find(params.require(:school_id))
   end
 
-  def build_mentors
-    session[:add_a_placement]["mentors_attributes"]["0"]["id"].compact_blank.each do |mentor_id|
-      @placement.mentors << Placements::Mentor.find(mentor_id)
+  def build_placement
+    if session[:add_a_placement]["placement"].present?
+      Placements::Schools::Placements::Build::Placement.new(school:, phase: session[:add_a_placement]["phase"])
+    elsif @placement.present?
+      @placement
+    else
+      Placements::Schools::Placements::Build::Placement.new(school:)
     end
   end
 
-  def build_subject
-    @placement.subjects << Subject.find(session[:add_a_placement]["subjects_attributes"]["0"]["id"])
+  def phase_params
+    params.dig(:placements_schools_placements_build_placement, :phase)
+  end
+
+  def subject_ids_params
+    params.dig(:placements_schools_placements_build_placement, :subject_ids)
+  end
+
+  def mentor_ids_params
+    params.dig(:placements_schools_placements_build_placement, :mentor_ids).compact_blank
   end
 
   def placement_params
-    params.require(:placement).permit(:subject_attributes, :mentors_attributes)
+    params.require(:placements_schools_placements_build_placement).permit(:subject_attributes, :mentors_attributes)
   end
 end
