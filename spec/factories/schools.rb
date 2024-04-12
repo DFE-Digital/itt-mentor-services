@@ -61,8 +61,6 @@
 #  fk_rails_...  (region_id => regions.id)
 #  fk_rails_...  (trust_id => trusts.id)
 #
-require "./spec/support/geocoder_stub"
-
 FactoryBot.define do
   factory :school do
     region { Region.all.sample }
@@ -84,7 +82,5 @@ FactoryBot.define do
     factory :placements_school,
             class: "Placements::School",
             parent: :school, traits: %i[placements]
-
-    after(:build) { |school| GeocoderStub.stub_with(school) }
   end
 end
