@@ -37,6 +37,25 @@ describe ProviderOnboardingForm, type: :model do
     end
   end
 
+  describe "delegations" do
+    describe "#name" do
+      context "when provider is nil" do
+        it "returns nil" do
+          form = described_class.new
+          expect(form.name).to eq(nil)
+        end
+      end
+
+      context "when provider exists" do
+        it "returns then name of the provider" do
+          provider = create(:provider, name: "Provider 1")
+          form = described_class.new(id: provider.id)
+          expect(form.name).to eq("Provider 1")
+        end
+      end
+    end
+  end
+
   describe "#provider" do
     context "when given the urn of an existing provider" do
       it "returns the provider associated with that urn" do
