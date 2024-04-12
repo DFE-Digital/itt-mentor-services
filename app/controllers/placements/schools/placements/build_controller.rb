@@ -47,7 +47,10 @@ class Placements::Schools::Placements::BuildController < ApplicationController
         render :check_your_answers and return
       end
     when :add_phase
-      if Placements::Schools::Placements::Build::Placement.new(school:, phase: phase_params).valid_phase?
+      @placement = build_placement
+      @placement.phase = phase_params
+
+      if @placement.valid_phase?
         session[:add_a_placement][:phase] = phase_params
       else
         render :add_phase and return
@@ -55,7 +58,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
     when :add_subject
       subject_ids = subject_ids_params
       subject_ids.compact_blank! if subject_ids.instance_of?(Array)
-      @placement = Placements::Schools::Placements::Build::Placement.new(school:, phase: session[:add_a_placement]["phase"])
+      @placement = build_placement
       @placement.subject_ids = subject_ids if subject_ids.present?
 
       if @placement.valid_subjects?
@@ -66,7 +69,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
       end
     when :add_mentors
       mentor_ids = mentor_ids_params
-      @placement = Placements::Schools::Placements::Build::Placement.new(school:, phase: session[:add_a_placement]["phase"])
+      @placement = build_placement
       @placement.mentor_ids = mentor_ids if mentor_ids.present?
 
       if @placement.valid_mentor_ids?
@@ -78,7 +81,6 @@ class Placements::Schools::Placements::BuildController < ApplicationController
       raise ActionController::RoutingError, "Not Found"
     end
 
-    @placement = school.placements.new(placement_params) if @placement.blank?
     redirect_to public_send(next_step(params[:id]))
   end
 
@@ -106,26 +108,26 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   end
 
   def setup_phase_navigation
-    @enable_phase_navigation = session[:add_a_placement]["enable_phase_navigation"]
+    @enable_phase_navigation = session.dig(:add_a_placement, "enable_phase_navigation")
   end
 
   def build_or_retrieve_placement
     @placement = build_placement
-    session[:add_a_placement]["subject_ids"].present? ? build_subjects : @placement.subjects.build
+    session.dig(:add_a_placement, "subject_ids").present? ? build_subjects : @placement.subjects.build
   end
 
   def assign_subjects_based_on_phase
-    @phase = session[:add_a_placement]["phase"].presence || (school.primary_or_secondary_only? ? school.phase : "Primary")
+    @phase = session.dig(:add_a_placement, "phase").presence || (school.primary_or_secondary_only? ? school.phase : "Primary")
     @subjects = @phase == "Primary" ? Subject.primary : Subject.secondary
     @selected_subjects = find_subjects
   end
 
   def find_mentors
-    session[:add_a_placement]["mentor_ids"].present? ? school.mentors.find(session[:add_a_placement]["mentor_ids"].compact_blank) : []
+    session[:add_a_placement]["mentor_ids"].present? ? school.mentors.find(session.dig(:add_a_placement, "mentor_ids").compact_blank) : []
   end
 
   def find_subjects
-    subject_ids = session[:add_a_placement]["subject_ids"]
+    subject_ids = session.dig(:add_a_placement, "subject_ids")
     if subject_ids.instance_of?(String)
       subject_ids.present? ? [Subject.find(subject_ids)] : []
     else
@@ -149,26 +151,13 @@ class Placements::Schools::Placements::BuildController < ApplicationController
 
   def build_subjects(placement = nil)
     placement ||= @placement
-    subject_ids = session[:add_a_placement]["subject_ids"]
+    subject_ids = session.dig(:add_a_placement, "subject_ids")
     if subject_ids.instance_of?(String)
       placement.subjects << Subject.find(subject_ids)
     elsif subject_ids.present?
       subject_ids.each do |subject_id|
         placement.subjects << Subject.find(subject_id)
       end
-    end
-  end
-
-  def handle_other_updates
-    case params[:id].to_sym
-    when :add_phase
-      handle_add_phase
-    when :add_subject
-      handle_add_subject
-    when :add_mentors
-      handle_add_mentors
-    else
-      raise ActionController::RoutingError, "Not Found"
     end
   end
 
@@ -181,8 +170,8 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   end
 
   def build_placement
-    if session[:add_a_placement]["placement"].present?
-      Placements::Schools::Placements::Build::Placement.new(school:, phase: session[:add_a_placement]["phase"])
+    if session.dig(:add_a_placement, "phase").present?
+      Placements::Schools::Placements::Build::Placement.new(school:, phase: session.dig(:add_a_placement, "phase"))
     else
       Placements::Schools::Placements::Build::Placement.new(school:)
     end
