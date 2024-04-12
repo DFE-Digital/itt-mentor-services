@@ -15,9 +15,9 @@
           <%= t(".add_placement") %>
         </span>
 
-        <%= f.govuk_check_boxes_fieldset :mentor_ids, legend: { size: "l", text: t(".mentors") }, required: true do %>
+        <%= f.govuk_check_boxes_fieldset :mentor_ids, legend: { size: "l", text: t(".mentors") } do %>
           <% @school.mentors.each do |mentor| %>
-            <%= f.govuk_check_box :mentor_ids, mentor.id, label: { text: mentor.full_name }, checked: @selected_mentors.include?(mentor) %>
+            <%= f.govuk_check_box :mentor_ids, mentor.id, label: { text: mentor.full_name }, checked: @selected_mentors&.include?(mentor) %>
           <% end %>
           <%= f.govuk_check_box_divider %>
           <%= f.govuk_check_box :mentor_ids, :not_known, label: { text: t(".not_known") }, exclusive: true %>

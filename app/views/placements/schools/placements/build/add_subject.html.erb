@@ -2,7 +2,6 @@
 <%= render "placements/schools/primary_navigation", school: @school, current_navigation: :placements %>
 
 <%= content_for(:before_content) do %>
-  <%= @enable_phase_navigation %>
   <% if @school.primary_or_secondary_only? && !@enable_phase_navigation %>
     <%= govuk_back_link(href: placements_school_placements_path(@school)) %>
   <% else %>
@@ -18,8 +17,18 @@
       <div class="govuk-grid-column-two-thirds">
         <span class="govuk-caption-l"><%= t(".add_placement") %></span>
 
-        <%= f.fields_for(:subjects) do |subject_form| %>
-          <%= subject_form.govuk_collection_radio_buttons :id, @subjects, :id, :name, legend: { size: "l", text: t(".subject") } %>
+        <% if @phase == "Primary" %>
+          <%= f.govuk_radio_buttons_fieldset :subject_ids, legend: { size: "l", text: t(".subject") } do %>
+            <% @subjects.each do |subject| %>
+              <%= f.govuk_radio_button :subject_ids, subject.id, label: { text: subject.name }, checked: @selected_subjects&.include?(subject) %>
+            <% end %>
+          <% end %>
+        <% else %>
+          <%= f.govuk_check_boxes_fieldset :subject_ids, legend: { size: "l", text: t(".subject") } do %>
+            <% @subjects.each do |subject| %>
+              <%= f.govuk_check_box :subject_ids, subject.id, label: { text: subject.name }, checked: @selected_subjects&.include?(subject) %>
+            <% end %>
+          <% end %>
         <% end %>
 
         <%= f.govuk_submit t(".continue") %>

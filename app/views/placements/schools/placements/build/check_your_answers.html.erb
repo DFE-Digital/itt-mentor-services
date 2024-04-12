@@ -28,7 +28,7 @@
 
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".subject")) %>
-            <% row.with_value(text: @placement.subjects.first.name) %>
+            <% row.with_value(text: @placement.subjects.map(&:name).to_sentence) %>
             <% row.with_action(text: t(".change"), href: add_subject_placements_school_placement_build_index_path(@school, :add_subject), visually_hidden_text: t(".add_subject")) %>
           <% end %>
 
