@@ -31,12 +31,10 @@ when "dfe-sign-in"
   end
 
   SETUP_PROC = lambda do |env|
-    service = HostingEnvironment.current_service(Rack::Request.new(env))
+    request = Rack::Request.new(env)
+    service = HostingEnvironment.current_service(request)
 
-    dfe_sign_in_redirect_uri = URI.join(
-      HostingEnvironment.application_url(service),
-      "/auth/dfe/callback",
-    )
+    dfe_sign_in_redirect_uri = URI.join(request.base_url, "/auth/dfe/callback")
 
     env["omniauth.strategy"].options.client_options = {
       port: dfe_sign_in_issuer_uri&.port,

@@ -88,42 +88,6 @@ RSpec.describe HostingEnvironment do
     end
   end
 
-  describe ".application_url" do
-    it "returns the application url for claims" do
-      current_service = "claims"
-      expect(described_class.application_url(current_service)).to eq(
-        "https://claims.localhost",
-      )
-    end
-
-    it "returns the application url for placements" do
-      current_service = "placements"
-      expect(described_class.application_url(current_service)).to eq(
-        "https://placements.localhost",
-      )
-    end
-
-    context "when env is development" do
-      it "returns the application url for claims with port" do
-        allow(Rails.env).to receive(:development?).and_return(true)
-        current_service = "claims"
-
-        expect(described_class.application_url(current_service)).to eq(
-          "http://claims.localhost:3000",
-        )
-      end
-
-      it "returns the application url for placements with port" do
-        allow(Rails.env).to receive(:development?).and_return(true)
-        current_service = "placements"
-
-        expect(described_class.application_url(current_service)).to eq(
-          "http://placements.localhost:3000",
-        )
-      end
-    end
-  end
-
   describe ".current_service" do
     it "returns the current service for claims" do
       request = instance_double("Rack::Request", host: ENV["CLAIMS_HOST"])
