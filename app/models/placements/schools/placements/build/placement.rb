@@ -14,7 +14,7 @@ class Placements::Schools::Placements::Build::Placement < Placement
   def valid_phase?
     return true if phase.present? && [Placements::School::PRIMARY_PHASE, Placements::School::SECONDARY_PHASE].include?(phase)
 
-    errors.add(:phase, "Select a phase")
+    errors.add(:phase, I18n.t("activerecord.errors.models.placements/schools/placements/build/placement.attributes.phase.invalid"))
     false
   end
 
@@ -24,7 +24,7 @@ class Placements::Schools::Placements::Build::Placement < Placement
     if mentor_ids.present? && mentor_ids.all? { |id| Placements::Mentor.exists?(id:) && school.mentors.exists?(id:) }
       true
     else
-      errors.add(:mentor_ids, "Select a mentor or not known")
+      errors.add(:mentor_ids, I18n.t("activerecord.errors.models.placements/schools/placements/build/placement.attributes.mentor_ids.invalid"))
       false
     end
   end
@@ -34,7 +34,7 @@ class Placements::Schools::Placements::Build::Placement < Placement
     if subject_ids.present? && converted_subject_ids.all? { |id| Subject.exists?(id:) && Subject.find(id).subject_area.downcase == phase.downcase }
       true
     else
-      errors.add(:subject_ids, "Select a subject")
+      errors.add(:subject_ids, I18n.t("activerecord.errors.models.placements/schools/placements/build/placement.attributes.subject_ids.invalid"))
       false
     end
   end
@@ -44,10 +44,8 @@ class Placements::Schools::Placements::Build::Placement < Placement
   end
 
   def build_subjects(subject_ids = nil)
-    if subject_ids.instance_of?(String)
-      subjects << Subject.find(subject_ids)
-    elsif subject_ids.present?
-      subject_ids.each { |subject_id| subjects << Subject.find(subject_id) }
+    if subject_ids.present?
+      subjects << Subject.where(id: subject_ids)
     else
       subjects.build
     end
@@ -55,11 +53,14 @@ class Placements::Schools::Placements::Build::Placement < Placement
 
   def build_mentors(mentor_ids = nil)
     if mentor_ids.present?
-      mentor_ids.compact_blank.each do |mentor_id|
-        mentors << Placements::Mentor.find(mentor_id)
-      end
+      mentors << Placements::Mentor.where(id: mentor_ids.compact_blank)
     else
       mentors.build
     end
+  end
+
+  def build_phase(phase)
+    phase.presence ||
+      (school.primary_or_secondary_only? ? school.phase : "Primary")
   end
 end

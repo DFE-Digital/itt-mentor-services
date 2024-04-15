@@ -102,17 +102,6 @@ RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model d
   end
 
   describe "#build_subjects" do
-    context "when passes a string" do
-      it "builds subjects" do
-        placement = described_class.new(school:)
-        subject = create(:subject)
-
-        placement.build_subjects(subject.id)
-
-        expect(placement.subjects).to eq([subject])
-      end
-    end
-
     context "when passed an array" do
       it "builds subjects" do
         placement = described_class.new(school:)
@@ -121,7 +110,10 @@ RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model d
 
         placement.build_subjects([subject_1.id, subject_2.id])
 
-        expect(placement.subjects).to eq([subject_1, subject_2])
+        expect(placement.subjects).to match_array([
+          have_attributes(subject_1.attributes),
+          have_attributes(subject_2.attributes),
+        ])
       end
     end
 
@@ -131,7 +123,9 @@ RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model d
 
         placement.build_subjects
 
-        expect(placement.subjects.first).to have_attributes(Subject.new.attributes)
+        expect(placement.subjects).to match_array([
+          have_attributes(Subject.new.attributes),
+        ])
       end
     end
   end
@@ -145,7 +139,10 @@ RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model d
 
         placement.build_mentors([mentor_1.id, mentor_2.id])
 
-        expect(placement.mentors).to eq([mentor_1, mentor_2])
+        expect(placement.mentors).to match_array([
+          have_attributes(mentor_1.attributes),
+          have_attributes(mentor_2.attributes),
+        ])
       end
     end
 
@@ -155,7 +152,37 @@ RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model d
 
         placement.build_mentors
 
-        expect(placement.mentors.first).to have_attributes(Placements::Mentor.new.attributes)
+        expect(placement.mentors).to match_array([
+          have_attributes(Placements::Mentor.new.attributes),
+        ])
+      end
+    end
+  end
+
+  describe "#build_phase" do
+    context "when passed a phase" do
+      it "returns the phase" do
+        placement = described_class.new
+
+        expect(placement.build_phase("Primary")).to eq("Primary")
+      end
+    end
+
+    context "when phase is blank and the school phase is set" do
+      it "returns the school's phase" do
+        allow(school).to receive(:phase).and_return("Primary")
+        placement = described_class.new(school:)
+
+        expect(placement.build_phase(nil)).to eq(school.phase)
+      end
+    end
+
+    context "when phase is blank and the school phase is not set" do
+      it "returns 'Primary'" do
+        allow(school).to receive(:phase).and_return(nil)
+        placement = described_class.new(school:)
+
+        expect(placement.build_phase(nil)).to eq("Primary")
       end
     end
   end

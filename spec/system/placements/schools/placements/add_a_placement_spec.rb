@@ -3,18 +3,13 @@ require "rails_helper"
 RSpec.describe "Placements / Schools / Placements / Add a placement",
                type: :system, service: :placements do
   let(:school) { build(:placements_school, name: "School 1", phase: "Primary") }
-  let(:subject_1) { create(:subject, name: "Primary subject", subject_area: :primary) }
-  let(:subject_2) { create(:subject, name: "Secondary subject", subject_area: :secondary) }
-  let(:subject_3) { create(:subject, name: "Secondary subject 2", subject_area: :secondary) }
-  let(:mentor_1) { create(:placements_mentor_membership, school:).mentor }
-  let(:mentor_2) { create(:placements_mentor_membership, school:).mentor }
+  let!(:subject_1) { create(:subject, name: "Primary subject", subject_area: :primary) }
+  let!(:subject_2) { create(:subject, name: "Secondary subject", subject_area: :secondary) }
+  let!(:subject_3) { create(:subject, name: "Secondary subject 2", subject_area: :secondary) }
+  let!(:mentor_1) { create(:placements_mentor_membership, school:).mentor }
+  let!(:mentor_2) { create(:placements_mentor_membership, school:).mentor }
 
   before do
-    mentor_1
-    mentor_2
-    subject_1
-    subject_2
-    subject_3
     given_i_sign_in_as_anne
   end
 
@@ -23,12 +18,26 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
       when_i_visit_the_placements_page
       and_i_click_on("Add placement")
       then_i_see_the_add_a_placement_subject_page(school.phase)
-      when_i_choose_a_subject("Primary subject")
+      when_i_choose_a_subject(subject_1.name)
       and_i_click_on("Continue")
       then_i_see_the_add_a_placement_mentor_page
       when_i_check_a_mentor(mentor_1.full_name)
       and_i_click_on("Continue")
-      then_i_see_the_check_your_answers_page(school.phase)
+      then_i_see_the_check_your_answers_page(school.phase, mentor_1)
+      and_i_click_on("Publish placement")
+      then_i_see_the_placements_page
+      and_i_see_my_placement(school.phase)
+    end
+
+    scenario "when I select not known for the mentor" do
+      when_i_visit_the_placements_page
+      and_i_click_on("Add placement")
+      when_i_choose_a_subject(subject_1.name)
+      and_i_click_on("Continue")
+      then_i_see_the_add_a_placement_mentor_page
+      when_i_check_a_mentor("Not known")
+      and_i_click_on("Continue")
+      then_i_see_the_check_your_answers_page(school.phase, nil)
       and_i_click_on("Publish placement")
       then_i_see_the_placements_page
       and_i_see_my_placement(school.phase)
@@ -74,11 +83,10 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
       scenario "my selected options are rendered when navigating using the back button" do
         when_i_visit_the_placements_page
         and_i_click_on("Add placement")
-        when_i_choose_a_subject("Primary subject")
+        when_i_choose_a_subject(subject_1.name)
         and_i_click_on("Continue")
         when_i_click_on("Back")
-        then_my_chosen_subject_is_selected("Primary subject")
-
+        then_my_chosen_subject_is_selected(subject_1.name)
         when_i_visit_the_add_mentor_page
         when_i_check_a_mentor(mentor_1.full_name)
         and_i_click_on("Continue")
@@ -93,7 +101,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
         then_i_see_the_add_a_placement_subject_page(school.phase)
         and_i_see_the_error_message("Select a subject")
 
-        when_i_choose_a_subject("Primary subject")
+        when_i_choose_a_subject(subject_1.name)
         and_i_click_on("Continue")
         and_i_click_on("Continue")
         then_i_see_the_add_a_placement_mentor_page
@@ -108,12 +116,12 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
       when_i_visit_the_placements_page
       and_i_click_on("Add placement")
       then_i_see_the_add_a_placement_subject_page(school.phase)
-      when_i_check_the_subject("Secondary subject")
+      when_i_check_the_subject(subject_2.name)
       and_i_click_on("Continue")
       then_i_see_the_add_a_placement_mentor_page
       when_i_check_a_mentor(mentor_1.full_name)
       and_i_click_on("Continue")
-      then_i_see_the_check_your_answers_page(school.phase)
+      then_i_see_the_check_your_answers_page(school.phase, mentor_1)
       and_i_click_on("Publish placement")
       then_i_see_the_placements_page
       and_i_see_my_placement(school.phase)
@@ -130,14 +138,14 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
         when_i_choose_a_phase("Primary")
         and_i_click_on("Continue")
         then_i_see_the_add_a_placement_subject_page("Primary")
-        when_i_choose_a_subject("Primary")
+        when_i_choose_a_subject(subject_1.name)
         then_i_see_the_add_a_placement_subject_page("Primary")
-        when_i_choose_a_subject("Primary subject")
+        when_i_choose_a_subject(subject_1.name)
         and_i_click_on("Continue")
         then_i_see_the_add_a_placement_mentor_page
         when_i_check_a_mentor(mentor_1.full_name)
         and_i_click_on("Continue")
-        then_i_see_the_check_your_answers_page("Primary")
+        then_i_see_the_check_your_answers_page("Primary", mentor_1)
         and_i_click_on("Publish placement")
         then_i_see_the_placements_page
         and_i_see_my_placement("Primary")
@@ -153,13 +161,13 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
         when_i_choose_a_phase("Secondary")
         and_i_click_on("Continue")
         then_i_see_the_add_a_placement_subject_page("Secondary")
-        when_i_check_the_subject("Secondary subject")
-        and_i_check_the_subject("Secondary subject 2")
+        when_i_check_the_subject(subject_2.name)
+        and_i_check_the_subject(subject_3.name)
         and_i_click_on("Continue")
         then_i_see_the_add_a_placement_mentor_page
         when_i_check_a_mentor(mentor_1.full_name)
         and_i_click_on("Continue")
-        then_i_see_the_check_your_answers_page("Secondary")
+        then_i_see_the_check_your_answers_page("Secondary", mentor_1)
         and_i_click_on("Publish placement")
         then_i_see_the_placements_page
         and_i_see_my_placement("Secondary")
@@ -272,11 +280,11 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
     check mentor_name
   end
 
-  def then_i_see_the_check_your_answers_page(phase)
+  def then_i_see_the_check_your_answers_page(phase, mentor)
     expect(page).to have_content("Check your answers")
     expect(page).to have_content(phase)
     expect(page).to have_content("#{phase} subject")
-    expect(page).to have_content(mentor_1.full_name)
+    expect(page).to have_content(mentor.full_name) if mentor.present?
   end
 
   def and_my_chosen_mentor_is_checked(mentor_name)

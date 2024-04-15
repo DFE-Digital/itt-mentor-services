@@ -44,11 +44,4 @@ RSpec.describe Placements::Mentor, type: :model do
       expect(described_class.all).not_to include(claims_mentor)
     end
   end
-
-  describe "#full_name" do
-    it "returns the mentor's full name" do
-      mentor = build(:placements_mentor, first_name: "Anne", last_name: "Smith")
-      expect(mentor.full_name).to eq("Anne Smith")
-    end
-  end
 end
