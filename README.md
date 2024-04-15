@@ -2,17 +2,17 @@
 
 This application has two main services:
 
-- A service where schools or training providers can claim funding for mentor training.
+- Claim funding for mentor training: A service where schools or training providers can claim funding for mentor training.
 - TODO: Add description for the other service
 
 ## Live Environments
 
-| Name       | URL | Purpose | AKS Namespace |
-| ---------- | --- | ------- | ------------- |
-| Production | *pending* | Public site | bat-production |
-| Sandbox    | *pending* | Demo environment for end-users | bat-production |
-| Staging    | *pending* | For internal use by DfE for testing - Production-like environment | bat-staging |
-| QA         | [Track & Pay](https://track-and-pay-qa.test.teacherservices.cloud) / [School Placements](https://manage-school-placements-qa.test.teacherservices.cloud) | For internal use by DfE for testing - Automatically deployed from main | bat-qa |
+| Name       | URL                                                                                                                                                                    | Purpose                                                                | AKS Namespace  |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------- |
+| Production | _pending_                                                                                                                                                              | Public site                                                            | bat-production |
+| Sandbox    | [Funding Mentors](https://sandbox.claim-funding-for-mentor-training.education.gov.uk)                                                                                  | Demo environment for end-users                                         | bat-production |
+| Staging    | [Funding Mentors](https://staging.claim-funding-for-mentor-training.education.gov.uk)                                                                                  | For internal use by DfE for testing - Production-like environment      | bat-staging    |
+| QA         | [Funding Mentors](https://qa.claim-funding-for-mentor-training.education.gov.uk) / [School Placements](https://manage-school-placements-qa.test.teacherservices.cloud) | For internal use by DfE for testing - Automatically deployed from main | bat-qa         |
 
 ## Setup
 
