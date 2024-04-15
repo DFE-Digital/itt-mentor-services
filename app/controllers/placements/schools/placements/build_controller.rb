@@ -37,15 +37,10 @@ class Placements::Schools::Placements::BuildController < ApplicationController
       @placement.subject_ids = subject_ids
       @placement.build_subjects(subject_ids)
       @placement.build_mentors(mentor_ids)
+      @placement.save!
 
-      if @placement.all_valid?
-        @placement.save!
-
-        session.delete(:add_a_placement)
-        redirect_to placements_school_placements_path(school), flash: { success: t(".success") } and return
-      else
-        render :check_your_answers and return
-      end
+      session.delete(:add_a_placement)
+      redirect_to placements_school_placements_path(school), flash: { success: t(".success") } and return
     when :add_phase
       @placement = build_placement
       @placement.phase = phase_params
@@ -77,8 +72,6 @@ class Placements::Schools::Placements::BuildController < ApplicationController
       else
         render :add_mentors and return
       end
-    else
-      raise ActionController::RoutingError, "Not Found"
     end
 
     redirect_to public_send(next_step(params[:id]))
@@ -117,14 +110,19 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   end
 
   def assign_subjects_based_on_phase
-    @phase = session.dig(:add_a_placement, "phase").presence || (school.primary_or_secondary_only? ? school.phase : "Primary")
+    phase = session.dig(:add_a_placement, "phase")
+    @phase = @placement.build_phase(phase)
     @subjects = @phase == "Primary" ? Subject.primary : Subject.secondary
     @placement.build_subjects(subject_ids)
     @selected_subjects = @placement.subjects
   end
 
   def find_mentors
-    session.dig(:add_a_placement, "mentor_ids").present? ? school.mentors.find(session.dig(:add_a_placement, "mentor_ids").compact_blank) : []
+    if session.dig(:add_a_placement, "mentor_ids").present?
+      school.mentors.find(session.dig(:add_a_placement, "mentor_ids").compact_blank)
+    else
+      []
+    end
   end
 
   def initialize_placement
@@ -144,7 +142,8 @@ class Placements::Schools::Placements::BuildController < ApplicationController
 
   def build_placement
     if session.dig(:add_a_placement, "phase").present?
-      Placements::Schools::Placements::Build::Placement.new(school:, phase: session.dig(:add_a_placement, "phase"))
+      Placements::Schools::Placements::Build::Placement.new(school:,
+                                                            phase: session.dig(:add_a_placement, "phase"))
     else
       Placements::Schools::Placements::Build::Placement.new(school:)
     end

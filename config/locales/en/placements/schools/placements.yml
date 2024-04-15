@@ -1,5 +1,16 @@
 
 en:
+  activerecord:
+    errors:
+      models:
+        placements/schools/placements/build/placement:
+          attributes:
+            phase:
+              invalid: Select a phase
+            mentor_ids:
+              invalid: Select a mentor or not known
+            subject_ids:
+              invalid: Select a subject
   placements:
     schools:
       placements:
