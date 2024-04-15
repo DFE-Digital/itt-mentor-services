@@ -53,7 +53,7 @@ gem "redcarpet", "~> 3.6"
 # GoodJob backend for Active Job
 gem "good_job", "~> 3.27"
 
-gem "govuk-components", "~> 5.3.0"
+gem "govuk-components", "~> 5.3.1"
 gem "govuk_design_system_formbuilder", "~> 5.2"
 
 # DfE Sign-in
