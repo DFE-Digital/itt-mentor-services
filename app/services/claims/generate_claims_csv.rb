@@ -13,7 +13,7 @@ class Claims::GenerateClaimsCsv
     CSV.generate(headers: true) do |csv|
       csv << HEADERS
 
-      @claims.each do |claim|
+      claims.each do |claim|
         csv << [
           claim.reference,
           claim.school.urn,
@@ -25,4 +25,8 @@ class Claims::GenerateClaimsCsv
       end
     end
   end
+
+  private
+
+  attr_reader :claims
 end
