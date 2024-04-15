@@ -37,7 +37,6 @@ erDiagram
   
   Placement {
     uuid id PK
-    uuid trainee_id FK
     uuid school_id FK
     date start_date
     date end_date
@@ -46,28 +45,81 @@ erDiagram
 
   School {
     uuid id PK
+    string address1
+    string address2
+    string address3
+    string admissions_policy
+    string district_admin_code
+    string district_admin_name
+    string email_address
+    string gender
+    string group
+    date last_inspection_date 
+    string local_authority_code
+    string local_authority_name
+    float latitude
+    float longitude
+    integer maximum_age
+    integer minimum_age
+    string name
+    integer percentage_free_school_meals
+    string phase
+    string postcode
+    string rating
+    string religious_character
+    integer school_capacity
+    string send_provision
+    string special_classes
+    string telephone
+    integer total_boys
+    integer total_girls
+    integer total_pupils
+    string town
+    string training_with_disabilities 
+    string type_of_establishment
+    string ukprn
+    string urban_or_rural
     string urn FK "Primary key for schools in GIAS"
+    string website
+    uuid region_id FK
+    uuid trust_id FK
     bool placements_service "Indicates if the School has been onboarded into the School Placements service"
     bool claims_service "Indicates if the School has been onboarded into the Track & Pay service"
   }
 
   Mentor {
     uuid id PK
+    string first_name
+    string last_name
     string trn FK "Primary key for people in DQT"
   }
 
   Provider {
     uuid id PK
+    bool accredited "Default FALSE"
+    string address1
+    string address2
+    string address3
+    string city
     string code FK "Primary key for providers in the Teacher Training Courses API"
+    string country
+    string email_address
+    string name
     bool placements_service "Indicates if the Provider has been onboarded into the School Placements service"
+    string postcode
+    enum provider_type
+    string telephone
+    string town
+    string ukprn
+    string urn
+    string website
   }
 
   MentorTraining {
     uuid id PK
+    string type
     uuid claim_id FK
-    uuid provider_id FK
     uuid mentor_id FK
-    int hours_completed
   }
 
   Claim {
@@ -76,16 +128,15 @@ erDiagram
     uuid provider_id FK
   }
 
-  Trainee {
-    uuid id PK
-    uuid provider_id FK
-    string trn FK "Primary key for people in DQT"
-  }
-
   User {
     uuid id PK
-    string type "Placements::User or Claims::User"
+    string dfe_sign_in_uid FK "Primary key for SSO"
+    datetime discarded_at
     string email UK
+    string first_name
+    string last_name
+    datetime last_signed_in_at
+    string type "Placements::User or Claims::User"
   }
 
   UserMembership {
@@ -102,22 +153,31 @@ erDiagram
     uuid school_id FK
   }
 
+  Trust {
+    uuid id PK
+    string name
+    string uid
+  }
+
+  Region {
+    uuid id PK
+    string claims_funding_available_per_hour_currency "Default 'GBP'"
+    integer claims_funding_available_per_hour_pence "Default 0"
+    string name
+  }
+
   School ||--|{ MentorMembership : "has many"
   Mentor ||--|{ MentorMembership : "has many"
 
-  Provider ||--|{ School : "has many"
-  Trainee }|--|| Provider : "belongs to"
-
-  Placement }|--|| PlacementMentorJoin : "has many"
-  Placement }|--|| PlacementSubjectJoin : "has many"
-  Placement }|--|| Trainee : "has many"
+  Placement ||--|{ PlacementMentorJoin : "has many"
+  Placement ||--|{ PlacementSubjectJoin : "has many"
   Placement }|--|| School : "belongs to"
   
-  Subject }|--|| PlacementSubjectJoin : "has many"
+  Subject ||--|{ PlacementSubjectJoin : "has many"
 
-  Mentor }|--|{ MentorTraining : "has many"
-  Mentor }|--|{ PlacementMentorJoin : "has many"
-  Provider }|--|{ MentorTraining : "has many"
+  Mentor |o--|{ MentorTraining : "has many"
+  Mentor ||--|{ PlacementMentorJoin : "has many"
+  Provider |o--|{ MentorTraining : "has many"
 
   School ||--|{ Claim : "has many"
   Claim }|--|{ MentorTraining : "has and belongs to many"
@@ -126,6 +186,9 @@ erDiagram
   User ||--|{ UserMembership : "has many"
   UserMembership }|--o| Provider : "belongs to (polymorphic)"
   UserMembership }|--o| School : "belongs to (polymorphic)"
+
+  School }|--o| Trust : "belongs to"
+  School }|--|| Region : "has many"
 ```
 
 ## Onboarding Schools and Providers into the services
