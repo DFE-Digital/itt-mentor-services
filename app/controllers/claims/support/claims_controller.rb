@@ -2,10 +2,10 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
   before_action :set_claim, only: %i[show]
   before_action :authorize_claim
   helper_method :filter_form
-  before_action :set_query_params, only: %i[index download_csv]
+  before_action :set_filtered_claims, only: %i[index download_csv]
 
   def index
-    @pagy, @claims = pagy(@query_params)
+    @pagy, @claims = pagy(@filtered_claims)
     @schools = Claims::School.all
     @providers = Claims::Provider.private_beta_providers
   end
@@ -13,15 +13,15 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
   def show; end
 
   def download_csv
-    csv_data = Claims::GenerateClaimsCsv.call(claims: @query_params)
+    csv_data = Claims::GenerateClaimsCsv.call(claims: @filtered_claims)
 
     send_data csv_data, filename: "claims-#{Date.current}.csv", type: "text/csv", disposition: "attachment"
   end
 
   private
 
-  def set_query_params
-    @query_params = Claims::ClaimsQuery.call(params: filter_form.query_params)
+  def set_filtered_claims
+    @filtered_claims = Claims::ClaimsQuery.call(params: filter_form.query_params)
   end
 
   def filter_form
