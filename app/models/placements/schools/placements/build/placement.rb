@@ -42,4 +42,24 @@ class Placements::Schools::Placements::Build::Placement < Placement
   def all_valid?
     valid_phase? && valid_mentor_ids? && valid_subjects?
   end
+
+  def build_subjects(subject_ids = nil)
+    if subject_ids.instance_of?(String)
+      subjects << Subject.find(subject_ids)
+    elsif subject_ids.present?
+      subject_ids.each { |subject_id| subjects << Subject.find(subject_id) }
+    else
+      subjects.build
+    end
+  end
+
+  def build_mentors(mentor_ids = nil)
+    if mentor_ids.present?
+      mentor_ids.compact_blank.each do |mentor_id|
+        mentors << Placements::Mentor.find(mentor_id)
+      end
+    else
+      mentors.build
+    end
+  end
 end
