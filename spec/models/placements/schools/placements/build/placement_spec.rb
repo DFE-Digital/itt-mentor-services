@@ -100,4 +100,63 @@ RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model d
       expect(placement.all_valid?).to eq(true)
     end
   end
+
+  describe "#build_subjects" do
+    context "when passes a string" do
+      it "builds subjects" do
+        placement = described_class.new(school:)
+        subject = create(:subject)
+
+        placement.build_subjects(subject.id)
+
+        expect(placement.subjects).to eq([subject])
+      end
+    end
+
+    context "when passed an array" do
+      it "builds subjects" do
+        placement = described_class.new(school:)
+        subject_1 = create(:subject)
+        subject_2 = create(:subject)
+
+        placement.build_subjects([subject_1.id, subject_2.id])
+
+        expect(placement.subjects).to eq([subject_1, subject_2])
+      end
+    end
+
+    context "when passed nil" do
+      it "builds subjects" do
+        placement = described_class.new(school:)
+
+        placement.build_subjects
+
+        expect(placement.subjects.first).to have_attributes(Subject.new.attributes)
+      end
+    end
+  end
+
+  describe "#build_mentors" do
+    context "when passed an array" do
+      it "builds mentors" do
+        placement = described_class.new(school:)
+        mentor_1 = create(:placements_mentor_membership, school:, mentor: create(:placements_mentor)).mentor
+        mentor_2 = create(:placements_mentor_membership, school:, mentor: create(:placements_mentor)).mentor
+
+        placement.build_mentors([mentor_1.id, mentor_2.id])
+
+        expect(placement.mentors).to eq([mentor_1, mentor_2])
+      end
+    end
+
+    context "when passed nil" do
+      it "builds mentors" do
+        placement = described_class.new(school:)
+
+        placement.build_mentors
+
+        expect(placement.mentors.first).to have_attributes(Placements::Mentor.new.attributes)
+      end
+    end
+  end
 end

@@ -5,6 +5,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
   let(:school) { build(:placements_school, name: "School 1", phase: "Primary") }
   let(:subject_1) { create(:subject, name: "Primary subject", subject_area: :primary) }
   let(:subject_2) { create(:subject, name: "Secondary subject", subject_area: :secondary) }
+  let(:subject_3) { create(:subject, name: "Secondary subject 2", subject_area: :secondary) }
   let(:mentor_1) { create(:placements_mentor_membership, school:).mentor }
   let(:mentor_2) { create(:placements_mentor_membership, school:).mentor }
 
@@ -13,6 +14,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
     mentor_2
     subject_1
     subject_2
+    subject_3
     given_i_sign_in_as_anne
   end
 
@@ -106,7 +108,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
       when_i_visit_the_placements_page
       and_i_click_on("Add placement")
       then_i_see_the_add_a_placement_subject_page(school.phase)
-      when_i_check_a_subject("Secondary subject")
+      when_i_check_the_subject("Secondary subject")
       and_i_click_on("Continue")
       then_i_see_the_add_a_placement_mentor_page
       when_i_check_a_mentor(mentor_1.full_name)
@@ -151,9 +153,8 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
         when_i_choose_a_phase("Secondary")
         and_i_click_on("Continue")
         then_i_see_the_add_a_placement_subject_page("Secondary")
-        when_i_check_a_subject("Secondary")
-        then_i_see_the_add_a_placement_subject_page("Secondary")
-        when_i_check_a_subject("Secondary subject")
+        when_i_check_the_subject("Secondary subject")
+        and_i_check_the_subject("Secondary subject 2")
         and_i_click_on("Continue")
         then_i_see_the_add_a_placement_mentor_page
         when_i_check_a_mentor(mentor_1.full_name)
@@ -252,7 +253,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
     page.choose subject_name
   end
 
-  def when_i_check_a_subject(subject_name)
+  def when_i_check_the_subject(subject_name)
     page.check subject_name
   end
 
@@ -295,6 +296,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
   end
 
   alias_method :and_i_click_on, :when_i_click_on
+  alias_method :and_i_check_the_subject, :when_i_check_the_subject
   alias_method :then_my_chosen_subject_is_selected, :and_my_chosen_subject_is_selected
   alias_method :then_my_chosen_mentor_is_checked, :and_my_chosen_mentor_is_checked
 end
