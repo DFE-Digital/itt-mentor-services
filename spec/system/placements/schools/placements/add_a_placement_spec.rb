@@ -107,6 +107,16 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
         then_i_see_the_add_a_placement_mentor_page
         and_i_see_the_error_message("Select a mentor or not known")
       end
+
+      context "when I tamper with the form URL", js: true do
+        scenario "I see an error message" do
+          when_i_visit_the_placements_page
+          and_i_click_on("Add placement")
+          then_i_tamper_with_the_form_url
+          and_i_click_on("Continue")
+          then_i_see_an_error_page
+        end
+      end
     end
   end
 
@@ -297,6 +307,14 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
 
   def and_i_see_the_error_message(message)
     expect(page).to have_content(message)
+  end
+
+  def then_i_tamper_with_the_form_url
+    page.execute_script("document.querySelector('form').action = '/schools/#{school.id}/placements/new_placement/build/invalid_id'")
+  end
+
+  def then_i_see_an_error_page
+    expect(page).to have_content("Sorry, there’s a problem with the service")
   end
 
   def when_i_click_on(text)

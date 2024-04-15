@@ -42,11 +42,11 @@
         <%= govuk_inset_text(text: t(".info_text")) %>
 
         <%= f.govuk_submit t(".publish_placement") %>
-
-        <p class="govuk-body">
-          <%= govuk_link_to(t(".cancel"), placements_school_placements_path(@school), no_visited_state: true) %>
-        </p>
       </div>
     </div>
   <% end %>
+
+  <p class="govuk-body">
+    <%= govuk_link_to(t(".cancel"), placements_school_placements_path(@school), no_visited_state: true) %>
+  </p>
 </div>

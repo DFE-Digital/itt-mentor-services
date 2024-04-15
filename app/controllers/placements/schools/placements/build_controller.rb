@@ -72,6 +72,9 @@ class Placements::Schools::Placements::BuildController < ApplicationController
       else
         render :add_mentors and return
       end
+    else
+      redirect_to placements_school_placements_path(school),
+                  flash: { error: t("errors.internal_server_error.page_title") } and return
     end
 
     redirect_to public_send(next_step(params[:id]))
