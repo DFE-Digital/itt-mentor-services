@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Filtering claims", type: :system, service: :claims do
+RSpec.describe "Download filtered claims", type: :system, service: :claims do
   let(:support_user) { create(:claims_support_user) }
   let(:school) { create(:claims_school, :claims, name: "School name 1", urn: "1234") }
   let(:another_school) { create(:claims_school, :claims, name: "School name 1", urn: "1235") }
@@ -21,7 +21,7 @@ RSpec.describe "Filtering claims", type: :system, service: :claims do
   scenario "Support user visits the claims index page and filters the claims and then downloads CSV using the same filters" do
     given_i_am_on_the_claims_index_page
     when_i_filter_the_claims_by_provider(best_practice_network)
-    when_the_filter_returns_only_the_best_practice_network_claims([best_practice_network_claim_1, best_practice_network_claim_2], best_practice_network)
+    then_the_filter_returns_only_the_best_practice_network_claims([best_practice_network_claim_1, best_practice_network_claim_2], best_practice_network)
     when_i_click_download_claims
     then_i_expect_to_use_the_same_query_params_to_download_claims_as_when_i_was_filtering_claims(best_practice_network)
   end
@@ -42,7 +42,7 @@ RSpec.describe "Filtering claims", type: :system, service: :claims do
     click_on("Apply filters")
   end
 
-  def when_the_filter_returns_only_the_best_practice_network_claims(claims, provider)
+  def then_the_filter_returns_only_the_best_practice_network_claims(claims, provider)
     expect(claims.count).to eq(page.find_all(".claim-card").count)
 
     uri = URI.parse(page.current_url)
