@@ -26,7 +26,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   def check_your_answers
     session[:add_a_placement][:enable_phase_navigation] = true
     @placement = initialize_placement
-    @phase = session.dig(:add_a_placement,"phase")
+    @phase = session.dig(:add_a_placement, "phase")
     @selected_mentor_text = if @placement.mentors.empty?
                               t(".not_known_yet")
                             else
