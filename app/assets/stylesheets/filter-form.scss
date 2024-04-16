@@ -7,30 +7,18 @@
   @include govuk-clearfix;
 }
 
-.app-filter-layout__filter {
-  @include govuk-media-query($from: desktop) {
-    float: left;
-    margin-right: govuk-spacing(6);
-    max-width: 310px;
-    min-width: 260px;
-    width: 100%;
-  }
-}
-
 .app-filter-layout__filter:focus {
-
   outline: $govuk-focus-width solid $govuk-focus-colour;
   outline-offset: 0;
 
   @include govuk-media-query(desktop) {
     outline: none;
   }
-
 }
 
 @include govuk-media-query($until: desktop) {
   .js-enabled .app-filter-layout__filter {
-    background-color: govuk-colour("white");
+    background-color: govuk-colour("light-grey");
     position: fixed; top: govuk-spacing(1); right: govuk_spacing(1); bottom: govuk_spacing(1);
     overflow-y: scroll;
     z-index: 100;
@@ -40,6 +28,7 @@
 .app-filter-layout__content {
   overflow: hidden;
   overflow-x: auto;
+  background-color: govuk-colour("light-grey");
 }
 
 .app-filter__header {
@@ -58,7 +47,6 @@
   @include govuk-media-query($from: desktop) {
     position: static;
   }
-
 }
 
 // JavaScript
@@ -151,7 +139,6 @@
     vertical-align: middle;
     width: 14px;
   }
-
 }
 
 .app-filter-layout__selected {
@@ -165,7 +152,6 @@
   ul:last-of-type {
     margin-bottom: 0; // IE9 +
   }
-
 }
 
 .app-filter__selected-heading {
@@ -263,6 +249,7 @@
   max-height: 200px;
   overflow-x: hidden;
   overflow-y: auto;
+  padding-left: govuk-spacing(2);
 }
 
 .app-filter__option input[type=search] {
@@ -280,3 +267,22 @@
   }
 }
 
+@include govuk-media-query(desktop) {
+  .display-initial {
+     display: initial;
+  }
+
+  .app-filter__close {
+    display: none;
+  }
+
+  .show-filter-button {
+    display: none;
+  }
+}
+
+@include govuk-media-query($until: desktop) {
+  .display-none-on-mobile {
+     display: none;
+  }
+}

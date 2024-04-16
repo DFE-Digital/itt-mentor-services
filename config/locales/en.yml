@@ -11,6 +11,8 @@ en:
   cancel: Cancel
   continue: Continue
   change: Change
+  close: Close
+  show_filter: Show filter 
   filter: Filter
   apply_filters: Apply filters
   selected_filters: Selected filters

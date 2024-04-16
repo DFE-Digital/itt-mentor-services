@@ -4,11 +4,14 @@
 
 import { application } from "./application"
 
-import ClaimsSupportFilterSearchController from "./claims_support_filter_search_controller"
-application.register("claims-support-filter-search", ClaimsSupportFilterSearchController )
-
 import AutocompleteController from "./autocomplete_controller"
 application.register("autocomplete", AutocompleteController)
+
+import ClaimsSupportFilterSearchController from "./claims_support_filter_search_controller"
+application.register("claims-support-filter-search", ClaimsSupportFilterSearchController)
+
+import FilterController from "./filter_controller"
+application.register("filter", FilterController)
 
 import SelectAutocompleteController from "./select_autocomplete_controller"
 application.register("select-autocomplete", SelectAutocompleteController)
