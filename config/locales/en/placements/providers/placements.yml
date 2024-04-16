@@ -1,0 +1,24 @@
+en:
+  placements:
+    providers:
+      placements:
+        index:
+          placements: Placements
+          no_results_for_filters: There are no results for the selected filter.
+          phase: Phase
+          age_range: Age range
+          school_type: School type
+          gender: Gender
+          religious_character: Religious character
+          urban_or_rural: Urban or rural
+          ofsted_rating: Ofsted rating
+          mentor: Mentor
+          trainee: Trainee
+        filter:
+          school: School
+          subject: Subject
+          school_phase: School phase
+          school_type: School type
+          gender: Gender
+          religious_character: Religious character
+          ofsted_rating: Ofsted rating

@@ -1,0 +1,113 @@
+<% content_for(:page_title) { t(".placements") } %>
+<%= render "placements/providers/primary_navigation", provider: @provider, current_navigation: :placements %>
+
+<div class="govuk-width-container" data-controller="filter">
+  <h1 class="govuk-heading-l"><%= t(".placements") %></h1>
+  <div>
+    <button class="govuk-button govuk-button--secondary show-filter-button" type="button" data-action="click->filter#open">
+      <%= t("show_filter") %>
+    </button>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+      <%= render partial: "filter" %>
+    </div>
+
+    <div class="govuk-grid-column-two-thirds">
+      <% if @placements.any? %>
+        <ul class="app-search-results">
+          <% @placements.each do |placement| %>
+            <li class="app-search-results__item">
+              <h2 class="app-search-result__item-title">
+                <%= govuk_link_to("", no_visited_state: true) do %>
+                  <span><%= placement.school.name %></span>
+                  <br>
+                  <span><%= placement.subject_names %></span>
+                <% end %>
+              </h2>
+              <dl class="app-result-detail">
+                <div class="app-result-detail__row">
+                  <dt class="app-result-detail__key">
+                    <%= t(".phase") %>
+                  </dt>
+                  <dd class="app-result-detail__value">
+                    <%= placement.school.phase %>
+                  </dd>
+                </div>
+                <div class="app-result-detail__row">
+                  <dt class="app-result-detail__key">
+                    <%= t(".age_range") %>
+                  </dt>
+                  <dd class="app-result-detail__value">
+                    <%= placement.age_range %>
+                  </dd>
+                </div>
+                <div class="app-result-detail__row">
+                  <dt class="app-result-detail__key">
+                    <%= t(".school_type") %>
+                  </dt>
+                  <dd class="app-result-detail__value">
+                    <%= placement.school.type_of_establishment %>
+                  </dd>
+                </div>
+                <div class="app-result-detail__row">
+                  <dt class="app-result-detail__key">
+                    <%= t(".gender") %>
+                  </dt>
+                  <dd class="app-result-detail__value">
+                    <%= placement.school.gender %>
+                  </dd>
+                </div>
+                <div class="app-result-detail__row">
+                  <dt class="app-result-detail__key">
+                    <%= t(".religious_character") %>
+                  </dt>
+                  <dd class="app-result-detail__value">
+                    <%= placement.school.religious_character %>
+                  </dd>
+                </div>
+                <div class="app-result-detail__row">
+                  <dt class="app-result-detail__key">
+                    <%= t(".urban_or_rural") %>
+                  </dt>
+                  <dd class="app-result-detail__value">
+                    <%= placement.school.urban_or_rural %>
+                  </dd>
+                </div>
+                <div class="app-result-detail__row">
+                  <dt class="app-result-detail__key">
+                    <%= t(".ofsted_rating") %>
+                  </dt>
+                  <dd class="app-result-detail__value">
+                    <%= placement.school.rating %>
+                  </dd>
+                </div>
+                <div class="app-result-detail__row">
+                  <dt class="app-result-detail__key">
+                    <%= t(".mentor") %>
+                  </dt>
+                  <dd class="app-result-detail__value">
+                    <%= placement.mentor_names %>
+                  </dd>
+                </div>
+                <div class="app-result-detail__row">
+                  <dt class="app-result-detail__key">
+                    <%= t(".trainee") %>
+                  </dt>
+                  <dd class="app-result-detail__value">
+                    <%= placement.trainee %>
+                  </dd>
+                </div>
+              </dl>
+            </li>
+          <% end %>
+        </ul>
+        <%= render PaginationComponent.new(pagy: @pagy) %>
+      <% else %>
+        <p>
+          <%= t(".no_results_for_filters") %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>

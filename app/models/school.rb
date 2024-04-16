@@ -100,6 +100,8 @@ class School < ApplicationRecord
                   against: %i[name postcode],
                   using: { trigram: { word_similarity: true } }
 
+  scope :order_by_name, -> { order(:name) }
+
   PRIMARY_PHASE = "Primary".freeze
   SECONDARY_PHASE = "Secondary".freeze
 

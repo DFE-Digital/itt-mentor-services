@@ -21,6 +21,14 @@ class PlacementDecorator < Draper::Decorator
     subjects.pick(:subject_area).titleize
   end
 
+  def age_range
+    "#{school.minimum_age} to #{school.maximum_age}"
+  end
+
+  def trainee
+    "None assigned"
+  end
+
   def window
     return "Not known" unless start_date && end_date
 

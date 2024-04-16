@@ -114,4 +114,21 @@ RSpec.describe PlacementDecorator do
       expect(placement.decorate.formatted_start_date).to eq(" 1 September 2020")
     end
   end
+
+  describe "#age_range" do
+    it "returns the minimum age and maximum age of the assigned school, as a string" do
+      school = build(:placements_school, minimum_age: 5, maximum_age: 11)
+      placement = build(:placement, school:)
+
+      expect(placement.decorate.age_range).to eq("5 to 11")
+    end
+  end
+
+  describe "#trainee" do
+    it "returns 'Not assigned'" do
+      placement = build(:placement)
+
+      expect(placement.decorate.trainee).to eq("None assigned")
+    end
+  end
 end

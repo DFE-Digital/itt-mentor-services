@@ -1,0 +1,273 @@
+<div class="app-filter-layout display-none-on-mobile " data-filter-target="filter">
+  <div class="app-filter-layout__filter">
+    <div class="app-filter__header">
+      <div class="app-filter__header-title">
+        <h2 class="govuk-heading-m"><%= t("filter") %></h2>
+      </div>
+      <div class="app-filter__header-action">
+        <button class="app-filter__close" type="button" data-action="click->filter#close">
+          <%= t("close") %>
+        </button>
+      </div>
+    </div>
+    <div class="app-filter-layout__content">
+      <% if filter_form.filters_selected? %>
+        <div class="app-filter-layout__selected">
+          <div class="app-filter__selected-heading">
+            <div class="app-filter__heading-title">
+              <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><%= t("selected_filters") %></h2>
+              <p class="govuk-body">
+                <%= govuk_link_to(
+                  t("clear_filters"),
+                  filter_form.clear_filters_path(@provider),
+                  no_visited_state: true,
+                ) %>
+              </p>
+            </div>
+          </div>
+
+          <% if filter_form.school_phases.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".school_phase") %></h3>
+            <ul class="app-filter-tags">
+              <% filter_form.school_phases.each do |school_phase| %>
+                <li>
+                  <%= govuk_link_to(
+                    school_phase,
+                    filter_form.index_path_without_filter(provider: @provider, filter: "school_phases", value: school_phase),
+                    class: "app-filter__tag",
+                    no_visited_state: true,
+                  ) %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+
+          <% if filter_form.school_ids.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".school") %></h3>
+            <ul class="app-filter-tags">
+              <% filter_form.schools.each do |school| %>
+                <li>
+                  <%= govuk_link_to(
+                    school.name,
+                    filter_form.index_path_without_filter(provider: @provider, filter: "school_ids", value: school.id),
+                    class: "app-filter__tag",
+                    no_visited_state: true,
+                  ) %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+
+          <% if filter_form.subject_ids.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".subject") %></h3>
+            <ul class="app-filter-tags">
+              <% filter_form.subjects.each do |subject| %>
+                <li>
+                  <%= govuk_link_to(
+                    subject.name,
+                    filter_form.index_path_without_filter(provider: @provider, filter: "subject_ids", value: subject.id),
+                    class: "app-filter__tag",
+                    no_visited_state: true,
+                  ) %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+
+          <% if filter_form.school_types.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".school_type") %></h3>
+            <ul class="app-filter-tags">
+              <% filter_form.school_types.each do |school_type| %>
+                <li>
+                  <%= govuk_link_to(
+                    school_type,
+                    filter_form.index_path_without_filter(provider: @provider, filter: "school_types", value: school_type),
+                    class: "app-filter__tag",
+                    no_visited_state: true,
+                  ) %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+
+          <% if filter_form.genders.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".gender") %></h3>
+            <ul class="app-filter-tags">
+              <% filter_form.genders.each do |gender| %>
+                <li>
+                  <%= govuk_link_to(
+                    gender,
+                    filter_form.index_path_without_filter(provider: @provider, filter: "genders", value: gender),
+                    class: "app-filter__tag",
+                    no_visited_state: true,
+                  ) %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+
+          <% if filter_form.religious_characters.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".religious_character") %></h3>
+            <ul class="app-filter-tags">
+              <% filter_form.religious_characters.each do |religious_character| %>
+                <li>
+                  <%= govuk_link_to(
+                    religious_character,
+                    filter_form.index_path_without_filter(
+                      provider: @provider,
+                      filter: "religious_characters",
+                      value: religious_character,
+                    ),
+                    class: "app-filter__tag",
+                    no_visited_state: true,
+                  ) %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+
+          <% if filter_form.ofsted_ratings.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".ofsted_rating") %></h3>
+            <ul class="app-filter-tags">
+              <% filter_form.ofsted_ratings.each do |ofsted_rating| %>
+                <li>
+                  <%= govuk_link_to(
+                    ofsted_rating,
+                    filter_form.index_path_without_filter(
+                      provider: @provider,
+                      filter: "ofsted_ratings",
+                      value: ofsted_rating,
+                    ),
+                    class: "app-filter__tag",
+                    no_visited_state: true,
+                  ) %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+      <% end %>
+
+      <div class="app-filter__options">
+        <%= form_with(
+          model: filter_form,
+          scope: :filters,
+          url: placements_provider_placements_path,
+          method: "get",
+          data: { turbo: false, controller: "placements-filter-search" },
+        ) do |form| %>
+          <%= form.govuk_submit t("apply_filters") %>
+
+          <div class="app-filter__option">
+            <%= form.govuk_check_boxes_fieldset(
+              :school_phases,
+              legend: { text: t(".school_phase") },
+              small: true,
+            ) do %>
+
+              <% filter_form.phases.each do |phase| %>
+                <%= form.govuk_check_box :school_phases,
+                  phase,
+                  label: { text: phase },
+                  data: { placements_filter_search_target: "phaseOption", action: "input->placements-filter-search#filterOptions" } %>
+               <% end %>
+             <% end %>
+          </div>
+
+          <div class="app-filter__option">
+            <%= form.govuk_check_boxes_fieldset(
+              :school_ids,
+              legend: { text: t(".school") },
+              small: true,
+            ) do %>
+
+              <% @schools.each do |school| %>
+                <%= form.govuk_check_box :school_ids,
+                  school.id,
+                  label: { text: school.name },
+                  data: { placements_filter_search_target: "schoolOption", phase: school.phase } %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <div class="app-filter__option">
+            <%= form.govuk_check_boxes_fieldset(
+              :subject_ids,
+              legend: { text: t(".subject") },
+              data: { placements_filter_search_target: "subjectList" },
+              small: true,
+            ) do %>
+
+              <% @subjects.each do |subject| %>
+                <%= form.govuk_check_box :subject_ids,
+                  subject.id,
+                  label: { text: subject.name },
+                  data: { placements_filter_search_target: "subjectOption", subject_area: subject.subject_area.capitalize } %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <div class="app-filter__option">
+            <%= form.govuk_check_boxes_fieldset(
+              :school_types,
+              legend: { text: t(".school_type") },
+              small: true,
+            ) do %>
+
+              <% @school_types.each do |school_types| %>
+                <%= form.govuk_check_box :school_types,
+                  school_types,
+                  label: { text: school_types } %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <div class="app-filter__option">
+            <%= form.govuk_check_boxes_fieldset(
+              :genders,
+              legend: { text: t(".gender") },
+              small: true,
+            ) do %>
+
+              <% @genders.each do |gender| %>
+                <%= form.govuk_check_box :genders,
+                  gender,
+                  label: { text: gender } %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <div class="app-filter__option">
+            <%= form.govuk_check_boxes_fieldset(
+              :religious_characters,
+              legend: { text: t(".religious_character") },
+              small: true,
+            ) do %>
+
+              <% @religious_characters.each do |religious_character| %>
+                <%= form.govuk_check_box :religious_characters,
+                  religious_character,
+                  label: { text: religious_character } %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <div class="app-filter__option">
+            <%= form.govuk_check_boxes_fieldset(
+              :ofsted_ratings,
+              legend: { text: t(".ofsted_rating") },
+              small: true,
+            ) do %>
+
+              <% @ofsted_ratings.each do |ofsted_rating| %>
+                <%= form.govuk_check_box :ofsted_ratings,
+                  ofsted_rating,
+                  label: { text: ofsted_rating } %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
