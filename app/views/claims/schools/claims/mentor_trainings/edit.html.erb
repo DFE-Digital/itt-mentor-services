@@ -41,12 +41,12 @@
             checked: mentor_training_form.custom_hours?,
             label: { text: t(".other_amount") },
           ) do %>
-            <h5 class="govuk-heading-s govuk-!-margin-bottom-1"><%= t(".number_of_hours") %></h5>
             <%= f.govuk_number_field(
               :custom_hours_completed,
               value: mentor_training_form.custom_hours? ? mentor_training_form.mentor_training.hours_completed : nil,
               class: "govuk-input--width-2",
-              label: { text: t(".enter_whole_numbers") },
+              label: { text: t(".number_of_hours"), class: "govuk-!-font-weight-bold" },
+              hint: { text: t(".enter_whole_numbers") },
             ) %>
           <% end %>
         <% end %>
