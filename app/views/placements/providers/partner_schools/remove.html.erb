@@ -12,7 +12,9 @@
         <%= t(".are_you_sure") %>
       </label>
       <%= render GovukComponent::WarningTextComponent.new(
-        text: t(".school_will_be_sent_an_email", provider: @provider.name),
+        text: t(".school_will_be_sent_an_email",
+          provider_name: @provider.name,
+          school_name: @partner_school.name),
       ) %>
 
       <%= govuk_button_to t(".remove_partner_school"), placements_provider_partner_school_path(@provider, @partner_school), warning: true, method: :delete %>
