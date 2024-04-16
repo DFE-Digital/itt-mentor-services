@@ -66,7 +66,7 @@ RSpec.describe "Edit a draft claim", type: :system, service: :claims do
   def then_i_edit_the_hours_of_training
     all("a", text: "Change")[2].click
     page.choose("Another amount")
-    fill_in("Enter whole numbers up to a maximum of 20 hours", with: 11)
+    fill_in("Number of hours", with: 11)
     click_on("Continue")
     expect(page).to have_content("Barry Garlow11 hoursChange")
   end

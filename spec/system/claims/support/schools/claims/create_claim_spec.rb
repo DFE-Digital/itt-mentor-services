@@ -110,7 +110,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
 
   def when_i_choose_other_amount_and_input_hours(hours)
     page.choose("Another amount")
-    fill_in("Enter whole numbers up to a maximum of 20 hours", with: hours)
+    fill_in("Number of hours", with: hours)
   end
 
   def then_i_check_my_answers
