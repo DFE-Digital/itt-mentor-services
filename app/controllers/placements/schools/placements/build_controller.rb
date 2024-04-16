@@ -8,23 +8,26 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   end
 
   def add_phase
+    setup_quick_navigation
     @placement = build_placement
     @selected_phase = session.dig(:add_a_placement, "phase") || school.phase
   end
 
   def add_subject
-    setup_phase_navigation
+    setup_quick_navigation
     build_or_retrieve_placement
     assign_subjects_based_on_phase
   end
 
   def add_mentors
+    setup_quick_navigation
     @placement = build_placement
     @selected_mentors = retrieve_selected_mentors
   end
 
   def check_your_answers
     session[:add_a_placement][:enable_phase_navigation] = true
+    session[:add_a_placement][:enable_quick_navigation] = true
     @placement = initialize_placement
     @phase = session.dig(:add_a_placement, "phase")
     @selected_mentor_text = if @placement.mentors.empty?
@@ -49,6 +52,10 @@ class Placements::Schools::Placements::BuildController < ApplicationController
     when :add_phase
       @placement = build_placement
       @placement.phase = phase_params
+
+      if session.dig(:add_a_placement, "phase").present?
+        session[:add_a_placement][:phase_changed] = phase_changed?
+      end
 
       if @placement.valid_phase?
         session[:add_a_placement][:phase] = phase_params
@@ -82,7 +89,11 @@ class Placements::Schools::Placements::BuildController < ApplicationController
                   flash: { alert: t("errors.internal_server_error.page_title") } and return
     end
 
-    redirect_to public_send(next_step(params[:id]))
+    if quick_navigation_enabled?
+      redirect_to check_your_answers_placements_school_placement_build_index_path(school.id, :check_your_answers)
+    else
+      redirect_to public_send(next_step(params[:id]))
+    end
   end
 
   private
@@ -108,8 +119,18 @@ class Placements::Schools::Placements::BuildController < ApplicationController
     session[:add_a_placement] = {} if session[:add_a_placement].blank?
   end
 
-  def setup_phase_navigation
-    @enable_phase_navigation = session.dig(:add_a_placement, "enable_phase_navigation")
+  def quick_navigation_enabled?
+    return false if session.dig(:add_a_placement, :phase_changed) == true && params[:id] == "add_phase"
+
+    session.dig(:add_a_placement, "enable_quick_navigation") == true
+  end
+
+  def phase_changed?
+    session.dig(:add_a_placement, "phase") != phase_params
+  end
+
+  def setup_quick_navigation
+    @enable_quick_navigation = quick_navigation_enabled?
   end
 
   def build_or_retrieve_placement
