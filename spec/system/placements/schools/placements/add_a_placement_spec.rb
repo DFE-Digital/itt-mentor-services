@@ -38,6 +38,9 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
       when_i_check_a_mentor("Not known")
       and_i_click_on("Continue")
       then_i_see_the_check_your_answers_page(school.phase, nil)
+      and_i_click_on("Back")
+      then_see_that_not_known_is_selected
+      when_i_click_on("Continue")
       and_i_click_on("Publish placement")
       then_i_see_the_placements_page
       and_i_see_my_placement(school.phase)
@@ -311,6 +314,10 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
 
   def then_i_tamper_with_the_form_url
     page.execute_script("document.querySelector('form').action = '/schools/#{school.id}/placements/new_placement/build/invalid_id'")
+  end
+
+  def then_see_that_not_known_is_selected
+    expect(page).to have_checked_field("Not known yet")
   end
 
   def then_i_see_an_error_page

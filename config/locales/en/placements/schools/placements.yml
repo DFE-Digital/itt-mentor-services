@@ -50,6 +50,7 @@ en:
             info_text: When a placement is published, it will be visible to accredited providers and lead partners.
             publish_placement: Publish placement
             cancel: Cancel
+            not_known_yet: Not known yet
           update:
             success: Placement added
         terms:

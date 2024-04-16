@@ -20,13 +20,18 @@ class Placements::Schools::Placements::BuildController < ApplicationController
 
   def add_mentors
     @placement = build_placement
-    @selected_mentors = find_mentors
+    @selected_mentors = retrieve_selected_mentors
   end
 
   def check_your_answers
     session[:add_a_placement][:enable_phase_navigation] = true
     @placement = initialize_placement
     @phase = session[:add_a_placement]["phase"]
+    @selected_mentor_text = if @placement.mentors.empty?
+                              t(".not_known_yet")
+                            else
+                              @placement.mentors.map(&:full_name).to_sentence
+                            end
   end
 
   def update
@@ -120,12 +125,13 @@ class Placements::Schools::Placements::BuildController < ApplicationController
     @selected_subjects = @placement.subjects
   end
 
-  def find_mentors
-    if session.dig(:add_a_placement, "mentor_ids").present?
-      school.mentors.find(session.dig(:add_a_placement, "mentor_ids").compact_blank)
-    else
-      []
-    end
+  def retrieve_selected_mentors
+    mentor_ids = session.dig(:add_a_placement, "mentor_ids")&.compact_blank
+    return [] if mentor_ids.blank?
+
+    return [:not_known] if mentor_ids.include?("not_known")
+
+    school.mentors.where(id: mentor_ids)
   end
 
   def initialize_placement
