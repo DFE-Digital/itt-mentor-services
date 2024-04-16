@@ -31,7 +31,7 @@ en:
           telephone: Telephone
           address: Address
           website: Website
-          school_will_be_sent_an_email: The school will be sent an email to tell them you have added them as a partner school for %{provider}.
+          school_will_be_sent_an_email: We will send an email to %{school_name}. This will let them know you have added them as a partner school for %{provider_name}.
         create:
           partner_school_added: Partner school added
         school_options:
@@ -53,7 +53,7 @@ en:
           cancel: Cancel
           remove_partner_school: Remove partner school
           are_you_sure: Are you sure you want to remove this partner school?
-          school_will_be_sent_an_email: The school will be sent an email to tell them you have removed them as a partner school for %{provider}.
+          school_will_be_sent_an_email: We will send an email to %{school_name}. This will let them know you have removed them as a partner school for %{provider_name}.
         destroy: 
           partner_school_removed: Partner school removed
 
