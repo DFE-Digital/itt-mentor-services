@@ -24,7 +24,8 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
       when_i_check_a_mentor(mentor_1.full_name)
       and_i_click_on("Continue")
       then_i_see_the_check_your_answers_page(school.phase, mentor_1)
-      and_i_click_on("Publish placement")
+      and_i_cannot_change_the_phase
+      when_i_click_on("Publish placement")
       then_i_see_the_placements_page
       and_i_see_my_placement(school.phase)
     end
@@ -135,7 +136,8 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
       when_i_check_a_mentor(mentor_1.full_name)
       and_i_click_on("Continue")
       then_i_see_the_check_your_answers_page(school.phase, mentor_1)
-      and_i_click_on("Publish placement")
+      and_i_cannot_change_the_phase
+      when_i_click_on("Publish placement")
       then_i_see_the_placements_page
       and_i_see_my_placement(school.phase)
     end
@@ -159,7 +161,8 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
         when_i_check_a_mentor(mentor_1.full_name)
         and_i_click_on("Continue")
         then_i_see_the_check_your_answers_page("Primary", mentor_1)
-        and_i_click_on("Publish placement")
+        and_i_can_change_the_phase
+        when_i_click_on("Publish placement")
         then_i_see_the_placements_page
         and_i_see_my_placement("Primary")
       end
@@ -195,6 +198,114 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
         and_i_click_on("Continue")
         then_i_see_the_add_a_placement_add_phase_page
         and_i_see_the_error_message("Select a phase")
+      end
+    end
+
+    context "and I click on change my phase" do
+      scenario "I decide to change my phase" do
+        school.update!(phase: "Nursery")
+        when_i_visit_the_placements_page
+        and_i_click_on("Add placement")
+        when_i_choose_a_phase("Secondary")
+        and_i_click_on("Continue")
+        when_i_check_the_subject(subject_2.name)
+        and_i_click_on("Continue")
+        when_i_check_a_mentor(mentor_1.full_name)
+        and_i_click_on("Continue")
+        when_i_change_my_phase
+        then_i_see_the_add_a_placement_add_phase_page
+        when_i_choose_a_phase("Primary")
+        and_i_click_on("Continue")
+        then_i_see_the_add_a_placement_subject_page("Primary")
+        when_i_choose_a_subject(subject_1.name)
+        when_i_click_on("Continue")
+        then_i_see_the_check_your_answers_page("Primary", mentor_1)
+      end
+
+      scenario "I do not decide to change my phase" do
+        school.update!(phase: "Nursery")
+        when_i_visit_the_placements_page
+        and_i_click_on("Add placement")
+        when_i_choose_a_phase("Secondary")
+        and_i_click_on("Continue")
+        when_i_check_the_subject(subject_2.name)
+        and_i_click_on("Continue")
+        when_i_check_a_mentor(mentor_1.full_name)
+        and_i_click_on("Continue")
+        when_i_change_my_phase
+        then_i_see_the_add_a_placement_add_phase_page
+        and_i_click_on("Continue")
+        then_i_see_the_check_your_answers_page("Secondary", mentor_1)
+      end
+    end
+
+    context "and I click on change my subject" do
+      scenario "I decide to change my subject" do
+        school.update!(phase: "Nursery")
+        when_i_visit_the_placements_page
+        and_i_click_on("Add placement")
+        when_i_choose_a_phase("Secondary")
+        and_i_click_on("Continue")
+        when_i_check_the_subject(subject_2.name)
+        and_i_click_on("Continue")
+        when_i_check_a_mentor(mentor_1.full_name)
+        and_i_click_on("Continue")
+        when_i_change_my_subject
+        then_i_see_the_add_a_placement_subject_page("Secondary")
+        when_i_check_the_subject(subject_3.name)
+        and_i_click_on("Continue")
+        then_i_see_the_check_your_answers_page("Secondary", mentor_1)
+      end
+
+      scenario "I do not decide to change my subject" do
+        school.update!(phase: "Nursery")
+        when_i_visit_the_placements_page
+        and_i_click_on("Add placement")
+        when_i_choose_a_phase("Secondary")
+        and_i_click_on("Continue")
+        when_i_check_the_subject(subject_2.name)
+        and_i_click_on("Continue")
+        when_i_check_a_mentor(mentor_1.full_name)
+        and_i_click_on("Continue")
+        when_i_change_my_subject
+        then_i_see_the_add_a_placement_subject_page("Secondary")
+        and_i_click_on("Continue")
+        then_i_see_the_check_your_answers_page("Secondary", mentor_1)
+      end
+    end
+
+    context "and I click on change my mentor" do
+      scenario "I decide to change my mentor" do
+        school.update!(phase: "Nursery")
+        when_i_visit_the_placements_page
+        and_i_click_on("Add placement")
+        when_i_choose_a_phase("Secondary")
+        and_i_click_on("Continue")
+        when_i_check_the_subject(subject_2.name)
+        and_i_click_on("Continue")
+        when_i_check_a_mentor(mentor_1.full_name)
+        and_i_click_on("Continue")
+        when_i_change_my_mentor
+        then_i_see_the_add_a_placement_mentor_page
+        when_i_check_a_mentor(mentor_2.full_name)
+        and_i_click_on("Continue")
+        then_i_see_the_check_your_answers_page("Secondary", mentor_2)
+      end
+
+      scenario "I do not decide to change my mentor" do
+        school.update!(phase: "Nursery")
+        when_i_visit_the_placements_page
+        and_i_click_on("Add placement")
+        when_i_choose_a_phase("Secondary")
+        and_i_click_on("Continue")
+        when_i_check_the_subject(subject_2.name)
+        and_i_click_on("Continue")
+        when_i_check_a_mentor(mentor_1.full_name)
+        and_i_click_on("Continue")
+        when_i_change_my_mentor
+        then_i_see_the_add_a_placement_mentor_page
+        and_i_click_on("Continue")
+        then_i_see_the_check_your_answers_page("Secondary", mentor_1)
       end
     end
   end
@@ -318,6 +429,26 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
 
   def then_see_that_not_known_is_selected
     expect(page).to have_checked_field("Not known yet")
+  end
+
+  def and_i_cannot_change_the_phase
+    expect(page).not_to have_link("Change", href: add_phase_placements_school_placement_build_index_path(school, :add_phase))
+  end
+
+  def and_i_can_change_the_phase
+    expect(page).to have_link("Change", href: add_phase_placements_school_placement_build_index_path(school, :add_phase))
+  end
+
+  def when_i_change_my_phase
+    click_link "Change", href: add_phase_placements_school_placement_build_index_path(school, :add_phase)
+  end
+
+  def when_i_change_my_subject
+    click_link "Change", href: add_subject_placements_school_placement_build_index_path(school, :add_subject)
+  end
+
+  def when_i_change_my_mentor
+    click_link "Change", href: add_mentors_placements_school_placement_build_index_path(school, :add_mentors)
   end
 
   def then_i_see_an_error_page
