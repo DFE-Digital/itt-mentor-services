@@ -1,10 +1,12 @@
-<div class="app-filter-layout">
+<div class="app-filter-layout display-none-on-mobile " data-filter-target="filter">
   <div class="app-filter-layout__filter">
     <div class="app-filter__header">
       <div class="app-filter__header-title">
         <h2 class="govuk-heading-m"><%= t("filter") %></h2>
       </div>
-      <div class="app-filter__header-action"></div>
+      <div class="app-filter__header-action">
+        <button class="app-filter__close" type="button" data-action="click->filter#close"><%= t("close") %></button>
+      </div>
     </div>
     <div class="app-filter-layout__content">
       <% if filter_form.filters_selected? %>
