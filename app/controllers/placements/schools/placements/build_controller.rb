@@ -8,6 +8,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   end
 
   def add_phase
+    setup_quick_navigation
     @placement = build_placement
     @selected_phase = session.dig(:add_a_placement, "phase") || school.phase
     @back_link_path = back_link_path(:add_phase)
@@ -28,8 +29,8 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   end
 
   def check_your_answers
+    setup_quick_navigation
     session[:add_a_placement][:enable_phase_navigation] = true
-    session[:add_a_placement][:enable_quick_navigation] = true
     @placement = initialize_placement
     @phase = session.dig(:add_a_placement, "phase")
     @selected_mentor_text = if @placement.mentors.empty?
@@ -133,6 +134,10 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   end
 
   def setup_quick_navigation
+    if params[:enable_quick_navigation] == "true"
+      session[:add_a_placement]["enable_quick_navigation"] = true
+    end
+
     @enable_quick_navigation = quick_navigation_enabled?
   end
 
