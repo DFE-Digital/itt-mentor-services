@@ -170,13 +170,18 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   end
 
   def back_link_path(step)
-    if quick_navigation_enabled? && step != :check_your_answers
-      check_your_answers_placements_school_placement_build_index_path(school.id, :check_your_answers)
-    elsif STEPS.include?(step)
-      public_send("#{STEPS[STEPS.index(step.to_sym) - 1]}_placements_school_placement_build_index_path")
-    else
-      placements_school_placements_path(school)
-    end
+    return quick_navigation_path if quick_navigation_enabled? && step != :check_your_answers
+    return placements_school_placements_path(school) if step == STEPS[0]
+
+    previous_step_path(step)
+  end
+
+  def quick_navigation_path
+    check_your_answers_placements_school_placement_build_index_path(school.id, :check_your_answers)
+  end
+
+  def previous_step_path(step)
+    public_send("#{STEPS[STEPS.index(step.to_sym) - 1]}_placements_school_placement_build_index_path")
   end
 
   def school
