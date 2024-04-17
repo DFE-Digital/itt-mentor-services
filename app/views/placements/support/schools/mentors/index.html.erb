@@ -34,11 +34,7 @@
             <% end %>
           <% end %>
         <% end %>
-
-        <%= govuk_pagination(pagy: @pagy) %>
-        <p>
-          <%= t("pagination_info", from: @pagy.from, to: @pagy.to, count: @pagy.count) %>
-        </p>
+        <%= render PaginationComponent.new(pagy: @pagy) %>
       <% else %>
         <p>
           <%= t("no_records_for", records: "mentors", for: @school.name) %>
