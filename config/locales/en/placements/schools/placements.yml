@@ -16,7 +16,8 @@ en:
       placements:
         build:
           add_phase:
-            title: Phase
+            title: Phase - Add placement
+            title_with_error: "Error: Select a phase"
             add_placement: Add placement
             phase: Phase
             primary: Primary
@@ -24,13 +25,15 @@ en:
             continue: Continue
             cancel: Cancel
           add_subject:
-            title: Subject
+            title: Subject - Add placement
+            title_with_error: "Error: Select a subject"
             add_placement: Add placement
             subject: Subject
             continue: Continue
             cancel: Cancel
           add_mentors:
-            title: Mentors
+            title: Mentors - Add placement
+            title_with_error: "Error: Select mentor or not known"
             add_placement: Add placement
             mentor: Mentor
             continue: Continue
@@ -38,7 +41,7 @@ en:
             mentors: Mentors
             not_known: Not known yet
           check_your_answers:
-            title: Check your answers
+            title: Check your answers - Add placement
             add_placement: Add placement
             phase: Phase
             add_phase: Add phase

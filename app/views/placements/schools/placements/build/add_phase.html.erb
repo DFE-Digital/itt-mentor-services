@@ -1,4 +1,4 @@
-<%= content_for :page_title, sanitize(t(".title")) %>
+<% content_for :page_title, @placement.errors.any? ? t(".title_with_error") : t(".title") %>
 <%= render "placements/schools/primary_navigation", school: @school, current_navigation: :placements %>
 
 <%= content_for(:before_content) do %>
