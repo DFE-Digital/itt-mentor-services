@@ -12,7 +12,7 @@ class Placements::Schools::Placements::Build::Placement < Placement
   attr_accessor :phase, :mentor_ids, :subject_ids
 
   def valid_phase?
-    return true if phase.present? && [Placements::School::PRIMARY_PHASE, Placements::School::SECONDARY_PHASE].include?(phase)
+    return true if [Placements::School::PRIMARY_PHASE, Placements::School::SECONDARY_PHASE].include?(phase)
 
     errors.add(:phase, :invalid)
     false
