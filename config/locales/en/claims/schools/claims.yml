@@ -17,7 +17,7 @@ en:
           guidance: We will check your claim before processing payment. If we need to contact you for further information, we will use the email you used to access this service.
         check:
           page_title: Check your answers
-          warning: You will be able to change the details of this claim up to and including July 19 2024
+          warning: You will not be able to change any of the claim details once you have submitted it.
           submit: Submit claim
           add_claim: Add claim
           declaration: Declaration

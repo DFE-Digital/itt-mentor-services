@@ -54,12 +54,7 @@
             <%= render Claim::CardComponent.new(claim:) %>
           <% end %>
         </div>
-
-        <%= govuk_pagination(pagy: @pagy) %>
-
-        <p>
-          <%= t("pagination_info", from: @pagy.from, to: @pagy.to, count: @pagy.count) %>
-        </p>
+          <%= render PaginationComponent.new(pagy: @pagy) %>
       <% else %>
         <p>
           <%= t("no_records", records: "claims") %>
