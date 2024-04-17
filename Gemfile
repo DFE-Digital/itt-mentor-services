@@ -20,6 +20,9 @@ gem "puma", "~> 6.4"
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem "jsbundling-rails"
 
+# https://www.skylight.io/ -- for monitoring performance
+gem "skylight"
+
 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
 gem "cssbundling-rails"
 
