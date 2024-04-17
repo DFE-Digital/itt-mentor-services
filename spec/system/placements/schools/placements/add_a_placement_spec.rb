@@ -443,23 +443,23 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
   end
 
   def and_i_cannot_change_the_phase
-    expect(page).not_to have_link("Change", href: add_phase_placements_school_placement_build_index_path(school, :add_phase))
+    expect(page).not_to have_link("Change", href: add_phase_placements_school_placement_build_index_path(school, :add_phase, enable_quick_navigation: true))
   end
 
   def and_i_can_change_the_phase
-    expect(page).to have_link("Change", href: add_phase_placements_school_placement_build_index_path(school, :add_phase))
+    expect(page).to have_link("Change", href: add_phase_placements_school_placement_build_index_path(school, :add_phase, enable_quick_navigation: true))
   end
 
   def when_i_change_my_phase
-    click_link "Change", href: add_phase_placements_school_placement_build_index_path(school, :add_phase)
+    click_link "Change", href: add_phase_placements_school_placement_build_index_path(school, :add_phase, enable_quick_navigation: true)
   end
 
   def when_i_change_my_subject
-    click_link "Change", href: add_subject_placements_school_placement_build_index_path(school, :add_subject)
+    click_link "Change", href: add_subject_placements_school_placement_build_index_path(school, :add_subject, enable_quick_navigation: true)
   end
 
   def when_i_change_my_mentor
-    click_link "Change", href: add_mentors_placements_school_placement_build_index_path(school, :add_mentors)
+    click_link "Change", href: add_mentors_placements_school_placement_build_index_path(school, :add_mentors, enable_quick_navigation: true)
   end
 
   def then_i_see_an_error_page
