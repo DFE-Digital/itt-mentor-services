@@ -23,11 +23,7 @@
             organisation_url: claims_support_school_path(school),
           )) %>
         <% end %>
-
-          <%= govuk_pagination(pagy: @pagy) %>
-          <p>
-            <%= t("pagination_info", from: @pagy.from, to: @pagy.to, count: @pagy.count) %>
-          </p>
+          <%= render PaginationComponent.new(pagy: @pagy) %>
         </ul>
       <% else %>
         <p>
