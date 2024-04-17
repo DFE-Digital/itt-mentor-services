@@ -39,7 +39,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
       when_i_check_a_mentor("Not known")
       and_i_click_on("Continue")
       then_i_see_the_check_your_answers_page(school.phase, nil)
-      and_i_click_on("Back")
+      when_i_change_my_mentor
       then_see_that_not_known_is_selected
       when_i_click_on("Continue")
       and_i_click_on("Publish placement")
@@ -67,21 +67,32 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
       end
 
       scenario "I can navigate to the previous page using the back button" do
-        when_i_visit_the_add_phase_page
-        and_i_click_on("Back")
-        then_i_see_the_placements_page
-
-        when_i_visit_the_add_subject_page
-        and_i_click_on("Back")
-        then_i_see_the_placements_page
-
-        when_i_visit_the_add_mentor_page
+        when_i_visit_the_placements_page
+        and_i_click_on("Add placement")
+        when_i_choose_a_subject(subject_1.name)
+        and_i_click_on("Continue")
+        when_i_check_a_mentor(mentor_1.full_name)
         and_i_click_on("Back")
         then_i_see_the_add_a_placement_subject_page(school.phase)
-
-        when_i_visit_the_check_your_answers_page
         and_i_click_on("Back")
-        then_i_see_the_add_a_placement_mentor_page
+        then_i_see_the_placements_page
+      end
+
+      context "When I've checked my answers and I click on change"
+      scenario "I can navigate back to the check my answers page with the back button" do
+        when_i_visit_the_placements_page
+        and_i_click_on("Add placement")
+        when_i_choose_a_subject(subject_1.name)
+        and_i_click_on("Continue")
+        when_i_check_a_mentor(mentor_1.full_name)
+        and_i_click_on("Continue")
+        then_i_see_the_check_your_answers_page(school.phase, mentor_1)
+        when_i_change_my_subject
+        and_i_click_on("Back")
+        then_i_see_the_check_your_answers_page(school.phase, mentor_1)
+        when_i_change_my_mentor
+        and_i_click_on("Back")
+        then_i_see_the_check_your_answers_page(school.phase, mentor_1)
       end
 
       scenario "my selected options are rendered when navigating using the back button" do
@@ -94,7 +105,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
         when_i_visit_the_add_mentor_page
         when_i_check_a_mentor(mentor_1.full_name)
         and_i_click_on("Continue")
-        when_i_click_on("Back")
+        when_i_change_my_mentor
         then_my_chosen_mentor_is_checked(mentor_1.full_name)
       end
 
