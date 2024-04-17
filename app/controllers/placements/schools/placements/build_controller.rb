@@ -8,21 +8,23 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   end
 
   def add_phase
-    setup_quick_navigation
     @placement = build_placement
     @selected_phase = session.dig(:add_a_placement, "phase") || school.phase
+    @back_link_path = back_link_path(:add_phase)
   end
 
   def add_subject
     setup_quick_navigation
     build_or_retrieve_placement
     assign_subjects_based_on_phase
+    @back_link_path = back_link_path(:add_subject)
   end
 
   def add_mentors
     setup_quick_navigation
     @placement = build_placement
     @selected_mentors = retrieve_selected_mentors
+    @back_link_path = back_link_path(:add_mentors)
   end
 
   def check_your_answers
@@ -35,6 +37,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
                             else
                               @placement.mentors.map(&:full_name).to_sentence
                             end
+    @back_link_path = back_link_path(:check_your_answers)
   end
 
   def update
@@ -164,6 +167,16 @@ class Placements::Schools::Placements::BuildController < ApplicationController
 
   def next_step(step)
     "#{STEPS[STEPS.index(step.to_sym) + 1]}_placements_school_placement_build_index_path"
+  end
+
+  def back_link_path(step)
+    if quick_navigation_enabled? && step != :check_your_answers
+      check_your_answers_placements_school_placement_build_index_path(school.id, :check_your_answers)
+    elsif STEPS.include?(step)
+      public_send("#{STEPS[STEPS.index(step.to_sym) - 1]}_placements_school_placement_build_index_path")
+    else
+      placements_school_placements_path(school)
+    end
   end
 
   def school

@@ -1,10 +1,6 @@
 <%= content_for :page_title, sanitize(t(".title")) %>
 <%= render "placements/schools/primary_navigation", school: @school, current_navigation: :placements %>
 
-<%= content_for(:before_content) do %>
-  <%= govuk_back_link(href: add_mentors_placements_school_placement_build_index_path(@school, :add_mentors)) %>
-<% end %>
-
 <div class="govuk-width-container">
   <%= form_for(@placement, url: placements_school_placement_build_path(@school, id: :check_your_answers), method: :put) do |f| %>
     <%= f.govuk_error_summary %>
