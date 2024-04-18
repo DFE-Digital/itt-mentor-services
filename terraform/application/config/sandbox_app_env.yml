@@ -7,3 +7,4 @@ HOSTING_ENV: sandbox
 TEACHING_RECORD_BASE_URL: https://preprod.teacher-qualifications-api.education.gov.uk
 TEACHING_RECORD_API_MINOR_VERSION: 20240101
 CLAIMS_HOSTS: sandbox.claim-funding-for-mentor-training.education.gov.uk,track-and-pay-sandbox.teacherservices.cloud
+CLAIMS_HOST: sandbox.claim-funding-for-mentor-training.education.gov.uk

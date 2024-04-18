@@ -15,7 +15,11 @@ class ApplicationMailer < Mail::Notify::Mailer
   end
 
   def default_url_options
-    { host:, port: ENV["PORT"] }
+    { host:, port: ENV["PORT"], protocol: }
+  end
+
+  def protocol
+    Rails.env.production? ? "https" : "http"
   end
 
   def host
