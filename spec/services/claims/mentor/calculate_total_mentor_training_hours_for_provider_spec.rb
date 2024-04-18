@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe Claims::CalculateTotalMentorTrainingHoursForProvider do
-  subject(:calculate_total_training_hours) { described_class.call(mentor: create(:mentor, :provider)) }
+RSpec.describe Claims::Mentor::CalculateTotalMentorTrainingHoursForProvider do
+  subject(:calculate_total_training_hours) { described_class.call(mentor:, provider:) }
 
   let!(:mentor) { create(:claims_mentor) }
 
@@ -17,12 +17,10 @@ RSpec.describe Claims::CalculateTotalMentorTrainingHoursForProvider do
 
   it "returns the total mentor training hours for a provider for a given mentor" do
     create(:mentor_training, provider:, claim:, hours_completed: 20, mentor:)
-    create(:mentor_training, provider:, claim:, hours_completed: 20, mentor:)
+    create(:mentor_training, provider:, claim:, hours_completed: 6, mentor:)
 
     create(:mentor_training, provider: provider_2, claim:, hours_completed: 20, mentor:)
 
-    result = described_class.call(mentor:, provider:)
-
-    expect(result).to eq(40)
+    expect(calculate_total_training_hours).to eq(26)
   end
 end

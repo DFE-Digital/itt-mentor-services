@@ -1,4 +1,4 @@
-class Claims::CalculateTotalMentorTrainingHoursForProvider
+class Claims::Mentor::CalculateTotalMentorTrainingHoursForProvider
   include ServicePattern
 
   def initialize(mentor:, provider:)
