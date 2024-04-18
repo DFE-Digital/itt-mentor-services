@@ -57,6 +57,15 @@ RSpec.describe "Sign In as a Claims User", type: :system, service: :claims do
     end
   end
 
+  context "when dsi fails" do
+    scenario "I try to sign in as support user" do
+      when_dsi_fails
+      when_i_visit_the_sign_in_path
+      when_i_click_sign_in
+      then_i_am_redirect_to_internal_server_error
+    end
+  end
+
   private
 
   def given_there_is_an_existing_claims_user_with_a_school_for(user)
@@ -128,5 +137,9 @@ RSpec.describe "Sign In as a Claims User", type: :system, service: :claims do
 
   def i_do_not_have_access_to_support_page
     expect(page).to have_content "You cannot perform this action"
+  end
+
+  def then_i_am_redirect_to_internal_server_error
+    expect(page).to have_content("Sorry, there’s a problem with the service")
   end
 end

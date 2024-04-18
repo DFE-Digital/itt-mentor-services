@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     get "/404", to: "errors#not_found", as: :not_found
     get "/422", to: "errors#unprocessable_entity"
     get "/429", to: "errors#too_many_requests"
-    get "/500", to: "errors#internal_server_error"
+    get "/500", to: "errors#internal_server_error", as: :internal_server_error
   end
 
   # User Account Details
@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   else
     get("/auth/dfe/callback" => "sessions#callback")
     get("/auth/dfe/sign-out" => "sessions#destroy", as: :sign_out)
+    get "/auth/failure", to: "sessions#failure"
   end
 
   resources :service_updates, only: %i[index]

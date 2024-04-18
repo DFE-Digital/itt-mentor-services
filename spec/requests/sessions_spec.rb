@@ -16,4 +16,16 @@ RSpec.describe "Sessions", type: :request do
       expect(response).to render_template("claims/schools/index")
     end
   end
+
+  describe "GET /auth/failure" do
+    it "returns http internal_server_error" do
+      allow(Sentry).to receive(:capture_message)
+
+      get "/auth/failure"
+      follow_redirect!
+
+      expect(response).to have_http_status(:internal_server_error)
+      expect(Sentry).to have_received(:capture_message)
+    end
+  end
 end

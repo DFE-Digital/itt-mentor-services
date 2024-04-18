@@ -24,6 +24,10 @@ module DfESignInUserHelper
     }
   end
 
+  def when_dsi_fails
+    OmniAuth.config.mock_auth[:dfe] = :invalid_credentials
+  end
+
   private
 
   def fake_dfe_sign_in_auth_hash(email:, dfe_sign_in_uid:, first_name:, last_name:)
