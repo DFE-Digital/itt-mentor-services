@@ -98,6 +98,7 @@ gem "audited"
 
 group :development do
   gem "annotate", require: false
+  gem "letter_opener"
   gem "prettier_print", require: false
   gem "rladr"
   gem "rubocop-govuk", require: false
