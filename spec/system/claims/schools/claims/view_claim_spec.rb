@@ -63,27 +63,25 @@ RSpec.describe "View a claim", type: :system, service: :claims do
   end
 
   def then_i_can_then_see_the_submitted_claim_details
-    expect(page).to have_content("Claim - 12345678")
+    expect(page).to have_content("Claim - #{submitted_claim.reference}")
     expect(page).to have_content("SchoolA School")
+    expect(page).to have_content("Submitted")
+    expect(page).to have_content("Submitted by #{anne.full_name} on 5 March 2024.")
     expect(page).to have_content("Accredited providerBest Practice Network")
     expect(page).to have_content("Mentors\nBarry Garlow")
     expect(page).to have_content("Hours of training")
-    expect(page).to have_content("StatusSubmitted")
-    expect(page).to have_content("Submitted by#{anne.full_name}")
-    expect(page).to have_content("Date submitted 5 March 2024")
     expect(page).to have_content("Barry Garlow#{mentor_training.hours_completed} hours")
     expect(page).to have_content("Claim amount£321.60")
   end
 
   def then_i_can_then_see_the_draft_claim_details
-    expect(page).to have_content("Claim - 88888888")
+    expect(page).to have_content("Claim - #{draft_claim.reference}")
     expect(page).to have_content("SchoolA School")
+    expect(page).to have_content("Draft")
+    expect(page).not_to have_content("Submitted by")
     expect(page).to have_content("Accredited providerBest Practice Network")
     expect(page).to have_content("Mentors\nBarry Garlow")
     expect(page).to have_content("Hours of training")
-    expect(page).to have_content("StatusDraft")
-    expect(page).to have_content("Submitted by-")
-    expect(page).to have_content("Date submitted-")
     expect(page).to have_content("Barry Garlow#{draft_mentor_training.hours_completed} hours")
     expect(page).to have_content("Claim amount£321.60")
   end

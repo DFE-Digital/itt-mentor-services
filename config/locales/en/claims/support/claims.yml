@@ -18,8 +18,15 @@ en:
           submit: Search
           clear: Clear search
         show:
-          heading: Claim
+          page_caption: Claim - %{reference}
+          page_title: Claim - %{school_name}
           status: Status
           provider: Accredited provider
           mentor_with_index: Mentor %{index}
           mentor: Mentor
+          submitted_by: Submitted by %{name} on %{date}.
+        details:
+          mentors: Mentors
+          hours_of_training: Hours of training
+          hours: hours
+          grant_funding: Grant funding

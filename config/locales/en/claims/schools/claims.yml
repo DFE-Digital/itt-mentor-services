@@ -49,5 +49,6 @@ en:
           grant_funding: Grant funding
           hours: hours
           submit: Submit claim
+          submitted_by: Submitted by %{name} on %{date}.
         edit:
           page_title: Accredited provider - Add claim

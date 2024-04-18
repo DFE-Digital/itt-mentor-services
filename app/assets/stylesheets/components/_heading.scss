@@ -1,0 +1,8 @@
+.govuk-heading-l {
+  .govuk-heading-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: govuk-spacing(2);
+  }
+}
