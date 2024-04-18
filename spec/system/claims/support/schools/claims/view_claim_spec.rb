@@ -49,12 +49,11 @@ RSpec.describe "View a claim", type: :system, service: :claims do
   def then_i_can_then_see_the_claim_details
     expect(page).to have_content("Claim - 12345678")
     expect(page).to have_content("SchoolA School")
+    expect(page).to have_content("Submitted")
+    expect(page).to have_content("Submitted by #{colin.full_name} on 5 March 2024.")
     expect(page).to have_content("Accredited providerBest Practice Network")
     expect(page).to have_content("Mentors\nBarry Garlow")
-    expect(page).to have_content("Submitted by#{colin.full_name}")
-    expect(page).to have_content("Date submitted 5 March 2024")
     expect(page).to have_content("Hours of training")
-    expect(page).to have_content("StatusSubmitted")
     expect(page).to have_content("Barry Garlow#{mentor_training.hours_completed} hours")
     expect(page).to have_content("Claim amount£321.60")
   end

@@ -1,0 +1,75 @@
+<%= govuk_summary_list do |summary_list| %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: Claims::Claim.human_attribute_name(:school)) %>
+    <% row.with_value(text: claim.school.name) %>
+  <% end %>
+
+  <% if claim.provider %>
+    <% summary_list.with_row do |row| %>
+      <% row.with_key(text: Claims::Claim.human_attribute_name(:accredited_provider)) %>
+      <% row.with_value(text: claim.provider.name) %>
+      <% if policy(claim).edit? %>
+        <% row.with_action(text: t("change"),
+                           href: edit_claims_support_school_claim_path(claim.school, claim),
+                           html_attributes: {
+                              class: "govuk-link--no-visited-state",
+                              }) %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <% summary_list.with_row do |row| %>
+      <% row.with_key(text: Claims::Claim.human_attribute_name(:accredited_provider)) %>
+      <% row.with_value(text: t("none")) %>
+    <% end %>
+  <% end %>
+
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".mentors")) %>
+    <% row.with_value do %>
+      <ul class="govuk-list">
+        <% claim.mentors.each do |mentor| %>
+          <li><%= mentor.full_name %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <% if policy(claim).edit? %>
+      <% row.with_action(text: t("change"),
+                         href: edit_claims_support_school_claim_mentor_path(claim.school, claim),
+                         html_attributes: {
+                  class: "govuk-link--no-visited-state",
+                }) %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<h2 class="govuk-heading-m"><%= t(".hours_of_training") %></h2>
+  <%= govuk_summary_list do |summary_list| %>
+   <%= claim.mentor_trainings.order_by_mentor_full_name.each do |mentor_training| %>
+    <% summary_list.with_row do |row| %>
+      <% row.with_key(text: mentor_training.mentor.full_name) %>
+      <% row.with_value(text: "#{mentor_training.hours_completed} #{t(".hours")}") %>
+      <% if policy(claim).edit? %>
+        <% row.with_action(text: t("change"),
+                           href: edit_claims_support_school_claim_mentor_training_path(
+                            claim.school,
+                            claim,
+                            mentor_training,
+                            params: {
+                              claims_support_claim_mentor_training_form: { hours_completed: mentor_training.hours_completed },
+                            },
+                          ),
+                           html_attributes: {
+                            class: "govuk-link--no-visited-state",
+                          }) %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<h2 class="govuk-heading-m"><%= t(".grant_funding") %></h2>
+<%= govuk_summary_list do |summary_list| %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: Claims::Claim.human_attribute_name(:claim_amount)) %>
+    <% row.with_value(text: humanized_money_with_symbol(claim.amount)) %>
+  <% end %>
+<% end %>

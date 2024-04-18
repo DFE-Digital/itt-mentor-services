@@ -4,14 +4,20 @@ RSpec.describe "View claims", type: :system, service: :claims do
   let!(:support_user) { create(:claims_support_user) }
   let(:provider) { create(:claims_provider) }
   let(:mentor) { create(:claims_mentor) }
+  let(:user) { create(:claims_user) }
   let!(:claim) do
     create(
       :claim,
       :submitted,
       provider:,
+      school: create(:claims_school, region: regions(:inner_london)),
       mentors: [mentor],
+      submitted_by: user,
+      submitted_at: Time.zone.parse("2024-03-05 12:31:52"),
     )
   end
+
+  let!(:mentor_training) { create(:mentor_training, claim:, mentor:, hours_completed: 6) }
 
   before do
     user_exists_in_dfe_sign_in(user: support_user)
@@ -40,21 +46,14 @@ RSpec.describe "View claims", type: :system, service: :claims do
   end
 
   def then_i_can_see_the_details_of_a_submitted_claim
-    expect(page).to have_content("Claims")
-
-    within(".govuk-summary-list__row:nth-child(1)") do
-      expect(page).to have_content("Status")
-      expect(page).to have_content("Submitted")
-    end
-
-    within(".govuk-summary-list__row:nth-child(2)") do
-      expect(page).to have_content("Accredited provider")
-      expect(page).to have_content(provider.name)
-    end
-
-    within(".govuk-summary-list__row:nth-child(3)") do
-      expect(page).to have_content("Mentor 1")
-      expect(page).to have_content(mentor.full_name)
-    end
+    expect(page).to have_content("Claim - #{claim.reference}")
+    expect(page).to have_content("School#{claim.school.name}")
+    expect(page).to have_content("Submitted")
+    expect(page).to have_content("Submitted by #{user.full_name} on 5 March 2024.")
+    expect(page).to have_content("Accredited provider#{provider.name}")
+    expect(page).to have_content("Mentors\n#{mentor.full_name}")
+    expect(page).to have_content("Hours of training")
+    expect(page).to have_content("#{mentor.full_name}#{mentor_training.hours_completed} hours")
+    expect(page).to have_content("Claim amount£321.60")
   end
 end

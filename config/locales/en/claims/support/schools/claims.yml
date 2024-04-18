@@ -4,7 +4,7 @@ en:
       schools:
         claims:
           draft:
-            add_success:  Claim added
+            add_success: Claim added
             update_success: Claim updated
           edit:
             page_title: Accredited provider - Add claim
@@ -24,13 +24,10 @@ en:
             add_mentor_guidance_html: You need to %{link_to} before creating a claim.</p>
             add_a_mentor: add a mentor
           show:
-            mentors: Mentors
             page_title: Claim - %{reference}
-            hours_of_training: Hours of training
-            grant_funding: Grant funding
-            hours: hours
             page_caption: Claims - %{school_name}
             remove_claim: Remove claim
+            submitted_by: Submitted by %{name} on %{date}.
           new:
             page_title: Accredited provider - Add claim
           remove:
