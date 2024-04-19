@@ -10,6 +10,10 @@ en:
               blank: Enter the number of hours
             hours_completed:
               blank: Select the number of hours
+        claims/claim/provider_form:
+          attributes:
+            provider_id:
+              blank: Select a provider
         placements/mentor_form:
           attributes:
             trn:
@@ -40,12 +44,11 @@ en:
               option_blank: Select a school
         placements/partnership_form:
           attributes:
-            school_id: 
+            school_id:
               already_added: "%{school_name} has already been added. Try another school"
               blank: Enter a school name, URN or postcode
               option_blank: Select a school
-            provider_id: 
+            provider_id:
               already_added: "%{provider_name} has already been added. Try another provider"
               blank: Enter a provider name, UKPRN, URN or postcode
               option_blank: Select a provider
-
