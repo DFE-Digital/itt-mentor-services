@@ -3,13 +3,12 @@ class Placements::Providers::PlacementsController < ApplicationController
   helper_method :filter_form
 
   def index
-    schools = Placements::School.order_by_name
     @subjects = Subject.order_by_name
-    @school_types = schools.pluck(:type_of_establishment).uniq.compact.sort
-    @genders = schools.pluck(:gender).uniq.compact.sort
-    @religious_characters = schools.pluck(:religious_character).uniq.compact.sort
-    @ofsted_ratings = schools.pluck(:rating).uniq.compact.sort
-    @schools = schools.select(:id, :name, :phase)
+    @school_types = compact_school_attribute_values(:type_of_establishment)
+    @genders = compact_school_attribute_values(:gender)
+    @religious_characters = compact_school_attribute_values(:religious_character)
+    @ofsted_ratings = compact_school_attribute_values(:rating)
+    @schools = Placements::School.order_by_name.select(:id, :name, :phase)
 
     @pagy, @placements = pagy(
       Placements::PlacementsQuery.call(
@@ -38,5 +37,23 @@ class Placements::Providers::PlacementsController < ApplicationController
       religious_characters: [],
       ofsted_ratings: [],
     )
+  end
+
+  def all_schools
+    @all_schools ||= School.all
+  end
+
+  def compact_school_attribute_values(attribute)
+    if attribute == :rating
+      [
+        "Outstanding",
+        "Good",
+        "Requires improvement",
+        "Inadequate",
+        "Serious Weaknesses",
+      ]
+    else
+      all_schools.pluck(attribute).uniq.compact.sort
+    end
   end
 end
