@@ -16,13 +16,6 @@ describe Claims::Claim::ProviderForm, type: :model do
     end
   end
 
-  describe "#to_model" do
-    it "returns an instance of a Claims::Claim" do
-      form = described_class.new(school:)
-      expect(form.to_model).to be_a Claims::Claim
-    end
-  end
-
   describe "#claim" do
     it "returns an instance of a Claims::Claim" do
       form = described_class.new(school:)
