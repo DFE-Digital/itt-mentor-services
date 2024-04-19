@@ -284,7 +284,7 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
     filter_options = page.find(".app-filter__options")
 
     within(filter_options) do
-      page.find("#filters-#{filter}-#{value.downcase}-field", visible: :all).check
+      page.find("label[for='filters-#{filter}-#{value.downcase}-field']", visible: :all).click
     end
   end
 
