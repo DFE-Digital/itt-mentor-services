@@ -37,6 +37,11 @@ scope module: :placements,
           member { get :remove }
           collection { get :check }
         end
+
+        resources :placements, only: %i[index new create show destroy] do
+          member { get :remove }
+          collection { get :check }
+        end
       end
     end
 
