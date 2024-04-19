@@ -21,7 +21,10 @@
           <% table.with_body do |body| %>
             <% @placements.each do |placement| %>
               <% body.with_row do |row| %>
-                <% row.with_cell(text: placement.subject_names) %>
+                <% row.with_cell(text: govuk_link_to(
+                  placement.subject_names,
+                  placements_support_school_placement_path(@school, placement),
+                )) %>
                 <% row.with_cell(text: placement.mentor_names) %>
                 <% row.with_cell(text: placement.window) %>
                 <% row.with_cell do %>
