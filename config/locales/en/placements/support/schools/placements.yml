@@ -12,3 +12,14 @@ en:
             status: Status
             not_entered: Not entered
             add_placement: Add placement
+          show:
+            page_title: "%{placement_name} - Placements - %{school_name}"
+            caption: "Placements - %{school_name}"
+            attributes:
+              placements:
+                school_level: School level
+                subject: Subject
+                mentor: Mentor
+                window: Window
+                status: Status
+
