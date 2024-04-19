@@ -27,25 +27,25 @@ export default class extends Controller {
       .filter(subject => subject.dataset.subjectArea === "Secondary");
 
     if (checkedPhases.length === 0) {
-      this.toggleOptions(primarySchools, "block");
-      this.toggleOptions(secondarySchools, "block");
-      this.toggleOptions(primarySubjects, "block");
-      this.toggleOptions(secondarySubjects, "block");
+      this.toggleOptions(primarySchools, "flex");
+      this.toggleOptions(secondarySchools, "flex");
+      this.toggleOptions(primarySubjects, "flex");
+      this.toggleOptions(secondarySubjects, "flex");
     } else if (allPhases.length === checkedPhases.length) {
-      this.toggleOptions(primarySchools, "block");
-      this.toggleOptions(secondarySchools, "block");
-      this.toggleOptions(primarySubjects, "block");
-      this.toggleOptions(secondarySubjects, "block");
+      this.toggleOptions(primarySchools, "flex");
+      this.toggleOptions(secondarySchools, "flex");
+      this.toggleOptions(primarySubjects, "flex");
+      this.toggleOptions(secondarySubjects, "flex");
     } else if (checkedPhases.includes("Primary")) {
-      this.toggleOptions(primarySchools, "block");
+      this.toggleOptions(primarySchools, "flex");
       this.toggleOptions(secondarySchools, "none");
-      this.toggleOptions(primarySubjects, "block");
+      this.toggleOptions(primarySubjects, "flex");
       this.toggleOptions(secondarySubjects, "none");
     } else {
       this.toggleOptions(primarySchools, "none");
-      this.toggleOptions(secondarySchools, "block");
+      this.toggleOptions(secondarySchools, "flex");
       this.toggleOptions(primarySubjects, "none");
-      this.toggleOptions(secondarySubjects, "block");
+      this.toggleOptions(secondarySubjects, "flex");
     }
   }
 
