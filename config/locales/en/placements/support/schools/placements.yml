@@ -1,0 +1,14 @@
+en:
+  placements:
+    support:
+      schools:
+        placements:
+          index:
+            page_title: Placements
+            placements: Placements
+            subject: Subject
+            mentor: Mentor
+            window: Window
+            status: Status
+            not_entered: Not entered
+            add_placement: Add placement
