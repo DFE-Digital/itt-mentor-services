@@ -63,7 +63,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     then_i_see_the_error("Enter the number of hours between 1 and 20")
     when_i_choose_other_amount_and_input_hours(0.5)
     when_i_click("Continue")
-    then_i_see_the_error("Enter the number of hours between 1 and 20")
+    then_i_see_the_error("Enter whole numbers only")
   end
 
   scenario "Anne creates a claim and tries to edit it" do
