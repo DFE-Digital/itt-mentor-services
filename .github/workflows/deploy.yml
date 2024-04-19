@@ -51,7 +51,7 @@ jobs:
         id: deploy
         with:
           environment: ${{ github.event.inputs.environment }}
-          docker-image: latest
+          docker-image: ${{ github.event.inputs.sha }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
           pull-request-number: ${{ github.event.inputs.pr_number }}
 
