@@ -12,11 +12,7 @@ class Placements::Placements::FilterForm < ApplicationForm
   attribute :ofsted_ratings, default: []
 
   def initialize(params = {})
-    params.each_value do |value|
-      next unless value.is_a?(Array)
-
-      value.compact_blank!
-    end
+    params.each_value(&:compact_blank!)
 
     super(params)
   end
