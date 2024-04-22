@@ -6,27 +6,6 @@ on:
           - 1717-ittms-manual-deployment-workflow-bug-fix-1
 env:
     environment: review
-
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: Environment to deploy to
-        required: true
-        type: choice
-        default: review
-        options:
-        - qa
-        - review
-        - staging
-        - sandbox
-        - dv
-      sha:
-        description: Commit sha to be deployed
-        required: true
-      pr_number:
-        description: PR number
-        required: false
-
 jobs:
   deploy:
     name: review deployment
