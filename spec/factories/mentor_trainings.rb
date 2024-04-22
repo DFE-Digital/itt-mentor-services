@@ -29,5 +29,9 @@ FactoryBot.define do
     association :claim
     association :mentor, factory: :claims_mentor
     association :provider
+
+    trait :submitted do
+      claim { create(:claim, :submitted) }
+    end
   end
 end

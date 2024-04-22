@@ -6,9 +6,16 @@ en:
           edit:
             page_title: Hours of training for %{mentor}
             add_claim: Add claim - %{school}
-            hours_of_training: Hours of training for %{mentor}
-            20_hours: 20 hours
-            20_hours_hint: The full amount of hours for standard training
+            hours_of_training: Hours of training
+            hours_of_training_for_mentor: Hours of training for %{mentor}
+            hours:
+              one: "%{count} hour"
+              other: "%{count} hours"
+            hours_hint:
+              full: The full amount of hours for standard training
+              remaining: The remaining amount of hours for standard training
             other_amount: Another amount
-            enter_whole_numbers: Enter whole numbers up to a maximum of 20 hours
+            custom_hours_completed_hint:
+              one: Enter whole numbers up to a maximum of %{count} hour
+              other: Enter whole numbers up to a maximum of %{count} hours
             number_of_hours: Number of hours

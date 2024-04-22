@@ -24,29 +24,27 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <span class="govuk-caption-l"><%= t(".add_claim", school: @claim.provider.name) %></span>
+        <h2 class="govuk-heading-l"><%= t(".hours_of_training_for_mentor", mentor: mentor_training_form.mentor_full_name) %> </h2>
+
+        <%= render Claims::Claim::MentorTrainingForm::DisclaimerComponent.new(mentor_training_form:) %>
+
         <%= f.govuk_radio_buttons_fieldset(
           :hours_completed,
           legend: {
-            size: "l",
-            text: t(".hours_of_training", mentor: mentor_training_form.mentor_full_name),
+            size: "m",
+            text: t(".hours_of_training"),
           },
         ) do %>
-          <%= f.govuk_radio_button :hours_completed, "20", label: { text: t(".20_hours") }, hint: { text: t(".20_hours_hint") } %>
+          <%= f.govuk_radio_button :hours_completed, mentor_training_form.max_hours, label: { text: t(".hours", count: mentor_training_form.max_hours) }, hint: { text: t(".hours_hint.#{mentor_training_form.max_hours == 20 ? "full" : "remaining"}", count: mentor_training_form.max_hours) } %>
 
           <%= f.govuk_radio_divider %>
 
-          <%= f.govuk_radio_button(
-            :hours_completed,
-            "on",
-            checked: mentor_training_form.custom_hours?,
-            label: { text: t(".other_amount") },
-          ) do %>
+          <%= f.govuk_radio_button(:hours_completed, "custom", label: { text: t(".other_amount") }) do %>
             <%= f.govuk_number_field(
               :custom_hours_completed,
-              value: mentor_training_form.custom_hours? ? mentor_training_form.mentor_training.hours_completed : nil,
               class: "govuk-input--width-2",
               label: { text: t(".number_of_hours"), class: "govuk-!-font-weight-bold" },
-              hint: { text: t(".enter_whole_numbers") },
+              hint: { text: t(".custom_hours_completed_hint", count: mentor_training_form.max_hours) },
             ) %>
           <% end %>
         <% end %>
