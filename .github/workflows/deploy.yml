@@ -78,7 +78,7 @@ jobs:
             | School Placements | <https://manage-school-placements-${{ github.event.inputs.pr_number }}.test.teacherservices.cloud> |
 
       - name: Slack Notification
-        if: failure() && ${{ github.event.inputs.environment != 'review' }}
+        if: ${{ failure() && github.event.inputs.environment != 'review' }}
         uses: rtCamp/action-slack-notify@master
         env:
           SLACK_COLOR: failure
