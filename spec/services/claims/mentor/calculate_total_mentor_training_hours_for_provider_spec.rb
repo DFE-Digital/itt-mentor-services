@@ -9,7 +9,7 @@ RSpec.describe Claims::Mentor::CalculateTotalMentorTrainingHoursForProvider do
   let!(:provider_2) { create(:claims_provider, :best_practice_network) }
 
   let!(:school) { create(:claims_school, :claims, name: "School name 1", region: regions(:inner_london), urn: "1234", local_authority_name: "blah", local_authority_code: "BLA", group: "Academy") }
-  let!(:claim) { create(:claim, school:, reference: "12345678") }
+  let!(:claim) { create(:claim, :submitted, school:, reference: "12345678") }
 
   it_behaves_like "a service object" do
     let(:params) { { mentor:, provider: } }

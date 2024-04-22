@@ -7,7 +7,7 @@ class Claims::Mentor::CalculateTotalMentorTrainingHoursForProvider
   end
 
   def call
-    mentor.mentor_trainings.where(provider:).sum(:hours_completed)
+    mentor.mentor_trainings.joins(:claim).where(claims: { status: %i[draft submitted] }, provider:).sum(:hours_completed)
   end
 
   private
