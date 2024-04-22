@@ -31,8 +31,8 @@ module "web_application" {
   environment  = var.environment
   service_name = var.service_name
   web_external_hostnames = [
-    local.app_env_values["CLAIMS_HOST"],
-    local.app_env_values["PLACEMENTS_HOST"]
+    local.ingress_domain_map["INGRESS_CLAIMS_HOST"],
+    local.ingress_domain_map["INGRESS_PLACEMENTS_HOST"]
   ]
 
   cluster_configuration_map  = module.cluster_data.configuration_map
