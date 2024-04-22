@@ -3,16 +3,23 @@ class Claims::Mentor::CalculateRemainingMentorTrainingHoursForProvider
 
   MAXIMUM_CLAIMABLE_HOURS_PER_PROVIDER = 20
 
-  def initialize(mentor:, provider:)
+  def initialize(mentor:, provider:, mentor_training: nil)
     @mentor = mentor
     @provider = provider
+    @mentor_training = mentor_training
   end
 
   def call
-    MAXIMUM_CLAIMABLE_HOURS_PER_PROVIDER - Claims::Mentor::CalculateTotalMentorTrainingHoursForProvider.call(mentor:, provider:)
+    MAXIMUM_CLAIMABLE_HOURS_PER_PROVIDER -
+      Claims::Mentor::CalculateTotalMentorTrainingHoursForProvider.call(mentor:, provider:) +
+      current_mentor_training_hours
   end
 
   private
 
-  attr_reader :mentor, :provider
+  attr_reader :mentor, :provider, :mentor_training
+
+  def current_mentor_training_hours
+    mentor_training&.claim&.active? ? mentor_training.hours_completed.to_i : 0
+  end
 end

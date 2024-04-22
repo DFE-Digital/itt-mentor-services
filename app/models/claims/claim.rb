@@ -63,4 +63,8 @@ class Claims::Claim < ApplicationRecord
   def amount
     Claims::Claim::CalculateAmount.call(claim: self)
   end
+
+  def active?
+    ACTIVE_STATUSES.include?(status.to_sym)
+  end
 end

@@ -41,4 +41,5 @@ class Claims::MentorTraining < ApplicationRecord
   scope :order_by_mentor_full_name, -> { joins(:mentor).merge(Mentor.order_by_full_name) }
 
   delegate :full_name, to: :mentor, prefix: true, allow_nil: true
+  delegate :name, to: :provider, prefix: true, allow_nil: true
 end

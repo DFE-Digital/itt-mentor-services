@@ -1,0 +1,10 @@
+en:
+  components:
+    claims:
+      claim:
+        mentor_training_form:
+          disclaimer_component:
+            disclaimer:
+              one: There is <strong>%{count} hour left to claim</strong> for %{mentor_name} for %{provider_name}.
+              other: There are <strong>%{count} hours left to claim</strong> for %{mentor_name} for %{provider_name}.
+            disclaimer_contact: Contact %{support_link} if you think there is a problem.

@@ -3,11 +3,14 @@ en:
     errors:
       messages:
         record_invalid: "Validation failed: %{errors}"
+        between: "must be between %{min} and %{max}"
       models:
         claims/claim/mentor_training_form:
           attributes:
             custom_hours_completed:
               blank: Enter the number of hours
+              not_an_integer: Enter whole numbers only
+              between: Enter the number of hours between %{min} and %{max}
             hours_completed:
               blank: Select the number of hours
         claims/claim/provider_form:
