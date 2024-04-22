@@ -3,7 +3,7 @@ require "csv"
 class Claims::GenerateClaimsCsv
   include ServicePattern
 
-  HEADERS = %w[reference urn school_name local_authority_name amount_to_pay type].freeze
+  HEADERS = %w[claim_reference urn school_name local_authority claim_amount establishment_type date_submitted].freeze
 
   def initialize(claims:)
     @claims = claims
@@ -21,6 +21,7 @@ class Claims::GenerateClaimsCsv
           claim.school.local_authority_name,
           claim.amount.format(symbol: false, decimal_mark: ".", no_cents: false),
           claim.school.group,
+          claim.submitted_at&.iso8601,
         ]
       end
     end
