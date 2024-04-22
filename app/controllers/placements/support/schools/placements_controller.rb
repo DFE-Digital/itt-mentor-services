@@ -1,6 +1,6 @@
 class Placements::Support::Schools::PlacementsController < Placements::Support::ApplicationController
   before_action :set_school
-  before_action :set_placement, only: %i[show]
+  before_action :set_placement, except: %i[index]
 
   def index
     @pagy, placements = pagy(@school.placements.includes(:subjects, :mentors).order("subjects.name"))
@@ -9,6 +9,15 @@ class Placements::Support::Schools::PlacementsController < Placements::Support::
 
   def show
     @placement = @school.placements.find(params.fetch(:id)).decorate
+  end
+
+  def remove
+    @placement = @placement.decorate
+  end
+
+  def destroy
+    @placement.destroy!
+    redirect_to placements_support_school_placements_path(@school), flash: { success: t(".placement_removed") }
   end
 
   private
