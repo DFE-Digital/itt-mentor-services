@@ -18,42 +18,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Azure Login
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-          environment: review
-
-      - name: Fetch secrets from key vault
-        if: ${{ env.ENVIRONMENT != 'review' }}
-        uses: azure/CLI@v2
-        id: keyvault-yaml-secret
-        with:
-          inlineScript: |
-            SLACK_WEBHOOK=$(az keyvault secret show --name "SLACK-WEBHOOK" --vault-name "${{ secrets.INF_KEY_VAULT }}" --query "value" -o tsv)
-            echo "::add-mask::$SLACK_WEBHOOK"
-            echo "SLACK_WEBHOOK=$SLACK_WEBHOOK" >> $GITHUB_ENV
-
-      - name: Deploy Environment
-        uses: ./.github/actions/deploy-environment
-        with:
-          environment: ${{ env.ENVIRONMENT }}
-          docker-image: edcd9c25360b3e8025d884e6e4eda09dd96fef9b
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          pull-request-number: 4591
-
-      - name: Post comment to Pull Request 4591
-        if: ${{ env.ENVIRONMENT == 'review' }}
-        uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          header: aks
-          message: |
-            ### Deployments
-
-            | App               | URL                                                                                      |
-            | ----------------- | ---------------------------------------------------------------------------------------- |
-            | Track & Pay       | <https://track-and-pay-4591.test.teacherservices.cloud>                                  |
-            | School Placements | <https://manage-school-placements-4591.test.teacherservices.cloud>                       |
 
       - name: Slack Notification
         if: ${{ failure() && env.ENVIRONMENT != 'review' }}
