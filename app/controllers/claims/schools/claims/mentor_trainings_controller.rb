@@ -41,7 +41,6 @@ class Claims::Schools::Claims::MentorTrainingsController < Claims::ApplicationCo
 
   def mentor_training
     current_claim = @claim_revision || claim
-
     mentor_training = current_claim.mentor_trainings.find_by_id(params.require(:id))
 
     @mentor_training ||= if mentor_training.nil?

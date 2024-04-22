@@ -21,6 +21,7 @@
                              href: edit_claims_support_school_claim_path(
                                @school,
                                claim,
+                               params: { revision: true },
                              ),
                              html_attributes: {
                                class: "govuk-link--no-visited-state",
@@ -37,7 +38,10 @@
             </ul>
           <% end %>
           <% row.with_action(text: t("change"),
-                             href: edit_claims_support_school_claim_mentor_path(@school, claim),
+                             href: edit_claims_support_school_claim_mentor_path(
+                               @school, claim,
+                               params: { revision: true }
+                             ),
                              html_attributes: {
                                class: "govuk-link--no-visited-state",
                              }) %>
@@ -58,6 +62,7 @@
                                  mentor_training,
                                  params: {
                                    claims_support_claim_mentor_training_form: { hours_completed: mentor_training.hours_completed },
+                                   revision: true,
                                  },
                                ),
                                html_attributes: {

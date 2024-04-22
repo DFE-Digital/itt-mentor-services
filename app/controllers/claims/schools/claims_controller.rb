@@ -85,7 +85,7 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   end
 
   def claim_id
-    @claim_revision&.id  || params[:claim_id] || params[:id]
+    @claim_revision&.id || params[:claim_id] || params[:id]
   end
 
   def authorize_claim
