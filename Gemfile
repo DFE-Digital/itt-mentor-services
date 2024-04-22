@@ -71,7 +71,7 @@ gem "pagy", "~> 7.0"
 gem "draper"
 
 # Download files safely
-gem "down", "~> 5.0"
+gem "down", "~> 5.4"
 
 # HTTP Request
 gem "httparty"

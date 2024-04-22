@@ -164,7 +164,7 @@ GEM
     dotenv-rails (3.1.0)
       dotenv (= 3.1.0)
       railties (>= 6.1)
-    down (5.4.1)
+    down (5.4.2)
       addressable (~> 2.8)
     draper (4.0.2)
       actionpack (>= 5.0)
@@ -637,7 +637,7 @@ DEPENDENCIES
   debug
   discard
   dotenv-rails
-  down (~> 5.0)
+  down (~> 5.4)
   draper
   erb_lint
   factory_bot_rails
