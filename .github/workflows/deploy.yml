@@ -41,7 +41,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Fetch secrets from key vault
-        if: ${{ environment.name != 'review' }}
+        if: ${{  environment != 'review' }}
         uses: azure/CLI@v2
         id: keyvault-yaml-secret
         with:
@@ -60,7 +60,7 @@ jobs:
 
     #   - name: Seed Review App
     #     shell: bash
-    #     if: github.event.inputs.pr_number!= '' && ${{ environment.name == 'review' }}
+    #     if: github.event.inputs.pr_number!= '' && ${{  environment == 'review' }}
     #     run: |
     #       make ci review get-cluster-credentials
     #       kubectl exec -n bat-qa deployment/itt-mentor-services-4591 -- sh -c "export GIAS_CSV_BASE_URL=https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public  && export PUBLISH_BASE_URL=https://qa.api.publish-teacher-training-courses.service.gov.uk// && cd /app && /usr/local/bin/rake db:seed"
@@ -68,7 +68,7 @@ jobs:
     #       PR_NUMBER: 4591
 
       - name: Post comment to Pull Request 4591
-        if: ${{ environment.name == 'review' }}
+        if: ${{  environment == 'review' }}
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: aks
@@ -81,7 +81,7 @@ jobs:
             | School Placements | <https://manage-school-placements-4591.test.teacherservices.cloud> |
 
       - name: Slack Notification
-        if: ${{ failure() && environment.name != 'review' }}
+        if: ${{ failure() &&  environment != 'review' }}
         uses: rtCamp/action-slack-notify@master
         env:
           SLACK_COLOR: failure
