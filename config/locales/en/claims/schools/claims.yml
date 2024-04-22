@@ -25,7 +25,9 @@ en:
           claim_on_behalf_of_school: I am authorised to claim on behalf of the school
           accurate_information: The information detailed above is accurate and the total I am claiming back has been used to support the cost of the mentor training
           provide_evidence: I will provide evidence to support this claim if requested by the Department for Education
-          hours: "%{hours} hours"
+          total_hours: Total hours
+          hourly_rate: Hourly rate
+          hour: hour
           grant_funding: Grant funding
           hours_of_training: Hours of training
         form:
@@ -47,7 +49,9 @@ en:
           page_title: Claim - %{reference}
           hours_of_training: Hours of training
           grant_funding: Grant funding
-          hours: hours
+          total_hours: Total hours
+          hourly_rate: Hourly rate
+          hour: hour
           submit: Submit claim
           submitted_by: Submitted by %{name} on %{date}.
         edit:

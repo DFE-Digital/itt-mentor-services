@@ -26,7 +26,9 @@ en:
           mentor: Mentor
           submitted_by: Submitted by %{name} on %{date}.
         details:
+          hour: hour
+          hourly_rate: Hourly rate
+          total_hours: Total hours
           mentors: Mentors
           hours_of_training: Hours of training
-          hours: hours
           grant_funding: Grant funding
