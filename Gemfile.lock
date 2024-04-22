@@ -208,7 +208,7 @@ GEM
     geocoder (1.8.2)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    good_job (3.27.3)
+    good_job (3.28.0)
       activejob (>= 6.0.0)
       activerecord (>= 6.0.0)
       concurrent-ruby (>= 1.0.2)
@@ -433,7 +433,7 @@ GEM
       psych (>= 4.0.0)
     redcarpet (3.6.0)
     regexp_parser (2.9.0)
-    reline (0.5.1)
+    reline (0.5.2)
       io-console (~> 0.5)
     request_store (1.6.0)
       rack (>= 1.4)
@@ -644,7 +644,7 @@ DEPENDENCIES
   faker
   flipflop
   geocoder
-  good_job (~> 3.27)
+  good_job (~> 3.28)
   govuk-components (~> 5.3.1)
   govuk_design_system_formbuilder (~> 5.2)
   httparty
