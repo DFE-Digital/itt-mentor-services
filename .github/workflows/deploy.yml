@@ -22,6 +22,7 @@ jobs:
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+          environment: review
 
       - name: Fetch secrets from key vault
         if: ${{ env.ENVIRONMENT != 'review' }}
