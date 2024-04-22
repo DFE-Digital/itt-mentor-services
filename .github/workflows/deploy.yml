@@ -1,6 +1,9 @@
 concurrency: build_and_deploy_${{ github.ref_name }}
 name: Deploy to AKS cluster
 on:
+  push:
+        branches:
+          - 1717-ittms-manual-deployment-workflow-bug-fix-1
   workflow_dispatch:
     inputs:
       environment:
@@ -23,9 +26,9 @@ on:
 
 jobs:
   deploy:
-    name: ${{ github.event.inputs.environment }} deployment
+    name: review deployment
     environment:
-      name: ${{ github.event.inputs.environment }}
+      name: review
     concurrency: deploy_all
     runs-on: ubuntu-latest
 
@@ -38,7 +41,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Fetch secrets from key vault
-        if: ${{ github.event.inputs.environment != 'review' }}
+        if: ${{ environment.name != 'review' }}
         uses: azure/CLI@v2
         id: keyvault-yaml-secret
         with:
@@ -50,22 +53,22 @@ jobs:
       - uses: ./.github/actions/deploy-environment
         id: deploy
         with:
-          environment: ${{ github.event.inputs.environment }}
-          docker-image: ${{ github.event.inputs.sha }}
+          environment: review
+          docker-image: edcd9c25360b3e8025d884e6e4eda09dd96fef9b
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          pull-request-number: ${{ github.event.inputs.pr_number }}
+          pull-request-number: 4591
 
-      - name: Seed Review App
-        shell: bash
-        if: github.event.inputs.pr_number!= '' && ${{ github.event.inputs.environment == 'review' }}
-        run: |
-          make ci review get-cluster-credentials
-          kubectl exec -n bat-qa deployment/itt-mentor-services-${{ github.event.inputs.pr_number }} -- sh -c "export GIAS_CSV_BASE_URL=https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public  && export PUBLISH_BASE_URL=https://qa.api.publish-teacher-training-courses.service.gov.uk// && cd /app && /usr/local/bin/rake db:seed"
-        env:
-          PR_NUMBER: ${{ github.event.inputs.pr_number }}
+    #   - name: Seed Review App
+    #     shell: bash
+    #     if: github.event.inputs.pr_number!= '' && ${{ environment.name == 'review' }}
+    #     run: |
+    #       make ci review get-cluster-credentials
+    #       kubectl exec -n bat-qa deployment/itt-mentor-services-4591 -- sh -c "export GIAS_CSV_BASE_URL=https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public  && export PUBLISH_BASE_URL=https://qa.api.publish-teacher-training-courses.service.gov.uk// && cd /app && /usr/local/bin/rake db:seed"
+    #     env:
+    #       PR_NUMBER: 4591
 
-      - name: Post comment to Pull Request ${{ github.event.inputs.pr_number }}
-        if: ${{ github.event.inputs.environment == 'review' }}
+      - name: Post comment to Pull Request 4591
+        if: ${{ environment.name == 'review' }}
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: aks
@@ -74,14 +77,14 @@ jobs:
 
             | App               | URL                                                                                      |
             | ----------------- | ---------------------------------------------------------------------------------------- |
-            | Track & Pay       | <https://track-and-pay-${{ github.event.inputs.pr_number }}.test.teacherservices.cloud>            |
-            | School Placements | <https://manage-school-placements-${{ github.event.inputs.pr_number }}.test.teacherservices.cloud> |
+            | Track & Pay       | <https://track-and-pay-4591.test.teacherservices.cloud>            |
+            | School Placements | <https://manage-school-placements-4591.test.teacherservices.cloud> |
 
       - name: Slack Notification
-        if: failure() && ${{ github.event.inputs.environment != 'review' }}
+        if: ${{ failure() && environment.name != 'review' }}
         uses: rtCamp/action-slack-notify@master
         env:
           SLACK_COLOR: failure
-          SLACK_TITLE: Failure deploying release to${{ github.event.inputs.environment }}
-          SLACK_MESSAGE: Failure deploying release to ${{ github.event.inputs.environment }} - Docker tag ${{ github.event.inputs.sha }}
+          SLACK_TITLE: Failure deploying release toreview
+          SLACK_MESSAGE: Failure deploying release to review - Docker tag ${{ github.event.inputs.sha }}
           SLACK_WEBHOOK: ${{ steps.keyvault-yaml-secret.outputs.SLACK_WEBHOOK }}
