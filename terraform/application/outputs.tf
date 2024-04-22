@@ -1,3 +1,3 @@
-output "hostname" {
-  value = [local.app_env_values["CLAIMS_HOST"], local.app_env_values["PLACEMENTS_HOST"]]
+output "ingress_hostnames" {
+  value = [local.ingress_domain_map["INGRESS_CLAIMS_HOST"], local.ingress_domain_map["INGRESS_PLACEMENTS_HOST"]]
 }

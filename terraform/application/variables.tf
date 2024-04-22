@@ -45,17 +45,21 @@ variable "enable_monitoring" {
 locals {
   postgres_ssl_mode       = var.enable_postgres_ssl ? "require" : "disable"
   app_env_values_from_yml = yamldecode(file("${path.module}/config/${var.config}_app_env.yml"))
-  ingress_claims_domain_map = (
+  ingress_domain_map = {
+    INGRESS_CLAIMS_HOST = "track-and-pay-${var.environment}.${module.cluster_data.ingress_domain}"
+    INGRESS_PLACEMENTS_HOST = "manage-school-placements-${var.environment}.${module.cluster_data.ingress_domain}"
+  }
+  claims_domain_map = (
     contains(keys(local.app_env_values_from_yml), "CLAIMS_HOST") ?
-    {} : { CLAIMS_HOST = "track-and-pay-${var.environment}.${module.cluster_data.ingress_domain}" }
+    {} : { CLAIMS_HOST = local.ingress_domain_map["INGRESS_CLAIMS_HOST"] }
   )
-  ingress_placements_domain_map = (
+  placements_domain_map = (
     contains(keys(local.app_env_values_from_yml), "PLACEMENTS_HOST") ?
-    {} : { PLACEMENTS_HOST = "manage-school-placements-${var.environment}.${module.cluster_data.ingress_domain}" }
+    {} : { PLACEMENTS_HOST = local.ingress_domain_map["INGRESS_PLACEMENTS_HOST"] }
   )
   app_env_values = merge(
     local.app_env_values_from_yml,
-    local.ingress_claims_domain_map,
-    local.ingress_placements_domain_map
+    local.claims_domain_map,
+    local.placements_domain_map
   )
 }
