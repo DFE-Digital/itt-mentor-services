@@ -71,6 +71,8 @@ RSpec.describe "View a claim", type: :system, service: :claims do
     expect(page).to have_content("Mentors\nBarry Garlow")
     expect(page).to have_content("Hours of training")
     expect(page).to have_content("Barry Garlow#{mentor_training.hours_completed} hours")
+    expect(page).to have_content("Total hours6 hours")
+    expect(page).to have_content("Hourly rate£53.60")
     expect(page).to have_content("Claim amount£321.60")
   end
 
@@ -83,6 +85,8 @@ RSpec.describe "View a claim", type: :system, service: :claims do
     expect(page).to have_content("Mentors\nBarry Garlow")
     expect(page).to have_content("Hours of training")
     expect(page).to have_content("Barry Garlow#{draft_mentor_training.hours_completed} hours")
+    expect(page).to have_content("Total hours6 hours")
+    expect(page).to have_content("Hourly rate£53.60")
     expect(page).to have_content("Claim amount£321.60")
   end
 

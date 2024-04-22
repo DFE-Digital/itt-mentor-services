@@ -231,6 +231,14 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
 
     within("dl.govuk-summary-list:nth(3)") do
       within(".govuk-summary-list__row:nth(1)") do
+        expect(page).to have_content("Total hours#{claim.mentor_trainings.sum(:hours_completed)} hours")
+      end
+
+      within(".govuk-summary-list__row:nth(2)") do
+        expect(page).to have_content("Hourly rate£53.60")
+      end
+
+      within(".govuk-summary-list__row:nth(3)") do
         expect(page).to have_content("Claim amount")
         expect(page).to have_content(claim.amount.format(symbol: true, decimal_mark: ".", no_cents: true))
       end

@@ -14,7 +14,9 @@ en:
             update: Update claim
             grant_funding: Grant funding
             add_claim: Add claim - %{school}
-            hours: "%{hours} hours"
+            hour: hour
+            hourly_rate: Hourly rate
+            total_hours: Total hours
             hours_of_training: Hours of training
           index:
             heading: Claims

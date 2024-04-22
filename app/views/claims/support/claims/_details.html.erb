@@ -47,7 +47,7 @@
    <%= claim.mentor_trainings.order_by_mentor_full_name.each do |mentor_training| %>
     <% summary_list.with_row do |row| %>
       <% row.with_key(text: mentor_training.mentor.full_name) %>
-      <% row.with_value(text: "#{mentor_training.hours_completed} #{t(".hours")}") %>
+      <% row.with_value(text: pluralize(mentor_training.hours_completed, t(".hour"))) %>
       <% if policy(claim).edit? %>
         <% row.with_action(text: t("change"),
                            href: edit_claims_support_school_claim_mentor_training_path(
@@ -68,6 +68,16 @@
 
 <h2 class="govuk-heading-m"><%= t(".grant_funding") %></h2>
 <%= govuk_summary_list do |summary_list| %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".total_hours")) %>
+    <% row.with_value(text: pluralize(claim.mentor_trainings.sum(:hours_completed), t(".hour"))) %>
+  <% end %>
+
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".hourly_rate")) %>
+    <% row.with_value(text: humanized_money_with_symbol(claim.school.region.funding_available_per_hour)) %>
+  <% end %>
+
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: Claims::Claim.human_attribute_name(:claim_amount)) %>
     <% row.with_value(text: humanized_money_with_symbol(claim.amount)) %>

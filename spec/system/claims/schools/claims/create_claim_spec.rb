@@ -153,6 +153,14 @@ RSpec.describe "Create claim", type: :system, service: :claims do
 
     within("dl.govuk-summary-list:nth(3)") do
       within(".govuk-summary-list__row:nth(1)") do
+        expect(page).to have_content("Total hours32 hours")
+      end
+
+      within(".govuk-summary-list__row:nth(2)") do
+        expect(page).to have_content("Hourly rate£53.60")
+      end
+
+      within(".govuk-summary-list__row:nth(3)") do
         expect(page).to have_content("Claim amount")
         expect(page).to have_content("£1,715.20")
       end
