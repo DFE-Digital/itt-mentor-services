@@ -27,8 +27,8 @@ on:
 jobs:
   deploy:
     name: review deployment
-    environment:
-      name: review
+    env:
+        environment: review
     concurrency: deploy_all
     runs-on: ubuntu-latest
 
