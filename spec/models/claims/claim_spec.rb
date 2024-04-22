@@ -69,14 +69,14 @@ RSpec.describe Claims::Claim, type: :model do
   end
 
   describe "scopes" do
-    describe "#visible" do
+    describe "#active" do
       it "returns the claims that dont have status internal_draft" do
         create(:claim)
         claim1 = create(:claim, :draft)
         claim2 = create(:claim, :submitted)
         create(:claim, :internal_draft)
 
-        expect(described_class.visible).to eq(
+        expect(described_class.active).to eq(
           [claim1, claim2],
         )
       end
