@@ -1,16 +1,16 @@
-concurrency: build_and_deploy_${{ github.ref_name }}
 name: Deploy to AKS cluster
+
 on:
   push:
-        branches:
-          - 1717-ittms-manual-deployment-workflow-bug-fix-1
+    branches:
+      - 1717-ittms-manual-deployment-workflow-bug-fix-1
+
 env:
-    environment: review
+  ENVIRONMENT: review
+
 jobs:
   deploy:
-    name: review deployment
-    env:
-        environment: review
+    name: Review Deployment
     concurrency: deploy_all
     runs-on: ubuntu-latest
 
@@ -18,59 +18,47 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: azure/login@v2
+      - name: Azure Login
+        uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Fetch secrets from key vault
-        if: ${{  environment != 'review' }}
+        if: ${{ env.ENVIRONMENT != 'review' }}
         uses: azure/CLI@v2
         id: keyvault-yaml-secret
         with:
-          environment: review
           inlineScript: |
             SLACK_WEBHOOK=$(az keyvault secret show --name "SLACK-WEBHOOK" --vault-name "${{ secrets.INF_KEY_VAULT }}" --query "value" -o tsv)
             echo "::add-mask::$SLACK_WEBHOOK"
-            echo "SLACK_WEBHOOK=$SLACK_WEBHOOK" >> $GITHUB_OUTPUT
+            echo "SLACK_WEBHOOK=$SLACK_WEBHOOK" >> $GITHUB_ENV
 
-      - uses: ./.github/actions/deploy-environment
-        id: deploy
+      - name: Deploy Environment
+        uses: ./.github/actions/deploy-environment
         with:
-          environment: review
+          environment: ${{ env.ENVIRONMENT }}
           docker-image: edcd9c25360b3e8025d884e6e4eda09dd96fef9b
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
           pull-request-number: 4591
 
-    #   - name: Seed Review App
-    #     shell: bash
-    #     if: github.event.inputs.pr_number!= '' && ${{  environment == 'review' }}
-    #     run: |
-    #       make ci review get-cluster-credentials
-    #       kubectl exec -n bat-qa deployment/itt-mentor-services-4591 -- sh -c "export GIAS_CSV_BASE_URL=https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public  && export PUBLISH_BASE_URL=https://qa.api.publish-teacher-training-courses.service.gov.uk// && cd /app && /usr/local/bin/rake db:seed"
-    #     env:
-    #       PR_NUMBER: 4591
-
       - name: Post comment to Pull Request 4591
-        if: ${{  environment == 'review' }}
+        if: ${{ env.ENVIRONMENT == 'review' }}
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          environment: review
           header: aks
           message: |
             ### Deployments
 
             | App               | URL                                                                                      |
             | ----------------- | ---------------------------------------------------------------------------------------- |
-            | Track & Pay       | <https://track-and-pay-4591.test.teacherservices.cloud>            |
-            | School Placements | <https://manage-school-placements-4591.test.teacherservices.cloud> |
+            | Track & Pay       | <https://track-and-pay-4591.test.teacherservices.cloud>                                  |
+            | School Placements | <https://manage-school-placements-4591.test.teacherservices.cloud>                       |
 
       - name: Slack Notification
-        if: ${{ failure() &&  environment != 'review' }}
+        if: ${{ failure() && env.ENVIRONMENT != 'review' }}
         uses: rtCamp/action-slack-notify@master
-        with:
-          environment: review
         env:
           SLACK_COLOR: failure
-          SLACK_TITLE: Failure deploying release toreview
+          SLACK_TITLE: Failure deploying release to review
           SLACK_MESSAGE: Failure deploying release to review - Docker tag ${{ github.event.inputs.sha }}
           SLACK_WEBHOOK: ${{ steps.keyvault-yaml-secret.outputs.SLACK_WEBHOOK }}
