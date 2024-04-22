@@ -6,7 +6,7 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
   helper_method :claim_provider_form
 
   def index
-    @pagy, @claims = pagy(@school.claims.visible.order_created_at_desc)
+    @pagy, @claims = pagy(@school.claims.active.order_created_at_desc)
   end
 
   def new; end

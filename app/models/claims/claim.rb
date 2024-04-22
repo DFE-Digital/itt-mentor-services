@@ -43,9 +43,9 @@ class Claims::Claim < ApplicationRecord
   validates :status, presence: true
   validates :reference, uniqueness: { case_sensitive: false }, allow_nil: true
 
-  VISIBLE_STATUSES = %i[draft submitted].freeze
+  ACTIVE_STATUSES = %i[draft submitted].freeze
 
-  scope :visible, -> { where(status: VISIBLE_STATUSES) }
+  scope :active, -> { where(status: ACTIVE_STATUSES) }
   scope :order_created_at_desc, -> { order(created_at: :desc) }
 
   enum :status,
