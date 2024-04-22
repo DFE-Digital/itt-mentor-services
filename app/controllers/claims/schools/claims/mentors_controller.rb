@@ -2,9 +2,9 @@ class Claims::Schools::Claims::MentorsController < Claims::ApplicationController
   include Claims::BelongsToSchool
   before_action :authorize_claim
 
-  helper_method :claim_mentors_form
-
-  def new; end
+  def new
+    render locals: { claim_mentors_form: }
+  end
 
   def create
     if claim_mentors_form.save
@@ -16,17 +16,25 @@ class Claims::Schools::Claims::MentorsController < Claims::ApplicationController
         ),
       )
     else
-      render :new
+      render :new, locals: { claim_mentors_form: }
     end
   end
 
-  def edit; end
+  def edit
+    if create_revision?
+      revision = claim.create_revision!
+
+      render locals: { claim_mentors_form: claim_mentors_form(revision) }
+    else
+      render locals: { claim_mentors_form: }
+    end
+  end
 
   def update
     if claim_mentors_form.save
       redirect_to claim_mentors_form.update_success_path
     else
-      render :edit
+      render :edit, locals: { claim_mentors_form: }
     end
   end
 
@@ -40,16 +48,22 @@ class Claims::Schools::Claims::MentorsController < Claims::ApplicationController
     @claim ||= @school.claims.find(params.require(:claim_id))
   end
 
-  def claim_mentors_form
+  def claim_mentors_form(claim_revision = nil)
+    claim_param = claim_revision || claim
+
     @claim_mentors_form ||=
       if params[:claims_claim].present?
-        Claims::Claim::MentorsForm.new(claim:, mentor_ids: claim_params[:mentor_ids])
+        Claims::Claim::MentorsForm.new(claim: claim_param, mentor_ids: claim_params[:mentor_ids])
       else
-        Claims::Claim::MentorsForm.new(claim:)
+        Claims::Claim::MentorsForm.new(claim: claim_param)
       end
   end
 
   def authorize_claim
     authorize claim
+  end
+
+  def create_revision?
+    params[:revision] == "true"
   end
 end

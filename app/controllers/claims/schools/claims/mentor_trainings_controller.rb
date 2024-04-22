@@ -3,7 +3,11 @@ class Claims::Schools::Claims::MentorTrainingsController < Claims::ApplicationCo
   before_action :authorize_claim
   helper_method :mentor_training_form
 
-  def edit; end
+  def edit
+    if create_revision?
+      @claim_revision = claim.create_revision!
+    end
+  end
 
   def update
     if mentor_training_form.save
@@ -32,11 +36,21 @@ class Claims::Schools::Claims::MentorTrainingsController < Claims::ApplicationCo
   end
 
   def default_params
-    { claim:, mentor_training: }
+    { claim: @claim_revision || claim, mentor_training: }
   end
 
   def mentor_training
-    @mentor_training ||= @claim.mentor_trainings.find(params.require(:id))
+    current_claim = @claim_revision || claim
+
+    mentor_training = current_claim.mentor_trainings.find_by_id(params.require(:id))
+
+    @mentor_training ||= if mentor_training.nil?
+                           current_claim.mentor_trainings.find_by(
+                             mentor_id: current_claim.previous_revision.mentor_trainings.find(params.require(:id)).mentor_id,
+                           )
+                         else
+                           mentor_training
+                         end
   end
 
   def claim
@@ -45,5 +59,9 @@ class Claims::Schools::Claims::MentorTrainingsController < Claims::ApplicationCo
 
   def authorize_claim
     authorize claim
+  end
+
+  def create_revision?
+    params[:revision] == "true"
   end
 end

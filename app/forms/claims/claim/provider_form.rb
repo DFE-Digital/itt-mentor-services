@@ -13,7 +13,13 @@ class Claims::Claim::ProviderForm < ApplicationForm
     claim.provider_id = provider_id
     claim.status = :internal_draft if claim.status.nil?
     claim.created_by = current_user
-    claim.save!
+
+    ActiveRecord::Base.transaction do
+      claim.save!
+      claim.mentor_trainings.each do |mentor_training|
+        mentor_training.update!(provider_id:)
+      end
+    end
   end
 
   def claim
