@@ -136,15 +136,8 @@ describe Placements::PartnershipForm, type: :model do
   describe "#school" do
     context "when given the id of an existing placement school" do
       it "returns the placement school associated with that id" do
-        school = create(:placements_school)
-        expect(described_class.new(school_id: school.id).school).to eq(school)
-      end
-    end
-
-    context "when given the id of a school not onboarded onto the placements service" do
-      it "returns nil" do
         school = create(:school)
-        expect(described_class.new(school_id: school.id).school).to eq(nil)
+        expect(described_class.new(school_id: school.id).school).to eq(school)
       end
     end
 
@@ -158,15 +151,8 @@ describe Placements::PartnershipForm, type: :model do
   describe "#provider" do
     context "when given the id of an existing placement provider" do
       it "returns the placement school associated with that id" do
-        provider = create(:placements_provider)
-        expect(described_class.new(provider_id: provider.id).provider).to eq(provider)
-      end
-    end
-
-    context "when given the id of a provider not onboarded onto the placements service" do
-      it "returns nil" do
         provider = create(:provider)
-        expect(described_class.new(provider_id: provider.id).provider).to eq(nil)
+        expect(described_class.new(provider_id: provider.id).provider).to eq(provider)
       end
     end
 

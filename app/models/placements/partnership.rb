@@ -20,8 +20,8 @@
 #  fk_rails_...  (school_id => schools.id)
 #
 class Placements::Partnership < ApplicationRecord
-  belongs_to :provider
-  belongs_to :school
+  belongs_to :provider, class_name: "::Provider"
+  belongs_to :school, class_name: "::School"
 
   validates :school_id, uniqueness: { scope: :provider_id }
 end

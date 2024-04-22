@@ -7,11 +7,11 @@ class Placements::PartnershipForm < ApplicationForm
   validate :partnership_already_exists?
 
   def provider
-    @provider ||= Placements::Provider.find_by(id: provider_id)
+    @provider ||= ::Provider.find_by(id: provider_id)
   end
 
   def school
-    @school ||= Placements::School.find_by(id: school_id)
+    @school ||= ::School.find_by(id: school_id)
   end
 
   def as_form_params

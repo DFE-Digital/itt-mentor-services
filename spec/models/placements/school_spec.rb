@@ -92,14 +92,17 @@ RSpec.describe Placements::School do
       it { is_expected.to have_many(:partner_providers).through(:partnerships) }
 
       it "returns only Placements::Provider records" do
-        placements_provider = create(:placements_provider)
         placements_school = create(:placements_school)
+        placements_provider = create(:provider, :placements)
+        provider = create(:provider)
 
-        placements_school.partner_providers << create(:claims_provider)
         placements_school.partner_providers << placements_provider
+        placements_school.partner_providers << provider
 
-        expect(placements_school.partner_providers).to contain_exactly(placements_provider)
-        expect(placements_school.partner_providers).to all(be_a(Placements::Provider))
+        expect(placements_school.partner_providers).to match_array(
+          [placements_provider, provider],
+        )
+        expect(placements_school.partner_providers).to all(be_a(Provider))
       end
     end
   end

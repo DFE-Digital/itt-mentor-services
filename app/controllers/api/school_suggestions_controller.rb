@@ -1,16 +1,11 @@
 class Api::SchoolSuggestionsController < ApplicationController
   def index
-    schools = model.search_name_urn_postcode(query_params)
-    render json: schools
+    render json: School.search_name_urn_postcode(query_params)
   end
 
   private
 
   def query_params
     params.require(:query)&.downcase
-  end
-
-  def model
-    School
   end
 end
