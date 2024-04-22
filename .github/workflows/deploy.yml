@@ -4,6 +4,9 @@ on:
   push:
         branches:
           - 1717-ittms-manual-deployment-workflow-bug-fix-1
+env:
+    environment: review
+
   workflow_dispatch:
     inputs:
       environment:
@@ -45,6 +48,7 @@ jobs:
         uses: azure/CLI@v2
         id: keyvault-yaml-secret
         with:
+          environment: review
           inlineScript: |
             SLACK_WEBHOOK=$(az keyvault secret show --name "SLACK-WEBHOOK" --vault-name "${{ secrets.INF_KEY_VAULT }}" --query "value" -o tsv)
             echo "::add-mask::$SLACK_WEBHOOK"
@@ -71,6 +75,7 @@ jobs:
         if: ${{  environment == 'review' }}
         uses: marocchino/sticky-pull-request-comment@v2
         with:
+          environment: review
           header: aks
           message: |
             ### Deployments
@@ -83,6 +88,8 @@ jobs:
       - name: Slack Notification
         if: ${{ failure() &&  environment != 'review' }}
         uses: rtCamp/action-slack-notify@master
+        with:
+          environment: review
         env:
           SLACK_COLOR: failure
           SLACK_TITLE: Failure deploying release toreview
