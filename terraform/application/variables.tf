@@ -42,6 +42,42 @@ variable "enable_monitoring" {
   description = "Enable monitoring and alerting"
 }
 
+variable "app_replicas" {
+  description = "number of replicas of the web app"
+  default = 1
+}
+
+variable "sidekiq_replicas" {
+  description = "number of replicas of the sidekiq"
+  default = 1
+}
+
+variable "key_vault_resource_group" {
+  default     = null
+  description = "The name of the key vault resorce group"
+}
+
+variable "statuscake_password_name" {
+  default     = "SC-PASSWORD"
+  description = "The name of the statuscake password"
+}
+
+variable "infra_key_vault_name" {
+  default     = null
+  description = "The name of the key vault to get postgres and redis"
+}
+
+variable "statuscake_alerts" {
+  type = map(
+    object({
+      website_url   = optional(list(string), [])
+      ssl_url       = optional(list(string), [])
+      contact_groups = optional(list(number), [])
+    })
+  )
+  default = {}
+}
+
 locals {
   postgres_ssl_mode       = var.enable_postgres_ssl ? "require" : "disable"
   app_env_values_from_yml = yamldecode(file("${path.module}/config/${var.config}_app_env.yml"))

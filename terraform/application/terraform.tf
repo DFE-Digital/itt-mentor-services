@@ -36,3 +36,8 @@ provider "kubernetes" {
     }
   }
 }
+
+provider "statuscake" {
+  # api_token = local.infra_secrets.STATUSCAKE_PASSWORD
+  api_token = data.azurerm_key_vault_secret.sc_password.value
+}

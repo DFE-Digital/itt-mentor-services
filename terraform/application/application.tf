@@ -38,7 +38,7 @@ module "web_application" {
   cluster_configuration_map  = module.cluster_data.configuration_map
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
-
+  replicas                   = var.app_replicas
   docker_image = var.docker_image
 }
 
@@ -52,7 +52,7 @@ module "worker_application" {
   namespace    = var.namespace
   environment  = var.environment
   service_name = var.service_name
-
+  replicas                   = var.sidekiq_replicas
   cluster_configuration_map  = module.cluster_data.configuration_map
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
