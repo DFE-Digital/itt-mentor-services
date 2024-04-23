@@ -41,7 +41,41 @@ variable "enable_monitoring" {
   default     = false
   description = "Enable monitoring and alerting"
 }
-
+variable "app_replicas" {
+  description = "number of replicas of the web app"
+  default = 1
+}
+variable "worker_replicas" {
+  description = "number of replicas of the workers"
+  default = 1
+}
+variable "key_vault_resource_group" {
+  default     = null
+  description = "The name of the key vault resorce group"
+}
+variable "statuscake_password_name" {
+  default     = "SC-PASSWORD"
+  description = "The name of the statuscake password"
+}
+variable "infra_key_vault_name" {
+  default     = null
+  description = "The name of the key vault to get postgres and redis"
+}
+variable "azure_maintenance_window" { 
+  default = null 
+}
+variable "postgres_flexible_server_sku" { 
+  default = "B_Standard_B1ms" 
+}
+variable "postgres_enable_high_availability" { 
+  default = false 
+}
+variable "azure_enable_backup_storage" { 
+  default = false 
+}
+variable "enable_container_monitoring" { 
+  default = false 
+}
 locals {
   postgres_ssl_mode       = var.enable_postgres_ssl ? "require" : "disable"
   app_env_values_from_yml = yamldecode(file("${path.module}/config/${var.config}_app_env.yml"))

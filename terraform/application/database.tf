@@ -13,4 +13,7 @@ module "postgres" {
   azure_extensions            = ["pg_trgm", "plpgsql"]
   azure_enable_backup_storage = var.enable_postgres_backup_storage
   server_version              = "14"
+  azure_sku_name          = var.postgres_flexible_server_sku
+  azure_enable_high_availability = var.postgres_enable_high_availability
+  azure_maintenance_window       = var.azure_maintenance_window
 }
