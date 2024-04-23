@@ -7,13 +7,9 @@ class Placements::Support::Schools::PlacementsController < Placements::Support::
     @placements = placements.decorate
   end
 
-  def show
-    @placement
-  end
+  def show; end
 
-  def remove
-    @placement
-  end
+  def remove; end
 
   def destroy
     @placement.destroy!
