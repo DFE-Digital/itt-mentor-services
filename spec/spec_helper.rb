@@ -38,6 +38,7 @@ SimpleCov.start "rails" do
   add_group "Policies", "app/policies"
   add_group "Queries", "app/queries"
   add_group "Services", "app/services"
+  add_group "Validators", "app/validators"
 end
 
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
