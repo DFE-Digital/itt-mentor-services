@@ -96,7 +96,6 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
     then_i_cant_see_the_mentor(mentor3)
   end
 
-
   scenario "Colin changes the training hours for a mentor on check page" do
     given_i_visit_claim_support_check_page
     when_i_click_change_training_hours_for_mentor

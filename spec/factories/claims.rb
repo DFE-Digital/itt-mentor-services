@@ -23,7 +23,6 @@
 #  index_claims_on_next_revision_id      (next_revision_id)
 #  index_claims_on_previous_revision_id  (previous_revision_id)
 #  index_claims_on_provider_id           (provider_id)
-#  index_claims_on_reference             (reference) UNIQUE
 #  index_claims_on_school_id             (school_id)
 #  index_claims_on_submitted_by          (submitted_by_type,submitted_by_id)
 #

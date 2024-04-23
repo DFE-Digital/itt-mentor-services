@@ -60,8 +60,14 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
   end
 
   def draft
-    success_message = @claim.draft? ? t(".update_success") : t(".add_success")
-    Claims::Claim::CreateDraft.call(claim: @claim)
+    claim_was_draft = @claim.was_draft?
+    success_message = claim_was_draft ? t(".update_success") : t(".add_success")
+
+    if claim_was_draft
+      Claims::Claim::UpdateDraft.call(claim: @claim)
+    else
+      Claims::Claim::CreateDraft.call(claim: @claim)
+    end
 
     redirect_to claims_support_school_claims_path(@school), flash: { success: success_message }
   end

@@ -23,7 +23,6 @@
 #  index_claims_on_next_revision_id      (next_revision_id)
 #  index_claims_on_previous_revision_id  (previous_revision_id)
 #  index_claims_on_provider_id           (provider_id)
-#  index_claims_on_reference             (reference) UNIQUE
 #  index_claims_on_school_id             (school_id)
 #  index_claims_on_submitted_by          (submitted_by_type,submitted_by_id)
 #
@@ -48,7 +47,12 @@ class Claims::Claim < ApplicationRecord
   belongs_to :next_revision, class_name: "Claims::Claim", optional: true
 
   validates :status, presence: true
-  validates :reference, uniqueness: { case_sensitive: false }, allow_nil: true
+  validates(
+    :reference,
+    uniqueness: { case_sensitive: false },
+    allow_nil: true,
+    unless: :has_revision?,
+  )
 
   VISIBLE_STATUSES = %i[draft submitted].freeze
 
@@ -79,7 +83,7 @@ class Claims::Claim < ApplicationRecord
     claim_record = self
     Claims::Claim::RemoveEmptyMentorTrainingHours.call(claim: claim_record)
 
-    claim_record = claim_record.previous_revision while !claim_record.ready_to_be_checked? && claim_record.present?
+    claim_record = claim_record.previous_revision while claim_record.present? && !claim_record.ready_to_be_checked?
 
     claim_record
   end
@@ -90,6 +94,7 @@ class Claims::Claim < ApplicationRecord
     dup_record.submitted_by = submitted_by
     dup_record.mentor_trainings = mentor_trainings.map(&:dup)
     dup_record.previous_revision_id = id
+    dup_record.status = :internal_draft
     dup_record
   end
 
@@ -102,5 +107,17 @@ class Claims::Claim < ApplicationRecord
     end
 
     dup
+  end
+
+  def has_revision?
+    previous_revision_id.present? || next_revision_id.present?
+  end
+
+  def was_draft?
+    claim_record = self
+
+    claim_record = claim_record.previous_revision while claim_record.present? && !claim_record.draft?
+
+    claim_record&.draft?
   end
 end
