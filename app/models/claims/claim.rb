@@ -79,19 +79,8 @@ class Claims::Claim < ApplicationRecord
     mentors.present? && mentor_trainings.without_hours.blank?
   end
 
-  def get_valid_revision
-    claim_record = self
-    Claims::Claim::RemoveEmptyMentorTrainingHours.call(claim: claim_record)
-
-    claim_record = claim_record.previous_revision while claim_record.present? && !claim_record.ready_to_be_checked?
-
-    claim_record
-  end
-
   def deep_dup
     dup_record = dup
-    dup_record.created_by = created_by
-    dup_record.submitted_by = submitted_by
     dup_record.mentor_trainings = mentor_trainings.map(&:dup)
     dup_record.previous_revision_id = id
     dup_record.status = :internal_draft
@@ -99,14 +88,22 @@ class Claims::Claim < ApplicationRecord
   end
 
   def create_revision!
-    dup = deep_dup
+    revision_record = deep_dup
 
     ActiveRecord::Base.transaction do
-      dup.save!
-      update!(next_revision_id: dup.id)
+      revision_record.save!
+      update!(next_revision_id: revision_record.id)
     end
 
-    dup
+    revision_record
+  end
+
+  def get_valid_revision
+    claim_record = self
+    Claims::Claim::RemoveEmptyMentorTrainingHours.call(claim: claim_record)
+
+    claim_record = claim_record.previous_revision while claim_record.present? && !claim_record.ready_to_be_checked?
+    claim_record
   end
 
   def has_revision?
@@ -115,9 +112,8 @@ class Claims::Claim < ApplicationRecord
 
   def was_draft?
     claim_record = self
-
     claim_record = claim_record.previous_revision while claim_record.present? && !claim_record.draft?
 
-    claim_record&.draft?
+    claim_record.nil? ? false : claim_record.draft?
   end
 end

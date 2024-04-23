@@ -22,19 +22,17 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   def show; end
 
   def check
-    valid_revision = @claim.get_valid_revision
-    last_mentor_training = valid_revision.mentor_trainings.order_by_mentor_full_name.last
+    @valid_claim = @claim.get_valid_revision
+    last_mentor_training = @valid_claim.mentor_trainings.order_by_mentor_full_name.last
 
     @back_path = edit_claims_school_claim_mentor_training_path(
       @school,
-      valid_revision,
+      @valid_claim,
       last_mentor_training,
       params: {
         claims_claim_mentor_training_form: { hours_completed: last_mentor_training.hours_completed },
       },
     )
-
-    render locals: { claim: valid_revision }
   end
 
   def edit

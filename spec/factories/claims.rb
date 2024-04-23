@@ -36,6 +36,7 @@ FactoryBot.define do
     association :school, factory: :claims_school
     association :provider
     association :created_by, factory: :claims_user
+    association :submitted_by, factory: :claims_user
 
     status { :internal_draft }
 
