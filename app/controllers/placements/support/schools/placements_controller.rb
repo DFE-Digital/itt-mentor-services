@@ -8,11 +8,11 @@ class Placements::Support::Schools::PlacementsController < Placements::Support::
   end
 
   def show
-    @placement = @school.placements.find(params.fetch(:id)).decorate
+    @placement
   end
 
   def remove
-    @placement = @placement.decorate
+    @placement
   end
 
   def destroy
@@ -27,6 +27,6 @@ class Placements::Support::Schools::PlacementsController < Placements::Support::
   end
 
   def set_placement
-    @placement = @school.placements.find(params.fetch(:id))
+    @placement = @school.placements.find(params.fetch(:id)).decorate
   end
 end
