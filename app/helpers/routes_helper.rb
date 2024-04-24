@@ -1,7 +1,7 @@
 module RoutesHelper
   include Placements::Routes::OrganisationsHelper
 
-  CLAIMS_FEEDBACK_URL = "https://forms.office.com/e/0E3277Kqpi".freeze
+  CLAIMS_FEEDBACK_URL = "https://forms.office.com/e/YmzG7PTLCi".freeze
   PLACEMENTS_FEEDBACK_URL = "https://forms.office.com/e/iVBfSXWPDb".freeze
 
   def root_path
