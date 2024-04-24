@@ -6,6 +6,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= govuk_button_to(t(".add_partner_provider"), new_placements_school_partner_provider_path, method: :get) %>
+
       <% if @partner_providers.any? %>
         <%= app_table do |table| %>
           <% table.with_head do |head| %>

@@ -172,11 +172,13 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     within(".app-secondary-navigation__list") do
       expect(page).to have_link "Details", current: "false"
       expect(page).to have_link "Users", current: "page"
-      unless organisation.is_a?(Provider)
+      if organisation.is_a?(Provider)
+        expect(page).to have_link "Providers", current: "false"
+      else
         expect(page).to have_link "Mentors", current: "false"
+        expect(page).to have_link "Partner providers", current: "false"
       end
       expect(page).to have_link "Placements", current: "false"
-      expect(page).to have_link "Providers", current: "false"
     end
   end
 

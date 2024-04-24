@@ -1,0 +1,47 @@
+en:
+  placements:
+    support:
+      schools:
+        partner_providers:
+          index:
+            heading: Partner providers
+            add_partner_provider: Add partner provider
+            empty_state: "There are no partner providers for %{school_name}."
+            attributes:
+              partner_providers:
+                name: Name
+                urn: Unique reference number (URN)
+          show:
+            page_title: "%{partner_provider_name} - Partner providers - %{school_name}"
+            caption: "Partner providers - %{school_name}"
+            contact_details: Contact details
+            remove_partner_provider: Remove partner provider
+          remove:
+            page_title: "Are you sure you want to remove this partner provider? - %{provider_name} - %{school_name}"
+            cancel: Cancel
+            remove_partner_provider: Remove partner provider
+            are_you_sure: Are you sure you want to remove this partner provider?
+          destroy:
+            partner_provider_removed: Partner provider removed
+          new:
+            page_title: "Enter a provider name, UKPRN, URN or postcode - Add partner provider - %{school_name}"
+            page_title_with_error: "Errors: Enter a provider name, UKPRN, URN or postcode - Add partner provider - %{school_name}"
+            caption: Add partner provider - %{school_name}
+            title: Enter a provider name, UKPRN, URN or postcode
+            cancel: Cancel
+          check:
+            continue: Continue
+            cancel: Cancel
+            page_title: Check your answers - Add partner provider - %{school_name}
+            contact_details: Contact details
+            add_partner_provider: Add partner provider
+            caption: Add partner provider - %{school_name}
+            title: Check your answers
+            name: Name
+            ukprn: UK provider reference number (UKPRN)
+            telephone: Telephone
+            address: Address
+            website: Website
+            email: Email address
+          create:
+            partner_provider_added: Partner provider added

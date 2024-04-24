@@ -49,6 +49,16 @@ scope module: :placements,
           member { get :remove }
           collection { get :check }
         end
+        
+        resources :partner_providers, only: %i[index new create show destroy] do
+          member { get :remove }
+
+          collection do
+            get :check
+            get :check_provider_option
+            get :provider_options
+          end
+        end
       end
     end
 

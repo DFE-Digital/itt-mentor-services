@@ -1,0 +1,24 @@
+<%= content_for :page_title, sanitize(t(".page_title", provider_name: @partner_provider.name, school_name: @school.name)) %>
+
+<%= render "placements/support/primary_navigation", current_navigation: :organisations %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: placements_support_school_partner_provider_path(@school, @partner_provider)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <label class="govuk-label govuk-label--l">
+        <span class="govuk-caption-l"><%= @partner_provider.name %></span>
+        <%= t(".are_you_sure") %>
+      </label>
+
+      <%= govuk_button_to t(".remove_partner_provider"), placements_support_school_partner_provider_path(@school, @partner_provider), warning: true, method: :delete %>
+
+      <p class="govuk-body">
+        <%= govuk_link_to(t(".cancel"), placements_support_school_partner_provider_path(@school, @partner_provider), no_visited_state: true) %>
+      </p>
+    </div>
+  </div>
+</div>
