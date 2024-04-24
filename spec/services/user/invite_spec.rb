@@ -20,21 +20,49 @@ RSpec.describe User::Invite do
     end
 
     context "when the user's service is Placements" do
-      describe "when the organisation is a school" do
-        let(:user) { create(:placements_user) }
-        let(:organisation) { create(:placements_school) }
+      context "when 'user_onboarding_emails' feature flag is enabled" do
+        let(:feature_flags) { Flipflop::FeatureSet.current.test! }
 
-        it "calls mailer with correct prams" do
-          expect { user_invite_service }.to have_enqueued_mail(UserMailer, :user_membership_created_notification).with(params: { service: :placements }, args: [user, organisation])
+        before { feature_flags.switch!(:user_onboarding_emails, true) }
+
+        after { feature_flags.switch!(:user_onboarding_emails, false) }
+
+        describe "when the organisation is a school" do
+          let(:user) { create(:placements_user) }
+          let(:organisation) { create(:placements_school) }
+
+          it "calls mailer with correct prams" do
+            expect { user_invite_service }.to have_enqueued_mail(UserMailer, :user_membership_created_notification).with(params: { service: :placements }, args: [user, organisation])
+          end
+        end
+
+        describe "when the organisation is a provider" do
+          let(:user) { create(:placements_user) }
+          let(:organisation) { create(:placements_provider) }
+
+          it "calls mailer with correct prams" do
+            expect { user_invite_service }.to have_enqueued_mail(UserMailer, :user_membership_created_notification).with(params: { service: :placements }, args: [user, organisation])
+          end
         end
       end
 
-      describe "when the organisation is a provider" do
-        let(:user) { create(:placements_user) }
-        let(:organisation) { create(:placements_provider) }
+      context "when 'user_onboarding_emails' feature flag is disabled" do
+        describe "when the organisation is a school" do
+          let(:user) { create(:placements_user) }
+          let(:organisation) { create(:placements_school) }
 
-        it "calls mailer with correct prams" do
-          expect { user_invite_service }.to have_enqueued_mail(UserMailer, :user_membership_created_notification).with(params: { service: :placements }, args: [user, organisation])
+          it "does not send an email notification" do
+            expect { user_invite_service }.not_to have_enqueued_mail(UserMailer, :user_membership_created_notification)
+          end
+        end
+
+        describe "when the organisation is a provider" do
+          let(:user) { create(:placements_user) }
+          let(:organisation) { create(:placements_provider) }
+
+          it "does not send an email notification" do
+            expect { user_invite_service }.not_to have_enqueued_mail(UserMailer, :user_membership_created_notification)
+          end
         end
       end
     end

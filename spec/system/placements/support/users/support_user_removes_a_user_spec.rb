@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.describe "Placements support user removes a user from an organisation", type: :system, service: :placements do
   include ActiveJob::TestHelper
 
+  let(:feature_flags) { Flipflop::FeatureSet.current.test! }
+
   around do |example|
     perform_enqueued_jobs { example.run }
   end
@@ -15,17 +17,40 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
       create(:user_membership, user:, organisation: school)
     end
 
-    scenario "user is removed from a school" do
-      given_i_am_signed_in_as_a_support_user
-      and_i_visit_the_user_page(school)
-      when_i_click_on("Remove user")
-      then_i_am_asked_to_confirm(school)
-      when_i_click_on("Cancel")
-      then_i_return_to_user_page(school)
-      when_i_click_on("Remove user")
-      then_i_am_asked_to_confirm(school)
-      when_i_click_on("Remove user")
-      then_the_user_is_removed_from_the_organisation(school)
+    context "when 'user_onboarding_emails' feature flag is enabled" do
+      before { feature_flags.switch!(:user_onboarding_emails, true) }
+
+      after { feature_flags.switch!(:user_onboarding_emails, false) }
+
+      scenario "user is removed from a school" do
+        given_i_am_signed_in_as_a_support_user
+        and_i_visit_the_user_page(school)
+        when_i_click_on("Remove user")
+        then_i_am_asked_to_confirm(school)
+        when_i_click_on("Cancel")
+        then_i_return_to_user_page(school)
+        when_i_click_on("Remove user")
+        then_i_am_asked_to_confirm(school)
+        when_i_click_on("Remove user")
+        then_the_user_is_removed_from_the_organisation(school)
+        and_email_is_sent(user.email, school)
+      end
+    end
+
+    context "when 'user_onboarding_emails' feature flag is disabled" do
+      scenario "user is removed from a school" do
+        given_i_am_signed_in_as_a_support_user
+        and_i_visit_the_user_page(school)
+        when_i_click_on("Remove user")
+        then_i_am_asked_to_confirm(school)
+        when_i_click_on("Cancel")
+        then_i_return_to_user_page(school)
+        when_i_click_on("Remove user")
+        then_i_am_asked_to_confirm(school)
+        when_i_click_on("Remove user")
+        then_the_user_is_removed_from_the_organisation(school)
+        and_email_is_not_sent(user.email, school)
+      end
     end
   end
 
@@ -37,17 +62,40 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
       create(:user_membership, user:, organisation: provider)
     end
 
-    scenario "user is removed from a provider" do
-      given_i_am_signed_in_as_a_support_user
-      and_i_visit_the_user_page(provider)
-      when_i_click_on("Remove user")
-      then_i_am_asked_to_confirm(provider)
-      when_i_click_on("Cancel")
-      then_i_return_to_user_page(provider)
-      when_i_click_on("Remove user")
-      then_i_am_asked_to_confirm(provider)
-      when_i_click_on("Remove user")
-      then_the_user_is_removed_from_the_organisation(provider)
+    context "when 'user_onboarding_emails' feature flag is enabled" do
+      before { feature_flags.switch!(:user_onboarding_emails, true) }
+
+      after { feature_flags.switch!(:user_onboarding_emails, false) }
+
+      scenario "user is removed from a provider" do
+        given_i_am_signed_in_as_a_support_user
+        and_i_visit_the_user_page(provider)
+        when_i_click_on("Remove user")
+        then_i_am_asked_to_confirm(provider)
+        when_i_click_on("Cancel")
+        then_i_return_to_user_page(provider)
+        when_i_click_on("Remove user")
+        then_i_am_asked_to_confirm(provider)
+        when_i_click_on("Remove user")
+        then_the_user_is_removed_from_the_organisation(provider)
+        and_email_is_sent(user.email, provider)
+      end
+    end
+
+    context "when 'user_onboarding_emails' feature flag is disabled" do
+      scenario "user is removed from a provider" do
+        given_i_am_signed_in_as_a_support_user
+        and_i_visit_the_user_page(provider)
+        when_i_click_on("Remove user")
+        then_i_am_asked_to_confirm(provider)
+        when_i_click_on("Cancel")
+        then_i_return_to_user_page(provider)
+        when_i_click_on("Remove user")
+        then_i_am_asked_to_confirm(provider)
+        when_i_click_on("Remove user")
+        then_the_user_is_removed_from_the_organisation(provider)
+        and_email_is_not_sent(user.email, provider)
+      end
     end
   end
 
@@ -143,7 +191,6 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
   end
 
   def then_the_user_is_removed_from_the_organisation(organisation)
-    email_is_sent(user.email, organisation)
     organisations_is_selected_in_primary_nav
     users_is_selected_in_secondary_nav(organisation)
     expect(user.user_memberships.find_by(organisation:)).to eq nil
@@ -154,11 +201,21 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     expect(page).not_to have_content user.full_name
   end
 
-  def email_is_sent(email, organisation)
-    email = ActionMailer::Base.deliveries.find do |delivery|
+  def email_removal_notification(email, organisation)
+    ActionMailer::Base.deliveries.find do |delivery|
       delivery.to.include?(email) && delivery.subject == "You have been removed from #{organisation.name}"
     end
+  end
 
-    expect(email).not_to be_nil
+  def and_email_is_sent(email, organisation)
+    removal_email = email_removal_notification(email, organisation)
+
+    expect(removal_email).not_to be_nil
+  end
+
+  def and_email_is_not_sent(email, organisation)
+    removal_email = email_removal_notification(email, organisation)
+
+    expect(removal_email).to be_nil
   end
 end

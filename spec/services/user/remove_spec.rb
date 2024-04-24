@@ -25,10 +25,26 @@ RSpec.describe User::Remove do
       let(:organisation) { create(:placements_school) }
       let!(:membership) { create(:user_membership, user:, organisation:) }
 
-      it "calls mailer with correct params" do
-        expect { remove_user_service }.to have_enqueued_mail(UserMailer, :user_membership_destroyed_notification).with(params: { service: :placements }, args: [user, organisation])
+      context "when 'user_onboarding_emails' feature flag is enabled" do
+        let(:feature_flags) { Flipflop::FeatureSet.current.test! }
 
-        expect { membership.reload }.to raise_error(ActiveRecord::RecordNotFound)
+        before { feature_flags.switch!(:user_onboarding_emails, true) }
+
+        after { feature_flags.switch!(:user_onboarding_emails, false) }
+
+        it "calls mailer with correct params" do
+          expect { remove_user_service }.to have_enqueued_mail(UserMailer, :user_membership_destroyed_notification).with(params: { service: :placements }, args: [user, organisation])
+
+          expect { membership.reload }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+
+      context "when 'user_onboarding_emails' feature flag is disabled" do
+        it "calls mailer with correct params" do
+          expect { remove_user_service }.not_to have_enqueued_mail(UserMailer, :user_membership_destroyed_notification)
+
+          expect { membership.reload }.to raise_error(ActiveRecord::RecordNotFound)
+        end
       end
     end
   end
