@@ -19,7 +19,7 @@ en:
           caption: Add user
           add_user: Add user
           cancel: Cancel
-          warning: "The user will be sent an email to tell them you’ve added them to %{school_name}."
+          warning: "%{user_name} will be sent an email to tell them you’ve added them to %{school_name}."
           change: Change
         create:
           success: User added
@@ -29,7 +29,7 @@ en:
           page_title: Are you sure you want to remove this user? - %{user_name}
           caption: "%{user_name}"
           heading: Are you sure you want to remove this user?
-          warning: The user will be sent an email to tell them you removed them from %{school_name}.
+          warning: "%{user_name} will be sent an email to tell them you removed them from %{school_name}."
           remove_user: Remove user
           cancel: Cancel
         destroy:

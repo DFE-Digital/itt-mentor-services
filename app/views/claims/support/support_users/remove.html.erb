@@ -13,7 +13,7 @@
           <%= t(".title") %>
         </label>
 
-        <%= govuk_warning_text(text: t(".warning")) %>
+        <%= govuk_warning_text(text: t(".warning", user_name: @support_user.full_name)) %>
 
         <%= f.govuk_submit t(".submit"), warning: true %>
 

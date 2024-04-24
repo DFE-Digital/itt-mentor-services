@@ -11,7 +11,7 @@
       <span class="govuk-caption-l"><%= t(".caption", user_name: @user.full_name) %></span>
       <h2 class="govuk-heading-l"><%= t(".heading") %></h2>
 
-      <%= govuk_warning_text(text: t(".warning", school_name: @school.name)) %>
+      <%= govuk_warning_text(text: t(".warning", user_name: @user.full_name, school_name: @school.name)) %>
 
       <%= govuk_button_to t(".remove_user"), claims_school_user_path(@school, @user), warning: true, method: :delete %>
 

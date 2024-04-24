@@ -23,7 +23,7 @@ en:
           submit: Add user
           cancel: Cancel
           change: Change
-          warning: The user will be sent an email to tell them you’ve added them to Claim funding for mentor training.
+          warning: "%{user_name} will be sent an email to tell them you’ve added them to Claim funding for mentor training."
         create:
           success: User added
         show:
@@ -32,7 +32,7 @@ en:
         remove:
           page_title: Are you sure you want to remove this user? - %{user_name}
           title: Are you sure you want to remove this user?
-          warning: The user will be sent an email to tell them you removed them from Claim funding for mentor training.
+          warning: "%{user_name} will be sent an email to tell them you removed them from Claim funding for mentor training."
           submit: Remove user
           cancel: Cancel
         destroy:

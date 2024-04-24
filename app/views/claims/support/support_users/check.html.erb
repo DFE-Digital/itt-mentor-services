@@ -43,7 +43,7 @@
 
         <div class="govuk-warning-text">
           <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-          <strong class="govuk-warning-text__text"><%= t(".warning") %></strong>
+          <strong class="govuk-warning-text__text"><%= t(".warning", user_name: "#{@support_user_form.first_name} #{@support_user_form.last_name}") %></strong>
         </div>
 
         <%= f.govuk_submit t(".submit") %>

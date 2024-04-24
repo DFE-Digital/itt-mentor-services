@@ -40,4 +40,4 @@ en:
           first_name: First name
           last_name: Last name
           email: Email
-          warning: "The user will be sent an email to tell them you’ve added them to %{school_name}."
+          warning: "%{user_name} will be sent an email to tell them you’ve added them to %{school_name}."
