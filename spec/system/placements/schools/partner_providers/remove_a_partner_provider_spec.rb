@@ -10,8 +10,8 @@ RSpec.describe "Placements / Schools / Partner providers / Remove a partner prov
   end
 
   let!(:school) { create(:placements_school) }
-  let!(:provider) { create(:placements_provider, name: "Provider 1") }
-  let!(:another_provider) { create(:placements_provider, name: "Another provider") }
+  let!(:provider) { create(:provider, :placements, name: "Provider 1") }
+  let!(:another_provider) { create(:provider, name: "Another provider") }
   let(:partnership) { create(:placements_partnership, school:, provider:) }
   let(:another_partnership) do
     create(:placements_partnership, school:, provider: another_provider)
@@ -36,6 +36,22 @@ RSpec.describe "Placements / Schools / Partner providers / Remove a partner prov
     then_the_partner_provider_is_removed(provider)
     and_a_partner_provider_remains_called("Another provider")
     and_a_notification_email_is_sent_to(provider_user)
+  end
+
+  scenario "User removes a partner provider, which is not onboarded on the placements service" do
+    given_the_provider_is_not_onboarded_on_placements_service(provider)
+    given_i_sign_in_as_anne
+    when_i_view_the_partner_provider_show_page
+    and_i_click_on("Remove partner provider")
+    then_i_am_asked_to_confirm_partner_provider(provider)
+    when_i_click_on("Cancel")
+    then_i_return_to_partner_provider_page(provider)
+    when_i_click_on("Remove partner provider")
+    then_i_am_asked_to_confirm_partner_provider(provider)
+    when_i_click_on("Remove partner provider")
+    then_the_partner_provider_is_removed(provider)
+    and_a_partner_provider_remains_called("Another provider")
+    and_a_notification_email_is_not_sent_to(provider_user)
   end
 
   private
@@ -90,13 +106,23 @@ RSpec.describe "Placements / Schools / Partner providers / Remove a partner prov
     expect(page).to have_content(provider_name)
   end
 
-  def and_a_notification_email_is_sent_to(user)
-    email = ActionMailer::Base.deliveries.find do |delivery|
+  def partner_provider_notification(user)
+    ActionMailer::Base.deliveries.find do |delivery|
       delivery.to.include?(user.email) &&
         delivery.subject == "#{provider.name} has been removed as a partner provider"
     end
+  end
+
+  def and_a_notification_email_is_sent_to(user)
+    email = partner_provider_notification(user)
 
     expect(email).not_to be_nil
+  end
+
+  def and_a_notification_email_is_not_sent_to(user)
+    email = partner_provider_notification(user)
+
+    expect(email).to be_nil
   end
 
   def expect_partner_providers_to_be_selected_in_primary_navigation
@@ -109,5 +135,9 @@ RSpec.describe "Placements / Schools / Partner providers / Remove a partner prov
       expect(page).to have_link "Organisation details", current: "false"
       expect(page).to have_link "Partner providers", current: "page"
     end
+  end
+
+  def given_the_provider_is_not_onboarded_on_placements_service(provider)
+    provider.update!(placements_service: false)
   end
 end

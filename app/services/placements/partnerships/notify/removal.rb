@@ -10,6 +10,8 @@ module Placements
         end
 
         def call
+          return unless @partner_organisation.placements_service?
+
           @partner_organisation.users.each do |user|
             UserMailer.with(service: :placements)
               .partnership_destroyed_notification(

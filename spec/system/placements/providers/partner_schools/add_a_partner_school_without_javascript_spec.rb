@@ -9,14 +9,14 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school 
     perform_enqueued_jobs { example.run }
   end
 
-  let!(:school) { create(:placements_school, name: "Manchester 1") }
+  let!(:school) { create(:school, :placements, name: "Manchester 1") }
   let!(:provider) { create(:placements_provider) }
   let!(:school_user) { create(:placements_user, schools: [school]) }
 
   before do
-    create(:placements_school, name: "Manchester 2")
-    create(:placements_school, name: "London")
-    create(:claims_school, name: "Claims")
+    create(:school, name: "Manchester 2")
+    create(:school, :placements, name: "London")
+    create(:school, :claims, name: "Claims")
 
     given_i_sign_in_as_patricia
   end
@@ -71,6 +71,22 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school 
     when_i_choose("Manchester 1")
     and_i_click_on("Continue")
     then_i_see_the_check_details_page_for_school("Manchester 1")
+  end
+
+  scenario "User adds a partner school, which is not onboarded on the placements service" do
+    given_the_school_is_not_onboarded_on_placements_service(school)
+    when_i_visit_the_add_partner_school_page
+    and_i_enter_a_school_named("Manch")
+    and_i_click_on("Continue")
+    then_i_see_list_of_placements_schools
+    when_i_choose("Manchester 1")
+    and_i_click_on("Continue")
+    then_i_see_the_check_details_page_for_school("Manchester 1")
+    and_i_click_on("Add partner school")
+    then_i_return_to_partner_school_index
+    and_a_school_is_listed(school_name: "Manchester 1")
+    and_i_see_success_message
+    and_a_notification_email_is_not_sent_to(school_user)
   end
 
   private
@@ -156,13 +172,23 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school 
     expect(page.find("#partnership-school-id-field").value).to eq(school_name)
   end
 
-  def and_a_notification_email_is_sent_to(user)
-    email = ActionMailer::Base.deliveries.find do |delivery|
+  def partner_school_notification(user)
+    ActionMailer::Base.deliveries.find do |delivery|
       delivery.to.include?(user.email) &&
         delivery.subject == "#{school.name} has been added as a partner school"
     end
+  end
+
+  def and_a_notification_email_is_sent_to(user)
+    email = partner_school_notification(user)
 
     expect(email).not_to be_nil
+  end
+
+  def and_a_notification_email_is_not_sent_to(user)
+    email = partner_school_notification(user)
+
+    expect(email).to be_nil
   end
 
   def expect_partner_schools_to_be_selected_in_primary_navigation
@@ -174,5 +200,9 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school 
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Organisation details", current: "false"
     end
+  end
+
+  def given_the_school_is_not_onboarded_on_placements_service(school)
+    school.update!(placements_service: false)
   end
 end

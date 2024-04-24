@@ -10,8 +10,8 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
   end
 
   let!(:provider) { create(:placements_provider) }
-  let!(:school) { create(:placements_school, name: "School 1") }
-  let!(:another_school) { create(:placements_school, name: "Another school") }
+  let!(:school) { create(:school, :placements, name: "School 1") }
+  let!(:another_school) { create(:school, name: "Another school") }
   let(:partnership) { create(:placements_partnership, school:, provider:) }
   let(:another_partnership) do
     create(:placements_partnership, provider:, school: another_school)
@@ -36,6 +36,22 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
     then_the_partner_school_is_removed(school)
     and_a_partner_provider_remains_called("Another school")
     and_a_notification_email_is_sent_to(school_user)
+  end
+
+  scenario "User removes a partner school, which is not onboarded on the placements service" do
+    given_the_school_is_not_onboarded_on_placements_service(school)
+    given_i_sign_in_as_patricia
+    when_i_view_the_partner_school_show_page
+    and_i_click_on("Remove partner school")
+    then_i_am_asked_to_confirm_partner_school(school)
+    when_i_click_on("Cancel")
+    then_i_return_to_partner_school_page(school)
+    when_i_click_on("Remove partner school")
+    then_i_am_asked_to_confirm_partner_school(school)
+    when_i_click_on("Remove partner school")
+    then_the_partner_school_is_removed(school)
+    and_a_partner_provider_remains_called("Another school")
+    and_a_notification_email_is_not_sent_to(school_user)
   end
 
   private
@@ -90,13 +106,23 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
     expect(page).to have_content(provider_name)
   end
 
-  def and_a_notification_email_is_sent_to(user)
-    email = ActionMailer::Base.deliveries.find do |delivery|
+  def partner_school_notification(user)
+    ActionMailer::Base.deliveries.find do |delivery|
       delivery.to.include?(user.email) &&
         delivery.subject == "#{school.name} has been removed as a partner school"
     end
+  end
+
+  def and_a_notification_email_is_sent_to(user)
+    email = partner_school_notification(user)
 
     expect(email).not_to be_nil
+  end
+
+  def and_a_notification_email_is_not_sent_to(user)
+    email = partner_school_notification(user)
+
+    expect(email).to be_nil
   end
 
   def expect_partner_schools_to_be_selected_in_primary_navigation
@@ -108,5 +134,9 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Organisation details", current: "false"
     end
+  end
+
+  def given_the_school_is_not_onboarded_on_placements_service(school)
+    school.update!(placements_service: false)
   end
 end

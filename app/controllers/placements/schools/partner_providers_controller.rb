@@ -123,7 +123,7 @@ class Placements::Schools::PartnerProvidersController < ApplicationController
   end
 
   def decorated_provider_options
-    @decorated_provider_options ||= Placements::Provider.search_name_urn_ukprn_postcode(
+    @decorated_provider_options ||= Provider.search_name_urn_ukprn_postcode(
       search_param.downcase,
     ).map(&:decorate)
   end
