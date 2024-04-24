@@ -1,4 +1,5 @@
 require "rails_helper"
+require "./app/services/concerns/service_pattern" # needed until DFE-Digital/dfe-analytics#136 is fixed
 
 RSpec.describe ServicePattern do
   describe "#call" do

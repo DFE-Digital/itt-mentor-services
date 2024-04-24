@@ -1,0 +1,168 @@
+---
+shared: 
+  :partnerships:
+  - id
+  - school_id
+  - provider_id
+  - created_at
+  - updated_at
+  :mentor_trainings:
+  - id
+  - training_type
+  - hours_completed
+  - date_completed
+  - claim_id
+  - mentor_id
+  - provider_id
+  - created_at
+  - updated_at
+  :user_memberships:
+  - id
+  - user_id
+  - organisation_type
+  - organisation_id
+  - created_at
+  - updated_at
+  :users:
+  - first_name
+  - last_name
+  - email
+  - created_at
+  - updated_at
+  - id
+  - type
+  - dfe_sign_in_uid
+  - last_signed_in_at
+  - discarded_at
+  :trusts:
+  - id
+  - uid
+  - name
+  - created_at
+  - updated_at
+  :subjects:
+  - id
+  - subject_area
+  - name
+  - code
+  - created_at
+  - updated_at
+  :regions:
+  - id
+  - name
+  - claims_funding_available_per_hour_pence
+  - claims_funding_available_per_hour_currency
+  - created_at
+  - updated_at
+  :placement_subject_joins:
+  - id
+  - subject_id
+  - placement_id
+  - created_at
+  - updated_at
+  :placement_mentor_joins:
+  - id
+  - mentor_id
+  - placement_id
+  - created_at
+  - updated_at
+  :mentor_memberships:
+  - id
+  - type
+  - mentor_id
+  - school_id
+  - created_at
+  - updated_at
+  :mentors:
+  - id
+  - first_name
+  - last_name
+  - trn
+  - created_at
+  - updated_at
+  :claims:
+  - id
+  - school_id
+  - created_at
+  - updated_at
+  - provider_id
+  - reference
+  - submitted_at
+  - created_by_type
+  - created_by_id
+  - status
+  - submitted_by_type
+  - submitted_by_id
+  :schools:
+  - id
+  - urn
+  - placements_service
+  - claims_service
+  - created_at
+  - updated_at
+  - name
+  - postcode
+  - town
+  - ukprn
+  - telephone
+  - website
+  - address1
+  - address2
+  - address3
+  - group
+  - type_of_establishment
+  - phase
+  - gender
+  - minimum_age
+  - maximum_age
+  - religious_character
+  - admissions_policy
+  - urban_or_rural
+  - school_capacity
+  - total_pupils
+  - total_girls
+  - total_boys
+  - percentage_free_school_meals
+  - special_classes
+  - send_provision
+  - training_with_disabilities
+  - rating
+  - last_inspection_date
+  - email_address
+  - district_admin_name
+  - district_admin_code
+  - region_id
+  - trust_id
+  - longitude
+  - latitude
+  - local_authority_name
+  - local_authority_code
+  :providers:
+  - id
+  - code
+  - created_at
+  - updated_at
+  - placements_service
+  - provider_type
+  - name
+  - ukprn
+  - urn
+  - email_address
+  - telephone
+  - website
+  - address1
+  - address2
+  - address3
+  - town
+  - city
+  - county
+  - postcode
+  - accredited
+  :placements:
+  - id
+  - status
+  - start_date
+  - end_date
+  - school_id
+  - created_at
+  - updated_at

@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include DfE::Analytics::Requests
   include ApplicationHelper
   include RoutesHelper
   include Pagy::Backend
