@@ -4,14 +4,17 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <span class="govuk-caption-l"><%= t(".add_claim", school: @school.name) %></span>
+        <h1 class="govuk-heading-l"><%= t(".heading", provider_name: claim_mentors_form.claim.provider_name) %></h1>
+
+        <%= render Claims::Claim::MentorsForm::DisclaimerComponent.new(mentors_form: claim_mentors_form) %>
 
         <%= f.govuk_collection_check_boxes(
           :mentor_ids,
-          school.mentors.order_by_full_name,
+          claim_mentors_form.mentors_with_claimable_hours,
           :id,
           :full_name,
           :trn,
-          legend: { text: t(".heading"), size: "l" },
+          legend: { text: t(".label"), size: "s" },
           hint: { text: t(".select_all_that_apply") },
         ) %>
 
