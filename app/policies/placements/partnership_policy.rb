@@ -1,6 +1,7 @@
 class Placements::PartnershipPolicy < ApplicationPolicy
   def destroy?
-    user.schools.include?(record.school) ||
+    user.support_user? ||
+      user.schools.include?(record.school) ||
       user.providers.include?(record.provider)
   end
 
