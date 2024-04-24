@@ -5,6 +5,7 @@
 #  id                   :uuid             not null, primary key
 #  created_by_type      :string
 #  reference            :string
+#  reviewed_by_user     :boolean          default(FALSE)
 #  status               :enum
 #  submitted_at         :datetime
 #  submitted_by_type    :string

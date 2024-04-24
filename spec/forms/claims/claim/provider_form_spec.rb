@@ -52,6 +52,34 @@ describe Claims::Claim::ProviderForm, type: :model do
         }.to change { claim.reload.provider }.to provider
         expect(claim.internal_draft?).to be(true)
         expect(form.claim.created_by).to eq(current_user)
+        expect(form.claim.created_by).to eq(current_user)
+      end
+    end
+
+    context "when claim has existing mentor trainings for another provide" do
+      it "creates an internal draft claim with a provider and updates the mentor_trainings" do
+        claim_with_mentor_trainings = create(:claim, school:)
+        niot_provider = create(:claims_provider, :niot)
+        create(
+          :mentor_training,
+          claim: claim_with_mentor_trainings,
+          hours_completed: 20,
+          provider:,
+        )
+        form = described_class.new(
+          id: claim_with_mentor_trainings.id,
+          provider_id: niot_provider.id,
+          school:,
+          current_user:,
+        )
+
+        expect {
+          form.save!
+        }.to change { claim_with_mentor_trainings.reload.provider }.to niot_provider
+        expect(claim.internal_draft?).to be(true)
+        expect(form.claim.created_by).to eq(current_user)
+        expect(form.claim.created_by).to eq(current_user)
+        expect(form.claim.mentor_trainings.pluck(:provider_id)).to eq([niot_provider.id])
       end
     end
   end

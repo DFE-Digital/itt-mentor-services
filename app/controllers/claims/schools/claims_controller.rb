@@ -23,6 +23,9 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
 
   def check
     @valid_claim = @claim.get_valid_revision
+    @valid_claim.without_auditing do
+      @valid_claim.update!(reviewed_by_user: true)
+    end
     last_mentor_training = @valid_claim.mentor_trainings.order_by_mentor_full_name.last
 
     @back_path = edit_claims_school_claim_mentor_training_path(
@@ -43,7 +46,7 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
 
   def update
     if claim_provider_form.save
-      redirect_to check_claims_school_claim_path(@school, claim_provider_form.claim)
+      redirect_to claim_provider_form.update_success_path
     else
       render :edit
     end

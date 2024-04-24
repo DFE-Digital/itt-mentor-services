@@ -5,6 +5,7 @@
 #  id                   :uuid             not null, primary key
 #  created_by_type      :string
 #  reference            :string
+#  reviewed_by_user     :boolean          default(FALSE)
 #  status               :enum
 #  submitted_at         :datetime
 #  submitted_by_type    :string
@@ -92,7 +93,9 @@ class Claims::Claim < ApplicationRecord
 
     ActiveRecord::Base.transaction do
       revision_record.save!
-      update!(next_revision_id: revision_record.id)
+      without_auditing do
+        update!(next_revision_id: revision_record.id)
+      end
     end
 
     revision_record

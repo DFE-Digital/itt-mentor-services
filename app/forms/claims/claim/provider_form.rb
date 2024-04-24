@@ -25,4 +25,20 @@ class Claims::Claim::ProviderForm < ApplicationForm
   def claim
     @claim ||= school.claims.find_or_initialize_by(id:)
   end
+
+  def edit_back_link
+    if claim.reviewed_by_user
+      check_claims_school_claim_path(claim.school, claim)
+    else
+      claims_school_claims_path(claim.school)
+    end
+  end
+
+  def update_success_path
+    if claim.reviewed_by_user
+      check_claims_school_claim_path(claim.school, claim)
+    else
+      edit_claims_school_claim_mentor_path(claim.school, claim, 1)
+    end
+  end
 end

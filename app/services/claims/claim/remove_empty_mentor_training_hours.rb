@@ -6,7 +6,9 @@ class Claims::Claim::RemoveEmptyMentorTrainingHours
   end
 
   def call
-    claim.mentor_trainings.without_hours.destroy_all
+    without_auditing do
+      claim.mentor_trainings.without_hours.destroy_all
+    end
   end
 
   private

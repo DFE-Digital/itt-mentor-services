@@ -31,6 +31,9 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
 
   def check
     @valid_claim = @claim.get_valid_revision
+    @valid_claim.without_auditing do
+      @valid_claim.update!(reviewed_by_user: true)
+    end
     last_mentor_training = @valid_claim.mentor_trainings.order_by_mentor_full_name.last
 
     @back_path = edit_claims_support_school_claim_mentor_training_path(
@@ -51,7 +54,7 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
 
   def update
     if claim_provider_form.save
-      redirect_to check_claims_support_school_claim_path(@school, claim_provider_form.claim)
+      redirect_to claim_provider_form.update_success_path
     else
       render :edit
     end
@@ -73,7 +76,7 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
   private
 
   def claim_params
-    params.require(:claims_claim_provider_form)
+    params.require(:claims_support_claim_provider_form)
       .permit(:id, :provider_id)
       .merge(default_params)
   end
@@ -92,10 +95,10 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
 
   def claim_provider_form
     @claim_provider_form ||=
-      if params[:claims_claim_provider_form].present?
-        Claims::Claim::ProviderForm.new(claim_params)
+      if params[:claims_support_claim_provider_form].present?
+        Claims::Support::Claim::ProviderForm.new(claim_params)
       else
-        Claims::Claim::ProviderForm.new(default_params.merge(id: claim_id))
+        Claims::Support::Claim::ProviderForm.new(default_params.merge(id: claim_id))
       end
   end
 
