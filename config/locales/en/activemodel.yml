@@ -17,6 +17,10 @@ en:
           attributes:
             provider_id:
               blank: Select a provider
+        claims/claim/mentors_form:
+          attributes:
+            mentor_ids:
+              blank: Select a mentor
         placements/mentor_form:
           attributes:
             trn:

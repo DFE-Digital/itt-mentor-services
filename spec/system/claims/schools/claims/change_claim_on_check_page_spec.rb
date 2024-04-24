@@ -55,11 +55,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
     then_i_see_the_error("Select a mentor")
     when_i_check_the_mentor(mentor2)
     when_i_click("Continue")
-    when_i_click("Continue")
-    then_i_see_the_error("Select the number of hours")
-    when_i_add_training_hours("20 hours")
-    when_i_click("Continue")
-    then_i_check_my_answers(provider1, [mentor2], [20])
+    then_i_check_my_answers(provider1, [mentor2], [12])
     when_i_click("Submit claim")
     then_i_get_a_claim_reference(claim)
   end
