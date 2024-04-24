@@ -1,0 +1,8 @@
+en:
+  components:
+    claims:
+      claim:
+        mentors_form:
+          disclaimer_component:
+            disclaimer: This list includes all mentors who can be included on a claim. If a mentor you have added is not showing in this list, that is because they have already had 20 hours of training claimed for with %{provider_name}.
+            disclaimer_contact: Contact %{email_link} if you think there is a problem.

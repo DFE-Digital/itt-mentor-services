@@ -77,8 +77,6 @@ RSpec.describe "Edit a draft claim", type: :system, service: :claims do
     click_on("Continue")
     page.choose("20 hours")
     click_on("Continue")
-    page.choose("20 hours")
-    click_on("Continue")
 
     expect(page).to have_content("Laura Clark")
     expect(page).to have_content("Barry Garlow")

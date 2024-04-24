@@ -3,6 +3,8 @@ class Claims::Claim::MentorsForm < ApplicationForm
 
   validates :mentor_ids, presence: true
 
+  delegate :school, :provider, to: :claim
+
   def initialize(attributes = {})
     super
 
@@ -25,6 +27,14 @@ class Claims::Claim::MentorsForm < ApplicationForm
     else
       check_claims_school_claim_path(claim.school, claim)
     end
+  end
+
+  def mentors_with_claimable_hours
+    @mentors_with_claimable_hours ||= Claims::MentorsWithRemainingClaimableHoursQuery.call(params: { school:, provider:, claim: })
+  end
+
+  def all_school_mentors_visible?
+    @all_school_mentors_visible ||= claim.school.mentors.count == mentors_with_claimable_hours.count
   end
 
   private

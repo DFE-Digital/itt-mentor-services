@@ -5,7 +5,8 @@ en:
         claims:
           mentors:
             form:
-              heading: Mentor
+              heading: Mentors for %{provider_name}
+              label: Mentor
               select_all_that_apply: Select all that apply
               add_claim: Add claim - %{school}
             new:

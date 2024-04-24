@@ -3,10 +3,10 @@ class Claims::Mentor::CalculateRemainingMentorTrainingHoursForProvider
 
   MAXIMUM_CLAIMABLE_HOURS_PER_PROVIDER = 20
 
-  def initialize(mentor:, provider:, mentor_training: nil)
+  def initialize(mentor:, provider:, claim: nil, mentor_training: nil)
     @mentor = mentor
     @provider = provider
-    @mentor_training = mentor_training
+    @mentor_training = claim ? claim.mentor_trainings.find_by(mentor:, provider:) : mentor_training
   end
 
   def call
