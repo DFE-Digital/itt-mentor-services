@@ -36,4 +36,5 @@ class Placements::Provider < Provider
   has_many :partner_schools,
            through: :partnerships,
            source: :school
+  has_many :placements
 end

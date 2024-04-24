@@ -229,6 +229,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_29_133246) do
     t.uuid "school_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "provider_id"
+    t.index ["provider_id"], name: "index_placements_on_provider_id"
     t.index ["school_id"], name: "index_placements_on_school_id"
   end
 
@@ -374,6 +376,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_29_133246) do
   add_foreign_key "placement_mentor_joins", "placements"
   add_foreign_key "placement_subject_joins", "placements"
   add_foreign_key "placement_subject_joins", "subjects"
+  add_foreign_key "placements", "providers"
   add_foreign_key "placements", "schools"
   add_foreign_key "schools", "regions"
   add_foreign_key "schools", "trusts"

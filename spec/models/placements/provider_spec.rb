@@ -31,7 +31,9 @@
 require "rails_helper"
 
 RSpec.describe Placements::Provider do
-  context "with assocations" do
+  describe "associations" do
+    it { is_expected.to have_many(:placements) }
+
     describe "#users" do
       it { is_expected.to have_many(:users).through(:user_memberships) }
 
