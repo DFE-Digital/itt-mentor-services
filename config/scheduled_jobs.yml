@@ -30,3 +30,9 @@ remove_internal_draft_claims:
   cron: "10 0 * * *"
   class: "Claims::RemoveInternalDraftClaimsJob"
   description: "Remove all internal_draft claims"
+
+send_entity_table_checks_to_bigquery:
+  cron: "30 0 * * *"  # Every day at 00:30.
+  class: "DfE::Analytics::EntityTableCheckJob"
+  queue: dfe_analytics
+  description: "Syncs the entity table in BigQuery with the database"

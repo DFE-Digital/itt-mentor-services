@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/DFE-Digital/dfe-analytics.git
+  revision: 3e078f9fdd0e890449f90e7cd2f151c392d570ac
+  tag: v1.12.4
+  specs:
+    dfe-analytics (1.12.4)
+      google-cloud-bigquery (~> 1.38)
+      request_store_rails (~> 2)
+
+GIT
   remote: https://github.com/DFE-Digital/rspec-retry.git
   revision: 306b42b8d5853303982e1a165e82d04744c20ea3
   branch: main
@@ -156,6 +165,7 @@ GEM
     debug (1.9.2)
       irb (~> 1.10)
       reline (>= 0.3.8)
+    declarative (0.0.20)
     diff-lcs (1.5.1)
     discard (1.3.0)
       activerecord (>= 4.2, < 8)
@@ -215,6 +225,36 @@ GEM
       fugit (>= 1.1)
       railties (>= 6.0.0)
       thor (>= 0.14.1)
+    google-apis-bigquery_v2 (0.67.0)
+      google-apis-core (>= 0.14.0, < 2.a)
+    google-apis-core (0.14.1)
+      addressable (~> 2.5, >= 2.5.1)
+      googleauth (~> 1.9)
+      httpclient (>= 2.8.1, < 3.a)
+      mini_mime (~> 1.0)
+      representable (~> 3.0)
+      retriable (>= 2.0, < 4.a)
+      rexml
+    google-cloud-bigquery (1.49.0)
+      concurrent-ruby (~> 1.0)
+      google-apis-bigquery_v2 (~> 0.62)
+      google-apis-core (~> 0.13)
+      google-cloud-core (~> 1.6)
+      googleauth (~> 1.9)
+      mini_mime (~> 1.0)
+    google-cloud-core (1.7.0)
+      google-cloud-env (>= 1.0, < 3.a)
+      google-cloud-errors (~> 1.0)
+    google-cloud-env (2.1.1)
+      faraday (>= 1.0, < 3.a)
+    google-cloud-errors (1.4.0)
+    googleauth (1.11.0)
+      faraday (>= 1.0, < 3.a)
+      google-cloud-env (~> 2.1)
+      jwt (>= 1.4, < 3.0)
+      multi_json (~> 1.11)
+      os (>= 0.9, < 2.0)
+      signet (>= 0.16, < 2.a)
     govuk-components (5.3.1)
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (>= 6, < 8)
@@ -235,6 +275,7 @@ GEM
     httparty (0.21.0)
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
+    httpclient (2.8.3)
     i18n (1.14.4)
       concurrent-ruby (~> 1.0)
     imagen (0.1.8)
@@ -292,6 +333,7 @@ GEM
       money (~> 6.13)
       railties (>= 3.0)
     msgpack (1.7.2)
+    multi_json (1.15.0)
     multi_xml (0.6.0)
     mutex_m (0.2.0)
     net-imap (0.4.10)
@@ -335,6 +377,7 @@ GEM
       validate_email
       validate_url
       webfinger (~> 2.0)
+    os (1.1.4)
     pagy (7.0.11)
     parallel (1.24.0)
     parser (3.3.0.5)
@@ -435,8 +478,15 @@ GEM
     regexp_parser (2.9.0)
     reline (0.5.2)
       io-console (~> 0.5)
+    representable (3.2.0)
+      declarative (< 0.1.0)
+      trailblazer-option (>= 0.1.1, < 0.2.0)
+      uber (< 0.2.0)
     request_store (1.6.0)
       rack (>= 1.4)
+    request_store_rails (2.0.0)
+      concurrent-ruby (~> 1.0)
+    retriable (3.1.2)
     reverse_markdown (2.1.1)
       nokogiri
     rexml (3.2.6)
@@ -520,6 +570,11 @@ GEM
       concurrent-ruby (~> 1.0, >= 1.0.2)
     shoulda-matchers (6.2.0)
       activesupport (>= 5.2.0)
+    signet (0.19.0)
+      addressable (~> 2.8)
+      faraday (>= 0.17.5, < 3.a)
+      jwt (>= 1.5, < 3.0)
+      multi_json (~> 1.10)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -574,8 +629,10 @@ GEM
     tilt (2.3.0)
     timecop (0.9.8)
     timeout (0.4.1)
+    trailblazer-option (0.1.2)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    uber (0.1.0)
     undercover (0.5.0)
       bigdecimal
       imagen (>= 0.1.8)
@@ -635,6 +692,7 @@ DEPENDENCIES
   climate_control
   cssbundling-rails
   debug
+  dfe-analytics!
   discard
   dotenv-rails
   down (~> 5.4)

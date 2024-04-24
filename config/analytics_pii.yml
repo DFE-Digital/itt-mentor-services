@@ -1,0 +1,12 @@
+---
+shared: 
+  :users:
+  - first_name
+  - last_name
+  - email
+  :mentors:
+  - first_name
+  - last_name
+  :providers:
+  - email_address
+  - telephone

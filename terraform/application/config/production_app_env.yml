@@ -10,3 +10,6 @@ DFE_SIGN_IN_ISSUER_URL: https://oidc.signin.education.gov.uk
 PLACEMENTS_DFE_SIGN_IN_CLIENT_ID: ittMentorSchoolPlacement
 CLAIMS_HOSTS: claim-funding-for-mentor-training.education.gov.uk,track-and-pay-production.teacherservices.cloud
 CLAIMS_HOST: claim-funding-for-mentor-training.education.gov.uk
+BIGQUERY_TABLE_NAME: events
+BIGQUERY_PROJECT_ID: rugged-abacus-218110
+BIGQUERY_DATASET: itt_mentor_events_production

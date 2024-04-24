@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-git_source(:github) { |_repo| "https://github.com/#{repo}.git" }
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.3.0"
 
@@ -95,6 +95,9 @@ gem "geocoder"
 
 # Audit trail
 gem "audited"
+
+# BigQuery
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.12.4"
 
 group :development do
   gem "annotate", require: false
