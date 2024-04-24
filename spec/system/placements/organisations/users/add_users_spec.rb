@@ -13,46 +13,100 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
   let(:mary) { create(:placements_user, :mary) }
   let(:another_school) { create(:placements_school, name: "Another School") }
   let(:new_user) { create(:placements_user) }
+  let(:feature_flags) { Flipflop::FeatureSet.current.test! }
 
-  describe "Ann invites a member successfully " do
-    context "with provider" do
-      scenario "user invites a member to a provider" do
-        given_i_am_logged_in_as_a_user_with_one_organisation(one_provider)
-        when_i_click_users
-        then_i_see_the_users_page
-        when_i_click_add_user
-        and_i_enter_valid_user_details
-        and_user_is_selected_in_provider_primary_navigation
-        then_i_can_check_my_answers(one_provider)
-        when_i_click_back
-        then_i_see_prepopulated_form
-        when_i_change_user_details
-        then_i_see_changes_in_check_form
-        and_user_is_selected_in_provider_primary_navigation
-        when_i_click_add_user
-        then_the_user_is_added(one_provider)
-        and_user_is_selected_in_provider_primary_navigation
+  describe "Ann invites a member successfully" do
+    context "when 'user_onboarding_emails' feature flag is enabled" do
+      before { feature_flags.switch!(:user_onboarding_emails, true) }
+
+      after { feature_flags.switch!(:user_onboarding_emails, false) }
+
+      context "with provider" do
+        scenario "user invites a member to a provider" do
+          given_i_am_logged_in_as_a_user_with_one_organisation(one_provider)
+          when_i_click_users
+          then_i_see_the_users_page
+          when_i_click_add_user
+          and_i_enter_valid_user_details
+          and_user_is_selected_in_provider_primary_navigation
+          then_i_can_check_my_answers(one_provider)
+          when_i_click_back
+          then_i_see_prepopulated_form
+          when_i_change_user_details
+          then_i_see_changes_in_check_form
+          and_user_is_selected_in_provider_primary_navigation
+          when_i_click_add_user
+          then_the_user_is_added(one_provider)
+          and_an_email_is_sent("firsty_lasty@email.co.uk", one_provider)
+          and_user_is_selected_in_provider_primary_navigation
+        end
+      end
+
+      context "with school" do
+        scenario "user invites a member to a school" do
+          given_i_am_logged_in_as_a_user_with_one_organisation(one_school)
+          when_i_click_users
+          then_i_see_the_users_page
+          and_user_is_selected_in_school_primary_navigation
+          when_i_click_add_user
+          and_user_is_selected_in_school_primary_navigation
+          and_i_enter_valid_user_details
+          then_i_can_check_my_answers(one_school)
+          when_i_click_back
+          then_i_see_prepopulated_form
+          and_user_is_selected_in_school_primary_navigation
+          when_i_change_user_details
+          then_i_see_changes_in_check_form
+          and_user_is_selected_in_school_primary_navigation
+          when_i_click_add_user
+          then_the_user_is_added(one_school)
+          and_an_email_is_sent("firsty_lasty@email.co.uk", one_school)
+        end
       end
     end
 
-    context "with school" do
-      scenario "user invites a member to a school" do
-        given_i_am_logged_in_as_a_user_with_one_organisation(one_school)
-        when_i_click_users
-        then_i_see_the_users_page
-        and_user_is_selected_in_school_primary_navigation
-        when_i_click_add_user
-        and_user_is_selected_in_school_primary_navigation
-        and_i_enter_valid_user_details
-        then_i_can_check_my_answers(one_school)
-        when_i_click_back
-        then_i_see_prepopulated_form
-        and_user_is_selected_in_school_primary_navigation
-        when_i_change_user_details
-        then_i_see_changes_in_check_form
-        and_user_is_selected_in_school_primary_navigation
-        when_i_click_add_user
-        then_the_user_is_added(one_school)
+    context "when 'user_onboarding_emails' feature flag is disabled" do
+      context "with provider" do
+        scenario "user invites a member to a provider" do
+          given_i_am_logged_in_as_a_user_with_one_organisation(one_provider)
+          when_i_click_users
+          then_i_see_the_users_page
+          when_i_click_add_user
+          and_i_enter_valid_user_details
+          and_user_is_selected_in_provider_primary_navigation
+          then_i_can_check_my_answers(one_provider)
+          when_i_click_back
+          then_i_see_prepopulated_form
+          when_i_change_user_details
+          then_i_see_changes_in_check_form
+          and_user_is_selected_in_provider_primary_navigation
+          when_i_click_add_user
+          then_the_user_is_added(one_provider)
+          and_an_email_is_not_sent("firsty_lasty@email.co.uk", one_provider)
+          and_user_is_selected_in_provider_primary_navigation
+        end
+      end
+
+      context "with school" do
+        scenario "user invites a member to a school" do
+          given_i_am_logged_in_as_a_user_with_one_organisation(one_school)
+          when_i_click_users
+          then_i_see_the_users_page
+          and_user_is_selected_in_school_primary_navigation
+          when_i_click_add_user
+          and_user_is_selected_in_school_primary_navigation
+          and_i_enter_valid_user_details
+          then_i_can_check_my_answers(one_school)
+          when_i_click_back
+          then_i_see_prepopulated_form
+          and_user_is_selected_in_school_primary_navigation
+          when_i_change_user_details
+          then_i_see_changes_in_check_form
+          and_user_is_selected_in_school_primary_navigation
+          when_i_click_add_user
+          then_the_user_is_added(one_school)
+          and_an_email_is_not_sent("firsty_lasty@email.co.uk", one_school)
+        end
       end
     end
   end
@@ -64,17 +118,42 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
       create(:user_membership, user: mary, organisation: one_provider)
     end
 
-    scenario "user adds a user to multiple organisations" do
-      given_i_am_logged_in_as_a_user_with_multiple_organisations
-      and_user_is_already_assigned_to_a_school
-      when_i_navigate_to_that_schools_users
-      then_i_see_the_user_on_that_schools_user_list
-      when_i_change_organisation(another_school)
-      and_i_try_to_add_the_user
-      then_the_user_is_added_successfully(another_school)
-      when_i_change_organisation(one_provider)
-      and_i_try_to_add_the_user
-      then_the_user_is_added_successfully(one_provider)
+    context "when 'user_onboarding_emails' feature flag is enabled" do
+      before { feature_flags.switch!(:user_onboarding_emails, true) }
+
+      after { feature_flags.switch!(:user_onboarding_emails, false) }
+
+      scenario "user adds a user to multiple organisations" do
+        given_i_am_logged_in_as_a_user_with_multiple_organisations
+        and_user_is_already_assigned_to_a_school
+        when_i_navigate_to_that_schools_users
+        then_i_see_the_user_on_that_schools_user_list
+        when_i_change_organisation(another_school)
+        and_i_try_to_add_the_user
+        then_the_user_is_added_successfully(another_school)
+        and_an_email_is_sent(new_user.email, another_school)
+        when_i_change_organisation(one_provider)
+        and_i_try_to_add_the_user
+        then_the_user_is_added_successfully(one_provider)
+        and_an_email_is_sent(new_user.email, one_provider)
+      end
+    end
+
+    context "when 'user_onboarding_emails' feature flag is disabled" do
+      scenario "user adds a user to multiple organisations" do
+        given_i_am_logged_in_as_a_user_with_multiple_organisations
+        and_user_is_already_assigned_to_a_school
+        when_i_navigate_to_that_schools_users
+        then_i_see_the_user_on_that_schools_user_list
+        when_i_change_organisation(another_school)
+        and_i_try_to_add_the_user
+        then_the_user_is_added_successfully(another_school)
+        and_an_email_is_not_sent(new_user.email, another_school)
+        when_i_change_organisation(one_provider)
+        and_i_try_to_add_the_user
+        then_the_user_is_added_successfully(one_provider)
+        and_an_email_is_not_sent(new_user.email, one_provider)
+      end
     end
   end
 
@@ -164,9 +243,7 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
     click_on "Add user"
   end
 
-  def then_the_user_is_added_successfully(organisation)
-    email_is_sent(new_user.email, organisation)
-
+  def then_the_user_is_added_successfully(_organisation)
     expect(page.find(".govuk-notification-banner__content")).to have_content("User added")
     expect(page).to have_content new_user.full_name
     expect(page).to have_content new_user.email
@@ -220,8 +297,7 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
     expect(page).to have_content "firsty_lasty@email.co.uk"
   end
 
-  def then_the_user_is_added(organisation)
-    email_is_sent("firsty_lasty@email.co.uk", organisation)
+  def then_the_user_is_added(_organisation)
     expect(page.find(".govuk-notification-banner__content")).to have_content("User added")
     expect(page).to have_content "New First Name Last Namey"
     expect(page).to have_content "firsty_lasty@email.co.uk"
@@ -244,11 +320,21 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
     end
   end
 
-  def email_is_sent(email, organisation)
-    email = ActionMailer::Base.deliveries.find do |delivery|
+  def email_invite_notification(email, organisation)
+    ActionMailer::Base.deliveries.find do |delivery|
       delivery.to.include?(email) && delivery.subject == "You have been invited to #{organisation.name}"
     end
+  end
 
-    expect(email).not_to be_nil
+  def and_an_email_is_sent(email, organisation)
+    invite_email = email_invite_notification(email, organisation)
+
+    expect(invite_email).not_to be_nil
+  end
+
+  def and_an_email_is_not_sent(email, organisation)
+    invite_email = email_invite_notification(email, organisation)
+
+    expect(invite_email).to be_nil
   end
 end

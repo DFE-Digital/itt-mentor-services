@@ -15,24 +15,49 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
            last_name: "User",
            email: "test@example.com")
   end
+  let(:feature_flags) { Flipflop::FeatureSet.current.test! }
 
   before do
     given_i_am_signed_in_as_a_support_user
   end
 
   describe "School" do
-    scenario "Support User invites a new user to a school" do
-      when_i_visit_the_users_page_for(organisation: school)
-      then_i_see_the_navigation_bars_with_organisations_and_users_selected(school)
-      and_i_click("Add user")
-      then_i_see_support_navigation_with_organisation_selected
-      and_i_enter_the_details_for_a_new_user
-      and_i_click("Continue")
-      then_i_see_support_navigation_with_organisation_selected
-      then_i_see_the_new_users_details
-      and_i_click("Add user")
-      then_i_see_support_navigation_with_organisation_selected
-      then_i_see_the_new_user_has_been_added(school)
+    context "when 'user_onboarding_emails' feature flag is enabled" do
+      before { feature_flags.switch!(:user_onboarding_emails, true) }
+
+      after { feature_flags.switch!(:user_onboarding_emails, false) }
+
+      scenario "Support User invites a new user to a school" do
+        when_i_visit_the_users_page_for(organisation: school)
+        then_i_see_the_navigation_bars_with_organisations_and_users_selected(school)
+        and_i_click("Add user")
+        then_i_see_support_navigation_with_organisation_selected
+        and_i_enter_the_details_for_a_new_user
+        and_i_click("Continue")
+        then_i_see_support_navigation_with_organisation_selected
+        then_i_see_the_new_users_details
+        and_i_click("Add user")
+        then_i_see_support_navigation_with_organisation_selected
+        then_i_see_the_new_user_has_been_added(school)
+        and_email_is_sent("test@example.com", school)
+      end
+    end
+
+    context "when 'user_onboarding_emails' feature flag is disabled" do
+      scenario "Support User invites a new user to a school" do
+        when_i_visit_the_users_page_for(organisation: school)
+        then_i_see_the_navigation_bars_with_organisations_and_users_selected(school)
+        and_i_click("Add user")
+        then_i_see_support_navigation_with_organisation_selected
+        and_i_enter_the_details_for_a_new_user
+        and_i_click("Continue")
+        then_i_see_support_navigation_with_organisation_selected
+        then_i_see_the_new_users_details
+        and_i_click("Add user")
+        then_i_see_support_navigation_with_organisation_selected
+        then_i_see_the_new_user_has_been_added(school)
+        and_email_is_not_sent("test@example.com", school)
+      end
     end
 
     scenario "Support user edits new user details before submitting" do
@@ -52,41 +77,98 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   end
 
   describe "Provider" do
-    scenario "Support User invites a new user to a school" do
-      when_i_visit_the_users_page_for(organisation: provider)
-      then_i_see_the_navigation_bars_with_organisations_and_users_selected(provider)
-      and_i_click("Add user")
-      then_i_see_support_navigation_with_organisation_selected
-      and_i_enter_the_details_for_a_new_user
-      and_i_click("Continue")
-      then_i_see_support_navigation_with_organisation_selected
-      then_i_see_the_new_users_details
-      and_i_click("Add user")
-      then_i_see_support_navigation_with_organisation_selected
-      then_i_see_the_new_user_has_been_added(provider)
+    context "when 'user_onboarding_emails' feature flag is enabled" do
+      before { feature_flags.switch!(:user_onboarding_emails, true) }
+
+      after { feature_flags.switch!(:user_onboarding_emails, false) }
+
+      scenario "Support User invites a new user to a school" do
+        when_i_visit_the_users_page_for(organisation: provider)
+        then_i_see_the_navigation_bars_with_organisations_and_users_selected(provider)
+        and_i_click("Add user")
+        then_i_see_support_navigation_with_organisation_selected
+        and_i_enter_the_details_for_a_new_user
+        and_i_click("Continue")
+        then_i_see_support_navigation_with_organisation_selected
+        then_i_see_the_new_users_details
+        and_i_click("Add user")
+        then_i_see_support_navigation_with_organisation_selected
+        then_i_see_the_new_user_has_been_added(provider)
+        and_email_is_sent("test@example.com", provider)
+      end
+    end
+
+    context "when 'user_onboarding_emails' feature flag is disabled" do
+      scenario "Support User invites a new user to a school" do
+        when_i_visit_the_users_page_for(organisation: provider)
+        then_i_see_the_navigation_bars_with_organisations_and_users_selected(provider)
+        and_i_click("Add user")
+        then_i_see_support_navigation_with_organisation_selected
+        and_i_enter_the_details_for_a_new_user
+        and_i_click("Continue")
+        then_i_see_support_navigation_with_organisation_selected
+        then_i_see_the_new_users_details
+        and_i_click("Add user")
+        then_i_see_support_navigation_with_organisation_selected
+        then_i_see_the_new_user_has_been_added(provider)
+        and_email_is_not_sent("test@example.com", provider)
+      end
     end
   end
 
   describe "User can be member of multiple organisations" do
-    scenario "Support user invites the same user to multiple organisations" do
-      when_i_visit_the_users_page_for(organisation: provider)
-      and_i_click("Add user")
-      and_i_enter_the_details_for_a_new_user
-      and_i_click("Continue")
-      then_i_see_the_new_users_details
-      and_i_click("Add user")
-      then_i_see_the_new_user_has_been_added(provider)
+    context "when 'user_onboarding_emails' feature flag is enabled" do
+      before { feature_flags.switch!(:user_onboarding_emails, true) }
 
-      when_i_return_to_organisations_page
-      when_i_visit_the_users_page_for(organisation: school)
-      and_i_click("Add user")
-      and_i_enter_the_details_for_a_new_user
-      and_i_click("Continue")
-      then_i_see_the_new_users_details
-      and_i_click("Add user")
-      then_i_see_the_new_user_has_been_added(school)
+      after { feature_flags.switch!(:user_onboarding_emails, false) }
 
-      and_the_user_has_multiple_memberships
+      scenario "Support user invites the same user to multiple organisations" do
+        when_i_visit_the_users_page_for(organisation: provider)
+        and_i_click("Add user")
+        and_i_enter_the_details_for_a_new_user
+        and_i_click("Continue")
+        then_i_see_the_new_users_details
+        and_i_click("Add user")
+        then_i_see_the_new_user_has_been_added(provider)
+        and_email_is_sent("test@example.com", provider)
+
+        when_i_return_to_organisations_page
+        when_i_visit_the_users_page_for(organisation: school)
+        and_i_click("Add user")
+        and_i_enter_the_details_for_a_new_user
+        and_i_click("Continue")
+        then_i_see_the_new_users_details
+        and_i_click("Add user")
+        then_i_see_the_new_user_has_been_added(school)
+        and_email_is_sent("test@example.com", school)
+
+        and_the_user_has_multiple_memberships
+      end
+    end
+
+    context "when 'user_onboarding_emails' feature flag is disabled" do
+      scenario "Support user invites the same user to multiple organisations" do
+        when_i_visit_the_users_page_for(organisation: provider)
+        and_i_click("Add user")
+        and_i_enter_the_details_for_a_new_user
+        and_i_click("Continue")
+        then_i_see_the_new_users_details
+        and_i_click("Add user")
+        then_i_see_the_new_user_has_been_added(provider)
+        and_email_is_not_sent("test@example.com", provider)
+
+        when_i_return_to_organisations_page
+        when_i_visit_the_users_page_for(organisation: school)
+        and_i_click("Add user")
+        and_i_enter_the_details_for_a_new_user
+        and_i_click("Continue")
+        then_i_see_the_new_users_details
+        and_i_click("Add user")
+        then_i_see_the_new_user_has_been_added(school)
+        and_email_is_not_sent("test@example.com", school)
+
+        and_the_user_has_multiple_memberships
+      end
     end
   end
 
@@ -202,19 +284,28 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
 
   alias_method :and_i_see_the_new_users_details, :then_i_see_the_new_users_details
 
-  def then_i_see_the_new_user_has_been_added(organisation)
-    and_email_is_sent("test@example.com", organisation)
+  def then_i_see_the_new_user_has_been_added(_organisation)
     expect(page.find(".govuk-notification-banner__content")).to have_content("User added")
     then_i_see_support_navigation_with_organisation_selected
     and_i_see_the_new_users_details
   end
 
-  def and_email_is_sent(email, organisation)
-    email = ActionMailer::Base.deliveries.find do |delivery|
+  def email_invite_notification(email, organisation)
+    ActionMailer::Base.deliveries.find do |delivery|
       delivery.to.include?(email) && delivery.subject == "You have been invited to #{organisation.name}"
     end
+  end
 
-    expect(email).not_to be_nil
+  def and_email_is_sent(email, organisation)
+    invite_email = email_invite_notification(email, organisation)
+
+    expect(invite_email).not_to be_nil
+  end
+
+  def and_email_is_not_sent(email, organisation)
+    invite_email = email_invite_notification(email, organisation)
+
+    expect(invite_email).to be_nil
   end
 
   def and_the_user_has_multiple_memberships
