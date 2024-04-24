@@ -28,9 +28,6 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
       @school,
       @claim,
       last_mentor_training,
-      params: {
-        claims_claim_mentor_training_form: { hours_completed: last_mentor_training.hours_completed },
-      },
     )
     Claims::Claim::RemoveEmptyMentorTrainingHours.call(claim: @claim)
   end

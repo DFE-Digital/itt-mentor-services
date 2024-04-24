@@ -15,13 +15,6 @@ describe Claims::Support::Claim::MentorsForm, type: :model do
     end
   end
 
-  describe "#to_model" do
-    it "returns an instance of a Claims::Claim" do
-      form = described_class.new(claim:)
-      expect(form.to_model).to be_a Claims::Claim
-    end
-  end
-
   describe "save" do
     it "creates mentor trainings on the claim" do
       mentor_ids = [mentor1, mentor2].map(&:id)
