@@ -118,7 +118,7 @@ scope module: :placements,
         end
       end
 
-      resources :placements, only: %i[index]
+      resources :placements, only: %i[index show]
     end
   end
 end

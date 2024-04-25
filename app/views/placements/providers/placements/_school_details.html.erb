@@ -1,0 +1,47 @@
+<%# locals: (school:, placement:) -%>
+<%= govuk_summary_list do |summary_list| %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".school_type")) %>
+    <% row.with_value(text: school.type_of_establishment) %>
+  <% end %>
+
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".school_phase")) %>
+    <% row.with_value(text: school.phase) %>
+  <% end %>
+
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".gender")) %>
+    <% row.with_value(text: school.gender) %>
+  <% end %>
+
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".age_range")) %>
+    <% row.with_value(text: school.age_range) %>
+  <% end %>
+
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".religious_character")) %>
+    <% row.with_value(text: school.religious_character) %>
+  <% end %>
+
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".urban_or_rural")) %>
+    <% row.with_value(text: school.urban_or_rural) %>
+  <% end %>
+
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".admissions_policy")) %>
+    <% row.with_value(text: school.admissions_policy) %>
+  <% end %>
+
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".percentage_free_school_meals")) %>
+    <% row.with_value(text: school.percentage_free_school_meals) %>
+  <% end %>
+
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".ofsted_rating")) %>
+    <% row.with_value(text: school.rating) %>
+  <% end %>
+<% end %>

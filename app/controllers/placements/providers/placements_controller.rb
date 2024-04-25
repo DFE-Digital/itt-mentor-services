@@ -15,6 +15,11 @@ class Placements::Providers::PlacementsController < ApplicationController
     )
   end
 
+  def show
+    @placement = Placement.find(params[:id]).decorate
+    @school = @placement.school
+  end
+
   private
 
   def set_provider

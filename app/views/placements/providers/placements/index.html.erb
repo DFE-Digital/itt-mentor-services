@@ -23,7 +23,7 @@
     <div class="govuk-grid-column-two-thirds">
       <% if @placements.any? %>
         <ul class="app-search-results">
-          <%= render(Placement::SummaryComponent.with_collection(@placements)) %>
+          <%= render(Placement::SummaryComponent.with_collection(@placements, provider: @provider)) %>
         </ul>
         <%= render PaginationComponent.new(pagy: @pagy) %>
       <% else %>

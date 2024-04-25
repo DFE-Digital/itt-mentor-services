@@ -1,5 +1,6 @@
 class Placement::SummaryComponentPreview < ApplicationComponentPreview
   def default
+    provider = FactoryBot.create(:provider)
     subject_1 = FactoryBot.build(:subject, name: "Biology")
     subject_2 = FactoryBot.build(:subject, name: "Classics")
     school_1 = FactoryBot.create(
@@ -60,6 +61,7 @@ class Placement::SummaryComponentPreview < ApplicationComponentPreview
 
     render(Placement::SummaryComponent.with_collection(
              [placement_1, placement_2, placement_3],
+             provider:,
            ))
   end
 end

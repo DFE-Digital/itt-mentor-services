@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Placement::SummaryComponent, type: :component do
   subject(:component) do
-    described_class.with_collection(placements)
+    described_class.with_collection(placements, provider:)
   end
 
   let(:subject_1) { create(:subject, name: "Biology") }
@@ -23,6 +23,7 @@ RSpec.describe Placement::SummaryComponent, type: :component do
   end
   let(:placement_1) { create(:placement, school:, subjects:, mentors:) }
   let(:placement_2) { create(:placement, school:, subjects: [subject_2], mentors:) }
+  let(:provider) { create(:provider) }
 
   context "when given multiple placements" do
     let(:subjects) { [subject_1] }
