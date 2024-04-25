@@ -1,0 +1,26 @@
+<% content_for(:page_title) { t(".page_title", school_name: @school.name, subject_name: @placement.subject_names) } %>
+<%= render "placements/providers/primary_navigation", provider: @provider, current_navigation: :placements %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: placements_provider_placements_path) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <h1 class="govuk-heading-l">
+    <span class="govuk-caption-l"><%= t(".placement", school_name: @school.name) %></span>
+    <%= @placement.subject_names %>
+  </h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= render "school_details", school: @school, placement: @placement %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-9">
+        <%= t(".mentor_details") %>
+      </h2>
+      <%= render "mentor_details", placement: @placement %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-9">
+        <%= t(".contact_details") %>
+      </h2>
+      <%= render "shared/organisations/contact_details", organisation: @school %>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,6 @@
 class PlacementDecorator < Draper::Decorator
   delegate_all
+  decorates_association :school
 
   def mentor_names
     if mentors.any?

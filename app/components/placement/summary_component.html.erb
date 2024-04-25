@@ -1,7 +1,6 @@
 <li class="app-search-results__item">
   <h2 class="app-search-result__item-title">
-    <!-- TODO: link to placement details -->
-    <%= govuk_link_to("", no_visited_state: true) do %>
+    <%= govuk_link_to(placements_provider_placement_path(@provider, placement), no_visited_state: true) do %>
       <span><%= school.name %></span>
       <br>
       <span><%= placement.subject_names %></span>

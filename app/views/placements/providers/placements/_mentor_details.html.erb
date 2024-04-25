@@ -1,0 +1,17 @@
+<%# locals: (placement:) -%>
+<%= govuk_summary_list do |summary_list| %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".mentor")) %>
+    <% row.with_value do %>
+      <% if @placement.mentors.any? %>
+        <ul class="govuk-list">
+          <% @placement.mentors.each do |mentor| %>
+            <li><%= mentor.full_name %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <%= t("placements.schools.placements.not_known_yet") %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
