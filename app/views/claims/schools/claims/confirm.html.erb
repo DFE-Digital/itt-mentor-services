@@ -23,7 +23,7 @@
 
       <h4 class="govuk-heading-m"><%= t(".give_us_feedback") %></h4>
       <p class="govuk-body">
-        <%= t(".feedback_link_html", feedback_link: govuk_link_to(t(".what_do_you_think"), feedback_url, target: "_blank", rel: "noreferrer", class: "govuk-link--no-visited-state")) %>
+        <%= govuk_link_to(t(".what_do_you_think"), feedback_url, target: "_blank", rel: "noreferrer", class: "govuk-link--no-visited-state") %>
       </p>
     <div>
   <div>

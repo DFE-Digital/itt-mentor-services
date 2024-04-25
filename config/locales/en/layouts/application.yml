@@ -9,7 +9,7 @@ en:
       claims:
         phase_banner:
           description: This is a new service &ndash; your %{feedback_link} will help us to improve it.
-          feedback: feedback
+          feedback: feedback (opens in a new tab)
 
       placements:
         phase_banner:
