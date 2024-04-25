@@ -15,7 +15,7 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
     user.support_user? && record.draft?
   end
 
-  def confirm?
+  def confirmation?
     !user.support_user? && record.submitted?
   end
 

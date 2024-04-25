@@ -75,7 +75,7 @@ describe Claims::ClaimPolicy do
     end
   end
 
-  permissions :confirm? do
+  permissions :confirmation? do
     context "when user has a submitted claim" do
       it "grants access" do
         expect(claim_policy).to permit(user, submitted_claim)

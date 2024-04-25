@@ -19,7 +19,7 @@ scope module: :claims, as: :claims, constraints: {
 
         member do
           get :check
-          get :confirm
+          get :confirmation
           post :submit
         end
       end

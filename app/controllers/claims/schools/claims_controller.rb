@@ -1,6 +1,6 @@
 class Claims::Schools::ClaimsController < Claims::ApplicationController
   include Claims::BelongsToSchool
-  before_action :set_claim, only: %i[show check confirm submit edit update]
+  before_action :set_claim, only: %i[show check confirmation submit edit update]
   before_action :authorize_claim
 
   helper_method :claim_provider_form
@@ -45,12 +45,12 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
     end
   end
 
-  def confirm; end
+  def confirmation; end
 
   def submit
     Claims::Claim::Submit.call(claim: @claim, user: current_user)
 
-    redirect_to confirm_claims_school_claim_path(@school, @claim)
+    redirect_to confirmation_claims_school_claim_path(@school, @claim)
   end
 
   private

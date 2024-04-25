@@ -2,7 +2,7 @@ en:
   claims:
     schools:
       claims:
-        confirm:
+        confirmation:
           page_title: Claim submitted
           claim_submitted: Claim submitted
           processing_your_claim: Processing your claim
