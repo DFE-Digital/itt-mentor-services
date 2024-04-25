@@ -5,3 +5,8 @@ en:
         region: Region
         hourly_rate: Hourly rate
         funding_link_text: View grant conditions
+      grant_conditions:
+        agreed_by: Agreed by
+        agreed_on: Agreed on
+        funding_link_text: View grant conditions
+        condtions_not_accepted: This school has not agreed to the grant conditions

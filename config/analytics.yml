@@ -1,5 +1,5 @@
 ---
-shared: 
+shared:
   :partnerships:
   - id
   - school_id
@@ -137,6 +137,8 @@ shared:
   - latitude
   - local_authority_name
   - local_authority_code
+  - claims_grant_conditions_accepted_at
+  - claims_grant_conditions_accepted_by_id
   :providers:
   - id
   - code

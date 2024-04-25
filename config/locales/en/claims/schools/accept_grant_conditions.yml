@@ -1,0 +1,8 @@
+en:
+  claims:
+    schools:
+      grant_conditions:
+        show:
+          page_title: Grant conditions
+          accept_conditions: Accept grant conditions
+          warning: "By selecting ‘Continue’ you declare that you have read and agreed to the above grant conditions as an authorised representative of %{school_name}"

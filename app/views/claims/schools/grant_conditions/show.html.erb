@@ -1,0 +1,17 @@
+<%= render partial: "claims/schools/grant_conditions", locals: { with_contents: false, page_title: t(".page_title") } %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text"><%= t(".warning", school_name: @school.name) %></strong>
+      </div>
+
+      <%= form_for @school, url: claims_school_grant_conditions_path, method: :patch do |f| %>
+        <%= f.submit t(".accept_conditions"), class: "govuk-button" %>
+      <% end %>
+    </div>
+  </div>
+</div>

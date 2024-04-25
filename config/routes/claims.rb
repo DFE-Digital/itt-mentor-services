@@ -24,6 +24,8 @@ scope module: :claims, as: :claims, constraints: {
         end
       end
 
+      resource :grant_conditions, only: %i[show update]
+
       resources :mentors, only: %i[index new create show destroy] do
         member { get :remove }
         collection { get :check }
