@@ -1,4 +1,3 @@
-
 en:
   activerecord:
     errors:
@@ -56,18 +55,12 @@ en:
             not_known_yet: Not known yet
           update:
             success: Placement added
-        terms:
-          autumn: Autumn
-          spring: Spring
-          summer: Summer
         not_known_yet: Not known yet
-        window_date: "%{start_month} to %{end_month}"
         index:
           page_title: Placements
           placements: Placements
           subject: Subject
           mentor: Mentor
-          window: Window
           status: Status
           not_entered: Not entered
           add_placement: Add placement
@@ -78,7 +71,6 @@ en:
               school_level: School level
               subject: Subject
               mentor: Mentor
-              window: Window
               status: Status
         remove:
           page_title: "Are you sure you want to remove this placement? - %{subject_names}"

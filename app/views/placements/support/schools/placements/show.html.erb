@@ -46,10 +46,6 @@
           <% end %>
         <% end %>
         <% summary_list.with_row do |row| %>
-          <% row.with_key(text: t(".attributes.placements.window")) %>
-          <% row.with_value(text: @placement.window) %>
-        <% end %>
-        <% summary_list.with_row do |row| %>
           <% row.with_key(text: t(".attributes.placements.status")) %>
           <% row.with_value do %>
             <%= render Placement::StatusTagComponent.new(@placement.status) %>

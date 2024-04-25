@@ -66,38 +66,6 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     end
   end
 
-  # TODO: This may change when design history is published
-
-  context "with placement window" do
-    before do
-      given_a_placement_has_one_subject(subject_1)
-    end
-
-    scenario "User views a placement with a placement window in Autumn (September to December)" do
-      given_a_placement_with_a_placement_window("01/09/2024", "31/12/2024")
-      when_i_visit_the_placement_show_page
-      then_i_the_placement_window_in_the_placement_details("Autumn")
-    end
-
-    scenario "User views a placement with a placement window in Spring (January to March)" do
-      given_a_placement_with_a_placement_window("01/01/2024", "31/03/2024")
-      when_i_visit_the_placement_show_page
-      then_i_the_placement_window_in_the_placement_details("Spring")
-    end
-
-    scenario "User views a placement with a placement window in Spring (April to July)" do
-      given_a_placement_with_a_placement_window("01/04/2024", "31/07/2024")
-      when_i_visit_the_placement_show_page
-      then_i_the_placement_window_in_the_placement_details("Summer")
-    end
-
-    scenario "User views a placement with a placement window not in a defined term" do
-      given_a_placement_with_a_placement_window("01/09/2024", "30/11/2024")
-      when_i_visit_the_placement_show_page
-      then_i_the_placement_window_in_the_placement_details("September to November")
-    end
-  end
-
   context "with school level" do
     before do
       given_a_placement_has_one_subject(subject_1)
@@ -232,19 +200,6 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
   def then_i_the_mentor_is_not_known_yet_in_the_placement_details
     within(".govuk-summary-list") do
       expect(page).to have_content("Not known yet")
-    end
-  end
-
-  def given_a_placement_with_a_placement_window(start_date, end_date)
-    placement.update!(
-      start_date: Date.parse(start_date),
-      end_date: Date.parse(end_date),
-    )
-  end
-
-  def then_i_the_placement_window_in_the_placement_details(placement_window_text)
-    within(".govuk-summary-list") do
-      expect(page).to have_content(placement_window_text)
     end
   end
 

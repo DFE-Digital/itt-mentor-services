@@ -8,7 +8,6 @@ en:
             placements: Placements
             subject: Subject
             mentor: Mentor
-            window: Window
             status: Status
             not_entered: Not entered
             add_placement: Add placement
@@ -25,9 +24,7 @@ en:
                 school_level: School level
                 subject: Subject
                 mentor: Mentor
-                window: Window
                 status: Status
             remove_placement: Remove placement
           destroy:
             placement_removed: Placement removed
-
