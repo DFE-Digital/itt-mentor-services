@@ -117,6 +117,8 @@ scope module: :placements,
           get :school_options
         end
       end
+
+      resources :placements, only: %i[index]
     end
   end
 end

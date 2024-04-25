@@ -91,6 +91,7 @@ class School < ApplicationRecord
 
   scope :placements_service, -> { where placements_service: true }
   scope :claims_service, -> { where claims_service: true }
+  scope :order_by_name, -> { order(name: :asc) }
 
   multisearchable against: %i[name postcode],
                   if: :placements_service?,
