@@ -53,14 +53,7 @@ variable "key_vault_resource_group" {
   default     = null
   description = "The name of the key vault resorce group"
 }
-variable "statuscake_password_name" {
-  default     = "SC-PASSWORD"
-  description = "The name of the statuscake password"
-}
-variable "infra_key_vault_name" {
-  default     = null
-  description = "The name of the key vault to get postgres and redis"
-}
+
 variable "azure_maintenance_window" { 
   default = null 
 }
@@ -76,6 +69,21 @@ variable "azure_enable_backup_storage" {
 variable "enable_container_monitoring" { 
   default = false 
 }
+
+variable "statuscake_contact_groups" {
+  default     = []
+  description = "ID of the contact group in statuscake web UI"
+}
+
+variable "statuscake_alerts" {
+  type = object({
+    website_url    = optional(list(string), [])
+    ssl_url        = optional(list(string), [])
+    contact_groups = optional(list(number), [])
+  })
+  default = {}
+}
+
 locals {
   postgres_ssl_mode       = var.enable_postgres_ssl ? "require" : "disable"
   app_env_values_from_yml = yamldecode(file("${path.module}/config/${var.config}_app_env.yml"))
