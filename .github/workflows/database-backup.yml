@@ -1,0 +1,116 @@
+name: Backup Database to Azure Storage
+concurrency: build_and_deploy_main
+
+on:
+    push:
+      branches: [1749-ittms-prod-db-backup-workflow]
+
+# on:
+#   workflow_dispatch:
+#     inputs:
+#       overwriteThisMorningsBackup:
+#         required: true
+#         type: boolean
+#         default: false
+#       restoreToProductionDataEnv:
+#         required: true
+#         type: boolean
+#         default: false
+#       restoreToProductionAnalysisEnv:
+#         required: true
+#         type: boolean
+#         default: false
+#       restoreToStagingEnv:
+#         required: true
+#         type: boolean
+#         default: false
+#   schedule: # 03:00 UTC
+#     - cron: '0 3 * * *'
+
+jobs:
+  backup:
+    name: Backup AKS Database (production)
+    # if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.overwriteThisMorningsBackup == 'true') }}
+    runs-on: ubuntu-latest
+    environment:
+        name: staging
+    services:
+      postgres:
+        image: postgres:11.10
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+        - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+    - uses: actions/checkout@v4
+      name: Checkout
+
+    - name: Set KV environment variables
+      run: |
+        tf_vars_file=terraform/application/config/staging.tfvars.json
+        echo "namespace=$(jq -r '.namespace' ${tf_vars_file})" >> $GITHUB_ENV
+        echo "cluster=$(jq -r '.cluster' ${tf_vars_file})" >> $GITHUB_ENV
+        echo "app_environment=$(jq -r '.cluster' ${tf_vars_file})" >> $GITHUB_ENV
+
+    - uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Setup postgres client
+      uses: DFE-Digital/github-actions/install-postgres-client@master
+      with:
+        version: 14
+
+
+
+
+    - name: Install kubectl
+      uses: azure/setup-kubectl@v4
+      with:
+        version: "v1.26.1" # default is latest stable
+
+    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
+      with:
+        azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: K8 setup
+      shell: bash
+      run: |
+        make ci staging get-cluster-credentials
+        make install-konduit
+
+    - name: Setup postgres client
+      uses: DFE-Digital/github-actions/install-postgres-client@master
+
+    - name: Set environment variable
+      run: echo "BACKUP_FILE_NAME=ittm_test" >> $GITHUB_ENV
+    #   run: echo "BACKUP_FILE_NAME=ittm_prod_$(date +"%F")" >> $GITHUB_ENV
+
+    - name: Backup Prod DB
+      run: |
+        bin/konduit.sh -t 7200 itt-mentor-services-staging -- pg_dump -E utf8 --clean --if-exists --no-owner --verbose --no-password -f ${BACKUP_FILE_NAME}.sql
+
+        tar -cvzf ${BACKUP_FILE_NAME}.tar.gz ${BACKUP_FILE_NAME}.sql
+
+    - name: Set up environment variables
+      shell: bash
+      run: |
+        echo "STORAGE_ACCOUNT_RG=s189t01-ittms-stg-rg" >> $GITHUB_ENV
+        SERVICE_SHORT=ittms
+        echo "STORAGE_ACCOUNT_NAME=s189t01ittmsstgtfsa" >> $GITHUB_ENV
+
+    - name: Set Connection String
+      run: |
+        STORAGE_CONN_STR=$(az storage account show-connection-string -g  $STORAGE_ACCOUNT_RG -n $STORAGE_ACCOUNT_NAME --query 'connectionString')
+        echo "::add-mask::$STORAGE_CONN_STR"
+        echo "AZURE_STORAGE_CONNECTION_STRING=$STORAGE_CONN_STR" >> $GITHUB_ENV
+
+    - name: Upload Backup to Azure Storage
+      run: |
+        az config set extension.use_dynamic_install=yes_without_prompt
+        az config set core.only_show_errors=true
+        az storage azcopy blob upload --container database-backup \
+        --source ittm_test.tar.gz
