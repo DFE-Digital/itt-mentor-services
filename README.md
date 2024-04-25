@@ -1,5 +1,7 @@
 # ITT mentor services
 
+[![View performance data on Skylight](https://badges.skylight.io/status/6v9PqzmAQIZi.svg?token=Qy2pZYtgRhgzOEiw8KVg4W9NcBRP2spyrwET1FsqaAE)](https://www.skylight.io/app/applications/6v9PqzmAQIZi)
+
 This application has two main services:
 
 - Claim funding for mentor training: A service where schools or training providers can claim funding for mentor training.
