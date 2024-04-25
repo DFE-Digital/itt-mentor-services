@@ -1,5 +1,7 @@
 class Claims::Schools::ClaimsController < Claims::ApplicationController
   include Claims::BelongsToSchool
+
+  before_action :has_school_accepted_grant_conditions?
   before_action :set_claim, only: %i[show check confirmation submit edit update]
   before_action :authorize_claim
 

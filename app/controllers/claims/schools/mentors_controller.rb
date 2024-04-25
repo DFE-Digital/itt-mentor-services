@@ -1,6 +1,7 @@
 class Claims::Schools::MentorsController < Claims::ApplicationController
   include Claims::BelongsToSchool
 
+  before_action :has_school_accepted_grant_conditions?
   before_action :set_mentor, only: %i[show remove destroy]
   before_action :authorize_mentor
 

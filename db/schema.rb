@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_02_144630) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_24_155320) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -310,6 +310,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_144630) do
     t.float "latitude"
     t.string "local_authority_name"
     t.string "local_authority_code"
+    t.datetime "claims_grant_conditions_accepted_at"
+    t.uuid "claims_grant_conditions_accepted_by_id"
+    t.index ["claims_grant_conditions_accepted_by_id"], name: "index_schools_on_claims_grant_conditions_accepted_by_id"
     t.index ["claims_service"], name: "index_schools_on_claims_service"
     t.index ["latitude"], name: "index_schools_on_latitude"
     t.index ["longitude"], name: "index_schools_on_longitude"
@@ -376,5 +379,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_144630) do
   add_foreign_key "placements", "schools"
   add_foreign_key "schools", "regions"
   add_foreign_key "schools", "trusts"
+  add_foreign_key "schools", "users", column: "claims_grant_conditions_accepted_by_id"
   add_foreign_key "user_memberships", "users"
 end

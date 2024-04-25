@@ -15,6 +15,7 @@ en:
         show:
           contact_details: Contact details
           grant_funding: Grant funding
+          grant_conditions: Grant conditions
         index:
           heading: Organisations (%{records})
           add_organisation: Add organisation

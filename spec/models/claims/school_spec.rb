@@ -2,62 +2,66 @@
 #
 # Table name: schools
 #
-#  id                           :uuid             not null, primary key
-#  address1                     :string
-#  address2                     :string
-#  address3                     :string
-#  admissions_policy            :string
-#  claims_service               :boolean          default(FALSE)
-#  district_admin_code          :string
-#  district_admin_name          :string
-#  email_address                :string
-#  gender                       :string
-#  group                        :string
-#  last_inspection_date         :date
-#  local_authority_code         :string
-#  local_authority_name         :string
-#  latitude                     :float
-#  longitude                    :float
-#  maximum_age                  :integer
-#  minimum_age                  :integer
-#  name                         :string
-#  percentage_free_school_meals :integer
-#  phase                        :string
-#  placements_service           :boolean          default(FALSE)
-#  postcode                     :string
-#  rating                       :string
-#  religious_character          :string
-#  school_capacity              :integer
-#  send_provision               :string
-#  special_classes              :string
-#  telephone                    :string
-#  total_boys                   :integer
-#  total_girls                  :integer
-#  total_pupils                 :integer
-#  town                         :string
-#  training_with_disabilities   :string
-#  type_of_establishment        :string
-#  ukprn                        :string
-#  urban_or_rural               :string
-#  urn                          :string           not null
-#  website                      :string
-#  created_at                   :datetime         not null
-#  updated_at                   :datetime         not null
-#  region_id                    :uuid
-#  trust_id                     :uuid
+#  id                                     :uuid             not null, primary key
+#  address1                               :string
+#  address2                               :string
+#  address3                               :string
+#  admissions_policy                      :string
+#  claims_grant_conditions_accepted_at    :datetime
+#  claims_service                         :boolean          default(FALSE)
+#  district_admin_code                    :string
+#  district_admin_name                    :string
+#  email_address                          :string
+#  gender                                 :string
+#  group                                  :string
+#  last_inspection_date                   :date
+#  latitude                               :float
+#  local_authority_code                   :string
+#  local_authority_name                   :string
+#  longitude                              :float
+#  maximum_age                            :integer
+#  minimum_age                            :integer
+#  name                                   :string
+#  percentage_free_school_meals           :integer
+#  phase                                  :string
+#  placements_service                     :boolean          default(FALSE)
+#  postcode                               :string
+#  rating                                 :string
+#  religious_character                    :string
+#  school_capacity                        :integer
+#  send_provision                         :string
+#  special_classes                        :string
+#  telephone                              :string
+#  total_boys                             :integer
+#  total_girls                            :integer
+#  total_pupils                           :integer
+#  town                                   :string
+#  training_with_disabilities             :string
+#  type_of_establishment                  :string
+#  ukprn                                  :string
+#  urban_or_rural                         :string
+#  urn                                    :string           not null
+#  website                                :string
+#  created_at                             :datetime         not null
+#  updated_at                             :datetime         not null
+#  claims_grant_conditions_accepted_by_id :uuid
+#  region_id                              :uuid
+#  trust_id                               :uuid
 #
 # Indexes
 #
-#  index_schools_on_claims_service      (claims_service)
-#  index_schools_on_latitude            (latitude)
-#  index_schools_on_longitude           (longitude)
-#  index_schools_on_placements_service  (placements_service)
-#  index_schools_on_region_id           (region_id)
-#  index_schools_on_trust_id            (trust_id)
-#  index_schools_on_urn                 (urn) UNIQUE
+#  index_schools_on_claims_grant_conditions_accepted_by_id  (claims_grant_conditions_accepted_by_id)
+#  index_schools_on_claims_service                          (claims_service)
+#  index_schools_on_latitude                                (latitude)
+#  index_schools_on_longitude                               (longitude)
+#  index_schools_on_placements_service                      (placements_service)
+#  index_schools_on_region_id                               (region_id)
+#  index_schools_on_trust_id                                (trust_id)
+#  index_schools_on_urn                                     (urn) UNIQUE
 #
 # Foreign Keys
 #
+#  fk_rails_...  (claims_grant_conditions_accepted_by_id => users.id)
 #  fk_rails_...  (region_id => regions.id)
 #  fk_rails_...  (trust_id => trusts.id)
 #
@@ -68,6 +72,7 @@ RSpec.describe Claims::School do
     it { is_expected.to have_many(:claims) }
     it { is_expected.to have_many(:mentor_memberships) }
     it { is_expected.to have_many(:mentors).through(:mentor_memberships) }
+    it { is_expected.to belong_to(:claims_grant_conditions_accepted_by).class_name("User").optional }
 
     describe "#users" do
       it { is_expected.to have_many(:users).through(:user_memberships) }
@@ -81,6 +86,22 @@ RSpec.describe Claims::School do
 
         expect(claims_school.users).to contain_exactly(claims_user)
         expect(claims_school.users).to all(be_a(Claims::User))
+      end
+    end
+
+    describe "#grant_conditions_accepted?" do
+      it "returns true if the grant conditions have been accepted" do
+        claims_user = create(:claims_user)
+        claims_school = create(:claims_school, claims_grant_conditions_accepted_at: Time.zone.now, claims_grant_conditions_accepted_by_id: claims_user.id)
+
+        expect(claims_school.grant_conditions_accepted?).to eq(true)
+      end
+
+      it "returns false if the grant conditions have NOT been accepted" do
+        create(:claims_user)
+        claims_school = create(:claims_school, claims_grant_conditions_accepted_at: nil, claims_grant_conditions_accepted_by_id: nil)
+
+        expect(claims_school.grant_conditions_accepted?).to eq(false)
       end
     end
   end

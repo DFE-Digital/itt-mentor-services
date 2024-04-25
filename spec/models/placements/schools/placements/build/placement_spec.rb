@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: placements
+#
+#  id         :uuid             not null, primary key
+#  end_date   :date
+#  start_date :date
+#  status     :enum             default("draft")
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  school_id  :uuid
+#
+# Indexes
+#
+#  index_placements_on_school_id  (school_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (school_id => schools.id)
+#
 require "rails_helper"
 
 RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model do

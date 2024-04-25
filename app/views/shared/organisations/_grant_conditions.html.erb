@@ -1,0 +1,15 @@
+<% if organisation.claims_grant_conditions_accepted_at %>
+  <%= govuk_summary_list(html_attributes: { id: "grant-conditions" }) do |summary_list| %>
+    <% summary_list.with_row do |row| %>
+      <% row.with_key(text: t(".agreed_by")) %>
+      <% row.with_value(**details_field_args(organisation.claims_grant_conditions_accepted_by&.full_name)) %>
+    <% end %>
+    <% summary_list.with_row do |row| %>
+      <% row.with_key(text: t(".agreed_on")) %>
+      <% row.with_value(**details_field_args(l(organisation.claims_grant_conditions_accepted_at.to_date, format: :long))) %>
+    <% end %>
+  <% end %>
+  <p class="govuk-body"><%= govuk_link_to(t(".funding_link_text"), claims_grant_conditions_path) %></p>
+<% else %>
+  <p class="govuk-body"><%= t(".condtions_not_accepted") %></p>
+<% end %>
