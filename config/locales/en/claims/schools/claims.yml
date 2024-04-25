@@ -13,7 +13,7 @@ en:
           your_reference_number_id: Your reference number
           what_happens_next: What happens next
           view_claims: View claims
-          sent_email: We have sent you a confirmation email.
+          sent_email: We have emailed you a copy of your claim.
           guidance: We will check your claim before processing payment. If we need to contact you for further information, we will use the email you used to access this service.
         check:
           page_title: Check your answers
