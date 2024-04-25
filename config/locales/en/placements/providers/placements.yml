@@ -1,0 +1,19 @@
+en:
+  placements:
+    providers:
+      placements:
+        index:
+          find_placements: Find placements
+          placements_found: "%{placements_count} placements found"
+          no_placements_found: No school placements found
+          placements: Placements
+          no_results_for_filters: There are no results for the selected filter.
+        filter:
+          partner_school: Partner school
+          school: School
+          subject: Subject
+          school_phase: School phase
+          school_type: School type
+          gender: Gender
+          religious_character: Religious character
+          ofsted_rating: Ofsted rating

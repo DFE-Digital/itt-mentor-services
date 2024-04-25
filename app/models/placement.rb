@@ -31,4 +31,6 @@ class Placement < ApplicationRecord
   accepts_nested_attributes_for :subjects, allow_destroy: true
 
   validates :school, :status, presence: true
+
+  scope :order_by_subject_school_name, -> { includes(:subjects, :school).order("subjects.name", "schools.name") }
 end

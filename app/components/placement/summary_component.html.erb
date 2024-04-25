@@ -1,0 +1,76 @@
+<li class="app-search-results__item">
+  <h2 class="app-search-result__item-title">
+    <!-- TODO: link to placement details -->
+    <%= govuk_link_to("", no_visited_state: true) do %>
+      <span><%= school.name %></span>
+      <br>
+      <span><%= placement.subject_names %></span>
+    <% end %>
+  </h2>
+  <dl class="app-result-detail">
+    <div class="app-result-detail__row">
+      <dt class="app-result-detail__key">
+        <%= t(".phase") %>
+      </dt>
+      <dd class="app-result-detail__value">
+        <%= school.phase %>
+      </dd>
+    </div>
+    <div class="app-result-detail__row">
+      <dt class="app-result-detail__key">
+        <%= t(".age_range") %>
+      </dt>
+      <dd class="app-result-detail__value">
+        <%= school.age_range %>
+      </dd>
+    </div>
+    <div class="app-result-detail__row">
+      <dt class="app-result-detail__key">
+        <%= t(".school_type") %>
+      </dt>
+      <dd class="app-result-detail__value">
+        <%= school.type_of_establishment %>
+      </dd>
+    </div>
+    <div class="app-result-detail__row">
+      <dt class="app-result-detail__key">
+        <%= t(".gender") %>
+      </dt>
+      <dd class="app-result-detail__value">
+        <%= school.gender %>
+      </dd>
+    </div>
+    <div class="app-result-detail__row">
+      <dt class="app-result-detail__key">
+        <%= t(".religious_character") %>
+      </dt>
+      <dd class="app-result-detail__value">
+        <%= school.religious_character %>
+      </dd>
+    </div>
+    <div class="app-result-detail__row">
+      <dt class="app-result-detail__key">
+        <%= t(".urban_or_rural") %>
+      </dt>
+      <dd class="app-result-detail__value">
+        <%= school.urban_or_rural %>
+      </dd>
+    </div>
+    <div class="app-result-detail__row">
+      <dt class="app-result-detail__key">
+        <%= t(".ofsted_rating") %>
+      </dt>
+      <dd class="app-result-detail__value">
+        <%= school.rating %>
+      </dd>
+    </div>
+    <div class="app-result-detail__row">
+      <dt class="app-result-detail__key">
+        <%= t(".mentor") %>
+      </dt>
+      <dd class="app-result-detail__value">
+        <%= placement.mentor_names %>
+      </dd>
+    </div>
+  </dl>
+</li>

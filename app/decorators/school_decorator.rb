@@ -10,6 +10,10 @@ class SchoolDecorator < OrganisationDecorator
     parts.join(", ")
   end
 
+  def age_range
+    "#{minimum_age} to #{maximum_age}"
+  end
+
   private
 
   def address_parts

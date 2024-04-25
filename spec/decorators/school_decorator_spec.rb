@@ -36,4 +36,12 @@ RSpec.describe SchoolDecorator do
       expect(school.decorate.formatted_inspection_date).to eq("12 October 2020")
     end
   end
+
+  describe "#age_range" do
+    it "return the minimum age and maximum age as a sentence" do
+      school = build(:school, minimum_age: 4, maximum_age: 11)
+
+      expect(school.decorate.age_range).to eq("4 to 11")
+    end
+  end
 end

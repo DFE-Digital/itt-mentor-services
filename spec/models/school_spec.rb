@@ -98,6 +98,16 @@ RSpec.describe School, type: :model do
         expect(described_class.claims_service).to contain_exactly(claims_school)
       end
     end
+
+    describe "#order_by_name" do
+      it "returns the schools ordered by name" do
+        school_1 = create(:school, name: "Brixton School")
+        school_2 = create(:school, name: "Abbey School")
+        school_3 = create(:school, name: "Brighton School")
+
+        expect(described_class.order_by_name).to eq([school_2, school_3, school_1])
+      end
+    end
   end
 
   context "with validations" do
