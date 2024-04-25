@@ -73,40 +73,6 @@ RSpec.describe PlacementDecorator do
     end
   end
 
-  describe "#window" do
-    context "when the window is autumn" do
-      it "returns autumn" do
-        placement = build(:placement, start_date: "2020-09-01", end_date: "2020-12-31")
-
-        expect(placement.decorate.window).to eq("Autumn")
-      end
-    end
-
-    context "when the window is spring" do
-      it "returns spring" do
-        placement = build(:placement, start_date: "2020-01-01", end_date: "2020-03-31")
-
-        expect(placement.decorate.window).to eq("Spring")
-      end
-    end
-
-    context "when the window is summer" do
-      it "returns summer" do
-        placement = build(:placement, start_date: "2020-04-01", end_date: "2020-07-31")
-
-        expect(placement.decorate.window).to eq("Summer")
-      end
-    end
-
-    context "when the window is not autumn, spring or summer" do
-      it "returns the window date" do
-        placement = build(:placement, start_date: "2020-02-01", end_date: "2020-03-31")
-
-        expect(placement.decorate.window).to eq("February to March")
-      end
-    end
-  end
-
   describe "#formatted_start_date" do
     it "returns the formatted start date" do
       placement = build(:placement, start_date: "2020-09-01")

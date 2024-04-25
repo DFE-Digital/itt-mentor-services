@@ -53,7 +53,7 @@ RSpec.describe "Placement school user views a list of placements", type: :system
   end
 
   def then_i_see_published_status_tag
-    within("tbody tr:nth-child(1) td:nth-child(4)") do
+    within("tbody tr:nth-child(1) td:nth-child(3)") do
       within(".govuk-tag--blue") do
         expect(page).to have_content "Published"
       end
@@ -97,7 +97,7 @@ RSpec.describe "Placement school user views a list of placements", type: :system
   end
 
   def and_i_see_draft_status_tag
-    within("tbody tr:nth-child(1) td:nth-child(4)") do
+    within("tbody tr:nth-child(1) td:nth-child(3)") do
       within(".govuk-tag--grey") do
         expect(page).to have_content "Draft"
       end
