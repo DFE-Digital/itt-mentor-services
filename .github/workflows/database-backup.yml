@@ -92,7 +92,6 @@ jobs:
     - name: Backup Prod DB
       run: |
         bin/konduit.sh -t 7200 itt-mentor-services-staging -- pg_dump -E utf8 --clean --if-exists --no-owner --verbose --no-password -f ${BACKUP_FILE_NAME}.sql
-
         tar -cvzf ${BACKUP_FILE_NAME}.tar.gz ${BACKUP_FILE_NAME}.sql
 
     - name: Set up environment variables
@@ -113,6 +112,7 @@ jobs:
         azcopy --version
         pwd
         ls
+        chmod 777 ittm_test.tar.gz
         az config set extension.use_dynamic_install=yes_without_prompt
         az config set core.only_show_errors=true
         az storage azcopy blob upload --container database-backup \
