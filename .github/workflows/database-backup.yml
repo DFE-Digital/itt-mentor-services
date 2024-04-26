@@ -109,10 +109,6 @@ jobs:
 
     - name: Upload Backup to Azure Storage
       run: |
-        azcopy --version
-        pwd
-        ls
-        chmod 777 ittm_test.tar.gz
         az config set extension.use_dynamic_install=yes_without_prompt
         az config set core.only_show_errors=true
         az storage azcopy blob upload --container database-backup \
