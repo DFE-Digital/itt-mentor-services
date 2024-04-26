@@ -22,7 +22,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.3.0
+          ruby-version: 3.3.1
           bundler-cache: true
       - name: ${{ matrix.tests }}
         run: ${{ matrix.COMMAND }}
@@ -54,7 +54,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.3.0
+          ruby-version: 3.3.1
           bundler-cache: true
       - name: Setup PROJ
         run: |

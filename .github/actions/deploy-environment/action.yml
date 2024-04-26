@@ -43,10 +43,10 @@ runs:
               output=$(terraform -chdir=terraform/application output -json ingress_hostnames)
               echo "HOSTNAMES=$output" >> $GITHUB_ENV
 
-          - name: Set up Ruby 3.3.0
+          - name: Set up Ruby 3.3.1
             uses: ruby/setup-ruby@v1
             with:
-              ruby-version: 3.3.0
+              ruby-version: 3.3.1
               bundler-cache: true
 
           - name: Run RSpec tests
