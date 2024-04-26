@@ -1,9 +1,10 @@
 class OrganisationListItem < ApplicationComponent
-  attr_reader :organisation, :organisation_url
+  attr_reader :organisation, :organisation_url, :show_details
 
   def initialize(
     organisation:,
     organisation_url:,
+    show_details: false,
     classes: [],
     html_attributes: {}
   )
@@ -11,5 +12,6 @@ class OrganisationListItem < ApplicationComponent
 
     @organisation = organisation
     @organisation_url = organisation_url
+    @show_details = show_details
   end
 end
