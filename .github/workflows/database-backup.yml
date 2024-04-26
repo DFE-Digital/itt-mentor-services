@@ -99,7 +99,7 @@ jobs:
       run: |
         echo "STORAGE_ACCOUNT_RG=s189t01-ittms-stg-rg" >> $GITHUB_ENV
         SERVICE_SHORT=ittms
-        echo "STORAGE_ACCOUNT_NAME=s189t01ittmsstgtfsa" >> $GITHUB_ENV
+        echo "STORAGE_ACCOUNT_NAME=s189t01ittmsdbbkpstgsa" >> $GITHUB_ENV
 
     - name: Set Connection String
       run: |
