@@ -4,14 +4,11 @@
       <h1 class="govuk-heading-xl"><%= t(".organisations") %></h1>
 
       <% if @schools.any? %>
-        <ul class="govuk-list">
+        <%= govuk_list spaced: true do %>
           <% @schools.each do |school| %>
-            <li>
-              <%= govuk_link_to school.name, claims_school_claims_path(school), no_visited_state: true %>
-
-            </li>
+            <%= tag.li govuk_link_to(school.name, claims_school_claims_path(school), no_visited_state: true) %>
           <% end %>
-        </ul>
+        <% end %>
       <% end %>
     </div>
   </div>

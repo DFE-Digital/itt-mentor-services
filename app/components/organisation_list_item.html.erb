@@ -2,10 +2,13 @@
   <h2 class="organisation-search-result__item-title">
     <%= govuk_link_to organisation.name, organisation_url, no_visited_state: true %>
   </h2>
-  <dl class="app-result-detail">
-    <div class="app-result-detail__row">
-      <dt class="app-result-detail__key"><%= t(".organisation_type") %></dt>
-      <dd class="app-result-detail__value"><%= t(".#{organisation.organisation_type}") %></dd>
-    </div>
-  </dl>
+
+  <% if show_details %>
+    <dl class="app-result-detail">
+      <div class="app-result-detail__row">
+        <dt class="app-result-detail__key"><%= t(".organisation_type") %></dt>
+        <dd class="app-result-detail__value"><%= t(".#{organisation.organisation_type}") %></dd>
+      </div>
+    </dl>
+  <% end %>
 </li>
