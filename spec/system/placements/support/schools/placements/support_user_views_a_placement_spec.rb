@@ -2,9 +2,9 @@ require "rails_helper"
 
 RSpec.describe "Placements / Support / Schools / Placement / Support User views a placement",
                type: :system, service: :placements do
-  let(:school) { create(:placements_school, name: "School 1", phase: "Nursery") }
+  let(:school) { create(:placements_school, name: "School 1", phase: "All-through") }
   let(:placement) do
-    create(:placement, school:, mentors: [mentor], subjects: [subject], status: "published", start_date: nil,
+    create(:placement, school:, subjects: [subject], status: "published", start_date: nil,
                        end_date: nil)
   end
   let(:mentor) { create(:placements_mentor) }
@@ -15,16 +15,89 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
     given_i_sign_in_as_colin
   end
 
-  scenario "Support User views a school placement's details" do
-    when_i_visit_the_support_show_page_for(school, placement)
-    then_i_see_the_placement_details(
-      school_name: "School 1",
-      school_level: "Primary",
-      subjects: "Maths",
-      mentors: placement.mentors.map(&:full_name).to_sentence,
-      window: "Not known",
-      status: "Published",
-    )
+  context "when there are no mentors assigned to a placement" do
+    scenario "Support User views a school placement's details" do
+      when_i_visit_the_support_show_page_for(school, placement)
+      then_i_see_the_placement_details(
+        school_name: "School 1",
+        school_level: "Primary",
+        subjects: "Maths",
+        mentors: ["Not known"],
+        window: "Not known",
+        status: "Published",
+      )
+    end
+  end
+
+  context "when there there is one mentor assigned to a placement" do
+    let(:placement) do
+      create(:placement, school:, mentors: [mentor], subjects: [subject],
+                         status: "published", start_date: nil, end_date: nil)
+    end
+
+    scenario "Support User views a school placement's details" do
+      when_i_visit_the_support_show_page_for(school, placement)
+      then_i_see_the_placement_details(
+        school_name: "School 1",
+        school_level: "Primary",
+        subjects: "Maths",
+        mentors: placement.mentors.map(&:full_name),
+        window: "Not known",
+        status: "Published",
+      )
+    end
+  end
+
+  context "when there are multiple mentors assigned to a placement" do
+    let(:placement) do
+      create(:placement, school:, mentors: [mentor, create(:placements_mentor)], subjects: [subject],
+                         status: "published", start_date: nil, end_date: nil)
+    end
+
+    scenario "Support User views a school placement's details" do
+      when_i_visit_the_support_show_page_for(school, placement)
+      then_i_see_the_placement_details(
+        school_name: "School 1",
+        school_level: "Primary",
+        subjects: "Maths",
+        mentors: placement.mentors.map(&:full_name),
+        window: "Not known",
+        status: "Published",
+      )
+    end
+  end
+
+  context "when there is one subject assigned to a placement" do
+    scenario "Support User views a school placement's details" do
+      when_i_visit_the_support_show_page_for(school, placement)
+      then_i_see_the_placement_details(
+        school_name: "School 1",
+        school_level: "Primary",
+        subjects: "Maths",
+        mentors: placement.mentors.map(&:full_name),
+        window: "Not known",
+        status: "Published",
+      )
+    end
+  end
+
+  context "when there are multiple subjects assigned to a placement" do
+    let(:placement) do
+      create(:placement, school:, mentors: [mentor], subjects: [subject, create(:subject, name: "English")],
+                         status: "published", start_date: nil, end_date: nil)
+    end
+
+    scenario "Support User views a school placement's details" do
+      when_i_visit_the_support_show_page_for(school, placement)
+      then_i_see_the_placement_details(
+        school_name: "School 1",
+        school_level: "Primary",
+        subjects: "Maths",
+        mentors: placement.mentors.map(&:full_name),
+        window: "Not known",
+        status: "Published",
+      )
+    end
   end
 
   private
@@ -59,7 +132,9 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
     within(".govuk-summary-list") do
       expect(page).to have_content(school_level)
       expect(page).to have_content(subjects)
-      expect(page).to have_content(mentors)
+      mentors.each do |mentor|
+        expect(page).to have_content(mentor)
+      end
       expect(page).to have_content(window)
       expect(page).to have_content(status)
     end
