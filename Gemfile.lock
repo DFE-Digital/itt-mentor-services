@@ -161,6 +161,7 @@ GEM
     crass (1.0.6)
     cssbundling-rails (1.4.0)
       railties (>= 6.0.0)
+    csv (3.3.0)
     date (3.3.4)
     debug (1.9.2)
       irb (~> 1.10)
@@ -691,6 +692,7 @@ DEPENDENCIES
   capybara_accessible_selectors!
   climate_control
   cssbundling-rails
+  csv
   debug
   dfe-analytics!
   discard
@@ -753,7 +755,7 @@ DEPENDENCIES
   webmock
 
 RUBY VERSION
-   ruby 3.3.0p0
+   ruby 3.3.1p55
 
 BUNDLED WITH
    2.5.6
