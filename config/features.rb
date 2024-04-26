@@ -7,7 +7,7 @@ Flipflop.configure do
   group :placements do
     feature :placements_user_onboarding_emails,
             description: "Dispatch emails to users when they have been" \
-            " onboarded onto the placements service",
+            " onboarded on to or removed from the placements service",
             default: false
   end
 end
