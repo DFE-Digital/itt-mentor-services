@@ -20,10 +20,10 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
       end
     end
 
-    context "when 'user_onboarding_emails' feature flag is enabled" do
-      before { feature_flags.switch!(:user_onboarding_emails, true) }
+    context "when 'placements_user_onboarding_emails' feature flag is enabled" do
+      before { feature_flags.switch!(:placements_user_onboarding_emails, true) }
 
-      after { feature_flags.switch!(:user_onboarding_emails, false) }
+      after { feature_flags.switch!(:placements_user_onboarding_emails, false) }
 
       scenario "user is removed from a school" do
         given_i_am_signed_in_as_mary
@@ -40,7 +40,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
       end
     end
 
-    context "when 'user_onboarding_emails' feature flag is disabled" do
+    context "when 'placements_user_onboarding_emails' feature flag is disabled" do
       scenario "user is removed from a school" do
         given_i_am_signed_in_as_mary
         and_i_visit_the_user_page(anne)
@@ -74,10 +74,10 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
       end
     end
 
-    context "when 'user_onboarding_emails' feature flag is enabled" do
-      before { feature_flags.switch!(:user_onboarding_emails, true) }
+    context "when 'placements_user_onboarding_emails' feature flag is enabled" do
+      before { feature_flags.switch!(:placements_user_onboarding_emails, true) }
 
-      after { feature_flags.switch!(:user_onboarding_emails, false) }
+      after { feature_flags.switch!(:placements_user_onboarding_emails, false) }
 
       scenario "user is removed from a provider" do
         given_i_am_signed_in_as_mary
@@ -94,7 +94,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
       end
     end
 
-    context "when 'user_onboarding_emails' feature flag is disabled" do
+    context "when 'placements_user_onboarding_emails' feature flag is disabled" do
       scenario "user is removed from a provider" do
         given_i_am_signed_in_as_mary
         and_i_visit_the_user_page(anne)

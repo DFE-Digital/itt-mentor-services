@@ -22,10 +22,10 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   end
 
   describe "School" do
-    context "when 'user_onboarding_emails' feature flag is enabled" do
-      before { feature_flags.switch!(:user_onboarding_emails, true) }
+    context "when 'placements_user_onboarding_emails' feature flag is enabled" do
+      before { feature_flags.switch!(:placements_user_onboarding_emails, true) }
 
-      after { feature_flags.switch!(:user_onboarding_emails, false) }
+      after { feature_flags.switch!(:placements_user_onboarding_emails, false) }
 
       scenario "Support User invites a new user to a school" do
         when_i_visit_the_users_page_for(organisation: school)
@@ -43,7 +43,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
       end
     end
 
-    context "when 'user_onboarding_emails' feature flag is disabled" do
+    context "when 'placements_user_onboarding_emails' feature flag is disabled" do
       scenario "Support User invites a new user to a school" do
         when_i_visit_the_users_page_for(organisation: school)
         then_i_see_the_navigation_bars_with_organisations_and_users_selected(school)
@@ -77,10 +77,10 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   end
 
   describe "Provider" do
-    context "when 'user_onboarding_emails' feature flag is enabled" do
-      before { feature_flags.switch!(:user_onboarding_emails, true) }
+    context "when 'placements_user_onboarding_emails' feature flag is enabled" do
+      before { feature_flags.switch!(:placements_user_onboarding_emails, true) }
 
-      after { feature_flags.switch!(:user_onboarding_emails, false) }
+      after { feature_flags.switch!(:placements_user_onboarding_emails, false) }
 
       scenario "Support User invites a new user to a school" do
         when_i_visit_the_users_page_for(organisation: provider)
@@ -98,7 +98,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
       end
     end
 
-    context "when 'user_onboarding_emails' feature flag is disabled" do
+    context "when 'placements_user_onboarding_emails' feature flag is disabled" do
       scenario "Support User invites a new user to a school" do
         when_i_visit_the_users_page_for(organisation: provider)
         then_i_see_the_navigation_bars_with_organisations_and_users_selected(provider)
@@ -117,10 +117,10 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   end
 
   describe "User can be member of multiple organisations" do
-    context "when 'user_onboarding_emails' feature flag is enabled" do
-      before { feature_flags.switch!(:user_onboarding_emails, true) }
+    context "when 'placements_user_onboarding_emails' feature flag is enabled" do
+      before { feature_flags.switch!(:placements_user_onboarding_emails, true) }
 
-      after { feature_flags.switch!(:user_onboarding_emails, false) }
+      after { feature_flags.switch!(:placements_user_onboarding_emails, false) }
 
       scenario "Support user invites the same user to multiple organisations" do
         when_i_visit_the_users_page_for(organisation: provider)
@@ -146,7 +146,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
       end
     end
 
-    context "when 'user_onboarding_emails' feature flag is disabled" do
+    context "when 'placements_user_onboarding_emails' feature flag is disabled" do
       scenario "Support user invites the same user to multiple organisations" do
         when_i_visit_the_users_page_for(organisation: provider)
         and_i_click("Add user")

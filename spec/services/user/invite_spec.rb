@@ -20,12 +20,12 @@ RSpec.describe User::Invite do
     end
 
     context "when the user's service is Placements" do
-      context "when 'user_onboarding_emails' feature flag is enabled" do
+      context "when 'placements_user_onboarding_emails' feature flag is enabled" do
         let(:feature_flags) { Flipflop::FeatureSet.current.test! }
 
-        before { feature_flags.switch!(:user_onboarding_emails, true) }
+        before { feature_flags.switch!(:placements_user_onboarding_emails, true) }
 
-        after { feature_flags.switch!(:user_onboarding_emails, false) }
+        after { feature_flags.switch!(:placements_user_onboarding_emails, false) }
 
         describe "when the organisation is a school" do
           let(:user) { create(:placements_user) }
@@ -46,7 +46,7 @@ RSpec.describe User::Invite do
         end
       end
 
-      context "when 'user_onboarding_emails' feature flag is disabled" do
+      context "when 'placements_user_onboarding_emails' feature flag is disabled" do
         describe "when the organisation is a school" do
           let(:user) { create(:placements_user) }
           let(:organisation) { create(:placements_school) }

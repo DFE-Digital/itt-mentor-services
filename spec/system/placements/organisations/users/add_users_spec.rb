@@ -16,10 +16,10 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
   let(:feature_flags) { Flipflop::FeatureSet.current.test! }
 
   describe "Ann invites a member successfully" do
-    context "when 'user_onboarding_emails' feature flag is enabled" do
-      before { feature_flags.switch!(:user_onboarding_emails, true) }
+    context "when 'placements_user_onboarding_emails' feature flag is enabled" do
+      before { feature_flags.switch!(:placements_user_onboarding_emails, true) }
 
-      after { feature_flags.switch!(:user_onboarding_emails, false) }
+      after { feature_flags.switch!(:placements_user_onboarding_emails, false) }
 
       context "with provider" do
         scenario "user invites a member to a provider" do
@@ -65,7 +65,7 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
       end
     end
 
-    context "when 'user_onboarding_emails' feature flag is disabled" do
+    context "when 'placements_user_onboarding_emails' feature flag is disabled" do
       context "with provider" do
         scenario "user invites a member to a provider" do
           given_i_am_logged_in_as_a_user_with_one_organisation(one_provider)
@@ -118,10 +118,10 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
       create(:user_membership, user: mary, organisation: one_provider)
     end
 
-    context "when 'user_onboarding_emails' feature flag is enabled" do
-      before { feature_flags.switch!(:user_onboarding_emails, true) }
+    context "when 'placements_user_onboarding_emails' feature flag is enabled" do
+      before { feature_flags.switch!(:placements_user_onboarding_emails, true) }
 
-      after { feature_flags.switch!(:user_onboarding_emails, false) }
+      after { feature_flags.switch!(:placements_user_onboarding_emails, false) }
 
       scenario "user adds a user to multiple organisations" do
         given_i_am_logged_in_as_a_user_with_multiple_organisations
@@ -139,7 +139,7 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
       end
     end
 
-    context "when 'user_onboarding_emails' feature flag is disabled" do
+    context "when 'placements_user_onboarding_emails' feature flag is disabled" do
       scenario "user adds a user to multiple organisations" do
         given_i_am_logged_in_as_a_user_with_multiple_organisations
         and_user_is_already_assigned_to_a_school
