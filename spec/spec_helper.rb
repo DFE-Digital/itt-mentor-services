@@ -41,6 +41,11 @@ SimpleCov.start "rails" do
   add_group "Validators", "app/validators"
 end
 
+# `expect(...).not_to matcher.and matcher` is not supported, since it creates a bit of an ambiguity.
+# Instead, define negated versions of whatever matchers you wish to negate with
+# `RSpec::Matchers.define_negated_matcher` and use `expect(...).to matcher.and matcher`.
+RSpec::Matchers.define_negated_matcher :not_change, :change
+
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
