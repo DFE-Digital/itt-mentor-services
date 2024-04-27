@@ -24,17 +24,21 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   def show; end
 
   def check
-    last_mentor_training = @claim.mentor_trainings.order_by_mentor_full_name.last
+    @valid_claim = @claim.get_valid_revision
+    last_mentor_training = @valid_claim.mentor_trainings.order_by_mentor_full_name.last
 
     @back_path = edit_claims_school_claim_mentor_training_path(
       @school,
-      @claim,
+      @valid_claim,
       last_mentor_training,
     )
-    Claims::Claim::RemoveEmptyMentorTrainingHours.call(claim: @claim)
   end
 
-  def edit; end
+  def edit
+    if create_revision?
+      @claim_revision = @claim.create_revision!
+    end
+  end
 
   def update
     if claim_provider_form.save
@@ -82,10 +86,14 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   end
 
   def claim_id
-    params[:claim_id] || params[:id]
+    @claim_revision&.id || params[:claim_id] || params[:id]
   end
 
   def authorize_claim
     authorize @claim || Claims::Claim
+  end
+
+  def create_revision?
+    params[:revision] == "true"
   end
 end

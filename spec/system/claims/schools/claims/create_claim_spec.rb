@@ -98,6 +98,14 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     then_i_am_redirected_to_root_path_with_alert
   end
 
+  scenario "Anne tries to create claim but backs off" do
+    when_i_click("Add claim")
+    when_i_choose_a_provider
+    when_i_click("Continue")
+    visit edit_claims_school_claim_path(school, Claims::Claim.last)
+    ### This will be fixed in a new PR
+  end
+
   private
 
   def given_i_sign_in
