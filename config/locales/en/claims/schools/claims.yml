@@ -17,9 +17,10 @@ en:
           guidance: We will check your claim before processing payment. If we need to contact you for further information, we will use the email you used to access this service.
         check:
           page_title: Check your answers
+          caption: Add claim
+          caption_draft: Claim - %{reference}
           warning: You will not be able to change any of the claim details once you have submitted it.
           submit: Submit claim
-          add_claim: Add claim
           declaration: Declaration
           disclaimer: "By submitting this claim, I confirm that:"
           claim_on_behalf_of_school: I am authorised to claim on behalf of the school
