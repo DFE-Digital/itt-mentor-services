@@ -1,6 +1,6 @@
 class Placements::Schools::PlacementsController < ApplicationController
   before_action :set_school
-  before_action :set_placement, only: %i[show remove destroy]
+  before_action :set_placement, only: %i[show edit_provider update remove destroy]
   before_action :set_decorated_placement, only: %i[show remove]
 
   def index
@@ -11,6 +11,20 @@ class Placements::Schools::PlacementsController < ApplicationController
   def show; end
 
   def remove; end
+
+  def edit_provider
+    @providers = Provider.all
+  end
+
+  def update
+    @placement.provider = Provider.find(provider_params[:provider_id]) if provider_params[:provider_id].present?
+
+    if @placement.save!
+      redirect_to placements_school_placement_path(@school, @placement), flash: { success: t(".success") }
+    else
+      render :edit_provider
+    end
+  end
 
   def destroy
     @placement.destroy!
@@ -29,5 +43,9 @@ class Placements::Schools::PlacementsController < ApplicationController
 
   def set_decorated_placement
     @placement = @placement.decorate
+  end
+
+  def provider_params
+    params.require(:provider).permit(:provider_id)
   end
 end
