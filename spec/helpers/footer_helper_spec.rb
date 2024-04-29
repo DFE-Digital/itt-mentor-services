@@ -9,7 +9,7 @@ RSpec.describe FooterHelper do
         allow(HostingEnvironment).to receive(:current_service).and_return(:claims)
         expect(helper.footer_meta_items).to eq(
           [
-            { href: "/grant_conditions", text: "Grant conditions" },
+            { href: "/grant-conditions", text: "Grant conditions" },
             { href: "/accessibility", text: "Accessibility" },
             { href: "/cookies", text: "Cookies" },
             { href: "/privacy", text: "Privacy notice" },
