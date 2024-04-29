@@ -24,7 +24,8 @@ en:
           declaration: Declaration
           disclaimer: "By submitting this claim, I confirm that:"
           claim_on_behalf_of_school: I am authorised to claim on behalf of the school
-          accurate_information: The information detailed above is accurate and the total I am claiming back has been used to support the cost of the mentor training
+          read_and_accepted_grant_conditions: I have read and accepted the grant terms and conditions
+          accurate_information: the information detailed above is accurate and the total I am claiming back has been used to support the cost of the mentor training
           provide_evidence: I will provide evidence to support this claim if requested by the Department for Education
           total_hours: Total hours
           hourly_rate: Hourly rate
