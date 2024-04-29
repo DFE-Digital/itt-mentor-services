@@ -40,6 +40,10 @@ RSpec.describe Placement, type: :model do
     it { is_expected.to validate_presence_of(:status) }
   end
 
+  describe "delegations" do
+    it { is_expected.to delegate_method(:name).to(:provider).with_prefix(true).allow_nil }
+  end
+
   describe "scopes" do
     describe "#order_by_subject_school_name" do
       it "returns the placements ordered by their associated schools name" do
