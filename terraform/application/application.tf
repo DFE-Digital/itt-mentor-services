@@ -14,9 +14,9 @@ module "application_configuration" {
   config_variables = merge(
     local.app_env_values,
     {
-    ENVIRONMENT_NAME = var.environment
-    PGSSLMODE        = local.postgres_ssl_mode
-    })
+      ENVIRONMENT_NAME = var.environment
+      PGSSLMODE        = local.postgres_ssl_mode
+  })
   secret_variables = {
     DATABASE_URL = module.postgres.url
   }
@@ -39,7 +39,8 @@ module "web_application" {
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
   replicas                   = var.app_replicas
-  docker_image = var.docker_image
+  docker_image               = var.docker_image
+  enable_logit               = true
 }
 
 module "worker_application" {
@@ -57,5 +58,6 @@ module "worker_application" {
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
   replicas                   = var.worker_replicas
-  docker_image = var.docker_image
+  docker_image               = var.docker_image
+  enable_logit               = true
 }
