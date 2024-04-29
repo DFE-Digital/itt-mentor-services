@@ -12,7 +12,7 @@ RSpec.describe FooterHelper do
             { href: "/grant_conditions", text: "Grant conditions" },
             { href: "/accessibility", text: "Accessibility" },
             { href: "/cookies", text: "Cookies" },
-            { href: "/privacy", text: "Privacy policy" },
+            { href: "/privacy", text: "Policy notice" },
             { href: "/terms", text: "Terms and conditions" },
           ],
         )
@@ -27,7 +27,7 @@ RSpec.describe FooterHelper do
             { href: "#", text: "Guidance" },
             { href: "#", text: "Accessibility" },
             { href: "#", text: "Cookies" },
-            { href: "#", text: "Privacy policy" },
+            { href: "#", text: "Policy notice" },
             { href: "#", text: "Terms and conditions" },
           ],
         )
