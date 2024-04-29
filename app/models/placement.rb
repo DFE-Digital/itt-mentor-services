@@ -27,12 +27,14 @@ class Placement < ApplicationRecord
   has_many :subjects, through: :placement_subject_joins
 
   belongs_to :school, class_name: "Placements::School"
-  belongs_to :provider, optional: true
+  belongs_to :provider, optional: true, class_name: "::Provider"
 
   accepts_nested_attributes_for :mentors, allow_destroy: true
   accepts_nested_attributes_for :subjects, allow_destroy: true
 
   validates :school, :status, presence: true
+
+  delegate :name, to: :provider, prefix: true, allow_nil: true
 
   scope :order_by_subject_school_name, -> { includes(:subjects, :school).order("subjects.name", "schools.name") }
 end
