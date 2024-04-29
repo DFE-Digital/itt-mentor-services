@@ -17,7 +17,7 @@ class Placements::Schools::PlacementsController < ApplicationController
   end
 
   def update
-    @placement.provider = Provider.find(provider_params[:provider_id]) if provider_params[:provider_id].present?
+    @placement.provider = provider_params[:provider_name].present? ? Provider.find(provider_params[:provider_id]) : nil
 
     if @placement.save!
       redirect_to placements_school_placement_path(@school, @placement), flash: { success: t(".success") }
@@ -46,6 +46,6 @@ class Placements::Schools::PlacementsController < ApplicationController
   end
 
   def provider_params
-    params.require(:provider).permit(:provider_id)
+    params.require(:provider).permit(:provider_id, :provider_name)
   end
 end
