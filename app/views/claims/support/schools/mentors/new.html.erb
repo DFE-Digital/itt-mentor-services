@@ -12,17 +12,25 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <div class="govuk-form-group">
-          <%= f.govuk_text_field :trn, width: "two-thirds", label: -> do %>
-            <span class="govuk-caption-l"><%= t(".add_mentor_with_school_name", school_name: @school.name) %></span>
-            <h2 class="govuk-heading-l"><%= t(".enter_a_trn") %></h2>
+          <span class="govuk-caption-l"><%= t(".add_mentor") %></span>
+          <h2 class="govuk-heading-l"><%= t(".find_teacher") %></h2>
+          <%= f.govuk_text_field :trn,
+                                  width: "two-thirds",
+                                  label: { text: t(".trn"), size: "s" },
+                                  hint: { text: t(".trn_hint") } %>
+          <%= govuk_details(summary_text: t(".help_with_the_trn")) do %>
+            <p>
+              <%= t(".guidance_html", guidance_link: govuk_link_to(t(".guidance_link_text"), "https://www.gov.uk/guidance/teacher-reference-number-trn", new_tab: true, no_visited_state: true)) %>
+            </p>
           <% end %>
-        </div>
 
-        <%= govuk_details(summary_text: t(".help_with_the_trn")) do %>
-          <p>
-            <%= t(".guidance_html", guidance_link: govuk_link_to(t(".guidance_link_text"), "https://www.gov.uk/guidance/teacher-reference-number-trn", new_tab: true, no_visited_state: true)) %>
-          </p>
-        <% end %>
+          <%= f.govuk_date_field(
+            :date_of_birth,
+            maxlength_enabled: true,
+            legend: { text: Mentor.human_attribute_name(:date_of_birth), size: "s" },
+            hint: { text: t(".date_of_birth_hint"), size: "s" },
+          ) %>
+        </div>
 
         <%= f.govuk_submit t(".continue") %>
         <p class="govuk-body">

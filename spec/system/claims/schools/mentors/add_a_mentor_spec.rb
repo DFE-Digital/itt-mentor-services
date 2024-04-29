@@ -26,11 +26,11 @@ RSpec.describe "Claims school user adds mentors to schools", type: :system, serv
     then_i_see_link_to_trn_guidance
   end
 
-  scenario "I do not enter a trn" do
+  scenario "I do not input anything" do
     given_i_navigate_to_schools_mentors_list
     and_i_click_on("Add mentor")
     when_i_click_on("Continue")
-    then_i_see_the_error("Enter a teacher reference number (TRN)")
+    then_i_see_errors(["Enter a teacher reference number (TRN)", "Enter a date of birth"])
   end
 
   scenario "I enter an invalid trn" do
@@ -38,7 +38,7 @@ RSpec.describe "Claims school user adds mentors to schools", type: :system, serv
     and_i_click_on("Add mentor")
     when_i_enter_trn("12a")
     and_i_click_on("Continue")
-    then_i_see_the_error("Enter a valid teacher reference number (TRN)")
+    then_i_see_errors(["Enter a valid teacher reference number (TRN)"])
   end
 
   scenario "I enter a trn of mentor who already exists for this school" do
@@ -47,47 +47,106 @@ RSpec.describe "Claims school user adds mentors to schools", type: :system, serv
     and_i_click_on("Add mentor")
     when_i_enter_trn(another_claims_mentor.trn)
     and_i_click_on("Continue")
-    then_i_see_the_error("The mentor has already been added")
+    then_i_see_errors(["The mentor has already been added"])
   end
 
-  scenario "I enter the trn of an existing claims mentor" do
-    given_a_claims_mentor_exists
-    given_i_navigate_to_schools_mentors_list
-    and_i_click_on("Add mentor")
-    when_i_enter_trn(claims_mentor.trn)
-    and_i_click_on("Continue")
-    then_i_see_check_page_for(claims_mentor)
-    when_i_click_on("Back")
-    then_i_see_form_with_trn(claims_mentor.trn)
-    when_i_click_on("Continue")
-    then_i_see_check_page_for(claims_mentor)
-    when_i_click_on("Change")
-    then_i_see_form_with_trn(claims_mentor.trn)
-    when_i_click_on("Continue")
-    then_i_see_check_page_for(claims_mentor)
-    when_i_click_on("Add mentor")
-    then_mentor_is_added(claims_mentor.full_name)
+  describe "Use trn of an existing claim mentor" do
+    before do
+      allow(TeachingRecord::GetTeacher).to receive(:call)
+       .with(trn: claims_mentor.trn, date_of_birth: "1986-11-12")
+       .and_return teaching_record_valid_response(new_mentor, "1986-11-12")
+    end
+
+    scenario "I enter the trn of an existing claims mentor" do
+      given_a_claims_mentor_exists
+      given_i_navigate_to_schools_mentors_list
+      and_i_click_on("Add mentor")
+      when_i_enter_trn(claims_mentor.trn)
+      when_i_enter_date_of_birth(12, 11, 1986)
+      and_i_click_on("Continue")
+      then_i_see_check_page_for(new_mentor)
+      when_i_click_on("Back")
+      then_i_see_form_with_trn(claims_mentor.trn)
+      then_i_see_form_with_dob("12", "11", "1986")
+      when_i_click_on("Continue")
+      then_i_see_check_page_for(new_mentor)
+      when_i_click_on("Change")
+      then_i_see_form_with_trn(claims_mentor.trn)
+      then_i_see_form_with_dob("12", "11", "1986")
+      when_i_click_on("Continue")
+      then_i_see_check_page_for(new_mentor)
+      when_i_click_on("Save mentor")
+      then_mentor_is_added(claims_mentor.full_name)
+    end
   end
 
-  scenario "I enter the trn of an existing placements mentor from another school" do
-    given_a_another_claims_mentor_exists(another_school, another_claims_mentor)
-    given_i_navigate_to_schools_mentors_list
-    and_i_click_on("Add mentor")
-    when_i_enter_trn(another_claims_mentor.trn)
-    and_i_click_on("Continue")
-    then_i_see_check_page_for(another_claims_mentor)
-    when_i_click_on("Back")
-    then_i_see_form_with_trn(another_claims_mentor.trn)
-    when_i_click_on("Continue")
-    then_i_see_check_page_for(another_claims_mentor)
-    when_i_click_on("Add mentor")
-    then_mentor_is_added(another_claims_mentor.full_name)
+  describe "Use trn of an existing claim mentor with wrong date of birth" do
+    before do
+      allow(TeachingRecord::GetTeacher).to receive(:call)
+       .with(trn: claims_mentor.trn, date_of_birth: "1999-11-12")
+       .and_raise TeachingRecord::RestClient::TeacherNotFoundError
+    end
+
+    scenario "I enter the trn of an existing claims mentor" do
+      given_a_claims_mentor_exists
+      given_i_navigate_to_schools_mentors_list
+      and_i_click_on("Add mentor")
+      when_i_enter_trn(claims_mentor.trn)
+      when_i_enter_date_of_birth(12, 11, 1999)
+      and_i_click_on("Continue")
+      then_i_see_no_results_page(school.name, claims_mentor.trn)
+    end
+  end
+
+  describe "Use trn of an existing placements mentor from another school" do
+    before do
+      allow(TeachingRecord::GetTeacher).to receive(:call)
+       .with(trn: another_claims_mentor.trn, date_of_birth: "1987-09-14")
+       .and_return teaching_record_valid_response(another_claims_mentor, "1987-9-14")
+    end
+
+    scenario "I enter the trn of an existing placements mentor from another school" do
+      given_a_another_claims_mentor_exists(another_school, another_claims_mentor)
+      given_i_navigate_to_schools_mentors_list
+      and_i_click_on("Add mentor")
+      when_i_enter_trn(another_claims_mentor.trn)
+      when_i_enter_date_of_birth(14, 9, 1987)
+      and_i_click_on("Continue")
+      then_i_see_check_page_for(another_claims_mentor)
+      when_i_click_on("Back")
+      then_i_see_form_with_trn(another_claims_mentor.trn)
+      then_i_see_form_with_dob("14", "9", "1987")
+      when_i_click_on("Continue")
+      then_i_see_check_page_for(another_claims_mentor)
+      when_i_click_on("Save mentor")
+      then_mentor_is_added(another_claims_mentor.full_name)
+    end
+  end
+
+  describe "when trn is valid-looking and mentor is found on Teaching Record Service but dob is wrong" do
+    before do
+      allow(TeachingRecord::GetTeacher).to receive(:call)
+                                             .with(trn: new_mentor.trn, date_of_birth: "1999-11-12")
+                                             .and_raise TeachingRecord::RestClient::TeacherNotFoundError
+    end
+
+    scenario "I enter a valid-looking trn that does exist on the Teaching Record Service with wrong dob" do
+      given_i_navigate_to_schools_mentors_list
+      and_i_click_on("Add mentor")
+      when_i_enter_trn(new_mentor.trn)
+      when_i_enter_date_of_birth(12, 11, 1999)
+      and_i_click_on("Continue")
+      then_i_see_no_results_page(school.name, new_mentor.trn)
+      when_i_click_on "Change your search"
+      then_i_see_form_with_trn(new_mentor.trn)
+      then_i_see_form_with_dob("12", "11", "1999")
+    end
   end
 
   describe "when trn is valid-looking, but does not exists in Teaching Record Service" do
     before do
       allow(TeachingRecord::GetTeacher).to receive(:call)
-                                             .with(trn: new_mentor.trn)
+                                             .with(trn: new_mentor.trn, date_of_birth: "1986-11-12")
                                              .and_raise TeachingRecord::RestClient::TeacherNotFoundError
     end
 
@@ -95,27 +154,30 @@ RSpec.describe "Claims school user adds mentors to schools", type: :system, serv
       given_i_navigate_to_schools_mentors_list
       and_i_click_on("Add mentor")
       when_i_enter_trn(new_mentor.trn)
+      when_i_enter_date_of_birth(12, 11, 1986)
       and_i_click_on("Continue")
       then_i_see_no_results_page(school.name, new_mentor.trn)
       when_i_click_on "Change your search"
       then_i_see_form_with_trn(new_mentor.trn)
+      then_i_see_form_with_dob("12", "11", "1986")
     end
   end
 
   describe "when trn is valid-looking and mentor is found on Teaching Record Service" do
     before do
       allow(TeachingRecord::GetTeacher).to receive(:call)
-                                             .with(trn: new_mentor.trn)
-                                             .and_return teaching_record_valid_response(new_mentor)
+                                             .with(trn: new_mentor.trn, date_of_birth: "1986-11-12")
+                                             .and_return teaching_record_valid_response(new_mentor, "1986-11-12")
     end
 
     scenario "I enter a valid-looking trn that does exist on the Teaching Record Service" do
       given_i_navigate_to_schools_mentors_list
       and_i_click_on("Add mentor")
       when_i_enter_trn(new_mentor.trn)
+      when_i_enter_date_of_birth(12, 11, 1986)
       and_i_click_on("Continue")
       then_i_see_check_page_for(new_mentor)
-      when_i_click_on("Add mentor")
+      when_i_click_on("Save mentor")
       then_mentor_is_added(new_mentor.full_name)
     end
   end
@@ -143,11 +205,14 @@ RSpec.describe "Claims school user adds mentors to schools", type: :system, serv
   end
 
   def when_i_click_on(text)
-    click_on text
+    click_on(text, match: :first)
   end
 
   def when_i_click_on_help_text
-    find("span", text: "Help with the teacher reference number (TRN)").click
+    find(
+      "span",
+      text: "Check that you typed in the teacher reference number (TRN) and date of birth correctly.",
+    ).click
   end
 
   def then_i_see_check_page_for(mentor)
@@ -181,23 +246,39 @@ RSpec.describe "Claims school user adds mentors to schools", type: :system, serv
     fill_in "claims-mentor-form-trn-field", with: trn
   end
 
+  def when_i_enter_date_of_birth(day, month, year)
+    within_fieldset("Date of birth") do
+      fill_in("Day", with: day)
+      fill_in("Month", with: month)
+      fill_in("Year", with: year)
+    end
+  end
+
   def then_i_see_the_index_page(school)
     expect(page).to have_current_path claims_school_mentors_path(school), ignore_query: true
   end
 
-  def then_i_see_the_error(message)
+  def then_i_see_errors(errors)
     expect(page).to have_title "Error: Enter a teacher reference number (TRN)"
     within(".govuk-error-summary") do
-      expect(page).to have_content message
+      expect(page).to have_content errors.join("")
     end
 
-    within(".govuk-form-group--error") do
-      expect(page).to have_content message
+    errors.each_with_index do |error, index|
+      within("div.govuk-form-group--error:nth(#{index + 1})") do
+        expect(page).to have_content error
+      end
     end
   end
 
   def then_i_see_form_with_trn(trn)
     expect(page.find("#claims-mentor-form-trn-field").value).to eq(trn)
+  end
+
+  def then_i_see_form_with_dob(day, month, year)
+    expect(page.find("#claims_mentor_form_date_of_birth_1i").value).to eq(year)
+    expect(page.find("#claims_mentor_form_date_of_birth_2i").value).to eq(month)
+    expect(page.find("#claims_mentor_form_date_of_birth_3i").value).to eq(day)
   end
 
   def then_i_see_no_results_page(_school_name, trn)
@@ -206,18 +287,19 @@ RSpec.describe "Claims school user adds mentors to schools", type: :system, serv
     expect(page).to have_content "No results found for ‘#{trn}’"
   end
 
-  def teaching_record_valid_response(mentor)
+  def teaching_record_valid_response(mentor, date_of_birth)
     {
       "trn" => mentor.trn.to_s,
       "firstName" => mentor.first_name.to_s,
       "middleName" => "",
       "lastName" => mentor.last_name.to_s,
+      "dateOfBirth" => date_of_birth,
     }
   end
 
   def then_i_see_link_to_trn_guidance
-    expect(page).to have_content "If you don’t have a TRN, read the Teacher reference number (TRN) guidance (opens in new tab) to find a lost TRN, or apply for one."
-    expect(page).to have_link("Teacher reference number (TRN) guidance (opens in new tab)", href: "https://www.gov.uk/guidance/teacher-reference-number-trn")
+    expect(page).to have_content "If your mentor does not have a TRN, share the teacher reference number (TRN) guidance (opens in new tab) to find a lost TRN, or apply for one."
+    expect(page).to have_link("teacher reference number (TRN) guidance (opens in new tab)", href: "https://www.gov.uk/guidance/teacher-reference-number-trn")
   end
 
   alias_method :and_i_click_on, :when_i_click_on

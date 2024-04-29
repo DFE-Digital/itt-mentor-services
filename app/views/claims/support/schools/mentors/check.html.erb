@@ -12,6 +12,7 @@
         <%= f.hidden_field :first_name, value: mentor_form.mentor.first_name %>
         <%= f.hidden_field :last_name, value: mentor_form.mentor.last_name %>
         <%= f.hidden_field :trn, value: mentor_form.trn %>
+        <%= f.govuk_date_field :date_of_birth, hidden: true, date_of_birth: true %>
 
         <label class="govuk-label govuk-label--l">
           <span class="govuk-caption-l"><%= t(".add_mentor_with_school_name", school_name: @school.name) %></span>
@@ -36,8 +37,17 @@
                                  class: "govuk-link--no-visited-state",
                                }) %>
           <% end %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".date_of_birth")) %>
+            <% row.with_value(text: safe_l(mentor_form.date_of_birth, format: :short)) %>
+            <% row.with_action(text: t(".change"),
+                               href: new_claims_school_mentor_path(params: mentor_form.as_form_params),
+                               html_attributes: {
+                                 class: "govuk-link--no-visited-state",
+                               }) %>
+          <% end %>
         <% end %>
-        <%= f.govuk_submit t(".add_mentor") %>
+        <%= f.govuk_submit t(".save_mentor") %>
         <p class="govuk-body">
           <%= govuk_link_to(t(".cancel"), claims_support_school_mentors_path(@school), no_visited_state: true) %>
         </p>

@@ -52,7 +52,7 @@ class Claims::Schools::MentorsController < Claims::ApplicationController
 
   def mentor_params
     params.require(:claims_mentor_form)
-          .permit(:first_name, :last_name, :trn)
+          .permit(:first_name, :last_name, :trn, :date_of_birth)
           .merge(default_params)
   end
 
