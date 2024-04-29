@@ -10,6 +10,8 @@ en:
               invalid: Select a mentor or not known
             subject_ids:
               invalid: Select a subject
+            provider_id:
+              invalid: Select a provider
   placements:
     schools:
       placements:
@@ -55,6 +57,19 @@ en:
             not_known_yet: Not known yet
           update:
             success: Placement added
+        edit_provider:
+          title_with_error: "Error: Select a provider"
+          title: Provider - Edit placement
+          caption: Edit Placement
+          edit_placement: Edit placement
+          provider: Provider
+          not_known: Not known yet
+          continue: Continue
+          cancel: Cancel
+        terms:
+          autumn: Autumn
+          spring: Spring
+          summer: Summer
         not_known_yet: Not known yet
         index:
           page_title: Placements
@@ -72,6 +87,8 @@ en:
               subject: Subject
               mentor: Mentor
               status: Status
+              provider: Provider
+          change: Change
         remove:
           page_title: "Are you sure you want to remove this placement? - %{subject_names}"
           are_you_sure: Are you sure you want to remove this placement?
@@ -79,3 +96,5 @@ en:
           remove_placement: Remove placement
         destroy:
           placement_removed: Placement removed
+        update:
+          success: Placement updated

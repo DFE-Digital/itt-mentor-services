@@ -1,0 +1,31 @@
+<% content_for :page_title, @placement.errors.any? ? t(".title_with_error") : t(".title") %>
+<%= render "placements/schools/primary_navigation", school: @school, current_navigation: :placements %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: :back) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <%= render AutocompleteSelectFormComponent.new(
+    model: @placement,
+    scope: :provider,
+    url: placements_school_placement_path(@school, @placement),
+    method: :patch,
+    data: {
+      autocomplete_path_value: "/api/provider_suggestions",
+      autocomplete_return_attributes_value: %w[code],
+      input_name: "provider[provider_name]",
+    },
+    input: {
+      field_name: :provider_id,
+      value: @placement.provider_name,
+      label: t(".title"),
+      caption: "Edit Placement",
+      previous_search: @placement.provider_id,
+    },
+  ) %>
+
+  <p class="govuk-body">
+    <%= govuk_link_to(t(".cancel"), placements_school_placement_path(@school, @placement), no_visited_state: true) %>
+  </p>
+</div>
