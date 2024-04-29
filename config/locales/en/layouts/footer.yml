@@ -5,7 +5,7 @@ en:
 
       email:
         heading: Email
-        disclaimer_html: You'll get a response within 5 working days, <b>or one working day for urgent requests.</b>
+        disclaimer_html: You’ll get a response within 5 working days.
 
       grant_conditions: Grant conditions
       guidance: Guidance
