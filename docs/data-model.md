@@ -22,24 +22,22 @@ erDiagram
     string name
     string code "code comes from publish API, but it is not a FK"
   }
-  
+
   PlacementSubjectJoin {
     uuid id PK
     uuid placement_id FK
     uuid subject_id FK
   }
-  
+
   PlacementMentorJoin {
     uuid id PK
     uuid placement_id FK
     uuid mentor_id FK
   }
-  
+
   Placement {
     uuid id PK
     uuid school_id FK
-    date start_date
-    date end_date
     enum status "draft or published"
   }
 
@@ -54,7 +52,7 @@ erDiagram
     string email_address
     string gender
     string group
-    date last_inspection_date 
+    date last_inspection_date
     string local_authority_code
     string local_authority_name
     float latitude
@@ -75,7 +73,7 @@ erDiagram
     integer total_girls
     integer total_pupils
     string town
-    string training_with_disabilities 
+    string training_with_disabilities
     string type_of_establishment
     string ukprn
     string urban_or_rural
@@ -172,7 +170,7 @@ erDiagram
   Placement ||--|{ PlacementMentorJoin : "has many"
   Placement ||--|{ PlacementSubjectJoin : "has many"
   Placement }|--|| School : "belongs to"
-  
+
   Subject ||--|{ PlacementSubjectJoin : "has many"
 
   Mentor |o--|{ MentorTraining : "has many"

@@ -3,8 +3,6 @@
 # Table name: placements
 #
 #  id         :uuid             not null, primary key
-#  end_date   :date
-#  start_date :date
 #  status     :enum             default("draft")
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -21,8 +19,6 @@
 FactoryBot.define do
   factory :placement do
     association :school, factory: :placements_school
-    start_date { 1.month.from_now }
-    end_date { 4.months.from_now }
     status { :published }
 
     trait :draft do

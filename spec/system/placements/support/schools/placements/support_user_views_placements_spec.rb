@@ -9,9 +9,9 @@ RSpec.describe "Placements / Support / Schools / Placements / Support User views
   let!(:mentor1) { create(:placements_mentor, first_name: "Bilbo", last_name: "Baggins") }
   let!(:mentor2) { create(:placements_mentor, first_name: "Bilbo", last_name: "Test") }
   let!(:mentor3) { create(:placements_mentor, trn: "1231233") }
-  let!(:placement1) { create(:placement, mentors: [mentor1], subjects: [subject1], school:, start_date: nil, end_date: nil) }
-  let!(:placement2) { create(:placement, mentors: [mentor2], subjects: [subject2], school:, start_date: nil, end_date: nil) }
-  let!(:placement3) { create(:placement, mentors: [mentor3], subjects: [subject3], start_date: nil, end_date: nil) }
+  let!(:placement1) { create(:placement, mentors: [mentor1], subjects: [subject1], school:) }
+  let!(:placement2) { create(:placement, mentors: [mentor2], subjects: [subject2], school:) }
+  let!(:placement3) { create(:placement, mentors: [mentor3], subjects: [subject3]) }
   let!(:school) { create(:placements_school, mentors: [mentor1, mentor2]) }
   let!(:another_school) { create(:placements_school) }
   let!(:colin) { create(:placements_support_user, :colin) }

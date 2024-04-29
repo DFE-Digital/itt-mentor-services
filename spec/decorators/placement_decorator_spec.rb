@@ -72,12 +72,4 @@ RSpec.describe PlacementDecorator do
       expect(placement.decorate.school_level).to eq("Primary")
     end
   end
-
-  describe "#formatted_start_date" do
-    it "returns the formatted start date" do
-      placement = build(:placement, start_date: "2020-09-01")
-
-      expect(placement.decorate.formatted_start_date).to eq(" 1 September 2020")
-    end
-  end
 end

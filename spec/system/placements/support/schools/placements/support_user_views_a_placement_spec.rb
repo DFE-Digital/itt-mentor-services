@@ -4,8 +4,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
                type: :system, service: :placements do
   let(:school) { create(:placements_school, name: "School 1", phase: "All-through") }
   let(:placement) do
-    create(:placement, school:, subjects: [subject], status: "published", start_date: nil,
-                       end_date: nil)
+    create(:placement, school:, subjects: [subject], status: "published")
   end
   let(:mentor) { create(:placements_mentor) }
   let(:subject) { create(:subject, name: "Maths", subject_area: :primary) }
@@ -30,8 +29,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
 
   context "when there there is one mentor assigned to a placement" do
     let(:placement) do
-      create(:placement, school:, mentors: [mentor], subjects: [subject],
-                         status: "published", start_date: nil, end_date: nil)
+      create(:placement, school:, mentors: [mentor], subjects: [subject], status: "published")
     end
 
     scenario "Support User views a school placement's details" do
@@ -48,8 +46,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
 
   context "when there are multiple mentors assigned to a placement" do
     let(:placement) do
-      create(:placement, school:, mentors: [mentor, create(:placements_mentor)], subjects: [subject],
-                         status: "published", start_date: nil, end_date: nil)
+      create(:placement, school:, mentors: [mentor, create(:placements_mentor)], subjects: [subject], status: "published")
     end
 
     scenario "Support User views a school placement's details" do
@@ -79,8 +76,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
 
   context "when there are multiple subjects assigned to a placement" do
     let(:placement) do
-      create(:placement, school:, mentors: [mentor], subjects: [subject, create(:subject, name: "English")],
-                         status: "published", start_date: nil, end_date: nil)
+      create(:placement, school:, mentors: [mentor], subjects: [subject, create(:subject, name: "English")], status: "published")
     end
 
     scenario "Support User views a school placement's details" do
