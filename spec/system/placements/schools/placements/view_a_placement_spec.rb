@@ -5,6 +5,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
   let!(:school) { create(:placements_school, name: "School 1", phase: "Primary") }
   let!(:placement) { create(:placement, school:) }
   let!(:subject_1) { create(:subject, name: "Subject 1", subject_area: :primary) }
+  let!(:provider) { create(:provider, name: "Provider 1") }
 
   before do
     given_i_sign_in_as_anne
@@ -111,6 +112,21 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
       given_a_placement_with_status("published")
       when_i_visit_the_placement_show_page
       then_see_the_status_in_the_placement_details(status: "Published")
+    end
+  end
+
+  context "with a provider" do
+    scenario "User views a placement with a provider" do
+      given_a_placement_with_a_provider(provider:)
+      when_i_visit_the_placement_show_page
+      then_i_see_the_provider_in_the_placement_details(provider:)
+    end
+  end
+
+  context "without a provider" do
+    scenario "User views a placement without a provider" do
+      when_i_visit_the_placement_show_page
+      then_i_see_the_provider_in_the_placement_details
     end
   end
 
@@ -221,6 +237,19 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
 
   def given_a_placement_with_status(status)
     placement.update!(status:)
+  end
+
+  def given_a_placement_with_a_provider(provider:)
+    placement.update!(provider:)
+  end
+
+  def then_i_see_the_provider_in_the_placement_details(provider: nil)
+    provider_text = provider&.name || "Not known yet"
+
+    within(".govuk-summary-list") do
+      expect(page).to have_content(provider_text)
+      expect(page).to have_content("Change")
+    end
   end
 
   def then_see_the_status_in_the_placement_details(status:)
