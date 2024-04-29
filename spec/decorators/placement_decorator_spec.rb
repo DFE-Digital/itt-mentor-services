@@ -72,4 +72,22 @@ RSpec.describe PlacementDecorator do
       expect(placement.decorate.school_level).to eq("Primary")
     end
   end
+
+  describe "#provider_name" do
+    context "when the placement has no provider" do
+      it "returns Not known yet" do
+        placement = build(:placement)
+
+        expect(placement.decorate.provider_name).to eq("Not known yet")
+      end
+    end
+
+    context "when the placement has a provider" do
+      it "returns the provider name" do
+        placement = build(:placement, provider: build(:provider, name: "Provider 1"))
+
+        expect(placement.decorate.provider_name).to eq("Provider 1")
+      end
+    end
+  end
 end
