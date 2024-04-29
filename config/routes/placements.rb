@@ -77,6 +77,7 @@ scope module: :placements,
       resources :placements, only: %i[index update show destroy] do
         member { get :remove }
         get :edit_provider, on: :member
+        get :edit_mentors, on: :member
 
         scope module: :placements do
           resources :build do
