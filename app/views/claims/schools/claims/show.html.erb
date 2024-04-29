@@ -17,7 +17,7 @@
       </h1>
 
       <% if policy(@claim).submit? %>
-        <%= govuk_button_to t(".submit"), submit_claims_school_claim_path(@school, @claim) %>
+        <%= govuk_button_to t(".submit"), check_claims_school_claim_path(@school, @claim), method: :get %>
       <% else %>
         <p class="govuk-body"><%= t(".submitted_by", name: @claim.submitted_by.full_name, date: l(@claim.submitted_on, format: :long)) %></p>
       <% end %>
