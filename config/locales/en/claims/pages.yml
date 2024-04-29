@@ -1,20 +1,6 @@
 en:
   claims:
     pages:
-      start:
-        page_title: Claim funding for mentor training
-        claim_guidance: You can claim funding for mentors who supported trainee teachers from September 2023 to July 2024.
-        closing_date_html: "Final closing date for claims: <b>19 July 2024 11:59pm<b/>"
-        training_guidance: Training that took place from April 2024 for the school year starting September 2024 can only be claimed for from May 2025.
-        before_you_start: Before you start
-        you_will_be_asked: "You’ll be asked for:"
-        itt_provider: Initial Teacher Training provider name
-        trn: the mentors’ Teacher Reference Numbers (TRN)
-        hours_of_training: hours of training the mentor completed
-        start_now: Start now
-        provider_guidance_link: Guidance for providers on initial teacher training (ITT)
-        trn_guidance_link: Find out what a teacher reference number (TRN) is and how to find or request a TRN
-        related_content: Related content
       accessibility:
         page_title: Accessibility statement for Claim funding for mentor training
       cookies:
