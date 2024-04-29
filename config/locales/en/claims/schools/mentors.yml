@@ -15,22 +15,29 @@ en:
             mentors:
               trn: Teacher reference number (TRN)
         new:
+          trn: Teacher reference number (TRN)
+          trn_hint: It’s a 7 digit number. For example, 1234567
           page_title: Enter a teacher reference number (TRN) - Add mentor
           page_title_with_error: "Error: Enter a teacher reference number (TRN) - Add mentor"
           add_mentor: Add mentor
           cancel: Cancel
           continue: Continue
-          enter_a_trn: Enter a teacher reference number (TRN)
-          help_with_the_trn: Help with the teacher reference number (TRN)
-          guidance_html: If you don’t have a TRN, read the %{guidance_link} to find a lost TRN, or apply for one.
-          guidance_link_text: Teacher reference number (TRN) guidance
+          date_of_birth_hint: For example, 31 3 1980
+          find_teacher: Find teacher
+          help_with_the_trn: Check that you typed in the teacher reference number (TRN) and date of birth correctly.
+          guidance_html: If your mentor does not have a TRN, share the %{guidance_link} to find a lost TRN, or apply for one.
+          guidance_link_text: teacher reference number (TRN) guidance
         check:
           page_title: Check your answers - Add mentor
+          save_mentor: Save mentor
           add_mentor: Add mentor
           cancel: Cancel
           change: Change
           check_your_answers: Check your answers
           trn: Teacher reference number (TRN)
+          date_of_birth: Date of birth
+          privacy_link: privacy notice
+          disclaimer_html: I confirm that %{mentor_name} has been informed that the Department for Education will store their information in line with the %{privacy_link} and have provided them with a copy of this notice for reference.
         no_results:
           page_title: No results found for ‘%{trn}’ - Add mentor
           add_mentor: Add mentor

@@ -15,6 +15,17 @@ RSpec.describe TeachingRecord::GetTeacher do
     end
   end
 
+  context "with invalid date of birth" do
+    date_of_birth = "2000-1-22"
+    subject(:get_teacher) { described_class.call(trn: "1234567", date_of_birth:) }
+
+    before { failure_stub_request_for_dob(date_of_birth) }
+
+    it "raises error" do
+      expect { get_teacher }.to raise_error(TeachingRecord::RestClient::TeacherNotFoundError)
+    end
+  end
+
   context "with valid trn" do
     subject(:get_teacher) { described_class.call(trn: "1234567") }
 
@@ -34,6 +45,28 @@ RSpec.describe TeachingRecord::GetTeacher do
         "eyts" => nil,
       })
     end
+
+    context "when dob is passed" do
+      date_of_birth = "1991-1-22"
+      subject(:get_teacher) { described_class.call(trn: "1234567", date_of_birth:) }
+
+      before { success_stub_request(date_of_birth) }
+
+      it "returns teacher details" do
+        teacher = get_teacher
+        expect(teacher).to match({
+          "trn" => "1234567",
+          "firstName" => "Judith",
+          "middleName" => "",
+          "lastName" => "Chicken",
+          "dateOfBirth" => "1991-01-22",
+          "nationalInsuranceNumber" => "B15J60R13",
+          "email" => "anonymous@anonymousdomain.org.net.co.uk",
+          "qts" => nil,
+          "eyts" => nil,
+        })
+      end
+    end
   end
 
   context "when we receive an response that is not ok? or not_found?" do
@@ -46,8 +79,9 @@ RSpec.describe TeachingRecord::GetTeacher do
     end
   end
 
-  def success_stub_request
-    stub_request(:get, "https://preprod.teacher-qualifications-api.education.gov.uk/v3/teachers/1234567")
+  def success_stub_request(date_of_birth = nil)
+    query_params = date_of_birth.blank? ? "" : "?#{date_of_birth.to_query("dateOfBirth")}"
+    stub_request(:get, "https://preprod.teacher-qualifications-api.education.gov.uk/v3/teachers/1234567#{query_params}")
       .with(
         headers: {
           "Accept" => "application/json",
@@ -55,12 +89,32 @@ RSpec.describe TeachingRecord::GetTeacher do
           "Authorization" => "Bearer secret",
           "Content-Type" => "application/json;odata.metadata=minimal",
           "User-Agent" => "Ruby",
-          "X-Api-Version" => "20240101",
+          "X-Api-Version" => "20240416",
         },
       )
       .to_return(
         status: 200,
         body: "{\"trn\":\"1234567\",\"firstName\":\"Judith\",\"middleName\":\"\",\"lastName\":\"Chicken\",\"dateOfBirth\":\"1991-01-22\",\"nationalInsuranceNumber\":\"B15J60R13\",\"email\":\"anonymous@anonymousdomain.org.net.co.uk\",\"qts\":null,\"eyts\":null}",
+        headers: {},
+      )
+  end
+
+  def failure_stub_request_for_dob(date_of_birth)
+    query_params = "?#{date_of_birth.to_query("dateOfBirth")}"
+    stub_request(:get, "https://preprod.teacher-qualifications-api.education.gov.uk/v3/teachers/1234567#{query_params}")
+      .with(
+        headers: {
+          "Accept" => "application/json",
+          "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+          "Authorization" => "Bearer secret",
+          "Content-Type" => "application/json;odata.metadata=minimal",
+          "User-Agent" => "Ruby",
+          "X-Api-Version" => "20240416",
+        },
+      )
+      .to_return(
+        status: 404,
+        body: "{\"type\":\"https://tools.ietf.org/html/rfc9110#section-15.5.5\",\"title\":\"Not Found\",\"status\":404,\"traceId\":\"00-dff9d2243466591e882b480c8bdbfc27-f60a1ced105d1602-00\"}",
         headers: {},
       )
   end
@@ -74,7 +128,7 @@ RSpec.describe TeachingRecord::GetTeacher do
           "Authorization" => "Bearer secret",
           "Content-Type" => "application/json;odata.metadata=minimal",
           "User-Agent" => "Ruby",
-          "X-Api-Version" => "20240101",
+          "X-Api-Version" => "20240416",
         },
       )
       .to_return(
@@ -93,7 +147,7 @@ RSpec.describe TeachingRecord::GetTeacher do
           "Authorization" => "Bearer secret",
           "Content-Type" => "application/json;odata.metadata=minimal",
           "User-Agent" => "Ruby",
-          "X-Api-Version" => "20240101",
+          "X-Api-Version" => "20240416",
         },
       )
       .to_return(

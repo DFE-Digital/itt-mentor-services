@@ -6,7 +6,7 @@ module TeachingRecord
       headers "Accept" => "application/json",
               "Content-Type" => "application/json;odata.metadata=minimal",
               "Authorization" => "Bearer #{ENV.fetch("TEACHING_RECORD_API_KEY", "")}",
-              "X-Api-Version" => ENV.fetch("TEACHING_RECORD_API_MINOR_VERSION", "20240101")
+              "X-Api-Version" => ENV.fetch("TEACHING_RECORD_API_MINOR_VERSION", "20240416")
     end
 
     class TeacherNotFoundError < StandardError; end

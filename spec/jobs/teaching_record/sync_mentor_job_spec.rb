@@ -68,7 +68,7 @@ RSpec.describe TeachingRecord::SyncMentorJob, type: :job do
           "Authorization" => "Bearer secret",
           "Content-Type" => "application/json;odata.metadata=minimal",
           "User-Agent" => "Ruby",
-          "X-Api-Version" => "20240101",
+          "X-Api-Version" => "20240416",
         },
       )
       .to_return(
@@ -87,7 +87,7 @@ RSpec.describe TeachingRecord::SyncMentorJob, type: :job do
           "Authorization" => "Bearer secret",
           "Content-Type" => "application/json;odata.metadata=minimal",
           "User-Agent" => "Ruby",
-          "X-Api-Version" => "20240101",
+          "X-Api-Version" => "20240416",
         },
       )
       .to_return(
@@ -106,7 +106,7 @@ RSpec.describe TeachingRecord::SyncMentorJob, type: :job do
           "Authorization" => "Bearer secret",
           "Content-Type" => "application/json;odata.metadata=minimal",
           "User-Agent" => "Ruby",
-          "X-Api-Version" => "20240101",
+          "X-Api-Version" => "20240416",
         },
       )
       .to_return(
