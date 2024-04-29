@@ -4,7 +4,6 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
                type: :system, service: :placements do
   let!(:school) { create(:placements_school, name: "School 1", phase: "Primary") }
   let!(:placement) { create(:placement, school:) }
-  let!(:subject_1) { create(:subject, name: "Subject 1", subject_area: :primary) }
   let!(:provider_1) { create(:provider, name: "Provider 1") }
   let!(:provider_2) { create(:provider, name: "Provider 2") }
 
@@ -114,7 +113,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
   end
 
   def when_i_select_provider_2
-    fill_in "Provider - Edit placement", with: "Provider 2"
+    fill_in "Provider - Edit placement", with: provider_2.name
     find("#provider-provider-id-field__option--0").click
   end
 
