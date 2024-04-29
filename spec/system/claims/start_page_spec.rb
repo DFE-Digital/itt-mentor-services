@@ -78,6 +78,7 @@ RSpec.describe "Start Page", type: :system, service: :claims do
       "You’ll be asked for:\n"\
       "initial teacher training (ITT) provider name "\
       "your mentors’ teacher reference numbers (TRN) "\
+      "your mentors’ dates of birth "\
       "hours of training each mentor completed",
     )
     expect(page).to have_content("Related content")
