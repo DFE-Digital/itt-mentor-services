@@ -3,7 +3,7 @@
 # Table name: placements
 #
 #  id          :uuid             not null, primary key
-#    status      :enum             default("draft")
+#  status      :enum             default("draft")
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  provider_id :uuid
