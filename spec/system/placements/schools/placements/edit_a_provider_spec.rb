@@ -15,7 +15,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     scenario "User edits the provider" do
       when_i_visit_the_placement_show_page
       then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
-      when_i_click_on("Change")
+      when_i_click_on_change
       then_i_should_see_the_edit_provider_page
       when_i_select_provider_2
       and_i_click_on("Continue")
@@ -25,7 +25,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     scenario "User does not select a provider" do
       when_i_visit_the_placement_show_page
       then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
-      when_i_click_on("Change")
+      when_i_click_on_change
       then_i_should_see_the_edit_provider_page
       and_i_click_on("Continue")
       then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
@@ -34,7 +34,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     scenario "User edits the provider and cancels" do
       when_i_visit_the_placement_show_page
       then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
-      when_i_click_on("Change")
+      when_i_click_on_change
       then_i_should_see_the_edit_provider_page
       when_i_select_provider_2
       and_i_click_on("Cancel")
@@ -44,7 +44,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     scenario "User clicks on back" do
       when_i_visit_the_placement_show_page
       then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
-      when_i_click_on("Change")
+      when_i_click_on_change
       then_i_should_see_the_edit_provider_page
       and_i_click_on("Back")
       then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
@@ -56,7 +56,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
       given_the_placement_has_a_provider(provider_1)
       when_i_visit_the_placement_show_page
       then_i_should_see_the_provider_name_in_the_placement_details("Provider 1")
-      when_i_click_on("Change")
+      when_i_click_on_change
       then_i_should_see_the_edit_provider_page
       when_i_select_provider_2
       and_i_click_on("Continue")
@@ -67,7 +67,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
       given_the_placement_has_a_provider(provider_1)
       when_i_visit_the_placement_show_page
       then_i_should_see_the_provider_name_in_the_placement_details("Provider 1")
-      when_i_click_on("Change")
+      when_i_click_on_change
       then_i_should_see_the_edit_provider_page
       when_i_remove_the_provider_from_the_search_box
       and_i_click_on("Continue")
@@ -119,6 +119,10 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
 
   def and_i_click_on(text)
     click_on text
+  end
+
+  def when_i_click_on_change
+    click_link "Change", href: edit_provider_placements_school_placement_path(school, placement)
   end
 
   def then_i_should_see_the_provider_name_in_the_placement_details(provider_name)
