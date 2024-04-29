@@ -53,7 +53,9 @@ class Placements::Schools::PlacementsController < ApplicationController
   end
 
   def find_provider
-    params.dig(:provider, :provider_name).present? ? Provider.find(params.dig(:provider, :provider_id)) : nil
+    provider_params_present = params.dig(:provider, :provider_name).present? &&
+      params.dig(:provider, :provider_id).present?
+    provider_params_present ? Provider.find(params.dig(:provider, :provider_id)) : nil
   end
 
   def process_mentor_ids
