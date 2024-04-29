@@ -21,4 +21,8 @@ class PlacementDecorator < Draper::Decorator
   def school_level
     subjects.pick(:subject_area).titleize
   end
+
+  def provider_name
+    provider&.name || I18n.t("placements.schools.placements.not_known_yet")
+  end
 end
