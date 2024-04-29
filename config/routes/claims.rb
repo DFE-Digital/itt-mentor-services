@@ -8,7 +8,7 @@ scope module: :claims, as: :claims, constraints: {
     get :cookies
     get :terms
     get :privacy
-    get :grant_conditions
+    get :grant_conditions, path: "grant-conditions"
   end
 
   resources :schools, only: %i[index show] do
