@@ -1,0 +1,60 @@
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">Claim funding for mentor training</h1>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body">
+        You can claim funding for mentors who supported trainee teachers from September 2023 to July 2024.
+      </p>
+
+      <p class="govuk-body">
+        Final closing date for claims: <b>19 July 2024 by 11:59pm<b />
+      </p>
+
+      <p class="govuk-body">
+        Training that took place from April 2024 for the school year starting September 2024 can only be claimed for from May 2025.
+      </p>
+
+      <h2 class="govuk-heading-m">Before you start</h2>
+
+      <p class="govuk-body">You’ll be asked for:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>initial teacher training (ITT) provider name</li>
+        <li>your mentors’ teacher reference numbers (TRN)</li>
+        <li>hours of training each mentor completed</li>
+      </ul>
+
+      <%= govuk_start_button(text: "Start now", href: sign_in_path, classes: "govuk-!-margin-top-4") %>
+
+      <h2 class="govuk-heading-m">Get an account to claim funding for mentor training</h2>
+
+      <p class="govuk-body">
+        Ask a colleague within your organisation to add you if you do not have an account.
+      </p>
+
+      <p class="govuk-body">
+        If your organisation has not been set up to claim funding for mentor training, send an email to <%= mail_to t("claims.support_email") %>.
+      </p>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      <aside class="app-related" role="complementary">
+        <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Related content</h2>
+
+        <ul class="govuk-list">
+          <li class="app-related__list-item">
+            <%= govuk_link_to "Guidance for providers on initial teacher training (ITT)", "https://www.gov.uk/government/collections/initial-teacher-training" %>
+          </li>
+          <li class="app-related__list-item">
+            <%= govuk_link_to "Find out what a teacher reference number (TRN) is and how to find or request a TRN", "https://www.gov.uk/guidance/teacher-reference-number-trn" %>
+          </li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</div>
