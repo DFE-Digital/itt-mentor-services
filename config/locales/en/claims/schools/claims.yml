@@ -14,6 +14,7 @@ en:
           what_happens_next: What happens next
           view_claims: View claims
           sent_email: We have emailed you a copy of your claim.
+          shared_with_provider: This claim will be shared with %{provider_name}.
           guidance: We will check your claim before processing payment. If we need to contact you for further information, we will use the email you used to access this service.
         check:
           page_title: Check your answers
