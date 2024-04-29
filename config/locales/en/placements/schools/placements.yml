@@ -66,6 +66,15 @@ en:
           not_known: Not known yet
           continue: Continue
           cancel: Cancel
+        edit_mentors:
+          title: Mentors - Edit placement
+          title_with_error: "Error: Select mentor or not known"
+          add_placement: Edit placement
+          mentor: Mentor
+          continue: Continue
+          cancel: Cancel
+          mentors: Mentors - Edit Placement
+          not_known: Not known yet
         terms:
           autumn: Autumn
           spring: Spring
