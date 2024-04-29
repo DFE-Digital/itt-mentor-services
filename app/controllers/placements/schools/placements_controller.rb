@@ -18,12 +18,9 @@ class Placements::Schools::PlacementsController < ApplicationController
 
   def update
     @placement.provider = provider_params[:provider_name].present? ? Provider.find(provider_params[:provider_id]) : nil
+    @placement.save!
 
-    if @placement.save!
-      redirect_to placements_school_placement_path(@school, @placement), flash: { success: t(".success") }
-    else
-      render :edit_provider
-    end
+    redirect_to placements_school_placement_path(@school, @placement), flash: { success: t(".success") }
   end
 
   def destroy
