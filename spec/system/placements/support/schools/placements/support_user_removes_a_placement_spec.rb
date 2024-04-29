@@ -4,13 +4,11 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User remove
                type: :system, service: :placements do
   let(:school) { create(:placements_school, name: "School 1", phase: "Nursery") }
   let(:placement_1) do
-    create(:placement, school:, mentors: [mentor], subjects: [subject_1], status: "published", start_date: nil,
-                       end_date: nil)
+    create(:placement, school:, mentors: [mentor], subjects: [subject_1], status: "published")
   end
 
   let(:placement_2) do
-    create(:placement, school:, mentors: [mentor], subjects: [subject_2], status: "published", start_date: nil,
-                       end_date: nil)
+    create(:placement, school:, mentors: [mentor], subjects: [subject_2], status: "published")
   end
   let(:mentor) { create(:placements_mentor) }
   let(:subject_1) { create(:subject, name: "Maths", subject_area: :primary) }

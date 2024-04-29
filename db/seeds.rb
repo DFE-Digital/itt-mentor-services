@@ -82,7 +82,7 @@ PublishTeacherTraining::Subject::Import.call
 Placements::School.find_each do |school|
   next if school.placements.any?
 
-  placement = Placement.create!(school:, start_date: 1.month.from_now, end_date: 2.months.from_now)
+  placement = Placement.create!(school:)
 
   subject = school.phase == "Primary" ? Subject.primary.first : Subject.secondary.first
   PlacementSubjectJoin.create!(placement:, subject:)

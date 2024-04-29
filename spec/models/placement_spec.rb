@@ -3,8 +3,6 @@
 # Table name: placements
 #
 #  id         :uuid             not null, primary key
-#  end_date   :date
-#  start_date :date
 #  status     :enum             default("draft")
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

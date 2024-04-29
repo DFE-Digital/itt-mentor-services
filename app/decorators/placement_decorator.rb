@@ -21,8 +21,4 @@ class PlacementDecorator < Draper::Decorator
   def school_level
     subjects.pick(:subject_area).titleize
   end
-
-  def formatted_start_date
-    I18n.l(start_date, format: :long)
-  end
 end

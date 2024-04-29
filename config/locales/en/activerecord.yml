@@ -13,10 +13,6 @@ en:
 
     errors:
       models:
-        placement:
-          attributes:
-            end_date:
-              before_start_date: Enter an end date that comes after the start date
         mentor:
           attributes:
             trn:
