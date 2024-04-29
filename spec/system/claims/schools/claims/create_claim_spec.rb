@@ -37,7 +37,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     when_i_click("Continue")
     then_i_check_my_answers
     when_i_click("Submit claim")
-    then_i_get_a_claim_reference(Claims::Claim.submitted.first)
+    then_i_get_a_claim_reference_and_see_next_steps(Claims::Claim.submitted.first)
   end
 
   scenario "Anne does not fill the form correctly" do
@@ -75,7 +75,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     when_i_add_training_hours("20 hours")
     when_i_click("Continue")
     when_i_click("Submit claim")
-    then_i_get_a_claim_reference(Claims::Claim.submitted.last)
+    then_i_get_a_claim_reference_and_see_next_steps(Claims::Claim.submitted.last)
     given_i_visit_claim_check_page_after_submitting(Claims::Claim.submitted.last)
     then_i_am_redirected_to_root_path_with_alert
   end
@@ -167,10 +167,15 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     end
   end
 
-  def then_i_get_a_claim_reference(claim)
+  def then_i_get_a_claim_reference_and_see_next_steps(claim)
     within(".govuk-panel") do
       expect(page).to have_content("Claim submitted\nYour reference number\n#{claim.reference}")
     end
+
+    expect(page).to have_content("We have emailed you a copy of your claim.")
+    expect(page).to have_content("This claim will be shared with #{claim.provider_name}.")
+    expect(page).to have_content("We will check your claim before processing payment. If we need to contact you for further information, we will use the email you used to access this service.")
+    expect(page).to have_content("We will process this claim at the end of July 2024 and all payments will be paid from September 2024.")
   end
 
   def then_i_expect_the_training_hours_for(hours, mentor)
