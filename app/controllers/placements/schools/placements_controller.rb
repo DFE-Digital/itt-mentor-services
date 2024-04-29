@@ -1,6 +1,6 @@
 class Placements::Schools::PlacementsController < ApplicationController
   before_action :set_school
-  before_action :set_placement, only: %i[show edit_provider update remove destroy]
+  before_action :set_placement, only: %i[show edit_provider edit_mentors update remove destroy]
   before_action :set_decorated_placement, only: %i[show remove]
 
   def index
@@ -16,9 +16,12 @@ class Placements::Schools::PlacementsController < ApplicationController
     @providers = Provider.all
   end
 
+  def edit_mentors
+    @mentors = @school.mentors.all
+  end
+
   def update
-    @placement.provider = provider_params[:provider_name].present? ? Provider.find(provider_params[:provider_id]) : nil
-    @placement.save!
+    @placement.update!(placement_params)
 
     redirect_to placements_school_placement_path(@school, @placement), flash: { success: t(".success") }
   end
@@ -42,7 +45,19 @@ class Placements::Schools::PlacementsController < ApplicationController
     @placement = @placement.decorate
   end
 
-  def provider_params
-    params.require(:provider).permit(:provider_id, :provider_name)
+  def placement_params
+    new_params = {}
+    new_params.merge!(provider: find_provider) if params[:provider].present?
+    new_params.merge!(mentor_ids: process_mentor_ids) if params[:placement].present?
+    new_params
+  end
+
+  def find_provider
+    params.dig(:provider, :provider_name).present? ? Provider.find(params.dig(:provider, :provider_id)) : nil
+  end
+
+  def process_mentor_ids
+    mentor_ids = params.dig(:placement, :mentor_ids)
+    mentor_ids.compact_blank!
   end
 end
