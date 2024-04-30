@@ -8,13 +8,13 @@
 <div class="govuk-width-container">
   <%= render AutocompleteSelectFormComponent.new(
     model: @placement,
-    scope: :provider,
+    scope: :placement,
     url: placements_school_placement_path(@school, @placement),
     method: :patch,
     data: {
       autocomplete_path_value: "/api/provider_suggestions",
       autocomplete_return_attributes_value: %w[code],
-      input_name: "provider[provider_name]",
+      input_name: "placement[provider_name]",
     },
     input: {
       field_name: :provider_id,

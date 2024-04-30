@@ -46,20 +46,6 @@ class Placements::Schools::PlacementsController < ApplicationController
   end
 
   def placement_params
-    new_params = {}
-    new_params.merge!(provider: find_provider) if params[:provider].present?
-    new_params.merge!(mentor_ids: process_mentor_ids) if params[:placement].present?
-    new_params
-  end
-
-  def find_provider
-    provider_params_present = params.dig(:provider, :provider_name).present? &&
-      params.dig(:provider, :provider_id).present?
-    provider_params_present ? Provider.find(params.dig(:provider, :provider_id)) : nil
-  end
-
-  def process_mentor_ids
-    mentor_ids = params.dig(:placement, :mentor_ids)
-    mentor_ids.compact_blank!
+    params.require(:placement).permit(:provider_id, mentor_ids: [])
   end
 end
