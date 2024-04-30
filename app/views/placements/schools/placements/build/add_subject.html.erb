@@ -2,11 +2,7 @@
 <%= render "placements/schools/primary_navigation", school: @school, current_navigation: :placements %>
 
 <%= content_for(:before_content) do %>
-  <% if @school.primary_or_secondary_only? || @enable_quick_navigation %>
-    <%= govuk_back_link(href: @back_link_path) %>
-  <% else %>
-    <%= govuk_back_link(href: add_phase_placements_school_placement_build_index_path(@school, :add_phase)) %>
-  <% end %>
+  <%= govuk_back_link(href: :back) %>
 <% end %>
 
 <div class="govuk-width-container">
