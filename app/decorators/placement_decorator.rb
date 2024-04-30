@@ -6,7 +6,7 @@ class PlacementDecorator < Draper::Decorator
     if mentors.any?
       mentors.map(&:full_name).sort.to_sentence
     else
-      I18n.t("placements.schools.placements.not_known_yet")
+      I18n.t("placements.schools.placements.not_yet_known")
     end
   end
 
@@ -14,7 +14,7 @@ class PlacementDecorator < Draper::Decorator
     if subjects.any?
       subjects.pluck(:name).sort.to_sentence
     else
-      I18n.t("placements.schools.placements.not_known_yet")
+      I18n.t("placements.schools.placements.not_yet_known")
     end
   end
 
@@ -23,6 +23,6 @@ class PlacementDecorator < Draper::Decorator
   end
 
   def provider_name
-    provider&.name || I18n.t("placements.schools.placements.not_known_yet")
+    provider&.name || I18n.t("placements.schools.placements.not_yet_known")
   end
 end

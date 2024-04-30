@@ -36,7 +36,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
       when_i_choose_a_subject(subject_1.name)
       and_i_click_on("Continue")
       then_i_see_the_add_a_placement_mentor_page
-      when_i_check_a_mentor("Not known")
+      when_i_check_a_mentor("Not yet known")
       and_i_click_on("Continue")
       then_i_see_the_check_your_answers_page(school.phase, nil)
       when_i_change_my_mentor
@@ -120,7 +120,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
         and_i_click_on("Continue")
         and_i_click_on("Continue")
         then_i_see_the_add_a_placement_mentor_page
-        and_i_see_the_error_message("Select a mentor or not known")
+        and_i_see_the_error_message("Select a mentor or not yet known")
       end
 
       context "when I tamper with the form URL", js: true do
@@ -453,7 +453,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
   end
 
   def then_see_that_not_known_is_selected
-    expect(page).to have_checked_field("Not known yet")
+    expect(page).to have_checked_field("Not yet known")
   end
 
   def and_i_cannot_change_the_phase

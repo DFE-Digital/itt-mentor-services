@@ -40,7 +40,7 @@
                 <% end %>
               </ul>
             <% else %>
-              <%= t("placements.schools.placements.not_known_yet") %>
+              <%= t("placements.schools.placements.not_yet_known") %>
             <% end %>
           <% end %>
           <% row.with_action(text: t(".change"), href: edit_mentors_placements_school_placement_path(@school, @placement), visually_hidden_text: t(".attributes.placements.provider")) %>
