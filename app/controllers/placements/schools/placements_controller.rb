@@ -13,7 +13,7 @@ class Placements::Schools::PlacementsController < ApplicationController
   def remove; end
 
   def edit_provider
-    @providers = Provider.all
+    @providers = @school.partner_providers.all
   end
 
   def edit_mentors
