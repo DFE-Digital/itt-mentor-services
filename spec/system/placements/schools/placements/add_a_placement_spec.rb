@@ -485,7 +485,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
   end
 
   def and_my_selection_has_not_changed_to(selection)
-    expect(page).to_not have_content(selection)
+    expect(page).not_to have_content(selection)
   end
 
   def when_i_click_on(text)
