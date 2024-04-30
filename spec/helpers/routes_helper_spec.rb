@@ -84,7 +84,7 @@ describe RoutesHelper do
       context "when the current service is claims" do
         it "returns the correct url" do
           allow(HostingEnvironment).to receive(:current_service).and_return(:claims)
-          expect(helper.feedback_url).to eq("https://forms.office.com/e/YmzG7PTLCi")
+          expect(helper.feedback_url).to eq("https://forms.office.com/e/0E3277Kqpi")
         end
       end
 
