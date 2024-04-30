@@ -53,7 +53,7 @@ class Claims::Schools::Claims::MentorsController < Claims::ApplicationController
 
     @claim_mentors_form ||=
       if params[:claims_claim_mentors_form].present?
-        Claims::Claim::MentorsForm.new(claim:, mentor_ids: claim_params[:mentor_ids])
+        Claims::Claim::MentorsForm.new(claim: claim_param, mentor_ids: claim_params[:mentor_ids])
       else
         Claims::Claim::MentorsForm.new(claim: claim_param)
       end

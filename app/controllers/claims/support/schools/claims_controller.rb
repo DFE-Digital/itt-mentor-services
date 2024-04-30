@@ -30,20 +30,24 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
   end
 
   def check
-    last_mentor_training = @claim.mentor_trainings.order_by_mentor_full_name.last
+    @valid_claim = @claim.get_valid_revision
+    last_mentor_training = @valid_claim.mentor_trainings.order_by_mentor_full_name.last
 
     @back_path = edit_claims_support_school_claim_mentor_training_path(
       @school,
-      @claim,
+      @valid_claim,
       last_mentor_training,
       params: {
         claims_support_claim_mentor_training_form: { hours_completed: last_mentor_training.hours_completed },
       },
     )
-    Claims::Claim::RemoveEmptyMentorTrainingHours.call(claim: @claim)
   end
 
-  def edit; end
+  def edit
+    if create_revision?
+      @claim_revision = @claim.create_revision!
+    end
+  end
 
   def update
     if claim_provider_form.save
@@ -56,8 +60,14 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
   def draft
     return redirect_to rejected_claims_support_school_claim_path unless @claim.valid_mentor_training_hours?
 
-    success_message = @claim.draft? ? t(".update_success") : t(".add_success")
-    Claims::Claim::CreateDraft.call(claim: @claim)
+    claim_was_draft = @claim.was_draft?
+    success_message = claim_was_draft ? t(".update_success") : t(".add_success")
+
+    if claim_was_draft
+      Claims::Claim::UpdateDraft.call(claim: @claim)
+    else
+      Claims::Claim::CreateDraft.call(claim: @claim)
+    end
 
     redirect_to claims_support_school_claims_path(@school), flash: { success: success_message }
   end
@@ -77,7 +87,7 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
   end
 
   def claim_id
-    params[:claim_id] || params[:id]
+    @claim_revision&.id || params[:claim_id] || params[:id]
   end
 
   def set_claim
@@ -95,5 +105,9 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
 
   def authorize_claim
     authorize @claim || Claims::Claim
+  end
+
+  def create_revision?
+    params[:revision] == "true"
   end
 end

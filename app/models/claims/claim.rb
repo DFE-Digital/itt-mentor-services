@@ -11,7 +11,6 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  created_by_id        :uuid
-#  next_revision_id     :uuid
 #  previous_revision_id :uuid
 #  provider_id          :uuid
 #  school_id            :uuid             not null
@@ -20,7 +19,6 @@
 # Indexes
 #
 #  index_claims_on_created_by            (created_by_type,created_by_id)
-#  index_claims_on_next_revision_id      (next_revision_id)
 #  index_claims_on_previous_revision_id  (previous_revision_id)
 #  index_claims_on_provider_id           (provider_id)
 #  index_claims_on_school_id             (school_id)
@@ -45,7 +43,6 @@ class Claims::Claim < ApplicationRecord
   has_many :mentors, through: :mentor_trainings
 
   belongs_to :previous_revision, class_name: "Claims::Claim", optional: true
-  belongs_to :next_revision, class_name: "Claims::Claim", optional: true
 
   validates :status, presence: true
   validates(
@@ -69,10 +66,11 @@ class Claims::Claim < ApplicationRecord
   delegate :full_name, to: :submitted_by, prefix: true, allow_nil: true
 
   def valid_mentor_training_hours?
-    mentor_trainings_without_current_claim = Claims::MentorTraining.joins(:claim).merge(Claims::Claim.active).where(
-      mentor_id: mentor_trainings.select(:mentor_id),
-      provider_id:,
-    ).where.not(claim_id: id)
+    mentor_trainings_without_current_claim = Claims::MentorTraining.joins(:claim)
+      .merge(Claims::Claim.active).where(
+        mentor_id: mentor_trainings.select(:mentor_id),
+        provider_id:,
+      ).where.not(claim_id: [id, previous_revision_id])
     grouped_trainings = [*mentor_trainings, *mentor_trainings_without_current_claim].group_by { [_1.mentor_id, _1.provider_id] }
 
     grouped_trainings.transform_values { _1.sum(&:hours_completed) }.values.all? { _1 <= MAXIMUM_CLAIMABLE_HOURS }
@@ -94,21 +92,9 @@ class Claims::Claim < ApplicationRecord
     mentors.present? && mentor_trainings.without_hours.blank?
   end
 
-  def deep_dup
-    dup_record = dup
-    dup_record.mentor_trainings = mentor_trainings.map(&:dup)
-    dup_record.previous_revision_id = id
-    dup_record.status = :internal_draft
-    dup_record
-  end
-
   def create_revision!
     revision_record = deep_dup
-
-    ActiveRecord::Base.transaction do
-      revision_record.save!
-      update!(next_revision_id: revision_record.id)
-    end
+    revision_record.save!
 
     revision_record
   end
@@ -121,14 +107,25 @@ class Claims::Claim < ApplicationRecord
     claim_record
   end
 
-  def has_revision?
-    previous_revision_id.present? || next_revision_id.present?
-  end
-
   def was_draft?
     claim_record = self
     claim_record = claim_record.previous_revision while claim_record.present? && !claim_record.draft?
 
     claim_record.nil? ? false : claim_record.draft?
+  end
+
+  private
+
+  def has_revision?
+    previous_revision_id.present? ||
+      id.present? && Claims::Claim.find_by(previous_revision_id: id).present?
+  end
+
+  def deep_dup
+    dup_record = dup
+    dup_record.mentor_trainings = mentor_trainings.map(&:dup)
+    dup_record.previous_revision_id = id
+    dup_record.status = :internal_draft
+    dup_record
   end
 end

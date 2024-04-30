@@ -11,7 +11,6 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  created_by_id        :uuid
-#  next_revision_id     :uuid
 #  previous_revision_id :uuid
 #  provider_id          :uuid
 #  school_id            :uuid             not null
@@ -20,7 +19,6 @@
 # Indexes
 #
 #  index_claims_on_created_by            (created_by_type,created_by_id)
-#  index_claims_on_next_revision_id      (next_revision_id)
 #  index_claims_on_previous_revision_id  (previous_revision_id)
 #  index_claims_on_provider_id           (provider_id)
 #  index_claims_on_school_id             (school_id)
@@ -39,14 +37,13 @@ RSpec.describe Claims::Claim, type: :model do
     it { is_expected.to belong_to(:provider) }
     it { is_expected.to belong_to(:created_by) }
     it { is_expected.to belong_to(:previous_revision).class_name("Claims::Claim").optional }
-    it { is_expected.to belong_to(:next_revision).class_name("Claims::Claim").optional }
     it { is_expected.to belong_to(:submitted_by).optional }
     it { is_expected.to have_many(:mentor_trainings).dependent(:destroy) }
     it { is_expected.to have_many(:mentors).through(:mentor_trainings) }
   end
 
   context "with validations" do
-    subject { build(:claim) }
+    subject { create(:claim) }
 
     it { is_expected.to validate_presence_of(:status) }
     it { is_expected.to validate_uniqueness_of(:reference).case_insensitive.allow_nil }
@@ -158,29 +155,6 @@ RSpec.describe Claims::Claim, type: :model do
     end
   end
 
-  describe "#deep_dup" do
-    it "builds a deep duplication of the claim, with associations" do
-      claim = create(:claim, :draft)
-      attributes = claim.attributes.except(
-        "id",
-        "created_at",
-        "updated_at",
-        "status",
-        "previous_revision_id",
-        "next_revision_id",
-      ).keys
-      dup_record = claim.deep_dup
-
-      expect(dup_record.mentor_trainings).to eq(claim.mentor_trainings)
-      expect(dup_record.previous_revision_id).to eq(claim.id)
-      expect(dup_record.status).to eq("internal_draft")
-
-      attributes.each do |attribute|
-        expect(dup_record.public_send(attribute)).to eq(claim.public_send(attribute))
-      end
-    end
-  end
-
   describe "#create_revision!" do
     it "creates a revision of the claim, with associations" do
       anne = create(:claims_user, :anne)
@@ -191,14 +165,12 @@ RSpec.describe Claims::Claim, type: :model do
         "updated_at",
         "status",
         "previous_revision_id",
-        "next_revision_id",
       ).keys
       revision = claim.create_revision!
 
       expect(revision.mentor_trainings).to eq(claim.mentor_trainings)
       expect(revision.previous_revision_id).to eq(claim.id)
       expect(revision.status).to eq("internal_draft")
-      expect(claim.next_revision_id).to eq(revision.id)
 
       attributes.each do |attribute|
         expect(revision.public_send(attribute)).to eq(claim.public_send(attribute))
@@ -220,34 +192,6 @@ RSpec.describe Claims::Claim, type: :model do
       revision = claim.get_valid_revision
 
       expect(revision).to eq(valid_revision)
-    end
-  end
-
-  describe "#has_revision?" do
-    it "returns true if previous_revision_id is present" do
-      previous_revision = create(:claim)
-      claim = build(:claim, previous_revision:)
-
-      expect(claim.has_revision?).to eq(true)
-    end
-
-    it "returns false if previous_revision_id is not present" do
-      claim = build(:claim, previous_revision: nil)
-
-      expect(claim.has_revision?).to eq(false)
-    end
-
-    it "returns true if next_revision_id is present" do
-      next_revision = create(:claim)
-      claim = build(:claim, next_revision:)
-
-      expect(claim.has_revision?).to eq(true)
-    end
-
-    it "returns true if next_revision_id is not present" do
-      claim = build(:claim, next_revision: nil)
-
-      expect(claim.has_revision?).to eq(false)
     end
   end
 

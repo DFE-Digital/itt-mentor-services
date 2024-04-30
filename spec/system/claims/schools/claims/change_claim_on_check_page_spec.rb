@@ -48,7 +48,12 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
     then_i_see_the_error("Select a mentor")
     when_i_check_the_mentor(mentor2)
     when_i_click("Continue")
-    then_i_check_my_answers(provider1, [mentor2], [12])
+    then_i_check_my_answers(
+      Claims::Claim.find_by(previous_revision_id: claim.id),
+      provider1,
+      [mentor2],
+      [12],
+    )
     when_i_click("Submit claim")
     then_i_get_a_claim_reference(claim)
   end
@@ -93,7 +98,12 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
     then_i_see_the_error("Enter the number of hours")
     when_i_choose_other_amount_and_input_hours(6, with_error: true)
     when_i_click("Continue")
-    then_i_check_my_answers(claim.reload.next_revision, provider1, [mentor1, mentor2], [6, 12])
+    then_i_check_my_answers(
+      Claims::Claim.find_by(previous_revision_id: claim.id),
+      provider1,
+      [mentor1, mentor2],
+      [6, 12],
+    )
   end
 
   scenario "Anne intends to change the training hours but clicks back link" do
@@ -234,7 +244,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
 
     within("dl.govuk-summary-list:nth(3)") do
       within(".govuk-summary-list__row:nth(1)") do
-        expect(page).to have_content("Total hours#{claim.mentor_trainings.sum(:hours_completed)} hours")
+        expect(page).to have_content("Total hours#{claim_record.mentor_trainings.sum(:hours_completed)} hours")
       end
 
       within(".govuk-summary-list__row:nth(2)") do

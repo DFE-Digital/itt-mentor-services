@@ -9,7 +9,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <label class="govuk-label govuk-label--l">
-        <span class="govuk-caption-l"><%= @claim.draft? ? t(".caption_draft", reference: @claim.reference) : t(".caption") %></span>
+        <span class="govuk-caption-l"><%= @valid_claim.draft? ? t(".caption_draft", reference: @valid_claim.reference) : t(".caption") %></span>
         <%= t(".page_title") %>
       </label>
 
@@ -81,12 +81,12 @@
         <%= govuk_summary_list do |summary_list| %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".total_hours")) %>
-            <% row.with_value(text: pluralize(@claim.mentor_trainings.sum(:hours_completed), t(".hour"))) %>
+            <% row.with_value(text: pluralize(@valid_claim.mentor_trainings.sum(:hours_completed), t(".hour"))) %>
           <% end %>
 
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".hourly_rate")) %>
-            <% row.with_value(text: humanized_money_with_symbol(@claim.school.region.funding_available_per_hour)) %>
+            <% row.with_value(text: humanized_money_with_symbol(@valid_claim.school.region.funding_available_per_hour)) %>
           <% end %>
 
           <% summary_list.with_row do |row| %>

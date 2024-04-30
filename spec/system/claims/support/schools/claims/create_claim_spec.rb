@@ -90,6 +90,16 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     then_i_see_the_error("Enter whole numbers only")
   end
 
+  scenario "Colin tries to create claim but backs off" do
+    when_i_click(school.name)
+    when_i_click_on_claims
+    when_i_click("Add claim")
+    when_i_choose_a_provider
+    when_i_click("Continue")
+    visit edit_claims_support_school_claim_path(school, Claims::Claim.last)
+    ### This will be fixed in a new PR
+  end
+
   private
 
   def given_i_sign_in
