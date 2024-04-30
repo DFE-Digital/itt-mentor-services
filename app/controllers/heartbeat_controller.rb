@@ -1,6 +1,9 @@
 class HeartbeatController < ApplicationController
   skip_before_action :authenticate_user!
 
+  # disable DfE Analytics request logging for this controller
+  skip_after_action :trigger_request_event
+
   def healthcheck
     checks = { database: database_alive? }
     status = checks.values.all? ? :ok : :service_unavailable
