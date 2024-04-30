@@ -4,14 +4,16 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
                type: :system, service: :placements do
   let!(:school) { create(:placements_school, name: "School 1", phase: "Primary") }
   let!(:placement) { create(:placement, school:) }
-  let!(:provider_1) { create(:provider, name: "Provider 1") }
-  let!(:provider_2) { create(:provider, name: "Provider 2") }
+  let!(:provider_1) { create(:provider, :placements, name: "Provider 1") }
+  let!(:provider_2) { create(:provider, :placements, name: "Provider 2") }
 
   before do
+    create(:placements_partnership, school:, provider: provider_1)
+    create(:placements_partnership, school:, provider: provider_2)
     given_i_sign_in_as_anne
   end
 
-  context "with no provider", js: true do
+  context "with no provider" do
     scenario "User edits the provider" do
       when_i_visit_the_placement_show_page
       then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
@@ -52,7 +54,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
   end
 
   context "with a provider" do
-    scenario "User edits the provider", js: true do
+    scenario "User edits the provider" do
       given_the_placement_has_a_provider(provider_1)
       when_i_visit_the_placement_show_page
       then_i_should_see_the_provider_name_in_the_placement_details("Provider 1")
@@ -63,15 +65,15 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
       then_i_should_see_the_provider_name_in_the_placement_details("Provider 2")
     end
 
-    scenario "User does not select a provider", js: true do
+    scenario "User does not select a provider" do
       given_the_placement_has_a_provider(provider_1)
       when_i_visit_the_placement_show_page
       then_i_should_see_the_provider_name_in_the_placement_details("Provider 1")
       when_i_click_on_change
       then_i_should_see_the_edit_provider_page
-      when_i_remove_the_provider_from_the_search_box
+      when_i_choose_not_yet_known
       and_i_click_on("Continue")
-      then_i_should_see_the_provider_name_in_the_placement_details("Not known yet")
+      then_i_should_see_the_provider_name_in_the_placement_details("Not yet known")
     end
   end
 
@@ -103,18 +105,17 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
 
   def then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
     within(".govuk-summary-list") do
-      expect(page).to have_content("Not known yet")
+      expect(page).to have_content("Not yet known")
       expect(page).to have_content("Change")
     end
   end
 
   def then_i_should_see_the_edit_provider_page
-    expect(page).to have_content("Edit placement")
+    expect(page).to have_content("Manage a placement")
   end
 
   def when_i_select_provider_2
-    fill_in "Provider - Edit placement", with: provider_2.name
-    find("#placement-provider-id-field__option--0").click
+    choose provider_2.name
   end
 
   def and_i_click_on(text)
@@ -136,8 +137,8 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     placement.update!(provider:)
   end
 
-  def when_i_remove_the_provider_from_the_search_box
-    fill_in "Provider - Edit placement", with: ""
+  def when_i_choose_not_yet_known
+    choose "Not yet known"
   end
 
   alias_method :when_i_click_on, :and_i_click_on
