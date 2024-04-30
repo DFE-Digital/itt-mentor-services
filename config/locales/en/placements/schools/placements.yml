@@ -7,7 +7,7 @@ en:
             phase:
               invalid: Select a phase
             mentor_ids:
-              invalid: Select a mentor or not known
+              invalid: Select a mentor or not yet known
             subject_ids:
               invalid: Select a subject
             provider_id:
@@ -40,7 +40,7 @@ en:
             continue: Continue
             cancel: Cancel
             mentors: Mentors
-            not_known: Not known yet
+            not_known: Not yet known
           check_your_answers:
             title: Check your answers - Add placement
             add_placement: Add placement
@@ -54,18 +54,20 @@ en:
             info_text: When a placement is published, it will be visible to accredited providers and lead partners.
             publish_placement: Publish placement
             cancel: Cancel
-            not_known_yet: Not known yet
+            not_yet_known: Not yet known
           update:
             success: Placement added
         edit_provider:
           title_with_error: "Error: Select a provider"
-          title: Provider - Edit placement
-          caption: Edit Placement
-          edit_placement: Edit placement
+          title: Provider - Manage a placement
+          caption: Manage a placement
           provider: Provider
-          not_known: Not known yet
+          not_known: Not yet known
           continue: Continue
           cancel: Cancel
+          help_with_providers: My provider is not listed
+          details_text_part_one: You will first need to
+          details_text_part_two: add a provider
         edit_mentors:
           title: Mentors - Edit placement
           title_with_error: "Error: Select mentor or not known"
@@ -74,12 +76,12 @@ en:
           continue: Continue
           cancel: Cancel
           mentors: Mentors - Edit Placement
-          not_known: Not known yet
+          not_known: Not yet known
         terms:
           autumn: Autumn
           spring: Spring
           summer: Summer
-        not_known_yet: Not known yet
+        not_yet_known: Not yet known
         index:
           page_title: Placements
           placements: Placements

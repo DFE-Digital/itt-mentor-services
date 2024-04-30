@@ -6,24 +6,34 @@
 <% end %>
 
 <div class="govuk-width-container">
-  <%= render AutocompleteSelectFormComponent.new(
-    model: @placement,
-    scope: :placement,
-    url: placements_school_placement_path(@school, @placement),
-    method: :patch,
-    data: {
-      autocomplete_path_value: "/api/provider_suggestions",
-      autocomplete_return_attributes_value: %w[code],
-      input_name: "placement[provider_name]",
-    },
-    input: {
-      field_name: :provider_id,
-      value: @placement.provider_name,
-      label: t(".title"),
-      caption: "Edit Placement",
-      previous_search: @placement.provider_id,
-    },
-  ) %>
+  <%= form_for(@placement, url: placements_school_placement_path(@school, @placement), method: :put) do |f| %>
+    <%= f.govuk_error_summary %>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l"><%= t(".caption") %></span>
+
+        <%= f.govuk_radio_buttons_fieldset :subject_ids, legend: { size: "l", text: t(".provider") } do %>
+          <% @providers.each do |provider| %>
+            <%= f.govuk_radio_button :provider_id, provider.id, label: { text: provider.name }, checked: @placement.provider == provider %>
+          <% end %>
+          <%= f.govuk_radio_divider %>
+          <%= f.govuk_radio_button :provider_id, nil, label: { text: t(".not_known") }, checked: @placement.provider.nil?, exclusive: true %>
+        <% end %>
+
+        <%= f.govuk_submit t(".continue") %>
+      </div>
+    </div>
+
+    <%= govuk_details(summary_text: t(".help_with_providers")) do %>
+      <p>
+        <%= t(".details_text_part_one") %>
+        <%= govuk_link_to(
+              t(".details_text_part_two"), placements_school_partner_providers_path(@school), no_visited_state: true
+            ) %>
+      </p>
+    <% end %>
+  <% end %>
 
   <p class="govuk-body">
     <%= govuk_link_to(t(".cancel"), placements_school_placement_path(@school, @placement), no_visited_state: true) %>
