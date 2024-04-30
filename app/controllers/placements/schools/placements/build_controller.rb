@@ -3,6 +3,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
 
   def new
     reset_session
+    setup_skipped_steps
     @placement = build_placement
     school.primary_or_secondary_only? ? handle_primary_or_secondary : handle_other
   end
@@ -23,7 +24,6 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   end
 
   def check_your_answers
-    session[:add_a_placement][:enable_phase_navigation] = true
     @placement = initialize_placement
     @phase = session.dig(:add_a_placement, "phase")
     @selected_mentor_text = if @placement.mentors.empty?
@@ -137,7 +137,13 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   end
 
   def next_step(step)
-    "#{STEPS[STEPS.index(step.to_sym) + 1]}_placements_school_placement_build_index_path"
+    steps = if skipped_steps.present?
+              STEPS - skipped_steps.map(&:to_sym)
+            else
+              STEPS
+            end
+
+    "#{steps[steps.index(step.to_sym) + 1]}_placements_school_placement_build_index_path"
   end
 
   def school
@@ -153,12 +159,22 @@ class Placements::Schools::Placements::BuildController < ApplicationController
     end
   end
 
+  def setup_skipped_steps
+    return if school.mentors.exists?
+
+    session[:add_a_placement][:skipped_steps] = %w[add_mentors]
+  end
+
+  def skipped_steps
+    session.dig(:add_a_placement, "skipped_steps") || []
+  end
+
   def subject_ids
     @subject_ids ||= session.dig(:add_a_placement, "subject_ids")
   end
 
   def mentor_ids
-    @mentor_ids ||= session.dig(:add_a_placement, "mentor_ids")
+    @mentor_ids ||= session.dig(:add_a_placement, "mentor_ids") || %w[not_known]
   end
 
   def phase_params

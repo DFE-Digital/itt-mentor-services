@@ -6,48 +6,70 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
   let!(:subject_1) { create(:subject, name: "Primary subject", subject_area: :primary) }
   let!(:subject_2) { create(:subject, name: "Secondary subject", subject_area: :secondary) }
   let!(:subject_3) { create(:subject, name: "Secondary subject 2", subject_area: :secondary) }
-  let!(:mentor_1) { create(:placements_mentor_membership, school:).mentor }
-  let!(:mentor_2) { create(:placements_mentor_membership, school:).mentor }
+  let!(:mentor_1) { create(:placements_mentor) }
+  let!(:mentor_2) { create(:placements_mentor) }
 
   before do
     given_i_sign_in_as_anne
   end
 
   context "when I am part of a primary school" do
-    scenario "I can create my placement" do
-      when_i_visit_the_placements_page
-      and_i_click_on("Add placement")
-      then_i_see_the_add_a_placement_subject_page(school.phase)
-      when_i_choose_a_subject(subject_1.name)
-      and_i_click_on("Continue")
-      then_i_see_the_add_a_placement_mentor_page
-      when_i_check_a_mentor(mentor_1.full_name)
-      and_i_click_on("Continue")
-      then_i_see_the_check_your_answers_page(school.phase, mentor_1)
-      and_i_cannot_change_the_phase
-      when_i_click_on("Publish placement")
-      then_i_see_the_placements_page
-      and_i_see_my_placement(school.phase)
+    context "when I have mentors" do
+      before do
+        create(:placements_mentor_membership, mentor: mentor_1, school:)
+        create(:placements_mentor_membership, mentor: mentor_2, school:)
+      end
+
+      scenario "I can create my placement" do
+        when_i_visit_the_placements_page
+        and_i_click_on("Add placement")
+        then_i_see_the_add_a_placement_subject_page(school.phase)
+        when_i_choose_a_subject(subject_1.name)
+        and_i_click_on("Continue")
+        then_i_see_the_add_a_placement_mentor_page
+        when_i_check_a_mentor(mentor_1.full_name)
+        and_i_click_on("Continue")
+        then_i_see_the_check_your_answers_page(school.phase, mentor_1)
+        and_i_cannot_change_the_phase
+        when_i_click_on("Publish placement")
+        then_i_see_the_placements_page
+        and_i_see_my_placement(school.phase)
+      end
+
+      scenario "when I select not known for the mentor" do
+        when_i_visit_the_placements_page
+        and_i_click_on("Add placement")
+        when_i_choose_a_subject(subject_1.name)
+        and_i_click_on("Continue")
+        then_i_see_the_add_a_placement_mentor_page
+        when_i_check_a_mentor("Not yet known")
+        and_i_click_on("Continue")
+        then_i_see_the_check_your_answers_page(school.phase, nil)
+        when_i_change_my_mentor
+        then_see_that_not_known_is_selected
+        when_i_click_on("Continue")
+        and_i_click_on("Publish placement")
+        then_i_see_the_placements_page
+        and_i_see_my_placement(school.phase)
+      end
     end
 
-    scenario "when I select not known for the mentor" do
-      when_i_visit_the_placements_page
-      and_i_click_on("Add placement")
-      when_i_choose_a_subject(subject_1.name)
-      and_i_click_on("Continue")
-      then_i_see_the_add_a_placement_mentor_page
-      when_i_check_a_mentor("Not yet known")
-      and_i_click_on("Continue")
-      then_i_see_the_check_your_answers_page(school.phase, nil)
-      when_i_change_my_mentor
-      then_see_that_not_known_is_selected
-      when_i_click_on("Continue")
-      and_i_click_on("Publish placement")
-      then_i_see_the_placements_page
-      and_i_see_my_placement(school.phase)
+    context "when I have no mentors" do
+      scenario "I do not see the add mentors page" do
+        when_i_visit_the_placements_page
+        and_i_click_on("Add placement")
+        when_i_choose_a_subject(subject_1.name)
+        and_i_click_on("Continue")
+        then_i_see_the_check_your_answers_page(school.phase, nil)
+      end
     end
 
     context "when using page navigation" do
+      before do
+        create(:placements_mentor_membership, mentor: mentor_1, school:)
+        create(:placements_mentor_membership, mentor: mentor_2, school:)
+      end
+
       scenario "I can navigate back to the index page with cancel" do
         when_i_visit_the_add_phase_page
         and_i_click_on("Cancel")
@@ -78,49 +100,50 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
         then_i_see_the_placements_page
       end
 
-      context "When I've checked my answers and I click on change"
-      scenario "I can navigate back to the check my answers page with the back button" do
-        when_i_visit_the_placements_page
-        and_i_click_on("Add placement")
-        when_i_choose_a_subject(subject_1.name)
-        and_i_click_on("Continue")
-        when_i_check_a_mentor(mentor_1.full_name)
-        and_i_click_on("Continue")
-        then_i_see_the_check_your_answers_page(school.phase, mentor_1)
-        when_i_change_my_subject
-        and_i_click_on("Back")
-        then_i_see_the_check_your_answers_page(school.phase, mentor_1)
-        when_i_change_my_mentor
-        and_i_click_on("Back")
-        then_i_see_the_check_your_answers_page(school.phase, mentor_1)
-      end
+      context "when I've checked my answers and I click on change" do
+        scenario "I can navigate back to the check my answers page with the back button" do
+          when_i_visit_the_placements_page
+          and_i_click_on("Add placement")
+          when_i_choose_a_subject(subject_1.name)
+          and_i_click_on("Continue")
+          when_i_check_a_mentor(mentor_1.full_name)
+          and_i_click_on("Continue")
+          then_i_see_the_check_your_answers_page(school.phase, mentor_1)
+          when_i_change_my_subject
+          and_i_click_on("Back")
+          then_i_see_the_check_your_answers_page(school.phase, mentor_1)
+          when_i_change_my_mentor
+          and_i_click_on("Back")
+          then_i_see_the_check_your_answers_page(school.phase, mentor_1)
+        end
 
-      scenario "my selected options are rendered when navigating using the back button" do
-        when_i_visit_the_placements_page
-        and_i_click_on("Add placement")
-        when_i_choose_a_subject(subject_1.name)
-        and_i_click_on("Continue")
-        when_i_click_on("Back")
-        then_my_chosen_subject_is_selected(subject_1.name)
-        when_i_visit_the_add_mentor_page
-        when_i_check_a_mentor(mentor_1.full_name)
-        and_i_click_on("Continue")
-        when_i_change_my_mentor
-        then_my_chosen_mentor_is_checked(mentor_1.full_name)
-      end
+        scenario "my selected options are rendered when navigating using the back button" do
+          when_i_visit_the_placements_page
+          and_i_click_on("Add placement")
+          when_i_choose_a_subject(subject_1.name)
+          and_i_click_on("Continue")
+          when_i_click_on("Back")
+          then_my_chosen_subject_is_selected(subject_1.name)
+          when_i_visit_the_add_mentor_page
+          when_i_check_a_mentor(mentor_1.full_name)
+          and_i_click_on("Continue")
+          when_i_change_my_mentor
+          then_my_chosen_mentor_is_checked(mentor_1.full_name)
+        end
 
-      scenario "when I do not enter valid options" do
-        when_i_visit_the_placements_page
-        and_i_click_on("Add placement")
-        and_i_click_on("Continue")
-        then_i_see_the_add_a_placement_subject_page(school.phase)
-        and_i_see_the_error_message("Select a subject")
+        scenario "when I do not enter valid options" do
+          when_i_visit_the_placements_page
+          and_i_click_on("Add placement")
+          and_i_click_on("Continue")
+          then_i_see_the_add_a_placement_subject_page(school.phase)
+          and_i_see_the_error_message("Select a subject")
 
-        when_i_choose_a_subject(subject_1.name)
-        and_i_click_on("Continue")
-        and_i_click_on("Continue")
-        then_i_see_the_add_a_placement_mentor_page
-        and_i_see_the_error_message("Select a mentor or not yet known")
+          when_i_choose_a_subject(subject_1.name)
+          and_i_click_on("Continue")
+          and_i_click_on("Continue")
+          then_i_see_the_add_a_placement_mentor_page
+          and_i_see_the_error_message("Select a mentor or not yet known")
+        end
       end
 
       context "when I tamper with the form URL", js: true do
@@ -136,6 +159,11 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
   end
 
   context "when I am part of a secondary school" do
+    before do
+      create(:placements_mentor_membership, mentor: mentor_1, school:)
+      create(:placements_mentor_membership, mentor: mentor_2, school:)
+    end
+
     scenario "I can create my placement" do
       school.update!(phase: "Secondary")
       when_i_visit_the_placements_page
@@ -155,6 +183,11 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
   end
 
   context "when I am part of school in a different phase e.g. Nursery" do
+    before do
+      create(:placements_mentor_membership, mentor: mentor_1, school:)
+      create(:placements_mentor_membership, mentor: mentor_2, school:)
+    end
+
     context "and I choose the Primary phase" do
       scenario "I can create my placement" do
         school.update!(phase: "Nursery")
