@@ -75,6 +75,32 @@ describe Claims::ClaimPolicy do
     end
   end
 
+  permissions :rejected? do
+    context "when user has an internal draft claim" do
+      it "grants access" do
+        expect(claim_policy).to permit(user, internal_draft_claim)
+      end
+    end
+
+    context "when user has a draft claim" do
+      it "grants access" do
+        expect(claim_policy).to permit(user, draft_claim)
+      end
+    end
+
+    context "when user is a support user" do
+      it "grants access" do
+        expect(claim_policy).to permit(support_user, draft_claim)
+      end
+    end
+
+    context "when user has a subbitted claim" do
+      it "denies access" do
+        expect(claim_policy).not_to permit(user, submitted_claim)
+      end
+    end
+  end
+
   permissions :confirmation? do
     context "when user has a submitted claim" do
       it "grants access" do

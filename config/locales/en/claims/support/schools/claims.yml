@@ -8,6 +8,11 @@ en:
             update_success: Claim updated
           edit:
             page_title: Accredited provider - Add claim
+          rejected:
+            page_title: You cannot submit the claim
+            add_claim: Add claim
+            reject_reason: You cannot submit the claim because your mentors’ information has recently changed.
+            view_claims: View claims
           check:
             page_title: Check your answers
             submit: Add claim

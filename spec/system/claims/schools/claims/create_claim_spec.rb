@@ -40,6 +40,24 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     then_i_get_a_claim_reference_and_see_next_steps(Claims::Claim.submitted.first)
   end
 
+  scenario "Anne creates a claim with mentor training hours over the maximum limit per provider" do
+    when_i_click("Add claim")
+    when_i_choose_a_provider
+    when_i_click("Continue")
+    when_i_select_all_mentors
+    when_i_click("Continue")
+    then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor1)
+    when_i_add_training_hours("20 hours")
+    when_i_click("Continue")
+    then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor2)
+    when_i_choose_other_amount_and_input_hours(12)
+    when_i_click("Continue")
+    then_i_check_my_answers
+    when_another_claim_with_same_mentors_has_been_created([mentor1, mentor2])
+    when_i_click("Submit claim")
+    then_i_get_the_reject_page
+  end
+
   scenario "Anne does not fill the form correctly" do
     when_i_click("Add claim")
     when_i_click("Continue")
@@ -205,5 +223,16 @@ RSpec.describe "Create claim", type: :system, service: :claims do
   def then_i_am_redirected_to_root_path_with_alert
     expect(page).to have_current_path(claims_school_claims_path(school))
     expect(page).to have_content "You cannot perform this action"
+  end
+
+  def when_another_claim_with_same_mentors_has_been_created(mentors)
+    claim = create(:claim, :submitted, provider:)
+    mentors.each do |mentor|
+      create(:mentor_training, claim:, hours_completed: 20, mentor:, provider:)
+    end
+  end
+
+  def then_i_get_the_reject_page
+    expect(page).to have_content "You cannot submit the claim"
   end
 end
