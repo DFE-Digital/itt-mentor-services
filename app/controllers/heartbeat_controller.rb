@@ -1,8 +1,7 @@
-class HeartbeatController < ApplicationController
-  skip_before_action :authenticate_user!
-
-  # disable DfE Analytics request logging for this controller
-  skip_after_action :trigger_request_event
+class HeartbeatController < ActionController::API
+  # Deliberately avoid inheriting from ApplicationController –
+  # we don't need user authentication, helper methods, or any of the other
+  # niceties afforded to user-facing controllers in the app.
 
   def healthcheck
     checks = { database: database_alive? }
