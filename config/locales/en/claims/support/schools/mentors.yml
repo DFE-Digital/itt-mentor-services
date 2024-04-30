@@ -41,11 +41,17 @@ en:
             no_results_found: No results found for ‘%{trn}’
           create:
             success: Mentor added
-          remove:
+          remove_mentor:
             page_title: Are you sure you want to remove this mentor? - %{user_name} - %{school_name}
             are_you_sure: Are you sure you want to remove this mentor?
             cancel: Cancel
             remove_mentor: Remove mentor
+          cannot_remove_mentor:
+            page_title: You cannot remove this mentor
+            cancel: Cancel
+            cant_remove_mentor: You cannot remove this mentor
+            included_in_claim: You cannot remove this mentor because they are included in an active claim.
+            can_remove_when_claim_processed: You will be able to remove the mentor once we have processed the claim.
           destroy:
             success: Mentor removed
 

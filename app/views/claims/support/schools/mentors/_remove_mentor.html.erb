@@ -1,0 +1,14 @@
+<%= content_for :page_title, sanitize(t(".page_title", user_name: @mentor.full_name, school_name: @school.name)) %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= @mentor.full_name %> - <%= @school.name %></span>
+      <h1 class="govuk-heading-l"><%= t(".are_you_sure") %></h1>
+    </div>
+  </div>
+
+  <%= govuk_button_to(t(".remove_mentor"), claims_support_school_mentor_path(@school, @mentor), warning: true, method: :delete, class: "govuk-button govuk-button--warning") %>
+
+  <%= govuk_link_to t(".cancel"), claims_support_school_mentors_path(@school), no_visited_state: true %>
+</div>
