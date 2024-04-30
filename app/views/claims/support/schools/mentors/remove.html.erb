@@ -1,20 +1,11 @@
-<%= content_for :page_title, sanitize(t(".page_title", user_name: @mentor.full_name, school_name: @school.name)) %>
-
 <% render "claims/support/primary_navigation", current: :organisations %>
 
 <% content_for(:before_content) do %>
   <%= govuk_back_link(href: claims_support_school_mentor_path(id: @mentor.id)) %>
 <% end %>
 
-<div class="govuk-width-container">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l"><%= @mentor.full_name %> - <%= @school.name %></span>
-      <h1 class="govuk-heading-l"><%= t(".are_you_sure") %></h1>
-    </div>
-  </div>
-
-  <%= govuk_button_to(t(".remove_mentor"), claims_support_school_mentor_path(@school, @mentor), warning: true, method: :delete, class: "govuk-button govuk-button--warning") %>
-
-  <%= govuk_link_to t(".cancel"), claims_support_school_mentors_path(@school), no_visited_state: true %>
-</div>
+<% if policy(@mentor).destroy? %>
+  <%= render partial: "claims/schools/mentors/remove_mentor" %>
+<% else %>
+  <%= render partial: "claims/schools/mentors/cannot_remove_mentor" %>
+<% end %>
