@@ -16,6 +16,12 @@ en:
           sent_email: We have emailed you a copy of your claim.
           shared_with_provider: This claim will be shared with %{provider_name}.
           guidance: We will check your claim before processing payment. If we need to contact you for further information, we will use the email you used to access this service.
+        rejected:
+          page_title: You cannot submit the claim
+          add_claim: Add claim
+          reject_reason: You cannot submit the claim because your mentors’ information has recently changed.
+          view_claims: View claims
+          guidance_html: If you have any questions, email %{support_email}
         check:
           page_title: Check your answers
           caption: Add claim

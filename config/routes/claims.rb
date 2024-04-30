@@ -20,6 +20,7 @@ scope module: :claims, as: :claims, constraints: {
         member do
           get :check
           get :confirmation
+          get :rejected
           post :submit
         end
       end
@@ -65,6 +66,7 @@ scope module: :claims, as: :claims, constraints: {
           member do
             get :remove
             get :check
+            get :rejected
             post :draft
           end
         end

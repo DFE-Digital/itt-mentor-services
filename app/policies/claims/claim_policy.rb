@@ -11,6 +11,10 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
     !user.support_user? && !record.submitted?
   end
 
+  def rejected?
+    submit? || draft?
+  end
+
   def destroy?
     user.support_user? && record.draft?
   end

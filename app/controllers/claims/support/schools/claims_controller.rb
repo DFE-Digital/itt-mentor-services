@@ -1,7 +1,7 @@
 class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationController
   include Claims::BelongsToSchool
 
-  before_action :set_claim, only: %i[check draft show edit update remove destroy]
+  before_action :set_claim, only: %i[check draft show edit update remove destroy rejected]
   before_action :authorize_claim
   helper_method :claim_provider_form
 
@@ -54,11 +54,15 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
   end
 
   def draft
+    return redirect_to rejected_claims_support_school_claim_path unless @claim.valid_mentor_training_hours?
+
     success_message = @claim.draft? ? t(".update_success") : t(".add_success")
     Claims::Claim::CreateDraft.call(claim: @claim)
 
     redirect_to claims_support_school_claims_path(@school), flash: { success: success_message }
   end
+
+  def rejected; end
 
   private
 

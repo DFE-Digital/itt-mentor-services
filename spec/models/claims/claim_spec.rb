@@ -47,6 +47,26 @@ RSpec.describe Claims::Claim, type: :model do
     it { is_expected.to validate_uniqueness_of(:reference).case_insensitive.allow_nil }
   end
 
+  describe "#valid_mentor_training_hours?" do
+    it "returns true when each mentor does not have more hours than maximum allocated per provider" do
+      claim = create(:claim, :submitted)
+      create(:mentor_training, claim:, hours_completed: 20)
+      create(:mentor_training, claim:, hours_completed: 20)
+
+      expect(claim.valid_mentor_training_hours?).to eq(true)
+    end
+
+    it "returns false when a mentor has more hours than maximum allocated per provider" do
+      provider = create(:provider)
+      claim = create(:claim, :submitted, provider:)
+      mentor = create(:claims_mentor)
+      create(:mentor_training, claim:, hours_completed: 20, mentor:, provider:)
+      create(:mentor_training, claim:, hours_completed: 20, mentor:, provider:)
+
+      expect(claim.valid_mentor_training_hours?).to eq(false)
+    end
+  end
+
   context "with delegations" do
     it { is_expected.to delegate_method(:name).to(:provider).with_prefix }
     it { is_expected.to delegate_method(:users).to(:school).with_prefix }

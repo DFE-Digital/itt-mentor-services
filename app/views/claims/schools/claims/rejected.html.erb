@@ -1,0 +1,23 @@
+<% content_for :page_title, t(".page_title") %>
+<% render "claims/schools/primary_navigation", school: @school, current: :claims %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <label class="govuk-label govuk-label--l">
+        <span class="govuk-caption-l"> <%= t(".add_claim") %></span>
+        <%= t(".page_title") %>
+      </label>
+
+      <p class="govuk-body"><%= t(".reject_reason") %></p>
+
+      <p class="govuk-body">
+        <%= govuk_link_to t(".view_claims"), claims_school_claims_path(@school), no_visited_state: true %>
+      </p>
+
+      <p class="govuk-body">
+        <%= t(".guidance_html", support_email: mail_to(t("claims.support_email"), class: "govuk-link")) %>
+      </p>
+    </div>
+  </div>
+</div>
