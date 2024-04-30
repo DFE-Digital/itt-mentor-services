@@ -27,7 +27,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
     @placement = initialize_placement
     @phase = session.dig(:add_a_placement, "phase")
     @selected_mentor_text = if @placement.mentors.empty?
-                              t(".not_known_yet")
+                              t(".not_yet_known")
                             else
                               @placement.mentors.map(&:full_name).to_sentence
                             end

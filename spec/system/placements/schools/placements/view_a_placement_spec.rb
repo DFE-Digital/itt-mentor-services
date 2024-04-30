@@ -63,7 +63,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     scenario "User views a placement with no mentors" do
       given_a_placement_with_no_mentor
       when_i_visit_the_placement_show_page
-      then_i_the_mentor_is_not_known_yet_in_the_placement_details
+      then_i_the_mentor_is_not_yet_known_in_the_placement_details
     end
   end
 
@@ -195,9 +195,9 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     end
   end
 
-  def then_i_the_mentor_is_not_known_yet_in_the_placement_details
+  def then_i_the_mentor_is_not_yet_known_in_the_placement_details
     within(".govuk-summary-list") do
-      expect(page).to have_content("Not known yet")
+      expect(page).to have_content("Not yet known")
     end
   end
 
@@ -226,7 +226,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
   end
 
   def then_i_see_the_provider_in_the_placement_details(provider: nil)
-    provider_text = provider&.name || "Not known yet"
+    provider_text = provider&.name || "Not yet known"
 
     within(".govuk-summary-list") do
       expect(page).to have_content(provider_text)

@@ -3,10 +3,10 @@ require "rails_helper"
 RSpec.describe PlacementDecorator do
   describe "#mentor_names" do
     context "when the placement has no mentors" do
-      it "returns Not known yet" do
+      it "returns Not yet known" do
         placement = build(:placement)
 
-        expect(placement.decorate.mentor_names).to eq("Not known yet")
+        expect(placement.decorate.mentor_names).to eq("Not yet known")
       end
     end
 
@@ -38,10 +38,10 @@ RSpec.describe PlacementDecorator do
 
   describe "#subject_names" do
     context "when the placement has no subjects" do
-      it "returns Not known yet" do
+      it "returns Not yet known" do
         placement = build(:placement)
 
-        expect(placement.decorate.subject_names).to eq("Not known yet")
+        expect(placement.decorate.subject_names).to eq("Not yet known")
       end
     end
 
@@ -78,7 +78,7 @@ RSpec.describe PlacementDecorator do
       it "returns Not known yet" do
         placement = build(:placement)
 
-        expect(placement.decorate.provider_name).to eq("Not known yet")
+        expect(placement.decorate.provider_name).to eq("Not yet known")
       end
     end
 

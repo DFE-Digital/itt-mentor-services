@@ -21,7 +21,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
         school_name: "School 1",
         school_level: "Primary",
         subjects: "Maths",
-        mentors: ["Not known"],
+        mentors: ["Not yet known"],
       )
     end
   end

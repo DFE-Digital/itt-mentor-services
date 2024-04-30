@@ -48,7 +48,7 @@ RSpec.describe Placement::SummaryComponent, type: :component do
       expect(page).to have_content("Classics", count: 1)
 
       # Mentor details
-      expect(page).to have_content("Not known yet", count: 2)
+      expect(page).to have_content("Not yet known", count: 2)
     end
   end
 

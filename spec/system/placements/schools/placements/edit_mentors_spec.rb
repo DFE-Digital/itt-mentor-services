@@ -15,7 +15,7 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
   context "with no mentors" do
     scenario "User edits the mentors" do
       when_i_visit_the_placement_show_page
-      then_i_should_see_the_mentor_is_not_known_yet_in_the_placement_details
+      then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
       when_i_click_on_change
       then_i_should_see_the_edit_mentors_page
       when_i_select_mentor_2
@@ -25,30 +25,30 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
 
     scenario "User does not select a mentor" do
       when_i_visit_the_placement_show_page
-      then_i_should_see_the_mentor_is_not_known_yet_in_the_placement_details
+      then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
       when_i_click_on_change
       then_i_should_see_the_edit_mentors_page
       and_i_click_on("Continue")
-      then_i_should_see_the_mentor_is_not_known_yet_in_the_placement_details
+      then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
     end
 
     scenario "User edits the mentor and cancels" do
       when_i_visit_the_placement_show_page
-      then_i_should_see_the_mentor_is_not_known_yet_in_the_placement_details
+      then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
       when_i_click_on_change
       then_i_should_see_the_edit_mentors_page
       when_i_select_mentor_2
       and_i_click_on("Cancel")
-      then_i_should_see_the_mentor_is_not_known_yet_in_the_placement_details
+      then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
     end
 
     scenario "User clicks on back" do
       when_i_visit_the_placement_show_page
-      then_i_should_see_the_mentor_is_not_known_yet_in_the_placement_details
+      then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
       when_i_click_on_change
       then_i_should_see_the_edit_mentors_page
       and_i_click_on("Back")
-      then_i_should_see_the_mentor_is_not_known_yet_in_the_placement_details
+      then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
     end
   end
 
@@ -70,9 +70,9 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
       then_i_should_see_the_mentor_name_in_the_placement_details(mentor_1.full_name)
       when_i_click_on_change
       then_i_should_see_the_edit_mentors_page
-      when_i_select_not_known_yet
+      when_i_select_not_yet_known
       and_i_click_on("Continue")
-      then_i_should_see_the_mentor_name_in_the_placement_details("Not known yet")
+      then_i_should_see_the_mentor_name_in_the_placement_details("Not yet known")
     end
 
     scenario "User edits the mentor and cancels" do
@@ -128,16 +128,16 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
     end
   end
 
-  def then_i_should_see_the_mentor_is_not_known_yet_in_the_placement_details
+  def then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
     within(".govuk-summary-list") do
-      expect(page).to have_content("Not known yet")
+      expect(page).to have_content("Not yet known")
       expect(page).to have_content("Change")
     end
   end
 
-  def when_i_select_not_known_yet
+  def when_i_select_not_yet_known
     uncheck mentor_1.full_name
-    check "Not known yet"
+    check "Not yet known"
   end
 
   def when_i_click_on(text)

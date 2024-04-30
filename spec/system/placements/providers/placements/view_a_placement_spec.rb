@@ -150,7 +150,7 @@ RSpec.describe "Placements / Providers / Placements / View a placement",
 
   def and_i_see_no_mentor_details
     expect(page).to have_content("Mentor details")
-    expect(page).to have_content("Not known yet")
+    expect(page).to have_content("Not yet known")
   end
 
   def and_i_see_contact_details_for_the_school
