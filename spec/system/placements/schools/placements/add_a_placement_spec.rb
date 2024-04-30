@@ -230,7 +230,10 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
         then_i_see_the_add_a_placement_subject_page("Primary")
         when_i_choose_a_subject(subject_1.name)
         when_i_click_on("Continue")
+        then_i_see_the_add_a_placement_mentor_page
+        and_i_click_on("Continue")
         then_i_see_the_check_your_answers_page("Primary", mentor_1)
+        and_my_selection_has_changed_to("Primary")
       end
 
       scenario "I do not decide to change my phase" do
@@ -246,7 +249,12 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
         when_i_change_my_phase
         then_i_see_the_add_a_placement_add_phase_page
         and_i_click_on("Continue")
+        then_i_see_the_add_a_placement_subject_page("Secondary")
+        and_i_click_on("Continue")
+        then_i_see_the_add_a_placement_mentor_page
+        and_i_click_on("Continue")
         then_i_see_the_check_your_answers_page("Secondary", mentor_1)
+        and_my_selection_has_not_changed_to("Primary")
       end
     end
 
@@ -265,7 +273,10 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
         then_i_see_the_add_a_placement_subject_page("Secondary")
         when_i_check_the_subject(subject_3.name)
         and_i_click_on("Continue")
+        then_i_see_the_add_a_placement_mentor_page
+        and_i_click_on("Continue")
         then_i_see_the_check_your_answers_page("Secondary", mentor_1)
+        and_my_selection_has_changed_to(subject_3.name)
       end
 
       scenario "I do not decide to change my subject" do
@@ -281,7 +292,10 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
         when_i_change_my_subject
         then_i_see_the_add_a_placement_subject_page("Secondary")
         and_i_click_on("Continue")
+        then_i_see_the_add_a_placement_mentor_page
+        and_i_click_on("Continue")
         then_i_see_the_check_your_answers_page("Secondary", mentor_1)
+        and_my_selection_has_not_changed_to(subject_3.name)
       end
     end
 
@@ -464,6 +478,14 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
 
   def then_i_see_an_error_page
     expect(page).to have_content("Sorry, there’s a problem with the service")
+  end
+
+  def and_my_selection_has_changed_to(selection)
+    expect(page).to have_content(selection)
+  end
+
+  def and_my_selection_has_not_changed_to(selection)
+    expect(page).to_not have_content(selection)
   end
 
   def when_i_click_on(text)
