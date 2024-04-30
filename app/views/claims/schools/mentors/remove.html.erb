@@ -4,7 +4,7 @@
   <%= govuk_back_link(href: claims_school_mentor_path(id: @mentor.id)) %>
 <% end %>
 
-<% if policy(@mentor).destroy? %>
+<% if policy(@mentor_membership).destroy? %>
   <%= render partial: "claims/schools/mentors/remove_mentor" %>
 <% else %>
   <%= render partial: "claims/schools/mentors/cannot_remove_mentor" %>
