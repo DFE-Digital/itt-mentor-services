@@ -114,7 +114,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
 
   def when_i_select_provider_2
     fill_in "Provider - Edit placement", with: provider_2.name
-    find("#provider-provider-id-field__option--0").click
+    find("#placement-provider-id-field__option--0").click
   end
 
   def and_i_click_on(text)
