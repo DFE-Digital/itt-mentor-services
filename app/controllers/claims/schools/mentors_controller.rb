@@ -3,7 +3,10 @@ class Claims::Schools::MentorsController < Claims::ApplicationController
 
   before_action :has_school_accepted_grant_conditions?
   before_action :set_mentor, only: %i[show remove destroy]
+  before_action :set_mentor_membership, only: %i[remove destroy]
+
   before_action :authorize_mentor
+  before_action :authorize_mentor_membership
 
   helper_method :mentor_form
 
@@ -42,8 +45,16 @@ class Claims::Schools::MentorsController < Claims::ApplicationController
     @mentor = @school.mentors.find(params.require(:id))
   end
 
+  def set_mentor_membership
+    @mentor_membership = @mentor.mentor_memberships.find_by!(school: @school)
+  end
+
   def authorize_mentor
     authorize @mentor || Claims::Mentor
+  end
+
+  def authorize_mentor_membership
+    authorize @mentor_membership || Claims::MentorMembership
   end
 
   def default_params
