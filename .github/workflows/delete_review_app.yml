@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
     - main
+    - feature/1788-ittms-fix-delete
     types:
     - closed
 
