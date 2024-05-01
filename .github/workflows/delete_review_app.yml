@@ -40,3 +40,4 @@ jobs:
         message: |
                 Review app  track and pay deployed to <https://track-and-pay-${{ github.event.number }}.test.teacherservices.cloud> was deleted
                 Review app  school placements deployed to <https://manage-school-placements-${{ github.event.number }}.test.teacherservices.cloud> was deleted
+
