@@ -11,7 +11,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
       user_memberships: [create(:user_membership, organisation: school)],
     )
   end
-  let!(:provider) { create(:claims_provider, :best_practice_network) }
+  let!(:bpn) { create(:claims_provider, :best_practice_network) }
 
   before do
     user_exists_in_dfe_sign_in(user: anne)
@@ -20,7 +20,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
 
   scenario "Anne creates a claim" do
     when_i_click("Add claim")
-    when_i_choose_a_provider(provider)
+    when_i_choose_a_provider(bpn)
     when_i_click("Continue")
     when_i_select_all_mentors
     when_i_click("Continue")
@@ -42,7 +42,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
 
   scenario "Anne creates a claim with mentor training hours over the maximum limit per provider" do
     when_i_click("Add claim")
-    when_i_choose_a_provider(provider)
+    when_i_choose_a_provider(bpn)
     when_i_click("Continue")
     when_i_select_all_mentors
     when_i_click("Continue")
@@ -62,7 +62,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     when_i_click("Add claim")
     when_i_click("Continue")
     then_i_see_the_error("Select a provider")
-    when_i_choose_a_provider(provider)
+    when_i_choose_a_provider(bpn)
     when_i_click("Continue")
     when_i_click("Continue")
     then_i_see_the_error("Select a mentor")
@@ -86,7 +86,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
 
   scenario "Anne creates a claim and tries to edit it" do
     when_i_click("Add claim")
-    when_i_choose_a_provider(provider)
+    when_i_choose_a_provider(bpn)
     when_i_click("Continue")
     when_i_select_a_mentor(mentor1)
     when_i_click("Continue")
@@ -99,9 +99,9 @@ RSpec.describe "Create claim", type: :system, service: :claims do
   end
 
   scenario "School attempts to create a claim when their mentors have all been claimed for" do
-    given_my_school_has_fully_claimed_for_all_mentors_for_provider(provider)
+    given_my_school_has_fully_claimed_for_all_mentors_for_provider(bpn)
     when_i_click("Add claim")
-    when_i_choose_a_provider(provider)
+    when_i_choose_a_provider(bpn)
     when_i_click("Continue")
     then_i_should_see_the_message("There are no mentors you can include in a claim because they have already had 20 hours of training claimed for with Best Practice Network.")
   end
@@ -161,7 +161,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     within("dl.govuk-summary-list:nth(1)") do
       within(".govuk-summary-list__row:nth(2)") do
         expect(page).to have_content("Accredited provider")
-        expect(page).to have_content(provider.name)
+        expect(page).to have_content(bpn.name)
       end
 
       within(".govuk-summary-list__row:nth(3)") do
@@ -240,9 +240,9 @@ RSpec.describe "Create claim", type: :system, service: :claims do
   end
 
   def when_another_claim_with_same_mentors_has_been_created(mentors)
-    claim = create(:claim, :submitted, provider:)
+    claim = create(:claim, :submitted, provider: bpn)
     mentors.each do |mentor|
-      create(:mentor_training, claim:, hours_completed: 20, mentor:, provider:)
+      create(:mentor_training, claim:, hours_completed: 20, mentor:, provider: bpn)
     end
   end
 
