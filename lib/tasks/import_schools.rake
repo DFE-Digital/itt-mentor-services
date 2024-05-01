@@ -1,8 +1,8 @@
 namespace :import_schools do
-  desc "Import of schools into the claims domain"
-  task :import, [:csv_file_path] => :environment do |_task, args|
-    csv_file_path = args[:csv_file_path]
+  desc "Import schools into the claims domain"
+  task import: :environment do
+    csv_string = Rails.application.encrypted("lib/data/schools.csv.enc").read
 
-    Claims::ImportSchools.call(csv_file_path:)
+    Claims::ImportSchools.call(csv_string:)
   end
 end
