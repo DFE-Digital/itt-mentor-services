@@ -3,7 +3,7 @@ class SupportUserMailer < ApplicationMailer
     subject = t(".subject", service_name: t("#{support_user.service}.service_name"))
     body = t(
       ".body",
-      user_name: support_user.full_name,
+      user_name: support_user.first_name,
       service_name: t("#{support_user.service}.service_name"),
       sign_in_url:,
     )
@@ -15,7 +15,7 @@ class SupportUserMailer < ApplicationMailer
     subject = t(".subject", service_name: t("#{support_user.service}.service_name"))
     body = t(
       ".body",
-      user_name: support_user.full_name,
+      user_name: support_user.first_name,
       service_name: t("#{support_user.service}.service_name"),
     )
 

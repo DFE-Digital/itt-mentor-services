@@ -201,9 +201,9 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     expect(page).not_to have_content user.full_name
   end
 
-  def email_removal_notification(email, organisation)
+  def email_removal_notification(email, _organisation)
     ActionMailer::Base.deliveries.find do |delivery|
-      delivery.to.include?(email) && delivery.subject == "You have been removed from #{organisation.name}"
+      delivery.to.include?(email) && delivery.subject == "You have been removed from Claim funding for mentor training"
     end
   end
 

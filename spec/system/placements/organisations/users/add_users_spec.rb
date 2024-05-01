@@ -320,9 +320,9 @@ RSpec.describe "Placements users invite other users to organisations", type: :sy
     end
   end
 
-  def email_invite_notification(email, organisation)
+  def email_invite_notification(email, _organisation)
     ActionMailer::Base.deliveries.find do |delivery|
-      delivery.to.include?(email) && delivery.subject == "You have been invited to #{organisation.name}"
+      delivery.to.include?(email) && delivery.subject == "Invitation to join Claim funding for mentor training"
     end
   end
 
