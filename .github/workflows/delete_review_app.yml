@@ -12,9 +12,9 @@ on:
 
 jobs:
   delete-review-app:
-    name: Delete Review App ${{ github.event.pull_request.number }}
+    name: Delete Review App ${{ github.event.number }}
     concurrency: deploy-${{ github.event.pull_request.number}}
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') || contains(github.event.pull_request.labels.*.name, 'dependencies') }}
+    # if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') || contains(github.event.pull_request.labels.*.name, 'dependencies') }}
     runs-on: ubuntu-latest
     environment: review
     steps:
