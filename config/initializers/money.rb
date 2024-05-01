@@ -20,6 +20,8 @@ MoneyRails.configure do |config|
     null: false,
     default: "GBP",
   }
+
+  config.no_cents_if_whole = false
 end
 
 Money.locale_backend = :i18n

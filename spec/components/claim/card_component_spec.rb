@@ -22,6 +22,6 @@ RSpec.describe Claim::CardComponent, type: :component do
 
     expect(page).to have_content(claim.provider.name)
     expect(page).to have_content("08/04/2024")
-    expect(page).to have_content("£1,072")
+    expect(page).to have_content("£1,072.00")
   end
 end
