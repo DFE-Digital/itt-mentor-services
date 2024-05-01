@@ -161,3 +161,10 @@ shared:
     - created_at
     - updated_at
     - provider_id
+  :school_contacts:
+    - id
+    - name
+    - email_address
+    - school_id
+    - created_at
+    - updated_at

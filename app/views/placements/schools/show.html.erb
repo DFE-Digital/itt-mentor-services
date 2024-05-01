@@ -16,6 +16,8 @@
       <%= render "shared/schools/ofsted_details", school: @school %>
       <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".contact_details") %></h2>
       <%= render "shared/organisations/contact_details", organisation: @school %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".school_contact_details") %></h2>
+      <%= render "shared/schools/school_contact_details", school: @school, school_contact: @school.school_contact %>
     </div>
   </div>
 </div>

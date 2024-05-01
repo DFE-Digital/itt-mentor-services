@@ -3,7 +3,7 @@
 # Table name: school_contacts
 #
 #  id            :uuid             not null, primary key
-#  email_address :string
+#  email_address :string           not null
 #  name          :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
@@ -19,4 +19,6 @@
 #
 class Placements::SchoolContact < ApplicationRecord
   belongs_to :school
+
+  validates :email_address, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 end

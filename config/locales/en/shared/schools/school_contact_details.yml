@@ -1,0 +1,10 @@
+en:
+  shared:
+    schools:
+      school_contact_details:
+        no_placement_coordinator: This organisation does not have a school contact
+        add_placement_coordinator: Add school contact
+        name: Name
+        email_address: Email address
+        change: Change
+        remove_placement_coordinator: Remove school contact

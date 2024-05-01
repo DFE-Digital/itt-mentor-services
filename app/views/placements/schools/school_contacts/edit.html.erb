@@ -1,0 +1,17 @@
+<% content_for :page_title, @school_contact.errors.any? ? t(".page_title_with_error") : t(".page_title") %>
+<%= render "placements/schools/primary_navigation", current_navigation: :organisation_details, school: @school %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: placements_school_path(@school)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <%= render "form",
+    model: @school_contact,
+    method: "patch",
+    url: placements_school_school_contact_path(@school) %>
+
+  <p class="govuk-body">
+    <%= govuk_link_to(t(".cancel"), placements_school_path(@school), no_visited_state: true) %>
+  </p>
+</div>
