@@ -6,7 +6,7 @@ class Claims::Schools::MentorsController < Claims::ApplicationController
   before_action :set_mentor_membership, only: %i[remove destroy]
 
   before_action :authorize_mentor
-  before_action :authorize_mentor_membership
+  before_action :authorize_mentor_membership, only: %i[remove destroy]
 
   helper_method :mentor_form
 
@@ -33,8 +33,7 @@ class Claims::Schools::MentorsController < Claims::ApplicationController
   end
 
   def destroy
-    mentor_membership = @mentor.mentor_memberships.find_by!(school: @school)
-    mentor_membership.destroy!
+    @mentor_membership.destroy!
 
     redirect_to claims_school_mentors_path(@school), flash: { success: t(".success") }
   end
@@ -54,7 +53,7 @@ class Claims::Schools::MentorsController < Claims::ApplicationController
   end
 
   def authorize_mentor_membership
-    authorize @mentor_membership || Claims::MentorMembership
+    authorize @mentor_membership
   end
 
   def default_params

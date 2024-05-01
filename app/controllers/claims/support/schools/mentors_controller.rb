@@ -4,8 +4,8 @@ class Claims::Support::Schools::MentorsController < Claims::Support::Application
   before_action :set_mentor, only: %i[show remove destroy]
   before_action :set_mentor_membership, only: %i[remove destroy]
 
-  before_action :authorize_mentor_membership
   before_action :authorize_mentor
+  before_action :authorize_mentor_membership, only: %i[remove destroy]
 
   helper_method :mentor_form
 
@@ -53,7 +53,7 @@ class Claims::Support::Schools::MentorsController < Claims::Support::Application
   end
 
   def authorize_mentor_membership
-    authorize @mentor_membership || Claims::MentorMembership
+    authorize @mentor_membership
   end
 
   def default_params
