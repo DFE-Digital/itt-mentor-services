@@ -8,13 +8,17 @@ class Claims::Schools::Claims::MentorsController < Claims::ApplicationController
 
   def create
     if claim_mentors_form.save
-      redirect_to(
-        edit_claims_school_claim_mentor_training_path(
-          @school,
-          claim,
-          claim.mentor_trainings.without_hours.first,
-        ),
-      )
+      if claim.mentor_trainings.without_hours.any?
+        redirect_to(
+          edit_claims_school_claim_mentor_training_path(
+            @school,
+            claim,
+            claim.mentor_trainings.without_hours.first,
+          ),
+        )
+      else
+        redirect_to check_claims_school_claim_path(@school, claim)
+      end
     else
       render :new
     end

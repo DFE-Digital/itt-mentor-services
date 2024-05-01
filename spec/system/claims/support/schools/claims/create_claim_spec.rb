@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "Create claim", type: :system, service: :claims do
-  let(:mentor1) { build(:claims_mentor, first_name: "Anne") }
-  let(:mentor2) { build(:claims_mentor, first_name: "Joe") }
-  let!(:school) { create(:claims_school, mentors: [mentor1, mentor2]) }
+  let!(:school) { create(:claims_school) }
+  let!(:mentor1) { create(:claims_mentor, first_name: "Anne", schools: [school]) }
+  let!(:mentor2) { create(:claims_mentor, first_name: "Joe", schools: [school]) }
   let!(:colin) do
     create(
       :claims_support_user,
@@ -22,7 +22,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     when_i_click(school.name)
     when_i_click_on_claims
     when_i_click("Add claim")
-    when_i_choose_a_provider
+    when_i_choose_a_provider(provider)
     when_i_click("Continue")
     when_i_select_all_mentors
     when_i_click("Continue")
@@ -46,7 +46,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     when_i_click(school.name)
     when_i_click_on_claims
     when_i_click("Add claim")
-    when_i_choose_a_provider
+    when_i_choose_a_provider(provider)
     when_i_click("Continue")
     when_i_select_all_mentors
     when_i_click("Continue")
@@ -68,7 +68,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     when_i_click("Add claim")
     when_i_click("Continue")
     then_i_see_the_error("Select a provider")
-    when_i_choose_a_provider
+    when_i_choose_a_provider(provider)
     when_i_click("Continue")
     when_i_click("Continue")
     then_i_see_the_error("Select a mentor")
@@ -90,11 +90,27 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     then_i_see_the_error("Enter whole numbers only")
   end
 
+  scenario "School attempts to create a claim when their mentors have all been claimed for" do
+    given_my_school_has_fully_claimed_for_all_mentors_for_provider(provider)
+    when_i_click(school.name)
+    when_i_click_on_claims
+    when_i_click("Add claim")
+    when_i_choose_a_provider(provider)
+    when_i_click("Continue")
+    then_i_should_see_the_message("There are no mentors you can include in a claim because they have already had 20 hours of training claimed for with Best Practice Network.")
+  end
+
   private
 
   def given_i_sign_in
     visit sign_in_path
     click_on "Sign in using DfE Sign In"
+  end
+
+  def given_my_school_has_fully_claimed_for_all_mentors_for_provider(provider)
+    school.mentors.find_each do |mentor|
+      create(:mentor_training, :submitted, mentor:, provider:, hours_completed: 20)
+    end
   end
 
   def when_i_click(button)
@@ -107,7 +123,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     end
   end
 
-  def when_i_choose_a_provider
+  def when_i_choose_a_provider(provider)
     page.choose(provider.name)
   end
 
@@ -195,5 +211,9 @@ RSpec.describe "Create claim", type: :system, service: :claims do
 
   def then_i_get_the_reject_page
     expect(page).to have_content "You cannot submit the claim"
+  end
+
+  def then_i_should_see_the_message(message)
+    expect(page).to have_content(message)
   end
 end
