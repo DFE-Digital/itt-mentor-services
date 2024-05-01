@@ -14,6 +14,7 @@
 #  provider_id       :uuid
 #  school_id         :uuid             not null
 #  submitted_by_id   :uuid
+#  reviewed             :boolean          default(FALSE)
 #
 # Indexes
 #

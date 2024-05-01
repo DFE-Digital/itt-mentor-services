@@ -87,6 +87,7 @@ RSpec.describe "Edit a draft claim", type: :system, service: :claims do
     first("a", text: "Change").click
     page.choose(niot_provider.name)
     click_on("Continue")
+    click_on("Continue")
     expect(page).to have_content("Accredited providerNIoT: National Institute of Teaching, founded by the School-Led Development TrustChange")
   end
 

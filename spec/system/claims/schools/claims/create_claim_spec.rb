@@ -41,6 +41,26 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     then_i_get_a_claim_reference_and_see_next_steps(Claims::Claim.submitted.first)
   end
 
+  scenario "Anne attempts to create a claim but backs off before the check page" do
+    when_i_click("Add claim")
+    when_i_choose_a_provider(bpn)
+    when_i_click("Continue")
+    when_i_select_all_mentors
+    when_i_click("Continue")
+    then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor1)
+    when_i_add_training_hours("20 hours")
+    when_i_click("Continue")
+    then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor2)
+    when_i_click("Back")
+    then_i_expect_the_training_hours_for(20, mentor1)
+    when_i_click("Back")
+    then_i_expect_the_mentors_to_be_checked([mentor1, mentor2])
+    when_i_click("Back")
+    then_i_expect_the_provider_to_be_checked(bpn)
+    when_i_click("Back")
+    then_i_expect_to_be_on_the_claims_index_page
+  end
+
   scenario "Anne creates a claim with mentor training hours over the maximum limit per provider" do
     when_i_click("Add claim")
     when_i_choose_a_provider(bpn)
@@ -279,5 +299,19 @@ RSpec.describe "Create claim", type: :system, service: :claims do
 
   def then_i_should_land_on_the_check_page
     expect(page).to have_content "Check your answers"
+  end
+
+  def then_i_expect_the_mentors_to_be_checked(mentors)
+    mentors.each do |mentor|
+      has_checked_field?("#claims-claim-mentor-ids-#{mentor.id}-field")
+    end
+  end
+
+  def then_i_expect_the_provider_to_be_checked(provider)
+    has_checked_field?("#claims-claim-provider-form-provider-id-#{provider.id}-field")
+  end
+
+  def then_i_expect_to_be_on_the_claims_index_page
+    expect(page).to have_current_path(claims_school_claims_path(school))
   end
 end

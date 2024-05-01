@@ -10,7 +10,7 @@ class Claims::Claim::ProviderForm < ApplicationForm
   end
 
   def persist
-    return if claim.provider_id == provider_id
+    return true if claim.provider_id == provider_id
 
     ActiveRecord::Base.transaction do
       claim.provider_id = provider_id
@@ -18,6 +18,22 @@ class Claims::Claim::ProviderForm < ApplicationForm
       claim.status = :internal_draft if claim.status.nil?
       claim.created_by ||= current_user
       claim.save!
+    end
+  end
+
+  def edit_back_path
+    if claim.reviewed?
+      check_claims_school_claim_path(claim.school, claim)
+    else
+      claims_school_claims_path(claim.school)
+    end
+  end
+
+  def update_success_path
+    if claim.reviewed?
+      check_claims_school_claim_path(claim.school, claim)
+    else
+      edit_claims_school_claim_mentors_path(claim.school, claim)
     end
   end
 

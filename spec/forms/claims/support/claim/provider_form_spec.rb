@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Claims::Claim::ProviderForm, type: :model do
+describe Claims::Support::Claim::ProviderForm, type: :model do
   let(:school) { create(:claims_school) }
   let(:existing_claim) { create(:claim, school:) }
 
@@ -75,7 +75,7 @@ describe Claims::Claim::ProviderForm, type: :model do
         form = described_class.new(id: existing_claim.id, school:)
 
         expect(form.edit_back_path).to eq(
-          "/schools/#{school.id}/claims",
+          "/support/schools/#{school.id}/claims",
         )
       end
     end
@@ -86,7 +86,7 @@ describe Claims::Claim::ProviderForm, type: :model do
         form = described_class.new(id: claim.id, school:)
 
         expect(form.edit_back_path).to eq(
-          "/schools/#{school.id}/claims/#{claim.id}/check",
+          "/support/schools/#{school.id}/claims/#{claim.id}/check",
         )
       end
     end
@@ -98,7 +98,7 @@ describe Claims::Claim::ProviderForm, type: :model do
         form = described_class.new(id: existing_claim.id, school:)
 
         expect(form.update_success_path).to eq(
-          "/schools/#{school.id}/claims/#{existing_claim.id}/mentors/edit",
+          "/support/schools/#{school.id}/claims/#{existing_claim.id}/mentors/edit",
         )
       end
     end
@@ -109,7 +109,7 @@ describe Claims::Claim::ProviderForm, type: :model do
         form = described_class.new(id: claim.id, school:)
 
         expect(form.update_success_path).to eq(
-          "/schools/#{school.id}/claims/#{claim.id}/check",
+          "/support/schools/#{school.id}/claims/#{claim.id}/check",
         )
       end
     end
