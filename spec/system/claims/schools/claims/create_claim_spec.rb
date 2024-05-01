@@ -12,6 +12,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     )
   end
   let!(:bpn) { create(:claims_provider, :best_practice_network) }
+  let!(:niot) { create(:claims_provider, :niot) }
 
   before do
     user_exists_in_dfe_sign_in(user: anne)
@@ -104,6 +105,28 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     when_i_choose_a_provider(bpn)
     when_i_click("Continue")
     then_i_should_see_the_message("There are no mentors you can include in a claim because they have already had 20 hours of training claimed for with Best Practice Network.")
+  end
+
+  scenario "School attempts to create a claim then changes the provider to an invalid one" do
+    given_my_school_has_fully_claimed_for_all_mentors_for_provider(bpn)
+    when_i_click("Add claim")
+    when_i_choose_a_provider(niot)
+    when_i_click("Continue")
+    when_i_select_a_mentor(mentor1)
+    when_i_click("Continue")
+    then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor1)
+    when_i_add_training_hours("20 hours")
+    when_i_click("Continue")
+    when_i_click("Change Accredited provider")
+    when_i_choose_a_provider(bpn)
+    when_i_click("Continue")
+    when_i_click("Change Mentors")
+    then_i_should_see_the_message("There are no mentors you can include in a claim because they have already had 20 hours of training claimed for with Best Practice Network.")
+    when_i_click("Change the accredited provider")
+    when_i_choose_a_provider(niot)
+    when_i_click("Continue")
+    when_i_click("Continue")
+    then_i_should_land_on_the_check_page
   end
 
   private
@@ -252,5 +275,9 @@ RSpec.describe "Create claim", type: :system, service: :claims do
 
   def then_i_should_see_the_message(message)
     expect(page).to have_content(message)
+  end
+
+  def then_i_should_land_on_the_check_page
+    expect(page).to have_content "Check your answers"
   end
 end
