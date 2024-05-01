@@ -105,7 +105,7 @@ RSpec.describe "Placements / Support Users / Support user adds a support user",
 
   def and_an_email_is_sent_to_the_support_user(email_address:)
     email = ActionMailer::Base.deliveries.find do |delivery|
-      delivery.to.include?(email_address) && delivery.subject == "Invitation to join Manage school placements"
+      delivery.to.include?(email_address) && delivery.subject == "Invitation to join Claim funding for mentor training"
     end
 
     expect(email).not_to be_nil

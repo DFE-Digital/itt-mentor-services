@@ -18,11 +18,9 @@ class Claims::Claim::CreateDraft
   attr_reader :claim
 
   def send_claim_created_support_notification_email
-    user_emails = claim.school_users.pluck(:email)
-
-    user_emails.each do |email|
+    claim.school_users.each do |user|
       UserMailer.with(service: :claims)
-        .claim_created_support_notification(claim, email).deliver_later
+        .claim_created_support_notification(claim, user).deliver_later
     end
   end
 
