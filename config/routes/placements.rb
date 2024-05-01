@@ -95,6 +95,11 @@ scope module: :placements,
         end
       end
 
+      resources :school_contacts, except: %i[show index] do
+        member { get :remove }
+        collection { get :check }
+      end
+
       resources :partner_providers, only: %i[index new create show destroy] do
         member { get :remove }
 

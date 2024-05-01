@@ -1,0 +1,61 @@
+en:
+  placements:
+    schools:
+      school_contacts:
+        new:
+          page_title: School contact
+          page_title_with_error: Error - School contact
+          caption: Add school contact
+          description: School contact details
+          continue: Continue
+          cancel: Cancel
+          attributes:
+            school_contacts:
+              name: Name
+              email_address: Email address
+        check:
+          page_title: School contact
+          check_your_answers: Check your answers
+          add_school_contact: Add school contact
+          cancel: Cancel
+          change: Change
+          attributes:
+            school_contacts:
+              name: Name
+              email_address: Email address
+        create:
+          school_contact_added: School contact added
+        edit:
+          page_title: School contact
+          page_title_with_error: Error - School contact
+          caption: Add school contact
+          description: School contact details
+          continue: Continue
+          cancel: Cancel
+          attributes:
+            school_contacts:
+              name: Name
+              email_address: Email address
+        update:
+          school_contact_updated: School contact updated
+        remove:
+          page_title: Are you sure you want to remove this school contact? - %{school_contact_name}
+          are_you_sure: Are you sure you want to remove this school contact?
+          cancel: Cancel
+          remove_school_contact: Remove school contact
+        destroy:
+          school_contact_removed: School contact removed
+        form:
+          caption: Add school contact
+          description: School contact details
+          continue: Continue
+          cancel: Cancel
+          what_is_a_school_contact: What is a school contact?
+          school_contact_description: |
+            A school contact is an individual or shared inbox, used by your organisation
+            to arrange placements. This information shared with providers when they view a placement.
+          attributes:
+            school_contacts:
+              name: Name
+              email_address: Email address
+          

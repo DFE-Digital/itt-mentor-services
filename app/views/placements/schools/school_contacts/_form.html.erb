@@ -1,0 +1,23 @@
+<%# locals: (model:, url:, method:) -%>
+<%= form_with(model:, url:, method:) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".caption") %></span>
+      <h2 class="govuk-heading-l"><%= t(".description") %></h2>
+
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :name, label: { text: t(".attributes.school_contacts.name"), size: "s" } %>
+      </div>
+
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :email_address, label: { text: t(".attributes.school_contacts.email_address"), size: "s" } %>
+      </div>
+
+      <%= govuk_details(summary_text: t(".what_is_a_school_contact"), text: t(".school_contact_description")) %>
+
+      <%= f.govuk_submit t(".continue") %>
+    </div>
+  </div>
+<% end %>
