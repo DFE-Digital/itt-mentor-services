@@ -18,6 +18,10 @@
 #  fk_rails_...  (school_id => schools.id)
 #
 FactoryBot.define do
-  factory :school_contact do
+  factory :school_contact, class: "Placements::SchoolContact" do
+    association :school, factory: :placements_school
+
+    name { "Placement Coordinator" }
+    email_address { "placement_coordinator@example.school" }
   end
 end

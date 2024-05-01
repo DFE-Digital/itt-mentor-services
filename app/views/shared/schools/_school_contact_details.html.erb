@@ -1,6 +1,6 @@
 <%# locals: (school:, school_contact:) -%>
 <% if school_contact.present? %>
-  <%= govuk_summary_list(html_attributes: { id: "placement-coordinator-details" }) do |summary_list| %>
+  <%= govuk_summary_list(html_attributes: { id: "school-contact-details" }) do |summary_list| %>
     <% summary_list.with_row do |row| %>
       <% row.with_key(text: t(".name")) %>
       <% row.with_value(text: school_contact.name) %>
