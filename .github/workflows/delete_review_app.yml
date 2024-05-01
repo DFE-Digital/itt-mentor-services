@@ -8,14 +8,15 @@ on:
     types:
     - closed
 
-concurrency: deploy-${{ github.event.number }}
+
 
 jobs:
-  build:
+  delete-review-app:
+    name: Delete Review App ${{ github.event.pull_request.number }}
+    concurrency: deploy-${{ github.event.pull_request.number}}
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') || contains(github.event.pull_request.labels.*.name, 'dependencies') }}
     runs-on: ubuntu-latest
-    # if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') }}
     environment: review
-
     steps:
     - name: Checkout
       uses: actions/checkout@v4
