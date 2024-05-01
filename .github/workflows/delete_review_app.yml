@@ -13,7 +13,7 @@ concurrency: deploy-${{ github.event.number }}
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') }}
+    # if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') }}
     environment: review
 
     steps:
