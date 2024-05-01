@@ -24,7 +24,7 @@ en:
           continue: Continue
           date_of_birth_hint: For example, 31 3 1980
           find_teacher: Find teacher
-          help_with_the_trn: Check that you typed in the teacher reference number (TRN) and date of birth correctly.
+          help_with_the_trn: If you do not have the teacher reference number (TRN)
           guidance_html: If your mentor does not have a TRN, share the %{guidance_link} to find a lost TRN, or apply for one.
           guidance_link_text: teacher reference number (TRN) guidance
         check:
@@ -42,7 +42,7 @@ en:
           page_title: No results found for ‘%{trn}’ - Add mentor
           add_mentor: Add mentor
           change_your_search: Change your search
-          help_text: Check that you typed in the teacher reference number (TRN) correctly.
+          help_text: Check that you typed in the teacher reference number (TRN) and date of birth correctly.
           no_results_found: No results found for ‘%{trn}’
         create:
           success: Mentor added

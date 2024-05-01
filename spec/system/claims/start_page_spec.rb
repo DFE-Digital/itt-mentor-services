@@ -63,16 +63,9 @@ RSpec.describe "Start Page", type: :system, service: :claims do
       expect(page).to have_content("Claim funding for mentor training")
     end
 
+    expect(page).to have_content("Use this service to claim for mentors who supported, or intended to support, trainee teachers from September 2023 to July 2024.")
     expect(page).to have_content("Final closing date for claims: 19 July 2024 by 11:59pm")
-
-    expect(page).to have_content(
-      "You can claim funding for mentors who supported trainee teachers from "\
-       "September 2023 to July 2024.",
-    )
-    expect(page).to have_content(
-      "Training that took place from April 2024 for the school year starting "\
-      "September 2024 can only be claimed for from May 2025.",
-    )
+    expect(page).to have_content("You must wait until May 2025 to claim for training that took place from April 2024 for the school year starting September 2025.")
     expect(page).to have_content(
       "Before you start\n"\
       "You’ll be asked for:\n"\

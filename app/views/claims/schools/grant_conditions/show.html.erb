@@ -3,11 +3,7 @@
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-
-      <div class="govuk-warning-text">
-        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-        <strong class="govuk-warning-text__text"><%= t(".warning", school_name: @school.name) %></strong>
-      </div>
+      <%= govuk_warning_text text: t(".warning", school_name: @school.name), classes: ["govuk-!-margin-top-4"] %>
 
       <%= form_for @school, url: claims_school_grant_conditions_path, method: :patch do |f| %>
         <%= f.submit t(".accept_conditions"), class: "govuk-button" %>
