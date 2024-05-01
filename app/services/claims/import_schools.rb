@@ -3,19 +3,32 @@ require "csv"
 class Claims::ImportSchools
   include ServicePattern
 
-  def initialize(csv_file_path:)
-    @csv_file_path = csv_file_path
+  def initialize(csv_string:)
+    @csv_string = csv_string
   end
 
   def call
-    urns = CSV.read(csv_file_path, headers: true).map { |row| row["urn"] }
+    ApplicationRecord.transaction do
+      CSV.parse(csv_string, headers: true) do |row|
+        school = School.find_by(urn: row["placement_school_urn"])
 
-    updated_count = School.where(urn: urns).update_all(claims_service: true)
-
-    Rails.logger.info "#{updated_count} schools updated."
+        begin
+          school.update!(claims_service: true)
+          user = Claims::User.create!(
+            first_name: row["First name"],
+            last_name: row["Last name"],
+            email: row["Email"],
+          )
+          school.users << user
+        rescue ActiveRecord::RecordInvalid => e
+          Rails.logger.debug "Error creating user: #{e.message}"
+          next
+        end
+      end
+    end
   end
 
   private
 
-  attr_reader :csv_file_path
+  attr_reader :csv_string
 end
