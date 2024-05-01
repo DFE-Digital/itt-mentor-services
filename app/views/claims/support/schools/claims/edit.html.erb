@@ -2,7 +2,7 @@
 <% render "claims/support/primary_navigation", current: :organisations %>
 
 <%= content_for(:before_content) do %>
-  <%= govuk_back_link(href: check_claims_support_school_claim_path(@school, claim_provider_form.claim)) %>
+  <%= govuk_back_link(href: claim_provider_form.edit_back_link) %>
 <% end %>
 
 <div class="govuk-width-container">
