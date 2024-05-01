@@ -211,7 +211,7 @@ RSpec.describe "Claims school user adds mentors to schools", type: :system, serv
   def when_i_click_on_help_text
     find(
       "span",
-      text: "Check that you typed in the teacher reference number (TRN) and date of birth correctly.",
+      text: "If you do not have the teacher reference number (TRN)",
     ).click
   end
 
