@@ -58,4 +58,27 @@ describe Claims::Support::Claim::MentorsForm, type: :model do
       end
     end
   end
+
+  describe "#edit_back_path" do
+    context "when reviewed is nil" do
+      it "returns the path to the mentor training hours form" do
+        form = described_class.new(claim:)
+
+        expect(form.edit_back_path).to eq(
+          "/support/schools/#{claim.school.id}/claims/#{claim.id}/edit",
+        )
+      end
+    end
+
+    context "when reviewed is true" do
+      it "returns the path to the claim check page" do
+        claim_reviewed = create(:claim, reviewed: true)
+        form = described_class.new(claim: claim_reviewed)
+
+        expect(form.update_success_path).to eq(
+          "/support/schools/#{claim_reviewed.school.id}/claims/#{claim_reviewed.id}/check",
+        )
+      end
+    end
+  end
 end
