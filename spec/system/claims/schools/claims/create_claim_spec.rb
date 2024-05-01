@@ -20,7 +20,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
 
   scenario "Anne creates a claim" do
     when_i_click("Add claim")
-    when_i_choose_a_provider
+    when_i_choose_a_provider(provider)
     when_i_click("Continue")
     when_i_select_all_mentors
     when_i_click("Continue")
@@ -42,7 +42,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
 
   scenario "Anne creates a claim with mentor training hours over the maximum limit per provider" do
     when_i_click("Add claim")
-    when_i_choose_a_provider
+    when_i_choose_a_provider(provider)
     when_i_click("Continue")
     when_i_select_all_mentors
     when_i_click("Continue")
@@ -62,7 +62,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     when_i_click("Add claim")
     when_i_click("Continue")
     then_i_see_the_error("Select a provider")
-    when_i_choose_a_provider
+    when_i_choose_a_provider(provider)
     when_i_click("Continue")
     when_i_click("Continue")
     then_i_see_the_error("Select a mentor")
@@ -86,7 +86,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
 
   scenario "Anne creates a claim and tries to edit it" do
     when_i_click("Add claim")
-    when_i_choose_a_provider
+    when_i_choose_a_provider(provider)
     when_i_click("Continue")
     when_i_select_a_mentor(mentor1)
     when_i_click("Continue")
@@ -98,6 +98,14 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     then_i_am_redirected_to_root_path_with_alert
   end
 
+  scenario "School attempts to create a claim when their mentors have all been claimed for" do
+    given_my_school_has_fully_claimed_for_all_mentors_for_provider(provider)
+    when_i_click("Add claim")
+    when_i_choose_a_provider(provider)
+    when_i_click("Continue")
+    then_i_should_see_the_message("There are no mentors you can include in a claim because they have already had 20 hours of training claimed for with Best Practice Network.")
+  end
+
   private
 
   def given_i_sign_in
@@ -105,11 +113,17 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     click_on "Sign in using DfE Sign In"
   end
 
+  def given_my_school_has_fully_claimed_for_all_mentors_for_provider(provider)
+    school.mentors.find_each do |mentor|
+      create(:mentor_training, :submitted, mentor:, provider:, hours_completed: 20)
+    end
+  end
+
   def when_i_click(button)
     click_on(button)
   end
 
-  def when_i_choose_a_provider
+  def when_i_choose_a_provider(provider)
     page.choose(provider.name)
   end
 
@@ -234,5 +248,9 @@ RSpec.describe "Create claim", type: :system, service: :claims do
 
   def then_i_get_the_reject_page
     expect(page).to have_content "You cannot submit the claim"
+  end
+
+  def then_i_should_see_the_message(message)
+    expect(page).to have_content(message)
   end
 end

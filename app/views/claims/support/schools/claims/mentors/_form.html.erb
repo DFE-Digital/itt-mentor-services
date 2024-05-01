@@ -1,9 +1,11 @@
-  <%= form_with model: claim_mentors_form, url: form_url, method: do |f| %>
-    <%= f.govuk_error_summary %>
+<%= form_with model: claim_mentors_form, url: form_url, method: do |f| %>
+  <%= f.govuk_error_summary %>
 
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
-        <span class="govuk-caption-l"><%= t(".add_claim", school: @school.name) %></span>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".add_claim", school: @school.name) %></span>
+
+      <% if claim_mentors_form.mentors_with_claimable_hours.any? %>
         <h1 class="govuk-heading-l"><%= t(".heading", provider_name: claim_mentors_form.claim.provider_name) %></h1>
 
         <%= render Claims::Claim::MentorsForm::DisclaimerComponent.new(mentors_form: claim_mentors_form) %>
@@ -19,8 +21,21 @@
         ) %>
 
         <%= f.govuk_submit t("continue") %>
+
         <p class="govuk-body">
           <%= govuk_link_to(t("cancel"), claims_support_school_claims_path(school), no_visited_state: true) %>
         </p>
+      <% else %>
+        <h1 class="govuk-heading-l"><%= t(".heading_empty", provider_name: claim_mentors_form.claim.provider_name) %></h1>
+
+        <p class="govuk-body">
+          <%= t(".no_mentors_with_claimable_hours", provider_name: claim_mentors_form.claim.provider_name) %>
+        </p>
+
+        <p class="govuk-body">
+          <%= govuk_link_to t(".change_provider"), new_claims_school_claim_path(school, id: claim_mentors_form.claim.id) %>
+        </p>
+      <% end %>
     </div>
-  <% end %>
+  </div>
+<% end %>
