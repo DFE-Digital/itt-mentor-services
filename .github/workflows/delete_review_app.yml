@@ -4,18 +4,15 @@ on:
   pull_request:
     branches:
     - main
-    - feature/1788-ittms-fix-delete
     types:
     - closed
 
-concurrency: deploy-${{ github.event.number }}
-
 jobs:
-  build:
+  delete-review-app:
+    name: Delete Review App ${{ github.event.number }}
+    concurrency: deploy-${{ github.event.pull_request.number}}
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') }}
     environment: review
-
     steps:
     - name: Checkout
       uses: actions/checkout@v4
