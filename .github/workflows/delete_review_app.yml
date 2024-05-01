@@ -7,7 +7,7 @@ on:
     types:
     - closed
 
-concurrency: deploy-${{ github.ref }}
+concurrency: deploy-${{ github.event.number }}
 
 jobs:
   build:
