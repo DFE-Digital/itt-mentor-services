@@ -27,6 +27,12 @@ RSpec.describe User, type: :model do
     it { is_expected.to have_many(:user_memberships).dependent(:destroy) }
   end
 
+  describe "normalizations" do
+    it { is_expected.to normalize(:first_name).from("  Jane  ").to("Jane") }
+    it { is_expected.to normalize(:last_name).from("  Doe  ").to("Doe") }
+    it { is_expected.to normalize(:email).from("  Jane.Doe@Example.com  ").to("jane.doe@example.com") }
+  end
+
   describe "validations" do
     it { is_expected.to validate_presence_of(:email) }
     it { is_expected.to validate_uniqueness_of(:email).scoped_to(:type).case_insensitive }
