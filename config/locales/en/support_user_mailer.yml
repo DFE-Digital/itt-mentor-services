@@ -11,7 +11,7 @@ en:
 
         If you have a DfE Sign-in account, you can use it to sign in:
 
-        %{sign_in_url}
+        [sign_in_url](%{sign_in_url})
 
         If you need to create a DfE Sign-in account, you can do this after clicking "Sign in using DfE Sign-in"
 
