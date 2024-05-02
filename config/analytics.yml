@@ -24,9 +24,6 @@ shared:
     - created_at
     - updated_at
   :users:
-    - first_name
-    - last_name
-    - email
     - created_at
     - updated_at
     - id
@@ -75,8 +72,6 @@ shared:
     - updated_at
   :mentors:
     - id
-    - first_name
-    - last_name
     - trn
     - created_at
     - updated_at
@@ -149,8 +144,6 @@ shared:
     - name
     - ukprn
     - urn
-    - email_address
-    - telephone
     - website
     - address1
     - address2
