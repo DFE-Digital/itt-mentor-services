@@ -23,6 +23,9 @@ class User < ApplicationRecord
 
   has_many :user_memberships, dependent: :destroy
 
+  normalizes :first_name, :last_name, with: ->(value) { value.strip }
+  normalizes :email, with: ->(value) { value.strip.downcase }
+
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, unless: :support_user?
