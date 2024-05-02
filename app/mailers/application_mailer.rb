@@ -3,12 +3,16 @@ class ApplicationMailer < Mail::Notify::Mailer
 
   default from: "no-reply@education.gov.uk"
 
-  def notify_email(headers)
+  def notify_email(subject:, **headers)
     headers.merge!(rails_mailer: mailer_name, rails_mail_template: action_name)
-    view_mail(GENERIC_NOTIFY_TEMPLATE, headers)
+    view_mail(GENERIC_NOTIFY_TEMPLATE, subject: environment_prefix + subject, **headers)
   end
 
   private
+
+  def environment_prefix
+    HostingEnvironment.env != "production" ? "[#{HostingEnvironment.env.upcase}] " : ""
+  end
 
   def service_name
     I18n.t("#{params[:service]}.service_name")
