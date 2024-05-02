@@ -1,5 +1,5 @@
 module Placements::ButtonHelper
-  def govuk_start_button_link_to(body, url, html_options = {})
+  def govuk_start_button_link_to(url:, body: I18n.t("start_now"), html_options: {})
     options = {
       class: "govuk-button govuk-button--start #{html_options[:class]}",
       role: "button",
