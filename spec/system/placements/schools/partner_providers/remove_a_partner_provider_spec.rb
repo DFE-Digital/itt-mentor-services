@@ -109,7 +109,7 @@ RSpec.describe "Placements / Schools / Partner providers / Remove a partner prov
   def partner_provider_notification(user)
     ActionMailer::Base.deliveries.find do |delivery|
       delivery.to.include?(user.email) &&
-        delivery.subject == "#{provider.name} has been removed as a partner provider"
+        delivery.subject == "A school has removed your organisation from its list of partner providers"
     end
   end
 

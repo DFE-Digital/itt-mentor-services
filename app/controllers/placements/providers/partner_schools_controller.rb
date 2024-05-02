@@ -51,7 +51,7 @@ class Placements::Providers::PartnerSchoolsController < ApplicationController
 
   def create
     partnership_form.save!
-    Placements::Partnerships::Notify::Creation.call(
+    Placements::Partnerships::Notify::Create.call(
       source_organisation: @provider,
       partner_organisation: partner_school,
     )
@@ -68,7 +68,7 @@ class Placements::Providers::PartnerSchoolsController < ApplicationController
 
     school = @partnership.school
     @partnership.destroy!
-    Placements::Partnerships::Notify::Removal.call(
+    Placements::Partnerships::Notify::Remove.call(
       source_organisation: @provider,
       partner_organisation: school,
     )
