@@ -9,7 +9,7 @@ RSpec.describe SupportUserMailer, type: :mailer do
 
       it "is addressed to the user's email and contains a link to the claims sign in url" do
         expect(invite_email.to).to contain_exactly(user.email)
-        expect(invite_email.subject).to eq("Invitation to join Claim funding for mentor training")
+        expect(invite_email.subject).to eq("[TEST] Invitation to join Claim funding for mentor training")
         expect(invite_email.body).to have_content <<~EMAIL
           Dear John,
 
@@ -34,6 +34,16 @@ RSpec.describe SupportUserMailer, type: :mailer do
           Claim funding for mentor training team
         EMAIL
       end
+
+      context "when HostingEnvironment.env is 'production'" do
+        before do
+          allow(HostingEnvironment).to receive(:env).and_return("production")
+        end
+
+        it "does not append the hosting environment to the subject" do
+          expect(invite_email.subject).to eq("Invitation to join Claim funding for mentor training")
+        end
+      end
     end
 
     context "when inviting a user to the placements service" do
@@ -43,7 +53,7 @@ RSpec.describe SupportUserMailer, type: :mailer do
 
       it "is addressed to the user's email and contains a link to the placements sign in url" do
         expect(invite_email.to).to contain_exactly(user.email)
-        expect(invite_email.subject).to eq("Invitation to join Claim funding for mentor training")
+        expect(invite_email.subject).to eq("[TEST] Invitation to join Claim funding for mentor training")
         expect(invite_email.body).to have_content <<~EMAIL
           Dear John,
 
@@ -68,6 +78,16 @@ RSpec.describe SupportUserMailer, type: :mailer do
           Claim funding for mentor training team
         EMAIL
       end
+
+      context "when HostingEnvironment.env is 'production'" do
+        before do
+          allow(HostingEnvironment).to receive(:env).and_return("production")
+        end
+
+        it "does not append the hosting environment to the subject" do
+          expect(invite_email.subject).to eq("Invitation to join Claim funding for mentor training")
+        end
+      end
     end
   end
 
@@ -79,7 +99,7 @@ RSpec.describe SupportUserMailer, type: :mailer do
 
       it "is addressed to the user's email and contains a link to the claims sign in url" do
         expect(removal_email.to).to contain_exactly(user.email)
-        expect(removal_email.subject).to eq("You have been removed from Claim funding for mentor training")
+        expect(removal_email.subject).to eq("[TEST] You have been removed from Claim funding for mentor training")
         expect(removal_email.body).to have_content <<~EMAIL
           Dear John,
 
@@ -101,7 +121,7 @@ RSpec.describe SupportUserMailer, type: :mailer do
 
       it "is addressed to the user's email and contains a link to the placements sign in url" do
         expect(removal_email.to).to contain_exactly(user.email)
-        expect(removal_email.subject).to eq("You have been removed from Claim funding for mentor training")
+        expect(removal_email.subject).to eq("[TEST] You have been removed from Claim funding for mentor training")
         expect(removal_email.body).to have_content <<~EMAIL
           Dear John,
 
