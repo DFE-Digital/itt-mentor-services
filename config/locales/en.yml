@@ -17,6 +17,7 @@ en:
   apply_filters: Apply filters
   selected_filters: Selected filters
   clear_filters: Clear filters
+  start_now: Start now
   date:
     formats:
       month: "%B"

@@ -265,6 +265,9 @@ GEM
       activemodel (>= 6.1)
       activesupport (>= 6.1)
       html-attributes-utils (~> 1)
+    govuk_markdown (2.0.2)
+      activesupport
+      redcarpet
     haml (6.3.0)
       temple (>= 0.8.2)
       thor
@@ -709,6 +712,7 @@ DEPENDENCIES
   good_job (~> 3.28)
   govuk-components (~> 5.3.2)
   govuk_design_system_formbuilder (~> 5.3)
+  govuk_markdown
   httparty
   jsbundling-rails
   launchy

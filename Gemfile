@@ -53,7 +53,10 @@ gem "bootsnap", require: false
 gem "csv"
 
 gem "flipflop"
+
+# Markdown
 gem "redcarpet", "~> 3.6"
+gem "govuk_markdown"
 
 # GoodJob backend for Active Job
 gem "good_job", "~> 3.28"
