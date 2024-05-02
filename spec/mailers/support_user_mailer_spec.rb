@@ -10,6 +10,7 @@ RSpec.describe SupportUserMailer, type: :mailer do
       it "is addressed to the user's email and contains a link to the claims sign in url" do
         expect(invite_email.to).to contain_exactly(user.email)
         expect(invite_email.subject).to eq("Invitation to join Claim funding for mentor training")
+        pp invite_email.subject
         expect(invite_email.body).to have_content <<~EMAIL
           Dear John,
 
@@ -19,7 +20,7 @@ RSpec.describe SupportUserMailer, type: :mailer do
 
           If you have a DfE Sign-in account, you can use it to sign in:
 
-          [link](http://claims.localhost:3000/sign-in)
+          http://claims.localhost:3000/sign-in
 
           If you need to create a DfE Sign-in account, you can do this after clicking "Sign in using DfE Sign-in"
 
@@ -31,7 +32,7 @@ RSpec.describe SupportUserMailer, type: :mailer do
 
           Regards
 
-          Becoming a Teacher team
+          Claim funding for mentor training team
         EMAIL
       end
     end
@@ -53,7 +54,7 @@ RSpec.describe SupportUserMailer, type: :mailer do
 
           If you have a DfE Sign-in account, you can use it to sign in:
 
-          [link](http://placements.localhost:3000/sign-in)
+          http://placements.localhost:3000/sign-in
 
           If you need to create a DfE Sign-in account, you can do this after clicking "Sign in using DfE Sign-in"
 
@@ -65,7 +66,7 @@ RSpec.describe SupportUserMailer, type: :mailer do
 
           Regards
 
-          Becoming a Teacher team
+          Claim funding for mentor training team
         EMAIL
       end
     end
@@ -89,7 +90,7 @@ RSpec.describe SupportUserMailer, type: :mailer do
 
           Regards
 
-          Becoming a Teacher team
+          Claim funding for mentor training team
         EMAIL
       end
     end
@@ -111,7 +112,7 @@ RSpec.describe SupportUserMailer, type: :mailer do
 
           Regards
 
-          Becoming a Teacher team
+          Claim funding for mentor training team
         EMAIL
       end
     end
