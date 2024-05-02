@@ -13,8 +13,8 @@ en:
           submitted_before: Submitted before
           submitted_before_hint: For example, 31 7 2024
           school_ids: School
-          provider_ids: Accredited prvoider
-          provider: Accredited prvoider
+          provider_ids: Accredited provider
+          provider: Accredited provider
           submit: Search
           clear: Clear search
         show:

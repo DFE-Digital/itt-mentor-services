@@ -136,7 +136,7 @@ RSpec.describe "View claims", type: :system, service: :claims, js: true do
   end
 
   def when_i_search_the_provider_filer_with(provider_name)
-    fill_in("Accredited prvoider", with: provider_name)
+    fill_in("Accredited provider", with: provider_name)
   end
 
   def then_i_see_only_my_filter_school_as_an_option
@@ -152,6 +152,6 @@ RSpec.describe "View claims", type: :system, service: :claims, js: true do
   end
 
   def then_i_see_my_search_provider_filter_populated(provider_name)
-    expect(page).to have_field("Accredited prvoider", with: provider_name)
+    expect(page).to have_field("Accredited provider", with: provider_name)
   end
 end
