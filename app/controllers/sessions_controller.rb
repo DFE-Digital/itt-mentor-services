@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
   before_action :redirect_to_after_sign_in_path, only: %i[new], if: :user_signed_in?
 
   def new
-    render "sessions/placements/start" if current_service == :placements
+    render "placements/pages/start" if current_service == :placements
   end
 
   def callback

@@ -36,7 +36,7 @@ RSpec.describe "Sign out as a Placements User", type: :system, service: :placeme
   end
 
   def when_i_click_sign_in
-    click_on "Sign in using DfE Sign In"
+    click_on "Start now"
   end
 
   def i_should_see_a_sign_out_button
@@ -48,8 +48,8 @@ RSpec.describe "Sign out as a Placements User", type: :system, service: :placeme
   end
 
   def i_expect_to_be_on_sign_in_page
-    expect(page).to have_content("Sign in to Manage school placements")
-    expect(page).to have_content("Sign in using DfE Sign In")
+    expect(page).to have_content("Manage school placements")
+    expect(page).to have_content("Start now")
   end
 
   def when_i_visit_placements_schools_details_path

@@ -7,7 +7,7 @@ RSpec.describe "Home Page", type: :system, service: :placements do
     i_can_see_the_dfe_sign_in_button
   end
 
-  scenario "User visits the claims homepage with person sign in", persona_sign_in: true do
+  scenario "User visits the placements homepage with person sign in", persona_sign_in: true do
     given_i_am_on_the_start_page
     i_can_see_the_placements_service_name_in_the_header
     i_can_see_the_persona_sign_in_button
@@ -26,10 +26,10 @@ RSpec.describe "Home Page", type: :system, service: :placements do
   end
 
   def i_can_see_the_dfe_sign_in_button
-    expect(page).to have_content("Sign in using DfE Sign In")
+    expect(page).to have_content("Start now")
   end
 
   def i_can_see_the_persona_sign_in_button
-    expect(page).to have_content("Sign in using a Persona")
+    expect(page).to have_content("Start now")
   end
 end

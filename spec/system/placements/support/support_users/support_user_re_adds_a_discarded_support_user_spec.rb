@@ -88,7 +88,7 @@ RSpec.describe "Placements / Support Users / Support user re-adds a discarded su
   def when_i_sign_in_as_a_support_user(support_user)
     user_exists_in_dfe_sign_in(user: support_user)
     visit sign_in_path
-    click_on "Sign in using DfE Sign In"
+    click_on "Start now"
   end
 
   def and_i_visit_the_support_users_page

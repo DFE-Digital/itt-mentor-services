@@ -30,7 +30,7 @@ RSpec.describe "Authentication", type: :system, service: :placements do
   end
 
   def then_i_am_unable_to_access_the_page
-    expect(page).to have_content("Sign in to Manage school placements")
+    expect(page).to have_content("Start now")
   end
 
   def then_i_am_able_to_access_the_page
@@ -42,7 +42,7 @@ RSpec.describe "Authentication", type: :system, service: :placements do
   end
 
   def when_i_click_sign_in
-    click_on "Sign in using DfE Sign In"
+    click_on "Start now"
   end
 
   def given_there_is_an_existing_placements_user_with_a_school_for(user)

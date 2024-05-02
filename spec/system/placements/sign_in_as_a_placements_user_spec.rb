@@ -88,7 +88,7 @@ RSpec.describe "Sign In as a Placements User", type: :system, service: :placemen
   end
 
   def when_i_click_sign_in
-    click_on "Sign in using DfE Sign In"
+    click_on "Start now"
   end
 
   def and_i_visit_my_account_page

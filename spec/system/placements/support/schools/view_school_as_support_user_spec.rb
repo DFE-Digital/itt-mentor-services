@@ -23,7 +23,7 @@ RSpec.describe "Placements / Organisations / Support user views a School", type:
     user = create(:placements_support_user, :colin)
     user_exists_in_dfe_sign_in(user:)
     visit sign_in_path
-    click_on "Sign in using DfE Sign In"
+    click_on "Start now"
   end
 
   def when_i_click_on_a_organisation_name(name)

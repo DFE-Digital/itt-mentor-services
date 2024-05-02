@@ -60,7 +60,7 @@ RSpec.describe "Placements / Support / Schools / Support User adds a School",
   end
 
   def and_i_click_sign_in
-    click_on "Sign in using DfE Sign In"
+    click_on "Start now"
   end
 
   def given_i_sign_in_as_colin

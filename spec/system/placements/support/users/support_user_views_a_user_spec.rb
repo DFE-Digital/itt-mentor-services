@@ -62,7 +62,7 @@ RSpec.describe "Placements / Support / Users / Support User Views A User", type:
   end
 
   def and_i_click_sign_in
-    click_on "Sign in using DfE Sign In"
+    click_on "Start now"
   end
 
   def given_i_am_signed_in_as_a_support_user

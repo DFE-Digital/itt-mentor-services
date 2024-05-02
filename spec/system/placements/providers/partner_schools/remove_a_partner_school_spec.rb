@@ -37,7 +37,7 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
     create(:user_membership, user:, organisation: provider)
     user_exists_in_dfe_sign_in(user:)
     visit sign_in_path
-    click_on "Sign in using DfE Sign In"
+    click_on "Start now"
   end
 
   def when_i_view_the_partner_school_show_page

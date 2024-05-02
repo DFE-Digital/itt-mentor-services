@@ -55,8 +55,8 @@ gem "csv"
 gem "flipflop"
 
 # Markdown
-gem "redcarpet", "~> 3.6"
 gem "govuk_markdown"
+gem "redcarpet", "~> 3.6"
 
 # GoodJob backend for Active Job
 gem "good_job", "~> 3.28"
