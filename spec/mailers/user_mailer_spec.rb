@@ -20,7 +20,7 @@ RSpec.describe UserMailer, type: :mailer do
 
           If you have a DfE Sign-in account, you can use it to sign in:
 
-          [sign_in_url](http://claims.localhost:3000/sign-in)
+          http://claims.localhost:3000/sign-in
 
           If you need to create a DfE Sign-in account, you can do this after clicking "Sign in using DfE Sign-in"
 
@@ -28,7 +28,7 @@ RSpec.describe UserMailer, type: :mailer do
 
           # Give feedback or report a problem
 
-          If you have any questions or feedback, please contact the team at ittmentor.funding@digital.education.gov.uk.
+          If you have any questions or feedback, please contact the team at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk).
 
           Regards
 
@@ -64,7 +64,7 @@ RSpec.describe UserMailer, type: :mailer do
 
             If you have a DfE Sign-in account, you can use it to sign in:
 
-            [sign_in_url](http://placements.localhost:3000/sign-in)
+            http://placements.localhost:3000/sign-in
 
             If you need to create a DfE Sign-in account, you can do this after clicking "Sign in using DfE Sign-in"
 
@@ -72,7 +72,7 @@ RSpec.describe UserMailer, type: :mailer do
 
             # Give feedback or report a problem
 
-            If you have any questions or feedback, please contact the team at ittmentor.funding@digital.education.gov.uk.
+            If you have any questions or feedback, please contact the team at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk).
 
             Regards
 
@@ -107,7 +107,7 @@ RSpec.describe UserMailer, type: :mailer do
 
             If you have a DfE Sign-in account, you can use it to sign in:
 
-            [sign_in_url](http://placements.localhost:3000/sign-in)
+            http://placements.localhost:3000/sign-in
 
             If you need to create a DfE Sign-in account, you can do this after clicking "Sign in using DfE Sign-in"
 
@@ -115,7 +115,7 @@ RSpec.describe UserMailer, type: :mailer do
 
             # Give feedback or report a problem
 
-            If you have any questions or feedback, please contact the team at ittmentor.funding@digital.education.gov.uk.
+            If you have any questions or feedback, please contact the team at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk).
 
             Regards
 
@@ -153,7 +153,7 @@ RSpec.describe UserMailer, type: :mailer do
 
           # Give feedback or report a problem
 
-          If you have any questions or feedback, please contact the team at ittmentor.funding@digital.education.gov.uk.
+          If you have any questions or feedback, please contact the team at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk).
 
           Regards
 
@@ -187,7 +187,7 @@ RSpec.describe UserMailer, type: :mailer do
 
             # Give feedback or report a problem
 
-            If you have any questions or feedback, please contact the team at ittmentor.funding@digital.education.gov.uk.
+            If you have any questions or feedback, please contact the team at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk).
 
             Regards
 
@@ -220,7 +220,7 @@ RSpec.describe UserMailer, type: :mailer do
 
             # Give feedback or report a problem
 
-            If you have any questions or feedback, please contact the team at ittmentor.funding@digital.education.gov.uk.
+            If you have any questions or feedback, please contact the team at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk).
 
             Regards
 
@@ -267,7 +267,7 @@ RSpec.describe UserMailer, type: :mailer do
 
           # Give feedback or report a problem
 
-          If you have any questions or feedback, please contact the team at ittmentor.funding@digital.education.gov.uk.
+          If you have any questions or feedback, please contact the team at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk).
 
           Regards
 
@@ -314,7 +314,7 @@ RSpec.describe UserMailer, type: :mailer do
 
           # Give feedback or report a problem
 
-          If you have any questions or feedback, please contact the team at ittmentor.funding@digital.education.gov.uk.
+          If you have any questions or feedback, please contact the team at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk).
 
           Regards
 
