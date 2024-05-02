@@ -58,9 +58,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_29_133246) do
     t.enum "status", enum_type: "claim_status"
     t.string "submitted_by_type"
     t.uuid "submitted_by_id"
+    t.uuid "previous_revision_id"
     t.index ["created_by_type", "created_by_id"], name: "index_claims_on_created_by"
+    t.index ["previous_revision_id"], name: "index_claims_on_previous_revision_id"
     t.index ["provider_id"], name: "index_claims_on_provider_id"
-    t.index ["reference"], name: "index_claims_on_reference", unique: true
+    t.index ["reference"], name: "index_claims_on_reference"
     t.index ["school_id"], name: "index_claims_on_school_id"
     t.index ["submitted_by_type", "submitted_by_id"], name: "index_claims_on_submitted_by"
   end

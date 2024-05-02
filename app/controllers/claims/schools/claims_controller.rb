@@ -2,8 +2,9 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   include Claims::BelongsToSchool
 
   before_action :has_school_accepted_grant_conditions?
-  before_action :set_claim, only: %i[show check confirmation submit edit update rejected]
+  before_action :set_claim, only: %i[show check confirmation submit edit update rejected create_revision]
   before_action :authorize_claim
+  before_action :get_valid_revision, only: :check
 
   helper_method :claim_provider_form
 
@@ -19,6 +20,11 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
     else
       render :new
     end
+  end
+
+  def create_revision
+    revision = Claims::Claim::CreateRevision.call(claim: @claim)
+    redirect_to edit_claims_school_claim_path(@school, revision)
   end
 
   def show; end
@@ -87,5 +93,11 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
 
   def authorize_claim
     authorize @claim || Claims::Claim
+  end
+
+  def get_valid_revision
+    revision = @claim.get_valid_revision
+
+    redirect_to check_claims_school_claim_path(@school, revision) if revision != @claim
   end
 end

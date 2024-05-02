@@ -113,10 +113,10 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor1)
     when_i_add_training_hours("20 hours")
     when_i_click("Continue")
-    when_i_click("Change Accredited provider")
+    when_i_click_change_provider
     when_i_choose_a_provider(bpn)
     when_i_click("Continue")
-    when_i_click("Change Mentors")
+    when_i_click_change_mentors
     then_i_should_see_the_message("There are no mentors you can include in a claim because they have already had 20 hours of training claimed for with Best Practice Network.")
     when_i_click("Change the accredited provider")
     when_i_choose_a_provider(niot)
@@ -248,5 +248,21 @@ RSpec.describe "Create claim", type: :system, service: :claims do
 
   def then_i_should_land_on_the_check_page
     expect(page).to have_content "Check your answers"
+  end
+
+  def when_i_click_change_provider
+    within("dl.govuk-summary-list:nth(1)") do
+      within(".govuk-summary-list__row:nth(1)") do
+        click_button("Change")
+      end
+    end
+  end
+
+  def when_i_click_change_mentors
+    within("dl.govuk-summary-list:nth(1)") do
+      within(".govuk-summary-list__row:nth(2)") do
+        click_button("Change")
+      end
+    end
   end
 end

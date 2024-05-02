@@ -113,7 +113,7 @@ describe Claims::Support::Claim::MentorTrainingForm, type: :model do
     context "when we are on the alphabetically-first mentor training hours page" do
       it "returns the path to the mentors check list" do
         expect(mentor_training_form.back_path).to eq(
-          "/support/schools/#{mentor_training.claim.school_id}/claims/#{mentor_training.claim.id}/mentors/#{mentor_training.mentor_id}/edit",
+          "/support/schools/#{mentor_training.claim.school_id}/claims/#{mentor_training.claim.id}/mentors/edit",
         )
       end
     end

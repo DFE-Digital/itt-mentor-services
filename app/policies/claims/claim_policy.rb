@@ -7,6 +7,10 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
     edit?
   end
 
+  def create_revision?
+    edit?
+  end
+
   def submit?
     !user.support_user? && !record.submitted?
   end
