@@ -20,7 +20,7 @@ RSpec.describe UserMailer, type: :mailer do
 
           If you have a DfE Sign-in account, you can use it to sign in:
 
-          [link](http://claims.localhost:3000/sign-in)
+          http://claims.localhost:3000/sign-in
 
           If you need to create a DfE Sign-in account, you can do this after clicking "Sign in using DfE Sign-in"
 
@@ -32,7 +32,7 @@ RSpec.describe UserMailer, type: :mailer do
 
           Regards
 
-          Becoming a Teacher team
+          Claim funding for mentor training team
         EMAIL
       end
     end
@@ -54,7 +54,7 @@ RSpec.describe UserMailer, type: :mailer do
 
             If you have a DfE Sign-in account, you can use it to sign in:
 
-            [link](http://placements.localhost:3000/sign-in)
+            http://placements.localhost:3000/sign-in
 
             If you need to create a DfE Sign-in account, you can do this after clicking "Sign in using DfE Sign-in"
 
@@ -66,7 +66,7 @@ RSpec.describe UserMailer, type: :mailer do
 
             Regards
 
-            Becoming a Teacher team
+            Claim funding for mentor training team
           EMAIL
         end
       end
@@ -87,7 +87,7 @@ RSpec.describe UserMailer, type: :mailer do
 
             If you have a DfE Sign-in account, you can use it to sign in:
 
-            [link](http://placements.localhost:3000/sign-in)
+            http://placements.localhost:3000/sign-in
 
             If you need to create a DfE Sign-in account, you can do this after clicking "Sign in using DfE Sign-in"
 
@@ -99,7 +99,7 @@ RSpec.describe UserMailer, type: :mailer do
 
             Regards
 
-            Becoming a Teacher team
+            Claim funding for mentor training team
           EMAIL
         end
       end
@@ -127,7 +127,7 @@ RSpec.describe UserMailer, type: :mailer do
 
           Regards
 
-          Becoming a Teacher team
+          Claim funding for mentor training team
         EMAIL
       end
     end
@@ -151,7 +151,7 @@ RSpec.describe UserMailer, type: :mailer do
 
             Regards
 
-            Becoming a Teacher team
+            Claim funding for mentor training team
           EMAIL
         end
       end
@@ -174,7 +174,7 @@ RSpec.describe UserMailer, type: :mailer do
 
             Regards
 
-            Becoming a Teacher team
+            Claim funding for mentor training team
           EMAIL
         end
       end
@@ -203,7 +203,7 @@ RSpec.describe UserMailer, type: :mailer do
 
           You can view your claim on Claim funding for mentor training:
 
-          [link](http://claims.localhost:3000/schools/#{school.id}/claims/#{claim.id})
+          http://claims.localhost:3000/schools/#{school.id}/claims/#{claim.id}
 
           # Give feedback or report a problem
 
@@ -211,7 +211,7 @@ RSpec.describe UserMailer, type: :mailer do
 
           Regards
 
-          Becoming a Teacher team
+          Claim funding for mentor training team
         EMAIL
       end
     end
@@ -240,7 +240,7 @@ RSpec.describe UserMailer, type: :mailer do
 
           You can view the claim, edit and submit it on Claim funding for mentor training:
 
-          [link](http://claims.localhost:3000/sign-in)
+          http://claims.localhost:3000/schools/#{school.id}/claims/#{claim.id}
 
           # Give feedback or report a problem
 
@@ -248,7 +248,7 @@ RSpec.describe UserMailer, type: :mailer do
 
           Regards
 
-          Becoming a Teacher team
+          Claim funding for mentor training team
         EMAIL
       end
     end

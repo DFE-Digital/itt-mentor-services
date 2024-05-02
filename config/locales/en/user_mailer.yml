@@ -11,7 +11,7 @@ en:
 
         If you have a DfE Sign-in account, you can use it to sign in:
 
-        [link](%{sign_in_url})
+        %{sign_in_url}
 
         If you need to create a DfE Sign-in account, you can do this after clicking "Sign in using DfE Sign-in"
 
@@ -23,7 +23,7 @@ en:
 
         Regards
 
-        Becoming a Teacher team
+        Claim funding for mentor training team
 
     user_membership_destroyed_notification:
       subject: You have been removed from Claim funding for mentor training
@@ -38,7 +38,7 @@ en:
 
         Regards
 
-        Becoming a Teacher team
+        Claim funding for mentor training team
 
     claim_submitted_notification:
       subject: Thank you for submitting your claim for mentor training
@@ -51,7 +51,7 @@ en:
 
         You can view your claim on Claim funding for mentor training:
 
-        [link](%{link_to_claim})
+        %{link_to_claim}
 
         # Give feedback or report a problem
 
@@ -59,7 +59,7 @@ en:
 
         Regards
 
-        Becoming a Teacher team
+        Claim funding for mentor training team
 
     claim_created_support_notification:
       subject: New draft claim for mentor training
@@ -71,7 +71,7 @@ en:
 
         You can view the claim, edit and submit it on Claim funding for mentor training:
 
-        [link](%{sign_in_url})
+        %{link_to_claim}
 
         # Give feedback or report a problem
 
@@ -79,4 +79,4 @@ en:
 
         Regards
 
-        Becoming a Teacher team
+        Claim funding for mentor training team

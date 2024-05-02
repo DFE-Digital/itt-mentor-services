@@ -34,7 +34,6 @@ class UserMailer < ApplicationMailer
                          organisation_name: claim.school.name,
                          reference: claim.reference,
                          amount: claim.amount.format(symbol: true, decimal_mark: ".", no_cents: false),
-                         sign_in_url:,
                          link_to_claim:))
   end
 end
