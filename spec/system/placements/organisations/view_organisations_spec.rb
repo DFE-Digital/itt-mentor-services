@@ -143,7 +143,7 @@ RSpec.describe "View organisations", type: :system, service: :placements do
   end
 
   def when_i_click_sign_in
-    click_on "Sign in using DfE Sign In"
+    click_on "Start now"
   end
 
   def and_i_only_see_placement_schools

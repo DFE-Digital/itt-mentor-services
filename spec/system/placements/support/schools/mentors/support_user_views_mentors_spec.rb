@@ -29,7 +29,7 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User views men
 
   def given_i_sign_in
     visit sign_in_path
-    click_on "Sign in using DfE Sign In"
+    click_on "Start now"
   end
 
   def when_i_visit_the_support_school_mentors_page(school)

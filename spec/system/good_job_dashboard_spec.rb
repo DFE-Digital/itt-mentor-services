@@ -41,6 +41,7 @@ RSpec.describe "GoodJob admin dashboard", type: :system, service: :placements do
   end
 
   def then_i_am_asked_to_sign_in
-    expect(page).to have_content "Sign in to Manage school placements"
+    expect(page).to have_content "Manage school placements"
+    expect(page).to have_content "Start now"
   end
 end

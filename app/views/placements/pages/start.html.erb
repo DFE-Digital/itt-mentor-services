@@ -1,0 +1,38 @@
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l"><%= t(".service") %></h1>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= render_markdown(t(".content")) %>
+
+      <% if ENV["SIGN_IN_METHOD"] == "persona" %>
+        <%= govuk_start_button(text: t("start_now"), href: personas_path) %>
+      <% else %>
+        <%= govuk_start_button_link_to(t("start_now"), omniauth_sign_in_path("dfe")) %>
+      <% end %>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      <h3 class="govuk-heading-s">
+        <%= t(".related_content") %>
+      </h3>
+      <ul class="govuk-list govuk-body-s">
+        <li>
+          <%= govuk_link_to(
+            t(".guidance.offer_trainee_teacher_placement"),
+            "https://www.gov.uk/guidance/offer-a-trainee-teacher-placement",
+          ) %>
+        </li>
+        <li>
+          <%= govuk_link_to(
+            t(".guidance.how_to_find_a_trn"),
+            "https://www.gov.uk/guidance/teacher-reference-number-trn",
+          ) %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

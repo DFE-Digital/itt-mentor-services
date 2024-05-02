@@ -124,7 +124,7 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
     user = create(:placements_support_user, :colin)
     user_exists_in_dfe_sign_in(user:)
     visit sign_in_path
-    click_on "Sign in using DfE Sign In"
+    click_on "Start now"
   end
 
   def given_a_claims_mentor_exists
