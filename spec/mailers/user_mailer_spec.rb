@@ -10,7 +10,7 @@ RSpec.describe UserMailer, type: :mailer do
 
       it "sends the invitation" do
         expect(invite_email.to).to contain_exactly(user.email)
-        expect(invite_email.subject).to eq("[TEST] Invitation to join Claim funding for mentor training")
+        expect(invite_email.subject).to eq("Invitation to join Claim funding for mentor training")
         expect(invite_email.body).to have_content <<~EMAIL
           Dear #{user.first_name},
 
@@ -41,8 +41,18 @@ RSpec.describe UserMailer, type: :mailer do
           allow(HostingEnvironment).to receive(:env).and_return("production")
         end
 
-        it "does not append the hosting environment to the subject" do
+        it "does not prepend the hosting environment to the subject" do
           expect(invite_email.subject).to eq("Invitation to join Claim funding for mentor training")
+        end
+      end
+
+      context "when HostingEnvironment.env is 'staging'" do
+        before do
+          allow(HostingEnvironment).to receive(:env).and_return("staging")
+        end
+
+        it "prepends the hosting environment to the subject" do
+          expect(invite_email.subject).to eq("[STAGING] Invitation to join Claim funding for mentor training")
         end
       end
     end
@@ -54,7 +64,7 @@ RSpec.describe UserMailer, type: :mailer do
 
         it "sends invitation email" do
           expect(invite_email.to).to contain_exactly(user.email)
-          expect(invite_email.subject).to eq("[TEST] Invitation to join Claim funding for mentor training")
+          expect(invite_email.subject).to eq("Invitation to join Claim funding for mentor training")
           expect(invite_email.body).to have_content <<~EMAIL
             Dear #{user.first_name},
 
@@ -85,8 +95,18 @@ RSpec.describe UserMailer, type: :mailer do
             allow(HostingEnvironment).to receive(:env).and_return("production")
           end
 
-          it "does not append the hosting environment to the subject" do
+          it "does not prepend the hosting environment to the subject" do
             expect(invite_email.subject).to eq("Invitation to join Claim funding for mentor training")
+          end
+        end
+
+        context "when HostingEnvironment.env is 'staging'" do
+          before do
+            allow(HostingEnvironment).to receive(:env).and_return("staging")
+          end
+
+          it "prepends the hosting environment to the subject" do
+            expect(invite_email.subject).to eq("[STAGING] Invitation to join Claim funding for mentor training")
           end
         end
       end
@@ -97,7 +117,7 @@ RSpec.describe UserMailer, type: :mailer do
 
         it "sends invitation email" do
           expect(invite_email.to).to contain_exactly(user.email)
-          expect(invite_email.subject).to eq("[TEST] Invitation to join Claim funding for mentor training")
+          expect(invite_email.subject).to eq("Invitation to join Claim funding for mentor training")
           expect(invite_email.body).to have_content <<~EMAIL
             Dear #{user.first_name},
 
@@ -128,8 +148,18 @@ RSpec.describe UserMailer, type: :mailer do
             allow(HostingEnvironment).to receive(:env).and_return("production")
           end
 
-          it "does not append the hosting environment to the subject" do
+          it "does not prepend the hosting environment to the subject" do
             expect(invite_email.subject).to eq("Invitation to join Claim funding for mentor training")
+          end
+        end
+
+        context "when HostingEnvironment.env is 'staging'" do
+          before do
+            allow(HostingEnvironment).to receive(:env).and_return("staging")
+          end
+
+          it "prepends the hosting environment to the subject" do
+            expect(invite_email.subject).to eq("[STAGING] Invitation to join Claim funding for mentor training")
           end
         end
       end
@@ -145,7 +175,7 @@ RSpec.describe UserMailer, type: :mailer do
 
       it "sends expected message to user" do
         expect(removal_email.to).to contain_exactly user.email
-        expect(removal_email.subject).to eq "[TEST] You have been removed from Claim funding for mentor training"
+        expect(removal_email.subject).to eq "You have been removed from Claim funding for mentor training"
         expect(removal_email.body).to have_content <<~EMAIL
           Dear #{user.first_name},
 
@@ -166,8 +196,18 @@ RSpec.describe UserMailer, type: :mailer do
           allow(HostingEnvironment).to receive(:env).and_return("production")
         end
 
-        it "does not append the hosting environment to the subject" do
+        it "does not prepend the hosting environment to the subject" do
           expect(removal_email.subject).to eq("You have been removed from Claim funding for mentor training")
+        end
+      end
+
+      context "when HostingEnvironment.env is 'staging'" do
+        before do
+          allow(HostingEnvironment).to receive(:env).and_return("staging")
+        end
+
+        it "prepends the hosting environment to the subject" do
+          expect(removal_email.subject).to eq("[STAGING] You have been removed from Claim funding for mentor training")
         end
       end
     end
@@ -179,7 +219,7 @@ RSpec.describe UserMailer, type: :mailer do
 
         it "sends expected message to user" do
           expect(removal_email.to).to contain_exactly user.email
-          expect(removal_email.subject).to eq "[TEST] You have been removed from Claim funding for mentor training"
+          expect(removal_email.subject).to eq "You have been removed from Claim funding for mentor training"
           expect(removal_email.body).to have_content <<~EMAIL
             Dear #{user.first_name},
 
@@ -200,8 +240,18 @@ RSpec.describe UserMailer, type: :mailer do
             allow(HostingEnvironment).to receive(:env).and_return("production")
           end
 
-          it "does not append the hosting environment to the subject" do
+          it "does not prepend the hosting environment to the subject" do
             expect(removal_email.subject).to eq("You have been removed from Claim funding for mentor training")
+          end
+        end
+
+        context "when HostingEnvironment.env is 'staging'" do
+          before do
+            allow(HostingEnvironment).to receive(:env).and_return("staging")
+          end
+
+          it "prepends the hosting environment to the subject" do
+            expect(removal_email.subject).to eq("[STAGING] You have been removed from Claim funding for mentor training")
           end
         end
       end
@@ -212,7 +262,7 @@ RSpec.describe UserMailer, type: :mailer do
 
         it "sends expected message to user" do
           expect(removal_email.to).to contain_exactly user.email
-          expect(removal_email.subject).to eq "[TEST] You have been removed from Claim funding for mentor training"
+          expect(removal_email.subject).to eq "You have been removed from Claim funding for mentor training"
           expect(removal_email.body).to have_content <<~EMAIL
             Dear #{user.first_name},
 
@@ -233,8 +283,18 @@ RSpec.describe UserMailer, type: :mailer do
             allow(HostingEnvironment).to receive(:env).and_return("production")
           end
 
-          it "does not append the hosting environment to the subject" do
+          it "does not prepend the hosting environment to the subject" do
             expect(removal_email.subject).to eq("You have been removed from Claim funding for mentor training")
+          end
+        end
+
+        context "when HostingEnvironment.env is 'staging'" do
+          before do
+            allow(HostingEnvironment).to receive(:env).and_return("staging")
+          end
+
+          it "prepends the hosting environment to the subject" do
+            expect(removal_email.subject).to eq("[STAGING] You have been removed from Claim funding for mentor training")
           end
         end
       end
@@ -253,7 +313,7 @@ RSpec.describe UserMailer, type: :mailer do
         create(:mentor_training, claim:, hours_completed: 10)
 
         expect(claim_confirmation_email.to).to contain_exactly(user.email)
-        expect(claim_confirmation_email.subject).to eq("[TEST] Thank you for submitting your claim for mentor training")
+        expect(claim_confirmation_email.subject).to eq("Thank you for submitting your claim for mentor training")
         expect(claim_confirmation_email.body.to_s.strip).to eq(<<~EMAIL.strip)
           Dear #{user.first_name},
 
@@ -280,8 +340,18 @@ RSpec.describe UserMailer, type: :mailer do
           allow(HostingEnvironment).to receive(:env).and_return("production")
         end
 
-        it "does not append the hosting environment to the subject" do
+        it "does not prepend the hosting environment to the subject" do
           expect(claim_confirmation_email.subject).to eq("Thank you for submitting your claim for mentor training")
+        end
+      end
+
+      context "when HostingEnvironment.env is 'staging'" do
+        before do
+          allow(HostingEnvironment).to receive(:env).and_return("staging")
+        end
+
+        it "prepends the hosting environment to the subject" do
+          expect(claim_confirmation_email.subject).to eq("[STAGING] Thank you for submitting your claim for mentor training")
         end
       end
     end
@@ -301,7 +371,7 @@ RSpec.describe UserMailer, type: :mailer do
         create(:mentor_training, claim:, hours_completed: 10)
 
         expect(claim_confirmation_email.to).to contain_exactly(email)
-        expect(claim_confirmation_email.subject).to eq("[TEST] New draft claim for mentor training")
+        expect(claim_confirmation_email.subject).to eq("New draft claim for mentor training")
         expect(claim_confirmation_email.body.to_s.strip).to eq(<<~EMAIL.strip)
           Dear #{user_of_a_school.first_name},
 
@@ -327,8 +397,18 @@ RSpec.describe UserMailer, type: :mailer do
           allow(HostingEnvironment).to receive(:env).and_return("production")
         end
 
-        it "does not append the hosting environment to the subject" do
+        it "does not prepend the hosting environment to the subject" do
           expect(claim_confirmation_email.subject).to eq("New draft claim for mentor training")
+        end
+      end
+
+      context "when HostingEnvironment.env is 'staging'" do
+        before do
+          allow(HostingEnvironment).to receive(:env).and_return("staging")
+        end
+
+        it "prepends the hosting environment to the subject" do
+          expect(claim_confirmation_email.subject).to eq("[STAGING] New draft claim for mentor training")
         end
       end
     end
