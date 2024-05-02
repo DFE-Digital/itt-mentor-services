@@ -15,7 +15,7 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
 
   def create
     if claim_provider_form.save
-      redirect_to new_claims_school_claim_mentor_path(@school, claim_provider_form.claim)
+      redirect_to new_claims_school_claim_mentors_path(@school, claim_provider_form.claim)
     else
       render :new
     end

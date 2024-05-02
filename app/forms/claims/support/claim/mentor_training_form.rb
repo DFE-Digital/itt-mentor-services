@@ -1,7 +1,7 @@
 class Claims::Support::Claim::MentorTrainingForm < Claims::Claim::MentorTrainingForm
   def back_path
     if mentor_trainings.index(mentor_training).zero?
-      edit_claims_support_school_claim_mentor_path(school, claim, mentor_training.mentor_id)
+      edit_claims_support_school_claim_mentors_path(school, claim)
     else
       edit_claims_support_school_claim_mentor_training_path(school, claim, previous_mentor_training)
     end
