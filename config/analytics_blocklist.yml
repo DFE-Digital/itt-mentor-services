@@ -82,3 +82,13 @@ shared:
     - job_class
     - error_event
     - labels
+  :users:
+    - first_name
+    - last_name
+    - email
+  :mentors:
+    - first_name
+    - last_name
+  :providers:
+    - email_address
+    - telephone
