@@ -11,7 +11,9 @@ class ApplicationMailer < Mail::Notify::Mailer
   private
 
   def environment_prefix
-    HostingEnvironment.env != "production" ? "[#{HostingEnvironment.env.upcase}] " : ""
+    return "" if HostingEnvironment.env.in? %w[production test]
+
+    "[#{HostingEnvironment.env.upcase}] "
   end
 
   def service_name
