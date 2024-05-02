@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Placements::Partnerships::Notify::Removal do
+RSpec.describe Placements::Partnerships::Notify::Remove do
   let(:provider) { create(:placements_provider) }
   let(:school) { create(:placements_school) }
 
@@ -56,6 +56,7 @@ RSpec.describe Placements::Partnerships::Notify::Removal do
 
         let!(:user_1) { create(:placements_user, schools: [school]) }
         let!(:user_2) { create(:placements_user, schools: [school]) }
+        let!(:user_3) { create(:claims_user, schools: [school]) }
 
         it "sends a notification email to every user for a provider" do
           expect { partnership_notify_removal }.to have_enqueued_mail(
@@ -70,6 +71,14 @@ RSpec.describe Placements::Partnerships::Notify::Removal do
           ).with(
             params: { service: :placements },
             args: [user_2, provider, school],
+          )
+
+          expect { partnership_notify_removal }.not_to have_enqueued_mail(
+            UserMailer,
+            :partnership_destroyed_notification,
+          ).with(
+            params: { service: :placements },
+            args: [user_3, provider, school],
           )
         end
       end

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Placements::Partnerships::Notify::Creation do
+RSpec.describe Placements::Partnerships::Notify::Create do
   it_behaves_like "a service object" do
     let(:params) do
       {
@@ -53,8 +53,9 @@ RSpec.describe Placements::Partnerships::Notify::Creation do
 
         let!(:user_1) { create(:placements_user, schools: [school]) }
         let!(:user_2) { create(:placements_user, schools: [school]) }
+        let!(:user_3) { create(:claims_user, schools: [school]) }
 
-        it "sends a notification email to every user for a provider" do
+        it "sends a notification email to every placements user for a provider" do
           expect { partnership_notify_creation }.to have_enqueued_mail(
             UserMailer,
             :partnership_created_notification,
@@ -67,6 +68,14 @@ RSpec.describe Placements::Partnerships::Notify::Creation do
           ).with(
             params: { service: :placements },
             args: [user_2, provider, school],
+          )
+
+          expect { partnership_notify_creation }.not_to have_enqueued_mail(
+            UserMailer,
+            :partnership_created_notification,
+          ).with(
+            params: { service: :placements },
+            args: [user_3, provider, school],
           )
         end
       end

@@ -428,12 +428,15 @@ RSpec.describe UserMailer, type: :mailer do
       it "sends a notification email to the user of the provider" do
         expect(partnership_created_notification_email.to).to contain_exactly(user.email)
         expect(partnership_created_notification_email.subject).to eq(
-          "#{partner_organisation.name} has been added as a partner provider",
+          "A school has added your organisation to its list of partner providers",
         )
+
         expect(partnership_created_notification_email.body).to have_content <<~EMAIL
           Dear #{user.full_name},
 
-          #{partner_organisation.name} has been added as a partner provider to #{source_organisation.name}.
+          You are receiving this notification because #{source_organisation.name} has added #{partner_organisation.name} to its list of partner providers.
+
+          View or manage your list of partner schools http://placements.localhost:3000/providers/#{partner_organisation.id}/partner_schools
         EMAIL
       end
     end
@@ -447,12 +450,14 @@ RSpec.describe UserMailer, type: :mailer do
       it "sends a notification email to the user of the school" do
         expect(partnership_created_notification_email.to).to contain_exactly(user.email)
         expect(partnership_created_notification_email.subject).to eq(
-          "#{partner_organisation.name} has been added as a partner school",
+          "An ITT provider has added your organisation to its list of partner schools",
         )
         expect(partnership_created_notification_email.body).to have_content <<~EMAIL
           Dear #{user.full_name},
 
-          #{partner_organisation.name} has been added as a partner school to #{source_organisation.name}.
+          You are receiving this notification because #{source_organisation.name} has added #{partner_organisation.name} to its list of partner schools.
+
+          View or manage your list of partner providers http://placements.localhost:3000/schools/#{partner_organisation.id}/partner_providers
         EMAIL
       end
     end
@@ -472,12 +477,14 @@ RSpec.describe UserMailer, type: :mailer do
       it "sends a notification email to the user of the provider" do
         expect(partnership_destroyed_notification_email.to).to contain_exactly(user.email)
         expect(partnership_destroyed_notification_email.subject).to eq(
-          "#{partner_organisation.name} has been removed as a partner provider",
+          "A school has removed your organisation from its list of partner providers",
         )
         expect(partnership_destroyed_notification_email.body).to have_content <<~EMAIL
           Dear #{user.full_name},
 
-          #{partner_organisation.name} has been removed as a partner provider to #{source_organisation.name}.
+          You are receiving this notification because #{source_organisation.name} has removed #{partner_organisation.name} from its list of partner providers.
+
+          View or manage your list of partner schools http://placements.localhost:3000/providers/#{partner_organisation.id}/partner_schools
         EMAIL
       end
     end
@@ -491,12 +498,14 @@ RSpec.describe UserMailer, type: :mailer do
       it "sends a notification email to the user of the school" do
         expect(partnership_destroyed_notification_email.to).to contain_exactly(user.email)
         expect(partnership_destroyed_notification_email.subject).to eq(
-          "#{partner_organisation.name} has been removed as a partner school",
+          "An ITT provider has removed your organisation from its list of partner schools",
         )
         expect(partnership_destroyed_notification_email.body).to have_content <<~EMAIL
           Dear #{user.full_name},
 
-          #{partner_organisation.name} has been removed as a partner school to #{source_organisation.name}.
+          You are receiving this notification because #{source_organisation.name} has removed #{partner_organisation.name} from its list of partner schools.
+
+          View or manage your list of partner providers http://placements.localhost:3000/schools/#{partner_organisation.id}/partner_providers
         EMAIL
       end
     end

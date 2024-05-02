@@ -83,28 +83,36 @@ en:
 
     partnership_created_notification:
       subject:
-        provider: "%{organisation} has been added as a partner provider"
-        school: "%{organisation} has been added as a partner school"
+        provider: "A school has added your organisation to its list of partner providers"
+        school: "An ITT provider has added your organisation to its list of partner schools"
       body:
         provider: |
           Dear %{user_name},
 
-          %{partner_organisation} has been added as a partner provider to %{source_organisation}.
+          You are receiving this notification because %{source_organisation} has added %{partner_organisation} to its list of partner providers.
+
+          View or manage your list of partner schools %{link}
         school: |
           Dear %{user_name},
 
-          %{partner_organisation} has been added as a partner school to %{source_organisation}.
+          You are receiving this notification because %{source_organisation} has added %{partner_organisation} to its list of partner schools.
+
+          View or manage your list of partner providers %{link}
 
     partnership_destroyed_notification:
       subject:
-        provider: "%{organisation} has been removed as a partner provider"
-        school: "%{organisation} has been removed as a partner school"
+        provider: "A school has removed your organisation from its list of partner providers"
+        school: "An ITT provider has removed your organisation from its list of partner schools"
       body:
         provider: |
           Dear %{user_name},
 
-          %{partner_organisation} has been removed as a partner provider to %{source_organisation}.
+          You are receiving this notification because %{source_organisation} has removed %{partner_organisation} from its list of partner providers.
+
+          View or manage your list of partner schools %{link}
         school: |
           Dear %{user_name},
 
-          %{partner_organisation} has been removed as a partner school to %{source_organisation}.
+          You are receiving this notification because %{source_organisation} has removed %{partner_organisation} from its list of partner schools.
+
+          View or manage your list of partner providers %{link}

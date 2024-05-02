@@ -173,7 +173,7 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
   def partner_provider_notification(user)
     ActionMailer::Base.deliveries.find do |delivery|
       delivery.to.include?(user.email) &&
-        delivery.subject == "#{provider.name} has been added as a partner provider"
+        delivery.subject == "A school has added your organisation to its list of partner providers"
     end
   end
 

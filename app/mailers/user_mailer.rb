@@ -57,7 +57,13 @@ class UserMailer < ApplicationMailer
   end
 
   def partnership_created_notification(user, source_organisation, partner_organisation)
-    partner_class = partner_organisation.is_a?(Provider) ? "provider" : "school"
+    if partner_organisation.is_a?(Provider)
+      partner_class = "provider"
+      link = placements_provider_partner_schools_url(partner_organisation)
+    else
+      partner_class = "school"
+      link = placements_school_partner_providers_url(partner_organisation)
+    end
 
     notify_email(
       to: user.email,
@@ -67,12 +73,19 @@ class UserMailer < ApplicationMailer
         user_name: user.full_name,
         source_organisation: source_organisation.name,
         partner_organisation: partner_organisation.name,
+        link:,
       ),
     )
   end
 
   def partnership_destroyed_notification(user, source_organisation, partner_organisation)
-    partner_class = partner_organisation.is_a?(Provider) ? "provider" : "school"
+    if partner_organisation.is_a?(Provider)
+      partner_class = "provider"
+      link = placements_provider_partner_schools_url(partner_organisation)
+    else
+      partner_class = "school"
+      link = placements_school_partner_providers_url(partner_organisation)
+    end
 
     notify_email(
       to: user.email,
@@ -82,6 +95,7 @@ class UserMailer < ApplicationMailer
         user_name: user.full_name,
         source_organisation: source_organisation.name,
         partner_organisation: partner_organisation.name,
+        link:,
       ),
     )
   end
