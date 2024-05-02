@@ -21,7 +21,7 @@ RSpec.describe Placements::Partnerships::Notify do
           partner_organisation: provider,
         )
       }.to raise_error(
-        NoMethodError, "#nofity_user must be implemented"
+        NoMethodError, "#nofity_users must be implemented"
       )
     end
   end
