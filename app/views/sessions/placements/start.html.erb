@@ -1,0 +1,13 @@
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= render_markdown(t("placements.markdown.start")) %>
+
+      <% if ENV["SIGN_IN_METHOD"] == "persona" %>
+        <%= govuk_start_button(text: t("start_now"), href: personas_path) %>
+      <% else %>
+        <%= govuk_start_button_link_to(t("start_now"), omniauth_sign_in_path("dfe")) %>
+      <% end %>
+    </div>
+  </div>
+</div>
