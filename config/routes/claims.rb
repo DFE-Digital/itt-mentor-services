@@ -14,7 +14,7 @@ scope module: :claims, as: :claims, constraints: {
   resources :schools, only: %i[index show] do
     scope module: :schools do
       resources :claims, except: %i[destroy] do
-        resources :mentors, only: %i[new create edit update], module: :claims
+        resource :mentors, only: %i[new create edit update], module: :claims
         resources :mentor_trainings, only: %i[edit update], module: :claims
 
         member do
@@ -60,7 +60,7 @@ scope module: :claims, as: :claims, constraints: {
 
       scope module: :schools do
         resources :claims do
-          resources :mentors, only: %i[new create edit update], module: :claims
+          resource :mentors, only: %i[new create edit update], module: :claims
           resources :mentor_trainings, only: %i[edit update], module: :claims
 
           member do
