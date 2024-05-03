@@ -34,6 +34,7 @@ en:
           trn_guidance: Teacher reference number (TRN) guidance
           to_find_a_list_trn: to find a lost TRN, or apply for one.
           help_with_the_trn: Help with the teacher reference number (TRN)
+          date_of_birth_hint: For example, 31 3 1980
         check:
           page_title: Check your answers - Add mentor
           add_mentor: Add mentor
@@ -41,6 +42,7 @@ en:
           change: Change
           check_your_answers: Check your answers
           trn: Teacher reference number (TRN)
+          date_of_birth: Date of birth
         no_results:
           page_title: No results found for ‘%{trn}’ - Add mentor
           add_mentor: Add mentor
