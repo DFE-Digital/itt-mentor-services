@@ -76,18 +76,19 @@ shared:
     - created_at
     - updated_at
   :claims:
-    - id
-    - school_id
-    - created_at
-    - updated_at
-    - provider_id
-    - reference
-    - submitted_at
-    - created_by_type
-    - created_by_id
-    - status
-    - submitted_by_type
-    - submitted_by_id
+  - id
+  - school_id
+  - created_at
+  - updated_at
+  - provider_id
+  - reference
+  - submitted_at
+  - created_by_type
+  - created_by_id
+  - status
+  - submitted_by_type
+  - submitted_by_id
+  - previous_revision_id
   :schools:
     - id
     - urn

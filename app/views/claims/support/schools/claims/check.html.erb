@@ -17,15 +17,13 @@
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: Claims::Claim.human_attribute_name(:accredited_provider)) %>
           <% row.with_value(text: @claim.provider_name) %>
-          <% row.with_action(text: t("change"),
-                             href: edit_claims_support_school_claim_path(
-                               @school,
-                               @claim,
-                             ),
-                             visually_hidden_text: Claims::Claim.human_attribute_name(:accredited_provider),
-                             html_attributes: {
-                               class: "govuk-link--no-visited-state",
-                             }) %>
+          <% row.with_action(href: "#", visually_hidden_text: Claims::Claim.human_attribute_name(:accredited_provider)) do %>
+            <%= button_to(
+              t("change"),
+              create_revision_claims_support_school_claim_path(@school, @claim),
+              class: "govuk-link--no-visited-state govuk-link",
+            ) %>
+          <% end %>
         <% end %>
 
         <% summary_list.with_row do |row| %>
@@ -37,12 +35,13 @@
               <% end %>
             </ul>
           <% end %>
-          <% row.with_action(text: t("change"),
-                             href: edit_claims_support_school_claim_mentors_path(@school, @claim),
-                             visually_hidden_text: Claims::Claim.human_attribute_name(:mentors),
-                             html_attributes: {
-                               class: "govuk-link--no-visited-state",
-                             }) %>
+          <% row.with_action(href: "#", visually_hidden_text: Claims::Claim.human_attribute_name(:mentors)) do %>
+            <%= button_to(
+              t("change"),
+              create_revision_claims_support_school_claim_mentor_path(@school, @claim),
+              class: "govuk-link--no-visited-state govuk-link",
+            ) %>
+          <% end %>
         <% end %>
       <% end %>
 
@@ -53,18 +52,19 @@
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: mentor_training.mentor.full_name) %>
             <% row.with_value(text: pluralize(mentor_training.hours_completed, t(".hour"))) %>
-            <% row.with_action(text: t("change"),
-                               href: edit_claims_support_school_claim_mentor_training_path(
-                                 @school,
-                                 @claim,
-                                 mentor_training,
-                               ),
-                               visually_hidden_text: "Hours of training for #{mentor_training.mentor.full_name}",
-                               html_attributes: {
-                                 class: "govuk-link--no-visited-state",
-                               }) %>
+            <% row.with_action(href: "#", visually_hidden_text: "Hours of training for #{mentor_training.mentor.full_name}") do %>
+              <%= button_to(
+                t("change"),
+                create_revision_claims_support_school_claim_mentor_training_path(
+                  @school,
+                  @claim,
+                  mentor_training.mentor_id,
+                ),
+                class: "govuk-link--no-visited-state govuk-link",
+              ) %>
             <% end %>
           <% end %>
+        <% end %>
       <% end %>
 
       <h2 class="govuk-heading-m"><%= t(".grant_funding") %></h2>
@@ -85,7 +85,7 @@
           <% end %>
         <% end %>
 
-      <%= govuk_button_to (@claim.draft? ? t(".update") : t(".submit")), draft_claims_support_school_claim_path(@school, @claim) %>
+      <%= govuk_button_to (@claim.was_draft? ? t(".update") : t(".submit")), draft_claims_support_school_claim_path(@school, @claim) %>
 
       <p class="govuk-body">
         <%= govuk_link_to t("cancel"), claims_support_school_claims_path(@school), no_visited_state: true %>

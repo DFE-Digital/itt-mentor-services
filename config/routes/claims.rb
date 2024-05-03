@@ -15,12 +15,21 @@ scope module: :claims, as: :claims, constraints: {
     scope module: :schools do
       resources :claims, except: %i[destroy] do
         resource :mentors, only: %i[new create edit update], module: :claims
-        resources :mentor_trainings, only: %i[edit update], module: :claims
+          member do
+            post :create_revision
+          end
+        end
+        resources :mentor_trainings, only: %i[edit update], module: :claims do
+          member do
+            post :create_revision
+          end
+        end
 
         member do
           get :check
           get :confirmation
           get :rejected
+          post :create_revision
           post :submit
         end
       end
@@ -61,13 +70,23 @@ scope module: :claims, as: :claims, constraints: {
       scope module: :schools do
         resources :claims do
           resource :mentors, only: %i[new create edit update], module: :claims
-          resources :mentor_trainings, only: %i[edit update], module: :claims
+          resources :mentors, only: %i[new create], module: :claims do
+            member do
+              post :create_revision
+            end
+          end
+          resources :mentor_trainings, only: %i[edit update], module: :claims do
+            member do
+              post :create_revision
+            end
+          end
 
           member do
             get :remove
             get :check
             get :rejected
             post :draft
+            post :create_revision
           end
         end
 

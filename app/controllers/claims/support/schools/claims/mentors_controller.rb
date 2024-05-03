@@ -20,6 +20,11 @@ class Claims::Support::Schools::Claims::MentorsController < Claims::ApplicationC
     end
   end
 
+  def create_revision
+    revision = Claims::Claim::CreateRevision.call(claim: @claim)
+    redirect_to edit_claims_support_school_claim_mentors_path(@school, revision)
+  end
+
   def edit; end
 
   def update
