@@ -19,6 +19,6 @@ class SupportUser::Remove
   private
 
   def send_email_notification
-    SupportUserMailer.support_user_removal_notification(support_user).deliver_later
+    SupportUserMailer.with(service: support_user.service).support_user_removal_notification(support_user).deliver_later
   end
 end

@@ -293,7 +293,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
 
   def email_invite_notification(email, _organisation)
     ActionMailer::Base.deliveries.find do |delivery|
-      delivery.to.include?(email) && delivery.subject =~ /Invitation to join Claim funding for mentor training/
+      delivery.to.include?(email) && delivery.subject == "Invitation to join Manage school placements"
     end
   end
 

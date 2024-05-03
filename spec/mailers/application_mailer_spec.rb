@@ -24,4 +24,38 @@ RSpec.describe ApplicationMailer, type: :mailer do
       end
     end
   end
+
+  describe "#host" do
+    subject(:email) { example_mailer_class.with(service:).example_email }
+
+    let(:example_mailer_class) do
+      Class.new(ApplicationMailer) do
+        def example_email
+          mail(body: "host: #{host.inspect}")
+        end
+      end
+    end
+
+    let(:service) { nil }
+
+    it "returns a 'nil' host" do
+      expect(email.body).to eq("host: nil")
+    end
+
+    context "when given the 'claims' service" do
+      let(:service) { "claims" }
+
+      it "returns the CLAIMS_HOST" do
+        expect(email.body).to eq("host: \"claims.localhost\"")
+      end
+    end
+
+    context "when given the 'placements' service" do
+      let(:service) { "placements" }
+
+      it "returns the PLACEMENTS_HOST" do
+        expect(email.body).to eq("host: \"placements.localhost\"")
+      end
+    end
+  end
 end
