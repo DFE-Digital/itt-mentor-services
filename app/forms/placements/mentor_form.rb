@@ -1,10 +1,19 @@
 class Placements::MentorForm < ApplicationForm
-  FORM_PARAMS = %i[trn].freeze
+  include ActiveModel::Attributes
 
-  attr_accessor :school, :trn, :first_name, :last_name
+  attribute :school
+  attribute :trn
+  attribute :first_name
+  attribute :last_name
+  attribute "date_of_birth(1i)", :integer
+  attribute "date_of_birth(2i)", :integer
+  attribute "date_of_birth(3i)", :integer
 
-  validate :validate_mentor
+  FORM_PARAMS = [:trn, "date_of_birth(1i)", "date_of_birth(2i)", "date_of_birth(3i)"].freeze
+
   validate :validate_membership
+  validates :date_of_birth, presence: true
+  validate :validate_mentor
 
   def persist
     ActiveRecord::Base.transaction do
@@ -19,13 +28,23 @@ class Placements::MentorForm < ApplicationForm
   end
 
   def mentor
-    @mentor ||= MentorBuilder.call(trn:, first_name:, last_name:).becomes(Placements::Mentor)
+    @mentor ||= MentorBuilder.call(trn:, date_of_birth:, first_name:, last_name:).becomes(Placements::Mentor)
   end
 
   def validate_mentor
     if mentor.errors.any?
-      mentor.errors.each { |err| errors.add(:trn, err.message) }
+      mentor.errors.each { |err| errors.add(err.attribute, err.message) }
     end
+  end
+
+  def date_of_birth
+    Date.new(
+      attributes["date_of_birth(1i)"], # year
+      attributes["date_of_birth(2i)"], # month
+      attributes["date_of_birth(3i)"], # day
+    )
+  rescue Date::Error, TypeError
+    nil
   end
 
   private
