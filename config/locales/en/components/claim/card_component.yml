@@ -1,0 +1,5 @@
+en:
+  components:
+    claim:
+      card_component:
+        claim_title: "%{reference} - %{school_name}"

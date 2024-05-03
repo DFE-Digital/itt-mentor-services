@@ -1,8 +1,7 @@
 <div class="claim-card">
   <div class="claim-card__header">
     <div class="claim-card__header__name govuk-heading-s">
-      <%= govuk_link_to claim.school.name, claims_support_claim_path(claim), no_visited_state: true %>
-      <span class="govuk-caption-m"><%= claim.reference %></span>
+      <%= govuk_link_to t(".claim_title", reference: claim.reference, school_name: claim.school.name), claims_support_claim_path(claim), no_visited_state: true %>
     </div>
     <div><%= render Claim::StatusTagComponent.new(claim:, classes: %w[govuk-body-s]) %></div>
   </div>
