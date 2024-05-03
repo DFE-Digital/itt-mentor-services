@@ -27,7 +27,7 @@ RSpec.describe "Download claims CSV", type: :system, service: :claims do
   end
 
   def when_i_click_download_claims
-    click_on("Download claims")
+    click_on("Download CSV")
   end
 
   def then_i_receive_a_csv_file

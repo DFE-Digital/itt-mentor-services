@@ -52,7 +52,7 @@ RSpec.describe "Download filtered claims", type: :system, service: :claims do
   end
 
   def when_i_click_download_claims
-    click_on("Download claims")
+    click_on("Download CSV")
   end
 
   def then_i_expect_to_use_the_same_query_params_to_download_claims_as_when_i_was_filtering_claims(provider)

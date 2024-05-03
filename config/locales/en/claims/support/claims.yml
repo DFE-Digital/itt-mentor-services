@@ -4,7 +4,7 @@ en:
       claims:
         index:
           heading: Claims (%{count})
-          download_csv: Download claims
+          download_csv: Download CSV
           search_label: Search by claim reference
           school: School
           accredited_provider: Accredited provider
