@@ -27,9 +27,16 @@
                   new_tab: true,
                   no_visited_state: true,
                 ) %>
-            <%= t(".to_find_a_list_trn") %>
+            <%= t(".to_find_a_lost_trn") %>
           </p>
         <% end %>
+
+        <%= f.govuk_date_field(
+              :date_of_birth,
+              maxlength_enabled: true,
+              legend: { text: Mentor.human_attribute_name(:date_of_birth), size: "s" },
+              hint: { text: t(".date_of_birth_hint"), size: "s" },
+            ) %>
 
         <%= f.govuk_submit t(".continue") %>
         <p class="govuk-body">
