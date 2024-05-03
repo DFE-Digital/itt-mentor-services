@@ -25,6 +25,8 @@ en:
           attributes:
             trn:
               taken: The mentor has already been added
+            date_of_birth:
+              blank: Enter a date of birth
         claims/mentor_form:
           attributes:
             trn:
