@@ -6,11 +6,18 @@ describe Placements::MentorForm, type: :model do
   let!(:school) { create(:school) }
   let!(:mentor) { create(:placements_mentor) }
   let(:trn) { "1234567" }
+  let(:date_of_birth) { "1991-01-22" }
 
   describe "validations" do
     context "when the form is valid" do
       it "returns valid" do
-        form = described_class.new(trn:, school:)
+        form = described_class.new(
+          "date_of_birth(3i)" => "22",
+          "date_of_birth(2i)" => "1",
+          "date_of_birth(1i)" => "1991",
+          "trn" => trn,
+          "school" => school,
+        )
         expect(form.valid?).to eq(true)
       end
     end
@@ -20,6 +27,14 @@ describe Placements::MentorForm, type: :model do
         form = described_class.new(school:)
         expect(form.valid?).to eq(false)
         expect(form.errors.messages[:trn]).to include("Enter a teacher reference number (TRN)")
+      end
+    end
+
+    context "when date_of_birth is not set" do
+      it "returns invalid", :aggregate_failures do
+        form = described_class.new(trn:, school:)
+        expect(form.valid?).to eq(false)
+        expect(form.errors.messages[:date_of_birth]).to include("Enter a date of birth")
       end
     end
   end
@@ -43,7 +58,15 @@ describe Placements::MentorForm, type: :model do
       let(:trn) { "2345678" }
 
       it "creates a new mentor and membership" do
-        form = described_class.new(trn: "1234567", first_name: "Jane", last_name: "Doe", school:)
+        form = described_class.new(
+          "date_of_birth(3i)" => "22",
+          "date_of_birth(2i)" => "1",
+          "date_of_birth(1i)" => "1991",
+          "trn" => "2345678",
+          "school" => school,
+          "first_name" => "Jane",
+          "last_name" => "Doe",
+        )
 
         expect {
           form.persist
@@ -65,16 +88,23 @@ describe Placements::MentorForm, type: :model do
 
   describe "#as_form_params" do
     it "returns a hash of form params" do
-      form = described_class.new(trn:, school:)
-      expect(form.as_form_params).to eq("placements_mentor_form" => { "trn" => "1234567" })
+      form = described_class.new(
+        "date_of_birth(3i)" => "14",
+        "date_of_birth(2i)" => "1",
+        "date_of_birth(1i)" => "1999",
+        "trn" => trn,
+        "school" => school,
+      )
+      expect(form.as_form_params).to eq("placements_mentor_form" => { "date_of_birth(1i)" => 1999, "date_of_birth(2i)" => 1, "date_of_birth(3i)" => 14, "trn" => "1234567" })
     end
   end
 
   def stub_teaching_record_response
-    allow(TeachingRecord::GetTeacher).to receive(:call).with(trn:).and_return(
-      status: 200,
-      body: "{\"trn\":\"1234567\",\"firstName\":\"Judith\",\"middleName\":\"\",\"lastName\":\"Chicken\",\"dateOfBirth\":\"1991-01-22\",\"nationalInsuranceNumber\":\"B15J60R13\",\"email\":\"anonymous@anonymousdomain.org.net.co.uk\",\"qts\":null,\"eyts\":null}",
-      headers: {},
+    allow(TeachingRecord::GetTeacher).to receive(:call).with(trn:, date_of_birth:).and_return(
+      { "trn" => "1234567",
+        "firstName" => "Judith",
+        "lastName" => "Chicken",
+        "dateOfBirth" => "1991-01-22" },
     )
   end
 end
