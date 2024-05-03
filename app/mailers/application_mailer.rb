@@ -16,8 +16,16 @@ class ApplicationMailer < Mail::Notify::Mailer
     "[#{HostingEnvironment.env.upcase}] "
   end
 
+  def service
+    params[:service]
+  end
+
   def service_name
-    I18n.t("#{params[:service]}.service_name")
+    I18n.t("#{service}.service_name")
+  end
+
+  def support_email
+    I18n.t("#{service}.support_email")
   end
 
   def default_url_options
@@ -29,7 +37,7 @@ class ApplicationMailer < Mail::Notify::Mailer
   end
 
   def host
-    case params[:service].to_s
+    case service.to_s
     when "claims"
       ENV["CLAIMS_HOST"]
     when "placements"

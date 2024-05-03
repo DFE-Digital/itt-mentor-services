@@ -64,7 +64,7 @@ RSpec.describe UserMailer, type: :mailer do
 
         it "sends invitation email" do
           expect(invite_email.to).to contain_exactly(user.email)
-          expect(invite_email.subject).to eq("Invitation to join Claim funding for mentor training")
+          expect(invite_email.subject).to eq("Invitation to join Manage school placements")
           expect(invite_email.body).to have_content <<~EMAIL
             Dear #{user.first_name},
 
@@ -82,11 +82,11 @@ RSpec.describe UserMailer, type: :mailer do
 
             # Give feedback or report a problem
 
-            If you have any questions or feedback, please contact the team at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk).
+            If you have any questions or feedback, please contact the team at [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk).
 
             Regards
 
-            Claim funding for mentor training team
+            Manage school placements team
           EMAIL
         end
 
@@ -96,7 +96,7 @@ RSpec.describe UserMailer, type: :mailer do
           end
 
           it "does not prepend the hosting environment to the subject" do
-            expect(invite_email.subject).to eq("Invitation to join Claim funding for mentor training")
+            expect(invite_email.subject).to eq("Invitation to join Manage school placements")
           end
         end
 
@@ -106,7 +106,7 @@ RSpec.describe UserMailer, type: :mailer do
           end
 
           it "prepends the hosting environment to the subject" do
-            expect(invite_email.subject).to eq("[STAGING] Invitation to join Claim funding for mentor training")
+            expect(invite_email.subject).to eq("[STAGING] Invitation to join Manage school placements")
           end
         end
       end
@@ -117,7 +117,7 @@ RSpec.describe UserMailer, type: :mailer do
 
         it "sends invitation email" do
           expect(invite_email.to).to contain_exactly(user.email)
-          expect(invite_email.subject).to eq("Invitation to join Claim funding for mentor training")
+          expect(invite_email.subject).to eq("Invitation to join Manage school placements")
           expect(invite_email.body).to have_content <<~EMAIL
             Dear #{user.first_name},
 
@@ -135,11 +135,11 @@ RSpec.describe UserMailer, type: :mailer do
 
             # Give feedback or report a problem
 
-            If you have any questions or feedback, please contact the team at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk).
+            If you have any questions or feedback, please contact the team at [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk).
 
             Regards
 
-            Claim funding for mentor training team
+            Manage school placements team
           EMAIL
         end
 
@@ -149,7 +149,7 @@ RSpec.describe UserMailer, type: :mailer do
           end
 
           it "does not prepend the hosting environment to the subject" do
-            expect(invite_email.subject).to eq("Invitation to join Claim funding for mentor training")
+            expect(invite_email.subject).to eq("Invitation to join Manage school placements")
           end
         end
 
@@ -159,7 +159,7 @@ RSpec.describe UserMailer, type: :mailer do
           end
 
           it "prepends the hosting environment to the subject" do
-            expect(invite_email.subject).to eq("[STAGING] Invitation to join Claim funding for mentor training")
+            expect(invite_email.subject).to eq("[STAGING] Invitation to join Manage school placements")
           end
         end
       end
@@ -219,19 +219,19 @@ RSpec.describe UserMailer, type: :mailer do
 
         it "sends expected message to user" do
           expect(removal_email.to).to contain_exactly user.email
-          expect(removal_email.subject).to eq "You have been removed from Claim funding for mentor training"
+          expect(removal_email.subject).to eq "You have been removed from Manage school placements"
           expect(removal_email.body).to have_content <<~EMAIL
             Dear #{user.first_name},
 
-            You have been removed from the Claim funding for mentor training service for #{organisation.name}.
+            You have been removed from the Manage school placements service for #{organisation.name}.
 
             # Give feedback or report a problem
 
-            If you have any questions or feedback, please contact the team at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk).
+            If you have any questions or feedback, please contact the team at [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk).
 
             Regards
 
-            Claim funding for mentor training team
+            Manage school placements team
           EMAIL
         end
 
@@ -241,7 +241,7 @@ RSpec.describe UserMailer, type: :mailer do
           end
 
           it "does not prepend the hosting environment to the subject" do
-            expect(removal_email.subject).to eq("You have been removed from Claim funding for mentor training")
+            expect(removal_email.subject).to eq("You have been removed from Manage school placements")
           end
         end
 
@@ -251,7 +251,7 @@ RSpec.describe UserMailer, type: :mailer do
           end
 
           it "prepends the hosting environment to the subject" do
-            expect(removal_email.subject).to eq("[STAGING] You have been removed from Claim funding for mentor training")
+            expect(removal_email.subject).to eq("[STAGING] You have been removed from Manage school placements")
           end
         end
       end
@@ -262,19 +262,19 @@ RSpec.describe UserMailer, type: :mailer do
 
         it "sends expected message to user" do
           expect(removal_email.to).to contain_exactly user.email
-          expect(removal_email.subject).to eq "You have been removed from Claim funding for mentor training"
+          expect(removal_email.subject).to eq "You have been removed from Manage school placements"
           expect(removal_email.body).to have_content <<~EMAIL
             Dear #{user.first_name},
 
-            You have been removed from the Claim funding for mentor training service for #{organisation.name}.
+            You have been removed from the Manage school placements service for #{organisation.name}.
 
             # Give feedback or report a problem
 
-            If you have any questions or feedback, please contact the team at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk).
+            If you have any questions or feedback, please contact the team at [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk).
 
             Regards
 
-            Claim funding for mentor training team
+            Manage school placements team
           EMAIL
         end
 
@@ -284,7 +284,7 @@ RSpec.describe UserMailer, type: :mailer do
           end
 
           it "does not prepend the hosting environment to the subject" do
-            expect(removal_email.subject).to eq("You have been removed from Claim funding for mentor training")
+            expect(removal_email.subject).to eq("You have been removed from Manage school placements")
           end
         end
 
@@ -294,7 +294,7 @@ RSpec.describe UserMailer, type: :mailer do
           end
 
           it "prepends the hosting environment to the subject" do
-            expect(removal_email.subject).to eq("[STAGING] You have been removed from Claim funding for mentor training")
+            expect(removal_email.subject).to eq("[STAGING] You have been removed from Manage school placements")
           end
         end
       end

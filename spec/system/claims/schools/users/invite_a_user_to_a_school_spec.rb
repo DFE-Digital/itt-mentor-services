@@ -192,7 +192,7 @@ RSpec.describe "Invite a user to a school", type: :system do
 
   def email_is_sent(email, _school)
     email = ActionMailer::Base.deliveries.find do |delivery|
-      delivery.to.include?(email) && delivery.subject =~ /Invitation to join Claim funding for mentor training/
+      delivery.to.include?(email) && delivery.subject == "Invitation to join Claim funding for mentor training"
     end
 
     expect(email).not_to be_nil
