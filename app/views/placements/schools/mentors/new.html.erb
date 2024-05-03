@@ -31,6 +31,13 @@
           </p>
         <% end %>
 
+        <%= f.govuk_date_field(
+              :date_of_birth,
+              maxlength_enabled: true,
+              legend: { text: Mentor.human_attribute_name(:date_of_birth), size: "s" },
+              hint: { text: t(".date_of_birth_hint"), size: "s" },
+            ) %>
+
         <%= f.govuk_submit t(".continue") %>
         <p class="govuk-body">
           <%= govuk_link_to(t(".cancel"), placements_school_mentors_path(@school), no_visited_state: true) %>

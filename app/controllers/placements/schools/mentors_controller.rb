@@ -38,7 +38,7 @@ class Placements::Schools::MentorsController < ApplicationController
 
   def mentor_params
     params.require(:placements_mentor_form)
-          .permit(:first_name, :last_name, :trn)
+          .permit(:first_name, :last_name, :trn, :date_of_birth)
           .merge(default_params)
   end
 
