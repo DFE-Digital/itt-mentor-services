@@ -99,7 +99,7 @@ gem "geocoder"
 gem "audited"
 
 # BigQuery
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.12.3"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.12.6"
 
 group :development do
   gem "annotate", require: false
