@@ -4,7 +4,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
                type: :system, service: :placements do
   let(:school) { create(:placements_school, name: "School 1", phase: "All-through") }
   let(:placement) do
-    create(:placement, school:, subjects: [subject], status: "published")
+    create(:placement, school:, subjects: [subject])
   end
   let(:mentor) { create(:placements_mentor) }
   let(:subject) { create(:subject, name: "Maths", subject_area: :primary) }
@@ -22,14 +22,13 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
         school_level: "Primary",
         subjects: "Maths",
         mentors: ["Not known"],
-        status: "Published",
       )
     end
   end
 
   context "when there there is one mentor assigned to a placement" do
     let(:placement) do
-      create(:placement, school:, mentors: [mentor], subjects: [subject], status: "published")
+      create(:placement, school:, mentors: [mentor], subjects: [subject])
     end
 
     scenario "Support User views a school placement's details" do
@@ -39,14 +38,13 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
         school_level: "Primary",
         subjects: "Maths",
         mentors: placement.mentors.map(&:full_name),
-        status: "Published",
       )
     end
   end
 
   context "when there are multiple mentors assigned to a placement" do
     let(:placement) do
-      create(:placement, school:, mentors: [mentor, create(:placements_mentor)], subjects: [subject], status: "published")
+      create(:placement, school:, mentors: [mentor, create(:placements_mentor)], subjects: [subject])
     end
 
     scenario "Support User views a school placement's details" do
@@ -56,7 +54,6 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
         school_level: "Primary",
         subjects: "Maths",
         mentors: placement.mentors.map(&:full_name),
-        status: "Published",
       )
     end
   end
@@ -69,14 +66,13 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
         school_level: "Primary",
         subjects: "Maths",
         mentors: placement.mentors.map(&:full_name),
-        status: "Published",
       )
     end
   end
 
   context "when there are multiple subjects assigned to a placement" do
     let(:placement) do
-      create(:placement, school:, mentors: [mentor], subjects: [subject, create(:subject, name: "English")], status: "published")
+      create(:placement, school:, mentors: [mentor], subjects: [subject, create(:subject, name: "English")])
     end
 
     scenario "Support User views a school placement's details" do
@@ -86,7 +82,6 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
         school_level: "Primary",
         subjects: "Maths",
         mentors: placement.mentors.map(&:full_name),
-        status: "Published",
       )
     end
   end
@@ -116,7 +111,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
     visit placements_support_school_placement_path(school, placement)
   end
 
-  def then_i_see_the_placement_details(school_name:, school_level:, subjects:, mentors:, status:)
+  def then_i_see_the_placement_details(school_name:, school_level:, subjects:, mentors:)
     expect(page).to have_content(school_name)
     expect(page).to have_content(subjects)
 
@@ -126,7 +121,6 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
       mentors.each do |mentor|
         expect(page).to have_content(mentor)
       end
-      expect(page).to have_content(status)
     end
   end
 end

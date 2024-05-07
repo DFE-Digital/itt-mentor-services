@@ -97,24 +97,6 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     end
   end
 
-  context "with a status" do
-    before do
-      given_a_placement_has_one_subject(subject_1)
-    end
-
-    scenario "User views a placement in draft state" do
-      given_a_placement_with_status("draft")
-      when_i_visit_the_placement_show_page
-      then_see_the_status_in_the_placement_details(status: "Draft")
-    end
-
-    scenario "User views a placement in published state" do
-      given_a_placement_with_status("published")
-      when_i_visit_the_placement_show_page
-      then_see_the_status_in_the_placement_details(status: "Published")
-    end
-  end
-
   context "with a provider" do
     scenario "User views a placement with a provider" do
       given_a_placement_with_a_provider(provider:)

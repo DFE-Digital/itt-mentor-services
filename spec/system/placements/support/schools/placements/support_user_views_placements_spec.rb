@@ -45,18 +45,15 @@ RSpec.describe "Placements / Support / Schools / Placements / Support User views
   def then_i_see_a_list_of_the_schools_placements
     expect(page).to have_content("Subject")
     expect(page).to have_content("Mentor")
-    expect(page).to have_content("Status")
 
     within("tbody tr:nth-child(1)") do
       expect(page).to have_link(placement1.subjects.map(&:name).to_sentence, href: placements_support_school_placement_path(school, placement1))
       expect(page).to have_content(placement1.mentors.map(&:full_name).to_sentence)
-      expect(page).to have_content(placement1.status.titleize)
     end
 
     within("tbody tr:nth-child(2)") do
       expect(page).to have_content(placement2.subjects.map(&:name).to_sentence)
       expect(page).to have_content(placement2.mentors.map(&:full_name).to_sentence)
-      expect(page).to have_content(placement2.status.titleize)
     end
   end
 
