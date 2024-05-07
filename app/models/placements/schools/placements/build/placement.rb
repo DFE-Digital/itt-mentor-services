@@ -3,7 +3,6 @@
 # Table name: placements
 #
 #  id          :uuid             not null, primary key
-#  status      :enum             default("draft")
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  provider_id :uuid
@@ -29,7 +28,7 @@ class Placements::Schools::Placements::Build::Placement < Placement
   belongs_to :school, class_name: "Placements::School"
   belongs_to :provider, optional: true
 
-  validates :school, :status, presence: true
+  validates :school, presence: true
 
   attr_accessor :phase, :mentor_ids, :subject_ids
 
