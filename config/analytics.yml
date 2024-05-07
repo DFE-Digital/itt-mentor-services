@@ -156,7 +156,6 @@ shared:
     - accredited
   :placements:
     - id
-    - status
     - school_id
     - created_at
     - updated_at
