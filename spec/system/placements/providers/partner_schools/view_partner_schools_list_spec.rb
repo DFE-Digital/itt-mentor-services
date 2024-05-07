@@ -30,7 +30,7 @@ RSpec.describe "Placements / Providers / Partner schools / View a list of partne
     create(:user_membership, user:, organisation: provider)
     user_exists_in_dfe_sign_in(user:)
     visit sign_in_path
-    click_on "Start now"
+    click_on "Sign in using DfE Sign In"
   end
   alias_method :and_i_sign_in_as_patricia, :given_i_sign_in_as_patricia
 

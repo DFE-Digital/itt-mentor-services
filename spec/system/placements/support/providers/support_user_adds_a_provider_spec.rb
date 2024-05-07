@@ -62,7 +62,7 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
   end
 
   def and_i_click_sign_in
-    click_on "Start now"
+    click_on "Sign in using DfE Sign In"
   end
 
   def when_i_visit_the_add_provider_page

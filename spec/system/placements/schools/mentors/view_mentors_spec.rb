@@ -40,7 +40,7 @@ RSpec.describe "Placements / Schools / Mentors / View mentors", type: :system, s
 
   def given_i_sign_in
     visit sign_in_path
-    click_on "Start now"
+    click_on "Sign in using DfE Sign In"
   end
 
   def when_i_visit_the_school_mentors_page(school)

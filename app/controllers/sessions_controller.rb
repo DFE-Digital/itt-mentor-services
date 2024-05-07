@@ -2,9 +2,7 @@ class SessionsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[new callback failure]
   before_action :redirect_to_after_sign_in_path, only: %i[new], if: :user_signed_in?
 
-  def new
-    render "placements/pages/start" if current_service == :placements
-  end
+  def new; end
 
   def callback
     DfESignInUser.begin_session!(session, request.env["omniauth.auth"])

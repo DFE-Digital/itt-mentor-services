@@ -39,7 +39,7 @@ RSpec.describe "Placements / Schools / Placements / Remove a placement",
   end
 
   def and_i_click_sign_in
-    click_on "Start now"
+    click_on "Sign in using DfE Sign In"
   end
 
   def when_i_visit_the_placement_show_page(placement)

@@ -75,7 +75,7 @@ RSpec.describe "Support User adds a Provider without JavaScript", type: :system,
   end
 
   def and_i_click_sign_in
-    click_on "Start now"
+    click_on "Sign in using DfE Sign In"
   end
 
   def given_i_sign_in_as_colin
