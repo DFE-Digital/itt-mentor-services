@@ -28,7 +28,7 @@ class Placements::Support::SupportUsersController < Placements::Support::Applica
     authorize @support_user
 
     SupportUser::Remove.call(support_user: @support_user)
-    redirect_to claims_support_support_users_path, flash: { success: t(".success") }
+    redirect_to placements_support_support_users_path, flash: { success: t(".success") }
   end
 
   private
