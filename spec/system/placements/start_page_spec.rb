@@ -54,6 +54,8 @@ RSpec.describe "Start Page", type: :system, service: :placements do
     content = GovukMarkdown.render(markdown, headings_start_with: "l").html_safe
 
     strip_tags(content).split("\n").each do |paragraph|
+      next if paragraph.blank?
+
       expect(page).to have_content(paragraph.strip)
     end
 
