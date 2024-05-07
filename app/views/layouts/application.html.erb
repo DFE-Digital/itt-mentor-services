@@ -44,6 +44,10 @@
 
     <%= yield :primary_navigation_content %>
 
+    <% if content_for?(:breadcrumbs) %>
+      <%= tag.div yield(:breadcrumbs), class: "govuk-width-container" %>
+    <% end %>
+
     <div class="govuk-width-container">
       <%= yield :before_content %>
     </div>
