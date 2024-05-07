@@ -1,7 +1,11 @@
 en:
   placements:
     pages:
-      feedback:
-        page_title: Feedback
-
-
+      start:
+        service: Manage school placements
+        related_content: Related content
+        guidance:
+          offer_trainee_teacher_placement: |
+            Guidance on what schools need to do to offer trainee teacher placements
+          how_to_find_a_trn: |
+            Guidance on how to find or request a TRN
