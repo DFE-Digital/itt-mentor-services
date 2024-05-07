@@ -38,7 +38,7 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User views a m
   end
 
   def and_i_click_sign_in
-    click_on "Start now"
+    click_on "Sign in using DfE Sign In"
   end
 
   def given_i_sign_in_as_colin

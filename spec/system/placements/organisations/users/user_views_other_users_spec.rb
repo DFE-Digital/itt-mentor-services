@@ -54,7 +54,7 @@ RSpec.describe "Placements user views other users in their organisation", type: 
 
   def when_i_visit_the_users_page
     visit sign_in_path
-    click_on "Start now"
+    click_on "Sign in using DfE Sign In"
     within(".app-primary-navigation__nav") do
       click_on "Users"
     end

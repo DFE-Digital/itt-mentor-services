@@ -116,7 +116,7 @@ RSpec.describe "Placements / Providers / Placements / View a placement",
     create(:user_membership, user:, organisation: provider)
     user_exists_in_dfe_sign_in(user:)
     visit sign_in_path
-    click_on "Start now"
+    click_on "Sign in using DfE Sign In"
   end
 
   def when_i_visit_the_placement_show_page

@@ -45,7 +45,7 @@ RSpec.describe "Placement school user views a list of placements", type: :system
     create(:user_membership, user:, organisation: school)
     user_exists_in_dfe_sign_in(user:)
     visit sign_in_path
-    click_on "Start now"
+    click_on "Sign in using DfE Sign In"
   end
 
   def given_a_published_placement_exists

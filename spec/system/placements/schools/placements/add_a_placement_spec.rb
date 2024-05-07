@@ -348,7 +348,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
   end
 
   def and_i_click_sign_in
-    click_on "Start now"
+    click_on "Sign in using DfE Sign In"
   end
 
   def when_i_visit_the_add_phase_page

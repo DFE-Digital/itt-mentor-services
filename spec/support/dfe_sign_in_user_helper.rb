@@ -2,11 +2,7 @@ module DfESignInUserHelper
   def sign_in_as(user)
     user_exists_in_dfe_sign_in(user:)
     visit sign_in_path
-    if user.service == :claims
-      click_on "Sign in using DfE Sign In"
-    else
-      click_on "Start"
-    end
+    click_on "Sign in using DfE Sign In"
   end
   alias_method :given_i_sign_in_as, :sign_in_as
 

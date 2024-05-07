@@ -205,6 +205,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
 
   def and_i_click_on_sign_in
     click_on "Start now"
+    click_on "Sign in using DfE Sign In"
   end
 
   def given_i_am_signed_in_as_a_support_user

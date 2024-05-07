@@ -6,7 +6,12 @@ scope module: :placements,
           *ENV.fetch("PLACEMENTS_HOSTS", "").split(","),
         ],
       } do
-  root to: redirect("/sign-in")
+  # root to: redirect("/sign-in")
+  root to: "pages#start"
+
+  scope module: :pages do
+    get :start
+  end
 
   namespace :support do
     root to: redirect("/support/organisations")

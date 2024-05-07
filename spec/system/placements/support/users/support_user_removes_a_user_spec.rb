@@ -136,7 +136,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     user = create(:placements_support_user, :colin)
     user_exists_in_dfe_sign_in(user:)
     visit sign_in_path
-    click_on "Start now"
+    click_on "Sign in using DfE Sign In"
   end
 
   def and_i_visit_the_user_page(organisation)

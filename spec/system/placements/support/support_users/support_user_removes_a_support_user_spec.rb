@@ -36,6 +36,7 @@ RSpec.describe "Placements / Support Users / Support users removes a support use
     user_exists_in_dfe_sign_in(user: support_user)
     visit placements_root_path
     click_on "Start now"
+    click_on "Sign in using DfE Sign In"
   end
 
   def and_i_visit_the_support_users_page

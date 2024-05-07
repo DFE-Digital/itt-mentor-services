@@ -122,7 +122,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
   def given_i_am_signed_in_as_mary
     user_exists_in_dfe_sign_in(user: mary)
     visit sign_in_path
-    click_on "Start now"
+    click_on "Sign in using DfE Sign In"
   end
 
   def email_removal_notification(email, _organisation)
