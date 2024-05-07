@@ -46,7 +46,7 @@ scope module: :claims, as: :claims, constraints: {
       get :download_csv, on: :collection
     end
 
-    resources :support_users do
+    resources :support_users, path: "support-users" do
       get :check, on: :collection
       get :remove, on: :member
     end
