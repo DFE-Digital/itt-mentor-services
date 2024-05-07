@@ -3,7 +3,6 @@
 # Table name: placements
 #
 #  id          :uuid             not null, primary key
-#  status      :enum             default("draft")
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  provider_id :uuid
@@ -37,7 +36,6 @@ RSpec.describe Placement, type: :model do
     subject { build(:placement) }
 
     it { is_expected.to validate_presence_of(:school) }
-    it { is_expected.to validate_presence_of(:status) }
   end
 
   describe "delegations" do

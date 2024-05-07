@@ -3,7 +3,6 @@
 # Table name: placements
 #
 #  id          :uuid             not null, primary key
-#  status      :enum             default("draft")
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  provider_id :uuid
@@ -32,7 +31,7 @@ class Placement < ApplicationRecord
   accepts_nested_attributes_for :mentors, allow_destroy: true
   accepts_nested_attributes_for :subjects, allow_destroy: true
 
-  validates :school, :status, presence: true
+  validates :school, presence: true
 
   delegate :name, to: :provider, prefix: true, allow_nil: true
 
