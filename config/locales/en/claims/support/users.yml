@@ -35,7 +35,7 @@ en:
         check:
           title: Check your answers
           caption: Add user
-          add_user: Add user
+          submit: Save user
           cancel: Cancel
           first_name: First name
           last_name: Last name

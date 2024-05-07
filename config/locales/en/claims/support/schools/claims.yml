@@ -15,7 +15,7 @@ en:
             view_claims: View claims
           check:
             page_title: Check your answers
-            submit: Add claim
+            submit: Save claim
             update: Update claim
             grant_funding: Grant funding
             add_claim: Add claim - %{school}

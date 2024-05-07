@@ -20,7 +20,7 @@ en:
           page_title: Check your answers - Add user
           caption: Add user
           title: Check your answers
-          submit: Add user
+          submit: Save user
           cancel: Cancel
           change: Change
           warning: "%{user_name} will be sent an email to tell them you’ve added them to Claim funding for mentor training."

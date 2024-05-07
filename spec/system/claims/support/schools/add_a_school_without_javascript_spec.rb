@@ -17,7 +17,7 @@ RSpec.describe "Support User adds a School without JavaScript", type: :system, s
     then_i_choose("Manchester 1")
     and_i_click_continue
     then_i_see_the_check_details_page_for_school("Manchester 1")
-    when_i_click_add_organisation
+    when_i_click_save_organisation
     then_i_return_to_support_organisations_index
     and_a_school_is_listed(school_name: "Manchester 1")
   end
@@ -105,8 +105,8 @@ RSpec.describe "Support User adds a School without JavaScript", type: :system, s
     expect(org_name_row).to have_content(school_name)
   end
 
-  def when_i_click_add_organisation
-    click_on "Add organisation"
+  def when_i_click_save_organisation
+    click_on "Save organisation"
   end
 
   def then_i_return_to_support_organisations_index

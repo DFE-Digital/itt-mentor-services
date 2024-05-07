@@ -17,7 +17,7 @@ RSpec.describe "Re-add a discarded support user", type: :system do
     )
     when_i_sign_in_as_a_support_user(support_user)
     and_i_visit_the_support_users_page
-    and_i_click_on_add_a_support_user
+    when_i_click("Add user")
     and_i_fill_in_the_support_user_form(
       email_address: "john.doe@education.gov.uk",
       first_name: "John",
@@ -29,7 +29,7 @@ RSpec.describe "Re-add a discarded support user", type: :system do
       first_name: "John",
       last_name: "Doe",
     )
-    when_i_click_on_add_user
+    when_i_click("Save user")
     i_see_the_support_user_has_been_added(email_address: "john.doe@education.gov.uk")
     and_an_email_is_sent_to_the_support_user(email_address: "john.doe@education.gov.uk")
   end
@@ -42,7 +42,7 @@ RSpec.describe "Re-add a discarded support user", type: :system do
     )
     when_i_sign_in_as_a_support_user(support_user)
     and_i_visit_the_support_users_page
-    and_i_click_on_add_a_support_user
+    when_i_click("Add user")
     and_i_fill_in_the_support_user_form(
       email_address: "john.doe@education.gov.uk",
       first_name: "Johnny",
@@ -54,7 +54,7 @@ RSpec.describe "Re-add a discarded support user", type: :system do
       first_name: "Johnny",
       last_name: "Dorian",
     )
-    when_i_click_on_add_user
+    when_i_click("Save user")
     i_see_the_support_user_has_been_added(email_address: "john.doe@education.gov.uk")
     and_an_email_is_sent_to_the_support_user(email_address: "john.doe@education.gov.uk")
   end
@@ -67,7 +67,7 @@ RSpec.describe "Re-add a discarded support user", type: :system do
     )
     when_i_sign_in_as_a_support_user(support_user)
     and_i_visit_the_support_users_page
-    and_i_click_on_add_a_support_user
+    when_i_click("Add user")
     and_i_fill_in_the_support_user_form(
       email_address: "john.doe@education.gov.uk",
       first_name: "",
@@ -117,8 +117,8 @@ RSpec.describe "Re-add a discarded support user", type: :system do
     expect(page).to have_content last_name
   end
 
-  def when_i_click_on_add_user
-    click_on "Add user"
+  def when_i_click(button)
+    click_on button
   end
 
   def i_see_the_support_user_has_been_added(email_address:)

@@ -12,9 +12,9 @@ RSpec.describe "Invite and view a users details", type: :system do
   scenario "I sign in as a lead mentor user and invite a user to a school and view that users details" do
     sign_in_as_lead_mentor_user
     visit_claims_school_users_page
-    click_on_add_user
+    when_i_click("Add user")
     fill_in_user_details
-    click_on_add_user
+    when_i_click("Save user")
     show_user_details
   end
 
@@ -49,7 +49,7 @@ RSpec.describe "Invite and view a users details", type: :system do
     expect(page).to have_content("\nEmail addressbarry.garlow@eduction.gov.uk")
   end
 
-  def click_on_add_user
-    click_on "Add user"
+  def when_i_click(button)
+    click_on button
   end
 end

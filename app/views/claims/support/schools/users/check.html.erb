@@ -81,7 +81,7 @@
           <strong class="govuk-warning-text__text"><%= t(".warning", user_name: "#{@user_form.first_name} #{@user_form.last_name}", school_name: @school.name) %></strong>
         </div>
 
-        <%= f.govuk_submit t(".add_user") %>
+        <%= f.govuk_submit t(".submit") %>
 
         <p class="govuk-body">
           <%= govuk_link_to(t(".cancel"), claims_support_school_users_path(@school), no_visited_state: true) %>

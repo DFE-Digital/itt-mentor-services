@@ -39,7 +39,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     when_i_choose_other_amount_and_input_hours(12)
     when_i_click("Continue")
     then_i_check_my_answers
-    when_i_click("Add claim")
+    when_i_click("Save claim")
     then_i_am_redirectd_to_index_page(Claims::Claim.draft.first)
   end
 
@@ -81,7 +81,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
     when_i_click("Continue")
     then_i_check_my_answers
     when_another_claim_with_same_mentors_has_been_created([mentor1, mentor2])
-    when_i_click("Add claim")
+    when_i_click("Save claim")
     then_i_get_the_reject_page
   end
 

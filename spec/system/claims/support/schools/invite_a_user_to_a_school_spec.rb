@@ -13,17 +13,17 @@ RSpec.describe "Invite a user to a school", type: :system do
   scenario "I sign in as a support user and invite a user to a school" do
     sign_in_as_support_user
     visit_claims_support_school_users_page
-    click_on_add_user
+    when_i_click("Add user")
     fill_in_user_details
     check_user_details
-    click_on_add_user
+    when_i_click("Save user")
     verify_user_added
   end
 
   scenario "I sign in as a support user and enter invalid user details" do
     sign_in_as_support_user
     visit_claims_support_school_users_page
-    click_on_add_user
+    when_i_click("Add user")
     fill_in_invalid_user_details
     then_see_error_message
   end
@@ -31,12 +31,12 @@ RSpec.describe "Invite a user to a school", type: :system do
   scenario "I try to add a user who already exists" do
     sign_in_as_support_user
     visit_claims_support_school_users_page
-    click_on_add_user
+    when_i_click("Add user")
     fill_in_user_details
     check_user_details
-    click_on_add_user
+    when_i_click("Save user")
     and_user_is_added
-    click_on_add_user
+    when_i_click("Add user")
     fill_in_user_details
     then_see_error_message_for_existing_user
   end
@@ -44,31 +44,31 @@ RSpec.describe "Invite a user to a school", type: :system do
   scenario "I add a user to different schools" do
     sign_in_as_support_user
     visit_claims_support_school_users_page
-    click_on_add_user
+    when_i_click("Add user")
     fill_in_user_details
     check_user_details
-    click_on_add_user
+    when_i_click("Save user")
     verify_user_added
 
     visit_another_claims_support_school_users_page
-    click_on_add_user
+    when_i_click("Add user")
     fill_in_user_details
     check_user_details
-    click_on_add_user
+    when_i_click("Save user")
     verify_user_added_to_another_school
   end
 
   scenario "I use back or change to edit my answers" do
     sign_in_as_support_user
     visit_claims_support_school_users_page
-    click_on_add_user
+    when_i_click("Add user")
     fill_in_user_details
     check_user_details
     click_back
     check_form_is_populated
     edit_first_name
     check_user_details_updated
-    click_on_add_user
+    when_i_click("Save user")
     verify_edited_user_added
   end
 
@@ -143,8 +143,8 @@ RSpec.describe "Invite a user to a school", type: :system do
     expect(page).to have_content("barry.garlow@eduction.gov.uk")
   end
 
-  def click_on_add_user
-    click_on "Add user"
+  def when_i_click(button)
+    click_on button
   end
 
   def click_back

@@ -17,7 +17,7 @@ en:
           page_title: Check your answers
           title: Check your answers
           caption: Add user
-          add_user: Add user
+          submit: Save user
           cancel: Cancel
           warning: "%{user_name} will be sent an email to tell them you’ve added them to %{school_name}."
           change: Change

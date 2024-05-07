@@ -32,7 +32,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
     then_i_expect_the_provider_to_be_checked(provider2)
     when_i_click("Continue")
     then_i_check_my_answers(provider2, [mentor1, mentor2], [20, 12])
-    when_i_click("Add claim")
+    when_i_click("Save claim")
     then_i_am_redirected_to_index_page(claim)
   end
 
@@ -56,7 +56,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
     when_i_check_the_mentor(mentor2)
     when_i_click("Continue")
     then_i_check_my_answers(provider1, [mentor2], [12])
-    when_i_click("Add claim")
+    when_i_click("Save claim")
     then_i_am_redirected_to_index_page(claim)
   end
 

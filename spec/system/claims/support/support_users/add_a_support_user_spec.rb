@@ -12,10 +12,10 @@ RSpec.describe "Add a support user", type: :system do
   scenario "Add a support user" do
     given_i_sign_in_as(support_user)
     and_i_visit_the_support_users_page
-    and_i_click_on_add_a_support_user
+    when_i_click("Add user")
     and_i_fill_in_the_support_user_form(email_address: "john.doe@education.gov.uk")
     then_i_am_redirected_to_check_the_support_user_details
-    when_i_click_on_add_user
+    when_i_click("Save user")
     then_i_see_the_support_user_has_been_added(email_address: "john.doe@education.gov.uk")
     and_an_email_is_sent_to_the_support_user(email_address: "john.doe@education.gov.uk")
   end
@@ -23,7 +23,7 @@ RSpec.describe "Add a support user", type: :system do
   scenario "Attempt to add a support user without an @education.gov.uk email address" do
     given_i_sign_in_as(support_user)
     and_i_visit_the_support_users_page
-    and_i_click_on_add_a_support_user
+    when_i_click("Add user")
     and_i_fill_in_the_support_user_form(email_address: "john.doe@example.com")
     then_i_see_an_error("Enter a Department for Education email address in the correct format, like name@education.gov.uk")
     and_the_page_title_is("Error: Personal details - Add user - Claim funding for mentor training")
@@ -33,7 +33,7 @@ RSpec.describe "Add a support user", type: :system do
     given_there_is_a_support_user_with(email_address: "john.doe@education.gov.uk")
     given_i_sign_in_as(support_user)
     and_i_visit_the_support_users_page
-    and_i_click_on_add_a_support_user
+    when_i_click("Add user")
     and_i_fill_in_the_support_user_form(email_address: "john.doe@education.gov.uk")
     then_i_see_an_error("Email address already in use")
     and_the_page_title_is("Error: Personal details - Add user - Claim funding for mentor training")
@@ -42,12 +42,12 @@ RSpec.describe "Add a support user", type: :system do
   scenario "Make changes while adding a support user" do
     given_i_sign_in_as(support_user)
     and_i_visit_the_support_users_page
-    and_i_click_on_add_a_support_user
+    when_i_click("Add user")
     and_i_fill_in_the_support_user_form(email_address: "john.doe@education.gov.uk")
     and_i_click_on_a_change_link
     then_i_should_see_the_support_user_form_with(email_address: "john.doe@education.gov.uk")
     when_i_fill_in_the_support_user_form(email_address: "jane.doe@education.gov.uk")
-    and_i_click_on_add_user
+    when_i_click("Save user")
     then_i_see_the_support_user_has_been_added(email_address: "jane.doe@education.gov.uk")
     and_an_email_is_sent_to_the_support_user(email_address: "jane.doe@education.gov.uk")
   end
@@ -85,10 +85,9 @@ RSpec.describe "Add a support user", type: :system do
     expect(page).to have_content "john.doe@education.gov.uk"
   end
 
-  def when_i_click_on_add_user
-    click_on "Add user"
+  def when_i_click(button)
+    click_on button
   end
-  alias_method :and_i_click_on_add_user, :when_i_click_on_add_user
 
   def then_i_see_the_support_user_has_been_added(email_address:)
     expect(page).to have_content "User added"
