@@ -1,5 +1,5 @@
 ---
-:shared:
+shared:
   :flipflop_features:
     - id
     - key
