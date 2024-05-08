@@ -2,27 +2,29 @@
 #
 # Table name: claims
 #
-#  id                :uuid             not null, primary key
-#  created_by_type   :string
-#  reference         :string
-#  status            :enum
-#  submitted_at      :datetime
-#  submitted_by_type :string
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  created_by_id     :uuid
-#  provider_id       :uuid
-#  school_id         :uuid             not null
-#  submitted_by_id   :uuid
+#  id                   :uuid             not null, primary key
+#  created_by_type      :string
+#  reference            :string
 #  reviewed             :boolean          default(FALSE)
+#  status               :enum
+#  submitted_at         :datetime
+#  submitted_by_type    :string
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  created_by_id        :uuid
+#  previous_revision_id :uuid
+#  provider_id          :uuid
+#  school_id            :uuid             not null
+#  submitted_by_id      :uuid
 #
 # Indexes
 #
-#  index_claims_on_created_by    (created_by_type,created_by_id)
-#  index_claims_on_provider_id   (provider_id)
-#  index_claims_on_reference     (reference) UNIQUE
-#  index_claims_on_school_id     (school_id)
-#  index_claims_on_submitted_by  (submitted_by_type,submitted_by_id)
+#  index_claims_on_created_by            (created_by_type,created_by_id)
+#  index_claims_on_previous_revision_id  (previous_revision_id)
+#  index_claims_on_provider_id           (provider_id)
+#  index_claims_on_reference             (reference)
+#  index_claims_on_school_id             (school_id)
+#  index_claims_on_submitted_by          (submitted_by_type,submitted_by_id)
 #
 # Foreign Keys
 #
@@ -42,8 +44,15 @@ class Claims::Claim < ApplicationRecord
   has_many :mentor_trainings, dependent: :destroy
   has_many :mentors, through: :mentor_trainings
 
+  belongs_to :previous_revision, class_name: "Claims::Claim", optional: true
+
   validates :status, presence: true
-  validates :reference, uniqueness: { case_sensitive: false }, allow_nil: true
+  validates(
+    :reference,
+    uniqueness: { case_sensitive: false },
+    allow_nil: true,
+    unless: :has_revision?,
+  )
 
   ACTIVE_STATUSES = %i[draft submitted].freeze
 
@@ -59,10 +68,11 @@ class Claims::Claim < ApplicationRecord
   delegate :full_name, to: :submitted_by, prefix: true, allow_nil: true
 
   def valid_mentor_training_hours?
-    mentor_trainings_without_current_claim = Claims::MentorTraining.joins(:claim).merge(Claims::Claim.active).where(
-      mentor_id: mentor_trainings.select(:mentor_id),
-      provider_id:,
-    ).where.not(claim_id: id)
+    mentor_trainings_without_current_claim = Claims::MentorTraining.joins(:claim)
+      .merge(Claims::Claim.active).where(
+        mentor_id: mentor_trainings.select(:mentor_id),
+        provider_id:,
+      ).where.not(claim_id: [id, previous_revision_id])
     grouped_trainings = [*mentor_trainings, *mentor_trainings_without_current_claim].group_by { [_1.mentor_id, _1.provider_id] }
 
     grouped_trainings.transform_values { _1.sum(&:hours_completed) }.values.all? { _1 <= MAXIMUM_CLAIMABLE_HOURS }
@@ -78,5 +88,29 @@ class Claims::Claim < ApplicationRecord
 
   def active?
     ACTIVE_STATUSES.include?(status.to_sym)
+  end
+
+  def ready_to_be_checked?
+    mentors.present? && mentor_trainings.without_hours.blank?
+  end
+
+  def get_valid_revision
+    Claims::Claim::RemoveEmptyMentorTrainingHours.call(claim: self)
+
+    mentor_trainings.present? ? self : previous_revision
+  end
+
+  def was_draft?
+    claim_record = self
+    claim_record = claim_record.previous_revision while claim_record.present? && !claim_record.draft?
+
+    claim_record.nil? ? false : claim_record.draft?
+  end
+
+  private
+
+  def has_revision?
+    previous_revision_id.present? ||
+      id.present? && Claims::Claim.find_by(previous_revision_id: id).present?
   end
 end

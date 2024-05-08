@@ -2,27 +2,29 @@
 #
 # Table name: claims
 #
-#  id                :uuid             not null, primary key
-#  created_by_type   :string
-#  reference         :string
-#  status            :enum
-#  submitted_at      :datetime
-#  submitted_by_type :string
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  created_by_id     :uuid
-#  provider_id       :uuid
-#  school_id         :uuid             not null
-#  submitted_by_id   :uuid
+#  id                   :uuid             not null, primary key
+#  created_by_type      :string
+#  reference            :string
 #  reviewed             :boolean          default(FALSE)
+#  status               :enum
+#  submitted_at         :datetime
+#  submitted_by_type    :string
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  created_by_id        :uuid
+#  previous_revision_id :uuid
+#  provider_id          :uuid
+#  school_id            :uuid             not null
+#  submitted_by_id      :uuid
 #
 # Indexes
 #
-#  index_claims_on_created_by    (created_by_type,created_by_id)
-#  index_claims_on_provider_id   (provider_id)
-#  index_claims_on_reference     (reference) UNIQUE
-#  index_claims_on_school_id     (school_id)
-#  index_claims_on_submitted_by  (submitted_by_type,submitted_by_id)
+#  index_claims_on_created_by            (created_by_type,created_by_id)
+#  index_claims_on_previous_revision_id  (previous_revision_id)
+#  index_claims_on_provider_id           (provider_id)
+#  index_claims_on_reference             (reference)
+#  index_claims_on_school_id             (school_id)
+#  index_claims_on_submitted_by          (submitted_by_type,submitted_by_id)
 #
 # Foreign Keys
 #
@@ -36,13 +38,14 @@ RSpec.describe Claims::Claim, type: :model do
     it { is_expected.to belong_to(:school).class_name("Claims::School") }
     it { is_expected.to belong_to(:provider) }
     it { is_expected.to belong_to(:created_by) }
+    it { is_expected.to belong_to(:previous_revision).class_name("Claims::Claim").optional }
     it { is_expected.to belong_to(:submitted_by).optional }
     it { is_expected.to have_many(:mentor_trainings).dependent(:destroy) }
     it { is_expected.to have_many(:mentors).through(:mentor_trainings) }
   end
 
   context "with validations" do
-    subject { build(:claim) }
+    subject { create(:claim) }
 
     it { is_expected.to validate_presence_of(:status) }
     it { is_expected.to validate_uniqueness_of(:reference).case_insensitive.allow_nil }
@@ -129,6 +132,70 @@ RSpec.describe Claims::Claim, type: :model do
 
         expect(claim.submitted_on).to eq(nil)
       end
+    end
+  end
+
+  describe "#ready_to_be_checked?" do
+    it "returns true if the claim's mentors all have their hours recorded" do
+      claim = create(:claim)
+      create(:mentor_training, hours_completed: 20, claim:)
+
+      expect(claim.ready_to_be_checked?).to eq(true)
+    end
+
+    it "returns false if the claim does have mentors" do
+      claim = build(:claim)
+
+      expect(claim.ready_to_be_checked?).to eq(false)
+    end
+
+    it "returns false if the claim does have mentor training hours" do
+      claim = create(:claim)
+      create(:mentor_training, hours_completed: nil, claim:)
+
+      expect(claim.ready_to_be_checked?).to eq(false)
+    end
+  end
+
+  describe "#get_valid_revision" do
+    it "gets the last valid revision" do
+      claim = create(:claim, :draft)
+      invalid_revision = create(
+        :claim,
+        :draft,
+        previous_revision: claim,
+      )
+      claim.update!(previous_revision: invalid_revision)
+      create(:mentor_training, claim: invalid_revision, hours_completed: nil)
+      create(:mentor_training, claim:, hours_completed: 20)
+
+      expect(claim.get_valid_revision).to eq(claim)
+    end
+  end
+
+  describe "#was_draft?" do
+    it "returns true if any previous revision was draft" do
+      draft_revision = create(:claim, :draft)
+      revision = create(
+        :claim,
+        :internal_draft,
+        previous_revision: draft_revision,
+      )
+      claim = create(:claim, :submitted, previous_revision: revision)
+
+      expect(claim.was_draft?).to eq(true)
+    end
+
+    it "returns false if no previous revision was draft" do
+      second_revision = create(:claim, :internal_draft)
+      revision = create(
+        :claim,
+        :internal_draft,
+        previous_revision: second_revision,
+      )
+      claim = create(:claim, :submitted, previous_revision: revision)
+
+      expect(claim.was_draft?).to eq(false)
     end
   end
 end

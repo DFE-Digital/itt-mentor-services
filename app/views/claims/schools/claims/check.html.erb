@@ -17,16 +17,13 @@
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: Claims::Claim.human_attribute_name(:school_name)) %>
           <% row.with_value(text: @school.name) %>
-          <% end %>
+        <% end %>
 
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: Claims::Claim.human_attribute_name(:accredited_provider)) %>
           <% row.with_value(text: @claim.provider_name) %>
           <% row.with_action(text: t("change"),
-                             href: edit_claims_school_claim_path(
-                               @school,
-                               @claim,
-                             ),
+                             href: create_revision_claims_school_claim_path(@school, @claim),
                              visually_hidden_text: Claims::Claim.human_attribute_name(:accredited_provider),
                              html_attributes: {
                                class: "govuk-link--no-visited-state",
@@ -43,7 +40,7 @@
             </ul>
           <% end %>
           <% row.with_action(text: t("change"),
-                             href: edit_claims_school_claim_mentors_path(@school, @claim),
+                             href: create_revision_claims_school_claim_mentors_path(@school, @claim),
                              visually_hidden_text: Claims::Claim.human_attribute_name(:mentors),
                              html_attributes: {
                                class: "govuk-link--no-visited-state",
@@ -59,17 +56,17 @@
             <% row.with_key(text: mentor_training.mentor.full_name) %>
             <% row.with_value(text: pluralize(mentor_training.hours_completed, t(".hour"))) %>
             <% row.with_action(text: t("change"),
-                               href: edit_claims_school_claim_mentor_training_path(
+                               href: create_revision_claims_school_claim_mentor_training_path(
                                  @school,
                                  @claim,
-                                 mentor_training,
+                                 mentor_training.mentor_id,
                                ),
                                visually_hidden_text: "Hours of training for #{mentor_training.mentor.full_name}",
                                html_attributes: {
                                  class: "govuk-link--no-visited-state",
                                }) %>
-            <% end %>
           <% end %>
+        <% end %>
       <% end %>
 
       <h2 class="govuk-heading-m"><%= t(".grant_funding") %></h2>

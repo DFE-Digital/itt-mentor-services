@@ -1,8 +1,10 @@
 class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationController
   include Claims::BelongsToSchool
 
-  before_action :set_claim, only: %i[check draft show edit update remove destroy rejected]
+  before_action :set_claim, only: %i[check draft show edit update remove destroy rejected create_revision]
   before_action :authorize_claim
+  before_action :get_valid_revision, only: :check
+
   helper_method :claim_provider_form
 
   def index
@@ -27,6 +29,11 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
     else
       render :new
     end
+  end
+
+  def create_revision
+    revision = Claims::Claim::CreateRevision.call(claim: @claim)
+    redirect_to edit_claims_support_school_claim_path(@school, revision)
   end
 
   def check
@@ -57,8 +64,14 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
   def draft
     return redirect_to rejected_claims_support_school_claim_path unless @claim.valid_mentor_training_hours?
 
-    success_message = @claim.draft? ? t(".update_success") : t(".add_success")
-    Claims::Claim::CreateDraft.call(claim: @claim)
+    claim_was_draft = @claim.was_draft?
+    success_message = claim_was_draft ? t(".update_success") : t(".add_success")
+
+    if claim_was_draft
+      Claims::Claim::UpdateDraft.call(claim: @claim)
+    else
+      Claims::Claim::CreateDraft.call(claim: @claim)
+    end
 
     redirect_to claims_support_school_claims_path(@school), flash: { success: success_message }
   end
@@ -96,5 +109,11 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
 
   def authorize_claim
     authorize @claim || Claims::Claim
+  end
+
+  def get_valid_revision
+    revision = @claim.get_valid_revision
+
+    redirect_to check_claims_support_school_claim_path(@school, revision) if revision != @claim
   end
 end

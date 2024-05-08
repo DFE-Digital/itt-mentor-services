@@ -11,7 +11,7 @@ class Claims::Mentor::CalculateRemainingMentorTrainingHoursForProvider
 
   def call
     MAXIMUM_CLAIMABLE_HOURS_PER_PROVIDER -
-      Claims::Mentor::CalculateTotalMentorTrainingHoursForProvider.call(mentor:, provider:) +
+      Claims::Mentor::CalculateTotalMentorTrainingHoursForProvider.call(mentor:, provider:, claim: mentor_training&.claim) +
       current_mentor_training_hours
   end
 
