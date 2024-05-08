@@ -43,5 +43,7 @@ module IttMentorServices
     config.exceptions_app = routes
 
     config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, ActiveSupport::TimeWithZone, ActiveSupport::TimeZone]
+
+    config.skylight.probes << "active_job"
   end
 end
