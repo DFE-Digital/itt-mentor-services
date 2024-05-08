@@ -1,6 +1,6 @@
 class Placements::Schools::SchoolContactsController < ApplicationController
   before_action :set_school
-  before_action :set_school_contact, only: %i[edit update remove destroy]
+  before_action :set_school_contact, only: %i[edit update]
 
   def new
     @school_contact = if params[:placements_school_contact].present?
@@ -40,13 +40,6 @@ class Placements::Schools::SchoolContactsController < ApplicationController
     else
       render :edit
     end
-  end
-
-  def remove; end
-
-  def destroy
-    @school_contact.destroy!
-    redirect_to placements_school_path(@school), flash: { success: t(".school_contact_removed") }
   end
 
   private

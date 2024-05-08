@@ -1,0 +1,7 @@
+<%# locals: (school:) -%>
+<%= govuk_summary_list(html_attributes: { id: "location-details" }) do |summary_list| %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".address")) %>
+    <% row.with_value(**details_field_args(school.formatted_address)) %>
+  <% end %>
+<% end %>

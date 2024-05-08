@@ -3,20 +3,14 @@ en:
     schools:
       school_contacts:
         new:
-          page_title: School contact
-          page_title_with_error: Error - School contact
-          caption: Add school contact
-          description: School contact details
+          page_title: Add the ITT placement contact
+          page_title_with_error: Error - Add the ITT placement contact
           continue: Continue
           cancel: Cancel
-          attributes:
-            school_contacts:
-              name: Name
-              email_address: Email address
         check:
-          page_title: School contact
+          page_title: Check your answers
           check_your_answers: Check your answers
-          add_school_contact: Add school contact
+          add_the_itt_placement_contact: Add the ITT placement contact
           cancel: Cancel
           change: Change
           attributes:
@@ -46,16 +40,13 @@ en:
         destroy:
           school_contact_removed: School contact removed
         form:
-          caption: Add school contact
-          description: School contact details
+          caption: Organisation details
+          title: Add the ITT placement contact
+          description: Add an email for the main contact for school placements. This can also be a shared inbox.
           continue: Continue
           cancel: Cancel
-          what_is_a_school_contact: What is a school contact?
-          school_contact_description: |
-            A school contact is an individual or shared inbox, used by your organisation
-            to arrange placements. This information shared with providers when they view a placement.
           attributes:
             school_contacts:
-              name: Name
-              email_address: Email address
+              full_name: Full name
+              email: Email
           
