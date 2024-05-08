@@ -60,7 +60,7 @@ class UserMailer < ApplicationMailer
     if partner_organisation.is_a?(Provider)
       partner_class = "provider"
       link = placements_provider_partner_schools_url(partner_organisation)
-    else
+    elsif partner_organisation.is_a?(School)
       partner_class = "school"
       link = placements_school_partner_providers_url(partner_organisation)
     end
@@ -82,7 +82,7 @@ class UserMailer < ApplicationMailer
     if partner_organisation.is_a?(Provider)
       partner_class = "provider"
       link = placements_provider_partner_schools_url(partner_organisation)
-    else
+    elsif partner_organisation.is_a?(School)
       partner_class = "school"
       link = placements_school_partner_providers_url(partner_organisation)
     end
