@@ -1,0 +1,11 @@
+<%# locals: (school:) -%>
+<p class="govuk-body">
+  <%= embedded_link_text(
+    t(".gias_details",
+      link_to: govuk_link_to(t(".gias"),
+        "https://www.get-information-schools.service.gov.uk/Guidance/Governance",
+      no_visited_state: true)),
+  ) %>
+</p>
+
+<%= render "shared/organisations/organisation_details", organisation: @school %>

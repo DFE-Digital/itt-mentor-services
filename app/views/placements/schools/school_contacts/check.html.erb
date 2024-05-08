@@ -17,7 +17,7 @@
         <%= f.hidden_field :email_address, value: @school_contact.email_address %>
 
         <label class="govuk-label govuk-label--l">
-          <span class="govuk-caption-l"><%= t(".add_school_contact") %></span>
+          <span class="govuk-caption-l"><%= t(".add_the_itt_placement_contact") %></span>
           <%= t(".check_your_answers") %>
         </label>
 
@@ -41,7 +41,7 @@
                                }) %>
           <% end %>
         <% end %>
-        <%= f.govuk_submit t(".add_school_contact") %>
+        <%= f.govuk_submit t(".add_the_itt_placement_contact") %>
         <p class="govuk-body">
           <%= govuk_link_to(t(".cancel"), placements_school_mentors_path(@school), no_visited_state: true) %>
         </p>

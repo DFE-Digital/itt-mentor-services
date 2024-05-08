@@ -11,7 +11,7 @@ RSpec.describe "Placements / Schools / School Contacts / Add a school contact",
   scenario "User adds a school contact to their organisation" do
     when_i_view_my_organisation_details_page
     then_i_see_no_school_contact_details
-    when_i_click_on("Add school contact")
+    when_i_click_on("Add ITT placement contact")
     and_i_fill_out_the_school_contact_form(
       name: "Placement Coordinator",
       email_address: "placement_coordinator@example.school",
@@ -21,7 +21,7 @@ RSpec.describe "Placements / Schools / School Contacts / Add a school contact",
       name: "Placement Coordinator",
       email_address: "placement_coordinator@example.school",
     )
-    when_i_click_on("Add school contact")
+    when_i_click_on("Add the ITT placement contact")
     then_i_return_to_my_organisation_details_page
     and_i_see_the_school_contact_details(
       name: "Placement Coordinator",
@@ -47,7 +47,7 @@ RSpec.describe "Placements / Schools / School Contacts / Add a school contact",
   scenario "User attempts to add a school contact with an invalid email address" do
     when_i_view_my_organisation_details_page
     then_i_see_no_school_contact_details
-    when_i_click_on("Add school contact")
+    when_i_click_on("Add ITT placement contact")
     and_i_fill_out_the_school_contact_form(
       name: "Placement Coordinator",
       email_address: "invalid_email",
@@ -90,15 +90,13 @@ RSpec.describe "Placements / Schools / School Contacts / Add a school contact",
   alias_method :and_i_click_on, :when_i_click_on
 
   def then_i_see_no_school_contact_details
-    expect(page).to have_content("School contact details")
-
-    expect(page).to have_content("This organisation does not have a school contact.")
-    expect(page).to have_content("Add school contact")
+    expect(page).to have_content("ITT placement contact")
+    expect(page).to have_content("Add ITT placement contact")
   end
 
   def when_i_fill_out_the_school_contact_form(name:, email_address:)
-    fill_in "Name", with: name
-    fill_in "Email address", with: email_address
+    fill_in "Full name", with: name
+    fill_in "Email", with: email_address
   end
   alias_method :and_i_fill_out_the_school_contact_form,
                :when_i_fill_out_the_school_contact_form
@@ -109,8 +107,8 @@ RSpec.describe "Placements / Schools / School Contacts / Add a school contact",
   end
 
   def then_i_return_to_my_organisation_details_page
-    expect(page.find(".govuk-heading-l")).to have_content("Organisation details")
-    expect(page).to have_content(school.name)
+    expect(page.find(".govuk-heading-l")).to have_content(school.name)
+    expect_organisation_details_to_be_selected_in_primary_navigation
   end
 
   def and_i_see_the_school_contact_details(name:, email_address:)

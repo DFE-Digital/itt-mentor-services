@@ -129,15 +129,15 @@ RSpec.describe "Placements / Schools / School Contacts / Edit a school contact",
   end
 
   def when_i_fill_out_the_school_contact_form(name:, email_address:)
-    fill_in "Name", with: name
-    fill_in "Email address", with: email_address
+    fill_in "Full name", with: name
+    fill_in "Email", with: email_address
   end
   alias_method :and_i_fill_out_the_school_contact_form,
                :when_i_fill_out_the_school_contact_form
 
   def then_i_return_to_my_organisation_details_page
-    expect(page.find(".govuk-heading-l")).to have_content("Organisation details")
-    expect(page).to have_content(school.name)
+    expect(page.find(".govuk-heading-l")).to have_content(school.name)
+    expect_organisation_details_to_be_selected_in_primary_navigation
   end
 
   def and_i_see_the_school_contact_details(name:, email_address:)
