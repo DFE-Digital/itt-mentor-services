@@ -49,23 +49,23 @@
 
       <h2 class="govuk-heading-m" id="eligibility">3. Eligibility</h2>
       <p class="govuk-body">Any type of institution within England that hosted an ITT trainee on a course where the accredited provider was BPN or NIoT; or intended to host an ITT trainee on a BPN or NIoT course leading to the award of QTS (except Assessment Only), is eligible to claim funding, including special schools, pupil referral units, early years settings, further education organisations and independent schools.</p>
-      <h3 class="govuk-heading-m">Placement duration</h3>
+      <h3 class="govuk-heading-s">Placement duration</h3>
       <p class="govuk-body">There is no minimum placement duration for an organisation to submit a claim for general mentor funding.</p>
-      <h3 class="govuk-heading-m">Eligible type of training</h3>
+      <h3 class="govuk-heading-s">Eligible type of training</h3>
       <p class="govuk-body">Funding can be used to cover a variety of training, including virtual, face to face and asynchronous.</p>
-      <h3 class="govuk-heading-m">School location</h3>
+      <h3 class="govuk-heading-s">School location</h3>
       <p class="govuk-body">Only educational organisations located in England are eligible to apply for this grant funding.</p>
-      <h3 class="govuk-heading-m">Mentors who cannot continue with mentoring</h3>
+      <h3 class="govuk-heading-s">Mentors who cannot continue with mentoring</h3>
       <p class="govuk-body">An early adopter school can claim funding when a mentor starts their initial training between 6 April 2023 and 31 May 2024, begins mentoring a trainee but then cannot continue mentoring for any reason. The school should arrange a new mentor for the trainee. The school can claim funding for both mentors if they both started their training between 6 April 2023 and 31 May 2024.</p>
-      <h3 class="govuk-heading-m">Mentors training with different providers</h3>
+      <h3 class="govuk-heading-s">Mentors training with different providers</h3>
       <p class="govuk-body">Each accredited ITT provider can develop their own mentor training, which can result in different training for mentors working with different providers. If a school hosts trainees from different providers, a mentor might have to undertake their initial mentor training with each provider, but accredited ITT providers should consider prior training when deciding what aspects of their mentor training a mentor should complete.</p>
       <p class="govuk-body">Early adopter schools can claim funding for the time a mentor spends training at each provider.</p>
       <p class="govuk-body">For schools to claim this funding, a mentor must have worked with a trainee who started or intended to start their ITT in the 2023/24 academic year (between 1 September 2023 and 31 May 2024, 1 June 2023 for apprenticeship trainees). Schools must ensure a trainee has one dedicated mentor during their placement (unless the mentor works in a job-share). Other teachers may support elements of the trainee’s placement, but schools can only claim funding for the training time of the trainee’s dedicated mentor.</p>
       <p class="govuk-body">This funding is not available to schools if a mentor only works with high potential initial teacher training (HPITT) trainees, as funding is provided separately for such mentors.</p>
-      <h3 class="govuk-heading-m">Mentors working with multiple schools</h3>
+      <h3 class="govuk-heading-s">Mentors working with multiple schools</h3>
       <p class="govuk-body">Mentors can work with multiple schools while undertaking their training. For example, if a mentor is working across multiple schools in a trust then those schools can only claim for a total of 20 hours of funding per mentor with a single accredited ITT provider.</p>
       <p class="govuk-body">For instance, if school A claimed 10 hours of funding for mentor A, with provider A, then school B could only claim 10 hours for mentor A, with provider A. If school A claimed 20 hours of funding for mentor A, with provider A, then school B could not claim any funding for mentor A with provider A.</p>
-      <h3 class="govuk-heading-m">Trainees that defer or withdraw from their training</h3>
+      <h3 class="govuk-heading-s">Trainees that defer or withdraw from their training</h3>
       <p class="govuk-body">Early adopter schools can claim mentor funding if a mentor works with a trainee who:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>deferred in a previous academic year and then returns to their course in the 2023/24 academic year for any time on school placement</li>
@@ -144,7 +144,7 @@
       <h2 class="govuk-heading-m" id="payments">6. Payments</h2>
       <p class="govuk-body">Payments will be made in arrears from September 2024. Early adopter schools will be able to submit a claim via a new GOV.UK service. The service will open in May 2024 and schools will be able to submit their claims once their mentors have completed their training.</p>
       <p class="govuk-body">Early adopter schools must complete their claims by the end of July to receive payment from the Educational and Skills Funding Agency (ESFA) in late September/early October. If schools miss the payment window, they will be able to submit a claim in September, with payment being made in December 2024.</p>
-      <p class="govuk-body">If you would like additional information about the payments email <%= govuk_mail_to("ittmentor.funding@education.gov.uk") %>.</p>
+      <p class="govuk-body">If you would like additional information about the payments email <%= govuk_mail_to(t("claims.support_email")) %>.</p>
 
       <h2 class="govuk-heading-m" id="variation">7. Variation</h2>
       <p class="govuk-body">These conditions of grant may be altered at any time. Participating institutions will be notified of this through existing channels.</p>
@@ -153,7 +153,7 @@
       <p class="govuk-body">This funding is being provided under sections 14 of the Education Act 2002 and we reserve the right to audit the expenditure.</p>
       <p class="govuk-body">We may seek to recover funding that has been paid in error or has not been used for the intended purpose.</p>
       <p class="govuk-body">Recoveries will be made by invoice or by offsetting the amount against subsequent payments due from DfE.</p>
-      <p class="govuk-body">The recipient must notify DfE immediately through the <% govuk_mail_to("ittmentor.funding@education.gov.uk") %> email if it becomes aware of any instance of error, suspected fraud or financial irregularity in the use of the funds.</p>
+      <p class="govuk-body">The recipient must notify DfE immediately through the <%= govuk_mail_to(t("claims.support_email")) %> email if it becomes aware of any instance of error, suspected fraud or financial irregularity in the use of the funds.</p>
 
       <h2 class="govuk-heading-m" id="assurance">9. Assurance</h2>
       <p class="govuk-body">DfE have a responsibility to make sure that public funds are properly managed in line with these grant conditions. As payment will be made in arrears, DfE reserve the right to ask schools to confirm that the money has been or will be spent in the way intended. Acceptance of the funding will be taken as confirmation.</p>
@@ -163,15 +163,15 @@
       <p class="govuk-body">Accredited ITT providers must also retain evidence of the general mentor training delivered, including the number of hours of training undertaken by the school-based mentor and as part of assurance will be asked to provide this evidence to DfE.</p>
 
       <h2 class="govuk-heading-m" id="annex-a--definition-of-areas">Annex A – definition of areas</h2>
-      <h3 class="govuk-heading-m" id="inner-london-area">Inner London Area</h3>
+      <h3 class="govuk-heading-s" id="inner-london-area">Inner London Area</h3>
       <p class="govuk-body">“the Inner London Area” means the area comprising the London boroughs of Barking and Dagenham, Brent, Camden, City of London, Ealing, Greenwich, Hackney, Hammersmith and Fulham, Haringey, Islington, Kensington and Chelsea, Lambeth, Lewisham, Merton, Newham, Southwark, Tower Hamlets, Wandsworth and Westminster.</p>
-      <h3 class="govuk-heading-m" id="london-area">London Area</h3>
+      <h3 class="govuk-heading-s" id="london-area">London Area</h3>
       <p class="govuk-body">“the London Area” comprises the Inner London Area, the Outer London Area and the Fringe Area.</p>
-      <h3 class="govuk-heading-m" id="fringe-area">Fringe Area</h3>
+      <h3 class="govuk-heading-s" id="fringe-area">Fringe Area</h3>
       <p class="govuk-body">“the Fringe Area” means: a) in Berkshire – the Districts of Bracknell Forest, Slough and Windsor and Maidenhead; b) in Buckinghamshire – the Districts of South Buckinghamshire and Chiltern; c) in Essex – the Districts of Basildon, Brentwood, Epping Forest, Harlow and Thurrock; d) in Hertfordshire – the Districts of Broxbourne, Dacorum, East Hertfordshire, Hertsmere, St Albans, Three Rivers, Watford and Welwyn Hatfield; e) in Kent – the Districts of Dartford and Sevenoaks; f) in Surrey – the whole county; and g) in West Sussex – the District of Crawley.</p>
-      <h3 class="govuk-heading-m" id="outer-london-area">Outer London Area</h3>
+      <h3 class="govuk-heading-s" id="outer-london-area">Outer London Area</h3>
       <p class="govuk-body">“the Outer London Area” means the area comprising the London boroughs of Barnet, Bexley, Bromley, Croydon, Enfield, Harrow, Havering, Hillingdon, Hounslow, Kingston-upon-Thames, Redbridge, Richmond-upon-Thames, Sutton and Waltham Forest.</p>
-      <h3 class="govuk-heading-m" id="rest-of-england">Rest of England</h3>
+      <h3 class="govuk-heading-s" id="rest-of-england">Rest of England</h3>
       <p class="govuk-body">“the Rest of England” covers the localities beyond the areas above.</p>
     </div>
   </div>
