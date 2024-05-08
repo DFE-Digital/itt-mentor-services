@@ -461,6 +461,18 @@ RSpec.describe UserMailer, type: :mailer do
         EMAIL
       end
     end
+
+    context "when partner organisation is not a school or provider" do
+      let(:source_organisation) { create(:placements_provider, name: "Provider 1") }
+      let(:partner_organisation) { nil }
+      let(:user) { create(:placements_user) }
+
+      it "raises an error" do
+        expect { partnership_created_notification_email.to }.to raise_error(
+          InvalidOrganisationError, "#partner_organisation must be either a Provider or School"
+        )
+      end
+    end
   end
 
   describe "#partnership_destroyed_notification" do
@@ -507,6 +519,18 @@ RSpec.describe UserMailer, type: :mailer do
 
           View or manage your list of partner providers http://placements.localhost:3000/schools/#{partner_organisation.id}/partner_providers
         EMAIL
+      end
+    end
+
+    context "when partner organisation is not a school or provider" do
+      let(:source_organisation) { create(:placements_provider, name: "Provider 1") }
+      let(:partner_organisation) { nil }
+      let(:user) { create(:placements_user) }
+
+      it "raises an error" do
+        expect { partnership_destroyed_notification_email.to }.to raise_error(
+          InvalidOrganisationError, "#partner_organisation must be either a Provider or School"
+        )
       end
     end
   end

@@ -63,6 +63,8 @@ class UserMailer < ApplicationMailer
     elsif partner_organisation.is_a?(School)
       partner_class = "school"
       link = placements_school_partner_providers_url(partner_organisation)
+    else
+      raise InvalidOrganisationError, "#partner_organisation must be either a Provider or School"
     end
 
     notify_email(
@@ -85,6 +87,8 @@ class UserMailer < ApplicationMailer
     elsif partner_organisation.is_a?(School)
       partner_class = "school"
       link = placements_school_partner_providers_url(partner_organisation)
+    else
+      raise InvalidOrganisationError, "#partner_organisation must be either a Provider or School"
     end
 
     notify_email(
@@ -100,3 +104,5 @@ class UserMailer < ApplicationMailer
     )
   end
 end
+
+class InvalidOrganisationError < StandardError; end
