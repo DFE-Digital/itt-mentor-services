@@ -49,7 +49,7 @@ en:
           add_claim: Add claim
           guidance: Claims can only be made for the school year September 2023 to July 2024.
           final_date: The final date to submit a claim is 19 July 2024.
-          add_mentor_guidance_html: Before you can start a claim, you need to %{link_to}.</p>
+          add_mentor_guidance_html: Before you can start a claim you will need to %{link_to}.</p>
           add_a_mentor: add a mentor
         update:
           claim_updated: Claim updated

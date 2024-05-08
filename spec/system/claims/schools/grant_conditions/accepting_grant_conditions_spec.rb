@@ -64,7 +64,6 @@ RSpec.describe "Accepting grant conditions", type: :system, service: :claims do
   def then_i_can_see_the_schools_claims_page
     expect(page).to have_current_path(claims_school_claims_path(school_id: grant_conditons_accepted_school), ignore_query: true)
     expect(page).to have_content("Claims")
-    expect(page).to have_content("Claims can only be made for the school year September 2023 to July 2024.")
   end
 
   def then_i_can_see_the_grant_conditions_page

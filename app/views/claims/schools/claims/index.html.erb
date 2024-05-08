@@ -5,13 +5,13 @@
   <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
   <% if @school.mentors.any? %>
-    <p class="govuk-body"><%= t(".guidance") %></p>
-    <p class="govuk-body"><%= t(".final_date") %></p>
+    <div class="govuk-inset-text">
+      <p class="govuk-body"><%= t(".guidance") %></p>
+      <p class="govuk-body"><%= t(".final_date") %></p>
+    </div>
     <%= govuk_link_to t(".add_claim"), new_claims_school_claim_path, class: "govuk-button" %>
   <% else %>
     <p class="govuk-inset-text"><%= t(".add_mentor_guidance_html", link_to: govuk_link_to(t(".add_a_mentor"), claims_school_mentors_path(@school))) %></p>
-    <p class="govuk-body"><%= t(".guidance") %></p>
-    <p class="govuk-body"><%= t(".final_date") %></p>
   <% end %>
 
   <% if @claims.any? %>
