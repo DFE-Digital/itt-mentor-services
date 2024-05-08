@@ -82,7 +82,7 @@ RSpec.describe "View claims", type: :system, service: :claims do
   def i_can_see_the_add_a_mentor_guidance
     within(".govuk-inset-text") do
       expect(page).to have_content(
-        "Before you can start a claim, you need to add a mentor.",
+        "Before you can start a claim you will need to add a mentor.",
       )
       expect(page).to have_link("add a mentor", href: "/schools/#{school.id}/mentors")
     end
