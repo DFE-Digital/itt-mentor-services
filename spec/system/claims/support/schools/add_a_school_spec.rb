@@ -17,6 +17,7 @@ RSpec.describe "Support User adds a School", type: :system, service: :claims do
     when_i_click_the_dropdown_item_for("School 1")
     and_i_click_continue
     then_i_see_the_check_details_page_for_school("School 1")
+    i_then_click_change_school_link
     when_i_click_save_organisation
     then_i_return_to_support_organisations_index
     and_a_school_is_listed(school_name: "School 1")
@@ -48,6 +49,12 @@ RSpec.describe "Support User adds a School", type: :system, service: :claims do
   end
 
   private
+
+  def i_then_click_change_school_link
+    click_on "Change"
+    expect(page).to have_content("Enter a school name, URN or postcode")
+    click_on "Continue"
+  end
 
   def and_there_is_an_existing_user_for(user_name)
     user = create(:claims_support_user, user_name.downcase.to_sym)
