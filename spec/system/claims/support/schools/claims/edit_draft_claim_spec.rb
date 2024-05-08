@@ -18,6 +18,7 @@ RSpec.describe "Edit a draft claim", type: :system, service: :claims do
       reference: "12345678",
       provider: best_practice_network_provider,
       submitted_by: colin,
+      reviewed: true,
     )
   end
 
@@ -34,7 +35,6 @@ RSpec.describe "Edit a draft claim", type: :system, service: :claims do
   end
 
   let!(:draft_mentor_training) { create(:mentor_training, claim: draft_claim, mentor: claims_mentor, hours_completed: 6) }
-  let!(:submitted_mentor_training) { create(:mentor_training, claim: submitted_claim, mentor: claims_mentor, hours_completed: 6) }
 
   scenario "A support user I can edit a draft claim" do
     user_exists_in_dfe_sign_in(user: colin)
@@ -42,10 +42,39 @@ RSpec.describe "Edit a draft claim", type: :system, service: :claims do
     when_i_select_a_school
     when_i_click_on_claims
     when_i_visit_the_draft_claim_show_page
-    then_i_edit_the_provider
+    then_i_edit_the_provider(
+      current_provider: best_practice_network_provider,
+      new_provider: niot_provider,
+    )
     then_i_edit_the_mentors
     then_i_edit_the_hours_of_training
-    then_i_update_the_claim
+    then_i_expect_the_current_draft_claims_to_not_have_my_changes
+    then_i_update_the_claim(another_claims_mentor)
+  end
+
+  scenario "A support user I finish editing a claim and go back to the check page to edit it again" do
+    user_exists_in_dfe_sign_in(user: colin)
+    given_i_sign_in
+    when_i_select_a_school
+    when_i_click_on_claims
+    when_i_visit_the_draft_claim_show_page
+    then_i_edit_the_provider(
+      current_provider: best_practice_network_provider,
+      new_provider: niot_provider,
+    )
+    then_i_update_the_claim(claims_mentor)
+    when_i_go_back_to_the_check_page
+    then_i_edit_the_provider(
+      current_provider: niot_provider,
+      new_provider: best_practice_network_provider,
+    )
+    then_i_edit_the_provider(
+      current_provider: best_practice_network_provider,
+      new_provider: niot_provider,
+    )
+    then_i_expect_the_current_draft_claims_to_not_have_my_changes
+    when_i_click("Update claim")
+    then_i_expect_to_not_have_duplicated_claims
   end
 
   scenario "A support user I can't edit a non draft claim" do
@@ -58,9 +87,14 @@ RSpec.describe "Edit a draft claim", type: :system, service: :claims do
 
   private
 
-  def then_i_update_the_claim
+  def then_i_update_the_claim(mentor)
     click_on("Update claim")
     expect(page).to have_content("Claim updated")
+    expect(page).to have_content(mentor.full_name)
+    expect(page).to have_content(
+      "NIoT: National Institute of Teaching, founded by the "\
+      "School-Led Development Trust",
+    )
   end
 
   def then_i_edit_the_hours_of_training
@@ -68,7 +102,7 @@ RSpec.describe "Edit a draft claim", type: :system, service: :claims do
     page.choose("Another amount")
     fill_in("Number of hours", with: 11)
     click_on("Continue")
-    expect(page).to have_content("Barry Garlow11 hoursChange")
+    expect(page).to have_content("Barry Garlow11 hours")
   end
 
   def then_i_edit_the_mentors
@@ -82,29 +116,27 @@ RSpec.describe "Edit a draft claim", type: :system, service: :claims do
     expect(page).to have_content("Barry Garlow")
   end
 
-  def then_i_edit_the_provider
-    expect(page).to have_content("Accredited providerBest Practice NetworkChange")
+  def then_i_edit_the_provider(current_provider:, new_provider:)
+    expect(page).to have_content(current_provider.name)
     first("a", text: "Change").click
-    page.choose(niot_provider.name)
+    page.choose(new_provider.name)
     click_on("Continue")
-    click_on("Continue")
-    expect(page).to have_content("Accredited providerNIoT: National Institute of Teaching, founded by the School-Led Development TrustChange")
+    expect(page).to have_content("Accredited provider#{new_provider.name}")
   end
 
   def when_i_visit_the_draft_claim_show_page
     click_on draft_claim.reference
 
-    expect(page).to have_content("Best Practice NetworkChange")
-    expect(page).to have_content("Barry Garlow\nChange")
-    expect(page).to have_content("Barry Garlow#{draft_mentor_training.hours_completed} hoursChange")
+    expect(page).to have_content("Best Practice Network")
+    expect(page).to have_content("Barry Garlow")
+    expect(page).to have_content("Barry Garlow#{draft_mentor_training.hours_completed} hours")
   end
 
   def then_i_cant_edit_the_submitted_claim
     click_on submitted_claim.reference
+    change_links = all("a", text: "Change")
 
-    expect(page).not_to have_content("Best Practice NetworkChange")
-    expect(page).not_to have_content("Barry Garlow\nChange")
-    expect(page).not_to have_content("Barry Garlow#{submitted_mentor_training.hours_completed} hoursChange")
+    expect(change_links).to be_empty
   end
 
   def when_i_select_a_school
@@ -120,5 +152,25 @@ RSpec.describe "Edit a draft claim", type: :system, service: :claims do
   def given_i_sign_in
     visit sign_in_path
     click_on "Sign in using DfE Sign In"
+  end
+
+  def then_i_expect_the_current_draft_claims_to_not_have_my_changes
+    mentor_names = Claims::Claim.active.flat_map(&:mentors).map(&:full_name)
+
+    expect(mentor_names.include?(another_claims_mentor.full_name)).to eq(false)
+  end
+
+  def when_i_go_back_to_the_check_page
+    claim = Claims::Claim.active.draft.first
+    visit check_claims_support_school_claim_path(claim.school, claim)
+  end
+
+  def then_i_expect_to_not_have_duplicated_claims
+    uniq_references = Claims::Claim.active.pluck(:reference).uniq
+    expect(Claims::Claim.active.count).to eq(uniq_references.count)
+  end
+
+  def when_i_click(button)
+    click_on(button)
   end
 end

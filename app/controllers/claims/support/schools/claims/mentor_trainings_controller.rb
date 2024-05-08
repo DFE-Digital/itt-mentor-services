@@ -3,6 +3,17 @@ class Claims::Support::Schools::Claims::MentorTrainingsController < Claims::Appl
   before_action :authorize_claim
   helper_method :mentor_training_form
 
+  def create_revision
+    revision = Claims::Claim::CreateRevision.call(claim: @claim)
+    mentor_training = revision.mentor_trainings.find_by(mentor_id: params.require(:id))
+
+    redirect_to edit_claims_support_school_claim_mentor_training_path(
+      @school,
+      revision,
+      mentor_training,
+    )
+  end
+
   def edit; end
 
   def update

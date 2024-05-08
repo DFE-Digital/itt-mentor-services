@@ -89,6 +89,7 @@ shared:
     - submitted_by_type
     - submitted_by_id
     - reviewed
+    - previous_revision_id
   :schools:
     - id
     - urn
