@@ -82,6 +82,8 @@ en:
           spring: Spring
           summer: Summer
         not_yet_known: Not yet known
+        available: Available
+        unavailable: Unavailable
         index:
           page_title: Placements
           placements: Placements

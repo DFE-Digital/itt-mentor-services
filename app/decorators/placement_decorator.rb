@@ -25,4 +25,12 @@ class PlacementDecorator < Draper::Decorator
   def provider_name
     provider&.name || I18n.t("placements.schools.placements.not_yet_known")
   end
+
+  def status_colour
+    provider.present? ? "orange" : "turquoise"
+  end
+
+  def status_text
+    provider.present? ? I18n.t("placements.schools.placements.unavailable") : I18n.t("placements.schools.placements.available")
+  end
 end

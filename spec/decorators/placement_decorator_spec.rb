@@ -90,4 +90,40 @@ RSpec.describe PlacementDecorator do
       end
     end
   end
+
+  describe "#status_colour" do
+    context "when the placement has a provider" do
+      it "returns orange" do
+        placement = build(:placement, provider: build(:provider))
+
+        expect(placement.decorate.status_colour).to eq("orange")
+      end
+    end
+
+    context "when the placement has no provider" do
+      it "returns turquoise" do
+        placement = build(:placement)
+
+        expect(placement.decorate.status_colour).to eq("turquoise")
+      end
+    end
+  end
+
+  describe "#status_text" do
+    context "when the placement has a provider" do
+      it "returns Unavailable" do
+        placement = build(:placement, provider: build(:provider))
+
+        expect(placement.decorate.status_text).to eq("Unavailable")
+      end
+    end
+
+    context "when the placement has no provider" do
+      it "returns Available" do
+        placement = build(:placement)
+
+        expect(placement.decorate.status_text).to eq("Available")
+      end
+    end
+  end
 end

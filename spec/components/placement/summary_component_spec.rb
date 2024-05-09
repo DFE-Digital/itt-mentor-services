@@ -22,7 +22,7 @@ RSpec.describe Placement::SummaryComponent, type: :component do
     )
   end
   let(:placement_1) { create(:placement, school:, subjects:, mentors:) }
-  let(:placement_2) { create(:placement, school:, subjects: [subject_2], mentors:) }
+  let(:placement_2) { create(:placement, school:, subjects: [subject_2], mentors:, provider: create(:placements_provider)) }
   let(:provider) { create(:provider) }
 
   context "when given multiple placements" do
@@ -32,6 +32,10 @@ RSpec.describe Placement::SummaryComponent, type: :component do
 
     it "renders the details of each placement" do
       render_inline(component)
+
+      # Availability details
+      expect(page).to have_content("Available", count: 1)
+      expect(page).to have_content("Unavailable", count: 1)
 
       # School details
       expect(page).to have_content("London Primary School", count: 2)
