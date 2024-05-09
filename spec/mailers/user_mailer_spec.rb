@@ -428,7 +428,7 @@ RSpec.describe UserMailer, type: :mailer do
       it "sends a notification email to the user of the provider" do
         expect(partnership_created_notification_email.to).to contain_exactly(user.email)
         expect(partnership_created_notification_email.subject).to eq(
-          "[TEST] A school has added your organisation to its list of partner providers",
+          "A school has added your organisation to its list of partner providers",
         )
 
         expect(partnership_created_notification_email.body).to have_content <<~EMAIL
@@ -450,7 +450,7 @@ RSpec.describe UserMailer, type: :mailer do
       it "sends a notification email to the user of the school" do
         expect(partnership_created_notification_email.to).to contain_exactly(user.email)
         expect(partnership_created_notification_email.subject).to eq(
-          "[TEST] An ITT provider has added your organisation to its list of partner schools",
+          "An ITT provider has added your organisation to its list of partner schools",
         )
         expect(partnership_created_notification_email.body).to have_content <<~EMAIL
           Dear #{user.full_name},
@@ -489,7 +489,7 @@ RSpec.describe UserMailer, type: :mailer do
       it "sends a notification email to the user of the provider" do
         expect(partnership_destroyed_notification_email.to).to contain_exactly(user.email)
         expect(partnership_destroyed_notification_email.subject).to eq(
-          "[TEST] A school has removed your organisation from its list of partner providers",
+          "A school has removed your organisation from its list of partner providers",
         )
         expect(partnership_destroyed_notification_email.body).to have_content <<~EMAIL
           Dear #{user.full_name},
@@ -510,7 +510,7 @@ RSpec.describe UserMailer, type: :mailer do
       it "sends a notification email to the user of the school" do
         expect(partnership_destroyed_notification_email.to).to contain_exactly(user.email)
         expect(partnership_destroyed_notification_email.subject).to eq(
-          "[TEST] An ITT provider has removed your organisation from its list of partner schools",
+          "An ITT provider has removed your organisation from its list of partner schools",
         )
         expect(partnership_destroyed_notification_email.body).to have_content <<~EMAIL
           Dear #{user.full_name},
