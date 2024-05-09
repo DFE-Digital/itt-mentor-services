@@ -80,11 +80,7 @@ PublishTeacherTraining::Subject::Import.call
 
 # Create placements
 Placements::School.find_each do |school|
-  next if school.placements.any?
-
-  placement = Placement.create!(school:)
-
-  subject = school.phase == "Primary" ? Subject.primary.first : Subject.secondary.first
-  PlacementSubjectJoin.create!(placement:, subject:)
-  PlacementMentorJoin.create!(placement:, mentor: Placements::Mentor.first)
+  subjects = school.phase == "Primary" ? Subject.primary : Subject.secondary
+  mentors = Placements::Mentor.all
+  subjects.find_each { |subject| Placement.create!(school:, subjects: [subject], mentors: [mentors.sample]) }
 end
