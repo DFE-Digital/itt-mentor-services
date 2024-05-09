@@ -85,6 +85,9 @@ class School < ApplicationRecord
   has_many :mentor_memberships
   has_many :mentors, through: :mentor_memberships
 
+  normalizes :email_address, with: ->(value) { value.strip.downcase }
+  validates :email_address, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_nil: true
+
   validates :urn, presence: true
   validates :urn, uniqueness: { case_sensitive: false }
   validates :name, presence: true
