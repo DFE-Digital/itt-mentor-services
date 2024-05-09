@@ -271,7 +271,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_07_081604) do
 
   create_table "school_contacts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
-    t.string "email_address"
+    t.string "email_address", null: false
     t.uuid "school_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

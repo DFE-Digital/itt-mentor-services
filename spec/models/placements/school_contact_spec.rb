@@ -3,7 +3,7 @@
 # Table name: school_contacts
 #
 #  id            :uuid             not null, primary key
-#  email_address :string
+#  email_address :string           not null
 #  name          :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
