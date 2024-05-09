@@ -24,7 +24,7 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
   let!(:subject_1) { create(:subject, name: "Primary with mathematics") }
   let!(:subject_2) { create(:subject, name: "Chemistry") }
   let(:placement_1) { create(:placement, subjects: [subject_1], school: primary_school) }
-  let(:placement_2) { create(:placement, subjects: [subject_2], school: secondary_school) }
+  let(:placement_2) { create(:placement, subjects: [subject_2], school: secondary_school, provider: create(:placements_provider)) }
 
   before do
     given_i_sign_in_as_patricia
@@ -45,6 +45,16 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
       when_i_visit_the_placements_index_page
       then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
       and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
+    end
+
+    scenario "User can filter placements by availability" do
+      when_i_visit_the_placements_index_page
+      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+      and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
+      when_i_check_filter_option("available", "true")
+      and_i_click_on("Apply filters")
+      then_i_can_see_a_placement_for_placement_1
+      and_i_cannot_see_a_placement_for_placement_2
     end
 
     scenario "User can filter placements by partner school" do
@@ -89,7 +99,18 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
     end
 
     context "when a filter is pre-selected in the URL params" do
-      scenario "User can remove a parnter school filter" do
+      scenario "User can remove the available filter" do
+        when_i_visit_the_placements_index_page({ filters: { available: %w[true] } })
+        then_i_can_see_a_placement_for_placement_1
+        and_i_cannot_see_a_placement_for_placement_2
+        and_i_can_see_a_preset_filter("Placements Available", "Available")
+        when_i_click_to_remove_filter("Placements Available", "Available")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
+        and_i_can_not_see_any_selected_filters
+      end
+
+      scenario "User can remove a partner school filter" do
         given_a_partnership_exists_between(provider, primary_school)
         when_i_visit_the_placements_index_page({ filters: { partner_school_ids: [primary_school.id] } })
         then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
@@ -241,5 +262,13 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
 
   def given_a_partnership_exists_between(provider, school)
     Placements::Partnership.create!(provider:, school:)
+  end
+
+  def then_i_can_see_a_placement_for_placement_1
+    expect(page).to have_content("Primary School\nPrimary with mathematics")
+  end
+
+  def and_i_cannot_see_a_placement_for_placement_2
+    expect(page).not_to have_content("Secondary School\nChemistry")
   end
 end

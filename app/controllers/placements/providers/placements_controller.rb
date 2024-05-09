@@ -36,6 +36,7 @@ class Placements::Providers::PlacementsController < ApplicationController
       school_ids: [],
       subject_ids: [],
       school_types: [],
+      available: [],
     )
   end
 

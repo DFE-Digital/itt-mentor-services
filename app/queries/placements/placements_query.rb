@@ -6,6 +6,7 @@ class Placements::PlacementsQuery < ApplicationQuery
     scope = subject_condition(scope)
     scope = school_type_condition(scope)
     scope = partner_school_condition(scope)
+    scope = available_condition(scope)
     scope.order_by_subject_school_name
   end
 
@@ -33,5 +34,11 @@ class Placements::PlacementsQuery < ApplicationQuery
     return scope if params[:partner_school_ids].blank?
 
     scope.where(school_id: params[:partner_school_ids])
+  end
+
+  def available_condition(scope)
+    return scope if params[:available].blank?
+
+    scope.where(provider_id: nil)
   end
 end

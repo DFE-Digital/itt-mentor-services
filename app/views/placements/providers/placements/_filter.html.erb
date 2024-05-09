@@ -89,6 +89,20 @@
               <% end %>
             </ul>
           <% end %>
+
+          <% if filter_form.available.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".availability") %></h3>
+            <ul class="app-filter-tags">
+              <li>
+                <%= govuk_link_to(
+                      "Available",
+                      filter_form.index_path_without_filter(provider: @provider, filter: "available", value: "true"),
+                      class: "app-filter__tag",
+                      no_visited_state: true,
+                    ) %>
+              </li>
+            </ul>
+          <% end %>
         </div>
       <% end %>
 
@@ -101,6 +115,20 @@
           data: { turbo: false, controller: "placements-filter-search" },
         ) do |form| %>
           <%= form.govuk_submit t("apply_filters") %>
+
+          <div class="app-filter__option">
+            <%= form.govuk_check_boxes_fieldset(
+              :available,
+              legend: { text: t(".availability"), size: "s" },
+              small: true,
+            ) do %>
+
+              <%= form.govuk_check_box :available,
+                                       true,
+                                       label: { text: t(".available_text") },
+                                       checked: filter_form.available.present? %>
+            <% end %>
+          </div>
 
           <% if @partner_schools.any? %>
             <div class="app-filter__option">

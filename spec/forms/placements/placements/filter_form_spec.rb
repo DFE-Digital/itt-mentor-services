@@ -8,6 +8,14 @@ describe Placements::Placements::FilterForm, type: :model do
   describe "#filters_selected?" do
     subject(:filter_form) { described_class.new(params).filters_selected? }
 
+    context "when given available params" do
+      let(:params) { { available: %w[true] } }
+
+      it "returns true" do
+        expect(filter_form).to eq(true)
+      end
+    end
+
     context "when given school id params" do
       let(:params) { { school_ids: %w[school_id] } }
 
@@ -61,6 +69,24 @@ describe Placements::Placements::FilterForm, type: :model do
 
   describe "index_path_without_filter" do
     subject(:filter_form) { described_class.new(params) }
+
+    context "when removing available params" do
+      let(:params) do
+        { available: %w[true] }
+      end
+
+      it "returns the placements index page path without the given available param" do
+        expect(
+          filter_form.index_path_without_filter(
+            provider:,
+            filter: "available",
+            value: "true",
+          ),
+        ).to eq(
+          placements_provider_placements_path(provider),
+        )
+      end
+    end
 
     context "when removing school id params" do
       let(:params) do
