@@ -1,11 +1,19 @@
 <li class="app-search-results__item">
-  <h2 class="app-search-result__item-title">
-    <%= govuk_link_to(placements_provider_placement_path(@provider, placement), no_visited_state: true) do %>
-      <span><%= school.name %></span>
-      <br>
-      <span><%= placement.subject_names %></span>
-    <% end %>
-  </h2>
+  <div class="govuk-grid-column-three-quarters govuk-!-padding-left-0">
+    <h2 class="app-search-result__item-title">
+      <%= govuk_link_to(placements_provider_placement_path(@provider, placement), no_visited_state: true) do %>
+        <span><%= school.name %></span>
+        <br>
+        <span><%= placement.subject_names %></span>
+      <% end %>
+    </h2>
+  </div>
+
+  <div class="govuk-grid-column-one-quarter">
+    <%= render GovukComponent::TagComponent.new(text: placement.status_text,
+                                                colour: placement.status_colour) %>
+  </div>
+
   <dl class="app-result-detail">
     <div class="app-result-detail__row">
       <dt class="app-result-detail__key">
