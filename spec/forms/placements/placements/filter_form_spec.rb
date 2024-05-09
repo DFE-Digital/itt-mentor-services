@@ -177,6 +177,7 @@ describe Placements::Placements::FilterForm, type: :model do
           partner_school_ids: [],
           school_types: [],
           subject_ids: [],
+          available: [],
         },
       )
     end
