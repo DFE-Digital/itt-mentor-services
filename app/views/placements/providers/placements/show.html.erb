@@ -14,10 +14,6 @@
     <div class="govuk-grid-column-two-thirds">
       <%= render "school_details", school: @school, placement: @placement %>
       <h2 class="govuk-heading-m govuk-!-margin-top-9">
-        <%= t(".mentor_details") %>
-      </h2>
-      <%= render "mentor_details", placement: @placement %>
-      <h2 class="govuk-heading-m govuk-!-margin-top-9">
         <%= t(".contact_details") %>
       </h2>
       <%= render "shared/organisations/contact_details", organisation: @school %>

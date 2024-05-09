@@ -20,7 +20,6 @@ en:
         show:
           page_title: "%{subject_name} - Placements - %{school_name}"
           placement: "Placement - %{school_name}"
-          mentor_details: Mentor details
           contact_details: Contact details
         school_details:
           school_type: School type
@@ -32,5 +31,3 @@ en:
           admissions_policy: Admissions policy
           percentage_free_school_meals: Percentage free school meals
           ofsted_rating: Ofsted rating
-        mentor_details:
-          mentor: Mentor

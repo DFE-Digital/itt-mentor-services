@@ -30,81 +30,29 @@ RSpec.describe "Placements / Providers / Placements / View a placement",
   let!(:subject_1) { create(:subject, name: "Biology") }
   let!(:subject_2) { create(:subject, name: "Chemistry") }
   let!(:placement) do
-    create(:placement, subjects:, school:, mentors:)
+    create(:placement, subjects:, school:)
   end
 
   before { given_i_sign_in_as_patricia }
 
   context "when the placement has one subject" do
     let(:subjects) { [subject_1] }
-    let(:mentors) { [] }
 
     scenario "User views a placement details" do
       when_i_visit_the_placement_show_page
       then_i_see_details_for_the_school
       and_i_see_the_subject_name("Biology")
-      and_i_see_no_mentor_details
       and_i_see_contact_details_for_the_school
-    end
-  end
-
-  context "with mentors" do
-    let(:subjects) { [subject_1] }
-    let(:mentor_1) { create(:placements_mentor, first_name: "Joe", last_name: "Bloggs") }
-    let(:mentor_2) { create(:placements_mentor, first_name: "Jane", last_name: "Doe") }
-
-    before do
-      create(
-        :mentor_membership,
-        :placements,
-        mentor: mentor_1,
-        school:,
-      )
-
-      create(
-        :mentor_membership,
-        :placements,
-        mentor: mentor_2,
-        school:,
-      )
-    end
-
-    context "when one mentor is associated with the placement" do
-      let(:mentors) { [mentor_1] }
-
-      scenario "User views a placement and mentor details" do
-        when_i_visit_the_placement_show_page
-        then_i_see_details_for_the_school
-        and_i_see_the_subject_name("Biology")
-        and_i_see_details_for_mentor(mentor_1)
-        and_i_do_not_see_details_for_mentor(mentor_2)
-        and_i_see_contact_details_for_the_school
-      end
-    end
-
-    context "when multiple mentors are associated with the placement" do
-      let(:mentors) { [mentor_1, mentor_2] }
-
-      scenario "User views a placement and multiple mentors details" do
-        when_i_visit_the_placement_show_page
-        then_i_see_details_for_the_school
-        and_i_see_the_subject_name("Biology")
-        and_i_see_details_for_mentor(mentor_1)
-        and_i_see_details_for_mentor(mentor_2)
-        and_i_see_contact_details_for_the_school
-      end
     end
   end
 
   context "with multiple subjects" do
     let(:subjects) { [subject_1, subject_2] }
-    let(:mentors) { [] }
 
     scenario "User views a placement and multiple subject details" do
       when_i_visit_the_placement_show_page
       then_i_see_details_for_the_school
       and_i_see_the_subject_name("Biology and Chemistry")
-      and_i_see_no_mentor_details
       and_i_see_contact_details_for_the_school
     end
   end
@@ -148,25 +96,12 @@ RSpec.describe "Placements / Providers / Placements / View a placement",
     expect(page).to have_content("Good")
   end
 
-  def and_i_see_no_mentor_details
-    expect(page).to have_content("Mentor details")
-    expect(page).to have_content("Not yet known")
-  end
-
   def and_i_see_contact_details_for_the_school
     expect(page).to have_content("Contact details")
     expect(page).to have_content("01234567890")
     expect(page).to have_content("www.a-london-example-school.com")
     expect(page).to have_content("user@london-example-school.com")
     expect(page).to have_content("London Secondary School\nLondon\nCity of London\nLN01 2LN")
-  end
-
-  def and_i_see_details_for_mentor(mentor)
-    expect(page).to have_content(mentor.full_name)
-  end
-
-  def and_i_do_not_see_details_for_mentor(mentor)
-    expect(page).not_to have_content(mentor.full_name)
   end
 
   def and_i_see_the_subject_name(subject_name)
