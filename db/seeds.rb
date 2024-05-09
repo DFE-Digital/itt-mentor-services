@@ -79,7 +79,7 @@ end
 PublishTeacherTraining::Subject::Import.call
 
 # Create placements
-Placements.destroy_all
+Placement.destroy_all
 Placements::School.find_each do |school|
   subjects = school.phase == "Primary" ? Subject.primary : Subject.secondary
   mentors = Placements::Mentor.all
