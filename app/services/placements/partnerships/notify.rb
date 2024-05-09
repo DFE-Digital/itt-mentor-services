@@ -21,7 +21,7 @@ module Placements
       end
 
       def notify_users
-        raise NoMethodError, "#nofity_users must be implemented"
+        raise NoMethodError, "#notify_users must be implemented"
       end
     end
   end
