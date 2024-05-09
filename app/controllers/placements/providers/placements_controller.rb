@@ -37,6 +37,10 @@ class Placements::Providers::PlacementsController < ApplicationController
     @filter_form ||= Placements::Placements::FilterForm.new(filter_params)
   end
 
+  def search_params
+    params.permit(:search_location)
+  end
+
   def filter_params
     params.fetch(:filters, {}).permit(
       :only_available_placements,

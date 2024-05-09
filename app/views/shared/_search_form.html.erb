@@ -1,4 +1,4 @@
-<%# locals: (url:, name:, value: params[name], clear_search_url: "", label:, filters: []) -%>
+<%# locals: (url:, name:, value: params[name], clear_search_url: "", label:, filters: [], caption: {}) -%>
 
 <div class="govuk-form-group">
   <%= form_with(
@@ -7,11 +7,23 @@
     class: "search-form",
     data: { turbo: false },
   ) do |f| %>
-    <%= f.govuk_text_field name, type: :search, value:, label: %>
+    <%= f.govuk_text_field name, type: :search, value:, label:, caption: %>
     <%= f.govuk_submit t(".submit") %>
     <% if filters.present? %>
-      <% filters.each do |filter| %>
-        <%= f.hidden_field :filters, multiple: true, value: filter %>
+      <% if filters.is_a?(Hash) %>
+        <% filters.each do |key, value| %>
+          <% if value.is_a?(Array) %>
+            <% value.each do |v|%>
+              <%= f.hidden_field "filters[#{key}]", multiple: true, value: v %>
+            <% end %>
+          <% else %>
+            <%= f.hidden_field "filters[#{key}]", multiple: true, value: %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <% filters.each do |filter| %>
+          <%= f.hidden_field :filters, multiple: true, value: filter %>
+        <% end %>
       <% end %>
     <% end %>
   <% end %>
