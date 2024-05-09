@@ -85,9 +85,12 @@ class School < ApplicationRecord
   has_many :mentor_memberships
   has_many :mentors, through: :mentor_memberships
 
+  normalizes :email_address, with: ->(value) { value.strip.downcase }
+
   validates :urn, presence: true
   validates :urn, uniqueness: { case_sensitive: false }
   validates :name, presence: true
+  validates :email_address, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_nil: true
 
   scope :placements_service, -> { where placements_service: true }
   scope :claims_service, -> { where claims_service: true }
