@@ -69,7 +69,7 @@ require "rails_helper"
 
 RSpec.describe Placements::School do
   context "with assocations" do
-    it { is_expected.to have_one(:school_contact) }
+    it { is_expected.to have_one(:school_contact).dependent(:destroy) }
 
     it { is_expected.to have_many(:mentor_memberships) }
     it { is_expected.to have_many(:mentors).through(:mentor_memberships) }

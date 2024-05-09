@@ -22,14 +22,8 @@ en:
         edit:
           page_title: School contact
           page_title_with_error: Error - School contact
-          caption: Add school contact
-          description: School contact details
           continue: Continue
           cancel: Cancel
-          attributes:
-            school_contacts:
-              name: Name
-              email_address: Email address
         update:
           school_contact_updated: School contact updated
         remove:
