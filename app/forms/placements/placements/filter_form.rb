@@ -5,7 +5,7 @@ class Placements::Placements::FilterForm < ApplicationForm
   attribute :subject_ids, default: []
   attribute :school_types, default: []
   attribute :partner_school_ids, default: []
-  attribute :available, default: nil
+  attribute :available, default: []
 
   def initialize(params = {})
     params.each_value(&:compact_blank!)
