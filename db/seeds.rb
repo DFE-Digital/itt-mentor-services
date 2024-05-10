@@ -20,6 +20,8 @@ School.last(2).each do |school|
   school.update!(claims_service: true, placements_service: true)
 end
 
+School.where.not(phase: "Primary").limit(3).update!(placements_service: true)
+
 School.first.update!(placements_service: true)
 School.second.update!(claims_service: true)
 
@@ -82,6 +84,6 @@ PublishTeacherTraining::Subject::Import.call
 Placement.destroy_all
 Placements::School.find_each do |school|
   subjects = school.phase == "Primary" ? Subject.primary : Subject.secondary
-  mentors = Placements::Mentor.all
+  mentors = school.mentors
   subjects.find_each { |subject| Placement.create!(school:, subjects: [subject], mentors: [mentors.sample]) }
 end

@@ -5,7 +5,7 @@
   <h1 class="govuk-heading-l">
     <span class="govuk-caption-l"><%= t(".find_placements") %></span>
     <% if @placements.any? %>
-      <%= t(".placements_found", placements_count: @placements.count) %>
+      <%= t(".placements_found", placements_count: @pagy.count) %>
     <% else %>
       <%= t(".no_placements_found") %>
     <% end %>
