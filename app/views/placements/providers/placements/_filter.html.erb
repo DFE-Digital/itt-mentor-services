@@ -26,22 +26,6 @@
             </div>
           </div>
 
-          <% if filter_form.partner_school_ids.present? %>
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".partner_school") %></h3>
-            <ul class="app-filter-tags">
-              <% filter_form.partner_schools.each do |partner_school| %>
-                <li>
-                  <%= govuk_link_to(
-                    partner_school.name,
-                    filter_form.index_path_without_filter(provider: @provider, filter: "partner_school_ids", value: partner_school.id),
-                    class: "app-filter__tag",
-                    no_visited_state: true,
-                  ) %>
-                </li>
-              <% end %>
-            </ul>
-          <% end %>
-
           <% if filter_form.school_ids.present? %>
             <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".school") %></h3>
             <ul class="app-filter-tags">
@@ -90,12 +74,26 @@
             </ul>
           <% end %>
 
+          <% if filter_form.partner_schools.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= "Partner schools" %></h3>
+            <ul class="app-filter-tags">
+              <li>
+                <%= govuk_link_to(
+                      "Partner schools",
+                      filter_form.index_path_without_filter(provider: @provider, filter: "partner_schools", value: @provider.id),
+                      class: "app-filter__tag",
+                      no_visited_state: true,
+                    ) %>
+              </li>
+            </ul>
+          <% end %>
+
           <% if filter_form.only_available_placements.present? %>
             <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".availability") %></h3>
             <ul class="app-filter-tags">
               <li>
                 <%= govuk_link_to(
-                      "Available",
+                      t(".availability"),
                       filter_form.index_path_without_filter(provider: @provider, filter: "only_available_placements", value: true),
                       class: "app-filter__tag",
                       no_visited_state: true,
@@ -118,6 +116,20 @@
 
           <div class="app-filter__option">
             <%= form.govuk_check_boxes_fieldset(
+              :partner_schools,
+              legend: { text: "Partner schools", size: "s" },
+              small: true,
+            ) do %>
+
+              <%= form.govuk_check_box :partner_schools,
+                                       @provider.id,
+                                       label: { text: "Only show placements offered by my partner schools" },
+                                       checked: filter_form.partner_schools.present? %>
+            <% end %>
+          </div>
+
+          <div class="app-filter__option">
+            <%= form.govuk_check_boxes_fieldset(
               :only_available_placements,
               legend: { text: t(".availability"), size: "s" },
               small: true,
@@ -131,33 +143,6 @@
                                        multiple: false %>
             <% end %>
           </div>
-
-          <% if @partner_schools.any? %>
-            <div class="app-filter__option">
-              <%= form.govuk_text_field(
-                :search_partner_school,
-                type: :search,
-                data: {
-                  placements_filter_search_target: "partnerSchoolInput",
-                  action: "input->placements-filter-search#searchPartnerSchool",
-                },
-                label: { text: t(".partner_school"), size: "s" },
-              ) %>
-
-              <%= form.govuk_check_boxes_fieldset(
-                :school_ids,
-                legend: { hidden: "true" },
-                data: { placements_filter_search_target: "partnerSchoolList" },
-                small: true,
-              ) do %>
-                <% @partner_schools.each do |partner_school| %>
-                  <%= form.govuk_check_box :partner_school_ids,
-                    partner_school.id,
-                    label: { text: partner_school.name } %>
-                <% end %>
-              <% end %>
-            </div>
-          <% end %>
 
           <div class="app-filter__option">
             <%= form.govuk_text_field(
