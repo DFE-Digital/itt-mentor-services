@@ -41,7 +41,7 @@ describe Placements::Placements::FilterForm, type: :model do
     end
 
     context "when given partner school params" do
-      let(:params) { { partner_school_ids: %w[partner_school_id] } }
+      let(:params) { { partner_schools: %w[partner_schools] } }
 
       it "returns true" do
         expect(filter_form).to eq(true)
@@ -110,19 +110,19 @@ describe Placements::Placements::FilterForm, type: :model do
 
     context "when removing partner school id params" do
       let(:params) do
-        { partner_school_ids: %w[school_id_1 school_id_2] }
+        { partner_schools: [provider.id] }
       end
 
       it "returns the placements index page path without the given school id param" do
         expect(
           filter_form.index_path_without_filter(
             provider:,
-            filter: "partner_school_ids",
-            value: "school_id_1",
+            filter: "partner_schools",
+            value: provider.id,
           ),
         ).to eq(
           placements_provider_placements_path(provider, filters: {
-            partner_school_ids: %w[school_id_2],
+            partner_schools: [],
           }),
         )
       end
@@ -170,11 +170,11 @@ describe Placements::Placements::FilterForm, type: :model do
   end
 
   describe "#query_params" do
-    it "returns { partner_school_ids: [], school_ids: [], subject_ids: [], school_types: [] }" do
+    it "returns { partner_schools: [], school_ids: [], subject_ids: [], school_types: [] }" do
       expect(described_class.new.query_params).to eq(
         {
           school_ids: [],
-          partner_school_ids: [],
+          partner_schools: [],
           school_types: [],
           subject_ids: [],
           only_available_placements: false,
@@ -200,17 +200,6 @@ describe Placements::Placements::FilterForm, type: :model do
       expect(
         described_class.new(subject_ids: subjects.pluck(:id)).subjects,
       ).to match_array(subjects)
-    end
-  end
-
-  describe "#partner_schools" do
-    it "returns the partner schools associated with the partner_school_id params given" do
-      schools = create_list(:school, 2)
-      provider.partner_schools << schools
-
-      expect(
-        described_class.new(partner_school_ids: schools.pluck(:id)).partner_schools,
-      ).to match_array(schools)
     end
   end
 end

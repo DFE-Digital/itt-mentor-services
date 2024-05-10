@@ -4,7 +4,7 @@ class Placements::Placements::FilterForm < ApplicationForm
   attribute :school_ids, default: []
   attribute :subject_ids, default: []
   attribute :school_types, default: []
-  attribute :partner_school_ids, default: []
+  attribute :partner_schools, default: []
   attribute :only_available_placements, :boolean, default: false
 
   def initialize(params = {})
@@ -39,7 +39,7 @@ class Placements::Placements::FilterForm < ApplicationForm
       school_ids:,
       subject_ids:,
       school_types:,
-      partner_school_ids:,
+      partner_schools:,
       only_available_placements:,
     }
   end
@@ -50,10 +50,6 @@ class Placements::Placements::FilterForm < ApplicationForm
 
   def subjects
     @subjects ||= Subject.where(id: subject_ids).order_by_name
-  end
-
-  def partner_schools
-    @partner_schools ||= School.where(id: partner_school_ids).order_by_name
   end
 
   private
