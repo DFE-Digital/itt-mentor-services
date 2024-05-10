@@ -11,6 +11,8 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
       phase: "Primary",
       name: "Primary School",
       type_of_establishment: "Free school",
+      latitude: 51.5072178,
+      longitude: -0.1275862,
     )
   end
   let!(:secondary_school) do
@@ -19,6 +21,8 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
       phase: "Secondary",
       name: "Secondary School",
       type_of_establishment: "Community school",
+      latitude: 53.9614205,
+      longitude: -1.0739108,
     )
   end
   let!(:subject_1) { create(:subject, name: "Primary with mathematics") }
@@ -182,6 +186,45 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
         and_i_can_not_see_any_selected_filters
       end
     end
+
+    context "when a search location has been pre-entered" do
+      before { stub_london_geocoder_search }
+
+      scenario "User can filter placements by school, and the location search persists" do
+        when_i_visit_the_placements_index_page({ search_location: "London" })
+        and_i_check_filter_option("school-ids", primary_school.id)
+        and_i_click_on("Apply filters")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
+        and_i_can_see_search_location_is_set_as("London")
+        and_i_see_placements_for(school_name: "Primary School", list_item: 0, distance: 0.0)
+      end
+
+      context "when a filter is pre-selected in the URL params" do
+        scenario "User can remove a school filter, and the location search persists" do
+          when_i_visit_the_placements_index_page(
+            { search_location: "London", filters: { school_ids: [primary_school.id] } },
+          )
+          and_i_can_see_a_preset_filter("School", "Primary School")
+          when_i_click_to_remove_filter("School", "Primary School")
+          then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+          and_i_can_see_search_location_is_set_as("London")
+          and_i_see_placements_for(school_name: "Primary School", list_item: 0, distance: 0.0)
+        end
+
+        scenario "User can clear all filters, and the location search persists" do
+          when_i_visit_the_placements_index_page(
+            { search_location: "London", filters: { school_ids: [primary_school.id] } },
+          )
+          and_i_can_see_a_preset_filter("School", "Primary School")
+          when_i_click_on("Clear filters")
+          then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+          and_i_can_not_see_any_selected_filters
+          and_i_can_see_search_location_is_set_as("London")
+          and_i_see_placements_for(school_name: "Primary School", list_item: 0, distance: 0.0)
+        end
+      end
+    end
   end
 
   private
@@ -240,6 +283,7 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
       page.find("label[for='filters-#{filter}-#{normalised_value}-field']", visible: :all).click
     end
   end
+  alias_method :and_i_check_filter_option, :when_i_check_filter_option
 
   def then_i_can_see_a_preset_filter(filter, value)
     selected_filters = page.find(".app-filter-layout__selected")
@@ -287,5 +331,26 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
     within(".govuk-tag--orange") do
       expect(page).to have_text("Unavailable")
     end
+  end
+
+  def and_i_can_see_search_location_is_set_as(search_location)
+    expect(page.find("#search-location-field").value).to eq(search_location)
+  end
+
+  def then_i_see_placements_for(school_name:, list_item:, distance:)
+    within(".app-search-results") do
+      placement_div = page.all(".app-search-results__item")[list_item]
+      expect(placement_div).to have_content(school_name)
+      expect(placement_div).to have_content("#{distance} miles")
+    end
+  end
+  alias_method :and_i_see_placements_for, :then_i_see_placements_for
+
+  def stub_london_geocoder_search
+    geocoder_results = instance_double("geocoder_results")
+    geocoder_result = instance_double("geocoder_result")
+    geocoder_results.stub(:first).and_return(geocoder_result)
+    geocoder_result.stub(:coordinates).and_return([51.5072178, -0.1275862])
+    allow(Geocoder).to receive(:search).and_return(geocoder_results)
   end
 end
