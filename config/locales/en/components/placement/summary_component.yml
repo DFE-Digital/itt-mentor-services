@@ -9,4 +9,5 @@ en:
         religious_character: Religious character
         urban_or_rural: Urban or rural
         ofsted_rating: Ofsted rating
+        distance: "Distance"
         distance_in_miles: "%{distance} miles"
