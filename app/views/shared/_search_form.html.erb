@@ -13,7 +13,7 @@
       <% if filters.is_a?(Hash) %>
         <% filters.each do |key, value| %>
           <% if value.is_a?(Array) %>
-            <% value.each do |v|%>
+            <% value.each do |v| %>
               <%= f.hidden_field "filters[#{key}]", multiple: true, value: v %>
             <% end %>
           <% else %>

@@ -1,4 +1,6 @@
 class Placements::PlacementsQuery < ApplicationQuery
+  MAX_DISTANCE = 50
+
   def call
     scope = Placement.includes(:school, :subjects)
 
@@ -51,10 +53,13 @@ class Placements::PlacementsQuery < ApplicationQuery
     if params[:location_coordinates].present?
       school_ids = Placements::School.near(
         params[:location_coordinates],
-        Geocoder::Search::UK_LENGTH,
+        MAX_DISTANCE,
         order: :distance,
       ).map(&:id)
-      scope.order_by_location_and_subject(school_ids)
+
+      scope.where(school_id: school_ids)
+        .order_by_school_ids(school_ids)
+        .order("subjects.name")
     else
       scope.order_by_subject_school_name
     end

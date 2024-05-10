@@ -62,4 +62,32 @@ RSpec.describe Placement, type: :model do
       end
     end
   end
+
+  describe "order_by_school_ids" do
+    it "returns placements ordered by a given list of school ids" do
+      school_1 = create(:placements_school)
+      school_2 = create(:placements_school)
+      school_3 = create(:placements_school)
+
+      placement_1 = create(:placement, school: school_1)
+      placement_2 = create(:placement, school: school_2)
+      placement_3 = create(:placement, school: school_3)
+
+      expect(
+        described_class.order_by_school_ids(
+          [school_2.id, school_3.id, school_1.id],
+        ),
+      ).to eq(
+        [placement_2, placement_3, placement_1],
+      )
+
+      expect(
+        described_class.order_by_school_ids(
+          [school_3.id, school_2.id, school_1.id],
+        ),
+      ).to eq(
+        [placement_3, placement_2, placement_1],
+      )
+    end
+  end
 end

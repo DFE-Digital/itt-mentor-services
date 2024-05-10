@@ -36,7 +36,6 @@ class Placement < ApplicationRecord
   delegate :name, to: :provider, prefix: true, allow_nil: true
 
   scope :order_by_subject_school_name, -> { includes(:subjects, :school).order("subjects.name", "schools.name") }
-  scope :order_by_location_and_subject, ->(school_ids) { includes(:subjects).order_by_school_ids(school_ids).order("subjects.name") }
 
   def self.order_by_school_ids(school_ids)
     t = arel_table
