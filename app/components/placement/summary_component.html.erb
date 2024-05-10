@@ -10,8 +10,7 @@
   </div>
 
   <div class="govuk-grid-column-one-quarter">
-    <%= render GovukComponent::TagComponent.new(text: placement.status_text,
-                                                colour: placement.status_colour) %>
+    <%= render Placement::StatusTagComponent.new(placement:) %>
   </div>
 
   <dl class="app-result-detail">
