@@ -5,8 +5,7 @@ class Placements::Providers::PlacementsController < ApplicationController
   def index
     @subjects = Subject.order_by_name.select(:id, :name)
     @school_types = compact_school_attribute_values(:type_of_establishment)
-    @schools = Placements::School.select(:id, :name)
-    @partner_schools = @provider.partner_schools.select(:id, :name)
+    set_schools
 
     @pagy, @placements = pagy(
       Placements::PlacementsQuery.call(
@@ -21,6 +20,22 @@ class Placements::Providers::PlacementsController < ApplicationController
   end
 
   private
+
+  def set_schools
+    @schools = partner_schools_present? ? partner_schools : all_placements_schools
+  end
+
+  def partner_schools_present?
+    filter_params[:partner_schools]&.compact_blank.present?
+  end
+
+  def partner_schools
+    @provider.partner_schools.select(:id, :name)
+  end
+
+  def all_placements_schools
+    Placements::School.select(:id, :name)
+  end
 
   def set_provider
     @provider = Placements::Provider.find(params[:provider_id])
