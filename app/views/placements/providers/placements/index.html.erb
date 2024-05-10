@@ -21,18 +21,17 @@
     </div>
 
     <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-m">Enter a location</h2>
+      <%= render partial: "shared/search_form", locals: {
+        url: placements_provider_placements_path,
+        label: { hidden: true },
+        caption: { text: "For example, Sunderland or SR2" },
+        name: :search_location,
+        clear_search_url: placements_provider_placements_path,
+        filters: filter_form.attributes,
+        value: @search_location,
+      } %>
       <% if @placements.any? %>
-        <h2 class="govuk-heading-m">Enter a location</h2>
-        <%= render partial: "shared/search_form", locals: {
-          url: placements_provider_placements_path,
-          label: { hidden: true },
-          caption: { text: "For example, Sunderland or SR2" },
-          name: :search_location,
-          clear_search_url: placements_provider_placements_path,
-          filters: filter_form.attributes,
-          value: @search_location,
-        } %>
-
         <ul class="app-search-results">
           <%= render(Placement::SummaryComponent.with_collection(@placements, provider: @provider, location_coordinates:)) %>
         </ul>
