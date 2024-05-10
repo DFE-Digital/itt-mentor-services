@@ -17,7 +17,7 @@
   </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-third">
-      <%= render partial: "filter" %>
+      <%= render partial: "filter", locals: { search_location: @search_location } %>
     </div>
 
     <div class="govuk-grid-column-two-thirds">
@@ -30,10 +30,11 @@
           name: :search_location,
           clear_search_url: placements_provider_placements_path,
           filters: filter_form.attributes,
+          value: @search_location,
         } %>
 
         <ul class="app-search-results">
-          <%= render(Placement::SummaryComponent.with_collection(@placements, provider: @provider)) %>
+          <%= render(Placement::SummaryComponent.with_collection(@placements, provider: @provider, location_coordinates:)) %>
         </ul>
         <%= render PaginationComponent.new(pagy: @pagy) %>
       <% else %>
