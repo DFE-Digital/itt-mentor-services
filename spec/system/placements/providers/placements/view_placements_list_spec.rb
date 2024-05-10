@@ -24,7 +24,7 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
   let!(:subject_1) { create(:subject, name: "Primary with mathematics") }
   let!(:subject_2) { create(:subject, name: "Chemistry") }
   let(:placement_1) { create(:placement, subjects: [subject_1], school: primary_school) }
-  let(:placement_2) { create(:placement, subjects: [subject_2], school: secondary_school, provider: create(:placements_provider)) }
+  let(:placement_2) { create(:placement, subjects: [subject_2], school: secondary_school, provider: build(:placements_provider)) }
 
   before do
     given_i_sign_in_as_patricia
@@ -45,6 +45,8 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
       when_i_visit_the_placements_index_page
       then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
       and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
+      and_i_can_see_the_status_tag_for_placement_1
+      and_i_can_see_the_status_tag_for_placement_2
     end
 
     scenario "User can filter placements by availability" do
@@ -270,5 +272,17 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
 
   def and_i_cannot_see_a_placement_for_placement_2
     expect(page).not_to have_content("Secondary School\nChemistry")
+  end
+
+  def and_i_can_see_the_status_tag_for_placement_1
+    within(".govuk-tag--turquoise") do
+      expect(page).to have_text("Available")
+    end
+  end
+
+  def and_i_can_see_the_status_tag_for_placement_2
+    within(".govuk-tag--orange") do
+      expect(page).to have_text("Unavailable")
+    end
   end
 end
