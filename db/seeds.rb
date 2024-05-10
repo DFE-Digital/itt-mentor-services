@@ -20,7 +20,7 @@ School.last(2).each do |school|
   school.update!(claims_service: true, placements_service: true)
 end
 
-School.where.not(phase: "Primary").limit(3).update!(placements_service: true)
+School.where(phase: "Secondary").limit(3).update!(placements_service: true)
 
 School.first.update!(placements_service: true)
 School.second.update!(claims_service: true)
