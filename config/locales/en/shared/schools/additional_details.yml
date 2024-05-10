@@ -2,8 +2,7 @@ en:
   shared:
     schools:
       additional_details:
-        group: Group
-        type: Type
+        establishment_group: Establishment group
         phase: Phase
         gender: Gender
         minimum_age: Minimum age
