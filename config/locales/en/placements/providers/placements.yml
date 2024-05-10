@@ -27,7 +27,7 @@ en:
           placement: "Placement - %{school_name}"
           contact_details: Contact details
         school_details:
-          school_type: School type
+          establishment_group: Establishment group
           school_phase: School phase
           gender: Gender
           age_range: Age range

@@ -4,7 +4,7 @@ en:
       summary_component:
         phase: Phase
         age_range: Age range
-        school_type: School type
+        establishment_group: Establishment group
         gender: Gender
         religious_character: Religious character
         urban_or_rural: Urban or rural
