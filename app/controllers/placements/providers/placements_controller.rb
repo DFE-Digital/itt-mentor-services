@@ -1,6 +1,6 @@
 class Placements::Providers::PlacementsController < ApplicationController
   before_action :set_provider
-  helper_method :filter_form
+  helper_method :filter_form, :location_coordinates
 
   def index
     @subjects = Subject.order_by_name.select(:id, :name)
@@ -37,8 +37,21 @@ class Placements::Providers::PlacementsController < ApplicationController
     @filter_form ||= Placements::Placements::FilterForm.new(filter_params)
   end
 
-  def search_params
-    params.permit(:search_location)
+  def search_location
+    @search_location ||= params[:search_location] ||
+      params.dig(:filters, :search_location)
+  end
+
+  def location_coordinates
+    return nil if search_location.blank?
+
+    @location_coordinates ||= begin
+      location = Geocoder::Search.call(
+        search_location,
+      )
+      # latitude and longitude
+      location.coordinates
+    end
   end
 
   def filter_params
@@ -54,6 +67,7 @@ class Placements::Providers::PlacementsController < ApplicationController
   def query_params
     {
       filters: filter_form.query_params,
+      location_coordinates:,
       current_provider: @provider,
     }
   end

@@ -17,11 +17,11 @@ class Placements::Placements::FilterForm < ApplicationForm
     attributes.values.compact.flatten.any?
   end
 
-  def clear_filters_path(provider)
-    placements_provider_placements_path(provider)
+  def clear_filters_path(provider, search_location = nil)
+    placements_provider_placements_path(provider, search_location:)
   end
 
-  def index_path_without_filter(provider:, filter:, value: nil)
+  def index_path_without_filter(provider:, filter:, value: nil, search_location: nil)
     without_filter = if BOOLEAN_ATTRIBUTES.include?(filter)
                        compacted_attributes.reject { |key, _| key == filter }
                      else
@@ -30,7 +30,7 @@ class Placements::Placements::FilterForm < ApplicationForm
 
     placements_provider_placements_path(
       provider_id: provider,
-      params: { filters: without_filter },
+      params: { filters: without_filter, search_location: },
     )
   end
 

@@ -19,7 +19,7 @@
               <p class="govuk-body">
                 <%= govuk_link_to(
                   t("clear_filters"),
-                  filter_form.clear_filters_path(@provider),
+                  filter_form.clear_filters_path(@provider, search_location),
                   no_visited_state: true,
                 ) %>
               </p>
@@ -33,7 +33,12 @@
                 <li>
                   <%= govuk_link_to(
                     school.name,
-                    filter_form.index_path_without_filter(provider: @provider, filter: "school_ids", value: school.id),
+                    filter_form.index_path_without_filter(
+                      provider: @provider,
+                      filter: "school_ids",
+                      value: school.id,
+                      search_location:,
+                    ),
                     class: "app-filter__tag",
                     no_visited_state: true,
                   ) %>
@@ -49,7 +54,12 @@
                 <li>
                   <%= govuk_link_to(
                     subject.name,
-                    filter_form.index_path_without_filter(provider: @provider, filter: "subject_ids", value: subject.id),
+                    filter_form.index_path_without_filter(
+                      provider: @provider,
+                      filter: "subject_ids",
+                      value: subject.id,
+                      search_location:,
+                    ),
                     class: "app-filter__tag",
                     no_visited_state: true,
                   ) %>
@@ -65,7 +75,12 @@
                 <li>
                   <%= govuk_link_to(
                     school_type,
-                    filter_form.index_path_without_filter(provider: @provider, filter: "school_types", value: school_type),
+                    filter_form.index_path_without_filter(
+                      provider: @provider,
+                      filter: "school_types",
+                      value: school_type,
+                      search_location:,
+                    ),
                     class: "app-filter__tag",
                     no_visited_state: true,
                   ) %>
@@ -80,7 +95,12 @@
               <li>
                 <%= govuk_link_to(
                       t(".partner_schools"),
-                      filter_form.index_path_without_filter(provider: @provider, filter: "only_partner_schools", value: true),
+                      filter_form.index_path_without_filter(
+                        provider: @provider, 
+                        filter: "only_partner_schools", 
+                        value: true,
+                        search_location:,
+                      ),
                       class: "app-filter__tag",
                       no_visited_state: true,
                     ) %>
@@ -113,6 +133,7 @@
           data: { turbo: false, controller: "placements-filter-search" },
         ) do |form| %>
           <%= form.govuk_submit t("apply_filters") %>
+          <%= form.hidden_field :search_location, value: search_location %>
 
           <div class="app-filter__option">
             <%= form.govuk_check_boxes_fieldset(
