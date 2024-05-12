@@ -10,3 +10,4 @@ en:
         agreed_on: Agreed on
         funding_link_text: View grant conditions
         condtions_not_accepted: This school has not agreed to the grant conditions
+        remove_agreement_text: Remove user's agreement to the grant conditions

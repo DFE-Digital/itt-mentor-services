@@ -1,6 +1,6 @@
 class Claims::Support::SchoolsController < Claims::Support::ApplicationController
   before_action :redirect_to_school_options, only: :check, if: -> { javascript_disabled? }
-  before_action :set_school, only: %i[show]
+  before_action :set_school, only: %i[show remove_grant_conditions_acceptance_check remove_grant_conditions_acceptance]
   before_action :authorize_school
 
   def index
@@ -15,6 +15,13 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
                    else
                      SchoolOnboardingForm.new
                    end
+  end
+
+  def remove_grant_conditions_acceptance_check; end
+
+  def remove_grant_conditions_acceptance
+    @school.update!(claims_grant_conditions_accepted_at: nil, claims_grant_conditions_accepted_by: nil)
+    redirect_to claims_support_school_path(@school), flash: { success: t(".success") }
   end
 
   def school_options

@@ -9,7 +9,11 @@
       <% row.with_value(**details_field_args(l(organisation.claims_grant_conditions_accepted_at.to_date, format: :long))) %>
     <% end %>
   <% end %>
-  <p class="govuk-body"><%= govuk_link_to(t(".funding_link_text"), claims_grant_conditions_path) %></p>
+  <% if current_user.support_user? %>
+    <%= govuk_link_to t(".remove_agreement_text"), remove_grant_conditions_acceptance_check_claims_support_school_path(organisation), class: "app-link app-link--destructive" %>
+  <% else %>
+    <p class="govuk-body"><%= govuk_link_to(t(".funding_link_text"), claims_grant_conditions_path) %></p>
+  <% end %>
 <% else %>
   <p class="govuk-body"><%= t(".condtions_not_accepted") %></p>
 <% end %>
