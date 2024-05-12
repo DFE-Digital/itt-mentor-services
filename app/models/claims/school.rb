@@ -66,6 +66,8 @@
 #  fk_rails_...  (trust_id => trusts.id)
 #
 class Claims::School < School
+  audited
+
   default_scope { claims_service }
 
   has_many :users, through: :user_memberships

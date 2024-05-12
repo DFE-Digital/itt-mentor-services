@@ -1,0 +1,11 @@
+en:
+  claims:
+    support:
+      schools:
+        remove_grant_conditions_acceptance_check:
+          page_title: Are you sure you want to remove %{user_name}'s agreement?
+          agreement: Agreement to grant conditions
+          remove_agreement: Remove agreement
+          cancel: Cancel
+        remove_grant_conditions_acceptance:
+          success: Agreement to grant conditions removed

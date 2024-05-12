@@ -61,6 +61,11 @@ scope module: :claims, as: :claims, constraints: {
     end
 
     resources :schools, except: %i[destroy update] do
+      member do
+        put :remove_grant_conditions_acceptance, path: "remove-grant-conditions-acceptance"
+        get :remove_grant_conditions_acceptance_check, path: "remove-grant-conditions-acceptance"
+      end
+
       collection do
         get :check
         get :check_school_option
