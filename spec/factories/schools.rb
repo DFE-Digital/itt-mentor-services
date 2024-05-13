@@ -87,6 +87,14 @@ FactoryBot.define do
 
     factory :placements_school,
             class: "Placements::School",
-            parent: :school, traits: %i[placements]
+            parent: :school, traits: %i[placements] do
+      transient do
+        with_school_contact { true }
+      end
+
+      after(:build) do |school, evaluator|
+        create(:school_contact, school:) if evaluator.with_school_contact
+      end
+    end
   end
 end

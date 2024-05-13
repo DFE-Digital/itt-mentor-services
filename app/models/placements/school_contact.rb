@@ -19,6 +19,14 @@
 #
 class Placements::SchoolContact < ApplicationRecord
   belongs_to :school
+  before_destroy :prevent_destroy
 
   validates :email_address, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+
+  def prevent_destroy
+    raise ActiveRecord::RecordNotDestroyed,
+          I18n.t(
+            "activerecord.errors.models.placements/school_contact.can_not_be_destroyed",
+          )
+  end
 end

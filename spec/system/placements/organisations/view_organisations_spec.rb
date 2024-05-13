@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "View organisations", type: :system, service: :placements do
-  let(:one_school) { create(:school, :placements, name: "One School") }
+  let(:one_school) { create(:placements_school, name: "One School") }
   let(:one_provider) { create(:placements_provider, name: "One Provider") }
-  let(:multi_org_school) { create(:school, :placements, name: "Placements School") }
+  let(:multi_org_school) { create(:placements_school, name: "Placements School") }
   let(:multi_org_provider) { create(:placements_provider, name: "Provider 1") }
   let(:claims_school) { create(:school, :claims, name: "Claims School") }
   let(:no_service_school) { create(:school, name: "No service school") }

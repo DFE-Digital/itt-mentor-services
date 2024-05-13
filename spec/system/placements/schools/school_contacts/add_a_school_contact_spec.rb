@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Placements / Schools / School Contacts / Add a school contact",
                type: :system, service: :placements do
-  let(:school) { build(:placements_school) }
+  let(:school) { build(:placements_school, with_school_contact: false) }
 
   before do
     given_i_sign_in_as_anne
