@@ -5,7 +5,7 @@ class Placements::Providers::PlacementsController < ApplicationController
   def index
     @subjects = Subject.order_by_name.select(:id, :name)
     @school_types = compact_school_attribute_values(:type_of_establishment)
-    set_schools
+    @schools = schools_scope.select(:id, :name)
 
     @pagy, @placements = pagy(
       Placements::PlacementsQuery.call(
@@ -21,20 +21,12 @@ class Placements::Providers::PlacementsController < ApplicationController
 
   private
 
-  def set_schools
-    @schools = partner_schools_present? ? partner_schools : all_placements_schools
-  end
-
-  def partner_schools_present?
-    filter_params[:partner_schools]&.compact_blank.present?
-  end
-
-  def partner_schools
-    @provider.partner_schools.select(:id, :name)
-  end
-
-  def all_placements_schools
-    Placements::School.select(:id, :name)
+  def schools_scope
+    if filter_params[:only_partner_schools]&.compact_blank&.empty?
+      @provider.partner_schools
+    else
+      Placements::School.all
+    end
   end
 
   def set_provider
@@ -48,11 +40,18 @@ class Placements::Providers::PlacementsController < ApplicationController
   def filter_params
     params.fetch(:filters, {}).permit(
       :only_available_placements,
-      partner_school_ids: [],
+      :only_partner_schools,
       school_ids: [],
       subject_ids: [],
       school_types: [],
     )
+  end
+
+  def query_params
+    {
+      filters: filter_form.query_params,
+      current_provider: @provider,
+    }
   end
 
   def query_params
@@ -68,6 +67,6 @@ class Placements::Providers::PlacementsController < ApplicationController
 
   def compact_school_attribute_values(attribute)
     all_schools.where.not(attribute => nil)
-      .distinct(attribute).order(attribute).pluck(attribute)
+               .distinct(attribute).order(attribute).pluck(attribute)
   end
 end

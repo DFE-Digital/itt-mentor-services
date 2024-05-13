@@ -74,13 +74,13 @@
             </ul>
           <% end %>
 
-          <% if filter_form.partner_schools.present? %>
+          <% if filter_form.only_partner_schools.present? %>
             <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= "Partner schools" %></h3>
             <ul class="app-filter-tags">
               <li>
                 <%= govuk_link_to(
                       "Partner schools",
-                      filter_form.index_path_without_filter(provider: @provider, filter: "partner_schools", value: @provider.id),
+                      filter_form.index_path_without_filter(provider: @provider, filter: "only_partner_schools", value: true),
                       class: "app-filter__tag",
                       no_visited_state: true,
                     ) %>
@@ -116,15 +116,17 @@
 
           <div class="app-filter__option">
             <%= form.govuk_check_boxes_fieldset(
-              :partner_schools,
+              :only_partner_schools,
               legend: { text: "Partner schools", size: "s" },
               small: true,
+              multiple: false,
             ) do %>
 
-              <%= form.govuk_check_box :partner_schools,
-                                       @provider.id,
+              <%= form.govuk_check_box :only_partner_schools,
+                                       true,
                                        label: { text: "Only show placements offered by my partner schools" },
-                                       checked: filter_form.partner_schools.present? %>
+                                       checked: filter_form.only_partner_schools == true %>
+
             <% end %>
           </div>
 

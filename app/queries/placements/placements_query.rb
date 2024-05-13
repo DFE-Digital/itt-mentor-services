@@ -1,7 +1,9 @@
 class Placements::PlacementsQuery < ApplicationQuery
   def call
-    scope = set_initial_scope
+    scope = Placement.includes(:school, :subjects)
+
     scope = school_condition(scope)
+    scope = partner_school_condition(scope)
     scope = subject_condition(scope)
     scope = school_type_condition(scope)
     scope = only_available_placements_condition(scope)
@@ -9,23 +11,6 @@ class Placements::PlacementsQuery < ApplicationQuery
   end
 
   private
-
-  def set_initial_scope
-    if partner_schools_present?
-      scope_with_partner_schools
-    else
-      Placement.includes(:school, :subjects)
-    end
-  end
-
-  def scope_with_partner_schools
-    provider = Placements::Provider.find(params[:partner_schools].first)
-    Placement.where(school_id: provider.partner_schools.ids).includes(:school, :subjects)
-  end
-
-  def partner_schools_present?
-    params[:partner_schools]&.compact_blank!.present?
-  end
 
   def school_condition(scope)
     return scope if filter_params[:school_ids].blank?

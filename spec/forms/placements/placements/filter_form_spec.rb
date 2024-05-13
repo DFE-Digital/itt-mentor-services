@@ -41,7 +41,7 @@ describe Placements::Placements::FilterForm, type: :model do
     end
 
     context "when given partner school params" do
-      let(:params) { { partner_schools: %w[partner_schools] } }
+      let(:params) { { only_partner_schools: true } }
 
       it "returns true" do
         expect(filter_form).to eq(true)
@@ -110,15 +110,15 @@ describe Placements::Placements::FilterForm, type: :model do
 
     context "when removing partner school id params" do
       let(:params) do
-        { partner_schools: [provider.id] }
+        { only_partner_schools: true }
       end
 
       it "returns the placements index page path without the given school id param" do
         expect(
           filter_form.index_path_without_filter(
             provider:,
-            filter: "partner_schools",
-            value: provider.id,
+            filter: "only_partner_schools",
+            value: false,
           ),
         ).to eq(
           placements_provider_placements_path(provider, filters: {
@@ -170,11 +170,11 @@ describe Placements::Placements::FilterForm, type: :model do
   end
 
   describe "#query_params" do
-    it "returns { partner_schools: [], school_ids: [], subject_ids: [], school_types: [] }" do
+    it "returns { only_partner_schools: false, school_ids: [], subject_ids: [], school_types: [] }" do
       expect(described_class.new.query_params).to eq(
         {
           school_ids: [],
-          partner_schools: [],
+          only_partner_schools: false,
           school_types: [],
           subject_ids: [],
           only_available_placements: false,

@@ -4,7 +4,7 @@ class Placements::Placements::FilterForm < ApplicationForm
   attribute :school_ids, default: []
   attribute :subject_ids, default: []
   attribute :school_types, default: []
-  attribute :partner_schools, default: []
+  attribute :only_partner_schools, :boolean, default: false
   attribute :only_available_placements, :boolean, default: false
 
   def initialize(params = {})
@@ -39,7 +39,7 @@ class Placements::Placements::FilterForm < ApplicationForm
       school_ids:,
       subject_ids:,
       school_types:,
-      partner_schools:,
+      only_partner_schools:,
       only_available_placements:,
     }
   end
@@ -54,7 +54,7 @@ class Placements::Placements::FilterForm < ApplicationForm
 
   private
 
-  BOOLEAN_ATTRIBUTES = %w[only_available_placements].freeze
+  BOOLEAN_ATTRIBUTES = %w[only_available_placements only_partner_schools].freeze
 
   def compacted_attributes
     @compacted_attributes ||= attributes.compact_blank
