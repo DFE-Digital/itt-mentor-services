@@ -79,7 +79,7 @@
             <ul class="app-filter-tags">
               <li>
                 <%= govuk_link_to(
-                      "Partner schools",
+                      t(".partner_schools"),
                       filter_form.index_path_without_filter(provider: @provider, filter: "only_partner_schools", value: true),
                       class: "app-filter__tag",
                       no_visited_state: true,
