@@ -31,10 +31,7 @@ RSpec.describe Placements::SchoolContact, type: :model do
     it { is_expected.not_to allow_value("name").for(:email_address) }
 
     describe "#check_placement_exist" do
-      let(:school) { create(:placements_school) }
-      let(:school_contact) { school.school_contact }
-
-      before { school_contact }
+      let!(:school_contact) { create(:school_contact) }
 
       it "can not be destroyed" do
         expect { school_contact.destroy! }.to raise_error(
