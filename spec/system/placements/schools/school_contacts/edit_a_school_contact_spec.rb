@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Placements / Schools / School Contacts / Edit a school contact",
                type: :system, service: :placements do
   let(:school) { build(:placements_school) }
-  let(:school_contact) { create(:school_contact, school:) }
+  let(:school_contact) { school.school_contact }
 
   before do
     given_i_sign_in_as_anne

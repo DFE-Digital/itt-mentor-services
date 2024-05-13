@@ -92,6 +92,9 @@ en:
           status: Status
           not_entered: Not entered
           add_placement: Add placement
+          you_must_add_itt_placement_contact: |
+            You must add the %{link_to} email before adding a placement
+          itt_placement_contact: ITT placement contact
         show:
           remove_placement: Remove placement
           attributes:

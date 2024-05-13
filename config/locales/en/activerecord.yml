@@ -52,3 +52,4 @@ en:
             email_address:
               blank: Enter an email address
               invalid: Enter an email address in the correct format, like name@example.com
+          can_not_be_destroyed: School contact can not be destroyed!

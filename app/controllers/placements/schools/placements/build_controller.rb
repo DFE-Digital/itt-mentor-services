@@ -1,5 +1,6 @@
 class Placements::Schools::Placements::BuildController < ApplicationController
   before_action :setup_session, except: :new
+  before_action :authorize_placement
 
   def new
     reset_session
@@ -187,5 +188,9 @@ class Placements::Schools::Placements::BuildController < ApplicationController
 
   def mentor_ids_params
     params.dig(:placements_schools_placements_build_placement, :mentor_ids).compact_blank
+  end
+
+  def authorize_placement
+    authorize Placement.new(school:)
   end
 end
