@@ -108,7 +108,7 @@ describe Placements::Placements::FilterForm, type: :model do
       end
     end
 
-    context "when removing partner school id params" do
+    context "when removing the partner schools filter" do
       let(:params) do
         { only_partner_schools: true }
       end
@@ -121,9 +121,7 @@ describe Placements::Placements::FilterForm, type: :model do
             value: false,
           ),
         ).to eq(
-          placements_provider_placements_path(provider, filters: {
-            partner_schools: [],
-          }),
+          placements_provider_placements_path(provider, filters: {}),
         )
       end
     end

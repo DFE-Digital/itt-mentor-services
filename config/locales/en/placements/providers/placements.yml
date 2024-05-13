@@ -9,7 +9,8 @@ en:
           placements: Placements
           no_results_for_filters: There are no results for the selected filter.
         filter:
-          partner_school: Partner school
+          partner_schools: Partner schools
+          only_show_partner_schools: Only show placements offered by my partner schools
           school: School
           subject: Subject
           school_phase: School phase

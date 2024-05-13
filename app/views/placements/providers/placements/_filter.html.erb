@@ -75,7 +75,7 @@
           <% end %>
 
           <% if filter_form.only_partner_schools.present? %>
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= "Partner schools" %></h3>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".partner_schools") %></h3>
             <ul class="app-filter-tags">
               <li>
                 <%= govuk_link_to(
@@ -117,14 +117,15 @@
           <div class="app-filter__option">
             <%= form.govuk_check_boxes_fieldset(
               :only_partner_schools,
-              legend: { text: "Partner schools", size: "s" },
-              small: true,
+              legend: { text: t(".partner_schools"), size: "s" },
               multiple: false,
+              small: true,
             ) do %>
 
               <%= form.govuk_check_box :only_partner_schools,
                                        true,
-                                       label: { text: "Only show placements offered by my partner schools" },
+                                       label: { text: t(".only_show_partner_schools") },
+                                       multiple: false,
                                        checked: filter_form.only_partner_schools == true %>
 
             <% end %>

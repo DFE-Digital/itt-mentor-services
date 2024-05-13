@@ -5,7 +5,7 @@ class Placements::Providers::PlacementsController < ApplicationController
   def index
     @subjects = Subject.order_by_name.select(:id, :name)
     @school_types = compact_school_attribute_values(:type_of_establishment)
-    @schools = schools_scope.select(:id, :name)
+    @schools = schools_scope.order_by_name.select(:id, :name)
 
     @pagy, @placements = pagy(
       Placements::PlacementsQuery.call(
@@ -22,7 +22,7 @@ class Placements::Providers::PlacementsController < ApplicationController
   private
 
   def schools_scope
-    if filter_params[:only_partner_schools] && filter_params[:only_partner_schools].present?
+    if filter_params[:only_partner_schools].present?
       @provider.partner_schools
     else
       Placements::School.all

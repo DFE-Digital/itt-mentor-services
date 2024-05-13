@@ -31,7 +31,7 @@ class Placements::PlacementsQuery < ApplicationQuery
   end
 
   def partner_school_condition(scope)
-    return scope if filter_params[:partner_school_ids].blank?
+    return scope if filter_params[:only_partner_schools].blank?
 
     scope.where(school_id: filter_params[:partner_school_ids])
   end

@@ -64,7 +64,7 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
       when_i_visit_the_placements_index_page
       then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
       and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
-      when_i_check_filter_option("only-partner-schools", "true")
+      when_i_check_filter_option("only-partner-schools", true)
       and_i_click_on("Apply filters")
       then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
       and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
@@ -114,7 +114,7 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
 
       scenario "User can remove a partner school filter" do
         given_a_partnership_exists_between(provider, primary_school)
-        when_i_visit_the_placements_index_page({ filters: { only_partner_schools: %w[true] } })
+        when_i_visit_the_placements_index_page({ filters: { only_partner_schools: true } })
         then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
         and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
         and_i_can_see_a_preset_filter("Partner schools", "Partner schools")
@@ -162,7 +162,7 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
         when_i_visit_the_placements_index_page(
           {
             filters: {
-              only_partner_schools: [true],
+              only_partner_schools: true,
               school_ids: [primary_school.id],
               subject_ids: [subject_1.id],
               school_types: ["Free school"],
