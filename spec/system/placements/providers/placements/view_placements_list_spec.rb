@@ -162,7 +162,7 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
         when_i_visit_the_placements_index_page(
           {
             filters: {
-              only_partner_schools: %w[true],
+              only_partner_schools: [true],
               school_ids: [primary_school.id],
               subject_ids: [subject_1.id],
               school_types: ["Free school"],

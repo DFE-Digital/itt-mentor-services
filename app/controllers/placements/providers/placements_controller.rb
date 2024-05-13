@@ -22,7 +22,7 @@ class Placements::Providers::PlacementsController < ApplicationController
   private
 
   def schools_scope
-    if filter_params[:only_partner_schools] && filter_params[:only_partner_schools].empty?
+    if filter_params[:only_partner_schools] && filter_params[:only_partner_schools].present?
       @provider.partner_schools
     else
       Placements::School.all
