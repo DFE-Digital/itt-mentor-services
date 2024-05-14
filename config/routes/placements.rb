@@ -49,7 +49,7 @@ scope module: :placements,
           member { get :remove }
           collection { get :check }
         end
-        
+
         resources :partner_providers, only: %i[index new create show destroy] do
           member { get :remove }
 
@@ -73,6 +73,16 @@ scope module: :placements,
         resources :users, only: %i[index new create show destroy] do
           member { get :remove }
           collection { get :check }
+        end
+      end
+
+      resources :partner_schools, only: %i[index new create show destroy] do
+        member { get :remove }
+
+        collection do
+          get :check
+          get :check_school_option
+          get :school_options
         end
       end
     end
