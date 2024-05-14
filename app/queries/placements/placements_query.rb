@@ -7,7 +7,7 @@ class Placements::PlacementsQuery < ApplicationQuery
     scope = school_condition(scope)
     scope = partner_school_condition(scope)
     scope = subject_condition(scope)
-    scope = school_type_condition(scope)
+    scope = establishment_group_condition(scope)
     scope = only_available_placements_condition(scope)
     order_condition(scope)
   end
@@ -26,10 +26,10 @@ class Placements::PlacementsQuery < ApplicationQuery
     scope.where(subjects: { id: filter_params[:subject_ids] })
   end
 
-  def school_type_condition(scope)
-    return scope if filter_params[:school_types].blank?
+  def establishment_group_condition(scope)
+    return scope if filter_params[:establishment_groups].blank?
 
-    scope.where(schools: { type_of_establishment: filter_params[:school_types] })
+    scope.where(schools: { group: filter_params[:establishment_groups] })
   end
 
   def partner_school_condition(scope)

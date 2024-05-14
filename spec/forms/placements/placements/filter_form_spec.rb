@@ -32,8 +32,8 @@ describe Placements::Placements::FilterForm, type: :model do
       end
     end
 
-    context "when given school type params" do
-      let(:params) { { school_types: %w[Miscellaneous] } }
+    context "when given establishment group params" do
+      let(:params) { { establishment_groups: %w[Colleges] } }
 
       it "returns true" do
         expect(filter_form).to eq(true)
@@ -146,21 +146,21 @@ describe Placements::Placements::FilterForm, type: :model do
       end
     end
 
-    context "when removing school type params" do
+    context "when removing establishment group params" do
       let(:params) do
-        { school_types: ["Free school", "Community school"] }
+        { establishment_groups: ["Academies", "Independent schools"] }
       end
 
-      it "returns the placements index page path without the given school type param" do
+      it "returns the placements index page path without the given establishment group param" do
         expect(
           filter_form.index_path_without_filter(
             provider:,
-            filter: "school_types",
-            value: "Free school",
+            filter: "establishment_groups",
+            value: "Independent schools",
           ),
         ).to eq(
           placements_provider_placements_path(provider, filters: {
-            school_types: ["Community school"],
+            establishment_groups: %w[Academies],
           }),
         )
       end
@@ -168,12 +168,12 @@ describe Placements::Placements::FilterForm, type: :model do
   end
 
   describe "#query_params" do
-    it "returns { only_partner_schools: false, school_ids: [], subject_ids: [], school_types: [] }" do
+    it "returns { only_partner_schools: false, school_ids: [], subject_ids: [], establishment_groups: [] }" do
       expect(described_class.new.query_params).to eq(
         {
           school_ids: [],
           only_partner_schools: false,
-          school_types: [],
+          establishment_groups: [],
           subject_ids: [],
           only_available_placements: false,
         },

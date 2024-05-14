@@ -48,8 +48,7 @@ RSpec.describe "Placements / Providers / Partner schools / Views a partner schoo
     end
 
     within("#additional-details") do
-      expect(page).to have_content "Group"
-      expect(page).to have_content "Type"
+      expect(page).to have_content "Establishment group"
       expect(page).to have_content "Phase"
       expect(page).to have_content "Gender"
       expect(page).to have_content "Minimum age"

@@ -1,67 +1,74 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 // Connects to data-controller="placements-filter-search"
 export default class extends Controller {
-  static targets = ["partnerSchoolInput", "partnerSchoolList", 
-    "schoolInput", "schoolList", "subjectInput", "subjectList",
-    "schoolTypeInput", "schoolTypeList"]
+  static targets = [
+    "partnerSchoolInput",
+    "partnerSchoolList",
+    "schoolInput",
+    "schoolList",
+    "subjectInput",
+    "subjectList",
+    "establishmentGroupInput",
+    "establishmentGroupList",
+  ];
 
   connect() {
     if (this.partnerSchoolInputTarget.value !== "") {
-      this.searchPartnerSchool()
+      this.searchPartnerSchool();
     }
 
     if (this.schoolInputTarget.value !== "") {
-      this.searchSchool()
+      this.searchSchool();
     }
 
     if (this.subjectInputTarget.value !== "") {
-      this.searchSubject()
+      this.searchSubject();
     }
 
-    if (this.schoolTypeInputTarget.value !== "") {
-      this.searchSchoolType()
+    if (this.establishmentGroupInputTarget.value !== "") {
+      this.searchEstablishmentGroup();
     }
   }
 
   searchSchool() {
-    const schoolItems = this.schoolListTarget.children
-    const searchValue = this.schoolInputTarget.value.toLowerCase()
+    const schoolItems = this.schoolListTarget.children;
+    const searchValue = this.schoolInputTarget.value.toLowerCase();
 
-    this.toggleItems(schoolItems, searchValue)
+    this.toggleItems(schoolItems, searchValue);
   }
 
-  searchPartnerSchool(){
-    const partnerSchoolItems = this.partnerSchoolListTarget.children
-    const searchValue = this.partnerSchoolInputTarget.value.toLowerCase()
+  searchPartnerSchool() {
+    const partnerSchoolItems = this.partnerSchoolListTarget.children;
+    const searchValue = this.partnerSchoolInputTarget.value.toLowerCase();
 
-    this.toggleItems(partnerSchoolItems, searchValue)
+    this.toggleItems(partnerSchoolItems, searchValue);
   }
 
   searchSubject() {
-    const subjectItems = this.subjectListTarget.children
-    const searchValue = this.subjectInputTarget.value.toLowerCase()
+    const subjectItems = this.subjectListTarget.children;
+    const searchValue = this.subjectInputTarget.value.toLowerCase();
 
-    this.toggleItems(subjectItems, searchValue)
+    this.toggleItems(subjectItems, searchValue);
   }
 
-  searchSchoolType() {
-    const schoolTypeItems = this.schoolTypeListTarget.children
-    const searchValue = this.schoolTypeInputTarget.value.toLowerCase()
+  searchEstablishmentGroup() {
+    const establishmentGroupItems = this.establishmentGroupListTarget.children;
+    const searchValue = this.establishmentGroupInputTarget.value.toLowerCase();
 
-    this.toggleItems(schoolTypeItems, searchValue)
+    this.toggleItems(establishmentGroupItems, searchValue);
   }
 
-  toggleItems(items, searchValue){
+  toggleItems(items, searchValue) {
     Array.from(items).forEach(function (item) {
-      const inputField = item.querySelector("input")
+      const inputField = item.querySelector("input");
 
-      if (item.textContent.toLowerCase().indexOf(searchValue) > -1 ) {
-        item.style.display = ""
+      if (item.textContent.toLowerCase().indexOf(searchValue) > -1) {
+        item.style.display = "";
       } else {
-        item.style.display = "none"
-        inputField.checked = false
+        item.style.display = "none";
+        inputField.checked = false;
       }
-    })
+    });
   }
 }

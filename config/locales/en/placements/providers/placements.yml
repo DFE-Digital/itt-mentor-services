@@ -16,7 +16,7 @@ en:
           school: School
           subject: Subject
           school_phase: School phase
-          school_type: School type
+          establishment_group: Establishment group
           availability: Placements Available
           available_text: Only show placements open to accepting trainees
           gender: Gender

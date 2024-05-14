@@ -10,7 +10,7 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
       :placements_school,
       phase: "Primary",
       name: "Primary School",
-      type_of_establishment: "Free school",
+      group: "Free Schools",
       latitude: 51.5072178,
       longitude: -0.1275862,
     )
@@ -20,7 +20,7 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
       :placements_school,
       phase: "Secondary",
       name: "Secondary School",
-      type_of_establishment: "Community school",
+      group: "Local authority maintained schools",
       latitude: 53.9614205,
       longitude: -1.0739108,
     )
@@ -94,11 +94,11 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
       and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
     end
 
-    scenario "User can filter placements by school type" do
+    scenario "User can filter placements by establishment group" do
       when_i_visit_the_placements_index_page
       then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
       and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
-      when_i_check_filter_option("school-types", "free-school")
+      when_i_check_filter_option("establishment-groups", "free-schools")
       and_i_click_on("Apply filters")
       then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
       and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
@@ -150,12 +150,12 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
         and_i_can_not_see_any_selected_filters
       end
 
-      scenario "User can remove a school type filter" do
-        when_i_visit_the_placements_index_page({ filters: { school_types: ["Free school"] } })
+      scenario "User can remove a establishment group filter" do
+        when_i_visit_the_placements_index_page({ filters: { establishment_groups: ["Free Schools"] } })
         then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
         and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
-        and_i_can_see_a_preset_filter("School type", "Free school")
-        when_i_click_to_remove_filter("School type", "Free school")
+        and_i_can_see_a_preset_filter("Establishment group", "Free Schools")
+        when_i_click_to_remove_filter("Establishment group", "Free Schools")
         then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
         and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
         and_i_can_not_see_any_selected_filters
@@ -170,7 +170,7 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
               only_partner_schools: true,
               school_ids: [primary_school.id],
               subject_ids: [subject_1.id],
-              school_types: ["Free school"],
+              establishment_groups: ["Free Schools"],
             },
           },
         )
@@ -179,7 +179,7 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
         and_i_can_see_a_preset_filter("Partner schools", "Partner schools")
         and_i_can_see_a_preset_filter("School", "Primary School")
         and_i_can_see_a_preset_filter("Subject", "Primary with mathematics")
-        and_i_can_see_a_preset_filter("School type", "Free school")
+        and_i_can_see_a_preset_filter("Establishment group", "Free Schools")
         when_i_click_on("Clear filters")
         then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
         and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")

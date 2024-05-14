@@ -68,17 +68,17 @@
             </ul>
           <% end %>
 
-          <% if filter_form.school_types.present? %>
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".school_type") %></h3>
+          <% if filter_form.establishment_groups.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".establishment_group") %></h3>
             <ul class="app-filter-tags">
-              <% filter_form.school_types.each do |school_type| %>
+              <% filter_form.establishment_groups.each do |establishment_group| %>
                 <li>
                   <%= govuk_link_to(
-                    school_type,
+                    establishment_group,
                     filter_form.index_path_without_filter(
                       provider: @provider,
-                      filter: "school_types",
-                      value: school_type,
+                      filter: "establishment_groups",
+                      value: establishment_group,
                       search_location:,
                     ),
                     class: "app-filter__tag",
@@ -220,25 +220,25 @@
 
           <div class="app-filter__option">
             <%= form.govuk_text_field(
-              :search_school_types,
+              :search_establishment_groups,
               type: :search,
               data: {
-                placements_filter_search_target: "schoolTypeInput",
-                action: "input->placements-filter-search#searchSchoolType",
+                placements_filter_search_target: "establishmentGroupInput",
+                action: "input->placements-filter-search#searchEstablishmentGroup",
               },
-              label: { text: t(".school_type"), size: "s" },
+              label: { text: t(".establishment_group"), size: "s" },
             ) %>
 
             <%= form.govuk_check_boxes_fieldset(
-              :school_types,
+              :establishment_groups,
               legend: { hidden: true },
-              data: { placements_filter_search_target: "schoolTypeList" },
+              data: { placements_filter_search_target: "establishmentGroupList" },
               small: true,
             ) do %>
-              <% @school_types.each do |school_types| %>
-                <%= form.govuk_check_box :school_types,
-                  school_types,
-                  label: { text: school_types } %>
+              <% @establishment_groups.each do |establishment_groups| %>
+                <%= form.govuk_check_box :establishment_groups,
+                  establishment_groups,
+                  label: { text: establishment_groups } %>
               <% end %>
             <% end %>
           </div>

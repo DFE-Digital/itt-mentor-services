@@ -4,7 +4,7 @@ class Placements::Providers::PlacementsController < ApplicationController
 
   def index
     @subjects = Subject.order_by_name.select(:id, :name)
-    @school_types = compact_school_attribute_values(:type_of_establishment)
+    @establishment_groups = compact_school_attribute_values(:group)
     @schools = schools_scope.order_by_name.select(:id, :name)
 
     @pagy, @placements = pagy(
@@ -60,7 +60,7 @@ class Placements::Providers::PlacementsController < ApplicationController
       :only_partner_schools,
       school_ids: [],
       subject_ids: [],
-      school_types: [],
+      establishment_groups: [],
     )
   end
 
