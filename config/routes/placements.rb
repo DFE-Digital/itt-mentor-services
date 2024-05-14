@@ -150,8 +150,8 @@ scope module: :placements,
           get :school_options
         end
       end
-
-      resources :placements, only: %i[index show]
     end
   end
+
+  resources :placements, only: %i[index show]
 end

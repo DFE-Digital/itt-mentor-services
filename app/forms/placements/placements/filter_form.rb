@@ -17,8 +17,8 @@ class Placements::Placements::FilterForm < ApplicationForm
     attributes.values.compact.flatten.any?
   end
 
-  def clear_filters_path(provider:, search_location: nil)
-    placements_provider_placements_path(provider, search_location:)
+  def clear_filters_path(search_location: nil)
+    placements_placements_path(provider, search_location:)
   end
 
   def index_path_without_filter(provider:, filter:, value: nil, search_location: nil)
@@ -28,8 +28,7 @@ class Placements::Placements::FilterForm < ApplicationForm
                        compacted_attributes.merge(filter => compacted_attributes[filter].reject { |filter_value| filter_value == value })
                      end
 
-    placements_provider_placements_path(
-      provider_id: provider,
+    placements_placements_path(
       params: { filters: without_filter, search_location: },
     )
   end

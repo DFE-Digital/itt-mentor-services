@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Providers / Placements / View placements list",
+RSpec.describe "Placements / Placements / View placements list",
                type: :system,
                service: :placements,
                js: true do
@@ -263,7 +263,7 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
   alias_method :and_i_click_on, :when_i_click_on
 
   def when_i_visit_the_placements_index_page(params = {})
-    visit placements_provider_placements_path(provider, params)
+    visit placements_placements_path(provider, params)
 
     expect_placements_to_be_selected_in_primary_navigation
   end

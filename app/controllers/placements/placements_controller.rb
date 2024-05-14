@@ -1,4 +1,4 @@
-class Placements::Providers::PlacementsController < ApplicationController
+class Placements::PlacementsController < ApplicationController
   before_action :set_provider
   helper_method :filter_form, :location_coordinates
 
@@ -30,7 +30,7 @@ class Placements::Providers::PlacementsController < ApplicationController
   end
 
   def set_provider
-    @provider = Placements::Provider.find(params[:provider_id])
+    @provider = Placements::Provider.first
   end
 
   def filter_form

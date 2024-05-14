@@ -10,7 +10,7 @@
 
 <%= content_for(:primary_navigation_content) do %>
   <%= render PrimaryNavigationComponent.new do |component| %>
-    <% component.with_navigation_item t(".placements"), placements_provider_placements_path(provider), current: current_navigation == :placements %>
+    <% component.with_navigation_item t(".placements"), placements_placements_path(provider), current: current_navigation == :placements %>
     <% component.with_navigation_item t(".partner_schools"), placements_provider_partner_schools_path(provider), current: current_navigation == :partner_schools %>
     <% component.with_navigation_item t(".users"), placements_provider_users_path(provider), current: current_navigation == :users %>
     <% component.with_navigation_item t(".organisation_details"),
