@@ -1,4 +1,6 @@
-<%= content_for :page_title, sanitize(t(".page_title", school_name: @school.name)) %>
+<%= content_for :page_title, sanitize(
+    @partnership_form.errors.any? ? t(".page_title_with_error", school_name: @school.name) : t(".page_title", school_name: @school.name),
+) %>
 
 <%= render "placements/support/primary_navigation", current_navigation: :organisations %>
 
