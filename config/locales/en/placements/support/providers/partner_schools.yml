@@ -32,3 +32,15 @@ en:
             cancel: Cancel
           create:
             partner_school_added: Partner school added
+          show:
+            page_title: "%{partner_school_name} - Partner schools - %{provider_name}"
+            caption: "Partner schools - %{provider_name}"
+            contact_details: Contact details
+            remove_partner_provider: Remove partner school
+          remove:
+            page_title: "Are you sure you want to remove this partner school? - %{school_name} - %{provider_name}"
+            cancel: Cancel
+            remove_partner_school: Remove partner school
+            are_you_sure: Are you sure you want to remove this partner school?
+          destroy:
+            partner_school_removed: Partner school removed
