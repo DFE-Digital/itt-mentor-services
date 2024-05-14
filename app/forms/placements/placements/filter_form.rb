@@ -17,7 +17,7 @@ class Placements::Placements::FilterForm < ApplicationForm
     attributes.values.compact.flatten.any?
   end
 
-  def clear_filters_path(provider, search_location = nil)
+  def clear_filters_path(provider:, search_location: nil)
     placements_provider_placements_path(provider, search_location:)
   end
 
