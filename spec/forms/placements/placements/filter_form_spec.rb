@@ -61,7 +61,7 @@ describe Placements::Placements::FilterForm, type: :model do
     subject(:filter_form) { described_class.new }
 
     it "returns the placements index page path" do
-      expect(filter_form.clear_filters_path(provider)).to eq(
+      expect(filter_form.clear_filters_path(provider:)).to eq(
         placements_provider_placements_path(provider),
       )
     end

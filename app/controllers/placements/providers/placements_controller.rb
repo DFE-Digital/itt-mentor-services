@@ -43,7 +43,7 @@ class Placements::Providers::PlacementsController < ApplicationController
   end
 
   def location_coordinates
-    return nil if search_location.blank?
+    return if search_location.blank?
 
     @location_coordinates ||= begin
       location = Geocoder::Search.call(

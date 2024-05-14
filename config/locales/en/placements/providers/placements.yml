@@ -8,6 +8,8 @@ en:
           no_placements_found: No school placements found
           placements: Placements
           no_results_for_filters: There are no results for the selected filter.
+          enter_a_location: Enter a location
+          location_search_example: For example, Sunderland or SR2
         filter:
           partner_schools: Partner schools
           only_show_partner_schools: Only show placements offered by my partner schools
