@@ -1,12 +1,4 @@
 class Placements::Support::Schools::PartnerProvidersController < Placements::Schools::PartnerProvidersController
-  def destroy
-    authorize @partnership
-
-    @partnership.destroy!
-    redirect_to placements_support_school_partner_providers_path(@school),
-                flash: { success: t(".partner_provider_removed") }
-  end
-
   private
 
   def set_school

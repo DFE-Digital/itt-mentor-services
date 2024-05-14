@@ -71,8 +71,8 @@ class Placements::Schools::PartnerProvidersController < ApplicationController
       partner_organisation: provider,
     )
 
-    redirect_to placements_school_partner_providers_path(@school),
-                flash: { success: t(".partner_provider_removed") }
+    flash[:success] = t(".partner_provider_removed")
+    redirect_to_index_path
   end
 
   private
