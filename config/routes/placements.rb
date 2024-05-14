@@ -10,6 +10,7 @@ scope module: :placements,
 
   scope module: :pages do
     get :start
+    get :cookies
   end
 
   namespace :support do

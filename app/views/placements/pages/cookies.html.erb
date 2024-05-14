@@ -1,0 +1,15 @@
+<% content_for :breadcrumbs, govuk_breadcrumbs(
+  breadcrumbs: {
+    t("home") => placements_root_path,
+  },
+  collapse_on_mobile: true,
+) %>
+<% content_for :page_title, t(".page_title") %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= render_markdown(content) %>
+    </div>
+  </div>
+</div>
