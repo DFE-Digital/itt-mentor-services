@@ -25,7 +25,7 @@ RSpec.describe FooterHelper do
         expect(helper.footer_meta_items).to eq(
           [
             { href: "#", text: "Guidance" },
-            { href: "#", text: "Accessibility" },
+            { href: "/accessibility", text: "Accessibility" },
             { href: "/cookies", text: "Cookies" },
             { href: "#", text: "Privacy notice" },
             { href: "#", text: "Terms and conditions" },
