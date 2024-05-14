@@ -5,10 +5,10 @@ class Placements::Placements::FilterForm < ApplicationForm
   attribute :subject_ids, default: []
   attribute :school_types, default: []
   attribute :partner_school_ids, default: []
-  attribute :available, default: []
+  attribute :only_available_placements, :boolean, default: false
 
   def initialize(params = {})
-    params.each_value(&:compact_blank!)
+    params.each_value { |v| v.compact_blank! if v.is_a?(Array) }
 
     super(params)
   end
@@ -22,9 +22,11 @@ class Placements::Placements::FilterForm < ApplicationForm
   end
 
   def index_path_without_filter(provider:, filter:, value: nil)
-    without_filter = compacted_attributes.merge(
-      filter => compacted_attributes[filter].reject { |filter_value| filter_value == value },
-    )
+    without_filter = if BOOLEAN_ATTRIBUTES.include?(filter)
+                       compacted_attributes.reject { |key, _| key == filter }
+                     else
+                       compacted_attributes.merge(filter => compacted_attributes[filter].reject { |filter_value| filter_value == value })
+                     end
 
     placements_provider_placements_path(
       provider_id: provider,
@@ -38,7 +40,7 @@ class Placements::Placements::FilterForm < ApplicationForm
       subject_ids:,
       school_types:,
       partner_school_ids:,
-      available:,
+      only_available_placements:,
     }
   end
 
@@ -55,6 +57,8 @@ class Placements::Placements::FilterForm < ApplicationForm
   end
 
   private
+
+  BOOLEAN_ATTRIBUTES = %w[only_available_placements].freeze
 
   def compacted_attributes
     @compacted_attributes ||= attributes.compact_blank

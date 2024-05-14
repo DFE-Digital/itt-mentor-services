@@ -10,7 +10,7 @@ class Placements::Providers::PlacementsController < ApplicationController
 
     @pagy, @placements = pagy(
       Placements::PlacementsQuery.call(
-        params: filter_form.query_params,
+        params: query_params,
       ),
     )
   end
@@ -32,12 +32,19 @@ class Placements::Providers::PlacementsController < ApplicationController
 
   def filter_params
     params.fetch(:filters, {}).permit(
+      :only_available_placements,
       partner_school_ids: [],
       school_ids: [],
       subject_ids: [],
       school_types: [],
-      available: [],
     )
+  end
+
+  def query_params
+    {
+      filters: filter_form.query_params,
+      current_provider: @provider,
+    }
   end
 
   def all_schools
