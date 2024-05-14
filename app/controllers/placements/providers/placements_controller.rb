@@ -54,13 +54,6 @@ class Placements::Providers::PlacementsController < ApplicationController
     }
   end
 
-  def query_params
-    {
-      filters: filter_form.query_params,
-      current_provider: @provider,
-    }
-  end
-
   def all_schools
     @all_schools ||= School.all
   end
