@@ -1,38 +1,37 @@
 en:
   placements:
-    providers:
-      placements:
-        index:
-          find_placements: Find placements
-          placements_found: "%{placements_count} placements found"
-          no_placements_found: No school placements found
-          placements: Placements
-          no_results_for_filters: There are no results for the selected filter.
-          enter_a_location: Enter a location
-          location_search_example: For example, Sunderland or SR2
-        filter:
-          partner_schools: Partner schools
-          only_show_partner_schools: Only show placements offered by my partner schools
-          school: School
-          subject: Subject
-          school_phase: School phase
-          establishment_group: Establishment group
-          availability: Placements Available
-          available_text: Only show placements open to accepting trainees
-          gender: Gender
-          religious_character: Religious character
-          ofsted_rating: Ofsted rating
-        show:
-          page_title: "%{subject_name} - Placements - %{school_name}"
-          placement: "Placement - %{school_name}"
-          contact_details: Contact details
-        school_details:
-          establishment_group: Establishment group
-          school_phase: School phase
-          gender: Gender
-          age_range: Age range
-          religious_character: Religious character
-          urban_or_rural: Urban or rural
-          admissions_policy: Admissions policy
-          percentage_free_school_meals: Percentage free school meals
-          ofsted_rating: Ofsted rating
+    placements:
+      index:
+        find_placements: Find placements
+        placements_found: "%{placements_count} placements found"
+        no_placements_found: No school placements found
+        placements: Placements
+        no_results_for_filters: There are no results for the selected filter.
+        enter_a_location: Enter a location
+        location_search_example: For example, Sunderland or SR2
+      filter:
+        partner_schools: Partner schools
+        only_show_partner_schools: Only show placements offered by my partner schools
+        school: School
+        subject: Subject
+        school_phase: School phase
+        establishment_group: Establishment group
+        availability: Placements Available
+        available_text: Only show placements open to accepting trainees
+        gender: Gender
+        religious_character: Religious character
+        ofsted_rating: Ofsted rating
+      show:
+        page_title: "%{subject_name} - Placements - %{school_name}"
+        placement: "Placement - %{school_name}"
+        contact_details: Contact details
+      school_details:
+        establishment_group: Establishment group
+        school_phase: School phase
+        gender: Gender
+        age_range: Age range
+        religious_character: Religious character
+        urban_or_rural: Urban or rural
+        admissions_policy: Admissions policy
+        percentage_free_school_meals: Percentage free school meals
+        ofsted_rating: Ofsted rating

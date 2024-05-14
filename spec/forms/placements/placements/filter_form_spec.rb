@@ -61,8 +61,8 @@ describe Placements::Placements::FilterForm, type: :model do
     subject(:filter_form) { described_class.new }
 
     it "returns the placements index page path" do
-      expect(filter_form.clear_filters_path(provider:)).to eq(
-        placements_provider_placements_path(provider),
+      expect(filter_form.clear_filters_path).to eq(
+        placements_placements_path,
       )
     end
   end
@@ -101,7 +101,7 @@ describe Placements::Placements::FilterForm, type: :model do
             value: "school_id_1",
           ),
         ).to eq(
-          placements_provider_placements_path(provider, filters: {
+          placements_placements_path(filters: {
             school_ids: %w[school_id_2],
           }),
         )
@@ -121,7 +121,7 @@ describe Placements::Placements::FilterForm, type: :model do
             value: false,
           ),
         ).to eq(
-          placements_provider_placements_path(provider, filters: {}),
+          placements_placements_path(filters: {}),
         )
       end
     end
@@ -139,7 +139,7 @@ describe Placements::Placements::FilterForm, type: :model do
             value: "subject_id_1",
           ),
         ).to eq(
-          placements_provider_placements_path(provider, filters: {
+          placements_placements_path(filters: {
             subject_ids: %w[subject_id_2],
           }),
         )
@@ -159,7 +159,7 @@ describe Placements::Placements::FilterForm, type: :model do
             value: "Independent schools",
           ),
         ).to eq(
-          placements_provider_placements_path(provider, filters: {
+          placements_placements_path(filters: {
             establishment_groups: %w[Academies],
           }),
         )

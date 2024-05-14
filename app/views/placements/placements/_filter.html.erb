@@ -19,7 +19,7 @@
               <p class="govuk-body">
                 <%= govuk_link_to(
                   t("clear_filters"),
-                  filter_form.clear_filters_path(provider: @provider, search_location:),
+                  filter_form.clear_filters_path(search_location:),
                   no_visited_state: true,
                 ) %>
               </p>
@@ -34,7 +34,6 @@
                   <%= govuk_link_to(
                     school.name,
                     filter_form.index_path_without_filter(
-                      provider: @provider,
                       filter: "school_ids",
                       value: school.id,
                       search_location:,
@@ -55,7 +54,6 @@
                   <%= govuk_link_to(
                     subject.name,
                     filter_form.index_path_without_filter(
-                      provider: @provider,
                       filter: "subject_ids",
                       value: subject.id,
                       search_location:,
@@ -76,7 +74,6 @@
                   <%= govuk_link_to(
                     establishment_group,
                     filter_form.index_path_without_filter(
-                      provider: @provider,
                       filter: "establishment_groups",
                       value: establishment_group,
                       search_location:,
@@ -96,7 +93,6 @@
                 <%= govuk_link_to(
                       t(".partner_schools"),
                       filter_form.index_path_without_filter(
-                        provider: @provider,
                         filter: "only_partner_schools",
                         value: true,
                         search_location:,
@@ -114,7 +110,7 @@
               <li>
                 <%= govuk_link_to(
                       t(".availability"),
-                      filter_form.index_path_without_filter(provider: @provider, filter: "only_available_placements", value: true),
+                      filter_form.index_path_without_filter(filter: "only_available_placements", value: true),
                       class: "app-filter__tag",
                       no_visited_state: true,
                     ) %>
@@ -128,7 +124,7 @@
         <%= form_with(
           model: filter_form,
           scope: :filters,
-          url: placements_provider_placements_path,
+          url: placements_placements_path,
           method: "get",
           data: { turbo: false, controller: "placements-filter-search" },
         ) do |form| %>
