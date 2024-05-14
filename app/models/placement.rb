@@ -37,6 +37,8 @@ class Placement < ApplicationRecord
 
   scope :order_by_subject_school_name, -> { includes(:subjects, :school).order("subjects.name", "schools.name") }
 
+  # This method is used to order placement, after the schools have been ordered by distance.
+  # As distance is not an attribute of school, and is given to us by the Geocoder gem.
   def self.order_by_school_ids(school_ids)
     t = arel_table
     condition = Arel::Nodes::Case.new(t[:school_id])
