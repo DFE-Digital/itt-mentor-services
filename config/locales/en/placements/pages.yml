@@ -9,6 +9,8 @@ en:
             Guidance on what schools need to do to offer trainee teacher placements
           how_to_find_a_trn: |
             Guidance on how to find or request a TRN
-      cookies:
-        cookies: Cookies
-        page_title: Cookies on Manage school placements
+      show:
+        cookies:
+          page_title: Cookies on Manage school placements
+        accessibility:
+          page_title: Accessibility statement for Manage school placements

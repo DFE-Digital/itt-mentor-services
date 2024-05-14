@@ -10,7 +10,9 @@ scope module: :placements,
 
   scope module: :pages do
     get :start
-    get :cookies
+    get :cookies, action: :show, page: :cookies
+    get :privacy, action: :show, page: :privacy
+    get :accessibility, action: :show, page: :accessibility
   end
 
   namespace :support do
