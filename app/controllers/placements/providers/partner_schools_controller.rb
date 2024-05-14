@@ -37,9 +37,7 @@ class Placements::Providers::PartnerSchoolsController < ApplicationController
 
   def check_school_option
     if partnership_form(javascript_disabled: true).valid?
-      redirect_to check_placements_provider_partner_schools_path(
-        partnership: { school_id: partner_school_params.fetch(:school_id), school_name: search_param },
-      )
+      redirect_to_check_path
     else
       render :school_options, locals: {
         search_param:,
@@ -56,7 +54,7 @@ class Placements::Providers::PartnerSchoolsController < ApplicationController
       partner_organisation: partner_school,
     )
     flash[:success] = t(".partner_school_added")
-    redirect_to placements_provider_partner_schools_path(@provider)
+    redirect_to_index_path
   end
 
   def show; end
@@ -73,8 +71,8 @@ class Placements::Providers::PartnerSchoolsController < ApplicationController
       partner_organisation: school,
     )
 
-    redirect_to placements_provider_partner_schools_path(@provider),
-                flash: { success: t(".partner_school_removed") }
+    flash[:success] = t(".partner_school_removed")
+    redirect_to_index_path
   end
 
   private
@@ -126,5 +124,15 @@ class Placements::Providers::PartnerSchoolsController < ApplicationController
     @decorated_school_options ||= School.search_name_urn_postcode(
       search_param.downcase,
     ).map(&:decorate)
+  end
+
+  def redirect_to_check_path
+    redirect_to check_placements_provider_partner_schools_path(
+      partnership: { school_id: partner_school_params.fetch(:school_id), school_name: search_param },
+    )
+  end
+
+  def redirect_to_index_path
+    redirect_to placements_provider_partner_schools_path(@provider)
   end
 end

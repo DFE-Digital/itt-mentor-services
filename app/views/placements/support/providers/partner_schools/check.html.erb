@@ -1,0 +1,69 @@
+<% content_for :page_title, t(".page_title", provider_name: @provider.name) %>
+<%= render "placements/support/primary_navigation", current_navigation: :organisations %>
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: new_placements_support_provider_partner_school_path(@partnership_form.as_form_params)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= form_with(
+        model: @provider_form,
+        scope: :partnership,
+        url: placements_support_provider_partner_schools_path,
+        method: "post",
+        data: { turbo: false },
+      ) do |f| %>
+        <%= f.hidden_field :school_id, value: @partnership_form.school_id %>
+
+        <label class="govuk-label govuk-label--l">
+          <span class="govuk-caption-l"><%= t(".caption", provider_name: @provider.name) %></span>
+          <%= t(".title") %>
+        </label>
+
+        <%= govuk_summary_list do |summary_list| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".name")) %>
+            <% row.with_value(text: @partner_school.name) %>
+          <% end %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".urn")) %>
+            <% row.with_value(text: @partner_school.urn) %>
+          <% end %>
+        <% end %>
+
+        <h2 class="govuk-heading-m govuk-!-margin-top-7">
+          <%= t(".contact_details") %>
+        </h2>
+
+        <%= govuk_summary_list do |summary_list| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".telephone")) %>
+            <% row.with_value(text: @partner_school.telephone) %>
+          <% end %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".website")) %>
+            <% row.with_value do %>
+              <%= govuk_link_to(@partner_school.website, external_link(@partner_school.website), target: "_blank", rel: "noopener noreferrer") %>
+            <% end %>
+          <% end %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".address")) %>
+            <% row.with_value(text: @partner_school.formatted_address) %>
+          <% end %>
+        <% end %>
+
+        <%= render GovukComponent::WarningTextComponent.new(
+          text: t(".school_will_be_sent_an_email",
+            provider_name: @provider.name,
+            school_name: @partner_school.name),
+        ) %>
+
+        <%= f.govuk_submit t(".add_partner_school") %>
+        <p class="govuk-body">
+          <%= govuk_link_to(t(".cancel"), placements_support_provider_partner_schools_path, no_visited_state: true) %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>
