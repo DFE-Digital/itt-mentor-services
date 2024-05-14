@@ -6,4 +6,10 @@ class Placements::PagesController < ApplicationController
       content: File.read(Rails.root.join("app/views/placements/pages/landing-page.md")),
     }
   end
+
+  def cookies
+    render locals: {
+      content: File.read(Rails.root.join("app/views/placements/pages/cookies.md")),
+    }
+  end
 end
