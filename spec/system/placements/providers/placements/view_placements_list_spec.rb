@@ -53,7 +53,7 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
       when_i_visit_the_placements_index_page
       then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
       and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
-      when_i_check_filter_option("available", "true")
+      when_i_check_filter_option("only-available-placements", true)
       and_i_click_on("Apply filters")
       then_i_can_see_a_placement_for_placement_1
       and_i_cannot_see_a_placement_for_placement_2
@@ -102,7 +102,7 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
 
     context "when a filter is pre-selected in the URL params" do
       scenario "User can remove the available filter" do
-        when_i_visit_the_placements_index_page({ filters: { available: %w[true] } })
+        when_i_visit_the_placements_index_page({ filters: { only_available_placements: true } })
         then_i_can_see_a_placement_for_placement_1
         and_i_cannot_see_a_placement_for_placement_2
         and_i_can_see_a_preset_filter("Placements Available", "Available")
@@ -234,7 +234,8 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
     filter_options = page.find(".app-filter__options")
 
     within(filter_options) do
-      page.find("label[for='filters-#{filter}-#{value.downcase}-field']", visible: :all).click
+      normalised_value = [true, false].include?(value) ? value : value.downcase
+      page.find("label[for='filters-#{filter}-#{normalised_value}-field']", visible: :all).click
     end
   end
 
