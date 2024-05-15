@@ -176,6 +176,7 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
         )
         then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
         and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
+        and_i_can_see_a_preset_filter("Placements Available", "Placements Available")
         and_i_can_see_a_preset_filter("Partner schools", "Partner schools")
         and_i_can_see_a_preset_filter("School", "Primary School")
         and_i_can_see_a_preset_filter("Subject", "Primary with mathematics")
@@ -223,6 +224,17 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
           and_i_can_see_search_location_is_set_as("London")
           and_i_see_placements_for(school_name: "Primary School", list_item: 0, distance: 0.0)
         end
+      end
+    end
+
+    context "when a user views a placement and returns to the index page" do
+      scenario "User filters are preserved when using the back button" do
+        when_i_visit_the_placements_index_page
+        when_i_check_filter_option("only-available-placements", true)
+        and_i_click_on("Apply filters")
+        and_i_navigate_to("Primary with mathematics")
+        and_i_click_on("Back")
+        then_i_can_see_a_preset_filter("Placements Available", "Placements Available")
       end
     end
   end
@@ -345,6 +357,10 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
     end
   end
   alias_method :and_i_see_placements_for, :then_i_see_placements_for
+
+  def and_i_navigate_to(text)
+    click_link(text)
+  end
 
   def stub_london_geocoder_search
     geocoder_results = instance_double("geocoder_results")
