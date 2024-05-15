@@ -1,4 +1,4 @@
-# 7. Populating school emails via rake task
+# 8. Populating school emails via rake task
 
 Date: 2024-05-11
 
