@@ -77,7 +77,7 @@ scope module: :placements,
 
         resources :partner_schools, only: %i[index new create show destroy] do
           member { get :remove }
-  
+
           collection do
             get :check
             get :check_school_option
