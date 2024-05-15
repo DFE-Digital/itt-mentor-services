@@ -24,7 +24,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
     given_i_am_signed_in_as_a_support_user
   end
 
-  scenario "User removes a partner school" do
+  scenario "Support user removes a partner school" do
     when_i_visit_the_partner_schools_page_for(provider:, school:)
     and_i_click_on("Remove partner school")
     then_i_am_asked_to_confirm_partner_school(school)
@@ -38,7 +38,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
     and_a_notification_email_is_sent_to(school_user)
   end
 
-  scenario "User removes a partner school, which is not onboarded on the placements service" do
+  scenario "Support user removes a partner school, which is not onboarded on the placements service" do
     given_the_school_is_not_onboarded_on_placements_service(school)
     when_i_visit_the_partner_schools_page_for(provider:, school:)
     and_i_click_on("Remove partner school")

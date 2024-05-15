@@ -12,12 +12,12 @@ RSpec.describe "Placements / Support / Schools / Partner providers / View partne
     given_i_am_signed_in_as_a_support_user
   end
 
-  scenario "User views school partner providers page where school has no partner providers" do
+  scenario "Support user views school partner providers page where school has no partner providers" do
     when_i_visit_the_partner_providers_page_for(school)
     then_i_see_the_empty_state
   end
 
-  scenario "User views school partner providers page where school has partner providers" do
+  scenario "Support user views school partner providers page where school has partner providers" do
     given_a_partnership_exists_between(school, provider)
     and_a_partnership_exists_between(another_school, another_provider)
     when_i_visit_the_partner_providers_page_for(school)
