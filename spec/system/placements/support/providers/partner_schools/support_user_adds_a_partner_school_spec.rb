@@ -132,9 +132,8 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
   end
 
   def then_i_return_to_partner_school_index_for(provider)
-    headings = page.all(".govuk-heading-l")
-    expect(headings[0]).to have_content(provider.name)
-    expect(headings[1]).to have_content("Partner schools")
+    expect(page.find(".govuk-heading-l")).to have_content(provider.name)
+    expect(page.all(".govuk-heading-m")[1]).to have_content("Partner schools")
   end
 
   def and_a_school_is_listed(school_name:)
