@@ -1,0 +1,27 @@
+<%= content_for :page_title, sanitize(
+  school_form.errors.any? ? t(".page_title_with_error", provider_name: @provider.name, school_count: schools.count, search_param:) : t(".page_title", provider_name: @provider.name, school_count: schools.count, search_param:),
+) %>
+
+<%= render "placements/support/primary_navigation", current_navigation: :organisations %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: new_placements_support_provider_partner_school_path) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <%= render OptionsFormComponent.new(
+    model: school_form,
+    url: check_school_option_placements_support_provider_partner_schools_path,
+    search_param:,
+    records: schools,
+    records_klass: "school",
+    back_link: new_placements_support_provider_partner_school_path,
+    scope: :partnership,
+    input_field_name: :school_id,
+    title: t(".title"),
+  ) %>
+
+  <p class="govuk-body">
+    <%= govuk_link_to(t(".cancel"), placements_support_provider_partner_schools_path, no_visited_state: true) %>
+  </p>
+</div>
