@@ -17,7 +17,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
     given_i_am_signed_in_as_a_support_user
   end
 
-  scenario "User adds a partner provider", js: true, retry: 3 do
+  scenario "Support user adds a partner provider", js: true, retry: 3 do
     when_i_visit_the_partner_providers_page_for(school)
     and_i_click_on("Add partner provider")
     and_i_enter_a_provider_named("Provider 1")
@@ -32,7 +32,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
     and_a_notification_email_is_sent_to(provider_user)
   end
 
-  scenario "User adds a partner provider which already exists", js: true, retry: 3 do
+  scenario "Support user adds a partner provider which already exists", js: true, retry: 3 do
     given_a_partnership_exists_between(school, provider)
     when_i_visit_the_partner_providers_page_for(school)
     and_i_click_on("Add partner provider")
@@ -43,13 +43,13 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
     then_i_see_an_error("Provider 1 has already been added. Try another provider")
   end
 
-  scenario "User submits the search form without selecting a provider", js: true, retry: 3 do
+  scenario "Support user submits the search form without selecting a provider", js: true, retry: 3 do
     when_i_visit_the_add_partner_provider_page
     and_i_click_on("Continue")
     then_i_see_an_error("Enter a provider name, UKPRN, URN or postcode")
   end
 
-  scenario "User reconsiders selecting a provider", js: true, retry: 3 do
+  scenario "Support user reconsiders selecting a provider", js: true, retry: 3 do
     given_i_have_completed_the_form_to_select(provider:)
     when_i_click_on("Back")
     then_i_see_the_search_input_pre_filled_with("Provider 1")
@@ -57,7 +57,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
     then_i_see_the_check_details_page_for_provider("Provider 1")
   end
 
-  scenario "User adds a partner provider, which is not onboarded on the placements service",
+  scenario "Support user adds a partner provider, which is not onboarded on the placements service",
            js: true, retry: 3 do
     given_the_provider_is_not_onboarded_on_placements_service(provider)
     when_i_visit_the_partner_providers_page_for(school)

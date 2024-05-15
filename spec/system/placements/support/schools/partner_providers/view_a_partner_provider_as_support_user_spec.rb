@@ -12,7 +12,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / View a part
     given_i_am_signed_in_as_a_support_user
   end
 
-  scenario "User views a school partner provider" do
+  scenario "Support user views a school partner provider" do
     when_i_visit_the_partner_providers_page_for(school)
     and_i_click_on("Provider 1")
     then_i_see_the_details_of(provider)
