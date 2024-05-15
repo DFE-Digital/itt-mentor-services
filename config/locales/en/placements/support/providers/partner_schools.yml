@@ -44,3 +44,8 @@ en:
             are_you_sure: Are you sure you want to remove this partner school?
           destroy:
             partner_school_removed: Partner school removed
+          school_options:
+            page_title: "%{school_count} results found for ‘%{search_param}’ - Add partner school - %{provider_name}"
+            page_title_with_error: "Error: %{school_count} results found for ‘%{search_param}’- Add partner school - %{provider_name}"
+            title: Add partner school
+            cancel: Cancel

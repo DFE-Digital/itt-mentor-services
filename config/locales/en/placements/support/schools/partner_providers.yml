@@ -45,3 +45,8 @@ en:
             email: Email address
           create:
             partner_provider_added: Partner provider added
+          provider_options:
+            page_title: "%{provider_count} results found for ‘%{search_param}’ - Add partner provider - %{school_name}"
+            page_title_with_error: "Error: %{provider_count} results found for ‘%{search_param}’- Add partner provider - %{school_name}"
+            title: Add partner provider
+            cancel: Cancel
