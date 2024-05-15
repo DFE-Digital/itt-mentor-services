@@ -78,12 +78,11 @@ describe Placements::Placements::FilterForm, type: :model do
       it "returns the placements index page path without the given available param" do
         expect(
           filter_form.index_path_without_filter(
-            provider:,
             filter: "only_available_placements",
             value: true,
           ),
         ).to eq(
-          placements_provider_placements_path(provider),
+          placements_placements_path,
         )
       end
     end

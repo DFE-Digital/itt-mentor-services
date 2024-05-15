@@ -18,7 +18,7 @@ class Placements::Placements::FilterForm < ApplicationForm
   end
 
   def clear_filters_path(search_location: nil)
-    placements_placements_path(provider, search_location:)
+    placements_placements_path(search_location:)
   end
 
   def index_path_without_filter(filter:, value: nil, search_location: nil)
