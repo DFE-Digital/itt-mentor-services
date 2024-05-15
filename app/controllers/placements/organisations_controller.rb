@@ -8,6 +8,7 @@ class Placements::OrganisationsController < ApplicationController
     set_memberships
 
     if @memberships.one?
+      set_session_provider
       redirect_to placements_organisation_path(organisation)
     end
   end
@@ -18,5 +19,9 @@ class Placements::OrganisationsController < ApplicationController
 
   def organisation
     @organisation ||= current_user.user_memberships.first.organisation
+  end
+
+  def set_session_provider
+    session[:placements_provider_id] = organisation.id if organisation.is_a?(Provider)
   end
 end

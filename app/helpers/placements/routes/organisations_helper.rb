@@ -37,6 +37,7 @@ module Placements::Routes::OrganisationsHelper
     when School
       placements_school_placements_path(organisation)
     when Provider
+      session[:placements_provider_id] = organisation.id
       placements_provider_path(organisation)
     else
       raise NotImplementedError
