@@ -7,6 +7,11 @@ CLAIMS_HOST: staging.claim-funding-for-mentor-training.education.gov.uk
 # Additional hostnames that may be used – e.g. the CDN origin (comma separated)
 CLAIMS_HOSTS: staging.claim-funding-for-mentor-training.education.gov.uk,track-and-pay-staging.test.teacherservices.cloud
 
+# Primary hostname for the School Placements service
+PLACEMENTS_HOST: staging.manage-school-placements.education.gov.uk
+# Additional hostnames that may be used – e.g. the CDN origin (comma separated)
+PLACEMENTS_HOSTS: staging.manage-school-placements.education.gov.uk,manage-school-placements-staging.test.teacherservices.cloud
+
 # API integrations
 GIAS_CSV_BASE_URL: https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public
 PUBLISH_BASE_URL: https://staging.api.publish-teacher-training-courses.service.gov.uk
