@@ -183,7 +183,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
         when_i_visit_the_placements_page
         and_i_click_on("Add placement")
         then_i_see_the_add_a_placement_subject_page(school.phase)
-        when_i_check_the_subject(subject_2.name)
+        when_i_choose_a_subject(subject_2.name)
         and_i_click_on("Continue")
         then_i_see_the_add_a_placement_mentor_page
         when_i_check_a_mentor(mentor_1.full_name)
@@ -235,8 +235,8 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           when_i_choose_a_phase("Secondary")
           and_i_click_on("Continue")
           then_i_see_the_add_a_placement_subject_page("Secondary")
-          when_i_check_the_subject(subject_2.name)
-          and_i_check_the_subject(subject_3.name)
+          when_i_choose_a_subject(subject_2.name)
+          and_i_choose_the_subject(subject_3.name)
           and_i_click_on("Continue")
           then_i_see_the_add_a_placement_mentor_page
           when_i_check_a_mentor(mentor_1.full_name)
@@ -266,7 +266,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           and_i_click_on("Add placement")
           when_i_choose_a_phase("Secondary")
           and_i_click_on("Continue")
-          when_i_check_the_subject(subject_2.name)
+          when_i_choose_a_subject(subject_2.name)
           and_i_click_on("Continue")
           when_i_check_a_mentor(mentor_1.full_name)
           and_i_click_on("Continue")
@@ -289,7 +289,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           and_i_click_on("Add placement")
           when_i_choose_a_phase("Secondary")
           and_i_click_on("Continue")
-          when_i_check_the_subject(subject_2.name)
+          when_i_choose_a_subject(subject_2.name)
           and_i_click_on("Continue")
           when_i_check_a_mentor(mentor_1.full_name)
           and_i_click_on("Continue")
@@ -312,13 +312,13 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           and_i_click_on("Add placement")
           when_i_choose_a_phase("Secondary")
           and_i_click_on("Continue")
-          when_i_check_the_subject(subject_2.name)
+          when_i_choose_a_subject(subject_2.name)
           and_i_click_on("Continue")
           when_i_check_a_mentor(mentor_1.full_name)
           and_i_click_on("Continue")
           when_i_change_my_subject
           then_i_see_the_add_a_placement_subject_page("Secondary")
-          when_i_check_the_subject(subject_3.name)
+          when_i_choose_a_subject(subject_3.name)
           and_i_click_on("Continue")
           then_i_see_the_add_a_placement_mentor_page
           and_i_click_on("Continue")
@@ -332,7 +332,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           and_i_click_on("Add placement")
           when_i_choose_a_phase("Secondary")
           and_i_click_on("Continue")
-          when_i_check_the_subject(subject_2.name)
+          when_i_choose_a_subject(subject_2.name)
           and_i_click_on("Continue")
           when_i_check_a_mentor(mentor_1.full_name)
           and_i_click_on("Continue")
@@ -353,7 +353,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           and_i_click_on("Add placement")
           when_i_choose_a_phase("Secondary")
           and_i_click_on("Continue")
-          when_i_check_the_subject(subject_2.name)
+          when_i_choose_a_subject(subject_2.name)
           and_i_click_on("Continue")
           when_i_check_a_mentor(mentor_1.full_name)
           and_i_click_on("Continue")
@@ -370,7 +370,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           and_i_click_on("Add placement")
           when_i_choose_a_phase("Secondary")
           and_i_click_on("Continue")
-          when_i_check_the_subject(subject_2.name)
+          when_i_choose_a_subject(subject_2.name)
           and_i_click_on("Continue")
           when_i_check_a_mentor(mentor_1.full_name)
           and_i_click_on("Continue")
@@ -456,10 +456,6 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
 
   def when_i_choose_a_subject(subject_name)
     page.choose subject_name
-  end
-
-  def when_i_check_the_subject(subject_name)
-    page.check subject_name
   end
 
   def then_i_see_the_add_a_placement_mentor_page
@@ -549,7 +545,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
   end
 
   alias_method :and_i_click_on, :when_i_click_on
-  alias_method :and_i_check_the_subject, :when_i_check_the_subject
+  alias_method :and_i_choose_the_subject, :when_i_choose_a_subject
   alias_method :then_my_chosen_subject_is_selected, :and_my_chosen_subject_is_selected
   alias_method :then_my_chosen_mentor_is_checked, :and_my_chosen_mentor_is_checked
 end

@@ -13,17 +13,9 @@
       <div class="govuk-grid-column-two-thirds">
         <span class="govuk-caption-l"><%= t(".add_placement") %></span>
 
-        <% if @phase == "Primary" %>
-          <%= f.govuk_radio_buttons_fieldset :subject_ids, legend: { size: "l", text: t(".subject") } do %>
-            <% @subjects.each do |subject| %>
-              <%= f.govuk_radio_button :subject_ids, subject.id, label: { text: subject.name }, checked: @selected_subjects&.include?(subject) %>
-            <% end %>
-          <% end %>
-        <% else %>
-          <%= f.govuk_check_boxes_fieldset :subject_ids, legend: { size: "l", text: t(".subject") } do %>
-            <% @subjects.each do |subject| %>
-              <%= f.govuk_check_box :subject_ids, subject.id, label: { text: subject.name }, checked: @selected_subjects&.include?(subject) %>
-            <% end %>
+        <%= f.govuk_radio_buttons_fieldset :subject_ids, legend: { size: "l", text: t(".subject") } do %>
+          <% @subjects.each do |subject| %>
+            <%= f.govuk_radio_button :subject_ids, subject.id, label: { text: subject.name }, checked: @selected_subjects&.include?(subject) %>
           <% end %>
         <% end %>
 
