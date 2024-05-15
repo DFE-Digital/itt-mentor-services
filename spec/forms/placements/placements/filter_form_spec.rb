@@ -96,7 +96,6 @@ describe Placements::Placements::FilterForm, type: :model do
       it "returns the placements index page path without the given school id param" do
         expect(
           filter_form.index_path_without_filter(
-            provider:,
             filter: "school_ids",
             value: "school_id_1",
           ),
@@ -116,7 +115,6 @@ describe Placements::Placements::FilterForm, type: :model do
       it "returns the placements index page path without the given school id param" do
         expect(
           filter_form.index_path_without_filter(
-            provider:,
             filter: "only_partner_schools",
             value: false,
           ),
@@ -134,7 +132,6 @@ describe Placements::Placements::FilterForm, type: :model do
       it "returns the placements index page path without the given subject id param" do
         expect(
           filter_form.index_path_without_filter(
-            provider:,
             filter: "subject_ids",
             value: "subject_id_1",
           ),
@@ -154,7 +151,6 @@ describe Placements::Placements::FilterForm, type: :model do
       it "returns the placements index page path without the given establishment group param" do
         expect(
           filter_form.index_path_without_filter(
-            provider:,
             filter: "establishment_groups",
             value: "Independent schools",
           ),
