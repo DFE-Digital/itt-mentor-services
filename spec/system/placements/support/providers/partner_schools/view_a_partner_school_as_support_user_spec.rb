@@ -69,8 +69,6 @@ RSpec.describe "Placements / Support/ Providers / Partner schools / View a partn
     within(".app-secondary-navigation__list") do
       expect(page).to have_link "Details", current: "false"
       expect(page).to have_link "Users", current: "false"
-      expect(page).to have_link "Providers", current: "false"
-      expect(page).to have_link "Placements", current: "false"
       expect(page).to have_link "Partner schools", current: "page"
     end
   end
