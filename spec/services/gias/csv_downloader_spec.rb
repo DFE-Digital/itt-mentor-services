@@ -9,9 +9,9 @@ RSpec.describe Gias::CsvDownloader do
 
   it_behaves_like "a service object"
 
-  it "downloads the GIAS CSV for today's date" do
-    today = Time.zone.today.strftime("%Y%m%d")
-    gias_filename = "edubasealldata#{today}.csv"
+  it "downloads the GIAS CSV for yesterday's date" do
+    yesterday = Time.zone.yesterday.strftime("%Y%m%d")
+    gias_filename = "edubasealldata#{yesterday}.csv"
 
     allow(Down).to receive(:download).with(
       "#{ENV["GIAS_CSV_BASE_URL"]}/#{gias_filename}",

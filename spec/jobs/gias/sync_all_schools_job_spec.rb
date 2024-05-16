@@ -17,9 +17,9 @@ RSpec.describe Gias::SyncAllSchoolsJob, type: :job do
 
   describe "integration test" do
     let(:gias_csv_url) do
-      today = Time.zone.today.strftime("%Y%m%d")
+      yesterday = Time.zone.yesterday.strftime("%Y%m%d")
       base_url = ENV.fetch("GIAS_CSV_BASE_URL")
-      "#{base_url}/edubasealldata#{today}.csv"
+      "#{base_url}/edubasealldata#{yesterday}.csv"
     end
 
     let(:gias_csv_file) { File.open("spec/fixtures/gias/gias_subset.csv") }
