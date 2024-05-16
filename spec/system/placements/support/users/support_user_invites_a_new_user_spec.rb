@@ -169,12 +169,12 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
       expect(page).to have_link "Details", current: "false"
       expect(page).to have_link "Users", current: "page"
       if organisation.is_a?(Provider)
-        expect(page).to have_link "Providers", current: "false"
+        expect(page).to have_link "Partner schools", current: "false"
       else
         expect(page).to have_link "Mentors", current: "false"
         expect(page).to have_link "Partner providers", current: "false"
+        expect(page).to have_link "Placements", current: "false"
       end
-      expect(page).to have_link "Placements", current: "false"
     end
   end
 
