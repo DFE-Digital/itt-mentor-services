@@ -1,13 +1,13 @@
-This service is for schools offering placements for trainee teachers and 
-Initial teacher training (ITT) providers in England 
-(accredited ITT providers and lead partners).
+This service is for:
 
-If you are a school, use this service to record ITT placements at your organisation.
-If you are an ITT provider, use this service to find ITT school placement opportunities.
+- schools offering placements for trainee teachers
+- initial teacher training (ITT) providers in England
 
-##Before you start##
+### If you are a school, use this service to: ###
 
-If you are a school, you will be asked for:
+- publish placement opportunities for placement teachers so that ITT providers can contact you
+- add and assign mentors to placements to track capacity
 
-- your mentors' Teacher reference number (TRN)
-- your mentors' date of birth
+### If you are an ITT provider, use this service to: ###
+
+- find schools who are offering placements for your trainees
