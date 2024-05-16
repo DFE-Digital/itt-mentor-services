@@ -28,6 +28,7 @@ en:
           title: Check your answers
           name: Name
           ukprn: UK provider reference number (UKPRN)
+          urn: Unique reference number (URN)
           telephone: Telephone
           address: Address
           website: Website
