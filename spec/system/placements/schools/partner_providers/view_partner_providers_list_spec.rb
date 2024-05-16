@@ -5,8 +5,8 @@ RSpec.describe "Placements / Schools / Partner providers / View a list of partne
                service: :placements do
   let!(:school) { create(:placements_school) }
   let!(:another_school) { create(:placements_school) }
-  let!(:provider) { create(:placements_provider, urn: "1234") }
-  let!(:another_provider) { create(:placements_provider, urn: "5678") }
+  let!(:provider) { create(:placements_provider, ukprn: "1234") }
+  let!(:another_provider) { create(:placements_provider, ukprn: "5678") }
 
   scenario "User views school partner providers page where school has no partner providers" do
     given_i_sign_in_as_anne
@@ -51,12 +51,12 @@ RSpec.describe "Placements / Schools / Partner providers / View a list of partne
 
   def then_i_see_partner_provider(provider)
     expect(page).to have_content(provider.name)
-    expect(page).to have_content(provider.urn)
+    expect(page).to have_content(provider.ukprn)
   end
 
   def and_i_cannot_see_partner_provider(provider)
     expect(page).not_to have_content(provider.name)
-    expect(page).not_to have_content(provider.urn)
+    expect(page).not_to have_content(provider.ukprn)
   end
 
   def expect_partner_providers_to_be_selected_in_primary_navigation

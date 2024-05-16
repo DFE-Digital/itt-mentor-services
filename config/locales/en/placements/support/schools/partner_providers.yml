@@ -10,7 +10,7 @@ en:
             attributes:
               partner_providers:
                 name: Name
-                urn: Unique reference number (URN)
+                ukprn: UK provider reference number (UKPRN)
           show:
             page_title: "%{partner_provider_name} - Partner providers - %{school_name}"
             caption: "Partner providers - %{school_name}"
