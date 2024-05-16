@@ -228,13 +228,21 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
     end
 
     context "when a user views a placement and returns to the index page" do
+      before do
+        stub_london_geocoder_search
+        create_list(:placement, 30, subjects: [subject_1], school: primary_school)
+      end
+
       scenario "User filters are preserved when using the back button" do
-        when_i_visit_the_placements_index_page
+        when_i_visit_the_placements_index_page({ search_location: "London" })
         when_i_check_filter_option("only-available-placements", true)
         and_i_click_on("Apply filters")
-        and_i_navigate_to("Primary with mathematics")
+        and_i_navigate_to("2")
+        when_i_click_on_the_first_placement
         and_i_click_on("Back")
         then_i_can_see_a_preset_filter("Placements Available", "Placements Available")
+        and_i_can_see_search_location_is_set_as("London")
+        and_the_pagination_remains_selected("2")
       end
     end
   end
@@ -360,6 +368,14 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
 
   def and_i_navigate_to(text)
     click_link(text)
+  end
+
+  def when_i_click_on_the_first_placement
+    first(".app-search-results__item").click_link("Primary with mathematics")
+  end
+
+  def and_the_pagination_remains_selected(text)
+    expect(find(".govuk-pagination__item--current")).to have_content(text)
   end
 
   def stub_london_geocoder_search
