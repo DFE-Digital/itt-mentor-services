@@ -3,10 +3,10 @@ module Gias
     include ServicePattern
 
     def call
-      today = Time.zone.today.strftime("%Y%m%d")
-      gias_filename = "edubasealldata#{today}.csv"
+      yesterday = Time.zone.yesterday.strftime("%Y%m%d")
+      gias_filename = "edubasealldata#{yesterday}.csv"
 
-      Rails.logger.info "Downloading the new gias file for #{Time.zone.today}"
+      Rails.logger.info "Downloading the new gias file for #{Time.zone.yesterday}"
       file = Down.download("#{ENV["GIAS_CSV_BASE_URL"]}/#{gias_filename}")
 
       # GIAS CSVs are published with ISO-8859-1 character encoding.
