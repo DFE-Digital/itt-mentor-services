@@ -68,7 +68,7 @@
           <% end %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".address")) %>
-            <% row.with_value(text: @partner_provider.formatted_address) %>
+            <% row.with_value(**details_field_args(@partner_provider.formatted_address)) %>
           <% end %>
         <% end %>
 
