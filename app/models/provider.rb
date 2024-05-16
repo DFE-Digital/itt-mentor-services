@@ -50,6 +50,7 @@ class Provider < ApplicationRecord
   scope :accredited, -> { where accredited: true }
   scope :placements_service, -> { where placements_service: true }
   scope :private_beta_providers, -> { where(name: PRIVATE_BETA_PROVIDERS) }
+  scope :order_by_name, -> { order(name: :asc) }
 
   multisearchable against: %i[name postcode],
                   if: :placements_service?,

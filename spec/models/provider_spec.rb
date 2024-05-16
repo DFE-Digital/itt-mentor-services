@@ -91,5 +91,15 @@ RSpec.describe Provider, type: :model do
         expect(described_class.private_beta_providers).not_to include(provider3)
       end
     end
+
+    describe "#order_by_name" do
+      it "returns the providers ordered by name" do
+        provider_1 = create(:provider, name: "Brixton Provider")
+        provider_2 = create(:provider, name: "Abbey Provider")
+        provider_3 = create(:provider, name: "Brighton Provider")
+
+        expect(described_class.order_by_name).to eq([provider_2, provider_3, provider_1])
+      end
+    end
   end
 end
