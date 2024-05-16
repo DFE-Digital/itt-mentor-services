@@ -5,8 +5,8 @@ RSpec.describe "Placements / Support / Schools / Partner providers / View partne
                service: :placements do
   let!(:school) { create(:placements_school) }
   let!(:another_school) { create(:placements_school) }
-  let!(:provider) { create(:placements_provider, urn: "1234") }
-  let!(:another_provider) { create(:placements_provider, urn: "5678") }
+  let!(:provider) { create(:placements_provider, ukprn: "1234") }
+  let!(:another_provider) { create(:placements_provider, ukprn: "5678") }
 
   before do
     given_i_am_signed_in_as_a_support_user
@@ -69,11 +69,11 @@ RSpec.describe "Placements / Support / Schools / Partner providers / View partne
 
   def then_i_see_partner_provider(provider)
     expect(page).to have_content(provider.name)
-    expect(page).to have_content(provider.urn)
+    expect(page).to have_content(provider.ukprn)
   end
 
   def and_i_cannot_see_partner_provider(provider)
     expect(page).not_to have_content(provider.name)
-    expect(page).not_to have_content(provider.urn)
+    expect(page).not_to have_content(provider.ukprn)
   end
 end
