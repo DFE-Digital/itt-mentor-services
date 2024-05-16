@@ -26,11 +26,11 @@
         <%= govuk_summary_list do |summary_list| %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".name")) %>
-            <% row.with_value(text: @partner_school.name) %>
+            <% row.with_value(**details_field_args(@partner_school.name)) %>
           <% end %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".urn")) %>
-            <% row.with_value(text: @partner_school.urn) %>
+            <% row.with_value(**details_field_args(@partner_school.urn)) %>
           <% end %>
         <% end %>
 
@@ -41,17 +41,26 @@
         <%= govuk_summary_list do |summary_list| %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".telephone")) %>
-            <% row.with_value(text: @partner_school.telephone) %>
+            <% row.with_value(**details_field_args(@partner_school.telephone)) %>
           <% end %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".website")) %>
-            <% row.with_value do %>
-              <%= govuk_link_to(@partner_school.website, external_link(@partner_school.website), target: "_blank", rel: "noopener noreferrer") %>
+            <% if @partner_school.website.present? %>
+              <% row.with_value do %>
+                <%= govuk_link_to(
+                  @partner_school.website,
+                  external_link(@partner_school.website),
+                  target: "_blank",
+                  rel: "noopener noreferrer",
+                ) %>
+              <% end %>
+            <% else %>
+              <% row.with_value(**details_field_args) %>
             <% end %>
           <% end %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".address")) %>
-            <% row.with_value(text: @partner_school.formatted_address) %>
+            <% row.with_value(**details_field_args(@partner_school.formatted_address)) %>
           <% end %>
         <% end %>
 
