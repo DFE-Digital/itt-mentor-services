@@ -5,7 +5,7 @@ class Placements::Providers::PartnerSchoolsController < ApplicationController
   before_action :redirect_to_school_options, only: :check, if: -> { javascript_disabled? }
 
   def index
-    @pagy, @partner_schools = pagy(@provider.partner_schools)
+    @pagy, @partner_schools = pagy(@provider.partner_schools.order_by_name)
   end
 
   def new
