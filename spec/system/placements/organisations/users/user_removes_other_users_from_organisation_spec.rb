@@ -3,8 +3,6 @@ require "rails_helper"
 RSpec.describe "Placements support user removes a user from an organisation", type: :system, service: :placements do
   include ActiveJob::TestHelper
 
-  let(:feature_flags) { Flipflop::FeatureSet.current.test! }
-
   around do |example|
     perform_enqueued_jobs { example.run }
   end
@@ -20,40 +18,18 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
       end
     end
 
-    context "when 'placements_user_onboarding_emails' feature flag is enabled" do
-      before { feature_flags.switch!(:placements_user_onboarding_emails, true) }
-
-      after { feature_flags.switch!(:placements_user_onboarding_emails, false) }
-
-      scenario "user is removed from a school" do
-        given_i_am_signed_in_as_mary
-        and_i_visit_the_user_page(anne)
-        when_i_click_on("Remove user")
-        then_i_am_asked_to_confirm(anne, school)
-        when_i_click_on("Cancel")
-        then_i_return_to_user_page(anne, school)
-        when_i_click_on("Remove user")
-        then_i_am_asked_to_confirm(anne, school)
-        when_i_click_on("Remove user")
-        then_the_the_user_is_removed_from_the_organisation(anne, school)
-        and_message_is_sent_to_user(anne, school)
-      end
-    end
-
-    context "when 'placements_user_onboarding_emails' feature flag is disabled" do
-      scenario "user is removed from a school" do
-        given_i_am_signed_in_as_mary
-        and_i_visit_the_user_page(anne)
-        when_i_click_on("Remove user")
-        then_i_am_asked_to_confirm(anne, school)
-        when_i_click_on("Cancel")
-        then_i_return_to_user_page(anne, school)
-        when_i_click_on("Remove user")
-        then_i_am_asked_to_confirm(anne, school)
-        when_i_click_on("Remove user")
-        then_the_the_user_is_removed_from_the_organisation(anne, school)
-        and_message_is_not_sent_to_user(anne, school)
-      end
+    scenario "user is removed from a school" do
+      given_i_am_signed_in_as_mary
+      and_i_visit_the_user_page(anne)
+      when_i_click_on("Remove user")
+      then_i_am_asked_to_confirm(anne, school)
+      when_i_click_on("Cancel")
+      then_i_return_to_user_page(anne, school)
+      when_i_click_on("Remove user")
+      then_i_am_asked_to_confirm(anne, school)
+      when_i_click_on("Remove user")
+      then_the_the_user_is_removed_from_the_organisation(anne, school)
+      and_message_is_sent_to_user(anne, school)
     end
 
     scenario "I try to remove myself from a school" do
@@ -74,40 +50,18 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
       end
     end
 
-    context "when 'placements_user_onboarding_emails' feature flag is enabled" do
-      before { feature_flags.switch!(:placements_user_onboarding_emails, true) }
-
-      after { feature_flags.switch!(:placements_user_onboarding_emails, false) }
-
-      scenario "user is removed from a provider" do
-        given_i_am_signed_in_as_mary
-        and_i_visit_the_user_page(anne)
-        when_i_click_on("Remove user")
-        then_i_am_asked_to_confirm(anne, provider)
-        when_i_click_on("Cancel")
-        then_i_return_to_user_page(anne, provider)
-        when_i_click_on("Remove user")
-        then_i_am_asked_to_confirm(anne, provider)
-        when_i_click_on("Remove user")
-        then_the_the_user_is_removed_from_the_organisation(anne, provider)
-        and_message_is_sent_to_user(anne, provider)
-      end
-    end
-
-    context "when 'placements_user_onboarding_emails' feature flag is disabled" do
-      scenario "user is removed from a provider" do
-        given_i_am_signed_in_as_mary
-        and_i_visit_the_user_page(anne)
-        when_i_click_on("Remove user")
-        then_i_am_asked_to_confirm(anne, provider)
-        when_i_click_on("Cancel")
-        then_i_return_to_user_page(anne, provider)
-        when_i_click_on("Remove user")
-        then_i_am_asked_to_confirm(anne, provider)
-        when_i_click_on("Remove user")
-        then_the_the_user_is_removed_from_the_organisation(anne, provider)
-        and_message_is_not_sent_to_user(anne, provider)
-      end
+    scenario "user is removed from a provider" do
+      given_i_am_signed_in_as_mary
+      and_i_visit_the_user_page(anne)
+      when_i_click_on("Remove user")
+      then_i_am_asked_to_confirm(anne, provider)
+      when_i_click_on("Cancel")
+      then_i_return_to_user_page(anne, provider)
+      when_i_click_on("Remove user")
+      then_i_am_asked_to_confirm(anne, provider)
+      when_i_click_on("Remove user")
+      then_the_the_user_is_removed_from_the_organisation(anne, provider)
+      and_message_is_sent_to_user(anne, provider)
     end
 
     scenario "I try to remove myself from a school" do
