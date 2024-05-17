@@ -44,31 +44,25 @@ RSpec.describe Placements::Importers::SchoolUsersImporter do
     end
 
     context "when the user details are not valid" do
-      let(:school_1) { create(:school, urn: "110048", placements_service: false) }
-      let(:school_2) { create(:school, urn: "114433", placements_service: false) }
-      let(:school_3) { create(:school, urn: "110063", placements_service: false) }
+      let!(:school) { create(:school, urn: "110063", placements_service: false) }
 
       before do
-        school_1
-        school_2
-        school_3
+        create(:school, urn: "110048", placements_service: false)
+        create(:school, urn: "114433", placements_service: false)
       end
 
       it "logs an error when a user fails to import" do
         expect(Rails.logger).to receive(:error)
-          .with("Failed to import user for #{school_3.name}: Email address Enter an email address and Email address Enter an email address in the correct format, like name@example.com")
+          .with("Failed to import user for #{school.name}: Email address Enter an email address and Email address Enter an email address in the correct format, like name@example.com")
 
         described_class.call(csv_path)
       end
     end
 
     context "when the school is not found" do
-      let(:school_1) { create(:school, urn: "110048", placements_service: false) }
-      let(:school_2) { create(:school, urn: "114433", placements_service: false) }
-
       before do
-        school_1
-        school_2
+        create(:school, urn: "110048", placements_service: false)
+        create(:school, urn: "114433", placements_service: false)
       end
 
       it "logs an error when a school is not found" do
