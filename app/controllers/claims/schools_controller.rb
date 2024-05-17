@@ -5,7 +5,7 @@ class Claims::SchoolsController < Claims::ApplicationController
   before_action :has_school_accepted_grant_conditions?, only: :show
 
   def index
-    @schools = policy_scope(Claims::School)
+    @schools = policy_scope(Claims::School.order_by_name)
   end
 
   def show; end

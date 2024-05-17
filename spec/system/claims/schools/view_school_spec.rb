@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "School Page", type: :system do
-  let(:school1) { create(:school, :claims, name: "School1") }
-  let(:school2) { create(:school, :claims, name: "School2") }
+  let(:school1) { create(:school, :claims, name: "School B") }
+  let(:school2) { create(:school, :claims, name: "School A") }
 
   scenario "User visits his school" do
     user_exists_in_dfe_sign_in(
@@ -20,13 +20,14 @@ RSpec.describe "School Page", type: :system do
     and_user_has_multiple_schools(user)
     when_i_visit_the_sign_in_page
     when_i_click_sign_in
+    then_i_see_schools_ordered_by_name
 
-    i_go_to_school_details_page("School1")
+    i_go_to_school_details_page("School B")
     when_i_click_on_school_details
     then_i_see_the_school_details
 
     i_click_on_change_organisation
-    i_go_to_school_details_page("School2")
+    i_go_to_school_details_page("School A")
     when_i_click_on_school_details
     then_i_see_the_school_details
   end
@@ -57,6 +58,10 @@ RSpec.describe "School Page", type: :system do
     user = create(:claims_user, user_name.downcase.to_sym)
     create(:user_membership, user:, organisation: school1)
     user
+  end
+
+  def then_i_see_schools_ordered_by_name
+    expect(page.body.index("School A")).to be < page.body.index("School B")
   end
 
   def then_i_see_the_school_details
