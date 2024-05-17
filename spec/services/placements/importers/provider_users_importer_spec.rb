@@ -41,6 +41,20 @@ RSpec.describe Placements::Importers::ProviderUsersImporter do
         described_class.call(csv_path)
         expect { described_class.call(csv_path) }.not_to(change(Placements::User, :count))
       end
+
+      context "when a user is in two provider organisations" do
+        let!(:provider2) { create(:provider, ukprn: "10032194", placements_service: false) }
+
+        before do
+          provider
+          described_class.call(csv_path)
+        end
+
+        it "associates the user to both schools" do
+          user = Placements::User.find_by(email: "j.barnes@example.com")
+          expect(user.providers).to match_array([provider.becomes(Placements::Provider), provider2.becomes(Placements::Provider)])
+        end
+      end
     end
 
     context "when the user details are not valid" do

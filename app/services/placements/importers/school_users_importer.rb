@@ -64,8 +64,9 @@ module Placements
         user_instance = User.find_or_initialize_by(email: user[:email]) do |new_user|
           new_user.first_name = user[:first_name]
           new_user.last_name = user[:last_name]
-          new_user.schools << school unless new_user.schools.exists?(school.id)
         end
+
+        user_instance.schools << school unless user_instance.schools.exists?(school.id)
 
         if user_instance.save
           @successful_count += 1
