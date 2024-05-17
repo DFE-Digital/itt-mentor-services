@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "View a school's mentors", type: :system, service: :claims do
-  let!(:mentor1) { create(:mentor, first_name: "Bilbo", last_name: "Baggins") }
-  let!(:mentor2) { create(:mentor, first_name: "Bilbo", last_name: "Test") }
+  let!(:mentor1) { create(:mentor, first_name: "Bilbo", last_name: "Test") }
+  let!(:mentor2) { create(:mentor, first_name: "Bilbo", last_name: "Baggins") }
   let!(:mentor3) { create(:mentor, trn: "0123456") }
   let!(:school) { create(:claims_school, mentors: [mentor1, mentor2]) }
   let!(:another_school) { create(:claims_school) }
@@ -25,7 +25,7 @@ RSpec.describe "View a school's mentors", type: :system, service: :claims do
     user_exists_in_dfe_sign_in(user: anne)
     given_i_sign_in
     when_i_visit_the_school_mentors_page(school)
-    then_i_see_a_list_of_the_schools_mentors
+    then_i_see_a_list_of_the_schools_mentors_ordered_by_full_name
     and_i_dont_see_mentors_from_another_school
   end
 
@@ -47,18 +47,18 @@ RSpec.describe "View a school's mentors", type: :system, service: :claims do
     visit claims_school_mentors_path(school)
   end
 
-  def then_i_see_a_list_of_the_schools_mentors
+  def then_i_see_a_list_of_the_schools_mentors_ordered_by_full_name
     expect(page).to have_content("Name")
     expect(page).to have_content("Teacher reference number (TRN)")
 
     within("tbody tr:nth-child(1)") do
-      expect(page).to have_content(mentor1.full_name)
-      expect(page).to have_content(mentor1.trn)
+      expect(page).to have_content(mentor2.full_name)
+      expect(page).to have_content(mentor2.trn)
     end
 
     within("tbody tr:nth-child(2)") do
-      expect(page).to have_content(mentor2.full_name)
-      expect(page).to have_content(mentor2.trn)
+      expect(page).to have_content(mentor1.full_name)
+      expect(page).to have_content(mentor1.trn)
     end
   end
 
