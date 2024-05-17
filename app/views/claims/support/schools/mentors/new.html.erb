@@ -12,17 +12,12 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <div class="govuk-form-group">
-          <span class="govuk-caption-l"><%= t(".add_mentor") %></span>
+          <span class="govuk-caption-l"><%= t(".add_mentor", school_name: @school.name) %></span>
           <h2 class="govuk-heading-l"><%= t(".find_teacher") %></h2>
           <%= f.govuk_text_field :trn,
                                   width: "two-thirds",
                                   label: { text: t(".trn"), size: "s" },
                                   hint: { text: t(".trn_hint") } %>
-          <%= govuk_details(summary_text: t(".help_with_the_trn")) do %>
-            <p>
-              <%= t(".guidance_html", guidance_link: govuk_link_to(t(".guidance_link_text"), "https://www.gov.uk/guidance/teacher-reference-number-trn", new_tab: true, no_visited_state: true)) %>
-            </p>
-          <% end %>
 
           <%= f.govuk_date_field(
             :date_of_birth,
