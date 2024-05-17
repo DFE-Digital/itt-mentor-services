@@ -43,14 +43,14 @@ module Placements
         school = ::School.find_by(urn:)
 
         if school.present?
-          update_school(school)
+          onboard_school(school)
           process_users(users, school)
         else
           Rails.logger.error("Failed to import users for school with URN: #{urn}. School not found.")
         end
       end
 
-      def update_school(school)
+      def onboard_school(school)
         school.update!(placements_service: true)
       end
 
