@@ -21,6 +21,7 @@ RSpec.describe "Create claim", type: :system, service: :claims do
 
   scenario "Anne creates a claim" do
     when_i_click("Add claim")
+    then_i_should_see_providers_ordered_by_name
     when_i_choose_a_provider(bpn)
     when_i_click("Continue")
     when_i_select_all_mentors
@@ -194,6 +195,10 @@ RSpec.describe "Create claim", type: :system, service: :claims do
   def when_i_choose_other_amount_and_input_hours(hours)
     page.choose("Another amount")
     fill_in("Number of hours", with: hours)
+  end
+
+  def then_i_should_see_providers_ordered_by_name
+    expect(page.body.index(bpn.name)).to be < page.body.index(niot.name)
   end
 
   def then_i_check_my_answers
