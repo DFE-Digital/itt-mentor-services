@@ -2,7 +2,7 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   include Claims::BelongsToSchool
 
   before_action :has_school_accepted_grant_conditions?
-  before_action :set_claim, only: %i[show check confirmation submit edit update rejected create_revision]
+  before_action :set_claim, only: %i[show check confirmation submit edit update rejected create_revision remove destroy]
   before_action :authorize_claim
   before_action :get_valid_revision, only: :check
 
@@ -62,6 +62,14 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   end
 
   def rejected; end
+
+  def remove; end
+
+  def destroy
+    @claim.destroy!
+
+    redirect_to claims_school_claims_path(@school, @claim), flash: { success: t(".success") }
+  end
 
   private
 

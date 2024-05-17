@@ -32,6 +32,12 @@
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: Claims::Claim.human_attribute_name(:accredited_provider)) %>
             <% row.with_value(text: @claim.provider.name) %>
+            <% row.with_action(
+              text: t("change"),
+              href: create_revision_claims_school_claim_path(@school, @claim),
+              visually_hidden_text: Claims::Claim.human_attribute_name(:accredited_provider),
+              html_attributes: { class: "govuk-link--no-visited-state" },
+            ) %>
           <% end %>
         <% else %>
           <% summary_list.with_row do |row| %>
@@ -49,6 +55,12 @@
               <% end %>
             </ul>
           <% end %>
+          <% row.with_action(
+            text: t("change"),
+            href: create_revision_claims_school_claim_mentors_path(@school, @claim),
+            visually_hidden_text: Claims::Claim.human_attribute_name(:mentors),
+            html_attributes: { class: "govuk-link--no-visited-state" },
+          ) %>
         <% end %>
       <% end %>
 
@@ -58,6 +70,14 @@
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: mentor_training.mentor.full_name) %>
             <% row.with_value(text: pluralize(mentor_training.hours_completed, t(".hour"))) %>
+            <% row.with_action(text: t("change"),
+                               href: create_revision_claims_school_claim_mentor_training_path(
+                @school,
+                @claim,
+                mentor_training.mentor_id,
+              ),
+                               visually_hidden_text: "Hours of training for #{mentor_training.mentor.full_name}",
+                               html_attributes: { class: "govuk-link--no-visited-state" }) %>
           <% end %>
         <% end %>
       <% end %>
@@ -78,6 +98,10 @@
             <% row.with_key(text: Claims::Claim.human_attribute_name(:claim_amount)) %>
             <% row.with_value(text: humanized_money_with_symbol(@claim.amount)) %>
           <% end %>
+        <% end %>
+
+        <% if policy(@claim).remove? %>
+          <%= govuk_link_to t(".remove_claim"), remove_claims_school_claim_path(@school, @claim), class: "app-link app-link--destructive" %>
         <% end %>
     </div>
   </div>

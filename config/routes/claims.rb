@@ -13,7 +13,7 @@ scope module: :claims, as: :claims, constraints: {
 
   resources :schools, only: %i[index show] do
     scope module: :schools do
-      resources :claims, except: %i[destroy] do
+      resources :claims do
         resource :mentors, only: %i[new create edit update], module: :claims do
           member do
             get :create_revision
@@ -26,6 +26,7 @@ scope module: :claims, as: :claims, constraints: {
         end
 
         member do
+          get :remove
           get :check
           get :confirmation
           get :rejected
