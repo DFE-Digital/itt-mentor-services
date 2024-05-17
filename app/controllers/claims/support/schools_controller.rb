@@ -4,7 +4,7 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
   before_action :authorize_school
 
   def index
-    @pagy, @schools = pagy(schools)
+    @pagy, @schools = pagy(schools.order_by_name)
   end
 
   def show; end
