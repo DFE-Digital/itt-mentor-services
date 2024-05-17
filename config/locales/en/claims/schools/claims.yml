@@ -53,8 +53,17 @@ en:
           add_a_mentor: add a mentor
         update:
           claim_updated: Claim updated
+        remove:
+          page_title: Are you sure you want to remove this claim?
+          caption: Claim - %{reference}
+          warning: Are you sure you want to remove this claim?
+          cancel: Cancel
+          remove_claim: Remove claim
+        destroy:
+          success: Claim has been removed
         show:
           mentors: Mentors
+          remove_claim: Remove claim
           page_title: Claim - %{reference}
           hours_of_training: Hours of training
           grant_funding: Grant funding

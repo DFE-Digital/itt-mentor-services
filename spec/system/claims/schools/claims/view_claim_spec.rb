@@ -53,6 +53,9 @@ RSpec.describe "View a claim", type: :system, service: :claims do
     when_i_visit_the_claim_show_page(draft_claim)
     then_i_can_then_see_the_draft_claim_details
     then_i_can_see_submit_button
+    when_i_click("Submit claim")
+    then_i_can_see_submit_button
+    then_i_can_then_see_the_draft_claim_details_without_change_buttons
   end
 
   private
@@ -87,6 +90,21 @@ RSpec.describe "View a claim", type: :system, service: :claims do
     expect(page).to have_content("Total hours6 hours")
     expect(page).to have_content("Hourly rate£53.60")
     expect(page).to have_content("Claim amount£321.60")
+    expect(page).to have_content("Change", count: 3)
+  end
+
+  def then_i_can_then_see_the_draft_claim_details_without_change_buttons
+    expect(page).to have_content("Claim - #{draft_claim.reference}")
+    expect(page).to have_content("SchoolA School")
+    expect(page).not_to have_content("Submitted by")
+    expect(page).to have_content("Accredited providerBest Practice Network")
+    expect(page).to have_content("Mentors\nBarry Garlow")
+    expect(page).to have_content("Hours of training")
+    expect(page).to have_content("Barry Garlow#{draft_mentor_training.hours_completed} hours")
+    expect(page).to have_content("Total hours6 hours")
+    expect(page).to have_content("Hourly rate£53.60")
+    expect(page).to have_content("Claim amount£321.60")
+    expect(page).not_to have_content("Change")
   end
 
   def given_i_sign_in
@@ -100,5 +118,9 @@ RSpec.describe "View a claim", type: :system, service: :claims do
 
   def then_i_can_see_submit_button
     expect(page).to have_button("Submit claim")
+  end
+
+  def when_i_click(button)
+    click_on button
   end
 end

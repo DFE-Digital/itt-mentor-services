@@ -20,7 +20,7 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
   end
 
   def destroy?
-    user.support_user? && record.draft?
+    record.draft?
   end
 
   def confirmation?

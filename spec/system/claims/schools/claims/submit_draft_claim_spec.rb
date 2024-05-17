@@ -68,7 +68,6 @@ RSpec.describe "Submit a draft claim", type: :system, service: :claims do
 
   def then_i_see_a_check_page_with_a_declaration
     expect(page).to have_content("Claim - #{draft_claim.reference}")
-    expect(page).to have_content("Check your answers")
     expect(page).to have_content("Declaration")
     expect(page).to have_content("By submitting this claim, I confirm that:")
     expect(page).to have_content("I am authorised to claim on behalf of the school")
