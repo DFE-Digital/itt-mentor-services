@@ -16,19 +16,15 @@ en:
           add_organisation: Add organisation
           address: Address
           cancel: Cancel
-          contact_details: Contact details
-          organisation_name: Organisation name
-          telephone: Telephone number
           title: Check your answers
-          urn: Unique reference number (URN)
-          website: Website
-        show:
-          unknown: Unknown
-          not_entered: Not entered
-          not_applicable: Not applicable
           additional_details: Additional details
-          send: Special educational needs and disabilities (SEND)
           ofsted: Ofsted
+          send: Special educational needs and disabilities (SEND)
+          contact_details: Contact details
+        show:
+          additional_details: Additional details
+          ofsted: Ofsted
+          send: Special educational needs and disabilities (SEND)
           contact_details: Contact details
         school_options:
           title: "%{school_count} results found for ‘%{search_param}’ - Add organisation"

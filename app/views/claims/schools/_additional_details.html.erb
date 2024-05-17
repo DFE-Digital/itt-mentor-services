@@ -1,58 +1,58 @@
 <%= govuk_summary_list(html_attributes: { id: "additional-details" }) do |summary_list| %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t("claims.schools.show.group")) %>
-    <% row.with_value(**details_field_args(@school.group)) %>
+    <% row.with_value(**summary_row_value(value: @school.group)) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t("claims.schools.show.type")) %>
-    <% row.with_value(**details_field_args(@school.type_of_establishment)) %>
+    <% row.with_value(**summary_row_value(value: @school.type_of_establishment)) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t("claims.schools.show.phase")) %>
-    <% row.with_value(**details_field_args(@school.phase)) %>
+    <% row.with_value(**summary_row_value(value: @school.phase)) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t("claims.schools.show.gender")) %>
-    <% row.with_value(**details_field_args(@school.gender)) %>
+    <% row.with_value(**summary_row_value(value: @school.gender)) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t("claims.schools.show.minimum_age")) %>
-    <% row.with_value(**details_field_args(@school.minimum_age)) %>
+    <% row.with_value(**summary_row_value(value: @school.minimum_age)) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t("claims.schools.show.maximum_age")) %>
-    <% row.with_value(**details_field_args(@school.maximum_age)) %>
+    <% row.with_value(**summary_row_value(value: @school.maximum_age)) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t("claims.schools.show.religious_character")) %>
-    <% row.with_value(**details_field_args(@school.religious_character)) %>
+    <% row.with_value(**summary_row_value(value: @school.religious_character)) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t("claims.schools.show.admissions_policy")) %>
-    <% row.with_value(**details_field_args(@school.admissions_policy)) %>
+    <% row.with_value(**summary_row_value(value: @school.admissions_policy)) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t("claims.schools.show.urban_or_rural")) %>
-    <% row.with_value(**details_field_args(@school.urban_or_rural)) %>
+    <% row.with_value(**summary_row_value(value: @school.urban_or_rural)) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t("claims.schools.show.school_capacity")) %>
-    <% row.with_value(**details_field_args(@school.school_capacity)) %>
+    <% row.with_value(**summary_row_value(value: @school.school_capacity)) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t("claims.schools.show.total_pupils")) %>
-    <% row.with_value(**details_field_args(@school.total_pupils)) %>
+    <% row.with_value(**summary_row_value(value: @school.total_pupils)) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t("claims.schools.show.total_boys")) %>
-    <% row.with_value(**details_field_args(@school.total_boys)) %>
+    <% row.with_value(**summary_row_value(value: @school.total_boys)) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t("claims.schools.show.total_girls")) %>
-    <% row.with_value(**details_field_args(@school.total_girls)) %>
+    <% row.with_value(**summary_row_value(value: @school.total_girls)) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t("claims.schools.show.percentage_free_school_meals")) %>
-    <% row.with_value(**details_field_args(@school.percentage_free_school_meals)) %>
+    <% row.with_value(**summary_row_value(value: @school.percentage_free_school_meals)) %>
   <% end %>
 <% end %>

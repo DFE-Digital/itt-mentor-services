@@ -15,44 +15,9 @@
           <%= t(".title") %>
         </label>
 
-        <%= govuk_summary_list do |summary_list| %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(text: t(".organisation_name")) %>
-            <% row.with_value(text: @provider.name) %>
-          <% end %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(text: t(".ukprn")) %>
-            <% row.with_value(text: @provider.ukprn) %>
-          <% end %>
-        <% end %>
-
-        <h2 class="govuk-heading-m govuk-!-margin-top-7">
-          <%= t(".contact_details") %>
-        </h2>
-
-        <%= govuk_summary_list do |summary_list| %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(text: t(".email")) %>
-            <% row.with_value(text: @provider.email_address) %>
-          <% end %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(text: t(".telephone")) %>
-            <% row.with_value(text: @provider.telephone) %>
-          <% end %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(text: t(".website")) %>
-            <% row.with_value do %>
-              <%= govuk_link_to(@provider.website,
-                external_link(@provider.website),
-                target: "_blank",
-                rel: "noopener noreferrer") %>
-            <% end %>
-          <% end %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(text: t(".address")) %>
-            <% row.with_value(text: @provider.formatted_address) %>
-          <% end %>
-        <% end %>
+        <%= render "shared/organisations/organisation_details", organisation: @provider %>
+        <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".contact_details") %></h2>
+        <%= render "shared/organisations/contact_details", organisation: @provider %>
 
         <%= f.govuk_submit t(".add_organisation") %>
         <p class="govuk-body">

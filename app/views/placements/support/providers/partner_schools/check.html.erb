@@ -21,46 +21,15 @@
           <%= t(".title") %>
         </label>
 
-        <%= govuk_summary_list do |summary_list| %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(text: t(".name")) %>
-            <% row.with_value(**details_field_args(@partner_school.name)) %>
-          <% end %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(text: t(".urn")) %>
-            <% row.with_value(**details_field_args(@partner_school.urn)) %>
-          <% end %>
-        <% end %>
-
-        <h2 class="govuk-heading-m govuk-!-margin-top-7">
-          <%= t(".contact_details") %>
-        </h2>
-
-        <%= govuk_summary_list do |summary_list| %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(text: t(".telephone")) %>
-            <% row.with_value(**details_field_args(@partner_school.telephone)) %>
-          <% end %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(text: t(".website")) %>
-            <% row.with_value do %>
-              <% if @partner_school.website.present? %>
-                <%= govuk_link_to(
-                  @partner_school.website,
-                  external_link(@partner_school.website),
-                  target: "_blank",
-                  rel: "noopener noreferrer",
-                ) %>
-              <% else %>
-                <%= row.with_value(**details_field_args) %>
-              <% end %>
-            <% end %>
-          <% end %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(text: t(".address")) %>
-            <% row.with_value(**details_field_args(@partner_school.formatted_address)) %>
-          <% end %>
-        <% end %>
+        <%= render "shared/organisations/organisation_details", organisation: @partner_school %>
+        <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".additional_details") %></h2>
+        <%= render "shared/schools/additional_details", school: @partner_school %>
+        <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".send") %></h2>
+        <%= render "shared/schools/send_details", school: @partner_school %>
+        <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".ofsted") %></h2>
+        <%= render "shared/schools/ofsted_details", school: @partner_school %>
+        <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".contact_details") %></h2>
+        <%= render "shared/organisations/contact_details", organisation: @partner_school %>
 
         <%= render GovukComponent::WarningTextComponent.new(
           text: t(".school_will_be_sent_an_email",

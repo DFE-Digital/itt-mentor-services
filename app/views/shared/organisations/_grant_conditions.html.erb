@@ -2,11 +2,11 @@
   <%= govuk_summary_list(html_attributes: { id: "grant-conditions" }) do |summary_list| %>
     <% summary_list.with_row do |row| %>
       <% row.with_key(text: t(".agreed_by")) %>
-      <% row.with_value(**details_field_args(organisation.claims_grant_conditions_accepted_by&.full_name)) %>
+      <% row.with_value(**summary_row_value(value: organisation.claims_grant_conditions_accepted_by&.full_name)) %>
     <% end %>
     <% summary_list.with_row do |row| %>
       <% row.with_key(text: t(".agreed_on")) %>
-      <% row.with_value(**details_field_args(l(organisation.claims_grant_conditions_accepted_at.to_date, format: :long))) %>
+      <% row.with_value(**summary_row_value(value: l(organisation.claims_grant_conditions_accepted_at.to_date, format: :long))) %>
     <% end %>
   <% end %>
   <% if current_user.support_user? %>
