@@ -10,7 +10,7 @@ class Claims::Support::Schools::MentorsController < Claims::Support::Application
   helper_method :mentor_form
 
   def index
-    @pagy, @mentors = pagy(@school.mentors.order(:first_name, :last_name))
+    @pagy, @mentors = pagy(@school.mentors.order_by_full_name)
   end
 
   def new; end
