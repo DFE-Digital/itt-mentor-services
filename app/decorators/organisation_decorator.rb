@@ -4,6 +4,8 @@ class OrganisationDecorator < Draper::Decorator
 
   def formatted_address
     address_string = address_parts.reject(&:blank?)&.join("\n")
+    return if address_string.blank?
+
     simple_format(address_string)
   end
 end

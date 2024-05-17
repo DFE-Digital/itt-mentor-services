@@ -38,13 +38,6 @@ en:
             add_partner_provider: Add partner provider
             caption: Add partner provider - %{school_name}
             title: Check your answers
-            name: Name
-            ukprn: UK provider reference number (UKPRN)
-            urn: Unique reference number (URN)
-            telephone: Telephone
-            address: Address
-            website: Website
-            email: Email address
             provider_will_be_sent_an_email: We will send an email to %{provider_name}. This will let them know you have added them as a partner provider for %{school_name}.
           create:
             partner_provider_added: Partner provider added

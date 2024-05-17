@@ -1,14 +1,14 @@
 <%= govuk_summary_list(html_attributes: { id: "organisation-details" }) do |summary_list| %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".organisation_name")) %>
-    <% row.with_value(**details_field_args(organisation.name)) %>
+    <% row.with_value(**summary_row_value(value: organisation.name)) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".ukprn")) %>
-    <% row.with_value(**details_field_args(organisation.ukprn)) %>
+    <% row.with_value(**summary_row_value(value: organisation.ukprn)) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".urn")) %>
-    <% row.with_value(**details_field_args(organisation.urn)) %>
+    <% row.with_value(**summary_row_value(value: organisation.urn)) %>
   <% end %>
 <% end %>

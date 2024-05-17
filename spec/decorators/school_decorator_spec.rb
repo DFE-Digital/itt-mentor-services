@@ -27,6 +27,15 @@ RSpec.describe SchoolDecorator do
         )
       end
     end
+
+    context "when all address attributes are missing" do
+      it "returns nil" do
+        school = create(:school)
+        expect(
+          school.decorate.formatted_address,
+        ).to eq(nil)
+      end
+    end
   end
 
   describe "#formatted_inspection_date" do

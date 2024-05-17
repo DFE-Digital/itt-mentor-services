@@ -23,14 +23,12 @@ en:
           continue: Continue
           cancel: Cancel
           page_title: Check your answers - Add partner school
-          contact_details: Contact details
           add_partner_school: Add partner school
           title: Check your answers
-          name: Name
-          urn: Unique reference number (URN)
-          telephone: Telephone
-          address: Address
-          website: Website
+          additional_details: Additional details
+          ofsted: Ofsted
+          send: Special educational needs and disabilities (SEND)
+          contact_details: Contact details
           school_will_be_sent_an_email: We will send an email to %{school_name}. This will let them know you have added them as a partner school for %{provider_name}.
         create:
           partner_school_added: Partner school added

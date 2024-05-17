@@ -22,12 +22,10 @@ en:
             add_partner_school: Add partner school
             caption: Add partner school - %{provider_name}
             title: Check your answers
+            additional_details: Additional details
+            ofsted: Ofsted
+            send: Special educational needs and disabilities (SEND)
             contact_details: Contact details
-            name: Name
-            urn: Unique reference number (URN)
-            telephone: Telephone
-            address: Address
-            website: Website
             school_will_be_sent_an_email: We will send an email to %{school_name}. This will let them know you have added them as a partner school for %{provider_name}.
             cancel: Cancel
           create:
@@ -35,6 +33,9 @@ en:
           show:
             page_title: "%{partner_school_name} - Partner schools - %{provider_name}"
             caption: "Partner schools - %{provider_name}"
+            additional_details: Additional details
+            ofsted: Ofsted
+            send: Special educational needs and disabilities (SEND)
             contact_details: Contact details
             remove_partner_provider: Remove partner school
           remove:

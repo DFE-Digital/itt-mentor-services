@@ -33,5 +33,14 @@ RSpec.describe ProviderDecorator do
         )
       end
     end
+
+    context "when all address attributes are missing" do
+      it "returns nil" do
+        provider = create(:provider)
+        expect(
+          provider.decorate.formatted_address,
+        ).to eq(nil)
+      end
+    end
   end
 end
