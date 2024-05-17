@@ -6,7 +6,7 @@ class Claims::Schools::UsersController < Claims::ApplicationController
   before_action :authorize_user
 
   def index
-    @pagy, @users = pagy(@school.users)
+    @pagy, @users = pagy(@school.users.order_by_full_name)
   end
 
   def new
