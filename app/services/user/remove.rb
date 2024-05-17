@@ -10,9 +10,6 @@ class User::Remove
 
   def call
     user_membership.destroy!
-    return if user.service == :placements &&
-      !Flipflop.enabled?(:placements_user_onboarding_emails)
-
     UserMailer.with(service: user.service).user_membership_destroyed_notification(user, organisation).deliver_later
   end
 
