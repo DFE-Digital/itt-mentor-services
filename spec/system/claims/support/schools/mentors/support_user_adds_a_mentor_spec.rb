@@ -19,13 +19,6 @@ RSpec.describe "Claims support user adds mentors to schools", type: :system, ser
     then_i_see_the_index_page(school)
   end
 
-  scenario "I can view help with the trn" do
-    given_i_navigate_to_schools_mentors_list(school)
-    and_i_click_on "Add mentor"
-    when_i_click_on_help_text
-    then_i_see_link_to_trn_guidance
-  end
-
   scenario "I do not enter a trn" do
     given_i_navigate_to_schools_mentors_list(school)
     and_i_click_on("Add mentor")

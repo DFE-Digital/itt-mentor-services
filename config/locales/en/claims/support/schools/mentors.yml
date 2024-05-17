@@ -26,10 +26,7 @@ en:
             find_teacher: Find teacher
             continue: Continue
             enter_a_trn: Enter a teacher reference number (TRN)
-            help_with_the_trn: If you do not have the teacher reference number (TRN)
-            guidance_html: If your mentor does not have a TRN, share the %{guidance_link} to find a lost TRN, or apply for one.
-            guidance_link_text: teacher reference number (TRN) guidance
-            add_mentor: Add mentor
+            add_mentor: Add mentor - %{school_name}
           check:
             save_mentor: Save mentor
             date_of_birth: Date of birth
