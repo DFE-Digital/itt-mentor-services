@@ -10,7 +10,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    flex-wrap: wrap;
+    gap: govuk-spacing(2);
 
     .claim-card__header__name {
       display: flex;
