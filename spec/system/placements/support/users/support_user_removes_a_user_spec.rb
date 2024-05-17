@@ -38,7 +38,6 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
       create(:user_membership, user:, organisation: provider)
     end
 
-
     scenario "user is removed from a provider" do
       given_i_am_signed_in_as_a_support_user
       and_i_visit_the_user_page(provider)
