@@ -45,6 +45,8 @@ end
 # Instead, define negated versions of whatever matchers you wish to negate with
 # `RSpec::Matchers.define_negated_matcher` and use `expect(...).to matcher.and matcher`.
 RSpec::Matchers.define_negated_matcher :not_change, :change
+RSpec::Matchers.define_negated_matcher :not_have_enqueued_mail, :have_enqueued_mail
+RSpec::Matchers.define_negated_matcher :not_have_enqueued_job, :have_enqueued_job
 
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|

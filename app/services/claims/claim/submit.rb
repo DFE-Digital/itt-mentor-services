@@ -11,6 +11,7 @@ class Claims::Claim::Submit
 
     if status_changed_to_submitted?
       send_claim_submitted_notification_email
+      send_claim_submitted_notification_slack_message
     end
   end
 
@@ -21,6 +22,10 @@ class Claims::Claim::Submit
   def send_claim_submitted_notification_email
     UserMailer.with(service: :claims)
       .claim_submitted_notification(user, claim).deliver_later
+  end
+
+  def send_claim_submitted_notification_slack_message
+    Claims::ClaimSlackNotifier.claim_submitted_notification(claim).deliver_later
   end
 
   def status_changed_to_submitted?
