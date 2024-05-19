@@ -19,11 +19,11 @@ describe Claims::Claim::Submit do
       allow(SecureRandom).to receive(:random_number).with(99_999_999).and_return(123)
 
       expect { submit_service }.to change(claim, :reference).from(nil).to("123")
+        .and(have_enqueued_mail(UserMailer, :claim_submitted_notification).once)
+        .and(have_enqueued_job(SlackNotifier::Message::DeliveryJob).once)
+
       expect(claim.status).to eq("submitted")
       expect(claim.submitted_at).to eq(submitted_at)
-
-      expect(submit_service.arguments.first).to eq("UserMailer")
-      expect(submit_service.arguments.second).to eq("claim_submitted_notification")
     end
 
     context "when claim has a reference already" do
@@ -31,7 +31,9 @@ describe Claims::Claim::Submit do
         claim_with_reference = create(:claim, reference: "123")
         service = described_class.call(claim: claim_with_reference, user:)
 
-        expect { service }.not_to change(claim, :reference)
+        expect { service }.to not_change(claim, :reference)
+          .and(not_have_enqueued_mail(UserMailer, :claim_submitted_notification))
+          .and(not_have_enqueued_job(SlackNotifier::Message::DeliveryJob))
       end
     end
 
@@ -40,8 +42,11 @@ describe Claims::Claim::Submit do
         submitted_claim = create(:claim, status: :submitted, school:)
         service = described_class.call(claim: submitted_claim, user:)
 
+        expect { service }.to not_change(claim, :reference)
+          .and(not_have_enqueued_mail(UserMailer, :claim_submitted_notification))
+          .and(not_have_enqueued_job(SlackNotifier::Message::DeliveryJob))
+
         expect(service).to be_nil
-        expect(UserMailer).not_to receive(:with).with(any_args)
       end
     end
 
@@ -52,6 +57,8 @@ describe Claims::Claim::Submit do
         allow(SecureRandom).to receive(:random_number).with(99_999_999).and_return(123, 456)
 
         expect { submit_service }.to change(claim, :reference).from(nil).to("456")
+          .and(have_enqueued_mail(UserMailer, :claim_submitted_notification).once)
+          .and(have_enqueued_job(SlackNotifier::Message::DeliveryJob).once)
 
         expect(claim.status).to eq("submitted")
         expect(claim.submitted_at).to eq(submitted_at)
