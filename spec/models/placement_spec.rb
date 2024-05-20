@@ -110,8 +110,8 @@ RSpec.describe Placement, type: :model do
       end
     end
 
-    context "when a subject has been associated with the placement" do
-      context "when the subject is not same as the already associated subject" do
+    context "when subjects have been associated with the placement" do
+      context "when subject is nil" do
         let(:subjects) { [create(:subject)] }
         let(:a_subject) { nil }
 
@@ -120,9 +120,9 @@ RSpec.describe Placement, type: :model do
         end
       end
 
-      context "when the subject is same as the already associated subject" do
+      context "when subject is not nil" do
         let(:subjects) { [create(:subject)] }
-        let(:a_subject) { subjects.last }
+        let(:a_subject) { create(:subject) }
 
         it "keeps the original subject assigned to the placement" do
           expect(placement.subject).to eq(a_subject)
