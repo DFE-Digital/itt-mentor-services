@@ -20,5 +20,7 @@
 #
 FactoryBot.define do
   factory :placement_additional_subject, class: "Placements::PlacementAdditionalSubject" do
+    association :subject
+    association :placement
   end
 end

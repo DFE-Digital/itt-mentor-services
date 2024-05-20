@@ -22,7 +22,8 @@
 #  fk_rails_...  (subject_id => subjects.id)
 #
 class Placement < ApplicationRecord
-  after_save :assign_subject # TODO: Remove when data migrated
+  # TODO: Remove when data migrated
+  after_save :assign_subject, unless: proc { |placement| placement.subject.present? }
 
   has_many :placement_mentor_joins, dependent: :destroy
   has_many :mentors, through: :placement_mentor_joins, class_name: "Placements::Mentor"
@@ -58,9 +59,7 @@ class Placement < ApplicationRecord
 
   # TODO: Remove after data migrated
   def assign_subject
-    return if subjects.blank? ||
-      subject.present? ||
-      subject == subjects.last
+    return if subjects.blank?
 
     update!(subject: subjects.last)
   end
