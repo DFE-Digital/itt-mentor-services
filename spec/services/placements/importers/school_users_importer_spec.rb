@@ -44,6 +44,13 @@ RSpec.describe Placements::Importers::SchoolUsersImporter do
         expect { described_class.call(csv_path) }.not_to(change(Placements::User, :count))
       end
 
+      it "does not send an invite to the user if they are already invited" do
+        school
+        described_class.call(csv_path)
+        described_class.call(csv_path)
+        expect(User::Invite).to have_received(:call).with(an_instance_of(Placements::User), school).once
+      end
+
       it "sends an invite to the user" do
         school
         described_class.call(csv_path)
