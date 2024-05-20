@@ -107,6 +107,9 @@ gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.12.3"
 # Migrations
 gem "strong_migrations"
 
+# Data Migrate [https://github.com/ilyakatz/data-migrate]
+gem "data_migrate", "~> 9.4"
+
 group :development do
   gem "annotate", require: false
   gem "prettier_print", require: false
