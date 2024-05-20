@@ -2,12 +2,21 @@
 #
 # Table name: subjects
 #
-#  id           :uuid             not null, primary key
-#  code         :string
-#  name         :string           not null
-#  subject_area :enum
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
+#  id                :uuid             not null, primary key
+#  code              :string
+#  name              :string           not null
+#  subject_area      :enum
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  parent_subject_id :uuid
+#
+# Indexes
+#
+#  index_subjects_on_parent_subject_id  (parent_subject_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (parent_subject_id => subjects.id)
 #
 FactoryBot.define do
   factory :subject do

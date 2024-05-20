@@ -7,26 +7,34 @@
 #  updated_at  :datetime         not null
 #  provider_id :uuid
 #  school_id   :uuid
+#  subject_id  :uuid
 #
 # Indexes
 #
 #  index_placements_on_provider_id  (provider_id)
 #  index_placements_on_school_id    (school_id)
+#  index_placements_on_subject_id   (subject_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (provider_id => providers.id)
 #  fk_rails_...  (school_id => schools.id)
+#  fk_rails_...  (subject_id => subjects.id)
 #
 class Placement < ApplicationRecord
+  after_save :assign_subject # TODO: Remove when data migrated
+
   has_many :placement_mentor_joins, dependent: :destroy
   has_many :mentors, through: :placement_mentor_joins, class_name: "Placements::Mentor"
 
   has_many :placement_subject_joins, dependent: :destroy
   has_many :subjects, through: :placement_subject_joins
+  has_many :placement_additional_subjects, class_name: "Placements::PlacementAdditionalSubject", dependent: :destroy
+  has_many :additional_subjects, through: :placement_additional_subjects, source: :subject
 
   belongs_to :school, class_name: "Placements::School"
   belongs_to :provider, optional: true, class_name: "::Provider"
+  belongs_to :subject, class_name: "::Subject", optional: true # TODO: Remove optional true after data migrated
 
   accepts_nested_attributes_for :mentors, allow_destroy: true
   accepts_nested_attributes_for :subjects, allow_destroy: true
@@ -46,5 +54,14 @@ class Placement < ApplicationRecord
       condition.when(school_id).then(index)
     end
     order(condition)
+  end
+
+  # TODO: Remove after data migrated
+  def assign_subject
+    return if subjects.blank? ||
+      subject.present? ||
+      subject == subjects.last
+
+    update!(subject: subjects.last)
   end
 end

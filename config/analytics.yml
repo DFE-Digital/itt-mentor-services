@@ -42,6 +42,7 @@ shared:
     - subject_area
     - name
     - code
+    - parent_subject_id
     - created_at
     - updated_at
   :regions:
@@ -158,6 +159,7 @@ shared:
   :placements:
     - id
     - school_id
+    - subject_id
     - created_at
     - updated_at
     - provider_id
@@ -166,5 +168,11 @@ shared:
     - name
     - email_address
     - school_id
+    - created_at
+    - updated_at
+  :placement_additional_subjects:
+    - id
+    - subject_id
+    - placement_id
     - created_at
     - updated_at
