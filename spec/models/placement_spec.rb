@@ -7,16 +7,19 @@
 #  updated_at  :datetime         not null
 #  provider_id :uuid
 #  school_id   :uuid
+#  subject_id  :uuid
 #
 # Indexes
 #
 #  index_placements_on_provider_id  (provider_id)
 #  index_placements_on_school_id    (school_id)
+#  index_placements_on_subject_id   (subject_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (provider_id => providers.id)
 #  fk_rails_...  (school_id => schools.id)
+#  fk_rails_...  (subject_id => subjects.id)
 #
 require "rails_helper"
 
@@ -27,9 +30,12 @@ RSpec.describe Placement, type: :model do
 
     it { is_expected.to have_many(:placement_subject_joins).dependent(:destroy) }
     it { is_expected.to have_many(:subjects).through(:placement_subject_joins) }
+    it { is_expected.to have_many(:placement_additional_subjects).class_name("Placements::PlacementAdditionalSubject").dependent(:destroy) }
+    it { is_expected.to have_many(:additional_subjects).through(:placement_additional_subjects).class_name("Subject") }
 
     it { is_expected.to belong_to(:school) }
     it { is_expected.to belong_to(:provider).optional }
+    it { is_expected.to belong_to(:subject).optional } # TODO: Remove optional after data migration
   end
 
   describe "validations" do
@@ -88,6 +94,40 @@ RSpec.describe Placement, type: :model do
       ).to eq(
         [placement_3, placement_2, placement_1],
       )
+    end
+  end
+
+  # TODO: Remove after data migrated
+  describe "#assign_subject" do
+    subject(:placement) { create(:placement, subjects:, subject: a_subject) }
+
+    context "when no subjects have been associated with the placement" do
+      let(:subjects) { [] }
+      let(:a_subject) { nil }
+
+      it "does not assign a subject" do
+        expect(placement.subject).to eq(nil)
+      end
+    end
+
+    context "when a subject has been associated with the placement" do
+      context "when the subject is not same as the already associated subject" do
+        let(:subjects) { [create(:subject)] }
+        let(:a_subject) { nil }
+
+        it "assigns a subject to the placement" do
+          expect(placement.subject).to eq(subjects.last)
+        end
+      end
+
+      context "when the subject is same as the already associated subject" do
+        let(:subjects) { [create(:subject)] }
+        let(:a_subject) { subjects.last }
+
+        it "keeps the original subject assigned to the placement" do
+          expect(placement.subject).to eq(a_subject)
+        end
+      end
     end
   end
 end

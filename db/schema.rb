@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_07_081604) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_20_143732) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -209,6 +209,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_07_081604) do
     t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable"
   end
 
+  create_table "placement_additional_subjects", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "subject_id", null: false
+    t.uuid "placement_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["placement_id"], name: "index_placement_additional_subjects_on_placement_id"
+    t.index ["subject_id"], name: "index_placement_additional_subjects_on_subject_id"
+  end
+
   create_table "placement_mentor_joins", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "mentor_id", null: false
     t.uuid "placement_id", null: false
@@ -232,8 +241,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_07_081604) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "provider_id"
+    t.uuid "subject_id"
     t.index ["provider_id"], name: "index_placements_on_provider_id"
     t.index ["school_id"], name: "index_placements_on_school_id"
+    t.index ["subject_id"], name: "index_placements_on_subject_id"
   end
 
   create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -339,6 +350,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_07_081604) do
     t.string "code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "parent_subject_id"
+    t.index ["parent_subject_id"], name: "index_subjects_on_parent_subject_id"
   end
 
   create_table "trusts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -383,15 +396,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_07_081604) do
   add_foreign_key "mentor_trainings", "providers"
   add_foreign_key "partnerships", "providers"
   add_foreign_key "partnerships", "schools"
+  add_foreign_key "placement_additional_subjects", "placements"
+  add_foreign_key "placement_additional_subjects", "subjects"
   add_foreign_key "placement_mentor_joins", "mentors"
   add_foreign_key "placement_mentor_joins", "placements"
   add_foreign_key "placement_subject_joins", "placements"
   add_foreign_key "placement_subject_joins", "subjects"
   add_foreign_key "placements", "providers"
   add_foreign_key "placements", "schools"
+  add_foreign_key "placements", "subjects"
   add_foreign_key "school_contacts", "schools"
   add_foreign_key "schools", "regions"
   add_foreign_key "schools", "trusts"
   add_foreign_key "schools", "users", column: "claims_grant_conditions_accepted_by_id"
+  add_foreign_key "subjects", "subjects", column: "parent_subject_id"
   add_foreign_key "user_memberships", "users"
 end
