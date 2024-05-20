@@ -6,7 +6,7 @@ class ApplicationSlackNotifier < SlackNotifier
   private
 
   def default_url_options
-    { host:, port: ENV.fetch("PORT") }
+    { host:, port: ENV["PORT"] }
   end
 
   def host
