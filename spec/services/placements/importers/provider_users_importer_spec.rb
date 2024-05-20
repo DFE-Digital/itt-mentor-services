@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe Placements::Importers::ProviderUsersImporter do
+  before { allow(User::Invite).to receive(:call).and_return(true) }
+
   it_behaves_like "a service object" do
     let(:params) { { path: "some_path_to_nowhere" } }
   end
@@ -40,6 +42,12 @@ RSpec.describe Placements::Importers::ProviderUsersImporter do
         provider
         described_class.call(csv_path)
         expect { described_class.call(csv_path) }.not_to(change(Placements::User, :count))
+      end
+
+      it "sends an invite to the user" do
+        provider
+        described_class.call(csv_path)
+        expect(User::Invite).to have_received(:call).with(an_instance_of(Placements::User), provider)
       end
 
       context "when a user is in two provider organisations" do
