@@ -69,6 +69,7 @@ module Placements
         user_instance.schools << school unless user_instance.schools.exists?(school.id)
 
         if user_instance.save
+          User::Invite.call(user_instance, school)
           @successful_count += 1
         else
           Rails.logger.error("Failed to import user for #{school.name}: #{user_instance.errors.full_messages.to_sentence}")
