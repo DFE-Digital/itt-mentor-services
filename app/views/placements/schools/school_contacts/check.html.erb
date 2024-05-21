@@ -43,7 +43,7 @@
         <% end %>
         <%= f.govuk_submit t(".add_the_itt_placement_contact") %>
         <p class="govuk-body">
-          <%= govuk_link_to(t(".cancel"), placements_school_mentors_path(@school), no_visited_state: true) %>
+          <%= govuk_link_to(t(".cancel"), placements_school_path(@school), no_visited_state: true) %>
         </p>
       <% end %>
     </div>
