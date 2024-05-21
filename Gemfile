@@ -62,7 +62,7 @@ gem "redcarpet", "~> 3.6"
 gem "good_job", "~> 3.28"
 
 gem "govuk-components", "~> 5.4.0"
-gem "govuk_design_system_formbuilder", "~> 5.3"
+gem "govuk_design_system_formbuilder", "~> 5.4"
 
 # DfE Sign-in
 gem "omniauth"
