@@ -76,6 +76,7 @@ RSpec.describe "View a claim", type: :system, service: :claims do
     expect(page).to have_content("Total hours6 hours")
     expect(page).to have_content("Hourly rate£53.60")
     expect(page).to have_content("Claim amount£321.60")
+    expect(page).not_to have_content("Change")
   end
 
   def then_i_can_then_see_the_draft_claim_details
