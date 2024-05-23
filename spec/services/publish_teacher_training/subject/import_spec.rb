@@ -16,15 +16,20 @@ RSpec.describe PublishTeacherTraining::Subject::Import do
           described_class.call
         }.to change(Subject.primary, :count).by(2).and change(
           Subject.secondary, :count
-        ).by(3)
+        ).by(4)
 
         expect(Subject.primary.pluck(:name)).to match_array([
           "Primary", "Primary with English"
         ])
 
         expect(Subject.secondary.pluck(:name)).to match_array([
-          "Art and design", "Science", "French"
+          "Art and design", "Science", "French", "Modern Languages"
         ])
+
+        modern_languages = Subject.find_by(name: "Modern Languages")
+        expect(modern_languages.child_subjects.pluck(:name)).to match_array(
+          %w[French],
+        )
       end
 
       context "when a subject already exists" do
@@ -33,7 +38,7 @@ RSpec.describe PublishTeacherTraining::Subject::Import do
 
           expect {
             described_class.call
-          }.to change(Subject, :count).by(4)
+          }.to change(Subject, :count).by(5)
         end
       end
     end
@@ -147,6 +152,10 @@ RSpec.describe PublishTeacherTraining::Subject::Import do
                   "type" => "subjects",
                   "id" => "4",
                 },
+                {
+                  "type" => "subjects",
+                  "id" => "7",
+                },
               ],
             },
           },
@@ -207,6 +216,14 @@ RSpec.describe PublishTeacherTraining::Subject::Import do
           "attributes" => {
             "name" => "Science",
             "code" => "F0",
+          },
+        },
+        {
+          "id" => "7",
+          "type" => "subjects",
+          "attributes" => {
+            "name" => "Modern Languages",
+            "code" => nil,
           },
         },
         {
