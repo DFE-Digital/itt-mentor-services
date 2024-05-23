@@ -3,7 +3,7 @@
 # production: runs the actual app
 
 # Build builder image
-FROM ruby:3.3.1-alpine as builder
+FROM ruby:3.3.1-alpine3.20 as builder
 
 # RUN apk -U upgrade && \
 #     apk add --update --no-cache gcc git libc6-compat libc-dev make nodejs \
@@ -20,7 +20,7 @@ RUN apk add --update --no-cache tzdata && \
 # yarn: node package manager
 # postgresql-dev: postgres driver and libraries
 # git: to install dfe-analytics
-RUN apk add --no-cache build-base yarn postgresql13-dev git
+RUN apk add --no-cache build-base yarn postgresql14-dev git
 
 # Install gems defined in Gemfile
 COPY .ruby-version Gemfile Gemfile.lock ./
@@ -76,5 +76,5 @@ RUN apk add --no-cache proj-util
 COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 
-CMD bundle exec rails db:migrate && \
+CMD bundle exec rails db:migrate:with_data && \
     bundle exec rails server -b 0.0.0.0
