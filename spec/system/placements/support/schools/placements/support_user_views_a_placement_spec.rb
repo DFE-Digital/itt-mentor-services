@@ -44,7 +44,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
 
   context "when there are multiple mentors assigned to a placement" do
     let(:placement) do
-      create(:placement, school:, mentors: [mentor, create(:placements_mentor)], subject: subject)
+      create(:placement, school:, mentors: [mentor, create(:placements_mentor)], subject:)
     end
 
     scenario "Support User views a school placement's details" do
@@ -59,22 +59,6 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
   end
 
   context "when there is one subject assigned to a placement" do
-    scenario "Support User views a school placement's details" do
-      when_i_visit_the_support_show_page_for(school, placement)
-      then_i_see_the_placement_details(
-        school_name: "School 1",
-        school_level: "Primary",
-        subject: "Maths",
-        mentors: placement.mentors.map(&:full_name),
-      )
-    end
-  end
-
-  context "when there are multiple subject assigned to a placement" do
-    let(:placement) do
-      create(:placement, school:, mentors: [mentor], subject:)
-    end
-
     scenario "Support User views a school placement's details" do
       when_i_visit_the_support_show_page_for(school, placement)
       then_i_see_the_placement_details(

@@ -185,7 +185,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
   end
 
   def given_a_placement_with_a_subject_which_has_child_subjects(subject, child_subjects)
-    placement.update(subject:)
+    placement.update!(subject:)
 
     child_subjects.each do |child_subject|
       Placements::PlacementAdditionalSubject.create!(placement:, subject: child_subject)
