@@ -10,16 +10,18 @@ class PlacementDecorator < Draper::Decorator
     end
   end
 
-  def subject_names
-    if subjects.any?
-      subjects.pluck(:name).sort.to_sentence
+  def subject_name
+    if additional_subjects.exists?
+      "#{subject.name} - #{additional_subjects.pluck(:name).sort.to_sentence}"
+    elsif subject.present?
+      subject.name
     else
       I18n.t("placements.schools.placements.not_yet_known")
     end
   end
 
   def school_level
-    subjects.pick(:subject_area).titleize
+    subject.subject_area.titleize
   end
 
   def provider_name
