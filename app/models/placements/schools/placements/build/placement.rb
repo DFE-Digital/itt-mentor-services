@@ -11,7 +11,7 @@
 #
 # Indexes
 #
-#  index_placements_on_provider_id  (provider_id)
+#  index_placements_on_provider_id  (provider_id)a
 #  index_placements_on_school_id    (school_id)
 #  index_placements_on_subject_id   (subject_id)
 #
@@ -25,20 +25,30 @@ class Placements::Schools::Placements::Build::Placement < Placement
   has_many :placement_mentor_joins, dependent: :destroy
   has_many :mentors, through: :placement_mentor_joins, class_name: "Placements::Mentor"
 
-  has_many :placement_subject_joins, dependent: :destroy
-  has_many :subjects, through: :placement_subject_joins
+  has_many :placement_additional_subjects, class_name: "Placements::PlacementAdditionalSubject", dependent: :destroy
+  has_many :additional_subjects, through: :placement_additional_subjects, source: :subject
 
   belongs_to :school, class_name: "Placements::School"
   belongs_to :provider, optional: true
+  belongs_to :subject
 
   validates :school, presence: true
 
-  attr_accessor :phase, :mentor_ids, :subject_ids
+  delegate :has_child_subjects?, to: :subject, allow_nil: true, prefix: true
+
+  attr_accessor :phase, :mentor_ids, :additional_subject_ids
 
   def valid_phase?
     return true if [Placements::School::PRIMARY_PHASE, Placements::School::SECONDARY_PHASE].include?(phase)
 
     errors.add(:phase, :invalid)
+    false
+  end
+
+  def valid_subject?
+    return true if subject.present? && subject.subject_area.downcase == phase.downcase
+
+    errors.add(:subject, :invalid)
     false
   end
 
@@ -53,25 +63,25 @@ class Placements::Schools::Placements::Build::Placement < Placement
     end
   end
 
-  def valid_subjects?
-    converted_subject_ids = subject_ids.is_a?(Array) ? subject_ids : [subject_ids]
-    if subject_ids.present? && converted_subject_ids.all? { |id| Subject.exists?(id:) && Subject.find(id).subject_area.downcase == phase.downcase }
+  def valid_additional_subjects?
+    converted_subject_ids = additional_subject_ids.is_a?(Array) ? additional_subject_ids : [additional_subject_ids]
+    if additional_subject_ids.present? && converted_subject_ids.all? { |id| Subject.exists?(id:)}
       true
     else
-      errors.add(:subject_ids, :invalid)
+      errors.add(:additional_subject_ids, :invalid)
       false
     end
   end
 
   def all_valid?
-    valid_phase? && valid_mentor_ids? && valid_subjects?
+    valid_phase? && valid_subject? && valid_mentor_ids? && valid_additional_subjects?
   end
 
-  def build_subjects(subject_ids = nil)
-    if subject_ids.present?
-      subjects << Subject.where(id: subject_ids)
+  def build_additional_subjects(additional_subject_ids = nil)
+    if additional_subject_ids.present?
+      additional_subjects << Subject.where(id: additional_subject_ids)
     else
-      subjects.build
+      additional_subjects.build
     end
   end
 
