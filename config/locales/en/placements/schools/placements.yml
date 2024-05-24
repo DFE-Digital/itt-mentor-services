@@ -18,7 +18,7 @@ en:
         build:
           add_phase:
             title: Phase - Add placement
-            title_with_error: "Error: Select a phase"
+            title_with_error: "Error: Phase - Add placement"
             add_placement: Add placement
             phase: Phase
             primary: Primary
@@ -27,20 +27,23 @@ en:
             cancel: Cancel
           add_subject:
             title: Subject - Add placement
-            title_with_error: "Error: Select a subject"
+            title_with_error: "Error: Subject - Add placement"
             add_placement: Add placement
             subject: Subject
             continue: Continue
             cancel: Cancel
           add_mentors:
-            title: Mentors - Add placement
-            title_with_error: "Error: Select mentor or not known"
+            title: Mentor - Add placement
+            title_with_error: "Error: Mentor - Add placement"
             add_placement: Add placement
             mentor: Mentor
             continue: Continue
             cancel: Cancel
             mentors: Mentors
             not_known: Not yet known
+            mentor_not_listed: My mentor is not listed
+            you_need_to_add_a_mentor: "You will first need to %{link}."
+            add_a_mentor: add a mentor
           check_your_answers:
             title: Check your answers - Add placement
             add_placement: Add placement
@@ -58,7 +61,7 @@ en:
           update:
             success: Placement added
         edit_provider:
-          title_with_error: "Error: Select a provider"
+          title_with_error: "Error: Provider - Manage a placement"
           title: Provider - Manage a placement
           caption: Manage a placement
           provider: Provider
@@ -69,14 +72,17 @@ en:
           details_text_part_one: You will first need to
           details_text_part_two: add a provider
         edit_mentors:
-          title: Mentors - Edit placement
-          title_with_error: "Error: Select mentor or not known"
-          add_placement: Edit placement
+          title: Mentor - Manage a placement
+          title_with_error: "Error: Mentor - Manage a placement"
+          add_placement: Manage a placement
           mentor: Mentor
           continue: Continue
           cancel: Cancel
-          mentors: Mentors - Edit Placement
+          mentors: Mentors
           not_known: Not yet known
+          mentor_not_listed: My mentor is not listed
+          you_need_to_add_a_mentor: "You will first need to %{link}."
+          add_a_mentor: add a mentor
         terms:
           autumn: Autumn
           spring: Spring
