@@ -15,8 +15,16 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   end
 
   def add_subject
-    build_or_retrieve_placement
+    @placement = build_placement
     assign_subjects_based_on_phase
+    @selected_subject_id = session.dig(:add_a_placement, "subject_id")
+  end
+
+  def add_additional_subjects
+    @placement = build_or_retrieve_placement
+    @selected_subject = Subject.find(session.dig(:add_a_placement, "subject_id"))
+    @additional_subjects = assign_additional_subjects
+    @selected_additional_subjects = @placement.additional_subjects
   end
 
   def add_mentors
@@ -27,6 +35,8 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   def check_your_answers
     @placement = initialize_placement
     @phase = session.dig(:add_a_placement, "phase")
+    @selected_subject = Subject.find(session.dig(:add_a_placement, "subject_id"))
+    @selected_additional_subjects = @selected_subject.child_subjects.where(id: additional_subject_ids)
     @selected_mentor_text = if @placement.mentors.empty?
                               t(".not_yet_known")
                             else
@@ -37,10 +47,14 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   def update
     case params[:id].to_sym
     when :check_your_answers
-      @placement = Placements::Schools::Placements::Build::Placement.new(school:, phase: session.dig(:add_a_placement, "phase"))
+      subject = Subject.find(session.dig(:add_a_placement, "subject_id"))
+      phase = session.dig(:add_a_placement, "phase")
+      @placement = Placements::Schools::Placements::Build::Placement.new(school:, phase:, subject:)
       @placement.mentor_ids = mentor_ids
-      @placement.subject_ids = subject_ids
-      @placement.build_subjects(subject_ids)
+      if subject.has_child_subjects?
+        @placement.additional_subject_ids = additional_subject_ids
+        @placement.build_additional_subjects(additional_subject_ids)
+      end
       @placement.build_mentors(mentor_ids)
       @placement.save!
 
@@ -56,16 +70,34 @@ class Placements::Schools::Placements::BuildController < ApplicationController
         render :add_phase and return
       end
     when :add_subject
-      subject_ids = subject_ids_params
-      subject_ids.compact_blank! if subject_ids.instance_of?(Array)
+      subject_id = subject_params
       @placement = build_placement
-      @placement.subject_ids = subject_ids if subject_ids.present?
+      @placement.subject = Subject.find(subject_id) if subject_id.present?
 
-      if @placement.valid_subjects?
-        session[:add_a_placement][:subject_ids] = subject_ids
+      if @placement.subject_has_child_subjects?
+        session[:add_a_placement]["skipped_steps"].delete("add_additional_subjects")
+      else
+        session[:add_a_placement][:additional_subject_ids] = []
+        session[:add_a_placement]["skipped_steps"] << "add_additional_subjects"
+      end
+
+      if @placement.valid_subject?
+        session[:add_a_placement][:subject_id] = subject_id
       else
         assign_subjects_based_on_phase
         render :add_subject and return
+      end
+    when :add_additional_subjects
+      additional_subject_ids = additional_subject_ids_params
+      @placement = build_placement
+      @placement.additional_subject_ids = additional_subject_ids if additional_subject_ids.present?
+
+      if @placement.valid_additional_subjects?
+        session[:add_a_placement][:additional_subject_ids] = additional_subject_ids
+      else
+        @selected_subject = Subject.find(session.dig(:add_a_placement, "subject_id"))
+        assign_additional_subjects
+        render :add_additional_subjects and return
       end
     when :add_mentors
       mentor_ids = mentor_ids_params
@@ -87,7 +119,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
 
   private
 
-  STEPS = %i[add_phase add_subject add_mentors check_your_answers].freeze
+  STEPS = %i[add_phase add_subject add_additional_subjects add_mentors check_your_answers].freeze
 
   def reset_session
     session.delete(:add_a_placement)
@@ -110,15 +142,18 @@ class Placements::Schools::Placements::BuildController < ApplicationController
 
   def build_or_retrieve_placement
     @placement = build_placement
-    @placement.build_subjects(subject_ids)
+    @placement.build_additional_subjects(additional_subject_ids)
+    @placement
   end
 
   def assign_subjects_based_on_phase
     phase = session.dig(:add_a_placement, "phase")
     @phase = @placement.build_phase(phase)
-    @subjects = @phase == "Primary" ? Subject.primary : Subject.secondary
-    @placement.build_subjects(subject_ids)
-    @selected_subjects = @placement.subjects
+    @subjects = @phase == "Primary" ? Subject.parent_subjects.primary : Subject.parent_subjects.secondary
+  end
+
+  def assign_additional_subjects
+    @additional_subjects = @selected_subject.child_subjects
   end
 
   def retrieve_selected_mentors
@@ -131,9 +166,10 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   end
 
   def initialize_placement
-    placement = Placements::Schools::Placements::Build::Placement.new(school:)
+    subject = Subject.find(session.dig(:add_a_placement, "subject_id"))
+    placement = Placements::Schools::Placements::Build::Placement.new(school:, subject:)
     placement.build_mentors(mentor_ids)
-    placement.build_subjects(subject_ids)
+    placement.build_additional_subjects(additional_subject_ids)
     placement
   end
 
@@ -161,17 +197,18 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   end
 
   def setup_skipped_steps
+    session[:add_a_placement][:skipped_steps] = []
     return if school.mentors.exists?
 
-    session[:add_a_placement][:skipped_steps] = %w[add_mentors]
+    session[:add_a_placement][:skipped_steps] << "add_mentors"
   end
 
   def skipped_steps
     session.dig(:add_a_placement, "skipped_steps") || []
   end
 
-  def subject_ids
-    @subject_ids ||= session.dig(:add_a_placement, "subject_ids")
+  def additional_subject_ids
+    @additional_subject_ids ||= session.dig(:add_a_placement, "additional_subject_ids")
   end
 
   def mentor_ids
@@ -182,8 +219,12 @@ class Placements::Schools::Placements::BuildController < ApplicationController
     params.dig(:placements_schools_placements_build_placement, :phase)
   end
 
-  def subject_ids_params
-    params.dig(:placements_schools_placements_build_placement, :subject_ids)
+  def subject_params
+    params.dig(:placements_schools_placements_build_placement, :subject_id)
+  end
+
+  def additional_subject_ids_params
+    params.dig(:placements_schools_placements_build_placement, :additional_subject_ids).compact_blank
   end
 
   def mentor_ids_params

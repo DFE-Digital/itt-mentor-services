@@ -111,6 +111,7 @@ scope module: :placements,
             collection do
               get :add_phase
               get :add_subject
+              get :add_additional_subjects
               get :add_mentors
               get :check_your_answers
             end
