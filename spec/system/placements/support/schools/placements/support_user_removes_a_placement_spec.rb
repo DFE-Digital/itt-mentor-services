@@ -29,7 +29,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User remove
     then_i_am_asked_to_confirm(placement_1)
     when_i_click_on("Remove placement")
     then_the_placement_is_removed_from_the_school(school, placement_1)
-    and_a_school_placement_remains_called(placement_2.decorate.subject_names)
+    and_a_school_placement_remains_called(placement_2.decorate.subject_name)
   end
 
   private
@@ -65,7 +65,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User remove
   def then_i_am_asked_to_confirm(placement)
     organisations_is_selected_in_primary_nav
     expect(page).to have_title(
-      "Are you sure you want to remove this placement? - #{placement.decorate.subject_names} - Manage school placements",
+      "Are you sure you want to remove this placement? - #{placement.decorate.subject_name} - Manage school placements",
     )
     expect(page).to have_content "Are you sure you want to remove this placement?"
   end

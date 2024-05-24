@@ -71,27 +71,39 @@ RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model d
     end
   end
 
-  describe "#valid_subjects?" do
-    it "returns false if subjects is blank" do
-      placement_1 = described_class.new(subject_ids: [], school:)
-      placement_2 = described_class.new(subject_ids: "", school:)
+  describe "#valid_subject?" do
+    it "returns false if subject is blank" do
+      placement_1 = described_class.new(subject_id: nil, school:)
 
-      expect(placement_1.valid_subjects?).to eq(false)
-      expect(placement_2.valid_subjects?).to eq(false)
+      expect(placement_1.valid_subject?).to eq(false)
     end
 
     it "returns false if subject does not match phase" do
-      primary_subject = create(:subject, :primary)
-      secondary_subject = create(:subject, :secondary)
-      placement = described_class.new(phase: "primary", subject_ids: [primary_subject.id, secondary_subject.id], school:)
+      invalid_subject = create(:subject, :secondary)
+      placement = described_class.new(phase: "primary", subject: invalid_subject, school:)
 
-      expect(placement.valid_subjects?).to eq(false)
+      expect(placement.valid_subject?).to eq(false)
     end
 
-    it "returns true if subjects is valid" do
-      placement = described_class.new(phase: "primary", subject_ids: [create(:subject, :primary).id], school:)
+    it "returns true if subject is valid" do
+      placement = described_class.new(phase: "primary", subject: create(:subject, :primary), school:)
 
-      expect(placement.valid_subjects?).to eq(true)
+      expect(placement.valid_subject?).to eq(true)
+    end
+  end
+
+  describe "#valid_additional_subjects?" do
+    it "returns false if additional_subject_ids is blank" do
+      placement = described_class.new(additional_subject_ids: nil)
+
+      expect(placement.valid_additional_subjects?).to eq(false)
+    end
+
+    it "returns true if additional_subject_ids is valid" do
+      subject = create(:subject, :primary)
+      placement = described_class.new(additional_subject_ids: [subject.id])
+
+      expect(placement.valid_additional_subjects?).to eq(true)
     end
   end
 
@@ -117,23 +129,24 @@ RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model d
     it "returns true if all are valid" do
       mentor = create(:placements_mentor_membership, school:).mentor
       subject = create(:subject, :primary)
-      placement = described_class.new(phase: School::PRIMARY_PHASE, mentor_ids: [mentor.id], subject_ids: [subject.id],
-                                      school:)
+      additional_subject = create(:subject, :primary, parent_subject: subject)
+      placement = described_class.new(phase: School::PRIMARY_PHASE, mentor_ids: [mentor.id], subject:,
+                                      school:, additional_subject_ids: [additional_subject.id])
 
       expect(placement.all_valid?).to eq(true)
     end
   end
 
-  describe "#build_subjects" do
+  describe "build_additional_subjects" do
     context "when passed an array" do
-      it "builds subjects" do
+      it "builds additional subjects" do
         placement = described_class.new(school:)
         subject_1 = create(:subject)
         subject_2 = create(:subject)
 
-        placement.build_subjects([subject_1.id, subject_2.id])
+        placement.build_additional_subjects([subject_1.id, subject_2.id])
 
-        expect(placement.subjects).to match_array([
+        expect(placement.additional_subjects).to match_array([
           have_attributes(subject_1.attributes),
           have_attributes(subject_2.attributes),
         ])
@@ -141,12 +154,12 @@ RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model d
     end
 
     context "when passed nil" do
-      it "builds subjects" do
+      it "builds additional subjects" do
         placement = described_class.new(school:)
 
-        placement.build_subjects
+        placement.build_additional_subjects
 
-        expect(placement.subjects).to match_array([
+        expect(placement.additional_subjects).to match_array([
           have_attributes(Subject.new.attributes),
         ])
       end

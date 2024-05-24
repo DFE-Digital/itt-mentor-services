@@ -28,15 +28,15 @@ RSpec.describe "Placements / Placements / View a placement",
     )
   end
   let!(:subject_1) { create(:subject, name: "Biology") }
-  let!(:subject_2) { create(:subject, name: "Chemistry") }
+  let(:additional_subjects) { [] }
   let!(:placement) do
-    create(:placement, subjects:, school:)
+    create(:placement, subject:, school:, additional_subjects:)
   end
 
   before { given_i_sign_in_as_patricia }
 
-  context "when the placement has one subject" do
-    let(:subjects) { [subject_1] }
+  context "when the placement has a subject without child subjects" do
+    let(:subject) { subject_1 }
 
     scenario "User views a placement details" do
       when_i_visit_the_placement_show_page
@@ -47,13 +47,20 @@ RSpec.describe "Placements / Placements / View a placement",
     end
   end
 
-  context "with multiple subjects" do
-    let(:subjects) { [subject_1, subject_2] }
+  context "when the placement has a subject with child subjects" do
+    let(:subject) { create(:subject, name: "Modern Foreign Languages") }
+    let(:additional_subjects) do
+      [
+        build(:subject, name: "French", parent_subject: subject),
+        build(:subject, name: "German", parent_subject: subject),
+        build(:subject, name: "Spanish", parent_subject: subject),
+      ]
+    end
 
     scenario "User views a placement and multiple subject details" do
       when_i_visit_the_placement_show_page
       then_i_see_details_for_the_school
-      and_i_see_the_subject_name("Biology and Chemistry")
+      and_i_see_the_subject_name("Modern Foreign Languages - French, German, and Spanish")
       and_i_see_the_itt_placement_contact_details_for_the_school
       and_i_see_location_details_for_the_school
     end

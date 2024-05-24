@@ -21,7 +21,7 @@ RSpec.describe "Placement school user views a list of placements", type: :system
       given_a_placement_exists_with_multiple_mentors_and_subjects
       given_i_sign_in_as_anne
       then_i_see_mentor_names("Bart Simpson and Lisa Simpson")
-      and_i_see_subject_names("Biology and Maths")
+      and_i_see_subject_names("Biology")
     end
 
     scenario "where placement has no mentors attached" do
