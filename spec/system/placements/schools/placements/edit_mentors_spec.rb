@@ -149,7 +149,8 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
   end
 
   def then_i_should_see_the_edit_mentors_page
-    expect(page).to have_content("Edit placement")
+    expect(page).to have_content("Manage a placement")
+    expect(page).to have_content("Mentor")
   end
 
   def when_i_select_mentor_2

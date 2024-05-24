@@ -15,13 +15,23 @@
           <%= t(".add_placement") %>
         </span>
 
-        <%= f.govuk_check_boxes_fieldset :mentor_ids, legend: { size: "l", text: t(".mentors") } do %>
+        <%= f.govuk_check_boxes_fieldset :mentor_ids, legend: { size: "l", text: t(".mentor") } do %>
           <% @school.mentors.each do |mentor| %>
             <%= f.govuk_check_box :mentor_ids, mentor.id, label: { text: mentor.full_name }, checked: @selected_mentors&.include?(mentor) %>
           <% end %>
           <%= f.govuk_check_box_divider %>
           <%= f.govuk_check_box :mentor_ids, :not_known, label: { text: t(".not_known") }, checked: @selected_mentors&.include?(:not_known), exclusive: true %>
         <% end %>
+
+        <%= govuk_details(
+          summary_text: t(".mentor_not_listed"),
+          text: embedded_link_text(
+            t(".you_need_to_add_a_mentor",
+              link: govuk_link_to(
+                t(".add_a_mentor"), new_placements_school_mentor_path, no_visited_state: true
+              )),
+          ),
+        ) %>
 
         <%= f.govuk_submit t(".continue") %>
       </div>
