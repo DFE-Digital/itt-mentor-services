@@ -65,7 +65,7 @@ class Placements::Schools::Placements::Build::Placement < Placement
 
   def valid_additional_subjects?
     converted_subject_ids = additional_subject_ids.is_a?(Array) ? additional_subject_ids : [additional_subject_ids]
-    if additional_subject_ids.present? && converted_subject_ids.all? { |id| Subject.exists?(id:)}
+    if additional_subject_ids.present? && converted_subject_ids.all? { |id| Subject.exists?(id:) }
       true
     else
       errors.add(:additional_subject_ids, :invalid)
