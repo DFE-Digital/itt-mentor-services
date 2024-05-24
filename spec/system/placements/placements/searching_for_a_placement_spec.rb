@@ -29,9 +29,9 @@ RSpec.describe "Placements / Placements / Searching for a placements list",
       longitude: -2.3596827,
     )
   end
-  let(:london_placement) { create(:placement, school: london_school) }
-  let(:guildford_placement) { create(:placement, school: guildford_school) }
-  let(:bath_placement) { create(:placement, school: bath_school) }
+  let(:london_placement) { create(:placement, school: london_school, subject: build(:subject, :primary)) }
+  let(:guildford_placement) { create(:placement, school: guildford_school, subject: build(:subject, :primary)) }
+  let(:bath_placement) { create(:placement, school: bath_school, subject: build(:subject, :primary)) }
 
   before do
     london_placement
@@ -167,8 +167,8 @@ RSpec.describe "Placements / Placements / Searching for a placements list",
   def stub_london_geocoder_search
     geocoder_results = instance_double("geocoder_results")
     geocoder_result = instance_double("geocoder_result")
-    geocoder_results.stub(:first).and_return(geocoder_result)
-    geocoder_result.stub(:coordinates).and_return([51.5072178, -0.1275862])
+    allow(geocoder_results).to receive(:first).and_return(geocoder_result)
+    allow(geocoder_result).to receive(:coordinates).and_return([51.5072178, -0.1275862])
     allow(Geocoder).to receive(:search).and_return(geocoder_results)
   end
 

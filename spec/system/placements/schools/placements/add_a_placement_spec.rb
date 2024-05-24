@@ -194,6 +194,57 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
         then_i_see_the_placements_page
         and_i_see_my_placement(school.phase)
       end
+
+      context "when I select a subject with child subjects" do
+        let!(:subject_3) { create(:subject, name: "Secondary subject 3", subject_area: :secondary, parent_subject: subject_2) }
+        let!(:subject_4) { create(:subject, name: "Secondary subject 4", subject_area: :secondary) }
+
+        scenario "I can create my placement" do
+          school.update!(phase: "Secondary")
+          when_i_visit_the_placements_page
+          and_i_click_on("Add placement")
+          then_i_see_the_add_a_placement_subject_page(school.phase)
+          when_i_choose_a_subject(subject_2.name)
+          and_i_click_on("Continue")
+          and_i_check_the_subject(subject_3.name)
+          and_i_click_on("Continue")
+          then_i_see_the_add_a_placement_mentor_page
+          when_i_check_a_mentor(mentor_1.full_name)
+          and_i_click_on("Continue")
+          then_i_see_the_check_your_answers_page(school.phase, mentor_1)
+          and_i_cannot_change_the_phase
+          when_i_click_on("Publish placement")
+          then_i_see_the_placements_page
+          and_i_see_my_placement(school.phase)
+        end
+
+        scenario "I see a validation message if I do not select an additional subject" do
+          school.update!(phase: "Secondary")
+          when_i_visit_the_placements_page
+          and_i_click_on("Add placement")
+          then_i_see_the_add_a_placement_subject_page(school.phase)
+          when_i_choose_a_subject(subject_2.name)
+          and_i_click_on("Continue")
+          and_i_click_on("Continue")
+          then_i_see_the_add_additional_subjects_page(subject_2)
+          and_i_see_the_error_message("Select an additional subject")
+        end
+
+        scenario "If I change the subject, I do not see teh additional subject page" do
+          school.update!(phase: "Secondary")
+          when_i_visit_the_placements_page
+          and_i_click_on("Add placement")
+          then_i_see_the_add_a_placement_subject_page(school.phase)
+          when_i_choose_a_subject(subject_2.name)
+          and_i_click_on("Continue")
+          then_i_see_the_add_additional_subjects_page(subject_2)
+          and_i_click_on("Back")
+          then_i_see_the_add_a_placement_subject_page(school.phase)
+          when_i_choose_a_subject(subject_4.name)
+          and_i_click_on("Continue")
+          then_i_see_the_add_a_placement_mentor_page
+        end
+      end
     end
 
     context "when I am part of school in a different phase e.g. Nursery" do
@@ -445,6 +496,15 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
     expect(page).not_to have_content("#{opposite_phase} subject")
   end
 
+  def then_i_see_the_add_additional_subjects_page(subject)
+    expect(page).to have_content("Add placement")
+    expect(page).to have_content(subject.name)
+
+    subject.child_subjects.each do |child_subject|
+      expect(page).to have_content(child_subject.name)
+    end
+  end
+
   def then_i_see_the_placements_page
     expect(page).to have_content("Placements")
     expect(page).to have_content("Add placement")
@@ -456,6 +516,10 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
 
   def when_i_choose_a_subject(subject_name)
     page.choose subject_name
+  end
+
+  def when_i_check_a_subject(subject_name)
+    check subject_name
   end
 
   def then_i_see_the_add_a_placement_mentor_page
@@ -546,6 +610,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
 
   alias_method :and_i_click_on, :when_i_click_on
   alias_method :and_i_choose_the_subject, :when_i_choose_a_subject
+  alias_method :and_i_check_the_subject, :when_i_check_a_subject
   alias_method :then_my_chosen_subject_is_selected, :and_my_chosen_subject_is_selected
   alias_method :then_my_chosen_mentor_is_checked, :and_my_chosen_mentor_is_checked
 end

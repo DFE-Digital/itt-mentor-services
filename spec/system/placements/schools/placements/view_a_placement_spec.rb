@@ -16,18 +16,16 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     let!(:subject_2) { create(:subject, name: "Subject 2") }
     let!(:subject_3) { create(:subject, name: "Subject 3") }
 
-    scenario "User views a placement with one subject" do
+    scenario "User views a placement with a subject that has no child subjects" do
       given_a_placement_has_one_subject(subject_1)
       when_i_visit_the_placement_show_page
       then_i_see_the_subject_name_in_the_placement_details("Subject 1")
     end
 
-    scenario "User views a placement with multiple subjects" do
-      given_a_placement_with_multiple_subjects([subject_1, subject_2, subject_3])
+    scenario "User views a placement with child subjects" do
+      given_a_placement_with_a_subject_which_has_child_subjects(subject_1, [subject_2, subject_3])
       when_i_visit_the_placement_show_page
-      then_i_see_all_of_the_subjects_names_in_the_placement_details(
-        ["Subject 1", "Subject 2", "Subject 3"],
-      )
+      then_i_see_all_of_the_subjects_names_in_the_placement_details("Subject 1", ["Subject 2", "Subject 3"])
     end
   end
 
@@ -175,7 +173,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
   end
 
   def given_a_placement_has_one_subject(placements_subject)
-    PlacementSubjectJoin.create!(placement:, subject: placements_subject)
+    placement.update(subject: placements_subject)
   end
 
   def then_i_see_the_subject_name_in_the_placement_details(subject_name)
@@ -186,19 +184,17 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     end
   end
 
-  def given_a_placement_with_multiple_subjects(placements_subjects)
-    placements_subjects.each do |placements_subject|
-      PlacementSubjectJoin.create!(placement:, subject: placements_subject)
+  def given_a_placement_with_a_subject_which_has_child_subjects(subject, child_subjects)
+    placement.update(subject:)
+
+    child_subjects.each do |child_subject|
+      Placements::PlacementAdditionalSubject.create!(placement:, subject: child_subject)
     end
   end
 
-  def then_i_see_all_of_the_subjects_names_in_the_placement_details(subject_names)
-    subject_title = subject_names.sort.to_sentence
-    expect(page.find(".govuk-heading-l")).to have_content(subject_title)
-
-    subject_names.each do |subject_name|
-      expect(page).to have_content(subject_name)
-    end
+  def then_i_see_all_of_the_subjects_names_in_the_placement_details(subject_name, additional_subject_names)
+    additional_subjects_title = additional_subject_names.sort.to_sentence
+    expect(page.find(".govuk-heading-l")).to have_content("#{subject_name} - #{additional_subjects_title}")
   end
 
   def given_a_placement_with_no_mentor; end

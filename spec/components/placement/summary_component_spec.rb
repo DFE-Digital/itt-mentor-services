@@ -23,12 +23,12 @@ RSpec.describe Placement::SummaryComponent, type: :component do
       longitude: -0.570409,
     )
   end
-  let(:placement_1) { create(:placement, school:, subjects:, mentors:) }
-  let(:placement_2) { create(:placement, school:, subjects: [subject_2], mentors:) }
+  let(:placement_1) { create(:placement, school:, subject:, mentors:) }
+  let(:placement_2) { create(:placement, school:, subject: subject_2, mentors:) }
   let(:provider) { create(:provider) }
 
   context "when given multiple placements" do
-    let(:subjects) { [subject_1] }
+    let(:subject) { subject_1 }
     let(:mentors) { [] }
     let(:placements) { [placement_1, placement_2] }
     let(:location_coordinates) { nil }
@@ -52,48 +52,75 @@ RSpec.describe Placement::SummaryComponent, type: :component do
     end
   end
 
-  context "when given a single placements" do
+  context "when given a single placement" do
+    let(:subject) { subject_1 }
+    let(:subject_1) { create(:subject, name: "Biology") }
     let(:placements) { [placement_1] }
 
-    context "when the placement has multiple subject" do
+    context "when the placement has subject with no child subjects" do
       let(:mentors) { [] }
       let(:location_coordinates) { nil }
 
-      context "with 2 subjects do" do
-        let(:subjects) { [subject_1, subject_2] }
+      it "renders the placement's subjects as a sentence" do
+        render_inline(component)
 
-        it "renders the placement's subjects as a sentence" do
-          render_inline(component)
-
-          # Subject details
-          expect(page).to have_content("Biology and Classics")
-        end
-      end
-
-      context "with 3 subjects do" do
-        let(:subject_3) { create(:subject, name: "Physics") }
-        let(:subjects) { [subject_1, subject_2, subject_3] }
-
-        it "renders the placement's subjects as a sentence" do
-          render_inline(component)
-
-          # Subject details
-          expect(page).to have_content("Biology, Classics, and Physics")
-        end
+        # Subject details
+        expect(page).to have_content("Biology")
       end
     end
 
-    context "when giving location coordinates to the component" do
-      let(:location_coordinates) { [51.5072178, -0.1275862] }
-      let(:subjects) { [subject_1] }
+    context "when the placement has subject with child subjects" do
       let(:mentors) { [] }
+      let(:location_coordinates) { nil }
+      let(:subject) { subject_1 }
+      let(:subject_1) { create(:subject, name: "Modern Foreign Languages") }
+      let(:additional_subject_1) { create(:subject, name: "French", parent_subject: subject_1) }
+      let(:additional_subject_2) { create(:subject, name: "German", parent_subject: subject_1) }
+      let(:additional_subject_3) { create(:subject, name: "Spanish", parent_subject: subject_1) }
+      let(:placement_1) { create(:placement, school:, subject: subject_1, additional_subjects: [additional_subject_1]) }
 
-      it "renders the distance between the placement's school and the coordinates" do
+      it "renders the placement's subjects as a sentence" do
         render_inline(component)
 
-        # Distance details
-        expect(page).to have_content(26.7)
+        # Subject details
+        expect(page).to have_content("Modern Foreign Languages - French")
       end
+
+      context "with 2 additional subject do" do
+        let(:subject) { subject_1 }
+        let(:placement_1) { create(:placement, school:, subject: subject_1, additional_subjects: [additional_subject_1, additional_subject_2]) }
+
+        it "renders the placement's subjects as a sentence" do
+          render_inline(component)
+
+          # Subject details
+          expect(page).to have_content("Modern Foreign Languages - French and German")
+        end
+      end
+
+      context "with 3 additional subjects do" do
+        let(:placement_1) { create(:placement, school:, subject: subject_1, additional_subjects: [additional_subject_1, additional_subject_2, additional_subject_3]) }
+
+        it "renders the placement's subjects as a sentence" do
+          render_inline(component)
+          # Subject details
+          expect(page).to have_content("Modern Foreign Languages - French, German, and Spanish")
+        end
+      end
+    end
+  end
+
+  context "when giving location coordinates to the component" do
+    let(:location_coordinates) { [51.5072178, -0.1275862] }
+    let(:subject) { subject_1 }
+    let(:mentors) { [] }
+    let(:placements) { [placement_1] }
+
+    it "renders the distance between the placement's school and the coordinates" do
+      render_inline(component)
+
+      # Distance details
+      expect(page).to have_content(26.7)
     end
   end
 end
