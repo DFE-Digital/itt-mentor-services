@@ -1,4 +1,4 @@
-<%= content_for :page_title, sanitize(t(".page_title", placement_name: @placement.subject_names, school_name: @school.name)) %>
+<%= content_for :page_title, sanitize(t(".page_title", placement_name: @placement.subject_name, school_name: @school.name)) %>
 
 <%= render "placements/support/primary_navigation", current_navigation: :organisations %>
 
@@ -11,7 +11,7 @@
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l"><%= t(".caption", school_name: @school.name) %></span>
       <h2 class="govuk-heading-l">
-        <%= @placement.subject_names %>
+        <%= @placement.subject_name %>
       </h2>
 
       <%= govuk_summary_list(actions: false) do |summary_list| %>
@@ -24,11 +24,7 @@
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t(".attributes.placements.subject")) %>
           <% row.with_value do %>
-            <ul class="govuk-list">
-              <% @placement.subjects.each do |subject| %>
-                <li><%= subject.name %></li>
-              <% end %>
-            </ul>
+            <% @placement.subject_name %>
           <% end %>
         <% end %>
         <% summary_list.with_row do |row| %>

@@ -1,4 +1,4 @@
-<%= content_for :page_title, sanitize(t(".page_title", subject_names: @placement.subject_names)) %>
+<%= content_for :page_title, sanitize(t(".page_title", subject_names: @placement.subject_name)) %>
 <%= render "placements/schools/primary_navigation", school: @school, current_navigation: :placements %>
 <%= content_for(:before_content) do %>
   <%= govuk_back_link(href: placements_school_placement_path(@school, @placement)) %>
@@ -8,7 +8,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <label class="govuk-label govuk-label--l">
-        <span class="govuk-caption-l"><%= @placement.subject_names %></span>
+        <span class="govuk-caption-l"><%= @placement.subject_name %></span>
         <%= t(".are_you_sure") %>
       </label>
 

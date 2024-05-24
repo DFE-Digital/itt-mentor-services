@@ -8,8 +8,10 @@ en:
               invalid: Select a phase
             mentor_ids:
               invalid: Select a mentor or not yet known
-            subject_ids:
+            subject:
               invalid: Select a subject
+            additional_subject_ids:
+              invalid: Select an additional subject
             provider_id:
               invalid: Select a provider
   placements:
@@ -32,6 +34,12 @@ en:
             subject: Subject
             continue: Continue
             cancel: Cancel
+          add_additional_subjects:
+            title: Add placement
+            title_with_error: "Error: Select an additional subject"
+            add_placement: Add placement
+            continue: Continue
+            cancel: Cancel
           add_mentors:
             title: Mentor - Add placement
             title_with_error: "Error: Mentor - Add placement"
@@ -52,6 +60,8 @@ en:
             add_phase: Add phase
             subject: Subject
             add_subject: Add subject
+            additional_subjects: Additional subjects
+            add_additional_subjects: Add additional subjects
             mentor: Mentor
             add_mentors: Add mentors
             change: Change

@@ -20,7 +20,7 @@
               <% @placements.each do |placement| %>
                 <% body.with_row do |row| %>
                   <% row.with_cell(text: govuk_link_to(
-                    placement.subject_names,
+                    placement.subject_name,
                     placements_school_placement_path(@school, placement),
                   )) %>
                   <% row.with_cell(text: placement.mentor_names) %>

@@ -13,9 +13,9 @@
       <div class="govuk-grid-column-two-thirds">
         <span class="govuk-caption-l"><%= t(".add_placement") %></span>
 
-        <%= f.govuk_radio_buttons_fieldset :subject_ids, legend: { size: "l", text: t(".subject") } do %>
+        <%= f.govuk_radio_buttons_fieldset :subject_id, legend: { size: "l", text: t(".subject") } do %>
           <% @subjects.each do |subject| %>
-            <%= f.govuk_radio_button :subject_ids, subject.id, label: { text: subject.name }, checked: @selected_subjects&.include?(subject) %>
+            <%= f.govuk_radio_button :subject_id, subject.id, label: { text: subject.name }, checked: @selected_subject_id == subject.id %>
           <% end %>
         <% end %>
 
