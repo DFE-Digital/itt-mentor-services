@@ -6,10 +6,13 @@
 <% end %>
 
 <div class="govuk-width-container">
-  <h1 class="govuk-heading-l">
+  <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
     <span class="govuk-caption-l"><%= t(".placement", school_name: @school.name) %></span>
     <%= @placement.subject_names %>
   </h1>
+  <div class="govuk-!-margin-top-0 govuk-!-margin-bottom-6">
+      <%= render Placement::StatusTagComponent.new(placement: @placement) %>
+  </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= render "school_details", school: @school, placement: @placement %>
