@@ -68,9 +68,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_20_143732) do
     t.index ["submitted_by_type", "submitted_by_id"], name: "index_claims_on_submitted_by"
   end
 
-  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
-  end
-
   create_table "flipflop_features", force: :cascade do |t|
     t.string "key", null: false
     t.boolean "enabled", default: false, null: false
