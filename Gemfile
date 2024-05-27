@@ -70,7 +70,7 @@ gem "omniauth_openid_connect"
 gem "omniauth-rails_csrf_protection"
 
 # Pagination
-gem "pagy", "~> 7.0"
+gem "pagy", "~> 8.4"
 
 # Decorators
 gem "draper"
