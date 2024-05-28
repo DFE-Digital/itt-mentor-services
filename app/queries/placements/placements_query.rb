@@ -23,7 +23,7 @@ class Placements::PlacementsQuery < ApplicationQuery
   def subject_condition(scope)
     return scope if filter_params[:subject_ids].blank?
 
-    scope.where(subjects: { id: filter_params[:subject_ids] })
+    scope.where(subject_id: filter_params[:subject_ids])
   end
 
   def establishment_group_condition(scope)

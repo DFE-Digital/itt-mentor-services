@@ -9,9 +9,9 @@ RSpec.describe "Placements / Support / Schools / Placements / Support User views
   let!(:mentor1) { create(:placements_mentor, first_name: "Bilbo", last_name: "Baggins") }
   let!(:mentor2) { create(:placements_mentor, first_name: "Bilbo", last_name: "Test") }
   let!(:mentor3) { create(:placements_mentor, trn: "1231233") }
-  let!(:placement1) { create(:placement, mentors: [mentor1], subjects: [subject1], school:) }
-  let!(:placement2) { create(:placement, mentors: [mentor2], subjects: [subject2], school:) }
-  let!(:placement3) { create(:placement, mentors: [mentor3], subjects: [subject3]) }
+  let!(:placement1) { create(:placement, mentors: [mentor1], subject: subject1, school:) }
+  let!(:placement2) { create(:placement, mentors: [mentor2], subject: subject2, school:) }
+  let!(:placement3) { create(:placement, mentors: [mentor3], subject: subject3) }
   let!(:school) { create(:placements_school, mentors: [mentor1, mentor2]) }
   let!(:another_school) { create(:placements_school) }
   let!(:colin) { create(:placements_support_user, :colin) }
@@ -58,7 +58,7 @@ RSpec.describe "Placements / Support / Schools / Placements / Support User views
   end
 
   def and_i_dont_see_placements_from_another_school
-    expect(page).not_to have_content(placement3.subjects.map(&:name).to_sentence)
+    expect(page).not_to have_content(placement3.subject.name)
     expect(page).not_to have_content(placement3.mentors.map(&:full_name).to_sentence)
   end
 

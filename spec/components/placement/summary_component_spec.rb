@@ -54,7 +54,6 @@ RSpec.describe Placement::SummaryComponent, type: :component do
 
   context "when given a single placement" do
     let(:subject) { subject_1 }
-    let(:subject_1) { create(:subject, name: "Biology") }
     let(:placements) { [placement_1] }
 
     context "when the placement has subject with no child subjects" do

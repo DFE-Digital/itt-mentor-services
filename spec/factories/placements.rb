@@ -24,5 +24,6 @@
 FactoryBot.define do
   factory :placement do
     association :school, factory: :placements_school
+    association :subject, factory: :subject
   end
 end

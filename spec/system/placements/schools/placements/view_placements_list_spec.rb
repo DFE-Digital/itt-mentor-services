@@ -17,8 +17,8 @@ RSpec.describe "Placement school user views a list of placements", type: :system
   end
 
   context "with placements" do
-    scenario "where placement has multiple mentors and multiple subjects" do
-      given_a_placement_exists_with_multiple_mentors_and_subjects
+    scenario "where placement has multiple mentors" do
+      given_a_placement_exists_with_multiple_mentors
       given_i_sign_in_as_anne
       then_i_see_mentor_names("Bart Simpson and Lisa Simpson")
       and_i_see_subject_names("Biology")
@@ -81,15 +81,12 @@ RSpec.describe "Placement school user views a list of placements", type: :system
     end
   end
 
-  def given_a_placement_exists_with_multiple_mentors_and_subjects
+  def given_a_placement_exists_with_multiple_mentors
     mentor_lisa = create(:placements_mentor, first_name: "Lisa", last_name: "Simpson")
     mentor_bart = create(:placements_mentor, first_name: "Bart", last_name: "Simpson")
     mentors = [mentor_lisa, mentor_bart]
 
-    biology = create(:subject, name: "Biology")
-    maths = create(:subject, name: "Maths")
-    subjects = [maths, biology]
-    create(:placement, school:, mentors:, subjects:)
+    create(:placement, school:, mentors:, subject: create(:subject, name: "Biology"))
   end
 
   def given_placement_exists_for_another_school

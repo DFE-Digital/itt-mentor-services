@@ -23,6 +23,7 @@ en:
               placements:
                 school_level: School level
                 subject: Subject
+                additional_subjects: Additional subjects
                 mentor: Mentor
                 status: Status
             remove_placement: Remove placement
