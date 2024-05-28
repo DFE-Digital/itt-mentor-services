@@ -35,8 +35,8 @@ en:
             continue: Continue
             cancel: Cancel
           add_additional_subjects:
-            title: Add placement
-            title_with_error: "Error: Select an additional subject"
+            title: Additional subject - Add placement
+            title_with_error: "Error: Additional subject - Add placement"
             add_placement: Add placement
             continue: Continue
             cancel: Cancel
@@ -118,6 +118,7 @@ en:
             placements:
               school_level: School level
               subject: Subject
+              additional_subjects: Additional subjects
               mentor: Mentor
               status: Status
               provider: Provider

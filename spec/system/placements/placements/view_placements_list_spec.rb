@@ -27,8 +27,8 @@ RSpec.describe "Placements / Placements / View placements list",
   end
   let!(:subject_1) { create(:subject, name: "Primary with mathematics") }
   let!(:subject_2) { create(:subject, name: "Chemistry") }
-  let(:placement_1) { create(:placement, subjects: [subject_1], school: primary_school) }
-  let(:placement_2) { create(:placement, subjects: [subject_2], school: secondary_school, provider: build(:placements_provider)) }
+  let(:placement_1) { create(:placement, subject: subject_1, school: primary_school) }
+  let(:placement_2) { create(:placement, subject: subject_2, school: secondary_school, provider: build(:placements_provider)) }
 
   before do
     given_i_sign_in_as_patricia
@@ -230,7 +230,7 @@ RSpec.describe "Placements / Placements / View placements list",
     context "when a user views a placement and returns to the index page" do
       before do
         stub_london_geocoder_search
-        create_list(:placement, 30, subjects: [subject_1], school: primary_school)
+        create_list(:placement, 30, subject: subject_1, school: primary_school)
       end
 
       scenario "User filters are preserved when using the back button" do

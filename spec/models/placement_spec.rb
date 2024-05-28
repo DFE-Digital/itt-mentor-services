@@ -46,6 +46,7 @@ RSpec.describe Placement, type: :model do
 
   describe "delegations" do
     it { is_expected.to delegate_method(:name).to(:provider).with_prefix(true).allow_nil }
+    it { is_expected.to delegate_method(:has_child_subjects?).to(:subject).with_prefix(true).allow_nil }
   end
 
   describe "scopes" do

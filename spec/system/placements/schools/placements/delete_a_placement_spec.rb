@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe "Placements / Schools / Placements / Delete a placement",
                type: :system, service: :placements do
-  let!(:placement_1) { create(:placement, school:, subjects: [subject_1]) }
-  let(:placement_2) { create(:placement, school:, subjects: [subject_2]) }
+  let!(:placement_1) { create(:placement, school:, subject: subject_1) }
+  let(:placement_2) { create(:placement, school:, subject: subject_2) }
   let(:school) { build(:placements_school, name: "School 1", phase: "Primary") }
   let(:subject_1) { build(:subject, name: "Subject 1", subject_area: :primary) }
   let(:subject_2) { build(:subject, name: "Subject 2", subject_area: :primary) }
