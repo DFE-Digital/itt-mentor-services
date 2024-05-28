@@ -181,6 +181,16 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     end
   end
 
+  def then_i_should_see_an_error_message
+    within(".govuk-error-summary__title") do
+      expect(page).to have_content("There is a problem")
+    end
+
+    within(".govuk-error-summary__body") do
+      expect(page).to have_content("Select a provider or not yet known")
+    end
+  end
+
   def given_the_placement_has_a_provider(provider)
     placement.update!(provider:)
   end

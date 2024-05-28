@@ -16,6 +16,12 @@ en:
               invalid: Select a provider
             year_group:
               invalid: Select a year group
+        placement:
+          attributes:
+            mentor_ids:
+              invalid: Select a mentor or not yet known
+            provider_id:
+              invalid: Select a provider or not yet known
   placements:
     schools:
       placements:

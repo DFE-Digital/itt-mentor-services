@@ -57,7 +57,7 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
         )
         then_i_should_see_the_edit_mentors_page
         and_i_click_on("Continue")
-        then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
+        then_i_should_see_an_error_message
       end
 
       scenario "User edits the mentor and cancels" do
@@ -199,6 +199,16 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
   )
     within(".govuk-summary-list") do
       expect(page).to have_content(change_link)
+    end
+  end
+
+  def then_i_should_see_an_error_message
+    within(".govuk-error-summary__title") do
+      expect(page).to have_content("There is a problem")
+    end
+
+    within(".govuk-error-summary__body") do
+      expect(page).to have_content("Select a mentor or not yet known")
     end
   end
 
