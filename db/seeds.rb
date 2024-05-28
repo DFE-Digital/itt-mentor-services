@@ -80,6 +80,15 @@ PublishTeacherTraining::Subject::Import.call
 
 # Create placements
 Placements::School.find_each do |school|
+  # A school must have a school contact before creating placements
+  if school.school_contact.blank?
+    Placements::SchoolContact.create!(
+      school:,
+      name: "ITT School Contact",
+      email_address: "itt_contact@example.com",
+    )
+  end
+
   next if school.placements.any?
 
   placement = Placement.create!(school:)
