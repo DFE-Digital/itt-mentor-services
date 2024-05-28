@@ -22,6 +22,11 @@ end
 
 Capybara.javascript_driver = :selenium_chrome_headless
 
+# Allow Capybara to click a <label> even if its corresponding <input> isn't visible on screen.
+# This needs to be enabled when using custom-styled checkboxes and radios, such as those
+# in the GOV.UK Design System.
+Capybara.automatic_label_click = true
+
 RSpec.configure do |config|
   config.around(:each, type: :system, smoke_test: true) do |example|
     Capybara.current_driver = Capybara.javascript_driver

@@ -62,7 +62,10 @@ class Placements::Schools::PlacementsController < ApplicationController
   end
 
   def valid_mentor_ids?(mentor_ids)
-    return true if mentor_ids.include?("not_known")
+    if mentor_ids.include?("not_known")
+      params[:placement][:mentor_ids] = []
+      return true
+    end
 
     if mentor_ids.present? && mentor_ids.all? { |id| Placements::Mentor.exists?(id:) && @school.mentors.exists?(id:) }
       true
