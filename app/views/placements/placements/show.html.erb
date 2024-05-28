@@ -15,11 +15,23 @@
   </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= render "school_details", school: @school, placement: @placement %>
-      <h2 class="govuk-heading-m govuk-!-margin-top-9">
-        <%= t(".contact_details") %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-0">
+        <%= t(".itt_placement_contact") %>
       </h2>
-      <%= render "shared/organisations/contact_details", organisation: @school %>
+      <%= render "shared/schools/school_contact_details",
+        school: @school,
+        school_contact: @school.school_contact,
+        changeable: false %>
+
+      <h2 class="govuk-heading-m govuk-!-margin-top-0">
+        <%= t(".location") %>
+      </h2>
+      <%= render "shared/schools/location_details", school: @school %>
+
+      <h2 class="govuk-heading-m govuk-!-margin-top-0">
+        <%= t(".additional_details") %>
+      </h2>
+      <%= render "school_details", school: @school, placement: @placement %>
     </div>
   </div>
 </div>

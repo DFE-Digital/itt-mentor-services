@@ -42,7 +42,8 @@ RSpec.describe "Placements / Placements / View a placement",
       when_i_visit_the_placement_show_page
       then_i_see_details_for_the_school
       and_i_see_the_subject_name("Biology")
-      and_i_see_contact_details_for_the_school
+      and_i_see_the_itt_placement_contact_details_for_the_school
+      and_i_see_location_details_for_the_school
     end
   end
 
@@ -53,7 +54,8 @@ RSpec.describe "Placements / Placements / View a placement",
       when_i_visit_the_placement_show_page
       then_i_see_details_for_the_school
       and_i_see_the_subject_name("Biology and Chemistry")
-      and_i_see_contact_details_for_the_school
+      and_i_see_the_itt_placement_contact_details_for_the_school
+      and_i_see_location_details_for_the_school
     end
   end
 
@@ -96,12 +98,15 @@ RSpec.describe "Placements / Placements / View a placement",
     expect(page).to have_content("Good")
   end
 
-  def and_i_see_contact_details_for_the_school
-    expect(page).to have_content("Contact details")
-    expect(page).to have_content("01234567890")
-    expect(page).to have_content("www.a-london-example-school.com")
-    expect(page).to have_content("user@london-example-school.com")
+  def and_i_see_location_details_for_the_school
+    expect(page).to have_content("Location")
     expect(page).to have_content("London Secondary School\nLondon\nCity of London\nLN01 2LN")
+  end
+
+  def and_i_see_the_itt_placement_contact_details_for_the_school
+    expect(page).to have_content("ITT placement contact")
+    expect(page).to have_content(school.school_contact.name)
+    expect(page).to have_content(school.school_contact.email_address)
   end
 
   def and_i_see_the_subject_name(subject_name)

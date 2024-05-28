@@ -24,6 +24,9 @@ en:
         page_title: "%{subject_name} - Placements - %{school_name}"
         placement: "Placement - %{school_name}"
         contact_details: Contact details
+        itt_placement_contact: ITT placement contact
+        location: Location
+        additional_details: Additional details
       school_details:
         establishment_group: Establishment group
         school_phase: School phase
