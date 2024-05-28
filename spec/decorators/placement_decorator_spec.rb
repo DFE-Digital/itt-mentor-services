@@ -54,7 +54,7 @@ RSpec.describe PlacementDecorator do
           build(:subject, name: "Spanish", parent_subject: subject),
         ])
 
-        expect(placement.decorate.subject_name).to eq("Modern Foreign Languages - French, German, and Spanish")
+        expect(placement.decorate.subject_name).to eq("French, German, and Spanish")
       end
     end
   end

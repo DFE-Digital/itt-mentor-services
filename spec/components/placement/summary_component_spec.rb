@@ -83,7 +83,7 @@ RSpec.describe Placement::SummaryComponent, type: :component do
         render_inline(component)
 
         # Subject details
-        expect(page).to have_content("Modern Foreign Languages - French")
+        expect(page).to have_content("French")
       end
 
       context "with 2 additional subject do" do
@@ -94,7 +94,7 @@ RSpec.describe Placement::SummaryComponent, type: :component do
           render_inline(component)
 
           # Subject details
-          expect(page).to have_content("Modern Foreign Languages - French and German")
+          expect(page).to have_content("French and German")
         end
       end
 
@@ -104,7 +104,7 @@ RSpec.describe Placement::SummaryComponent, type: :component do
         it "renders the placement's subjects as a sentence" do
           render_inline(component)
           # Subject details
-          expect(page).to have_content("Modern Foreign Languages - French, German, and Spanish")
+          expect(page).to have_content("French, German, and Spanish")
         end
       end
     end
