@@ -27,7 +27,15 @@
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t(".attributes.placements.subject")) %>
           <% row.with_value do %>
+              <% @placement.subject.name %>
+          <% end %>
+        <% end %>
+        <% if @placement.subject_has_child_subjects? %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".attributes.placements.additional_subjects")) %>
+            <% row.with_value do %>
               <% @placement.subject_name %>
+            <% end %>
           <% end %>
         <% end %>
         <% if @placement.subject_has_child_subjects? %>
