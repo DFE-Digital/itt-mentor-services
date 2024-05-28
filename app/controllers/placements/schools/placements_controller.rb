@@ -22,9 +22,14 @@ class Placements::Schools::PlacementsController < ApplicationController
   end
 
   def update
-    @placement.update!(placement_params)
+    if valid_attributes?
+      @placement.update!(placement_params)
 
-    redirect_to placements_school_placement_path(@school, @placement), flash: { success: t(".success") }
+      redirect_to placements_school_placement_path(@school, @placement), flash: { success: t(".success") }
+    else
+      set_instance_variables_for_edit
+      render params[:edit_path]
+    end
   end
 
   def destroy
@@ -44,6 +49,33 @@ class Placements::Schools::PlacementsController < ApplicationController
 
   def set_decorated_placement
     @placement = @placement.decorate
+  end
+
+  def valid_attributes?
+    if params[:edit_path] == "edit_provider"
+      placement_params[:provider_id].present?
+    elsif params[:edit_path] == "edit_mentors"
+      valid_mentor_ids?(placement_params[:mentor_ids].compact_blank)
+    else
+      false
+    end
+  end
+
+  def valid_mentor_ids?(mentor_ids)
+    return true if mentor_ids.include?("not_known")
+
+    if mentor_ids.present? && mentor_ids.all? { |id| Placements::Mentor.exists?(id:) && @school.mentors.exists?(id:) }
+      true
+    else
+      @placement.errors.add(:mentor_ids, :invalid)
+      false
+    end
+  end
+
+  def set_instance_variables_for_edit
+    if placement_params[:mentor_ids].present?
+      @mentors = @school.mentors.all
+    end
   end
 
   def placement_params

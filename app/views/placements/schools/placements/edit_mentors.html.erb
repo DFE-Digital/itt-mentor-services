@@ -6,7 +6,7 @@
 <% end %>
 
 <div class="govuk-width-container">
-  <%= form_for(@placement, url: placements_school_placement_path(@school, @placement), method: :put) do |f| %>
+  <%= form_for(@placement, url: placements_school_placement_path(@school, @placement, edit_path: :edit_mentors), method: :put) do |f| %>
     <%= f.govuk_error_summary %>
 
     <div class="govuk-grid-row">
