@@ -51,7 +51,7 @@ en:
             add_phase: Add phase
             subject: Subject
             add_subject: Add subject
-            mentors: Mentors
+            mentor: Mentor
             add_mentors: Add mentors
             change: Change
             info_text: When a placement is published, it will be visible to accredited providers and lead partners.
