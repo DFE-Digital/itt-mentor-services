@@ -45,7 +45,8 @@ en:
             you_need_to_add_a_mentor: "You will first need to %{link}."
             add_a_mentor: add a mentor
           check_your_answers:
-            title: Check your answers - Add placement
+            page_title: Check your answers - Add placement
+            title: Check your answers
             add_placement: Add placement
             phase: Phase
             add_phase: Add phase
