@@ -11,7 +11,7 @@
 #
 # Indexes
 #
-#  index_placements_on_provider_id  (provider_id)a
+#  index_placements_on_provider_id  (provider_id)
 #  index_placements_on_school_id    (school_id)
 #  index_placements_on_subject_id   (subject_id)
 #
