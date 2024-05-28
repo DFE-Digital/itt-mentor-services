@@ -25,7 +25,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     scenario "User views a placement with child subjects" do
       given_a_placement_with_a_subject_which_has_child_subjects(subject_1, [subject_2, subject_3])
       when_i_visit_the_placement_show_page
-      then_i_see_all_of_the_subjects_names_in_the_placement_details("Subject 1", ["Subject 2", "Subject 3"])
+      then_i_see_all_of_the_subjects_names_in_the_placement_details(["Subject 2", "Subject 3"])
     end
   end
 
@@ -192,9 +192,8 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     end
   end
 
-  def then_i_see_all_of_the_subjects_names_in_the_placement_details(subject_name, additional_subject_names)
-    additional_subjects_title = additional_subject_names.sort.to_sentence
-    expect(page.find(".govuk-heading-l")).to have_content("#{subject_name} - #{additional_subjects_title}")
+  def then_i_see_all_of_the_subjects_names_in_the_placement_details(additional_subject_names)
+    expect(page.find(".govuk-heading-l")).to have_content(additional_subject_names.sort.to_sentence)
   end
 
   def given_a_placement_with_no_mentor; end

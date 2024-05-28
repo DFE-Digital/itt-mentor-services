@@ -60,7 +60,7 @@ RSpec.describe "Placements / Placements / View a placement",
     scenario "User views a placement and multiple subject details" do
       when_i_visit_the_placement_show_page
       then_i_see_details_for_the_school
-      and_i_see_the_subject_name("Modern Foreign Languages - French, German, and Spanish")
+      and_i_see_the_subject_name("French, German, and Spanish")
       and_i_see_the_itt_placement_contact_details_for_the_school
       and_i_see_location_details_for_the_school
     end
