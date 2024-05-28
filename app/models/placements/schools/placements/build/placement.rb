@@ -22,16 +22,6 @@
 #  fk_rails_...  (subject_id => subjects.id)
 #
 class Placements::Schools::Placements::Build::Placement < Placement
-  has_many :placement_mentor_joins, dependent: :destroy
-  has_many :mentors, through: :placement_mentor_joins, class_name: "Placements::Mentor"
-
-  has_many :placement_additional_subjects, class_name: "Placements::PlacementAdditionalSubject", dependent: :destroy
-  has_many :additional_subjects, through: :placement_additional_subjects, source: :subject
-
-  belongs_to :school, class_name: "Placements::School"
-  belongs_to :provider, optional: true
-  belongs_to :subject
-
   validates :school, presence: true
 
   delegate :has_child_subjects?, to: :subject, allow_nil: true, prefix: true
