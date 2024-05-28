@@ -41,10 +41,10 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
           href: edit_mentors_placements_school_placement_path(school, placement),
         )
         then_i_should_see_the_edit_mentors_page
-        when_i_select_mentor_2
-        and_i_click_on("Continue")
-        then_i_should_see_the_mentor_name_in_the_placement_details(
-          mentor_name: mentor_2.full_name,
+        when_i_uncheck("Not yet known")
+      when_i_select_mentor_2
+      and_i_click_on("Continue")
+      then_i_should_see_the_mentor_name_in_the_placement_details(mentor_name: mentor_2.full_name,
         )
       end
 
@@ -55,10 +55,11 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
           text: "Select a mentor",
           href: edit_mentors_placements_school_placement_path(school, placement),
         )
-        then_i_should_see_the_edit_mentors_page
-        and_i_click_on("Continue")
-        then_i_should_see_an_error_message
-      end
+        when_i_uncheck("Not yet known")
+      then_i_should_see_the_edit_mentors_page
+      and_i_click_on("Continue")
+      then_i_should_see_an_error_message
+    end
 
       scenario "User edits the mentor and cancels" do
         when_i_visit_the_placement_show_page
@@ -116,7 +117,8 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
           href: edit_mentors_placements_school_placement_path(school, placement),
         )
         then_i_should_see_the_edit_mentors_page
-        when_i_select_not_yet_known
+        when_i_uncheck(mentor_1.full_name)
+      and_i_uncheck("Not yet known")
         and_i_click_on("Continue")
         then_i_see_link(
           text: "Select a mentor",
@@ -156,6 +158,16 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
           mentor_name: mentor_1.full_name,
         )
       end
+    end
+
+    scenario "User selects not yet known" do
+      when_i_visit_the_placement_show_page
+      then_i_should_see_the_mentor_name_in_the_placement_details(mentor_1.full_name)
+      when_i_click_on_change
+      then_i_should_see_the_edit_mentors_page
+      when_i_select_not_yet_known
+      and_i_click_on("Continue")
+      then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
     end
   end
 
@@ -244,4 +256,10 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
   def then_i_see_link(text:, href:)
     expect(page).to have_link(text, href:)
   end
+  def when_i_uncheck(text)
+    uncheck(text)
+  end
+
+  alias_method :and_i_click_on, :when_i_click_on
+  alias_method :and_i_uncheck, :when_i_uncheck
 end
