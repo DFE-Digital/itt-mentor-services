@@ -14,7 +14,7 @@ RSpec.describe ApplicationSlackNotifier do
       end
 
       it "builds claims urls" do
-        expect(claims_slack_notifier_class.root_url_notification.text).to eq("http://claims.localhost:3000/")
+        expect(claims_slack_notifier_class.root_url_notification.text).to eq("http://claims.localhost/")
       end
     end
 
@@ -30,7 +30,7 @@ RSpec.describe ApplicationSlackNotifier do
       end
 
       it "builds placements urls" do
-        expect(placements_slack_notifier_class.root_url_notification.text).to eq("http://placements.localhost:3000/")
+        expect(placements_slack_notifier_class.root_url_notification.text).to eq("http://placements.localhost/")
       end
     end
 

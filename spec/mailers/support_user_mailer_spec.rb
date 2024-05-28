@@ -19,11 +19,11 @@ RSpec.describe SupportUserMailer, type: :mailer do
 
           If you have a DfE Sign-in account, you can use it to sign in:
 
-          [http://claims.localhost:3000/sign-in](http://claims.localhost:3000/sign-in)
+          [http://claims.localhost/sign-in](http://claims.localhost/sign-in)
 
           If you need to create a DfE Sign-in account, you can do this after clicking "Sign in using DfE Sign-in"
 
-          After creating a DfE Sign-in account, you will need to return to this email and [sign in to access the service](http://claims.localhost:3000/sign-in).
+          After creating a DfE Sign-in account, you will need to return to this email and [sign in to access the service](http://claims.localhost/sign-in).
 
           # Give feedback or report a problem
 
@@ -73,11 +73,11 @@ RSpec.describe SupportUserMailer, type: :mailer do
 
           If you have a DfE Sign-in account, you can use it to sign in:
 
-          [http://placements.localhost:3000/sign-in](http://placements.localhost:3000/sign-in)
+          [http://placements.localhost/sign-in](http://placements.localhost/sign-in)
 
           If you need to create a DfE Sign-in account, you can do this after clicking "Sign in using DfE Sign-in"
 
-          After creating a DfE Sign-in account, you will need to return to this email and [sign in to access the service](http://placements.localhost:3000/sign-in).
+          After creating a DfE Sign-in account, you will need to return to this email and [sign in to access the service](http://placements.localhost/sign-in).
 
           # Give feedback or report a problem
 
