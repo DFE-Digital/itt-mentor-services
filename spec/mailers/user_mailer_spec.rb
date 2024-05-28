@@ -20,11 +20,11 @@ RSpec.describe UserMailer, type: :mailer do
 
           If you have a DfE Sign-in account, you can use it to sign in:
 
-          [http://claims.localhost:3000/sign-in](http://claims.localhost:3000/sign-in)
+          [http://claims.localhost/sign-in](http://claims.localhost/sign-in)
 
           If you need to create a DfE Sign-in account, you can do this after clicking "Sign in using DfE Sign-in"
 
-          After creating a DfE Sign-in account, you will need to return to this email and [sign in to access the service](http://claims.localhost:3000/sign-in).
+          After creating a DfE Sign-in account, you will need to return to this email and [sign in to access the service](http://claims.localhost/sign-in).
 
           # Give feedback or report a problem
 
@@ -74,11 +74,11 @@ RSpec.describe UserMailer, type: :mailer do
 
             If you have a DfE Sign-in account, you can use it to sign in:
 
-            [http://placements.localhost:3000/sign-in](http://placements.localhost:3000/sign-in)
+            [http://placements.localhost/sign-in](http://placements.localhost/sign-in)
 
             If you need to create a DfE Sign-in account, you can do this after clicking "Sign in using DfE Sign-in"
 
-            After creating a DfE Sign-in account, you will need to return to this email and [sign in to access the service](http://placements.localhost:3000/sign-in).
+            After creating a DfE Sign-in account, you will need to return to this email and [sign in to access the service](http://placements.localhost/sign-in).
 
             # Give feedback or report a problem
 
@@ -127,11 +127,11 @@ RSpec.describe UserMailer, type: :mailer do
 
             If you have a DfE Sign-in account, you can use it to sign in:
 
-            [http://placements.localhost:3000/sign-in](http://placements.localhost:3000/sign-in)
+            [http://placements.localhost/sign-in](http://placements.localhost/sign-in)
 
             If you need to create a DfE Sign-in account, you can do this after clicking "Sign in using DfE Sign-in"
 
-            After creating a DfE Sign-in account, you will need to return to this email and [sign in to access the service](http://placements.localhost:3000/sign-in).
+            After creating a DfE Sign-in account, you will need to return to this email and [sign in to access the service](http://placements.localhost/sign-in).
 
             # Give feedback or report a problem
 
@@ -323,7 +323,7 @@ RSpec.describe UserMailer, type: :mailer do
 
           You can view your claim on Claim funding for mentor training:
 
-          http://claims.localhost:3000/schools/#{school.id}/claims/#{claim.id}
+          http://claims.localhost/schools/#{school.id}/claims/#{claim.id}
 
           # Give feedback or report a problem
 
@@ -380,7 +380,7 @@ RSpec.describe UserMailer, type: :mailer do
 
           You can view the claim, edit and submit it on Claim funding for mentor training:
 
-          http://claims.localhost:3000/schools/#{school.id}/claims/#{claim.id}
+          http://claims.localhost/schools/#{school.id}/claims/#{claim.id}
 
           # Give feedback or report a problem
 
@@ -436,7 +436,7 @@ RSpec.describe UserMailer, type: :mailer do
 
           You are receiving this notification because #{source_organisation.name} has added #{partner_organisation.name} to its list of partner providers.
 
-          View or manage your list of partner schools http://placements.localhost:3000/providers/#{partner_organisation.id}/partner_schools
+          View or manage your list of partner schools http://placements.localhost/providers/#{partner_organisation.id}/partner_schools
         EMAIL
       end
     end
@@ -457,7 +457,7 @@ RSpec.describe UserMailer, type: :mailer do
 
           You are receiving this notification because #{source_organisation.name} has added #{partner_organisation.name} to its list of partner schools.
 
-          View or manage your list of partner providers http://placements.localhost:3000/schools/#{partner_organisation.id}/partner_providers
+          View or manage your list of partner providers http://placements.localhost/schools/#{partner_organisation.id}/partner_providers
         EMAIL
       end
     end
@@ -496,7 +496,7 @@ RSpec.describe UserMailer, type: :mailer do
 
           You are receiving this notification because #{source_organisation.name} has removed #{partner_organisation.name} from its list of partner providers.
 
-          View or manage your list of partner schools http://placements.localhost:3000/providers/#{partner_organisation.id}/partner_schools
+          View or manage your list of partner schools http://placements.localhost/providers/#{partner_organisation.id}/partner_schools
         EMAIL
       end
     end
@@ -517,7 +517,7 @@ RSpec.describe UserMailer, type: :mailer do
 
           You are receiving this notification because #{source_organisation.name} has removed #{partner_organisation.name} from its list of partner schools.
 
-          View or manage your list of partner providers http://placements.localhost:3000/schools/#{partner_organisation.id}/partner_providers
+          View or manage your list of partner providers http://placements.localhost/schools/#{partner_organisation.id}/partner_providers
         EMAIL
       end
     end
