@@ -47,16 +47,40 @@
               <%= t("placements.schools.placements.not_yet_known") %>
             <% end %>
           <% end %>
-          <% row.with_action(text: t(".change"), href: edit_mentors_placements_school_placement_path(@school, @placement), visually_hidden_text: t(".attributes.placements.provider")) %>
+          <% if @school.mentors.blank? %>
+            <% row.with_action(
+              text: t(".add_a_mentor"),
+              href: new_placements_school_mentor_path,
+              visually_hidden_text: t(".attributes.placements.mentor"),
+            ) %>
+          <% else %>
+            <% row.with_action(
+              text: t(".change_mentor", count: @placement.mentors.count),
+              href: edit_mentors_placements_school_placement_path(@school, @placement),
+              visually_hidden_text: t(".attributes.placements.mentor"),
+            ) %>
+          <% end %>
         <% end %>
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t(".attributes.placements.provider")) %>
           <% row.with_value(text: @placement.provider_name) %>
-          <% row.with_action(text: t(".change"), href: edit_provider_placements_school_placement_path(@school, @placement), visually_hidden_text: t(".attributes.placements.provider")) %>
+          <% if @school.partner_providers.blank? %>
+            <% row.with_action(
+              text: t(".add_a_partner_provider"),
+              href: new_placements_school_partner_provider_path,
+              visually_hidden_text: t(".attributes.placements.provider"),
+            ) %>
+          <% else %>
+            <% row.with_action(
+              text: t(".change_provider", count: @placement.provider.present? ? 1 : 0),
+              href: edit_provider_placements_school_placement_path(@school, @placement),
+              visually_hidden_text: t(".attributes.placements.provider"),
+            ) %>
+          <% end %>
        <% end %>
       <% end %>
 
-      <%= govuk_link_to t(".remove_placement"),
+      <%= govuk_link_to t(".delete_placement"),
                         remove_placements_school_placement_path(@school, @placement),
                         class: "app-link app-link--destructive" %>
     </div>

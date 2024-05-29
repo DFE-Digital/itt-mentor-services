@@ -6,6 +6,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
   let!(:placement) { create(:placement, school:) }
   let!(:subject_1) { create(:subject, name: "Subject 1", subject_area: :primary) }
   let!(:provider) { create(:provider, name: "Provider 1") }
+  let(:partnership) { create(:placements_partnership, provider:, school:) }
 
   before do
     given_i_sign_in_as_anne
@@ -60,10 +61,26 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
       given_a_placement_has_one_subject(subject_1)
     end
 
-    scenario "User views a placement with no mentors" do
-      given_a_placement_with_no_mentor
-      when_i_visit_the_placement_show_page
-      then_i_the_mentor_is_not_yet_known_in_the_placement_details
+    context "when the school has no mentors" do
+      scenario "User views a placement with no mentors" do
+        given_a_placement_with_no_mentor
+        when_i_visit_the_placement_show_page
+        then_i_see_the_mentor_is_not_yet_known_in_the_placement_details(change_link: "Add a mentor")
+      end
+    end
+
+    context "when the school has mentors" do
+      let!(:mentor_1) { create(:placements_mentor, first_name: "Joe", last_name: "Bloggs") }
+
+      before do
+        given_the_school_has_mentors(school:, mentors: [mentor_1])
+      end
+
+      scenario "User views a placement with no mentors" do
+        given_a_placement_with_no_mentor
+        when_i_visit_the_placement_show_page
+        then_i_see_the_mentor_is_not_yet_known_in_the_placement_details(change_link: "Select a mentor")
+      end
     end
   end
 
@@ -98,17 +115,36 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
   end
 
   context "with a provider" do
+    before { partnership }
+
     scenario "User views a placement with a provider" do
       given_a_placement_with_a_provider(provider:)
       when_i_visit_the_placement_show_page
-      then_i_see_the_provider_in_the_placement_details(provider:)
+      then_i_see_the_provider_in_the_placement_details(provider_name: "Provider 1")
     end
   end
 
   context "without a provider" do
-    scenario "User views a placement without a provider" do
-      when_i_visit_the_placement_show_page
-      then_i_see_the_provider_in_the_placement_details
+    context "when the school has no partner providers" do
+      scenario "User views a placement without a provider" do
+        when_i_visit_the_placement_show_page
+        then_i_see_the_provider_in_the_placement_details(
+          provider_name: "Not yet known",
+          change_link: "Add a partner provider",
+        )
+      end
+    end
+
+    context "when the school has partner providers" do
+      before { partnership }
+
+      scenario "User views a placement without a provider" do
+        when_i_visit_the_placement_show_page
+        then_i_see_the_provider_in_the_placement_details(
+          provider_name: "Not yet known",
+          change_link: "Assign a provider",
+        )
+      end
     end
   end
 
@@ -193,11 +229,13 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     mentor_names.each do |mentor_name|
       then_i_see_the_mentor_name_in_the_placement_details(mentor_name)
     end
+    expect(page).to have_content("Change")
   end
 
-  def then_i_the_mentor_is_not_yet_known_in_the_placement_details
+  def then_i_see_the_mentor_is_not_yet_known_in_the_placement_details(change_link:)
     within(".govuk-summary-list") do
       expect(page).to have_content("Not yet known")
+      expect(page).to have_content(change_link)
     end
   end
 
@@ -225,12 +263,12 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     placement.update!(provider:)
   end
 
-  def then_i_see_the_provider_in_the_placement_details(provider: nil)
-    provider_text = provider&.name || "Not yet known"
-
+  def then_i_see_the_provider_in_the_placement_details(
+    provider_name:, change_link: "Change"
+  )
     within(".govuk-summary-list") do
-      expect(page).to have_content(provider_text)
-      expect(page).to have_content("Change")
+      expect(page).to have_content(provider_name)
+      expect(page).to have_content(change_link)
     end
   end
 

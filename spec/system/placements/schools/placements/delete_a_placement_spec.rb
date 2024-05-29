@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Schools / Placements / Remove a placement",
+RSpec.describe "Placements / Schools / Placements / Delete a placement",
                type: :system, service: :placements do
   let!(:placement_1) { create(:placement, school:, subjects: [subject_1]) }
   let(:placement_2) { create(:placement, school:, subjects: [subject_2]) }
@@ -14,14 +14,14 @@ RSpec.describe "Placements / Schools / Placements / Remove a placement",
     when_i_visit_the_placement_show_page(placement_1)
   end
 
-  scenario "User removes a placement from a school" do
-    and_i_click_on("Remove placement")
+  scenario "User delete a placement from a school" do
+    and_i_click_on("Delete placement")
     then_i_am_asked_to_confirm(school, placement_1, subject_1)
     when_i_click_on("Cancel")
     then_i_return_to_placement_page(school, placement_1)
-    when_i_click_on("Remove placement")
+    when_i_click_on("Delete placement")
     then_i_am_asked_to_confirm(school, placement_1, subject_1)
-    when_i_click_on("Remove placement")
+    when_i_click_on("Delete placement")
     then_the_placement_is_removed_from_the_school(school, placement_1, "Subject 1")
     and_a_school_placement_remains_for_subject("Subject 2")
   end
@@ -60,10 +60,10 @@ RSpec.describe "Placements / Schools / Placements / Remove a placement",
   def then_i_am_asked_to_confirm(_school, _placement, subject)
     placements_is_selected_in_primary_nav
     expect(page).to have_title(
-      "Are you sure you want to remove this placement? - #{subject.name} - Manage school placements",
+      "Are you sure you want to delete this placement? - #{subject.name} - Manage school placements",
     )
     expect(page).to have_content subject.name
-    expect(page).to have_content "Are you sure you want to remove this placement?"
+    expect(page).to have_content "Are you sure you want to delete this placement?"
   end
 
   def placements_is_selected_in_primary_nav
@@ -85,7 +85,7 @@ RSpec.describe "Placements / Schools / Placements / Remove a placement",
     placements_is_selected_in_primary_nav
     expect(school.placements.find_by(id: placement.id)).to eq nil
     within(".govuk-notification-banner__content") do
-      expect(page).to have_content "Placement removed"
+      expect(page).to have_content "Placement deleted"
     end
 
     expect(page).not_to have_content(subject_name)
