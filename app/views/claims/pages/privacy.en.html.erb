@@ -7,10 +7,15 @@
       <h1 class="govuk-heading-l"><%= t(".page_title") %></h1>
 
       <p class="govuk-body">
-        <%= govuk_link_to(
-          "Read privacy information section 8.4",
-          "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers#using-your-data-to-maintain-a-list-of-teachers",
-        ) %> which tells you what we do with you and your mentors’ data when you make contact with us or use this service.
+        Read the <%= govuk_link_to "Privacy information: education providers’ workforce, including teachers", "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers", new_tab: true %>.
+      </p>
+
+      <p class="govuk-body">
+        <%= govuk_link_to "Section 8.4", "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers#using-your-data-to-maintain-a-list-of-teachers", new_tab: true %> tells you what we do with you and your mentor’s data when you make contact with us or use this service.
+      </p>
+
+      <p class="govuk-body">
+        <%= govuk_link_to "Section 4.1", "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers#using-your-datato-contact-you-for-feedback", new_tab: true %> tells you how we use your data to contact you for feedback.
       </p>
     </div>
   </div>
