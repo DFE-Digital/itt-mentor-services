@@ -88,7 +88,7 @@ RSpec.describe "Error pages", type: :system do
     if self.class.metadata[:service] == :claims
       "ittmentor.funding@education.gov.uk"
     else
-      "becomingateacher@digital.education.gov.uk"
+      "Manage.SchoolPlacements@education.gov.uk"
     end
   end
 end
