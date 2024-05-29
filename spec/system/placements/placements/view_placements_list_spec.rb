@@ -109,8 +109,8 @@ RSpec.describe "Placements / Placements / View placements list",
         when_i_visit_the_placements_index_page({ filters: { only_available_placements: true } })
         then_i_can_see_a_placement_for_placement_1
         and_i_cannot_see_a_placement_for_placement_2
-        and_i_can_see_a_preset_filter("Placements Available", "Available")
-        when_i_click_to_remove_filter("Placements Available", "Available")
+        and_i_can_see_a_preset_filter("Placements available", "Placements available")
+        when_i_click_to_remove_filter("Placements available", "Placements available")
         then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
         and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
         and_i_can_not_see_any_selected_filters
@@ -176,7 +176,7 @@ RSpec.describe "Placements / Placements / View placements list",
         )
         then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
         and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
-        and_i_can_see_a_preset_filter("Placements Available", "Placements Available")
+        and_i_can_see_a_preset_filter("Placements available", "Placements available")
         and_i_can_see_a_preset_filter("Partner schools", "Partner schools")
         and_i_can_see_a_preset_filter("School", "Primary School")
         and_i_can_see_a_preset_filter("Subject", "Primary with mathematics")
@@ -240,7 +240,7 @@ RSpec.describe "Placements / Placements / View placements list",
         and_i_navigate_to("2")
         when_i_click_on_the_first_placement
         and_i_click_on("Back")
-        then_i_can_see_a_preset_filter("Placements Available", "Placements Available")
+        then_i_can_see_a_preset_filter("Placements available", "Placements available")
         and_i_can_see_search_location_is_set_as("London")
         and_the_pagination_remains_selected("2")
       end
