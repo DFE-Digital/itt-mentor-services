@@ -26,6 +26,38 @@
             </div>
           </div>
 
+          <% if filter_form.only_partner_schools.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".partner_schools") %></h3>
+            <ul class="app-filter-tags">
+              <li>
+                <%= govuk_link_to(
+                      t(".partner_schools"),
+                      filter_form.index_path_without_filter(
+                        filter: "only_partner_schools",
+                        value: true,
+                        search_location:,
+                      ),
+                      class: "app-filter__tag",
+                      no_visited_state: true,
+                    ) %>
+              </li>
+            </ul>
+          <% end %>
+
+          <% if filter_form.only_available_placements.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".availability") %></h3>
+            <ul class="app-filter-tags">
+              <li>
+                <%= govuk_link_to(
+                      t(".availability"),
+                      filter_form.index_path_without_filter(filter: "only_available_placements", value: true),
+                      class: "app-filter__tag",
+                      no_visited_state: true,
+                    ) %>
+              </li>
+            </ul>
+          <% end %>
+
           <% if filter_form.school_ids.present? %>
             <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".school") %></h3>
             <ul class="app-filter-tags">
@@ -83,38 +115,6 @@
                   ) %>
                 </li>
               <% end %>
-            </ul>
-          <% end %>
-
-          <% if filter_form.only_partner_schools.present? %>
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".partner_schools") %></h3>
-            <ul class="app-filter-tags">
-              <li>
-                <%= govuk_link_to(
-                      t(".partner_schools"),
-                      filter_form.index_path_without_filter(
-                        filter: "only_partner_schools",
-                        value: true,
-                        search_location:,
-                      ),
-                      class: "app-filter__tag",
-                      no_visited_state: true,
-                    ) %>
-              </li>
-            </ul>
-          <% end %>
-
-          <% if filter_form.only_available_placements.present? %>
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".availability") %></h3>
-            <ul class="app-filter-tags">
-              <li>
-                <%= govuk_link_to(
-                      t(".availability"),
-                      filter_form.index_path_without_filter(filter: "only_available_placements", value: true),
-                      class: "app-filter__tag",
-                      no_visited_state: true,
-                    ) %>
-              </li>
             </ul>
           <% end %>
         </div>

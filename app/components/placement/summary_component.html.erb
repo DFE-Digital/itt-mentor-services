@@ -1,5 +1,5 @@
 <li class="app-search-results__item">
-  <div class="govuk-grid-column-three-quarters govuk-!-padding-left-0">
+  <div class="govuk-grid-column-full govuk-!-padding-left-0">
     <h2 class="app-search-result__item-title">
       <%= govuk_link_to(placements_placement_path(placement), no_visited_state: true) do %>
         <span><%= school.name %></span>
@@ -9,9 +9,12 @@
     </h2>
   </div>
 
-  <div class="govuk-grid-column-one-quarter">
-    <%= render Placement::StatusTagComponent.new(placement:) %>
-  </div>
+  <dl class="app-result-detail">
+    <div class="app-result-detail__row">
+      <%= render Placement::StatusTagComponent.new(placement:) %>
+    </div>
+  </dl>
+
   <dl class="app-result-detail">
     <% if location_coordinates.present? %>
       <div class="app-result-detail__row">
