@@ -29,7 +29,7 @@ class Placements::Schools::PlacementsController < ApplicationController
 
   def destroy
     @placement.destroy!
-    redirect_to placements_school_placements_path(@school), flash: { success: t(".placement_removed") }
+    redirect_to placements_school_placements_path(@school), flash: { success: t(".placement_deleted") }
   end
 
   private
