@@ -82,7 +82,7 @@ RSpec.describe UserMailer, type: :mailer do
 
             # Give feedback or report a problem
 
-            If you have any questions or feedback, please contact the team at [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk).
+            If you have any questions or feedback, please contact the team at [Manage.SchoolPlacements@education.gov.uk](mailto:Manage.SchoolPlacements@education.gov.uk).
 
             Regards
 
@@ -135,7 +135,7 @@ RSpec.describe UserMailer, type: :mailer do
 
             # Give feedback or report a problem
 
-            If you have any questions or feedback, please contact the team at [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk).
+            If you have any questions or feedback, please contact the team at [Manage.SchoolPlacements@education.gov.uk](mailto:Manage.SchoolPlacements@education.gov.uk).
 
             Regards
 
@@ -227,7 +227,7 @@ RSpec.describe UserMailer, type: :mailer do
 
             # Give feedback or report a problem
 
-            If you have any questions or feedback, please contact the team at [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk).
+            If you have any questions or feedback, please contact the team at [Manage.SchoolPlacements@education.gov.uk](mailto:Manage.SchoolPlacements@education.gov.uk).
 
             Regards
 
@@ -270,7 +270,7 @@ RSpec.describe UserMailer, type: :mailer do
 
             # Give feedback or report a problem
 
-            If you have any questions or feedback, please contact the team at [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk).
+            If you have any questions or feedback, please contact the team at [Manage.SchoolPlacements@education.gov.uk](mailto:Manage.SchoolPlacements@education.gov.uk).
 
             Regards
 
