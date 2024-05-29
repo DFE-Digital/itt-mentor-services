@@ -2,7 +2,6 @@ en:
   placements:
     placements:
       index:
-        find_placements: Find placements
         placements_found: "%{placements_count} placements found"
         no_placements_found: No school placements found
         placements: Placements
