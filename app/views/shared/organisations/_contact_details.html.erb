@@ -19,8 +19,7 @@
       <% row.with_value do %>
         <%= govuk_link_to(organisation.website,
                           external_link(organisation.website),
-                          target: "_blank",
-                          rel: "noopener noreferrer") %>
+                          new_tab: true) %>
       <% end %>
     <% else %>
       <% row.with_value(**summary_row_value) %>
