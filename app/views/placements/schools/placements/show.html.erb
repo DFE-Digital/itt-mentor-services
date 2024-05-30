@@ -49,7 +49,7 @@
         <% if @placement.year_group.present? %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".attributes.placements.year_group")) %>
-            <% row.with_value(text: @placement.formatted_year_group) %>
+            <% row.with_value(text: t("placements.schools.placements.year_groups.#{@placement.year_group}")) %>
           <% end %>
         <% end %>
         <% summary_list.with_row do |row| %>
