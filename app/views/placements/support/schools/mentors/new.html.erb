@@ -11,11 +11,11 @@
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l"><%= t(".add_mentor_with_school_name", school_name: @school.name) %></span>
+        <h2 class="govuk-heading-l"><%= t(".find_teacher") %></h2>
+
         <div class="govuk-form-group">
-          <%= f.govuk_text_field :trn, width: "two-thirds", label: -> do %>
-            <span class="govuk-caption-l"><%= t(".add_mentor_with_school_name", school_name: @school.name) %></span>
-            <h2 class="govuk-heading-l"><%= t(".enter_a_trn") %></h2>
-          <% end %>
+          <%= f.govuk_text_field :trn, width: "two-thirds", label: { text: t(".trn"), size: "s" } %>
         </div>
 
         <%= govuk_details(summary_text: t(".help_with_the_trn")) do %>

@@ -238,7 +238,7 @@ RSpec.describe "Placements school user adds mentors to schools", type: :system, 
   end
 
   def then_i_see_the_error(message, field_index = 0)
-    expect(page).to have_title "Error: Enter a teacher reference number (TRN)"
+    expect(page).to have_title "Error: Find teacher - Add mentor"
     within(".govuk-error-summary") do
       expect(page).to have_content message
     end
