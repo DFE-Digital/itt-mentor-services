@@ -3,6 +3,7 @@
 # Table name: placements
 #
 #  id          :uuid             not null, primary key
+#  year_group  :enum
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  provider_id :uuid

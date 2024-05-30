@@ -3,6 +3,7 @@
 # Table name: placements
 #
 #  id          :uuid             not null, primary key
+#  year_group  :enum
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  provider_id :uuid
@@ -25,6 +26,17 @@ class Placements::Schools::Placements::Build::Placement < Placement
   validates :school, presence: true
 
   attr_accessor :phase, :mentor_ids, :additional_subject_ids
+
+  def self.year_groups
+    [
+      [:year_1, "Year 1"],
+      [:year_2, "Year 2"],
+      [:year_3, "Year 3"],
+      [:year_4, "Year 4"],
+      [:year_5, "Year 5"],
+      [:year_6, "Year 6"],
+    ]
+  end
 
   def valid_phase?
     return true if [Placements::School::PRIMARY_PHASE, Placements::School::SECONDARY_PHASE].include?(phase)
@@ -59,6 +71,13 @@ class Placements::Schools::Placements::Build::Placement < Placement
       errors.add(:additional_subject_ids, :invalid)
       false
     end
+  end
+
+  def valid_year_group?
+    return true if school.phase != "Primary" || year_group.present?
+
+    errors.add(:year_group, :invalid)
+    false
   end
 
   def all_valid?

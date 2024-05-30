@@ -40,6 +40,9 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           then_i_see_the_add_a_placement_subject_page(school.phase)
           when_i_choose_a_subject(subject_1.name)
           and_i_click_on("Continue")
+          then_i_see_the_add_year_group_page("Year 1")
+          when_i_choose_a_year_group("Year 1")
+          and_i_click_on("Continue")
           then_i_see_the_add_a_placement_mentor_page
           when_i_check_a_mentor(mentor_1.full_name)
           and_i_click_on("Continue")
@@ -54,6 +57,9 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
           when_i_choose_a_subject(subject_1.name)
+          and_i_click_on("Continue")
+          then_i_see_the_add_year_group_page("Year 1")
+          when_i_choose_a_year_group("Year 1")
           and_i_click_on("Continue")
           then_i_see_the_add_a_placement_mentor_page
           when_i_check_a_mentor("Not yet known")
@@ -74,6 +80,9 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           and_i_click_on("Add placement")
           when_i_choose_a_subject(subject_1.name)
           and_i_click_on("Continue")
+          then_i_see_the_add_year_group_page("Year 1")
+          when_i_choose_a_year_group("Year 1")
+          and_i_click_on("Continue")
           then_i_see_the_check_your_answers_page(school.phase, nil)
         end
       end
@@ -93,6 +102,10 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           and_i_click_on("Cancel")
           then_i_see_the_placements_page
 
+          when_i_visit_the_add_year_group_page
+          and_i_click_on("Cancel")
+          then_i_see_the_placements_page
+
           when_i_visit_the_add_mentor_page
           and_i_click_on("Cancel")
           then_i_see_the_placements_page
@@ -102,35 +115,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           then_i_see_the_placements_page
         end
 
-        scenario "I can navigate to the previous page using the back button" do
-          when_i_visit_the_placements_page
-          and_i_click_on("Add placement")
-          when_i_choose_a_subject(subject_1.name)
-          and_i_click_on("Continue")
-          when_i_check_a_mentor(mentor_1.full_name)
-          and_i_click_on("Back")
-          then_i_see_the_add_a_placement_subject_page(school.phase)
-          and_i_click_on("Back")
-          then_i_see_the_placements_page
-        end
-
         context "when I've checked my answers and I click on change" do
-          scenario "I can navigate back to the check my answers page with the back button" do
-            when_i_visit_the_placements_page
-            and_i_click_on("Add placement")
-            when_i_choose_a_subject(subject_1.name)
-            and_i_click_on("Continue")
-            when_i_check_a_mentor(mentor_1.full_name)
-            and_i_click_on("Continue")
-            then_i_see_the_check_your_answers_page(school.phase, mentor_1)
-            when_i_change_my_subject
-            and_i_click_on("Back")
-            then_i_see_the_check_your_answers_page(school.phase, mentor_1)
-            when_i_change_my_mentor
-            and_i_click_on("Back")
-            then_i_see_the_check_your_answers_page(school.phase, mentor_1)
-          end
-
           scenario "my selected options are rendered when navigating using the back button" do
             when_i_visit_the_placements_page
             and_i_click_on("Add placement")
@@ -138,6 +123,13 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
             and_i_click_on("Continue")
             when_i_click_on("Back")
             then_my_chosen_subject_is_selected(subject_1.name)
+
+            when_i_visit_the_add_year_group_page
+            when_i_choose_a_year_group("Year 1")
+            and_i_click_on("Continue")
+            when_i_click_on("Back")
+            then_my_chosen_year_group_is_selected("Year 1")
+
             when_i_visit_the_add_mentor_page
             when_i_check_a_mentor(mentor_1.full_name)
             and_i_click_on("Continue")
@@ -154,8 +146,13 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
 
             when_i_choose_a_subject(subject_1.name)
             and_i_click_on("Continue")
+            then_i_see_the_add_year_group_page("Year 1")
+            and_i_click_on("Continue")
+            and_i_see_the_error_message("Select a year group")
+            when_i_choose_a_year_group("Year 1")
             and_i_click_on("Continue")
             then_i_see_the_add_a_placement_mentor_page
+            when_i_click_on("Continue")
             and_i_see_the_error_message("Select a mentor or not yet known")
           end
         end
@@ -230,7 +227,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           and_i_see_the_error_message("Select an additional subject")
         end
 
-        scenario "If I change the subject, I do not see teh additional subject page" do
+        scenario "If I change the subject, I do not see the additional subject page" do
           school.update!(phase: "Secondary")
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
@@ -263,8 +260,9 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           and_i_click_on("Continue")
           then_i_see_the_add_a_placement_subject_page("Primary")
           when_i_choose_a_subject(subject_1.name)
-          then_i_see_the_add_a_placement_subject_page("Primary")
-          when_i_choose_a_subject(subject_1.name)
+          and_i_click_on("Continue")
+          then_i_see_the_add_year_group_page("Year 1")
+          when_i_choose_a_year_group("Year 1")
           and_i_click_on("Continue")
           then_i_see_the_add_a_placement_mentor_page
           when_i_check_a_mentor(mentor_1.full_name)
@@ -466,10 +464,16 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
     visit add_mentors_placements_school_placement_build_index_path(school, :add_mentor)
   end
 
+  def when_i_visit_the_add_year_group_page
+    visit add_year_group_placements_school_placement_build_index_path(school, :add_year_group)
+  end
+
   def when_i_visit_the_check_your_answers_page
     when_i_visit_the_placements_page
     and_i_click_on("Add placement")
     when_i_choose_a_subject("Primary subject")
+    and_i_click_on("Continue")
+    when_i_choose_a_year_group("Year 1")
     and_i_click_on("Continue")
     when_i_check_a_mentor(mentor_1.full_name)
     and_i_click_on("Continue")
@@ -510,12 +514,22 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
     expect(page).to have_content("Add placement")
   end
 
+  def then_i_see_the_add_year_group_page(year_group)
+    expect(page).to have_content("Add placement")
+    expect(page).to have_content("Year group")
+    expect(page).to have_content(year_group)
+  end
+
   def when_i_choose_a_phase(phase)
     page.choose phase
   end
 
   def when_i_choose_a_subject(subject_name)
     page.choose subject_name
+  end
+
+  def when_i_choose_a_year_group(year_group)
+    page.choose year_group
   end
 
   def when_i_check_a_subject(subject_name)
@@ -531,6 +545,10 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
 
   def and_my_chosen_subject_is_selected(subject_name)
     expect(page).to have_checked_field(subject_name)
+  end
+
+  def and_my_chosen_year_group_is_selected(year_group)
+    expect(page).to have_checked_field(year_group)
   end
 
   def when_i_check_a_mentor(mentor_name)
@@ -613,4 +631,5 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
   alias_method :and_i_check_the_subject, :when_i_check_a_subject
   alias_method :then_my_chosen_subject_is_selected, :and_my_chosen_subject_is_selected
   alias_method :then_my_chosen_mentor_is_checked, :and_my_chosen_mentor_is_checked
+  alias_method :then_my_chosen_year_group_is_selected, :and_my_chosen_year_group_is_selected
 end

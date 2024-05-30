@@ -27,6 +27,14 @@ class Placements::Schools::Placements::BuildController < ApplicationController
     @selected_additional_subjects = @placement.additional_subjects
   end
 
+  def add_year_group
+    @placement = build_placement
+    @year_groups = Placements::Schools::Placements::Build::Placement.year_groups.map do |value, name|
+      OpenStruct.new value:, name:, description: t("placements.schools.placements.year_groups.#{value}_description")
+    end
+    @placement.year_group = session.dig(:add_a_placement, "year_group")
+  end
+
   def add_mentors
     @placement = build_placement
     @selected_mentors = retrieve_selected_mentors
@@ -37,6 +45,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
     @phase = session.dig(:add_a_placement, "phase")
     @selected_subject = Subject.find(session.dig(:add_a_placement, "subject_id"))
     @selected_additional_subjects = @selected_subject.child_subjects.where(id: additional_subject_ids)
+    @selected_year_group = session.dig(:add_a_placement, "year_group") if school.phase == "Primary"
     @selected_mentor_text = if @placement.mentors.empty?
                               t(".not_yet_known")
                             else
@@ -55,6 +64,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
         @placement.additional_subject_ids = additional_subject_ids
         @placement.build_additional_subjects(additional_subject_ids)
       end
+      @placement.year_group = session.dig(:add_a_placement, "year_group") if school.phase == "Primary"
       @placement.build_mentors(mentor_ids)
       @placement.save!
 
@@ -65,6 +75,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
       @placement.phase = phase_params
 
       if @placement.valid_phase?
+        session[:add_a_placement]["skipped_steps"] << "add_year_group" if @placement.phase != "Primary"
         session[:add_a_placement][:phase] = phase_params
       else
         render :add_phase and return
@@ -99,6 +110,19 @@ class Placements::Schools::Placements::BuildController < ApplicationController
         assign_additional_subjects
         render :add_additional_subjects and return
       end
+    when :add_year_group
+      year_group = params.dig(:placements_schools_placements_build_placement, :year_group)
+      @placement = build_placement
+      @placement.year_group = year_group
+
+      if @placement.valid_year_group?
+        session[:add_a_placement][:year_group] = year_group
+      else
+        @year_groups = Placements::Schools::Placements::Build::Placement.year_groups.map do |value, name|
+          OpenStruct.new value:, name:, description: t("placements.schools.placements.year_groups.#{value}_description")
+        end
+        render :add_year_group and return
+      end
     when :add_mentors
       mentor_ids = mentor_ids_params
       @placement = build_placement
@@ -119,7 +143,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
 
   private
 
-  STEPS = %i[add_phase add_subject add_additional_subjects add_mentors check_your_answers].freeze
+  STEPS = %i[add_phase add_subject add_additional_subjects add_year_group add_mentors check_your_answers].freeze
 
   def reset_session
     session.delete(:add_a_placement)
@@ -167,7 +191,8 @@ class Placements::Schools::Placements::BuildController < ApplicationController
 
   def initialize_placement
     subject = Subject.find(session.dig(:add_a_placement, "subject_id"))
-    placement = Placements::Schools::Placements::Build::Placement.new(school:, subject:)
+    year_group = session.dig(:add_a_placement, "year_group")
+    placement = Placements::Schools::Placements::Build::Placement.new(school:, subject:, year_group:)
     placement.build_mentors(mentor_ids)
     placement.build_additional_subjects(additional_subject_ids)
     placement
@@ -198,9 +223,8 @@ class Placements::Schools::Placements::BuildController < ApplicationController
 
   def setup_skipped_steps
     session[:add_a_placement][:skipped_steps] = []
-    return if school.mentors.exists?
-
-    session[:add_a_placement][:skipped_steps] << "add_mentors"
+    session[:add_a_placement][:skipped_steps] << "add_mentors" unless school.mentors.exists?
+    session[:add_a_placement][:skipped_steps] << "add_year_group" if school.phase == "Secondary"
   end
 
   def skipped_steps
