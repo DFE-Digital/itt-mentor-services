@@ -111,17 +111,11 @@ en:
               mentor: Mentor
               status: Status
               provider: Provider
-          change_mentor: 
-            zero: Select a mentor
-            one: Change
-            other: Change
-          change_provider:
-            zero: Assign a provider
-            one: Change
-            other: Change
           select_a_mentor: Select a mentor
           add_a_mentor: Add a mentor
+          assign_a_provider: Assign a provider
           add_a_partner_provider: Add a partner provider
+          change: Change
         remove:
           page_title: "Are you sure you want to delete this placement? - %{subject_names}"
           are_you_sure: Are you sure you want to delete this placement?

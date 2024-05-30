@@ -128,9 +128,9 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     context "when the school has no partner providers" do
       scenario "User views a placement without a provider" do
         when_i_visit_the_placement_show_page
-        then_i_see_the_provider_in_the_placement_details(
-          provider_name: "Not yet known",
-          change_link: "Add a partner provider",
+        then_i_see_link(
+          text: "Add a partner provider",
+          href: placements_school_partner_providers_path(school),
         )
       end
     end
@@ -140,9 +140,9 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
 
       scenario "User views a placement without a provider" do
         when_i_visit_the_placement_show_page
-        then_i_see_the_provider_in_the_placement_details(
-          provider_name: "Not yet known",
-          change_link: "Assign a provider",
+        then_i_see_link(
+          text: "Assign a provider",
+          href: edit_provider_placements_school_placement_path(school, placement),
         )
       end
     end
@@ -234,7 +234,6 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
 
   def then_i_see_the_mentor_is_not_yet_known_in_the_placement_details(change_link:)
     within(".govuk-summary-list") do
-      expect(page).to have_content("Not yet known")
       expect(page).to have_content(change_link)
     end
   end
@@ -276,5 +275,9 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     within(".govuk-summary-list") do
       expect(page.find(".govuk-tag")).to have_content(status)
     end
+  end
+
+  def then_i_see_link(text:, href:)
+    expect(page).to have_link(text, href:)
   end
 end

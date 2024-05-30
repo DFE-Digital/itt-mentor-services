@@ -20,7 +20,7 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
       )
       when_i_click_link(
         text: "Add a mentor",
-        href: new_placements_school_mentor_path(school),
+        href: placements_school_mentors_path(school),
       )
       then_i_am_redirected_to_add_a_mentor
     end
@@ -118,9 +118,9 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
         then_i_should_see_the_edit_mentors_page
         when_i_select_not_yet_known
         and_i_click_on("Continue")
-        then_i_should_see_the_mentor_name_in_the_placement_details(
-          mentor_name: "Not yet known",
-          change_link: "Select a mentor",
+        then_i_see_link(
+          text: "Select a mentor",
+          href: edit_mentors_placements_school_placement_path(school, placement),
         )
       end
 
@@ -198,7 +198,6 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
     change_link: "Select a mentor"
   )
     within(".govuk-summary-list") do
-      expect(page).to have_content("Not yet known")
       expect(page).to have_content(change_link)
     end
   end
@@ -228,7 +227,11 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
 
   def then_i_am_redirected_to_add_a_mentor
     expect(page).to have_current_path(
-      new_placements_school_mentor_path(school), ignore_query: true
+      placements_school_mentors_path(school), ignore_query: true
     )
+  end
+
+  def then_i_see_link(text:, href:)
+    expect(page).to have_link(text, href:)
   end
 end
