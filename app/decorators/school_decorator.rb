@@ -14,6 +14,10 @@ class SchoolDecorator < OrganisationDecorator
     "#{minimum_age} to #{maximum_age}"
   end
 
+  def percentage_free_school_meals_percentage
+    "#{percentage_free_school_meals}%" if percentage_free_school_meals.present?
+  end
+
   private
 
   def address_parts
