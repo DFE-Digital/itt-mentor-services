@@ -17,7 +17,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
       )
       when_i_click_link(
         text: "Add a partner provider",
-        href: new_placements_school_partner_provider_path(school),
+        href: placements_school_partner_providers_path(school),
       )
       then_i_am_redirected_to_add_a_partner_provider
     end
@@ -115,9 +115,9 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
         then_i_should_see_the_edit_provider_page
         when_i_choose_not_yet_known
         and_i_click_on("Continue")
-        then_i_should_see_the_provider_name_in_the_placement_details(
-          provider_name: "Not yet known",
-          change_link: "Assign a provider",
+        then_i_see_link(
+          text: "Assign a provider",
+          href: edit_provider_placements_school_placement_path(school, placement),
         )
       end
     end
@@ -153,7 +153,6 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     change_link: "Assign a provider"
   )
     within(".govuk-summary-list") do
-      expect(page).to have_content("Not yet known")
       expect(page).to have_content(change_link)
     end
   end
@@ -192,7 +191,11 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
 
   def then_i_am_redirected_to_add_a_partner_provider
     expect(page).to have_current_path(
-      new_placements_school_partner_provider_path(school), ignore_query: true
+      placements_school_partner_providers_path(school), ignore_query: true
     )
+  end
+
+  def then_i_see_link(text:, href:)
+    expect(page).to have_link(text, href:)
   end
 end
