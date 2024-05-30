@@ -8,6 +8,7 @@
       </p>
 
       <%= govuk_summary_list(
+        actions: false,
         rows: [
           { key: { text: "Service" }, value: { text: "Claims" } },
           { key: { text: "Signed in as" }, value: { text: current_user&.first_name } },

@@ -1,5 +1,5 @@
 <%# locals: (school:, placement:) -%>
-<%= govuk_summary_list do |summary_list| %>
+<%= govuk_summary_list(actions: false) do |summary_list| %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".establishment_group")) %>
     <% row.with_value(text: school.group) %>

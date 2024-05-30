@@ -1,4 +1,4 @@
-<%= govuk_summary_list(html_attributes: { id: "send-details" }) do |summary_list| %>
+<%= govuk_summary_list(html_attributes: { id: "send-details" }, actions: false) do |summary_list| %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".special_classes")) %>
     <% row.with_value(**summary_row_value(value: school.special_classes)) %>

@@ -1,4 +1,4 @@
-<%= govuk_summary_list(html_attributes: { id: "ofsted-details" }) do |summary_list| %>
+<%= govuk_summary_list(html_attributes: { id: "ofsted-details" }, actions: false) do |summary_list| %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".rating")) %>
     <% row.with_value(**summary_row_value(value: school.rating, empty_text: t(".unknown"))) %>

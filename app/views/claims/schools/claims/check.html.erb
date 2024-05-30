@@ -13,7 +13,7 @@
         <%= @claim.draft? ? t(".declaration") : t(".page_title") %>
       </label>
 
-      <%= govuk_summary_list do |summary_list| %>
+      <%= govuk_summary_list(actions: !@claim.draft?) do |summary_list| %>
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: Claims::Claim.human_attribute_name(:school)) %>
           <% row.with_value(text: @school.name) %>
@@ -54,7 +54,7 @@
 
       <h2 class="govuk-heading-m"><%= t(".hours_of_training") %></h2>
 
-      <%= govuk_summary_list do |summary_list| %>
+      <%= govuk_summary_list(actions: !@claim.draft?) do |summary_list| %>
         <% @claim.mentor_trainings.order_by_mentor_full_name.each do |mentor_training| %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: mentor_training.mentor.full_name) %>
@@ -76,7 +76,7 @@
       <% end %>
 
       <h2 class="govuk-heading-m"><%= t(".grant_funding") %></h2>
-        <%= govuk_summary_list do |summary_list| %>
+        <%= govuk_summary_list(actions: false) do |summary_list| %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".total_hours")) %>
             <% row.with_value(text: pluralize(@claim.mentor_trainings.sum(:hours_completed), t(".hour"))) %>

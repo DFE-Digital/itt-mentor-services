@@ -14,7 +14,7 @@
         <%= @placement.subject_names %>
       </h2>
 
-      <%= govuk_summary_list do |summary_list| %>
+      <%= govuk_summary_list(actions: false) do |summary_list| %>
         <% if !@school.primary_or_secondary_only? %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".attributes.placements.school_level")) %>
