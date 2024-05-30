@@ -42,7 +42,7 @@
             <% end %>
           <% end %>
 
-          <% if @school.phase == "Primary" %>
+          <% if @placement.year_group.present? %>
             <% summary_list.with_row do |row| %>
               <% row.with_key(text: t(".year_group")) %>
               <% row.with_value(text: @placement.decorate.formatted_year_group) %>
