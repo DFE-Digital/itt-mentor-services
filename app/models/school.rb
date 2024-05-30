@@ -36,7 +36,6 @@
 #  total_girls                            :integer
 #  total_pupils                           :integer
 #  town                                   :string
-#  training_with_disabilities             :string
 #  type_of_establishment                  :string
 #  ukprn                                  :string
 #  urban_or_rural                         :string
