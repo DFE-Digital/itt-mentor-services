@@ -46,15 +46,30 @@ RSpec.describe PlacementDecorator do
     end
 
     context "when the placement has a subject with children" do
-      it "returns a list of subject names in alphabetical order" do
-        subject = build(:subject, name: "Modern Foreign Languages")
-        placement = create(:placement, subject:, additional_subjects: [
-          build(:subject, name: "French", parent_subject: subject),
-          build(:subject, name: "German", parent_subject: subject),
-          build(:subject, name: "Spanish", parent_subject: subject),
-        ])
+      context "when the placement has been created" do
+        it "returns a list of subject names in alphabetical order" do
+          subject = build(:subject, name: "Modern Foreign Languages")
+          placement = create(:placement, subject:, additional_subjects: [
+            build(:subject, name: "French", parent_subject: subject),
+            build(:subject, name: "German", parent_subject: subject),
+            build(:subject, name: "Spanish", parent_subject: subject),
+          ])
 
-        expect(placement.decorate.subject_name).to eq("French, German, and Spanish")
+          expect(placement.decorate.subject_name).to eq("French, German, and Spanish")
+        end
+      end
+
+      context "when the placement has been built" do
+        it "returns a list of subject names in alphabetical order" do
+          subject = build(:subject, name: "Modern Foreign Languages")
+          placement = build(:placement, subject:, additional_subjects: [
+            build(:subject, name: "French", parent_subject: subject),
+            build(:subject, name: "German", parent_subject: subject),
+            build(:subject, name: "Spanish", parent_subject: subject),
+          ])
+
+          expect(placement.decorate.subject_name).to eq("French, German, and Spanish")
+        end
       end
     end
   end
