@@ -33,19 +33,19 @@
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".school_capacity")) %>
-    <% row.with_value(**summary_row_value(value: school.school_capacity)) %>
+    <% row.with_value(**summary_row_value(value: number_with_delimiter(school.school_capacity))) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".total_pupils")) %>
-    <% row.with_value(**summary_row_value(value: school.total_pupils)) %>
+    <% row.with_value(**summary_row_value(value: number_with_delimiter(school.total_pupils))) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".total_boys")) %>
-    <% row.with_value(**summary_row_value(value: school.total_boys)) %>
+    <% row.with_value(**summary_row_value(value: number_with_delimiter(school.total_boys))) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".total_girls")) %>
-    <% row.with_value(**summary_row_value(value: school.total_girls)) %>
+    <% row.with_value(**summary_row_value(value: number_with_delimiter(school.total_girls))) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".percentage_free_school_meals")) %>
