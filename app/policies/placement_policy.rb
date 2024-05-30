@@ -5,6 +5,7 @@ class PlacementPolicy < ApplicationPolicy
   alias_method :add_phase?, :new?
   alias_method :add_subject?, :new?
   alias_method :add_additional_subjects?, :new?
+  alias_method :add_year_group?, :new?
   alias_method :add_mentors?, :new?
   alias_method :check_your_answers?, :new?
 
