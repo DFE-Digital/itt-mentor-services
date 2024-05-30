@@ -12,7 +12,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <span class="govuk-caption-l"><%= t(".add_placement") %></span>
-        <%= f.govuk_collection_radio_buttons :year_group, @year_groups, :value, :name, :description, legend: { size: "l", text: t(".year_group") } %>
+        <%= f.govuk_collection_radio_buttons :year_group, @year_groups_for_select, :value, :name, :description, legend: { size: "l", text: t(".year_group") } %>
 
         <%= f.govuk_submit t(".continue") %>
       </div>
