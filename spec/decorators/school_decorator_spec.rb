@@ -53,4 +53,20 @@ RSpec.describe SchoolDecorator do
       expect(school.decorate.age_range).to eq("4 to 11")
     end
   end
+
+  describe "#percentage_free_school_meals_percentage" do
+    it "returns the percentage of free school meals" do
+      school = build(:school, percentage_free_school_meals: 20)
+
+      expect(school.decorate.percentage_free_school_meals_percentage).to eq("20%")
+    end
+
+    context "when the percentage is nil" do
+      it "returns nil" do
+        school = build(:school, percentage_free_school_meals: nil)
+
+        expect(school.decorate.percentage_free_school_meals_percentage).to eq(nil)
+      end
+    end
+  end
 end
