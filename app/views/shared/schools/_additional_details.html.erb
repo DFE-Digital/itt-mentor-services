@@ -12,12 +12,8 @@
     <% row.with_value(**summary_row_value(value: school.gender)) %>
   <% end %>
   <% summary_list.with_row do |row| %>
-    <% row.with_key(text: t(".minimum_age")) %>
-    <% row.with_value(**summary_row_value(value: school.minimum_age)) %>
-  <% end %>
-  <% summary_list.with_row do |row| %>
-    <% row.with_key(text: t(".maximum_age")) %>
-    <% row.with_value(**summary_row_value(value: school.maximum_age)) %>
+    <% row.with_key(text: t(".age_range")) %>
+    <% row.with_value(**summary_row_value(value: school.age_range)) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".religious_character")) %>
