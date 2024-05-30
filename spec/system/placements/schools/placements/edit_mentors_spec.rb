@@ -171,6 +171,16 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
     end
   end
 
+  context "when I tamper with the form URL", js: true do
+    scenario "I see an error message" do
+      when_i_visit_the_placement_show_page
+      when_i_click_on_change
+      then_i_tamper_with_the_form_url
+      and_i_click_on("Continue")
+      then_i_should_see_the_placement_show_page_with_notice
+    end
+  end
+
   private
 
   def and_there_is_an_existing_user_for(user_name)
@@ -258,6 +268,15 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
   end
   def when_i_uncheck(text)
     uncheck(text)
+  end
+
+  def then_i_tamper_with_the_form_url
+    page.execute_script("document.querySelector('form').action = '/schools/#{school.id}/placements/#{placement.id}?edit_path=fake_path'")
+  end
+
+  def then_i_should_see_the_placement_show_page_with_notice
+    expect(page).to have_current_path(placements_school_placement_path(school, placement))
+    expect(page).to have_content("Sorry, there’s a problem with the service")
   end
 
   alias_method :and_i_click_on, :when_i_click_on
