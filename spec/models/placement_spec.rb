@@ -140,7 +140,7 @@ RSpec.describe Placement, type: :model do
 
       placement = create(:placement, subject:, additional_subjects:)
 
-      expect(placement.becomes(Placements::Schools::Placements::Build::Placement).additional_subject_names).to eq(%w[French Spanish])
+      expect(placement.additional_subject_names).to eq(%w[French Spanish])
     end
   end
 end

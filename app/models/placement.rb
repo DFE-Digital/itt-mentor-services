@@ -64,4 +64,8 @@ class Placement < ApplicationRecord
 
     update!(subject: subjects.last)
   end
+
+  def additional_subject_names
+    additional_subjects.map(&:name).sort
+  end
 end

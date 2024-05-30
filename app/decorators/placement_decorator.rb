@@ -12,7 +12,7 @@ class PlacementDecorator < Draper::Decorator
 
   def subject_name
     if additional_subjects.exists?
-      additional_subjects.pluck(:name).sort.to_sentence
+      additional_subject_names.to_sentence
     elsif subject.present?
       subject.name
     else
