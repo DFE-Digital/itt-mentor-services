@@ -66,7 +66,7 @@ export default class extends Controller {
       let attributesString = '';
 
       for (let i = 0; i < attributesValue.length; i++) {
-        let attribute = attributesValue[i];
+        const attribute = attributesValue[i];
          if (result[attribute] !== null && result[attribute] !== undefined) {
            attributesString += `${result[attribute]}`;
            if (i < attributesValue.length - 1) {
