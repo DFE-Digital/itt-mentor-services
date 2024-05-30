@@ -65,7 +65,6 @@ export default class extends Controller {
       const attributesValue = this.returnAttributesValue
       let attributesString = '';
 
-
       for (let i = 0; i < attributesValue.length; i++) {
         let attribute = attributesValue[i];
          if (result[attribute] !== null && result[attribute] !== undefined) {
