@@ -46,6 +46,12 @@
             <% end %>
           <% end %>
         <% end %>
+        <% if @placement.year_group.present? %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".attributes.placements.year_group")) %>
+            <% row.with_value(text: @placement.formatted_year_group) %>
+          <% end %>
+        <% end %>
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t(".attributes.placements.mentor")) %>
           <% row.with_value do %>

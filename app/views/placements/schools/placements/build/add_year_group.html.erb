@@ -1,0 +1,25 @@
+<% content_for :page_title, @placement.errors.any? ? t(".title_with_error") : t(".title") %>
+<%= render "placements/schools/primary_navigation", school: @school, current_navigation: :placements %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: :back) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <%= form_for(@placement, url: placements_school_placement_build_path(@school, id: :add_year_group), method: :put) do |f| %>
+    <%= f.govuk_error_summary %>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l"><%= t(".add_placement") %></span>
+        <%= f.govuk_collection_radio_buttons :year_group, @year_groups, :value, :name, :description, legend: { size: "l", text: t(".year_group") } %>
+
+        <%= f.govuk_submit t(".continue") %>
+      </div>
+    </div>
+  <% end %>
+
+  <p class="govuk-body">
+    <%= govuk_link_to(t(".cancel"), placements_school_placements_path(@school), no_visited_state: true) %>
+  </p>
+</div>
