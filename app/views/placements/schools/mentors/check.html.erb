@@ -47,6 +47,18 @@
                                }) %>
           <% end %>
         <% end %>
+
+        <p class="govuk-inset-text">
+          <!-- TODO: Replace hardcoded URL with path when available -->
+          <%= embedded_link_text(
+            t(".confirm_mentor_informed",
+              mentor_name: @mentor_form.mentor.full_name,
+              link: govuk_link_to(
+                t(".privacy_notice"), "/privacy", no_visited_state: true
+              )),
+          ) %>
+        </p>
+
         <%= f.govuk_submit t(".add_mentor") %>
         <p class="govuk-body">
           <%= govuk_link_to(t(".cancel"), placements_school_mentors_path(@school), no_visited_state: true) %>
