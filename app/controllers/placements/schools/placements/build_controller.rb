@@ -29,9 +29,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
 
   def add_year_group
     @placement = build_placement
-    @year_groups = Placements::Schools::Placements::Build::Placement.year_groups.map do |value, name|
-      OpenStruct.new value:, name:, description: t("placements.schools.placements.year_groups.#{value}_description")
-    end
+    year_groups_for_select
     @placement.year_group = session.dig(:add_a_placement, "year_group")
   end
 
@@ -118,9 +116,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
       if @placement.valid_year_group?
         session[:add_a_placement][:year_group] = year_group
       else
-        @year_groups = Placements::Schools::Placements::Build::Placement.year_groups.map do |value, name|
-          OpenStruct.new value:, name:, description: t("placements.schools.placements.year_groups.#{value}_description")
-        end
+        year_groups_for_select
         render :add_year_group and return
       end
     when :add_mentors
@@ -229,6 +225,12 @@ class Placements::Schools::Placements::BuildController < ApplicationController
 
   def skipped_steps
     session.dig(:add_a_placement, "skipped_steps") || []
+  end
+
+  def year_groups_for_select
+    @year_groups_for_select ||= Placements::Schools::Placements::Build::Placement.year_groups.map do |value, name|
+      OpenStruct.new value:, name:, description: t("placements.schools.placements.year_groups.#{value}_description")
+    end
   end
 
   def additional_subject_ids
