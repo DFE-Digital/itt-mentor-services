@@ -7,8 +7,4 @@
     <% row.with_key(text: t("claims.schools.show.send_provision")) %>
     <% row.with_value(**summary_row_value(value: @school.send_provision)) %>
   <% end %>
-  <% summary_list.with_row do |row| %>
-    <% row.with_key(text: t("claims.schools.show.training_with_disabilities")) %>
-    <% row.with_value(**summary_row_value(value: @school.training_with_disabilities)) %>
-  <% end %>
 <% end %>

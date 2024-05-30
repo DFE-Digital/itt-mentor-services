@@ -92,7 +92,6 @@ RSpec.describe "Placements / Organisations / Support user views a School", type:
     within("#send-details") do
       expect(page).to have_content "Special classes"
       expect(page).to have_content "SEND provision"
-      expect(page).to have_content "Training with disabilities"
     end
 
     within("#ofsted-details") do
