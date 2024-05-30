@@ -123,7 +123,6 @@ shared:
     - percentage_free_school_meals
     - special_classes
     - send_provision
-    - training_with_disabilities
     - rating
     - last_inspection_date
     - email_address
