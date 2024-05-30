@@ -87,4 +87,8 @@ class Placements::Schools::Placements::Build::Placement < Placement
     phase.presence ||
       (school.primary_or_secondary_only? ? school.phase : "Primary")
   end
+
+  def additional_subject_names
+    additional_subjects.map(&:name)
+  end
 end
