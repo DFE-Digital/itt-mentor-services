@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_20_143732) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_30_141427) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -323,7 +323,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_20_143732) do
     t.integer "percentage_free_school_meals"
     t.string "special_classes"
     t.string "send_provision"
-    t.string "training_with_disabilities"
     t.string "rating"
     t.date "last_inspection_date"
     t.string "email_address"
