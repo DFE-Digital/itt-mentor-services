@@ -162,6 +162,7 @@ shared:
     - created_at
     - updated_at
     - provider_id
+    - year_group
   :school_contacts:
     - id
     - name
