@@ -62,7 +62,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
         @placement.additional_subject_ids = additional_subject_ids
         @placement.build_additional_subjects(additional_subject_ids)
       end
-      @placement.year_group = session.dig(:add_a_placement, "year_group") if school.phase == "Primary"
+      @placement.year_group = session.dig(:add_a_placement, "year_group") if @placement.phase == "Primary"
       @placement.build_mentors(mentor_ids)
       @placement.save!
 
