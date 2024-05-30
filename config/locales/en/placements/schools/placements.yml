@@ -14,6 +14,8 @@ en:
               invalid: Select an additional subject
             provider_id:
               invalid: Select a provider
+            year_group:
+              invalid: Select a year group
   placements:
     schools:
       placements:
@@ -25,6 +27,14 @@ en:
             phase: Phase
             primary: Primary
             secondary: Secondary
+            continue: Continue
+            cancel: Cancel
+          add_year_group:
+            title: Year group - Add placement
+            title_with_error: "Error: Year group - Add placement"
+            add_placement: Add placement
+            year_group: Year group
+            primary: Primary
             continue: Continue
             cancel: Cancel
           add_subject:
@@ -63,6 +73,8 @@ en:
             additional_subjects: Additional subjects
             add_additional_subjects: Add additional subjects
             mentor: Mentor
+            year_group: Year group
+            add_year_group: Add year group
             add_mentors: Add mentors
             change: Change
             info_text: When a placement is published, it will be visible to accredited providers and lead partners.
@@ -99,6 +111,19 @@ en:
           spring: Spring
           summer: Summer
         not_yet_known: Not yet known
+        year_groups:
+          year_1: Year 1
+          year_1_description: 5 to 6 years
+          year_2: Year 2
+          year_2_description: 6 to 7 years
+          year_3: Year 3
+          year_3_description: 7 to 8 years
+          year_4: Year 4
+          year_4_description: 8 to 9 years
+          year_5: Year 5
+          year_5_description: 9 to 10 years
+          year_6: Year 6
+          year_6_description: 10 to 11 years
         available: Available
         unavailable: Unavailable
         index:
@@ -119,6 +144,7 @@ en:
               school_level: School level
               subject: Subject
               additional_subjects: Additional subjects
+              year_group: Year group
               mentor: Mentor
               status: Status
               provider: Provider
