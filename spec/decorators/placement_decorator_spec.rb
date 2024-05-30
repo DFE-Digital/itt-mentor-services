@@ -45,7 +45,7 @@ RSpec.describe PlacementDecorator do
 
   describe "#title" do
     context "when the placement has a subject without children" do
-      it "returns a list of subject names" do
+      it "returns a the subject name" do
         placement = create(:placement, subject: build(:subject, name: "Maths"))
 
         expect(placement.decorate.title).to eq("Maths")
@@ -62,6 +62,14 @@ RSpec.describe PlacementDecorator do
         ])
 
         expect(placement.decorate.title).to eq("French, German, and Spanish")
+      end
+    end
+
+    context "when the placement has no subject" do
+      it "returns Not yet known" do
+        placement = build(:placement, subject: nil)
+
+        expect(placement.decorate.subject_name).to eq("Not yet known")
       end
     end
   end
