@@ -33,7 +33,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   end
 
   def check_your_answers
-    @placement = initialize_placement
+    @placement = initialize_placement.decorate
     @phase = session.dig(:add_a_placement, "phase")
     @selected_subject = Subject.find(session.dig(:add_a_placement, "subject_id"))
     @selected_additional_subjects = @selected_subject.child_subjects.where(id: additional_subject_ids)
