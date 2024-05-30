@@ -110,6 +110,7 @@ scope module: :placements,
           resources :build do
             collection do
               get :add_phase
+              get :add_year_group
               get :add_subject
               get :add_additional_subjects
               get :add_mentors
