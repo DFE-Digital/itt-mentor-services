@@ -20,6 +20,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_30_141427) do
   create_enum "claim_status", ["internal_draft", "draft", "submitted"]
   create_enum "mentor_training_type", ["refresher", "initial"]
   create_enum "placement_status", ["draft", "published"]
+  create_enum "placement_year_group", ["year_1", "year_2", "year_3", "year_4", "year_5", "year_6"]
   create_enum "provider_type", ["scitt", "lead_school", "university"]
   create_enum "service", ["claims", "placements"]
   create_enum "subject_area", ["primary", "secondary"]
@@ -245,6 +246,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_30_141427) do
     t.datetime "updated_at", null: false
     t.uuid "provider_id"
     t.uuid "subject_id"
+    t.enum "year_group", enum_type: "placement_year_group"
     t.index ["provider_id"], name: "index_placements_on_provider_id"
     t.index ["school_id"], name: "index_placements_on_school_id"
     t.index ["subject_id"], name: "index_placements_on_subject_id"
