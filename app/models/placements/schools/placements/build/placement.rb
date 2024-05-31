@@ -24,8 +24,6 @@
 class Placements::Schools::Placements::Build::Placement < Placement
   validates :school, presence: true
 
-  delegate :has_child_subjects?, to: :subject, allow_nil: true, prefix: true
-
   attr_accessor :phase, :mentor_ids, :additional_subject_ids
 
   def valid_phase?

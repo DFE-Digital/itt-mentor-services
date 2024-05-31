@@ -26,10 +26,6 @@ require "rails_helper"
 RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model do
   let!(:school) { create(:placements_school) }
 
-  describe "delegations" do
-    it { is_expected.to delegate_method(:has_child_subjects?).to(:subject).with_prefix(true).allow_nil }
-  end
-
   describe "#valid_phase?" do
     it "returns false if phase is blank" do
       placement = described_class.new(phase: nil)
