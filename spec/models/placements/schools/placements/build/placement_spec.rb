@@ -222,16 +222,4 @@ RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model d
       end
     end
   end
-
-  describe "#additional_subject_names" do
-    it "returns the names of additional subjects" do
-      subject = build(:subject, name: "Modern foreign languages")
-      additional_subjects = [build(:subject, name: "French", parent_subject: subject),
-                             build(:subject, name: "Spanish", parent_subject: subject)]
-
-      placement = create(:placement, subject:, additional_subjects:)
-
-      expect(placement.additional_subject_names).to eq(%w[French Spanish])
-    end
-  end
 end

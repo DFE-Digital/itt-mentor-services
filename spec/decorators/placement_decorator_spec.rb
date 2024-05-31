@@ -1,6 +1,13 @@
 require "rails_helper"
 
 RSpec.describe PlacementDecorator do
+  describe "#subject_name" do
+    it "returns the name of the subject" do
+      placement = build(:placement, subject: build(:subject, name: "Maths"))
+      expect(placement.decorate.subject_name).to eq("Maths")
+    end
+  end
+
   describe "#mentor_names" do
     context "when the placement has no mentors" do
       it "returns Not yet known" do
@@ -36,7 +43,7 @@ RSpec.describe PlacementDecorator do
     end
   end
 
-  describe "#subject_names" do
+  describe "#title" do
     context "when the placement has a subject without children" do
       it "returns a list of subject names" do
         placement = create(:placement, subject: build(:subject, name: "Maths"))
@@ -82,6 +89,18 @@ RSpec.describe PlacementDecorator do
 
         expect(placement.decorate.provider_name).to eq("Provider 1")
       end
+    end
+  end
+
+  describe "#additional_subject_names" do
+    it "returns the names of additional subjects" do
+      subject = build(:subject, name: "Modern foreign languages")
+      additional_subjects = [build(:subject, name: "French", parent_subject: subject),
+                             build(:subject, name: "Spanish", parent_subject: subject)]
+
+      placement = create(:placement, subject:, additional_subjects:)
+
+      expect(placement.decorate.additional_subject_names).to eq(%w[French Spanish])
     end
   end
 end

@@ -2,6 +2,8 @@ class PlacementDecorator < Draper::Decorator
   delegate_all
   decorates_association :school
 
+  delegate :name, to: :subject, prefix: true, allow_nil: true
+
   def mentor_names
     if mentors.any?
       mentors.map(&:full_name).sort.to_sentence
@@ -13,10 +15,8 @@ class PlacementDecorator < Draper::Decorator
   def title
     if additional_subjects.present?
       additional_subject_names.to_sentence
-    elsif subject.present?
-      subject.name
     else
-      I18n.t("placements.schools.placements.not_yet_known")
+      subject_name
     end
   end
 
@@ -26,5 +26,9 @@ class PlacementDecorator < Draper::Decorator
 
   def provider_name
     provider&.name || I18n.t("placements.schools.placements.not_yet_known")
+  end
+
+  def additional_subject_names
+    additional_subjects.map(&:name).sort
   end
 end

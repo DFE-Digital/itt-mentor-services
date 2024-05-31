@@ -44,7 +44,6 @@ class Placement < ApplicationRecord
 
   delegate :name, to: :provider, prefix: true, allow_nil: true
   delegate :has_child_subjects?, to: :subject, allow_nil: true, prefix: true
-  delegate :name, to: :subject, prefix: true, allow_nil: true
 
   scope :order_by_subject_school_name, -> { includes(:subjects, :school).order("subjects.name", "schools.name") }
 
@@ -64,9 +63,5 @@ class Placement < ApplicationRecord
     return if subjects.blank?
 
     update!(subject: subjects.last)
-  end
-
-  def additional_subject_names
-    additional_subjects.order(:name).pluck(:name)
   end
 end

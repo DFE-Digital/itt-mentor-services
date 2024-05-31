@@ -47,7 +47,6 @@ RSpec.describe Placement, type: :model do
   describe "delegations" do
     it { is_expected.to delegate_method(:name).to(:provider).with_prefix(true).allow_nil }
     it { is_expected.to delegate_method(:has_child_subjects?).to(:subject).with_prefix(true).allow_nil }
-    it { is_expected.to delegate_method(:name).to(:subject).with_prefix(true).allow_nil }
   end
 
   describe "scopes" do
@@ -130,18 +129,6 @@ RSpec.describe Placement, type: :model do
           expect(placement.subject).to eq(a_subject)
         end
       end
-    end
-  end
-
-  describe "#additional_subject_names" do
-    it "returns the names of additional subjects" do
-      subject = build(:subject, name: "Modern foreign languages")
-      additional_subjects = [build(:subject, name: "French", parent_subject: subject),
-                             build(:subject, name: "Spanish", parent_subject: subject)]
-
-      placement = create(:placement, subject:, additional_subjects:)
-
-      expect(placement.additional_subject_names).to eq(%w[French Spanish])
     end
   end
 end
