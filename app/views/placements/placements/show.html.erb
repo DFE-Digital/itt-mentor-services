@@ -1,4 +1,4 @@
-<% content_for(:page_title) { t(".page_title", school_name: @school.name, subject_name: @placement.subject_name) } %>
+<% content_for(:page_title) { t(".page_title", school_name: @school.name, subject_name: @placement.title) } %>
 <%= render "placements/providers/primary_navigation", provider: @provider, current_navigation: :placements %>
 
 <%= content_for(:before_content) do %>
@@ -8,7 +8,7 @@
 <div class="govuk-width-container">
   <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
     <span class="govuk-caption-l"><%= t(".placement", school_name: @school.name) %></span>
-    <%= @placement.subject_name %>
+    <%= @placement.title %>
   </h1>
   <div class="govuk-!-margin-top-0 govuk-!-margin-bottom-6">
       <%= render Placement::StatusTagComponent.new(placement: @placement) %>

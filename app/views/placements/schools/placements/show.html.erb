@@ -1,4 +1,4 @@
-<%= content_for :page_title, sanitize(@placement.subject_name) %>
+<%= content_for :page_title, sanitize(@placement.title) %>
 
 <%= render "placements/schools/primary_navigation", school: @school, current_navigation: :placements %>
 
@@ -10,7 +10,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h2 class="govuk-heading-l govuk-!-margin-bottom-2">
-        <%= @placement.subject_name %>
+        <%= @placement.title %>
       </h2>
 
       <div class="govuk-!-margin-top-0 govuk-!-margin-bottom-6">
@@ -27,14 +27,14 @@
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t(".attributes.placements.subject")) %>
           <% row.with_value do %>
-              <% @placement.subject&.name %>
+              <% @placement.subject_name %>
           <% end %>
         <% end %>
         <% if @placement.subject_has_child_subjects? %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".attributes.placements.additional_subjects")) %>
             <% row.with_value do %>
-              <% @placement.subject_name %>
+              <% @placement.additional_subject_names %>
             <% end %>
           <% end %>
         <% end %>
