@@ -1,0 +1,10 @@
+en:
+  shared:
+    schools:
+      mentors:
+        can_not_remove:
+          title: You can not remove this mentor
+          description: |
+            %{mentor_name} cannot be removed from your organisation because they are assigned to placements.
+
+            To remove %{mentor_name} as a mentor you must remove them from any current placements.
