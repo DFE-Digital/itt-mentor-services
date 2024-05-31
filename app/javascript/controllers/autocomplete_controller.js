@@ -61,21 +61,12 @@ export default class extends Controller {
 
   resultTemplate(result) {
     if (result && typeof result === "object") {
-      const returnString = `${result.name}`;
-      const attributesValue = this.returnAttributesValue
-      let attributesString = '';
+      const attributes = this.returnAttributesValue
+        .map((attribute) => result[attribute])
+        .filter((attribute) => !!attribute)
+        .join(", ");
 
-      for (let i = 0; i < attributesValue.length; i++) {
-        const attribute = attributesValue[i];
-         if (result[attribute] !== null && result[attribute] !== undefined) {
-           attributesString += `${result[attribute]}`;
-           if (i < attributesValue.length - 1) {
-             attributesString += ", ";
-           }
-         }
-      }
-
-      return returnString.concat(` (${attributesString.trim()})`)
+      return `${result.name} (${attributes})`;
     } else {
       return ""
     }
