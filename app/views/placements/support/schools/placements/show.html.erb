@@ -15,7 +15,7 @@
       </h2>
 
       <%= govuk_summary_list(actions: false) do |summary_list| %>
-        <% if !@school.primary_or_secondary_only? %>
+        <% unless @school.primary_or_secondary_only? %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".attributes.placements.school_level")) %>
             <% row.with_value(text: @placement.school_level) %>
@@ -24,22 +24,14 @@
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t(".attributes.placements.subject")) %>
           <% row.with_value do %>
-            <% @placement.subject.name %>
+            <% @placement.subject_name %>
           <% end %>
         <% end %>
         <% if @placement.subject_has_child_subjects? %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".attributes.placements.additional_subjects")) %>
             <% row.with_value do %>
-              <% @placement.subject.name %>
-          <% end %>
-        <% end %>
-        <% if @placement.subject_has_child_subjects? %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(text: t(".attributes.placements.additional_subjects")) %>
-            <% row.with_value do %>
-              <% @placement.title %>
-            <% end %>
+              <% @placement.additional_subject_names %>
             <% end %>
           <% end %>
         <% end %>
@@ -60,8 +52,8 @@
       <% end %>
 
       <%= govuk_link_to t(".remove_placement"),
-            remove_placements_support_school_placement_path(@school, @placement),
-            class: "app-link app-link--destructive" %>
+                        remove_placements_support_school_placement_path(@school, @placement),
+                        class: "app-link app-link--destructive" %>
 
     </div>
   </div>
