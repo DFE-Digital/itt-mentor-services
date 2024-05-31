@@ -27,17 +27,6 @@ class Placements::Schools::Placements::Build::Placement < Placement
 
   attr_accessor :phase, :mentor_ids, :additional_subject_ids
 
-  def self.year_groups
-    [
-      [:year_1, "Year 1"],
-      [:year_2, "Year 2"],
-      [:year_3, "Year 3"],
-      [:year_4, "Year 4"],
-      [:year_5, "Year 5"],
-      [:year_6, "Year 6"],
-    ]
-  end
-
   def valid_phase?
     return true if [Placements::School::PRIMARY_PHASE, Placements::School::SECONDARY_PHASE].include?(phase)
 
