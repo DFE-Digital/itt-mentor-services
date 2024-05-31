@@ -41,6 +41,15 @@ class Placement < ApplicationRecord
   accepts_nested_attributes_for :mentors, allow_destroy: true
   accepts_nested_attributes_for :subjects, allow_destroy: true
 
+  enum :year_group, {
+    year_1: "year_1",
+    year_2: "year_2",
+    year_3: "year_3",
+    year_4: "year_4",
+    year_5: "year_5",
+    year_6: "year_6",
+  }, validate: { allow_nil: true }
+
   validates :school, presence: true
 
   delegate :name, to: :provider, prefix: true, allow_nil: true
