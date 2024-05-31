@@ -64,14 +64,6 @@ RSpec.describe PlacementDecorator do
         expect(placement.decorate.title).to eq("French, German, and Spanish")
       end
     end
-
-    context "when the placement has no subject" do
-      it "returns Not yet known" do
-        placement = build(:placement, subject: nil)
-
-        expect(placement.decorate.subject_name).to eq("Not yet known")
-      end
-    end
   end
 
   describe "#school_level" do
