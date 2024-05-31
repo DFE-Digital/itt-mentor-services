@@ -20,4 +20,10 @@ class Placements::Support::Schools::PartnerProvidersController < Placements::Sch
       partnership: { search_param: },
     )
   end
+
+  def back_link
+    @back_link ||= new_placements_support_school_partner_provider_path(
+      partnership_form.as_form_params,
+    )
+  end
 end

@@ -22,6 +22,7 @@ class Placements::Providers::PartnerSchoolsController < ApplicationController
   def check
     if partnership_form.valid?
       partner_school
+      back_link
     else
       render :new
     end
@@ -135,5 +136,11 @@ class Placements::Providers::PartnerSchoolsController < ApplicationController
 
   def redirect_to_index_path
     redirect_to placements_provider_partner_schools_path(@provider)
+  end
+
+  def back_link
+    @back_link ||= new_placements_provider_partner_school_path(
+      partnership_form.as_form_params,
+    )
   end
 end
