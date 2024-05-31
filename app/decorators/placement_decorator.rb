@@ -1,6 +1,4 @@
 class PlacementDecorator < Draper::Decorator
-  include ActionView::Helpers::TextHelper
-
   delegate_all
   decorates_association :school
 
