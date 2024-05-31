@@ -41,35 +41,20 @@ RSpec.describe PlacementDecorator do
       it "returns a list of subject names" do
         placement = create(:placement, subject: build(:subject, name: "Maths"))
 
-        expect(placement.decorate.subject_name).to eq("Maths")
+        expect(placement.decorate.title).to eq("Maths")
       end
     end
 
     context "when the placement has a subject with children" do
-      context "when the placement has been created" do
-        it "returns a list of subject names in alphabetical order" do
-          subject = build(:subject, name: "Modern Foreign Languages")
-          placement = create(:placement, subject:, additional_subjects: [
-            build(:subject, name: "French", parent_subject: subject),
-            build(:subject, name: "German", parent_subject: subject),
-            build(:subject, name: "Spanish", parent_subject: subject),
-          ])
+      it "returns a list of subject names in alphabetical order" do
+        subject = build(:subject, name: "Modern Foreign Languages")
+        placement = create(:placement, subject:, additional_subjects: [
+          build(:subject, name: "French", parent_subject: subject),
+          build(:subject, name: "German", parent_subject: subject),
+          build(:subject, name: "Spanish", parent_subject: subject),
+        ])
 
-          expect(placement.decorate.subject_name).to eq("French, German, and Spanish")
-        end
-      end
-
-      context "when the placement has been built" do
-        it "returns a list of subject names in alphabetical order" do
-          subject = build(:subject, name: "Modern Foreign Languages")
-          placement = build(:placement, subject:, additional_subjects: [
-            build(:subject, name: "French", parent_subject: subject),
-            build(:subject, name: "German", parent_subject: subject),
-            build(:subject, name: "Spanish", parent_subject: subject),
-          ])
-
-          expect(placement.decorate.subject_name).to eq("French, German, and Spanish")
-        end
+        expect(placement.decorate.title).to eq("French, German, and Spanish")
       end
     end
   end

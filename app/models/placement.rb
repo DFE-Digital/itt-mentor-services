@@ -44,6 +44,7 @@ class Placement < ApplicationRecord
 
   delegate :name, to: :provider, prefix: true, allow_nil: true
   delegate :has_child_subjects?, to: :subject, allow_nil: true, prefix: true
+  delegate :name, to: :subject, prefix: true, allow_nil: true
 
   scope :order_by_subject_school_name, -> { includes(:subjects, :school).order("subjects.name", "schools.name") }
 
