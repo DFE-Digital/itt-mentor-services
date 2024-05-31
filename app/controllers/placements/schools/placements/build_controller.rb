@@ -73,7 +73,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
       @placement.phase = phase_params
 
       if @placement.valid_phase?
-        session[:add_a_placement]["skipped_steps"] << "add_year_group" if @placement.phase != "Primary"
+        session[:add_a_placement]["skipped_steps"] << "add_year_group" unless @placement.phase == "Primary"
         session[:add_a_placement][:phase] = phase_params
       else
         render :add_phase and return
@@ -220,7 +220,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   def setup_skipped_steps
     session[:add_a_placement][:skipped_steps] = []
     session[:add_a_placement][:skipped_steps] << "add_mentors" unless school.mentors.exists?
-    session[:add_a_placement][:skipped_steps] << "add_year_group" unless placement.phase == "Primary"
+    session[:add_a_placement][:skipped_steps] << "add_year_group" if school.phase == "Secondary"
   end
 
   def skipped_steps
