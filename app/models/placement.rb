@@ -66,6 +66,6 @@ class Placement < ApplicationRecord
   end
 
   def additional_subject_names
-    additional_subjects.map(&:name).sort
+    additional_subjects.order(:name).pluck(:name)
   end
 end
