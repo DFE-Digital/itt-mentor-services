@@ -17,7 +17,7 @@ class Mentor < ApplicationRecord
   has_many :mentor_memberships
   has_many :schools, through: :mentor_memberships
 
-  has_many :placement_mentor_joins, dependent: :destroy
+  has_many :placement_mentor_joins, dependent: :restrict_with_error
   has_many :placements, through: :placement_mentor_joins
 
   validates :first_name, :last_name, presence: true

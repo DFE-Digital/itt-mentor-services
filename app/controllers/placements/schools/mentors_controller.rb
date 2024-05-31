@@ -1,6 +1,7 @@
 class Placements::Schools::MentorsController < ApplicationController
   before_action :set_school
   before_action :set_mentor, only: %i[show remove destroy]
+  before_action :set_mentor_membership, only: %i[remove destroy]
 
   def index
     @pagy, @mentors = pagy(@school.mentors.order_by_full_name)
@@ -11,8 +12,8 @@ class Placements::Schools::MentorsController < ApplicationController
   def remove; end
 
   def destroy
-    mentor_membership = @mentor.mentor_memberships.find_by(school: @school)
-    mentor_membership.destroy!
+    authorize @mentor_membership
+    @mentor_membership.destroy!
 
     redirect_to placements_school_mentors_path(@school)
     flash[:success] = t(".mentor_removed")
@@ -61,5 +62,9 @@ class Placements::Schools::MentorsController < ApplicationController
 
   def set_mentor
     @mentor = @school.mentors.find(params.require(:id))
+  end
+
+  def set_mentor_membership
+    @mentor_membership = @mentor.mentor_memberships.find_by(school: @school)
   end
 end

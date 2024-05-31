@@ -19,17 +19,29 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User removes a
     given_i_sign_in_as_colin
   end
 
-  scenario "Support User removes a mentor from a school" do
-    when_i_visit_the_support_show_page_for(school, mentor_1)
-    and_i_click_on("Remove mentor")
-    then_i_am_asked_to_confirm(school, mentor_1)
-    when_i_click_on("Cancel")
-    then_i_return_to_mentor_page(school, mentor_1)
-    when_i_click_on("Remove mentor")
-    then_i_am_asked_to_confirm(school, mentor_1)
-    when_i_click_on("Remove mentor")
-    then_the_mentor_is_removed_from_the_school(school, mentor_1)
-    and_a_school_mentor_remains_called("Agatha Christie")
+  context "when the mentor has no placements" do
+    scenario "Support User removes a mentor from a school" do
+      when_i_visit_the_support_show_page_for(school, mentor_1)
+      and_i_click_on("Remove mentor")
+      then_i_am_asked_to_confirm(school, mentor_1)
+      when_i_click_on("Cancel")
+      then_i_return_to_mentor_page(school, mentor_1)
+      when_i_click_on("Remove mentor")
+      then_i_am_asked_to_confirm(school, mentor_1)
+      when_i_click_on("Remove mentor")
+      then_the_mentor_is_removed_from_the_school(school, mentor_1)
+      and_a_school_mentor_remains_called("Agatha Christie")
+    end
+  end
+
+  context "when the mentor has placements" do
+    before { create(:placement, mentors: [mentor_1], school:) }
+
+    scenario "Suppoer User can not remove the mentor from the school" do
+      when_i_visit_the_support_show_page_for(school, mentor_1)
+      and_i_click_on("Remove mentor")
+      then_i_see_i_cannot_remove_the_mentor("John Doe")
+    end
   end
 
   private
@@ -113,5 +125,10 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User removes a
 
   def and_a_school_mentor_remains_called(mentor_name)
     expect(page).to have_content(mentor_name)
+  end
+
+  def then_i_see_i_cannot_remove_the_mentor(mentor_name)
+    expect(page).to have_content(mentor_name)
+    expect(page).to have_content("You can not remove this mentor")
   end
 end

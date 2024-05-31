@@ -1,0 +1,9 @@
+<%# locals: (mentor:) -%>
+<label class="govuk-label govuk-label--l">
+  <span class="govuk-caption-l"><%= mentor.full_name %></span>
+  <%= t(".title") %>
+</label>
+
+<p class="govuk-body">
+  <%= simple_format(t(".description", mentor_name: mentor.full_name)) %>
+</p>

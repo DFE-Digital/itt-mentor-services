@@ -20,7 +20,7 @@ RSpec.describe Mentor, type: :model do
     it { is_expected.to have_many(:mentor_memberships) }
     it { is_expected.to have_many(:schools).through(:mentor_memberships) }
 
-    it { is_expected.to have_many(:placement_mentor_joins).dependent(:destroy) }
+    it { is_expected.to have_many(:placement_mentor_joins).dependent(:restrict_with_error) }
     it { is_expected.to have_many(:placements).through(:placement_mentor_joins) }
   end
 
