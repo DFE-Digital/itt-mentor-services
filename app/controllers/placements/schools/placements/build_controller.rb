@@ -220,7 +220,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   def setup_skipped_steps
     session[:add_a_placement][:skipped_steps] = []
     session[:add_a_placement][:skipped_steps] << "add_mentors" unless school.mentors.exists?
-    session[:add_a_placement][:skipped_steps] << "add_year_group" if school.phase == "Secondary"
+    session[:add_a_placement][:skipped_steps] << "add_year_group" unless placement.phase == "Primary"
   end
 
   def skipped_steps
