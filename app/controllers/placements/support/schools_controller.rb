@@ -33,7 +33,8 @@ class Placements::Support::SchoolsController < Placements::Support::ApplicationC
 
   def check
     if school_form.valid?
-      @school = school
+      school
+      back_link
     else
       render :new
     end
@@ -85,5 +86,9 @@ class Placements::Support::SchoolsController < Placements::Support::ApplicationC
     @decorated_school_options ||= School.search_name_urn_postcode(
       search_param.downcase,
     ).map(&:decorate)
+  end
+
+  def back_link
+    @back_link ||= new_placements_support_school_path(school_form.as_form_params)
   end
 end

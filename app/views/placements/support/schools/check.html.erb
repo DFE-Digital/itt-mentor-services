@@ -1,7 +1,7 @@
 <% content_for :page_title, t(".title") %>
 <%= render "placements/support/primary_navigation", current_navigation: :organisations %>
 <%= content_for(:before_content) do %>
-  <%= govuk_back_link(href: new_placements_support_school_path(@school_form.as_form_params)) %>
+  <%= govuk_back_link(href: @back_link) %>
 <% end %>
 
 <div class="govuk-width-container">
@@ -15,7 +15,7 @@
           <%= t(".title") %>
         </label>
 
-        <%= render "shared/organisations/organisation_details", organisation: @school %>
+        <%= render "shared/organisations/organisation_details", organisation: @school, change_link: @back_link %>
         <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".additional_details") %></h2>
         <%= render "shared/schools/additional_details", school: @school %>
         <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".send") %></h2>

@@ -16,6 +16,7 @@ class Placements::Support::ProvidersController < Placements::Support::Applicatio
   def check
     if provider_form.valid?
       provider
+      back_link
     else
       render :new
     end
@@ -84,5 +85,9 @@ class Placements::Support::ProvidersController < Placements::Support::Applicatio
     @decorated_provider_options ||= Provider.search_name_urn_ukprn_postcode(
       search_param.downcase,
     ).map(&:decorate)
+  end
+
+  def back_link
+    @back_link ||= new_placements_support_provider_path(provider_form.as_form_params)
   end
 end
