@@ -50,6 +50,13 @@ en:
             no_results_found: No results found for ‘%{trn}’
           create:
             mentor_added: Mentor added
+          confirm_remove:
+            page_title: Are you sure you want to remove this mentor? - %{user_name} - %{school_name}
+            are_you_sure: Are you sure you want to remove this mentor?
+            cancel: Cancel
+            remove_mentor: Remove mentor
+          can_not_remove:
+            page_title: You can not remove this mentor - %{user_name} - %{school_name}
           remove:
             page_title: Are you sure you want to remove this mentor? - %{user_name} - %{school_name}
             are_you_sure: Are you sure you want to remove this mentor?

@@ -9,7 +9,13 @@ class Placements::Schools::MentorsController < ApplicationController
 
   def show; end
 
-  def remove; end
+  def remove
+    if policy(@mentor_membership).destroy?
+      render "confirm_remove"
+    else
+      render "can_not_remove"
+    end
+  end
 
   def destroy
     authorize @mentor_membership

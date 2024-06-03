@@ -1,0 +1,13 @@
+<%= content_for :page_title, sanitize(t(".page_title", user_name: @mentor.full_name)) %>
+<%= render "placements/schools/primary_navigation", school: @school, current_navigation: :mentors %>
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: placements_school_mentor_path(@school, @mentor)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <%= render "shared/schools/mentors/can_not_remove", mentor: @mentor, school: @school %>
+    </div>
+  </div>
+</div>
