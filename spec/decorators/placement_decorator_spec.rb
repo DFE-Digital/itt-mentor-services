@@ -64,6 +64,14 @@ RSpec.describe PlacementDecorator do
         expect(placement.decorate.title).to eq("French, German, and Spanish")
       end
     end
+
+    context "when the placement has a year group" do
+      it "returns a subject name, followed by the year group in brackets" do
+        placement = create(:placement, subject: build(:subject, name: "Maths"), year_group: :year_1)
+
+        expect(placement.decorate.title).to eq("Maths (Year 1)")
+      end
+    end
   end
 
   describe "#school_level" do

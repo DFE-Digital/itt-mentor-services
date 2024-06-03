@@ -13,11 +13,14 @@ class PlacementDecorator < Draper::Decorator
   end
 
   def title
-    if additional_subjects.present?
-      additional_subject_names.to_sentence
-    else
-      subject_name
-    end
+    placement_title = if additional_subjects.present?
+                        additional_subject_names.to_sentence
+                      else
+                        subject_name
+                      end
+    return placement_title if year_group.blank?
+
+    "#{placement_title} (#{I18n.t("placements.schools.placements.year_groups.#{year_group}")})"
   end
 
   def school_level
