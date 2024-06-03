@@ -3,7 +3,7 @@ class Placements::Support::Schools::PlacementsController < Placements::Support::
   before_action :set_placement, except: %i[index]
 
   def index
-    @pagy, placements = pagy(@school.placements.includes(:subjects, :mentors).order("subjects.name"))
+    @pagy, placements = pagy(@school.placements.includes(:subject, :mentors).order("subjects.name"))
     @placements = placements.decorate
   end
 

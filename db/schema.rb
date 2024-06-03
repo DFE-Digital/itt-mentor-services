@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_30_141427) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_03_102641) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -231,15 +231,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_30_141427) do
     t.index ["placement_id"], name: "index_placement_mentor_joins_on_placement_id"
   end
 
-  create_table "placement_subject_joins", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "subject_id", null: false
-    t.uuid "placement_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["placement_id"], name: "index_placement_subject_joins_on_placement_id"
-    t.index ["subject_id"], name: "index_placement_subject_joins_on_subject_id"
-  end
-
   create_table "placements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "school_id"
     t.datetime "created_at", null: false
@@ -404,8 +395,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_30_141427) do
   add_foreign_key "placement_additional_subjects", "subjects"
   add_foreign_key "placement_mentor_joins", "mentors"
   add_foreign_key "placement_mentor_joins", "placements"
-  add_foreign_key "placement_subject_joins", "placements"
-  add_foreign_key "placement_subject_joins", "subjects"
   add_foreign_key "placements", "providers"
   add_foreign_key "placements", "schools"
   add_foreign_key "placements", "subjects"

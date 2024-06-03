@@ -22,8 +22,7 @@ class Subject < ApplicationRecord
   belongs_to :parent_subject, class_name: "Subject", optional: true
 
   has_many :child_subjects, class_name: "Subject", foreign_key: :parent_subject_id, dependent: :destroy
-  has_many :placement_subject_joins, dependent: :restrict_with_exception
-  has_many :placements, through: :placement_subject_joins # TODO: Remove `through: :placement_subject_joins` after data migration
+  has_many :placements, dependent: :restrict_with_exception
 
   enum :subject_area,
        { primary: "primary", secondary: "secondary" },

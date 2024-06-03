@@ -4,11 +4,11 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User remove
                type: :system, service: :placements do
   let(:school) { create(:placements_school, name: "School 1", phase: "Nursery") }
   let(:placement_1) do
-    create(:placement, school:, mentors: [mentor], subjects: [subject_1])
+    create(:placement, school:, mentors: [mentor], subject: subject_1)
   end
 
   let(:placement_2) do
-    create(:placement, school:, mentors: [mentor], subjects: [subject_2])
+    create(:placement, school:, mentors: [mentor], subject: subject_2)
   end
   let(:mentor) { create(:placements_mentor) }
   let(:subject_1) { create(:subject, name: "Maths", subject_area: :primary) }
@@ -91,7 +91,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User remove
       expect(page).to have_content "Placement removed"
     end
 
-    expect(page).not_to have_content placement.subjects.to_sentence
+    expect(page).not_to have_content placement.subject.name
   end
 
   def placements_is_selected_in_secondary_nav

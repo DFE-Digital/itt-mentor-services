@@ -29,14 +29,12 @@ RSpec.describe Placement, type: :model do
     it { is_expected.to have_many(:placement_mentor_joins).dependent(:destroy) }
     it { is_expected.to have_many(:mentors).through(:placement_mentor_joins) }
 
-    it { is_expected.to have_many(:placement_subject_joins).dependent(:destroy) }
-    it { is_expected.to have_many(:subjects).through(:placement_subject_joins) }
     it { is_expected.to have_many(:placement_additional_subjects).class_name("Placements::PlacementAdditionalSubject").dependent(:destroy) }
     it { is_expected.to have_many(:additional_subjects).through(:placement_additional_subjects).class_name("Subject") }
 
     it { is_expected.to belong_to(:school) }
     it { is_expected.to belong_to(:provider).optional }
-    it { is_expected.to belong_to(:subject).optional } # TODO: Remove optional after data migration
+    it { is_expected.to belong_to(:subject) }
   end
 
   describe "validations" do
@@ -59,13 +57,12 @@ RSpec.describe Placement, type: :model do
         subject_a = create(:subject, name: "Art and design")
         subject_b = create(:subject, name: "Biology")
 
-        placement_1 = create(:placement, school: school_b, subjects: [subject_a])
-        placement_2 = create(:placement, school: school_a, subjects: [subject_b])
-        placement_3 = create(:placement, school: school_b, subjects: [subject_b])
-        placement_4 = create(:placement, school: school_b, subjects: [subject_a, subject_b])
+        placement_1 = create(:placement, school: school_b, subject: subject_a)
+        placement_2 = create(:placement, school: school_a, subject: subject_b)
+        placement_3 = create(:placement, school: school_b, subject: subject_b)
 
         expect(described_class.order_by_subject_school_name).to eq(
-          [placement_1, placement_4, placement_2, placement_3],
+          [placement_1, placement_2, placement_3],
         )
       end
     end
@@ -96,40 +93,6 @@ RSpec.describe Placement, type: :model do
       ).to eq(
         [placement_3, placement_2, placement_1],
       )
-    end
-  end
-
-  # TODO: Remove after data migrated
-  describe "#assign_subject" do
-    subject(:placement) { create(:placement, subjects:, subject: a_subject) }
-
-    context "when no subjects have been associated with the placement" do
-      let(:subjects) { [] }
-      let(:a_subject) { nil }
-
-      it "does not assign a subject" do
-        expect(placement.subject).to eq(nil)
-      end
-    end
-
-    context "when subjects have been associated with the placement" do
-      context "when subject is nil" do
-        let(:subjects) { [create(:subject)] }
-        let(:a_subject) { nil }
-
-        it "assigns a subject to the placement" do
-          expect(placement.subject).to eq(subjects.last)
-        end
-      end
-
-      context "when subject is not nil" do
-        let(:subjects) { [create(:subject)] }
-        let(:a_subject) { create(:subject) }
-
-        it "keeps the original subject assigned to the placement" do
-          expect(placement.subject).to eq(a_subject)
-        end
-      end
     end
   end
 end

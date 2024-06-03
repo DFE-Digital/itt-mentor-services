@@ -125,12 +125,6 @@ RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model d
       expect(placement.all_valid?).to eq(false)
     end
 
-    it "returns false if subjects is not valid" do
-      placement = described_class.new(subjects: [], school:)
-
-      expect(placement.all_valid?).to eq(false)
-    end
-
     it "returns true if all are valid" do
       mentor = create(:placements_mentor_membership, school:).mentor
       subject = create(:subject, :primary)
