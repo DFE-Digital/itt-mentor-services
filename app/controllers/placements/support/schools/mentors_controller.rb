@@ -25,7 +25,13 @@ class Placements::Support::Schools::MentorsController < Placements::Support::App
     redirect_to placements_support_school_mentors_path(@school), flash: { success: t(".mentor_added") }
   end
 
-  def remove; end
+  def remove
+    if policy(@mentor_membership).destroy?
+      render "confirm_remove"
+    else
+      render "can_not_remove"
+    end
+  end
 
   def destroy
     authorize @mentor_membership

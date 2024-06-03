@@ -4,6 +4,7 @@ en:
       mentors:
         can_not_remove:
           title: You can not remove this mentor
+          title_with_school: You can not remove this mentor - %{school_name}
           description: |
             %{mentor_name} cannot be removed from your organisation because they are assigned to placements.
 

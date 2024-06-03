@@ -1,7 +1,7 @@
-<%# locals: (mentor:) -%>
+<%# locals: (mentor:, school:, support: false) -%>
 <label class="govuk-label govuk-label--l">
   <span class="govuk-caption-l"><%= mentor.full_name %></span>
-  <%= t(".title") %>
+  <%= support ? t(".title_with_school", school_name: school.name) : t(".title") %>
 </label>
 
 <p class="govuk-body">

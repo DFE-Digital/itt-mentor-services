@@ -12,11 +12,13 @@ en:
           attributes:
             mentors:
               trn: Teacher reference number (TRN)
-        remove:
+        confirm_remove:
           page_title: Are you sure you want to remove this mentor? - %{user_name}
           are_you_sure: Are you sure you want to remove this mentor?
           remove_mentor: Remove mentor
           cancel: Cancel
+        can_not_remove:
+          page_title: You can not remove this mentor - %{user_name}
         destroy:
           mentor_removed: Mentor removed
           caption: "Mentors - %{school_name}"
