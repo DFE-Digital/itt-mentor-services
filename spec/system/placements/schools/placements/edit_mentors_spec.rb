@@ -42,10 +42,9 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
         )
         then_i_should_see_the_edit_mentors_page
         when_i_uncheck("Not yet known")
-      when_i_select_mentor_2
-      and_i_click_on("Continue")
-      then_i_should_see_the_mentor_name_in_the_placement_details(mentor_name: mentor_2.full_name,
-        )
+        when_i_select_mentor_2
+        and_i_click_on("Continue")
+        then_i_should_see_the_mentor_name_in_the_placement_details(mentor_name: mentor_2.full_name)
       end
 
       scenario "User does not select a mentor" do
@@ -56,10 +55,10 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
           href: edit_mentors_placements_school_placement_path(school, placement),
         )
         when_i_uncheck("Not yet known")
-      then_i_should_see_the_edit_mentors_page
-      and_i_click_on("Continue")
-      then_i_should_see_an_error_message
-    end
+        then_i_should_see_the_edit_mentors_page
+        and_i_click_on("Continue")
+        then_i_should_see_an_error_message
+      end
 
       scenario "User edits the mentor and cancels" do
         when_i_visit_the_placement_show_page
@@ -118,12 +117,9 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
         )
         then_i_should_see_the_edit_mentors_page
         when_i_uncheck(mentor_1.full_name)
-      and_i_uncheck("Not yet known")
+        and_i_uncheck("Not yet known")
         and_i_click_on("Continue")
-        then_i_see_link(
-          text: "Select a mentor",
-          href: edit_mentors_placements_school_placement_path(school, placement),
-        )
+        then_i_should_see_an_error_message
       end
 
       scenario "User edits the mentor and cancels" do
@@ -158,26 +154,21 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
           mentor_name: mentor_1.full_name,
         )
       end
-    end
 
-    scenario "User selects not yet known" do
-      when_i_visit_the_placement_show_page
-      then_i_should_see_the_mentor_name_in_the_placement_details(mentor_1.full_name)
-      when_i_click_on_change
-      then_i_should_see_the_edit_mentors_page
-      when_i_select_not_yet_known
-      and_i_click_on("Continue")
-      then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
-    end
-  end
-
-  context "when I tamper with the form URL", js: true do
-    scenario "I see an error message" do
-      when_i_visit_the_placement_show_page
-      when_i_click_on_change
-      then_i_tamper_with_the_form_url
-      and_i_click_on("Continue")
-      then_i_should_see_the_placement_show_page_with_notice
+      scenario "User selects not yet known" do
+        when_i_visit_the_placement_show_page
+        then_i_should_see_the_mentor_name_in_the_placement_details(
+          mentor_name: mentor_1.full_name,
+        )
+        when_i_click_link(
+          text: "Change",
+          href: edit_mentors_placements_school_placement_path(school, placement),
+        )
+        then_i_should_see_the_edit_mentors_page
+        when_i_select_not_yet_known
+        and_i_click_on("Continue")
+        then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
+      end
     end
   end
 
@@ -266,6 +257,7 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
   def then_i_see_link(text:, href:)
     expect(page).to have_link(text, href:)
   end
+
   def when_i_uncheck(text)
     uncheck(text)
   end

@@ -22,11 +22,6 @@ class Placements::Schools::PlacementsController < ApplicationController
   end
 
   def update
-    unless valid_path?
-      redirect_to placements_school_placement_path(@school, @placement),
-                  flash: { alert: t("errors.internal_server_error.page_title") } and return
-    end
-
     if valid_attributes?
       @placement.update!(placement_params)
 
@@ -45,12 +40,6 @@ class Placements::Schools::PlacementsController < ApplicationController
 
   private
 
-  VALID_PATHS = %w[edit_provider edit_mentors].freeze
-
-  def valid_path?
-    VALID_PATHS.include?(params[:edit_path])
-  end
-
   def set_placement
     @placement = @school.placements.find(params.require(:id))
   end
@@ -66,7 +55,7 @@ class Placements::Schools::PlacementsController < ApplicationController
   def valid_attributes?
     if params[:edit_path] == "edit_provider"
       placement_params[:provider_id].present?
-    elsif params[:edit_path] == "edit_mentors"
+    else # params[:edit_path] == "edit_mentors"
       valid_mentor_ids?(placement_params[:mentor_ids].compact_blank)
     end
   end
