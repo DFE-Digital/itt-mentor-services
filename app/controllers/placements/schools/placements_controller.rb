@@ -5,7 +5,7 @@ class Placements::Schools::PlacementsController < ApplicationController
   before_action :authorize_placement, only: %i[edit_provider edit_mentors update]
 
   def index
-    @pagy, placements = pagy(@school.placements.includes(:subjects, :mentors).order("subjects.name"))
+    @pagy, placements = pagy(@school.placements.includes(:subject, :mentors).order("subjects.name"))
     @placements = placements.decorate
   end
 

@@ -52,12 +52,6 @@ shared:
     - claims_funding_available_per_hour_currency
     - created_at
     - updated_at
-  :placement_subject_joins:
-    - id
-    - subject_id
-    - placement_id
-    - created_at
-    - updated_at
   :placement_mentor_joins:
     - id
     - mentor_id

@@ -23,23 +23,17 @@
 #  fk_rails_...  (subject_id => subjects.id)
 #
 class Placement < ApplicationRecord
-  # TODO: Remove when data migrated
-  after_save :assign_subject, unless: proc { |placement| placement.subject.present? }
-
   has_many :placement_mentor_joins, dependent: :destroy
   has_many :mentors, through: :placement_mentor_joins, class_name: "Placements::Mentor"
 
-  has_many :placement_subject_joins, dependent: :destroy
-  has_many :subjects, through: :placement_subject_joins
   has_many :placement_additional_subjects, class_name: "Placements::PlacementAdditionalSubject", dependent: :destroy
   has_many :additional_subjects, through: :placement_additional_subjects, source: :subject
 
   belongs_to :school, class_name: "Placements::School"
   belongs_to :provider, optional: true, class_name: "::Provider"
-  belongs_to :subject, class_name: "::Subject", optional: true # TODO: Remove optional true after data migrated
+  belongs_to :subject, class_name: "::Subject"
 
   accepts_nested_attributes_for :mentors, allow_destroy: true
-  accepts_nested_attributes_for :subjects, allow_destroy: true
 
   enum :year_group, {
     year_1: "year_1",
@@ -55,7 +49,7 @@ class Placement < ApplicationRecord
   delegate :name, to: :provider, prefix: true, allow_nil: true
   delegate :has_child_subjects?, to: :subject, allow_nil: true, prefix: true
 
-  scope :order_by_subject_school_name, -> { includes(:subjects, :school).order("subjects.name", "schools.name") }
+  scope :order_by_subject_school_name, -> { includes(:subject, :school).order("subjects.name", "schools.name") }
 
   # This method is used to order placement, after the schools have been ordered by distance.
   # As distance is not an attribute of school, and is given to us by the Geocoder gem.
@@ -66,12 +60,5 @@ class Placement < ApplicationRecord
       condition.when(school_id).then(index)
     end
     order(condition)
-  end
-
-  # TODO: Remove after data migrated
-  def assign_subject
-    return if subjects.blank?
-
-    update!(subject: subjects.last)
   end
 end
