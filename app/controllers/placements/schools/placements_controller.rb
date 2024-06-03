@@ -27,7 +27,7 @@ class Placements::Schools::PlacementsController < ApplicationController
 
       redirect_to placements_school_placement_path(@school, @placement), flash: { success: t(".success") }
     else
-      @mentors = @school.mentors.all
+      @mentors = @school.mentors.all if params[:edit_path] == "edit_mentors"
 
       render params[:edit_path]
     end
