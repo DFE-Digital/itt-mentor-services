@@ -7,7 +7,7 @@ en:
 
         You have been invited to join the %{service_name} service for %{organisation_name}.
 
-        # Sign in to submit claims
+        # %{heading}
 
         If you have a DfE Sign-in account, you can use it to sign in:
 
@@ -24,6 +24,10 @@ en:
         Regards
 
         %{service_name} team
+      claims:
+        heading: Sign in to submit claims
+      placements:
+        heading: Sign in to view placements
 
     user_membership_destroyed_notification:
       subject: You have been removed from %{service_name}

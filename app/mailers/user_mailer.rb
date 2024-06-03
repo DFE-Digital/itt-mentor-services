@@ -7,6 +7,7 @@ class UserMailer < ApplicationMailer
                    user_name: user.first_name,
                    organisation_name: organisation.name,
                    service_name:,
+                   heading: t(".#{service}.heading"),
                    support_email:,
                    sign_in_url:,
                  )
