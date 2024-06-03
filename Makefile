@@ -68,9 +68,6 @@ ittms_domain:   ## runs a script to config variables for setting up dns
 set-azure-template-tag:
 	$(eval ARM_TEMPLATE_TAG=1.1.6)
 
-.PHONY: set-azure-resource-group-tags
-set-azure-resource-group-tags: ##Tags that will be added to resource group on its creation in ARM template
-	$(eval RG_TAGS=$(shell echo '{"Product" : "ITT mentor services", "Service Offering": "ITT mentor services", "Environment" : "$(ENV_TAG)"}' | jq . ))
 
 bin/terrafile: ## Install terrafile to manage terraform modules
 	curl -sL https://github.com/coretech/terrafile/releases/download/v${TERRAFILE_VERSION}/terrafile_${TERRAFILE_VERSION}_$$(uname)_x86_64.tar.gz \
@@ -124,7 +121,7 @@ deploy-arm-resources: arm-deployment ## Validate ARM resource deployment. Usage:
 
 validate-arm-resources: set-what-if arm-deployment ## Validate ARM resource deployment. Usage: make domains validate-arm-resources
 
-domain-azure-resources: set-azure-account set-azure-template-tag set-azure-resource-group-tags ## deploy container to store terraform state for all dns resources -run validate first
+domain-azure-resources: set-azure-account set-azure-template-tag  ## deploy container to store terraform state for all dns resources -run validate first
 	$(if $(AUTO_APPROVE), , $(error can only run with AUTO_APPROVE))
 	az deployment sub create -l "UK South" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
 		--name "${DNS_ZONE}domains-$(shell date +%Y%m%d%H%M%S)" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-rg" 'tags=${RG_TAGS}' \
