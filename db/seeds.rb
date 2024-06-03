@@ -91,8 +91,15 @@ Placements::School.find_each do |school|
 
   next if school.placements.any?
 
-  subject = school.phase == "Primary" ? Subject.primary.first : Subject.secondary.first
-  placement = Placement.create!(school:, subject:)
+  year_group = nil
+  subject = if school.phase == "Primary"
+              year_group =  Placement.year_groups.to_a.sample.first
+              Subject.primary.first
+            else
+              Subject.secondary.first
+            end
+  placement = Placement.create!(school:, subject:, year_group:)
 
+  PlacementSubjectJoin.create!(placement:, subject:)
   PlacementMentorJoin.create!(placement:, mentor: Placements::Mentor.first)
 end
