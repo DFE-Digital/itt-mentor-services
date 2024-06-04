@@ -35,7 +35,6 @@ class Placements::Schools::PlacementsController < ApplicationController
       @providers = @school.partner_providers.all if params[:edit_path] == "edit_provider"
       year_groups_for_select if params[:edit_path] == "edit_year_group"
 
-
       render params[:edit_path]
     end
   end
@@ -102,8 +101,6 @@ class Placements::Schools::PlacementsController < ApplicationController
   end
 
   def year_groups_for_select
-    @year_groups_for_select ||= Placement.year_groups.map do |_, value|
-      OpenStruct.new value:, name: t("placements.schools.placements.year_groups.#{value}"), description: t("placements.schools.placements.year_groups.#{value}_description")
-    end
+    @year_groups_for_select ||= Placement.year_groups_as_options
   end
 end

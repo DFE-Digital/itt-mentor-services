@@ -95,4 +95,21 @@ RSpec.describe Placement, type: :model do
       )
     end
   end
+
+  describe ".year_groups_as_options" do
+    it "returns an array of OpenStruct objects with the year group value, name and description" do
+      options = described_class.year_groups_as_options
+
+      expect(options).to eq(
+        [
+          OpenStruct.new(value: "year_1", name: "Year 1", description: "5 to 6 years"),
+          OpenStruct.new(value: "year_2", name: "Year 2", description: "6 to 7 years"),
+          OpenStruct.new(value: "year_3", name: "Year 3", description: "7 to 8 years"),
+          OpenStruct.new(value: "year_4", name: "Year 4", description: "8 to 9 years"),
+          OpenStruct.new(value: "year_5", name: "Year 5", description: "9 to 10 years"),
+          OpenStruct.new(value: "year_6", name: "Year 6", description: "10 to 11 years"),
+        ],
+      )
+    end
+  end
 end

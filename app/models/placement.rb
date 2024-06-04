@@ -62,4 +62,11 @@ class Placement < ApplicationRecord
     end
     order(condition)
   end
+
+  def self.year_groups_as_options
+    year_groups.map do |_, value|
+      OpenStruct.new value:, name: I18n.t("placements.schools.placements.year_groups.#{value}"),
+                     description: I18n.t("placements.schools.placements.year_groups.#{value}_description")
+    end
+  end
 end
