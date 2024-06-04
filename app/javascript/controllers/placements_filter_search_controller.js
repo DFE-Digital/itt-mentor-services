@@ -67,7 +67,6 @@ export default class extends Controller {
         item.style.display = "";
       } else {
         item.style.display = "none";
-        inputField.checked = false;
       }
     });
   }
