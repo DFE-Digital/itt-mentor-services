@@ -228,9 +228,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   end
 
   def year_groups_for_select
-    @year_groups_for_select ||= Placement.year_groups.map do |_, value|
-      OpenStruct.new value:, name: t("placements.schools.placements.year_groups.#{value}"), description: t("placements.schools.placements.year_groups.#{value}_description")
-    end
+    @year_groups_for_select ||= Placement.year_groups_as_options
   end
 
   def additional_subject_ids
