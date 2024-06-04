@@ -100,6 +100,5 @@ Placements::School.find_each do |school|
             end
   placement = Placement.create!(school:, subject:, year_group:)
 
-  PlacementSubjectJoin.create!(placement:, subject:)
   PlacementMentorJoin.create!(placement:, mentor: Placements::Mentor.first)
 end
