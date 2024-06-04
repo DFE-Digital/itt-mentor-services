@@ -44,20 +44,6 @@
             </ul>
           <% end %>
 
-          <% if filter_form.only_available_placements.present? %>
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".availability") %></h3>
-            <ul class="app-filter-tags">
-              <li>
-                <%= govuk_link_to(
-                      t(".availability"),
-                      filter_form.index_path_without_filter(filter: "only_available_placements", value: true),
-                      class: "app-filter__tag",
-                      no_visited_state: true,
-                    ) %>
-              </li>
-            </ul>
-          <% end %>
-
           <% if filter_form.school_ids.present? %>
             <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".school") %></h3>
             <ul class="app-filter-tags">
@@ -131,6 +117,31 @@
           <%= form.hidden_field :search_location, value: search_location %>
 
           <div class="app-filter__option">
+            <%= form.govuk_radio_buttons_fieldset(
+              :placements_to_show,
+              legend: { text: t(".placements_to_show_title"), size: "s" },
+              small: true,
+              multiple: false,
+            ) do %>
+              <%= form.govuk_radio_button :placements_to_show,
+                :available_placements,
+                label: { text: t(".placements_to_show.available_placements") },
+                checked: filter_form.placements_to_show == "available_placements",
+                multiple: false %>
+              <%= form.govuk_radio_button :placements_to_show,
+                :assigned_to_me,
+                label: { text: t(".placements_to_show.assigned_to_me") },
+                checked: filter_form.placements_to_show == "assigned_to_me",
+                multiple: false %>
+              <%= form.govuk_radio_button :placements_to_show,
+                :all_placements,
+                label: { text: t(".placements_to_show.all_placements") },
+                checked: filter_form.placements_to_show == "all_placements",
+                multiple: false %>
+            <% end %>
+          </div>
+
+          <div class="app-filter__option">
             <%= form.govuk_check_boxes_fieldset(
               :only_partner_schools,
               legend: { text: t(".partner_schools"), size: "s" },
@@ -144,22 +155,6 @@
                                        multiple: false,
                                        checked: filter_form.only_partner_schools == true %>
 
-            <% end %>
-          </div>
-
-          <div class="app-filter__option">
-            <%= form.govuk_check_boxes_fieldset(
-              :only_available_placements,
-              legend: { text: t(".availability"), size: "s" },
-              small: true,
-              multiple: false,
-            ) do %>
-
-              <%= form.govuk_check_box :only_available_placements,
-                                       true,
-                                       label: { text: t(".available_text") },
-                                       checked: filter_form.only_available_placements.present?,
-                                       multiple: false %>
             <% end %>
           </div>
 
