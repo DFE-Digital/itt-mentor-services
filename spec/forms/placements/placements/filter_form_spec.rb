@@ -8,14 +8,6 @@ describe Placements::Placements::FilterForm, type: :model do
   describe "#filters_selected?" do
     subject(:filter_form) { described_class.new(params).filters_selected? }
 
-    context "when given only available placements params" do
-      let(:params) { { only_available_placements: true } }
-
-      it "returns true" do
-        expect(filter_form).to eq(true)
-      end
-    end
-
     context "when given school id params" do
       let(:params) { { school_ids: %w[school_id] } }
 
@@ -62,30 +54,13 @@ describe Placements::Placements::FilterForm, type: :model do
 
     it "returns the placements index page path" do
       expect(filter_form.clear_filters_path).to eq(
-        placements_placements_path,
+        placements_placements_path(filters: { placements_to_show: "available_placements" }),
       )
     end
   end
 
   describe "index_path_without_filter" do
     subject(:filter_form) { described_class.new(params) }
-
-    context "when removing available params" do
-      let(:params) do
-        { only_available_placements: true }
-      end
-
-      it "returns the placements index page path without the given available param" do
-        expect(
-          filter_form.index_path_without_filter(
-            filter: "only_available_placements",
-            value: true,
-          ),
-        ).to eq(
-          placements_placements_path,
-        )
-      end
-    end
 
     context "when removing school id params" do
       let(:params) do
@@ -100,6 +75,7 @@ describe Placements::Placements::FilterForm, type: :model do
           ),
         ).to eq(
           placements_placements_path(filters: {
+            placements_to_show: "available_placements",
             school_ids: %w[school_id_2],
           }),
         )
@@ -118,7 +94,7 @@ describe Placements::Placements::FilterForm, type: :model do
             value: false,
           ),
         ).to eq(
-          placements_placements_path(filters: {}),
+          placements_placements_path(filters: { placements_to_show: "available_placements" }),
         )
       end
     end
@@ -136,6 +112,7 @@ describe Placements::Placements::FilterForm, type: :model do
           ),
         ).to eq(
           placements_placements_path(filters: {
+            placements_to_show: "available_placements",
             subject_ids: %w[subject_id_2],
           }),
         )
@@ -163,9 +140,10 @@ describe Placements::Placements::FilterForm, type: :model do
   end
 
   describe "#query_params" do
-    it "returns { only_partner_schools: false, school_ids: [], subject_ids: [] }" do
+    it "returns the expected result" do
       expect(described_class.new.query_params).to eq(
         {
+          placements_to_show: "available_placements",
           school_ids: [],
           only_partner_schools: false,
           subject_ids: [],
