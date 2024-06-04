@@ -9,8 +9,6 @@ export default class extends Controller {
     "schoolList",
     "subjectInput",
     "subjectList",
-    "establishmentGroupInput",
-    "establishmentGroupList",
   ];
 
   connect() {
@@ -24,10 +22,6 @@ export default class extends Controller {
 
     if (this.subjectInputTarget.value !== "") {
       this.searchSubject();
-    }
-
-    if (this.establishmentGroupInputTarget.value !== "") {
-      this.searchEstablishmentGroup();
     }
   }
 
@@ -50,13 +44,6 @@ export default class extends Controller {
     const searchValue = this.subjectInputTarget.value.toLowerCase();
 
     this.toggleItems(subjectItems, searchValue);
-  }
-
-  searchEstablishmentGroup() {
-    const establishmentGroupItems = this.establishmentGroupListTarget.children;
-    const searchValue = this.establishmentGroupInputTarget.value.toLowerCase();
-
-    this.toggleItems(establishmentGroupItems, searchValue);
   }
 
   toggleItems(items, searchValue) {
