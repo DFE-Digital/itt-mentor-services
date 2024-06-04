@@ -1,4 +1,4 @@
-class Placements::Organisations::UsersController < ApplicationController
+class Placements::Organisations::UsersController < Placements::ApplicationController
   before_action :set_organisation
   before_action :set_user, only: %i[show remove destroy]
   before_action :redirect_if_not_allowed, only: %i[remove destroy]

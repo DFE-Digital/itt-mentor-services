@@ -1,4 +1,4 @@
-class Placements::OrganisationsController < ApplicationController
+class Placements::OrganisationsController < Placements::ApplicationController
   before_action :redirect_to_organisation_if_only_one, only: :index
   def index; end
 

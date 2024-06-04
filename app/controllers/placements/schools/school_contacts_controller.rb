@@ -1,4 +1,4 @@
-class Placements::Schools::SchoolContactsController < ApplicationController
+class Placements::Schools::SchoolContactsController < Placements::ApplicationController
   before_action :set_school
   before_action :set_school_contact, only: %i[edit update]
 

@@ -1,4 +1,4 @@
-class Placements::PagesController < ApplicationController
+class Placements::PagesController < Placements::ApplicationController
   skip_before_action :authenticate_user!
 
   def start
