@@ -1,4 +1,4 @@
-class Placements::Providers::PartnerSchoolsController < ApplicationController
+class Placements::Providers::PartnerSchoolsController < Placements::ApplicationController
   before_action :set_provider
   before_action :set_decorated_partner_school, only: %i[show remove destroy]
   before_action :set_partnership, only: %i[show remove destroy]

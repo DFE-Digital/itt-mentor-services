@@ -1,4 +1,4 @@
-class Placements::Schools::PlacementsController < ApplicationController
+class Placements::Schools::PlacementsController < Placements::ApplicationController
   before_action :set_school
   before_action :set_placement, only: %i[show edit_provider edit_mentors edit_year_group update remove destroy]
   before_action :set_decorated_placement, only: %i[show remove]

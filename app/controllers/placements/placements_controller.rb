@@ -1,4 +1,4 @@
-class Placements::PlacementsController < ApplicationController
+class Placements::PlacementsController < Placements::ApplicationController
   before_action :set_provider
   helper_method :filter_form, :location_coordinates
 

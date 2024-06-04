@@ -1,4 +1,4 @@
-class Placements::Schools::Placements::BuildController < ApplicationController
+class Placements::Schools::Placements::BuildController < Placements::ApplicationController
   before_action :setup_session, except: :new
   before_action :authorize_placement
 

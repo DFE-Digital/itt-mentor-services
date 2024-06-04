@@ -1,4 +1,4 @@
-class Placements::Support::ApplicationController < ApplicationController
+class Placements::Support::ApplicationController < Placements::ApplicationController
   before_action :authorize_user!
 
   private
