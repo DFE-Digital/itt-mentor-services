@@ -2,8 +2,10 @@ en:
   placements:
     placements:
       index:
-        placements_found: "%{placements_count} placements found"
-        no_placements_found: No school placements found
+        placements_found:
+          zero: No placements found
+          one: 1 placement found
+          other: "%{count} placements found"
         placements: Placements
         no_results_for_filters: There are no results for the selected filter.
         enter_a_location: Enter a location

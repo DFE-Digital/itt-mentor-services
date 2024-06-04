@@ -6,11 +6,7 @@
     <%= t(".placements") %>
   </h1>
   <h2 class="govuk-heading-m">
-    <% if @placements.any? %>
-      <%= t(".placements_found", placements_count: @placements.count) %>
-    <% else %>
-      <%= t(".no_placements_found") %>
-    <% end %>
+    <%= t(".placements_found", count: @placements.count) %>
   </h2>
   <div>
     <button class="govuk-button govuk-button--secondary show-filter-button" type="button" data-action="click->filter#open">
