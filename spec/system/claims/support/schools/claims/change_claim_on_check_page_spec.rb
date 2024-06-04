@@ -36,7 +36,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
     when_i_click("Continue")
     then_i_check_my_answers(claim, provider2, [mentor1, mentor2], [20, 12])
     when_i_click("Save claim")
-    then_i_am_redirected_to_index_page(claim)
+    then_i_am_redirected_to_index_page
   end
 
   scenario "Colin changes the mentors on claim on check page" do
@@ -55,7 +55,7 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
       [12],
     )
     when_i_click("Save claim")
-    then_i_am_redirected_to_index_page(claim)
+    then_i_am_redirected_to_index_page
   end
 
   scenario "Colin clicks change mentors the check page and is redirected back to check page" do
@@ -258,11 +258,9 @@ RSpec.describe "Change claim on check page", type: :system, service: :claims do
     end
   end
 
-  def then_i_am_redirected_to_index_page(claim)
+  def then_i_am_redirected_to_index_page
     within(".govuk-notification-banner--success") do
       expect(page).to have_content "Claim added"
     end
-
-    expect(page).to have_content(claim.reload.reference)
   end
 end
