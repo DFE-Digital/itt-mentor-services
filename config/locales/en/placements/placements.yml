@@ -26,6 +26,7 @@ en:
         gender: Gender
         religious_character: Religious character
         ofsted_rating: Ofsted rating
+        year_group: Primary year group
       show:
         page_title: "%{subject_name} - Placements - %{school_name}"
         placement: "Placement - %{school_name}"
