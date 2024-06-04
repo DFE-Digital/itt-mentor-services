@@ -94,6 +94,39 @@ RSpec.describe "Placements / Placements / View placements list",
       and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
     end
 
+    context "when placements have additional subjects" do
+      let!(:parent_subject) { build(:subject, name: "Modern Foreign Languages") }
+      let!(:additional_subject) { create(:subject, name: "French", parent_subject:) }
+      let(:additional_subject_placement) { create(:placement, subject: parent_subject, school: secondary_school, additional_subjects: [additional_subject]) }
+
+      before { additional_subject_placement }
+
+      scenario "User can filter placements by additional subjects" do
+        when_i_visit_the_placements_index_page
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
+        and_i_can_see_a_placement_for_school_and_subject("Secondary School", "French")
+        when_i_check_filter_option("subject-ids", additional_subject.id)
+        and_i_click_on("Apply filters")
+        then_i_can_see_a_placement_for_school_and_subject("Secondary School", "French")
+        and_i_can_not_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
+      end
+
+      scenario "User can filter placements by subject and additional subjects together" do
+        when_i_visit_the_placements_index_page
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
+        and_i_can_see_a_placement_for_school_and_subject("Secondary School", "French")
+        when_i_check_filter_option("subject-ids", additional_subject.id)
+        when_i_check_filter_option("subject-ids", subject_1.id)
+        and_i_click_on("Apply filters")
+        then_i_can_see_a_placement_for_school_and_subject("Secondary School", "French")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
+      end
+    end
+
     context "when a filter is pre-selected in the URL params" do
       scenario "User can remove the available filter" do
         when_i_visit_the_placements_index_page({ filters: { only_available_placements: true } })
@@ -237,6 +270,7 @@ RSpec.describe "Placements / Placements / View placements list",
   def when_i_click_on(text)
     click_on text
   end
+
   alias_method :and_i_click_on, :when_i_click_on
 
   def when_i_visit_the_placements_index_page(params = {})
@@ -263,12 +297,14 @@ RSpec.describe "Placements / Placements / View placements list",
   def then_i_can_see_a_placement_for_school_and_subject(school_name, subject_name)
     expect(page).to have_content("#{school_name}\n#{subject_name}")
   end
+
   alias_method :and_i_can_see_a_placement_for_school_and_subject,
                :then_i_can_see_a_placement_for_school_and_subject
 
   def then_i_can_not_see_a_placement_for_school_and_subject(school_name, subject_name)
     expect(page).not_to have_content("#{school_name}\n#{subject_name}")
   end
+
   alias_method :and_i_can_not_see_a_placement_for_school_and_subject,
                :then_i_can_not_see_a_placement_for_school_and_subject
 
@@ -280,6 +316,7 @@ RSpec.describe "Placements / Placements / View placements list",
       page.find("label[for='filters-#{filter}-#{normalised_value}-field']", visible: :all).click
     end
   end
+
   alias_method :and_i_check_filter_option, :when_i_check_filter_option
 
   def then_i_can_see_a_preset_filter(filter, value)
@@ -290,6 +327,7 @@ RSpec.describe "Placements / Placements / View placements list",
       expect(page).to have_content(value)
     end
   end
+
   alias_method :and_i_can_see_a_preset_filter, :then_i_can_see_a_preset_filter
 
   def when_i_click_to_remove_filter(_filter, value)
@@ -303,6 +341,7 @@ RSpec.describe "Placements / Placements / View placements list",
   def then_i_can_not_see_any_selected_filters
     expect(page).not_to have_content("Selected filters")
   end
+
   alias_method :and_i_can_not_see_any_selected_filters,
                :then_i_can_not_see_any_selected_filters
 
@@ -341,6 +380,7 @@ RSpec.describe "Placements / Placements / View placements list",
       expect(placement_div).to have_content("#{distance} miles")
     end
   end
+
   alias_method :and_i_see_placements_for, :then_i_see_placements_for
 
   def and_i_navigate_to(text)

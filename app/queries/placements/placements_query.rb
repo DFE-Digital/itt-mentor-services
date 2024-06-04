@@ -2,7 +2,7 @@ class Placements::PlacementsQuery < ApplicationQuery
   MAX_LOCATION_DISTANCE = 50
 
   def call
-    scope = Placement.includes(:school, :subject)
+    scope = Placement.includes(:school, :subject, :additional_subjects)
 
     scope = school_condition(scope)
     scope = partner_school_condition(scope)
@@ -23,6 +23,7 @@ class Placements::PlacementsQuery < ApplicationQuery
     return scope if filter_params[:subject_ids].blank?
 
     scope.where(subject_id: filter_params[:subject_ids])
+         .or(scope.where(additional_subjects: { id: filter_params[:subject_ids] }))
   end
 
   def partner_school_condition(scope)
