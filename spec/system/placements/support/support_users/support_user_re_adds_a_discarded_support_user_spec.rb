@@ -93,12 +93,12 @@ RSpec.describe "Placements / Support Users / Support user re-adds a discarded su
 
   def and_i_visit_the_support_users_page
     within(".app-primary-navigation nav") do
-      click_on "Users"
+      click_on "Support users"
     end
   end
 
   def and_i_click_on_add_a_support_user
-    click_on "Add user"
+    click_on "Add support user"
   end
 
   def and_i_fill_in_the_support_user_form(email_address:, first_name:, last_name:)
@@ -120,11 +120,11 @@ RSpec.describe "Placements / Support Users / Support user re-adds a discarded su
   end
 
   def when_i_click_on_add_user
-    click_on "Add user"
+    click_on "Add support user"
   end
 
   def i_see_the_support_user_has_been_added(email_address:)
-    expect(page).to have_content "User added"
+    expect(page).to have_content "Support user added"
     expect(page).to have_content email_address
   end
 

@@ -28,7 +28,7 @@ RSpec.describe "Placements / Support Users / Support user adds a support user",
     and_i_click_on_add_a_support_user
     and_i_fill_in_the_support_user_form(email_address: "john.doe@example.com")
     then_i_see_an_error("Enter a Department for Education email address in the correct format, like name@education.gov.uk")
-    and_the_page_title_is("Error: Personal details - Add user - Manage school placements")
+    and_the_page_title_is("Error: Personal details - Add support user - Manage school placements")
   end
 
   scenario "Attempt to add a support user with an email that already exists in the system" do
@@ -38,7 +38,7 @@ RSpec.describe "Placements / Support Users / Support user adds a support user",
     and_i_click_on_add_a_support_user
     and_i_fill_in_the_support_user_form(email_address: "john.doe@education.gov.uk")
     then_i_see_an_error("Email address already in use")
-    and_the_page_title_is("Error: Personal details - Add user - Manage school placements")
+    and_the_page_title_is("Error: Personal details - Add support user - Manage school placements")
   end
 
   scenario "Make changes while adding a support user" do
@@ -68,12 +68,12 @@ RSpec.describe "Placements / Support Users / Support user adds a support user",
 
   def and_i_visit_the_support_users_page
     within(".app-primary-navigation nav") do
-      click_on "Users"
+      click_on "Support users"
     end
   end
 
   def and_i_click_on_add_a_support_user
-    click_on "Add user"
+    click_on "Add support user"
   end
 
   def when_i_fill_in_the_support_user_form(email_address:)
@@ -94,12 +94,12 @@ RSpec.describe "Placements / Support Users / Support user adds a support user",
   end
 
   def when_i_click_on_add_user
-    click_on "Add user"
+    click_on "Add support user"
   end
   alias_method :and_i_click_on_add_user, :when_i_click_on_add_user
 
   def then_i_see_the_support_user_has_been_added(email_address:)
-    expect(page).to have_content "User added"
+    expect(page).to have_content "Support user added"
     expect(page).to have_content email_address
   end
 

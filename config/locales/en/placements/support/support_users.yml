@@ -3,13 +3,13 @@ en:
     support:
       support_users:
         index:
-          page_title: Users
-          add_user: Add user
-          heading: Users
+          page_title: Support users
+          add_user: Add support user
+          heading: Support users
         new:
-          page_title: Personal details - Add user
-          page_title_with_errors: "Error: Personal details - Add user"
-          caption: Add user
+          page_title: Personal details - Add support user
+          page_title_with_errors: "Error: Personal details - Add support user"
+          caption: Add support user
           title: Personal details
           submit: Continue
           cancel: Cancel
@@ -17,24 +17,24 @@ en:
             email:
               hint: Email must be a valid Department for Education address, like name@education.gov.uk
         check:
-          page_title: Check your answers - Add user
-          caption: Add user
+          page_title: Check your answers - Add support user
+          caption: Add support user
           title: Check your answers
-          submit: Add user
+          submit: Add support user
           cancel: Cancel
           change: Change
-          warning: The user will be sent an email to tell them you’ve added them to Manage school placements.
+          warning: The support user will be sent an email to tell them you’ve added them to Manage school placements.
         create:
-          success: User added
+          success: Support user added
         show:
           change: Change
-          remove_user: Remove user
+          remove_user: Remove support user
         remove:
-          page_title: Are you sure you want to remove this user? - %{user_name}
-          title: Are you sure you want to remove this user?
-          warning: The user will be sent an email to tell them you removed them from Manage school placements.
-          submit: Remove user
+          page_title: Are you sure you want to remove this support user? - %{user_name}
+          title: Are you sure you want to remove this support user?
+          warning: The support user will be sent an email to tell them you removed them from Manage school placements.
+          submit: Remove support user
           cancel: Cancel
         destroy:
-          success: User removed
-          failure: There was a problem removing the user
+          success: Support user removed
+          failure: There was a problem removing the support user

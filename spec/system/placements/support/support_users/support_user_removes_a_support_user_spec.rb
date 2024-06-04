@@ -41,7 +41,7 @@ RSpec.describe "Placements / Support Users / Support users removes a support use
 
   def and_i_visit_the_support_users_page
     within(".app-primary-navigation nav") do
-      click_on "Users"
+      click_on "Support users"
     end
   end
 
@@ -50,18 +50,18 @@ RSpec.describe "Placements / Support Users / Support users removes a support use
   end
 
   def when_i_click_on_remove
-    click_on "Remove user"
+    click_on "Remove support user"
   end
   alias_method :and_i_click_on_remove, :when_i_click_on_remove
 
   def then_i_see_the_support_user_removal_confirmation(support_user)
     expect(page).to have_content support_user.full_name
-    expect(page).to have_content "Are you sure you want to remove this user?"
+    expect(page).to have_content "Are you sure you want to remove this support user?"
   end
 
   def then_i_see_the_support_user_has_been_removed(support_user)
     expect(page).not_to have_content support_user.full_name
-    expect(page).to have_content "User removed"
+    expect(page).to have_content "Support user removed"
   end
 
   def then_an_email_is_sent(email)
