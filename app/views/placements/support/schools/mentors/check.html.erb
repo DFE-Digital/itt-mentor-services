@@ -41,7 +41,7 @@
             <% row.with_key(text: t(".date_of_birth")) %>
             <% row.with_value(text: safe_l(@mentor_form.date_of_birth, format: :short)) %>
             <% row.with_action(text: t(".change"),
-                               href: new_placements_school_mentor_path(params: @mentor_form.as_form_params),
+                               href: new_placements_support_school_mentor_path(params: @mentor_form.as_form_params),
                                html_attributes: {
                                  class: "govuk-link--no-visited-state",
                                }) %>
