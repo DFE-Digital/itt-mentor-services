@@ -27,8 +27,10 @@ RSpec.describe "Placements / Placements / View placements list",
   end
   let!(:subject_1) { create(:subject, name: "Primary with mathematics") }
   let!(:subject_2) { create(:subject, name: "Chemistry") }
+  let!(:subject_3) { create(:subject, name: "Physics") }
   let(:placement_1) { create(:placement, subject: subject_1, school: primary_school, year_group: :year_1) }
-  let(:placement_2) { create(:placement, subject: subject_2, school: secondary_school, provider: build(:placements_provider)) }
+  let(:placement_2) { create(:placement, subject: subject_2, school: secondary_school) }
+  let(:placement_3) { create(:placement, subject: subject_3, school: secondary_school, provider: build(:placements_provider)) }
 
   before do
     given_i_sign_in_as_patricia
@@ -43,24 +45,34 @@ RSpec.describe "Placements / Placements / View placements list",
     before do
       placement_1
       placement_2
+      placement_3
+    end
+
+    scenario "User can view available placements by default" do
+      when_i_visit_the_placements_index_page
+      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+      and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Physics")
+      and_i_can_see_the_status_tag_for_placement_1
+    end
+
+    scenario "User can view placements assigned to them" do
+      when_i_visit_the_placements_index_page
+      and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Physics")
+      placement_3.update!(provider:)
+      and_i_check_filter_option("placements-to-show", "assigned-to-me")
+      and_i_click_on("Apply filters")
+      and_i_can_not_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+      then_i_can_see_a_placement_for_school_and_subject("Secondary School", "Physics")
     end
 
     scenario "User can view all placements" do
       when_i_visit_the_placements_index_page
+      and_i_check_filter_option("placements-to-show", "all-placements")
+      and_i_click_on("Apply filters")
       then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
       and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
       and_i_can_see_the_status_tag_for_placement_1
       and_i_can_see_the_status_tag_for_placement_2
-    end
-
-    scenario "User can filter placements by availability" do
-      when_i_visit_the_placements_index_page
-      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
-      and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
-      when_i_check_filter_option("only-available-placements", true)
-      and_i_click_on("Apply filters")
-      then_i_can_see_a_placement_for_placement_1
-      and_i_cannot_see_a_placement_for_placement_2
     end
 
     scenario "User can filter placements by partner school" do
@@ -128,17 +140,6 @@ RSpec.describe "Placements / Placements / View placements list",
     end
 
     context "when a filter is pre-selected in the URL params" do
-      scenario "User can remove the available filter" do
-        when_i_visit_the_placements_index_page({ filters: { only_available_placements: true } })
-        then_i_can_see_a_placement_for_placement_1
-        and_i_cannot_see_a_placement_for_placement_2
-        and_i_can_see_a_preset_filter("Placements available", "Placements available")
-        when_i_click_to_remove_filter("Placements available", "Placements available")
-        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
-        and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
-        and_i_can_not_see_any_selected_filters
-      end
-
       scenario "User can remove a partner school filter" do
         given_a_partnership_exists_between(provider, primary_school)
         when_i_visit_the_placements_index_page({ filters: { only_partner_schools: true } })
@@ -189,7 +190,6 @@ RSpec.describe "Placements / Placements / View placements list",
         when_i_visit_the_placements_index_page(
           {
             filters: {
-              only_available_placements: true,
               only_partner_schools: true,
               school_ids: [primary_school.id],
               subject_ids: [subject_1.id],
@@ -199,7 +199,6 @@ RSpec.describe "Placements / Placements / View placements list",
         )
         then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
         and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
-        and_i_can_see_a_preset_filter("Placements available", "Placements available")
         and_i_can_see_a_preset_filter("Partner schools", "Partner schools")
         and_i_can_see_a_preset_filter("School", "Primary School")
         and_i_can_see_a_preset_filter("Subject", "Primary with mathematics")
@@ -258,12 +257,12 @@ RSpec.describe "Placements / Placements / View placements list",
 
       scenario "User filters are preserved when using the back button" do
         when_i_visit_the_placements_index_page({ search_location: "London" })
-        when_i_check_filter_option("only-available-placements", true)
+        when_i_check_filter_option("subject-ids", subject_1.id)
         and_i_click_on("Apply filters")
         and_i_navigate_to("2")
         when_i_click_on_the_first_placement
         and_i_click_on("Back")
-        then_i_can_see_a_preset_filter("Placements available", "Placements available")
+        then_i_can_see_a_preset_filter("Subject", subject_1.name)
         and_i_can_see_search_location_is_set_as("London")
         and_the_pagination_remains_selected("2")
       end
@@ -371,7 +370,7 @@ RSpec.describe "Placements / Placements / View placements list",
   end
 
   def and_i_can_see_the_status_tag_for_placement_1
-    within(".govuk-tag--turquoise") do
+    all(".govuk-tag--turquoise").first do
       expect(page).to have_text("Available")
     end
   end
