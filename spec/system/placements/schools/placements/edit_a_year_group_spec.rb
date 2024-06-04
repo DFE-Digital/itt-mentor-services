@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Schools / Placements / View a placement",
+RSpec.describe "Placements / Schools / Placements / Edit a year group",
                type: :system, service: :placements do
   let!(:school) { create(:placements_school, name: "School 1", phase: "Primary") }
   let!(:placement) { create(:placement, school:, year_group: :year_1) }
