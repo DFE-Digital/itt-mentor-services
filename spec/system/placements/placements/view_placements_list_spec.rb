@@ -27,7 +27,7 @@ RSpec.describe "Placements / Placements / View placements list",
   end
   let!(:subject_1) { create(:subject, name: "Primary with mathematics") }
   let!(:subject_2) { create(:subject, name: "Chemistry") }
-  let(:placement_1) { create(:placement, subject: subject_1, school: primary_school) }
+  let(:placement_1) { create(:placement, subject: subject_1, school: primary_school, year_group: :year_1) }
   let(:placement_2) { create(:placement, subject: subject_2, school: secondary_school, provider: build(:placements_provider)) }
 
   before do
@@ -173,6 +173,17 @@ RSpec.describe "Placements / Placements / View placements list",
         and_i_can_not_see_any_selected_filters
       end
 
+      scenario "User can remove a year group filter" do
+        when_i_visit_the_placements_index_page({ filters: { year_groups: [:year_1] } })
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
+        and_i_can_see_a_preset_filter("Primary year group", "Year 1")
+        when_i_click_to_remove_filter("Primary year group", "Year 1")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
+        and_i_can_not_see_any_selected_filters
+      end
+
       scenario "User can clear all filters" do
         given_a_partnership_exists_between(provider, primary_school)
         when_i_visit_the_placements_index_page(
@@ -182,6 +193,7 @@ RSpec.describe "Placements / Placements / View placements list",
               only_partner_schools: true,
               school_ids: [primary_school.id],
               subject_ids: [subject_1.id],
+              year_groups: [:year_1],
             },
           },
         )
@@ -191,6 +203,7 @@ RSpec.describe "Placements / Placements / View placements list",
         and_i_can_see_a_preset_filter("Partner schools", "Partner schools")
         and_i_can_see_a_preset_filter("School", "Primary School")
         and_i_can_see_a_preset_filter("Subject", "Primary with mathematics")
+        and_i_can_see_a_preset_filter("Primary year group", "Year 1")
         when_i_click_on("Clear filters")
         then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
         and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
