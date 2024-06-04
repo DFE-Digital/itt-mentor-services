@@ -32,6 +32,14 @@ describe Placements::Placements::FilterForm, type: :model do
       end
     end
 
+    context "when given year group params" do
+      let(:params) { { year_groups: %w[year_group] } }
+
+      it "returns true" do
+        expect(filter_form).to eq(true)
+      end
+    end
+
     context "when given partner school params" do
       let(:params) { { only_partner_schools: true } }
 
@@ -133,6 +141,25 @@ describe Placements::Placements::FilterForm, type: :model do
         )
       end
     end
+
+    context "when removing year group params" do
+      let(:params) do
+        { year_groups: %w[year_group_1 year_group_2] }
+      end
+
+      it "returns the placements index page path without the given year group param" do
+        expect(
+          filter_form.index_path_without_filter(
+            filter: "year_groups",
+            value: "year_group_1",
+          ),
+        ).to eq(
+          placements_placements_path(filters: {
+            year_groups: %w[year_group_2],
+          }),
+        )
+      end
+    end
   end
 
   describe "#query_params" do
@@ -142,6 +169,7 @@ describe Placements::Placements::FilterForm, type: :model do
           school_ids: [],
           only_partner_schools: false,
           subject_ids: [],
+          year_groups: [],
           only_available_placements: false,
         },
       )
