@@ -38,5 +38,18 @@ RSpec.describe "Placements", type: :request, service: :placements do
         expect(response.body).to include("Select a provider")
       end
     end
+
+    context "when editing a year group" do
+      it "returns an error message when the year_group is invalid" do
+        placement = create(:placement, school:)
+
+        patch placements_school_placement_path(school, placement), params: {
+          placement: { year_group: nil },
+          edit_path: "edit_year_group",
+        }
+
+        expect(response.body).to include("Select a year group")
+      end
+    end
   end
 end
