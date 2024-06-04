@@ -1,6 +1,11 @@
 en:
   placements:
     placements:
+      table:
+        subject: Subject
+        mentor: Mentor
+        status: Status
+        not_entered: Not entered
       index:
         placements_found:
           zero: No placements found
