@@ -22,6 +22,8 @@ en:
               invalid: Select a mentor or not yet known
             provider_id:
               invalid: Select a provider or not yet known
+            year_group:
+              invalid: Select a year group
   placements:
     schools:
       placements:
@@ -112,6 +114,13 @@ en:
           mentor_not_listed: My mentor is not listed
           you_need_to_add_a_mentor: "You will first need to %{link}."
           add_a_mentor: add a mentor
+        edit_year_group:
+          title: Year group - Manage a placement
+          title_with_error: "Error: Year group - Manage a placement"
+          manage_placement: Manage a placement
+          year_group: Year group
+          continue: Continue
+          cancel: Cancel
         terms:
           autumn: Autumn
           spring: Spring
@@ -154,6 +163,7 @@ en:
               mentor: Mentor
               status: Status
               provider: Provider
+              year_group: Year group
           select_a_mentor: Select a mentor
           add_a_mentor: Add a mentor
           assign_a_provider: Assign a provider
