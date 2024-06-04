@@ -21,11 +21,14 @@ en:
         subject: Subject
         school_phase: School phase
         establishment_group: Establishment group
-        availability: Placements available
-        available_text: Only show placements open to accepting trainees
         gender: Gender
         religious_character: Religious character
         ofsted_rating: Ofsted rating
+        placements_to_show_title: Placements to show
+        placements_to_show:
+          available_placements: Available placements
+          assigned_to_me: Assigned to me
+          all_placements: All placements
         year_group: Primary year group
       show:
         page_title: "%{subject_name} - Placements - %{school_name}"
