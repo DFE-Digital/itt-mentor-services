@@ -57,7 +57,7 @@ class Placements::PlacementsController < ApplicationController
 
   def filter_params
     params.fetch(:filters, {}).permit(
-      :only_available_placements,
+      :placements_to_show,
       :only_partner_schools,
       school_ids: [],
       subject_ids: [],
