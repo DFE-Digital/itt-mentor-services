@@ -6,6 +6,9 @@ class Placements::PlacementsController < ApplicationController
     @subjects = Subject.order_by_name.select(:id, :name)
     @establishment_groups = compact_school_attribute_values(:group)
     @schools = schools_scope.order_by_name.select(:id, :name)
+    @year_groups ||= Placement.year_groups.map do |_, value|
+      OpenStruct.new value:, name: t("placements.schools.placements.year_groups.#{value}"), description: t("placements.schools.placements.year_groups.#{value}_description")
+    end
 
     @pagy, @placements = pagy(
       Placements::PlacementsQuery.call(
@@ -61,6 +64,7 @@ class Placements::PlacementsController < ApplicationController
       school_ids: [],
       subject_ids: [],
       establishment_groups: [],
+      year_groups: [],
     )
   end
 
