@@ -32,14 +32,6 @@ describe Placements::Placements::FilterForm, type: :model do
       end
     end
 
-    context "when given establishment group params" do
-      let(:params) { { establishment_groups: %w[Colleges] } }
-
-      it "returns true" do
-        expect(filter_form).to eq(true)
-      end
-    end
-
     context "when given partner school params" do
       let(:params) { { only_partner_schools: true } }
 
@@ -141,34 +133,14 @@ describe Placements::Placements::FilterForm, type: :model do
         )
       end
     end
-
-    context "when removing establishment group params" do
-      let(:params) do
-        { establishment_groups: ["Academies", "Independent schools"] }
-      end
-
-      it "returns the placements index page path without the given establishment group param" do
-        expect(
-          filter_form.index_path_without_filter(
-            filter: "establishment_groups",
-            value: "Independent schools",
-          ),
-        ).to eq(
-          placements_placements_path(filters: {
-            establishment_groups: %w[Academies],
-          }),
-        )
-      end
-    end
   end
 
   describe "#query_params" do
-    it "returns { only_partner_schools: false, school_ids: [], subject_ids: [], establishment_groups: [] }" do
+    it "returns { only_partner_schools: false, school_ids: [], subject_ids: [] }" do
       expect(described_class.new.query_params).to eq(
         {
           school_ids: [],
           only_partner_schools: false,
-          establishment_groups: [],
           subject_ids: [],
           only_available_placements: false,
         },

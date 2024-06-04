@@ -3,7 +3,6 @@ class Placements::Placements::FilterForm < ApplicationForm
 
   attribute :school_ids, default: []
   attribute :subject_ids, default: []
-  attribute :establishment_groups, default: []
   attribute :only_partner_schools, :boolean, default: false
   attribute :only_available_placements, :boolean, default: false
 
@@ -37,7 +36,6 @@ class Placements::Placements::FilterForm < ApplicationForm
     {
       school_ids:,
       subject_ids:,
-      establishment_groups:,
       only_partner_schools:,
       only_available_placements:,
     }

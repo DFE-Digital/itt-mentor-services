@@ -94,16 +94,6 @@ RSpec.describe "Placements / Placements / View placements list",
       and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
     end
 
-    scenario "User can filter placements by establishment group" do
-      when_i_visit_the_placements_index_page
-      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
-      and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
-      when_i_check_filter_option("establishment-groups", "free-schools")
-      and_i_click_on("Apply filters")
-      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
-      and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
-    end
-
     context "when a filter is pre-selected in the URL params" do
       scenario "User can remove the available filter" do
         when_i_visit_the_placements_index_page({ filters: { only_available_placements: true } })
@@ -150,17 +140,6 @@ RSpec.describe "Placements / Placements / View placements list",
         and_i_can_not_see_any_selected_filters
       end
 
-      scenario "User can remove a establishment group filter" do
-        when_i_visit_the_placements_index_page({ filters: { establishment_groups: ["Free Schools"] } })
-        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
-        and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
-        and_i_can_see_a_preset_filter("Establishment group", "Free Schools")
-        when_i_click_to_remove_filter("Establishment group", "Free Schools")
-        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
-        and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
-        and_i_can_not_see_any_selected_filters
-      end
-
       scenario "User can clear all filters" do
         given_a_partnership_exists_between(provider, primary_school)
         when_i_visit_the_placements_index_page(
@@ -170,7 +149,6 @@ RSpec.describe "Placements / Placements / View placements list",
               only_partner_schools: true,
               school_ids: [primary_school.id],
               subject_ids: [subject_1.id],
-              establishment_groups: ["Free Schools"],
             },
           },
         )
@@ -180,7 +158,6 @@ RSpec.describe "Placements / Placements / View placements list",
         and_i_can_see_a_preset_filter("Partner schools", "Partner schools")
         and_i_can_see_a_preset_filter("School", "Primary School")
         and_i_can_see_a_preset_filter("Subject", "Primary with mathematics")
-        and_i_can_see_a_preset_filter("Establishment group", "Free Schools")
         when_i_click_on("Clear filters")
         then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
         and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")

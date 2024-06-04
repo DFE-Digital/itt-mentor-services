@@ -97,26 +97,6 @@
               <% end %>
             </ul>
           <% end %>
-
-          <% if filter_form.establishment_groups.present? %>
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".establishment_group") %></h3>
-            <ul class="app-filter-tags">
-              <% filter_form.establishment_groups.each do |establishment_group| %>
-                <li>
-                  <%= govuk_link_to(
-                    establishment_group,
-                    filter_form.index_path_without_filter(
-                      filter: "establishment_groups",
-                      value: establishment_group,
-                      search_location:,
-                    ),
-                    class: "app-filter__tag",
-                    no_visited_state: true,
-                  ) %>
-                </li>
-              <% end %>
-            </ul>
-          <% end %>
         </div>
       <% end %>
 
@@ -210,31 +190,6 @@
                 <%= form.govuk_check_box :subject_ids,
                   subject.id,
                   label: { text: subject.name } %>
-              <% end %>
-            <% end %>
-          </div>
-
-          <div class="app-filter__option">
-            <%= form.govuk_text_field(
-              :search_establishment_groups,
-              type: :search,
-              data: {
-                placements_filter_search_target: "establishmentGroupInput",
-                action: "input->placements-filter-search#searchEstablishmentGroup",
-              },
-              label: { text: t(".establishment_group"), size: "s" },
-            ) %>
-
-            <%= form.govuk_check_boxes_fieldset(
-              :establishment_groups,
-              legend: { hidden: true },
-              data: { placements_filter_search_target: "establishmentGroupList" },
-              small: true,
-            ) do %>
-              <% @establishment_groups.each do |establishment_groups| %>
-                <%= form.govuk_check_box :establishment_groups,
-                  establishment_groups,
-                  label: { text: establishment_groups } %>
               <% end %>
             <% end %>
           </div>
