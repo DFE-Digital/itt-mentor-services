@@ -7,7 +7,7 @@ class Placements::PlacementsQuery < ApplicationQuery
     scope = school_condition(scope)
     scope = partner_school_condition(scope)
     scope = subject_condition(scope)
-    scope = only_available_placements_condition(scope)
+    scope = placements_to_show(scope)
     scope = year_group_condition(scope)
     order_condition(scope)
   end
@@ -34,10 +34,15 @@ class Placements::PlacementsQuery < ApplicationQuery
     scope.where(school_id: provider.partner_schools.select(:id))
   end
 
-  def only_available_placements_condition(scope)
-    return scope if filter_params[:only_available_placements].blank?
-
-    scope.where(provider_id: nil)
+  def placements_to_show(scope)
+    case filter_params[:placements_to_show]
+    when "available_placements"
+      scope.where(provider_id: nil)
+    when "assigned_to_me"
+      scope.where(provider_id: params[:current_provider].id)
+    else
+      scope
+    end
   end
 
   def year_group_condition(scope)
