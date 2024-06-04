@@ -25,5 +25,18 @@ RSpec.describe "Placements", type: :request, service: :placements do
         expect(response.body).to include("Select a mentor or not yet known")
       end
     end
+
+    context "when editing a provider" do
+      it "returns an error message when the provider_id is not present" do
+        placement = create(:placement, school:)
+
+        patch placements_school_placement_path(school, placement), params: {
+          placement: { provider_id: "" },
+          edit_path: "edit_provider",
+        }
+
+        expect(response.body).to include("Select a provider")
+      end
+    end
   end
 end
