@@ -35,6 +35,7 @@ class Placement < ApplicationRecord
 
   accepts_nested_attributes_for :mentors, allow_destroy: true
 
+  attribute :year_group, :string
   enum :year_group, {
     year_1: "year_1",
     year_2: "year_2",
