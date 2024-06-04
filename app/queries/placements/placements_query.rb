@@ -8,6 +8,7 @@ class Placements::PlacementsQuery < ApplicationQuery
     scope = partner_school_condition(scope)
     scope = subject_condition(scope)
     scope = only_available_placements_condition(scope)
+    scope = year_group_condition(scope)
     order_condition(scope)
   end
 
@@ -37,6 +38,12 @@ class Placements::PlacementsQuery < ApplicationQuery
     return scope if filter_params[:only_available_placements].blank?
 
     scope.where(provider_id: nil)
+  end
+
+  def year_group_condition(scope)
+    return scope if filter_params[:year_groups].blank?
+
+    scope.where(year_group: filter_params[:year_groups])
   end
 
   def filter_params
