@@ -13,7 +13,7 @@
         <% if support %>
           <% row.with_cell(text: govuk_link_to(
             placement.title,
-            placements_support_school_placement_path(@school, placement),
+            placements_support_school_placement_path(school, placement),
           )) %>
         <% else %>
           <% row.with_cell(text: govuk_link_to(
