@@ -262,15 +262,6 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
     uncheck(text)
   end
 
-  def then_i_tamper_with_the_form_url
-    page.execute_script("document.querySelector('form').action = '/schools/#{school.id}/placements/#{placement.id}?edit_path=fake_path'")
-  end
-
-  def then_i_should_see_the_placement_show_page_with_notice
-    expect(page).to have_current_path(placements_school_placement_path(school, placement))
-    expect(page).to have_content("Sorry, there’s a problem with the service")
-  end
-
   alias_method :and_i_click_on, :when_i_click_on
   alias_method :and_i_uncheck, :when_i_uncheck
 end

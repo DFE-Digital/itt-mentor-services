@@ -66,7 +66,7 @@ class Placements::Schools::PlacementsController < ApplicationController
       return true
     end
 
-    if mentor_ids.present? && mentor_ids.all? { |id| Placements::Mentor.exists?(id:) && @school.mentors.exists?(id:) }
+    if mentor_ids.present? && mentor_ids.all? { |id| @school.mentors.exists?(id:) }
       true
     else
       @placement.errors.add(:mentor_ids, :invalid)
