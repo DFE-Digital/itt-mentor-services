@@ -162,7 +162,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   def then_i_see_the_navigation_bars_with_organisations_and_users_selected(organisation)
     within(".app-primary-navigation__nav") do
       expect(page).to have_link "Organisations", current: "page"
-      expect(page).to have_link "Users", current: "false"
+      expect(page).to have_link "Support users", current: "false"
     end
 
     within(".app-secondary-navigation") do
@@ -257,7 +257,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   def then_i_see_support_navigation_with_organisation_selected
     within(".app-primary-navigation__nav") do
       expect(page).to have_link "Organisations", current: "page"
-      expect(page).to have_link "Users", current: "false"
+      expect(page).to have_link "Support users", current: "false"
     end
   end
 end

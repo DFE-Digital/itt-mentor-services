@@ -208,7 +208,7 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
   def expect_organisations_to_be_selected_in_primary_navigation
     within(".app-primary-navigation__nav") do
       expect(page).to have_link "Organisations", current: "page"
-      expect(page).to have_link "Users", current: "false"
+      expect(page).to have_link "Support users", current: "false"
     end
   end
 

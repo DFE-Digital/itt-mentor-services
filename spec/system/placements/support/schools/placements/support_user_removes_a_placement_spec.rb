@@ -73,7 +73,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User remove
   def organisations_is_selected_in_primary_nav
     within(".app-primary-navigation__nav") do
       expect(page).to have_link "Organisations", current: "page"
-      expect(page).to have_link "Users", current: "false"
+      expect(page).to have_link "Support users", current: "false"
     end
   end
 

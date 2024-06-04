@@ -91,7 +91,7 @@ RSpec.describe "Support User adds a Provider without JavaScript", type: :system,
   def then_i_see_support_navigation_with_organisation_selected
     within(".app-primary-navigation__nav") do
       expect(page).to have_link "Organisations", current: "page"
-      expect(page).to have_link "Users", current: "false"
+      expect(page).to have_link "Support users", current: "false"
     end
   end
 

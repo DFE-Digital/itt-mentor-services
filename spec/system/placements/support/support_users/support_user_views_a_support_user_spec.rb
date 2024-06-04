@@ -20,7 +20,7 @@ RSpec.describe "Placements / Support Users / Support user views a support user",
 
   def and_i_visit_the_support_users_page
     within(".app-primary-navigation nav") do
-      click_on "Users"
+      click_on "Support users"
     end
   end
 
