@@ -105,6 +105,7 @@ scope module: :placements,
         member { get :remove }
         get :edit_provider, on: :member
         get :edit_mentors, on: :member
+        get :edit_year_group, on: :member
 
         scope module: :placements do
           resources :build do
