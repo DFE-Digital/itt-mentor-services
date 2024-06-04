@@ -28,6 +28,7 @@ class Placements::Schools::PlacementsController < ApplicationController
       redirect_to placements_school_placement_path(@school, @placement), flash: { success: t(".success") }
     else
       @mentors = @school.mentors.all if params[:edit_path] == "edit_mentors"
+      @providers = @school.partner_providers.all if params[:edit_path] == "edit_provider"
 
       render params[:edit_path]
     end
@@ -54,7 +55,7 @@ class Placements::Schools::PlacementsController < ApplicationController
 
   def valid_attributes?
     if params[:edit_path] == "edit_provider"
-      placement_params[:provider_id].present?
+      valid_provider_id?
     else # params[:edit_path] == "edit_mentors"
       valid_mentor_ids?(placement_params[:mentor_ids].compact_blank)
     end
@@ -72,6 +73,13 @@ class Placements::Schools::PlacementsController < ApplicationController
       @placement.errors.add(:mentor_ids, :invalid)
       false
     end
+  end
+
+  def valid_provider_id?
+    return true if placement_params[:provider_id].present?
+
+    @placement.errors.add(:provider_id, :invalid)
+    false
   end
 
   def placement_params
