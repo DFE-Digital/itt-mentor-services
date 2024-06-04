@@ -6,10 +6,6 @@ en:
           index:
             page_title: Placements
             placements: Placements
-            subject: Subject
-            mentor: Mentor
-            status: Status
-            not_entered: Not entered
             add_placement: Add placement
           remove:
             page_title: "Are you sure you want to remove this placement? - %{subject_names}"
