@@ -14,11 +14,13 @@
           <% row.with_cell(text: govuk_link_to(
             placement.title,
             placements_support_school_placement_path(school, placement),
+            no_visited_state: true,
           )) %>
         <% else %>
           <% row.with_cell(text: govuk_link_to(
             placement.title,
             placements_school_placement_path(school, placement),
+            no_visited_state: true,
           )) %>
         <% end %>
         <% row.with_cell(text: placement.mentor_names) %>

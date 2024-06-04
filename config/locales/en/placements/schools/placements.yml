@@ -135,10 +135,6 @@ en:
         index:
           page_title: Placements
           placements: Placements
-          subject: Subject
-          mentor: Mentor
-          status: Status
-          not_entered: Not entered
           add_placement: Add placement
           you_must_add_itt_placement_contact: |
             You must add the %{link_to} email before adding a placement
