@@ -132,6 +132,7 @@ describe Placements::Placements::FilterForm, type: :model do
           ),
         ).to eq(
           placements_placements_path(filters: {
+            placements_to_show: "available_placements",
             year_groups: %w[year_group_2],
           }),
         )
@@ -148,7 +149,6 @@ describe Placements::Placements::FilterForm, type: :model do
           only_partner_schools: false,
           subject_ids: [],
           year_groups: [],
-          only_available_placements: false,
         },
       )
     end
