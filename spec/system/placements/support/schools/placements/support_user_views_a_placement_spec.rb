@@ -2,71 +2,165 @@ require "rails_helper"
 
 RSpec.describe "Placements / Support / Schools / Placement / Support User views a placement",
                type: :system, service: :placements do
-  let(:school) { create(:placements_school, name: "School 1", phase: "All-through") }
-  let(:placement) do
-    create(:placement, school:, subject:)
-  end
+  let(:school) { create(:placements_school, name: "School 1", phase:) }
   let(:mentor) { create(:placements_mentor) }
-  let!(:subject) { create(:subject, name: "Maths", subject_area: :primary) }
+  let(:phase) { "All-through" }
+  let(:year_group) { :year_1 }
+  let!(:primary_subject) { create(:subject, name: "Primary with science", subject_area: :primary) }
+  let!(:secondary_subject) { create(:subject, name: "Maths", subject_area: :secondary) }
 
   before do
     school
     given_i_sign_in_as_colin
   end
 
-  context "when there are no mentors assigned to a placement", js: true do
-    scenario "Support User views a school placement's details" do
-      when_i_visit_the_support_show_page_for(school, placement)
-      then_i_see_the_placement_details(
-        school_name: "School 1",
-        school_level: "Primary",
-        subject: "Maths",
-        mentors: ["Not yet known"],
-      )
+  describe "school phases" do
+    context "when the school phase is All-through" do
+      let(:placement) do
+        create(:placement, school:, subject: primary_subject, year_group:)
+      end
+
+      scenario "Support User views a school placement's details, with school level displayed" do
+        when_i_visit_the_support_show_page_for(school, placement)
+        then_i_see_the_placement_details(
+          school_name: "School 1",
+          school_level: "Primary",
+          year_group: "Year 1",
+          subject: "Primary with science",
+          mentors: ["Not yet known"],
+          provider: "Not yet known",
+        )
+      end
+    end
+
+    context "when the school phase is Primary" do
+      let(:phase) { "Primary" }
+      let(:placement) do
+        create(:placement, school:, subject: primary_subject, year_group:)
+      end
+
+      scenario "Support User views a school placement's details, with no school level displayed" do
+        when_i_visit_the_support_show_page_for(school, placement)
+        then_i_see_the_placement_details(
+          school_name: "School 1",
+          year_group: "Year 1",
+          subject: "Primary with science",
+          mentors: ["Not yet known"],
+          provider: "Not yet known",
+        )
+      end
+    end
+
+    context "when the school phase is Secondary" do
+      let(:phase) { "Secondary" }
+      let(:placement) do
+        create(:placement, school:, subject: secondary_subject)
+      end
+
+      scenario "Support User views a school placement's details, with no school level displayed" do
+        when_i_visit_the_support_show_page_for(school, placement)
+        then_i_see_the_placement_details(
+          school_name: "School 1",
+          subject: "Maths",
+          mentors: ["Not yet known"],
+          provider: "Not yet known",
+        )
+      end
     end
   end
 
-  context "when there there is one mentor assigned to a placement" do
-    let(:placement) do
-      create(:placement, school:, mentors: [mentor], subject:)
+  describe "mentors" do
+    context "when there are no mentors assigned to a placement" do
+      let(:placement) do
+        create(:placement, school:, subject: primary_subject, year_group:)
+      end
+
+      scenario "Support User views a school placement's details" do
+        when_i_visit_the_support_show_page_for(school, placement)
+        then_i_see_the_placement_details(
+          school_name: "School 1",
+          school_level: "Primary",
+          year_group: "Year 1",
+          subject: "Primary with science",
+          mentors: ["Not yet known"],
+          provider: "Not yet known",
+        )
+      end
     end
 
-    scenario "Support User views a school placement's details" do
-      when_i_visit_the_support_show_page_for(school, placement)
-      then_i_see_the_placement_details(
-        school_name: "School 1",
-        school_level: "Primary",
-        subject: "Maths",
-        mentors: placement.mentors.map(&:full_name),
-      )
+    context "when there there is one mentor assigned to a placement" do
+      let(:placement) do
+        create(:placement, school:, mentors: [mentor], subject: primary_subject, year_group:)
+      end
+
+      scenario "Support User views a school placement's details, with mentor name displayed" do
+        when_i_visit_the_support_show_page_for(school, placement)
+        then_i_see_the_placement_details(
+          school_name: "School 1",
+          school_level: "Primary",
+          year_group: "Year 1",
+          subject: "Primary with science",
+          mentors: [mentor.full_name],
+          provider: "Not yet known",
+        )
+      end
+    end
+
+    context "when there are multiple mentors assigned to a placement" do
+      let(:placement) do
+        create(:placement, school:, mentors: [mentor, create(:placements_mentor)],
+                           subject: primary_subject, year_group:)
+      end
+
+      scenario "Support User views a school placement's details, with all mentor names displayed" do
+        when_i_visit_the_support_show_page_for(school, placement)
+        then_i_see_the_placement_details(
+          school_name: "School 1",
+          school_level: "Primary",
+          year_group: "Year 1",
+          subject: "Primary with science",
+          mentors: placement.mentors.map(&:full_name),
+          provider: "Not yet known",
+        )
+      end
     end
   end
 
-  context "when there are multiple mentors assigned to a placement" do
-    let(:placement) do
-      create(:placement, school:, mentors: [mentor, create(:placements_mentor)], subject:)
+  describe "provider" do
+    context "when there is no provider assigned to a placement" do
+      let(:placement) do
+        create(:placement, school:, subject: secondary_subject)
+      end
+
+      scenario "Support User views a school placement's details" do
+        when_i_visit_the_support_show_page_for(school, placement)
+        then_i_see_the_placement_details(
+          school_name: "School 1",
+          school_level: "Secondary",
+          subject: "Maths",
+          mentors: ["Not yet known"],
+          provider: "Not yet known",
+        )
+      end
     end
 
-    scenario "Support User views a school placement's details" do
-      when_i_visit_the_support_show_page_for(school, placement)
-      then_i_see_the_placement_details(
-        school_name: "School 1",
-        school_level: "Primary",
-        subject: "Maths",
-        mentors: placement.mentors.map(&:full_name),
-      )
-    end
-  end
+    context "when there is a provider assigned to a placement, with provider name displayed" do
+      let(:provider) { create(:placements_provider) }
+      let(:placement) do
+        create(:placement, school:, subject: secondary_subject, provider:)
+      end
 
-  context "when there is one subject assigned to a placement" do
-    scenario "Support User views a school placement's details" do
-      when_i_visit_the_support_show_page_for(school, placement)
-      then_i_see_the_placement_details(
-        school_name: "School 1",
-        school_level: "Primary",
-        subject: "Maths",
-        mentors: placement.mentors.map(&:full_name),
-      )
+      scenario "Support User views a school placement's details" do
+        when_i_visit_the_support_show_page_for(school, placement)
+        then_i_see_the_placement_details(
+          school_name: "School 1",
+          school_level: "Secondary",
+          subject: "Maths",
+          mentors: ["Not yet known"],
+          provider: provider.name,
+          status: "Unavailable",
+        )
+      end
     end
   end
 
@@ -95,16 +189,32 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
     visit placements_support_school_placement_path(school, placement)
   end
 
-  def then_i_see_the_placement_details(school_name:, school_level:, subject:, mentors:)
+  def then_i_see_the_placement_details(school_name:, subject:, mentors:,
+                                       provider:, school_level: nil,
+                                       year_group: nil,
+                                       status: "Available")
     expect(page).to have_content(school_name)
     expect(page).to have_content(subject)
+    expect(page).to have_content(status)
 
     within(".govuk-summary-list") do
-      expect(page).to have_content(school_level)
+      if school.phase == "All-through"
+        expect(page).to have_content("School level")
+        expect(page).to have_content(school_level)
+      else
+        expect(page).not_to have_content("School level")
+      end
+      if placement.year_group.present?
+        expect(page).to have_content("Year group")
+        expect(page).to have_content(year_group)
+      else
+        expect(page).not_to have_content("Year group")
+      end
       expect(page).to have_content(subject)
       mentors.each do |mentor|
         expect(page).to have_content(mentor)
       end
+      expect(page).to have_content(provider)
     end
   end
 end

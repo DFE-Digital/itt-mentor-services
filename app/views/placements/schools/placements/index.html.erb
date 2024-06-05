@@ -8,7 +8,7 @@
         <%= govuk_button_to(t(".add_placement"), new_placements_school_placement_build_path(@school, placement_id: "new_placement"), method: :get) %>
 
         <% if @placements.any? %>
-          <%= render "placements/placements/table", school: @school, placements: @placements %>
+          <%= render "placements/schools/placements/table", school: @school, placements: @placements %>
           <%= render PaginationComponent.new(pagy: @pagy) %>
         <% else %>
           <p>
