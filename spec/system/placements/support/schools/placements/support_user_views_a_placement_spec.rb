@@ -30,6 +30,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
           mentors: ["Not yet known"],
           provider: "Not yet known",
         )
+        and_should_not_see_any_change_links
       end
     end
 
@@ -48,6 +49,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
           mentors: ["Not yet known"],
           provider: "Not yet known",
         )
+        and_should_not_see_any_change_links
       end
     end
 
@@ -65,6 +67,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
           mentors: ["Not yet known"],
           provider: "Not yet known",
         )
+        and_should_not_see_any_change_links
       end
     end
   end
@@ -85,6 +88,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
           mentors: ["Not yet known"],
           provider: "Not yet known",
         )
+        and_should_not_see_any_change_links
       end
     end
 
@@ -103,6 +107,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
           mentors: [mentor.full_name],
           provider: "Not yet known",
         )
+        and_should_not_see_any_change_links
       end
     end
 
@@ -122,6 +127,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
           mentors: placement.mentors.map(&:full_name),
           provider: "Not yet known",
         )
+        and_should_not_see_any_change_links
       end
     end
   end
@@ -141,6 +147,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
           mentors: ["Not yet known"],
           provider: "Not yet known",
         )
+        and_should_not_see_any_change_links
       end
     end
 
@@ -160,6 +167,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
           provider: provider.name,
           status: "Unavailable",
         )
+        and_should_not_see_any_change_links
       end
     end
   end
@@ -216,5 +224,12 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
       end
       expect(page).to have_content(provider)
     end
+  end
+
+  def and_should_not_see_any_change_links
+    expect(page).not_to have_content("Change")
+    expect(page).not_to have_content("Add a mentor")
+    expect(page).not_to have_content("Assign a provider")
+    expect(page).not_to have_content("Add a partner provider")
   end
 end
