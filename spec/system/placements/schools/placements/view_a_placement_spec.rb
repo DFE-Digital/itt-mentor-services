@@ -188,12 +188,16 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     placement.update!(subject:)
 
     child_subjects.each do |child_subject|
+      child_subject.update!(parent_subject: subject)
       Placements::PlacementAdditionalSubject.create!(placement:, subject: child_subject)
     end
   end
 
   def then_i_see_all_of_the_subjects_names_in_the_placement_details(additional_subject_names)
     expect(page.find(".govuk-heading-l")).to have_content(additional_subject_names.sort.to_sentence)
+    within(".govuk-summary-list") do
+      expect(page).to have_content(additional_subject_names.sort.to_sentence)
+    end
   end
 
   def given_a_placement_with_no_mentor; end
