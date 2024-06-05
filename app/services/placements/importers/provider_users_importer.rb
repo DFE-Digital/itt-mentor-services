@@ -74,7 +74,7 @@ module Placements
         end
 
         if user_instance.save
-          User::Invite.call(user_instance, provider) if new_user_association
+          User::Invite.call(user: user_instance, organisation: provider) if new_user_association
           @successful_count += 1
         else
           Rails.logger.error("Failed to import user for #{provider.name}: #{user_instance.errors.full_messages.to_sentence}")

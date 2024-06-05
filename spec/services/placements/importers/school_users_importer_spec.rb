@@ -48,13 +48,13 @@ RSpec.describe Placements::Importers::SchoolUsersImporter do
         school
         described_class.call(csv_path)
         described_class.call(csv_path)
-        expect(User::Invite).to have_received(:call).with(an_instance_of(Placements::User), school).once
+        expect(User::Invite).to have_received(:call).with(user: an_instance_of(Placements::User), organisation: school).once
       end
 
       it "sends an invite to the user" do
         school
         described_class.call(csv_path)
-        expect(User::Invite).to have_received(:call).with(an_instance_of(Placements::User), school)
+        expect(User::Invite).to have_received(:call).with(user: an_instance_of(Placements::User), organisation: school)
       end
 
       context "when a user is in two schools" do

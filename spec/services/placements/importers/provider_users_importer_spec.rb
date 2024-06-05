@@ -48,13 +48,13 @@ RSpec.describe Placements::Importers::ProviderUsersImporter do
         provider
         described_class.call(csv_path)
         described_class.call(csv_path)
-        expect(User::Invite).to have_received(:call).with(an_instance_of(Placements::User), provider).once
+        expect(User::Invite).to have_received(:call).with(user: an_instance_of(Placements::User), organisation: provider).once
       end
 
       it "sends an invite to the user" do
         provider
         described_class.call(csv_path)
-        expect(User::Invite).to have_received(:call).with(an_instance_of(Placements::User), provider).once
+        expect(User::Invite).to have_received(:call).with(user: an_instance_of(Placements::User), organisation: provider).once
       end
 
       context "when a user is in two provider organisations" do
