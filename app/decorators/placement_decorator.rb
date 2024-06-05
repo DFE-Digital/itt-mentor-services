@@ -14,7 +14,7 @@ class PlacementDecorator < Draper::Decorator
 
   def title
     placement_title = if additional_subjects.present?
-                        additional_subject_names.to_sentence
+                        additional_subject_names
                       else
                         subject_name
                       end
@@ -32,6 +32,6 @@ class PlacementDecorator < Draper::Decorator
   end
 
   def additional_subject_names
-    additional_subjects.map(&:name).sort
+    additional_subjects.map(&:name).sort.to_sentence
   end
 end

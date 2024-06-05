@@ -108,7 +108,7 @@ RSpec.describe PlacementDecorator do
 
       placement = create(:placement, subject:, additional_subjects:)
 
-      expect(placement.decorate.additional_subject_names).to eq(%w[French Spanish])
+      expect(placement.decorate.additional_subject_names).to eq("French and Spanish")
     end
   end
 end
