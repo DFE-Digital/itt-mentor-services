@@ -4,6 +4,7 @@ en:
       organisations:
         users:
           details:
+            caption: Users - %{organisation_name}
             attributes:
               users:
                 first_name: First name
