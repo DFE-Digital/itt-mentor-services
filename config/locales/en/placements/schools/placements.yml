@@ -27,6 +27,10 @@ en:
   placements:
     schools:
       placements:
+        table:
+          subject: Subject
+          mentor: Mentor
+          status: Status
         build:
           add_phase:
             title: Phase - Add placement
@@ -150,6 +154,13 @@ en:
           itt_placement_contact: ITT placement contact
         show:
           delete_placement: Delete placement
+        details:
+          select_a_mentor: Select a mentor
+          add_a_mentor: Add a mentor
+          assign_a_provider: Assign a provider
+          add_a_partner_provider: Add a partner provider
+          not_yet_known: Not yet known
+          change: Change
           attributes:
             placements:
               school_level: School level
@@ -159,12 +170,6 @@ en:
               mentor: Mentor
               status: Status
               provider: Provider
-              year_group: Year group
-          select_a_mentor: Select a mentor
-          add_a_mentor: Add a mentor
-          assign_a_provider: Assign a provider
-          add_a_partner_provider: Add a partner provider
-          change: Change
         remove:
           page_title: "Are you sure you want to delete this placement? - %{subject_names}"
           are_you_sure: Are you sure you want to delete this placement?

@@ -9,7 +9,7 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l"><%= t(".placements") %></h1>
       <% if @placements.any? %>
-        <%= render "placements/placements/table", school: @school, placements: @placements, support: true %>
+        <%= render "placements/schools/placements/table", school: @school, placements: @placements, support: true %>
         <%= render PaginationComponent.new(pagy: @pagy) %>
       <% else %>
         <p>
