@@ -100,6 +100,17 @@ RSpec.describe "Placements / Placements / Searching for a placements list",
     end
   end
 
+  context "when searching for a location that doesn't exist" do
+    before { stub_unknown_geocoder_search }
+
+    scenario "User sees a message that no placements were found" do
+      when_i_visit_the_placements_index_page
+      and_i_fill_in_location_search_with("Chicken")
+      and_i_click_on("Search")
+      expect(page).to have_content("There are no results for the selected filter.")
+    end
+  end
+
   private
 
   def given_i_sign_in_as_patricia
@@ -177,6 +188,14 @@ RSpec.describe "Placements / Placements / Searching for a placements list",
     geocoder_result = instance_double("geocoder_result")
     allow(geocoder_results).to receive(:first).and_return(geocoder_result)
     allow(geocoder_result).to receive(:coordinates).and_return([51.23622, -0.570409])
+    allow(Geocoder).to receive(:search).and_return(geocoder_results)
+  end
+
+  def stub_unknown_geocoder_search
+    geocoder_results = instance_double("geocoder_results")
+    geocoder_result = instance_double("geocoder_result")
+    allow(geocoder_results).to receive(:first).and_return(geocoder_result)
+    allow(geocoder_result).to receive(:coordinates).and_return([55.378051, -3.435973])
     allow(Geocoder).to receive(:search).and_return(geocoder_results)
   end
 end
