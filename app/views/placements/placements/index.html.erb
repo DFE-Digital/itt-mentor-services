@@ -6,7 +6,7 @@
     <%= t(".placements") %>
   </h1>
   <h2 class="govuk-heading-m">
-    <%= t(".placements_found", count: @placements.count) %>
+    <%= t(".placements_found", count: @pagy.count) %>
   </h2>
   <div>
     <button class="govuk-button govuk-button--secondary show-filter-button" type="button" data-action="click->filter#open">
