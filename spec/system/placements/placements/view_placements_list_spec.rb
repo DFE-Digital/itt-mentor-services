@@ -246,6 +246,18 @@ RSpec.describe "Placements / Placements / View placements list",
           and_i_can_see_search_location_is_set_as("London")
           and_i_see_placements_for(school_name: "Primary School", list_item: 0, distance: 0.0)
         end
+
+        scenario "User can clear the location search, and the filters persist" do
+          when_i_visit_the_placements_index_page(
+            { search_location: "London", filters: { school_ids: [primary_school.id] } },
+          )
+          and_i_can_see_search_location_is_set_as("London")
+          and_i_can_see_a_preset_filter("School", "Primary School")
+          when_i_click_on("Clear search")
+          then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+          and_i_can_see_a_preset_filter("School", "Primary School")
+          and_i_can_see_search_location_is_set_as("")
+        end
       end
     end
 
