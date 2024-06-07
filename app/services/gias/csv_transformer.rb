@@ -57,7 +57,11 @@ module Gias
 
     class School
       OPEN_SCHOOL = "1".freeze
-      NON_ENGLISH_ESTABLISHMENTS = %w[8 10 25 24 26 27 29 30 32 37 49 56 57].freeze
+      # Code | Establishment type
+      # 25   | Offshore schools
+      # 30   | Welsh establishment
+      # 37   | British schools overseas
+      NON_ENGLISH_ESTABLISHMENTS = %w[25 30 37].freeze
 
       attr_reader :row
 
