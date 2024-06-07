@@ -3,10 +3,10 @@ require "rails_helper"
 RSpec.describe "Placements / Support / Providers / Partner schools / View a partner school as support user",
                type: :system,
                service: :placements do
-  let!(:provider) { create(:placements_provider) }
-  let!(:another_provider) { create(:placements_provider) }
-  let!(:school) { create(:placements_school, urn: "1234") }
-  let!(:another_school) { create(:placements_school, urn: "5678") }
+  let!(:provider) { create(:placements_provider, name: "Springfield Community College") }
+  let!(:another_provider) { create(:placements_provider, name: "Burns University") }
+  let!(:school) { create(:placements_school, name: "Springfield Elementary School", urn: "1234") }
+  let!(:another_school) { create(:placements_school, name: "Shelbyville Elementary School", urn: "5678") }
 
   before do
     given_i_am_signed_in_as_a_support_user

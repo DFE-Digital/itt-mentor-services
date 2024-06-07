@@ -3,10 +3,10 @@ require "rails_helper"
 RSpec.describe "Placements / Providers / Partner schools / View a list of partner schools",
                type: :system,
                service: :placements do
-  let!(:provider) { create(:placements_provider) }
-  let!(:another_provider) { create(:placements_provider) }
-  let!(:school) { create(:placements_school, urn: "1234") }
-  let!(:another_school) { create(:placements_school, urn: "5678") }
+  let!(:provider) { create(:placements_provider, name: "Springfield Community College") }
+  let!(:another_provider) { create(:placements_provider, name: "Burns University") }
+  let!(:school) { create(:placements_school, name: "Springfield Elementary School", urn: "1234") }
+  let!(:another_school) { create(:placements_school, name: "Shelbyville Elementary School", urn: "5678") }
 
   scenario "User views provider partner schools page where provider has no partner schools" do
     given_i_sign_in_as_patricia
