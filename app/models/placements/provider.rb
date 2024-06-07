@@ -26,7 +26,11 @@
 # Indexes
 #
 #  index_providers_on_code                (code) UNIQUE
+#  index_providers_on_name_trigram        (name) USING gin
 #  index_providers_on_placements_service  (placements_service)
+#  index_providers_on_postcode_trigram    (postcode) USING gin
+#  index_providers_on_ukprn_trigram       (ukprn) USING gin
+#  index_providers_on_urn_trigram         (urn) USING gin
 #
 class Placements::Provider < Provider
   default_scope { placements_service }

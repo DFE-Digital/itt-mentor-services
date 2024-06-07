@@ -53,10 +53,13 @@
 #  index_schools_on_claims_service                          (claims_service)
 #  index_schools_on_latitude                                (latitude)
 #  index_schools_on_longitude                               (longitude)
+#  index_schools_on_name_trigram                            (name) USING gin
 #  index_schools_on_placements_service                      (placements_service)
+#  index_schools_on_postcode_trigram                        (postcode) USING gin
 #  index_schools_on_region_id                               (region_id)
 #  index_schools_on_trust_id                                (trust_id)
 #  index_schools_on_urn                                     (urn) UNIQUE
+#  index_schools_on_urn_trigram                             (urn) USING gin
 #
 # Foreign Keys
 #
