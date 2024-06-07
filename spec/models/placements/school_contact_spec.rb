@@ -24,6 +24,11 @@ RSpec.describe Placements::SchoolContact, type: :model do
     it { is_expected.to belong_to(:school) }
   end
 
+  describe "normalisations" do
+    it { is_expected.to normalize(:name).from("  Name  ").to("Name") }
+    it { is_expected.to normalize(:email_address).from("EmAiL@eXaMPlE.cOm ").to("email@example.com") }
+  end
+
   describe "validations" do
     it { is_expected.to validate_presence_of(:email_address) }
     it { is_expected.to allow_value("name@education.gov.uk").for(:email_address) }

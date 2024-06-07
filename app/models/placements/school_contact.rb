@@ -21,6 +21,9 @@ class Placements::SchoolContact < ApplicationRecord
   belongs_to :school
   before_destroy :prevent_destroy
 
+  normalizes :name, with: ->(value) { value.strip }
+  normalizes :email_address, with: ->(value) { value.strip.downcase }
+
   validates :email_address, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   def prevent_destroy
