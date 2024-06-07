@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_03_102641) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_07_105222) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -264,7 +264,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_03_102641) do
     t.string "postcode"
     t.boolean "accredited", default: false
     t.index ["code"], name: "index_providers_on_code", unique: true
+    t.index ["name"], name: "index_providers_on_name_trigram", opclass: :gin_trgm_ops, using: :gin
     t.index ["placements_service"], name: "index_providers_on_placements_service"
+    t.index ["postcode"], name: "index_providers_on_postcode_trigram", opclass: :gin_trgm_ops, using: :gin
+    t.index ["ukprn"], name: "index_providers_on_ukprn_trigram", opclass: :gin_trgm_ops, using: :gin
+    t.index ["urn"], name: "index_providers_on_urn_trigram", opclass: :gin_trgm_ops, using: :gin
   end
 
   create_table "regions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -333,10 +337,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_03_102641) do
     t.index ["claims_service"], name: "index_schools_on_claims_service"
     t.index ["latitude"], name: "index_schools_on_latitude"
     t.index ["longitude"], name: "index_schools_on_longitude"
+    t.index ["name"], name: "index_schools_on_name_trigram", opclass: :gin_trgm_ops, using: :gin
     t.index ["placements_service"], name: "index_schools_on_placements_service"
+    t.index ["postcode"], name: "index_schools_on_postcode_trigram", opclass: :gin_trgm_ops, using: :gin
     t.index ["region_id"], name: "index_schools_on_region_id"
     t.index ["trust_id"], name: "index_schools_on_trust_id"
     t.index ["urn"], name: "index_schools_on_urn", unique: true
+    t.index ["urn"], name: "index_schools_on_urn_trigram", opclass: :gin_trgm_ops, using: :gin
   end
 
   create_table "subjects", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
