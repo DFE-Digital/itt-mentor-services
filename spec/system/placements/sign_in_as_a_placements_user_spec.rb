@@ -66,6 +66,18 @@ RSpec.describe "Sign In as a Placements User", type: :system, service: :placemen
     end
   end
 
+  context "when the user has both a support and non-support account" do
+    scenario "I sign in as user colin and accesses the support user page" do
+      given_there_is_an_existing_user_for("Colin")
+      given_there_is_an_existing_support_user_for("Colin")
+      and_there_are_placement_organisations
+
+      when_i_visit_the_sign_in_path
+      when_i_click_sign_in
+      then_i_see_a_list_of_organisations
+    end
+  end
+
   private
 
   def given_there_is_an_existing_user_for(user_name)

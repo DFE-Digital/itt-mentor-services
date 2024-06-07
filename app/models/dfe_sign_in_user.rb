@@ -55,7 +55,7 @@ class DfESignInUser
   end
 
   def user
-    @user ||= user_by_uid || user_by_email
+    @user ||= support_user || non_support_user
   end
 
   def self.end_session!(session)
@@ -64,17 +64,13 @@ class DfESignInUser
 
   private
 
-  def user_by_uid
-    return if dfe_sign_in_uid.blank?
-
+  def support_user
     support_user_klass.find_by(dfe_sign_in_uid:) ||
-      user_klass.find_by(dfe_sign_in_uid:)
+      support_user_klass.find_by(email:)
   end
 
-  def user_by_email
-    return if email.blank?
-
-    support_user_klass.find_by(email:) ||
+  def non_support_user
+    user_klass.find_by(dfe_sign_in_uid:) ||
       user_klass.find_by(email:)
   end
 
