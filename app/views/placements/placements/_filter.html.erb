@@ -26,6 +26,45 @@
             </div>
           </div>
 
+          <% if filter_form.subject_ids.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".subject") %></h3>
+            <ul class="app-filter-tags">
+              <% filter_form.subjects.each do |subject| %>
+                <li>
+                  <%= govuk_link_to(
+                        subject.name,
+                        filter_form.index_path_without_filter(
+                          filter: "subject_ids",
+                          value: subject.id,
+                          search_location:,
+                        ),
+                        class: "app-filter__tag",
+                        no_visited_state: true,
+                      ) %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+
+          <% if filter_form.year_groups.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".year_group") %></h3>
+            <ul class="app-filter-tags">
+              <% filter_form.year_groups.each do |year_group| %>
+                <li>
+                  <%= govuk_link_to(
+                        t("placements.schools.placements.year_groups.#{year_group}"),
+                        filter_form.index_path_without_filter(
+                          filter: "year_groups",
+                          value: year_group,
+                        ),
+                        class: "app-filter__tag",
+                        no_visited_state: true,
+                      ) %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+
           <% if filter_form.only_partner_schools.present? %>
             <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".partner_schools") %></h3>
             <ul class="app-filter-tags">
@@ -59,45 +98,6 @@
                     class: "app-filter__tag",
                     no_visited_state: true,
                   ) %>
-                </li>
-              <% end %>
-            </ul>
-          <% end %>
-
-          <% if filter_form.subject_ids.present? %>
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".subject") %></h3>
-            <ul class="app-filter-tags">
-              <% filter_form.subjects.each do |subject| %>
-                <li>
-                  <%= govuk_link_to(
-                    subject.name,
-                    filter_form.index_path_without_filter(
-                      filter: "subject_ids",
-                      value: subject.id,
-                      search_location:,
-                    ),
-                    class: "app-filter__tag",
-                    no_visited_state: true,
-                  ) %>
-                </li>
-              <% end %>
-            </ul>
-          <% end %>
-
-          <% if filter_form.year_groups.present? %>
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".year_group") %></h3>
-            <ul class="app-filter-tags">
-              <% filter_form.year_groups.each do |year_group| %>
-                <li>
-                  <%= govuk_link_to(
-                        t("placements.schools.placements.year_groups.#{year_group}"),
-                        filter_form.index_path_without_filter(
-                          filter: "year_groups",
-                          value: year_group,
-                        ),
-                        class: "app-filter__tag",
-                        no_visited_state: true,
-                      ) %>
                 </li>
               <% end %>
             </ul>
@@ -142,6 +142,45 @@
           </div>
 
           <div class="app-filter__option">
+            <%= form.govuk_text_field(
+                  :search_subject,
+                  type: :search,
+                  data: {
+                    placements_filter_search_target: "subjectInput",
+                    action: "input->placements-filter-search#searchSubject",
+                  },
+                  label: { text: t(".subject"), size: "s" },
+                ) %>
+
+            <%= form.govuk_check_boxes_fieldset(
+              :subject_ids,
+              legend: { hidden: true },
+              data: { placements_filter_search_target: "subjectList" },
+              small: true,
+            ) do %>
+              <% @subjects.each do |subject| %>
+                <%= form.govuk_check_box :subject_ids,
+                                         subject.id,
+                                         label: { text: subject.name } %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <div class="app-filter__option">
+            <%= form.govuk_check_boxes_fieldset(
+              :year_groups,
+              legend: { text: t(".year_group"), size: "s" },
+              small: true,
+            ) do %>
+              <% @year_groups.each do |year_group| %>
+                <%= form.govuk_check_box :year_groups,
+                                         year_group.value,
+                                         label: { text: year_group.name } %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <div class="app-filter__option">
             <%= form.govuk_check_boxes_fieldset(
               :only_partner_schools,
               legend: { text: t(".partner_schools"), size: "s" },
@@ -179,45 +218,6 @@
                 <%= form.govuk_check_box :school_ids,
                   school.id,
                   label: { text: school.name } %>
-              <% end %>
-            <% end %>
-          </div>
-
-          <div class="app-filter__option">
-            <%= form.govuk_text_field(
-              :search_subject,
-              type: :search,
-              data: {
-                placements_filter_search_target: "subjectInput",
-                action: "input->placements-filter-search#searchSubject",
-              },
-              label: { text: t(".subject"), size: "s" },
-            ) %>
-
-            <%= form.govuk_check_boxes_fieldset(
-              :subject_ids,
-              legend: { hidden: true },
-              data: { placements_filter_search_target: "subjectList" },
-              small: true,
-            ) do %>
-              <% @subjects.each do |subject| %>
-                <%= form.govuk_check_box :subject_ids,
-                  subject.id,
-                  label: { text: subject.name } %>
-              <% end %>
-            <% end %>
-          </div>
-
-          <div class="app-filter__option">
-            <%= form.govuk_check_boxes_fieldset(
-              :year_groups,
-              legend: { text: t(".year_group"), size: "s" },
-              small: true,
-            ) do %>
-              <% @year_groups.each do |year_group| %>
-                <%= form.govuk_check_box :year_groups,
-                                         year_group.value,
-                                         label: { text: year_group.name } %>
               <% end %>
             <% end %>
           </div>
