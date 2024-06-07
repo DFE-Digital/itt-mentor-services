@@ -21,7 +21,7 @@ export default class extends Controller {
       name: this.inputTarget.dataset.inputName,
       defaultValue: this.serverInputTarget.value,
       minLength,
-      source: debounce(request(this.pathValue), 900),
+      source: debounce(request(this.pathValue), 200),
       templates: {
         inputValue: this.inputValueTemplate.bind(this),
         suggestion: this.resultTemplate.bind(this),
