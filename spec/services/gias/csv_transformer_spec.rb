@@ -27,6 +27,7 @@ RSpec.describe Gias::CsvTransformer do
 
     expected_coordinates = [
       { easting: "533498", northing: "181201", latitude: 51.5139702631, longitude: -0.0775045667 },
+      { easting: "529819", northing: "178495", latitude: 51.4905084881, longitude: -0.1314887113 },
       { easting: "284509", northing: "77456", latitude: 50.5853706802, longitude: -3.6327567586 },
       { easting: "417927", northing: "305209", latitude: 52.6443444763, longitude: -1.7364805658 },
     ]
@@ -43,7 +44,7 @@ RSpec.describe Gias::CsvTransformer do
   it "filters out schools which are Closed or not in England" do
     output_csv = CSV.read(output_file, headers: true)
     urns = output_csv.values_at("URN").flatten
-    expect(urns).to eq %w[100000 137666 124087]
+    expect(urns).to eq %w[100000 101173 137666 124087]
   end
 
   private
@@ -51,6 +52,7 @@ RSpec.describe Gias::CsvTransformer do
   def stub_coordinate_transformer
     coordinates = {
       { easting: "533498", northing: "181201" } => { latitude: 51.5139702631, longitude: -0.0775045667 },
+      { easting: "529819", northing: "178495" } => { latitude: 51.4905084881, longitude: -0.1314887113 },
       { easting: "284509", northing: "77456" } => { latitude: 50.5853706802, longitude: -3.6327567586 },
       { easting: "417927", northing: "305209" } => { latitude: 52.6443444763, longitude: -1.7364805658 },
     }
