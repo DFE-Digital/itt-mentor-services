@@ -23,7 +23,7 @@ module FooterHelper
       { text: t(".guidance"), href: "#" },
       { text: t(".accessibility"), href: placements_accessibility_path },
       { text: t(".cookies"), href: placements_cookies_path },
-      { text: t(".privacy_policy"), href: "#" },
+      { text: t(".privacy_policy"), href: placements_privacy_path },
       { text: t(".terms_and_conditions"), href: "#" },
     ]
   end

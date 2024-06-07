@@ -49,12 +49,11 @@
         <% end %>
 
         <p class="govuk-inset-text">
-          <!-- TODO: Replace hardcoded URL with path when available -->
           <%= embedded_link_text(
             t(".confirm_mentor_informed",
               mentor_name: @mentor_form.mentor.full_name,
               link: govuk_link_to(
-                t(".privacy_notice"), "/privacy", no_visited_state: true
+                t(".privacy_notice"), placements_privacy_path, no_visited_state: true
               )),
           ) %>
         </p>

@@ -12,6 +12,6 @@ Essential cookies keep your information secure while you use Manage school place
 | -------- | -------- | -------- |
 | _itt_mentor_services_session | Session cookie to identify the user of the service and their place on multi-step form journeys. | When the user's browser is closed. |
 
-Read more about how we process personal data in our [privacy notice](/privacy_notice).
+Read more about how we process personal data in our [privacy notice](/privacy).
 
 Last updated 10 May 2024
