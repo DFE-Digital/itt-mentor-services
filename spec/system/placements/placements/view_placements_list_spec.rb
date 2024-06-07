@@ -109,7 +109,11 @@ RSpec.describe "Placements / Placements / View placements list",
     context "when placements have additional subjects" do
       let!(:parent_subject) { build(:subject, name: "Modern Foreign Languages") }
       let!(:additional_subject) { create(:subject, name: "French", parent_subject:) }
-      let(:additional_subject_placement) { create(:placement, subject: parent_subject, school: secondary_school, additional_subjects: [additional_subject]) }
+      let!(:additional_subject_2) { create(:subject, name: "Spanish", parent_subject:) }
+      let(:additional_subject_placement) do
+        create(:placement, subject: parent_subject, school: secondary_school,
+                           additional_subjects: [additional_subject, additional_subject_2])
+      end
 
       before { additional_subject_placement }
 
@@ -117,10 +121,10 @@ RSpec.describe "Placements / Placements / View placements list",
         when_i_visit_the_placements_index_page
         then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
         and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
-        and_i_can_see_a_placement_for_school_and_subject("Secondary School", "French")
+        and_i_can_see_a_placement_for_school_and_subject("Secondary School", "French and Spanish")
         when_i_check_filter_option("subject-ids", additional_subject.id)
         and_i_click_on("Apply filters")
-        then_i_can_see_a_placement_for_school_and_subject("Secondary School", "French")
+        then_i_can_see_a_placement_for_school_and_subject("Secondary School", "French and Spanish")
         and_i_can_not_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
         and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
       end
