@@ -25,7 +25,7 @@
         label: { hidden: true },
         caption: { text: t(".location_search_example") },
         name: :search_location,
-        clear_search_url: placements_placements_path,
+        clear_search_url: placements_placements_path(filters: filter_form.attributes),
         filters: filter_form.attributes,
         value: @search_location,
       } %>
