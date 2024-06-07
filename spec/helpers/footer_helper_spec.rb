@@ -27,7 +27,7 @@ RSpec.describe FooterHelper do
             { href: "#", text: "Guidance" },
             { href: "/accessibility", text: "Accessibility" },
             { href: "/cookies", text: "Cookies" },
-            { href: "#", text: "Privacy notice" },
+            { href: "/privacy", text: "Privacy notice" },
             { href: "#", text: "Terms and conditions" },
           ],
         )
