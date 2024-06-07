@@ -13,7 +13,7 @@ module TeachingRecord
     class HttpError < StandardError; end
 
     def self.get(path)
-      response = Request.get("/v3/#{path}")
+      response = Request.get("/v3/#{path.delete(" ")}")
 
       if response.ok?
         JSON.parse(response.body || "{}")
