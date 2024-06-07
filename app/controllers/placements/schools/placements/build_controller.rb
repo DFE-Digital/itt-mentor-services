@@ -6,18 +6,22 @@ class Placements::Schools::Placements::BuildController < ApplicationController
     reset_session
     setup_skipped_steps
     @placement = build_placement
-    school.primary_or_secondary_only? ? handle_primary_or_secondary : handle_other
+    handle_primary_or_secondary if school.primary_or_secondary_only?
+
+    redirect_to public_send("#{steps[0]}_placements_school_placement_build_index_path", school_id: school.id)
   end
 
   def add_phase
     @placement = build_placement
     @selected_phase = session.dig(:add_a_placement, "phase") || school.phase
+    @previous_step = previous_step(:add_phase)
   end
 
   def add_subject
     @placement = build_placement
     assign_subjects_based_on_phase
     @selected_subject_id = session.dig(:add_a_placement, "subject_id")
+    @previous_step = previous_step(:add_subject)
   end
 
   def add_additional_subjects
@@ -25,17 +29,20 @@ class Placements::Schools::Placements::BuildController < ApplicationController
     @selected_subject = Subject.find(session.dig(:add_a_placement, "subject_id"))
     @additional_subjects = assign_additional_subjects
     @selected_additional_subjects = @placement.additional_subjects
+    @previous_step = previous_step(:add_additional_subjects)
   end
 
   def add_year_group
     @placement = build_placement
     year_groups_for_select
     @placement.year_group = session.dig(:add_a_placement, "year_group")
+    @previous_step = previous_step(:add_year_group)
   end
 
   def add_mentors
     @placement = build_placement
     @selected_mentors = retrieve_selected_mentors
+    @previous_step = previous_step(:add_mentors)
   end
 
   def check_your_answers
@@ -49,6 +56,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
                             else
                               @placement.mentors.map(&:full_name).to_sentence
                             end
+    @previous_step = previous_step(:check_your_answers)
   end
 
   def update
@@ -149,11 +157,6 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   def handle_primary_or_secondary
     session[:add_a_placement][:placement] = @placement.attributes
     session[:add_a_placement][:phase] = school.phase
-    redirect_to add_subject_placements_school_placement_build_index_path(school_id: school.id)
-  end
-
-  def handle_other
-    redirect_to add_phase_placements_school_placement_build_index_path(school_id: school.id)
   end
 
   def setup_session
@@ -194,14 +197,22 @@ class Placements::Schools::Placements::BuildController < ApplicationController
     placement
   end
 
-  def next_step(step)
-    steps = if skipped_steps.present?
-              STEPS - skipped_steps.map(&:to_sym)
-            else
-              STEPS
-            end
+  def steps
+    if skipped_steps.present?
+      STEPS - skipped_steps.map(&:to_sym)
+    else
+      STEPS
+    end
+  end
 
+  def next_step(step)
     "#{steps[steps.index(step.to_sym) + 1]}_placements_school_placement_build_index_path"
+  end
+
+  def previous_step(step)
+    return placements_school_placements_path(school) if steps.index(step.to_sym).zero?
+
+    public_send("#{steps[steps.index(step.to_sym) - 1]}_placements_school_placement_build_index_path")
   end
 
   def school
@@ -219,12 +230,14 @@ class Placements::Schools::Placements::BuildController < ApplicationController
 
   def setup_skipped_steps
     session[:add_a_placement][:skipped_steps] = []
+    session[:add_a_placement][:skipped_steps] << "add_phase" if school.primary_or_secondary_only?
     session[:add_a_placement][:skipped_steps] << "add_mentors" unless school.mentors.exists?
     session[:add_a_placement][:skipped_steps] << "add_year_group" if school.phase == "Secondary"
   end
 
   def skipped_steps
-    session.dig(:add_a_placement, "skipped_steps") || []
+    session.dig(:add_a_placement, "skipped_steps") ||
+      session.dig(:add_a_placement, :skipped_steps) || []
   end
 
   def year_groups_for_select
