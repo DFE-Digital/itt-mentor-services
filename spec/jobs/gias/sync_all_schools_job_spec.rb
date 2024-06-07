@@ -29,7 +29,7 @@ RSpec.describe Gias::SyncAllSchoolsJob, type: :job do
     end
 
     it "downloads and imports school data from GIAS" do
-      expect { described_class.perform_now }.to change(School, :count).from(0).to(3)
+      expect { described_class.perform_now }.to change(School, :count).from(0).to(4)
 
       expected_schools = [
         {
@@ -50,6 +50,12 @@ RSpec.describe Gias::SyncAllSchoolsJob, type: :job do
           latitude: 52.6443444763,
           longitude: -1.7364805658,
         },
+        {
+          urn: "101173",
+          name: "Fairley House School",
+          latitude: 51.4905084881,
+          longitude: -0.1314887113,
+        }
       ]
 
       expected_schools.each do |expected|
