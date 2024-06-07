@@ -20,6 +20,8 @@ class Mentor < ApplicationRecord
   has_many :placement_mentor_joins, dependent: :restrict_with_error
   has_many :placements, through: :placement_mentor_joins
 
+  normalizes :trn, with: ->(value) { value.strip }
+
   validates :first_name, :last_name, presence: true
   validates :trn, presence: true, uniqueness: true, format: /\A\d{7}\z/
 

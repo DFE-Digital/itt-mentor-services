@@ -24,6 +24,10 @@ RSpec.describe Mentor, type: :model do
     it { is_expected.to have_many(:placements).through(:placement_mentor_joins) }
   end
 
+  describe "normalisations" do
+    it { is_expected.to normalize(:trn).from(" 1234567 ").to("1234567") }
+  end
+
   context "with validations" do
     subject { build(:mentor) }
 
