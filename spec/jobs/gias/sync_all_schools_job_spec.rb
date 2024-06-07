@@ -55,7 +55,7 @@ RSpec.describe Gias::SyncAllSchoolsJob, type: :job do
           name: "Fairley House School",
           latitude: 51.4905084881,
           longitude: -0.1314887113,
-        }
+        },
       ]
 
       expected_schools.each do |expected|
