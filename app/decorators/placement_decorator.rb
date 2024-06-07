@@ -32,6 +32,7 @@ class PlacementDecorator < Draper::Decorator
   end
 
   def additional_subject_names
+    reload unless new_record?
     additional_subjects.map(&:name).sort.to_sentence
   end
 end
