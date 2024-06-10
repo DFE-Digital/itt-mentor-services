@@ -72,7 +72,7 @@ en:
             mentors: Mentors
             not_known: Not yet known
             mentor_not_listed: My mentor is not listed
-            you_need_to_add_a_mentor: "You need to %{link} first."
+            you_need_to_add_a_mentor: "You will need to %{link} first."
             add_a_mentor: add a mentor
           check_your_answers:
             page_title: Check your answers - Add placement
