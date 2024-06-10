@@ -35,12 +35,12 @@ en:
           school_contact_removed: Placement contact removed
         form:
           caption: Organisation details
-          title: Add the ITT placement contact
-          description: Add an email for the main contact for school placements. This can also be a shared inbox.
+          title: Add the placement contact
+          description: Add an email address for the main contact for school placements. This can also be a shared inbox.
           continue: Continue
           cancel: Cancel
           attributes:
             school_contacts:
               full_name: Full name
-              email: Email
+              email: Email address
           
