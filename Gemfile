@@ -110,6 +110,9 @@ gem "strong_migrations"
 # Data Migrate [https://github.com/ilyakatz/data-migrate]
 gem "data_migrate", "~> 9.4"
 
+# OK Computer [https://github.com/sportngin/okcomputer]
+gem "okcomputer"
+
 group :development do
   gem "annotate", require: false
   gem "prettier_print", require: false

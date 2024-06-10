@@ -366,6 +366,7 @@ GEM
       racc (~> 1.4)
     notifications-ruby-client (6.0.0)
       jwt (>= 1.5, < 3)
+    okcomputer (1.18.5)
     omniauth (2.1.2)
       hashie (>= 3.4.6)
       rack (>= 2.2.3)
@@ -730,6 +731,7 @@ DEPENDENCIES
   launchy
   mail-notify
   money-rails (~> 1.12)
+  okcomputer
   omniauth
   omniauth-rails_csrf_protection
   omniauth_openid_connect
