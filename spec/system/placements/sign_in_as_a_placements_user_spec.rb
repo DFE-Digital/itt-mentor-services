@@ -78,15 +78,43 @@ RSpec.describe "Sign In as a Placements User", type: :system, service: :placemen
     end
   end
 
+  context "when the user does not have a DfE ID" do
+    context "when the user is not a support user" do
+      scenario "I sign in as user Anne, using my email address" do
+        given_there_is_an_existing_user_for("Anne", with_dfe_sign_id: false)
+        when_i_visit_the_sign_in_path
+        when_i_click_sign_in
+        then_i_dont_get_redirected_to_support_organisations
+        and_i_visit_my_account_page
+        then_i_see_user_details_for_anne
+      end
+    end
+
+    context "when the user is a support user" do
+      scenario "I sign in as support user Colin, using my email address" do
+        given_there_is_an_existing_support_user_for("Colin", with_dfe_sign_id: false)
+        and_there_are_placement_organisations
+        when_i_visit_the_sign_in_path
+        when_i_click_sign_in
+        then_i_see_a_list_of_organisations
+
+        and_i_visit_my_account_page
+        then_i_see_user_details_for_colin
+      end
+    end
+  end
+
   private
 
-  def given_there_is_an_existing_user_for(user_name)
+  def given_there_is_an_existing_user_for(user_name, with_dfe_sign_id: true)
     user = create(:placements_user, user_name.downcase.to_sym)
+    user.update!(dfe_sign_in_uid: nil) unless with_dfe_sign_id
     user_exists_in_dfe_sign_in(user:)
   end
 
-  def given_there_is_an_existing_support_user_for(user_name)
+  def given_there_is_an_existing_support_user_for(user_name, with_dfe_sign_id: true)
     user = create(:placements_support_user, user_name.downcase.to_sym)
+    user.update!(dfe_sign_in_uid: nil) unless with_dfe_sign_id
     user_exists_in_dfe_sign_in(user:)
   end
 
