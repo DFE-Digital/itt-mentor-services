@@ -112,7 +112,7 @@ RSpec.describe AutocompleteSelectFormComponent, type: :component do
       {
         field_name: :id,
         value: nil,
-        label: "Enter a provider name, UKPRN, URN or postcode",
+        label: "Enter a provider name, United Kingdom Provider Number (UKPRN), Unique Reference Number (URN) or postcode.",
         caption: "Add organisation",
         previous_search: nil,
       }
@@ -126,7 +126,7 @@ RSpec.describe AutocompleteSelectFormComponent, type: :component do
         "[data-autocomplete-path-value='/api/provider_suggestions']" \
         "[data-autocomplete-return-attributes-value='[\"code\"]']",
       )
-      expect(page.find(".govuk-label")).to have_content("Enter a provider name, UKPRN, URN or postcode")
+      expect(page.find(".govuk-label")).to have_content("Enter a provider name, United Kingdom Provider Number (UKPRN), Unique Reference Number (URN) or postcode.")
       expect(page.find(".govuk-caption-l")).to have_content("Add organisation")
       expect(page).to have_field("provider-id-field")
       page.find("div[data-input-name='provider[name]']")
