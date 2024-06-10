@@ -29,7 +29,7 @@ class Placements::Schools::PlacementsController < ApplicationController
     if valid_attributes?
       @placement.update!(placement_params)
 
-      redirect_to placements_school_placement_path(@school, @placement), flash: { success: t(".success") }
+      redirect_to placements_school_placement_path(@school, @placement), flash: { success: t(".success.#{params[:edit_path]}") }
     else
       @mentors = @school.mentors.all if params[:edit_path] == "edit_mentors"
       @providers = @school.partner_providers.all if params[:edit_path] == "edit_provider"

@@ -45,6 +45,7 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
         when_i_select_mentor_2
         and_i_click_on("Continue")
         then_i_should_see_the_mentor_name_in_the_placement_details(mentor_name: mentor_2.full_name)
+        and_i_see_success_message("Mentor updated")
       end
 
       scenario "User does not select a mentor" do
@@ -104,6 +105,7 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
         then_i_should_see_the_mentor_name_in_the_placement_details(
           mentor_name: mentor_2.full_name,
         )
+        and_i_see_success_message("Mentor updated")
       end
 
       scenario "User does not select a mentor" do
@@ -168,6 +170,7 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
         when_i_select_not_yet_known
         and_i_click_on("Continue")
         then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
+        and_i_see_success_message("Mentor updated")
       end
     end
   end
@@ -260,6 +263,12 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
 
   def when_i_uncheck(text)
     uncheck(text)
+  end
+
+  def and_i_see_success_message(message)
+    within(".govuk-notification-banner") do
+      expect(page).to have_content message
+    end
   end
 
   alias_method :and_i_click_on, :when_i_click_on
