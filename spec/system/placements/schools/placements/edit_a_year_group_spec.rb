@@ -23,6 +23,7 @@ RSpec.describe "Placements / Schools / Placements / Edit a year group",
       then_i_should_see_the_year_group_in_the_placement_details(
         year_group_name: "Year 4",
       )
+      and_i_see_success_message("Year group updated")
     end
   end
 
@@ -73,6 +74,12 @@ RSpec.describe "Placements / Schools / Placements / Edit a year group",
     within(".govuk-summary-list") do
       expect(page).to have_content(year_group_name)
       expect(page).to have_content(change_link)
+    end
+  end
+
+  def and_i_see_success_message(message)
+    within(".govuk-notification-banner") do
+      expect(page).to have_content message
     end
   end
 end

@@ -43,6 +43,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
         then_i_should_see_the_provider_name_in_the_placement_details(
           provider_name: "Provider 2",
         )
+        and_i_see_success_message("Provider updated")
       end
 
       scenario "User does not select a provider" do
@@ -100,6 +101,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
         then_i_should_see_the_provider_name_in_the_placement_details(
           provider_name: "Provider 2",
         )
+        and_i_see_success_message("Provider updated")
       end
 
       scenario "User does not select a provider" do
@@ -119,6 +121,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
           text: "Assign a provider",
           href: edit_provider_placements_school_placement_path(school, placement),
         )
+        and_i_see_success_message("Provider updated")
       end
     end
   end
@@ -197,5 +200,11 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
 
   def then_i_see_link(text:, href:)
     expect(page).to have_link(text, href:)
+  end
+
+  def and_i_see_success_message(message)
+    within(".govuk-notification-banner") do
+      expect(page).to have_content message
+    end
   end
 end

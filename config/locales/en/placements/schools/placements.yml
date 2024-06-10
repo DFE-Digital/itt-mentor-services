@@ -178,4 +178,7 @@ en:
         destroy:
           placement_deleted: Placement deleted
         update:
-          success: Placement updated
+          success: 
+            edit_mentors: Mentor updated
+            edit_provider: Provider updated
+            edit_year_group: Year group updated
