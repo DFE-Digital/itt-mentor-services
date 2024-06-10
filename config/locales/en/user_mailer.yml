@@ -87,8 +87,8 @@ en:
 
     partnership_created_notification:
       subject:
-        provider: "A school has added your organisation to its list of partner providers"
-        school: "An ITT provider has added your organisation to its list of partner schools"
+        provider: A school has added your organisation to its list of partner providers
+        school: A teacher training provider has added your organisation to its list of partner schools
       body:
         provider: |
           Dear %{user_name},
@@ -105,8 +105,8 @@ en:
 
     partnership_destroyed_notification:
       subject:
-        provider: "A school has removed your organisation from its list of partner providers"
-        school: "An ITT provider has removed your organisation from its list of partner schools"
+        provider: A school has removed your organisation from its list of partner providers
+        school: A teacher training provider has removed your organisation from its list of partner schools
       body:
         provider: |
           Dear %{user_name},
