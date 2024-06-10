@@ -148,7 +148,7 @@ RSpec.describe "Placements / Schools / School Contacts / Edit a school contact",
   end
 
   def and_i_see_success_message
-    expect(page).to have_content("School contact updated")
+    expect(page).to have_content("Placement contact updated")
   end
 
   def then_i_see_an_error(error_message)

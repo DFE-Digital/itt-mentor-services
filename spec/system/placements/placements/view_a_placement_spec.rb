@@ -111,7 +111,7 @@ RSpec.describe "Placements / Placements / View a placement",
   end
 
   def and_i_see_the_itt_placement_contact_details_for_the_school
-    expect(page).to have_content("ITT placement contact")
+    expect(page).to have_content("Placement contact")
     expect(page).to have_content(school.school_contact.name)
     expect(page).to have_content(school.school_contact.email_address)
   end

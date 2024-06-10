@@ -13,7 +13,7 @@ describe OrganisationOnboardingForm, type: :model do
         [
           OpenStruct.new(
             id: described_class::ITT_PROVIDER,
-            name: "ITT provider",
+            name: "Teacher training provider",
           ),
           OpenStruct.new(
             id: described_class::SCHOOL,
