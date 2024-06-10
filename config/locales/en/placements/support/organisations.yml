@@ -4,7 +4,7 @@ en:
       organisations:
         new:
           caption: Add organisation
-          itt_provider: ITT provider
+          itt_provider: Teacher training provider
           school: School
           title: Organisation type
           title_with_error: "Error: Organisation type"

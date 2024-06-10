@@ -3,7 +3,7 @@ en:
     schools:
       school_details:
         gias: Get Information about Schools (GIAS)
-        gias_details: "These details will be displayed to ITT providers. 
+        gias_details: "These details will be displayed to teacher training providers.
           If any details are incorrect, go to the %{link_to} service to update them."
         organisation_name: Organisation name
         ukprn: UK provider reference number (UKPRN)
