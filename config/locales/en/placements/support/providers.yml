@@ -10,8 +10,8 @@ en:
           caption: Add organisation
           cancel: Cancel
           continue: Continue
-          title_with_error: "Error: Enter a provider name, UKPRN, URN or postcode"
-          title: Enter a provider name, UKPRN, URN or postcode
+          title_with_error: "Error: Enter a provider name, United Kingdom Provider Number (UKPRN), Unique Reference Number (URN) or postcode."
+          title: Enter a provider name, United Kingdom Provider Number (UKPRN), Unique Reference Number (URN) or postcode.
         check:
           add_organisation: Add organisation
           address: Address

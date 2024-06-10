@@ -13,10 +13,10 @@ en:
               ukprn: UK provider reference number (UKPRN)
         new:
           change_organisation: Change organisation
-          page_title: Enter a provider name, UKPRN, URN or postcode - Add partner provider
-          page_title_with_error: "Errors:  Enter a provider name, UKPRN, URN or postcode - Add partner provider"
+          page_title: Enter a provider name, United Kingdom Provider Number (UKPRN), Unique Reference Number (URN) or postcode - Add partner provider
+          page_title_with_error: "Errors: Enter a provider name, United Kingdom Provider Number (UKPRN), Unique Reference Number (URN) or postcode - Add partner provider"
           caption: Add partner provider
-          title: Enter a provider name, UKPRN, URN or postcode
+          title: Enter a provider name, United Kingdom Provider Number (UKPRN), Unique Reference Number (URN) or postcode
           continue: Continue
           cancel: Cancel
         check:

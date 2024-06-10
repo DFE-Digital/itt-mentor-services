@@ -7,7 +7,7 @@ describe ProviderOnboardingForm, type: :model do
         form = described_class.new(id: nil)
         expect(form.valid?).to eq(false)
         expect(form.valid?).to eq(false)
-        expect(form.errors.messages[:id]).to include("Enter a provider name, UKPRN, URN or postcode")
+        expect(form.errors.messages[:id]).to include("Enter a provider name, United Kingdom Provider Number (UKPRN), Unique Reference Number (URN) or postcode")
       end
     end
 
@@ -15,7 +15,7 @@ describe ProviderOnboardingForm, type: :model do
       it "returns invalid" do
         form = described_class.new(id: "1231")
         expect(form.valid?).to eq(false)
-        expect(form.errors.messages[:id]).to include("Enter a provider name, UKPRN, URN or postcode")
+        expect(form.errors.messages[:id]).to include("Enter a provider name, United Kingdom Provider Number (UKPRN), Unique Reference Number (URN) or postcode")
       end
     end
 

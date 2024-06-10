@@ -36,7 +36,7 @@ class AutocompleteSelectFormComponentPreview < ApplicationComponentPreview
       input: {
         field_name: :id,
         value: nil,
-        label: "Enter a provider name, UKPRN, URN or postcode",
+        label: "Enter a provider name, United Kingdom Provider Number (UKPRN), Unique Reference Number (URN) or postcode.",
         caption: "Add organisation",
         previous_search: nil,
       },
