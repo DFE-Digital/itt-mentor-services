@@ -65,13 +65,17 @@ class DfESignInUser
   private
 
   def support_user
-    support_user_klass.find_by(dfe_sign_in_uid:) ||
-      support_user_klass.find_by(email:)
+    @support_user ||= support_user_klass.find_by(dfe_sign_in_uid:) if dfe_sign_in_uid.present?
+    return @support_user if @support_user.present?
+
+    @support_user = support_user_klass.find_by(email:)
   end
 
   def non_support_user
-    user_klass.find_by(dfe_sign_in_uid:) ||
-      user_klass.find_by(email:)
+    @non_support_user ||= user_klass.find_by(dfe_sign_in_uid:) if dfe_sign_in_uid.present?
+    return @non_support_user if @non_support_user.present?
+
+    @non_support_user = user_klass.find_by(email:)
   end
 
   def support_user_klass
