@@ -4,6 +4,8 @@
 #
 #  id            :uuid             not null, primary key
 #  email_address :string           not null
+#  first_name    :string
+#  last_name     :string
 #  name          :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
@@ -25,8 +27,10 @@ RSpec.describe Placements::SchoolContact, type: :model do
   end
 
   describe "normalisations" do
-    it { is_expected.to normalize(:name).from("  Name  ").to("Name") }
+    it { is_expected.to normalize(:name).from("  Name  ").to("Name") } # TODO: Remove when column removed
     it { is_expected.to normalize(:email_address).from("EmAiL@eXaMPlE.cOm ").to("email@example.com") }
+    it { is_expected.to normalize(:first_name).from("  First name  ").to("First name") }
+    it { is_expected.to normalize(:last_name).from("  Last name  ").to("Last name") }
   end
 
   describe "validations" do

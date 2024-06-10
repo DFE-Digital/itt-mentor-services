@@ -13,22 +13,26 @@ RSpec.describe "Placements / Schools / School Contacts / Edit a school contact",
   scenario "User edits the name of the school contact for their organisation" do
     when_i_view_my_organisation_details_page
     then_i_see_the_school_contact_details(
-      name: "Placement Coordinator",
+      first_name: "Placement",
+      last_name: "Coordinator",
       email_address: "placement_coordinator@example.school",
     )
     when_i_click_on_change(attribute: :name)
     then_i_see_the_inputs_pre_filled_with(
-      name: "Placement Coordinator",
+      first_name: "Placement",
+      last_name: "Coordinator",
       email_address: "placement_coordinator@example.school",
     )
     when_i_fill_out_the_school_contact_form(
-      name: "Placement Organiser",
+      first_name: "Placement",
+      last_name: "Organiser",
       email_address: "placement_organiser@example.school",
     )
     and_i_click_on("Continue")
     then_i_return_to_my_organisation_details_page
     and_i_see_the_school_contact_details(
-      name: "Placement Organiser",
+      first_name: "Placement",
+      last_name: "Organiser",
       email_address: "placement_organiser@example.school",
     )
     and_i_see_success_message
@@ -37,22 +41,26 @@ RSpec.describe "Placements / Schools / School Contacts / Edit a school contact",
   scenario "User edits the email address of the school contact for their organisation" do
     when_i_view_my_organisation_details_page
     then_i_see_the_school_contact_details(
-      name: "Placement Coordinator",
+      first_name: "Placement",
+      last_name: "Coordinator",
       email_address: "placement_coordinator@example.school",
     )
     when_i_click_on_change(attribute: :email_address)
     then_i_see_the_inputs_pre_filled_with(
-      name: "Placement Coordinator",
+      first_name: "Placement",
+      last_name: "Coordinator",
       email_address: "placement_coordinator@example.school",
     )
     when_i_fill_out_the_school_contact_form(
-      name: "Placement Organiser",
+      first_name: "Placement",
+      last_name: "Organiser",
       email_address: "placement_organiser@example.school",
     )
     and_i_click_on("Continue")
     then_i_return_to_my_organisation_details_page
     and_i_see_the_school_contact_details(
-      name: "Placement Organiser",
+      first_name: "Placement",
+      last_name: "Organiser",
       email_address: "placement_organiser@example.school",
     )
     and_i_see_success_message
@@ -61,12 +69,14 @@ RSpec.describe "Placements / Schools / School Contacts / Edit a school contact",
   scenario "User attempts to edit a school contact with an invalid email address" do
     when_i_view_my_organisation_details_page
     then_i_see_the_school_contact_details(
-      name: "Placement Coordinator",
+      first_name: "Placement",
+      last_name: "Coordinator",
       email_address: "placement_coordinator@example.school",
     )
     when_i_click_on_change(attribute: :email_address)
     and_i_fill_out_the_school_contact_form(
-      name: "Placement Organiser",
+      first_name: "Placement",
+      last_name: "Organiser",
       email_address: "placement organiser",
     )
     and_i_click_on("Continue")
@@ -114,22 +124,25 @@ RSpec.describe "Placements / Schools / School Contacts / Edit a school contact",
     end
   end
 
-  def then_i_see_the_school_contact_details(name:, email_address:)
+  def then_i_see_the_school_contact_details(first_name:, last_name:, email_address:)
     within("#school-contact-details") do
-      expect(page).to have_content(name)
+      expect(page).to have_content(first_name)
+      expect(page).to have_content(last_name)
       expect(page).to have_content(email_address)
     end
   end
   alias_method :and_i_see_the_school_contact_details,
                :then_i_see_the_school_contact_details
 
-  def then_i_see_the_inputs_pre_filled_with(name:, email_address:)
-    expect(page.find("#placements-school-contact-name-field").value).to eq(name)
+  def then_i_see_the_inputs_pre_filled_with(first_name:, last_name:, email_address:)
+    expect(page.find("#placements-school-contact-first-name-field").value).to eq(first_name)
+    expect(page.find("#placements-school-contact-last-name-field").value).to eq(last_name)
     expect(page.find("#placements-school-contact-email-address-field").value).to eq(email_address)
   end
 
-  def when_i_fill_out_the_school_contact_form(name:, email_address:)
-    fill_in "Full name", with: name
+  def when_i_fill_out_the_school_contact_form(first_name:, last_name:, email_address:)
+    fill_in "First name", with: first_name
+    fill_in "Last name", with: last_name
     fill_in "Email", with: email_address
   end
   alias_method :and_i_fill_out_the_school_contact_form,
@@ -140,9 +153,10 @@ RSpec.describe "Placements / Schools / School Contacts / Edit a school contact",
     expect_organisation_details_to_be_selected_in_primary_navigation
   end
 
-  def and_i_see_the_school_contact_details(name:, email_address:)
+  def and_i_see_the_school_contact_details(first_name:, last_name:, email_address:)
     within("#school-contact-details") do
-      expect(page).to have_content(name)
+      expect(page).to have_content(first_name)
+      expect(page).to have_content(last_name)
       expect(page).to have_content(email_address)
     end
   end

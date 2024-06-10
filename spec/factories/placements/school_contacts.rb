@@ -4,6 +4,8 @@
 #
 #  id            :uuid             not null, primary key
 #  email_address :string           not null
+#  first_name    :string
+#  last_name     :string
 #  name          :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
@@ -22,6 +24,8 @@ FactoryBot.define do
     association :school, factory: :placements_school
 
     name { "Placement Coordinator" }
+    first_name { "Placement" }
+    last_name { "Coordinator" }
     email_address { "placement_coordinator@example.school" }
   end
 end
