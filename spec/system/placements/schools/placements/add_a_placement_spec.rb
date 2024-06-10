@@ -18,7 +18,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
     it "does not allow the user to add a placement" do
       when_i_visit_the_placements_page
       then_i_see_content(
-        "You must add the ITT placement contact email before adding a placement",
+        "Before you add a placement, you must add a placement contact so that the teacher training providers can contact you.",
       )
       and_i_do_not_see_the_button_to("Add placement")
     end
