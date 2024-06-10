@@ -3,14 +3,14 @@ en:
     schools:
       school_contacts:
         new:
-          page_title: Add the ITT placement contact
-          page_title_with_error: Error - Add the ITT placement contact
+          page_title: Add the placement contact
+          page_title_with_error: Error - Add the placement contact
           continue: Continue
           cancel: Cancel
         check:
           page_title: Check your answers
           check_your_answers: Check your answers
-          add_the_itt_placement_contact: Add the ITT placement contact
+          add_the_itt_placement_contact: Add the placement contact
           cancel: Cancel
           change: Change
           attributes:
@@ -18,21 +18,21 @@ en:
               name: Name
               email_address: Email address
         create:
-          school_contact_added: School contact added
+          school_contact_added: Placement contact added
         edit:
-          page_title: School contact
-          page_title_with_error: Error - School contact
+          page_title: Placement contact
+          page_title_with_error: Error - Placement contact
           continue: Continue
           cancel: Cancel
         update:
-          school_contact_updated: School contact updated
+          school_contact_updated: Placement contact updated
         remove:
-          page_title: Are you sure you want to remove this school contact? - %{school_contact_name}
-          are_you_sure: Are you sure you want to remove this school contact?
+          page_title: Are you sure you want to remove this placement contact? - %{school_contact_name}
+          are_you_sure: Are you sure you want to remove this placement contact?
           cancel: Cancel
-          remove_school_contact: Remove school contact
+          remove_school_contact: Remove placement contact
         destroy:
-          school_contact_removed: School contact removed
+          school_contact_removed: Placement contact removed
         form:
           caption: Organisation details
           title: Add the ITT placement contact

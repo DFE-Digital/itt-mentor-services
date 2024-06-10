@@ -150,8 +150,8 @@ en:
           placements: Placements
           add_placement: Add placement
           you_must_add_itt_placement_contact: |
-            You must add the %{link_to} email before adding a placement
-          itt_placement_contact: ITT placement contact
+            Before you add a placement, you must add a %{link_to} so that the teacher training providers can contact you.
+          itt_placement_contact: placement contact
         show:
           delete_placement: Delete placement
         details:
