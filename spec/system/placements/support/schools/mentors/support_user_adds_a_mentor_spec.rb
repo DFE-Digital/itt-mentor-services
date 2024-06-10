@@ -186,7 +186,7 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
   end
 
   def when_i_click_on_help_text
-    find("span", text: "Help with the teacher reference number (TRN)").click
+    find("span", text: "Help with the TRN").click
   end
 
   def then_i_see_check_page_for(mentor, school)
@@ -276,8 +276,12 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
   end
 
   def then_i_see_link_to_trn_guidance
-    expect(page).to have_content "If you don’t have a TRN, read the Teacher reference number (TRN) guidance (opens in new tab) to find a lost TRN, or apply for one."
-    expect(page).to have_link("Teacher reference number (TRN) guidance (opens in new tab)", href: "https://www.gov.uk/guidance/teacher-reference-number-trn")
+    expect(page).to have_content(
+      "A TRN is a 7 digit number that uniquely identifies people in the education sector in England. " \
+      "If you do not know a teacher’s TRN, you can ask them for it. " \
+      "They can find a lost TRN, or apply for a new one by following the instructions in the ",
+    )
+    expect(page).to have_link("TRN guidance (opens in new tab)", href: "https://www.gov.uk/guidance/teacher-reference-number-trn")
   end
 
   alias_method :and_i_click_on, :when_i_click_on

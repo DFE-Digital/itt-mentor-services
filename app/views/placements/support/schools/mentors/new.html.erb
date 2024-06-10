@@ -18,18 +18,18 @@
           <%= f.govuk_text_field :trn, width: "two-thirds", label: { text: t(".trn"), size: "s" } %>
         </div>
 
-        <%= govuk_details(summary_text: t(".help_with_the_trn")) do %>
-          <p>
-            <%= t(".if_you_dont_have_a_trn") %>
-            <%= govuk_link_to(
+        <%= govuk_details(
+          summary_text: t(".help_with_the_trn"),
+          text: embedded_link_text(
+            t(".what_is_a_trn",
+              link: govuk_link_to(
                   t(".trn_guidance"),
                   "https://www.gov.uk/guidance/teacher-reference-number-trn",
                   new_tab: true,
                   no_visited_state: true,
-                ) %>
-            <%= t(".to_find_a_lost_trn") %>
-          </p>
-        <% end %>
+                )),
+          ),
+        ) %>
 
         <%= f.govuk_date_field(
               :date_of_birth,
