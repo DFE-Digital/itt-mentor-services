@@ -43,8 +43,6 @@ Rails.application.routes.draw do
   draw :placements
   draw :claims
 
-  get :healthcheck, controller: :heartbeat
-
   # GoodJob admin interface – only accessible to support users
   mount GoodJob::Engine => "/good_job", constraints: SupportUserConstraint
   get "/good_job", to: redirect("/support")
