@@ -3,14 +3,14 @@ en:
     schools:
       school_contacts:
         new:
-          page_title: Add the placement contact
-          page_title_with_error: Error - Add the placement contact
+          page_title: Add placement contact
+          page_title_with_error: Error - Add placement contact
           continue: Continue
           cancel: Cancel
         check:
           page_title: Check your answers
           check_your_answers: Check your answers
-          add_the_itt_placement_contact: Add the placement contact
+          add_the_itt_placement_contact: Add placement contact
           cancel: Cancel
           change: Change
           attributes:
@@ -35,7 +35,7 @@ en:
           school_contact_removed: Placement contact removed
         form:
           caption: Organisation details
-          title: Add the placement contact
+          title: Add placement contact
           description: Add an email address for the main contact for school placements. This can also be a shared inbox.
           continue: Continue
           cancel: Cancel

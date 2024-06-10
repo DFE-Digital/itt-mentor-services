@@ -21,7 +21,7 @@ RSpec.describe "Placements / Schools / School Contacts / Add a school contact",
       name: "Placement Coordinator",
       email_address: "placement_coordinator@example.school",
     )
-    when_i_click_on("Add the placement contact")
+    when_i_click_on("Add placement contact")
     then_i_return_to_my_organisation_details_page
     and_i_see_the_school_contact_details(
       name: "Placement Coordinator",
