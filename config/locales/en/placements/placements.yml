@@ -30,7 +30,7 @@ en:
         page_title: "%{subject_name} - Placements - %{school_name}"
         placement: "Placement - %{school_name}"
         contact_details: Contact details
-        itt_placement_contact: ITT placement contact
+        itt_placement_contact: Placement contact
         location: Location
         additional_details: Additional details
       school_details:
