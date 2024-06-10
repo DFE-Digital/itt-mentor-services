@@ -1,4 +1,6 @@
 class Placements::Support::Schools::PartnerProvidersController < Placements::Schools::PartnerProvidersController
+  include Placements::SupportUserController
+
   private
 
   def set_school
