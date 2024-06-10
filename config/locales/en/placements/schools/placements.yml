@@ -72,7 +72,7 @@ en:
             mentors: Mentors
             not_known: Not yet known
             mentor_not_listed: My mentor is not listed
-            you_need_to_add_a_mentor: "You will first need to %{link}."
+            you_need_to_add_a_mentor: "You need to %{link} first."
             add_a_mentor: add a mentor
           check_your_answers:
             page_title: Check your answers - Add placement
@@ -104,8 +104,8 @@ en:
           continue: Continue
           cancel: Cancel
           help_with_providers: My provider is not listed
-          details_text_part_one: You will first need to
-          details_text_part_two: add a provider
+          you_need_to_add_a_provider: You will need to %{link} first.
+          add_a_provider: add a provider
         edit_mentors:
           title: Mentor - Manage a placement
           title_with_error: "Error: Mentor - Manage a placement"
@@ -116,7 +116,7 @@ en:
           mentors: Mentors
           not_known: Not yet known
           mentor_not_listed: My mentor is not listed
-          you_need_to_add_a_mentor: "You will first need to %{link}."
+          you_need_to_add_a_mentor: "You will need to %{link} first."
           add_a_mentor: add a mentor
         edit_year_group:
           title: Year group - Manage a placement
