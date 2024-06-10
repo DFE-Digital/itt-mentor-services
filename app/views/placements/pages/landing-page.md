@@ -1,13 +1,13 @@
 This service is for:
 
 - schools offering placements for trainee teachers
-- initial teacher training (ITT) providers in England
+- teacher training providers in England
 
 ### If you are a school, use this service to: ###
 
-- publish placement opportunities for placement teachers so that ITT providers can contact you
+- publish placement opportunities for trainee teachers so that teacher training providers can contact you
 - add and assign mentors to placements to track capacity
 
-### If you are an ITT provider, use this service to: ###
+### If you are a teacher training provider, use this service to: ###
 
-- find schools who are offering placements for your trainees
+- find schools that are offering placements for trainee teachers
