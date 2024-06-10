@@ -10,7 +10,11 @@
       <p class="govuk-body"><%= t(".description") %></p>
 
       <div class="govuk-form-group">
-        <%= f.govuk_text_field :name, class: "govuk-input--width-20", label: { text: t(".attributes.school_contacts.full_name"), size: "s" } %>
+        <%= f.govuk_text_field :first_name, class: "govuk-input--width-20", label: { text: t(".attributes.school_contacts.first_name"), size: "s" } %>
+      </div>
+
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :last_name, class: "govuk-input--width-20", label: { text: t(".attributes.school_contacts.last_name"), size: "s" } %>
       </div>
 
       <div class="govuk-form-group">

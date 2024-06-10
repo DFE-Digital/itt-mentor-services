@@ -16,7 +16,8 @@ class Placements::Schools::SchoolContactsController < ApplicationController
       @back_link = @change_link = new_placements_school_school_contact_path(
         school_id: @school.id,
         placements_school_contact: {
-          name: @school_contact.name,
+          first_name: @school_contact.first_name,
+          last_name: @school_contact.last_name,
           email_address: @school_contact.email_address,
         },
       )
@@ -54,7 +55,7 @@ class Placements::Schools::SchoolContactsController < ApplicationController
 
   def school_contact_params
     params.require(:placements_school_contact)
-      .permit(:name, :email_address)
+      .permit(:first_name, :last_name, :email_address)
       .merge(school: @school)
   end
 end

@@ -164,6 +164,8 @@ shared:
     - school_id
     - created_at
     - updated_at
+    - first_name
+    - last_name
   :placement_additional_subjects:
     - id
     - subject_id

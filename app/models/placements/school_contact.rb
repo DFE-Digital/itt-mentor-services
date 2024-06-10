@@ -4,6 +4,8 @@
 #
 #  id            :uuid             not null, primary key
 #  email_address :string           not null
+#  first_name    :string
+#  last_name     :string
 #  name          :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
@@ -21,8 +23,9 @@ class Placements::SchoolContact < ApplicationRecord
   belongs_to :school
   before_destroy :prevent_destroy
 
-  normalizes :name, with: ->(value) { value.strip }
+  normalizes :name, with: ->(value) { value.strip } # TODO: Remove when column removed
   normalizes :email_address, with: ->(value) { value.strip.downcase }
+  normalizes :first_name, :last_name, with: ->(value) { value.strip }
 
   validates :email_address, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 

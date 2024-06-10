@@ -84,7 +84,8 @@ Placements::School.find_each do |school|
   if school.school_contact.blank?
     Placements::SchoolContact.create!(
       school:,
-      name: "ITT School Contact",
+      first_name: "School",
+      last_name: "Contact",
       email_address: "itt_contact@example.com",
     )
   end
