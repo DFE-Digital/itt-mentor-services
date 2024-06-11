@@ -24,7 +24,6 @@ RSpec.describe FooterHelper do
         allow(HostingEnvironment).to receive(:current_service).and_return(:placements)
         expect(helper.footer_meta_items).to eq(
           [
-            { href: "#", text: "Guidance" },
             { href: "/accessibility", text: "Accessibility" },
             { href: "/cookies", text: "Cookies" },
             { href: "/privacy", text: "Privacy notice" },
