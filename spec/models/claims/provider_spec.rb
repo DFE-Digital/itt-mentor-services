@@ -29,6 +29,7 @@
 #  index_providers_on_name_trigram        (name) USING gin
 #  index_providers_on_placements_service  (placements_service)
 #  index_providers_on_postcode_trigram    (postcode) USING gin
+#  index_providers_on_provider_type       (provider_type)
 #  index_providers_on_ukprn_trigram       (ukprn) USING gin
 #  index_providers_on_urn_trigram         (urn) USING gin
 #
