@@ -55,7 +55,13 @@ class DfESignInUser
   end
 
   def user
-    @user ||= support_user || non_support_user
+    @user ||= User.where(type: [support_user_klass, user_klass].map(&:to_s))
+      .and(
+        User.where(dfe_sign_in_uid:).where.not(dfe_sign_in_uid: nil)
+          .or(User.where(email:)),
+      )
+      .order(type: :asc) # so support users take precedence
+      .first
   end
 
   def self.end_session!(session)
@@ -63,22 +69,6 @@ class DfESignInUser
   end
 
   private
-
-  def support_user
-    @support_user ||= user_by_id(support_user_klass) ||
-      support_user_klass.find_by(email:)
-  end
-
-  def non_support_user
-    @non_support_user ||= user_by_id(user_klass) ||
-      user_klass.find_by(email:)
-  end
-
-  def user_by_id(klass)
-    return if dfe_sign_in_uid.blank?
-
-    klass.find_by(dfe_sign_in_uid:)
-  end
 
   def support_user_klass
     case service
