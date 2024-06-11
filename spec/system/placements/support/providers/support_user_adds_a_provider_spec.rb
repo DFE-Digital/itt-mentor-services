@@ -39,7 +39,7 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
     when_i_visit_the_add_provider_page
     then_i_see_support_navigation_with_organisation_selected
     and_i_click_continue
-    then_i_see_an_error("Enter a provider name, United Kingdom Provider Number (UKPRN), Unique Reference Number (URN) or postcode")
+    then_i_see_an_error("Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode")
   end
 
   scenario "Colin reconsiders onboarding a provider", js: true, retry: 3 do

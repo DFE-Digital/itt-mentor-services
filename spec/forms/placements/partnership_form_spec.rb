@@ -57,7 +57,7 @@ describe Placements::PartnershipForm, type: :model do
           )
 
           expect(form.valid?).to eq(false)
-          expect(form.errors.messages[:provider_id]).to include("Enter a provider name, United Kingdom Provider Number (UKPRN), Unique Reference Number (URN) or postcode")
+          expect(form.errors.messages[:provider_id]).to include("Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode")
         end
       end
 
@@ -84,7 +84,7 @@ describe Placements::PartnershipForm, type: :model do
         )
 
         expect(form.valid?).to eq(false)
-        expect(form.errors.messages[:provider_id]).to include("Enter a provider name, United Kingdom Provider Number (UKPRN), Unique Reference Number (URN) or postcode")
+        expect(form.errors.messages[:provider_id]).to include("Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode")
       end
     end
 

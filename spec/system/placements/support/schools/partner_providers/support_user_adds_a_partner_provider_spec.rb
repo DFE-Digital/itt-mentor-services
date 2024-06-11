@@ -46,7 +46,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   scenario "Support user submits the search form without selecting a provider", js: true, retry: 3 do
     when_i_visit_the_add_partner_provider_page
     and_i_click_on("Continue")
-    then_i_see_an_error("Enter a provider name, United Kingdom Provider Number (UKPRN), Unique Reference Number (URN) or postcode")
+    then_i_see_an_error("Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode")
   end
 
   scenario "Support user reconsiders selecting a provider", js: true, retry: 3 do

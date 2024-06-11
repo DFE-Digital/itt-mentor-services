@@ -45,7 +45,7 @@ en:
           attributes:
             id:
               already_added: "%{provider_name} has already been added. Try another provider"
-              blank: Enter a provider name, United Kingdom Provider Number (UKPRN), Unique Reference Number (URN) or postcode
+              blank: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode
               option_blank: Select a provider
         school_onboarding_form:
           attributes:
@@ -61,5 +61,5 @@ en:
               option_blank: Select a school
             provider_id:
               already_added: "%{provider_name} has already been added. Try another provider"
-              blank: Enter a provider name, United Kingdom Provider Number (UKPRN), Unique Reference Number (URN) or postcode
+              blank: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode
               option_blank: Select a provider
