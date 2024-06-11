@@ -1,4 +1,4 @@
-class Placements::Support::ProvidersController < Placements::Support::ApplicationController
+class Placements::Support::ProvidersController < Placements::ApplicationController
   before_action :redirect_to_provider_options, only: :check, if: -> { javascript_disabled? }
 
   def new

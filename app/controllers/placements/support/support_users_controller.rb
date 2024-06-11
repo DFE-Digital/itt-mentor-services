@@ -1,4 +1,4 @@
-class Placements::Support::SupportUsersController < Placements::Support::ApplicationController
+class Placements::Support::SupportUsersController < Placements::ApplicationController
   before_action :set_support_user, only: %i[show remove destroy]
   before_action :authorize_support_user, only: %i[remove destroy]
 

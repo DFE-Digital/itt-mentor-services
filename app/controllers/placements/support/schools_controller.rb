@@ -1,4 +1,4 @@
-class Placements::Support::SchoolsController < Placements::Support::ApplicationController
+class Placements::Support::SchoolsController < Placements::ApplicationController
   before_action :redirect_to_school_options, only: :check, if: -> { javascript_disabled? }
 
   def new
