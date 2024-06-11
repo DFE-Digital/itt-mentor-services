@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_07_135849) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_11_151728) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -241,6 +241,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_07_135849) do
     t.index ["provider_id"], name: "index_placements_on_provider_id"
     t.index ["school_id"], name: "index_placements_on_school_id"
     t.index ["subject_id"], name: "index_placements_on_subject_id"
+    t.index ["year_group"], name: "index_placements_on_year_group"
   end
 
   create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -267,6 +268,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_07_135849) do
     t.index ["name"], name: "index_providers_on_name_trigram", opclass: :gin_trgm_ops, using: :gin
     t.index ["placements_service"], name: "index_providers_on_placements_service"
     t.index ["postcode"], name: "index_providers_on_postcode_trigram", opclass: :gin_trgm_ops, using: :gin
+    t.index ["provider_type"], name: "index_providers_on_provider_type"
     t.index ["ukprn"], name: "index_providers_on_ukprn_trigram", opclass: :gin_trgm_ops, using: :gin
     t.index ["urn"], name: "index_providers_on_urn_trigram", opclass: :gin_trgm_ops, using: :gin
   end

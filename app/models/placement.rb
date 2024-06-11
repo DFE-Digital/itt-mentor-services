@@ -15,6 +15,7 @@
 #  index_placements_on_provider_id  (provider_id)
 #  index_placements_on_school_id    (school_id)
 #  index_placements_on_subject_id   (subject_id)
+#  index_placements_on_year_group   (year_group)
 #
 # Foreign Keys
 #
