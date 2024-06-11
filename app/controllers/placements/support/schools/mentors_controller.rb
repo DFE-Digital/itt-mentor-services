@@ -1,4 +1,4 @@
-class Placements::Support::Schools::MentorsController < Placements::Support::ApplicationController
+class Placements::Support::Schools::MentorsController < Placements::ApplicationController
   before_action :set_school
   before_action :set_mentor, only: %i[show remove destroy]
   before_action :set_mentor_membership, only: %i[remove destroy]

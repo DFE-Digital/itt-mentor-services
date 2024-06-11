@@ -1,4 +1,4 @@
-class Placements::Support::Schools::PlacementsController < Placements::Support::ApplicationController
+class Placements::Support::Schools::PlacementsController < Placements::ApplicationController
   before_action :set_school
   before_action :set_placement, except: %i[index]
 

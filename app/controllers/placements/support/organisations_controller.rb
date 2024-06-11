@@ -1,4 +1,4 @@
-class Placements::Support::OrganisationsController < Placements::Support::ApplicationController
+class Placements::Support::OrganisationsController < Placements::ApplicationController
   def index
     @pagy, @organisations = pagy(organisations)
     @filters = filters_param

@@ -1,4 +1,4 @@
-class Placements::Support::Organisations::UsersController < Placements::Support::ApplicationController
+class Placements::Support::Organisations::UsersController < Placements::ApplicationController
   before_action :set_organisation
   before_action :set_user, only: %i[show remove destroy]
   before_action :authorize_user, only: %i[remove destroy]
