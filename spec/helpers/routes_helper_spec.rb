@@ -91,7 +91,7 @@ describe RoutesHelper do
       context "when the current service is placements" do
         it "returns the correct url" do
           allow(HostingEnvironment).to receive(:current_service).and_return(:placements)
-          expect(helper.feedback_url).to eq("https://forms.office.com/e/iVBfSXWPDb")
+          expect(helper.feedback_url).to eq("https://forms.office.com/e/2dZ8gck5Zg")
         end
       end
     end
