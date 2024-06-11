@@ -25,10 +25,10 @@ en:
           destroy:
             partner_provider_removed: Partner provider removed
           new:
-            page_title: "Enter a provider name, United Kingdom Provider Number (UKPRN), Unique Reference Number (URN) or postcode - Add partner provider - %{school_name}"
-            page_title_with_error: "Errors: Enter a provider name, United Kingdom Provider Number (UKPRN), Unique Reference Number (URN) or postcode - Add partner provider - %{school_name}"
+            page_title: "Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode - Add partner provider - %{school_name}"
+            page_title_with_error: "Errors: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode - Add partner provider - %{school_name}"
             caption: Add partner provider - %{school_name}
-            title: Enter a provider name, United Kingdom Provider Number (UKPRN), Unique Reference Number (URN) or postcode.
+            title: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode.
             cancel: Cancel
           check:
             continue: Continue

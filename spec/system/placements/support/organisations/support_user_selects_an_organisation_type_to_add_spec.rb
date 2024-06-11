@@ -11,7 +11,7 @@ RSpec.describe "Placements / Support / Organisations / Support User Selects An O
   scenario "Colin selects to add an ITT provider" do
     when_i_select_the_radio_option("ITT provider")
     and_i_click_continue
-    then_i_see_the_title("Enter a provider name, United Kingdom Provider Number (UKPRN), Unique Reference Number (URN) or postcode")
+    then_i_see_the_title("Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode")
   end
 
   scenario "Colin selects to add a school" do
