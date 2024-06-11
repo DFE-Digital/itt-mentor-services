@@ -142,7 +142,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
                   flash: { alert: t("errors.internal_server_error.page_title") } and return
     end
 
-    redirect_to public_send(next_step(params[:id]))
+    redirect_to next_step(params[:id])
   end
 
   private
@@ -206,7 +206,7 @@ class Placements::Schools::Placements::BuildController < ApplicationController
   end
 
   def next_step(step)
-    "#{steps[steps.index(step.to_sym) + 1]}_placements_school_placement_build_index_path"
+    public_send("#{steps[steps.index(step.to_sym) + 1]}_placements_school_placement_build_index_path")
   end
 
   def previous_step(step)
