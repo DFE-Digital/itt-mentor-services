@@ -115,7 +115,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           then_i_see_the_placements_page
         end
 
-        context "navigated back through the steps" do
+        context "when navigating back through the steps" do
           scenario "my selected options are rendered and I go to the previous step" do
             when_i_visit_the_placements_page
             and_i_click_on("Add placement")
