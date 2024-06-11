@@ -12,8 +12,8 @@ class Placements::MentorForm < ApplicationForm
   FORM_PARAMS = [:trn, "date_of_birth(1i)", "date_of_birth(2i)", "date_of_birth(3i)"].freeze
 
   validate :validate_membership
-  validates :date_of_birth, presence: true
   validate :validate_mentor
+  validates :date_of_birth, presence: true
 
   def persist
     ActiveRecord::Base.transaction do
