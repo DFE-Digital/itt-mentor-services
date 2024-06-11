@@ -37,6 +37,24 @@ describe Placements::MentorForm, type: :model do
         expect(form.errors.messages[:date_of_birth]).to include("Enter a date of birth")
       end
     end
+
+    context "when date_of_birth is in future" do
+      before { stub_teaching_record_response(date_of_birth: "#{year}-01-22") }
+
+      let(:year) { Time.zone.today.year + 1 }
+
+      it "returns invalid", :aggregate_failures do
+        form = described_class.new(
+          "date_of_birth(3i)" => "22",
+          "date_of_birth(2i)" => "1",
+          "date_of_birth(1i)" => year.to_s,
+          "trn" => trn,
+          "school" => school,
+        )
+        expect(form.valid?).to eq(false)
+        expect(form.errors.messages[:date_of_birth]).to include("Date of birth must be in the past")
+      end
+    end
   end
 
   describe "#mentor" do
@@ -99,12 +117,12 @@ describe Placements::MentorForm, type: :model do
     end
   end
 
-  def stub_teaching_record_response
+  def stub_teaching_record_response(date_of_birth: "1991-01-22")
     allow(TeachingRecord::GetTeacher).to receive(:call).with(trn:, date_of_birth:).and_return(
       { "trn" => "1234567",
         "firstName" => "Judith",
         "lastName" => "Chicken",
-        "dateOfBirth" => "1991-01-22" },
+        "dateOfBirth" => date_of_birth },
     )
   end
 end
