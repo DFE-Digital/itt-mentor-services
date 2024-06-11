@@ -13,6 +13,7 @@ scope module: :placements,
     get :cookies, action: :show, page: :cookies
     get :privacy, action: :show, page: :privacy
     get :accessibility, action: :show, page: :accessibility
+    get :terms_and_conditions, action: :show, page: :terms_and_conditions
   end
 
   namespace :support do
