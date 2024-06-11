@@ -115,28 +115,33 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           then_i_see_the_placements_page
         end
 
-        context "when I've checked my answers and I click on change" do
-          scenario "my selected options are rendered when navigating using the back button" do
+        context "navigated back through the steps" do
+          scenario "my selected options are rendered and I go to the previous step" do
             when_i_visit_the_placements_page
             and_i_click_on("Add placement")
             when_i_choose_a_subject(subject_1.name)
             and_i_click_on("Continue")
-            when_i_click_on("Back")
-            then_my_chosen_subject_is_selected(subject_1.name)
-
-            when_i_visit_the_add_year_group_page
             when_i_choose_a_year_group("Year 1")
             and_i_click_on("Continue")
+            when_i_check_a_mentor(mentor_1.full_name)
+            and_i_click_on("Continue")
+            then_i_see_the_check_your_answers_page(school.phase, mentor_1)
+
+            when_i_click_on("Back")
+            then_my_chosen_mentor_is_checked(mentor_1.full_name)
+
             when_i_click_on("Back")
             then_my_chosen_year_group_is_selected("Year 1")
 
-            when_i_visit_the_add_mentor_page
-            when_i_check_a_mentor(mentor_1.full_name)
-            and_i_click_on("Continue")
-            when_i_change_my_mentor
-            then_my_chosen_mentor_is_checked(mentor_1.full_name)
-          end
+            when_i_click_on("Back")
+            then_my_chosen_subject_is_selected(subject_1.name)
 
+            when_i_click_on("Back")
+            then_i_see_the_placements_page
+          end
+        end
+
+        context "when I've checked my answers and I click on change" do
           scenario "when I do not enter valid options" do
             when_i_visit_the_placements_page
             and_i_click_on("Add placement")
