@@ -56,7 +56,10 @@ module Gias
     end
 
     class School
-      OPEN_SCHOOL = "1".freeze
+      # Code | EstablishmentStatus
+      # 1    | Open
+      # 3    | Open, but proposed to close
+      OPEN_SCHOOL_CODES = %w[1 3].freeze
       # Code | Establishment type
       # 25   | Offshore schools
       # 30   | Welsh establishment
@@ -70,7 +73,7 @@ module Gias
       end
 
       def open?
-        row.fetch("EstablishmentStatus (code)") == OPEN_SCHOOL
+        OPEN_SCHOOL_CODES.include? row.fetch("EstablishmentStatus (code)")
       end
 
       def in_england?
