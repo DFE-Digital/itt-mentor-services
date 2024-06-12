@@ -79,7 +79,6 @@ class Placements::Providers::PartnerSchoolsController < Placements::ApplicationC
   private
 
   def set_provider
-    session[:placements_provider_id] = params[:provider_id]
     @provider = current_user.providers.find(params.fetch(:provider_id))
   end
 
