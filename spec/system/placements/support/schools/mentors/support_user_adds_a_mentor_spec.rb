@@ -44,9 +44,9 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
   end
 
   scenario "I do not enter a date of birth" do
-    allow(TeachingRecord::GetTeacher).to receive(:call)
-     .with(trn: "1212121", date_of_birth: Struct.new(:day, :month, :year).new(nil, nil, nil).to_s)
-     .and_return teaching_record_valid_response(claims_mentor)
+    stub_valid_teaching_record_response(trn: "1212121",
+                                        date_of_birth: Struct.new(:day, :month, :year).new(nil, nil, nil).to_s,
+                                        mentor: claims_mentor)
 
     given_i_navigate_to_schools_mentors_list(school)
     and_i_click_on("Add mentor")
@@ -65,9 +65,9 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
   end
 
   scenario "I enter a trn of mentor who already exists for this school" do
-    allow(TeachingRecord::GetTeacher).to receive(:call)
-      .with(trn: placements_mentor.trn, date_of_birth: Struct.new(:day, :month, :year).new(nil, nil, nil).to_s)
-      .and_return teaching_record_valid_response(claims_mentor)
+    stub_valid_teaching_record_response(trn: placements_mentor.trn,
+                                        date_of_birth: Struct.new(:day, :month, :year).new(nil, nil, nil).to_s,
+                                        mentor: claims_mentor)
 
     given_a_placements_mentor_exists(school, placements_mentor)
     given_i_navigate_to_schools_mentors_list(school)
@@ -79,9 +79,9 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
 
   context "when the mentor already exists in the claims service" do
     before do
-      allow(TeachingRecord::GetTeacher).to receive(:call)
-                                             .with(trn: claims_mentor.trn, date_of_birth: "1990-01-01")
-                                             .and_return teaching_record_valid_response(claims_mentor)
+      stub_valid_teaching_record_response(trn: claims_mentor.trn,
+                                          date_of_birth: "1990-01-01",
+                                          mentor: claims_mentor)
     end
 
     scenario "I enter the trn of an existing claims mentor" do
@@ -107,9 +107,9 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
 
   context "when the mentor already exists in the placements service" do
     before do
-      allow(TeachingRecord::GetTeacher).to receive(:call)
-                                             .with(trn: placements_mentor.trn, date_of_birth: "1990-01-01")
-                                             .and_return teaching_record_valid_response(placements_mentor)
+      stub_valid_teaching_record_response(trn: placements_mentor.trn,
+                                          date_of_birth: "1990-01-01",
+                                          mentor: placements_mentor)
     end
 
     scenario "I enter the trn of an existing placements mentor from another school" do
@@ -150,9 +150,9 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
 
   describe "when trn is valid-looking and mentor is found on Teaching Record Service" do
     before do
-      allow(TeachingRecord::GetTeacher).to receive(:call)
-                                             .with(trn: new_mentor.trn, date_of_birth: "1990-01-01")
-                                             .and_return teaching_record_valid_response(new_mentor)
+      stub_valid_teaching_record_response(trn: new_mentor.trn,
+                                          date_of_birth: "1990-01-01",
+                                          mentor: new_mentor)
     end
 
     scenario "I enter a valid-looking trn that does exist on the Teaching Record Service" do
@@ -290,6 +290,12 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
       "They can find a lost TRN, or apply for a new one by following the instructions in the ",
     )
     expect(page).to have_link("TRN guidance (opens in new tab)", href: "https://www.gov.uk/guidance/teacher-reference-number-trn")
+  end
+
+  def stub_valid_teaching_record_response(trn:, date_of_birth:, mentor:)
+    allow(TeachingRecord::GetTeacher).to receive(:call)
+                                           .with(trn:, date_of_birth:)
+                                           .and_return teaching_record_valid_response(mentor)
   end
 
   alias_method :and_i_click_on, :when_i_click_on
