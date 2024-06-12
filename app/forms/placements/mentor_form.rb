@@ -8,11 +8,15 @@ class Placements::MentorForm < ApplicationForm
   attribute "date_of_birth(1i)", :integer
   attribute "date_of_birth(2i)", :integer
   attribute "date_of_birth(3i)", :integer
+  alias_attribute :year, :"date_of_birth(1i)"
+  alias_attribute :month, :"date_of_birth(2i)"
+  alias_attribute :day, :"date_of_birth(3i)"
 
   FORM_PARAMS = [:trn, "date_of_birth(1i)", "date_of_birth(2i)", "date_of_birth(3i)"].freeze
 
   validate :validate_membership
   validate :validate_mentor
+  validate :validate_date_of_birth
   validates :date_of_birth, presence: true
   validates :date_of_birth, comparison: { less_than: Time.zone.today }
 
@@ -39,13 +43,13 @@ class Placements::MentorForm < ApplicationForm
   end
 
   def date_of_birth
-    Date.new(
-      attributes["date_of_birth(1i)"], # year
-      attributes["date_of_birth(2i)"], # month
-      attributes["date_of_birth(3i)"], # day
-    )
-  rescue Date::Error, TypeError
-    nil
+    date_args = [year, month, day].map(&:to_i)
+
+    begin
+      Date.new(*date_args)
+    rescue ArgumentError, RangeError
+      Struct.new(:day, :month, :year).new(day, month, year)
+    end
   end
 
   private
@@ -54,6 +58,10 @@ class Placements::MentorForm < ApplicationForm
     if mentor_membership.invalid?
       errors.add(:trn, :taken)
     end
+  end
+
+  def validate_date_of_birth
+    errors.add(:date_of_birth, :blank) unless date_of_birth.is_a?(Date)
   end
 
   def mentor_membership
