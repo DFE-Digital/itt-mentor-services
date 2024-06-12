@@ -18,7 +18,7 @@ class Placements::MentorForm < ApplicationForm
   validate :validate_mentor
   validate :validate_date_of_birth
   validates :date_of_birth, presence: true
-  validates :date_of_birth, comparison: { less_than: Time.zone.today }
+  validates :date_of_birth, comparison: { less_than: Time.zone.today }, if: -> { date_of_birth.is_a?(Date) }
 
   def persist
     ActiveRecord::Base.transaction do
