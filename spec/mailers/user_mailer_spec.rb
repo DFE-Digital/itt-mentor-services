@@ -70,7 +70,7 @@ RSpec.describe UserMailer, type: :mailer do
 
             You have been invited to join the Manage school placements service for #{organisation.name}.
 
-            # Sign in to view placements
+            # Sign in to manage your school placements
 
             If you have a DfE Sign-in account, you can use it to sign in:
 
@@ -123,7 +123,7 @@ RSpec.describe UserMailer, type: :mailer do
 
             You have been invited to join the Manage school placements service for #{organisation.name}.
 
-            # Sign in to view placements
+            # Sign in to manage your school placements
 
             If you have a DfE Sign-in account, you can use it to sign in:
 
