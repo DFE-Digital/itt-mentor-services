@@ -32,18 +32,6 @@ module Placements::Routes::OrganisationsHelper
     end
   end
 
-  def placements_organisation_path(organisation)
-    case organisation
-    when School
-      placements_school_placements_path(organisation)
-    when Provider
-      session[:placements_provider_id] = organisation.id
-      placements_provider_path(organisation)
-    else
-      raise NotImplementedError
-    end
-  end
-
   def placements_support_users_path(organisation)
     case organisation
     when School

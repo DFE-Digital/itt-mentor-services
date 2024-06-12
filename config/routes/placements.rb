@@ -89,7 +89,7 @@ scope module: :placements,
     end
   end
 
-  resources :organisations, only: [:index]
+  resources :organisations, only: %i[index show]
   resources :schools, only: %i[show] do
     scope module: :schools do
       resources :users, only: %i[index new create show destroy] do
