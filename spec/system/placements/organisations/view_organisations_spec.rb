@@ -22,7 +22,7 @@ RSpec.describe "View organisations", type: :system, service: :placements do
     when_i_click_on_change_organisation
     i_am_redirected_to_organisation_index
     when_i_click_on_provider_name
-    then_i_see_provider_page(multi_org_provider)
+    then_i_see_the_placements_search_page
     when_i_click_on_change_organisation
     i_am_redirected_to_organisation_index
   end
@@ -42,7 +42,7 @@ RSpec.describe "View organisations", type: :system, service: :placements do
     and_user_has_one_provider(user:)
     when_i_visit_sign_in_path
     when_i_click_sign_in
-    then_i_see_the_one_provider(one_provider)
+    then_i_see_the_one_provider
   end
 
   scenario "I cannot view a school unless it is a placements school" do
@@ -93,6 +93,7 @@ RSpec.describe "View organisations", type: :system, service: :placements do
     within(".app-primary-navigation__nav") do
       expect(page).to have_link "Placements", current: "page"
       expect(page).to have_link "Mentors", current: "false"
+      expect(page).to have_link "Partner providers", current: "false"
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Organisation details", current: "false"
     end
@@ -111,12 +112,13 @@ RSpec.describe "View organisations", type: :system, service: :placements do
     click_on "Provider 1"
   end
 
-  def then_i_see_provider_page(provider)
-    expect(page).to have_current_path placements_provider_path(provider), ignore_query: true
-    within(".govuk-main-wrapper") do
-      expect(page).to have_content provider.name
-      expect(page).to have_content "Organisation details"
-      expect(page).to have_content "Contact details"
+  def then_i_see_the_placements_search_page
+    expect(page).to have_current_path placements_placements_path, ignore_query: true
+    within(".app-primary-navigation__nav") do
+      expect(page).to have_link "Placements", current: "page"
+      expect(page).to have_link "Partner schools", current: "false"
+      expect(page).to have_link "Users", current: "false"
+      expect(page).to have_link "Organisation details", current: "false"
     end
   end
 
@@ -133,9 +135,9 @@ RSpec.describe "View organisations", type: :system, service: :placements do
     then_i_see_the_school_page(school)
   end
 
-  def then_i_see_the_one_provider(provider)
+  def then_i_see_the_one_provider
     expect(page).not_to have_content "Change organisation"
-    then_i_see_provider_page(provider)
+    then_i_see_the_placements_search_page
   end
 
   def when_i_visit_sign_in_path

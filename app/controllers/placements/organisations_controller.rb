@@ -40,8 +40,7 @@ class Placements::OrganisationsController < Placements::ApplicationController
     when School
       placements_school_placements_path(organisation)
     when Provider
-      # placements_placements_path
-      placements_provider_path(organisation)
+      placements_placements_path
     end
   end
 end
