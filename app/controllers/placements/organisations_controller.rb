@@ -36,10 +36,9 @@ class Placements::OrganisationsController < Placements::ApplicationController
   end
 
   def landing_page_path(organisation)
-    case organisation
-    when School
+    if organisation.is_a?(School)
       placements_school_placements_path(organisation)
-    when Provider
+    else # Provider
       placements_placements_path
     end
   end
