@@ -27,7 +27,7 @@ en:
       claims:
         heading: Sign in to submit claims
       placements:
-        heading: Sign in to view placements
+        heading: Sign in to manage your school placements
 
     user_membership_destroyed_notification:
       subject: You have been removed from %{service_name}
