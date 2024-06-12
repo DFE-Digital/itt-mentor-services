@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe Placements::MentorForm, type: :model do
-  before { stub_teaching_record_response(date_of_birth:) }
+  before { stub_teaching_record_response(date_of_birth:, trn:) }
 
   let!(:school) { create(:school) }
   let!(:mentor) { create(:placements_mentor, trn:) }
@@ -41,7 +41,7 @@ describe Placements::MentorForm, type: :model do
     end
 
     context "when date_of_birth is in future" do
-      before { stub_teaching_record_response(date_of_birth: "#{year}-01-22") }
+      before { stub_teaching_record_response(date_of_birth: "#{year}-01-22", trn:) }
 
       let(:year) { Time.zone.today.year + 1 }
 
@@ -78,15 +78,7 @@ describe Placements::MentorForm, type: :model do
   describe "persist" do
     context "when the mentor doesn't exist" do
       let(:trn) { "2345678" }
-
-      before do
-        allow(TeachingRecord::GetTeacher).to receive(:call).with(trn: "1234567", date_of_birth:).and_return(
-          { "trn" => "1234567",
-            "firstName" => "Judith",
-            "lastName" => "Chicken",
-            "dateOfBirth" => "1991-01-22" },
-        )
-      end
+      before { stub_teaching_record_response(date_of_birth:, trn: "1234567") }
 
       it "creates a new mentor and membership" do
         form = described_class.new(
@@ -132,7 +124,7 @@ describe Placements::MentorForm, type: :model do
     end
   end
 
-  def stub_teaching_record_response(date_of_birth: "1991-01-22")
+  def stub_teaching_record_response(date_of_birth: "1991-01-22", trn:)
     allow(TeachingRecord::GetTeacher).to receive(:call).with(trn:, date_of_birth:).and_return(
       { "trn" => "1234567",
         "firstName" => "Judith",
