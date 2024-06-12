@@ -4,7 +4,7 @@ describe Placements::MentorForm, type: :model do
   before { stub_teaching_record_response }
 
   let!(:school) { create(:school) }
-  let!(:mentor) { create(:placements_mentor) }
+  let!(:mentor) { create(:placements_mentor, trn:) }
   let(:trn) { "1234567" }
   let(:date_of_birth) { "1991-01-22" }
 
@@ -31,6 +31,8 @@ describe Placements::MentorForm, type: :model do
     end
 
     context "when date_of_birth is not set" do
+      let(:date_of_birth) { Struct.new(:day, :month, :year).new(nil, nil, nil).to_s }
+
       it "returns invalid", :aggregate_failures do
         form = described_class.new(trn:, school:)
         expect(form.valid?).to eq(false)
@@ -64,6 +66,8 @@ describe Placements::MentorForm, type: :model do
     end
 
     context "when mentor already exists" do
+      let(:date_of_birth) { Struct.new(:day, :month, :year).new(nil, nil, nil).to_s }
+
       it "returns the existing mentor" do
         form = described_class.new(trn: mentor.trn, school:)
         expect(form.mentor).to eq(mentor)
@@ -75,12 +79,21 @@ describe Placements::MentorForm, type: :model do
     context "when the mentor doesn't exist" do
       let(:trn) { "2345678" }
 
+      before do
+        allow(TeachingRecord::GetTeacher).to receive(:call).with(trn: "1234567", date_of_birth:).and_return(
+          { "trn" => "1234567",
+            "firstName" => "Judith",
+            "lastName" => "Chicken",
+            "dateOfBirth" => "1991-01-22" },
+        )
+      end
+
       it "creates a new mentor and membership" do
         form = described_class.new(
           "date_of_birth(3i)" => "22",
           "date_of_birth(2i)" => "1",
           "date_of_birth(1i)" => "1991",
-          "trn" => "2345678",
+          "trn" => "1234567",
           "school" => school,
           "first_name" => "Jane",
           "last_name" => "Doe",
@@ -94,6 +107,8 @@ describe Placements::MentorForm, type: :model do
     end
 
     context "when the mentor does exist" do
+      let(:date_of_birth) { Struct.new(:day, :month, :year).new(nil, nil, nil).to_s }
+
       it "creates a new mentor membership" do
         form = described_class.new(trn: mentor.trn, first_name: mentor.first_name, last_name: mentor.last_name, school:)
 

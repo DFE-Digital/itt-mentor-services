@@ -44,6 +44,10 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
   end
 
   scenario "I do not enter a date of birth" do
+    allow(TeachingRecord::GetTeacher).to receive(:call)
+     .with(trn: "1212121", date_of_birth: Struct.new(:day, :month, :year).new(nil, nil, nil).to_s)
+     .and_return teaching_record_valid_response(claims_mentor)
+
     given_i_navigate_to_schools_mentors_list(school)
     and_i_click_on("Add mentor")
     when_i_enter_trn(1_212_121)
@@ -61,6 +65,10 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
   end
 
   scenario "I enter a trn of mentor who already exists for this school" do
+    allow(TeachingRecord::GetTeacher).to receive(:call)
+      .with(trn: placements_mentor.trn, date_of_birth: Struct.new(:day, :month, :year).new(nil, nil, nil).to_s)
+      .and_return teaching_record_valid_response(claims_mentor)
+
     given_a_placements_mentor_exists(school, placements_mentor)
     given_i_navigate_to_schools_mentors_list(school)
     and_i_click_on("Add mentor")

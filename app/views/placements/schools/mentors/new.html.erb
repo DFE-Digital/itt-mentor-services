@@ -33,6 +33,7 @@
 
         <%= f.govuk_date_field(
               :date_of_birth,
+              date_of_birth: true,
               maxlength_enabled: true,
               legend: { text: Mentor.human_attribute_name(:date_of_birth), size: "s" },
               hint: { text: t(".date_of_birth_hint"), size: "s" },
