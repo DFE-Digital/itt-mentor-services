@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe Placements::MentorForm, type: :model do
-  before { stub_teaching_record_response }
+  before { stub_teaching_record_response(date_of_birth:) }
 
   let!(:school) { create(:school) }
   let!(:mentor) { create(:placements_mentor, trn:) }
