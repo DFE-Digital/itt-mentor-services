@@ -6,8 +6,9 @@ Please read these Terms of Use (“General Terms”) carefully before using this
 This service is maintained to enable:
 
 - Schools to publish placement opportunities for trainee teachers so that teacher training providers can contact them
-Teacher training providers to find schools who are offering placements for trainee teachers
-- Access and use by you of this Service constitutes your acceptance of these General Terms. This takes effect from the date on which you first use this website. If you do not agree to these terms, you must not use this website.
+- Teacher training providers to find schools who are offering placements for trainee teachers
+
+Access and use by you of this Service constitutes your acceptance of these General Terms. This takes effect from the date on which you first use this website. If you do not agree to these terms, you must not use this website.
 
 If we change these General Terms we will post the revised document here with an updated effective date. If we make significant changes to these terms, we may notify you by other means such as sending an email or posting a notice on our home page.
 
