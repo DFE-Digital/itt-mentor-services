@@ -78,6 +78,7 @@ describe Placements::MentorForm, type: :model do
   describe "persist" do
     context "when the mentor doesn't exist" do
       let(:trn) { "2345678" }
+
       before { stub_teaching_record_response(date_of_birth:, trn: "1234567") }
 
       it "creates a new mentor and membership" do
@@ -124,7 +125,7 @@ describe Placements::MentorForm, type: :model do
     end
   end
 
-  def stub_teaching_record_response(date_of_birth: "1991-01-22", trn:)
+  def stub_teaching_record_response(trn:, date_of_birth: "1991-01-22")
     allow(TeachingRecord::GetTeacher).to receive(:call).with(trn:, date_of_birth:).and_return(
       { "trn" => "1234567",
         "firstName" => "Judith",
