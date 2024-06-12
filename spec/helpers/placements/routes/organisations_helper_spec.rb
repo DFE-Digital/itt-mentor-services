@@ -73,29 +73,6 @@ RSpec.describe Placements::Routes::OrganisationsHelper do
     end
   end
 
-  describe "#placements_organisation_path" do
-    context "when organisation is a school" do
-      it "returns the school placements path" do
-        organisation = create(:school)
-        expect(placements_organisation_path(organisation)).to eq(placements_school_placements_path(organisation))
-      end
-    end
-
-    context "when organisation is a provider" do
-      it "returns the provider path" do
-        organisation = create(:provider)
-        expect(placements_organisation_path(organisation)).to eq(placements_provider_path(organisation))
-      end
-    end
-
-    context "when organisation is not a school or provider" do
-      it "raises NotImplementedError" do
-        organisation = create(:claim)
-        expect { placements_organisation_path(organisation) }.to raise_error(NotImplementedError)
-      end
-    end
-  end
-
   describe "#placements_support_users_path" do
     context "when organisation is a school" do
       it "returns the support school users path" do

@@ -1,27 +1,47 @@
 class Placements::OrganisationsController < Placements::ApplicationController
-  before_action :redirect_to_organisation_if_only_one, only: :index
-  def index; end
+  before_action :auto_redirect_if_only_one, only: :index
+
+  def index
+    @memberships = memberships.filter(&:placements_service).sort_by(&:name)
+  end
+
+  def show
+    membership = memberships.find(params[:id])
+    load_organisation(membership)
+  end
 
   private
 
-  def redirect_to_organisation_if_only_one
-    set_memberships
+  def auto_redirect_if_only_one
+    load_organisation(memberships.first) if memberships.one?
+  end
 
-    if @memberships.one?
-      set_session_provider
-      redirect_to placements_organisation_path(organisation)
+  def memberships
+    current_user.user_memberships.includes(:organisation)
+  end
+
+  def load_organisation(membership)
+    organisation = membership.organisation
+
+    set_current_provider(organisation)
+    redirect_to landing_page_path(organisation)
+  end
+
+  def set_current_provider(organisation)
+    if organisation.is_a?(Provider)
+      session[:placements_provider_id] = organisation.id
+    else
+      session.delete(:placements_provider_id)
     end
   end
 
-  def set_memberships
-    @memberships = current_user.user_memberships.filter(&:placements_service).sort_by(&:name)
-  end
-
-  def organisation
-    @organisation ||= current_user.user_memberships.first.organisation
-  end
-
-  def set_session_provider
-    session[:placements_provider_id] = organisation.id if organisation.is_a?(Provider)
+  def landing_page_path(organisation)
+    case organisation
+    when School
+      placements_school_placements_path(organisation)
+    when Provider
+      # placements_placements_path
+      placements_provider_path(organisation)
+    end
   end
 end
