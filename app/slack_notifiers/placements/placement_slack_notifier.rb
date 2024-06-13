@@ -1,21 +1,13 @@
 class Placements::PlacementSlackNotifier < Placements::ApplicationSlackNotifier
   def placement_created_notification(school, placement)
     message(
-      text: ":new:  Placement added.",
+      text: ":new: Placement added: #{placement.title} at #{school.name}",
       blocks: [
         {
           type: "section",
           text: {
             type: "mrkdwn",
-            text: ":new:  Placement added: {school.name} have added a {placement.title} placement.",
-          },
-          accessory: {
-            type: "button",
-            text: {
-              type: "plain_text",
-              text: "View placement",
-            },
-            url: placements_support_school_placements_url(school, placement),
+            text: ":new: *Placement added:* <#{placements_support_school_placements_url(school, placement)}|#{placement.title}> at #{school.name}",
           },
         },
       ],
