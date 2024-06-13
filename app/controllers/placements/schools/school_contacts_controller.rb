@@ -29,6 +29,7 @@ class Placements::Schools::SchoolContactsController < Placements::ApplicationCon
   def create
     @school_contact = Placements::SchoolContact.new(school_contact_params)
     @school_contact.save!
+    Placements::SchoolSlackNotifier.school_onboarded_notification(@school).deliver_later
 
     redirect_to placements_school_path(@school), flash: { success: t(".school_contact_added") }
   end

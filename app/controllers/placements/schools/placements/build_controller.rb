@@ -74,6 +74,8 @@ class Placements::Schools::Placements::BuildController < Placements::Application
       @placement.build_mentors(mentor_ids)
       @placement.save!
 
+      Placements::PlacementSlackNotifier.placement_created_notification(school, @placement).deliver_later
+
       session.delete(:add_a_placement)
       redirect_to placements_school_placements_path(school), flash: { success: t(".success") } and return
     when :add_phase
