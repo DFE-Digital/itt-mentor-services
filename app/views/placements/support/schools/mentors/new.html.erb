@@ -15,7 +15,7 @@
         <h2 class="govuk-heading-l"><%= t(".find_teacher") %></h2>
 
         <div class="govuk-form-group">
-          <%= f.govuk_text_field :trn, width: "two-thirds", label: { text: t(".trn"), size: "s" } %>
+          <%= f.govuk_text_field :trn, width: "two-thirds", label: { text: t(".trn"), size: "s" }, hint: { text: t(".trn_hint") } %>
         </div>
 
         <%= govuk_details(
