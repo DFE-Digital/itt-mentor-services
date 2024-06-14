@@ -11,7 +11,7 @@ RSpec.describe MentorBuilder do
     it "returns mentor object with error on trn" do
       mentor = described_class.call(trn:)
       expect(mentor.class).to eq(Placements::Mentor)
-      expect(mentor.errors[:trn]).to include "Enter a valid teacher reference number (TRN)"
+      expect(mentor.errors[:trn]).to include "Enter a 7 digit teacher reference number (TRN)"
     end
   end
 
