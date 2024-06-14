@@ -17,7 +17,7 @@ en:
           attributes:
             trn:
               blank: Enter a teacher reference number (TRN)
-              invalid: Enter a valid teacher reference number (TRN)
+              invalid: Enter a 7 digit teacher reference number (TRN)
         claims/claim:
           attributes:
             provider_id:

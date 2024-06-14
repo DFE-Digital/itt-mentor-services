@@ -22,10 +22,10 @@ en:
             cancel: Cancel
             continue: Continue
             trn: Teacher reference number (TRN)
+            trn_hint: A TRN is a 7 digit number that uniquely identifies people in the education sector in England.
             find_teacher: Find teacher
             trn_guidance: TRN guidance
             what_is_a_trn: |
-              A TRN is a 7 digit number that uniquely identifies people in the education sector in England. 
               If you do not know a teacher’s TRN, you can ask them for it. 
               They can find a lost TRN, or apply for a new one by following the instructions in the %{link}.
             help_with_the_trn: Help with the TRN
