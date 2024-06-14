@@ -107,7 +107,7 @@ RSpec.describe "Placements / Placements / Searching for a placements list",
       when_i_visit_the_placements_index_page
       and_i_fill_in_location_search_with("Chicken")
       and_i_click_on("Search")
-      expect(page).to have_content("There are no results for the selected filter.")
+      then_i_see_the_empty_state
     end
   end
 
@@ -172,6 +172,10 @@ RSpec.describe "Placements / Placements / Searching for a placements list",
     end
   end
   alias_method :and_i_can_see_a_preset_filter, :then_i_can_see_a_preset_filter
+
+  def then_i_see_the_empty_state
+    expect(page).to have_content I18n.t("placements.placements.index.no_results")
+  end
 
   # Stub requests
 

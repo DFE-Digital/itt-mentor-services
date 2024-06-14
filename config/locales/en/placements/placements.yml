@@ -7,7 +7,7 @@ en:
           one: 1 placement found
           other: "%{count} placements found"
         placements: Placements
-        no_results_for_filters: There are no results for the selected filter.
+        no_results: There are no placements that match your selection. Try searching again, or removing one or more filters.
         enter_a_location: Enter a location
         location_search_example: For example, Sunderland or SR2
       filter:
