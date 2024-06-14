@@ -319,7 +319,7 @@ RSpec.describe "Placements / Placements / View placements list",
   end
 
   def then_i_see_the_empty_state
-    expect(page).to have_content("There are no results for the selected filter.")
+    expect(page).to have_content I18n.t("placements.placements.index.no_results")
   end
 
   def then_i_can_see_a_placement_for_school_and_subject(school_name, subject_name)
