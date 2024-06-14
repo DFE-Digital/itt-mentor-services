@@ -38,15 +38,15 @@ RSpec.describe Mentor, type: :model do
     it "allows only TRNs that are seven numeric characters long" do
       mentor_with_alpha_trn = build(:mentor, trn: "a12345b")
       expect(mentor_with_alpha_trn.valid?).to eq false
-      expect(mentor_with_alpha_trn.errors.messages[:trn]).to include "Enter a valid teacher reference number (TRN)"
+      expect(mentor_with_alpha_trn.errors.messages[:trn]).to include "Enter a 7 digit teacher reference number (TRN)"
 
       mentor_with_too_few_chars = build(:mentor, trn: "123")
       expect(mentor_with_too_few_chars.valid?).to eq false
-      expect(mentor_with_too_few_chars.errors.messages[:trn]).to include "Enter a valid teacher reference number (TRN)"
+      expect(mentor_with_too_few_chars.errors.messages[:trn]).to include "Enter a 7 digit teacher reference number (TRN)"
 
       mentor_with_too_many_chars = build(:mentor, trn: "123456789")
       expect(mentor_with_too_many_chars.valid?).to eq false
-      expect(mentor_with_too_many_chars.errors.messages[:trn]).to include "Enter a valid teacher reference number (TRN)"
+      expect(mentor_with_too_many_chars.errors.messages[:trn]).to include "Enter a 7 digit teacher reference number (TRN)"
     end
   end
 

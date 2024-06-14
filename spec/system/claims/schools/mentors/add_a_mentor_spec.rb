@@ -38,7 +38,7 @@ RSpec.describe "Claims school user adds mentors to schools", type: :system, serv
     and_i_click_on("Add mentor")
     when_i_enter_trn("12a")
     and_i_click_on("Continue")
-    then_i_see_errors(["Enter a valid teacher reference number (TRN)"])
+    then_i_see_errors(["Enter a 7 digit teacher reference number (TRN)"])
   end
 
   scenario "I enter a trn of mentor who already exists for this school" do

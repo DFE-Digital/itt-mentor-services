@@ -61,7 +61,7 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
     and_i_click_on("Add mentor")
     when_i_enter_trn("12a")
     and_i_click_on("Continue")
-    then_i_see_the_error("Enter a valid teacher reference number (TRN)", school.name)
+    then_i_see_the_error("Enter a 7 digit teacher reference number (TRN)", school.name)
   end
 
   scenario "I enter a trn of mentor who already exists for this school" do
@@ -285,7 +285,6 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
 
   def then_i_see_link_to_trn_guidance
     expect(page).to have_content(
-      "A TRN is a 7 digit number that uniquely identifies people in the education sector in England. " \
       "If you do not know a teacher’s TRN, you can ask them for it. " \
       "They can find a lost TRN, or apply for a new one by following the instructions in the ",
     )
