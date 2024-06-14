@@ -169,3 +169,9 @@ get-cluster-credentials: set-azure-account
 bin/konduit.sh:
 	curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/main/scripts/konduit.sh -o bin/konduit.sh \
 		&& chmod +x bin/konduit.sh
+
+action-group-resources: set-azure-account # make production action-group-resources ACTION_GROUP_EMAIL=notificationemail@domain.com. Must be run before setting enable_monitoring=true for each subscription
+	$(if $(ACTION_GROUP_EMAIL), , $(error Please specify a notification email for the action group))
+	echo ${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-mn-rg
+	az group create -l uksouth -g ${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-mn-rg --tags "Product=ITT mentor service" "Environment=${DEPLOY_ENV}"
+	az monitor action-group create -n ${AZURE_RESOURCE_PREFIX}-itt-mentor-services -g ${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-mn-rg --action email ${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-email ${ACTION_GROUP_EMAIL}
