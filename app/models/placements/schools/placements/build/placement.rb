@@ -42,17 +42,6 @@ class Placements::Schools::Placements::Build::Placement < Placement
     false
   end
 
-  def valid_mentor_ids?
-    return true if mentor_ids.present? && mentor_ids.include?("not_known")
-
-    if mentor_ids.present? && mentor_ids.all? { |id| Placements::Mentor.exists?(id:) && school.mentors.exists?(id:) }
-      true
-    else
-      errors.add(:mentor_ids, :invalid)
-      false
-    end
-  end
-
   def valid_additional_subjects?
     converted_subject_ids = additional_subject_ids.is_a?(Array) ? additional_subject_ids : [additional_subject_ids]
     if additional_subject_ids.present? && converted_subject_ids.all? { |id| Subject.exists?(id:) }
@@ -71,7 +60,7 @@ class Placements::Schools::Placements::Build::Placement < Placement
   end
 
   def all_valid?
-    valid_phase? && valid_subject? && valid_mentor_ids? && valid_additional_subjects?
+    valid_phase? && valid_subject? && valid_additional_subjects?
   end
 
   def build_additional_subjects(additional_subject_ids = nil)
@@ -82,12 +71,10 @@ class Placements::Schools::Placements::Build::Placement < Placement
     end
   end
 
-  def build_mentors(mentor_ids = nil)
-    if mentor_ids.present?
-      mentors << Placements::Mentor.where(id: mentor_ids.compact_blank)
-    else
-      mentors.build
-    end
+  def build_mentors(mentor_ids)
+    return if mentor_ids.empty?
+
+    mentors << Placements::Mentor.where(id: mentor_ids)
   end
 
   def build_phase(phase)
