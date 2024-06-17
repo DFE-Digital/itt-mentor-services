@@ -12,8 +12,6 @@ en:
               invalid: Select an additional subject
             provider_id:
               invalid: Select a provider
-            year_group:
-              invalid: Select a year group
         placement:
           attributes:
             mentor_ids:

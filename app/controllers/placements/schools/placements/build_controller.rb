@@ -33,9 +33,7 @@ class Placements::Schools::Placements::BuildController < Placements::Application
   end
 
   def add_year_group
-    @placement = build_placement
-    year_groups_for_select
-    @placement.year_group = session.dig(:add_a_placement, "year_group")
+    @current_step = Placements::AddPlacement::Steps::YearGroup.new(school:, year_group:)
     @previous_step = previous_step(:add_year_group)
   end
 
@@ -63,14 +61,15 @@ class Placements::Schools::Placements::BuildController < Placements::Application
     when :check_your_answers
       subject = Subject.find(session.dig(:add_a_placement, "subject_id"))
       phase = session.dig(:add_a_placement, "phase")
-      @placement = Placements::Schools::Placements::Build::Placement.new(school:, phase:, subject:)
       mentor_step = Placements::AddPlacement::Steps::Mentors.new(school:, mentor_ids:)
-      @placement.assign_attributes mentor_step.wizard_attributes
+      year_group_step = Placements::AddPlacement::Steps::YearGroup.new(school:, year_group:)
+      @placement = Placements::Schools::Placements::Build::Placement.new(school:, phase:, subject:)
+
+      @placement.assign_attributes [mentor_step.wizard_attributes, year_group_step.wizard_attributes].inject(:merge)
       if subject.has_child_subjects?
         @placement.additional_subject_ids = additional_subject_ids
         @placement.build_additional_subjects(additional_subject_ids)
       end
-      @placement.year_group = session.dig(:add_a_placement, "year_group") if @placement.phase == "Primary"
       @placement.build_mentors(mentor_step.wizard_attributes[:mentor_ids])
       @placement.save!
 
@@ -119,14 +118,11 @@ class Placements::Schools::Placements::BuildController < Placements::Application
         render :add_additional_subjects and return
       end
     when :add_year_group
-      year_group = params.dig(:placements_schools_placements_build_placement, :year_group)
-      @placement = build_placement
-      @placement.year_group = year_group
+      @current_step = Placements::AddPlacement::Steps::YearGroup.new(school:, year_group: year_group_params)
 
-      if @placement.valid_year_group?
-        session[:add_a_placement][:year_group] = year_group
+      if @current_step.valid?
+        session[:add_a_placement][:year_group] = @current_step.year_group
       else
-        year_groups_for_select
         render :add_year_group and return
       end
     when :add_mentors
@@ -243,6 +239,10 @@ class Placements::Schools::Placements::BuildController < Placements::Application
     @mentor_ids ||= session.dig(:add_a_placement, "mentor_ids")&.compact_blank
   end
 
+  def year_group
+    @year_group ||= session.dig(:add_a_placement, "year_group")
+  end
+
   def phase_params
     params.dig(:placements_schools_placements_build_placement, :phase)
   end
@@ -257,6 +257,10 @@ class Placements::Schools::Placements::BuildController < Placements::Application
 
   def mentor_ids_params
     params.dig(:placements_add_placement_steps_mentors, :mentor_ids).compact_blank
+  end
+
+  def year_group_params
+    params.dig(:placements_add_placement_steps_year_group, :year_group)
   end
 
   def authorize_placement

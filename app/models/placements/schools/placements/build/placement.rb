@@ -52,13 +52,6 @@ class Placements::Schools::Placements::Build::Placement < Placement
     end
   end
 
-  def valid_year_group?
-    return true if school.phase != "Primary" || year_group.present?
-
-    errors.add(:year_group, :invalid)
-    false
-  end
-
   def all_valid?
     valid_phase? && valid_subject? && valid_additional_subjects?
   end
