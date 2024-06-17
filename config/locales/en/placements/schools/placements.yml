@@ -6,8 +6,6 @@ en:
           attributes:
             phase:
               invalid: Select a phase
-            mentor_ids:
-              invalid: Select a mentor or not yet known
             subject:
               invalid: Select a subject
             additional_subject_ids:

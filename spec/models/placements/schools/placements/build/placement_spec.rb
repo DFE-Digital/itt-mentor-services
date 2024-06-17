@@ -52,31 +52,6 @@ RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model d
     end
   end
 
-  describe "#valid_mentor_ids?" do
-    it "returns false if mentor_ids is blank" do
-      placement = described_class.new(mentor_ids: nil, school:)
-
-      expect(placement.valid_mentor_ids?).to eq(false)
-    end
-
-    it "returns false if mentor_ids is not valid" do
-      other_school = create(:placements_school)
-      mentor = create(:placements_mentor_membership, school: other_school).mentor
-      placement = described_class.new(mentor_ids: [mentor.id], school:)
-
-      expect(placement.valid_mentor_ids?).to eq(false)
-    end
-
-    it "returns true if mentor_ids is valid" do
-      mentor = create(:placements_mentor_membership, school:).mentor
-      placement_1 = described_class.new(mentor_ids: [mentor.id], school:)
-      placement_2 = described_class.new(mentor_ids: %w[not_known], school:)
-
-      expect(placement_1.valid_mentor_ids?).to eq(true)
-      expect(placement_2.valid_mentor_ids?).to eq(true)
-    end
-  end
-
   describe "#valid_subject?" do
     it "returns false if subject is blank" do
       placement_1 = described_class.new(subject_id: nil, school:)
@@ -127,10 +102,9 @@ RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model d
     end
 
     it "returns true if all are valid" do
-      mentor = create(:placements_mentor_membership, school:).mentor
       subject = create(:subject, :primary)
       additional_subject = create(:subject, :primary, parent_subject: subject)
-      placement = described_class.new(phase: School::PRIMARY_PHASE, mentor_ids: [mentor.id], subject:,
+      placement = described_class.new(phase: School::PRIMARY_PHASE, subject:,
                                       school:, additional_subject_ids: [additional_subject.id])
 
       expect(placement.all_valid?).to eq(true)
@@ -178,18 +152,6 @@ RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model d
         expect(placement.mentors).to match_array([
           have_attributes(mentor_1.attributes),
           have_attributes(mentor_2.attributes),
-        ])
-      end
-    end
-
-    context "when passed nil" do
-      it "builds mentors" do
-        placement = described_class.new(school:)
-
-        placement.build_mentors
-
-        expect(placement.mentors).to match_array([
-          have_attributes(Placements::Mentor.new.attributes),
         ])
       end
     end
