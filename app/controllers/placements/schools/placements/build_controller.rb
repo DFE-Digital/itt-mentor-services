@@ -40,8 +40,7 @@ class Placements::Schools::Placements::BuildController < Placements::Application
   end
 
   def add_mentors
-    @placement = build_placement
-    @selected_mentors = retrieve_selected_mentors
+    @current_step = Placements::AddPlacement::Steps::Mentors.new(school:, mentor_ids:)
     @previous_step = previous_step(:add_mentors)
   end
 
@@ -65,13 +64,14 @@ class Placements::Schools::Placements::BuildController < Placements::Application
       subject = Subject.find(session.dig(:add_a_placement, "subject_id"))
       phase = session.dig(:add_a_placement, "phase")
       @placement = Placements::Schools::Placements::Build::Placement.new(school:, phase:, subject:)
-      @placement.mentor_ids = mentor_ids
+      mentor_step = Placements::AddPlacement::Steps::Mentors.new(school:, mentor_ids:)
+      @placement.assign_attributes mentor_step.wizard_attributes
       if subject.has_child_subjects?
         @placement.additional_subject_ids = additional_subject_ids
         @placement.build_additional_subjects(additional_subject_ids)
       end
       @placement.year_group = session.dig(:add_a_placement, "year_group") if @placement.phase == "Primary"
-      @placement.build_mentors(mentor_ids)
+      @placement.build_mentors(mentor_step.wizard_attributes[:mentor_ids])
       @placement.save!
 
       Placements::PlacementSlackNotifier.placement_created_notification(school, @placement.decorate).deliver_later
@@ -130,12 +130,10 @@ class Placements::Schools::Placements::BuildController < Placements::Application
         render :add_year_group and return
       end
     when :add_mentors
-      mentor_ids = mentor_ids_params
-      @placement = build_placement
-      @placement.mentor_ids = mentor_ids if mentor_ids.present?
+      @current_step = Placements::AddPlacement::Steps::Mentors.new(school:, mentor_ids: mentor_ids_params)
 
-      if @placement.valid_mentor_ids?
-        session[:add_a_placement][:mentor_ids] = mentor_ids
+      if @current_step.valid?
+        session[:add_a_placement][:mentor_ids] = @current_step.mentor_ids
       else
         render :add_mentors and return
       end
@@ -181,20 +179,11 @@ class Placements::Schools::Placements::BuildController < Placements::Application
     @additional_subjects = @selected_subject.child_subjects
   end
 
-  def retrieve_selected_mentors
-    mentor_ids = session.dig(:add_a_placement, "mentor_ids")&.compact_blank
-    return [] if mentor_ids.blank?
-
-    return [:not_known] if mentor_ids.include?("not_known")
-
-    school.mentors.where(id: mentor_ids)
-  end
-
   def initialize_placement
     subject = Subject.find(session.dig(:add_a_placement, "subject_id"))
     year_group = session.dig(:add_a_placement, "year_group")
     placement = Placements::Schools::Placements::Build::Placement.new(school:, subject:, year_group:)
-    placement.build_mentors(mentor_ids)
+    placement.build_mentors(mentor_ids || [])
     placement.build_additional_subjects(additional_subject_ids)
     placement
   end
@@ -251,7 +240,7 @@ class Placements::Schools::Placements::BuildController < Placements::Application
   end
 
   def mentor_ids
-    @mentor_ids ||= session.dig(:add_a_placement, "mentor_ids") || %w[not_known]
+    @mentor_ids ||= session.dig(:add_a_placement, "mentor_ids")&.compact_blank
   end
 
   def phase_params
@@ -267,7 +256,7 @@ class Placements::Schools::Placements::BuildController < Placements::Application
   end
 
   def mentor_ids_params
-    params.dig(:placements_schools_placements_build_placement, :mentor_ids).compact_blank
+    params.dig(:placements_add_placement_steps_mentors, :mentor_ids).compact_blank
   end
 
   def authorize_placement
