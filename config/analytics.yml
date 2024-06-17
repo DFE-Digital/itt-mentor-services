@@ -168,3 +168,9 @@ shared:
     - placement_id
     - created_at
     - updated_at
+  :sessions:
+    - id
+    - session_id
+    - data
+    - created_at
+    - updated_at

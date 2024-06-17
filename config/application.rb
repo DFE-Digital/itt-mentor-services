@@ -45,5 +45,8 @@ module IttMentorServices
     config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, ActiveSupport::TimeWithZone, ActiveSupport::TimeZone]
 
     config.skylight.probes << "active_job"
+
+    # Store user sessions in the database
+    config.session_store :active_record_store
   end
 end
