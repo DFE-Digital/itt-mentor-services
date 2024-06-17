@@ -5,6 +5,11 @@ en:
         record_invalid: "Validation failed: %{errors}"
         between: "must be between %{min} and %{max}"
       models:
+        placements/add_placement/steps/mentors:
+          attributes:
+            mentor_ids:
+              blank: Select a mentor or not yet known
+              invalid: Select a mentor or not yet known
         claims/claim/mentor_training_form:
           attributes:
             custom_hours_completed:
