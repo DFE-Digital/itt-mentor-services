@@ -61,6 +61,9 @@ gem "redcarpet", "~> 3.6"
 # GoodJob backend for Active Job
 gem "good_job", "~> 3.29"
 
+# Store user sessions in the database
+gem "activerecord-session_store"
+
 gem "govuk-components", "~> 5.4.0"
 gem "govuk_design_system_formbuilder", "~> 5.4"
 
