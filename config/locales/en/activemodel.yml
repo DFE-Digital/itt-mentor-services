@@ -9,6 +9,10 @@ en:
           attributes:
             mentor_ids:
               blank: Select a mentor or not yet known
+        placements/add_placement/steps/year_group:
+          attributes:
+            year_group:
+              blank: Select a year group
         claims/claim/mentor_training_form:
           attributes:
             custom_hours_completed:
