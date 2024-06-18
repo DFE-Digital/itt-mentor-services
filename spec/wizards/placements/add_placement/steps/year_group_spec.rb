@@ -15,9 +15,7 @@ RSpec.describe Placements::AddPlacement::Steps::YearGroup, type: :model do
     context "when the school is primary" do
       subject { described_class.new(school:) }
 
-      let(:school) { instance_double(Placements::School) }
-
-      before { allow(school).to receive(:primary?).and_return(true) }
+      let(:school) { create(:placements_school, :primary) }
 
       it { is_expected.to validate_presence_of(:year_group) }
     end
