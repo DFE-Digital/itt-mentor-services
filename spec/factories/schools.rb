@@ -83,6 +83,10 @@ FactoryBot.define do
       placements_service { true }
     end
 
+    trait :primary do
+      phase { "Primary" }
+    end
+
     factory :claims_school,
             class: "Claims::School",
             parent: :school, traits: %i[claims]
