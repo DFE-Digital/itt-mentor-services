@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
   def authenticate_user!
     return if current_user
 
-    session[:requested_path] = request.fullpath
+    session["requested_path"] = request.fullpath
 
     redirect_to sign_in_path
   end

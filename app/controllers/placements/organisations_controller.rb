@@ -29,9 +29,9 @@ class Placements::OrganisationsController < Placements::ApplicationController
 
   def set_current_provider(organisation)
     if organisation.is_a?(Provider)
-      session[:placements_provider_id] = organisation.id
+      session["placements_provider_id"] = organisation.id
     else
-      session.delete(:placements_provider_id)
+      session.delete("placements_provider_id")
     end
   end
 

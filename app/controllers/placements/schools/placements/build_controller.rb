@@ -13,20 +13,20 @@ class Placements::Schools::Placements::BuildController < Placements::Application
 
   def add_phase
     @placement = build_placement
-    @selected_phase = session.dig(:add_a_placement, "phase") || school.phase
+    @selected_phase = session.dig("add_a_placement", "phase") || school.phase
     @previous_step = previous_step(:add_phase)
   end
 
   def add_subject
     @placement = build_placement
     assign_subjects_based_on_phase
-    @selected_subject_id = session.dig(:add_a_placement, "subject_id")
+    @selected_subject_id = session.dig("add_a_placement", "subject_id")
     @previous_step = previous_step(:add_subject)
   end
 
   def add_additional_subjects
     @placement = build_or_retrieve_placement
-    @selected_subject = Subject.find(session.dig(:add_a_placement, "subject_id"))
+    @selected_subject = Subject.find(session.dig("add_a_placement", "subject_id"))
     @additional_subjects = assign_additional_subjects
     @selected_additional_subjects = @placement.additional_subjects
     @previous_step = previous_step(:add_additional_subjects)
@@ -44,10 +44,10 @@ class Placements::Schools::Placements::BuildController < Placements::Application
 
   def check_your_answers
     @placement = initialize_placement.decorate
-    @phase = session.dig(:add_a_placement, "phase")
-    @selected_subject = Subject.find(session.dig(:add_a_placement, "subject_id"))
+    @phase = session.dig("add_a_placement", "phase")
+    @selected_subject = Subject.find(session.dig("add_a_placement", "subject_id"))
     @selected_additional_subjects = @selected_subject.child_subjects.where(id: additional_subject_ids)
-    @selected_year_group = session.dig(:add_a_placement, "year_group") if school.phase == "Primary"
+    @selected_year_group = session.dig("add_a_placement", "year_group") if school.phase == "Primary"
     @selected_mentor_text = if @placement.mentors.empty?
                               t(".not_yet_known")
                             else
@@ -59,8 +59,8 @@ class Placements::Schools::Placements::BuildController < Placements::Application
   def update
     case params[:id].to_sym
     when :check_your_answers
-      subject = Subject.find(session.dig(:add_a_placement, "subject_id"))
-      phase = session.dig(:add_a_placement, "phase")
+      subject = Subject.find(session.dig("add_a_placement", "subject_id"))
+      phase = session.dig("add_a_placement", "phase")
       mentor_step = Placements::AddPlacement::Steps::Mentors.new(school:, mentor_ids:)
       year_group_step = Placements::AddPlacement::Steps::YearGroup.new(school:, year_group:)
       @placement = Placements::Schools::Placements::Build::Placement.new(school:, phase:, subject:)
@@ -75,15 +75,15 @@ class Placements::Schools::Placements::BuildController < Placements::Application
 
       Placements::PlacementSlackNotifier.placement_created_notification(school, @placement.decorate).deliver_later
 
-      session.delete(:add_a_placement)
+      session.delete("add_a_placement")
       redirect_to placements_school_placements_path(school), flash: { success: t(".success") } and return
     when :add_phase
       @placement = build_placement
       @placement.phase = phase_params
 
       if @placement.valid_phase?
-        session[:add_a_placement]["skipped_steps"] << "add_year_group" unless @placement.phase == "Primary"
-        session[:add_a_placement][:phase] = phase_params
+        session["add_a_placement"]["skipped_steps"] << "add_year_group" unless @placement.phase == "Primary"
+        session["add_a_placement"]["phase"] = phase_params
       else
         render :add_phase and return
       end
@@ -93,14 +93,14 @@ class Placements::Schools::Placements::BuildController < Placements::Application
       @placement.subject = Subject.find(subject_id) if subject_id.present?
 
       if @placement.subject_has_child_subjects?
-        session[:add_a_placement]["skipped_steps"].delete("add_additional_subjects")
+        session["add_a_placement"]["skipped_steps"].delete("add_additional_subjects")
       else
-        session[:add_a_placement][:additional_subject_ids] = []
-        session[:add_a_placement]["skipped_steps"] << "add_additional_subjects"
+        session["add_a_placement"]["additional_subject_ids"] = []
+        session["add_a_placement"]["skipped_steps"] << "add_additional_subjects"
       end
 
       if @placement.valid_subject?
-        session[:add_a_placement][:subject_id] = subject_id
+        session["add_a_placement"]["subject_id"] = subject_id
       else
         assign_subjects_based_on_phase
         render :add_subject and return
@@ -111,9 +111,9 @@ class Placements::Schools::Placements::BuildController < Placements::Application
       @placement.additional_subject_ids = additional_subject_ids if additional_subject_ids.present?
 
       if @placement.valid_additional_subjects?
-        session[:add_a_placement][:additional_subject_ids] = additional_subject_ids
+        session["add_a_placement"]["additional_subject_ids"] = additional_subject_ids
       else
-        @selected_subject = Subject.find(session.dig(:add_a_placement, "subject_id"))
+        @selected_subject = Subject.find(session.dig("add_a_placement", "subject_id"))
         assign_additional_subjects
         render :add_additional_subjects and return
       end
@@ -121,7 +121,7 @@ class Placements::Schools::Placements::BuildController < Placements::Application
       @current_step = Placements::AddPlacement::Steps::YearGroup.new(school:, year_group: year_group_params)
 
       if @current_step.valid?
-        session[:add_a_placement][:year_group] = @current_step.year_group
+        session["add_a_placement"]["year_group"] = @current_step.year_group
       else
         render :add_year_group and return
       end
@@ -129,7 +129,7 @@ class Placements::Schools::Placements::BuildController < Placements::Application
       @current_step = Placements::AddPlacement::Steps::Mentors.new(school:, mentor_ids: mentor_ids_params)
 
       if @current_step.valid?
-        session[:add_a_placement][:mentor_ids] = @current_step.mentor_ids
+        session["add_a_placement"]["mentor_ids"] = @current_step.mentor_ids
       else
         render :add_mentors and return
       end
@@ -146,17 +146,17 @@ class Placements::Schools::Placements::BuildController < Placements::Application
   STEPS = %i[add_phase add_subject add_additional_subjects add_year_group add_mentors check_your_answers].freeze
 
   def reset_session
-    session.delete(:add_a_placement)
+    session.delete("add_a_placement")
     setup_session
   end
 
   def handle_primary_or_secondary
-    session[:add_a_placement][:placement] = @placement.attributes
-    session[:add_a_placement][:phase] = school.phase
+    session["add_a_placement"]["placement"] = @placement.attributes
+    session["add_a_placement"]["phase"] = school.phase
   end
 
   def setup_session
-    session[:add_a_placement] = {} if session[:add_a_placement].blank?
+    session["add_a_placement"] = {} if session["add_a_placement"].blank?
   end
 
   def build_or_retrieve_placement
@@ -166,7 +166,7 @@ class Placements::Schools::Placements::BuildController < Placements::Application
   end
 
   def assign_subjects_based_on_phase
-    phase = session.dig(:add_a_placement, "phase")
+    phase = session.dig("add_a_placement", "phase")
     @phase = @placement.build_phase(phase)
     @subjects = @phase == "Primary" ? Subject.parent_subjects.primary : Subject.parent_subjects.secondary
   end
@@ -176,8 +176,8 @@ class Placements::Schools::Placements::BuildController < Placements::Application
   end
 
   def initialize_placement
-    subject = Subject.find(session.dig(:add_a_placement, "subject_id"))
-    year_group = session.dig(:add_a_placement, "year_group")
+    subject = Subject.find(session.dig("add_a_placement", "subject_id"))
+    year_group = session.dig("add_a_placement", "year_group")
     placement = Placements::Schools::Placements::Build::Placement.new(school:, subject:, year_group:)
     placement.build_mentors(mentor_ids || [])
     placement.build_additional_subjects(additional_subject_ids)
@@ -207,24 +207,23 @@ class Placements::Schools::Placements::BuildController < Placements::Application
   end
 
   def build_placement
-    if session.dig(:add_a_placement, "phase").present?
+    if session.dig("add_a_placement", "phase").present?
       Placements::Schools::Placements::Build::Placement.new(school:,
-                                                            phase: session.dig(:add_a_placement, "phase"))
+                                                            phase: session.dig("add_a_placement", "phase"))
     else
       Placements::Schools::Placements::Build::Placement.new(school:)
     end
   end
 
   def setup_skipped_steps
-    session[:add_a_placement][:skipped_steps] = []
-    session[:add_a_placement][:skipped_steps] << "add_phase" if school.primary_or_secondary_only?
-    session[:add_a_placement][:skipped_steps] << "add_mentors" unless school.mentors.exists?
-    session[:add_a_placement][:skipped_steps] << "add_year_group" if school.phase == "Secondary"
+    session["add_a_placement"]["skipped_steps"] = []
+    session["add_a_placement"]["skipped_steps"] << "add_phase" if school.primary_or_secondary_only?
+    session["add_a_placement"]["skipped_steps"] << "add_mentors" unless school.mentors.exists?
+    session["add_a_placement"]["skipped_steps"] << "add_year_group" if school.phase == "Secondary"
   end
 
   def skipped_steps
-    session.dig(:add_a_placement, "skipped_steps") ||
-      session.dig(:add_a_placement, :skipped_steps) || []
+    session.dig("add_a_placement", "skipped_steps") || []
   end
 
   def year_groups_for_select
@@ -232,15 +231,15 @@ class Placements::Schools::Placements::BuildController < Placements::Application
   end
 
   def additional_subject_ids
-    @additional_subject_ids ||= session.dig(:add_a_placement, "additional_subject_ids")
+    @additional_subject_ids ||= session.dig("add_a_placement", "additional_subject_ids")
   end
 
   def mentor_ids
-    @mentor_ids ||= session.dig(:add_a_placement, "mentor_ids")&.compact_blank
+    @mentor_ids ||= session.dig("add_a_placement", "mentor_ids")&.compact_blank
   end
 
   def year_group
-    @year_group ||= session.dig(:add_a_placement, "year_group")
+    @year_group ||= session.dig("add_a_placement", "year_group")
   end
 
   def phase_params
