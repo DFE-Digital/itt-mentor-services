@@ -125,16 +125,4 @@ RSpec.describe Placements::School do
       expect(described_class.all).not_to include(school_without_placements)
     end
   end
-
-  describe "#primary?" do
-    it "returns true for primary schools" do
-      school = described_class.new(phase: "Primary")
-      expect(school.primary?).to be(true)
-    end
-
-    it "returns false for secondary schools" do
-      school = described_class.new(phase: "Secondary")
-      expect(school.primary?).to be(false)
-    end
-  end
 end

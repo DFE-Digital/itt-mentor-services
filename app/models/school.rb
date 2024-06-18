@@ -127,4 +127,8 @@ class School < ApplicationRecord
       "United Kingdom",
     ].compact.join(", ")
   end
+
+  def primary?
+    phase == PRIMARY_PHASE
+  end
 end

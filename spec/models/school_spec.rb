@@ -210,4 +210,16 @@ RSpec.describe School, type: :model do
       end
     end
   end
+
+  describe "#primary?" do
+    it "returns true for primary schools" do
+      school = described_class.new(phase: "Primary")
+      expect(school.primary?).to be(true)
+    end
+
+    it "returns false for secondary schools" do
+      school = described_class.new(phase: "Secondary")
+      expect(school.primary?).to be(false)
+    end
+  end
 end
