@@ -31,7 +31,7 @@ class Placements::PlacementsController < Placements::ApplicationController
   end
 
   def set_provider
-    @provider = Placements::Provider.find(session[:placements_provider_id])
+    @provider = Placements::Provider.find(session["placements_provider_id"])
   end
 
   def filter_form
