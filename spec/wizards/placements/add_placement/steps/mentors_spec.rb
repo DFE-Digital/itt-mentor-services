@@ -12,11 +12,10 @@ RSpec.describe Placements::AddPlacement::Steps::Mentors, type: :model do
 
   describe "#mentors_for_selection" do
     it "returns mentors for the school" do
-      school = create(:placements_school)
-      mentor = create(:placements_mentor_membership, school:).mentor
+      school = create(:placements_school, mentors: build_list(:placements_mentor, 1))
       step = described_class.new(school:)
 
-      expect(step.mentors_for_selection).to eq([mentor.becomes(Placements::Mentor)])
+      expect(step.mentors_for_selection).to eq(school.mentors)
     end
   end
 
