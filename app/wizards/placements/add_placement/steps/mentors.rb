@@ -22,7 +22,7 @@ class Placements::AddPlacement::Steps::Mentors
 
   private
 
-  NOT_KNOWN = [:not_known].freeze
+  NOT_KNOWN = %w[not_known].freeze
 
   def normalised_mentor_ids(mentor_ids)
     if mentor_ids.blank?

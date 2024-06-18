@@ -20,7 +20,7 @@
             <%= f.govuk_check_box :mentor_ids, mentor.id, label: { text: mentor.full_name }, checked: @current_step.mentor_ids.include?(mentor.id) %>
           <% end %>
           <%= f.govuk_check_box_divider %>
-          <%= f.govuk_check_box :mentor_ids, :not_known, label: { text: t(".not_known") }, checked: @current_step.mentor_ids.include?(:not_known), exclusive: true %>
+          <%= f.govuk_check_box :mentor_ids, "not_known", label: { text: t(".not_known") }, checked: @current_step.mentor_ids.include?("not_known"), exclusive: true %>
         <% end %>
 
         <%= govuk_details(
