@@ -81,8 +81,4 @@ class Placements::School < School
   has_many :partner_providers,
            through: :partnerships,
            source: :provider
-
-  def primary?
-    phase == "Primary"
-  end
 end
