@@ -1,4 +1,7 @@
 class DfESignInUser
+  # Sessions timeout after this period of inactivity
+  SESSION_TIMEOUT = 2.hours
+
   attr_reader :email, :dfe_sign_in_uid, :id_token, :provider, :service, :first_name, :last_name
 
   def initialize(email:, dfe_sign_in_uid:, first_name:, last_name:, service:, id_token: nil, provider: nil)
@@ -31,7 +34,7 @@ class DfESignInUser
     # `last_active_at` set. In that case, force them to sign in again.
     return unless dfe_sign_in_session["last_active_at"]
 
-    return if dfe_sign_in_session.fetch("last_active_at") < 2.hours.ago
+    return if dfe_sign_in_session.fetch("last_active_at") < SESSION_TIMEOUT.ago
 
     dfe_sign_in_session["last_active_at"] = Time.current
 
