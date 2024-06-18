@@ -34,8 +34,8 @@ RSpec.describe Placements::AddPlacement::Steps::Mentors, type: :model do
 
     context "when the value includes 'not_known'" do
       it "removes all values except not_known" do
-        school = create(:placements_school)
-        mentor = create(:placements_mentor_membership, school:).mentor
+        school = create(:placements_school, mentors: build_list(:placements_mentor, 1))
+        mentor = school.mentors.first
         step = described_class.new(school:)
 
         step.mentor_ids = ["not_known", mentor.id]
@@ -46,13 +46,24 @@ RSpec.describe Placements::AddPlacement::Steps::Mentors, type: :model do
 
     context "when the value includes mentor ids" do
       it "retains the mentor ids" do
-        school = create(:placements_school)
-        mentor = create(:placements_mentor_membership, school:).mentor
+        school = create(:placements_school, mentors: build_list(:placements_mentor, 1))
         step = described_class.new(school:)
 
-        step.mentor_ids = [mentor.id]
+        step.mentor_ids = school.mentors.ids
 
-        expect(step.mentor_ids).to eq([mentor.id])
+        expect(step.mentor_ids).to eq(school.mentors.ids)
+      end
+
+      context "and the values include mentors from another school" do
+        it "retains only the mentors from the target school" do
+          school = create(:placements_school, mentors: build_list(:placements_mentor, 1))
+          another_school = create(:placements_school, mentors: build_list(:placements_mentor, 1))
+          step = described_class.new(school:)
+
+          step.mentor_ids = another_school.mentors.ids + school.mentors.ids
+
+          expect(step.mentor_ids).to eq(school.mentors.ids)
+        end
       end
     end
   end
