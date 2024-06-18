@@ -39,7 +39,7 @@ RSpec.describe Placements::AddPlacement::Steps::Mentors, type: :model do
 
         step.mentor_ids = ["not_known", mentor.id]
 
-        expect(step.mentor_ids).to eq([:not_known])
+        expect(step.mentor_ids).to eq(%w[not_known])
       end
     end
 
@@ -70,7 +70,7 @@ RSpec.describe Placements::AddPlacement::Steps::Mentors, type: :model do
   describe "#wizard_attributes" do
     it "removes not_known" do
       school = create(:placements_school)
-      step = described_class.new(school:, mentor_ids: [:not_known])
+      step = described_class.new(school:, mentor_ids: %w[not_known])
 
       expect(step.wizard_attributes).to eq({ mentor_ids: [] })
     end
