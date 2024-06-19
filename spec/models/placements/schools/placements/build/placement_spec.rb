@@ -52,27 +52,6 @@ RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model d
     end
   end
 
-  describe "#valid_subject?" do
-    it "returns false if subject is blank" do
-      placement_1 = described_class.new(subject_id: nil, school:)
-
-      expect(placement_1.valid_subject?).to eq(false)
-    end
-
-    it "returns false if subject does not match phase" do
-      invalid_subject = create(:subject, :secondary)
-      placement = described_class.new(phase: "primary", subject: invalid_subject, school:)
-
-      expect(placement.valid_subject?).to eq(false)
-    end
-
-    it "returns true if subject is valid" do
-      placement = described_class.new(phase: "primary", subject: create(:subject, :primary), school:)
-
-      expect(placement.valid_subject?).to eq(true)
-    end
-  end
-
   describe "#valid_additional_subjects?" do
     it "returns false if additional_subject_ids is blank" do
       placement = described_class.new(additional_subject_ids: nil)
