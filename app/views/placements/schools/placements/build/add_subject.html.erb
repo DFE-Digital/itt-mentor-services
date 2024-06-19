@@ -1,12 +1,12 @@
-<% content_for :page_title, @placement.errors.any? ? t(".title_with_error") : t(".title") %>
-<%= render "placements/schools/primary_navigation", school: @school, current_navigation: :placements %>
+<% content_for :page_title, @current_step.errors.any? ? t(".title_with_error") : t(".title") %>
+<%= render "placements/schools/primary_navigation", school: @current_step.school, current_navigation: :placements %>
 
 <%= content_for(:before_content) do %>
   <%= govuk_back_link(href: @previous_step) %>
 <% end %>
 
 <div class="govuk-width-container">
-  <%= form_for(@placement, url: placements_school_placement_build_path(@school, id: :add_subject), method: :put) do |f| %>
+  <%= form_for(@current_step, url: placements_school_placement_build_path(@current_step.school, id: :add_subject), method: :put) do |f| %>
     <%= f.govuk_error_summary %>
 
     <div class="govuk-grid-row">
@@ -14,8 +14,8 @@
         <span class="govuk-caption-l"><%= t(".add_placement") %></span>
 
         <%= f.govuk_radio_buttons_fieldset :subject_id, legend: { size: "l", text: t(".subject") } do %>
-          <% @subjects.each do |subject| %>
-            <%= f.govuk_radio_button :subject_id, subject.id, label: { text: subject.name }, checked: @selected_subject_id == subject.id %>
+          <% @current_step.subjects_for_selection.each do |subject| %>
+            <%= f.govuk_radio_button :subject_id, subject.id, label: { text: subject.name }, checked: @current_step.subject_id == subject.id %>
           <% end %>
         <% end %>
 
@@ -25,6 +25,6 @@
   <% end %>
 
   <p class="govuk-body">
-    <%= govuk_link_to(t(".cancel"), placements_school_placements_path(@school), no_visited_state: true) %>
+    <%= govuk_link_to(t(".cancel"), placements_school_placements_path(@current_step.school), no_visited_state: true) %>
   </p>
 </div>

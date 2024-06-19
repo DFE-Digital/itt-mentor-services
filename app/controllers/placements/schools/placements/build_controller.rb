@@ -17,9 +17,8 @@ class Placements::Schools::Placements::BuildController < Placements::Application
   end
 
   def add_subject
-    @placement = build_placement
-    assign_subjects_based_on_phase
-    @selected_subject_id = session.dig("add_a_placement", "subject_id")
+    phase_step = Placements::AddPlacement::Steps::Phase.new(school:, phase:)
+    @current_step = Placements::AddPlacement::Steps::Subject.new(school:, phase: phase_step.phase, subject_id:)
     @previous_step = previous_step(:add_subject)
   end
 
@@ -44,7 +43,7 @@ class Placements::Schools::Placements::BuildController < Placements::Application
   def check_your_answers
     @placement = initialize_placement.decorate
     @phase = session.dig("add_a_placement", "phase")
-    @selected_subject = Subject.find(session.dig("add_a_placement", "subject_id"))
+    @selected_subject = Subject.find(subject_id)
     @selected_additional_subjects = @selected_subject.child_subjects.where(id: additional_subject_ids)
     @selected_year_group = session.dig("add_a_placement", "year_group") if school.phase == "Primary"
     @selected_mentor_text = if @placement.mentors.empty?
@@ -58,14 +57,16 @@ class Placements::Schools::Placements::BuildController < Placements::Application
   def update
     case params[:id].to_sym
     when :check_your_answers
-      subject = Subject.find(session.dig("add_a_placement", "subject_id"))
       phase_step = Placements::AddPlacement::Steps::Phase.new(school:, phase:)
+      subject_step = Placements::AddPlacement::Steps::Subject.new(school:, phase: phase_step.phase, subject_id:)
       mentor_step = Placements::AddPlacement::Steps::Mentors.new(school:, mentor_ids:)
       year_group_step = Placements::AddPlacement::Steps::YearGroup.new(school:, year_group:)
-      @placement = Placements::Schools::Placements::Build::Placement.new(school:, phase: phase_step.phase, subject:)
+      @placement = Placements::Schools::Placements::Build::Placement.new(school:, phase: phase_step.phase)
 
-      @placement.assign_attributes [mentor_step.wizard_attributes, year_group_step.wizard_attributes].inject(:merge)
-      if subject.has_child_subjects?
+      @placement.assign_attributes [mentor_step.wizard_attributes,
+                                    year_group_step.wizard_attributes,
+                                    subject_step.wizard_attributes].inject(:merge)
+      if subject_step.subject_has_child_subjects?
         @placement.additional_subject_ids = additional_subject_ids
         @placement.build_additional_subjects(additional_subject_ids)
       end
@@ -86,21 +87,18 @@ class Placements::Schools::Placements::BuildController < Placements::Application
         render :add_phase and return
       end
     when :add_subject
-      subject_id = subject_params
-      @placement = build_placement
-      @placement.subject = Subject.find(subject_id) if subject_id.present?
+      phase_step = Placements::AddPlacement::Steps::Phase.new(school:, phase:)
+      @current_step = Placements::AddPlacement::Steps::Subject.new(school:, phase: phase_step.phase, subject_id: subject_params)
 
-      if @placement.subject_has_child_subjects?
-        session["add_a_placement"]["skipped_steps"].delete("add_additional_subjects")
+      if @current_step.valid?
+        if @current_step.subject_has_child_subjects?
+          session["add_a_placement"]["skipped_steps"].delete("add_additional_subjects")
+        else
+          session["add_a_placement"]["additional_subject_ids"] = []
+          session["add_a_placement"]["skipped_steps"] << "add_additional_subjects"
+        end
+        session["add_a_placement"]["subject_id"] = @current_step.subject_id
       else
-        session["add_a_placement"]["additional_subject_ids"] = []
-        session["add_a_placement"]["skipped_steps"] << "add_additional_subjects"
-      end
-
-      if @placement.valid_subject?
-        session["add_a_placement"]["subject_id"] = subject_id
-      else
-        assign_subjects_based_on_phase
         render :add_subject and return
       end
     when :add_additional_subjects
@@ -163,18 +161,12 @@ class Placements::Schools::Placements::BuildController < Placements::Application
     @placement
   end
 
-  def assign_subjects_based_on_phase
-    phase = session.dig("add_a_placement", "phase")
-    @phase = @placement.build_phase(phase)
-    @subjects = @phase == "Primary" ? Subject.parent_subjects.primary : Subject.parent_subjects.secondary
-  end
-
   def assign_additional_subjects
     @additional_subjects = @selected_subject.child_subjects
   end
 
   def initialize_placement
-    subject = Subject.find(session.dig("add_a_placement", "subject_id"))
+    subject = Subject.find(subject_id)
     year_group = session.dig("add_a_placement", "year_group")
     placement = Placements::Schools::Placements::Build::Placement.new(school:, subject:, year_group:)
     placement.build_mentors(mentor_ids || [])
@@ -236,6 +228,10 @@ class Placements::Schools::Placements::BuildController < Placements::Application
     @phase ||= session.dig("add_a_placement", "phase") || school.phase
   end
 
+  def subject_id
+    @subject_id ||= session.dig("add_a_placement", "subject_id")
+  end
+
   def mentor_ids
     @mentor_ids ||= session.dig("add_a_placement", "mentor_ids")&.compact_blank
   end
@@ -249,7 +245,7 @@ class Placements::Schools::Placements::BuildController < Placements::Application
   end
 
   def subject_params
-    params.dig(:placements_schools_placements_build_placement, :subject_id)
+    params.dig(:placements_add_placement_steps_subject, :subject_id)
   end
 
   def additional_subject_ids_params
