@@ -13,6 +13,10 @@ en:
           attributes:
             phase:
               blank: Select a phase
+        placements/add_placement/steps/subject:
+          attributes:
+            subject_id:
+              blank: Select a subject
         placements/add_placement/steps/year_group:
           attributes:
             year_group:
