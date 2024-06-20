@@ -8,7 +8,27 @@ RSpec.describe Placements::AddPlacement::Steps::Subject, type: :model do
   describe "validations" do
     it { is_expected.to validate_presence_of(:school) }
     it { is_expected.to validate_presence_of(:phase) }
-    it { is_expected.to validate_presence_of(:subject_id) }
+
+    describe "subject_id" do
+      it "is not required if phase is not present" do
+        step = described_class.new(phase: nil)
+
+        expect(step).not_to validate_presence_of(:subject_id)
+      end
+
+      it "is required if phase is present" do
+        step = described_class.new(phase: "Primary")
+
+        expect(step).to validate_presence_of(:subject_id)
+      end
+
+      it "is invalid if the subject is not in the selection" do
+        step = described_class.new(phase: "Primary", subject_id: 1)
+
+        expect(step).not_to be_valid
+        expect(step.errors[:subject_id]).to include "is not included in the list"
+      end
+    end
   end
 
   describe "#subjects_for_selection" do
