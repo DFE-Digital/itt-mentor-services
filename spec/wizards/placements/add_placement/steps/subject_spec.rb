@@ -50,5 +50,4 @@ RSpec.describe Placements::AddPlacement::Steps::Subject, type: :model do
       expect(step.subject_has_child_subjects?).to eq(false)
     end
   end
-
 end
