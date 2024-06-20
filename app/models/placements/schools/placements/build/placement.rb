@@ -26,7 +26,7 @@
 class Placements::Schools::Placements::Build::Placement < Placement
   validates :school, presence: true
 
-  attr_accessor :phase, :mentor_ids, :additional_subject_ids
+  attr_accessor :phase, :mentor_ids
 
   def valid_phase?
     return true if [Placements::School::PRIMARY_PHASE, Placements::School::SECONDARY_PHASE].include?(phase)
@@ -35,26 +35,8 @@ class Placements::Schools::Placements::Build::Placement < Placement
     false
   end
 
-  def valid_additional_subjects?
-    converted_subject_ids = additional_subject_ids.is_a?(Array) ? additional_subject_ids : [additional_subject_ids]
-    if additional_subject_ids.present? && converted_subject_ids.all? { |id| Subject.exists?(id:) }
-      true
-    else
-      errors.add(:additional_subject_ids, :invalid)
-      false
-    end
-  end
-
   def all_valid?
-    valid_phase? && valid_additional_subjects?
-  end
-
-  def build_additional_subjects(additional_subject_ids = nil)
-    if additional_subject_ids.present?
-      additional_subjects << Subject.where(id: additional_subject_ids)
-    else
-      additional_subjects.build
-    end
+    valid_phase?
   end
 
   def build_mentors(mentor_ids)
