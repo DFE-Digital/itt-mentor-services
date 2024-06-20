@@ -23,10 +23,10 @@ class Placements::Schools::Placements::BuildController < Placements::Application
   end
 
   def add_additional_subjects
-    @placement = build_or_retrieve_placement
-    @selected_subject = Subject.find(session.dig("add_a_placement", "subject_id"))
-    @additional_subjects = assign_additional_subjects
-    @selected_additional_subjects = @placement.additional_subjects
+    phase_step = Placements::AddPlacement::Steps::Phase.new(school:, phase:)
+    subject_step = Placements::AddPlacement::Steps::Subject.new(school:, phase: phase_step.phase, subject_id:)
+    @current_step = Placements::AddPlacement::Steps::AdditionalSubjects.new(school:, parent_subject_id: subject_step.subject_id,
+                                                                            additional_subject_ids:)
     @previous_step = previous_step(:add_additional_subjects)
   end
 
@@ -59,6 +59,11 @@ class Placements::Schools::Placements::BuildController < Placements::Application
     when :check_your_answers
       phase_step = Placements::AddPlacement::Steps::Phase.new(school:, phase:)
       subject_step = Placements::AddPlacement::Steps::Subject.new(school:, phase: phase_step.phase, subject_id:)
+      additional_subject_step = Placements::AddPlacement::Steps::AdditionalSubjects.new(
+        school:,
+        parent_subject_id: subject_step.subject_id,
+        additional_subject_ids:,
+      )
       mentor_step = Placements::AddPlacement::Steps::Mentors.new(school:, mentor_ids:)
       year_group_step = Placements::AddPlacement::Steps::YearGroup.new(school:, year_group:)
       @placement = Placements::Schools::Placements::Build::Placement.new(school:, phase: phase_step.phase)
@@ -67,8 +72,7 @@ class Placements::Schools::Placements::BuildController < Placements::Application
                                     year_group_step.wizard_attributes,
                                     subject_step.wizard_attributes].inject(:merge)
       if subject_step.subject_has_child_subjects?
-        @placement.additional_subject_ids = additional_subject_ids
-        @placement.build_additional_subjects(additional_subject_ids)
+        @placement.additional_subject_ids = additional_subject_step.additional_subject_ids
       end
       @placement.build_mentors(mentor_step.wizard_attributes[:mentor_ids])
       @placement.save!
@@ -102,15 +106,15 @@ class Placements::Schools::Placements::BuildController < Placements::Application
         render :add_subject and return
       end
     when :add_additional_subjects
-      additional_subject_ids = additional_subject_ids_params
-      @placement = build_placement
-      @placement.additional_subject_ids = additional_subject_ids if additional_subject_ids.present?
+      phase_step = Placements::AddPlacement::Steps::Phase.new(school:, phase:)
+      subject_step = Placements::AddPlacement::Steps::Subject.new(school:, phase: phase_step.phase, subject_id:)
+      @current_step = Placements::AddPlacement::Steps::AdditionalSubjects.new(school:,
+                                                                              parent_subject_id: subject_step.subject_id,
+                                                                              additional_subject_ids: additional_subject_ids_params)
 
-      if @placement.valid_additional_subjects?
-        session["add_a_placement"]["additional_subject_ids"] = additional_subject_ids
+      if @current_step.valid?
+        session["add_a_placement"]["additional_subject_ids"] = @current_step.additional_subject_ids
       else
-        @selected_subject = Subject.find(session.dig("add_a_placement", "subject_id"))
-        assign_additional_subjects
         render :add_additional_subjects and return
       end
     when :add_year_group
@@ -155,22 +159,12 @@ class Placements::Schools::Placements::BuildController < Placements::Application
     session["add_a_placement"] = {} if session["add_a_placement"].blank?
   end
 
-  def build_or_retrieve_placement
-    @placement = build_placement
-    @placement.build_additional_subjects(additional_subject_ids)
-    @placement
-  end
-
-  def assign_additional_subjects
-    @additional_subjects = @selected_subject.child_subjects
-  end
-
   def initialize_placement
     subject = Subject.find(subject_id)
     year_group = session.dig("add_a_placement", "year_group")
     placement = Placements::Schools::Placements::Build::Placement.new(school:, subject:, year_group:)
     placement.build_mentors(mentor_ids || [])
-    placement.build_additional_subjects(additional_subject_ids)
+    placement.additional_subject_ids = additional_subject_ids
     placement
   end
 
@@ -249,7 +243,7 @@ class Placements::Schools::Placements::BuildController < Placements::Application
   end
 
   def additional_subject_ids_params
-    params.dig(:placements_schools_placements_build_placement, :additional_subject_ids).compact_blank
+    params.dig(:placements_add_placement_steps_additional_subjects, :additional_subject_ids).compact_blank
   end
 
   def mentor_ids_params
