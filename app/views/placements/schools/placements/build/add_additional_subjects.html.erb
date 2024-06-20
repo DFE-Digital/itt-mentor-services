@@ -1,0 +1,31 @@
+<% content_for :page_title, @current_step.errors.any? ? t(".title_with_error") : t(".title") %>
+<%= render "placements/schools/primary_navigation", school: @current_step.school, current_navigation: :placements %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: @previous_step) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <%= form_for(@current_step, url: placements_school_placement_build_path(@current_step.school, id: :add_additional_subjects), method: :put) do |f| %>
+    <%= f.govuk_error_summary %>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l"><%= t(".add_placement") %></span>
+
+        <%= f.govuk_check_boxes_fieldset :additional_subject_ids, legend: { size: "l", text: @current_step.parent_subject_name } do %>
+          <% @current_step.additional_subjects_for_selection.each do |additional_subject| %>
+            <%= f.govuk_check_box :additional_subject_ids, additional_subject.id, label: { text: additional_subject.name },
+                                                                                  checked: @current_step.additional_subject_ids.include?(additional_subject.id) %>
+          <% end %>
+        <% end %>
+
+        <%= f.govuk_submit t(".continue") %>
+      </div>
+    </div>
+  <% end %>
+
+  <p class="govuk-body">
+    <%= govuk_link_to(t(".cancel"), placements_school_placements_path(@current_step.school), no_visited_state: true) %>
+  </p>
+</div>
