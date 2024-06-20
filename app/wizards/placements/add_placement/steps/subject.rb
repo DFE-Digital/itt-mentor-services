@@ -8,10 +8,13 @@ class Placements::AddPlacement::Steps::Subject
 
   validates :school, presence: true
   validates :phase, presence: true
-  validates :subject_id, presence: true
+  validates :subject_id, presence: true, inclusion: { in: ->(step) { step.subjects_for_selection.ids } }, if: ->(step) { step.phase.present? }
 
   def subjects_for_selection
-    phase == "Primary" ? Subject.parent_subjects.primary : Subject.parent_subjects.secondary
+    {
+      "Primary" => Subject.parent_subjects.primary,
+      "Secondary" => Subject.parent_subjects.secondary,
+    }.fetch phase
   end
 
   def wizard_attributes
