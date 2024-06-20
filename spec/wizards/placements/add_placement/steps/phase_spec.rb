@@ -9,31 +9,25 @@ RSpec.describe Placements::AddPlacement::Steps::Phase, type: :model do
     it { is_expected.to validate_presence_of(:school) }
     it { is_expected.to validate_presence_of(:phase) }
 
-    context "when validating the phase" do
-      let(:school) { build(:placements_school) }
+    describe "phase" do
+      subject { described_class.new(school: build(:placements_school), phase:) }
 
-      context "and the phase is primary" do
-        it "is valid" do
-          step = described_class.new(school:, phase: "Primary")
+      context "when the phase is primary" do
+        let(:phase) { "Primary" }
 
-          expect(step).to be_valid
-        end
+        it { is_expected.to be_valid }
       end
 
-      context "and the phase is secondary" do
-        it "is valid" do
-          step = described_class.new(school:, phase: "Secondary")
+      context "when the phase is secondary" do
+        let(:phase) { "Secondary" }
 
-          expect(step).to be_valid
-        end
+        it { is_expected.to be_valid }
       end
 
-      context "and the phase is not primary or secondary" do
-        it "is invalid" do
-          step = described_class.new(school:, phase: "Nursery")
+      context "when the phase is neither primary nor secondary" do
+        let(:phase) { "Nursery" }
 
-          expect(step).not_to be_valid
-        end
+        it { is_expected.to be_invalid }
       end
     end
   end
