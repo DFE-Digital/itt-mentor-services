@@ -5,9 +5,10 @@ class Placements::AddPlacement::Steps::Phase
   attribute :school
   attribute :phase
 
+  VALID_PHASES = [Placements::School::PRIMARY_PHASE, Placements::School::SECONDARY_PHASE].freeze
+
   validates :school, presence: true
-  validates :phase, presence: true
-  validate :phase_is_valid
+  validates :phase, presence: true, inclusion: { in: VALID_PHASES }
 
   def phases_for_selection
     { primary: "Primary", secondary: "Secondary" }
@@ -15,13 +16,5 @@ class Placements::AddPlacement::Steps::Phase
 
   def wizard_attributes
     { phase: }
-  end
-
-  private
-
-  def phase_is_valid
-    return if [Placements::School::PRIMARY_PHASE, Placements::School::SECONDARY_PHASE].include?(phase)
-
-    errors.add(:phase, :invalid)
   end
 end
