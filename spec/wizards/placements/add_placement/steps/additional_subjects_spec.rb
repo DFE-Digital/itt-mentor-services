@@ -15,7 +15,7 @@ RSpec.describe Placements::AddPlacement::Steps::AdditionalSubjects, type: :model
       let(:parent_subject) { create(:subject) }
 
       it "is invalid of the subject does not exist" do
-        step = described_class.new(parent_subject_id: parent_subject.id, additional_subject_ids: ["not_a_subject"])
+        step = described_class.new(parent_subject_id: parent_subject.id, additional_subject_ids: %w[not_a_subject])
 
         expect(step).to be_invalid
       end
