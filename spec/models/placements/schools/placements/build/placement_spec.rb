@@ -52,21 +52,6 @@ RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model d
     end
   end
 
-  describe "#valid_additional_subjects?" do
-    it "returns false if additional_subject_ids is blank" do
-      placement = described_class.new(additional_subject_ids: nil)
-
-      expect(placement.valid_additional_subjects?).to eq(false)
-    end
-
-    it "returns true if additional_subject_ids is valid" do
-      subject = create(:subject, :primary)
-      placement = described_class.new(additional_subject_ids: [subject.id])
-
-      expect(placement.valid_additional_subjects?).to eq(true)
-    end
-  end
-
   describe "#all_valid?" do
     it "returns false if phase is not valid" do
       placement = described_class.new(phase: "invalid", school:)
@@ -82,40 +67,10 @@ RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model d
 
     it "returns true if all are valid" do
       subject = create(:subject, :primary)
-      additional_subject = create(:subject, :primary, parent_subject: subject)
       placement = described_class.new(phase: School::PRIMARY_PHASE, subject:,
-                                      school:, additional_subject_ids: [additional_subject.id])
+                                      school:)
 
       expect(placement.all_valid?).to eq(true)
-    end
-  end
-
-  describe "build_additional_subjects" do
-    context "when passed an array" do
-      it "builds additional subjects" do
-        placement = described_class.new(school:)
-        subject_1 = create(:subject)
-        subject_2 = create(:subject)
-
-        placement.build_additional_subjects([subject_1.id, subject_2.id])
-
-        expect(placement.additional_subjects).to match_array([
-          have_attributes(subject_1.attributes),
-          have_attributes(subject_2.attributes),
-        ])
-      end
-    end
-
-    context "when passed nil" do
-      it "builds additional subjects" do
-        placement = described_class.new(school:)
-
-        placement.build_additional_subjects
-
-        expect(placement.additional_subjects).to match_array([
-          have_attributes(Subject.new.attributes),
-        ])
-      end
     end
   end
 
