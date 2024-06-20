@@ -61,26 +61,25 @@ schools.each do |school|
 end
 
 # Create dummy mentors
-mentors_data = [{ first_name: "Sarah", last_name: "Doe", trn: "1234567" },
-                { first_name: "John", last_name: "Doe", trn: "1212121" },
-                { first_name: "Pomona", last_name: "Doe", trn: "1313131" }]
-
-mentors_data.each do |mentor|
-  Mentor.find_or_create_by!(trn: mentor[:trn]) do |new_mentor|
-    new_mentor.first_name = mentor[:first_name]
-    new_mentor.last_name = mentor[:last_name]
-  end
-end
-
-mentors = Mentor.where(trn: %w[1234567 1212121 1313131])
-
-(Claims::School.all + Placements::School.all).each do |school|
-  school.mentors = mentors
-end
+# mentors_data = [{ first_name: "Sarah", last_name: "Doe", trn: "1234567" },
+#                 { first_name: "John", last_name: "Doe", trn: "1212121" },
+#                 { first_name: "Pomona", last_name: "Doe", trn: "1313131" }]
+#
+# mentors_data.each do |mentor|
+#   Mentor.find_or_create_by!(trn: mentor[:trn]) do |new_mentor|
+#     new_mentor.first_name = mentor[:first_name]
+#     new_mentor.last_name = mentor[:last_name]
+#   end
+# end
+#
+# mentors = Mentor.where(trn: %w[1234567 1212121 1313131])
+#
+# (Claims::School.all + Placements::School.all).each do |school|
+#   school.mentors = mentors
+# end
 
 # Create subjects
 PublishTeacherTraining::Subject::Import.call
-
 
 MODERN_LANGUAGE_SUBJECT_NAMES = ["Modern Languages",
                                  "French",
@@ -93,30 +92,27 @@ MODERN_LANGUAGE_SUBJECT_NAMES = ["Modern Languages",
                                  "Modern languages (other)"].freeze
 
 # Create placements
-Placements::School.find_each do |school|
-  # A school must have a school contact before creating placements
-  if school.phase == "All-through"
-    Placements::SchoolContact.create!(
-      school:,
-      first_name: "School",
-      last_name: "Contact",
-      email_address: "itt_contact@example.com",
-    )
+all_through_school = Placements::School.find_by(phase: "All-through")
+# A school must have a school contact before creating placements
+Placements::SchoolContact.create!(
+  school: all_through_school,
+  first_name: "School",
+  last_name: "Contact",
+  email_address: "itt_contact@example.com",
+)
 
-    next if school.placements.any?
+unless all_through_school.placements.any?
+  primary_subjects = Subject.primary.sample(4)
+  secondary_subjects = Subject.secondary.where.not(name: MODERN_LANGUAGE_SUBJECT_NAMES).sample(4)
 
-    primary_subjects = Subject.primary.sample(4)
-    secondary_subjects = Subject.secondary.where.not(name: MODERN_LANGUAGE_SUBJECT_NAMES).sample(4)
+  4.times do |i|
     year_group = Placement.year_groups.to_a.sample.first
-
-    4.times do |i|
-      Placement.create!(school:, subject: secondary_subjects[i])
-      Placement.create!(school:, subject: primary_subjects[i], year_group:)
-    end
+    Placement.create!(school: all_through_school, subject: secondary_subjects[i])
+    Placement.create!(school: all_through_school, subject: primary_subjects[i], year_group:)
   end
 end
 
-school_scope = School.where.not(claims_service: true, placements_service: true)
+school_scope = School.where(claims_service: false, placements_service: false)
 
 school_scope.where(phase: "Primary").limit(3).each do |school|
   school.update!(placements_service: true)
@@ -131,4 +127,3 @@ school_scope.where(phase: "Secondary").limit(3).each do |school|
     Placement.create!(school: school.becomes(Placements::School), subject:)
   end
 end
-
