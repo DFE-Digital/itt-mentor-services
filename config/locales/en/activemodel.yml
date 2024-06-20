@@ -17,6 +17,11 @@ en:
           attributes:
             subject_id:
               blank: Select a subject
+        placements/add_placement/steps/additional_subjects:
+          attributes:
+            additional_subject_ids:
+              blank: Select an additional subject
+              invalid: Select a valid additional subject
         placements/add_placement/steps/year_group:
           attributes:
             year_group:
