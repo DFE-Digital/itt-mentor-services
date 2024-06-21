@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Placements::AddPlacement::Steps::YearGroup, type: :model do
+RSpec.describe Placements::AddPlacementWizard::YearGroupStep, type: :model do
   describe "attributes" do
     it { is_expected.to have_attributes(school: nil, year_group: nil) }
   end

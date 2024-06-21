@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Placements::AddPlacement::Steps::Phase, type: :model do
+RSpec.describe Placements::AddPlacementWizard::PhaseStep, type: :model do
   describe "attributes" do
     it { is_expected.to have_attributes(school: nil, phase: nil) }
   end

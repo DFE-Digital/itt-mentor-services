@@ -1,4 +1,4 @@
-class Placements::AddPlacement::Steps::AdditionalSubjects
+class Placements::AddPlacementWizard::AdditionalSubjectsStep
   include ActiveModel::Model
   include ActiveModel::Attributes
 

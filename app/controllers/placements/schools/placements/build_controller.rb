@@ -12,31 +12,31 @@ class Placements::Schools::Placements::BuildController < Placements::Application
   end
 
   def add_phase
-    @current_step = Placements::AddPlacement::Steps::Phase.new(school:, phase:)
+    @current_step = Placements::AddPlacementWizard::PhaseStep.new(school:, phase:)
     @previous_step = previous_step(:add_phase)
   end
 
   def add_subject
-    phase_step = Placements::AddPlacement::Steps::Phase.new(school:, phase:)
-    @current_step = Placements::AddPlacement::Steps::Subject.new(school:, phase: phase_step.phase, subject_id:)
+    phase_step = Placements::AddPlacementWizard::PhaseStep.new(school:, phase:)
+    @current_step = Placements::AddPlacementWizard::SubjectStep.new(school:, phase: phase_step.phase, subject_id:)
     @previous_step = previous_step(:add_subject)
   end
 
   def add_additional_subjects
-    phase_step = Placements::AddPlacement::Steps::Phase.new(school:, phase:)
-    subject_step = Placements::AddPlacement::Steps::Subject.new(school:, phase: phase_step.phase, subject_id:)
-    @current_step = Placements::AddPlacement::Steps::AdditionalSubjects.new(school:, parent_subject_id: subject_step.subject_id,
-                                                                            additional_subject_ids:)
+    phase_step = Placements::AddPlacementWizard::PhaseStep.new(school:, phase:)
+    subject_step = Placements::AddPlacementWizard::SubjectStep.new(school:, phase: phase_step.phase, subject_id:)
+    @current_step = Placements::AddPlacementWizard::AdditionalSubjectsStep.new(school:, parent_subject_id: subject_step.subject_id,
+                                                                               additional_subject_ids:)
     @previous_step = previous_step(:add_additional_subjects)
   end
 
   def add_year_group
-    @current_step = Placements::AddPlacement::Steps::YearGroup.new(school:, year_group:)
+    @current_step = Placements::AddPlacementWizard::YearGroupStep.new(school:, year_group:)
     @previous_step = previous_step(:add_year_group)
   end
 
   def add_mentors
-    @current_step = Placements::AddPlacement::Steps::Mentors.new(school:, mentor_ids:)
+    @current_step = Placements::AddPlacementWizard::MentorsStep.new(school:, mentor_ids:)
     @previous_step = previous_step(:add_mentors)
   end
 
@@ -57,15 +57,15 @@ class Placements::Schools::Placements::BuildController < Placements::Application
   def update
     case params[:id].to_sym
     when :check_your_answers
-      phase_step = Placements::AddPlacement::Steps::Phase.new(school:, phase:)
-      subject_step = Placements::AddPlacement::Steps::Subject.new(school:, phase: phase_step.phase, subject_id:)
-      additional_subject_step = Placements::AddPlacement::Steps::AdditionalSubjects.new(
+      phase_step = Placements::AddPlacementWizard::PhaseStep.new(school:, phase:)
+      subject_step = Placements::AddPlacementWizard::SubjectStep.new(school:, phase: phase_step.phase, subject_id:)
+      additional_subject_step = Placements::AddPlacementWizard::AdditionalSubjectsStep.new(
         school:,
         parent_subject_id: subject_step.subject_id,
         additional_subject_ids:,
       )
-      mentor_step = Placements::AddPlacement::Steps::Mentors.new(school:, mentor_ids:)
-      year_group_step = Placements::AddPlacement::Steps::YearGroup.new(school:, year_group:)
+      mentor_step = Placements::AddPlacementWizard::MentorsStep.new(school:, mentor_ids:)
+      year_group_step = Placements::AddPlacementWizard::YearGroupStep.new(school:, year_group:)
       @placement = Placements::Schools::Placements::Build::Placement.new(school:, phase: phase_step.phase)
 
       @placement.assign_attributes [mentor_step.wizard_attributes,
@@ -82,7 +82,7 @@ class Placements::Schools::Placements::BuildController < Placements::Application
       session.delete("add_a_placement")
       redirect_to placements_school_placements_path(school), flash: { success: t(".success") } and return
     when :add_phase
-      @current_step = Placements::AddPlacement::Steps::Phase.new(school:, phase: phase_params)
+      @current_step = Placements::AddPlacementWizard::PhaseStep.new(school:, phase: phase_params)
 
       if @current_step.valid?
         session["add_a_placement"]["skipped_steps"] << "add_year_group" unless @current_step.phase == "Primary"
@@ -91,8 +91,8 @@ class Placements::Schools::Placements::BuildController < Placements::Application
         render :add_phase and return
       end
     when :add_subject
-      phase_step = Placements::AddPlacement::Steps::Phase.new(school:, phase:)
-      @current_step = Placements::AddPlacement::Steps::Subject.new(school:, phase: phase_step.phase, subject_id: subject_params)
+      phase_step = Placements::AddPlacementWizard::PhaseStep.new(school:, phase:)
+      @current_step = Placements::AddPlacementWizard::SubjectStep.new(school:, phase: phase_step.phase, subject_id: subject_params)
 
       if @current_step.valid?
         if @current_step.subject_has_child_subjects?
@@ -106,11 +106,11 @@ class Placements::Schools::Placements::BuildController < Placements::Application
         render :add_subject and return
       end
     when :add_additional_subjects
-      phase_step = Placements::AddPlacement::Steps::Phase.new(school:, phase:)
-      subject_step = Placements::AddPlacement::Steps::Subject.new(school:, phase: phase_step.phase, subject_id:)
-      @current_step = Placements::AddPlacement::Steps::AdditionalSubjects.new(school:,
-                                                                              parent_subject_id: subject_step.subject_id,
-                                                                              additional_subject_ids: additional_subject_ids_params)
+      phase_step = Placements::AddPlacementWizard::PhaseStep.new(school:, phase:)
+      subject_step = Placements::AddPlacementWizard::SubjectStep.new(school:, phase: phase_step.phase, subject_id:)
+      @current_step = Placements::AddPlacementWizard::AdditionalSubjectsStep.new(school:,
+                                                                                 parent_subject_id: subject_step.subject_id,
+                                                                                 additional_subject_ids: additional_subject_ids_params)
 
       if @current_step.valid?
         session["add_a_placement"]["additional_subject_ids"] = @current_step.additional_subject_ids
@@ -118,7 +118,7 @@ class Placements::Schools::Placements::BuildController < Placements::Application
         render :add_additional_subjects and return
       end
     when :add_year_group
-      @current_step = Placements::AddPlacement::Steps::YearGroup.new(school:, year_group: year_group_params)
+      @current_step = Placements::AddPlacementWizard::YearGroupStep.new(school:, year_group: year_group_params)
 
       if @current_step.valid?
         session["add_a_placement"]["year_group"] = @current_step.year_group
@@ -126,7 +126,7 @@ class Placements::Schools::Placements::BuildController < Placements::Application
         render :add_year_group and return
       end
     when :add_mentors
-      @current_step = Placements::AddPlacement::Steps::Mentors.new(school:, mentor_ids: mentor_ids_params)
+      @current_step = Placements::AddPlacementWizard::MentorsStep.new(school:, mentor_ids: mentor_ids_params)
 
       if @current_step.valid?
         session["add_a_placement"]["mentor_ids"] = @current_step.mentor_ids
@@ -235,23 +235,23 @@ class Placements::Schools::Placements::BuildController < Placements::Application
   end
 
   def phase_params
-    params.dig(:placements_add_placement_steps_phase, :phase)
+    params.dig(:placements_add_placement_wizard_phase_step, :phase)
   end
 
   def subject_params
-    params.dig(:placements_add_placement_steps_subject, :subject_id)
+    params.dig(:placements_add_placement_wizard_subject_step, :subject_id)
   end
 
   def additional_subject_ids_params
-    params.dig(:placements_add_placement_steps_additional_subjects, :additional_subject_ids).compact_blank
+    params.dig(:placements_add_placement_wizard_additional_subjects_step, :additional_subject_ids).compact_blank
   end
 
   def mentor_ids_params
-    params.dig(:placements_add_placement_steps_mentors, :mentor_ids).compact_blank
+    params.dig(:placements_add_placement_wizard_mentors_step, :mentor_ids).compact_blank
   end
 
   def year_group_params
-    params.dig(:placements_add_placement_steps_year_group, :year_group)
+    params.dig(:placements_add_placement_wizard_year_group_step, :year_group)
   end
 
   def authorize_placement

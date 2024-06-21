@@ -1,4 +1,4 @@
-class Placements::AddPlacement::Steps::Mentors
+class Placements::AddPlacementWizard::MentorsStep
   include ActiveModel::Model
   include ActiveModel::Attributes
 
