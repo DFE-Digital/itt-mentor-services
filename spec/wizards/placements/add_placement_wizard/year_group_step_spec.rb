@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Placements::AddPlacementWizard::YearGroupStep, type: :model do
   describe "attributes" do
-    it { is_expected.to have_attributes(school: nil, year_group: nil) }
+    it { is_expected.to have_attributes(year_group: nil) }
   end
 
   describe "delegations" do
@@ -10,8 +10,6 @@ RSpec.describe Placements::AddPlacementWizard::YearGroupStep, type: :model do
   end
 
   describe "validations" do
-    it { is_expected.to validate_presence_of(:school) }
-
     context "when the school is primary" do
       subject { described_class.new(school:) }
 

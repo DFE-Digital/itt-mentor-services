@@ -1,12 +1,7 @@
-class Placements::AddPlacementWizard::SubjectStep
-  include ActiveModel::Model
-  include ActiveModel::Attributes
-
-  attribute :school
+class Placements::AddPlacementWizard::SubjectStep < Placements::BaseStep
   attribute :phase
   attribute :subject_id
 
-  validates :school, presence: true
   validates :phase, presence: true
   validates :subject_id, presence: true, inclusion: { in: ->(step) { step.subjects_for_selection.ids } }, if: ->(step) { step.phase.present? }
 
