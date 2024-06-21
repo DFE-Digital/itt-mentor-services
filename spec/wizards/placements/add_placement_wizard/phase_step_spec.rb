@@ -2,11 +2,10 @@ require "rails_helper"
 
 RSpec.describe Placements::AddPlacementWizard::PhaseStep, type: :model do
   describe "attributes" do
-    it { is_expected.to have_attributes(school: nil, phase: nil) }
+    it { is_expected.to have_attributes(phase: nil) }
   end
 
   describe "validations" do
-    it { is_expected.to validate_presence_of(:school) }
     it { is_expected.to validate_presence_of(:phase) }
 
     describe "phase" do

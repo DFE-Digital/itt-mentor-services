@@ -1,11 +1,6 @@
-class Placements::AddPlacementWizard::MentorsStep
-  include ActiveModel::Model
-  include ActiveModel::Attributes
-
-  attribute :school
+class Placements::AddPlacementWizard::MentorsStep < Placements::BaseStep
   attribute :mentor_ids, default: []
 
-  validates :school, presence: true
   validates :mentor_ids, presence: true
 
   def mentors_for_selection

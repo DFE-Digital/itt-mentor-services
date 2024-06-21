@@ -2,11 +2,10 @@ require "rails_helper"
 
 RSpec.describe Placements::AddPlacementWizard::AdditionalSubjectsStep, type: :model do
   describe "attributes" do
-    it { is_expected.to have_attributes(school: nil, parent_subject_id: nil, additional_subject_ids: []) }
+    it { is_expected.to have_attributes(parent_subject_id: nil, additional_subject_ids: []) }
   end
 
   describe "validations" do
-    it { is_expected.to validate_presence_of(:school) }
     it { is_expected.to validate_presence_of(:parent_subject_id) }
 
     describe "additional subjects validation" do

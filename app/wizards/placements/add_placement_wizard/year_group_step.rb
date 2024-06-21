@@ -1,13 +1,8 @@
-class Placements::AddPlacementWizard::YearGroupStep
-  include ActiveModel::Model
-  include ActiveModel::Attributes
-
-  attribute :school
+class Placements::AddPlacementWizard::YearGroupStep < Placements::BaseStep
   attribute :year_group, default: nil
 
   delegate :primary?, to: :school, prefix: true, allow_nil: true
 
-  validates :school, presence: true
   validates :year_group, presence: true, if: :school_primary?
 
   def year_groups_for_selection
