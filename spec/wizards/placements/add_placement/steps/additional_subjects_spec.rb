@@ -14,14 +14,16 @@ RSpec.describe Placements::AddPlacement::Steps::AdditionalSubjects, type: :model
       let(:parent_subject) { create(:subject) }
 
       it "is invalid if the additional subject does not exist" do
-        step = described_class.new(school:, parent_subject_id: parent_subject.id, additional_subject_ids: %w[not_a_subject])
+        child_subject = create(:subject, parent_subject:)
+        step = described_class.new(school:, parent_subject_id: parent_subject.id, additional_subject_ids: ["not_a_subject", child_subject.id])
 
         expect(step).to be_invalid
       end
 
       it "is valid if all additional subjects exist and are children of the parent subject" do
         child_subject = create(:subject, parent_subject:)
-        step = described_class.new(school:, parent_subject_id: parent_subject.id, additional_subject_ids: [child_subject.id])
+        child_subject_2 = create(:subject, parent_subject:)
+        step = described_class.new(school:, parent_subject_id: parent_subject.id, additional_subject_ids: [child_subject.id, child_subject_2.id])
 
         expect(step).to be_valid
       end
