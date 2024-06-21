@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Placements::AddPlacement::Steps::AdditionalSubjects, type: :model do
+RSpec.describe Placements::AddPlacementWizard::AdditionalSubjectsStep, type: :model do
   describe "attributes" do
     it { is_expected.to have_attributes(school: nil, parent_subject_id: nil, additional_subject_ids: []) }
   end

@@ -1,4 +1,4 @@
-class Placements::AddPlacement::Steps::YearGroup
+class Placements::AddPlacementWizard::YearGroupStep
   include ActiveModel::Model
   include ActiveModel::Attributes
 

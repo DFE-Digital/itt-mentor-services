@@ -5,24 +5,24 @@ en:
         record_invalid: "Validation failed: %{errors}"
         between: "must be between %{min} and %{max}"
       models:
-        placements/add_placement/steps/mentors:
+        placements/add_placement_wizard/mentors_step:
           attributes:
             mentor_ids:
               blank: Select a mentor or not yet known
-        placements/add_placement/steps/phase:
+        placements/add_placement_wizard/phase_step:
           attributes:
             phase:
               blank: Select a phase
-        placements/add_placement/steps/subject:
+        placements/add_placement_wizard/subject_step:
           attributes:
             subject_id:
               blank: Select a subject
-        placements/add_placement/steps/additional_subjects:
+        placements/add_placement_wizard/additional_subjects_step:
           attributes:
             additional_subject_ids:
               blank: Select an additional subject
               invalid: Select a valid additional subject
-        placements/add_placement/steps/year_group:
+        placements/add_placement_wizard/year_group_step:
           attributes:
             year_group:
               blank: Select a year group

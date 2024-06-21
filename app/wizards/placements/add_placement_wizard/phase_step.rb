@@ -1,4 +1,4 @@
-class Placements::AddPlacement::Steps::Phase
+class Placements::AddPlacementWizard::PhaseStep
   include ActiveModel::Model
   include ActiveModel::Attributes
 

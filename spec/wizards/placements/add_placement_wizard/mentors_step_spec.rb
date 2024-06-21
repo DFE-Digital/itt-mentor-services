@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Placements::AddPlacement::Steps::Mentors, type: :model do
+RSpec.describe Placements::AddPlacementWizard::MentorsStep, type: :model do
   describe "attributes" do
     it { is_expected.to have_attributes(school: nil, mentor_ids: []) }
   end
