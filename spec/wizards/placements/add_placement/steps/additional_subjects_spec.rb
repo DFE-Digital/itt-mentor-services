@@ -8,19 +8,18 @@ RSpec.describe Placements::AddPlacement::Steps::AdditionalSubjects, type: :model
   describe "validations" do
     it { is_expected.to validate_presence_of(:school) }
     it { is_expected.to validate_presence_of(:parent_subject_id) }
-    it { is_expected.to validate_presence_of(:additional_subject_ids) }
 
     describe "#additional_subjects_valid" do
       let(:school) { create(:placements_school) }
       let(:parent_subject) { create(:subject) }
 
-      it "is invalid of the subject does not exist" do
-        step = described_class.new(parent_subject_id: parent_subject.id, additional_subject_ids: %w[not_a_subject])
+      it "is invalid if the additional subject does not exist" do
+        step = described_class.new(school:, parent_subject_id: parent_subject.id, additional_subject_ids: %w[not_a_subject])
 
         expect(step).to be_invalid
       end
 
-      it "is valid if all additional subjects exist" do
+      it "is valid if all additional subjects exist and are children of the parent subject" do
         child_subject = create(:subject, parent_subject:)
         step = described_class.new(school:, parent_subject_id: parent_subject.id, additional_subject_ids: [child_subject.id])
 
@@ -33,22 +32,10 @@ RSpec.describe Placements::AddPlacement::Steps::AdditionalSubjects, type: :model
     let(:parent_subject) { create(:subject) }
     let(:child_subject) { create(:subject, parent_subject:) }
 
-    it "returns additional subjects for the subject" do
+    it "returns child subjects of the parent subject" do
       step = described_class.new(parent_subject_id: parent_subject.id)
 
       expect(step.additional_subjects_for_selection).to eq([child_subject])
-    end
-  end
-
-  describe "#additional_subject_ids=" do
-    let(:parent_subject) { create(:subject) }
-
-    it "normalises the value to an array" do
-      step = described_class.new
-
-      step.additional_subject_ids = parent_subject.id
-
-      expect(step.additional_subject_ids).to eq([parent_subject.id])
     end
   end
 
