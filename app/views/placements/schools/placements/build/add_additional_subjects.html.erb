@@ -16,7 +16,7 @@
         <%= f.govuk_check_boxes_fieldset :additional_subject_ids, legend: { size: "l", text: @current_step.parent_subject_name } do %>
           <% @current_step.additional_subjects_for_selection.each do |additional_subject| %>
             <%= f.govuk_check_box :additional_subject_ids, additional_subject.id, label: { text: additional_subject.name },
-                                                                                  checked: @current_step.additional_subject_ids.include?(additional_subject.id) %>
+                                                                                  checked: @current_step.additional_subject_ids&.include?(additional_subject.id) %>
           <% end %>
         <% end %>
 

@@ -8,17 +8,14 @@ class Placements::AddPlacement::Steps::AdditionalSubjects
 
   validates :school, presence: true
   validates :parent_subject_id, presence: true
-  validates :additional_subject_ids, presence: true
-  validate :additional_subjects_valid
+  validates :additional_subject_ids, presence: true,
+                                     inclusion: { in: ->(step) { step.parent_subject.child_subjects.ids } },
+                                     if: ->(step) { step.parent_subject_id.present? }
 
   delegate :name, to: :parent_subject, prefix: true, allow_nil: true
 
   def additional_subjects_for_selection
     parent_subject.child_subjects
-  end
-
-  def additional_subject_ids=(value)
-    super Array(value)
   end
 
   def wizard_attributes
@@ -27,13 +24,5 @@ class Placements::AddPlacement::Steps::AdditionalSubjects
 
   def parent_subject
     @parent_subject ||= Subject.find(parent_subject_id)
-  end
-
-  private
-
-  def additional_subjects_valid
-    return if additional_subject_ids.all? { |id| Subject.exists?(id:) }
-
-    errors.add(:additional_subject_ids, :invalid)
   end
 end
