@@ -7,9 +7,6 @@ import { application } from "./application"
 import AutocompleteController from "./autocomplete_controller"
 application.register("autocomplete", AutocompleteController)
 
-import ClaimsSupportFilterSearchController from "./claims_support_filter_search_controller"
-application.register("claims-support-filter-search", ClaimsSupportFilterSearchController)
-
 import FilterSearchController from "./filter_search_controller"
 application.register("filter-search", FilterSearchController)
 

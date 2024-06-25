@@ -83,27 +83,18 @@
           model: filter_form,
           url: claims_support_claims_path,
           method: "get",
-          data: { turbo: false, controller: "claims-support-filter-search" },
         ) do |form| %>
           <%= form.govuk_submit t("apply_filters") %>
 
           <%= form.hidden_field :search, value: filter_form.search %>
 
-          <div class="app-filter__option">
-            <%= form.govuk_text_field(
-              :search_school,
-              type: :search,
-              data: {
-                claims_support_filter_search_target: "schoolInput",
-                action: "input->claims-support-filter-search#searchSchool",
-              },
-              label: { text: t("claims.support.claims.index.school"), size: "s" },
-            ) %>
-
+          <div class="app-filter__option" data-controller="filter-search">
             <%= form.govuk_check_boxes_fieldset(
               :school_ids,
-              legend: { hidden: "true" },
-              data: { claims_support_filter_search_target: "schoolList" },
+              legend: {
+                text: t("claims.support.claims.index.school"),
+                size: "s",
+              },
               small: true,
             ) do %>
 
@@ -113,22 +104,14 @@
              <% end %>
           </div>
 
-          <div class="app-filter__option">
-            <%= form.govuk_text_field(
-              :search_provider,
-              data: {
-                claims_support_filter_search_target: "providerInput",
-                action: "input->claims-support-filter-search#searchProvider",
-              },
-              type: :search,
-              label: { text: t("claims.support.claims.index.provider"), size: "s" },
-            ) %>
-
+          <div class="app-filter__option" data-controller="filter-search">
             <%= form.govuk_check_boxes_fieldset(
               :provider_ids,
-              legend: { hidden: "true" },
+              legend: {
+                text: t("claims.support.claims.index.provider"),
+                size: "s",
+              },
               small: true,
-              data: { claims_support_filter_search_target: "providerList" },
             ) do %>
               <% @providers.each do |provider| %>
                 <%= form.govuk_check_box :provider_ids, provider.id, label: { text: provider.name } %>

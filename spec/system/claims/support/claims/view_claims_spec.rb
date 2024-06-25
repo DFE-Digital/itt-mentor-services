@@ -48,12 +48,11 @@ RSpec.describe "View claims", type: :system, service: :claims, js: true do
   scenario "Support user uses the js filter search" do
     when_i_visit_claim_index_page
     then_i_see_a_list_of_submitted_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
-    when_i_search_the_school_filer_with(school_2.name)
+    when_i_search_the_school_filter_with(school_2.name)
     then_i_see_only_my_filter_school_as_an_option
     when_i_check_school_filter(school_2)
     then_i_see_a_list_of_submitted_claims([claim_7])
-    then_i_see_my_search_school_filter_populated(school_2.name)
-    when_i_search_the_provider_filer_with(provider_2.name)
+    when_i_search_the_provider_filter_with(provider_2.name)
     when_i_check_provider_filter(provider_2)
     then_i_see_a_list_of_submitted_claims([claim_7])
   end
@@ -131,27 +130,19 @@ RSpec.describe "View claims", type: :system, service: :claims, js: true do
     end
   end
 
-  def when_i_search_the_school_filer_with(school_name)
-    fill_in("School", with: school_name)
+  def when_i_search_the_school_filter_with(school_name)
+    find("legend", text: "School").sibling("input[type=search]").fill_in(with: school_name)
   end
 
-  def when_i_search_the_provider_filer_with(provider_name)
-    fill_in("Accredited provider", with: provider_name)
+  def when_i_search_the_provider_filter_with(provider_name)
+    find("legend", text: "Accredited provider").sibling("input[type=search]").fill_in(with: provider_name)
   end
 
   def then_i_see_only_my_filter_school_as_an_option
     my_selection = page.find("#claims-support-claims-filter-form-school-ids-#{school_2.id}-field", visible: :all)
     expect(my_selection.present?).to eq(true)
 
-    other_school_option = page.find_all("#claims-support-claims-filter-form-school-ids-#{school_1.id}-field")
+    other_school_option = page.find_all("#claims-support-claims-filter-form-school-ids-#{school_1.id}-field", wait: false)
     expect(other_school_option.blank?).to eq(true)
-  end
-
-  def then_i_see_my_search_school_filter_populated(school_name)
-    expect(page).to have_field("School", with: school_name)
-  end
-
-  def then_i_see_my_search_provider_filter_populated(provider_name)
-    expect(page).to have_field("Accredited provider", with: provider_name)
   end
 end
