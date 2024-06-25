@@ -88,7 +88,7 @@ en:
             cancel: Cancel
             not_yet_known: Not yet known
           update:
-            success: Placement added
+            success: Placement published
         edit_provider:
           title_with_error: "Error: Provider - Manage a placement"
           title: Provider - Manage a placement

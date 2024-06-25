@@ -51,6 +51,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           when_i_click_on("Publish placement")
           then_i_see_the_placements_page
           and_i_see_my_placement(school.phase)
+          and_i_see_success_message("Placement published")
         end
 
         scenario "when I select not known for the mentor" do
@@ -71,6 +72,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           and_i_click_on("Publish placement")
           then_i_see_the_placements_page
           and_i_see_my_placement(school.phase)
+          and_i_see_success_message("Placement published")
         end
       end
 
@@ -195,6 +197,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
         when_i_click_on("Publish placement")
         then_i_see_the_placements_page
         and_i_see_my_placement(school.phase)
+        and_i_see_success_message("Placement published")
       end
 
       context "when I select a subject with child subjects" do
@@ -218,6 +221,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           when_i_click_on("Publish placement")
           then_i_see_the_placements_page
           and_i_see_my_placement(school.phase)
+          and_i_see_success_message("Placement published")
         end
 
         scenario "I see a validation message if I do not select an additional subject" do
@@ -277,6 +281,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           when_i_click_on("Publish placement")
           then_i_see_the_placements_page
           and_i_see_my_placement("Primary")
+          and_i_see_success_message("Placement published")
         end
       end
 
@@ -299,6 +304,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           and_i_click_on("Publish placement")
           then_i_see_the_placements_page
           and_i_see_my_placement("Secondary")
+          and_i_see_success_message("Placement published")
         end
       end
 
@@ -629,6 +635,12 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
 
   def and_i_do_not_see_the_button_to(button_text)
     expect(page).not_to have_button(button_text)
+  end
+
+  def and_i_see_success_message(message)
+    within(".govuk-notification-banner") do
+      expect(page).to have_content message
+    end
   end
 
   alias_method :and_i_click_on, :when_i_click_on
