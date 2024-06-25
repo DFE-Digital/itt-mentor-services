@@ -83,7 +83,9 @@ en:
             add_year_group: Add year group
             add_mentors: Add mentors
             change: Change
-            info_text: When a placement is published, it will be visible to teacher training providers.
+            info_text: |
+              When a placement is published, it will be visible to teacher training providers. 
+              You can edit your placement after it is published.
             publish_placement: Publish placement
             cancel: Cancel
             not_yet_known: Not yet known
