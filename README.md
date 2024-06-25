@@ -4,17 +4,28 @@
 
 This application has two main services:
 
-- Claim funding for mentor training: A service where schools or training providers can claim funding for mentor training.
-- TODO: Add description for the other service
+- Claim funding for mentor training: A service for placement partners to claim funding for their general mentors’ training.
+- Manage school placements: A service for training providers and placement partners to manage their mentors and placements.
 
 ## Live Environments
 
-| Name       | URL                                                                                                                                                                    | Purpose                                                                | AKS Namespace  |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------- |
-| Production | _pending_                                                                                                                                                              | Public site                                                            | bat-production |
-| Sandbox    | [Funding Mentors](https://sandbox.claim-funding-for-mentor-training.education.gov.uk)                                                                                  | Demo environment for end-users                                         | bat-production |
-| Staging    | [Funding Mentors](https://staging.claim-funding-for-mentor-training.education.gov.uk)                                                                                  | For internal use by DfE for testing - Production-like environment      | bat-staging    |
-| QA         | [Funding Mentors](https://qa.claim-funding-for-mentor-training.education.gov.uk) / [School Placements](https://manage-school-placements-qa.test.teacherservices.cloud) | For internal use by DfE for testing - Automatically deployed from main | bat-qa         |
+### Claim funding for mentor training
+
+| Name       | URL                                                                           | Purpose                                                                | AKS Namespace  |
+| ---------- | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------- |
+| Production | [www](https://claim-funding-for-mentor-training.education.gov.uk)             | Public site                                                            | bat-production |
+| Sandbox    | [sandbox](https://sandbox.claim-funding-for-mentor-training.education.gov.uk) | Demo environment for end-users                                         | bat-production |
+| Staging    | [staging](https://staging.claim-funding-for-mentor-training.education.gov.uk) | For internal use by DfE for testing - Production-like environment      | bat-staging    |
+| QA         | [qa](https://qa.claim-funding-for-mentor-training.education.gov.uk)           | For internal use by DfE for testing - Automatically deployed from main | bat-qa         |
+
+### Manage school placements
+
+| Name       | URL                                                                  | Purpose                                                                | AKS Namespace  |
+| ---------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------- |
+| Production | [www](https://manage-school-placements.education.gov.uk)             | Public site                                                            | bat-production |
+| Sandbox    | [sandbox](https://sandbox.manage-school-placements.education.gov.uk) | Demo environment for end-users                                         | bat-production |
+| Staging    | [staging](https://staging.manage-school-placements.education.gov.uk) | For internal use by DfE for testing - Production-like environment      | bat-staging    |
+| QA         | [qa](https://qa.manage-school-placements.education.gov.uk)           | For internal use by DfE for testing - Automatically deployed from main | bat-qa         |
 
 ## Setup
 
