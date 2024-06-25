@@ -73,15 +73,10 @@ en:
             title: Check your answers
             add_placement: Add placement
             phase: Phase
-            add_phase: Add phase
             subject: Subject
-            add_subject: Add subject
             additional_subjects: Additional subjects
-            add_additional_subjects: Add additional subjects
             mentor: Mentor
             year_group: Year group
-            add_year_group: Add year group
-            add_mentors: Add mentors
             change: Change
             info_text: When a placement is published, it will be visible to teacher training providers.
             publish_placement: Publish placement
@@ -172,7 +167,7 @@ en:
         destroy:
           placement_deleted: Placement deleted
         update:
-          success: 
+          success:
             edit_mentors: Mentor updated
             edit_provider: Provider updated
             edit_year_group: Year group updated

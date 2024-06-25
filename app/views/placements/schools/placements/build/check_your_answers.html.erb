@@ -24,21 +24,21 @@
             <% row.with_key { t(".phase") } %>
             <% row.with_value(text: @phase) %>
             <% unless @school.primary_or_secondary_only? %>
-              <% row.with_action(text: t(".change"), href: add_phase_placements_school_placement_build_index_path(@school, :add_phase), visually_hidden_text: t(".add_phase")) %>
+              <% row.with_action(text: t(".change"), href: add_phase_placements_school_placement_build_index_path(@school, :add_phase), visually_hidden_text: t(".phase")) %>
             <% end %>
           <% end %>
 
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".subject")) %>
             <% row.with_value(text: @placement.subject_name) %>
-            <% row.with_action(text: t(".change"), href: add_subject_placements_school_placement_build_index_path(@school, :add_subject), visually_hidden_text: t(".add_subject")) %>
+            <% row.with_action(text: t(".change"), href: add_subject_placements_school_placement_build_index_path(@school, :add_subject), visually_hidden_text: t(".subject")) %>
           <% end %>
 
           <% if @placement.subject_has_child_subjects? %>
             <% summary_list.with_row do |row| %>
               <% row.with_key(text: t(".additional_subjects")) %>
               <% row.with_value(text: @placement.additional_subject_names) %>
-              <% row.with_action(text: t(".change"), href: add_additional_subjects_placements_school_placement_build_index_path(@school, :add_additional_subjects), visually_hidden_text: t(".add_additional_subjects")) %>
+              <% row.with_action(text: t(".change"), href: add_additional_subjects_placements_school_placement_build_index_path(@school, :add_additional_subjects), visually_hidden_text: t(".additional_subjects")) %>
             <% end %>
           <% end %>
 
@@ -46,7 +46,7 @@
             <% summary_list.with_row do |row| %>
               <% row.with_key(text: t(".year_group")) %>
               <% row.with_value(text: t("placements.schools.placements.year_groups.#{@placement.year_group}")) %>
-              <% row.with_action(text: t(".change"), href: add_year_group_placements_school_placement_build_index_path(@school, :add_year_group), visually_hidden_text: t(".add_year_group")) %>
+              <% row.with_action(text: t(".change"), href: add_year_group_placements_school_placement_build_index_path(@school, :add_year_group), visually_hidden_text: t(".year_group")) %>
             <% end %>
           <% end %>
 
@@ -54,7 +54,7 @@
             <% summary_list.with_row do |row| %>
               <% row.with_key(text: t(".mentor")) %>
               <% row.with_value(text: @selected_mentor_text) %>
-              <% row.with_action(text: t(".change"), href: add_mentors_placements_school_placement_build_index_path(@school, :add_mentors), visually_hidden_text: t(".add_mentors")) %>
+              <% row.with_action(text: t(".change"), href: add_mentors_placements_school_placement_build_index_path(@school, :add_mentors), visually_hidden_text: t(".mentor")) %>
             <% end %>
           <% end %>
         <% end %>
