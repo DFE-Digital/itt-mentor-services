@@ -2,8 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Placements / Placements / View a placement",
                type: :system,
-               service: :placements,
-               js: true do
+               service: :placements do
   let(:provider) { create(:placements_provider, name: "Provider") }
   let(:school) do
     create(
@@ -107,7 +106,7 @@ RSpec.describe "Placements / Placements / View a placement",
 
   def and_i_see_location_details_for_the_school
     expect(page).to have_content("Location")
-    expect(page).to have_content("London Secondary School\nLondon\nCity of London\nLN01 2LN")
+    expect(page).to have_content("London Secondary School London City of London LN01 2LN")
   end
 
   def and_i_see_the_itt_placement_contact_details_for_the_school

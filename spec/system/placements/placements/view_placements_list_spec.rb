@@ -2,8 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Placements / Placements / View placements list",
                type: :system,
-               service: :placements,
-               js: true do
+               service: :placements do
   let(:provider) { create(:placements_provider, name: "Provider") }
   let!(:primary_school) do
     create(
@@ -260,7 +259,7 @@ RSpec.describe "Placements / Placements / View placements list",
           when_i_click_on("Clear search")
           then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
           and_i_can_see_a_preset_filter("School", "Primary School")
-          and_i_can_see_search_location_is_set_as("")
+          and_i_can_see_search_location_is_set_as(nil)
         end
       end
     end
@@ -323,14 +322,14 @@ RSpec.describe "Placements / Placements / View placements list",
   end
 
   def then_i_can_see_a_placement_for_school_and_subject(school_name, subject_name)
-    expect(page).to have_content("#{school_name}\n#{subject_name}")
+    expect(page).to have_content("#{school_name} #{subject_name}")
   end
 
   alias_method :and_i_can_see_a_placement_for_school_and_subject,
                :then_i_can_see_a_placement_for_school_and_subject
 
   def then_i_can_not_see_a_placement_for_school_and_subject(school_name, subject_name)
-    expect(page).not_to have_content("#{school_name}\n#{subject_name}")
+    expect(page).not_to have_content("#{school_name} #{subject_name}")
   end
 
   alias_method :and_i_can_not_see_a_placement_for_school_and_subject,
