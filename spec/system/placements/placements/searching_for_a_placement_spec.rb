@@ -2,8 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Placements / Placements / Searching for a placements list",
                type: :system,
-               service: :placements,
-               js: true do
+               service: :placements do
   let(:provider) { create(:placements_provider, name: "Provider") }
   let(:london_school) do
     create(
