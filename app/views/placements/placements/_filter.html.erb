@@ -111,7 +111,6 @@
           scope: :filters,
           url: placements_placements_path,
           method: "get",
-          data: { turbo: false, controller: "placements-filter-search" },
         ) do |form| %>
           <%= form.govuk_submit t("apply_filters") %>
           <%= form.hidden_field :search_location, value: search_location %>
@@ -141,21 +140,13 @@
             <% end %>
           </div>
 
-          <div class="app-filter__option">
-            <%= form.govuk_text_field(
-                  :search_subject,
-                  type: :search,
-                  data: {
-                    placements_filter_search_target: "subjectInput",
-                    action: "input->placements-filter-search#searchSubject",
-                  },
-                  label: { text: t(".subject"), size: "s" },
-                ) %>
-
+          <div class="app-filter__option" data-controller="filter-search">
             <%= form.govuk_check_boxes_fieldset(
               :subject_ids,
-              legend: { hidden: true },
-              data: { placements_filter_search_target: "subjectList" },
+              legend: {
+                text: t(".subject"),
+                size: "s",
+              },
               small: true,
             ) do %>
               <% @subjects.each do |subject| %>
@@ -197,23 +188,16 @@
             <% end %>
           </div>
 
-          <div class="app-filter__option">
-            <%= form.govuk_text_field(
-              :search_school,
-              type: :search,
-              data: {
-                placements_filter_search_target: "schoolInput",
-                action: "input->placements-filter-search#searchSchool",
-              },
-              label: { text: t(".school"), size: "s" },
-            ) %>
-
+          <div class="app-filter__option" data-controller="filter-search">
             <%= form.govuk_check_boxes_fieldset(
               :school_ids,
-              legend: { hidden: "true" },
-              data: { placements_filter_search_target: "schoolList" },
+              legend: {
+                text: t(".school"),
+                size: "s",
+              },
               small: true,
             ) do %>
+
               <% @schools.each do |school| %>
                 <%= form.govuk_check_box :school_ids,
                   school.id,

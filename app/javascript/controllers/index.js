@@ -10,8 +10,8 @@ application.register("autocomplete", AutocompleteController)
 import ClaimsSupportFilterSearchController from "./claims_support_filter_search_controller"
 application.register("claims-support-filter-search", ClaimsSupportFilterSearchController)
 
-import PlacementsFilterSearchController from "./placements_filter_search_controller"
-application.register("placements-filter-search", PlacementsFilterSearchController)
+import FilterSearchController from "./filter_search_controller"
+application.register("filter-search", FilterSearchController)
 
 import FilterController from "./filter_controller"
 application.register("filter", FilterController)
