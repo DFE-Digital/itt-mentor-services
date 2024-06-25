@@ -33,7 +33,7 @@ class Placements::MentorForm < ApplicationForm
   end
 
   def mentor
-    @mentor ||= MentorBuilder.call(trn:, date_of_birth:, first_name:, last_name:).becomes(Placements::Mentor)
+    @mentor ||= MentorBuilder.call(trn:, date_of_birth:, first_name:, last_name:)
   end
 
   def validate_mentor

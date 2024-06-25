@@ -7,9 +7,10 @@ RSpec.describe MentorBuilder do
 
   context "with invalid trn provided" do
     let(:trn) { "ab" }
+    let(:date_of_birth) { "1991-01-22" }
 
     it "returns mentor object with error on trn" do
-      mentor = described_class.call(trn:)
+      mentor = described_class.call(trn:, date_of_birth:)
       expect(mentor.class).to eq(Placements::Mentor)
       expect(mentor.errors[:trn]).to include "Enter a 7 digit teacher reference number (TRN)"
     end
@@ -17,20 +18,42 @@ RSpec.describe MentorBuilder do
 
   context "with empty trn provided" do
     let(:trn) { nil }
+    let(:date_of_birth) { "1991-01-22" }
 
     it "returns mentor object with error on trn" do
-      mentor = described_class.call(trn:)
+      mentor = described_class.call(trn:, date_of_birth:)
       expect(mentor.class).to eq(Placements::Mentor)
       expect(mentor.errors[:trn]).to include "Enter a teacher reference number (TRN)"
+    end
+  end
+
+  context "when trn is not provided as an argument" do
+    let(:date_of_birth) { "1991-01-22" }
+
+    it "returns an error with missing keyword: trn" do
+      expect { described_class.call(date_of_birth:) }.to raise_error(ArgumentError, "missing keyword: :trn")
+    end
+  end
+
+  context "when date of birth is not provided as an argument" do
+    let(:trn) { "1234567" }
+
+    it "returns an error with missing keyword: date of birth" do
+      expect { described_class.call(trn:) }.to raise_error(ArgumentError, "missing keyword: :date_of_birth")
     end
   end
 
   context "when mentor with trn already exists" do
     let(:existing_mentor) { create(:placements_mentor) }
     let(:trn) { existing_mentor.trn }
+    let(:date_of_birth) { "1991-01-22" }
+
+    before "fetches teacher record from teaching record service" do
+      allow(TeachingRecord::GetTeacher).to receive(:call).with(trn:, date_of_birth:).once.and_return(teacher_object)
+    end
 
     it "returns existing mentor" do
-      mentor = described_class.call(trn:)
+      mentor = described_class.call(trn:, date_of_birth:)
       expect(mentor).to eq existing_mentor
     end
   end
@@ -43,8 +66,9 @@ RSpec.describe MentorBuilder do
       allow(TeachingRecord::GetTeacher).to receive(:call).with(trn:, date_of_birth:).once.and_return(teacher_object)
     end
 
-    it "returns initialized mentor record without errors" do
+    it "returns initialized placements mentor record without errors" do
       mentor = described_class.call(trn:, date_of_birth:)
+      expect(mentor.class).to eq(Placements::Mentor)
       expect(mentor.trn).to eq trn
       expect(mentor.first_name).to eq teacher_object["firstName"]
       expect(mentor.last_name).to eq teacher_object["lastName"]
@@ -63,13 +87,26 @@ RSpec.describe MentorBuilder do
       allow(TeachingRecord::GetTeacher).to receive(:call).with(trn:, date_of_birth:).once.and_return(teacher_object)
     end
 
-    it "returns initialized mentor record with first and last name" do
+    it "returns initialized placements mentor record with first and last name" do
       mentor = described_class.call(trn:, first_name:, last_name:, date_of_birth:)
+      expect(mentor.class).to eq(Placements::Mentor)
       expect(mentor.trn).to eq trn
       expect(mentor.first_name).to eq first_name
       expect(mentor.last_name).to eq last_name
       expect(mentor.persisted?).to eq false
       expect(mentor.errors.none?).to eq true
+    end
+
+    context "with mentor klass Claims::Mentor" do
+      it "returns initialized claims mentor record with first and last name" do
+        mentor = described_class.call(trn:, first_name:, last_name:, date_of_birth:, mentor_klass: Claims::Mentor)
+        expect(mentor.class).to eq(Claims::Mentor)
+        expect(mentor.trn).to eq trn
+        expect(mentor.first_name).to eq first_name
+        expect(mentor.last_name).to eq last_name
+        expect(mentor.persisted?).to eq false
+        expect(mentor.errors.none?).to eq true
+      end
     end
   end
 

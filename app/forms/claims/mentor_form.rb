@@ -27,11 +27,12 @@ class Claims::MentorForm < ApplicationForm
   end
 
   def mentor
-    @mentor ||= Claims::MentorBuilder.call(
+    @mentor ||= MentorBuilder.call(
       trn:,
       first_name:,
       last_name:,
       date_of_birth:,
+      mentor_klass: Claims::Mentor,
     )
   end
 
