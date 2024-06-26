@@ -21,8 +21,8 @@ class Placements::Schools::MentorsController < Placements::ApplicationController
     authorize @mentor_membership
     @mentor_membership.destroy!
 
-    redirect_to placements_school_mentors_path(@school)
     flash[:success] = t(".mentor_removed")
+    redirect_to_index_path
   end
 
   def new
@@ -37,8 +37,9 @@ class Placements::Schools::MentorsController < Placements::ApplicationController
 
   def create
     mentor_form.save!
+    flash[:success] = t(".mentor_added")
 
-    redirect_to placements_school_mentors_path(@school), flash: { success: t(".mentor_added") }
+    redirect_to_index_path
   end
 
   private
@@ -72,5 +73,9 @@ class Placements::Schools::MentorsController < Placements::ApplicationController
 
   def set_mentor_membership
     @mentor_membership = @mentor.mentor_memberships.find_by(school: @school)
+  end
+
+  def redirect_to_index_path
+    redirect_to placements_school_mentors_path(@school)
   end
 end
