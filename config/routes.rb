@@ -29,7 +29,6 @@ Rails.application.routes.draw do
     get "/auth/failure", to: "sessions#failure"
   end
 
-  resources :service_updates, only: %i[index]
   namespace :api do
     resources :school_suggestions, only: [:index]
     resources :provider_suggestions, only: [:index]
