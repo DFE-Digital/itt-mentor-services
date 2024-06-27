@@ -35,7 +35,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     scenario "I try to remove myself from a school" do
       given_i_am_signed_in_as_mary
       when_i_try_to_visit_the_remove_path_for(mary, school)
-      then_i_am_redirected_to_the_index_page(school)
+      then_i_am_redirected_back
     end
   end
 
@@ -67,7 +67,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     scenario "I try to remove myself from a school" do
       given_i_am_signed_in_as_mary
       when_i_try_to_visit_the_remove_path_for(mary, provider)
-      then_i_am_redirected_to_the_index_page(provider)
+      then_i_am_redirected_back
     end
   end
 
@@ -115,13 +115,8 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     end
   end
 
-  def then_i_am_redirected_to_the_index_page(organisation)
-    case organisation
-    when School
-      expect(page).to have_current_path placements_school_users_path(organisation), ignore_query: true
-    when Provider
-      expect(page).to have_current_path placements_provider_users_path(organisation), ignore_query: true
-    end
+  def then_i_am_redirected_back
+    expect(page).to have_current_path placements_root_path, ignore_query: true
 
     expect(page).to have_content "You cannot perform this action"
   end

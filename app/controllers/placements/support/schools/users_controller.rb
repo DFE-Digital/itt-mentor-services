@@ -1,4 +1,4 @@
-class Placements::Support::Schools::UsersController < Placements::Support::Organisations::UsersController
+class Placements::Support::Schools::UsersController < Placements::Organisations::UsersController
   private
 
   def set_organisation
