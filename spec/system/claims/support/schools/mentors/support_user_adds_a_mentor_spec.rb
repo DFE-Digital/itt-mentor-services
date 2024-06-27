@@ -34,13 +34,22 @@ RSpec.describe "Claims support user adds mentors to schools", type: :system, ser
     then_i_see_errors(["Enter a 7 digit teacher reference number (TRN)"])
   end
 
-  scenario "I enter a trn of mentor who already exists for this school" do
-    given_a_another_claims_mentor_exists(school, another_claims_mentor)
-    given_i_navigate_to_schools_mentors_list(school)
-    and_i_click_on("Add mentor")
-    when_i_enter_trn(another_claims_mentor.trn)
-    and_i_click_on("Continue")
-    then_i_see_errors(["The mentor has already been added"])
+  describe "Use trn of an existing claim mentor within a school" do
+    before do
+      allow(TeachingRecord::GetTeacher).to receive(:call)
+        .with(trn: another_claims_mentor.trn, date_of_birth: "1986-11-12")
+        .and_return teaching_record_valid_response(another_claims_mentor, "1986-11-12")
+    end
+
+    scenario "I enter a trn of mentor who already exists for this school" do
+      given_a_another_claims_mentor_exists(school, another_claims_mentor)
+      given_i_navigate_to_schools_mentors_list(school)
+      and_i_click_on("Add mentor")
+      when_i_enter_trn(another_claims_mentor.trn)
+      when_i_enter_date_of_birth(12, 11, 1986)
+      and_i_click_on("Continue")
+      then_i_see_errors(["The mentor has already been added"])
+    end
   end
 
   describe "Use trn of an existing claim mentor" do

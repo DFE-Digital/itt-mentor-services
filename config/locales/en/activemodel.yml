@@ -55,6 +55,7 @@ en:
               taken: The mentor has already been added
             date_of_birth:
               blank: Enter a date of birth
+              less_than: Date of birth must be in the past
         user_invite_form:
           attributes:
             email:
