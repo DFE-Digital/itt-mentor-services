@@ -102,6 +102,31 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
         then_i_see_user_details_for_colin
       end
     end
+
+    context "when I use a deep link without being logged in" do
+      context "when I am a support user" do
+        scenario "when I sign in as Colin I am redirected to my requested page" do
+          given_there_is_an_existing_support_user_for("Colin", with_dfe_sign_id: false)
+          when_i_visit_the_support_users_path
+          then_i_am_redirected_to_the_sign_in_page
+          when_i_click_sign_in
+          then_i_am_redirected_to_the_support_users_page
+        end
+      end
+
+      context "when I am not a support user" do
+        let!(:organisation) { create(:school, :placements, name: "Deep Link Placement School") }
+
+        scenario "when I sign in as Anne I am redirected to my requested page" do
+          given_there_is_an_existing_user_for("Anne", with_dfe_sign_id: false)
+          and_anne_is_part_of_an_organisation(organisation)
+          when_i_visit_the_school_users_path(organisation)
+          then_i_am_redirected_to_the_sign_in_page
+          when_i_click_sign_in
+          then_i_am_redirected_to_the_school_users_page(organisation)
+        end
+      end
+    end
   end
 
   private
@@ -197,5 +222,29 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
 
   def then_i_am_redirect_to_internal_server_error
     expect(page).to have_content("Sorry, there’s a problem with the service")
+  end
+
+  def when_i_visit_the_support_users_path
+    visit placements_support_support_users_path
+  end
+
+  def then_i_am_redirected_to_the_sign_in_page
+    expect(page).to have_current_path(sign_in_path)
+  end
+
+  def then_i_am_redirected_to_the_support_users_page
+    expect(page).to have_current_path(placements_support_support_users_path)
+  end
+
+  def and_anne_is_part_of_an_organisation(organisation)
+    organisation.users << User.find_by(email: "anne_wilson@example.org")
+  end
+
+  def when_i_visit_the_school_users_path(organisation)
+    visit placements_school_users_path(organisation)
+  end
+
+  def then_i_am_redirected_to_the_school_users_page(organisation)
+    expect(page).to have_current_path(placements_school_users_path(organisation))
   end
 end
