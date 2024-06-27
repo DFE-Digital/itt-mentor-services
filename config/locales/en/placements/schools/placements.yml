@@ -80,67 +80,6 @@ en:
             not_yet_known: Not yet known
           update:
             success: Placement published
-        build:
-          add_phase:
-            title: Phase - Add placement
-            title_with_error: "Error: Phase - Add placement"
-            add_placement: Add placement
-            phase: Phase
-            primary: Primary
-            secondary: Secondary
-            continue: Continue
-            cancel: Cancel
-          add_year_group:
-            title: Year group - Add placement
-            title_with_error: "Error: Year group - Add placement"
-            add_placement: Add placement
-            year_group: Year group
-            primary: Primary
-            continue: Continue
-            cancel: Cancel
-          add_subject:
-            title: Subject - Add placement
-            title_with_error: "Error: Subject - Add placement"
-            add_placement: Add placement
-            subject: Subject
-            continue: Continue
-            cancel: Cancel
-          add_additional_subjects:
-            title: Additional subject - Add placement
-            title_with_error: "Error: Additional subject - Add placement"
-            add_placement: Add placement
-            continue: Continue
-            cancel: Cancel
-          add_mentors:
-            title: Mentor - Add placement
-            title_with_error: "Error: Mentor - Add placement"
-            add_placement: Add placement
-            mentor: Mentor
-            continue: Continue
-            cancel: Cancel
-            mentors: Mentors
-            not_known: Not yet known
-            mentor_not_listed: My mentor is not listed
-            you_need_to_add_a_mentor: "You will need to %{link} first."
-            add_a_mentor: add a mentor
-          check_your_answers:
-            page_title: Check your answers - Add placement
-            title: Check your answers
-            add_placement: Add placement
-            phase: Phase
-            subject: Subject
-            additional_subjects: Additional subjects
-            mentor: Mentor
-            year_group: Year group
-            change: Change
-            info_text: |
-              When a placement is published, it will be visible to teacher training providers. 
-              You can edit your placement after it is published.
-            publish_placement: Publish placement
-            cancel: Cancel
-            not_yet_known: Not yet known
-          update:
-            success: Placement published
         edit_provider:
           title_with_error: "Error: Provider - Manage a placement"
           title: Provider - Manage a placement

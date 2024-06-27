@@ -113,19 +113,6 @@ scope module: :placements,
           get "new/:step", to: "placements/add_placement#edit", as: :add_placement
           put "new/:step", to: "placements/add_placement#update"
         end
-
-        scope module: :placements do
-          resources :build do
-            collection do
-              get :add_phase
-              get :add_year_group
-              get :add_subject
-              get :add_additional_subjects
-              get :add_mentors
-              get :check_your_answers
-            end
-          end
-        end
       end
 
       resources :school_contacts, except: %i[show index destroy] do
