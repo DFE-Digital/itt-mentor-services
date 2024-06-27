@@ -47,7 +47,7 @@ RSpec.describe "Claims school user adds mentors to schools", type: :system, serv
         .with(trn: another_claims_mentor.trn, date_of_birth: "1986-11-12")
         .and_return teaching_record_valid_response(another_claims_mentor, "1986-11-12")
     end
-    
+
     scenario "I enter a trn of mentor who already exists for this school" do
       given_a_another_claims_mentor_exists(school, another_claims_mentor)
       given_i_navigate_to_schools_mentors_list
