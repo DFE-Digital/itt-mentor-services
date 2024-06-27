@@ -28,11 +28,19 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path
-    if current_user.support_user?
+    if requested_path.present?
+      requested_path
+    elsif current_user.support_user?
       support_root_path
     else
       organisations_path
     end
+  end
+
+  def requested_path
+    return if [sign_in_path, sign_out_path, nil].include?(session["requested_path"])
+
+    session[:requested_path]
   end
 
   def after_sign_out_path
