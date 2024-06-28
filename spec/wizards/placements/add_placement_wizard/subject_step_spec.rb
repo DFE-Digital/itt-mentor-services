@@ -1,72 +1,76 @@
 require "rails_helper"
 
 RSpec.describe Placements::AddPlacementWizard::SubjectStep, type: :model do
+  subject(:step) { described_class.new(wizard: mock_wizard, attributes:) }
+
+  let(:mock_wizard) do
+    instance_double(Placements::AddPlacementWizard).tap do |mock_wizard|
+      allow(mock_wizard).to receive(:placement_phase).and_return(phase)
+    end
+  end
+
+  let(:phase) { "Primary" }
+
+  let(:attributes) { nil }
+
+  let(:primary_subjects) { create_list(:subject, 5, :primary) }
+  let(:secondary_subjects) { create_list(:subject, 5, :secondary) }
+
+  let(:primary_subject_ids) { primary_subjects.map(&:id) }
+  let(:secondary_subject_ids) { secondary_subjects.map(&:id) }
+
   describe "attributes" do
-    it { is_expected.to have_attributes(phase: nil, subject_id: nil) }
+    it { is_expected.to have_attributes(subject_id: nil) }
   end
 
   describe "validations" do
-    it { is_expected.to validate_presence_of(:phase) }
+    it { is_expected.to validate_presence_of(:subject_id) }
 
-    describe "subject_id" do
-      it "is not required if phase is not present" do
-        step = described_class.new(phase: nil)
+    context "when the phase is Primary" do
+      let(:phase) { "Primary" }
 
-        expect(step).not_to validate_presence_of(:subject_id)
-      end
+      it { is_expected.to validate_inclusion_of(:subject_id).in_array(primary_subject_ids) }
+    end
 
-      it "is required if phase is present" do
-        step = described_class.new(phase: "Primary")
+    context "when the phase is Secondary" do
+      let(:phase) { "Secondary" }
 
-        expect(step).to validate_presence_of(:subject_id)
-      end
-
-      it "is invalid if the subject is not in the selection" do
-        step = described_class.new(phase: "Primary", subject_id: 1)
-
-        expect(step).not_to be_valid
-        expect(step.errors[:subject_id]).to include "is not included in the list"
-      end
+      it { is_expected.to validate_inclusion_of(:subject_id).in_array(secondary_subject_ids) }
     end
   end
 
   describe "#subjects_for_selection" do
-    it "returns primary subjects when phase is Primary" do
-      subject = create(:subject, :primary)
-      step = described_class.new(phase: "Primary")
+    subject { step.subjects_for_selection }
 
-      expect(step.subjects_for_selection).to eq([subject])
+    context "when the phase is Primary" do
+      let(:phase) { "Primary" }
+
+      it { is_expected.to match_array(primary_subjects) }
     end
 
-    it "returns secondary subjects when phase is Secondary" do
-      subject = create(:subject, :secondary)
-      step = described_class.new(phase: "Secondary")
+    context "when the phase is Secondary" do
+      let(:phase) { "Secondary" }
 
-      expect(step.subjects_for_selection).to eq([subject])
-    end
-  end
-
-  describe "#wizard_attributes" do
-    it "returns the subject_id" do
-      step = described_class.new(subject_id: 1)
-
-      expect(step.wizard_attributes).to eq({ subject_id: 1 })
+      it { is_expected.to match_array(secondary_subjects) }
     end
   end
 
-  describe "#subject_has_child_subjects?" do
-    it "returns true if the subject has child subjects" do
-      subject = create(:subject, :primary, child_subjects: [build(:subject, :primary)])
-      step = described_class.new(subject_id: subject.id)
+  describe "#subject" do
+    subject { step.subject }
 
-      expect(step.subject_has_child_subjects?).to be(true)
+    context "when subject_id is set" do
+      let(:attributes) { { subject_id: primary_subject_ids.first } }
+
+      it { is_expected.to eq(primary_subjects.first) }
     end
 
-    it "returns false if the subject does not have child subjects" do
-      subject = create(:subject, :primary)
-      step = described_class.new(subject_id: subject.id)
+    context "when subject_id is nil" do
+      let(:attributes) { { subject_id: nil } }
 
-      expect(step.subject_has_child_subjects?).to be(false)
+      it { is_expected.to be_nil }
     end
   end
+
+  it { is_expected.to delegate_method(:name).to(:subject).with_prefix }
+  it { is_expected.to delegate_method(:has_child_subjects?).to(:subject).with_prefix }
 end
