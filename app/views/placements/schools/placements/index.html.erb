@@ -5,7 +5,7 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l"><%= t(".placements") %></h1>
       <% if @school.school_contact.present? %>
-        <%= govuk_button_to(t(".add_placement"), new_placements_school_placement_build_path(@school, placement_id: "new_placement"), method: :get) %>
+        <%= govuk_button_link_to(t(".add_placement"), new_add_placement_placements_school_placements_path) %>
 
         <% if @placements.any? %>
           <%= render "placements/schools/placements/table", school: @school, placements: @placements %>

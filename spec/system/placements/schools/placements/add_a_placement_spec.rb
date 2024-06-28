@@ -344,10 +344,9 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
           then_i_see_the_add_a_placement_subject_page("Primary")
           when_i_choose_a_subject(subject_1.name)
           when_i_click_on("Continue")
-          # TODO: a bug fix is needed - we should ask for the year group here
-          # then_i_see_the_add_year_group_page("Year 1")
-          # when_i_choose_a_year_group("Year 1")
-          # and_i_click_on("Continue")
+          then_i_see_the_add_year_group_page("Year 1")
+          when_i_choose_a_year_group("Year 1")
+          and_i_click_on("Continue")
           then_i_see_the_add_a_placement_mentor_page
           and_i_click_on("Continue")
           then_i_see_the_check_your_answers_page("Primary", mentor_1)
