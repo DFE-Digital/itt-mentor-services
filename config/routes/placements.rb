@@ -108,6 +108,12 @@ scope module: :placements,
         get :edit_mentors, on: :member
         get :edit_year_group, on: :member
 
+        collection do
+          get "new", to: "placements/add_placement#new", as: :new_add_placement
+          get "new/:step", to: "placements/add_placement#edit", as: :add_placement
+          put "new/:step", to: "placements/add_placement#update"
+        end
+
         scope module: :placements do
           resources :build do
             collection do
