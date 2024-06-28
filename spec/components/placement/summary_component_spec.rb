@@ -23,12 +23,12 @@ RSpec.describe Placement::SummaryComponent, type: :component do
       longitude: -0.570409,
     )
   end
-  let(:placement_1) { create(:placement, school:, subject:, mentors:) }
+  let(:placement_1) { create(:placement, school:, subject: placement_subject, mentors:) }
   let(:placement_2) { create(:placement, school:, subject: subject_2, mentors:) }
   let(:provider) { create(:provider) }
 
   context "when given multiple placements" do
-    let(:subject) { subject_1 }
+    let(:placement_subject) { subject_1 }
     let(:mentors) { [] }
     let(:placements) { [placement_1, placement_2] }
     let(:location_coordinates) { nil }
@@ -53,7 +53,7 @@ RSpec.describe Placement::SummaryComponent, type: :component do
   end
 
   context "when given a single placement" do
-    let(:subject) { subject_1 }
+    let(:placement_subject) { subject_1 }
     let(:placements) { [placement_1] }
 
     context "when the placement has subject with no child subjects" do
@@ -71,7 +71,7 @@ RSpec.describe Placement::SummaryComponent, type: :component do
     context "when the placement has subject with child subjects" do
       let(:mentors) { [] }
       let(:location_coordinates) { nil }
-      let(:subject) { subject_1 }
+      let(:placement_subject) { subject_1 }
       let(:subject_1) { create(:subject, name: "Modern Foreign Languages") }
       let(:additional_subject_1) { create(:subject, name: "French", parent_subject: subject_1) }
       let(:additional_subject_2) { create(:subject, name: "German", parent_subject: subject_1) }
@@ -86,7 +86,7 @@ RSpec.describe Placement::SummaryComponent, type: :component do
       end
 
       context "with 2 additional subject do" do
-        let(:subject) { subject_1 }
+        let(:placement_subject) { subject_1 }
         let(:placement_1) { create(:placement, school:, subject: subject_1, additional_subjects: [additional_subject_1, additional_subject_2]) }
 
         it "renders the placement's subjects as a sentence" do
@@ -111,7 +111,7 @@ RSpec.describe Placement::SummaryComponent, type: :component do
 
   context "when giving location coordinates to the component" do
     let(:location_coordinates) { [51.5072178, -0.1275862] }
-    let(:subject) { subject_1 }
+    let(:placement_subject) { subject_1 }
     let(:mentors) { [] }
     let(:placements) { [placement_1] }
 
