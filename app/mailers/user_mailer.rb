@@ -1,28 +1,10 @@
 class UserMailer < ApplicationMailer
   def user_membership_created_notification(user, organisation)
-    notify_email to: user.email,
-                 subject: t(".subject", service_name:),
-                 body: t(
-                   ".body",
-                   user_name: user.first_name,
-                   organisation_name: organisation.name,
-                   service_name:,
-                   heading: t(".#{service}.heading"),
-                   support_email:,
-                   sign_in_url:,
-                 )
+    user_membership_notification(user, organisation, t(".#{service}.heading"), sign_in_url)
   end
 
   def user_membership_destroyed_notification(user, organisation)
-    notify_email to: user.email,
-                 subject: t(".subject", service_name:),
-                 body: t(
-                   ".body",
-                   user_name: user.first_name,
-                   organisation_name: organisation.name,
-                   service_name:,
-                   support_email:,
-                 )
+    user_membership_notification(user, organisation)
   end
 
   def claim_submitted_notification(user, claim)
@@ -42,6 +24,20 @@ class UserMailer < ApplicationMailer
   end
 
   private
+
+  def user_membership_notification(user, organisation, heading = nil, sign_in_url = nil)
+    notify_email to: user.email,
+                 subject: t(".subject", service_name:),
+                 body: t(
+                   ".body",
+                   user_name: user.first_name,
+                   organisation_name: organisation.name,
+                   service_name:,
+                   heading:,
+                   support_email:,
+                   sign_in_url:,
+                 )
+  end
 
   def partnership_notification(user, source_organisation, partner_organisation)
     if partner_organisation.is_a?(Provider)
