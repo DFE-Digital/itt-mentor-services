@@ -3,8 +3,8 @@ class AddProviderAttributes < ActiveRecord::Migration[7.1]
     create_enum :provider_type, %w[scitt lead_school university]
 
     change_table :providers, bulk: true do |t|
-      t.enum :provider_type, enum_type: "provider_type", null: false
-      t.string :name, null: false
+      t.enum :provider_type, enum_type: "provider_type", null: false, default: "scitt"
+      t.string :name, null: false, default: ""
       t.string :ukprn
       t.string :urn
       t.string :email
