@@ -16,7 +16,7 @@ describe Claims::Claim::CreateDraft do
       create(:claims_user, email: "babagoli@gmail.com", user_memberships: [create(:user_membership, organisation: school)])
       create(:claims_user, email: "email@gmail.com", user_memberships: [create(:user_membership, organisation: school)])
 
-      mailer_stub = class_double(mailer)
+      mailer_stub = class_double("mailer")
       expect(UserMailer).to receive(:with).with(any_args).twice.and_return(mailer_stub)
       expect(mailer_stub).to receive(:claim_created_support_notification).twice.and_return(mailer_stub)
       expect(mailer_stub).to receive(:deliver_later).twice

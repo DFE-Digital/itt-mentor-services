@@ -178,24 +178,24 @@ RSpec.describe "Placements / Placements / Searching for a placements list",
   # Stub requests
 
   def stub_london_geocoder_search
-    geocoder_results = instance_double(geocoder_results)
-    geocoder_result = instance_double(geocoder_result)
+    geocoder_results = instance_double("geocoder_results")
+    geocoder_result = instance_double("geocoder_result")
     allow(geocoder_results).to receive(:first).and_return(geocoder_result)
     allow(geocoder_result).to receive(:coordinates).and_return([51.5072178, -0.1275862])
     allow(Geocoder).to receive(:search).and_return(geocoder_results)
   end
 
   def stub_guildford_geocoder_search
-    geocoder_results = instance_double(geocoder_results)
-    geocoder_result = instance_double(geocoder_result)
+    geocoder_results = instance_double("geocoder_results")
+    geocoder_result = instance_double("geocoder_result")
     allow(geocoder_results).to receive(:first).and_return(geocoder_result)
     allow(geocoder_result).to receive(:coordinates).and_return([51.23622, -0.570409])
     allow(Geocoder).to receive(:search).and_return(geocoder_results)
   end
 
   def stub_unknown_geocoder_search
-    geocoder_results = instance_double(geocoder_results)
-    geocoder_result = instance_double(geocoder_result)
+    geocoder_results = instance_double("geocoder_results")
+    geocoder_result = instance_double("geocoder_result")
     allow(geocoder_results).to receive(:first).and_return(geocoder_result)
     allow(geocoder_result).to receive(:coordinates).and_return([55.378051, -3.435973])
     allow(Geocoder).to receive(:search).and_return(geocoder_results)
