@@ -87,6 +87,10 @@ FactoryBot.define do
       phase { "Primary" }
     end
 
+    trait :secondary do
+      phase { "Secondary" }
+    end
+
     factory :claims_school,
             class: "Claims::School",
             parent: :school, traits: %i[claims]

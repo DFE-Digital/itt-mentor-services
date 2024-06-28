@@ -1,6 +1,11 @@
 require "rails_helper"
 
 RSpec.describe Placements::AddPlacementWizard::PhaseStep, type: :model do
+  subject(:step) { described_class.new(wizard: mock_wizard, attributes:) }
+
+  let(:mock_wizard) { instance_double(Placements::AddPlacementWizard) }
+  let(:attributes) { nil }
+
   describe "attributes" do
     it { is_expected.to have_attributes(phase: nil) }
   end
@@ -9,7 +14,7 @@ RSpec.describe Placements::AddPlacementWizard::PhaseStep, type: :model do
     it { is_expected.to validate_presence_of(:phase) }
 
     describe "phase" do
-      subject { described_class.new(school: build(:placements_school), phase:) }
+      let(:attributes) { { phase: } }
 
       context "when the phase is primary" do
         let(:phase) { "Primary" }
@@ -33,17 +38,7 @@ RSpec.describe Placements::AddPlacementWizard::PhaseStep, type: :model do
 
   describe "#phases_for_selection" do
     it "returns primary and secondary phases" do
-      step = described_class.new(school: build(:placements_school))
-
-      expect(step.phases_for_selection).to eq({ primary: "Primary", secondary: "Secondary" })
-    end
-  end
-
-  describe "#wizard_attributes" do
-    it "returns the phase" do
-      step = described_class.new(school: build(:placements_school), phase: "Primary")
-
-      expect(step.wizard_attributes).to eq({ phase: "Primary" })
+      expect(step.phases_for_selection.map(&:name)).to eq(%w[Primary Secondary])
     end
   end
 end
