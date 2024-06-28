@@ -118,7 +118,6 @@ RSpec.describe "Sign In as a Placements User", type: :system, service: :placemen
         let!(:organisation) { create(:school, :placements, name: "Deep Link Placement School") }
         let(:provider_organisation) { create(:provider, :placements, name: "Provider") }
 
-
         scenario "when I sign in as Anne I am redirected to my requested page" do
           given_there_is_an_existing_user_for("Anne", with_dfe_sign_id: false)
           and_anne_is_part_of_an_organisation(organisation)
