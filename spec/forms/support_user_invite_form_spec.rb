@@ -114,7 +114,7 @@ describe SupportUserInviteForm, type: :model do
         it "does not create a new user" do
           expect {
             support_user_invite_form.save!
-          }.to change(Placements::SupportUser.with_discarded, :count).by(0)
+          }.to not_change(Placements::SupportUser.with_discarded, :count)
             .and change(Placements::SupportUser, :count).by(1)
         end
 
@@ -139,7 +139,7 @@ describe SupportUserInviteForm, type: :model do
         it "does not create a new user" do
           expect {
             support_user_invite_form.save!
-          }.to change(Placements::SupportUser.with_discarded, :count).by(0)
+          }.to not_change(Placements::SupportUser.with_discarded, :count)
             .and change(Placements::SupportUser, :count).by(1)
         end
 
