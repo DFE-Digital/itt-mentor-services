@@ -22,12 +22,19 @@ Style/FrozenStringLiteralComment:
 Layout/AccessModifierIndentation:
   EnforcedStyle: indent
 
-RSpec/Capybara/FeatureMethods:
-  EnabledMethods:
-    - scenario
+RSpec/Dialect:
+   Enabled: true
+   PreferredMethods:
+     background: :before
+     given: :let
+     given!: :let!
+     feature: :describe
+
+RSpec/IndexedLet:
+  Enabled: false
 
 # Switch off deprecated cop
-RSpec/FilePath:
+Rails/FilePath:
   Enabled: false
 
 # And replace with the preferred cops
