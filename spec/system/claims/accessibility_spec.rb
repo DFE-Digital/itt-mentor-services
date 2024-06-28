@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Accessibility Page", type: :system, service: :claims do
+RSpec.describe "Accessibility Page", service: :claims, type: :system do
   scenario "User visits the accessibility page" do
     given_i_am_on_the_accessibility_page
     then_i_can_see_the_accessibility_page

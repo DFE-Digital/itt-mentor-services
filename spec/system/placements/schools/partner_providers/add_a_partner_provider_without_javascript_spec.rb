@@ -1,8 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Schools / Partner providers / Add a partner provider without JavaScript",
-               type: :system,
-               service: :placements do
+               service: :placements, type: :system do
   include ActiveJob::TestHelper
 
   around do |example|

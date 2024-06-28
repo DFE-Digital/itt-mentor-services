@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support users", type: :request, service: :placements do
+RSpec.describe "Support users", service: :placements, type: :request do
   let(:current_user) { create(:placements_support_user) }
   let(:support_users) { Placements::SupportUser.all }
 

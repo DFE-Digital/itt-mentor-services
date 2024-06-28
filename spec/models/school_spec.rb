@@ -134,19 +134,19 @@ RSpec.describe School, type: :model do
     context "when given a school with phase Primary" do
       let(:school) { create(:school, phase: "Primary") }
 
-      it { is_expected.to eq(true) }
+      it { is_expected.to be(true) }
     end
 
     context "when given a school with phase Secondary" do
       let(:school) { create(:school, phase: "Secondary") }
 
-      it { is_expected.to eq(true) }
+      it { is_expected.to be(true) }
     end
 
     context "when given a school with phase not Primary or Secondary" do
       let(:school) { create(:school, phase: "All-through") }
 
-      it { is_expected.to eq(false) }
+      it { is_expected.to be(false) }
     end
   end
 
@@ -170,7 +170,7 @@ RSpec.describe School, type: :model do
       it "returns the schools near the search for area" do
         expect(
           described_class.near(london_coordinates, 20),
-        ).to match_array([uxbridge_school, brixton_school])
+        ).to contain_exactly(uxbridge_school, brixton_school)
       end
     end
   end

@@ -36,19 +36,19 @@ RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model d
     it "returns false if phase is blank" do
       placement = described_class.new(phase: nil)
 
-      expect(placement.valid_phase?).to eq(false)
+      expect(placement.valid_phase?).to be(false)
     end
 
     it "returns false if phase is not valid" do
       placement = described_class.new(phase: "invalid")
 
-      expect(placement.valid_phase?).to eq(false)
+      expect(placement.valid_phase?).to be(false)
     end
 
     it "returns true if phase is valid" do
       placement = described_class.new(phase: School::PRIMARY_PHASE)
 
-      expect(placement.valid_phase?).to eq(true)
+      expect(placement.valid_phase?).to be(true)
     end
   end
 
@@ -56,13 +56,13 @@ RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model d
     it "returns false if phase is not valid" do
       placement = described_class.new(phase: "invalid", school:)
 
-      expect(placement.all_valid?).to eq(false)
+      expect(placement.all_valid?).to be(false)
     end
 
     it "returns false if mentor_ids is not valid" do
       placement = described_class.new(mentor_ids: [], school:)
 
-      expect(placement.all_valid?).to eq(false)
+      expect(placement.all_valid?).to be(false)
     end
 
     it "returns true if all are valid" do
@@ -70,7 +70,7 @@ RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model d
       placement = described_class.new(phase: School::PRIMARY_PHASE, subject:,
                                       school:)
 
-      expect(placement.all_valid?).to eq(true)
+      expect(placement.all_valid?).to be(true)
     end
   end
 
@@ -83,10 +83,7 @@ RSpec.describe Placements::Schools::Placements::Build::Placement, type: :model d
 
         placement.build_mentors([mentor_1.id, mentor_2.id])
 
-        expect(placement.mentors).to match_array([
-          have_attributes(mentor_1.attributes),
-          have_attributes(mentor_2.attributes),
-        ])
+        expect(placement.mentors).to contain_exactly(have_attributes(mentor_1.attributes), have_attributes(mentor_2.attributes))
       end
     end
   end

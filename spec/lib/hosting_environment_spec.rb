@@ -90,12 +90,12 @@ RSpec.describe HostingEnvironment do
 
   describe ".current_service" do
     it "returns the current service for claims" do
-      request = instance_double("Rack::Request", host: ENV["CLAIMS_HOST"])
+      request = instance_double(Rack::Request, host: ENV["CLAIMS_HOST"])
       expect(described_class.current_service(request)).to eq(:claims)
     end
 
     it "returns the current service for placements" do
-      request = instance_double("Rack::Request", host: ENV["PLACEMENTS_HOST"])
+      request = instance_double(Rack::Request, host: ENV["PLACEMENTS_HOST"])
       expect(described_class.current_service(request)).to eq(:placements)
     end
   end

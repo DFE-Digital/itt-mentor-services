@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Authentication", type: :system, service: :placements do
+RSpec.describe "Authentication", service: :placements, type: :system do
   let(:school) { create(:placements_school, name: "School") }
   let(:anne) { create(:placements_user, :anne) }
 

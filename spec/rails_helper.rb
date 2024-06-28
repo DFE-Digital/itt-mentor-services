@@ -97,7 +97,7 @@ RSpec.configure do |config|
     Capybara.app_host = nil
   end
 
-  config.around(:each, type: :system, smoke_test: true) do |example|
+  config.around(:each, :smoke_test, type: :system) do |example|
     service = self.class.metadata[:service] || :claims
 
     Capybara.app_host = "http://#{service_external_host(service)}"
@@ -105,7 +105,7 @@ RSpec.configure do |config|
     Capybara.app_host = nil
   end
 
-  config.around(:each, type: :system, persona_sign_in: true) do |example|
+  config.around(:each, :persona_sign_in, type: :system) do |example|
     ClimateControl.modify SIGN_IN_METHOD: "persona" do
       Rails.application.reload_routes!
       example.run

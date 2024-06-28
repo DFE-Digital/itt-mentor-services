@@ -10,7 +10,7 @@ RSpec.describe Claims::SchoolPolicy::Scope do
     let(:user) { create(:claims_support_user) }
 
     it "returns all schools" do
-      expect(school_policy).to match_array([non_associated_school, associated_school])
+      expect(school_policy).to contain_exactly(non_associated_school, associated_school)
     end
   end
 
@@ -22,7 +22,7 @@ RSpec.describe Claims::SchoolPolicy::Scope do
     end
 
     it "returns schools that the user is associated with" do
-      expect(school_policy).to match_array([associated_school])
+      expect(school_policy).to contain_exactly(associated_school)
     end
   end
 end

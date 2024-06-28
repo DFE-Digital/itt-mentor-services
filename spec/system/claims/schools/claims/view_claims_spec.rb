@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "View claims", type: :system, service: :claims do
+RSpec.describe "View claims", service: :claims, type: :system do
   let(:school) { create(:claims_school) }
   let(:anne) do
     create(

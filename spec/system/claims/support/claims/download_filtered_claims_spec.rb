@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Download filtered claims", type: :system, service: :claims do
+RSpec.describe "Download filtered claims", service: :claims, type: :system do
   let(:support_user) { create(:claims_support_user) }
   let(:school) { create(:claims_school, :claims, name: "School name 1", urn: "1234") }
   let(:another_school) { create(:claims_school, :claims, name: "School name 1", urn: "1235") }

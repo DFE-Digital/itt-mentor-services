@@ -30,15 +30,15 @@ RSpec.describe SupportUser::Remove do
       let(:support_user) { build(:claims_support_user, :discarded) }
 
       it "returns true" do
-        expect(remove_support_user).to be(nil)
+        expect(remove_support_user).to be_nil
       end
 
       it "removes a user" do
-        expect { remove_support_user }.to change { User.with_discarded.discarded.count }.by(0)
+        expect { remove_support_user }.not_to(change { User.with_discarded.discarded.count })
       end
 
       it "enqueues an invitation email" do
-        expect { remove_support_user }.to change(enqueued_jobs, :size).by(0)
+        expect { remove_support_user }.not_to change(enqueued_jobs, :size)
       end
     end
   end

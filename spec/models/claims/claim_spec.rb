@@ -57,7 +57,7 @@ RSpec.describe Claims::Claim, type: :model do
       create(:mentor_training, claim:, hours_completed: 20)
       create(:mentor_training, claim:, hours_completed: 20)
 
-      expect(claim.valid_mentor_training_hours?).to eq(true)
+      expect(claim.valid_mentor_training_hours?).to be(true)
     end
 
     it "returns false when a mentor has more hours than maximum allocated per provider" do
@@ -67,7 +67,7 @@ RSpec.describe Claims::Claim, type: :model do
       create(:mentor_training, claim:, hours_completed: 20, mentor:, provider:)
       create(:mentor_training, claim:, hours_completed: 20, mentor:, provider:)
 
-      expect(claim.valid_mentor_training_hours?).to eq(false)
+      expect(claim.valid_mentor_training_hours?).to be(false)
     end
   end
 
@@ -130,7 +130,7 @@ RSpec.describe Claims::Claim, type: :model do
       it "returns nil" do
         claim = build(:claim)
 
-        expect(claim.submitted_on).to eq(nil)
+        expect(claim.submitted_on).to be_nil
       end
     end
   end
@@ -140,20 +140,20 @@ RSpec.describe Claims::Claim, type: :model do
       claim = create(:claim)
       create(:mentor_training, hours_completed: 20, claim:)
 
-      expect(claim.ready_to_be_checked?).to eq(true)
+      expect(claim.ready_to_be_checked?).to be(true)
     end
 
     it "returns false if the claim does have mentors" do
       claim = build(:claim)
 
-      expect(claim.ready_to_be_checked?).to eq(false)
+      expect(claim.ready_to_be_checked?).to be(false)
     end
 
     it "returns false if the claim does have mentor training hours" do
       claim = create(:claim)
       create(:mentor_training, hours_completed: nil, claim:)
 
-      expect(claim.ready_to_be_checked?).to eq(false)
+      expect(claim.ready_to_be_checked?).to be(false)
     end
   end
 
@@ -183,7 +183,7 @@ RSpec.describe Claims::Claim, type: :model do
       )
       claim = create(:claim, :submitted, previous_revision: revision)
 
-      expect(claim.was_draft?).to eq(true)
+      expect(claim.was_draft?).to be(true)
     end
 
     it "returns false if no previous revision was draft" do
@@ -195,7 +195,7 @@ RSpec.describe Claims::Claim, type: :model do
       )
       claim = create(:claim, :submitted, previous_revision: revision)
 
-      expect(claim.was_draft?).to eq(false)
+      expect(claim.was_draft?).to be(false)
     end
   end
 end

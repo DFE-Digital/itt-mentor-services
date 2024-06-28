@@ -5,7 +5,7 @@ RSpec.describe ApplicationHelper do
     context "when value is blank" do
       it "returns nil" do
         value = ""
-        expect(external_link(value)).to eq(nil)
+        expect(external_link(value)).to be_nil
       end
     end
 

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Submit a draft claim", type: :system, service: :claims do
+RSpec.describe "Submit a draft claim", service: :claims, type: :system do
   let(:school) { create(:claims_school, name: "A School", region: regions(:inner_london)) }
 
   let(:anne) do

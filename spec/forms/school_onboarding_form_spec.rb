@@ -8,7 +8,7 @@ describe SchoolOnboardingForm, type: :model do
     context "when id is not present" do
       it "returns invalid" do
         form = described_class.new(id: nil, service: :placements)
-        expect(form.valid?).to eq(false)
+        expect(form.valid?).to be(false)
         expect(form.errors.messages[:id]).to include("Enter a school name, URN or postcode")
       end
     end
@@ -16,7 +16,7 @@ describe SchoolOnboardingForm, type: :model do
     context "when id is not present and javascript is disabled" do
       it "returns invalid" do
         form = described_class.new(id: nil, service: :placements, javascript_disabled: true)
-        expect(form.valid?).to eq(false)
+        expect(form.valid?).to be(false)
         expect(form.errors.messages[:id]).to include("Select a school")
       end
     end
@@ -24,7 +24,7 @@ describe SchoolOnboardingForm, type: :model do
     context "when given an id not associated with a school" do
       it "returns invalid" do
         form = described_class.new(id: "random", service: :placements)
-        expect(form.valid?).to eq(false)
+        expect(form.valid?).to be(false)
         expect(form.errors.messages[:id]).to include("Enter a school name, URN or postcode")
       end
     end
@@ -33,7 +33,7 @@ describe SchoolOnboardingForm, type: :model do
       it "returns invalid" do
         school = create(:school, :placements)
         form = described_class.new(id: school.id, service: :placements)
-        expect(form.valid?).to eq(false)
+        expect(form.valid?).to be(false)
         expect(form.errors.messages[:id]).to include("#{school.name} has already been added. Try another school")
       end
     end
@@ -42,7 +42,7 @@ describe SchoolOnboardingForm, type: :model do
       it "returns valid" do
         school = create(:school, :claims)
         form = described_class.new(id: school.id, service: :placements)
-        expect(form.valid?).to eq(true)
+        expect(form.valid?).to be(true)
       end
     end
   end
@@ -52,7 +52,7 @@ describe SchoolOnboardingForm, type: :model do
       context "when school is nil" do
         it "returns nil" do
           form = described_class.new
-          expect(form.name).to eq(nil)
+          expect(form.name).to be_nil
         end
       end
 
@@ -76,7 +76,7 @@ describe SchoolOnboardingForm, type: :model do
 
     context "when given an id not associated with a school" do
       it "returns nil" do
-        expect(described_class.new(id: "random").school).to eq(nil)
+        expect(described_class.new(id: "random").school).to be_nil
       end
     end
   end

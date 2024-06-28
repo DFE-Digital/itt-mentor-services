@@ -8,7 +8,7 @@ describe Claims::Support::Claim::ProviderForm, type: :model do
     context "when provider is not set" do
       it "returns invalid" do
         form = described_class.new(school:)
-        expect(form.valid?).to eq(false)
+        expect(form.valid?).to be(false)
         expect(form.errors.messages[:provider_id]).to include("Select a provider")
       end
     end

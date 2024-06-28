@@ -59,7 +59,7 @@ describe UserInviteForm, type: :model do
         let(:form_params) { { last_name: "Last Name", organisation:, service: :placements } }
 
         it "returns user errors on form and does not send invite" do
-          expect(user_invite_form.valid?).to eq false
+          expect(user_invite_form.valid?).to be false
 
           expect(user_invite_form.errors.messages).to match(
             first_name: ["Enter a first name"],
@@ -84,7 +84,7 @@ describe UserInviteForm, type: :model do
 
         it "returns membership error on the email attribute of the for and does not send invite" do
           create(:user_membership, user:, organisation:)
-          expect(user_invite_form.valid?).to eq false
+          expect(user_invite_form.valid?).to be false
 
           expect(user_invite_form.errors.messages)
             .to match(email: ["Email address already in use"])

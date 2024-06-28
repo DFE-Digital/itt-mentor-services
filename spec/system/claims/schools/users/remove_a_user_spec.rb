@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Remove a user", type: :system, service: :claims do
+RSpec.describe "Remove a user", service: :claims, type: :system do
   let!(:school) { create(:claims_school) }
   let!(:user) do
     create(:claims_user) { |user| school.users << user }

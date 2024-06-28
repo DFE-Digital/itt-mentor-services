@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Terms Page", type: :system, service: :claims do
+RSpec.describe "Terms Page", service: :claims, type: :system do
   scenario "User visits the terms page" do
     given_i_am_on_the_terms_page
     then_i_can_see_the_terms_page

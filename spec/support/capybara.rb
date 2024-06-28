@@ -28,7 +28,7 @@ Capybara.javascript_driver = :selenium_chrome_headless
 Capybara.automatic_label_click = true
 
 RSpec.configure do |config|
-  config.around(:each, type: :system, smoke_test: true) do |example|
+  config.around(:each, :smoke_test, type: :system) do |example|
     Capybara.current_driver = Capybara.javascript_driver
     Capybara.run_server = false
     example.run

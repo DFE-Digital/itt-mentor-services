@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements support user adds mentors to schools", type: :system, service: :placements do
+RSpec.describe "Placements support user adds mentors to schools", service: :placements, type: :system do
   let!(:school) { create(:placements_school, name: "School") }
   let(:another_school) { create(:placements_school, name: "Another School") }
   let(:claims_mentor) { create(:claims_mentor) }
@@ -26,7 +26,7 @@ RSpec.describe "Placements support user adds mentors to schools", type: :system,
     then_i_see_link_to_trn_guidance
   end
 
-  scenario "I do not enter anything", js: true do
+  scenario "I do not enter anything", :js do
     given_i_navigate_to_schools_mentors_list(school)
     and_i_click_on("Add mentor")
     when_i_click_on("Continue")

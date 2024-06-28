@@ -18,13 +18,9 @@ RSpec.describe PublishTeacherTraining::Subject::Import do
           Subject.secondary, :count
         ).by(4)
 
-        expect(Subject.primary.pluck(:name)).to match_array([
-          "Primary", "Primary with English"
-        ])
+        expect(Subject.primary.pluck(:name)).to contain_exactly("Primary", "Primary with English")
 
-        expect(Subject.secondary.pluck(:name)).to match_array([
-          "Art and design", "Science", "French", "Modern Languages"
-        ])
+        expect(Subject.secondary.pluck(:name)).to contain_exactly("Art and design", "Science", "French", "Modern Languages")
 
         modern_languages = Subject.find_by(name: "Modern Languages")
         expect(modern_languages.child_subjects.pluck(:name)).to match_array(

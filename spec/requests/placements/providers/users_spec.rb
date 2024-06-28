@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Provider users", type: :request, service: :placements do
+RSpec.describe "Provider users", service: :placements, type: :request do
   let(:provider) { build(:placements_provider) }
   let(:current_user) { create(:placements_user, providers: [provider]) }
 

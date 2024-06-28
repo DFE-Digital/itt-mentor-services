@@ -96,14 +96,14 @@ RSpec.describe Claims::School do
         claims_user = create(:claims_user)
         claims_school = create(:claims_school, claims_grant_conditions_accepted_at: Time.zone.now, claims_grant_conditions_accepted_by_id: claims_user.id)
 
-        expect(claims_school.grant_conditions_accepted?).to eq(true)
+        expect(claims_school.grant_conditions_accepted?).to be(true)
       end
 
       it "returns false if the grant conditions have NOT been accepted" do
         create(:claims_user)
         claims_school = create(:claims_school, claims_grant_conditions_accepted_at: nil, claims_grant_conditions_accepted_by_id: nil)
 
-        expect(claims_school.grant_conditions_accepted?).to eq(false)
+        expect(claims_school.grant_conditions_accepted?).to be(false)
       end
     end
   end

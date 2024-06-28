@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Remembering the current provider", type: :system, service: :placements do
+RSpec.describe "Remembering the current provider", service: :placements, type: :system do
   let(:provider_one) { build(:placements_provider, name: "The Chalkboard Champions") }
   let(:provider_two) { build(:placements_provider, name: "Ctrl + Alt + Teach") }
 

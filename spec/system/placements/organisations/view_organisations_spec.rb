@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "View organisations", type: :system, service: :placements do
+RSpec.describe "View organisations", service: :placements, type: :system do
   let(:one_school) { create(:placements_school, name: "One School") }
   let(:one_provider) { create(:placements_provider, name: "One Provider") }
   let(:multi_org_school) { create(:placements_school, name: "Placements School") }

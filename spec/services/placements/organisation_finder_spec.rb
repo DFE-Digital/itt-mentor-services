@@ -34,7 +34,7 @@ RSpec.describe Placements::OrganisationFinder do
       it "returns a provider and school matching the search term" do
         results = organisations_finder
         expect(results.pluck(:content))
-          .to match_array ["A School HA4 2FW", "University of Westminster HA4 9JZ"]
+          .to contain_exactly("A School HA4 2FW", "University of Westminster HA4 9JZ")
       end
     end
 
@@ -44,7 +44,7 @@ RSpec.describe Placements::OrganisationFinder do
       it "returns a provider and school with 'London' in the name" do
         results = organisations_finder
         expect(results.pluck(:content))
-          .to match_array ["School London EC12 5BN", "Provider London SE3 5SL"]
+          .to contain_exactly("School London EC12 5BN", "Provider London SE3 5SL")
       end
     end
 
@@ -54,7 +54,7 @@ RSpec.describe Placements::OrganisationFinder do
       it "returns a provider and school with 'London' in the name" do
         results = organisations_finder
         expect(results.pluck(:content))
-          .to match_array ["School London EC12 5BN", "Provider London SE3 5SL"]
+          .to contain_exactly("School London EC12 5BN", "Provider London SE3 5SL")
       end
     end
   end

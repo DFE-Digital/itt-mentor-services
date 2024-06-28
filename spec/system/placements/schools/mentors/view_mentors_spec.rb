@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Schools / Mentors / View mentors", type: :system, service: :placements do
+RSpec.describe "Placements / Schools / Mentors / View mentors", service: :placements, type: :system do
   let!(:mentor1) { create(:mentor, first_name: "Bilbo", last_name: "Baggins") }
   let!(:mentor2) { create(:mentor, first_name: "Bilbo", last_name: "Test") }
   let!(:mentor3) { create(:mentor, trn: "1231233") }

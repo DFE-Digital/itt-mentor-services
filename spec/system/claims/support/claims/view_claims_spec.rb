@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "View claims", type: :system, service: :claims, js: true do
+RSpec.describe "View claims", :js, service: :claims, type: :system do
   let!(:support_user) { create(:claims_support_user) }
   let!(:school_1) { create(:claims_school) }
   let!(:school_2) { create(:claims_school) }
@@ -140,9 +140,9 @@ RSpec.describe "View claims", type: :system, service: :claims, js: true do
 
   def then_i_see_only_my_filter_school_as_an_option
     my_selection = page.find("#claims-support-claims-filter-form-school-ids-#{school_2.id}-field", visible: :all)
-    expect(my_selection.present?).to eq(true)
+    expect(my_selection.present?).to be(true)
 
     other_school_option = page.find_all("#claims-support-claims-filter-form-school-ids-#{school_1.id}-field", wait: false)
-    expect(other_school_option.blank?).to eq(true)
+    expect(other_school_option.blank?).to be(true)
   end
 end

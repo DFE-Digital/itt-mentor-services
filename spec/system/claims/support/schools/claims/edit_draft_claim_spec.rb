@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Edit a draft claim", type: :system, service: :claims do
+RSpec.describe "Edit a draft claim", service: :claims, type: :system do
   let!(:claims_mentor) { create(:claims_mentor, first_name: "Barry", last_name: "Garlow") }
   let!(:another_claims_mentor) { create(:claims_mentor, first_name: "Laura", last_name: "Clark") }
 
@@ -157,7 +157,7 @@ RSpec.describe "Edit a draft claim", type: :system, service: :claims do
   def then_i_expect_the_current_draft_claims_to_not_have_my_changes
     mentor_names = Claims::Claim.active.flat_map(&:mentors).map(&:full_name)
 
-    expect(mentor_names.include?(another_claims_mentor.full_name)).to eq(false)
+    expect(mentor_names.include?(another_claims_mentor.full_name)).to be(false)
   end
 
   def when_i_go_back_to_the_check_page

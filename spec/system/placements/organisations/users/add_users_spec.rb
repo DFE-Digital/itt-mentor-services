@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements users invite other users to organisations", type: :system, service: :placements do
+RSpec.describe "Placements users invite other users to organisations", service: :placements, type: :system do
   include ActiveJob::TestHelper
 
   around do |example|

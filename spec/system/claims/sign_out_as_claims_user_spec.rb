@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Sign out as a Claims User", type: :system, service: :claims do
+RSpec.describe "Sign out as a Claims User", service: :claims, type: :system do
   let(:colin) { create(:claims_support_user, :colin) }
 
   before do

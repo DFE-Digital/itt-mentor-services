@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements", type: :request, service: :placements do
+RSpec.describe "Placements", service: :placements, type: :request do
   describe "PATCH /update" do
     let!(:school) { create(:placements_school, name: "School 1", phase: "Primary") }
 

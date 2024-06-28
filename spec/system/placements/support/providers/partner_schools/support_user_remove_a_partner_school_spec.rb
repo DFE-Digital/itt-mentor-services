@@ -1,8 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Support / Providers / Partner schools / Support user removes a partner school",
-               type: :system,
-               service: :placements do
+               service: :placements, type: :system do
   include ActiveJob::TestHelper
 
   let!(:provider) { create(:placements_provider) }
@@ -105,7 +104,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
   def then_the_partner_school_is_removed(school)
     partner_schools_is_selected_in_secondary_nav
 
-    expect(provider.partner_schools.find_by(id: school.id)).to eq nil
+    expect(provider.partner_schools.find_by(id: school.id)).to be_nil
     within(".govuk-notification-banner__content") do
       expect(page).to have_content "Partner school removed"
     end

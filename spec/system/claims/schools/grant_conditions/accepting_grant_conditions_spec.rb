@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Accepting grant conditions", type: :system, service: :claims do
+RSpec.describe "Accepting grant conditions", service: :claims, type: :system do
   let(:grant_conditons_accepted_school) { create(:claims_school, :claims, urn: "123456") }
   let(:grant_conditons_not_accepted_school) { create(:claims_school, :claims, urn: "123457", claims_grant_conditions_accepted_at: nil) }
 

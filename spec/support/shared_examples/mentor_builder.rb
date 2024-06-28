@@ -62,8 +62,8 @@ RSpec.shared_examples "a mentor builder" do
       expect(mentor.trn).to eq trn
       expect(mentor.first_name).to eq teacher_object["firstName"]
       expect(mentor.last_name).to eq teacher_object["lastName"]
-      expect(mentor.persisted?).to eq false
-      expect(mentor.errors.none?).to eq true
+      expect(mentor.persisted?).to be false
+      expect(mentor.errors.none?).to be true
     end
   end
 
@@ -83,8 +83,8 @@ RSpec.shared_examples "a mentor builder" do
       expect(mentor.trn).to eq trn
       expect(mentor.first_name).to eq first_name
       expect(mentor.last_name).to eq last_name
-      expect(mentor.persisted?).to eq false
-      expect(mentor.errors.none?).to eq true
+      expect(mentor.persisted?).to be false
+      expect(mentor.errors.none?).to be true
     end
   end
 

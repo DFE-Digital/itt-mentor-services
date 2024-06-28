@@ -59,14 +59,14 @@ RSpec.describe Placements::AddPlacementWizard::SubjectStep, type: :model do
       subject = create(:subject, :primary, child_subjects: [build(:subject, :primary)])
       step = described_class.new(subject_id: subject.id)
 
-      expect(step.subject_has_child_subjects?).to eq(true)
+      expect(step.subject_has_child_subjects?).to be(true)
     end
 
     it "returns false if the subject does not have child subjects" do
       subject = create(:subject, :primary)
       step = described_class.new(subject_id: subject.id)
 
-      expect(step.subject_has_child_subjects?).to eq(false)
+      expect(step.subject_has_child_subjects?).to be(false)
     end
   end
 end

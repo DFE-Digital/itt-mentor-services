@@ -58,12 +58,7 @@ RSpec.describe User, type: :model do
           kept_claims_support_user = create(:claims_support_user)
           kept_placements_support_user = create(:placements_support_user)
 
-          expect(described_class.all).to match_array([
-            kept_claims_user,
-            kept_placements_user,
-            kept_claims_support_user,
-            kept_placements_support_user,
-          ])
+          expect(described_class.all).to contain_exactly(kept_claims_user, kept_placements_user, kept_claims_support_user, kept_placements_support_user)
         end
       end
     end
@@ -83,7 +78,7 @@ RSpec.describe User, type: :model do
 
   describe "#support_user?" do
     it "returns false" do
-      expect(test_user.support_user?).to eq(false)
+      expect(test_user.support_user?).to be(false)
     end
   end
 

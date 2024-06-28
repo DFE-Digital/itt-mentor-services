@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements support user removes a user from an organisation", type: :system, service: :placements do
+RSpec.describe "Placements support user removes a user from an organisation", service: :placements, type: :system do
   include ActiveJob::TestHelper
 
   around do |example|
@@ -77,7 +77,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
     click_on "Remove user"
     click_on "Remove user"
     expect(page).to have_content "User removed"
-    expect(user.user_memberships.find_by(organisation: school)).to eq nil
+    expect(user.user_memberships.find_by(organisation: school)).to be_nil
   end
 
   def then_user_is_still_member_of_provider
@@ -149,7 +149,7 @@ RSpec.describe "Placements support user removes a user from an organisation", ty
   def then_the_user_is_removed_from_the_organisation(organisation)
     organisations_is_selected_in_primary_nav
     users_is_selected_in_secondary_nav(organisation)
-    expect(user.user_memberships.find_by(organisation:)).to eq nil
+    expect(user.user_memberships.find_by(organisation:)).to be_nil
     within(".govuk-notification-banner__content") do
       expect(page).to have_content "User removed"
     end

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support User adds a School", type: :system, service: :claims do
+RSpec.describe "Support User adds a School", service: :claims, type: :system do
   let(:school) { create(:school, name: "School 1") }
 
   before do
@@ -10,7 +10,7 @@ RSpec.describe "Support User adds a School", type: :system, service: :claims do
 
   after { Capybara.app_host = nil }
 
-  scenario "Colin adds a new School", js: true, retry: 3 do
+  scenario "Colin adds a new School", :js, retry: 3 do
     when_i_visit_the_add_school_page
     and_i_enter_a_school_named("School 1")
     then_i_see_a_dropdown_item_for("School 1")
@@ -24,7 +24,7 @@ RSpec.describe "Support User adds a School", type: :system, service: :claims do
     and_i_see_success_message
   end
 
-  scenario "Colin adds a school which already exists", js: true, retry: 3 do
+  scenario "Colin adds a school which already exists", :js, retry: 3 do
     given_a_school_already_exists_for_claims
     when_i_visit_the_add_school_page
     and_i_enter_a_school_named("Claims School")
@@ -34,13 +34,13 @@ RSpec.describe "Support User adds a School", type: :system, service: :claims do
     then_i_see_an_error("Claims School has already been added. Try another school")
   end
 
-  scenario "Colin submits the search form without selecting a school", js: true, retry: 3 do
+  scenario "Colin submits the search form without selecting a school", :js, retry: 3 do
     when_i_visit_the_add_school_page
     and_i_click_continue
     then_i_see_an_error("Enter a school name, URN or postcode")
   end
 
-  scenario "Colin reconsiders onboarding a school", js: true, retry: 3 do
+  scenario "Colin reconsiders onboarding a school", :js, retry: 3 do
     given_i_have_completed_the_form_to_onboard(school:)
     when_i_click_back
     then_i_see_the_search_input_pre_filled_with("School 1")

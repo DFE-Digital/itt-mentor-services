@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support User adds a School without JavaScript", type: :system, service: :claims do
+RSpec.describe "Support User adds a School without JavaScript", service: :claims, type: :system do
   before do
     create(:school, name: "Manchester 1")
     create(:school, name: "Manchester 2")

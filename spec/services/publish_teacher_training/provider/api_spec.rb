@@ -34,23 +34,18 @@ RSpec.describe PublishTeacherTraining::Provider::Api do
 
   it "returns a list of providers from the current recruitment cycle publish-teacher-training-courses api" do
     response = provider_api
-    expect(response.fetch("data")).to match_array(
-      [
-        {
-          "id" => 123,
-          "attributes" => {
-            "name" => "Provider 1",
-            "code" => "Prov1",
-          },
-        },
-        {
-          "id" => 234,
-          "attributes" => {
-            "name" => "Provider 2",
-            "code" => "Prov2",
-          },
-        },
-      ],
-    )
+    expect(response.fetch("data")).to contain_exactly({
+      "id" => 123,
+      "attributes" => {
+        "name" => "Provider 1",
+        "code" => "Prov1",
+      },
+    }, {
+      "id" => 234,
+      "attributes" => {
+        "name" => "Provider 2",
+        "code" => "Prov2",
+      },
+    })
   end
 end

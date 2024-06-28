@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements user views other users in their organisation", type: :system, service: :placements do
+RSpec.describe "Placements user views other users in their organisation", service: :placements, type: :system do
   let(:school) { create(:placements_school, name: "Placements School 1") }
   let(:provider) { create(:placements_provider, name: "Placements Provider 1") }
   let(:anne) { create(:placements_user, :anne) }
