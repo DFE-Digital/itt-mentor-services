@@ -18,14 +18,14 @@ RSpec.shared_examples "a mentor form" do
           "trn" => trn,
           "school" => school,
         )
-        expect(form.valid?).to eq(true)
+        expect(form.valid?).to be(true)
       end
     end
 
     context "when trn is not set" do
       it "returns invalid", :aggregate_failures do
         form = described_class.new(school:)
-        expect(form.valid?).to eq(false)
+        expect(form.valid?).to be(false)
         expect(form.errors.messages[:trn]).to include("Enter a teacher reference number (TRN)")
       end
     end
@@ -35,7 +35,7 @@ RSpec.shared_examples "a mentor form" do
 
       it "returns invalid", :aggregate_failures do
         form = described_class.new(trn:, school:)
-        expect(form.valid?).to eq(false)
+        expect(form.valid?).to be(false)
         expect(form.errors.messages[:date_of_birth]).to include("Enter a date of birth")
       end
     end
@@ -53,7 +53,7 @@ RSpec.shared_examples "a mentor form" do
           "trn" => trn,
           "school" => school,
         )
-        expect(form.valid?).to eq(false)
+        expect(form.valid?).to be(false)
         expect(form.errors.messages[:date_of_birth]).to include("Date of birth must be in the past")
       end
     end
