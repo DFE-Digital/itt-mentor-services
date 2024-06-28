@@ -6,7 +6,7 @@ RSpec.describe Placements::UserMembershipPolicy do
   let(:user_membership) { create(:user_membership, user:, organisation:) }
 
   permissions :destroy?, :remove? do
-    context "when current user and user are the the same user" do
+    context "when the current user tries to delete themselves" do
       let(:current_user) { create(:placements_user) }
       let(:user) { current_user }
       let(:organisation) { create(:school, :placements) }
@@ -48,18 +48,18 @@ RSpec.describe Placements::UserMembershipPolicy do
         it "permit access" do
           expect(user_membership_policy).to permit(current_user, user_membership)
         end
+      end
 
-        context "when current user is associated with the membership's provider" do
-          let(:current_user) { create(:placements_user) }
-          let(:user) { create(:placements_user) }
-          let(:organisation) { create(:provider, :placements) }
-          let(:current_user_membership) { create(:user_membership, user: current_user, organisation:) }
+      context "when current user is associated with the membership's provider" do
+        let(:current_user) { create(:placements_user) }
+        let(:user) { create(:placements_user) }
+        let(:organisation) { create(:provider, :placements) }
+        let(:current_user_membership) { create(:user_membership, user: current_user, organisation:) }
 
-          before { current_user_membership }
+        before { current_user_membership }
 
-          it "permit access" do
-            expect(user_membership_policy).to permit(current_user, user_membership)
-          end
+        it "permit access" do
+          expect(user_membership_policy).to permit(current_user, user_membership)
         end
       end
     end
