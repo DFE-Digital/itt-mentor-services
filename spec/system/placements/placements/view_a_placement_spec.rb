@@ -28,13 +28,13 @@ RSpec.describe "Placements / Placements / View a placement",
   let!(:subject_1) { create(:subject, name: "Biology") }
   let(:additional_subjects) { [] }
   let!(:placement) do
-    create(:placement, subject:, school:, additional_subjects:)
+    create(:placement, subject: placement_subject, school:, additional_subjects:)
   end
 
   before { given_i_sign_in_as_patricia }
 
   context "when the placement has a subject without child subjects" do
-    let(:subject) { subject_1 }
+    let(:placement_subject) { subject_1 }
 
     scenario "User views a placement details" do
       when_i_visit_the_placement_show_page
@@ -46,12 +46,12 @@ RSpec.describe "Placements / Placements / View a placement",
   end
 
   context "when the placement has a subject with child subjects" do
-    let(:subject) { create(:subject, name: "Modern Foreign Languages") }
+    let(:placement_subject) { create(:subject, name: "Modern Foreign Languages") }
     let(:additional_subjects) do
       [
-        build(:subject, name: "French", parent_subject: subject),
-        build(:subject, name: "German", parent_subject: subject),
-        build(:subject, name: "Spanish", parent_subject: subject),
+        build(:subject, name: "French", parent_subject: placement_subject),
+        build(:subject, name: "German", parent_subject: placement_subject),
+        build(:subject, name: "Spanish", parent_subject: placement_subject),
       ]
     end
 
