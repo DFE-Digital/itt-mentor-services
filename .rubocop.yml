@@ -46,3 +46,6 @@ RSpec/SpecFilePathFormat:
 
 RSpec/SpecFilePathSuffix:
   Enabled: true
+
+RSpec/VerifiedDoubleReference:
+  Enabled: false
