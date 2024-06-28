@@ -13,13 +13,9 @@ RSpec.describe PublishTeacherTraining::Subject::SyncAllJob, type: :job do
           Subject.secondary, :count
         ).by(3)
 
-        expect(Subject.primary.pluck(:name)).to match_array([
-          "Primary", "Primary with English"
-        ])
+        expect(Subject.primary.pluck(:name)).to contain_exactly("Primary", "Primary with English")
 
-        expect(Subject.secondary.pluck(:name)).to match_array([
-          "Art and design", "Science", "French"
-        ])
+        expect(Subject.secondary.pluck(:name)).to contain_exactly("Art and design", "Science", "French")
       end
 
       context "when a subject already exists" do

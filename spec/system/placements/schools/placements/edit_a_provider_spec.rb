@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Schools / Placements / View a placement",
-               type: :system, service: :placements do
+               service: :placements, type: :system do
   let!(:school) { create(:placements_school, name: "School 1", phase: "Primary") }
   let!(:placement) { create(:placement, school:) }
   let!(:provider_1) { create(:provider, :placements, name: "Provider 1") }

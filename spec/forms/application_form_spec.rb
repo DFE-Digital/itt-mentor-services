@@ -3,14 +3,14 @@ require "rails_helper"
 RSpec.describe ApplicationForm do
   describe "#persist" do
     it "returns true" do
-      expect(described_class.new.persist).to eq(true)
+      expect(described_class.new.persist).to be(true)
     end
   end
 
   describe "#save" do
     context "when the form is valid" do
       it "returns true" do
-        expect(described_class.new.save).to eq(true)
+        expect(described_class.new.save).to be(true)
       end
     end
 
@@ -26,7 +26,7 @@ RSpec.describe ApplicationForm do
       end
 
       it "returns false" do
-        expect(InvalidForm.new(name: nil).save).to eq(false)
+        expect(InvalidForm.new(name: nil).save).to be(false)
       end
     end
   end
@@ -34,7 +34,7 @@ RSpec.describe ApplicationForm do
   describe "#save!" do
     context "when the form is valid" do
       it "returns true" do
-        expect(described_class.new.save!).to eq(true)
+        expect(described_class.new.save!).to be(true)
       end
     end
 

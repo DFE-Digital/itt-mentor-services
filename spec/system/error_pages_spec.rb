@@ -17,7 +17,7 @@ RSpec.describe "Error pages", type: :system do
       then_i_see_500_content
     end
 
-    it "shows the 429 error page " do
+    it "shows the 429 error page" do
       when_i_visit("/429")
       then_i_see_429_content
     end
@@ -39,7 +39,7 @@ RSpec.describe "Error pages", type: :system do
       then_i_see_500_content
     end
 
-    it "shows the 429 error page " do
+    it "shows the 429 error page" do
       when_i_visit("/429")
       then_i_see_429_content
     end

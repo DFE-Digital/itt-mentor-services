@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Schools / Placements / Edit mentors",
-               type: :system, service: :placements do
+               service: :placements, type: :system do
   let!(:school) { create(:placements_school, name: "School 1", phase: "Primary") }
   let!(:placement) { create(:placement, school:, provider:) }
   let(:mentor_1) { create(:placements_mentor_membership, mentor: create(:placements_mentor), school:).mentor }

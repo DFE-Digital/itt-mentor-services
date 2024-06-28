@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Support / Providers / Support User adds a Provider", type: :system, js: true, service: :placements do
+RSpec.describe "Placements / Support / Providers / Support User adds a Provider", :js, service: :placements, type: :system do
   let(:provider) { create(:provider, name: "Provider 1") }
 
   before do
@@ -10,7 +10,7 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
 
   after { Capybara.app_host = nil }
 
-  scenario "Colin adds a new Provider", js: true, retry: 3 do
+  scenario "Colin adds a new Provider", :js, retry: 3 do
     when_i_visit_the_add_provider_page
     then_i_see_support_navigation_with_organisation_selected
     and_i_enter_a_provider_named("Provider 1")
@@ -24,7 +24,7 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
     and_i_see_success_message
   end
 
-  scenario "Colin adds a Provider which already exists", js: true, retry: 3 do
+  scenario "Colin adds a Provider which already exists", :js, retry: 3 do
     given_a_provider_already_as_already_been_onboarded
     when_i_visit_the_add_provider_page
     then_i_see_support_navigation_with_organisation_selected
@@ -35,14 +35,14 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
     then_i_see_an_error("Provider 1 has already been added. Try another provider")
   end
 
-  scenario "Colin submits the search form without selecting a provider", js: true, retry: 3 do
+  scenario "Colin submits the search form without selecting a provider", :js, retry: 3 do
     when_i_visit_the_add_provider_page
     then_i_see_support_navigation_with_organisation_selected
     and_i_click_continue
     then_i_see_an_error("Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode")
   end
 
-  scenario "Colin reconsiders onboarding a provider", js: true, retry: 3 do
+  scenario "Colin reconsiders onboarding a provider", :js, retry: 3 do
     given_i_have_completed_the_form_to_onboard(provider:)
     when_i_click_back
     then_i_see_the_search_input_pre_filled_with("Provider 1")

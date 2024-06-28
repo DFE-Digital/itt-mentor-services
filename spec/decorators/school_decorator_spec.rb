@@ -33,7 +33,7 @@ RSpec.describe SchoolDecorator do
         school = create(:school)
         expect(
           school.decorate.formatted_address,
-        ).to eq(nil)
+        ).to be_nil
       end
     end
   end
@@ -65,7 +65,7 @@ RSpec.describe SchoolDecorator do
       it "returns nil" do
         school = build(:school, percentage_free_school_meals: nil)
 
-        expect(school.decorate.percentage_free_school_meals_percentage).to eq(nil)
+        expect(school.decorate.percentage_free_school_meals_percentage).to be_nil
       end
     end
   end

@@ -1,8 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Support Users / Support user views support users",
-               type: :system,
-               service: :placements do
+               service: :placements, type: :system do
   let!(:support_user) { create(:placements_support_user, :colin, created_at: "2024-02-01") }
   let!(:support_user_2) { create(:placements_support_user, created_at: "2024-01-01") }
 

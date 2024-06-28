@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support user filters and searches for organisations", type: :system, service: :placements do
+RSpec.describe "Support user filters and searches for organisations", service: :placements, type: :system do
   before do
     given_i_am_signed_in_as_a_support_user
     and_placement_schools_and_providers_exist

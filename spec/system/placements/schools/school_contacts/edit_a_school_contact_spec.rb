@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Schools / School Contacts / Edit a school contact",
-               type: :system, service: :placements do
+               service: :placements, type: :system do
   let(:school) { build(:placements_school) }
   let(:school_contact) { school.school_contact }
 

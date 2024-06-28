@@ -5,8 +5,8 @@ describe ProviderOnboardingForm, type: :model do
     context "when id is not present" do
       it "returns invalid" do
         form = described_class.new(id: nil)
-        expect(form.valid?).to eq(false)
-        expect(form.valid?).to eq(false)
+        expect(form.valid?).to be(false)
+        expect(form.valid?).to be(false)
         expect(form.errors.messages[:id]).to include("Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode")
       end
     end
@@ -14,7 +14,7 @@ describe ProviderOnboardingForm, type: :model do
     context "when given an id not associated with a provider" do
       it "returns invalid" do
         form = described_class.new(id: "1231")
-        expect(form.valid?).to eq(false)
+        expect(form.valid?).to be(false)
         expect(form.errors.messages[:id]).to include("Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode")
       end
     end
@@ -23,7 +23,7 @@ describe ProviderOnboardingForm, type: :model do
       it "returns invalid" do
         provider = create(:placements_provider)
         form = described_class.new(id: provider.id)
-        expect(form.valid?).to eq(false)
+        expect(form.valid?).to be(false)
         expect(form.errors.messages[:id]).to include("#{provider.name} has already been added. Try another provider")
       end
     end
@@ -32,7 +32,7 @@ describe ProviderOnboardingForm, type: :model do
       it "returns valid" do
         provider = create(:provider)
         form = described_class.new(id: provider.id)
-        expect(form.valid?).to eq(true)
+        expect(form.valid?).to be(true)
       end
     end
   end
@@ -42,7 +42,7 @@ describe ProviderOnboardingForm, type: :model do
       context "when provider is nil" do
         it "returns nil" do
           form = described_class.new
-          expect(form.name).to eq(nil)
+          expect(form.name).to be_nil
         end
       end
 
@@ -66,7 +66,7 @@ describe ProviderOnboardingForm, type: :model do
 
     context "when given an id not associated with a provider" do
       it "returns nil" do
-        expect(described_class.new(id: "123").provider).to eq(nil)
+        expect(described_class.new(id: "123").provider).to be_nil
       end
     end
   end

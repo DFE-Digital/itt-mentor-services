@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placement school user views a list of placements", type: :system, service: :placements do
+RSpec.describe "Placement school user views a list of placements", service: :placements, type: :system do
   let!(:school) { create(:placements_school) }
   let!(:another_school) { create(:placements_school) }
 

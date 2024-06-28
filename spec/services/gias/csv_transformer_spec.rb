@@ -58,7 +58,7 @@ RSpec.describe Gias::CsvTransformer do
       { easting: "385990", northing: "150305" } => { latitude: 51.2517381483, longitude: -2.2021246541 },
     }
 
-    stub = instance_double("Gias::CsvTransformer::CoordinateTransformer")
+    stub = instance_double(Gias::CsvTransformer::CoordinateTransformer)
     allow(Gias::CsvTransformer::CoordinateTransformer).to receive(:new).and_return(stub)
 
     allow(stub).to receive(:close)

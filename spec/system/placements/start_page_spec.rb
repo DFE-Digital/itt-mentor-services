@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Start Page", type: :system, service: :placements do
+RSpec.describe "Start Page", service: :placements, type: :system do
   include ActionView::Helpers::SanitizeHelper
 
   scenario "User visits the placements homepage with dfe sign in" do
@@ -12,7 +12,7 @@ RSpec.describe "Start Page", type: :system, service: :placements do
     then_i_can_see_the_dfe_sign_in_button
   end
 
-  scenario "User visits the placements homepage with person sign in", persona_sign_in: true do
+  scenario "User visits the placements homepage with person sign in", :persona_sign_in do
     given_i_am_on_the_start_page
     then_i_can_see_the_placements_service_name_in_the_header
     and_i_see_the_start_page_detail

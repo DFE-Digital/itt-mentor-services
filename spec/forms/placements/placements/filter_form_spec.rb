@@ -12,7 +12,7 @@ describe Placements::Placements::FilterForm, type: :model do
       let(:params) { { school_ids: %w[school_id] } }
 
       it "returns true" do
-        expect(filter_form).to eq(true)
+        expect(filter_form).to be(true)
       end
     end
 
@@ -20,7 +20,7 @@ describe Placements::Placements::FilterForm, type: :model do
       let(:params) { { subject_ids: %w[subject_id] } }
 
       it "returns true" do
-        expect(filter_form).to eq(true)
+        expect(filter_form).to be(true)
       end
     end
 
@@ -28,7 +28,7 @@ describe Placements::Placements::FilterForm, type: :model do
       let(:params) { { year_groups: %w[year_group] } }
 
       it "returns true" do
-        expect(filter_form).to eq(true)
+        expect(filter_form).to be(true)
       end
     end
 
@@ -36,7 +36,7 @@ describe Placements::Placements::FilterForm, type: :model do
       let(:params) { { only_partner_schools: true } }
 
       it "returns true" do
-        expect(filter_form).to eq(true)
+        expect(filter_form).to be(true)
       end
     end
 
@@ -44,7 +44,7 @@ describe Placements::Placements::FilterForm, type: :model do
       let(:params) { {} }
 
       it "returns false" do
-        expect(filter_form).to eq(false)
+        expect(filter_form).to be(false)
       end
     end
   end

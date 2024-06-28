@@ -9,7 +9,7 @@ describe Claims::Support::Claim::MentorsForm, type: :model do
     context "when mentors is blank" do
       it "returns invalid" do
         form = described_class.new(claim:)
-        expect(form.valid?).to eq(false)
+        expect(form.valid?).to be(false)
         expect(form.errors.messages[:mentor_ids]).to include("Select a mentor")
       end
     end
@@ -22,10 +22,7 @@ describe Claims::Support::Claim::MentorsForm, type: :model do
 
       expect {
         form.save!
-      }.to change { claim.reload.mentor_trainings }.to match_array([
-        have_attributes(mentor_id: mentor1.id, provider_id: claim.provider_id),
-        have_attributes(mentor_id: mentor2.id, provider_id: claim.provider_id),
-      ])
+      }.to change { claim.reload.mentor_trainings }.to contain_exactly(have_attributes(mentor_id: mentor1.id, provider_id: claim.provider_id), have_attributes(mentor_id: mentor2.id, provider_id: claim.provider_id))
     end
   end
 

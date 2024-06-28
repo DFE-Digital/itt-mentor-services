@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Schools / Mentors / View a mentor", type: :system, service: :placements do
+RSpec.describe "Placements / Schools / Mentors / View a mentor", service: :placements, type: :system do
   let(:school) { create(:placements_school, name: "School 1") }
   let(:mentor) do
     create(:placements_mentor,

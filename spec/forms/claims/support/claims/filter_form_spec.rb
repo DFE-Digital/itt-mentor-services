@@ -8,14 +8,14 @@ describe Claims::Support::Claims::FilterForm, type: :model do
       params = { school_ids: %w[school_id] }
       form = described_class.new(params)
 
-      expect(form.filters_selected?).to eq(true)
+      expect(form.filters_selected?).to be(true)
     end
 
     it "returns true if provider_ids present" do
       params = { provider_ids: %w[provider_id] }
       form = described_class.new(params)
 
-      expect(form.filters_selected?).to eq(true)
+      expect(form.filters_selected?).to be(true)
     end
 
     it "returns true if submitted_after is present" do
@@ -26,7 +26,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
       }
       form = described_class.new(params)
 
-      expect(form.filters_selected?).to eq(true)
+      expect(form.filters_selected?).to be(true)
     end
 
     it "returns true if submitted_before is present" do
@@ -37,14 +37,14 @@ describe Claims::Support::Claims::FilterForm, type: :model do
       }
       form = described_class.new(params)
 
-      expect(form.filters_selected?).to eq(true)
+      expect(form.filters_selected?).to be(true)
     end
 
     context "when filters are not present" do
       it "returns false" do
         form = described_class.new({})
 
-        expect(form.filters_selected?).to eq(false)
+        expect(form.filters_selected?).to be(false)
       end
     end
   end
@@ -229,7 +229,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
         }
         call = described_class.new(params).submitted_after
 
-        expect(call).to eq(nil)
+        expect(call).to be_nil
       end
     end
   end
@@ -253,7 +253,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
         }
         call = described_class.new(params).submitted_before
 
-        expect(call).to eq(nil)
+        expect(call).to be_nil
       end
     end
   end

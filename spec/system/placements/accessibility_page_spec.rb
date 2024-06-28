@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Accessibility Page", type: :system, service: :placements do
+RSpec.describe "Accessibility Page", service: :placements, type: :system do
   include ActionView::Helpers::SanitizeHelper
 
   scenario "User views the accessibility page" do

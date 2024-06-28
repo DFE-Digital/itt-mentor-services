@@ -36,7 +36,7 @@ RSpec.describe Claims::SupportUser do
 
   describe "#support_user?" do
     it "returns true" do
-      expect(described_class.new.support_user?).to eq(true)
+      expect(described_class.new.support_user?).to be(true)
     end
   end
 

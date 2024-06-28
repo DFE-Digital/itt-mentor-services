@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Support / Schools / Placement / Support User views a placement",
-               type: :system, service: :placements do
+               service: :placements, type: :system do
   let(:school) { create(:placements_school, name: "School 1", phase:) }
   let(:mentor) { create(:placements_mentor) }
   let(:phase) { "All-through" }

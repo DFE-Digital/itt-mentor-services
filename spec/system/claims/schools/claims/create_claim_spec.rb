@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Create claim", type: :system, service: :claims do
+RSpec.describe "Create claim", service: :claims, type: :system do
   let(:mentor1) { build(:claims_mentor, first_name: "Anne") }
   let(:mentor2) { build(:claims_mentor, first_name: "Joe") }
   let!(:school) { create(:claims_school, mentors: [mentor1, mentor2], region: regions(:inner_london)) }

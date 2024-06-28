@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Change claim on check page", type: :system, service: :claims do
+RSpec.describe "Change claim on check page", service: :claims, type: :system do
   let!(:school) { create(:claims_school, mentors: [mentor1, mentor2, mentor3], region: regions(:inner_london)) }
   let!(:anne) do
     create(

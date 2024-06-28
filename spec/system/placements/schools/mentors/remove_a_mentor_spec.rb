@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Schools / Mentors / Remove a mentor", type: :system, service: :placements do
+RSpec.describe "Placements / Schools / Mentors / Remove a mentor", service: :placements, type: :system do
   let(:school) { create(:placements_school, name: "School 1") }
   let(:mentor_1) do
     create(:placements_mentor,
@@ -110,7 +110,7 @@ RSpec.describe "Placements / Schools / Mentors / Remove a mentor", type: :system
 
   def then_the_mentor_is_removed_from_the_school(school, mentor)
     mentors_is_selected_in_primary_nav
-    expect(mentor.mentor_memberships.find_by(school:)).to eq nil
+    expect(mentor.mentor_memberships.find_by(school:)).to be_nil
     within(".govuk-notification-banner__content") do
       expect(page).to have_content "Mentor removed"
     end

@@ -71,9 +71,7 @@ RSpec.describe Placements::Provider do
         placements_provider.partner_schools << placements_school
         placements_provider.partner_schools << school
 
-        expect(placements_provider.partner_schools).to match_array(
-          [placements_school, claims_school, school],
-        )
+        expect(placements_provider.partner_schools).to contain_exactly(placements_school, claims_school, school)
         expect(placements_provider.partner_schools).to all(be_a(School))
       end
     end

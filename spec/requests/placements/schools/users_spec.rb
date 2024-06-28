@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "School users", type: :request, service: :placements do
+RSpec.describe "School users", service: :placements, type: :request do
   let(:school) { build(:placements_school) }
   let(:current_user) { create(:placements_user, schools: [school]) }
 

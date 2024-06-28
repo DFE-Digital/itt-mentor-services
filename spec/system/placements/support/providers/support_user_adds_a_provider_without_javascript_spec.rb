@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support User adds a Provider without JavaScript", type: :system, service: :placements do
+RSpec.describe "Support User adds a Provider without JavaScript", service: :placements, type: :system do
   before do
     create(:provider, name: "Manchester 1")
     create(:provider, name: "Manchester 2")

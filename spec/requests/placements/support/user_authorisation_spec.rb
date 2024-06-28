@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support console / user authorization", type: :request, service: :placements do
+RSpec.describe "Support console / user authorization", service: :placements, type: :request do
   let(:support_user) { create(:placements_support_user) }
   let(:non_support_user) { create(:placements_user) }
 

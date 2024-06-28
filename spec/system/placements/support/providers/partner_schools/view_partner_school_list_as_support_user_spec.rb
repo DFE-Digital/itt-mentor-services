@@ -1,8 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Support / Providers / Partner schools / View a partner school as support user",
-               type: :system,
-               service: :placements do
+               service: :placements, type: :system do
   let!(:provider) { create(:placements_provider, name: "Springfield Community College") }
   let!(:another_provider) { create(:placements_provider, name: "Burns University") }
   let!(:school) { create(:placements_school, name: "Springfield Elementary School", urn: "1234") }

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Schools / Placements / Add a placement",
-               type: :system, service: :placements do
+               service: :placements, type: :system do
   let!(:subject_1) { create(:subject, name: "Primary subject", subject_area: :primary) }
   let!(:subject_2) { create(:subject, name: "Secondary subject", subject_area: :secondary) }
   let!(:subject_3) { create(:subject, name: "Secondary subject 2", subject_area: :secondary) }

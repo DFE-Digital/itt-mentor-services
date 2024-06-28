@@ -48,7 +48,7 @@ RSpec.describe HostingEnvironmentHelper do
   describe "#hosting_environment_phase" do
     context "when the phase is qa" do
       it "returns the correct phase" do
-        current_service = instance_double("current_service")
+        current_service = instance_double(current_service)
         allow(HostingEnvironment).to receive(:phase).with(current_service).and_return("qa")
         expect(hosting_environment_phase(current_service)).to eq("QA")
       end
@@ -56,7 +56,7 @@ RSpec.describe HostingEnvironmentHelper do
 
     context "when the phase is not qa" do
       it "returns the correct phase" do
-        current_service = instance_double("current_service")
+        current_service = instance_double(current_service)
         allow(HostingEnvironment).to receive(:phase).with(current_service).and_return("production")
         expect(hosting_environment_phase(current_service)).to eq("Production")
       end

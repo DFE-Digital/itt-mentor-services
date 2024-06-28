@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Download claims CSV", type: :system, service: :claims do
+RSpec.describe "Download claims CSV", service: :claims, type: :system do
   let(:support_user) { create(:claims_support_user) }
 
   before do

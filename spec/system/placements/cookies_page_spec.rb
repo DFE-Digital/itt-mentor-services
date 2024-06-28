@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Start Page", type: :system, service: :placements do
+RSpec.describe "Start Page", service: :placements, type: :system do
   include ActionView::Helpers::SanitizeHelper
 
   scenario "User views the cookies page" do

@@ -12,7 +12,7 @@ describe Placements::PartnershipForm, type: :model do
           school_id: school.id,
         )
 
-        expect(form.valid?).to eq(true)
+        expect(form.valid?).to be(true)
       end
     end
 
@@ -26,7 +26,7 @@ describe Placements::PartnershipForm, type: :model do
             form_input: :school_id,
           )
 
-          expect(form.valid?).to eq(false)
+          expect(form.valid?).to be(false)
           expect(form.errors.messages[:school_id]).to include("Enter a school name, URN or postcode")
         end
       end
@@ -40,7 +40,7 @@ describe Placements::PartnershipForm, type: :model do
             form_input: :school_id,
           )
 
-          expect(form.valid?).to eq(false)
+          expect(form.valid?).to be(false)
           expect(form.errors.messages[:school_id]).to include("Select a school")
         end
       end
@@ -56,7 +56,7 @@ describe Placements::PartnershipForm, type: :model do
             form_input: :provider_id,
           )
 
-          expect(form.valid?).to eq(false)
+          expect(form.valid?).to be(false)
           expect(form.errors.messages[:provider_id]).to include("Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode")
         end
       end
@@ -70,7 +70,7 @@ describe Placements::PartnershipForm, type: :model do
             form_input: :provider_id,
           )
 
-          expect(form.valid?).to eq(false)
+          expect(form.valid?).to be(false)
           expect(form.errors.messages[:provider_id]).to include("Select a provider")
         end
       end
@@ -83,7 +83,7 @@ describe Placements::PartnershipForm, type: :model do
           school_id: school.id,
         )
 
-        expect(form.valid?).to eq(false)
+        expect(form.valid?).to be(false)
         expect(form.errors.messages[:provider_id]).to include("Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode")
       end
     end
@@ -95,7 +95,7 @@ describe Placements::PartnershipForm, type: :model do
           school_id: "1234",
         )
 
-        expect(form.valid?).to eq(false)
+        expect(form.valid?).to be(false)
         expect(form.errors.messages[:school_id]).to include("Enter a school name, URN or postcode")
       end
     end
@@ -113,7 +113,7 @@ describe Placements::PartnershipForm, type: :model do
             form_input: :school_id,
           )
 
-          expect(form.valid?).to eq(false)
+          expect(form.valid?).to be(false)
           expect(form.errors.messages[:school_id]).to include("#{school.name} has already been added. Try another school")
         end
       end
@@ -126,7 +126,7 @@ describe Placements::PartnershipForm, type: :model do
             form_input: :provider_id,
           )
 
-          expect(form.valid?).to eq(false)
+          expect(form.valid?).to be(false)
           expect(form.errors.messages[:provider_id]).to include("#{provider.name} has already been added. Try another provider")
         end
       end
@@ -143,7 +143,7 @@ describe Placements::PartnershipForm, type: :model do
 
     context "when given an id not associated with a school" do
       it "returns nil" do
-        expect(described_class.new(school_id: "random").school).to eq(nil)
+        expect(described_class.new(school_id: "random").school).to be_nil
       end
     end
   end
@@ -158,7 +158,7 @@ describe Placements::PartnershipForm, type: :model do
 
     context "when given an id not associated with a school" do
       it "returns nil" do
-        expect(described_class.new(provider_id: "random").provider).to eq(nil)
+        expect(described_class.new(provider_id: "random").provider).to be_nil
       end
     end
   end

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Sign In as a Placements User", type: :system, service: :placements do
+RSpec.describe "Sign In as a Placements User", service: :placements, type: :system do
   scenario "I sign in as user Anne" do
     given_there_is_an_existing_user_for("Anne")
     when_i_visit_the_sign_in_path

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Sign out as a Placements User", type: :system, service: :placements do
+RSpec.describe "Sign out as a Placements User", service: :placements, type: :system do
   let(:colin) { create(:placements_support_user, :colin) }
 
   before do

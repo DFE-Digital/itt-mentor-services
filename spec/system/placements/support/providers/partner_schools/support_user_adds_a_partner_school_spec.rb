@@ -1,8 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Support / Providers / Partner schools / Support user adds a partner school",
-               type: :system,
-               service: :placements do
+               service: :placements, type: :system do
   include ActiveJob::TestHelper
 
   let!(:school) { create(:placements_school, name: "School 1") }
@@ -17,7 +16,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
     given_i_am_signed_in_as_a_support_user
   end
 
-  scenario "Support user adds a partner school", js: true, retry: 3 do
+  scenario "Support user adds a partner school", :js, retry: 3 do
     when_i_visit_the_partner_schools_page_for(provider)
     and_i_click_on("Add partner school")
     and_i_enter_a_school_named("School 1")
@@ -32,7 +31,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
     and_a_notification_email_is_sent_to(school_user)
   end
 
-  scenario "Support user adds a partner school which already exists", js: true, retry: 3 do
+  scenario "Support user adds a partner school which already exists", :js, retry: 3 do
     given_a_partnership_exists_between(school, provider)
     when_i_visit_the_partner_schools_page_for(provider)
     and_i_click_on("Add partner school")
@@ -43,13 +42,13 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
     then_i_see_an_error("School 1 has already been added. Try another school")
   end
 
-  scenario "Support user submits the search form without selecting a school", js: true, retry: 3 do
+  scenario "Support user submits the search form without selecting a school", :js, retry: 3 do
     when_i_visit_the_add_partner_school_page_for(provider)
     and_i_click_on("Continue")
     then_i_see_an_error("Enter a school name, URN or postcode")
   end
 
-  scenario "Support user reconsiders selecting a school", js: true, retry: 3 do
+  scenario "Support user reconsiders selecting a school", :js, retry: 3 do
     given_i_have_completed_the_form_to_select(school:)
     when_i_click_on("Back")
     then_i_see_the_search_input_pre_filled_with("School 1")
@@ -57,8 +56,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
     then_i_see_the_check_details_page_for_school("School 1")
   end
 
-  scenario "Support user adds a partner school, which is not onboarded on the placements service",
-           js: true, retry: 3 do
+  scenario "Support user adds a partner school, which is not onboarded on the placements service", :js, retry: 3 do
     given_the_school_is_not_onboarded_on_placements_service(school)
     when_i_visit_the_partner_schools_page_for(provider)
     and_i_click_on("Add partner school")

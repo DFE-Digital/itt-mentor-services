@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Sign In as a Claims User", type: :system, service: :claims do
+RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
   let(:anne) { create(:claims_user, :anne) }
   let(:patricia) { create(:claims_user, :patricia) }
   let(:mary) { create(:claims_user, :mary) }

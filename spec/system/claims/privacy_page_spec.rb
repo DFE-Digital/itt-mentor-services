@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Privacy Page", type: :system, service: :claims do
+RSpec.describe "Privacy Page", service: :claims, type: :system do
   scenario "User visits the privacy page" do
     given_i_am_on_the_privacy_page
     then_i_can_see_the_privacy_page

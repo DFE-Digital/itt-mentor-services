@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Support / Organisations / Support User Selects An Organisation Type To Add",
-               type: :system, service: :placements do
+               service: :placements, type: :system do
   before do
     given_i_sign_in_as_colin
     when_i_click_add_organisation

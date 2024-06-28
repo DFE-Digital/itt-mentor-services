@@ -60,7 +60,7 @@ describe SupportUserInviteForm, type: :model do
         let(:form_params) { { last_name: "Last Name", service: :placements } }
 
         it "returns user errors on form and does not send invite" do
-          expect(support_user_invite_form.valid?).to eq(false)
+          expect(support_user_invite_form.valid?).to be(false)
 
           expect(support_user_invite_form.errors.messages).to match(
             first_name: ["Enter a first name"],

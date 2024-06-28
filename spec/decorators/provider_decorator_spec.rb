@@ -39,7 +39,7 @@ RSpec.describe ProviderDecorator do
         provider = create(:provider)
         expect(
           provider.decorate.formatted_address,
-        ).to eq(nil)
+        ).to be_nil
       end
     end
   end

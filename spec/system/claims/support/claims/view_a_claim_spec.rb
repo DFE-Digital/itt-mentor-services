@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "View claims", type: :system, service: :claims do
+RSpec.describe "View claims", service: :claims, type: :system do
   let!(:support_user) { create(:claims_support_user) }
   let(:provider) { create(:claims_provider) }
   let(:mentor) { create(:claims_mentor) }

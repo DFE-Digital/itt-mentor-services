@@ -9,18 +9,13 @@ describe OrganisationOnboardingForm, type: :model do
 
   describe "#options" do
     it "returns an array of organisation types as open structs" do
-      expect(described_class.new.options).to match_array(
-        [
-          OpenStruct.new(
-            id: described_class::ITT_PROVIDER,
-            name: "Teacher training provider",
-          ),
-          OpenStruct.new(
-            id: described_class::SCHOOL,
-            name: "School",
-          ),
-        ],
-      )
+      expect(described_class.new.options).to contain_exactly(OpenStruct.new(
+                                                               id: described_class::ITT_PROVIDER,
+                                                               name: "Teacher training provider",
+                                                             ), OpenStruct.new(
+                                                                  id: described_class::SCHOOL,
+                                                                  name: "School",
+                                                                ))
     end
   end
 
@@ -51,7 +46,7 @@ describe OrganisationOnboardingForm, type: :model do
           described_class.new(
             organisation_type: "random",
           ).onboarding_url,
-        ).to eq(nil)
+        ).to be_nil
       end
     end
   end

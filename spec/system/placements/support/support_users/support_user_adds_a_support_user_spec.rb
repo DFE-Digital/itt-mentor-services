@@ -1,8 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Support Users / Support user adds a support user",
-               type: :system,
-               service: :placements do
+               service: :placements, type: :system do
   include ActiveJob::TestHelper
 
   around do |example|

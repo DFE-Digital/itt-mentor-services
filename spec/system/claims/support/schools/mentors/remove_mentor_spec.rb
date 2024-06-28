@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Remove a mentor from a school", type: :system, service: :claims do
+RSpec.describe "Remove a mentor from a school", service: :claims, type: :system do
   let!(:mentor1) { create(:mentor, first_name: "Bilbo", last_name: "Baggins") }
   let!(:mentor2) { create(:mentor, first_name: "Bilbo", last_name: "Test") }
   let!(:school) { create(:claims_school, mentors: [mentor1, mentor2]) }

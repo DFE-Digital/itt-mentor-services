@@ -1,8 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Support/ Providers / Partner schools / View a partner school as support user",
-               type: :system,
-               service: :placements do
+               service: :placements, type: :system do
   let!(:school) { create(:placements_school, name: "School 1") }
   let!(:provider) { create(:placements_provider) }
   let(:partnership) { create(:placements_partnership, school:, provider:) }

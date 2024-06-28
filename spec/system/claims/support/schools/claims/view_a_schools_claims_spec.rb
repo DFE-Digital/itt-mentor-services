@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "View a schools claims", type: :system, service: :claims do
+RSpec.describe "View a schools claims", service: :claims, type: :system do
   let!(:school) { create(:school, :claims).becomes(Claims::School) }
   let!(:another_school) { create(:school, :claims).becomes(Claims::School) }
 

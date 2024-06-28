@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Schools / Placements / Delete a placement",
-               type: :system, service: :placements do
+               service: :placements, type: :system do
   let!(:placement_1) { create(:placement, school:, subject: subject_1) }
   let(:placement_2) { create(:placement, school:, subject: subject_2) }
   let(:school) { build(:placements_school, name: "School 1", phase: "Primary") }
@@ -83,7 +83,7 @@ RSpec.describe "Placements / Schools / Placements / Delete a placement",
 
   def then_the_placement_is_removed_from_the_school(school, placement, subject_name)
     placements_is_selected_in_primary_nav
-    expect(school.placements.find_by(id: placement.id)).to eq nil
+    expect(school.placements.find_by(id: placement.id)).to be_nil
     within(".govuk-notification-banner__content") do
       expect(page).to have_content "Placement deleted"
     end

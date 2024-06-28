@@ -21,7 +21,7 @@ describe Claims::ClaimsQuery do
         claim_with_partial_reference = create(:claim, :submitted, reference: "12345678")
         _claim_without_partial_reference = create(:claim, :submitted, reference: "87654321")
 
-        expect(claims_query).to match_array([claim_with_partial_reference])
+        expect(claims_query).to contain_exactly(claim_with_partial_reference)
       end
     end
 
@@ -33,7 +33,7 @@ describe Claims::ClaimsQuery do
         claim_belonging_to_filtered_school = create(:claim, :submitted, school:)
         _claim_not_belonging_to_filtered_school = create(:claim, :submitted)
 
-        expect(claims_query).to match_array([claim_belonging_to_filtered_school])
+        expect(claims_query).to contain_exactly(claim_belonging_to_filtered_school)
       end
     end
 
@@ -45,7 +45,7 @@ describe Claims::ClaimsQuery do
         claim_belonging_to_filtered_provider = create(:claim, :submitted, provider:)
         _claim_not_belonging_to_filtered_provider = create(:claim, :submitted)
 
-        expect(claims_query).to match_array([claim_belonging_to_filtered_provider])
+        expect(claims_query).to contain_exactly(claim_belonging_to_filtered_provider)
       end
     end
 
@@ -56,7 +56,7 @@ describe Claims::ClaimsQuery do
         expected_claim = create(:claim, :submitted, submitted_at: 1.day.ago)
         _unexpected_claim = create(:claim, :submitted, submitted_at: 3.days.ago)
 
-        expect(claims_query).to match_array([expected_claim])
+        expect(claims_query).to contain_exactly(expected_claim)
       end
     end
 
@@ -67,7 +67,7 @@ describe Claims::ClaimsQuery do
         expected_claim = create(:claim, :submitted, submitted_at: 3.days.ago)
         _unexpected_claim = create(:claim, :submitted, submitted_at: 1.day.ago)
 
-        expect(claims_query).to match_array([expected_claim])
+        expect(claims_query).to contain_exactly(expected_claim)
       end
     end
   end

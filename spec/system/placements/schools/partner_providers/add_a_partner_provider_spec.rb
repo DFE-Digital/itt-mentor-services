@@ -1,8 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Schools / Partner providers / Add a partner provider",
-               type: :system,
-               service: :placements do
+               service: :placements, type: :system do
   include ActiveJob::TestHelper
 
   around do |example|
@@ -17,7 +16,7 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
     given_i_sign_in_as_anne
   end
 
-  scenario "User adds a partner provider", js: true, retry: 3 do
+  scenario "User adds a partner provider", :js, retry: 3 do
     when_i_view_the_partner_providers_page
     and_i_click_on("Add partner provider")
     and_i_enter_a_provider_named("Provider 1")
@@ -32,7 +31,7 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
     and_a_notification_email_is_sent_to(provider_user)
   end
 
-  scenario "User adds a partner provider which already exists", js: true, retry: 3 do
+  scenario "User adds a partner provider which already exists", :js, retry: 3 do
     given_a_partnership_exists_between(school, provider)
     when_i_view_the_partner_providers_page
     and_i_click_on("Add partner provider")
@@ -43,13 +42,13 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
     then_i_see_an_error("Provider 1 has already been added. Try another provider")
   end
 
-  scenario "User submits the search form without selecting a provider", js: true, retry: 3 do
+  scenario "User submits the search form without selecting a provider", :js, retry: 3 do
     when_i_visit_the_add_partner_provider_page
     and_i_click_on("Continue")
     then_i_see_an_error("Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode")
   end
 
-  scenario "User reconsiders selecting a provider", js: true, retry: 3 do
+  scenario "User reconsiders selecting a provider", :js, retry: 3 do
     given_i_have_completed_the_form_to_select(provider:)
     when_i_click_on("Back")
     then_i_see_the_search_input_pre_filled_with("Provider 1")
@@ -57,8 +56,7 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
     then_i_see_the_check_details_page_for_provider("Provider 1")
   end
 
-  scenario "User adds a partner provider, which is not onboarded on the placements service",
-           js: true, retry: 3 do
+  scenario "User adds a partner provider, which is not onboarded on the placements service", :js, retry: 3 do
     given_the_provider_is_not_onboarded_on_placements_service(provider)
     when_i_view_the_partner_providers_page
     and_i_click_on("Add partner provider")

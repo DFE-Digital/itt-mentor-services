@@ -1,8 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Placements / Support / Schools / Placements / Support User views placements",
-               type: :system,
-               service: :placements do
+               service: :placements, type: :system do
   let!(:subject1) { create(:subject, name: "English") }
   let!(:subject2) { create(:subject, name: "Science") }
   let!(:subject3) { create(:subject, name: "Maths") }

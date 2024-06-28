@@ -67,7 +67,7 @@ RSpec.describe Placements::Importers::ProviderUsersImporter do
 
         it "associates the user to both schools" do
           user = Placements::User.find_by(email: "j.barnes@example.com")
-          expect(user.providers).to match_array([provider.becomes(Placements::Provider), provider2.becomes(Placements::Provider)])
+          expect(user.providers).to contain_exactly(provider.becomes(Placements::Provider), provider2.becomes(Placements::Provider))
         end
       end
     end
