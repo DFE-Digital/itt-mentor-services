@@ -69,7 +69,9 @@ RSpec.describe Placements::Partnerships::Notify::Create do
             params: { service: :placements },
             args: [user_2, provider, school],
           )
+        end
 
+        it "does not send a notification email to users not belonging to the placements service" do
           expect { partnership_notify_creation }.not_to have_enqueued_mail(
             UserMailer,
             :partnership_created_notification,

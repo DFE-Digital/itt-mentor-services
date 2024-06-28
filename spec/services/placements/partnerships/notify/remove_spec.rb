@@ -72,7 +72,9 @@ RSpec.describe Placements::Partnerships::Notify::Remove do
             params: { service: :placements },
             args: [user_2, provider, school],
           )
+        end
 
+        it "does not send a notification email to users not belonging to the school" do
           expect { partnership_notify_removal }.not_to have_enqueued_mail(
             UserMailer,
             :partnership_destroyed_notification,
