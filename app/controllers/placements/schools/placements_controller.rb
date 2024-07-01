@@ -2,7 +2,7 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
   before_action :set_school
   before_action :set_placement, only: %i[show edit_provider edit_mentors edit_year_group update remove destroy]
   before_action :set_decorated_placement, only: %i[show remove]
-  before_action :authorize_placement, only: %i[edit_provider edit_mentors update]
+  before_action :authorize_placement, only: %i[edit_provider edit_mentors edit_year_group update]
 
   def index
     @pagy, placements = pagy(@school.placements.includes(:subject, :mentors).order("subjects.name"))

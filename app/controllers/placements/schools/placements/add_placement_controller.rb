@@ -40,7 +40,7 @@ class Placements::Schools::Placements::AddPlacementController < Placements::Appl
   end
 
   def authorize_placement
-    authorize school.placements.build, :new?
+    authorize school.placements.build, :add_placement_journey?
   end
 
   def step_path(step)
