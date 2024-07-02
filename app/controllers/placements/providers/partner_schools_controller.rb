@@ -1,88 +1,41 @@
-class Placements::Providers::PartnerSchoolsController < Placements::ApplicationController
-  before_action :set_provider
-  before_action :set_decorated_partner_school, only: %i[show remove destroy]
-  before_action :set_partnership, only: %i[show remove destroy]
+class Placements::Providers::PartnerSchoolsController < Placements::PartnershipsController
   before_action :redirect_to_school_options, only: :check, if: -> { javascript_disabled? }
 
   def index
     @pagy, @partner_schools = pagy(@provider.partner_schools.order_by_name)
   end
 
-  def new
-    @partnership_form = if params[:partnership].present?
-                          partnership_form
-                        else
-                          ::Placements::PartnershipForm.new(
-                            provider_id: @provider.id,
-                            form_input: :school_id,
-                          )
-                        end
-  end
-
-  def check
-    if partnership_form.valid?
-      partner_school
-      back_link
-    else
-      render :new
-    end
-  end
-
   def school_options
-    render locals: {
-      search_param:,
-      schools: decorated_school_options,
-      school_form: ::Placements::PartnershipForm.new,
-    }
+    render_partner_organisation_options
   end
 
   def check_school_option
-    if partnership_form(javascript_disabled: true).valid?
-      redirect_to_check_path
-    else
-      render :school_options, locals: {
-        search_param:,
-        schools: decorated_school_options,
-        school_form: partnership_form(javascript_disabled: true),
-      }
-    end
+    check_partner_organisation_options
   end
 
   def create
-    partnership_form.save!
-    Placements::Partnerships::Notify::Create.call(
-      source_organisation: @provider,
-      partner_organisation: partner_school,
-    )
+    super
+
     flash[:success] = t(".partner_school_added")
-    redirect_to_index_path
   end
 
-  def show; end
-
-  def remove; end
-
   def destroy
-    authorize @partnership
-
-    school = @partnership.school
-    @partnership.destroy!
-    Placements::Partnerships::Notify::Remove.call(
-      source_organisation: @provider,
-      partner_organisation: school,
-    )
+    super
 
     flash[:success] = t(".partner_school_removed")
-    redirect_to_index_path
   end
 
   private
 
-  def set_provider
+  def set_organisation
     @provider = current_user.providers.find(params.fetch(:provider_id))
   end
 
-  def set_decorated_partner_school
+  def source_organisation
+    @provider
+  end
+
+  def set_decorated_partner_organisation
     @partner_school = @provider.partner_schools.find(params.require(:id)).decorate
   end
 
@@ -106,8 +59,13 @@ class Placements::Providers::PartnerSchoolsController < Placements::ApplicationC
   end
 
   def partner_school
-    @partner_school ||= partnership_form.school.decorate
+    @partner_school ||= if @school.present?
+                          @partnership.school
+                        else
+                          partnership_form.school.decorate
+                        end
   end
+  alias_method :partner_organisation, :partner_school
 
   def javascript_disabled?
     params.dig(:partnership, :school_name).nil? && partner_school_params[:school_id].present?
@@ -141,5 +99,20 @@ class Placements::Providers::PartnerSchoolsController < Placements::ApplicationC
     @back_link ||= new_placements_provider_partner_school_path(
       partnership_form.as_form_params,
     )
+  end
+
+  def new_partnership_form
+    ::Placements::PartnershipForm.new(
+      provider_id: @provider.id,
+      form_input: :school_id,
+    )
+  end
+
+  def render_partner_organisation_options
+    render :school_options, locals: {
+      search_param:,
+      schools: decorated_school_options,
+      school_form: partnership_form(javascript_disabled: true),
+    }
   end
 end
