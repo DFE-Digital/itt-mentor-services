@@ -1,4 +1,10 @@
 RSpec.shared_examples "an add a placement wizard" do
+  let!(:subject_1) { create(:subject, name: "Primary subject", subject_area: :primary) }
+  let!(:subject_2) { create(:subject, name: "Secondary subject", subject_area: :secondary) }
+  let!(:subject_3) { create(:subject, name: "Secondary subject 2", subject_area: :secondary) }
+  let!(:mentor_1) { create(:placements_mentor) }
+  let!(:mentor_2) { create(:placements_mentor) }
+
   context "when the school has a school contact" do
     let(:school) { build(:placements_school, name: "School 1", phase: "Primary") }
 

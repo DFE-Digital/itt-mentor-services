@@ -50,11 +50,6 @@ RSpec/SpecFilePathSuffix:
 RSpec/VerifiedDoubleReference:
   Enabled: false
 
-RSpec/LetSetup:
-  Exclude:
-    - spec/system/placements/support/placements/add_a_placement_spec.rb
-    - spec/system/placements/schools/placements/add_a_placement_spec.rb
-
 RSpec/NoExpectationExample:
   Exclude:
     - spec/support/shared_examples/add_a_placement_wizard.rb
