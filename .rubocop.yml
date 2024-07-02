@@ -52,4 +52,4 @@ RSpec/VerifiedDoubleReference:
 
 RSpec/NoExpectationExample:
   Exclude:
-    - spec/support/shared_examples/add_a_placement_wizard.rb
+    - spec/support/shared_examples/system/**/*.rb
