@@ -1,7 +1,7 @@
 class Placements::Support::Providers::PartnerSchoolsController < Placements::Providers::PartnerSchoolsController
   private
 
-  def set_provider
+  def set_organisation
     @provider = Placements::Provider.find(params.fetch(:provider_id))
   end
 
