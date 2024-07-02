@@ -59,11 +59,7 @@ class Placements::Schools::PartnerProvidersController < Placements::Partnerships
   end
 
   def partner_provider
-    @partner_provider ||= if @partnership.present?
-                            @partnership.provider
-                          else
-                            partnership_form.provider.decorate
-                          end
+    @partner_provider ||= partnership_form.provider.decorate
   end
   alias_method :partner_organisation, :partner_provider
 
