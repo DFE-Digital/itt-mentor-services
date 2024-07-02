@@ -20,12 +20,12 @@ CLAIMS_PERSONAS = [
 ].freeze
 
 PLACEMENTS_PERSONAS = [
-  {
-    first_name: "Anne",
-    last_name: "Wilson",
-    email: "anne_wilson@example.org",
-    type: "Placements::User",
-  },
+  # {
+  #   first_name: "Anne",
+  #   last_name: "Wilson",
+  #   email: "anne_wilson@example.org",
+  #   type: "Placements::User",
+  # },
   {
     first_name: "Patricia",
     last_name: "Adebayo",
@@ -38,12 +38,12 @@ PLACEMENTS_PERSONAS = [
     email: "mary@example.com",
     type: "Placements::User",
   },
-  {
-    first_name: "Colin",
-    last_name: "Chapman",
-    email: "colin.chapman@education.gov.uk",
-    type: "Placements::SupportUser",
-  },
+  # {
+  #   first_name: "Colin",
+  #   last_name: "Chapman",
+  #   email: "colin.chapman@education.gov.uk",
+  #   type: "Placements::SupportUser",
+  # },
 ].freeze
 
 # any additional details should be added to en.yml (t.personas.index)
