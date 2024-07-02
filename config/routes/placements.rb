@@ -49,6 +49,12 @@ scope module: :placements,
         resources :placements, only: %i[index new create show destroy] do
           member { get :remove }
           collection { get :check }
+
+          collection do
+            get "new", to: "placements/add_placement#new", as: :new_add_placement
+            get "new/:step", to: "placements/add_placement#edit", as: :add_placement
+            put "new/:step", to: "placements/add_placement#update"
+          end
         end
 
         resources :partner_providers, only: %i[index new create show destroy] do

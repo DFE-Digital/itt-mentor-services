@@ -23,11 +23,15 @@ class Placements::Schools::Placements::AddPlacementController < Placements::Appl
       placement = @wizard.create_placement
       Placements::PlacementSlackNotifier.placement_created_notification(@school, placement.decorate).deliver_later
       @wizard.reset_state
-      redirect_to placements_school_placements_path(@school), flash: { success: t(".success") }
+      redirect_to update_path(@school), flash: { success: t(".success") }
     end
   end
 
   private
+
+  def update_path(school)
+    placements_school_placements_path(school)
+  end
 
   def set_school
     school_id = params.require(:school_id)

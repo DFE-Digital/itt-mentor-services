@@ -49,3 +49,7 @@ RSpec/SpecFilePathSuffix:
 
 RSpec/VerifiedDoubleReference:
   Enabled: false
+
+RSpec/NoExpectationExample:
+  Exclude:
+    - spec/support/shared_examples/system/**/*.rb
