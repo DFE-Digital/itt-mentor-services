@@ -1,0 +1,15 @@
+<% render "claims/support/primary_navigation", current: :settings %>
+
+<div class="govuk-width-container">
+  <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
+
+  <% @previews.each do |mailer| %>
+    <h2 class="govuk-heading-m"><%= mailer.preview_name.delete_prefix("claims/").titleize %></h2>
+
+    <% email_links = mailer.emails.map do |email| %>
+      <% govuk_link_to(email, url_for(controller: "/rails/mailers", action: :preview, path: "#{mailer.preview_name}/#{email}"), no_visited_state: true, new_tab: true) %>
+    <% end %>
+
+    <%= govuk_list email_links, type: :bullet %>
+  <% end %>
+</div>

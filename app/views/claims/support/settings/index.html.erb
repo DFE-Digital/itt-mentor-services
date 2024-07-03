@@ -4,10 +4,11 @@
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-l">Settings</h1>
+      <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
       <%= govuk_list [
-        govuk_link_to("Background Jobs", "/good_job", no_visited_state: true, new_tab: true),
+        govuk_link_to(t(".background_jobs"), "/good_job", no_visited_state: true, new_tab: true),
+        govuk_link_to(t(".emails"), claims_support_mailers_path, no_visited_state: true),
       ], spaced: true %>
     </div>
   </div>

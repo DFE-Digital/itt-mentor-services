@@ -36,6 +36,9 @@ module IttMentorServices
       "node_modules/govuk-frontend/dist/govuk/assets",
     )
 
+    config.action_mailer.show_previews = true
+    config.action_mailer.preview_paths << Rails.root.join("spec/mailers/previews").to_s
+
     config.view_component.preview_paths << Rails.root.join("spec/components/previews").to_s
     config.view_component.default_preview_layout = "component_preview"
 

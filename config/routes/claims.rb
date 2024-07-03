@@ -108,5 +108,7 @@ scope module: :claims, as: :claims, constraints: {
     end
 
     get :settings, to: "settings#index"
+
+    resources :mailers, only: :index
   end
 end
