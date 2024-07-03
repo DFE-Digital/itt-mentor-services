@@ -22,7 +22,7 @@ class Placements::Support::Schools::Placements::AddPlacementController < Placeme
     end
   end
 
-  def new_add_placement_mentor_path
+  def add_mentor_path
     new_placements_support_school_mentor_path(@school)
   end
 end
