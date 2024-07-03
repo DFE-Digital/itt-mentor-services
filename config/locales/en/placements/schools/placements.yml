@@ -28,58 +28,6 @@ en:
         add_placement:
           edit:
             cancel: Cancel
-          phase_step:
-            title: Phase - Add placement
-            title_with_error: "Error: Phase - Add placement"
-            add_placement: Add placement
-            phase: Phase
-            primary: Primary
-            secondary: Secondary
-            continue: Continue
-          subject_step:
-            title: Subject - Add placement
-            title_with_error: "Error: Subject - Add placement"
-            add_placement: Add placement
-            subject: Subject
-            continue: Continue
-          additional_subjects_step:
-            title: Additional subject - Add placement
-            title_with_error: "Error: Additional subject - Add placement"
-            add_placement: Add placement
-            continue: Continue
-          year_group_step:
-            title: Year group - Add placement
-            title_with_error: "Error: Year group - Add placement"
-            add_placement: Add placement
-            year_group: Year group
-            primary: Primary
-            continue: Continue
-          mentors_step:
-            title: Mentor - Add placement
-            title_with_error: "Error: Mentor - Add placement"
-            add_placement: Add placement
-            mentor: Mentor
-            continue: Continue
-            mentors: Mentors
-            not_known: Not yet known
-            mentor_not_listed: My mentor is not listed
-            you_need_to_add_a_mentor: "You will need to %{link} first."
-            add_a_mentor: add a mentor
-          check_your_answers_step:
-            page_title: Check your answers - Add placement
-            title: Check your answers
-            add_placement: Add placement
-            phase: Phase
-            subject: Subject
-            additional_subjects: Additional subjects
-            mentor: Mentor
-            year_group: Year group
-            change: Change
-            info_text: When a placement is published, it will be visible to teacher training providers.
-            publish_placement: Publish placement
-            not_yet_known: Not yet known
-          update:
-            success: Placement published
         edit_provider:
           title_with_error: "Error: Provider - Manage a placement"
           title: Provider - Manage a placement
