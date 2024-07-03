@@ -60,4 +60,5 @@ module "worker_application" {
   replicas                   = var.worker_replicas
   docker_image               = var.docker_image
   enable_logit               = true
+  enable_gcp_wif             = true
 }
