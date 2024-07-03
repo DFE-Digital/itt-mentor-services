@@ -5,6 +5,10 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l">Settings</h1>
+
+      <%= govuk_list [
+        govuk_link_to("Background Jobs", "/good_job", no_visited_state: true, new_tab: true),
+      ], spaced: true %>
     </div>
   </div>
 </div>
