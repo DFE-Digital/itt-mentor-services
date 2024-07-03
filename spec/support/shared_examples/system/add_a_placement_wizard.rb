@@ -55,6 +55,20 @@ RSpec.shared_examples "an add a placement wizard" do
           and_i_see_my_placement(school.phase)
           and_i_see_success_message("Placement published")
         end
+
+        it "I am redirected to the add mentor page if I click on the link in the help text" do
+          when_i_visit_the_placements_page
+          and_i_click_on("Add placement")
+          when_i_choose_a_subject(subject_1.name)
+          and_i_click_on("Continue")
+          then_i_see_the_add_year_group_page("Year 1")
+          when_i_choose_a_year_group("Year 1")
+          and_i_click_on("Continue")
+          then_i_see_the_add_a_placement_mentor_page
+          when_i_expand_the_summary_text
+          and_i_click_on("add a mentor")
+          then_i_see_the_new_mentor_page
+        end
       end
 
       context "when I have no mentors" do
@@ -467,6 +481,15 @@ RSpec.shared_examples "an add a placement wizard" do
   def then_i_see_the_placements_page
     expect(page).to have_content("Placements")
     expect(page).to have_content("Add placement")
+  end
+
+  def then_i_see_the_new_mentor_page
+    expect(page).to have_content("Add mentor")
+    expect(page).to have_content("Find teacher")
+  end
+
+  def when_i_expand_the_summary_text
+    find(".govuk-details__summary-text").click
   end
 
   def then_i_see_the_add_year_group_page(year_group)

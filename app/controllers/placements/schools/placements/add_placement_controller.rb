@@ -3,7 +3,7 @@ class Placements::Schools::Placements::AddPlacementController < Placements::Appl
   before_action :set_wizard
   before_action :authorize_placement
 
-  helper_method :step_path, :current_step_path, :back_link_path
+  helper_method :step_path, :current_step_path, :back_link_path, :new_mentor_path
 
   attr_reader :school
 
@@ -23,13 +23,13 @@ class Placements::Schools::Placements::AddPlacementController < Placements::Appl
       placement = @wizard.create_placement
       Placements::PlacementSlackNotifier.placement_created_notification(@school, placement.decorate).deliver_later
       @wizard.reset_state
-      redirect_to update_path(@school), flash: { success: t(".success") }
+      redirect_to after_create_placement_path(@school), flash: { success: t(".success") }
     end
   end
 
   private
 
-  def update_path(school)
+  def after_create_placement_path(school)
     placements_school_placements_path(school)
   end
 
@@ -61,5 +61,9 @@ class Placements::Schools::Placements::AddPlacementController < Placements::Appl
     else
       placements_school_placements_path(@school)
     end
+  end
+
+  def new_mentor_path
+    new_placements_school_mentor_path
   end
 end
