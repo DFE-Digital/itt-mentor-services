@@ -3,7 +3,7 @@ class Placements::Schools::Placements::AddPlacementController < Placements::Appl
   before_action :set_wizard
   before_action :authorize_placement
 
-  helper_method :step_path, :current_step_path, :back_link_path, :new_add_placement_mentor_path
+  helper_method :step_path, :current_step_path, :back_link_path, :add_mentor_path
 
   attr_reader :school
 
@@ -63,7 +63,7 @@ class Placements::Schools::Placements::AddPlacementController < Placements::Appl
     end
   end
 
-  def new_add_placement_mentor_path
+  def add_mentor_path
     new_placements_school_mentor_path
   end
 end
