@@ -106,5 +106,7 @@ scope module: :claims, as: :claims, constraints: {
         end
       end
     end
+
+    get :settings, to: "settings#index"
   end
 end
