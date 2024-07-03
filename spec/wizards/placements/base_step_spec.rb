@@ -16,7 +16,7 @@ RSpec.describe Placements::BaseStep, type: :model do
 
   describe "rendering in a view" do
     it "responds to #to_partial_path" do
-      expect(step.to_partial_path).to eq("choose_burger_step")
+      expect(step.to_partial_path).to eq("placements/wizards/instance_verifying_double/choose_burger_step")
     end
   end
 end
