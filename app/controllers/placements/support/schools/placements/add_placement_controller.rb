@@ -6,7 +6,7 @@ class Placements::Support::Schools::Placements::AddPlacementController < Placeme
     @school = Placements::School.find(school_id)
   end
 
-  def update_path(school)
+  def after_create_placement_path(school)
     placements_support_school_placements_path(school)
   end
 
@@ -20,5 +20,9 @@ class Placements::Support::Schools::Placements::AddPlacementController < Placeme
     else
       placements_support_school_placements_path(@school)
     end
+  end
+
+  def new_mentor_path
+    new_placements_support_school_mentor_path(@school)
   end
 end
