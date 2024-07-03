@@ -72,4 +72,9 @@ DfE::Analytics.configure do |config|
   # in the format of '22-01-2024 19:30..22-01-2024 20:30' (UTC).
   #
   # config.bigquery_maintenance_window = ENV['BIGQUERY_MAINTENANCE_WINDOW']
+
+  # Whether to use azure workload identity federation for authentication
+  # instead of the BigQuery API JSON Key. Note that this also will also
+  # use a new version of the BigQuery streaming APIs.
+  config.azure_federated_auth = true
 end
