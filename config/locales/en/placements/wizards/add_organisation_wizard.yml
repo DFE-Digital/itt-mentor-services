@@ -1,0 +1,24 @@
+en:
+  placements:
+    wizards:
+      add_organisation_wizard:
+        organisation_type_step:
+          caption: Add organisation
+          provider: Teacher training provider
+          school: School
+          title: Organisation type
+          title_with_error: "Error: Organisation type"
+          continue: Continue
+        provider_step:
+          caption: Add organisation
+          continue: Continue
+          title_with_error: "Error: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode."
+          title: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode.
+        provider_check_your_answers_step:
+          add_organisation: Add organisation
+          address: Address
+          contact_details: Contact details
+          title: Check your answers
+        provider_options_step:
+          title: "%{provider_count} results found for ‘%{search_param}’ - Add organisation"
+          title_with_error: "Error: %{provider_count} results found for ‘%{search_param}’- Add organisation"
