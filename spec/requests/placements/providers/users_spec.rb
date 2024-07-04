@@ -5,9 +5,7 @@ RSpec.describe "Provider users", service: :placements, type: :request do
   let(:current_user) { create(:placements_user, providers: [provider]) }
 
   before do
-    user_exists_in_dfe_sign_in(user: current_user)
-    get "/auth/dfe/callback"
-    follow_redirect!
+    sign_in_as current_user
   end
 
   describe "DELETE" do

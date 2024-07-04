@@ -55,10 +55,4 @@ RSpec.describe "Support console / user authorization", service: :placements, typ
       end
     end
   end
-
-  def sign_in_as(user)
-    user_exists_in_dfe_sign_in(user:)
-    get "/auth/dfe/callback"
-    follow_redirect!
-  end
 end

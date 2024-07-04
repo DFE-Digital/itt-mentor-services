@@ -6,11 +6,7 @@ RSpec.describe "Placements", service: :placements, type: :request do
 
     before do
       user = create(:placements_user, schools: [school])
-      user_exists_in_dfe_sign_in(user:)
-
-      get "/auth/dfe/callback"
-
-      follow_redirect!
+      sign_in_as user
     end
 
     context "when editing mentors" do
