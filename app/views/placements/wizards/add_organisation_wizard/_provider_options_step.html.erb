@@ -1,0 +1,16 @@
+<% if provider_options_step.errors.any? %>
+  <% content_for :page_title, t(".title_with_error", provider_count: provider_options_step.providers.count, search_param: provider_options_step.search_params) %>
+<% else %>
+  <% content_for :page_title, t(".title", provider_count: provider_options_step.providers.count, search_param: provider_options_step.search_params) %>
+<% end %>
+
+<%= render OptionsFormComponent.new(
+  model: provider_options_step,
+  scope: provider_options_step.scope,
+  url: current_step_path,
+  search_param: provider_options_step.search_params,
+  records: provider_options_step.providers,
+  records_klass: "provider",
+  back_link: back_link_path,
+  method: :put,
+) %>

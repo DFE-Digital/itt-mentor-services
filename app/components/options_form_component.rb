@@ -2,7 +2,7 @@ class OptionsFormComponent < ApplicationComponent
   OPTIONS_PER_PAGE = 15
 
   attr_reader :model, :url, :search_param, :records, :records_klass,
-              :back_link, :scope, :input_field_name, :title
+              :back_link, :scope, :input_field_name, :title, :method
 
   def initialize(
     model:,
@@ -15,7 +15,8 @@ class OptionsFormComponent < ApplicationComponent
     input_field_name: :id,
     title: I18n.t("components.options_form_component.add_organisation"),
     classes: [],
-    html_attributes: {}
+    html_attributes: {},
+    method: :get
   )
     super(classes:, html_attributes:)
 
@@ -28,6 +29,7 @@ class OptionsFormComponent < ApplicationComponent
     @scope = scope
     @input_field_name = input_field_name
     @title = title
+    @method = method
   end
 
   def form_description
