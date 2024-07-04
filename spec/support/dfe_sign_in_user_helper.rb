@@ -1,8 +1,15 @@
 module DfESignInUserHelper
   def sign_in_as(user)
     user_exists_in_dfe_sign_in(user:)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
+
+    case RSpec.current_example.metadata[:type]
+    when :system
+      visit sign_in_path
+      click_on "Sign in using DfE Sign In"
+    when :request
+      get "/auth/dfe/callback"
+      follow_redirect!
+    end
   end
   alias_method :given_i_sign_in_as, :sign_in_as
 
