@@ -28,6 +28,8 @@ en:
             claim_id: ID
             add_claim: Add claim
             guidance: You can only claim for the academic year September 2023 to July 2024.
+            closing_date_disclaimer_title: Important
+            closing_date_disclaimer: You must submit a claim by 11:59pm on Friday 19 July 2024
             add_mentor_guidance_html: You need to %{link_to} before creating a claim.</p>
             add_a_mentor: add a mentor
           show:

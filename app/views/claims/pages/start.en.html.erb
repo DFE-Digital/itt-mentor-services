@@ -1,4 +1,8 @@
 <div class="govuk-width-container">
+  <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
+    <% notification_banner.with_heading(text: "You must submit a claim by 11:59pm on Friday 19 July 2024") %>
+  <% end %>
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl">Claim funding for mentor training</h1>
@@ -12,7 +16,7 @@
       </p>
 
       <p class="govuk-body">
-        Final closing date for claims: <b>19 July 2024 by 11:59pm<b />
+        You must submit a claim by <strong>11:59pm on Friday 19 July 2024<strong />
       </p>
 
       <p class="govuk-body">
