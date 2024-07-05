@@ -4,8 +4,8 @@ class Placements::AddOrganisationWizard::OrganisationSelectionStep < Placements:
   validate :id_presence
   validate :organisation_already_onboarded?
 
-  def organisation
-    @organisation ||= wizard.organisation_model&.find_by(id:)
+  def id_presence
+    errors.add(:id, :blank) if id.blank?
   end
 
   def organisation_already_onboarded?
@@ -17,6 +17,10 @@ class Placements::AddOrganisationWizard::OrganisationSelectionStep < Placements:
       organisation_name: organisation.name,
       organisation_type: wizard.organisation_type,
     )
+  end
+
+  def organisation
+    @organisation ||= wizard.organisation_model&.find_by(id:)
   end
 
   def scope
