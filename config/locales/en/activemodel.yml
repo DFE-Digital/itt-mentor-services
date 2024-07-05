@@ -30,16 +30,16 @@ en:
           attributes:
             organisation_type:
               blank: Select an organisation type
-        placements/add_organisation_wizard/provider_step:
+        placements/add_organisation_wizard/organisation_step:
           attributes:
             id:
-              already_added: "%{provider_name} has already been added. Try another provider"
-              blank: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode
-        placements/add_organisation_wizard/provider_options_step:
+              already_added: "%{organisation_name} has already been added. Try another %{organisation_type}"
+              blank: Select a %{organisation_type}
+        placements/add_organisation_wizard/organisation_options_step:
           attributes:
             id:
-              already_added: "%{provider_name} has already been added. Try another provider"
-              blank: Select a provider
+              already_added: "%{organisation_name} has already been added. Try another %{organisation_type}"
+              blank: Select a %{organisation_type}
         claims/claim/mentor_training_form:
           attributes:
             custom_hours_completed:
