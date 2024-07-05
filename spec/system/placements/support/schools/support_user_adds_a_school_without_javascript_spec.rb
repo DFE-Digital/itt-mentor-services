@@ -10,7 +10,9 @@ RSpec.describe "Support User adds a School without JavaScript", service: :placem
   end
 
   scenario "Colin adds a new School" do
-    when_i_visit_the_add_school_page
+    when_i_visit_the_add_organisation_page
+    and_choose_to_add_a_school
+    and_i_click_continue
     and_i_enter_a_school_named("Manch")
     and_i_click_continue
     then_i_see_list_of_schools
@@ -24,7 +26,9 @@ RSpec.describe "Support User adds a School without JavaScript", service: :placem
 
   scenario "Colin adds a school which already exists" do
     given_a_school_already_exists_for_placements
-    when_i_visit_the_add_school_page
+    when_i_visit_the_add_organisation_page
+    and_choose_to_add_a_school
+    and_i_click_continue
     and_i_enter_a_school_named("Manch")
     and_i_click_continue
     then_i_see_list_of_schools
@@ -34,13 +38,18 @@ RSpec.describe "Support User adds a School without JavaScript", service: :placem
   end
 
   scenario "Colin submits the search form without selecting a school" do
-    when_i_visit_the_add_school_page
+    when_i_visit_the_add_organisation_page
+    and_choose_to_add_a_school
     and_i_click_continue
-    then_i_see_an_error("Enter a school name, URN or postcode")
+    # and I don't select a school
+    and_i_click_continue
+    then_i_see_an_error("Enter a school name, unique reference number (URN) or postcode")
   end
 
   scenario "Colin submits the options form without selecting a school" do
-    when_i_visit_the_add_school_page
+    when_i_visit_the_add_organisation_page
+    and_choose_to_add_a_school
+    and_i_click_continue
     and_i_enter_a_school_named("Manch")
     and_i_click_continue
     then_i_see_list_of_schools
@@ -49,12 +58,21 @@ RSpec.describe "Support User adds a School without JavaScript", service: :placem
   end
 
   scenario "Colin reconsiders onboarding a school" do
-    given_i_have_completed_the_form_to_onboard("Manchester 1")
-    when_i_click_back
-    then_i_see_the_search_input_pre_filled_with("Manchester 1")
+    when_i_visit_the_add_organisation_page
+    and_choose_to_add_a_school
+    and_i_click_continue
+    and_i_enter_a_school_named("Manch")
     and_i_click_continue
     then_i_see_list_of_schools
     then_i_choose("Manchester 1")
+    and_i_click_continue
+    then_i_see_the_check_details_page_for_school("Manchester 1")
+    when_i_click_back
+    then_i_see_list_of_schools
+    and_the_option_for_school_has_been_pre_selected("Manchester 1")
+    when_i_click_back
+    then_i_see_the_search_input_pre_filled_with("Manch")
+    and_i_click_continue
     and_i_click_continue
     then_i_see_the_check_details_page_for_school("Manchester 1")
   end
@@ -80,12 +98,21 @@ RSpec.describe "Support User adds a School without JavaScript", service: :placem
     and_i_click_sign_in
   end
 
-  def when_i_visit_the_add_school_page
-    visit new_placements_support_school_path
+  def when_i_visit_the_add_organisation_page
+    visit new_add_organisation_placements_support_organisations_path
+
+    then_i_see_support_navigation_with_organisation_selected
+  end
+
+  def then_i_see_support_navigation_with_organisation_selected
+    within(".app-primary-navigation__nav") do
+      expect(page).to have_link "Organisations", current: "page"
+      expect(page).to have_link "Support users", current: "false"
+    end
   end
 
   def and_i_enter_a_school_named(school_name)
-    fill_in "school-id-field", with: school_name
+    fill_in "placements-add-organisation-wizard-organisation-step-id-field", with: school_name
   end
 
   def and_i_click_continue
@@ -144,6 +171,14 @@ RSpec.describe "Support User adds a School without JavaScript", service: :placem
   end
 
   def then_i_see_the_search_input_pre_filled_with(school_name)
-    expect(page.find("#school-id-field").value).to eq(school_name)
+    expect(page.find("#placements-add-organisation-wizard-organisation-step-id-field").value).to eq(school_name)
+  end
+
+  def and_choose_to_add_a_school
+    choose "School"
+  end
+
+  def and_the_option_for_school_has_been_pre_selected(school_name)
+    expect(page).to have_checked_field(school_name)
   end
 end

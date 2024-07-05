@@ -10,8 +10,9 @@ RSpec.describe "Support User adds a Provider without JavaScript", service: :plac
   end
 
   scenario "Colin adds a new Provider" do
-    when_i_visit_the_add_provider_page
-    then_i_see_support_navigation_with_organisation_selected
+    when_i_visit_the_add_organisation_page
+    and_choose_to_add_a_provider
+    and_i_click_continue
     and_i_enter_a_provider_named("Manch")
     and_i_click_continue
     then_i_see_list_of_providers
@@ -25,8 +26,9 @@ RSpec.describe "Support User adds a Provider without JavaScript", service: :plac
 
   scenario "Colin adds a provider which already exists" do
     given_a_provider_already_exists_for_placements
-    when_i_visit_the_add_provider_page
-    then_i_see_support_navigation_with_organisation_selected
+    when_i_visit_the_add_organisation_page
+    and_choose_to_add_a_provider
+    and_i_click_continue
     and_i_enter_a_provider_named("Manch")
     and_i_click_continue
     then_i_see_list_of_providers
@@ -36,15 +38,18 @@ RSpec.describe "Support User adds a Provider without JavaScript", service: :plac
   end
 
   scenario "Colin submits the search form without selecting a provider" do
-    when_i_visit_the_add_provider_page
-    then_i_see_support_navigation_with_organisation_selected
+    when_i_visit_the_add_organisation_page
+    and_choose_to_add_a_provider
+    and_i_click_continue
+    # and I don't select a provider
     and_i_click_continue
     then_i_see_an_error("Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode")
   end
 
   scenario "Colin submits the options form without selecting a provider" do
-    when_i_visit_the_add_provider_page
-    then_i_see_support_navigation_with_organisation_selected
+    when_i_visit_the_add_organisation_page
+    and_choose_to_add_a_provider
+    and_i_click_continue
     and_i_enter_a_provider_named("Manch")
     and_i_click_continue
     then_i_see_list_of_providers
@@ -53,12 +58,21 @@ RSpec.describe "Support User adds a Provider without JavaScript", service: :plac
   end
 
   scenario "Colin reconsiders onboarding a provider" do
-    given_i_have_completed_the_form_to_onboard("Manchester 1")
-    when_i_click_back
-    then_i_see_the_search_input_pre_filled_with("Manchester 1")
+    when_i_visit_the_add_organisation_page
+    and_choose_to_add_a_provider
+    and_i_click_continue
+    and_i_enter_a_provider_named("Manch")
     and_i_click_continue
     then_i_see_list_of_providers
     then_i_choose("Manchester 1")
+    and_i_click_continue
+    then_i_see_the_check_details_page_for_provider("Manchester 1")
+    when_i_click_back
+    then_i_see_list_of_providers
+    and_the_option_for_provider_has_been_pre_selected("Manchester 1")
+    when_i_click_back
+    then_i_see_the_search_input_pre_filled_with("Manch")
+    and_i_click_continue
     and_i_click_continue
     then_i_see_the_check_details_page_for_provider("Manchester 1")
   end
@@ -84,8 +98,10 @@ RSpec.describe "Support User adds a Provider without JavaScript", service: :plac
     and_i_click_sign_in
   end
 
-  def when_i_visit_the_add_provider_page
-    visit new_placements_support_provider_path
+  def when_i_visit_the_add_organisation_page
+    visit new_add_organisation_placements_support_organisations_path
+
+    then_i_see_support_navigation_with_organisation_selected
   end
 
   def then_i_see_support_navigation_with_organisation_selected
@@ -96,7 +112,7 @@ RSpec.describe "Support User adds a Provider without JavaScript", service: :plac
   end
 
   def and_i_enter_a_provider_named(provider_name)
-    fill_in "provider-id-field", with: provider_name
+    fill_in "placements-add-organisation-wizard-organisation-step-id-field", with: provider_name
   end
 
   def and_i_click_continue
@@ -155,6 +171,14 @@ RSpec.describe "Support User adds a Provider without JavaScript", service: :plac
   end
 
   def then_i_see_the_search_input_pre_filled_with(provider_name)
-    expect(page.find("#provider-id-field").value).to eq(provider_name)
+    expect(page.find("#placements-add-organisation-wizard-organisation-step-id-field").value).to eq(provider_name)
+  end
+
+  def and_choose_to_add_a_provider
+    choose "Teacher training provider"
+  end
+
+  def and_the_option_for_provider_has_been_pre_selected(provider_name)
+    expect(page).to have_checked_field(provider_name)
   end
 end

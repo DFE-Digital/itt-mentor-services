@@ -15,6 +15,12 @@ class Placements::AddOrganisationWizard::OrganisationOptionsStep < Placements::A
                        end.map(&:decorate)
   end
 
+  def id_presence
+    return if id.present?
+
+    errors.add(:id, :blank, organisation_type: wizard.organisation_type)
+  end
+
   def search_params
     @search_params ||= search_param || @wizard.steps[:organisation].id
   end

@@ -4,21 +4,6 @@ class Placements::Support::OrganisationsController < Placements::ApplicationCont
     @filters = filters_param
   end
 
-  def new
-    @organisation_form = OrganisationOnboardingForm.new
-  end
-
-  def select_type
-    @organisation_form = OrganisationOnboardingForm.new(
-      organisation_type: organisation_type_param,
-    )
-    if @organisation_form.valid?
-      redirect_to @organisation_form.onboarding_url
-    else
-      render :new
-    end
-  end
-
   private
 
   def organisations
@@ -31,9 +16,5 @@ class Placements::Support::OrganisationsController < Placements::ApplicationCont
 
   def search_param
     params.fetch(:name_or_postcode, "")
-  end
-
-  def organisation_type_param
-    params.dig(:organisation, :organisation_type)
   end
 end

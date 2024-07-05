@@ -4,7 +4,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l"><%= t(".title", organisation_count: @pagy.count) %></h1>
-      <%= govuk_button_to(t(".add_organisation"), new_placements_support_organisation_path, method: :get) %>
+      <%= govuk_button_to(t(".add_organisation"), new_add_organisation_placements_support_organisations_path, method: :get) %>
     </div>
   </div>
   <div class="govuk-grid-row">

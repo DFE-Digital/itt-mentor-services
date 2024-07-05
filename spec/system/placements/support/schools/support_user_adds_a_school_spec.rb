@@ -12,7 +12,9 @@ RSpec.describe "Placements / Support / Schools / Support User adds a School",
   after { Capybara.app_host = nil }
 
   scenario "Colin adds a new School", :js, retry: 3 do
-    when_i_visit_the_add_school_page
+    when_i_visit_the_add_organisation_page
+    and_choose_to_add_a_school
+    and_i_click_continue
     and_i_enter_a_school_named("School 1")
     then_i_see_a_dropdown_item_for("School 1")
     when_i_click_the_dropdown_item_for("School 1")
@@ -26,7 +28,9 @@ RSpec.describe "Placements / Support / Schools / Support User adds a School",
 
   scenario "Colin adds a school which already exists", :js, retry: 3 do
     given_a_school_already_exists_for_placements
-    when_i_visit_the_add_school_page
+    when_i_visit_the_add_organisation_page
+    and_choose_to_add_a_school
+    and_i_click_continue
     and_i_enter_a_school_named("Placements School")
     then_i_see_a_dropdown_item_for("Placements School")
     when_i_click_the_dropdown_item_for("Placements School")
@@ -35,13 +39,23 @@ RSpec.describe "Placements / Support / Schools / Support User adds a School",
   end
 
   scenario "Colin submits the search form without selecting a school", :js, retry: 3 do
-    when_i_visit_the_add_school_page
+    when_i_visit_the_add_organisation_page
+    and_choose_to_add_a_school
     and_i_click_continue
-    then_i_see_an_error("Enter a school name, URN or postcode")
+    # and I don't select a school
+    and_i_click_continue
+    then_i_see_an_error("Enter a school name, unique reference number (URN) or postcode")
   end
 
   scenario "Colin reconsiders onboarding a school", :js, retry: 3 do
-    given_i_have_completed_the_form_to_onboard(school:)
+    when_i_visit_the_add_organisation_page
+    and_choose_to_add_a_school
+    and_i_click_continue
+    and_i_enter_a_school_named("School 1")
+    then_i_see_a_dropdown_item_for("School 1")
+    when_i_click_the_dropdown_item_for("School 1")
+    and_i_click_continue
+    then_i_see_the_check_details_page_for_school("School 1")
     when_i_click_back
     then_i_see_the_search_input_pre_filled_with("School 1")
     and_i_click_continue
@@ -69,12 +83,21 @@ RSpec.describe "Placements / Support / Schools / Support User adds a School",
     and_i_click_sign_in
   end
 
-  def when_i_visit_the_add_school_page
-    visit new_placements_support_school_path
+  def when_i_visit_the_add_organisation_page
+    visit new_add_organisation_placements_support_organisations_path
+
+    then_i_see_support_navigation_with_organisation_selected
+  end
+
+  def then_i_see_support_navigation_with_organisation_selected
+    within(".app-primary-navigation__nav") do
+      expect(page).to have_link "Organisations", current: "page"
+      expect(page).to have_link "Support users", current: "false"
+    end
   end
 
   def and_i_enter_a_school_named(school_name)
-    fill_in "school-id-field", with: school_name
+    fill_in "placements-add-organisation-wizard-organisation-step-id-field", with: school_name
   end
 
   def then_i_see_a_dropdown_item_for(school_name)
@@ -137,7 +160,11 @@ RSpec.describe "Placements / Support / Schools / Support User adds a School",
 
   def then_i_see_the_search_input_pre_filled_with(school_name)
     within(".autocomplete__wrapper") do
-      expect(page.find("#school-id-field").value).to eq(school_name)
+      expect(page.find("#placements-add-organisation-wizard-organisation-step-id-field").value).to eq(school_name)
     end
+  end
+
+  def and_choose_to_add_a_school
+    choose "School"
   end
 end

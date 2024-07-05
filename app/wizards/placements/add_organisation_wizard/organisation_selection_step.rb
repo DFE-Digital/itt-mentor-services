@@ -8,12 +8,6 @@ class Placements::AddOrganisationWizard::OrganisationSelectionStep < Placements:
     @organisation ||= wizard.organisation_model&.find_by(id:)
   end
 
-  def id_presence
-    return if id.present?
-
-    errors.add(:id, :blank, organisation_type: wizard.organisation_type)
-  end
-
   def organisation_already_onboarded?
     return if organisation.blank? || !organisation.placements_service?
 
