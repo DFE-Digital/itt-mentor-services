@@ -1,6 +1,12 @@
 class Placements::AddOrganisationWizard::OrganisationOptionsStep < Placements::AddOrganisationWizard::OrganisationSelectionStep
   attribute :search_param
 
+  def id_presence
+    return if id.present?
+
+    errors.add(:id, :blank, organisation_type: wizard.organisation_type)
+  end
+
   def organisations
     return if wizard.organisation_model.blank?
 
@@ -13,12 +19,6 @@ class Placements::AddOrganisationWizard::OrganisationOptionsStep < Placements::A
                            search_params.downcase,
                          )
                        end.map(&:decorate)
-  end
-
-  def id_presence
-    return if id.present?
-
-    errors.add(:id, :blank, organisation_type: wizard.organisation_type)
   end
 
   def search_params
