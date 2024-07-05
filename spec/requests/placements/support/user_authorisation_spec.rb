@@ -16,6 +16,7 @@ RSpec.describe "Support console / user authorization", service: :placements, typ
       placements_support_school_partner_providers_path(school),
       placements_support_school_mentors_path(school),
       placements_support_school_placements_path(school),
+      add_placement_placements_support_school_placements_path(school, step: :phase),
       placements_support_provider_path(provider),
       placements_support_provider_users_path(provider),
       placements_support_provider_partner_schools_path(provider),
