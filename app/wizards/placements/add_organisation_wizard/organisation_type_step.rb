@@ -1,7 +1,7 @@
 class Placements::AddOrganisationWizard::OrganisationTypeStep < Placements::AddOrganisationWizard::BaseStep
-  ITT_PROVIDER = "provider".freeze
+  PROVIDER = "provider".freeze
   SCHOOL = "school".freeze
-  ORGANISATION_TYPES = [ITT_PROVIDER, SCHOOL].freeze
+  ORGANISATION_TYPES = [PROVIDER, SCHOOL].freeze
 
   attribute :organisation_type
 
@@ -10,8 +10,8 @@ class Placements::AddOrganisationWizard::OrganisationTypeStep < Placements::AddO
   def organisation_types_for_selection
     [
       OpenStruct.new(
-        name: I18n.t("placements.wizards.add_organisation_wizard.organisation_type_step.#{ITT_PROVIDER}"),
-        value: ITT_PROVIDER,
+        name: I18n.t("placements.wizards.add_organisation_wizard.organisation_type_step.#{PROVIDER}"),
+        value: PROVIDER,
       ),
       OpenStruct.new(
         name: I18n.t("placements.wizards.add_organisation_wizard.organisation_type_step.#{SCHOOL}"),
@@ -21,6 +21,10 @@ class Placements::AddOrganisationWizard::OrganisationTypeStep < Placements::AddO
   end
 
   def provider?
-    organisation_type == ITT_PROVIDER
+    organisation_type == PROVIDER
+  end
+
+  def school?
+    organisation_type == SCHOOL
   end
 end

@@ -2,23 +2,27 @@ module Placements
   class AddOrganisationWizard < BaseWizard
     def define_steps
       add_step(OrganisationTypeStep)
-      if steps[:organisation_type].provider?
-        add_step(ProviderStep)
-        add_step(ProviderOptionsStep) if steps[:provider].provider.blank?
-        add_step(ProviderCheckYourAnswersStep)
-      else
-        add_step(SchoolStep)
-        add_step(SchoolOptionsStep) if steps[:school].present?
-        add_step(SchoolCheckYourAnswersStep)
-      end
+      add_step(OrganisationStep)
+      add_step(OrganisationOptionsStep) if steps[:organisation].organisation.blank?
+      add_step(CheckYourAnswersStep)
     end
 
-    def provider
-      steps[:provider_check_your_answers].provider
+    def organisation_type
+      steps[:organisation_type].organisation_type
     end
 
-    def onboard_provider
-      provider.update!(placements_service: true)
+    def organisation_model
+      return if organisation_type.blank?
+
+      organisation_type&.camelize&.constantize
+    end
+
+    def organisation
+      steps[:check_your_answers].organisation
+    end
+
+    def onboard_organisation
+      organisation.update!(placements_service: true)
     end
   end
 end

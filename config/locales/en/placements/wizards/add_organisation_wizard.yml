@@ -9,16 +9,23 @@ en:
           title: Organisation type
           title_with_error: "Error: Organisation type"
           continue: Continue
-        provider_step:
+        organisation_step:
           caption: Add organisation
           continue: Continue
-          title_with_error: "Error: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode."
-          title: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode.
-        provider_check_your_answers_step:
+          title:
+            provider: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode.
+            school: Enter a school name, unique reference number (URN) or postcode
+          title_with_error:
+            provider: "Error: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode."
+            school: "Error: Enter a school name, unique reference number (URN) or postcode"
+        organisation_options_step:
+          title: "%{organisation_count} results found for ‘%{search_param}’ - Add organisation"
+          title_with_error: "Error: %{organisation_count} results found for ‘%{search_param}’- Add organisation"
+        check_your_answers_step:
           add_organisation: Add organisation
           address: Address
           contact_details: Contact details
           title: Check your answers
-        provider_options_step:
-          title: "%{provider_count} results found for ‘%{search_param}’ - Add organisation"
-          title_with_error: "Error: %{provider_count} results found for ‘%{search_param}’- Add organisation"
+          additional_details: Additional details
+          ofsted: Ofsted
+          send: Special educational needs and disabilities (SEND)

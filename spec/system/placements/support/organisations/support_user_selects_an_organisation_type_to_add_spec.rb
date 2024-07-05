@@ -17,7 +17,7 @@ RSpec.describe "Placements / Support / Organisations / Support User Selects An O
   scenario "Colin selects to add a school" do
     when_i_select_the_radio_option("School")
     and_i_click_continue
-    then_i_see_the_title("Enter a school name, URN or postcode")
+    then_i_see_the_title("Enter a school name, unique reference number (URN) or postcode")
   end
 
   scenario "Colin doesn't select an organisation type" do

@@ -16,7 +16,7 @@ class Placements::Support::Organisations::AddOrganisationController < Placements
     elsif @wizard.next_step.present?
       redirect_to step_path(@wizard.next_step)
     else
-      @wizard.onboard_provider
+      @wizard.onboard_organisation
       @wizard.reset_state
       redirect_to placements_support_organisations_path, flash: { success: t(".success") }
     end
