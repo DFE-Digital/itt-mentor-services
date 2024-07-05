@@ -11,8 +11,9 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
   after { Capybara.app_host = nil }
 
   scenario "Colin adds a new Provider", :js, retry: 3 do
-    when_i_visit_the_add_provider_page
-    then_i_see_support_navigation_with_organisation_selected
+    when_i_visit_the_add_organisation_page
+    and_choose_to_add_a_provider
+    and_i_click_continue
     and_i_enter_a_provider_named("Provider 1")
     then_i_see_a_dropdown_item_for("Provider 1")
     when_i_click_the_dropdown_item_for("Provider 1")
@@ -26,8 +27,9 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
 
   scenario "Colin adds a Provider which already exists", :js, retry: 3 do
     given_a_provider_already_as_already_been_onboarded
-    when_i_visit_the_add_provider_page
-    then_i_see_support_navigation_with_organisation_selected
+    when_i_visit_the_add_organisation_page
+    and_choose_to_add_a_provider
+    and_i_click_continue
     and_i_enter_a_provider_named("Provider 1")
     then_i_see_a_dropdown_item_for("Provider 1")
     when_i_click_the_dropdown_item_for("Provider 1")
@@ -36,14 +38,25 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
   end
 
   scenario "Colin submits the search form without selecting a provider", :js, retry: 3 do
-    when_i_visit_the_add_provider_page
-    then_i_see_support_navigation_with_organisation_selected
+    when_i_visit_the_add_organisation_page
+    and_choose_to_add_a_provider
     and_i_click_continue
-    then_i_see_an_error("Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode")
+    # and I don't select a provider
+    and_i_click_continue
+    then_i_see_an_error(
+      "Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode",
+    )
   end
 
   scenario "Colin reconsiders onboarding a provider", :js, retry: 3 do
-    given_i_have_completed_the_form_to_onboard(provider:)
+    when_i_visit_the_add_organisation_page
+    and_choose_to_add_a_provider
+    and_i_click_continue
+    and_i_enter_a_provider_named("Provider 1")
+    then_i_see_a_dropdown_item_for("Provider 1")
+    when_i_click_the_dropdown_item_for("Provider 1")
+    and_i_click_continue
+    then_i_see_the_check_details_page_for_provider("Provider 1")
     when_i_click_back
     then_i_see_the_search_input_pre_filled_with("Provider 1")
     and_i_click_continue
@@ -65,8 +78,10 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
     click_on "Sign in using DfE Sign In"
   end
 
-  def when_i_visit_the_add_provider_page
-    visit new_placements_support_provider_path
+  def when_i_visit_the_add_organisation_page
+    visit new_add_organisation_placements_support_organisations_path
+
+    then_i_see_support_navigation_with_organisation_selected
   end
 
   def then_i_see_support_navigation_with_organisation_selected
@@ -83,7 +98,7 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
   end
 
   def and_i_enter_a_provider_named(provider_name)
-    fill_in "provider-id-field", with: provider_name
+    fill_in "placements-add-organisation-wizard-organisation-step-id-field", with: provider_name
   end
 
   def then_i_see_a_dropdown_item_for(provider_name)
@@ -146,7 +161,11 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
 
   def then_i_see_the_search_input_pre_filled_with(provider_name)
     within(".autocomplete__wrapper") do
-      expect(page.find("#provider-id-field").value).to eq(provider_name)
+      expect(page.find("#placements-add-organisation-wizard-organisation-step-id-field").value).to eq(provider_name)
     end
+  end
+
+  def and_choose_to_add_a_provider
+    choose "Teacher training provider"
   end
 end

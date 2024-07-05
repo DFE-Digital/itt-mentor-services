@@ -24,9 +24,7 @@ scope module: :placements,
       member { get :remove }
     end
 
-    resources :organisations, only: %i[index new] do
-      collection { get :select_type }
-
+    resources :organisations, only: %i[index] do
       collection do
         get "new", to: "organisations/add_organisation#new", as: :new_add_organisation
         get "new/:step", to: "organisations/add_organisation#edit", as: :add_organisation
@@ -34,13 +32,7 @@ scope module: :placements,
       end
     end
 
-    resources :schools, except: %i[edit update] do
-      collection do
-        get :check
-        get :check_school_option
-        get :school_options
-      end
-
+    resources :schools, only: [:show] do
       scope module: :schools do
         resources :users, only: %i[index new create show destroy] do
           member { get :remove }
@@ -75,13 +67,7 @@ scope module: :placements,
       end
     end
 
-    resources :providers, except: %i[edit update] do
-      collection do
-        get :check
-        get :check_provider_option
-        get :provider_options
-      end
-
+    resources :providers, only: [:show] do
       scope module: :providers do
         resources :users, only: %i[index new create show destroy] do
           member { get :remove }

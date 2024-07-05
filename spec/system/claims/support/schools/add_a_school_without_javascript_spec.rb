@@ -132,7 +132,7 @@ RSpec.describe "Support User adds a School without JavaScript", service: :claims
   def given_i_have_completed_the_form_to_onboard(school_name)
     school = School.find_by(name: school_name)
     params = { school: { id: school.id, name: school.name } }
-    visit check_placements_support_schools_path(params)
+    visit check_claims_support_schools_path(params)
   end
 
   def then_i_see_the_search_input_pre_filled_with(school_name)

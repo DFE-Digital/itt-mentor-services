@@ -34,7 +34,8 @@ en:
           attributes:
             id:
               already_added: "%{organisation_name} has already been added. Try another %{organisation_type}"
-              blank: Select a %{organisation_type}
+              provider_blank: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode
+              school_blank: Enter a school name, unique reference number (URN) or postcode
         placements/add_organisation_wizard/organisation_options_step:
           attributes:
             id:
