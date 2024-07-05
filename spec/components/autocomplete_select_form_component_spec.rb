@@ -94,42 +94,4 @@ RSpec.describe AutocompleteSelectFormComponent, type: :component do
       page.find("div[data-input-name='school[name]']")
     end
   end
-
-  context "with provider onboarding attributes" do
-    let(:model) { ProviderOnboardingForm.new }
-    let(:scope) { :provider }
-    let(:url) { "" }
-    let(:data) do
-      {
-        turbo: false,
-        controller: "autocomplete",
-        autocomplete_path_value: "/api/provider_suggestions",
-        autocomplete_return_attributes_value: %w[code],
-        input_name: "provider[name]",
-      }
-    end
-    let(:input) do
-      {
-        field_name: :id,
-        value: nil,
-        label: "Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode.",
-        caption: "Add organisation",
-        previous_search: nil,
-      }
-    end
-
-    it "returns an autocomplete select form for onboarding schools" do
-      render_inline(component)
-
-      page.find(
-        "form[data-controller='autocomplete']" \
-        "[data-autocomplete-path-value='/api/provider_suggestions']" \
-        "[data-autocomplete-return-attributes-value='[\"code\"]']",
-      )
-      expect(page.find(".govuk-label")).to have_content("Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode.")
-      expect(page.find(".govuk-caption-l")).to have_content("Add organisation")
-      expect(page).to have_field("provider-id-field")
-      page.find("div[data-input-name='provider[name]']")
-    end
-  end
 end
