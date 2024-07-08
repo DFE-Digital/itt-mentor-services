@@ -1,4 +1,4 @@
-class Placements::AddOrganisationWizard::OrganisationTypeStep < Placements::AddOrganisationWizard::BaseStep
+class Placements::AddOrganisationWizard::OrganisationTypeStep < Placements::BaseStep
   PROVIDER = "provider".freeze
   SCHOOL = "school".freeze
   ORGANISATION_TYPES = [PROVIDER, SCHOOL].freeze
