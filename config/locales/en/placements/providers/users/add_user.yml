@@ -1,0 +1,9 @@
+en:
+  placements:
+    providers:
+      users:
+        add_user:
+          edit:
+            cancel: Cancel
+          update:
+            success: User added
