@@ -2,8 +2,10 @@
 <% render "claims/support/primary_navigation", current: :organisations %>
 
 <div class="govuk-width-container">
-  <%= govuk_notification_banner(title_text: t(".closing_date_disclaimer_title")) do |notification_banner| %>
-    <% notification_banner.with_heading(text: t(".closing_date_disclaimer")) %>
+  <% if Date.parse("20 July 2024").future? %>
+    <%= govuk_notification_banner(title_text: t(".closing_date_disclaimer_title")) do |notification_banner| %>
+      <% notification_banner.with_heading(text: t(".closing_date_disclaimer")) %>
+    <% end %>
   <% end %>
 
   <h1 class="govuk-heading-l"><%= @school.name %></h1>
