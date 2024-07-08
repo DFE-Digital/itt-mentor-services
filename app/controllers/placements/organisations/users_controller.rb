@@ -10,6 +10,25 @@ class Placements::Organisations::UsersController < Placements::ApplicationContro
 
   def show; end
 
+  # Used only by support
+
+  def new
+    @user_form = params[:user_invite_form].present? ? user_form : UserInviteForm.new
+  end
+
+  def check
+    render :new unless user_form.valid?
+  end
+
+  def create
+    user_form.save!
+    User::Invite.call(user: user_form.user, organisation: @organisation)
+    redirect_to_index
+    flash[:success] = t(".user_added")
+  end
+
+  ############
+
   def remove; end
 
   def destroy
@@ -26,6 +45,16 @@ class Placements::Organisations::UsersController < Placements::ApplicationContro
 
   def users
     @users = @organisation.users
+  end
+
+  def user_params
+    params.require(:user_invite_form)
+          .permit(:first_name, :last_name, :email)
+          .merge({ service: current_service, organisation: @organisation })
+  end
+
+  def user_form
+    @user_form ||= UserInviteForm.new(user_params)
   end
 
   def set_user_membership
