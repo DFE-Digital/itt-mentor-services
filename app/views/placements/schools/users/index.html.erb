@@ -5,7 +5,7 @@
   <h1 class="govuk-heading-l"><%= t(".users") %></h1>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= govuk_button_to(t(".add_user"), new_placements_school_user_path, method: :get) %>
+      <%= govuk_button_to(t(".add_user"), new_add_user_placements_school_users_path, method: :get) %>
       <%= render "placements/organisations/users/list", users: @users, organisation: @organisation %>
     </div>
   </div>

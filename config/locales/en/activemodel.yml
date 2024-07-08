@@ -41,6 +41,17 @@ en:
             id:
               already_added: "%{organisation_name} has already been added. Try another %{organisation_type}"
               blank: Select a %{organisation_type}
+        placements/add_user_wizard/user_step:
+          attributes:
+            first_name:
+              blank: Enter a first name
+            last_name:
+              blank: Enter a last name
+            email:
+              blank: Enter an email address
+              taken: Email address already in use
+              invalid: Enter an email address in the correct format, like name@example.com
+              invalid_support_email: Enter a Department for Education email address in the correct format, like name@education.gov.uk
         claims/claim/mentor_training_form:
           attributes:
             custom_hours_completed:
