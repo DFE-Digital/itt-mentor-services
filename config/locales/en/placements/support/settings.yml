@@ -1,0 +1,8 @@
+en:
+  placements:
+    support:
+      settings:
+        index:
+          heading: Settings
+          background_jobs: Background Jobs
+          emails: Emails

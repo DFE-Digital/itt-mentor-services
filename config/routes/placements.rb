@@ -19,6 +19,10 @@ scope module: :placements,
   namespace :support do
     root to: redirect("/support/organisations")
 
+    get :settings, to: "settings#index"
+
+    resources :mailers, only: :index
+
     resources :support_users do
       collection { get :check }
       member { get :remove }
