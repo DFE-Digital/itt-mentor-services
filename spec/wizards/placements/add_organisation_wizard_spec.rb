@@ -89,6 +89,18 @@ RSpec.describe Placements::AddOrganisationWizard do
       it { is_expected.to eq(Provider) }
     end
 
+    context "when organisation type step is set to nil" do
+      let(:session) do
+        {
+          "Placements::AddOrganisationWizard" => {
+            "organisation_type" => { "organisation_type" => nil },
+          },
+        }
+      end
+
+      it { is_expected.to be_nil }
+    end
+
     context "when organisation type step is not set" do
       it { is_expected.to be_nil }
     end
