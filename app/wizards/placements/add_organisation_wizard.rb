@@ -14,7 +14,7 @@ module Placements
     def organisation_model
       return if organisation_type.blank?
 
-      organisation_type&.camelize&.constantize
+      organisation_type.camelize.constantize
     end
 
     def organisation

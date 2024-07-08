@@ -145,6 +145,16 @@ RSpec.describe Placements::AddOrganisationWizard::OrganisationOptionsStep, type:
         expect(step.organisations).to contain_exactly(york_provider, yorkshire_provider)
       end
     end
+
+    context "when the organisation type is nil" do
+      let(:organisation_type) { nil }
+      let(:organisation_model) { nil }
+      let(:is_provider) { false }
+
+      it "returns nil" do
+        expect(step.organisations).to be_nil
+      end
+    end
   end
 
   describe "search_params" do
