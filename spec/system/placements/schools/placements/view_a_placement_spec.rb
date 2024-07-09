@@ -140,7 +140,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
         when_i_visit_the_placement_show_page
         then_i_see_link(
           text: "Assign a provider",
-          href: edit_provider_placements_school_placement_path(school, placement),
+          href: new_edit_placement_placements_school_placement_path(school, placement, step: :provider),
         )
       end
     end
