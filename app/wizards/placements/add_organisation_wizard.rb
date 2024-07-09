@@ -12,13 +12,15 @@ module Placements
     end
 
     def organisation_model
-      return if organisation_type.blank?
-
-      organisation_type.camelize.constantize
+      {
+        OrganisationTypeStep::PROVIDER => ::Provider,
+        OrganisationTypeStep::SCHOOL => ::School,
+      }[organisation_type]
     end
 
     def organisation
-      steps[:check_your_answers].organisation
+      @organisation ||= (steps[:organisation_options]&.organisation ||
+          steps[:organisation].organisation).decorate
     end
 
     def onboard_organisation

@@ -13,12 +13,10 @@ RSpec.describe Placements::AddOrganisationWizard do
 
     context "when an organisation was selected during the organsation step" do
       let!(:organisation) { create(:school) }
-      let(:session) do
+      let(:state) do
         {
-          "Placements::AddOrganisationWizard" => {
-            "organisation_type" => { "organisation_type" => "school" },
-            "organisation" => { "id" => organisation.id, "name" => organisation.name },
-          },
+          "organisation_type" => { "organisation_type" => "school" },
+          "organisation" => { "id" => organisation.id, "name" => organisation.name },
         }
       end
 
@@ -34,24 +32,16 @@ RSpec.describe Placements::AddOrganisationWizard do
     subject { wizard.organisation_type }
 
     context "when organisation type step is set to school" do
-      let(:session) do
-        {
-          "Placements::AddOrganisationWizard" => {
-            "organisation_type" => { "organisation_type" => "school" },
-          },
-        }
+      let(:state) do
+        { "organisation_type" => { "organisation_type" => "school" } }
       end
 
       it { is_expected.to eq("school") }
     end
 
     context "when organisation type step is set to provider" do
-      let(:session) do
-        {
-          "Placements::AddOrganisationWizard" => {
-            "organisation_type" => { "organisation_type" => "provider" },
-          },
-        }
+      let(:state) do
+        { "organisation_type" => { "organisation_type" => "provider" } }
       end
 
       it { is_expected.to eq("provider") }
@@ -66,24 +56,16 @@ RSpec.describe Placements::AddOrganisationWizard do
     subject { wizard.organisation_model }
 
     context "when organisation type step is set to school" do
-      let(:session) do
-        {
-          "Placements::AddOrganisationWizard" => {
-            "organisation_type" => { "organisation_type" => "school" },
-          },
-        }
+      let(:state) do
+        { "organisation_type" => { "organisation_type" => "school" } }
       end
 
       it { is_expected.to eq(School) }
     end
 
     context "when organisation type step is set to provider" do
-      let(:session) do
-        {
-          "Placements::AddOrganisationWizard" => {
-            "organisation_type" => { "organisation_type" => "provider" },
-          },
-        }
+      let(:state) do
+        { "organisation_type" => { "organisation_type" => "provider" } }
       end
 
       it { is_expected.to eq(Provider) }
@@ -91,11 +73,7 @@ RSpec.describe Placements::AddOrganisationWizard do
 
     context "when organisation type step is set to nil" do
       let(:session) do
-        {
-          "Placements::AddOrganisationWizard" => {
-            "organisation_type" => { "organisation_type" => nil },
-          },
-        }
+        { "organisation_type" => { "organisation_type" => nil } }
       end
 
       it { is_expected.to be_nil }
@@ -109,28 +87,24 @@ RSpec.describe Placements::AddOrganisationWizard do
   describe "#organisation" do
     subject { wizard.organisation }
 
-    context "when organisation as a school" do
+    context "when organisation is a school" do
       let!(:organisation) { create(:school) }
-      let(:session) do
+      let(:state) do
         {
-          "Placements::AddOrganisationWizard" => {
-            "organisation_type" => { "organisation_type" => "school" },
-            "organisation" => { "id" => organisation.id, "name" => organisation.name },
-          },
+          "organisation_type" => { "organisation_type" => "school" },
+          "organisation" => { "id" => organisation.id, "name" => organisation.name },
         }
       end
 
       it { is_expected.to eq(organisation) }
     end
 
-    context "when organisation as a provider" do
+    context "when organisation is a provider" do
       let!(:organisation) { create(:provider) }
-      let(:session) do
+      let(:state) do
         {
-          "Placements::AddOrganisationWizard" => {
-            "organisation_type" => { "organisation_type" => "provider" },
-            "organisation" => { "id" => organisation.id, "name" => organisation.name },
-          },
+          "organisation_type" => { "organisation_type" => "provider" },
+          "organisation" => { "id" => organisation.id, "name" => organisation.name },
         }
       end
 
@@ -141,12 +115,10 @@ RSpec.describe Placements::AddOrganisationWizard do
   describe "#onboard_organisation" do
     context "when organisation as a school" do
       let!(:organisation) { create(:school) }
-      let(:session) do
+      let(:state) do
         {
-          "Placements::AddOrganisationWizard" => {
-            "organisation_type" => { "organisation_type" => "school" },
-            "organisation" => { "id" => organisation.id, "name" => organisation.name },
-          },
+          "organisation_type" => { "organisation_type" => "school" },
+          "organisation" => { "id" => organisation.id, "name" => organisation.name },
         }
       end
 
@@ -160,12 +132,10 @@ RSpec.describe Placements::AddOrganisationWizard do
 
     context "when organisation as a provider" do
       let!(:organisation) { create(:provider) }
-      let(:session) do
+      let(:state) do
         {
-          "Placements::AddOrganisationWizard" => {
-            "organisation_type" => { "organisation_type" => "provider" },
-            "organisation" => { "id" => organisation.id, "name" => organisation.name },
-          },
+          "organisation_type" => { "organisation_type" => "provider" },
+          "organisation" => { "id" => organisation.id, "name" => organisation.name },
         }
       end
 

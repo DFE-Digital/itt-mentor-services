@@ -18,7 +18,7 @@ class Placements::AddOrganisationWizard::OrganisationOptionsStep < Placements::A
                          wizard.organisation_model.search_name_urn_postcode(
                            search_params.downcase,
                          )
-                       end.map(&:decorate)
+                       end.decorate
   end
 
   def search_params

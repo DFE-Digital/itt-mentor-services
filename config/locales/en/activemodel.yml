@@ -41,10 +41,6 @@ en:
             id:
               already_added: "%{organisation_name} has already been added. Try another %{organisation_type}"
               blank: Select a %{organisation_type}
-        placements/add_organisation_wizard/organisation_selection_step:
-          attributes:
-            id:
-              already_added: "%{organisation_name} has already been added. Try another %{organisation_type}"
         claims/claim/mentor_training_form:
           attributes:
             custom_hours_completed:
