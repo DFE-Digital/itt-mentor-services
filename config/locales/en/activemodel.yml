@@ -51,6 +51,11 @@ en:
               blank: Enter an email address
               taken: Email address already in use
               invalid: Enter an email address in the correct format, like name@example.com
+        placements/edit_placement_wizard/provider_step:
+            attributes:
+              provider_id:
+                blank: Select a provider or not yet known
+                inclusion: Select a provider or not yet known
         placements/add_support_user_wizard/support_user_step:
           attributes:
             first_name:
