@@ -10,14 +10,7 @@ class Placements::BaseStep
   end
 
   def to_partial_path
-    wizard_name = class_to_path(wizard.class)
-    step_name = class_to_path(self.class)
-    "placements/wizards/#{wizard_name}/#{step_name}"
-  end
-
-  private
-
-  def class_to_path(klass)
-    klass.name.demodulize.underscore
+    partial_path = self.class.name.underscore.sub("placements/", "")
+    "placements/wizards/#{partial_path}"
   end
 end
