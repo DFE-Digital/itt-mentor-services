@@ -113,7 +113,7 @@ RSpec.describe Placements::AddOrganisationWizard do
   end
 
   describe "#onboard_organisation" do
-    context "when organisation as a school" do
+    context "when organisation is a school" do
       let!(:organisation) { create(:school) }
       let(:state) do
         {
@@ -130,7 +130,7 @@ RSpec.describe Placements::AddOrganisationWizard do
       end
     end
 
-    context "when organisation as a provider" do
+    context "when organisation is a provider" do
       let!(:organisation) { create(:provider) }
       let(:state) do
         {
