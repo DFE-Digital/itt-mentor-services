@@ -125,8 +125,13 @@ scope module: :placements,
       end
 
       resources :placements, only: %i[index update show destroy] do
-        member { get :remove }
-        get :edit_provider, on: :member
+        member do
+          get :remove
+          get "edit", to: "placements/edit_placement#new", as: :new_edit_placement
+          get "edit/:step", to: "placements/edit_placement#edit", as: :edit_placement
+          put "edit/:step", to: "placements/edit_placement#update"
+        end
+
         get :edit_mentors, on: :member
         get :edit_year_group, on: :member
 
