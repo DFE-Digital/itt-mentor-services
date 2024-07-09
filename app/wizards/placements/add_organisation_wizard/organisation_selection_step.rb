@@ -8,10 +8,6 @@ class Placements::AddOrganisationWizard::OrganisationSelectionStep < Placements:
     @organisation_name ||= organisation&.name
   end
 
-  def id_presence
-    errors.add(:id, :blank) if id.blank?
-  end
-
   def organisation_already_onboarded?
     return if organisation.blank? || !organisation.placements_service?
 

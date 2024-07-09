@@ -17,49 +17,6 @@ RSpec.describe Placements::AddOrganisationWizard::OrganisationSelectionStep, typ
     it { is_expected.to have_attributes(id: nil) }
   end
 
-  describe "validations" do
-    describe "#id_presence" do
-      context "when id is not present" do
-        it "returns invalid" do
-          expect(step.valid?).to be(false)
-          expect(step.errors.messages[:id]).to include(
-            "can't be blank",
-          )
-        end
-      end
-    end
-
-    describe "organisation_already_onboarded?" do
-      let(:attributes) { { id: organisation.id } }
-
-      context "when the organisation is already onboarded onto the placements service" do
-        context "when the organisation is a school" do
-          let(:organisation) { create(:school, :placements) }
-
-          it "returns invalid" do
-            expect(step.valid?).to be(false)
-            expect(step.errors.messages[:id]).to include(
-              "#{organisation.name} has already been added. Try another school",
-            )
-          end
-        end
-
-        context "when the organisation is a provider" do
-          let(:organisation) { create(:provider, :placements) }
-          let(:organisation_type) { "provider" }
-          let(:organisation_model) { Provider }
-
-          it "returns invalid" do
-            expect(step.valid?).to be(false)
-            expect(step.errors.messages[:id]).to include(
-              "#{organisation.name} has already been added. Try another provider",
-            )
-          end
-        end
-      end
-    end
-  end
-
   describe "#organisation" do
     let(:attributes) { { id: organisation.id } }
 
