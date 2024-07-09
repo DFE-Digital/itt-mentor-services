@@ -16,10 +16,8 @@ class Placements::AddUserWizard::UserStep < Placements::BaseStep
   end
 
   def user
-    @user ||= begin
-      user = Placements::User.find_or_initialize_by(email:)
+    @user ||= Placements::User.find_or_initialize_by(email:).tap do |user|
       user.assign_attributes(first_name:, last_name:)
-      user
     end
   end
 
