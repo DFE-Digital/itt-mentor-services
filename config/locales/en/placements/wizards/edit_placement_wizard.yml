@@ -1,0 +1,15 @@
+en:
+  placements:
+    wizards:
+      edit_placement_wizard:
+        provider_step:
+          title_with_error: "Error: Provider - Manage a placement"
+          title: Provider - Manage a placement
+          caption: Manage a placement
+          provider: Provider
+          not_known: Not yet known
+          continue: Continue
+          cancel: Cancel
+          help_with_providers: My provider is not listed
+          you_need_to_add_a_provider: You will need to %{link} first.
+          add_a_provider: add a provider
