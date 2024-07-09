@@ -38,14 +38,14 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
         then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
         when_i_click_link(
           text: "Select a mentor",
-          href: edit_mentors_placements_school_placement_path(school, placement),
+          href: new_edit_placement_placements_school_placement_path(school, placement, step: :mentors),
         )
         then_i_should_see_the_edit_mentors_page
         when_i_uncheck("Not yet known")
         when_i_select_mentor_2
         and_i_click_on("Continue")
         then_i_should_see_the_mentor_name_in_the_placement_details(mentor_name: mentor_2.full_name)
-        and_i_see_success_message("Mentor updated")
+        and_i_see_success_message("Mentors updated")
       end
 
       scenario "User does not select a mentor" do
@@ -53,7 +53,7 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
         then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
         when_i_click_link(
           text: "Select a mentor",
-          href: edit_mentors_placements_school_placement_path(school, placement),
+          href: new_edit_placement_placements_school_placement_path(school, placement, step: :mentors),
         )
         when_i_uncheck("Not yet known")
         then_i_should_see_the_edit_mentors_page
@@ -66,7 +66,7 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
         then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
         when_i_click_link(
           text: "Select a mentor",
-          href: edit_mentors_placements_school_placement_path(school, placement),
+          href: new_edit_placement_placements_school_placement_path(school, placement, step: :mentors),
         )
         then_i_should_see_the_edit_mentors_page
         when_i_select_mentor_2
@@ -79,7 +79,7 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
         then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
         when_i_click_link(
           text: "Select a mentor",
-          href: edit_mentors_placements_school_placement_path(school, placement),
+          href: new_edit_placement_placements_school_placement_path(school, placement, step: :mentors),
         )
         then_i_should_see_the_edit_mentors_page
         and_i_click_on("Back")
@@ -97,7 +97,7 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
         )
         when_i_click_link(
           text: "Change",
-          href: edit_mentors_placements_school_placement_path(school, placement),
+          href: new_edit_placement_placements_school_placement_path(school, placement, step: :mentors),
         )
         then_i_should_see_the_edit_mentors_page
         when_i_select_mentor_2
@@ -105,7 +105,7 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
         then_i_should_see_the_mentor_name_in_the_placement_details(
           mentor_name: mentor_2.full_name,
         )
-        and_i_see_success_message("Mentor updated")
+        and_i_see_success_message("Mentors updated")
       end
 
       scenario "User does not select a mentor" do
@@ -115,7 +115,7 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
         )
         when_i_click_link(
           text: "Change",
-          href: edit_mentors_placements_school_placement_path(school, placement),
+          href: new_edit_placement_placements_school_placement_path(school, placement, step: :mentors),
         )
         then_i_should_see_the_edit_mentors_page
         when_i_uncheck(mentor_1.full_name)
@@ -131,7 +131,7 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
         )
         when_i_click_link(
           text: "Change",
-          href: edit_mentors_placements_school_placement_path(school, placement),
+          href: new_edit_placement_placements_school_placement_path(school, placement, step: :mentors),
         )
         then_i_should_see_the_edit_mentors_page
         when_i_select_mentor_2
@@ -148,7 +148,7 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
         )
         when_i_click_link(
           text: "Change",
-          href: edit_mentors_placements_school_placement_path(school, placement),
+          href: new_edit_placement_placements_school_placement_path(school, placement, step: :mentors),
         )
         then_i_should_see_the_edit_mentors_page
         and_i_click_on("Back")
@@ -164,13 +164,13 @@ RSpec.describe "Placements / Schools / Placements / Edit mentors",
         )
         when_i_click_link(
           text: "Change",
-          href: edit_mentors_placements_school_placement_path(school, placement),
+          href: new_edit_placement_placements_school_placement_path(school, placement, step: :mentors),
         )
         then_i_should_see_the_edit_mentors_page
         when_i_select_not_yet_known
         and_i_click_on("Continue")
         then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
-        and_i_see_success_message("Mentor updated")
+        and_i_see_success_message("Mentors updated")
       end
     end
   end

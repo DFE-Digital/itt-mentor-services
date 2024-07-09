@@ -15,7 +15,7 @@ RSpec.describe "Placements / Schools / Placements / Edit a year group",
       )
       when_i_click_link(
         text: "Change",
-        href: edit_year_group_placements_school_placement_path(school, placement),
+        href: new_edit_placement_placements_school_placement_path(school, placement, step: :year_group),
       )
       then_i_should_see_the_edit_year_group_page
       when_i_select "Year 4"
@@ -23,7 +23,7 @@ RSpec.describe "Placements / Schools / Placements / Edit a year group",
       then_i_should_see_the_year_group_in_the_placement_details(
         year_group_name: "Year 4",
       )
-      and_i_see_success_message("Year group updated")
+      and_i_see_success_message("Year Group updated")
     end
   end
 

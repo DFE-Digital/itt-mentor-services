@@ -30,12 +30,12 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     end
 
     context "with no provider" do
-      scenario "User edits the provider" do
+      scenario "User edits the provider", :js do
         when_i_visit_the_placement_show_page
         then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
         when_i_click_link(
           text: "Assign a provider",
-          href: edit_provider_placements_school_placement_path(school, placement),
+          href: new_edit_placement_placements_school_placement_path(school, placement, step: :provider),
         )
         then_i_should_see_the_edit_provider_page
         when_i_select_provider_2
@@ -51,7 +51,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
         then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
         when_i_click_link(
           text: "Assign a provider",
-          href: edit_provider_placements_school_placement_path(school, placement),
+          href: new_edit_placement_placements_school_placement_path(school, placement, step: :provider),
         )
         then_i_should_see_the_edit_provider_page
         and_i_click_on("Continue")
@@ -63,7 +63,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
         then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
         when_i_click_link(
           text: "Assign a provider",
-          href: edit_provider_placements_school_placement_path(school, placement),
+          href: new_edit_placement_placements_school_placement_path(school, placement, step: :provider),
         )
         then_i_should_see_the_edit_provider_page
         when_i_select_provider_2
@@ -76,7 +76,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
         then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
         when_i_click_link(
           text: "Assign a provider",
-          href: edit_provider_placements_school_placement_path(school, placement),
+          href: new_edit_placement_placements_school_placement_path(school, placement, step: :provider),
         )
         then_i_should_see_the_edit_provider_page
         and_i_click_on("Back")
@@ -93,7 +93,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
         )
         when_i_click_link(
           text: "Change",
-          href: edit_provider_placements_school_placement_path(school, placement),
+          href: new_edit_placement_placements_school_placement_path(school, placement, step: :provider),
         )
         then_i_should_see_the_edit_provider_page
         when_i_select_provider_2
@@ -112,14 +112,14 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
         )
         when_i_click_link(
           text: "Change",
-          href: edit_provider_placements_school_placement_path(school, placement),
+          href: new_edit_placement_placements_school_placement_path(school, placement, step: :provider),
         )
         then_i_should_see_the_edit_provider_page
         when_i_choose_not_yet_known
         and_i_click_on("Continue")
         then_i_see_link(
           text: "Assign a provider",
-          href: edit_provider_placements_school_placement_path(school, placement),
+          href: new_edit_placement_placements_school_placement_path(school, placement, step: :provider),
         )
         and_i_see_success_message("Provider updated")
       end
