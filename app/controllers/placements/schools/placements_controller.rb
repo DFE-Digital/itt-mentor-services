@@ -1,6 +1,6 @@
 class Placements::Schools::PlacementsController < Placements::ApplicationController
   before_action :set_school
-  before_action :set_placement, only: %i[show update remove destroy]
+  before_action :set_placement, only: %i[show remove destroy]
   before_action :set_decorated_placement, only: %i[show remove]
 
   def index

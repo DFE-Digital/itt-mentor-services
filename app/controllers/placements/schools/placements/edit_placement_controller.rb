@@ -18,8 +18,6 @@ class Placements::Schools::Placements::EditPlacementController < Placements::App
   def update
     if !@wizard.save_step
       render "edit"
-    elsif @wizard.next_step.present?
-      redirect_to step_path(@wizard.next_step)
     else
       placement = @wizard.update_placement
       Placements::PlacementSlackNotifier.placement_created_notification(@school, placement.decorate).deliver_later
@@ -53,11 +51,7 @@ class Placements::Schools::Placements::EditPlacementController < Placements::App
   end
 
   def back_link_path
-    if @wizard.previous_step.present?
-      step_path(@wizard.previous_step)
-    else
-      placements_school_placement_path(@school, placement)
-    end
+    placements_school_placement_path(@school, placement)
   end
 
   def placement
