@@ -72,7 +72,7 @@ RSpec.describe Placements::AddOrganisationWizard do
     end
 
     context "when organisation type step is set to nil" do
-      let(:session) do
+      let(:state) do
         { "organisation_type" => { "organisation_type" => nil } }
       end
 
