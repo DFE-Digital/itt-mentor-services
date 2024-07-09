@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Placements::AddUserWizard do
   subject(:wizard) { described_class.new(session:, params:, organisation:, current_step: nil) }
 
-  let(:session) { { "Placements::AddPlacementWizard" => state } }
+  let(:session) { { "Placements::AddUserWizard" => state } }
   let(:state) { {} }
   let(:params_data) { {} }
   let(:params) { ActionController::Parameters.new(params_data) }
@@ -21,14 +21,12 @@ RSpec.describe Placements::AddUserWizard do
     let(:first_name) { "John" }
     let(:last_name) { "Doe" }
     let(:email) { "joe_doe@example.com" }
-    let(:session) do
+    let(:state) do
       {
-        "Placements::AddUserWizard" => {
-          "user" => {
-            "first_name" => first_name,
-            "last_name" => last_name,
-            "email" => email,
-          },
+        "user" => {
+          "first_name" => first_name,
+          "last_name" => last_name,
+          "email" => email,
         },
       }
     end
