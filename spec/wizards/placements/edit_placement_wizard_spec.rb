@@ -93,7 +93,7 @@ RSpec.describe Placements::EditPlacementWizard do
         end
 
         it "updates the placement" do
-          expect(edit_wizard.provider).to be nil
+          expect(edit_wizard.provider).to be_nil
         end
       end
     end
@@ -124,4 +124,6 @@ RSpec.describe Placements::EditPlacementWizard do
       end
     end
   end
+
+  describe ""
 end
