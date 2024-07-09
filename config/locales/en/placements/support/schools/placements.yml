@@ -6,6 +6,14 @@ en:
           add_placement:
             edit:
               cancel: Cancel
+              add_placement: Add placement
+          edit_placement:
+            update:
+              success: "%{step_attribute} updated"
+            edit:
+              edit_placement: Manage a placement
+              cancel: Cancel
+            success: Placement updated
           index:
             page_title: Placements
             placements: Placements
