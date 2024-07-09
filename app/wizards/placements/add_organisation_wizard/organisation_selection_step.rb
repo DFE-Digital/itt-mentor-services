@@ -4,6 +4,10 @@ class Placements::AddOrganisationWizard::OrganisationSelectionStep < Placements:
   validate :id_presence
   validate :organisation_already_onboarded?
 
+  def organisation_name
+    @organisation_name ||= organisation&.name
+  end
+
   def id_presence
     errors.add(:id, :blank) if id.blank?
   end

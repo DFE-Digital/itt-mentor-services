@@ -131,4 +131,25 @@ RSpec.describe Placements::AddOrganisationWizard::OrganisationStep, type: :model
       )
     end
   end
+
+  describe "#organisation_name" do
+    context "when organisation is nil" do
+      let(:organisation_type) { nil }
+      let(:organisation_model) { nil }
+      let(:is_provider) { false }
+
+      it "returns nil" do
+        expect(step.organisation_name).to be_nil
+      end
+    end
+
+    context "when organisation is present" do
+      let(:organisation) { create(:school, :placements) }
+      let(:attributes) { { id: organisation.id } }
+
+      it "returns the name of the organisation" do
+        expect(step.organisation_name).to eq(organisation.name)
+      end
+    end
+  end
 end
