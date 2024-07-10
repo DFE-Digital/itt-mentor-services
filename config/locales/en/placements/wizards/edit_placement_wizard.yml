@@ -3,8 +3,8 @@ en:
     wizards:
       edit_placement_wizard:
         provider_step:
-          title_with_error: "Error: Provider - Manage a placement"
-          title: Provider - Manage a placement
+          title_with_error: "Error: Provider - %{contextual_text}"
+          title: Provider - %{contextual_text}
           caption: Manage a placement
           provider: Provider
           not_known: Not yet known

@@ -5,30 +5,30 @@ en:
         edit:
           cancel: Cancel
         phase_step:
-          title: Phase - Add placement
-          title_with_error: "Error: Phase - Add placement"
+          title: Phase - %{contextual_text}
+          title_with_error: "Error: Phase - %{contextual_text}"
           phase: Phase
           primary: Primary
           secondary: Secondary
           continue: Continue
         subject_step:
-          title: Subject - Add placement
-          title_with_error: "Error: Subject - Add placement"
+          title: Subject - %{contextual_text}
+          title_with_error: "Error: Subject - %{contextual_text}"
           subject: Subject
           continue: Continue
         additional_subjects_step:
-          title: Additional subject - Add placement
-          title_with_error: "Error: Additional subject - Add placement"
+          title: Additional subject - %{contextual_text}
+          title_with_error: "Error: Additional subject - %{contextual_text}"
           continue: Continue
         year_group_step:
-          title: Year group - %{caption}
-          title_with_error: "Error: Year group - %{caption}"
+          title: Year group - %{contextual_text}
+          title_with_error: "Error: Year group - %{contextual_text}"
           year_group: Year group
           primary: Primary
           continue: Continue
         mentors_step:
-          title: Mentor - %{caption}
-          title_with_error: "Error: Mentor - %{caption}"
+          title: Mentor - %{contextual_text}
+          title_with_error: "Error: Mentor - %{contextual_text}"
           mentor: Mentor
           continue: Continue
           mentors: Mentors
@@ -37,7 +37,7 @@ en:
           you_need_to_add_a_mentor: "You will need to %{link} first."
           add_a_mentor: add a mentor
         check_your_answers_step:
-          page_title: Check your answers - Add placement
+          page_title: Check your answers - %{contextual_text}
           title: Check your answers
           phase: Phase
           subject: Subject
