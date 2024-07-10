@@ -1,0 +1,11 @@
+en:
+  placements:
+    support:
+      providers:
+        users:
+          add_user:
+            edit:
+              caption: Add user - %{organisation_name}
+              cancel: Cancel
+            update:
+              success: User added

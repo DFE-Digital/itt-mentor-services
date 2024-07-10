@@ -4,6 +4,7 @@ en:
       users:
         add_user:
           edit:
+            caption: Add user
             cancel: Cancel
           update:
             success: User added

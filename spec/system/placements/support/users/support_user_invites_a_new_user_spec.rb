@@ -154,9 +154,9 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   alias_method :and_i_click, :when_i_click
 
   def and_i_enter_the_details_for_a_new_user
-    fill_in "user-invite-form-first-name-field", with: "New"
-    fill_in "user-invite-form-last-name-field", with: "User"
-    fill_in "user-invite-form-email-field", with: "test@example.com"
+    fill_in "First name", with: "New"
+    fill_in "Last name", with: "User"
+    fill_in "Email", with: "test@example.com"
   end
 
   def then_i_see_the_navigation_bars_with_organisations_and_users_selected(organisation)

@@ -10,7 +10,7 @@
 
     <div class="govuk-grid-column-two-thirds">
       <h2 class="govuk-heading-m"><%= t(".heading") %></h2>
-      <%= govuk_button_to(t(".add_user"), new_placements_support_provider_user_path(@provider), method: :get) %>
+      <%= govuk_button_link_to(t(".add_user"), new_add_user_placements_support_provider_users_path(@provider)) %>
 
       <% if @users.any? %>
         <%= app_table do |table| %>

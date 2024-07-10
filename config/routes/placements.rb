@@ -38,9 +38,14 @@ scope module: :placements,
 
     resources :schools, only: [:show] do
       scope module: :schools do
-        resources :users, only: %i[index new create show destroy] do
+        resources :users, only: %i[index show destroy] do
           member { get :remove }
-          collection { get :check }
+
+          collection do
+            get "new", to: "users/add_user#new", as: :new_add_user
+            get "new/:step", to: "users/add_user#edit", as: :add_user
+            put "new/:step", to: "users/add_user#update"
+          end
         end
 
         resources :mentors, only: %i[index new create show destroy] do
@@ -73,9 +78,14 @@ scope module: :placements,
 
     resources :providers, only: [:show] do
       scope module: :providers do
-        resources :users, only: %i[index new create show destroy] do
+        resources :users, only: %i[index show destroy] do
           member { get :remove }
-          collection { get :check }
+
+          collection do
+            get "new", to: "users/add_user#new", as: :new_add_user
+            get "new/:step", to: "users/add_user#edit", as: :add_user
+            put "new/:step", to: "users/add_user#update"
+          end
         end
 
         resources :partner_schools, only: %i[index new create show destroy] do
