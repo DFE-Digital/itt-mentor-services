@@ -28,4 +28,8 @@ class Placements::AddOrganisationWizard::OrganisationSelectionStep < Placements:
     step_name = class_to_path(self.class)
     "placements_#{wizard_name}_#{step_name}"
   end
+
+  def class_to_path(klass)
+    klass.name.demodulize.underscore
+  end
 end
