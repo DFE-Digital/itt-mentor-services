@@ -27,10 +27,10 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
           school_level: "Primary",
           year_group: "Year 1",
           subject: "Primary with science",
-          mentors: ["Not yet known"],
-          provider: "Not yet known",
+          mentors: ["Add a mentor"],
+          provider: "Add a partner provider",
         )
-        and_should_not_see_any_change_links
+        and_i_should_see_link("Change")
       end
     end
 
@@ -46,10 +46,10 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
           school_name: "School 1",
           year_group: "Year 1",
           subject: "Primary with science",
-          mentors: ["Not yet known"],
-          provider: "Not yet known",
+          mentors: ["Add a mentor"],
+          provider: "Add a partner provider",
         )
-        and_should_not_see_any_change_links
+        and_i_should_see_link("Change")
       end
     end
 
@@ -64,10 +64,10 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
         then_i_see_the_placement_details(
           school_name: "School 1",
           subject: "Maths",
-          mentors: ["Not yet known"],
-          provider: "Not yet known",
+          mentors: ["Add a mentor"],
+          provider: "Add a partner provider",
         )
-        and_should_not_see_any_change_links
+        and_i_should_see_link("Add a mentor")
       end
     end
   end
@@ -85,10 +85,10 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
           school_level: "Primary",
           year_group: "Year 1",
           subject: "Primary with science",
-          mentors: ["Not yet known"],
-          provider: "Not yet known",
+          mentors: ["Add a mentor"],
+          provider: "Add a partner provider",
         )
-        and_should_not_see_any_change_links
+        and_i_should_see_link("Change")
       end
     end
 
@@ -105,9 +105,9 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
           year_group: "Year 1",
           subject: "Primary with science",
           mentors: [mentor.full_name],
-          provider: "Not yet known",
+          provider: "Add a partner provider",
         )
-        and_should_not_see_any_change_links
+        and_i_should_see_link("Change")
       end
     end
 
@@ -125,9 +125,9 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
           year_group: "Year 1",
           subject: "Primary with science",
           mentors: placement.mentors.map(&:full_name),
-          provider: "Not yet known",
+          provider: "Add a partner provider",
         )
-        and_should_not_see_any_change_links
+        and_i_should_see_link("Change")
       end
     end
   end
@@ -144,10 +144,10 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
           school_name: "School 1",
           school_level: "Secondary",
           subject: "Maths",
-          mentors: ["Not yet known"],
-          provider: "Not yet known",
+          mentors: ["Add a mentor"],
+          provider: "Add a partner provider",
         )
-        and_should_not_see_any_change_links
+        and_i_should_see_link("Add a mentor")
       end
     end
 
@@ -163,11 +163,11 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
           school_name: "School 1",
           school_level: "Secondary",
           subject: "Maths",
-          mentors: ["Not yet known"],
+          mentors: ["Add a mentor"],
           provider: provider.name,
           status: "Unavailable",
         )
-        and_should_not_see_any_change_links
+        and_i_should_see_link("Change")
       end
     end
   end
@@ -226,10 +226,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
     end
   end
 
-  def and_should_not_see_any_change_links
-    expect(page).not_to have_content("Change")
-    expect(page).not_to have_content("Add a mentor")
-    expect(page).not_to have_content("Assign a provider")
-    expect(page).not_to have_content("Add a partner provider")
+  def and_i_should_see_link(link_text)
+    expect(page).to have_link(link_text)
   end
 end
