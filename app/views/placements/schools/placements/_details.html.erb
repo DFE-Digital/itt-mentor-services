@@ -3,7 +3,7 @@
   <%= render Placement::StatusTagComponent.new(placement:) %>
 </div>
 
-<%= govuk_summary_list(actions: !support) do |summary_list| %>
+<%= govuk_summary_list do |summary_list| %>
   <% if !school.primary_or_secondary_only? %>
     <% summary_list.with_row do |row| %>
       <% row.with_key(text: t(".attributes.placements.school_level")) %>
@@ -28,13 +28,11 @@
     <% summary_list.with_row do |row| %>
       <% row.with_key(text: t(".attributes.placements.year_group")) %>
       <% row.with_value(text: t("placements.schools.placements.year_groups.#{placement.year_group}")) %>
-      <% if !support %>
-        <% row.with_action(
-          text: t(".change"),
-          href: new_edit_placement_placements_school_placement_path(school, step: :year_group),
-          visually_hidden_text: t(".attributes.placements.year_group"),
-        ) %>
-      <% end %>
+      <% row.with_action(
+        text: t(".change"),
+        href: edit_attribute_path(:year_group),
+        visually_hidden_text: t(".attributes.placements.year_group"),
+      ) %>
     <% end %>
   <% end %>
   <% summary_list.with_row do |row| %>
@@ -46,26 +44,24 @@
             <li><%= mentor.full_name %></li>
           <% end %>
         </ul>
-      <% elsif support %>
-        <p><%= t(".not_yet_known") %></p>
       <% elsif school.mentors.any? %>
         <%= govuk_link_to(
           t(".select_a_mentor"),
-          new_edit_placement_placements_school_placement_path(school, step: :mentors),
+          edit_attribute_path(:mentors),
           no_visited_state: true,
         ) %>
       <% else %>
         <%= govuk_link_to(
           t(".add_a_mentor"),
-          placements_school_mentors_path,
+          add_mentor_path,
           no_visited_state: true,
         ) %>
       <% end %>
     <% end %>
-    <% if !support && placement.mentors.any? %>
+    <% if placement.mentors.any? %>
       <% row.with_action(
         text: t(".change"),
-        href: new_edit_placement_placements_school_placement_path(school, step: :mentors),
+        href: edit_attribute_path(:mentors),
         visually_hidden_text: t(".attributes.placements.mentor"),
       ) %>
     <% end %>
@@ -75,26 +71,24 @@
     <% row.with_value do %>
       <% if placement.provider.present? %>
         <%= placement.provider_name %>
-      <% elsif support %>
-        <p><%= t(".not_yet_known") %></p>
       <% elsif school.partner_providers.any? %>
         <%= govuk_link_to(
           t(".assign_a_provider"),
-          new_edit_placement_placements_school_placement_path(school, step: :provider),
+          edit_attribute_path(:provider),
           no_visited_state: true,
         ) %>
       <% else %>
         <%= govuk_link_to(
           t(".add_a_partner_provider"),
-          placements_school_partner_providers_path,
+          add_provider_path,
           no_visited_state: true,
         ) %>
       <% end %>
     <% end %>
-    <% if !support && placement.provider.present? %>
+    <% if placement.provider.present? %>
       <% row.with_action(
         text: t(".change"),
-        href: new_edit_placement_placements_school_placement_path(school, step: :provider),
+        href: edit_attribute_path(:provider),
         visually_hidden_text: t(".attributes.placements.provider"),
       ) %>
     <% end %>
