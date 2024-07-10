@@ -33,10 +33,6 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
     @placement = @placement.decorate
   end
 
-  def authorize_placement
-    authorize @placement
-  end
-
   def edit_attribute_path(attribute)
     new_edit_placement_placements_school_placement_path(@school, @placement, step: attribute)
   end
