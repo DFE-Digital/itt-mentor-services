@@ -24,7 +24,7 @@
         text: embedded_link_text(
           t(".you_need_to_add_a_provider",
             link: govuk_link_to(
-              t(".add_a_provider"), placements_school_partner_providers_path(@school), no_visited_state: true
+              t(".add_a_provider"), unlisted_provider_path, no_visited_state: true
             )),
         ),
       ) %>

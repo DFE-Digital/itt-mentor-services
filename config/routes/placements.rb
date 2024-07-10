@@ -59,7 +59,13 @@ scope module: :placements,
         end
 
         resources :placements, only: %i[index new create show destroy] do
-          member { get :remove }
+          member do
+            get :remove
+            get "edit", to: "placements/edit_placement#new", as: :new_edit_placement
+            get "edit/:step", to: "placements/edit_placement#edit", as: :edit_placement
+            put "edit/:step", to: "placements/edit_placement#update"
+          end
+
           collection { get :check }
 
           collection do
