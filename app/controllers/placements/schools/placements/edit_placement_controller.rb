@@ -34,7 +34,7 @@ class Placements::Schools::Placements::EditPlacementController < Placements::App
   end
 
   def set_wizard
-    current_step = params[:step]&.to_sym
+    current_step = params.fetch(:step).to_sym
     @wizard = Placements::EditPlacementWizard.new(school:, placement:, session:, params:, current_step:)
   end
 
