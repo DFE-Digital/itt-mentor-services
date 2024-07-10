@@ -1,4 +1,4 @@
-<%= content_for :page_title, sanitize(t(".page_title")) %>
+<%= content_for :page_title, sanitize(t(".page_title", contextual_text:)) %>
 
 <%= form_for(check_your_answers_step, url: current_step_path, method: :put) do |f| %>
   <%= f.govuk_error_summary %>
@@ -6,7 +6,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l">
-        <%= caption %>
+        <%= contextual_text %>
       </span>
 
       <span class="govuk-heading-l">

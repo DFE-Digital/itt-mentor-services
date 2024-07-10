@@ -1,11 +1,11 @@
-<% content_for :page_title, mentors_step.errors.any? ? t(".title_with_error", caption:) : t(".title", caption:) %>
+<% content_for :page_title, mentors_step.errors.any? ? t(".title_with_error", contextual_text:) : t(".title", contextual_text:) %>
 
 <%= form_for(mentors_step, url: current_step_path, method: :put) do |f| %>
   <%= f.govuk_error_summary %>
 
   <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <span class="govuk-caption-l"><%= caption %></span>
+        <span class="govuk-caption-l"><%= contextual_text %></span>
 
         <%= f.govuk_check_boxes_fieldset :mentor_ids, legend: { size: "l", text: t(".mentor") } do %>
           <% mentors_step.mentors_for_selection.each_with_index do |mentor, index| %>
