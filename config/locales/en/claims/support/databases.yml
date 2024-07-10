@@ -1,0 +1,6 @@
+en:
+  claims:
+    support:
+      databases:
+        destroy:
+          success: Database has been reset

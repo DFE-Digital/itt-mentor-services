@@ -1,0 +1,7 @@
+code.inline-code {
+  color: govuk-shade(govuk-colour("dark-grey"), 50%);
+  background-color: govuk-tint(govuk-colour("dark-grey"), 85%);
+  padding: govuk-spacing(1) / 3 * 2 govuk-spacing(1);
+  font-family: monospace;
+  font-size: 1rem;
+}

@@ -1,0 +1,32 @@
+<% content_for :page_title, "Reset database" %>
+<% render "claims/support/primary_navigation", current: :settings %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: claims_support_settings_path) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <span class="govuk-caption-l">Reset database</span>
+  <h1 class="govuk-heading-l">Are you sure you want to reset the <%= govuk_tag text: hosting_environment_phase(current_service), colour: hosting_environment_color, classes: "govuk-tag--middle" %> database?</h1>
+
+  <p class="govuk-body">This action will truncate the following tables:</p>
+
+  <%= govuk_list type: :bullet do %>
+    <%= tag.li tag.code("claims", class: "inline-code") %>
+    <%= tag.li tag.code("mentor_memberships WHERE mentor_memberships.type = 'Claims::MentorMembership'", class: "inline-code") %>
+  <% end %>
+
+  <p class="govuk-body">It will also perform the following data updates:</p>
+
+  <%= govuk_list type: :bullet, spaced: true do %>
+    <%= tag.li do %>
+      <div>Reset all grant conditions acceptances for all schools</div>
+      <div><code class="inline-code">schools.claims_grant_conditions_accepted_at = null</code></div>
+      <div><code class="inline-code">schools.claims_grant_conditions_accepted_by_id = null</code></div>
+    <% end %>
+  <% end %>
+
+  <%= govuk_button_to "Reset database", claims_support_database_path, warning: true, method: :delete, class: "govuk-button--warning" %>
+
+  <%= govuk_link_to "Cancel", claims_support_settings_path, no_visited_state: true %>
+</div>
