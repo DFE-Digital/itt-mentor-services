@@ -2,6 +2,8 @@ class Placements::Support::Schools::PlacementsController < Placements::Applicati
   before_action :set_school
   before_action :set_placement, except: %i[index]
 
+  helper_method :edit_attribute_path, :add_provider_path, :add_mentor_path
+
   def index
     @pagy, placements = pagy(@school.placements.includes(:subject, :mentors).order("subjects.name"))
     @placements = placements.decorate
@@ -24,5 +26,17 @@ class Placements::Support::Schools::PlacementsController < Placements::Applicati
 
   def set_placement
     @placement = @school.placements.find(params.fetch(:id)).decorate
+  end
+
+  def edit_attribute_path(attribute)
+    new_edit_placement_placements_support_school_placement_path(@school, @placement, step: attribute)
+  end
+
+  def add_provider_path
+    placements_support_school_partner_providers_path
+  end
+
+  def add_mentor_path
+    placements_support_school_mentors_path
   end
 end
