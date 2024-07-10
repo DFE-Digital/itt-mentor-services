@@ -6,3 +6,4 @@ en:
           heading: Settings
           background_jobs: Background Jobs
           emails: Emails
+          reset_database: Reset database

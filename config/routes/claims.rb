@@ -52,6 +52,12 @@ scope module: :claims, as: :claims, constraints: {
   namespace :support do
     root to: redirect("/support/schools")
 
+    unless HostingEnvironment.env.production?
+      resource :database, only: %i[destroy] do
+        get :remove
+      end
+    end
+
     resources :claims, only: %i[index show] do
       get :download_csv, on: :collection
     end
