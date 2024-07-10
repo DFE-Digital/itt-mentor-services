@@ -5,7 +5,7 @@
 <% end %>
 
 <div class="govuk-width-container">
-  <%= render @wizard.step, object: @wizard.step %>
+  <%= render @wizard.step, object: @wizard.step, caption: t(".caption") %>
 
   <p class="govuk-body">
     <%= govuk_link_to(t(".cancel"), placements_provider_users_path(@organisation), no_visited_state: true) %>

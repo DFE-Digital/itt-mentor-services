@@ -1,9 +1,0 @@
-<%= content_for :page_title, t(".page_title") %>
-<%= render "placements/providers/primary_navigation", current_navigation: :users, provider: @organisation %>
-<%= content_for(:before_content) do %>
-  <%= govuk_back_link(href: new_placements_provider_user_path(
-    @user_form.as_form_params.merge(provider_id: @organisation.id),
-  )) %>
-<% end %>
-
-<%= render "placements/organisations/users/check_form", user: @user_form, organisation: @organisation %>

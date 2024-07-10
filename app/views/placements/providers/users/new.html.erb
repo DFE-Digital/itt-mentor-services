@@ -1,9 +1,0 @@
-<%= content_for :page_title, @user_form.errors.any? ? t(".page_title_with_error") : t(".page_title") %>
-<%= render "placements/providers/primary_navigation", current_navigation: :users, provider: @organisation %>
-<%= content_for(:before_content) do %>
-  <%= govuk_back_link(href: placements_provider_users_path(@organisation)) %>
-<% end %>
-
-<div class="govuk-width-container">
-  <%= render "placements/organisations/users/new_form", user: @user_form, organisation: @organisation %>
-</div>
