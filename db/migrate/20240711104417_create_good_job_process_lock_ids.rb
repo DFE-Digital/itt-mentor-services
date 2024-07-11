@@ -8,9 +8,11 @@ class CreateGoodJobProcessLockIds < ActiveRecord::Migration[7.1]
       end
     end
 
-    change_table :good_jobs, bulk: true do |t|
-      t.uuid :locked_by_id
-      t.datetime :locked_at
+    safety_assured do
+      change_table :good_jobs, bulk: true do |t|
+        t.uuid :locked_by_id
+        t.datetime :locked_at
+      end
     end
 
     add_column :good_job_executions, :process_id, :uuid
