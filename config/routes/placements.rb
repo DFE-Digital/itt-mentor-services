@@ -23,9 +23,14 @@ scope module: :placements,
 
     resources :mailers, only: :index
 
-    resources :support_users do
-      collection { get :check }
+    resources :support_users, only: %i[index show destroy] do
       member { get :remove }
+
+      collection do
+        get "new", to: "support_users/add_support_user#new", as: :new_add_support_user
+        get "new/:step", to: "support_users/add_support_user#edit", as: :add_support_user
+        put "new/:step", to: "support_users/add_support_user#update"
+      end
     end
 
     resources :organisations, only: %i[index] do

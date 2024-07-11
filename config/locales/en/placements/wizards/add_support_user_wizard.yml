@@ -1,0 +1,19 @@
+en:
+  placements:
+    wizards:
+      add_support_user_wizard:
+        support_user_step:
+          title_with_error: "Error: Personal details - Add support user"
+          title: Personal details - Add support user
+          add_support_user: Add support user
+          continue: Continue
+          personal_details: Personal details
+          email:
+            hint: Email must be a valid Department for Education address, like name@education.gov.uk.
+        check_your_answers_step:
+          page_title: Check your answers - Add support user
+          add_support_user: Add support user
+          check_your_answers: Check your answers
+          submit: Add support user
+          change: Change
+          warning: The support user will be sent an email to tell them you’ve added them to Manage school placements.
