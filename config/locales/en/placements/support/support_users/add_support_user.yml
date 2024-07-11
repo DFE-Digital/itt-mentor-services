@@ -1,0 +1,9 @@
+en:
+  placements:
+    support:
+      support_users:
+        add_support_user:
+          edit:
+            cancel: Cancel
+          update:
+            success: Support user added

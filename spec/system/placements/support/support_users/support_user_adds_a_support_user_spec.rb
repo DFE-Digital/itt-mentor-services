@@ -116,7 +116,7 @@ RSpec.describe "Placements / Support Users / Support user adds a support user",
 
   def then_i_should_see_the_support_user_form_with(email_address:)
     within("form") do
-      expect(page).to have_field("support_user[email]", with: email_address)
+      expect(page).to have_field("Email address", with: email_address)
     end
   end
 
