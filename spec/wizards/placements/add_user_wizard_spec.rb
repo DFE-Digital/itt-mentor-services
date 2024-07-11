@@ -34,7 +34,7 @@ RSpec.describe Placements::AddUserWizard do
     context "when the user does not already exist" do
       context "when the organisation is a school" do
         it "creates a new user, and a membership between the user and school" do
-          expect { wizard.create_user }.to change(
+          expect { create_user }.to change(
             Placements::User, :count
           ).by(1).and change(UserMembership, :count).by(1)
 
@@ -47,7 +47,7 @@ RSpec.describe Placements::AddUserWizard do
         let(:organisation) { create(:placements_provider) }
 
         it "creates a new user, and a membership between the user and provider" do
-          expect { wizard.create_user }.to change(
+          expect { create_user }.to change(
             Placements::User, :count
           ).by(1).and change(UserMembership, :count).by(1)
 
@@ -62,7 +62,7 @@ RSpec.describe Placements::AddUserWizard do
 
       context "when the organisation is a school" do
         it "creates a membership between the user and school" do
-          expect { wizard.create_user }.to not_change(
+          expect { create_user }.to not_change(
             Placements::User, :count
           ).and change(UserMembership, :count).by(1)
 
@@ -74,7 +74,7 @@ RSpec.describe Placements::AddUserWizard do
         let(:organisation) { create(:placements_provider) }
 
         it "creates a membership between the user and provider" do
-          expect { wizard.create_user }.to not_change(
+          expect { create_user }.to not_change(
             Placements::User, :count
           ).and change(UserMembership, :count).by(1)
 
@@ -93,7 +93,7 @@ RSpec.describe Placements::AddUserWizard do
       end
 
       it "returns an error" do
-        expect { wizard.create_user }.to raise_error("Invalid wizard state")
+        expect { create_user }.to raise_error("Invalid wizard state")
       end
     end
   end

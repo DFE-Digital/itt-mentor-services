@@ -40,7 +40,6 @@ RSpec.describe Placements::AddUserWizard::UserStep, type: :model do
         let(:membership) { create(:user_membership, user:, organisation:) }
 
         before do
-          user
           membership
         end
 
@@ -69,10 +68,25 @@ RSpec.describe Placements::AddUserWizard::UserStep, type: :model do
       context "when the user already exists" do
         let!(:existing_user) { create(:placements_user, first_name:, last_name:, email:) }
 
-        it "returns the exist user record" do
+        it "returns the existing user record" do
           user = step.user
           expect(user.new_record?).to be(false)
           expect(user).to eq(existing_user)
+        end
+      end
+
+      context "when the first name or last name do not match the user record attributes" do
+        let!(:existing_user) { create(:placements_user, first_name: "Jake", last_name: "Bloggs", email:) }
+
+        it "returns the existing user record, with reassigned attributes" do
+          user = step.user
+          expect(user.new_record?).to be(false)
+          expect(user.id).to eq(existing_user.id)
+          expect(user.email).to eq(existing_user.email)
+          expect(user.first_name).not_to eq(existing_user.first_name)
+          expect(user.first_name).to eq(first_name)
+          expect(user.last_name).not_to eq(existing_user.last_name)
+          expect(user.last_name).to eq(last_name)
         end
       end
     end
