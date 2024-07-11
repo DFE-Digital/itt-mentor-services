@@ -44,10 +44,6 @@ RSpec.describe "Placements school user adds mentors to schools", service: :place
   end
 
   scenario "I do not enter a date of birth" do
-    stub_valid_teaching_record_response(trn: "1212121",
-                                        date_of_birth: Struct.new(:day, :month, :year).new(nil, nil, nil).to_s,
-                                        mentor: placements_mentor)
-
     given_i_navigate_to_schools_mentors_list
     and_i_click_on("Add mentor")
     when_i_enter_trn(1_212_121)
