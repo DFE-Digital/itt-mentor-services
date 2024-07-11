@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class CreateGoodJobProcessLockIds < ActiveRecord::Migration[7.1]
   def change
     reversible do |dir|
@@ -10,8 +8,11 @@ class CreateGoodJobProcessLockIds < ActiveRecord::Migration[7.1]
       end
     end
 
-    add_column :good_jobs, :locked_by_id, :uuid
-    add_column :good_jobs, :locked_at, :datetime
+    change_table :good_jobs, bulk: true do |t|
+      t.uuid :locked_by_id
+      t.datetime :locked_at
+    end
+
     add_column :good_job_executions, :process_id, :uuid
     add_column :good_job_processes, :lock_type, :integer, limit: 2
   end
