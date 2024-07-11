@@ -6,3 +6,4 @@ To align on scalable best practices, we've documented various code conventions a
 - [Mailers](/docs/conventions/mailers.md)
 - [Service Objects](/docs/conventions/service_objects.md)
 - [View Components](/docs/conventions/view_components.md)
+- [Wizards](/docs/conventions/wizards.md)
