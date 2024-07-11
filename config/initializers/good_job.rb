@@ -18,4 +18,9 @@ Rails.application.configure do
   # Disabled in development and test so scheduled jobs don't run automatically
   config.good_job.enable_cron = Rails.env.production?
   config.good_job.cron = scheduled_jobs || {}
+
+  # Clean up completed jobs after 3 days
+  # A few days affords us time to investigate/debug jobs after they've run,
+  # but is short enough that we don't fill up the database unnecessarily.
+  config.good_job.cleanup_preserved_jobs_before_seconds_ago = 3.days
 end
