@@ -12,7 +12,7 @@ class MentorBuilder
   def call
     mentor = Mentor.find_or_initialize_by(trn:).becomes(mentor_class)
     return mentor if mentor.invalid_attributes?(:trn)
-    return mentor if date_of_birth.nil?
+    return mentor if date_of_birth.nil? || !date_of_birth.is_a?(Date)
 
     mentor.assign_attributes(
       first_name: teacher["firstName"],
