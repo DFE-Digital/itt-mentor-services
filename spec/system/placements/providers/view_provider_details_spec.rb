@@ -65,7 +65,7 @@ RSpec.describe "Placements / Providers / View provider details", service: :place
     expect(page).to have_content("london_provider@example.com")
     expect(page).to have_content("Address")
     expect(page).to have_content(
-      "London Provider London City of London LN12 123"
+      "London Provider London City of London LN12 123",
     )
   end
 end
