@@ -8,7 +8,7 @@ RSpec.shared_examples "a mentor builder" do
     let(:date_of_birth) { "1991-01-22" }
 
     it "returns mentor object with error on trn" do
-      mentor = described_class.call(trn:, date_of_birth:)
+      mentor = described_class.call(trn:, date_of_birth: Date.parse(date_of_birth))
       expect(mentor.class).to eq(mentor_class)
       expect(mentor.errors[:trn]).to include "Enter a 7 digit teacher reference number (TRN)"
     end
@@ -19,7 +19,7 @@ RSpec.shared_examples "a mentor builder" do
     let(:date_of_birth) { "1991-01-22" }
 
     it "returns mentor object with error on trn" do
-      mentor = described_class.call(trn:, date_of_birth:)
+      mentor = described_class.call(trn:, date_of_birth: Date.parse(date_of_birth))
       expect(mentor.class).to eq(mentor_class)
       expect(mentor.errors[:trn]).to include "Enter a teacher reference number (TRN)"
     end
@@ -29,7 +29,7 @@ RSpec.shared_examples "a mentor builder" do
     let(:date_of_birth) { "1991-01-22" }
 
     it "returns an error with missing keyword: trn" do
-      expect { described_class.call(date_of_birth:) }.to raise_error(ArgumentError, "missing keyword: :trn")
+      expect { described_class.call(date_of_birth: Date.parse(date_of_birth)) }.to raise_error(ArgumentError, "missing keyword: :trn")
     end
   end
 
@@ -43,7 +43,7 @@ RSpec.shared_examples "a mentor builder" do
     end
 
     it "returns existing mentor" do
-      mentor = described_class.call(trn:, date_of_birth:)
+      mentor = described_class.call(trn:, date_of_birth: Date.parse(date_of_birth))
       expect(mentor).to eq existing_mentor
     end
   end
@@ -57,7 +57,7 @@ RSpec.shared_examples "a mentor builder" do
     end
 
     it "returns initialized placements mentor record without errors" do
-      mentor = described_class.call(trn:, date_of_birth:)
+      mentor = described_class.call(trn:, date_of_birth: Date.parse(date_of_birth))
       expect(mentor.class).to eq(mentor_class)
       expect(mentor.trn).to eq trn
       expect(mentor.first_name).to eq teacher_object["firstName"]
@@ -78,7 +78,7 @@ RSpec.shared_examples "a mentor builder" do
     end
 
     it "returns initialized placements mentor record with first and last name" do
-      mentor = described_class.call(trn:, first_name:, last_name:, date_of_birth:)
+      mentor = described_class.call(trn:, first_name:, last_name:, date_of_birth: Date.parse(date_of_birth))
       expect(mentor.class).to eq(mentor_class)
       expect(mentor.trn).to eq trn
       expect(mentor.first_name).to eq first_name
