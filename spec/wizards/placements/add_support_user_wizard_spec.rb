@@ -37,7 +37,7 @@ RSpec.describe Placements::AddSupportUserWizard do
         ).by(1)
 
         support_user = Placements::SupportUser.find_by(first_name:, last_name:, email:)
-        expect(support_user.present?).to be(true)
+        expect(support_user).to be_present
       end
     end
 
@@ -63,6 +63,26 @@ RSpec.describe Placements::AddSupportUserWizard do
 
         support_user.reload
         expect(support_user.discarded?).to be(false)
+      end
+
+      context "when the first name or last name do not match the record attributes" do
+        let(:support_user) do
+          create(:placements_support_user,
+                 first_name: "Jake",
+                 last_name: "Bloggs",
+                 email:)
+        end
+
+        it "updates the existing support user record's first and last name" do
+          expect { create_support_user }.to change(
+            Placements::SupportUser, :count
+          ).by(1)
+
+          support_user.reload
+          expect(support_user.discarded?).to be(false)
+          expect(support_user.first_name).to eq(first_name)
+          expect(support_user.last_name).to eq(last_name)
+        end
       end
     end
   end

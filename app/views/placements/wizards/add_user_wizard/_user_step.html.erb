@@ -10,13 +10,13 @@
 
       <div class="govuk-form-group">
         <%= f.govuk_text_field :first_name,
-                               class: "govuk-input--width-20",
+                               width: 20,
                                label: { text: User.human_attribute_name(:first_name), size: "s" } %>
       </div>
 
       <div class="govuk-form-group">
         <%= f.govuk_text_field :last_name,
-                               class: "govuk-input--width-20",
+                               width: 20,
                                label: { text: User.human_attribute_name(:last_name), size: "s" } %>
       </div>
 

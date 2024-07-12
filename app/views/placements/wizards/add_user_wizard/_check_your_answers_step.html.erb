@@ -16,27 +16,22 @@
             <% row.with_value(text: @wizard.steps[:user].first_name) %>
             <% row.with_action(text: t(".change"),
                                href: step_path(:user),
-                               html_attributes: {
-                                 class: "govuk-link--no-visited-state",
-                               }) %>
+                               classes: ["govuk-link--no-visited-state"]) %>
           <% end %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: User.human_attribute_name(:last_name)) %>
             <% row.with_value(text: @wizard.steps[:user].last_name) %>
             <% row.with_action(text: t(".change"),
                                href: step_path(:user),
-                               html_attributes: {
-                                 class: "govuk-link--no-visited-state",
-                               }) %>
+                               classes: ["govuk-link--no-visited-state"]) %>
+
           <% end %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: User.human_attribute_name(:email)) %>
             <% row.with_value(text: @wizard.steps[:user].email) %>
             <% row.with_action(text: t(".change"),
                                href: step_path(:user),
-                               html_attributes: {
-                                 class: "govuk-link--no-visited-state",
-                               }) %>
+                               classes: ["govuk-link--no-visited-state"]) %>
           <% end %>
         <% end %>
 
