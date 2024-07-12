@@ -19,8 +19,8 @@
           <% summary_list.with_row do |row| %>
             <% row.with_key { t(".phase") } %>
             <% row.with_value(text: @wizard.steps[:phase].phase) %>
-            <% row.with_action(text: t(".change"), 
-                               href: step_path(:phase), 
+            <% row.with_action(text: t(".change"),
+                               href: step_path(:phase),
                                visually_hidden_text: t(".phase"),
                                classes: ["govuk-link--no-visited-state"]) %>
           <% end %>
@@ -29,8 +29,8 @@
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t(".subject")) %>
           <% row.with_value(text: @wizard.steps[:subject].subject_name) %>
-          <% row.with_action(text: t(".change"), 
-                             href: step_path(:subject), 
+          <% row.with_action(text: t(".change"),
+                             href: step_path(:subject),
                              visually_hidden_text: t(".subject"),
                              classes: ["govuk-link--no-visited-state"]) %>
         <% end %>
@@ -39,8 +39,8 @@
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".additional_subjects")) %>
             <% row.with_value(text: @wizard.steps[:additional_subjects].additional_subject_names) %>
-            <% row.with_action(text: t(".change"), 
-                               href: step_path(:additional_subjects), 
+            <% row.with_action(text: t(".change"),
+                               href: step_path(:additional_subjects),
                                visually_hidden_text: t(".additional_subjects"),
                                classes: ["govuk-link--no-visited-state"]) %>
           <% end %>
@@ -50,8 +50,8 @@
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".year_group")) %>
             <% row.with_value(text: t("placements.schools.placements.year_groups.#{@wizard.steps[:year_group].year_group}")) %>
-            <% row.with_action(text: t(".change"), 
-                               href: step_path(:year_group), 
+            <% row.with_action(text: t(".change"),
+                               href: step_path(:year_group),
                                visually_hidden_text: t(".year_group"),
                                classes: ["govuk-link--no-visited-state"]) %>
           <% end %>
@@ -61,8 +61,8 @@
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".mentor")) %>
             <% row.with_value(text: @wizard.steps[:mentors].mentor_names || t(".not_yet_known")) %>
-            <% row.with_action(text: t(".change"), 
-                               href: step_path(:mentors), 
+            <% row.with_action(text: t(".change"),
+                               href: step_path(:mentors),
                                visually_hidden_text: t(".mentor"),
                                classes: ["govuk-link--no-visited-state"]) %>
           <% end %>
