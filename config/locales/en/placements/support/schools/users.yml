@@ -11,15 +11,6 @@ en:
                 name: Name
                 email: Email
             empty_state: There are no users for %{school_name}.
-          create:
-            user_added: User added
-          new:
-            page_title: "Personal details - Add user - %{school_name}"
-            page_title_with_error: "Error: Personal details - Add user - %{school_name}"
-          check:
-            page_title: "Check your answers - Add user - %{school_name}"
-            caption: Add user - %{organisation_name}
-            check_your_answers: Check your answers
           destroy:
             user_removed: User removed
           show:

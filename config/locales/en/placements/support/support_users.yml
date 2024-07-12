@@ -6,26 +6,6 @@ en:
           page_title: Support users
           add_user: Add support user
           heading: Support users
-        new:
-          page_title: Personal details - Add support user
-          page_title_with_errors: "Error: Personal details - Add support user"
-          caption: Add support user
-          title: Personal details
-          submit: Continue
-          cancel: Cancel
-          attributes:
-            email:
-              hint: Email must be a valid Department for Education address, like name@education.gov.uk
-        check:
-          page_title: Check your answers - Add support user
-          caption: Add support user
-          title: Check your answers
-          submit: Add support user
-          cancel: Cancel
-          change: Change
-          warning: The support user will be sent an email to tell them you’ve added them to Manage school placements.
-        create:
-          success: Support user added
         show:
           change: Change
           remove_user: Remove support user

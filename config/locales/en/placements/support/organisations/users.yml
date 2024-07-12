@@ -10,23 +10,3 @@ en:
                 first_name: First name
                 last_name: Last name
                 email: Email
-          new_form:
-            attributes:
-              users:
-                first_name: First name
-                last_name: Last name
-                email: Email
-            caption: Add user - %{organisation_name}
-            cancel: Cancel
-            continue: Continue
-            title: Personal details
-          check_form:
-            title: Check your answers
-            caption: Add user - %{organisation_name}
-            add_user: Add user
-            cancel: Cancel
-            first_name: First name
-            last_name: Last name
-            email: Email
-            warning: "The user will be sent an email to tell them you’ve added them to %{organisation_name}."
-            change: Change

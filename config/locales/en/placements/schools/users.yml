@@ -6,21 +6,9 @@ en:
           users: Users
           add_user: Add user
           change_organisation: Change organisation
-        new:
-          page_title_with_error: "Error: Personal details - Add user"
-          page_title: Personal details - Add user
-          change_organisation: Change organisation
-          add_user: Add user
-        check:
-          change_organisation: Change organisation
-          page_title: Check your answers - Add user
-          check_your_answers: Check your answers
-          add_user: Add user
         show:
           change_organisation: Change organisation
           remove_user: Remove user
-        create:
-          user_added: User added
         destroy:
           user_removed: User removed
         remove:
