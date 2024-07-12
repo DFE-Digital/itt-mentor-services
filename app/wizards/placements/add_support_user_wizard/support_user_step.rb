@@ -15,7 +15,7 @@ class Placements::AddSupportUserWizard::SupportUserStep < Placements::BaseStep
 
   def support_user
     @support_user ||= Placements::SupportUser.with_discarded
-      .discarded
+      .discarded # only find discarded users - existing active users are invalid in this step
       .find_or_initialize_by(email:).tap do |user|
         user.assign_attributes(first_name:, last_name:)
       end
