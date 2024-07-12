@@ -6,4 +6,12 @@ class Placements::UserMailerPreview < ActionMailer::Preview
   def user_membership_destroyed_notification
     UserMailer.with(service: :placements).user_membership_destroyed_notification(Placements::User.first, Placements::School.first)
   end
+
+  def partnership_created_notification
+    UserMailer.with(service: :placements).partnership_created_notification(Placements::User.first, Placements::School.first, Placements::Provider.first)
+  end
+
+  def partnership_destroyed_notification
+    UserMailer.with(service: :placements).partnership_destroyed_notification(Placements::User.first, Placements::School.first, Placements::Provider.first)
+  end
 end
