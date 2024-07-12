@@ -8,8 +8,8 @@
         <span class="govuk-caption-l"><%= t(".add_placement") %></span>
 
         <%= f.govuk_check_boxes_fieldset :mentor_ids, legend: { size: "l", text: t(".mentor") } do %>
-          <% mentors_step.mentors_for_selection.each do |mentor| %>
-            <%= f.govuk_check_box :mentor_ids, mentor.id, label: { text: mentor.full_name } %>
+          <% mentors_step.mentors_for_selection.each_with_index do |mentor, index| %>
+            <%= f.govuk_check_box :mentor_ids, mentor.id, label: { text: mentor.full_name }, link_errors: index.zero? %>
           <% end %>
           <%= f.govuk_check_box_divider %>
           <%= f.govuk_check_box :mentor_ids, "not_known", label: { text: t(".not_known") }, exclusive: true %>
