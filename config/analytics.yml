@@ -168,3 +168,18 @@ shared:
     - placement_id
     - created_at
     - updated_at
+  :academic_years:
+    - id
+    - name
+    - starts_on
+    - ends_on
+    - created_at
+    - updated_at
+  :claim_windows:
+    - id
+    - academic_year_id
+    - starts_on
+    - ends_on
+    - created_at
+    - updated_at
+    - discarded_at
