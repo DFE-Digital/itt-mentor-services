@@ -23,4 +23,5 @@ Rails.application.configure do
   # A few days affords us time to investigate/debug jobs after they've run,
   # but is short enough that we don't fill up the database unnecessarily.
   config.good_job.cleanup_preserved_jobs_before_seconds_ago = 4.days
+  config.good_job.on_thread_error = ->(exception) { Sentry.capture_exception(exception) }
 end
