@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_11_104419) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_12_103537) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -24,6 +24,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_11_104419) do
   create_enum "provider_type", ["scitt", "lead_school", "university"]
   create_enum "service", ["claims", "placements"]
   create_enum "subject_area", ["primary", "secondary"]
+
+  create_table "academic_years", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.date "starts_on"
+    t.date "ends_on"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "audits", force: :cascade do |t|
     t.uuid "auditable_id"
@@ -45,6 +53,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_11_104419) do
     t.index ["created_at"], name: "index_audits_on_created_at"
     t.index ["request_uuid"], name: "index_audits_on_request_uuid"
     t.index ["user_id", "user_type"], name: "user_index"
+  end
+
+  create_table "claim_windows", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "academic_year_id", null: false
+    t.date "starts_on"
+    t.date "ends_on"
+    t.date "discarded_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["academic_year_id"], name: "index_claim_windows_on_academic_year_id"
+    t.index ["discarded_at"], name: "index_claim_windows_on_discarded_at"
   end
 
   create_table "claims", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -411,6 +430,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_11_104419) do
     t.index ["type", "email"], name: "index_users_on_type_and_email", unique: true
   end
 
+  add_foreign_key "claim_windows", "academic_years"
   add_foreign_key "claims", "providers"
   add_foreign_key "claims", "schools"
   add_foreign_key "mentor_memberships", "mentors"
