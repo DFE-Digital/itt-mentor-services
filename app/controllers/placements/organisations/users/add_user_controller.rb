@@ -19,6 +19,7 @@ class Placements::Organisations::Users::AddUserController < Placements::Applicat
     else
       user = @wizard.create_user
       User::Invite.call(user:, organisation: @organisation)
+      @wizard.reset_state
       redirect_to index_path, flash: { success: t(".success") }
     end
   end

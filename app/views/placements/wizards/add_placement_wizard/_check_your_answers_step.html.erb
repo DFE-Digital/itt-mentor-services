@@ -52,7 +52,7 @@
             <% row.with_value(text: t("placements.schools.placements.year_groups.#{@wizard.steps[:year_group].year_group}")) %>
             <% row.with_action(text: t(".change"), 
                                href: step_path(:year_group), 
-                               visually_hidden_text: t(".year_group")
+                               visually_hidden_text: t(".year_group"),
                                classes: ["govuk-link--no-visited-state"]) %>
           <% end %>
         <% end %>
