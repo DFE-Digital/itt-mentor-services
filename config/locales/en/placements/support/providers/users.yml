@@ -11,14 +11,6 @@ en:
               users:
                 name: Name
                 email: Email
-          create:
-            user_added: User added
-          new:
-            page_title: "Personal details - Add user - %{provider_name}"
-            page_title_with_error: "Error: Personal details - Add user - %{provider_name}"
-          check:
-            page_title: "Check your answers - Add user - %{provider_name}"
-            check_your_answers: Check your answers
           remove:
             page_title: Are you sure you want to remove this user? - %{user_name} - %{organisation_name}
             are_you_sure: Are you sure you want to remove this user?
