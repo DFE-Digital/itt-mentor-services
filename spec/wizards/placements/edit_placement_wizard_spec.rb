@@ -91,7 +91,7 @@ RSpec.describe Placements::EditPlacementWizard do
         context "with an unknown provider" do
           let(:state) do
             {
-              "provider" => { "provider_id" => "on" },
+              "provider" => { "provider_id" => Placements::EditPlacementWizard::ProviderStep::NOT_KNOWN },
             }
           end
 
