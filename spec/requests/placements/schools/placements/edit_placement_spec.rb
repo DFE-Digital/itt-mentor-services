@@ -15,24 +15,39 @@ RSpec.describe "'Edit placement' journey", service: :placements, type: :request 
   context "when editing the mentors" do
     let(:step) { :mentors }
 
-    before do
-      put step_path(:mentors), params: { "placements_add_placement_wizard_mentors_step[mentor_ids]" => [mentor.id] }
-      get start_path
-    end
-
-    it "redirects to the first step of the wizard" do
-      expect(response).to redirect_to step_path(:mentors)
-    end
-
-    context "when the wizard is complete" do
-      it "updates the placement" do
-        put step_path(:mentors)
-        expect(Placement.last.mentors).to contain_exactly(mentor)
+    context "with valid data" do
+      before do
+        put step_path(:mentors), params: { "placements_add_placement_wizard_mentors_step[mentor_ids]" => [mentor.id] }
+        get start_path
       end
 
-      it "redirects to the placements show page" do
+      it "redirects to the first step of the wizard" do
+        expect(response).to redirect_to step_path(:mentors)
+      end
+
+      context "when the wizard is complete" do
+        it "updates the placement" do
+          put step_path(:mentors)
+          expect(Placement.last.mentors).to contain_exactly(mentor)
+        end
+
+        it "redirects to the placements show page" do
+          put step_path(:mentors)
+          expect(response).to redirect_to placements_school_placement_path(school_id:, id: placement.id)
+        end
+      end
+    end
+
+    context "with invalid data" do
+      before do
+        put step_path(:mentors), params: { "placements_add_placement_wizard_mentors_step[mentor_ids]" => [] }
+        get start_path
+      end
+
+      it "returns an error message when the mentor_ids are invalid" do
         put step_path(:mentors)
-        expect(response).to redirect_to placements_school_placement_path(school_id:, id: placement.id)
+
+        expect(response.body).to include("Select a mentor or not yet known")
       end
     end
   end
@@ -40,24 +55,39 @@ RSpec.describe "'Edit placement' journey", service: :placements, type: :request 
   context "when editing the provider" do
     let(:step) { :provider }
 
-    before do
-      put step_path(:provider), params: { "placements_edit_placement_wizard_provider_step[provider_id]" => provider.id }
-      get start_path
-    end
-
-    it "redirects to the first step of the wizard" do
-      expect(response).to redirect_to step_path(:provider)
-    end
-
-    context "when the wizard is complete" do
-      it "updates the placement" do
-        put step_path(:provider)
-        expect(Placement.last.provider.becomes(Placements::Provider)).to eq(provider)
+    context "with valid data" do
+      before do
+        put step_path(:provider), params: { "placements_edit_placement_wizard_provider_step[provider_id]" => provider.id }
+        get start_path
       end
 
-      it "redirects to the placements show page" do
+      it "redirects to the first step of the wizard" do
+        expect(response).to redirect_to step_path(:provider)
+      end
+
+      context "when the wizard is complete" do
+        it "updates the placement" do
+          put step_path(:provider)
+          expect(Placement.last.provider.becomes(Placements::Provider)).to eq(provider)
+        end
+
+        it "redirects to the placements show page" do
+          put step_path(:provider)
+          expect(response).to redirect_to placements_school_placement_path(school_id:, id: placement.id)
+        end
+      end
+    end
+
+    context "with invalid data" do
+      before do
+        put step_path(:provider), params: { "placements_edit_placement_wizard_provider_step[provider_id]" => nil }
+        get start_path
+      end
+
+      it "returns an error message when the provider_id is invalid" do
         put step_path(:provider)
-        expect(response).to redirect_to placements_school_placement_path(school_id:, id: placement.id)
+
+        expect(response.body).to include("Select a provider")
       end
     end
   end
@@ -65,24 +95,39 @@ RSpec.describe "'Edit placement' journey", service: :placements, type: :request 
   context "when editing the year group" do
     let(:step) { :year_group }
 
-    before do
-      put step_path(:year_group), params: { "placements_add_placement_wizard_year_group_step[year_group]" => year_group }
-      get start_path
-    end
-
-    it "redirects to the first step of the wizard" do
-      expect(response).to redirect_to step_path(:year_group)
-    end
-
-    context "when the wizard is complete" do
-      it "updates the placement" do
-        put step_path(:year_group)
-        expect(Placement.last.year_group).to eq("year_6")
+    context "with valid data" do
+      before do
+        put step_path(:year_group), params: { "placements_add_placement_wizard_year_group_step[year_group]" => year_group }
+        get start_path
       end
 
-      it "redirects to the placements show page" do
+      it "redirects to the first step of the wizard" do
+        expect(response).to redirect_to step_path(:year_group)
+      end
+
+      context "when the wizard is complete" do
+        it "updates the placement" do
+          put step_path(:year_group)
+          expect(Placement.last.year_group).to eq("year_6")
+        end
+
+        it "redirects to the placements show page" do
+          put step_path(:year_group)
+          expect(response).to redirect_to placements_school_placement_path(school_id:, id: placement.id)
+        end
+      end
+    end
+
+    context "with invalid data" do
+      before do
+        put step_path(:year_group), params: { "placements_add_placement_wizard_year_group_step[year_group]" => nil }
+        get start_path
+      end
+
+      it "returns an error message when the year_group is invalid" do
         put step_path(:year_group)
-        expect(response).to redirect_to placements_school_placement_path(school_id:, id: placement.id)
+
+        expect(response.body).to include("Select a year group")
       end
     end
   end
