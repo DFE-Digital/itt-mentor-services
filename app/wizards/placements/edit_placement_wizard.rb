@@ -18,8 +18,6 @@ module Placements
     def update_placement
       raise "Invalid wizard state" unless valid?
 
-      placement = school.placements.find(params[:id])
-
       if steps[:provider].present?
         placement.provider = steps[:provider].provider
       end
@@ -33,8 +31,6 @@ module Placements
       end
 
       placement.save!
-
-      placement
     end
 
     def setup_state
