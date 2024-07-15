@@ -10,7 +10,7 @@ RSpec.describe Placements::EditPlacementWizard do
   let(:params_data) { { id: placement.id } }
   let(:params) { ActionController::Parameters.new(params_data) }
   let(:mentors) { build_list(:placements_mentor, 5) }
-  let(:partner_providers) { build_list(:placements_provider, 5) }
+  let(:partner_providers) { build_list(:provider, 5) }
 
   describe "#steps" do
     subject { wizard.steps.keys }
