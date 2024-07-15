@@ -12,7 +12,7 @@
             <%= f.govuk_check_box :mentor_ids, mentor.id, label: { text: mentor.full_name }, link_errors: index.zero? %>
           <% end %>
           <%= f.govuk_check_box_divider %>
-          <%= f.govuk_check_box :mentor_ids, "not_known", label: { text: t(".not_known") }, exclusive: true %>
+          <%= f.govuk_check_box :mentor_ids, "not_known", label: { text: t(".not_known") }, checked: mentors_step.mentors.empty?, exclusive: true %>
         <% end %>
 
         <%= govuk_details(
