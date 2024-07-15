@@ -42,12 +42,12 @@ RSpec.describe Placements::AddMentorWizard::MentorStep, type: :model do
     context "when date_of_birth is in future" do
       let(:trn) { "1234567" }
       let(:year) { Time.zone.today.year + 1 }
-      let(:attributes) {
+      let(:attributes) do
         { trn:,
           "date_of_birth(3i)" => "22",
           "date_of_birth(2i)" => "01",
           "date_of_birth(1i)" => year }
-      }
+      end
 
       before { stub_teaching_record_response(date_of_birth: "#{year}-01-22", trn:) }
 
@@ -67,12 +67,12 @@ RSpec.describe Placements::AddMentorWizard::MentorStep, type: :model do
       let(:mentor) { create(:placements_mentor) }
       let(:date_of_birth) { "1991-01-22" }
       let(:trn) { mentor.trn }
-      let(:attributes) {
+      let(:attributes) do
         { trn:,
           "date_of_birth(3i)" => "22",
           "date_of_birth(2i)" => "01",
           "date_of_birth(1i)" => "1991" }
-      }
+      end
 
       before { stub_teaching_record_response(date_of_birth:, trn:) }
 
@@ -87,12 +87,12 @@ RSpec.describe Placements::AddMentorWizard::MentorStep, type: :model do
     let(:year) { 1991 }
     let(:month) { 1 }
     let(:day) { 22 }
-    let(:attributes) {
+    let(:attributes) do
       { trn:,
         "date_of_birth(3i)" => day,
         "date_of_birth(2i)" => month,
         "date_of_birth(1i)" => year }
-    }
+    end
 
     it "returns a date object" do
       expect(step.date_of_birth).to eq(Date.new(year, month, day))
