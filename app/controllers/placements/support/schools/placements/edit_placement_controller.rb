@@ -7,7 +7,7 @@ class Placements::Support::Schools::Placements::EditPlacementController < Placem
   end
 
   def after_update_placement_path
-    placements_support_school_placement_path(@school, placement)
+    placements_support_school_placement_path(@school, @placement)
   end
 
   def step_path(step)
@@ -15,7 +15,7 @@ class Placements::Support::Schools::Placements::EditPlacementController < Placem
   end
 
   def back_link_path
-    placements_support_school_placement_path(@school, placement)
+    placements_support_school_placement_path(@school, @placement)
   end
 
   def add_mentor_path
