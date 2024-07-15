@@ -128,6 +128,12 @@ scope module: :placements,
       resources :mentors, only: %i[index new create show destroy] do
         member { get :remove }
         collection { get :check }
+
+        collection do
+          get "new", to: "mentors/add_mentor#new", as: :new_add_mentor
+          get "new/:step", to: "mentors/add_mentor#edit", as: :add_mentor
+          put "new/:step", to: "mentors/add_mentor#update"
+        end
       end
 
       resources :placements, only: %i[index show destroy] do

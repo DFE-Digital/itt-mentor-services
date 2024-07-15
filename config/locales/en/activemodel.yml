@@ -68,6 +68,13 @@ en:
               blank: Enter an email address
               taken: Email address already in use
               invalid: Enter an email address in the correct format, like name@example.com
+        placements/add_mentor_wizard/mentor_step:
+          attributes:
+            trn:
+              taken: The mentor has already been added
+            date_of_birth:
+              blank: Enter a date of birth
+              less_than: Date of birth must be in the past
         placements/edit_placement_wizard/provider_step:
             attributes:
               provider_id:
