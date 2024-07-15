@@ -130,7 +130,7 @@ scope module: :placements,
         collection { get :check }
       end
 
-      resources :placements, only: %i[index update show destroy] do
+      resources :placements, only: %i[index show destroy] do
         member do
           get :remove
           get "edit", to: "placements/edit_placement#new", as: :new_edit_placement
