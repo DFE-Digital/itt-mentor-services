@@ -10,6 +10,6 @@ class Placements::EditPlacementWizard::ProviderStep < Placements::BaseStep
   end
 
   def provider
-    @provider ||= school.partner_providers.find(provider_id).becomes(Placements::Provider) if provider_id.present? && provider_id != "on"
+    @provider ||= school.partner_providers.find(provider_id) if provider_id.present? && provider_id != "on"
   end
 end
