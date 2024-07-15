@@ -1,5 +1,9 @@
 <% render "claims/support/primary_navigation", current: :settings %>
 
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: claims_support_settings_path) %>
+<% end %>
+
 <div class="govuk-width-container">
   <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
