@@ -1,0 +1,13 @@
+<% content_for :page_title, t(".page_title", trn: @wizard.steps[:mentor].trn) %>
+<div class="govuk-width-container">
+  <h1 class="govuk-heading-l">
+    <span class="govuk-caption-l"><%= t(".add_mentor") %></span>
+    <%= t(".no_results_found", trn: @wizard.steps[:mentor].trn) %>
+  </h1>
+  <p class="govuk-body">
+    <%= t(".help_text") %>
+  </p>
+    <p class="govuk-body">
+      <%= govuk_link_to(t(".change_your_search"), add_mentor_placements_school_mentors_path(@wizard.school, step: :mentor)) %>
+    </p>
+</div>
