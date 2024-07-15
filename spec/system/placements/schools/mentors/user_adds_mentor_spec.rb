@@ -226,7 +226,7 @@ RSpec.describe "Placements school user adds mentors to schools", service: :place
   end
 
   def when_i_enter_trn(trn)
-    fill_in "placements-mentor-form-trn-field", with: trn
+    fill_in "placements-add-mentor-wizard-mentor-step-trn-field", with: trn
   end
 
   def when_i_enter_date_of_birth(day, month, year)
@@ -259,10 +259,10 @@ RSpec.describe "Placements school user adds mentors to schools", service: :place
   end
 
   def then_i_see_form_with_trn_and_date_of_birth(trn, day, month, year)
-    expect(page.find("#placements-mentor-form-trn-field").value).to eq(trn)
-    expect(page.find("#placements_mentor_form_date_of_birth_3i").value).to eq(day.to_s)
-    expect(page.find("#placements_mentor_form_date_of_birth_2i").value).to eq(month.to_s)
-    expect(page.find("#placements_mentor_form_date_of_birth_1i").value).to eq(year.to_s)
+    expect(page.find("#placements-add-mentor-wizard-mentor-step-trn-field").value).to eq(trn)
+    expect(page.find("#placements_add_mentor_wizard_mentor_step_date_of_birth_3i").value).to eq(day.to_s)
+    expect(page.find("#placements_add_mentor_wizard_mentor_step_date_of_birth_2i").value).to eq(month.to_s)
+    expect(page.find("#placements_add_mentor_wizard_mentor_step_date_of_birth_1i").value).to eq(year.to_s)
   end
 
   def then_i_see_no_results_page(_school_name, trn)
