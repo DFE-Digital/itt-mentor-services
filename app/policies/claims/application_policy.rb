@@ -1,10 +1,14 @@
 class Claims::ApplicationPolicy < ApplicationPolicy
-  def index?
+  def read?
     true
   end
 
+  def index?
+    read?
+  end
+
   def show?
-    true
+    read?
   end
 
   def create?

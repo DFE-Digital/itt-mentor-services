@@ -8,6 +8,7 @@
 
       <%= govuk_list [
         govuk_link_to(t(".background_jobs"), "/good_job", no_visited_state: true, new_tab: true),
+        govuk_link_to(t(".claim_windows"), claims_support_claim_windows_path, no_visited_state: true),
         govuk_link_to(t(".emails"), claims_support_mailers_path, no_visited_state: true),
       ], spaced: true %>
     </div>

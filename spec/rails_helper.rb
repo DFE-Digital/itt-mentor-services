@@ -116,6 +116,12 @@ RSpec.configure do |config|
     end
   end
 
+  config.around(:each, :freeze) do |example|
+    Timecop.freeze(Time.zone.parse(example.metadata[:freeze] || self.class.metadata[:freeze])) do
+      example.run
+    end
+  end
+
   private
 
   def service_host(service)

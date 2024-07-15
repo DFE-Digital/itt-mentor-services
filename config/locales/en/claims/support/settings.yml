@@ -4,5 +4,6 @@ en:
       settings:
         index:
           heading: Settings
-          background_jobs: Background Jobs
+          background_jobs: Background jobs
+          claim_windows: Claim windows
           emails: Emails

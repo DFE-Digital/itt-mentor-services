@@ -29,25 +29,47 @@ class Claims::ClaimWindow < ApplicationRecord
   validates :starts_on, presence: true
   validates :ends_on, presence: true, comparison: { greater_than_or_equal_to: :starts_on }
 
-  validate :does_not_overlap_with_another_claim_window
+  validate :is_not_longer_than_an_academic_year
+  validate :does_not_start_in_the_past, on: :create
+  validate :does_not_start_within_another_claim_window
+  validate :does_not_end_in_the_past, on: :create
+  validate :does_not_end_within_another_claim_window
 
   delegate :name, to: :academic_year, prefix: true
+  delegate :past?, to: :ends_on
+  delegate :future?, to: :starts_on
 
-  def self.find_by_date(date)
-    find_by(starts_on: ...date, ends_on: date..)
-  end
-
-  def self.current
-    find_by_date(Date.current)
+  def current?
+    (starts_on..ends_on).cover?(Date.current)
   end
 
   private
 
-  def does_not_overlap_with_another_claim_window
-    overlapping_claim_window = Claims::ClaimWindow.where.not(id:).find_by("starts_on <= ? AND ends_on >= ?", ends_on, starts_on)
+  def is_not_longer_than_an_academic_year
+    return if starts_on.blank? || ends_on.blank?
 
-    return if overlapping_claim_window.blank?
+    if (ends_on - starts_on).to_i > 365
+      errors.add(:base, :longer_than_academic_year)
+    end
+  end
 
-    errors.add(:base, "Claim window overlaps with an existing claim window - #{I18n.l(overlapping_claim_window.starts_on, format: :long)} to #{I18n.l(overlapping_claim_window.ends_on, format: :long)}")
+  def does_not_start_within_another_claim_window
+    return unless Claims::ClaimWindow.where.not(id:).where("starts_on <= :starts_on AND ends_on >= :starts_on", starts_on:).exists?
+
+    errors.add(:starts_on, :overlap)
+  end
+
+  def does_not_end_within_another_claim_window
+    return unless Claims::ClaimWindow.where.not(id:).where("starts_on <= :ends_on AND ends_on >= :ends_on", ends_on:).exists?
+
+    errors.add(:ends_on, :overlap)
+  end
+
+  def does_not_start_in_the_past
+    errors.add(:starts_on, :past) if starts_on&.past?
+  end
+
+  def does_not_end_in_the_past
+    errors.add(:ends_on, :past) if ends_on&.past?
   end
 end

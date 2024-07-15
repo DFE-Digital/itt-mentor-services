@@ -1,0 +1,59 @@
+<% content_for :page_title, t(".page_title") %>
+<% render "claims/support/primary_navigation", current: :settings %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: edit_claims_support_claim_window_path(@claim_window, claims_claim_window: @claim_window.slice(:starts_on, :ends_on))) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <%= form_with(model: @claim_window, url: claims_support_claim_window_path(@claim_window), method: :patch) do |f| %>
+    <%= f.hidden_field :starts_on, value: f.object.starts_on %>
+    <%= f.hidden_field :ends_on, value: f.object.ends_on %>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l"><%= t(".page_caption") %></span>
+        <h1 class="govuk-heading-l"><%= t(".page_heading") %></h1>
+
+        <%= govuk_summary_list do |summary_list| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key text: Claims::ClaimWindow.human_attribute_name(:starts_on) %>
+            <% row.with_value text: l(@claim_window.starts_on, format: :long) %>
+            <% row.with_action(
+              text: t("change"),
+              href: edit_claims_support_claim_window_path(@claim_window, claims_claim_window: @claim_window.slice(:starts_on, :ends_on)),
+              visually_hidden_text: Claims::ClaimWindow.human_attribute_name(:starts_on),
+              classes: ["govuk-link--no-visited-state"],
+            ) %>
+          <% end %>
+
+          <% summary_list.with_row do |row| %>
+            <% row.with_key text: Claims::ClaimWindow.human_attribute_name(:ends_on) %>
+            <% row.with_value text: l(@claim_window.ends_on, format: :long) %>
+            <% row.with_action(
+              text: t("change"),
+              href: edit_claims_support_claim_window_path(@claim_window, claims_claim_window: @claim_window.slice(:starts_on, :ends_on)),
+              visually_hidden_text: Claims::ClaimWindow.human_attribute_name(:ends_on),
+              classes: ["govuk-link--no-visited-state"],
+            ) %>
+          <% end %>
+
+          <% summary_list.with_row do |row| %>
+            <% row.with_key text: Claims::ClaimWindow.human_attribute_name(:academic_year) %>
+            <% row.with_value text: @claim_window.academic_year_name %>
+          <% end %>
+        <% end %>
+
+        <% if @claim_window.ends_on.past? %>
+          <%= govuk_warning_text text: t(".warning") %>
+        <% end %>
+
+        <%= f.govuk_submit t(".submit") %>
+
+        <p class="govuk-body">
+          <%= govuk_link_to(t(".cancel"), claims_support_support_users_path, no_visited_state: true) %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+</div>

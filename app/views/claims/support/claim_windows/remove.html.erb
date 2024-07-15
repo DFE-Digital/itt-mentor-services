@@ -1,0 +1,29 @@
+<% content_for :page_title, t(".page_title") %>
+<% render "claims/support/primary_navigation", current: :settings %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: claims_support_claim_window_path(@claim_window)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= form_with(model: @claim_window, url: claims_support_claim_window_path(@claim_window), method: :delete) do |f| %>
+        <span class="govuk-caption-l"><%= window_range_display(@claim_window.starts_on, @claim_window.ends_on) %></span>
+        <h1 class="govuk-heading-l"><%= t(".page_title") %></h1>
+
+        <p class="govuk-body"><%= t(".description") %></p>
+
+        <% if @claim_window.current? %>
+          <%= govuk_warning_text text: t(".warning") %>
+        <% end %>
+
+        <%= f.govuk_submit t(".submit"), warning: true %>
+
+        <p class="govuk-body">
+          <%= govuk_link_to t(".cancel"), claims_support_claim_window_path(@claim_window), no_visited_state: true %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>
