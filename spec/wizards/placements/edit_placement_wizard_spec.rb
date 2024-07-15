@@ -15,19 +15,19 @@ RSpec.describe Placements::EditPlacementWizard do
   describe "#steps" do
     subject { wizard.steps.keys }
 
-    context "with a the provider step" do
+    context "with the provider step" do
       let(:current_step) { :provider }
 
       it { is_expected.to eq %i[provider] }
     end
 
-    context "with a the mentors step" do
+    context "with the mentors step" do
       let(:current_step) { :mentors }
 
       it { is_expected.to eq %i[mentors] }
     end
 
-    context "with a the year_group step" do
+    context "with the year_group step" do
       let(:current_step) { :year_group }
 
       it { is_expected.to eq %i[year_group] }
@@ -42,76 +42,80 @@ RSpec.describe Placements::EditPlacementWizard do
     let(:mentor_not_known) { Placements::AddPlacementWizard::MentorsStep::NOT_KNOWN }
     let(:selected_year_group) { :year_1 }
 
-    context "when the step is mentors" do
-      let(:current_step) { :mentors }
+    context "when the step is valid" do
+      before { edit_wizard }
 
-      context "with an existing mentor" do
-        let(:state) do
-          {
-            "mentors" => { "mentor_ids" => [selected_mentor.id] },
-          }
+      context "when the step is mentors" do
+        let(:current_step) { :mentors }
+
+        context "with an existing mentor" do
+          let(:state) do
+            {
+              "mentors" => { "mentor_ids" => [selected_mentor.id] },
+            }
+          end
+
+          it "updates the placement" do
+            expect(placement.mentors).to eq [selected_mentor]
+          end
         end
 
-        it "updates the placement" do
-          expect(edit_wizard.mentors).to eq [selected_mentor]
+        context "with an unknown mentor" do
+          let(:state) do
+            {
+              "mentors" => { "mentor_ids" => mentor_not_known },
+            }
+          end
+
+          it "updates the placement" do
+            expect(placement.mentors).to eq []
+          end
         end
       end
 
-      context "with an unknown mentor" do
+      context "when the step is provider" do
+        let(:current_step) { :provider }
+
+        context "with an existing provider" do
+          let(:state) do
+            {
+              "provider" => { "provider_id" => selected_provider.id },
+            }
+          end
+
+          it "updates the placement" do
+            expect(placement.provider).to eq selected_provider
+          end
+        end
+
+        context "with an unknown provider" do
+          let(:state) do
+            {
+              "provider" => { "provider_id" => "on" },
+            }
+          end
+
+          it "updates the placement" do
+            expect(placement.provider).to be_nil
+          end
+        end
+      end
+
+      context "when the step is year_group" do
+        let(:current_step) { :year_group }
         let(:state) do
           {
-            "mentors" => { "mentor_ids" => mentor_not_known },
+            "year_group" => { "year_group" => selected_year_group },
           }
         end
 
         it "updates the placement" do
-          expect(edit_wizard.mentors).to eq []
+          expect(placement.year_group).to eq "year_1"
         end
       end
     end
 
-    context "when the step is provider" do
-      let(:current_step) { :provider }
-
-      context "with an existing provider" do
-        let(:state) do
-          {
-            "provider" => { "provider_id" => selected_provider.id },
-          }
-        end
-
-        it "updates the placement" do
-          expect(edit_wizard.provider).to eq selected_provider
-        end
-      end
-
-      context "with an unknown provider" do
-        let(:state) do
-          {
-            "provider" => { "provider_id" => "on" },
-          }
-        end
-
-        it "updates the placement" do
-          expect(edit_wizard.provider).to be_nil
-        end
-      end
-    end
-
-    context "when the step is year_group" do
-      let(:current_step) { :year_group }
-      let(:state) do
-        {
-          "year_group" => { "year_group" => selected_year_group },
-        }
-      end
-
-      it "updates the placement" do
-        expect(edit_wizard.year_group).to eq "year_1"
-      end
-    end
-
-    context "when there are invalid steps" do
+    context "when a step is invalid" do
       let(:current_step) { :mentors }
       let(:state) do
         {
@@ -124,6 +128,4 @@ RSpec.describe Placements::EditPlacementWizard do
       end
     end
   end
-
-  describe ""
 end

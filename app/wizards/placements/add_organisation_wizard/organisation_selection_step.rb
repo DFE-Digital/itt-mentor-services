@@ -29,6 +29,8 @@ class Placements::AddOrganisationWizard::OrganisationSelectionStep < Placements:
     "placements_#{wizard_name}_#{step_name}"
   end
 
+  private
+
   def class_to_path(klass)
     klass.name.demodulize.underscore
   end

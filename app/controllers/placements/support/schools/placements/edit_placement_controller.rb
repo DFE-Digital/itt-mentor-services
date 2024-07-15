@@ -7,7 +7,7 @@ class Placements::Support::Schools::Placements::EditPlacementController < Placem
   end
 
   def after_update_placement_path
-    placements_support_school_placement_path(@school, placement.decorate)
+    placements_support_school_placement_path(@school, placement)
   end
 
   def step_path(step)
