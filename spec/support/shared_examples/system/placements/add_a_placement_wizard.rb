@@ -171,6 +171,7 @@ RSpec.shared_examples "an add a placement wizard" do
             when_i_choose_a_year_group("Year 1")
             and_i_click_on("Continue")
             then_i_see_the_add_a_placement_mentor_page
+            when_i_uncheck("Not yet known")
             when_i_click_on("Continue")
             and_i_see_the_error_message("Select a mentor or not yet known")
           end
@@ -530,6 +531,7 @@ RSpec.shared_examples "an add a placement wizard" do
   end
 
   def when_i_check_a_mentor(mentor_name)
+    uncheck "Not yet known"
     check mentor_name
   end
 
@@ -592,6 +594,10 @@ RSpec.shared_examples "an add a placement wizard" do
     within(".govuk-notification-banner") do
       expect(page).to have_content message
     end
+  end
+
+  def when_i_uncheck(text)
+    uncheck(text)
   end
 
   alias_method :and_i_click_on, :when_i_click_on
