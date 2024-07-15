@@ -5,7 +5,7 @@ RSpec.describe "Support console / 'Edit placement' journey", service: :placement
   let(:school) { create(:placements_school, :secondary, name: "Hogwarts", partner_providers: [provider]) }
   let(:placement) { create(:placement, school:) }
   let(:mentor) { create(:placements_mentor_membership, school:, mentor: build(:placements_mentor)).mentor }
-  let(:provider) { create(:placements_provider) }
+  let(:provider) { create(:provider) }
   let(:school_id) { school.id }
   let(:year_group) { :year_6 }
   let(:start_path) { new_edit_placement_placements_support_school_placement_path(school, placement, step:) }
@@ -27,7 +27,7 @@ RSpec.describe "Support console / 'Edit placement' journey", service: :placement
     context "when the wizard is complete" do
       it "updates the placement" do
         put step_path(:mentors)
-        expect(Placement.last.mentors).to contain_exactly(mentor)
+        expect(placement.mentors).to contain_exactly(mentor)
       end
 
       it "redirects to the placements show page" do
@@ -52,7 +52,7 @@ RSpec.describe "Support console / 'Edit placement' journey", service: :placement
     context "when the wizard is complete" do
       it "updates the placement" do
         put step_path(:provider)
-        expect(Placement.last.provider.becomes(Placements::Provider)).to eq(provider)
+        expect(placement.reload.provider).to eq(provider)
       end
 
       it "redirects to the placements show page" do
