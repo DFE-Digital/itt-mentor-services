@@ -1,0 +1,42 @@
+en:
+  claims:
+    support:
+      claim_windows:
+        index:
+          page_title: Claim windows
+          add_claim_window: Add claim window
+          current: Current
+          upcoming: Upcoming
+          past: Past
+        show:
+          page_caption: Claim window
+          remove: Remove claim window
+        new:
+          page_caption: Add claim window
+          page_title: Window details
+          submit: Continue
+          cancel: Cancel
+        new_check:
+          page_title: Check your answers - Add claim window
+          page_caption: Add claim window
+          page_heading: Check your answers
+          submit: Save claim window
+          cancel: Cancel
+        edit:
+          page_caption: Change claim window
+          page_title: Changing %{window}
+          submit: Continue
+          cancel: Cancel
+        edit_check:
+          page_title: Check your answers - Change claim window
+          page_caption: Change claim window
+          page_heading: Check your answers
+          warning: Setting the current claim window to a date in the past will close the window and prevent users from making any claims.
+          submit: Save claim window
+          cancel: Cancel
+        remove:
+          page_title: Are you sure you want to remove this claim window?
+          submit: Remove claim window
+          cancel: Cancel
+          description: This will soft-delete the claim window.
+          warning: This is the current claim window. Soft-deleting the current claim window means users cannot make any claims.
