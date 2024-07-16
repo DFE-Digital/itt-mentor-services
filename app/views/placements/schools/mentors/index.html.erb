@@ -7,7 +7,7 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
-      <%= govuk_button_to(t(".add_mentor"), new_add_mentor_placements_school_mentors_path, method: :get) %>
+      <%= govuk_button_link_to(t(".add_mentor"), new_add_mentor_placements_school_mentors_path) %>
 
       <% if @mentors.any? %>
         <%= app_table do |table| %>
