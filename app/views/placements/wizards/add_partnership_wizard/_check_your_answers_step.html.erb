@@ -1,4 +1,4 @@
-<%= content_for :page_title, sanitize(t(".title")) %>
+<%= content_for :page_title, sanitize(t(".page_title", contextual_text:)) %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
@@ -6,7 +6,7 @@
       <%= f.govuk_error_summary %>
 
       <label class="govuk-label govuk-label--l">
-        <span class="govuk-caption-l"><%= t(".add_partner_provider") %></span>
+        <span class="govuk-caption-l"><%= contextual_text %></span>
         <%= t(".title") %>
       </label>
 
@@ -22,7 +22,7 @@
       <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".contact_details") %></h2>
       <%= render "shared/organisations/contact_details", organisation: @wizard.partner_organisation %>
 
-      <%= f.govuk_submit t(".add_partner_provider") %>
+      <%= f.govuk_submit t(".add_partner_#{@wizard.partner_organisation_type}") %>
     <% end %>
   </div>
 </div>

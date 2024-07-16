@@ -4,6 +4,8 @@ class Placements::AddPartnershipWizard::PartnershipSelectionStep < Placements::B
   validate :id_presence
   validate :new_partnership
 
+  delegate :partner_organisation_model, :partner_organisation_type, to: :wizard
+
   def partner_organisation_name
     @partner_organisation_name ||= partner_organisation&.name
   end
@@ -39,16 +41,5 @@ class Placements::AddPartnershipWizard::PartnershipSelectionStep < Placements::B
     wizard_name = class_to_path(wizard.class)
     step_name = class_to_path(self.class)
     "placements_#{wizard_name}_#{step_name}"
-  end
-
-  def partner_organisation_model
-    @partner_organisation_model ||= {
-      Placements::School => Provider,
-      Placements::Provider => School,
-    }[wizard.organisation.class]
-  end
-
-  def partner_organisation_type
-    @partner_organisation_type ||= partner_organisation_model.to_s.downcase
   end
 end

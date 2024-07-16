@@ -173,13 +173,13 @@ scope module: :placements,
         end
       end
 
-      resources :partner_schools, only: %i[index new create show destroy] do
+      resources :partner_schools, only: %i[index show destroy] do
         member { get :remove }
 
         collection do
-          get :check
-          get :check_school_option
-          get :school_options
+          get "new", to: "partner_schools/add_partner_school#new", as: :new_add_partner_school
+          get "new/:step", to: "partner_schools/add_partner_school#edit", as: :add_partner_school
+          put "new/:step", to: "partner_schools/add_partner_school#update"
         end
       end
     end

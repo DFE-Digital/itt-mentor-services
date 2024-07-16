@@ -3,13 +3,13 @@
     results_count: partnership_options_step.partnership_options.count,
     search_param: partnership_options_step.search_params,
     organisation_type: partnership_options_step.partner_organisation_type,
-  ) %>
+    contextual_text:) %>
 <% else %>
   <% content_for :page_title, t(".page_title",
     results_count: partnership_options_step.partnership_options.count,
     search_param: partnership_options_step.search_params,
     organisation_type: partnership_options_step.partner_organisation_type,
-  ) %>
+    contextual_text:) %>
 <% end %>
 
 <%= render OptionsFormComponent.new(

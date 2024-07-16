@@ -1,0 +1,10 @@
+en:
+  placements:
+    providers:
+      partner_schools:
+        add_partner_school:
+          edit:
+            caption: Add partner school
+            cancel: Cancel
+          update:
+            success: Partner school added
