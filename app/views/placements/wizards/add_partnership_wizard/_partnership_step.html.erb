@@ -1,4 +1,4 @@
-<% content_for :page_title, partnership_step.errors.any? ? t(".title_with_error.#{partnership_step.partner_organisation_type}") : t(".title.#{partnership_step.partner_organisation_type}") %>
+<% content_for :page_title, partnership_step.errors.any? ? t(".page_title_with_error.#{partnership_step.partner_organisation_type}", contextual_text:) : t(".page_title.#{partnership_step.partner_organisation_type}", contextual_text:) %>
 
 <%= render AutocompleteSelectFormComponent.new(
   model: partnership_step,

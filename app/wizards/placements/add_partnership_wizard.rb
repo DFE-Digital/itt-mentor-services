@@ -1,9 +1,10 @@
 module Placements
   class AddPartnershipWizard < BaseWizard
-    attr_reader :organisation
+    attr_reader :organisation, :partner_organisation_model
 
     def initialize(organisation:, params:, session:, current_step: nil)
       @organisation = organisation
+      @partner_organisation_model = partner_org_model
       super(session:, params:, current_step:)
     end
 
@@ -19,11 +20,24 @@ module Placements
     end
 
     def create_partnership
-      if partner_organisation.is_a?(School)
+      if partner_organisation_model == (::School)
         Partnership.create!(school: partner_organisation, provider: organisation)
       else
         Partnership.create!(school: organisation, provider: partner_organisation)
       end
+    end
+
+    def partner_organisation_type
+      @partner_organisation_type ||= partner_organisation_model.to_s.downcase
+    end
+
+    private
+
+    def partner_org_model
+      {
+        School => ::Provider,
+        Provider => ::School,
+      }[organisation.class]
     end
   end
 end
