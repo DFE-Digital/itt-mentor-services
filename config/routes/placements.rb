@@ -149,13 +149,13 @@ scope module: :placements,
         collection { get :check }
       end
 
-      resources :partner_providers, only: %i[index new create show destroy] do
+      resources :partner_providers, only: %i[index show destroy] do
         member { get :remove }
 
         collection do
-          get :check
-          get :check_provider_option
-          get :provider_options
+          get "new", to: "partner_providers/add_partner_provider#new", as: :new_add_partner_provider
+          get "new/:step", to: "partner_providers/add_partner_provider#edit", as: :add_partner_provider
+          put "new/:step", to: "partner_providers/add_partner_provider#update"
         end
       end
     end

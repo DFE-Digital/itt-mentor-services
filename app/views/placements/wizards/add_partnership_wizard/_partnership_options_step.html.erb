@@ -1,0 +1,25 @@
+<% if partnership_options_step.errors.any? %>
+  <% content_for :page_title, t(".page_title_with_error",
+    results_count: partnership_options_step.partnership_options.count,
+    search_param: partnership_options_step.search_params,
+    organisation_type: partnership_options_step.partner_organisation_type,
+  ) %>
+<% else %>
+  <% content_for :page_title, t(".page_title",
+    results_count: partnership_options_step.partnership_options.count,
+    search_param: partnership_options_step.search_params,
+    organisation_type: partnership_options_step.partner_organisation_type,
+  ) %>
+<% end %>
+
+<%= render OptionsFormComponent.new(
+  model: partnership_options_step,
+  scope: partnership_options_step.scope,
+  url: current_step_path,
+  search_param: partnership_options_step.search_params,
+  records: partnership_options_step.partnership_options,
+  records_klass: partnership_options_step.partner_organisation_type,
+  back_link: back_link_path,
+  title: t(".title", organisation_type: partnership_options_step.partner_organisation_type),
+  method: :put,
+) %>

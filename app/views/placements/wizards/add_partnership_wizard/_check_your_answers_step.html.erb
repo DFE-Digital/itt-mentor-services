@@ -1,0 +1,28 @@
+<%= content_for :page_title, sanitize(t(".title")) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for(check_your_answers_step, url: current_step_path, method: :put) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <label class="govuk-label govuk-label--l">
+        <span class="govuk-caption-l"><%= t(".add_partner_provider") %></span>
+        <%= t(".title") %>
+      </label>
+
+      <%= render "shared/organisations/organisation_details", organisation: @wizard.partner_organisation, change_link: back_link_path %>
+      <% if @wizard.partner_organisation.is_a?(School) %>
+        <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".additional_details") %></h2>
+        <%= render "shared/schools/additional_details", school: @wizard.partner_organisation %>
+        <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".send") %></h2>
+        <%= render "shared/schools/send_details", school: @wizard.partner_organisation %>
+        <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".ofsted") %></h2>
+        <%= render "shared/schools/ofsted_details", school: @wizard.partner_organisation %>
+      <% end %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".contact_details") %></h2>
+      <%= render "shared/organisations/contact_details", organisation: @wizard.partner_organisation %>
+
+      <%= f.govuk_submit t(".add_partner_provider") %>
+    <% end %>
+  </div>
+</div>

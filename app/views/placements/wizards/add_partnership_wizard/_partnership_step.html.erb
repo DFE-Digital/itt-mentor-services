@@ -1,0 +1,18 @@
+<% content_for :page_title, partnership_step.errors.any? ? t(".title_with_error.#{partnership_step.partner_organisation_type}") : t(".title.#{partnership_step.partner_organisation_type}") %>
+
+<%= render AutocompleteSelectFormComponent.new(
+  model: partnership_step,
+  scope: partnership_step.scope,
+  url: current_step_path,
+  method: :put,
+  data: {
+    autocomplete_path_value: partnership_step.autocomplete_path_value,
+    autocomplete_return_attributes_value: partnership_step.autocomplete_return_attributes_value,
+  },
+  input: {
+    value: partnership_step.partner_organisation_name,
+    label: t(".title.#{partnership_step.partner_organisation_type}"),
+    caption: t(".caption.#{partnership_step.partner_organisation_type}"),
+    previous_search: partnership_step.id,
+  },
+) %>

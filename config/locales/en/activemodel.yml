@@ -5,6 +5,17 @@ en:
         record_invalid: "Validation failed: %{errors}"
         between: "must be between %{min} and %{max}"
       models:
+        placements/add_partnership_wizard/partnership_step:
+          attributes:
+            id:
+              already_added: "%{organisation_name} has already been added. Try another %{organisation_type}"
+              provider_blank: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode
+              school_blank: Enter a school name, unique reference number (URN) or postcode
+        placements/add_partnership_wizard/partnership_options_step:
+          attributes:
+            id:
+              already_added: "%{organisation_name} has already been added. Try another %{organisation_type}"
+              blank: Select a %{organisation_type}
         placements/add_placement_wizard/mentors_step:
           attributes:
             mentor_ids:
