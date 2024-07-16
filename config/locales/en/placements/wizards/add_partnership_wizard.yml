@@ -1,0 +1,27 @@
+en:
+  placements:
+    wizards:
+      add_partnership_wizard:
+        partnership_step:
+          title_with_error: 
+            provider: "Error: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode - Add partner provider"
+          title:
+            provider: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode
+          caption: 
+            provider: Add partner provider
+        check_your_answers_step:
+          title: Check your answers
+          add_partner_provider: Add partner provider
+          address: Address
+          contact_details: Contact details
+          additional_details: Additional details
+          ofsted: Ofsted
+          send: Special educational needs and disabilities (SEND)
+        partnership_options_step:
+          page_title: "%{results_count} results found for ‘%{search_param}’ - Add partner %{organisation_type}"
+          page_title_with_error: "Error: %{results_count} results found for ‘%{search_param}’- Add partner %{organisation_type}"
+          title: Add partner %{organisation_type}
+
+            
+          
+      
