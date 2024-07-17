@@ -1,7 +1,7 @@
-<% content_for :page_title, t(".page_title", trn: @wizard.steps[:mentor].trn) %>
+<% content_for :page_title, t(".page_title", trn: @wizard.steps[:mentor].trn, contextual_text:) %>
 <div class="govuk-width-container">
   <h1 class="govuk-heading-l">
-    <span class="govuk-caption-l"><%= t(".add_mentor") %></span>
+    <span class="govuk-caption-l"><%= t(".add_mentor_caption", contextual_text:) %></span>
     <%= t(".no_results_found", trn: @wizard.steps[:mentor].trn) %>
   </h1>
   <p class="govuk-body">
