@@ -9,6 +9,10 @@ describe Claims::ClaimPolicy do
   let(:draft_claim) { build(:claim, :draft) }
   let(:submitted_claim) { build(:claim, :submitted) }
 
+  before do
+    Claims::ClaimWindow::Build.call(claim_window_params: { starts_on: 2.days.ago, ends_on: 2.days.from_now }).save!(validate: false)
+  end
+
   permissions :edit? do
     context "when user has an internal draft claim" do
       it "grants access" do

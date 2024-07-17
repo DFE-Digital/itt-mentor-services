@@ -20,6 +20,7 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
   before do
     user_exists_in_dfe_sign_in(user: colin)
     given_i_sign_in
+    given_there_is_a_current_claim_window
     create(:mentor_training, mentor: mentor1, provider: provider1, claim:, hours_completed: 20)
     create(:mentor_training, mentor: mentor2, provider: provider1, claim:, hours_completed: 12)
   end
@@ -134,6 +135,10 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
   def given_i_sign_in
     visit sign_in_path
     click_on "Sign in using DfE Sign In"
+  end
+
+  def given_there_is_a_current_claim_window
+    Claims::ClaimWindow::Build.call(claim_window_params: { starts_on: 2.days.ago, ends_on: 2.days.from_now }).save!(validate: false)
   end
 
   def given_i_visit_claim_support_check_page

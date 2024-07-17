@@ -36,6 +36,10 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
 
   let!(:draft_mentor_training) { create(:mentor_training, claim: draft_claim, mentor: claims_mentor, hours_completed: 6) }
 
+  before do
+    given_there_is_a_current_claim_window
+  end
+
   scenario "A support user I can edit a draft claim" do
     user_exists_in_dfe_sign_in(user: colin)
     given_i_sign_in
@@ -86,6 +90,10 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
   end
 
   private
+
+  def given_there_is_a_current_claim_window
+    Claims::ClaimWindow::Build.call(claim_window_params: { starts_on: 2.days.ago, ends_on: 2.days.from_now }).save!(validate: false)
+  end
 
   def then_i_update_the_claim(mentor)
     click_on("Update claim")

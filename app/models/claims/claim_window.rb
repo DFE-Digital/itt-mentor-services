@@ -43,6 +43,14 @@ class Claims::ClaimWindow < ApplicationRecord
     (starts_on..ends_on).cover?(Date.current)
   end
 
+  def self.find_by_date(date)
+    find_by(starts_on: ..date, ends_on: date..)
+  end
+
+  def self.current
+    find_by_date(Date.current)
+  end
+
   private
 
   def is_not_longer_than_an_academic_year

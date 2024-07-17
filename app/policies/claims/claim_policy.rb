@@ -1,6 +1,10 @@
 class Claims::ClaimPolicy < Claims::ApplicationPolicy
+  def create?
+    Claims::ClaimWindow.current.present?
+  end
+
   def edit?
-    !record.submitted?
+    create? && !record.submitted?
   end
 
   def update?
@@ -12,7 +16,7 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
   end
 
   def submit?
-    !user.support_user? && !record.submitted?
+    create? && !user.support_user? && !record.submitted?
   end
 
   def rejected?
