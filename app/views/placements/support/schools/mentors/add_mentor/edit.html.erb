@@ -1,0 +1,14 @@
+
+<%= render "placements/support/primary_navigation", current_navigation: :organisations %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: back_link_path) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <%= render @wizard.step, object: @wizard.step, contextual_text: t(".add_mentor", school_name: @wizard.school.name) %>
+
+  <p class="govuk-body">
+    <%= govuk_link_to(t(".cancel"), placements_support_school_mentors_path(@wizard.school), no_visited_state: true) %>
+  </p>
+</div>
