@@ -2,7 +2,7 @@ class Placements::Schools::Mentors::AddMentorController < Placements::Applicatio
   before_action :set_school
   before_action :set_wizard
 
-  helper_method :step_path, :current_step_path, :back_link_path
+  helper_method :step_path, :current_step_path, :back_link_path, :change_mentor_details_path
 
   def new
     @wizard.reset_state
@@ -21,6 +21,10 @@ class Placements::Schools::Mentors::AddMentorController < Placements::Applicatio
       @wizard.reset_state
       redirect_to index_path, flash: { success: t("placements.wizards.add_mentor_wizard.update.success") }
     end
+  end
+
+  def change_mentor_details_path
+    add_mentor_placements_school_mentors_path(step: :mentor)
   end
 
   private
