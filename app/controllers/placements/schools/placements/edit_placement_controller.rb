@@ -21,7 +21,6 @@ class Placements::Schools::Placements::EditPlacementController < Placements::App
       render "edit"
     else
       @wizard.update_placement
-      Placements::PlacementSlackNotifier.placement_created_notification(@school, @placement.decorate).deliver_later
       @wizard.reset_state
       redirect_to after_update_placement_path, flash: { success: t(".success", step_attribute: params[:step].titleize) }
     end
