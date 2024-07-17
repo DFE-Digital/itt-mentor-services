@@ -10,7 +10,9 @@ class Placements::AddSchoolContactWizard::SchoolContactStep < Placements::BaseSt
   delegate :school, to: :wizard
 
   def new_school_contact
-    return if school.school_contact.blank?
+    return if Placements::SchoolContact.find_by(
+      school_id: school.id,
+    ).blank?
 
     errors.add(:email_address, :taken)
   end

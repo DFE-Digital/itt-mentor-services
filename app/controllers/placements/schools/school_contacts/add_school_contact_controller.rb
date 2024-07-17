@@ -1,6 +1,7 @@
 class Placements::Schools::SchoolContacts::AddSchoolContactController < Placements::ApplicationController
   before_action :set_school
   before_action :set_wizard
+  before_action :authorize_school_contact
 
   helper_method :step_path, :current_step_path, :back_link_path, :add_mentor_path
 
@@ -50,5 +51,9 @@ class Placements::Schools::SchoolContacts::AddSchoolContactController < Placemen
     else
       placements_school_path(@school)
     end
+  end
+
+  def authorize_school_contact
+    authorize Placements::SchoolContact.new(school: @school), :add_school_contact_journey?
   end
 end
