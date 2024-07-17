@@ -2,24 +2,6 @@ en:
   placements:
     schools:
       school_contacts:
-        new:
-          page_title: Add placement contact
-          page_title_with_error: Error - Add placement contact
-          continue: Continue
-          cancel: Cancel
-        check:
-          page_title: Check your answers
-          check_your_answers: Check your answers
-          add_the_itt_placement_contact: Add placement contact
-          cancel: Cancel
-          change: Change
-          attributes:
-            school_contacts:
-              first_name: First name
-              last_name: Last name
-              email_address: Email address
-        create:
-          school_contact_added: Placement contact added
         edit:
           page_title: Placement contact
           page_title_with_error: Error - Placement contact

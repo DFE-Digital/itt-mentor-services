@@ -52,6 +52,12 @@ en:
             id:
               already_added: "%{organisation_name} has already been added. Try another %{organisation_type}"
               blank: Select a %{organisation_type}
+        placements/add_school_contact_wizard/school_contact_step:
+          attributes:
+            email_address:
+              blank: Enter an email address
+              invalid: Enter an email address in the correct format, like name@example.com
+              taken: Placement contact has already been added.
         placements/add_user_wizard/user_step:
           attributes:
             first_name:

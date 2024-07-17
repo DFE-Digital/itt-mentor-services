@@ -1,0 +1,32 @@
+<% content_for :page_title, school_contact_step.errors.any? ? t(".title_with_error", contextual_text:) : t(".title", contextual_text:) %>
+
+<%= form_for(school_contact_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= contextual_text %></span>
+      <h2 class="govuk-heading-l"><%= t(".add_placement_contact") %></h2>
+
+      <p class="govuk-body"><%= t(".description") %></p>
+
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :first_name,
+                               width: 20,
+                               label: { text: User.human_attribute_name(:first_name), size: "s" } %>
+      </div>
+
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :last_name,
+                               width: 20,
+                               label: { text: User.human_attribute_name(:last_name), size: "s" } %>
+      </div>
+
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :email_address, label: { text: User.human_attribute_name(:email_address), size: "s" } %>
+      </div>
+
+      <%= f.govuk_submit t(".continue") %>
+    </div>
+  </div>
+<% end %>
