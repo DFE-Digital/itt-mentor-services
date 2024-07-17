@@ -108,6 +108,18 @@ RSpec.describe Placements::AddPartnershipWizard do
         expect(organisation.partner_schools).to contain_exactly(partner_organisation)
       end
     end
+
+    context "when there are invalid steps" do
+      let(:state) do
+        {
+          "partnership" => { "id" => nil, "name" => nil },
+        }
+      end
+
+      it "raises an error" do
+        expect { wizard.create_partnership }.to raise_error "Invalid wizard state"
+      end
+    end
   end
 
   describe "#partner_organisation_type" do
