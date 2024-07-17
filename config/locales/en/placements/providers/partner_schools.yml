@@ -11,32 +11,6 @@ en:
             partner_schools:
               name: Name
               urn: Unique reference number (URN)
-        new:
-          change_organisation: Change organisation
-          page_title: Enter a school name, URN or postcode - Add partner school
-          page_title_with_error: "Errors: Enter a school name, URN or postcode - Add partner school"
-          caption: Add partner school
-          title: Enter a school name, URN or postcode
-          continue: Continue
-          cancel: Cancel
-        check:
-          continue: Continue
-          cancel: Cancel
-          page_title: Check your answers - Add partner school
-          add_partner_school: Add partner school
-          title: Check your answers
-          additional_details: Additional details
-          ofsted: Ofsted
-          send: Special educational needs and disabilities (SEND)
-          contact_details: Contact details
-          school_will_be_sent_an_email: We will send an email to %{school_name}. This will let them know you have added them as a partner school for %{provider_name}.
-        create:
-          partner_school_added: Partner school added
-        school_options:
-          page_title: "%{school_count} results found for ‘%{search_param}’ - Add partner school"
-          page_title_with_error: "Error: %{school_count} results found for ‘%{search_param}’- Add partner school"
-          title: Add partner school
-          cancel: Cancel
         show:
           page_title: Partner schools
           change_organisation: Change organisation

@@ -6,10 +6,6 @@ class Placements::AddPartnershipWizard::PartnershipSelectionStep < Placements::B
 
   delegate :partner_organisation_model, :partner_organisation_type, to: :wizard
 
-  def partner_organisation_name
-    @partner_organisation_name ||= partner_organisation&.name
-  end
-
   def new_partnership
     existing_placement = if partner_organisation.is_a?(School)
                            Placements::Partnership.find_by(
@@ -31,6 +27,10 @@ class Placements::AddPartnershipWizard::PartnershipSelectionStep < Placements::B
       organisation_name: partner_organisation.name,
       organisation_type: partner_organisation_type,
     )
+  end
+
+  def partner_organisation_name
+    @partner_organisation_name ||= partner_organisation&.name
   end
 
   def partner_organisation

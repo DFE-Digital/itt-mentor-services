@@ -100,7 +100,7 @@ RSpec.describe Placements::AddOrganisationWizard::OrganisationStep, type: :model
       let(:organisation_model) { Provider }
       let(:is_provider) { true }
 
-      it "returns the attributes returned by the school suggestions api" do
+      it "returns the URL for provider suggestions" do
         expect(step.autocomplete_path_value).to eq("/api/provider_suggestions")
       end
     end
@@ -108,7 +108,7 @@ RSpec.describe Placements::AddOrganisationWizard::OrganisationStep, type: :model
 
   describe "#autocomplete_return_attributes_value" do
     context "when organisation type is school" do
-      it "returns the URL for school suggestions" do
+      it "returns the attributes returned by the school suggestions api" do
         expect(step.autocomplete_return_attributes_value).to match_array(%w[town postcode])
       end
     end

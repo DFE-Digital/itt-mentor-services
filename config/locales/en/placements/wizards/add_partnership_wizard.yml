@@ -29,7 +29,3 @@ en:
           page_title: "%{results_count} results found for ‘%{search_param}’ - Add partner %{organisation_type}"
           page_title_with_error: "Error: %{results_count} results found for ‘%{search_param}’- Add partner %{organisation_type}"
           title: Add partner %{organisation_type}
-
-            
-          
-      
