@@ -38,9 +38,9 @@ class ApplicationController < ActionController::Base
   end
 
   def requested_path
-    return if [sign_in_path, sign_out_path, nil].include?(session["requested_path"])
+    return if [sign_in_path, sign_out_path].include?(session["requested_path"])
 
-    session["requested_path"]
+    @path ||= session.delete("requested_path")
   end
 
   def after_sign_out_path
