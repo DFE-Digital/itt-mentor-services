@@ -20,6 +20,8 @@ module Placements
     end
 
     def create_partnership
+      raise "Invalid wizard state" unless valid?
+
       if partner_organisation_model == (::School)
         Partnership.create!(school: partner_organisation, provider: organisation)
       else
