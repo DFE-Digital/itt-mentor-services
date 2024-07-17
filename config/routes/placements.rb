@@ -145,8 +145,12 @@ scope module: :placements,
         end
       end
 
-      resources :school_contacts, except: %i[show index destroy] do
-        collection { get :check }
+      resources :school_contacts, only: %i[edit update] do
+        collection do
+          get "new", to: "school_contacts/add_school_contact#new", as: :new_add_school_contact
+          get "new/:step", to: "school_contacts/add_school_contact#edit", as: :add_school_contact
+          put "new/:step", to: "school_contacts/add_school_contact#update"
+        end
       end
 
       resources :partner_providers, only: %i[index new create show destroy] do

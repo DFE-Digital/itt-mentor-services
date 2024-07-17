@@ -11,7 +11,7 @@
       <% if @school.school_contact.present? %>
         <%= render "shared/schools/school_contact_details", school: @school, school_contact: @school.school_contact %>
       <% else %>
-        <%= govuk_link_to t(".add_itt_placement_contact"), new_placements_school_school_contact_path(@school), class: "govuk-button" %>
+        <%= govuk_link_to t(".add_itt_placement_contact"), new_add_school_contact_placements_school_school_contacts_path(@school), class: "govuk-button" %>
       <% end %>
       <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".school_details") %></h2>
       <%= render "shared/schools/school_details", school: @school %>

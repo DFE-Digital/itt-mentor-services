@@ -34,7 +34,20 @@ RSpec.describe "Placements / Schools / School Contacts / Add a school contact",
   end
 
   scenario "User reconsiders school contact details" do
-    given_i_have_completed_the_school_contact_form
+    when_i_view_my_organisation_details_page
+    then_i_see_no_school_contact_details
+    when_i_click_on("Add placement contact")
+    and_i_fill_out_the_school_contact_form(
+      first_name: "Placement",
+      last_name: "Coordinator",
+      email_address: "placement_coordinator@example.school",
+    )
+    and_i_click_on("Continue")
+    then_i_see_the_check_your_answers_page(
+      first_name: "Placement",
+      last_name: "Coordinator",
+      email_address: "placement_coordinator@example.school",
+    )
     when_i_click_on("Back")
     then_i_see_the_inputs_pre_filled_with(
       first_name: "Placement",
@@ -131,22 +144,10 @@ RSpec.describe "Placements / Schools / School Contacts / Add a school contact",
     expect(page).to have_content("Placement contact added")
   end
 
-  def given_i_have_completed_the_school_contact_form
-    params = {
-      "placements_school_contact" => {
-        first_name: "Placement",
-        last_name: "Coordinator",
-        email_address: "placement_coordinator@example.school",
-      },
-      school_id: school.id,
-    }
-    visit check_placements_school_school_contacts_path(params)
-  end
-
   def then_i_see_the_inputs_pre_filled_with(first_name:, last_name:, email_address:)
-    expect(page.find("#placements-school-contact-first-name-field").value).to eq(first_name)
-    expect(page.find("#placements-school-contact-last-name-field").value).to eq(last_name)
-    expect(page.find("#placements-school-contact-email-address-field").value).to eq(email_address)
+    expect(page.find("#placements-add-school-contact-wizard-school-contact-step-first-name-field").value).to eq(first_name)
+    expect(page.find("#placements-add-school-contact-wizard-school-contact-step-last-name-field").value).to eq(last_name)
+    expect(page.find("#placements-add-school-contact-wizard-school-contact-step-email-address-field").value).to eq(email_address)
   end
 
   def then_i_see_an_error(error_message)
