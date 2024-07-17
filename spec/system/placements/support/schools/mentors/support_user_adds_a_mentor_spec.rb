@@ -30,8 +30,8 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
     given_i_navigate_to_schools_mentors_list(school)
     and_i_click_on("Add mentor")
     when_i_click_on("Continue")
-    then_i_see_the_error("Enter a teacher reference number (TRN)", school.name)
-    then_i_see_the_error("Enter a date of birth", school.name, 1)
+    then_i_see_the_error("Enter a teacher reference number (TRN)", school.name, "Enter a teacher reference number (TRN)")
+    then_i_see_the_error("Enter a date of birth", school.name, "Enter a teacher reference number (TRN)", 1)
   end
 
   scenario "I do not enter a trn" do
@@ -39,7 +39,7 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
     and_i_click_on("Add mentor")
     when_i_enter_date_of_birth(1, 1, 1990)
     when_i_click_on("Continue")
-    then_i_see_the_error("Enter a teacher reference number (TRN)", school.name)
+    then_i_see_the_error("Enter a teacher reference number (TRN)", school.name, "Enter a teacher reference number (TRN)")
     and_i_do_not_see_the_error("Enter a date of birth")
   end
 
@@ -52,7 +52,7 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
     and_i_click_on("Add mentor")
     when_i_enter_trn(1_212_121)
     and_i_click_on("Continue")
-    then_i_see_the_error("Enter a date of birth", school.name)
+    then_i_see_the_error("Enter a date of birth", school.name, "Enter a date of birth")
     and_i_do_not_see_the_error("Enter a teacher reference number (TRN)")
   end
 
@@ -61,7 +61,7 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
     and_i_click_on("Add mentor")
     when_i_enter_trn("12a")
     and_i_click_on("Continue")
-    then_i_see_the_error("Enter a 7 digit teacher reference number (TRN)", school.name)
+    then_i_see_the_error("Enter a 7 digit teacher reference number (TRN)", school.name, "Enter a 7 digit teacher reference number (TRN)")
   end
 
   scenario "I enter a trn of mentor who already exists for this school" do
@@ -74,7 +74,7 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
     and_i_click_on("Add mentor")
     when_i_enter_trn(placements_mentor.trn)
     and_i_click_on("Continue")
-    then_i_see_the_error("The mentor has already been added", school.name)
+    then_i_see_the_error("The mentor has already been added", school.name, "The mentor has already been added")
   end
 
   context "when the mentor already exists in the claims service" do
@@ -228,7 +228,7 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
   end
 
   def when_i_enter_trn(trn)
-    fill_in "placements-mentor-form-trn-field", with: trn
+    fill_in "placements-add-mentor-wizard-mentor-step-trn-field", with: trn
   end
 
   def when_i_enter_date_of_birth(day, month, year)
@@ -243,8 +243,8 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
     expect(page).to have_current_path placements_support_school_mentors_path(school), ignore_query: true
   end
 
-  def then_i_see_the_error(message, school_name, field_index = 0)
-    expect(page).to have_title "Error: Enter a teacher reference number (TRN) - Add mentor - #{school_name}"
+  def then_i_see_the_error(message, school_name, title = message, field_index = 0)
+    expect(page).to have_title "Error: #{title} - Add mentor - #{school_name}"
     within(".govuk-error-summary") do
       expect(page).to have_content message
     end

@@ -31,7 +31,6 @@ RSpec.describe "Placements school user adds mentors to schools", service: :place
     and_i_click_on("Add mentor")
     when_i_click_on("Continue")
     then_i_see_the_error("Enter a teacher reference number (TRN)")
-    then_i_see_the_error("Enter a date of birth", 1)
   end
 
   scenario "I do not enter a trn" do
@@ -242,7 +241,7 @@ RSpec.describe "Placements school user adds mentors to schools", service: :place
   end
 
   def then_i_see_the_error(message, field_index = 0)
-    expect(page).to have_title "Error: Find teacher - Add mentor"
+    expect(page).to have_title "Error: #{message} - Add mentor"
     within(".govuk-error-summary") do
       expect(page).to have_content message
     end

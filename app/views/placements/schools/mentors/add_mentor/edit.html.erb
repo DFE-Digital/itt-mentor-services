@@ -1,3 +1,4 @@
+
 <%= render "placements/schools/primary_navigation", school: @wizard.school, current_navigation: :mentors %>
 
 <%= content_for(:before_content) do %>
@@ -5,7 +6,7 @@
 <% end %>
 
 <div class="govuk-width-container">
-  <%= render @wizard.step, object: @wizard.step %>
+  <%= render @wizard.step, object: @wizard.step, contextual_text: t(".add_mentor") %>
 
   <p class="govuk-body">
     <%= govuk_link_to(t(".cancel"), placements_school_mentors_path(@school), no_visited_state: true) %>
