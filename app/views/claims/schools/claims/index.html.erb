@@ -4,20 +4,28 @@
 <div class="govuk-width-container">
   <% if Date.parse("20 July 2024").future? %>
     <%= govuk_notification_banner(title_text: t(".closing_date_disclaimer_title")) do |notification_banner| %>
-      <% notification_banner.with_heading(text: sanitize(t(".closing_date_disclaimer"))) %>
+      <% notification_banner.with_heading(text: sanitize(t(".closing_date_disclaimer", time: "11:59pm on Friday 19 July 2024"))) %>
     <% end %>
   <% end %>
 
   <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
-  <% if @school.mentors.any? %>
-    <div class="govuk-inset-text">
-      <p class="govuk-body"><%= t(".guidance") %></p>
-      <p class="govuk-body"><%= sanitize t(".closing_date_disclaimer") %></p>
-    </div>
-    <%= govuk_link_to t(".add_claim"), new_claims_school_claim_path, class: "govuk-button" %>
+  <% if policy(Claims::Claim).create? %>
+    <% if @school.mentors.any? %>
+      <%= govuk_inset_text do %>
+        <p class="govuk-body"><%= t(".guidance") %></p>
+        <p class="govuk-body"><%= sanitize t(".closing_date_disclaimer", time: "11:59pm on #{l(Claims::ClaimWindow.current.ends_on, format: :long)}") %></p>
+      <% end %>
+
+      <%= govuk_link_to t(".add_claim"), new_claims_school_claim_path, class: "govuk-button" %>
+    <% else %>
+      <%= govuk_inset_text text: t(".add_mentor_guidance_html", link_to: govuk_link_to(t(".add_a_mentor"), claims_school_mentors_path(@school))) %>
+    <% end %>
   <% else %>
-    <p class="govuk-inset-text"><%= t(".add_mentor_guidance_html", link_to: govuk_link_to(t(".add_a_mentor"), claims_school_mentors_path(@school))) %></p>
+    <%= govuk_inset_text do %>
+      <p class="govuk-body"><%= t(".window_closed") %></p>
+      <p class="govuk-body"><%= sanitize t(".window_closed_guidance", link_to: govuk_link_to(t(".window_closed_guidance_link_text"), claims_school_mentors_path(@school))) %></p>
+    <% end %>
   <% end %>
 
   <% if @claims.any? %>
@@ -58,5 +66,9 @@
     <p>
       <%= t("no_records_for", records: "claims", for: @school.name) %>
     </p>
+  <% end %>
+
+  <% unless policy(Claims::Claim).create? %>
+    <p class="govuk-body"><%= sanitize t(".window_closed_support", link_to: govuk_mail_to(t("claims.support_email"))) %></p>
   <% end %>
 </div>

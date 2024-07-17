@@ -15,6 +15,7 @@ RSpec.describe "Create claim", service: :claims, type: :system do
   let!(:niot) { create(:claims_provider, :niot) }
 
   before do
+    given_there_is_a_current_claim_window
     user_exists_in_dfe_sign_in(user: anne)
     given_i_sign_in
   end
@@ -155,6 +156,10 @@ RSpec.describe "Create claim", service: :claims, type: :system do
   def given_i_sign_in
     visit sign_in_path
     click_on "Sign in using DfE Sign In"
+  end
+
+  def given_there_is_a_current_claim_window
+    Claims::ClaimWindow::Build.call(claim_window_params: { starts_on: 2.days.ago, ends_on: 2.days.from_now }).save!(validate: false)
   end
 
   def given_my_school_has_fully_claimed_for_all_mentors_for_provider(provider)

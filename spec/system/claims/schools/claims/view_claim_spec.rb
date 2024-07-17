@@ -39,6 +39,10 @@ RSpec.describe "View a claim", service: :claims, type: :system do
   let!(:mentor_training) { create(:mentor_training, claim: submitted_claim, mentor:, hours_completed: 6) }
   let!(:draft_mentor_training) { create(:mentor_training, claim: draft_claim, mentor:, hours_completed: 6) }
 
+  before do
+    given_there_is_a_current_claim_window
+  end
+
   scenario "Anne visits the show page of a submitted claim" do
     user_exists_in_dfe_sign_in(user: anne)
     given_i_sign_in
@@ -111,6 +115,10 @@ RSpec.describe "View a claim", service: :claims, type: :system do
   def given_i_sign_in
     visit sign_in_path
     click_on "Sign in using DfE Sign In"
+  end
+
+  def given_there_is_a_current_claim_window
+    Claims::ClaimWindow::Build.call(claim_window_params: { starts_on: 2.days.ago, ends_on: 2.days.from_now }).save!(validate: false)
   end
 
   def then_i_cant_see_submit_button

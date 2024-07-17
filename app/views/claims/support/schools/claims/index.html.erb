@@ -12,11 +12,19 @@
   <%= render "claims/support/schools/secondary_navigation", school: @school %>
   <h2 class="govuk-heading-m"><%= t(".heading") %></h2>
 
-  <% if @school.mentors.any? %>
-    <p class="govuk-inset-text"><%= t(".guidance") %></p>
-    <%= govuk_link_to t(".add_claim"), new_claims_support_school_claim_path, class: "govuk-button" %>
+  <% if policy(Claims::Claim).create? %>
+    <% if @school.mentors.any? %>
+      <%= govuk_inset_text text: t(".guidance") %>
+
+      <%= govuk_link_to t(".add_claim"), new_claims_support_school_claim_path, class: "govuk-button" %>
+    <% else %>
+      <%= govuk_inset_text text: t(".add_mentor_guidance_html", link_to: govuk_link_to(t(".add_a_mentor"), claims_support_school_mentors_path(@school))) %>
+    <% end %>
   <% else %>
-    <p class="govuk-inset-text"><%= t(".add_mentor_guidance_html", link_to: govuk_link_to(t(".add_a_mentor"), claims_support_school_mentors_path(@school))) %></p>
+    <%= govuk_inset_text do %>
+      <p class="govuk-body"><%= t(".window_closed") %></p>
+      <p class="govuk-body"><%= sanitize t(".window_closed_guidance", link_to: govuk_link_to(t(".window_closed_link_text"))) %></p>
+    <% end %>
   <% end %>
 
   <% if @claims.any? %>

@@ -17,6 +17,7 @@ RSpec.describe "Create claim", service: :claims, type: :system do
   before do
     user_exists_in_dfe_sign_in(user: colin)
     given_i_sign_in
+    given_there_is_a_current_claim_window
   end
 
   scenario "Colin creates a claim" do
@@ -158,6 +159,10 @@ RSpec.describe "Create claim", service: :claims, type: :system do
     school.mentors.find_each do |mentor|
       create(:mentor_training, :submitted, mentor:, provider:, hours_completed: 20)
     end
+  end
+
+  def given_there_is_a_current_claim_window
+    Claims::ClaimWindow::Build.call(claim_window_params: { starts_on: 2.days.ago, ends_on: 2.days.from_now }).save!(validate: false)
   end
 
   def when_i_click(button)
