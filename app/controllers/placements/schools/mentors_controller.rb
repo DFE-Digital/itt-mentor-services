@@ -25,43 +25,7 @@ class Placements::Schools::MentorsController < Placements::ApplicationController
     redirect_to_index_path
   end
 
-  def new
-    mentor_form
-  end
-
-  def check
-    render :new unless mentor_form.valid?
-  rescue TeachingRecord::RestClient::TeacherNotFoundError
-    render :no_results
-  end
-
-  def create
-    mentor_form.save!
-    flash[:success] = t(".mentor_added")
-
-    redirect_to_index_path
-  end
-
   private
-
-  def mentor_params
-    params.require(:placements_mentor_form)
-          .permit(:first_name, :last_name, :trn, :date_of_birth)
-          .merge(default_params)
-  end
-
-  def default_params
-    { school: @school }
-  end
-
-  def mentor_form
-    @mentor_form ||=
-      if params[:placements_mentor_form].present?
-        Placements::MentorForm.new(mentor_params)
-      else
-        Placements::MentorForm.new(default_params)
-      end
-  end
 
   def set_school
     @school = current_user.schools.find(params.require(:school_id))
