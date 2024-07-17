@@ -4,6 +4,7 @@ en:
       mentors:
         add_mentor:
           edit:
+            add_mentor: Add mentor
             cancel: Cancel
         index:
           heading: Mentors
@@ -28,5 +29,39 @@ en:
           attributes:
             mentors:
               trn: Teacher reference number (TRN)
-        update:
-          success: Mentor added
+        new:
+          page_title: Find teacher - Add mentor
+          page_title_with_error: "Error: Find teacher - Add mentor"
+          add_mentor: Add mentor
+          cancel: Cancel
+          continue: Continue
+          trn: Teacher reference number (TRN)
+          trn_hint: A TRN is a 7 digit number that uniquely identifies people in the education sector in England.
+          find_teacher: Find teacher
+          trn_guidance: TRN guidance
+          what_is_a_trn: |
+            If you do not know a teacher’s TRN, you can ask them for it. 
+            They can find a lost TRN, or apply for a new one by following the instructions in the %{link}.
+          help_with_the_trn: Help with the TRN
+          date_of_birth_hint: For example, 31 3 1980
+        check:
+          page_title: Check your answers - Add mentor
+          add_mentor: Add mentor
+          cancel: Cancel
+          change: Change
+          check_your_answers: Check your answers
+          trn: Teacher reference number (TRN)
+          date_of_birth: Date of birth
+          confirm_mentor_informed: |
+            I confirm that %{mentor_name} has been informed that the Department for Education will 
+            store their information in line with the %{link} and have provided them with a 
+            copy of this notice for reference.
+          privacy_notice: privacy notice
+        no_results:
+          page_title: No results found for ‘%{trn}’ - Add mentor
+          add_mentor: Add mentor
+          change_your_search: Change your search
+          help_text: Check that you typed in the teacher reference number (TRN) correctly.
+          no_results_found: No results found for ‘%{trn}’
+        create:
+          mentor_added: Mentor added

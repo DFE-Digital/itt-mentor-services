@@ -3,8 +3,9 @@ en:
     wizards:
       add_mentor_wizard:
         mentor_step:
-          page_title: Find teacher - Add mentor
-          page_title_with_error: "Error: Find teacher - Add mentor"
+          page_title: Find teacher - %{contextual_text}
+          page_title_with_error: "Error: %{error} - %{contextual_text}"
+          add_mentor_caption: "%{contextual_text}"
           add_mentor: Add mentor
           cancel: Cancel
           continue: Continue
@@ -18,7 +19,8 @@ en:
           help_with_the_trn: Help with the TRN
           date_of_birth_hint: For example, 31 3 1980
         check_your_answers_step:
-          page_title: Check your answers - Add mentor
+          page_title: Check your answers - %{contextual_text}
+          add_mentor_caption: "%{contextual_text}"
           add_mentor: Add mentor
           cancel: Cancel
           change: Change
@@ -31,7 +33,8 @@ en:
             copy of this notice for reference.
           privacy_notice: privacy notice
         no_results_step:
-          page_title: No results found for ‘%{trn}’ - Add mentor
+          page_title: No results found for ‘%{trn}’ - %{contextual_text}
+          add_mentor_caption: "%{contextual_text}"
           add_mentor: Add mentor
           change_your_search: Change your search
           help_text: Check that you typed in the teacher reference number (TRN) correctly.
