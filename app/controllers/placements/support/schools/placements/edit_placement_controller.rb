@@ -19,7 +19,7 @@ class Placements::Support::Schools::Placements::EditPlacementController < Placem
   end
 
   def add_mentor_path
-    new_placements_support_school_mentor_path(@school)
+    new_add_mentor_placements_support_school_mentors_path
   end
 
   def unlisted_provider_path
