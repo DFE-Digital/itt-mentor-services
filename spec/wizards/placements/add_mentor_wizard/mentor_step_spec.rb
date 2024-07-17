@@ -15,7 +15,7 @@ RSpec.describe Placements::AddMentorWizard::MentorStep, type: :model do
   end
 
   describe "attributes" do
-    it { is_expected.to have_attributes(trn: nil, first_name: nil, last_name: nil, year: nil, month: nil, day: nil) }
+    it { is_expected.to have_attributes(trn: nil, year: nil, month: nil, day: nil) }
   end
 
   describe "validations" do
