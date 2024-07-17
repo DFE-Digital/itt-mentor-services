@@ -261,10 +261,10 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
   end
 
   def then_i_see_form_with_trn_and_date_of_birth(trn, day, month, year)
-    expect(page.find("#placements-mentor-form-trn-field").value).to eq(trn)
-    expect(page.find("#placements_mentor_form_date_of_birth_3i").value).to eq(day.to_s)
-    expect(page.find("#placements_mentor_form_date_of_birth_2i").value).to eq(month.to_s)
-    expect(page.find("#placements_mentor_form_date_of_birth_1i").value).to eq(year.to_s)
+    find_field "TRN", with: trn
+    find_field "Day", with: day
+    find_field "Month", with: month
+    find_field "Year", with: year
   end
 
   def then_i_see_no_results_page(_school_name, trn)

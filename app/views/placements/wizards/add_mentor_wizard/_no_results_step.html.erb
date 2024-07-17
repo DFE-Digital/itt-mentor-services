@@ -8,6 +8,6 @@
     <%= t(".help_text") %>
   </p>
     <p class="govuk-body">
-      <%= govuk_link_to(t(".change_your_search"), add_mentor_placements_school_mentors_path(@wizard.school, step: :mentor)) %>
+      <%= govuk_link_to(t(".change_your_search"), step_path(:mentor)) %>
     </p>
 </div>

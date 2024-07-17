@@ -2,8 +2,6 @@ class Placements::AddMentorWizard::MentorStep < Placements::BaseStep
   include ActiveModel::Attributes
 
   attribute :trn
-  attribute :first_name
-  attribute :last_name
   attribute "date_of_birth(1i)", :integer
   attribute "date_of_birth(2i)", :integer
   attribute "date_of_birth(3i)", :integer
@@ -22,8 +20,6 @@ class Placements::AddMentorWizard::MentorStep < Placements::BaseStep
   def mentor
     @mentor ||= Placements::MentorBuilder.call(
       trn:,
-      first_name:,
-      last_name:,
       date_of_birth:,
     )
   rescue TeachingRecord::RestClient::TeacherNotFoundError

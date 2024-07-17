@@ -11,12 +11,18 @@ RSpec.describe "'Add mentor' journey", service: :placements, type: :request do
   context "when starting a new wizard journey" do
     before do
       # Populate the wizard so it has some existing state
-      put step_path(:mentor), params: { "placements_add_mentor_wizard_mentor_step[first_name]" => "John" }
+      put step_path(:mentor), params: { "placements_add_mentor_wizard_mentor_step[trn]" => "1234567" }
     end
 
     it "redirects to the first step of the wizard" do
       get start_path
       expect(response).to redirect_to step_path(:mentor)
+    end
+
+    it "resets the wizard state" do
+      expect(request.session["Placements::AddMentorWizard"]).to be_present
+      get start_path
+      expect(request.session["Placements::AddMentorWizard"]).to be_empty
     end
   end
 
@@ -26,8 +32,6 @@ RSpec.describe "'Add mentor' journey", service: :placements, type: :request do
       # Populate the wizard so it's ready to submit
       get start_path
       put step_path(:mentor), params: {
-        "placements_add_mentor_wizard_mentor_step[first_name]" => "John",
-        "placements_add_mentor_wizard_mentor_step[last_name]" => "Doe",
         "placements_add_mentor_wizard_mentor_step[trn]" => "1234567",
         "placements_add_mentor_wizard_mentor_step[date_of_birth(1i)]" => "2000",
         "placements_add_mentor_wizard_mentor_step[date_of_birth(2i)]" => "1",

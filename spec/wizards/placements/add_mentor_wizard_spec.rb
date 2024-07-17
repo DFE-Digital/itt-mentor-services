@@ -39,8 +39,6 @@ RSpec.describe Placements::AddMentorWizard do
       {
         "mentor" => {
           "trn" => trn,
-          "first_name" => first_name,
-          "last_name" => last_name,
           "date_of_birth(1i)" => "2000",
           "date_of_birth(2i)" => "1",
           "date_of_birth(3i)" => "1",
