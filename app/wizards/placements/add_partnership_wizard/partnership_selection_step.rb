@@ -34,7 +34,7 @@ class Placements::AddPartnershipWizard::PartnershipSelectionStep < Placements::B
   end
 
   def partner_organisation
-    @partner_organisation ||= partner_organisation_model&.find_by(id:)
+    @partner_organisation ||= partner_organisation_model.find_by(id:)
   end
 
   def scope
