@@ -228,7 +228,7 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
   end
 
   def when_i_enter_trn(trn)
-    fill_in "placements-add-mentor-wizard-mentor-step-trn-field", with: trn
+    fill_in "TRN", with: trn
   end
 
   def when_i_enter_date_of_birth(day, month, year)

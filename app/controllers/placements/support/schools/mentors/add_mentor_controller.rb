@@ -1,8 +1,4 @@
 class Placements::Support::Schools::Mentors::AddMentorController < Placements::Schools::Mentors::AddMentorController
-  def change_mentor_details_path
-    add_mentor_placements_support_school_mentors_path(step: :mentor)
-  end
-
   private
 
   def set_school

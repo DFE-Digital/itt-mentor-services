@@ -6,8 +6,13 @@ RSpec.shared_examples "an 'Add mentor' journey" do
 
   context "when starting a new wizard journey" do
     before do
-      # Populate the wizard so it has some existing state
-      put step_path(:mentor), params: { "placements_add_mentor_wizard_mentor_step[first_name]" => "John" }
+      stub_teaching_record_response(trn: "1234567", date_of_birth: "2000-01-01")
+      put step_path(:mentor), params: {
+        "placements_add_mentor_wizard_mentor_step[trn]" => "1234567",
+        "placements_add_mentor_wizard_mentor_step[date_of_birth(1i)]" => "2000",
+        "placements_add_mentor_wizard_mentor_step[date_of_birth(2i)]" => "1",
+        "placements_add_mentor_wizard_mentor_step[date_of_birth(3i)]" => "1",
+      }
     end
 
     it "redirects to the first step of the wizard" do
@@ -22,8 +27,6 @@ RSpec.shared_examples "an 'Add mentor' journey" do
       # Populate the wizard so it's ready to submit
       get start_path
       put step_path(:mentor), params: {
-        "placements_add_mentor_wizard_mentor_step[first_name]" => "John",
-        "placements_add_mentor_wizard_mentor_step[last_name]" => "Doe",
         "placements_add_mentor_wizard_mentor_step[trn]" => "1234567",
         "placements_add_mentor_wizard_mentor_step[date_of_birth(1i)]" => "2000",
         "placements_add_mentor_wizard_mentor_step[date_of_birth(2i)]" => "1",
