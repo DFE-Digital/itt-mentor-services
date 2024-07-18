@@ -64,6 +64,6 @@ class Placements::Schools::Placements::AddPlacementController < Placements::Appl
   end
 
   def add_mentor_path
-    new_placements_school_mentor_path
+    new_add_mentor_placements_school_mentors_path
   end
 end
