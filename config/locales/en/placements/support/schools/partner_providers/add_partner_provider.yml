@@ -1,0 +1,11 @@
+en:
+  placements:
+    support:
+      schools:
+        partner_providers:
+          add_partner_provider:
+            edit:
+              caption: Add partner provider - %{organisation_name}
+              cancel: Cancel
+            update:
+              success: Partner provider added

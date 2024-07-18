@@ -62,9 +62,18 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   end
 
   scenario "Support user reconsiders selecting a provider" do
-    given_i_have_completed_the_form_to_select(provider:)
+    when_i_visit_the_add_partner_provider_page_for(school)
+    and_i_enter_a_provider_named("Manch")
+    and_i_click_on("Continue")
+    then_i_see_list_of_placements_providers
+    when_i_choose("Manchester 1")
+    and_i_click_on("Continue")
+    then_i_see_the_check_details_page_for_provider("Manchester 1")
     when_i_click_on("Back")
-    then_i_see_the_search_input_pre_filled_with("Manchester 1")
+    then_i_see_list_of_placements_providers
+    and_the_option_for_provider_has_been_pre_selected("Manchester 1")
+    when_i_click_on("Back")
+    then_i_see_the_search_input_pre_filled_with("Manch")
     and_i_click_on("Continue")
     then_i_see_list_of_placements_providers
     when_i_choose("Manchester 1")
@@ -98,7 +107,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   end
 
   def when_i_visit_the_add_partner_provider_page_for(school)
-    visit new_placements_support_school_partner_provider_path(school)
+    visit new_add_partner_provider_placements_support_school_partner_providers_path(school)
 
     then_i_see_support_navigation_with_organisation_selected
   end
@@ -116,7 +125,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   alias_method :and_i_click_on, :when_i_click_on
 
   def and_i_enter_a_provider_named(provider_name)
-    fill_in "partnership-provider-id-field", with: provider_name
+    fill_in "placements-add-partnership-wizard-partnership-step-id-field", with: provider_name
   end
 
   def then_i_see_list_of_placements_providers
@@ -175,7 +184,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   end
 
   def then_i_see_the_search_input_pre_filled_with(provider_name)
-    expect(page.find("#partnership-provider-id-field").value).to eq(provider_name)
+    expect(page.find("#placements-add-partnership-wizard-partnership-step-id-field").value).to eq(provider_name)
   end
 
   def partner_provider_notification(user)
@@ -211,5 +220,9 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
 
   def given_the_provider_is_not_onboarded_on_placements_service(provider)
     provider.update!(placements_service: false)
+  end
+
+  def and_the_option_for_provider_has_been_pre_selected(provider_name)
+    expect(page).to have_checked_field(provider_name)
   end
 end

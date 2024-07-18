@@ -11,25 +11,6 @@ en:
               partner_schools:
                 name: Name
                 urn: Unique reference number (URN)
-          new:
-            page_title: Enter a school name, URN or postcode - Add partner school - %{provider_name}
-            page_title_with_error: "Error: Enter a school name, URN or postcode - Add partner school - %{provider_name}"
-            cancel: Cancel
-            title: Enter a school name, URN or postcode
-            caption: Add partner school - %{provider_name}
-          check: 
-            page_title: Check your answers - Add partner school - %{provider_name}
-            add_partner_school: Add partner school
-            caption: Add partner school - %{provider_name}
-            title: Check your answers
-            additional_details: Additional details
-            ofsted: Ofsted
-            send: Special educational needs and disabilities (SEND)
-            contact_details: Contact details
-            school_will_be_sent_an_email: We will send an email to %{school_name}. This will let them know you have added them as a partner school for %{provider_name}.
-            cancel: Cancel
-          create:
-            partner_school_added: Partner school added
           show:
             page_title: "%{partner_school_name} - Partner schools - %{provider_name}"
             caption: "Partner schools - %{provider_name}"
@@ -46,8 +27,3 @@ en:
             school_will_be_sent_an_email: We will send an email to %{school_name}. This will let them know you have removed them as a partner school for %{provider_name}.
           destroy:
             partner_school_removed: Partner school removed
-          school_options:
-            page_title: "%{school_count} results found for ‘%{search_param}’ - Add partner school - %{provider_name}"
-            page_title_with_error: "Error: %{school_count} results found for ‘%{search_param}’- Add partner school - %{provider_name}"
-            title: Add partner school
-            cancel: Cancel

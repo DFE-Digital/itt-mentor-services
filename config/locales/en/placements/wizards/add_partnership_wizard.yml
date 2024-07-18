@@ -12,9 +12,6 @@ en:
           title:
             provider: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode
             school: Enter a school name, unique reference number (URN) or postcode
-          caption: 
-            provider: Add partner provider
-            school: Add partner school
         check_your_answers_step:
           page_title: Check your answers - %{contextual_text}
           title: Check your answers
@@ -26,6 +23,5 @@ en:
           ofsted: Ofsted
           send: Special educational needs and disabilities (SEND)
         partnership_options_step:
-          page_title: "%{results_count} results found for ‘%{search_param}’ - Add partner %{organisation_type}"
-          page_title_with_error: "Error: %{results_count} results found for ‘%{search_param}’- Add partner %{organisation_type}"
-          title: Add partner %{organisation_type}
+          page_title: "%{results_count} results found for ‘%{search_param}’ - %{contextual_text}"
+          page_title_with_error: "Error: %{results_count} results found for ‘%{search_param}’- %{contextual_text}"

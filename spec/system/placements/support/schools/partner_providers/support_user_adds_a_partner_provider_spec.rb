@@ -49,7 +49,13 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   end
 
   scenario "Support user reconsiders selecting a provider", :js, retry: 3 do
-    given_i_have_completed_the_form_to_select(provider:)
+    when_i_visit_the_partner_providers_page_for(school)
+    and_i_click_on("Add partner provider")
+    and_i_enter_a_provider_named("Provider 1")
+    then_i_see_a_dropdown_item_for("Provider 1")
+    when_i_click_the_dropdown_item_for("Provider 1")
+    and_i_click_on("Continue")
+    then_i_see_the_check_details_page_for_provider("Provider 1")
     when_i_click_on("Back")
     then_i_see_the_search_input_pre_filled_with("Provider 1")
     and_i_click_on("Continue")
@@ -94,7 +100,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   alias_method :and_i_click_on, :when_i_click_on
 
   def and_i_enter_a_provider_named(provider_name)
-    fill_in "partnership-provider-id-field", with: provider_name
+    fill_in "placements-add-partnership-wizard-partnership-step-id-field", with: provider_name
   end
 
   def then_i_see_a_dropdown_item_for(provider_name)
@@ -141,15 +147,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   end
 
   def when_i_visit_the_add_partner_provider_page
-    visit new_placements_support_school_partner_provider_path(school)
-  end
-
-  def given_i_have_completed_the_form_to_select(provider:)
-    params = {
-      "partnership" => { provider_id: provider.id, provider_name: provider.name },
-      school_id: school.id,
-    }
-    visit check_placements_support_school_partner_providers_path(params)
+    visit new_add_partner_provider_placements_support_school_partner_providers_path(school)
   end
 
   def partner_provider_notification(user)
@@ -173,7 +171,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
 
   def then_i_see_the_search_input_pre_filled_with(provider_name)
     within(".autocomplete__wrapper") do
-      expect(page.find("#partnership-provider-id-field").value).to eq(provider_name)
+      expect(page.find("#placements-add-partnership-wizard-partnership-step-id-field").value).to eq(provider_name)
     end
   end
 
