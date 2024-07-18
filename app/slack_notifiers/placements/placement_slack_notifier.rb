@@ -7,7 +7,7 @@ class Placements::PlacementSlackNotifier < Placements::ApplicationSlackNotifier
           type: "section",
           text: {
             type: "mrkdwn",
-            text: ":new: *Placement added:* <#{placements_support_school_placements_url(school, placement)}|#{placement.title}> at #{school.name}",
+            text: ":new: *Placement added:* <#{placements_support_school_placement_url(school, placement)}|#{placement.title}> at #{school.name}",
           },
         },
       ],
