@@ -3,7 +3,6 @@ class Placements::AddSchoolContactWizard::SchoolContactStep < Placements::BaseSt
   attribute :last_name
   attribute :email_address
 
-  validates :first_name, :last_name, presence: true
   validates :email_address, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validate :new_school_contact
 
