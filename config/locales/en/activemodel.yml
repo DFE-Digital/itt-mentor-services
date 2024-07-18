@@ -54,6 +54,10 @@ en:
               blank: Select a %{organisation_type}
         placements/add_school_contact_wizard/school_contact_step:
           attributes:
+            first_name:
+              blank: Enter a first name
+            last_name:
+              blank: Enter a last name
             email_address:
               blank: Enter an email address
               invalid: Enter an email address in the correct format, like name@example.com
