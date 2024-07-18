@@ -10,6 +10,8 @@ class Placements::AddSchoolContactWizard::SchoolContactStep < Placements::BaseSt
   delegate :school, to: :wizard
 
   def new_school_contact
+    return if wizard.is_a?(Placements::EditSchoolContactWizard)
+
     return unless Placements::SchoolContact.where(
       school:,
     ).exists?
