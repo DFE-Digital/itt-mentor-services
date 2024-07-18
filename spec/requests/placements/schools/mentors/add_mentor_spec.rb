@@ -10,8 +10,14 @@ RSpec.describe "'Add mentor' journey", service: :placements, type: :request do
 
   context "when starting a new wizard journey" do
     before do
+      stub_teaching_record_response(trn: "1234567", date_of_birth: "2000-01-01")
       # Populate the wizard so it has some existing state
-      put step_path(:mentor), params: { "placements_add_mentor_wizard_mentor_step[trn]" => "1234567" }
+      put step_path(:mentor), params: {
+        "placements_add_mentor_wizard_mentor_step[trn]" => "1234567",
+        "placements_add_mentor_wizard_mentor_step[date_of_birth(1i)]" => "2000",
+        "placements_add_mentor_wizard_mentor_step[date_of_birth(2i)]" => "1",
+        "placements_add_mentor_wizard_mentor_step[date_of_birth(3i)]" => "1",
+      }
     end
 
     it "redirects to the first step of the wizard" do
