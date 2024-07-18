@@ -75,13 +75,13 @@ scope module: :placements,
           end
         end
 
-        resources :partner_providers, only: %i[index new create show destroy] do
+        resources :partner_providers, only: %i[index show destroy] do
           member { get :remove }
 
           collection do
-            get :check
-            get :check_provider_option
-            get :provider_options
+            get "new", to: "partner_providers/add_partner_provider#new", as: :new_add_partner_provider
+            get "new/:step", to: "partner_providers/add_partner_provider#edit", as: :add_partner_provider
+            put "new/:step", to: "partner_providers/add_partner_provider#update"
           end
         end
       end
@@ -99,13 +99,13 @@ scope module: :placements,
           end
         end
 
-        resources :partner_schools, only: %i[index new create show destroy] do
+        resources :partner_schools, only: %i[index show destroy] do
           member { get :remove }
 
           collection do
-            get :check
-            get :check_school_option
-            get :school_options
+            get "new", to: "partner_schools/add_partner_school#new", as: :new_add_partner_school
+            get "new/:step", to: "partner_schools/add_partner_school#edit", as: :add_partner_school
+            put "new/:step", to: "partner_schools/add_partner_school#update"
           end
         end
       end

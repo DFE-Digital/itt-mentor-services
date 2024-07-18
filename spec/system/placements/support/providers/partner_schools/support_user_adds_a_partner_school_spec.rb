@@ -45,11 +45,17 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
   scenario "Support user submits the search form without selecting a school", :js, retry: 3 do
     when_i_visit_the_add_partner_school_page_for(provider)
     and_i_click_on("Continue")
-    then_i_see_an_error("Enter a school name, URN or postcode")
+    then_i_see_an_error("Enter a school name, unique reference number (URN) or postcode")
   end
 
   scenario "Support user reconsiders selecting a school", :js, retry: 3 do
-    given_i_have_completed_the_form_to_select(school:)
+    when_i_visit_the_partner_schools_page_for(provider)
+    and_i_click_on("Add partner school")
+    and_i_enter_a_school_named("School 1")
+    then_i_see_a_dropdown_item_for("School 1")
+    when_i_click_the_dropdown_item_for("School 1")
+    and_i_click_on("Continue")
+    then_i_see_the_check_details_page_for_school("School 1")
     when_i_click_on("Back")
     then_i_see_the_search_input_pre_filled_with("School 1")
     and_i_click_on("Continue")
@@ -109,7 +115,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
   alias_method :and_i_click_on, :when_i_click_on
 
   def and_i_enter_a_school_named(school_name)
-    fill_in "partnership-school-id-field", with: school_name
+    fill_in "placements-add-partnership-wizard-partnership-step-id-field", with: school_name
   end
 
   def then_i_see_a_dropdown_item_for(school_name)
@@ -175,20 +181,12 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
   end
 
   def when_i_visit_the_add_partner_school_page_for(provider)
-    visit new_placements_support_provider_partner_school_path(provider)
-  end
-
-  def given_i_have_completed_the_form_to_select(school:)
-    params = {
-      "partnership" => { school_id: school.id, school_name: school.name },
-      provider_id: provider.id,
-    }
-    visit check_placements_support_provider_partner_schools_path(params)
+    visit new_add_partner_school_placements_support_provider_partner_schools_path(provider)
   end
 
   def then_i_see_the_search_input_pre_filled_with(school_name)
     within(".autocomplete__wrapper") do
-      expect(page.find("#partnership-school-id-field").value).to eq(school_name)
+      expect(page.find("#placements-add-partnership-wizard-partnership-step-id-field").value).to eq(school_name)
     end
   end
 

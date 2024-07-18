@@ -2,13 +2,11 @@
   <% content_for :page_title, t(".page_title_with_error",
     results_count: partnership_options_step.partnership_options.count,
     search_param: partnership_options_step.search_params,
-    organisation_type: partnership_options_step.partner_organisation_type,
     contextual_text:) %>
 <% else %>
   <% content_for :page_title, t(".page_title",
     results_count: partnership_options_step.partnership_options.count,
     search_param: partnership_options_step.search_params,
-    organisation_type: partnership_options_step.partner_organisation_type,
     contextual_text:) %>
 <% end %>
 
@@ -20,6 +18,6 @@
   records: partnership_options_step.partnership_options,
   records_klass: partnership_options_step.partner_organisation_type,
   back_link: back_link_path,
-  title: t(".title", organisation_type: partnership_options_step.partner_organisation_type),
+  title: contextual_text,
   method: :put,
 ) %>

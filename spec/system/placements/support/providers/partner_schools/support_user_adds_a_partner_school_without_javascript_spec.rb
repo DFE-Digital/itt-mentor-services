@@ -49,7 +49,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
   scenario "Support user submits the search form without selecting a school" do
     when_i_visit_the_add_partner_school_page_for(provider)
     and_i_click_on("Continue")
-    then_i_see_an_error("Enter a school name, URN or postcode")
+    then_i_see_an_error("Enter a school name, unique reference number (URN) or postcode")
   end
 
   scenario "Support user submits the options form without selecting a school" do
@@ -62,9 +62,18 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
   end
 
   scenario "Support user reconsiders selecting a school" do
-    given_i_have_completed_the_form_to_select(school:)
+    when_i_visit_the_add_partner_school_page_for(provider)
+    and_i_enter_a_school_named("Manch")
+    and_i_click_on("Continue")
+    then_i_see_list_of_placements_schools
+    when_i_choose("Manchester 1")
+    and_i_click_on("Continue")
+    then_i_see_the_check_details_page_for_school("Manchester 1")
     when_i_click_on("Back")
-    then_i_see_the_search_input_pre_filled_with("Manchester 1")
+    then_i_see_list_of_placements_schools
+    and_the_option_for_school_has_been_pre_selected("Manchester 1")
+    when_i_click_on("Back")
+    then_i_see_the_search_input_pre_filled_with("Manch")
     and_i_click_on("Continue")
     then_i_see_list_of_placements_schools
     when_i_choose("Manchester 1")
@@ -98,7 +107,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
   end
 
   def when_i_visit_the_add_partner_school_page_for(provider)
-    visit new_placements_support_provider_partner_school_path(provider)
+    visit new_add_partner_school_placements_support_provider_partner_schools_path(provider)
 
     then_i_see_support_navigation_with_organisation_selected
   end
@@ -116,7 +125,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
   alias_method :and_i_click_on, :when_i_click_on
 
   def and_i_enter_a_school_named(school_name)
-    fill_in "partnership-school-id-field", with: school_name
+    fill_in "placements-add-partnership-wizard-partnership-step-id-field", with: school_name
   end
 
   def then_i_see_list_of_placements_schools
@@ -185,19 +194,15 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
     expect(page.find(".govuk-error-message")).to have_content(error_message)
   end
 
-  def given_i_have_completed_the_form_to_select(school:)
-    params = {
-      "partnership" => { school_id: school.id, school_name: school.name },
-      provider_id: provider.id,
-    }
-    visit check_placements_support_provider_partner_schools_path(params)
-  end
-
   def then_i_see_the_search_input_pre_filled_with(school_name)
-    expect(page.find("#partnership-school-id-field").value).to eq(school_name)
+    expect(page.find("#placements-add-partnership-wizard-partnership-step-id-field").value).to eq(school_name)
   end
 
   def given_the_school_is_not_onboarded_on_placements_service(school)
     school.update!(placements_service: false)
+  end
+
+  def and_the_option_for_school_has_been_pre_selected(school_name)
+    expect(page).to have_checked_field(school_name)
   end
 end

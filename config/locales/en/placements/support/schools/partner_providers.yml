@@ -24,25 +24,3 @@ en:
             provider_will_be_sent_an_email: We will send an email to %{provider_name}. This will let them know you have removed them as a partner provider for %{school_name}.
           destroy:
             partner_provider_removed: Partner provider removed
-          new:
-            page_title: "Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode - Add partner provider - %{school_name}"
-            page_title_with_error: "Errors: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode - Add partner provider - %{school_name}"
-            caption: Add partner provider - %{school_name}
-            title: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode.
-            cancel: Cancel
-          check:
-            continue: Continue
-            cancel: Cancel
-            page_title: Check your answers - Add partner provider - %{school_name}
-            contact_details: Contact details
-            add_partner_provider: Add partner provider
-            caption: Add partner provider - %{school_name}
-            title: Check your answers
-            provider_will_be_sent_an_email: We will send an email to %{provider_name}. This will let them know you have added them as a partner provider for %{school_name}.
-          create:
-            partner_provider_added: Partner provider added
-          provider_options:
-            page_title: "%{provider_count} results found for ‘%{search_param}’ - Add partner provider - %{school_name}"
-            page_title_with_error: "Error: %{provider_count} results found for ‘%{search_param}’- Add partner provider - %{school_name}"
-            title: Add partner provider
-            cancel: Cancel
