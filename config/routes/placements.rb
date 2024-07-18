@@ -145,7 +145,12 @@ scope module: :placements,
         end
       end
 
-      resources :school_contacts, only: %i[edit update] do
+      resources :school_contacts, only: [] do
+        member do
+          get "edit", to: "school_contacts/edit_school_contact#new", as: :new_edit_school_contact
+          get "edit/:step", to: "school_contacts/edit_school_contact#edit", as: :edit_school_contact
+          put "edit/:step", to: "school_contacts/edit_school_contact#update"
+        end
         collection do
           get "new", to: "school_contacts/add_school_contact#new", as: :new_add_school_contact
           get "new/:step", to: "school_contacts/add_school_contact#edit", as: :add_school_contact

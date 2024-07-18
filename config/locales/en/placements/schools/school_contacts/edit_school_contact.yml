@@ -2,10 +2,10 @@ en:
   placements:
     schools:
       school_contacts:
-        add_school_contact:
+        edit_school_contact:
           edit:
             caption: Organisation details
-            title: Add placement contact
+            title: Edit placement contact
             cancel: Cancel
           update:
-            success: Placement contact added
+            success: Placement contact updated
