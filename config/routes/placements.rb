@@ -125,7 +125,7 @@ scope module: :placements,
         end
       end
 
-      resources :mentors, only: %i[index new create show destroy] do
+      resources :mentors, only: %i[index show destroy] do
         member { get :remove }
         collection { get :check }
 
