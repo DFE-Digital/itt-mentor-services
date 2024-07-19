@@ -9,7 +9,7 @@ RSpec.describe "Infinite redirect", service: :placements, type: :system do
     and_the_support_user_is_removed_as_a_support_user
     and_i_click_link("Organisations")
     then_i_no_longer_have_access_to_the_schools_details
-    and_to_be_redirected_to_the_root_path
+    and_i_am_redirected_to_the_root_path
   end
 
   private
@@ -34,7 +34,7 @@ RSpec.describe "Infinite redirect", service: :placements, type: :system do
     expect(page).to have_content("You cannot perform this action")
   end
 
-  def and_to_be_redirected_to_the_root_path
+  def and_i_am_redirected_to_the_root_path
     expect(page).to have_current_path(placements_root_path, ignore_query: true)
   end
 end
