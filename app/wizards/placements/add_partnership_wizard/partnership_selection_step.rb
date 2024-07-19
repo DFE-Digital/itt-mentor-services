@@ -42,4 +42,10 @@ class Placements::AddPartnershipWizard::PartnershipSelectionStep < Placements::B
     step_name = class_to_path(self.class)
     "placements_#{wizard_name}_#{step_name}"
   end
+
+  private
+
+  def class_to_path(klass)
+    klass.name.demodulize.underscore
+  end
 end
