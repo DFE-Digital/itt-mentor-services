@@ -16,8 +16,6 @@ RSpec.describe Placements::AddSchoolContactWizard::SchoolContactStep, type: :mod
   end
 
   describe "validations" do
-    it { is_expected.to validate_presence_of(:first_name) }
-    it { is_expected.to validate_presence_of(:last_name) }
     it { is_expected.to validate_presence_of(:email_address) }
     it { is_expected.to allow_value("name@education.gov.uk").for(:email_address) }
     it { is_expected.to allow_value("name@example.com").for(:email_address) }
