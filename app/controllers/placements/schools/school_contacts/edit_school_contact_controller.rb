@@ -49,10 +49,6 @@ class Placements::Schools::SchoolContacts::EditSchoolContactController < Placeme
   end
 
   def back_link_path
-    if @wizard.previous_step.present?
-      step_path(@wizard.previous_step)
-    else
-      placements_school_path(@school)
-    end
+    placements_school_path(@school)
   end
 end
