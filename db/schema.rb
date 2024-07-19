@@ -57,8 +57,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_12_103537) do
 
   create_table "claim_windows", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "academic_year_id", null: false
-    t.date "starts_on"
-    t.date "ends_on"
+    t.date "starts_on", null: false
+    t.date "ends_on", null: false
     t.date "discarded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

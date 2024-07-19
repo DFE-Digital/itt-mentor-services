@@ -4,8 +4,8 @@
 #
 #  id               :uuid             not null, primary key
 #  discarded_at     :date
-#  ends_on          :date
-#  starts_on        :date
+#  ends_on          :date             not null
+#  starts_on        :date             not null
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  academic_year_id :uuid             not null
