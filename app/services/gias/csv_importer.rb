@@ -95,7 +95,7 @@ module Gias
       School.where(district_admin_code: FRINGE_AREAS).update_all(region_id: fringe.id)
 
       # Rest of England Schools
-      rest_of_england = Region.find_or_create_by!(name: "Rest of England") { |region| region.claims_funding_available_per_hour = 43.18 }
+      rest_of_england = Region.find_or_create_by!(name: "Rest of England") { |region| region.claims_funding_available_per_hour = 43.80 }
       School.where(region_id: nil).update_all(region_id: rest_of_england.id)
     end
 
