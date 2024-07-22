@@ -175,7 +175,7 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
   end
 
   def then_i_see_the_search_input_pre_filled_with(provider_name)
-    expect(page.find("#placements-add-partnership-wizard-partnership-step-id-field").value).to eq(provider_name)
+    find_field "Enter a provider name", with: provider_name
   end
 
   def partner_provider_notification(user)
