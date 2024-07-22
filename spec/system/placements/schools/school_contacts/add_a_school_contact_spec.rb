@@ -145,9 +145,9 @@ RSpec.describe "Placements / Schools / School Contacts / Add a school contact",
   end
 
   def then_i_see_the_inputs_pre_filled_with(first_name:, last_name:, email_address:)
-    expect(page.find("#placements-add-school-contact-wizard-school-contact-step-first-name-field").value).to eq(first_name)
-    expect(page.find("#placements-add-school-contact-wizard-school-contact-step-last-name-field").value).to eq(last_name)
-    expect(page.find("#placements-add-school-contact-wizard-school-contact-step-email-address-field").value).to eq(email_address)
+    find_field "First name", with: first_name
+    find_field "Last name", with: last_name
+    find_field "Email address", with: email_address
   end
 
   def then_i_see_an_error(error_message)

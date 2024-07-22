@@ -54,6 +54,6 @@ class Placements::Schools::SchoolContacts::AddSchoolContactController < Placemen
   end
 
   def authorize_school_contact
-    authorize Placements::SchoolContact.new(school: @school), :add_school_contact_journey?
+    authorize @school.build_school_contact, :add_school_contact_journey?
   end
 end
