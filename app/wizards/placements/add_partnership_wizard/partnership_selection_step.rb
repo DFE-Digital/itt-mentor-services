@@ -7,19 +7,19 @@ class Placements::AddPartnershipWizard::PartnershipSelectionStep < Placements::B
   delegate :partner_organisation_model, :partner_organisation_type, to: :wizard
 
   def new_partnership
-    existing_placement = if partner_organisation.is_a?(School)
-                           Placements::Partnership.find_by(
-                             provider: wizard.organisation,
-                             school: partner_organisation,
-                           )
-                         else
-                           Placements::Partnership.find_by(
-                             provider: partner_organisation,
-                             school: wizard.organisation,
-                           )
-                         end
+    existing_partnership = if partner_organisation.is_a?(School)
+                             Placements::Partnership.find_by(
+                               provider: wizard.organisation,
+                               school: partner_organisation,
+                             )
+                           else
+                             Placements::Partnership.find_by(
+                               provider: partner_organisation,
+                               school: wizard.organisation,
+                             )
+                           end
 
-    return if existing_placement.blank?
+    return if existing_partnership.blank?
 
     errors.add(
       :id,

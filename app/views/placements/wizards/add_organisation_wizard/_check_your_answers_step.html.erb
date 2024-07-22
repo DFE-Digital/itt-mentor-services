@@ -10,7 +10,7 @@
         <%= t(".title") %>
       </label>
 
-      <%= render "shared/organisations/organisation_details", organisation: @wizard.organisation, change_link: back_link_path %>
+      <%= render "shared/organisations/organisation_details", organisation: @wizard.organisation, change_link: step_path(:organisation) %>
       <% if @wizard.steps[:organisation_type].school? %>
         <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".additional_details") %></h2>
         <%= render "shared/schools/additional_details", school: @wizard.organisation %>
