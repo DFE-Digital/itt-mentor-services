@@ -4,7 +4,7 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
   end
 
   def edit?
-    current_claim_window? && !record.submitted?
+    claim_claim_window_current? && !record.submitted?
   end
 
   def update?
@@ -48,5 +48,9 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
 
   def current_claim_window?
     Claims::ClaimWindow.current.present?
+  end
+
+  def claim_claim_window_current?
+    record.claim_window.current?
   end
 end
