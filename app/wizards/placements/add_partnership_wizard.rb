@@ -22,11 +22,12 @@ module Placements
     def create_partnership
       raise "Invalid wizard state" unless valid?
 
-      if partner_organisation_model == (::School)
-        Partnership.create!(school: partner_organisation, provider: organisation)
+      if organisation.respond_to?(:partner_schools)
+        organisation.partner_schools << partner_organisation
       else
-        Partnership.create!(school: organisation, provider: partner_organisation)
+        organisation.partner_providers << partner_organisation
       end
+      organisation.save!
     end
 
     def partner_organisation_type
@@ -36,10 +37,10 @@ module Placements
     private
 
     def partner_org_model
-      {
+      @partner_org_model ||= {
         School => ::Provider,
         Provider => ::School,
-      }[organisation.class]
+      }.fetch(organisation.class)
     end
   end
 end

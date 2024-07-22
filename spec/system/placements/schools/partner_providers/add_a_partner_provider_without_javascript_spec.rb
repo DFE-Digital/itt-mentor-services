@@ -117,7 +117,7 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
   alias_method :and_i_click_on, :when_i_click_on
 
   def and_i_enter_a_provider_named(provider_name)
-    fill_in "placements-add-partnership-wizard-partnership-step-id-field", with: provider_name
+    fill_in "Enter a provider name", with: provider_name
   end
 
   def then_i_see_list_of_placements_providers

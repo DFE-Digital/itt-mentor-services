@@ -100,7 +100,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
   end
 
   def and_i_enter_a_school_named(school_name)
-    fill_in "placements-add-partnership-wizard-partnership-step-id-field", with: school_name
+    fill_in "Enter a school name", with: school_name
   end
 
   def then_i_see_a_dropdown_item_for(school_name)
