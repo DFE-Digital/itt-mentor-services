@@ -40,7 +40,7 @@ class Claims::Claim < ApplicationRecord
 
   belongs_to :school
   belongs_to :provider
-  belongs_to :claim_window, optional: true
+  belongs_to :claim_window
   belongs_to :created_by, polymorphic: true
   belongs_to :submitted_by, polymorphic: true, optional: true
   belongs_to :previous_revision, class_name: "Claims::Claim", optional: true

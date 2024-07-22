@@ -40,8 +40,8 @@ RSpec.describe Claims::Claim, type: :model do
     it { is_expected.to belong_to(:school).class_name("Claims::School") }
     it { is_expected.to belong_to(:provider) }
     it { is_expected.to belong_to(:created_by) }
+    it { is_expected.to belong_to(:claim_window) }
     it { is_expected.to belong_to(:previous_revision).class_name("Claims::Claim").optional }
-    it { is_expected.to belong_to(:claim_window).optional }
     it { is_expected.to belong_to(:submitted_by).optional }
     it { is_expected.to have_many(:mentor_trainings).dependent(:destroy) }
     it { is_expected.to have_many(:mentors).through(:mentor_trainings) }
