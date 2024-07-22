@@ -53,6 +53,7 @@ RSpec.describe Placements::AddSchoolContactWizard::SchoolContactStep, type: :mod
       it "returns a new school contact record for the school" do
         school_contact = step.school_contact
         expect(school_contact.new_record?).to be(true)
+        expect(school_contact.school).to eq(school)
         expect(school_contact.first_name).to eq(first_name)
         expect(school_contact.last_name).to eq(last_name)
         expect(school_contact.email_address).to eq(email_address)
