@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_12_103537) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_22_120510) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -80,6 +80,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_12_103537) do
     t.uuid "submitted_by_id"
     t.boolean "reviewed", default: false
     t.uuid "previous_revision_id"
+    t.uuid "claim_window_id"
+    t.index ["claim_window_id"], name: "index_claims_on_claim_window_id"
     t.index ["created_by_type", "created_by_id"], name: "index_claims_on_created_by"
     t.index ["previous_revision_id"], name: "index_claims_on_previous_revision_id"
     t.index ["provider_id"], name: "index_claims_on_provider_id"
