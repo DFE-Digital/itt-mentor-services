@@ -11,6 +11,7 @@
 #  submitted_by_type    :string
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
+#  claim_window_id      :uuid
 #  created_by_id        :uuid
 #  previous_revision_id :uuid
 #  provider_id          :uuid
@@ -19,6 +20,7 @@
 #
 # Indexes
 #
+#  index_claims_on_claim_window_id       (claim_window_id)
 #  index_claims_on_created_by            (created_by_type,created_by_id)
 #  index_claims_on_previous_revision_id  (previous_revision_id)
 #  index_claims_on_provider_id           (provider_id)
@@ -38,13 +40,15 @@ class Claims::Claim < ApplicationRecord
 
   belongs_to :school
   belongs_to :provider
+  belongs_to :claim_window, optional: true
   belongs_to :created_by, polymorphic: true
   belongs_to :submitted_by, polymorphic: true, optional: true
+  belongs_to :previous_revision, class_name: "Claims::Claim", optional: true
+
+  has_one :academic_year, through: :claim_window
 
   has_many :mentor_trainings, dependent: :destroy
   has_many :mentors, through: :mentor_trainings
-
-  belongs_to :previous_revision, class_name: "Claims::Claim", optional: true
 
   validates :status, presence: true
   validates(

@@ -85,6 +85,7 @@ shared:
     - submitted_by_id
     - reviewed
     - previous_revision_id
+    - claim_window_id
   :schools:
     - id
     - urn
