@@ -4,21 +4,22 @@ class Placements::AddSchoolContactWizard::SchoolContactStep < Placements::BaseSt
   attribute :email_address
 
   validates :email_address, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validate :new_school_contact
+  validate :only_one_contact_per_school
 
   delegate :school, to: :wizard
 
-  def new_school_contact
-    return if wizard.is_a?(Placements::EditSchoolContactWizard)
-
-    return unless Placements::SchoolContact.where(
-      school:,
-    ).exists?
+  def only_one_contact_per_school
+    another_contact = Placements::SchoolContact.where(school:).excluding(school_contact)
+    return unless another_contact.exists?
 
     errors.add(:email_address, :taken)
   end
 
   def school_contact
-    school.build_school_contact(first_name:, last_name:, email_address:)
+    @school_contact ||= if wizard.respond_to?(:school_contact)
+                          wizard.school_contact
+                        else
+                          school.build_school_contact(first_name:, last_name:, email_address:)
+                        end
   end
 end
