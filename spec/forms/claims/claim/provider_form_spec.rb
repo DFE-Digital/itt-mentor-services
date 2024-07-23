@@ -3,6 +3,7 @@ require "rails_helper"
 describe Claims::Claim::ProviderForm, type: :model do
   let(:school) { create(:claims_school) }
   let(:existing_claim) { create(:claim, school:) }
+  let(:claim_window) { create(:claim_window, :current) }
 
   describe "validations" do
     context "when provider is not set" do
@@ -38,7 +39,7 @@ describe Claims::Claim::ProviderForm, type: :model do
 
     context "when claim doesn't exist" do
       it "creates an internal draft claim with a provider" do
-        form = described_class.new(provider_id: provider.id, school:, current_user:)
+        form = described_class.new(provider_id: provider.id, school:, current_user:, claim_window:)
 
         expect { form.save! }.to change { form.claim.provider }.to provider
 
@@ -49,7 +50,7 @@ describe Claims::Claim::ProviderForm, type: :model do
 
     context "when claim does exist" do
       it "updates the claim with the new provider" do
-        form = described_class.new(id: existing_claim.id, provider_id: provider.id, school:, current_user:)
+        form = described_class.new(id: existing_claim.id, provider_id: provider.id, school:, current_user:, claim_window:)
 
         expect { form.save! }.to change { existing_claim.reload.provider }.to provider
 
@@ -60,7 +61,7 @@ describe Claims::Claim::ProviderForm, type: :model do
 
       context "when selecting the same provider" do
         it "doesn't update anything" do
-          form = described_class.new(id: existing_claim.id, provider_id: existing_claim.provider.id, school:, current_user:)
+          form = described_class.new(id: existing_claim.id, provider_id: existing_claim.provider.id, school:, current_user:, claim_window:)
 
           expect { form.save! }.to not_change { existing_claim.reload.provider }
             .and(not_change { existing_claim.reload.mentor_trainings.pluck(:provider_id) })
