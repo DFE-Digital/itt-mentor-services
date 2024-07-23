@@ -32,7 +32,8 @@ class Placements::Schools::SchoolContacts::EditSchoolContactController < Placeme
   end
 
   def set_school_contact
-    @school_contact = @school.school_contact
+    school_contact_id = params.require(:id)
+    @school_contact = Placements::SchoolContact.find_by!(id: school_contact_id, school: @school)
   end
 
   def set_wizard
