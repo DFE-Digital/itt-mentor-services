@@ -37,7 +37,6 @@ RSpec.describe Placements::AddSchoolContactWizard::SchoolContactStep, type: :mod
         let(:school) { create(:placements_school) }
 
         context "when the school contact given is not the existing school contact" do
-
           it "returns invalid" do
             expect(step.valid?).to be(false)
           end
