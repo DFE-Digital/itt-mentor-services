@@ -18,14 +18,4 @@ class Placements::PartnershipsController < Placements::ApplicationController
 
     redirect_to_index_path
   end
-
-  private
-
-  def check_partner_organisation_options
-    if partnership_form(javascript_disabled: true).valid?
-      redirect_to_check_path
-    else
-      render_partner_organisation_options
-    end
-  end
 end
