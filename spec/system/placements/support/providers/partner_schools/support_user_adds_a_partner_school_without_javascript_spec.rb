@@ -125,7 +125,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
   alias_method :and_i_click_on, :when_i_click_on
 
   def and_i_enter_a_school_named(school_name)
-    fill_in "placements-add-partnership-wizard-partnership-step-id-field", with: school_name
+    fill_in "Enter a school name", with: school_name
   end
 
   def then_i_see_list_of_placements_schools
@@ -195,7 +195,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
   end
 
   def then_i_see_the_search_input_pre_filled_with(school_name)
-    expect(page.find("#placements-add-partnership-wizard-partnership-step-id-field").value).to eq(school_name)
+    find_field "Enter a school name", with: school_name
   end
 
   def given_the_school_is_not_onboarded_on_placements_service(school)

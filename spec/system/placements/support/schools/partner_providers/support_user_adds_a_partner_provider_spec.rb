@@ -100,7 +100,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   alias_method :and_i_click_on, :when_i_click_on
 
   def and_i_enter_a_provider_named(provider_name)
-    fill_in "placements-add-partnership-wizard-partnership-step-id-field", with: provider_name
+    fill_in "Enter a provider name", with: provider_name
   end
 
   def then_i_see_a_dropdown_item_for(provider_name)
@@ -171,7 +171,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
 
   def then_i_see_the_search_input_pre_filled_with(provider_name)
     within(".autocomplete__wrapper") do
-      expect(page.find("#placements-add-partnership-wizard-partnership-step-id-field").value).to eq(provider_name)
+      find_field "Enter a provider name", with: provider_name
     end
   end
 
