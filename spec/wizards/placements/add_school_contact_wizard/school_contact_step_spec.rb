@@ -21,7 +21,7 @@ RSpec.describe Placements::AddSchoolContactWizard::SchoolContactStep, type: :mod
     it { is_expected.to allow_value("name@example.com").for(:email_address) }
     it { is_expected.not_to allow_value("some_text").for(:email_address) }
 
-    describe "#new_school_contact" do
+    describe "#only_one_contact_per_school" do
       let(:first_name) { "John" }
       let(:last_name) { "Doe" }
       let(:email_address) { "joe_doe@example.com" }
@@ -36,8 +36,26 @@ RSpec.describe Placements::AddSchoolContactWizard::SchoolContactStep, type: :mod
       context "when the school already has a school contact" do
         let(:school) { create(:placements_school) }
 
-        it "returns invalid" do
-          expect(step.valid?).to be(false)
+        context "when the school contact given is not the existing school contact" do
+
+          it "returns invalid" do
+            expect(step.valid?).to be(false)
+          end
+        end
+
+        context "when the school contact is the existing school contact" do
+          let(:mock_wizard) do
+            instance_double(Placements::EditSchoolContactWizard).tap do |mock_wizard|
+              allow(mock_wizard).to receive_messages(
+                school:,
+                school_contact: school.school_contact,
+              )
+            end
+          end
+
+          it "returns valid" do
+            expect(step.valid?).to be(true)
+          end
         end
       end
     end
