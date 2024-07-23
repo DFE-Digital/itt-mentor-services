@@ -1,5 +1,5 @@
 class Claims::Claim::ProviderForm < ApplicationForm
-  attr_accessor :id, :provider_id, :school, :current_user
+  attr_accessor :id, :provider_id, :school, :current_user, :claim_window
 
   validates :provider_id, presence: true
 
@@ -17,6 +17,7 @@ class Claims::Claim::ProviderForm < ApplicationForm
       claim.mentor_trainings.update_all(provider_id:)
       claim.status = :internal_draft if claim.status.nil?
       claim.created_by ||= current_user
+      claim.claim_window = claim_window
       claim.save!
     end
   end

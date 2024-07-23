@@ -80,7 +80,7 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   end
 
   def default_params
-    { school: @school, current_user: }
+    { school: @school, current_user:, claim_window: Claims::ClaimWindow.current }
   end
 
   def claim_provider_form
