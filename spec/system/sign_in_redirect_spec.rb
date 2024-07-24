@@ -9,7 +9,7 @@ RSpec.describe "Sign in redirect", service: :placements, type: :system do
     let(:user) { create(:placements_user) }
     let(:school) { create(:placements_school, users: [user]) }
 
-    scenario "Logging in via the root path redirects to the placements page" do
+    scenario "Logging in via the root path redirects to the organisations page" do
       when_i_visit_the placements_root_path
       and_i_click_on "Start now"
       and_i_sign_in
