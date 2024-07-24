@@ -18,6 +18,7 @@ class Placements::Schools::Mentors::AddMentorController < Placements::Applicatio
       redirect_to step_path(@wizard.next_step)
     else
       @wizard.create_mentor
+      @wizard.reset_state
       redirect_to index_path, flash: { success: t("placements.wizards.add_mentor_wizard.update.success") }
     end
   end
