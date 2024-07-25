@@ -27,12 +27,12 @@ en:
             heading: Claims
             claim_id: ID
             add_claim: Add claim
-            guidance: You can only claim for the academic year September 2023 to July 2024.
+            guidance: You can only claim for the academic year September %{start_year} to July %{end_year}.
             closing_date_disclaimer_title: Important
             closing_date_disclaimer: You must submit a claim by 11:59pm on Friday 19 July 2024
             add_mentor_guidance_html: You need to %{link_to} before creating a claim.</p>
             add_a_mentor: add a mentor
-            window_closed: Claims can no longer be submitted for school year September 2023 to July 2024.
+            window_closed: Claims can no longer be submitted for school year September %{start_year} to July %{end_year}.
             window_closed_guidance: You can still %{link_to}.
             window_closed_link_text: add a mentor
           show:

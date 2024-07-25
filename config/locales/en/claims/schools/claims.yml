@@ -52,8 +52,8 @@ en:
           closing_date_disclaimer: You must submit a claim by <strong>%{time}</strong>.
           add_mentor_guidance_html: Before you can start a claim you will need to %{link_to}.
           add_a_mentor: add a mentor
-          window_closed: Claims can no longer be submitted for school year September 2023 to July 2024.
-          window_closed_guidance: "You can still %{link_to}. Final closing date for claims: <strong>11:59pm on Friday 19 July 2024</strong>."
+          window_closed: Claims can no longer be submitted for school year September %{start_year} to July %{end_year}.
+          window_closed_guidance: "You can still %{link_to}. Final closing date for claims: <strong>%{time}</strong>."
           window_closed_guidance_link_text: add a mentor
           window_closed_support: Email %{link_to} if you have a query about your claims.
         update:

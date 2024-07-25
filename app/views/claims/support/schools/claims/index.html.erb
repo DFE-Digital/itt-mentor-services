@@ -8,15 +8,15 @@
 
   <% if policy(Claims::Claim).create? %>
     <% if @school.mentors.any? %>
-      <%= govuk_inset_text text: t(".guidance") %>
+      <%= govuk_inset_text text: t(".guidance", start_year: Claims::ClaimWindow.current.academic_year.starts_on.year, end_year: Claims::ClaimWindow.current.academic_year.ends_on.year) %>
 
-      <%= govuk_link_to t(".add_claim"), new_claims_support_school_claim_path, class: "govuk-button" %>
+      <%= govuk_button_link_to t(".add_claim"), new_claims_support_school_claim_path %>
     <% else %>
       <%= govuk_inset_text text: t(".add_mentor_guidance_html", link_to: govuk_link_to(t(".add_a_mentor"), claims_support_school_mentors_path(@school))) %>
     <% end %>
   <% else %>
     <%= govuk_inset_text do %>
-      <p class="govuk-body"><%= t(".window_closed") %></p>
+      <p class="govuk-body"><%= t(".window_closed", start_year: Claims::ClaimWindow.previous.academic_year.starts_on.year, end_year: Claims::ClaimWindow.previous.academic_year.ends_on.year) %></p>
       <p class="govuk-body"><%= sanitize t(".window_closed_guidance", link_to: govuk_link_to(t(".window_closed_link_text"))) %></p>
     <% end %>
   <% end %>

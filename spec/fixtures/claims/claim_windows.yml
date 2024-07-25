@@ -19,14 +19,7 @@
 #
 #  fk_rails_...  (academic_year_id => academic_years.id)
 #
-FactoryBot.define do
-  factory :claim_window, class: "Claims::ClaimWindow" do
-    trait :current do
-      starts_on { 2.days.ago }
-      ends_on { 2.days.from_now }
-      association :academic_year, :current
-
-      to_create { |instance| instance.save!(validate: false) }
-    end
-  end
-end
+2_may_to_19_july:
+  starts_on: 2024-05-02
+  ends_on: 2024-07-19
+  academic_year: 2023_to_2024

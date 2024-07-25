@@ -8,7 +8,7 @@
     <% if @school.mentors.any? %>
       <%= govuk_inset_text do %>
         <p class="govuk-body"><%= t(".guidance") %></p>
-        <p class="govuk-body"><%= sanitize t(".closing_date_disclaimer", time: "11:59pm on #{l(Claims::ClaimWindow.current.ends_on, format: :long)}") %></p>
+        <p class="govuk-body"><%= sanitize t(".closing_date_disclaimer", time: l(Claims::ClaimWindow.current.ends_on.end_of_day, format: :time_on_date)) %></p>
       <% end %>
 
       <%= govuk_link_to t(".add_claim"), new_claims_school_claim_path, class: "govuk-button" %>
@@ -17,8 +17,8 @@
     <% end %>
   <% else %>
     <%= govuk_inset_text do %>
-      <p class="govuk-body"><%= t(".window_closed") %></p>
-      <p class="govuk-body"><%= sanitize t(".window_closed_guidance", link_to: govuk_link_to(t(".window_closed_guidance_link_text"), claims_school_mentors_path(@school))) %></p>
+      <p class="govuk-body"><%= t(".window_closed", start_year: Claims::ClaimWindow.previous.academic_year.starts_on.year, end_year: Claims::ClaimWindow.previous.academic_year.ends_on.year) %></p>
+      <p class="govuk-body"><%= sanitize t(".window_closed_guidance", link_to: govuk_link_to(t(".window_closed_guidance_link_text"), claims_school_mentors_path(@school)), time: l(Claims::ClaimWindow.previous.ends_on.end_of_day, format: :time_on_date)) %></p>
     <% end %>
   <% end %>
 
