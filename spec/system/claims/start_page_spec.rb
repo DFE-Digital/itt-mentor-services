@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Start Page", service: :claims, type: :system do
+RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :system do
   scenario "User visits the start page" do
     given_i_am_on_the_start_page
     then_i_can_see_the_start_page
@@ -64,7 +64,7 @@ RSpec.describe "Start Page", service: :claims, type: :system do
     end
 
     expect(page).to have_content("Use this service to claim for mentors who supported, or intended to support, trainee teachers from September 2023 to July 2024.")
-    expect(page).to have_content("Final closing date for claims: 11:59pm on Friday 19 July 2024")
+    expect(page).to have_content("The service is open for claims. Deadline to submit claims is: 11:59pm on Friday 19 July 2024")
     expect(page).to have_content("You must wait until May 2025 to claim for training that took place from April 2024 for the school year starting September 2025.")
     expect(page).to have_content(
       "Before you start\n"\

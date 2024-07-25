@@ -51,6 +51,10 @@ class Claims::ClaimWindow < ApplicationRecord
     find_by_date(Date.current)
   end
 
+  def self.previous
+    where(ends_on: ..Date.current).order(ends_on: :desc).first
+  end
+
   private
 
   def is_not_longer_than_an_academic_year

@@ -11,9 +11,19 @@
         Use this service to claim for mentors who supported, or intended to support, trainee teachers from September 2023 to July 2024.
       </p>
 
-      <p class="govuk-body">
-        Final closing date for claims: <strong>11:59pm on Friday 19 July 2024<strong />
-      </p>
+      <% if claim_window.current? %>
+        <p class="govuk-body">
+          The service is open for claims. Deadline to submit claims is: <strong><%= l(claim_window.ends_on.end_of_day, format: :time_on_date) %></strong>
+        </p>
+      <% else %>
+        <p class="govuk-body">
+          We are no longer accepting claims for academic year <%= academic_year.name %>.
+        </p>
+
+        <p class="govuk-body">
+          You can still add a mentor.
+        </p>
+      <% end %>
 
       <p class="govuk-body">
         You must wait until May 2025 to claim for training that took place from April 2024 for the school year starting September 2025.
