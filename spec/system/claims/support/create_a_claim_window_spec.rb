@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Create a claim window", freeze: "17 July 2024", service: :claims, type: :system do
+RSpec.describe "Create a claim window", freeze: "20 July 2024", service: :claims, type: :system do
   let(:support_user) { create(:claims_support_user) }
 
   before do
@@ -22,19 +22,19 @@ RSpec.describe "Create a claim window", freeze: "17 July 2024", service: :claims
     then_i_see_a_form_error("Enter a window opening date in the future")
     then_i_see_a_form_error("Enter a window closing date in the future")
 
-    when_i_fill_in_the_form(starts_on: Date.parse("18 July 2024"), ends_on: Date.parse("31 July 2024"))
+    when_i_fill_in_the_form(starts_on: Date.parse("21 July 2024"), ends_on: Date.parse("31 July 2024"))
     and_i_click_continue
-    then_i_see_the_claim_window_details_check_page_with(start_date: "18 July 2024", end_date: "31 July 2024")
+    then_i_see_the_claim_window_details_check_page_with(start_date: "21 July 2024", end_date: "31 July 2024")
 
     when_i_click_on_change
     then_i_see_the_form_to_create_a_claim_window
 
-    when_i_fill_in_the_form(starts_on: Date.parse("19 July 2024"), ends_on: Date.parse("31 July 2024"))
+    when_i_fill_in_the_form(starts_on: Date.parse("22 July 2024"), ends_on: Date.parse("31 July 2024"))
     and_i_click_continue
-    then_i_see_the_claim_window_details_check_page_with(start_date: "19 July 2024", end_date: "31 July 2024")
+    then_i_see_the_claim_window_details_check_page_with(start_date: "22 July 2024", end_date: "31 July 2024")
 
     when_i_click_save
-    then_i_see_the_claim_window_created_successfully_with(start_date: "19 July 2024", end_date: "31 July 2024")
+    then_i_see_the_claim_window_created_successfully_with(start_date: "22 July 2024", end_date: "31 July 2024")
   end
 
   private

@@ -3,7 +3,7 @@ require "rails_helper"
 describe Claims::Support::Claim::ProviderForm, type: :model do
   let(:school) { create(:claims_school) }
   let(:existing_claim) { create(:claim, school:) }
-  let(:claim_window) { create(:claim_window, :current) }
+  let(:claim_window) { Claims::ClaimWindow.current || create(:claim_window, :current) }
 
   describe "validations" do
     context "when provider is not set" do
