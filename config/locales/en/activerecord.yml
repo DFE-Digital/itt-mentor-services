@@ -39,11 +39,9 @@ en:
               required: Window opening date is required to set the academic year for this window
             starts_on:
               blank: Enter a window opening date
-              past: Enter a window opening date in the future
               overlap: Select a date that is not within an existing claim window
             ends_on:
               blank: Enter a window closing date
-              past: Enter a window closing date in the future
               overlap: Select a date that is not within an existing claim window
               greater_than_or_equal_to: Enter a window closing date that is after the opening date
         claims/mentor_training:
