@@ -1,43 +1,53 @@
 class Placements::TravelTime
   include ServicePattern
 
-  def initialize(origin_address:, destinations:, travel_mode: "DRIVE")
+  def initialize(origin_address:, destinations:)
     @origin_address = origin_address
     @destinations = destinations
-    @travel_mode = travel_mode
   end
 
   def call
-    travel_time_data = Rails.cache.fetch(cache_key(origin_address:, destinations:, travel_mode:), expires_in: 1.day) do
-      routes_client.travel_time(origin_address, destinations, travel_mode:)
-    end
-
-    combine_destinations_with_travel_data(travel_time_data)
+    combine_destinations_with_travel_data
   end
 
   private
 
-  attr_reader :origin_address, :destinations, :travel_mode
+  attr_reader :origin_address, :destinations
+
+  DRIVE_TRAVEL_MODE = "DRIVE".freeze
+  TRANSIT_TRAVEL_MODE = "TRANSIT".freeze
 
   def routes_client
     @routes_client ||= Google::RoutesApi.new
   end
 
-  def combine_destinations_with_travel_data(travel_time_data)
+  def combine_destinations_with_travel_data
     destinations.map.with_index do |destination, index|
-      api_data = travel_time_data.find { |datum| datum["destinationIndex"] == index }
-      travel_duration = api_data.dig("localizedValues", "duration", "text")
-      travel_distance = api_data.dig("localizedValues", "distance", "text")
+      drive_travel_data = travel_data(index, travel_mode: DRIVE_TRAVEL_MODE)
+      transit_travel_data = travel_data(index, travel_mode: TRANSIT_TRAVEL_MODE)
 
-      destination.update!(travel_duration:, travel_distance:)
+      destination.assign_attributes(
+        transit_travel_duration: transit_travel_data.dig("localizedValues", "duration", "text"),
+        transit_travel_distance: transit_travel_data.dig("localizedValues", "distance", "text"),
+        drive_travel_duration: drive_travel_data.dig("localizedValues", "duration", "text"),
+        drive_travel_distance: drive_travel_data.dig("localizedValues", "distance", "text"),
+      )
     end
 
-    destinations.sort_by(&:travel_duration)
+    destinations.sort_by(&:drive_travel_duration)
   end
 
-  def cache_key(origin_address:, destinations:, travel_mode:)
+  def travel_data(index, travel_mode:)
+    results = Rails.cache.fetch(cache_key(travel_mode:), expires_in: 1.day) do
+      routes_client.travel_time(origin_address, destinations, travel_mode:)
+    end
+
+    results.find { |datum| datum["destinationIndex"] == index }
+  end
+
+  def cache_key(travel_mode:)
     # An array of everything that makes this request unique
-    request_parameters = [origin_address, destinations.ids, travel_mode]
+    request_parameters = [origin_address, destinations.pluck(:latitude, :longitude), travel_mode]
 
     # Create a SHA256 hash which uniquely identifies this request
     fingerprint = Digest::SHA256.hexdigest(request_parameters.to_json)
