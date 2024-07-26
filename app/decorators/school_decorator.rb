@@ -1,4 +1,9 @@
 class SchoolDecorator < OrganisationDecorator
+  attribute :transit_travel_duration
+  attribute :transit_travel_distance
+  attribute :drive_travel_duration
+  attribute :drive_travel_distance
+
   def formatted_inspection_date
     return "" if last_inspection_date.blank?
 
