@@ -89,8 +89,10 @@ shared:
     - locked_by_id
     - locked_at
   :schools:
-    - travel_duration
-    - travel_distance
+    - transit_travel_duration
+    - transit_travel_distance
+    - drive_travel_duration
+    - drive_travel_distance
   :school_contacts:
     - name
     - email_address
