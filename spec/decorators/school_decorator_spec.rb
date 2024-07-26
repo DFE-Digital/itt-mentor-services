@@ -1,6 +1,15 @@
 require "rails_helper"
 
 RSpec.describe SchoolDecorator do
+  describe "attributes" do
+    subject(:school) { build(:school).decorate }
+
+    it {
+      expect(school).to have_attributes(drive_travel_duration: nil, drive_travel_distance: nil,
+                                        transit_travel_duration: nil, transit_travel_distance: nil)
+    }
+  end
+
   describe "#formatted_address" do
     it "returns a formatted address" do
       school = build(:school,
