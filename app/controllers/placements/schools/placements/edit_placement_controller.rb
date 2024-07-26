@@ -81,7 +81,7 @@ class Placements::Schools::Placements::EditPlacementController < Placements::App
         placement:,
       )
     end
-    
+
     if to_provider_id.present?
       Placements::Placements::NotifyProvider::Assign.call(
         provider: Provider.find(to_provider_id),
