@@ -21,7 +21,12 @@ RSpec.shared_examples "an edit placement wizard", :js do
   end
 
   context "when the school has partner providers" do
+    let(:provider_1_user) { create(:placements_user, providers: [provider_1]) }
+    let(:provider_2_user) { create(:placements_user, providers: [provider_2]) }
+
     before do
+      provider_1_user
+      provider_2_user
       create(:placements_partnership, school:, provider: provider_1)
       create(:placements_partnership, school:, provider: provider_2)
     end
@@ -41,6 +46,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
           provider_name: "Provider 2",
         )
         and_i_see_success_message("Provider updated")
+        and_the_provider_is_notified_they_have_been_assigned_to_the_placement(provider_2_user)
       end
 
       it "User does not select a provider" do
@@ -99,6 +105,8 @@ RSpec.shared_examples "an edit placement wizard", :js do
           provider_name: "Provider 2",
         )
         and_i_see_success_message("Provider updated")
+        and_the_provider_is_notified_they_have_been_removed_from_the_placement(provider_1_user)
+        and_the_provider_is_notified_they_have_been_assigned_to_the_placement(provider_2_user)
       end
 
       it "User does not select a provider" do
@@ -119,6 +127,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
           href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :provider),
         )
         and_i_see_success_message("Provider updated")
+        and_the_provider_is_notified_they_have_been_removed_from_the_placement(provider_1_user)
       end
     end
   end
@@ -426,6 +435,21 @@ RSpec.shared_examples "an edit placement wizard", :js do
 
   def when_i_select_year(year)
     choose year
+  end
+
+  def and_the_provider_is_notified_they_have_been_assigned_to_the_placement(user)
+    and_the_provider_is_notified(user, "#{school.name} wants you to place a trainee with them")
+  end
+
+  def and_the_provider_is_notified_they_have_been_removed_from_the_placement(user)
+    and_the_provider_is_notified(user, "#{school.name} has removed you from a placement")
+  end
+
+  def and_the_provider_is_notified(user, subject)
+    ActionMailer::Base.deliveries.find do |delivery|
+      delivery.to.include?(user.email) &&
+        delivery.subject == subject
+    end
   end
 
   alias_method :and_i_click_on, :when_i_click_on

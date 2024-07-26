@@ -534,4 +534,76 @@ RSpec.describe UserMailer, type: :mailer do
       end
     end
   end
+
+  describe "#placement_provider_assigned_notification" do
+    subject(:placement_provider_assigned_notification) do
+      described_class.with(service: :placements)
+        .placement_provider_assigned_notification(
+          provider_user, provider, placement
+        )
+    end
+
+    let(:school) { create(:placements_school, name: "School 1") }
+    let(:maths) { create(:subject, name: "Mathematics") }
+    let(:placement) { create(:placement, subject: maths, school:) }
+    let(:provider) { create(:provider, name: "Provider 1") }
+    let(:provider_user) { create(:placements_user, providers: [provider]) }
+    let(:school_contact_email) { school.school_contact.email_address }
+
+    it "sends a provider assigned notification email to the user of the provider" do
+      expect(placement_provider_assigned_notification.to).to contain_exactly(provider_user.email)
+      expect(placement_provider_assigned_notification.subject).to eq(
+        "School 1 wants you to place a trainee with them",
+      )
+      expect(placement_provider_assigned_notification.body).to have_content <<~EMAIL
+          Provider 1 has been assigned to the following placement:
+
+          [School 1](http://placements.localhost/placements/#{placement.id})
+          [Mathematics](http://placements.localhost/placements/#{placement.id})
+          
+          # What happens next?
+          
+          Contact the school to suggest a trainee you think would suit this placement. 
+          Get in touch at [#{school_contact_email}](mailto:#{school_contact_email})
+          
+          Manage school placements service
+        EMAIL
+    end
+  end
+
+  describe "#placement_provider_removed_notification" do
+    subject(:placement_provider_removed_notification) do
+      described_class.with(service: :placements)
+        .placement_provider_removed_notification(
+          provider_user, provider, placement
+        )
+    end
+
+    let(:school) { create(:placements_school, name: "School 1") }
+    let(:maths) { create(:subject, name: "Mathematics") }
+    let(:placement) { create(:placement, subject: maths, school:) }
+    let(:provider) { create(:provider, name: "Provider 1") }
+    let(:provider_user) { create(:placements_user, providers: [provider]) }
+    let(:school_contact_email) { school.school_contact.email_address }
+
+    it "sends a provider assigned notification email to the user of the provider" do
+      expect(placement_provider_removed_notification.to).to contain_exactly(provider_user.email)
+      expect(placement_provider_removed_notification.subject).to eq(
+        "School 1 has removed you from a placement",
+      )
+      expect(placement_provider_removed_notification.body).to have_content <<~EMAIL
+          Provider 1 is no longer able to allocate a trainee on the following placement:
+
+          [School 1](http://placements.localhost/placements/#{placement.id})
+          [Mathematics](http://placements.localhost/placements/#{placement.id})
+          
+          # What happens next?
+          
+          No further action is required. 
+          If you think this is a mistake, contact the school at [#{school_contact_email}](mailto:#{school_contact_email})
+          
+          Manage school placements service
+        EMAIL
+    end
+  end
 end

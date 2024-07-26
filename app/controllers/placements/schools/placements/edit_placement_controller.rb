@@ -21,6 +21,7 @@ class Placements::Schools::Placements::EditPlacementController < Placements::App
       render "edit"
     else
       @wizard.update_placement
+      notify_provider(@wizard.placement) if @wizard.placement.saved_change_to_provider_id?
       @wizard.reset_state
       redirect_to after_update_placement_path, flash: { success: t(".success", step_attribute: params[:step].titleize) }
     end
@@ -68,5 +69,23 @@ class Placements::Schools::Placements::EditPlacementController < Placements::App
 
   def unlisted_provider_path
     placements_school_partner_providers_path(@school)
+  end
+
+  def notify_provider(placement)
+    from_provider_id = @wizard.placement.saved_change_to_provider_id.first
+    to_provider_id = @wizard.placement.saved_change_to_provider_id.last
+
+    if from_provider_id.present?
+      Placements::Placements::NotifyProvider::Remove.call(
+        provider: Provider.find(from_provider_id),
+        placement:,
+      )
+    end
+    return if to_provider_id.blank?
+
+    Placements::Placements::NotifyProvider::Assign.call(
+      provider: Provider.find(to_provider_id),
+      placement:,
+    )
   end
 end
