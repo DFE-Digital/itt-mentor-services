@@ -30,9 +30,7 @@ class Claims::ClaimWindow < ApplicationRecord
   validates :ends_on, presence: true, comparison: { greater_than_or_equal_to: :starts_on }
 
   validate :is_not_longer_than_an_academic_year
-  validate :does_not_start_in_the_past, on: :create
   validate :does_not_start_within_another_claim_window
-  validate :does_not_end_in_the_past, on: :create
   validate :does_not_end_within_another_claim_window
 
   delegate :name, to: :academic_year, prefix: true
@@ -75,13 +73,5 @@ class Claims::ClaimWindow < ApplicationRecord
     return unless Claims::ClaimWindow.where.not(id:).where("starts_on <= :ends_on AND ends_on >= :ends_on", ends_on:).exists?
 
     errors.add(:ends_on, :overlap)
-  end
-
-  def does_not_start_in_the_past
-    errors.add(:starts_on, :past) if starts_on&.past?
-  end
-
-  def does_not_end_in_the_past
-    errors.add(:ends_on, :past) if ends_on&.past?
   end
 end

@@ -17,11 +17,6 @@ RSpec.describe "Create a claim window", freeze: "20 July 2024", service: :claims
     then_i_see_a_form_error("Enter a window opening date")
     then_i_see_a_form_error("Enter a window closing date")
 
-    when_i_fill_in_the_form(starts_on: Date.parse("1 July 2023"), ends_on: Date.parse("15 July 2024"))
-    and_i_click_continue
-    then_i_see_a_form_error("Enter a window opening date in the future")
-    then_i_see_a_form_error("Enter a window closing date in the future")
-
     when_i_fill_in_the_form(starts_on: Date.parse("21 July 2024"), ends_on: Date.parse("31 July 2024"))
     and_i_click_continue
     then_i_see_the_claim_window_details_check_page_with(start_date: "21 July 2024", end_date: "31 July 2024")
