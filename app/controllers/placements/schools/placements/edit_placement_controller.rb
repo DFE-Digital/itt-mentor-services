@@ -81,11 +81,12 @@ class Placements::Schools::Placements::EditPlacementController < Placements::App
         placement:,
       )
     end
-    return if to_provider_id.blank?
-
-    Placements::Placements::NotifyProvider::Assign.call(
-      provider: Provider.find(to_provider_id),
-      placement:,
-    )
+    
+    if to_provider_id.present?
+      Placements::Placements::NotifyProvider::Assign.call(
+        provider: Provider.find(to_provider_id),
+        placement:,
+      )
+    end
   end
 end
