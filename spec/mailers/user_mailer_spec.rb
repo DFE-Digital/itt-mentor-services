@@ -556,18 +556,18 @@ RSpec.describe UserMailer, type: :mailer do
         "School 1 wants you to place a trainee with them",
       )
       expect(placement_provider_assigned_notification.body).to have_content <<~EMAIL
-          Provider 1 has been assigned to the following placement:
+        Provider 1 has been assigned to the following placement:
 
-          [School 1](http://placements.localhost/placements/#{placement.id})
-          [Mathematics](http://placements.localhost/placements/#{placement.id})
-          
-          # What happens next?
-          
-          Contact the school to suggest a trainee you think would suit this placement. 
-          Get in touch at [#{school_contact_email}](mailto:#{school_contact_email})
-          
-          Manage school placements service
-        EMAIL
+        [School 1](http://placements.localhost/placements/#{placement.id})
+        [Mathematics](http://placements.localhost/placements/#{placement.id})
+
+        # What happens next?
+
+        Contact the school to suggest a trainee you think would suit this placement.#{" "}
+        Get in touch at [#{school_contact_email}](mailto:#{school_contact_email})
+
+        Manage school placements service
+      EMAIL
     end
   end
 
@@ -592,18 +592,18 @@ RSpec.describe UserMailer, type: :mailer do
         "School 1 has removed you from a placement",
       )
       expect(placement_provider_removed_notification.body).to have_content <<~EMAIL
-          Provider 1 is no longer able to allocate a trainee on the following placement:
+        Provider 1 is no longer able to allocate a trainee on the following placement:
 
-          [School 1](http://placements.localhost/placements/#{placement.id})
-          [Mathematics](http://placements.localhost/placements/#{placement.id})
-          
-          # What happens next?
-          
-          No further action is required. 
-          If you think this is a mistake, contact the school at [#{school_contact_email}](mailto:#{school_contact_email})
-          
-          Manage school placements service
-        EMAIL
+        [School 1](http://placements.localhost/placements/#{placement.id})
+        [Mathematics](http://placements.localhost/placements/#{placement.id})
+
+        # What happens next?
+
+        No further action is required.#{" "}
+        If you think this is a mistake, contact the school at [#{school_contact_email}](mailto:#{school_contact_email})
+
+        Manage school placements service
+      EMAIL
     end
   end
 end
