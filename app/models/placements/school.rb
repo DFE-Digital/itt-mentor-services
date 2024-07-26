@@ -70,9 +70,6 @@
 class Placements::School < School
   default_scope { placements_service }
 
-  attribute :travel_duration
-  attribute :travel_distance
-
   has_one :school_contact, dependent: :destroy
 
   has_many :users, through: :user_memberships

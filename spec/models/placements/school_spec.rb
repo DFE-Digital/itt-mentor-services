@@ -70,10 +70,6 @@
 require "rails_helper"
 
 RSpec.describe Placements::School do
-  describe "attributes" do
-    it { is_expected.to have_attributes(travel_duration: nil, travel_distance: nil) }
-  end
-
   context "with assocations" do
     it { is_expected.to have_one(:school_contact).dependent(:destroy) }
 
