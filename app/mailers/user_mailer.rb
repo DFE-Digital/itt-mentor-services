@@ -104,6 +104,42 @@ class UserMailer < ApplicationMailer
       ),
     )
   end
+
+  def placement_provider_assigned_notification(user, provider, placement)
+    placement_link = placements_placement_url(placement)
+    school = placement.school
+
+    notify_email(
+      to: user.email,
+      subject: t(".subject", school_name: school.name),
+      body: t(
+        ".body",
+        provider_name: provider.name,
+        placement_name: placement.decorate.title,
+        school_name: school.name,
+        school_email: school.school_contact.email_address,
+        link: placement_link,
+      ),
+    )
+  end
+
+  def placement_provider_removed_notification(user, provider, placement)
+    placement_link = placements_placement_url(placement)
+    school = placement.school
+
+    notify_email(
+      to: user.email,
+      subject: t(".subject", school_name: school.name),
+      body: t(
+        ".body",
+        provider_name: provider.name,
+        placement_name: placement.decorate.title,
+        school_name: school.name,
+        school_email: school.school_contact.email_address,
+        link: placement_link,
+      ),
+    )
+  end
 end
 
 class InvalidOrganisationError < StandardError; end
