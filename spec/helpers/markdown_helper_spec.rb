@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Placements::MarkdownHelper do
+RSpec.describe MarkdownHelper do
   describe "#render_markdown" do
     context "when given #" do
       it "returns h1 html tag, with class govuk-heading-l" do
