@@ -1,0 +1,3 @@
+<%= content_for :page_title, sanitize(t(".page_title", contextual_text:)) %>
+
+<%= render "placements/placements/placement_details", school: @wizard.school.decorate, placement: preview_placement_step.placement.decorate, preview: true %>

@@ -47,6 +47,9 @@ en:
           change: Change
           info_text: When a placement is published, it will be visible to teacher training providers.
           publish_placement: Publish placement
+          preview_placement: Preview placement
           not_yet_known: Not yet known
+        preview_placement_step:
+          page_title: Preview placement - %{contextual_text}
         update:
           success: Placement published
