@@ -48,7 +48,7 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
     then_i_see_an_error("Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode")
   end
 
-  scenario "User reconsiders selecting a provider", :js, retry: 3 do
+  scenario "User reconsiders selecting a provider using back link", :js, retry: 3 do
     when_i_view_the_partner_providers_page
     and_i_click_on("Add partner provider")
     and_i_enter_a_provider_named("Provider 1")
@@ -57,6 +57,20 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
     and_i_click_on("Continue")
     then_i_see_the_check_details_page_for_provider("Provider 1")
     when_i_click_on("Back")
+    then_i_see_the_search_input_pre_filled_with("Provider 1")
+    and_i_click_on("Continue")
+    then_i_see_the_check_details_page_for_provider("Provider 1")
+  end
+
+  scenario "User reconsiders selecting a provider using change link", :js, retry: 3 do
+    when_i_view_the_partner_providers_page
+    and_i_click_on("Add partner provider")
+    and_i_enter_a_provider_named("Provider 1")
+    then_i_see_a_dropdown_item_for("Provider 1")
+    when_i_click_the_dropdown_item_for("Provider 1")
+    and_i_click_on("Continue")
+    then_i_see_the_check_details_page_for_provider("Provider 1")
+    when_i_click_on("Change")
     then_i_see_the_search_input_pre_filled_with("Provider 1")
     and_i_click_on("Continue")
     then_i_see_the_check_details_page_for_provider("Provider 1")
