@@ -146,6 +146,14 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     end
   end
 
+  context "when I preview the placement" do
+    scenario "I can see the placement details" do
+      when_i_visit_the_placement_show_page
+      when_i_visit_the_placement_preview_page
+      then_i_see_the_placement_preview_page
+    end
+  end
+
   private
 
   def and_there_is_an_existing_user_for(user_name)
@@ -278,5 +286,13 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
 
   def then_i_see_link(text:, href:)
     expect(page).to have_link(text, href:)
+  end
+
+  def when_i_visit_the_placement_preview_page
+    click_link "preview this placement"
+  end
+
+  def then_i_see_the_placement_preview_page
+    expect(page).to have_content("This is a preview of how your placement will appear to teacher training providers.")
   end
 end

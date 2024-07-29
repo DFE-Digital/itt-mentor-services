@@ -15,6 +15,7 @@ module Placements
       add_step(YearGroupStep) if placement_phase == School::PRIMARY_PHASE
       add_step(MentorsStep) if school.mentors.present?
       add_step(CheckYourAnswersStep)
+      add_step(PreviewPlacementStep) if current_step == :preview_placement
     end
 
     def placement_phase

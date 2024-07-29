@@ -1,7 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Placements::AddPlacementWizard do
-  subject(:wizard) { described_class.new(session:, params:, school:, current_step: nil) }
+  subject(:wizard) { described_class.new(session:, params:, school:, current_step:) }
+
+  let(:current_step) { nil }
 
   # Schools
   let(:primary_school) { build(:placements_school, :primary, mentors:) }
@@ -67,6 +69,12 @@ RSpec.describe Placements::AddPlacementWizard do
       let(:state) { { "subject" => { "subject_id" => modern_foreign_languages.id } } }
 
       it { is_expected.to eq %i[subject additional_subjects mentors check_your_answers] }
+    end
+
+    context "when the preview placement step is active" do
+      let(:current_step) { :preview_placement }
+
+      it { is_expected.to eq %i[subject mentors check_your_answers preview_placement] }
     end
   end
 

@@ -71,7 +71,10 @@
 
       <%= govuk_inset_text(text: t(".info_text")) %>
 
-      <%= f.govuk_submit t(".publish_placement") %>
+      <div class="govuk-button-group">
+        <%= f.govuk_submit t(".publish_placement") %>
+        <%= govuk_link_to t(".preview_placement"), step_path(:preview_placement) %>
+      </div>
     </div>
   </div>
 <% end %>
