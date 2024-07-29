@@ -15,6 +15,16 @@
 
       <%= render "placements/schools/placements/details", school: @school, placement: @placement %>
 
+      <%= govuk_inset_text do %>
+        <%= embedded_link_text(
+              t(".preview_placement", href: govuk_link_to(
+                t(".preview_link"),
+                preview_placement_placements_school_placement_path(@school, @placement),
+                no_visited_state: true,
+              )),
+            ) %>
+      <% end %>
+
       <%= govuk_link_to t(".delete_placement"),
                         remove_placements_school_placement_path(@school, @placement),
                         class: "app-link app-link--destructive" %>
