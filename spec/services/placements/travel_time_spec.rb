@@ -17,6 +17,8 @@ RSpec.describe Placements::TravelTime do
   end
 
   describe "#call" do
+    include_context "with cache"
+
     let(:service) { described_class.call(origin_address:, destinations:) }
     let(:google_routes_client) { instance_double(Google::RoutesApi) }
     let(:body) do
