@@ -11,6 +11,8 @@ scope module: :claims, as: :claims, constraints: {
     get :grant_conditions, path: "grant-conditions"
   end
 
+  resources :service_updates, path: "service-updates", only: %i[index show]
+
   resources :schools, only: %i[index show] do
     scope module: :schools do
       resources :claims do

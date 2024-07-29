@@ -5,7 +5,7 @@ class Claims::PagesController < Claims::ApplicationController
 
   before_action :redirect_to_after_sign_in_path, only: :start, if: :user_signed_in?
 
-  helper_method :claim_window, :academic_year
+  helper_method :claim_window, :academic_year, :start_page_service_updates
 
   def start; end
 
@@ -17,5 +17,9 @@ class Claims::PagesController < Claims::ApplicationController
 
   def academic_year
     @academic_year ||= claim_window.academic_year
+  end
+
+  def start_page_service_updates
+    MarkdownDocument.from_directory(Rails.root.join("app/views/claims/service_updates/content")).select { _1["start_page"] }
   end
 end

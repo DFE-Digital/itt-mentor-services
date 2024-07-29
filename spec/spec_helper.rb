@@ -39,6 +39,7 @@ SimpleCov.start "rails" do
   add_group "Queries", "app/queries"
   add_group "Services", "app/services"
   add_group "Validators", "app/validators"
+  add_group "Wizards", "app/wizards"
 end
 
 # `expect(...).not_to matcher.and matcher` is not supported, since it creates a bit of an ambiguity.
