@@ -114,17 +114,17 @@ RSpec.describe Claims::ClaimWindow, type: :model do
   end
 
   describe ".current" do
-    it "returns the current window" do
-      _previous_window = create(:claim_window, starts_on: Date.parse("7 July 2024"), ends_on: Date.parse("17 July 2024"), academic_year:)
-      current_window = create(:claim_window, starts_on: Date.parse("18 July 2024"), ends_on: Date.parse("27 July 2024"), academic_year:)
-      _next_window = create(:claim_window, starts_on: Date.parse("28 July 2024"), ends_on: Date.parse("7 August 2024"), academic_year:)
+    it "returns the current window", freeze: "17 July 2024" do
+      _previous_window = create(:claim_window, starts_on: Date.parse("1 July 2024"), ends_on: Date.parse("11 July 2024"), academic_year:)
+      current_window = create(:claim_window, starts_on: Date.parse("12 July 2024"), ends_on: Date.parse("21 July 2024"), academic_year:)
+      _next_window = create(:claim_window, starts_on: Date.parse("22 July 2024"), ends_on: Date.parse("31 August 2024"), academic_year:)
 
       expect(described_class.current).to eq(current_window)
     end
   end
 
   describe ".previous" do
-    it "returns the most recently closed window" do
+    it "returns the most recently closed window", freeze: "17 July 2024" do
       _old_window = create(:claim_window, starts_on: Date.parse("7 June 2024"), ends_on: Date.parse("1 July 2024"), academic_year:)
       previous_window = create(:claim_window, starts_on: Date.parse("7 July 2024"), ends_on: Date.parse("17 July 2024"), academic_year:)
       _current_window = create(:claim_window, starts_on: Date.parse("18 July 2024"), ends_on: Date.parse("27 July 2024"), academic_year:)
