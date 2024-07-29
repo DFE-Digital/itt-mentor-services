@@ -65,6 +65,8 @@ en:
           add_itt_placement_contact: add a placement contact
         show:
           delete_placement: Delete placement
+          preview_placement: You can %{href} as it appears to providers.
+          preview_link: preview this placement
         details:
           select_a_mentor: Select a mentor
           add_a_mentor: Add a mentor
