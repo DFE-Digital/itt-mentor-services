@@ -48,7 +48,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
     then_i_see_an_error("Enter a school name, unique reference number (URN) or postcode")
   end
 
-  scenario "User reconsiders selecting a school", :js, retry: 3 do
+  scenario "User reconsiders selecting a school using back link", :js, retry: 3 do
     when_i_view_the_partner_schools_page
     and_i_click_on("Add partner school")
     and_i_enter_a_school_named("School 1")
@@ -57,6 +57,20 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
     and_i_click_on("Continue")
     then_i_see_the_check_details_page_for_school("School 1")
     when_i_click_on("Back")
+    then_i_see_the_search_input_pre_filled_with("School 1")
+    and_i_click_on("Continue")
+    then_i_see_the_check_details_page_for_school("School 1")
+  end
+
+  scenario "User reconsiders selecting a school using change link", :js, retry: 3 do
+    when_i_view_the_partner_schools_page
+    and_i_click_on("Add partner school")
+    and_i_enter_a_school_named("School 1")
+    then_i_see_a_dropdown_item_for("School 1")
+    when_i_click_the_dropdown_item_for("School 1")
+    and_i_click_on("Continue")
+    then_i_see_the_check_details_page_for_school("School 1")
+    when_i_click_on("Change")
     then_i_see_the_search_input_pre_filled_with("School 1")
     and_i_click_on("Continue")
     then_i_see_the_check_details_page_for_school("School 1")
