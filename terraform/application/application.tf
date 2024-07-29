@@ -46,10 +46,11 @@ module "web_application" {
 module "worker_application" {
   source = "./vendor/modules/aks//aks/application"
 
-  name   = "worker"
-  is_web = false
+  name    = "worker"
+  is_web  = false
+  command = ["bundle", "exec", "rake", "db:migrate:with_data", "good_job_start"]
   # command = ["bundle", "exec", "good_job", "start"]
-  command = ["/bin/sh", "bundle exec rails db:migrate:with_data && bundle exec good_job start"]
+  # command = ["/bin/sh", "bundle exec rails db:migrate:with_data && bundle exec good_job start"]
 
   namespace    = var.namespace
   environment  = var.environment
