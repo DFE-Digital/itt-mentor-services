@@ -22,27 +22,28 @@ class Placements::TravelTime
   end
 
   def combine_destinations_with_travel_data
+    drive_travel_data = travel_data(travel_mode: DRIVE_TRAVEL_MODE)
+    transit_travel_data = travel_data(travel_mode: TRANSIT_TRAVEL_MODE)
+
     destinations.map.with_index do |destination, index|
-      drive_travel_data = travel_data(index, travel_mode: DRIVE_TRAVEL_MODE)
-      transit_travel_data = travel_data(index, travel_mode: TRANSIT_TRAVEL_MODE)
+      drive_travel_datum = drive_travel_data.find { |datum| datum["destinationIndex"] == index }
+      transit_travel_datum = transit_travel_data.find { |datum| datum["destinationIndex"] == index }
 
       destination.assign_attributes(
-        transit_travel_duration: transit_travel_data.dig("localizedValues", "duration", "text"),
-        transit_travel_distance: transit_travel_data.dig("localizedValues", "distance", "text"),
-        drive_travel_duration: drive_travel_data.dig("localizedValues", "duration", "text"),
-        drive_travel_distance: drive_travel_data.dig("localizedValues", "distance", "text"),
+        drive_travel_duration: drive_travel_datum.dig("localizedValues", "duration", "text"),
+        drive_travel_distance: drive_travel_datum.dig("localizedValues", "distance", "text"),
+        transit_travel_duration: transit_travel_datum.dig("localizedValues", "duration", "text"),
+        transit_travel_distance: transit_travel_datum.dig("localizedValues", "distance", "text"),
       )
     end
 
     destinations.sort_by(&:drive_travel_duration)
   end
 
-  def travel_data(index, travel_mode:)
-    results = Rails.cache.fetch(cache_key(travel_mode:), expires_in: 1.day) do
+  def travel_data(travel_mode:)
+    Rails.cache.fetch(cache_key(travel_mode:), expires_in: 1.day) do
       routes_client.travel_time(origin_address, destinations, travel_mode:)
     end
-
-    results.find { |datum| datum["destinationIndex"] == index }
   end
 
   def cache_key(travel_mode:)
