@@ -5,33 +5,4 @@
   <%= govuk_back_link(href: :back) %>
 <% end %>
 
-<div class="govuk-width-container">
-  <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
-    <span class="govuk-caption-l"><%= t(".placement", school_name: @school.name) %></span>
-    <%= @placement.title %>
-  </h1>
-  <div class="govuk-!-margin-top-0 govuk-!-margin-bottom-6">
-      <%= render Placement::StatusTagComponent.new(placement: @placement) %>
-  </div>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <h2 class="govuk-heading-m govuk-!-margin-top-0">
-        <%= t(".itt_placement_contact") %>
-      </h2>
-      <%= render "shared/schools/school_contact_details",
-        school: @school,
-        school_contact: @school.school_contact,
-        changeable: false %>
-
-      <h2 class="govuk-heading-m govuk-!-margin-top-0">
-        <%= t(".location") %>
-      </h2>
-      <%= render "shared/schools/location_details", school: @school %>
-
-      <h2 class="govuk-heading-m govuk-!-margin-top-0">
-        <%= t(".additional_details") %>
-      </h2>
-      <%= render "school_details", school: @school, placement: @placement %>
-    </div>
-  </div>
-</div>
+<%= render "placement_details", school: @school, placement: @placement, preview: false %>
