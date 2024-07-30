@@ -3,6 +3,10 @@ class PlacementPolicy < ApplicationPolicy
     record.school.school_contact.present?
   end
 
+  def destroy?
+    record.provider.blank?
+  end
+
   # Actions in Placements::Schools::PlacementsController
   alias_method :edit_provider?, :new?
   alias_method :edit_mentors?, :new?

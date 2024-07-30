@@ -26,6 +26,12 @@ RSpec.describe "Placements / Schools / Placements / Delete a placement",
     and_a_school_placement_remains_for_subject("Subject 2")
   end
 
+  scenario "User can not delete a placement assigned to a provider" do
+    given_the_placement_is_assigned_to_a_provider(placement_1)
+    and_i_click_on("Delete placement")
+    then_i_see_i_can_not_delete_the_placement(placement_1)
+  end
+
   private
 
   def and_there_is_an_existing_user_for(user_name)
@@ -93,5 +99,14 @@ RSpec.describe "Placements / Schools / Placements / Delete a placement",
 
   def and_a_school_placement_remains_for_subject(placement_name)
     expect(page).to have_content(placement_name)
+  end
+
+  def given_the_placement_is_assigned_to_a_provider(placement)
+    placement.update!(provider: create(:placements_provider))
+  end
+
+  def then_i_see_i_can_not_delete_the_placement(placement)
+    expect(page).to have_content(placement.decorate.title)
+    expect(page).to have_content("You can not delete this placement")
   end
 end

@@ -12,9 +12,17 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
 
   def show; end
 
-  def remove; end
+  def remove
+    if policy(@placement).destroy?
+      render "confirm_remove"
+    else
+      render "can_not_remove"
+    end
+  end
 
   def destroy
+    authorize @placement
+
     @placement.destroy!
     redirect_to placements_school_placements_path(@school), flash: { success: t(".placement_deleted") }
   end

@@ -81,10 +81,17 @@ en:
               mentor: Mentor
               status: Status
               provider: Provider
-        remove:
+        confirm_remove:
           page_title: "Are you sure you want to delete this placement? - %{subject_names}"
           are_you_sure: Are you sure you want to delete this placement?
           cancel: Cancel
           delete_placement: Delete placement
+        can_not_remove:
+          page_title: "You can not delete this placement - %{subject_names}"
+          title: You can not delete this placement
+          description: |
+            This placement cannot be deleted whilst a provider is assigned to it.
+
+            To delete the placement you must unassign the provider from the placement first.
         destroy:
           placement_deleted: Placement deleted
