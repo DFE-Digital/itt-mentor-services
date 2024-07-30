@@ -27,3 +27,13 @@
 ## Screenshots
 
 <!-- Sceenshots to aid with reviewing if needed-->
+
+## Product review checklist
+
+- [ ] This PR has been reviewed by a Product Manager
+  - [ ] The features in this PR function as expected
+  - [ ] Numeric values, such as funding amounts, are accurate
+- [ ] This PR has been reviewed by a Interaction Designer
+  - [ ] The layout and components are consistent with the design system
+- [ ] This PR has been reviewed by a Content Designer
+  - [ ] The content is clear and concise
