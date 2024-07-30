@@ -27,7 +27,7 @@ RSpec.describe PlacementPolicy do
 
   permissions :destroy? do
     let(:school) { create(:placements_school) }
-    
+
     context "when a placement has no provider assigned" do
       let(:placement) { create(:placement) }
 
