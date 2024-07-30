@@ -1,33 +1,59 @@
 require "rails_helper"
 
 RSpec.describe "Sign In as a Placements User", service: :placements, type: :system do
-  scenario "I sign in as user Anne" do
+  scenario "I sign in as a non-support user, with no organisation" do
     given_there_is_an_existing_user_for("Anne")
     when_i_visit_the_sign_in_path
     when_i_click_sign_in
     then_i_dont_get_redirected_to_support_organisations
+    and_i_see_an_empty_organsations_page
+
     and_i_visit_my_account_page
     then_i_see_user_details_for_anne
   end
 
-  scenario "I sign in as user Patricia" do
-    given_there_is_an_existing_user_for("Patricia")
-    when_i_visit_the_sign_in_path
-    when_i_click_sign_in
-    and_i_visit_my_account_page
-    then_i_see_user_details_for_patricia
+  context "when the user is assigned to a school" do
+    let!(:organisation) { create(:school, :placements, name: "Placement School") }
+
+    scenario "I sign in as a school user and see my schools placements" do
+      given_there_is_an_existing_user_for("Anne")
+      and_the_user_is_part_of_an_organisation(organisation)
+      when_i_visit_the_sign_in_path
+      when_i_click_sign_in
+      then_i_dont_get_redirected_to_support_organisations
+      then_i_can_see_the_placements_school_placements_page
+    end
   end
 
-  scenario "I sign in as user Mary" do
-    given_there_is_an_existing_user_for("Mary")
-    when_i_visit_the_sign_in_path
-    when_i_click_sign_in
-    then_i_dont_get_redirected_to_support_organisations
-    and_i_visit_my_account_page
-    then_i_see_user_details_for_mary
+  context "when the user is assigned to a provider" do
+    let!(:organisation) { create(:provider, :placements, name: "Provider") }
+
+    scenario "I sign in as a provider user and see the placements list page" do
+      given_there_is_an_existing_user_for("Anne")
+      and_the_user_is_part_of_an_organisation(organisation)
+      when_i_visit_the_sign_in_path
+      when_i_click_sign_in
+      then_i_dont_get_redirected_to_support_organisations
+      then_i_can_see_the_placements_page
+    end
   end
 
-  scenario "I sign in as support user user Colin" do
+  context "when the user is assigned to multiple organisations" do
+    let!(:organisation) { create(:school, :placements, name: "Placement School") }
+    let(:provider_organisation) { create(:provider, :placements, name: "Provider") }
+
+    scenario "I sign in as a multi organisation user and see a list of my organisations" do
+      given_there_is_an_existing_user_for("Anne")
+      and_the_user_is_part_of_an_organisation(organisation)
+      and_the_user_is_part_of_an_organisation(provider_organisation)
+      when_i_visit_the_sign_in_path
+      when_i_click_sign_in
+      then_i_dont_get_redirected_to_support_organisations
+      then_i_am_redirected_to_the_organisations_page
+    end
+  end
+
+  scenario "I sign in as a support user" do
     given_there_is_an_existing_support_user_for("Colin")
     and_there_are_placement_organisations
     when_i_visit_the_sign_in_path
@@ -120,7 +146,7 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
 
         scenario "when I sign in as Anne I am redirected to my requested page" do
           given_there_is_an_existing_user_for("Anne", with_dfe_sign_id: false)
-          and_anne_is_part_of_an_organisation(organisation)
+          and_the_user_is_part_of_an_organisation(organisation)
           when_i_visit_the_school_users_path(organisation)
           then_i_am_redirected_to_the_sign_in_page
           when_i_click_sign_in
@@ -129,13 +155,79 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
 
         scenario "when I sign in as Anne and I have multiple organisations" do
           given_there_is_an_existing_user_for("Anne", with_dfe_sign_id: false)
-          and_anne_is_part_of_an_organisation(organisation)
-          and_anne_is_part_of_an_organisation(provider_organisation)
+          and_the_user_is_part_of_an_organisation(organisation)
+          and_the_user_is_part_of_an_organisation(provider_organisation)
           when_i_visit_the_placements_path
           then_i_am_redirected_to_the_sign_in_page
           when_i_click_sign_in
           then_i_am_redirected_to_the_organisations_page
         end
+      end
+    end
+  end
+
+  context "when I revisit the root path after using a deep link to sign in" do
+    let!(:organisation) { create(:school, :placements, name: "Deep Link Placement School") }
+
+    context "when I sign in as a school user" do
+      scenario "I am redirected to the placements page for my school" do
+        given_there_is_an_existing_user_for("Anne")
+        and_the_user_is_part_of_an_organisation(organisation)
+        when_i_visit_the_school_users_path(organisation)
+        then_i_am_redirected_to_the_sign_in_page
+        when_i_click_sign_in
+        then_i_am_redirected_to_the_school_users_page(organisation)
+        when_i_visit_the placements_root_path
+        and_i_click_on "Start now"
+        then_i_can_see_the_placements_school_placements_page
+      end
+    end
+
+    context "when I sign in as a provider user" do
+      let!(:organisation) { create(:provider, :placements, name: "Provider") }
+
+      scenario "I am redirected to the placements page for my school" do
+        given_there_is_an_existing_user_for("Anne")
+        and_the_user_is_part_of_an_organisation(organisation)
+        when_i_visit_the_provider_users_path(organisation)
+        then_i_am_redirected_to_the_sign_in_page
+        when_i_click_sign_in
+        then_i_am_redirected_to_the_provider_users_page(organisation)
+        when_i_visit_the placements_root_path
+        and_i_click_on "Start now"
+        then_i_can_see_the_placements_page
+      end
+    end
+
+    context "when I sign in as a multi-organisation user" do
+      let!(:organisation) { create(:school, :placements, name: "Deep Link Placement School") }
+      let!(:provider_organisation) { create(:provider, :placements, name: "Provider") }
+
+      scenario "I am redirected to the list of my organisations" do
+        given_there_is_an_existing_user_for("Anne")
+        and_the_user_is_part_of_an_organisation(organisation)
+        and_the_user_is_part_of_an_organisation(provider_organisation)
+        when_i_visit_the_school_users_path(organisation)
+        then_i_am_redirected_to_the_sign_in_page
+        when_i_click_sign_in
+        then_i_am_redirected_to_the_school_users_page(organisation)
+        when_i_visit_the placements_root_path
+        and_i_click_on "Start now"
+        then_i_am_redirected_to_the_organisations_page
+      end
+    end
+
+    context "when I sign in as support user Colin" do
+      scenario "I am redirected to the support organisation list page" do
+        given_there_is_an_existing_support_user_for("Colin")
+        and_there_are_placement_organisations
+        and_i_visit_my_account_page
+        then_i_am_redirected_to_the_sign_in_page
+        when_i_click_sign_in
+        then_i_see_user_details_for_colin
+        when_i_visit_the placements_root_path
+        and_i_click_on "Start now"
+        then_i_see_a_list_of_organisations
       end
     end
   end
@@ -167,8 +259,17 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
     click_on "Sign in using DfE Sign In"
   end
 
+  def and_i_click_on(text)
+    click_on text
+  end
+
   def and_i_visit_my_account_page
     visit account_path
+  end
+  alias_method :when_i_visit_my_account_page, :and_i_visit_my_account_page
+
+  def when_i_visit_the(path)
+    visit path
   end
 
   def then_i_see_a_list_of_organisations
@@ -182,6 +283,7 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
   end
 
   def then_i_see_user_details_for_anne
+    expect(page).to have_current_path account_path
     page_has_user_content(
       first_name: "Anne",
       last_name: "Wilson",
@@ -189,23 +291,8 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
     )
   end
 
-  def then_i_see_user_details_for_patricia
-    page_has_user_content(
-      first_name: "Patricia",
-      last_name: "Adebayo",
-      email: "patricia@example.com",
-    )
-  end
-
-  def then_i_see_user_details_for_mary
-    page_has_user_content(
-      first_name: "Mary",
-      last_name: "Lawson",
-      email: "mary@example.com",
-    )
-  end
-
   def then_i_see_user_details_for_colin
+    expect(page).to have_current_path account_path
     page_has_user_content(
       first_name: "Colin",
       last_name: "Chapman",
@@ -247,7 +334,7 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
     expect(page).to have_current_path(placements_support_support_users_path)
   end
 
-  def and_anne_is_part_of_an_organisation(organisation)
+  def and_the_user_is_part_of_an_organisation(organisation)
     organisation.users << User.find_by(email: "anne_wilson@example.org")
   end
 
@@ -265,5 +352,26 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
 
   def then_i_am_redirected_to_the_organisations_page
     expect(page).to have_current_path(placements_organisations_path)
+  end
+
+  def then_i_can_see_the_placements_school_placements_page
+    expect(page).to have_current_path(placements_school_placements_path(organisation))
+  end
+
+  def then_i_can_see_the_placements_page
+    expect(page).to have_current_path(placements_placements_path)
+  end
+
+  def and_i_see_an_empty_organsations_page
+    expect(page).to have_current_path(placements_organisations_path)
+    expect(page).to have_content("You are not a member of any placement organisations")
+  end
+
+  def when_i_visit_the_provider_users_path(organisation)
+    visit placements_provider_users_path(organisation)
+  end
+
+  def then_i_am_redirected_to_the_provider_users_page(organisation)
+    expect(page).to have_current_path(placements_provider_users_path(organisation))
   end
 end
