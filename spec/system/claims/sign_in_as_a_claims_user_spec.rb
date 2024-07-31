@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
-  let(:colin) { create(:claims_support_user, :colin) }
-
   scenario "I sign in as a non-support user, with no organisation" do
     given_there_is_an_existing_user_for("Anne")
     when_i_visit_the_sign_in_path
@@ -112,7 +110,6 @@ RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
           when_i_click_sign_in
           then_i_see_user_details_for_anne
           when_i_visit_the claims_root_path
-          # requested_path is not it again due to app/controllers/claims/pages_controller.rb:6
           then_i_can_see_the_claims_school_claims_page
         end
       end
@@ -130,7 +127,6 @@ RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
           when_i_click_sign_in
           then_i_see_user_details_for_anne
           when_i_visit_the claims_root_path
-          # requested_path is not it again due to app/controllers/claims/pages_controller.rb:6
           then_i_am_redirected_to_the_schools_page
         end
       end
@@ -144,7 +140,6 @@ RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
           when_i_click_sign_in
           then_i_see_user_details_for_colin
           when_i_visit_the claims_root_path
-          # requested_path is not it again due to app/controllers/claims/pages_controller.rb:6
           then_i_see_a_list_of_organisations
         end
       end
@@ -255,6 +250,7 @@ RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
   def and_i_see_an_empty_schools_page
     expect(page).to have_current_path(claims_schools_path)
     expect(page).to have_content("Organisations")
+    expect(find("#main-content")).not_to have_link
   end
 
   def then_i_can_see_the_claims_school_claims_page

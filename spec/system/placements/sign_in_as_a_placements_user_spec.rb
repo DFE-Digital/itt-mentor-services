@@ -158,10 +158,10 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
         given_there_is_an_existing_user_for("Anne")
         and_the_user_is_part_of_an_organisation(organisation)
         and_the_user_is_part_of_an_organisation(provider_organisation)
-        when_i_visit_the_placements_path
+        when_i_visit_the_school_users_path(organisation)
         then_i_am_redirected_to_the_sign_in_page
         when_i_click_sign_in
-        then_i_am_redirected_to_the_organisations_page
+        then_i_am_redirected_to_the_school_users_page(organisation)
       end
     end
 
