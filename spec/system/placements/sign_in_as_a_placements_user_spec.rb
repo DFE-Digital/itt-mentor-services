@@ -128,106 +128,132 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
         then_i_see_user_details_for_colin
       end
     end
+  end
 
-    context "when I use a deep link without being logged in" do
-      context "when I am a support user" do
-        scenario "when I sign in as Colin I am redirected to my requested page" do
-          given_there_is_an_existing_support_user_for("Colin", with_dfe_sign_id: false)
-          when_i_visit_the_support_users_path
-          then_i_am_redirected_to_the_sign_in_page
-          when_i_click_sign_in
-          then_i_am_redirected_to_the_support_users_page
-        end
+  context "when I use a deep link without being logged in" do
+    context "when I am a support user" do
+      scenario "when I sign in as Colin I am redirected to my requested page" do
+        given_there_is_an_existing_support_user_for("Colin")
+        when_i_visit_the_support_users_path
+        then_i_am_redirected_to_the_sign_in_page
+        when_i_click_sign_in
+        then_i_am_redirected_to_the_support_users_page
+      end
+    end
+
+    context "when I am not a support user" do
+      let!(:organisation) { create(:school, :placements, name: "Deep Link Placement School") }
+      let(:provider_organisation) { create(:provider, :placements, name: "Provider") }
+
+      scenario "when I sign in as a school user I am redirected to my requested page" do
+        given_there_is_an_existing_user_for("Anne")
+        and_the_user_is_part_of_an_organisation(organisation)
+        when_i_visit_the_school_users_path(organisation)
+        then_i_am_redirected_to_the_sign_in_page
+        when_i_click_sign_in
+        then_i_am_redirected_to_the_school_users_page(organisation)
       end
 
-      context "when I am not a support user" do
-        let!(:organisation) { create(:school, :placements, name: "Deep Link Placement School") }
-        let(:provider_organisation) { create(:provider, :placements, name: "Provider") }
+      scenario "when I sign in as a multi-organisation user I am redirected to my organisations page" do
+        given_there_is_an_existing_user_for("Anne")
+        and_the_user_is_part_of_an_organisation(organisation)
+        and_the_user_is_part_of_an_organisation(provider_organisation)
+        when_i_visit_the_placements_path
+        then_i_am_redirected_to_the_sign_in_page
+        when_i_click_sign_in
+        then_i_am_redirected_to_the_organisations_page
+      end
+    end
 
-        scenario "when I sign in as Anne I am redirected to my requested page" do
-          given_there_is_an_existing_user_for("Anne", with_dfe_sign_id: false)
+    context "when the deep link is the sign in path" do
+      let!(:organisation) { create(:school, :placements, name: "Deep Link Placement School") }
+
+      scenario "when I sign in as a school user I am redirect to the placements page" do
+        given_there_is_an_existing_user_for("Anne")
+        and_the_user_is_part_of_an_organisation(organisation)
+        when_i_visit_the(sign_in_path)
+        then_i_am_redirected_to_the_sign_in_page
+        when_i_click_sign_in
+        then_i_can_see_the_placements_school_placements_page
+      end
+    end
+
+    context "when the deep link is the sign out path" do
+      let!(:organisation) { create(:school, :placements, name: "Deep Link Placement School") }
+
+      scenario "when I sign in as a school user I am redirect to the placements page" do
+        given_there_is_an_existing_user_for("Anne")
+        and_the_user_is_part_of_an_organisation(organisation)
+        when_i_visit_the(sign_out_path)
+        then_i_am_redirected_to_the_sign_in_page
+        when_i_click_sign_in
+        then_i_can_see_the_placements_school_placements_page
+      end
+    end
+
+    context "when I revisit the root path after using a deep link to sign in" do
+      let!(:organisation) { create(:school, :placements, name: "Deep Link Placement School") }
+
+      context "when I sign in as a school user" do
+        scenario "I am redirected to the placements page for my school" do
+          given_there_is_an_existing_user_for("Anne")
           and_the_user_is_part_of_an_organisation(organisation)
           when_i_visit_the_school_users_path(organisation)
           then_i_am_redirected_to_the_sign_in_page
           when_i_click_sign_in
           then_i_am_redirected_to_the_school_users_page(organisation)
+          when_i_visit_the placements_root_path
+          and_i_click_on "Start now"
+          then_i_can_see_the_placements_school_placements_page
         end
+      end
 
-        scenario "when I sign in as Anne and I have multiple organisations" do
-          given_there_is_an_existing_user_for("Anne", with_dfe_sign_id: false)
+      context "when I sign in as a provider user" do
+        let!(:organisation) { create(:provider, :placements, name: "Provider") }
+
+        scenario "I am redirected to the placements page for my school" do
+          given_there_is_an_existing_user_for("Anne")
           and_the_user_is_part_of_an_organisation(organisation)
-          and_the_user_is_part_of_an_organisation(provider_organisation)
-          when_i_visit_the_placements_path
+          when_i_visit_the_provider_users_path(organisation)
           then_i_am_redirected_to_the_sign_in_page
           when_i_click_sign_in
+          then_i_am_redirected_to_the_provider_users_page(organisation)
+          when_i_visit_the placements_root_path
+          and_i_click_on "Start now"
+          then_i_can_see_the_placements_page
+        end
+      end
+
+      context "when I sign in as a multi-organisation user" do
+        let!(:organisation) { create(:school, :placements, name: "Deep Link Placement School") }
+        let!(:provider_organisation) { create(:provider, :placements, name: "Provider") }
+
+        scenario "I am redirected to the list of my organisations" do
+          given_there_is_an_existing_user_for("Anne")
+          and_the_user_is_part_of_an_organisation(organisation)
+          and_the_user_is_part_of_an_organisation(provider_organisation)
+          when_i_visit_the_school_users_path(organisation)
+          then_i_am_redirected_to_the_sign_in_page
+          when_i_click_sign_in
+          then_i_am_redirected_to_the_school_users_page(organisation)
+          when_i_visit_the placements_root_path
+          and_i_click_on "Start now"
           then_i_am_redirected_to_the_organisations_page
         end
       end
-    end
-  end
 
-  context "when I revisit the root path after using a deep link to sign in" do
-    let!(:organisation) { create(:school, :placements, name: "Deep Link Placement School") }
-
-    context "when I sign in as a school user" do
-      scenario "I am redirected to the placements page for my school" do
-        given_there_is_an_existing_user_for("Anne")
-        and_the_user_is_part_of_an_organisation(organisation)
-        when_i_visit_the_school_users_path(organisation)
-        then_i_am_redirected_to_the_sign_in_page
-        when_i_click_sign_in
-        then_i_am_redirected_to_the_school_users_page(organisation)
-        when_i_visit_the placements_root_path
-        and_i_click_on "Start now"
-        then_i_can_see_the_placements_school_placements_page
-      end
-    end
-
-    context "when I sign in as a provider user" do
-      let!(:organisation) { create(:provider, :placements, name: "Provider") }
-
-      scenario "I am redirected to the placements page for my school" do
-        given_there_is_an_existing_user_for("Anne")
-        and_the_user_is_part_of_an_organisation(organisation)
-        when_i_visit_the_provider_users_path(organisation)
-        then_i_am_redirected_to_the_sign_in_page
-        when_i_click_sign_in
-        then_i_am_redirected_to_the_provider_users_page(organisation)
-        when_i_visit_the placements_root_path
-        and_i_click_on "Start now"
-        then_i_can_see_the_placements_page
-      end
-    end
-
-    context "when I sign in as a multi-organisation user" do
-      let!(:organisation) { create(:school, :placements, name: "Deep Link Placement School") }
-      let!(:provider_organisation) { create(:provider, :placements, name: "Provider") }
-
-      scenario "I am redirected to the list of my organisations" do
-        given_there_is_an_existing_user_for("Anne")
-        and_the_user_is_part_of_an_organisation(organisation)
-        and_the_user_is_part_of_an_organisation(provider_organisation)
-        when_i_visit_the_school_users_path(organisation)
-        then_i_am_redirected_to_the_sign_in_page
-        when_i_click_sign_in
-        then_i_am_redirected_to_the_school_users_page(organisation)
-        when_i_visit_the placements_root_path
-        and_i_click_on "Start now"
-        then_i_am_redirected_to_the_organisations_page
-      end
-    end
-
-    context "when I sign in as support user Colin" do
-      scenario "I am redirected to the support organisation list page" do
-        given_there_is_an_existing_support_user_for("Colin")
-        and_there_are_placement_organisations
-        and_i_visit_my_account_page
-        then_i_am_redirected_to_the_sign_in_page
-        when_i_click_sign_in
-        then_i_see_user_details_for_colin
-        when_i_visit_the placements_root_path
-        and_i_click_on "Start now"
-        then_i_see_a_list_of_organisations
+      context "when I sign in as support user Colin" do
+        scenario "I am redirected to the support organisation list page" do
+          given_there_is_an_existing_support_user_for("Colin")
+          and_there_are_placement_organisations
+          and_i_visit_my_account_page
+          then_i_am_redirected_to_the_sign_in_page
+          when_i_click_sign_in
+          then_i_see_user_details_for_colin
+          when_i_visit_the placements_root_path
+          and_i_click_on "Start now"
+          then_i_see_a_list_of_organisations
+        end
       end
     end
   end

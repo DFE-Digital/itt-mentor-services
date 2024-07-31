@@ -66,28 +66,30 @@ RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
     end
   end
 
-  context "when I revisit the root path after using a deep link to sign in" do
-    context "when I sign in as a school user" do
-      let!(:organisation) { create(:school, :claims, name: "Claims School") }
+  context "when I use a deep link without being logged in" do
+    context "when I am a support user" do
+      scenario "when I sign in as Colin I am redirected to my requested page" do
+        given_there_is_an_existing_support_user_for("Colin")
+        when_i_visit_my_account_page
+        when_i_click_sign_in
+        then_i_see_user_details_for_colin
+      end
+    end
 
-      scenario "I am redirected to the claims page for my school" do
+    context "when I am not a support user" do
+      let!(:organisation) { create(:school, :claims, name: "Claims School 1") }
+      let(:another_organisation) { create(:school, :claims, name: "Claims School 2") }
+
+      scenario "when I sign in as a school user I am redirected to my requested page" do
         given_there_is_an_existing_user_for("Anne")
         and_the_user_is_part_of_an_organisation(organisation)
         when_i_visit_my_account_page
         then_i_am_redirected_to_the_sign_in_page
         when_i_click_sign_in
         then_i_see_user_details_for_anne
-        when_i_visit_the claims_root_path
-        # requested_path is not it again due to app/controllers/claims/pages_controller.rb:6
-        then_i_can_see_the_claims_school_claims_page
       end
-    end
 
-    context "when I sign in as a multi-organisation user" do
-      let!(:organisation) { create(:school, :placements, name: "Claims School 1") }
-      let!(:another_organisation) { create(:school, :placements, name: "Claims School 2") }
-
-      scenario "I am redirected to the list of my organisations" do
+      scenario "when I sign in as a multi-organisation user I am redirected to my organisations page" do
         given_there_is_an_existing_user_for("Anne")
         and_the_user_is_part_of_an_organisation(organisation)
         and_the_user_is_part_of_an_organisation(another_organisation)
@@ -95,23 +97,56 @@ RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
         then_i_am_redirected_to_the_sign_in_page
         when_i_click_sign_in
         then_i_see_user_details_for_anne
-        when_i_visit_the claims_root_path
-        # requested_path is not it again due to app/controllers/claims/pages_controller.rb:6
-        then_i_am_redirected_to_the_schools_page
       end
     end
 
-    context "when I sign in as a support user" do
-      scenario "I am redirected to the claims page for my school" do
-        given_a_school_has_been_onboarded_onto_the_claims_service(name: "Claims School")
-        given_there_is_an_existing_support_user_for("Colin")
-        when_i_visit_my_account_page
-        then_i_am_redirected_to_the_sign_in_page
-        when_i_click_sign_in
-        then_i_see_user_details_for_colin
-        when_i_visit_the claims_root_path
-        # requested_path is not it again due to app/controllers/claims/pages_controller.rb:6
-        then_i_see_a_list_of_organisations
+    context "when I revisit the root path after using a deep link to sign in" do
+      context "when I sign in as a school user" do
+        let!(:organisation) { create(:school, :claims, name: "Claims School") }
+
+        scenario "I am redirected to the claims page for my school" do
+          given_there_is_an_existing_user_for("Anne")
+          and_the_user_is_part_of_an_organisation(organisation)
+          when_i_visit_my_account_page
+          then_i_am_redirected_to_the_sign_in_page
+          when_i_click_sign_in
+          then_i_see_user_details_for_anne
+          when_i_visit_the claims_root_path
+          # requested_path is not it again due to app/controllers/claims/pages_controller.rb:6
+          then_i_can_see_the_claims_school_claims_page
+        end
+      end
+
+      context "when I sign in as a multi-organisation user" do
+        let!(:organisation) { create(:school, :placements, name: "Claims School 1") }
+        let!(:another_organisation) { create(:school, :placements, name: "Claims School 2") }
+
+        scenario "I am redirected to the list of my organisations" do
+          given_there_is_an_existing_user_for("Anne")
+          and_the_user_is_part_of_an_organisation(organisation)
+          and_the_user_is_part_of_an_organisation(another_organisation)
+          when_i_visit_my_account_page
+          then_i_am_redirected_to_the_sign_in_page
+          when_i_click_sign_in
+          then_i_see_user_details_for_anne
+          when_i_visit_the claims_root_path
+          # requested_path is not it again due to app/controllers/claims/pages_controller.rb:6
+          then_i_am_redirected_to_the_schools_page
+        end
+      end
+
+      context "when I sign in as a support user" do
+        scenario "I am redirected to the claims page for my school" do
+          given_a_school_has_been_onboarded_onto_the_claims_service(name: "Claims School")
+          given_there_is_an_existing_support_user_for("Colin")
+          when_i_visit_my_account_page
+          then_i_am_redirected_to_the_sign_in_page
+          when_i_click_sign_in
+          then_i_see_user_details_for_colin
+          when_i_visit_the claims_root_path
+          # requested_path is not it again due to app/controllers/claims/pages_controller.rb:6
+          then_i_see_a_list_of_organisations
+        end
       end
     end
   end
