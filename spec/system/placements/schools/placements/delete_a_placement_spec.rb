@@ -107,6 +107,6 @@ RSpec.describe "Placements / Schools / Placements / Delete a placement",
 
   def then_i_see_i_can_not_delete_the_placement(placement)
     expect(page).to have_content(placement.decorate.title)
-    expect(page).to have_content("You can not delete this placement")
+    expect(page).to have_content("You cannot delete this placement")
   end
 end

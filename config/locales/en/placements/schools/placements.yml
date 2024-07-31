@@ -87,11 +87,11 @@ en:
           cancel: Cancel
           delete_placement: Delete placement
         can_not_remove:
-          page_title: "You can not delete this placement - %{subject_names}"
-          title: You can not delete this placement
+          page_title: "You cannot delete this placement - %{subject_names}"
+          title: You cannot delete this placement
           description: |
-            This placement cannot be deleted whilst a provider is assigned to it.
+            This %{subject_names} placement cannot be deleted because it is assigned to a provider.
 
-            To delete the placement you must unassign the provider from the placement first.
+            You must remove %{provider_name} from the placement before you can delete it.
         destroy:
           placement_deleted: Placement deleted
