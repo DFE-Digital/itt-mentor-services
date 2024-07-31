@@ -76,5 +76,4 @@ RUN apk add --no-cache proj-util
 COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 
-CMD bundle exec rails db:migrate:with_data && \
-    bundle exec rails server -b 0.0.0.0
+CMD bundle exec rails server -b 0.0.0.0
