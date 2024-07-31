@@ -78,6 +78,41 @@ end
 # Create subjects
 PublishTeacherTraining::Subject::Import.call
 
+# Create academic years
+year = Date.current.year
+month = Date.current.month
+
+current_academic_year = if month < 9
+                          year - 1
+                        else
+                          year
+                        end
+
+previous_academic_year = current_academic_year - 1
+next_academic_year = current_academic_year + 1
+
+[previous_academic_year, current_academic_year, next_academic_year].each do |start_year|
+  end_year = start_year + 1
+  academic_year = AcademicYear.find_or_create_by!(
+    starts_on: Date.parse("1 September #{start_year}"),
+    ends_on: Date.parse("31 August #{end_year}"),
+    name: "#{start_year} to #{end_year}",
+  )
+  next unless start_year == current_academic_year
+
+  Claims::ClaimWindow.find_or_create_by!(
+    starts_on: Date.parse("2 May #{end_year}"),
+    ends_on: Date.parse("19 July #{end_year}"),
+    academic_year:,
+  )
+
+  Claims::ClaimWindow.find_or_create_by!(
+    starts_on: Date.parse("29 July #{end_year}"),
+    ends_on: Date.parse("9 August #{end_year}"),
+    academic_year:,
+  )
+end
+
 # Create placements
 Placements::School.find_each do |school|
   # A school must have a school contact before creating placements
