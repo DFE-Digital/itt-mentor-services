@@ -15,7 +15,9 @@
         </label>
 
         <p class="govuk-body">
-          <%= simple_format(t(".description")) %>
+          <%= simple_format(t(".description",
+            subject_names: @placement.title, 
+            provider_name: @placement.provider.name)) %>
         </p>
     </div>
   </div>
