@@ -137,7 +137,7 @@ To run the application locally:
 
 1. Run `yarn` to install dependencies for the web app to run
 2. Run `bin/setup` to setup the database
-3. Run `bin/dev` to launch the app on <http://localhost:3000>
+3. Run `bin/dev` to launch the app on <http://placements.localhost:3000> or <http://claims.localhost:3000>
 
 ### Seed Data
 
