@@ -22,8 +22,57 @@ module "application_configuration" {
   }
 }
 
+# Run database migrations
+# https://guides.rubyonrails.org/active_record_migrations.html#preparing-the-database
+# https://github.com/ilyakatz/data-migrate
+# Terraform waits for this to complete before starting web_application and worker_application
+resource "kubernetes_job" "migrations" {
+  metadata {
+    name      = "${var.service_name}-${var.environment}-migrations"
+    namespace = var.namespace
+  }
+
+  spec {
+    template {
+      metadata {}
+      spec {
+        container {
+          name    = "migrate"
+          image   = var.docker_image
+          command = ["bundle"]
+          args    = ["exec", "rails", "db:prepare", "data:migrate"]
+
+          env_from {
+            config_map_ref {
+              name = module.application_configuration.kubernetes_config_map_name
+            }
+          }
+
+          env_from {
+            secret_ref {
+              name = module.application_configuration.kubernetes_secret_name
+            }
+          }
+        }
+
+        restart_policy = "Never"
+      }
+    }
+
+    backoff_limit = 1
+  }
+
+  wait_for_completion = true
+
+  timeouts {
+    create = "11m"
+    update = "11m"
+  }
+}
+
 module "web_application" {
   source = "./vendor/modules/aks//aks/application"
+  depends_on = [kubernetes_job.migrations]
 
   is_web = true
 
@@ -45,6 +94,7 @@ module "web_application" {
 
 module "worker_application" {
   source = "./vendor/modules/aks//aks/application"
+  depends_on = [kubernetes_job.migrations]
 
   name    = "worker"
   is_web  = false
