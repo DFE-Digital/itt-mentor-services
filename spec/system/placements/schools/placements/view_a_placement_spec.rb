@@ -148,8 +148,8 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
 
   context "when I preview the placement" do
     scenario "I can see the placement details" do
-      when_i_visit_the_placement_show_page
-      when_i_visit_the_placement_preview_page
+      given_i_visit_the_placement_show_page
+      and_i_click_link("preview this placement")
       then_i_see_the_placement_preview_page
     end
   end
@@ -173,6 +173,8 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
   def when_i_visit_the_placement_show_page
     visit placements_school_placement_path(school, placement)
   end
+
+  alias_method :given_i_visit_the_placement_show_page, :when_i_visit_the_placement_show_page
 
   def given_i_sign_in_as_anne
     and_there_is_an_existing_user_for("Anne")
@@ -290,6 +292,10 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
 
   def when_i_visit_the_placement_preview_page
     click_link "preview this placement"
+  end
+
+  def and_i_click_link(link_text)
+    click_link link_text
   end
 
   def then_i_see_the_placement_preview_page
