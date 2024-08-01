@@ -201,6 +201,10 @@ scope module: :placements,
           get "new/:step", to: "partner_schools/add_partner_school#edit", as: :add_partner_school
           put "new/:step", to: "partner_schools/add_partner_school#update"
         end
+
+        scope module: :partner_schools do
+          resources :placements, only: %i[index show]
+        end
       end
     end
   end
