@@ -1,36 +1,28 @@
-<div class="govuk-width-container">
-  <% if preview %>
-    <%= render(GovukComponent::NotificationBannerComponent.new(title_text: "Important")) do %>
-      <h3 class="govuk-heading-m">This is a preview of how your placement will appear to teacher training providers.</h3>
-    <% end %>
-  <% end %>
+<h1 class="govuk-heading-l govuk-!-margin-bottom-2">
+  <span class="govuk-caption-l"><%= t(".placement", school_name: school.name) %></span>
+  <%= placement.title %>
+</h1>
+<div class="govuk-!-margin-top-0 govuk-!-margin-bottom-6">
+  <%= render Placement::StatusTagComponent.new(placement:) %>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m govuk-!-margin-top-0">
+      <%= t(".itt_placement_contact") %>
+    </h2>
+    <%= render "shared/schools/school_contact_details",
+               school:,
+               school_contact: school.school_contact,
+               changeable: false %>
 
-  <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
-    <span class="govuk-caption-l"><%= t(".placement", school_name: school.name) %></span>
-    <%= placement.title %>
-  </h1>
-  <div class="govuk-!-margin-top-0 govuk-!-margin-bottom-6">
-    <%= render Placement::StatusTagComponent.new(placement:) %>
-  </div>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <h2 class="govuk-heading-m govuk-!-margin-top-0">
-        <%= t(".itt_placement_contact") %>
-      </h2>
-      <%= render "shared/schools/school_contact_details",
-                 school:,
-                 school_contact: school.school_contact,
-                 changeable: false %>
+    <h2 class="govuk-heading-m govuk-!-margin-top-0">
+      <%= t(".location") %>
+    </h2>
+    <%= render "shared/schools/location_details", school: %>
 
-      <h2 class="govuk-heading-m govuk-!-margin-top-0">
-        <%= t(".location") %>
-      </h2>
-      <%= render "shared/schools/location_details", school: %>
-
-      <h2 class="govuk-heading-m govuk-!-margin-top-0">
-        <%= t(".additional_details") %>
-      </h2>
-      <%= render "placements/placements/school_details", school:, placement: %>
-    </div>
+    <h2 class="govuk-heading-m govuk-!-margin-top-0">
+      <%= t(".additional_details") %>
+    </h2>
+    <%= render "placements/placements/school_details", school:, placement: %>
   </div>
 </div>
