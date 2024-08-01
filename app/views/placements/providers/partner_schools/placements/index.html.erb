@@ -1,0 +1,58 @@
+<% content_for :page_title, "Placements" %>
+<%= render "placements/providers/primary_navigation", provider: @provider, current_navigation: :partner_schools %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: placements_provider_partner_schools_path) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l"><%= @partner_school.name %></h1>
+    </div>
+
+    <%= render "placements/providers/partner_schools/sub_navigation", school: @partner_school, provider: @provider, current_navigation: :school_details %>
+
+    <%= govuk_table(html_attributes: { id: "placements-assigned-to-you" }) do |table| %>
+      <% table.with_caption(size: "m", text: "Placements assigned to you") %>
+
+      <% table.with_head do |head| %>
+        <% head.with_row do |row| %>
+          <% row.with_cell(text: t(".subject")) %>
+          <% row.with_cell(text: "Mentors") %>
+        <% end %>
+      <% end %>
+
+      <% table.with_body do |body| %>
+        <% @placements_assigned_to_provider.each do |placement| %>
+          <% body.with_row do |row| %>
+            <% row.with_cell(text: govuk_link_to(placement.title, placements_provider_partner_school_placement_path(@provider, @partner_school, placement))) %>
+            <% row.with_cell(text: placement.mentor_names) %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= govuk_table(html_attributes: { id: "other-placements" }) do |table| %>
+      <% table.with_caption(size: "m", text: "Other placements") %>
+
+      <% table.with_head do |head| %>
+        <% head.with_row do |row| %>
+          <% row.with_cell(text: "Subject") %>
+          <% row.with_cell(text: "Status") %>
+        <% end %>
+      <% end %>
+
+      <% table.with_body do |body| %>
+        <% @other_placements.each do |placement| %>
+          <% body.with_row do |row| %>
+            <% row.with_cell(text: govuk_link_to(placement.title, placements_provider_partner_school_placement_path(@provider, @partner_school, placement))) %>
+            <% row.with_cell do %>
+              <%= render Placement::StatusTagComponent.new(placement:) %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

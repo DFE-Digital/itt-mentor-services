@@ -28,5 +28,24 @@ en:
           school_will_be_sent_an_email: We will send an email to %{school_name}. This will let them know you have removed them as a partner school for %{provider_name}.
         destroy: 
           partner_school_removed: Partner school removed
+        placements:
+          details:
+            placement_contact: Placement contact
+            placement_contact_email: Email
+            placement_contact_name: Name
+            address: Address
+            school_details: School details
+            establishment_group: Establishment group
+            phase: Phase
+            gender: Gender
+            age_range: Age range
+            religious_character: Religious character
+            urban_or_rural: Urban or rural
 
+            ofsted_rating: Ofsted rating
+            percentage_free_school_meals: Percentage free school meals
 
+          index:
+            subject: Subject
+            mentors: Mentors
+          show:

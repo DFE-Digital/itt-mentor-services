@@ -1,0 +1,4 @@
+<%= render SecondaryNavigationComponent.new do |component| %>
+  <% component.with_navigation_item "School details", placements_provider_partner_school_path(provider, school) %>
+  <% component.with_navigation_item "Placements", placements_provider_partner_school_placements_path(provider, school) %>
+<% end %>
