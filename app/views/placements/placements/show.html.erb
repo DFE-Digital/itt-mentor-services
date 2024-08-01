@@ -5,4 +5,6 @@
   <%= govuk_back_link(href: :back) %>
 <% end %>
 
-<%= render "placement_details", school: @school, placement: @placement, preview: false %>
+<div class="govuk-width-container">
+  <%= render "placement_details", school: @school, placement: @placement %>
+</div>

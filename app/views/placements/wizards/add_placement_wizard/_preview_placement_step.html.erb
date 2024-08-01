@@ -1,3 +1,9 @@
 <%= content_for :page_title, sanitize(t(".page_title", contextual_text:)) %>
 
-<%= render "placements/placements/placement_details", school: @wizard.school.decorate, placement: preview_placement_step.placement.decorate, preview: true %>
+<div class="govuk-width-container">
+  <%= render(GovukComponent::NotificationBannerComponent.new(title_text: t(".important"))) do %>
+    <h3 class="govuk-heading-m"><%= t(".this_is_a_preview") %></h3>
+  <% end %>
+
+  <%= render "placements/placements/placement_details", school: @wizard.school.decorate, placement: preview_placement_step.placement.decorate %>
+</div>

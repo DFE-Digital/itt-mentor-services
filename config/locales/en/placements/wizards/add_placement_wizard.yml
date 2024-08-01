@@ -51,5 +51,7 @@ en:
           not_yet_known: Not yet known
         preview_placement_step:
           page_title: Preview placement - %{contextual_text}
+          important: Important
+          this_is_a_preview: This is a preview of how your placement will appear to teacher training providers.
         update:
           success: Placement published
