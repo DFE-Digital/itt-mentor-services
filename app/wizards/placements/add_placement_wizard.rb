@@ -25,6 +25,13 @@ module Placements
     def create_placement
       raise "Invalid wizard state" unless valid?
 
+      placement = build_placement
+
+      placement.save!
+      placement
+    end
+
+    def build_placement
       placement = school.placements.build
       placement.subject = steps[:subject].subject
 
@@ -39,8 +46,6 @@ module Placements
       if steps[:mentors].present?
         placement.mentors = steps[:mentors].mentors
       end
-
-      placement.save!
 
       placement
     end
