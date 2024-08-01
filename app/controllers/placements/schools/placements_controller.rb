@@ -2,7 +2,6 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
   before_action :set_school
   before_action :set_placement, only: %i[show remove destroy preview]
   before_action :set_decorated_placement, only: %i[show remove preview]
-  before_action :set_decorated_school, only: %i[show remove preview]
 
   helper_method :edit_attribute_path, :add_provider_path, :add_mentor_path
 
@@ -42,10 +41,6 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
 
   def set_decorated_placement
     @placement = @placement.decorate
-  end
-
-  def set_decorated_school
-    @school = @school.decorate
   end
 
   def edit_attribute_path(attribute)
