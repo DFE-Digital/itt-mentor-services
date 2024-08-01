@@ -1,0 +1,11 @@
+<%= content_for :page_title, sanitize(@placement.title) %>
+
+<%= render "placements/providers/primary_navigation", provider: @provider, current_navigation: :partner_schools %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: :back) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <%= render "placements/placements/placement_details", school: @placement.school, placement: @placement %>
+</div>
