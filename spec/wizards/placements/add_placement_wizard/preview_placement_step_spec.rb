@@ -11,9 +11,12 @@ RSpec.describe Placements::AddPlacementWizard::PreviewPlacementStep, type: :mode
     it { is_expected.to delegate_method(:build_placement).to(:wizard) }
   end
 
-  describe "aliases" do
-    it "aliases #build_placement to #placement" do
-      expect(step.method(:build_placement)).to eq step.method(:placement)
+  describe "#placement" do
+    it "returns the placement built by the wizard" do
+      placement = instance_double(Placement)
+      allow(mock_wizard).to receive(:build_placement).and_return(placement)
+
+      expect(step.placement).to eq(placement)
     end
   end
 end
