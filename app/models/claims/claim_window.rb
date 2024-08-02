@@ -25,6 +25,7 @@ class Claims::ClaimWindow < ApplicationRecord
   default_scope -> { kept }
 
   belongs_to :academic_year
+  has_many :claims, class_name: "Claims::Claim"
 
   validates :starts_on, presence: true
   validates :ends_on, presence: true, comparison: { greater_than_or_equal_to: :starts_on }
