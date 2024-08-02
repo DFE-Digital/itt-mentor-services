@@ -16,29 +16,116 @@ There are a few things to bear in mind when reading this:
 
 ```mermaid
 erDiagram
-  Subject {
+  AcademicYear {
     uuid id PK
-    string subject_area "primary or secondary"
     string name
-    string code "code comes from publish API, but it is not a FK"
+    date starts_on
+    date ends_on
   }
 
-  PlacementSubjectJoin {
+  ClaimWindow {
     uuid id PK
-    uuid placement_id FK
+    uuid academic_year_id
+    date starts_on
+    date ends_on
+    date discarded_at
+  }
+
+  Claim {
+    uuid id PK
+    uuid school_id FK
+    uuid provider_id FK
+    string reference
+    datetime submitted_at
+    string created_by_type
+    uuid created_by_id
+    enum status "internal draft, draft or submitted"
+    string submitted_by_type
+    uuid submitted_by_id
+    bool reviewed
+    uuid previous_revision_id FK
+    uuid claim_window_id FK
+  }
+
+  MentorMembership {
+    uuid id PK
+    string type "This is used to define which service this particular membership belongs to. Placements::MentorMembership or Claims::MentorMembership"
+    uuid mentor_id FK
+    uuid school_id FK
+  }
+
+  MentorTraining {
+    uuid id PK
+    enum training_type "refresher or initial"
+    integer hours_completed
+    datetime date_completed
+    uuid claim_id FK
+    uuid mentor_id FK
+    uuid provider_id FK
+  }
+
+  Mentor {
+    uuid id PK
+    string first_name
+    string last_name
+    string trn FK "Primary key for people in DQT"
+  }
+
+  Partnership {
+    uuid id PK
+    uuid school_id FK
+    uuid provider_id FK
+  }
+
+  PlacementAdditionalSubject {
+    uuid id PK
     uuid subject_id FK
+    uuid placement_id FK
   }
 
   PlacementMentorJoin {
     uuid id PK
-    uuid placement_id FK
     uuid mentor_id FK
+    uuid placement_id FK
   }
 
   Placement {
     uuid id PK
     uuid school_id FK
     enum status "draft or published"
+    uuid provider_id FK
+    uuid subject_id FK
+    enum year_group "year_1, year_2,... or year_6"
+  }
+
+  Provider {
+    uuid id PK
+    bool accredited "Default FALSE"
+    string address1
+    string address2
+    string address3
+    string city
+    string code FK "Primary key for providers in the Teacher Training Courses API"
+    string country
+    string email_address
+    string name
+    bool placements_service "Indicates if the Provider has been onboarded into the School Placements service"
+    string postcode
+    enum provider_type
+    string telephone
+    string town
+    string ukprn
+    string urn
+    string website
+  }
+
+  SchoolContact {
+    uuid id PK
+    string name "No longer used"
+    string email_address
+    uuid school_id FK
+    string first_name
+    string last_name
   }
 
   School {
@@ -83,47 +170,38 @@ erDiagram
     uuid trust_id FK
     bool placements_service "Indicates if the School has been onboarded into the School Placements service"
     bool claims_service "Indicates if the School has been onboarded into the Track & Pay service"
+    float longitude
+    float latitude
+    datetime claims_grant_conditions_accepted_at
+    uuid claims_grant_conditions_accepted_by_id
   }
 
-  Mentor {
+  Subject {
     uuid id PK
-    string first_name
-    string last_name
-    string trn FK "Primary key for people in DQT"
-  }
-
-  Provider {
-    uuid id PK
-    bool accredited "Default FALSE"
-    string address1
-    string address2
-    string address3
-    string city
-    string code FK "Primary key for providers in the Teacher Training Courses API"
-    string country
-    string email_address
+    string subject_area "primary or secondary"
     string name
-    bool placements_service "Indicates if the Provider has been onboarded into the School Placements service"
-    string postcode
-    enum provider_type
-    string telephone
-    string town
-    string ukprn
-    string urn
-    string website
+    string code "code comes from publish API, but it is not a FK"
+    uuid parent_subject_id FK
   }
 
-  MentorTraining {
+  Region {
     uuid id PK
-    string type
-    uuid claim_id FK
-    uuid mentor_id FK
+    string claims_funding_available_per_hour_currency "Default 'GBP'"
+    integer claims_funding_available_per_hour_pence "Default 0"
+    string name
   }
 
-  Claim {
+  Trust {
     uuid id PK
-    uuid school_id FK
-    uuid provider_id FK
+    string name
+    string uid
+  }
+
+  UserMembership {
+    uuid id PK
+    uuid user_id FK
+    string organisation_type FK "Polymorphic association with School or Provider"
+    string organisation_id FK "Polymorphic association with School or Provider"
   }
 
   User {
@@ -137,56 +215,30 @@ erDiagram
     string type "Placements::User or Claims::User"
   }
 
-  UserMembership {
-    uuid id PK
-    uuid user_id FK
-    string organisation_type FK "Polymorphic association with School or Provider"
-    string organisation_id FK "Polymorphic association with School or Provider"
-  }
-
-  MentorMembership {
-    uuid id PK
-    string type "This is used to define which service this particular membership belongs to. Placements::MentorMembership or Claims::MentorMembership"
-    uuid mentor_id FK
-    uuid school_id FK
-  }
-
-  Trust {
-    uuid id PK
-    string name
-    string uid
-  }
-
-  Region {
-    uuid id PK
-    string claims_funding_available_per_hour_currency "Default 'GBP'"
-    integer claims_funding_available_per_hour_pence "Default 0"
-    string name
-  }
-
-  School ||--|{ MentorMembership : "has many"
-  Mentor ||--|{ MentorMembership : "has many"
-
-  Placement ||--|{ PlacementMentorJoin : "has many"
-  Placement ||--|{ PlacementSubjectJoin : "has many"
+  ClaimWindow }|--|| AcademicYear : "belongs to"
+  Claim }|--|| ClaimWindow : "belongs to"
+  Claim }|--|| Provider : "belongs to"
+  Claim }|--|| School : "belongs to"
+  MentorMembership }|--|| Mentor : "belongs to"
+  MentorMembership }|--|| School : "belongs to"
+  MentorTraining }|--|| Claim : "belongs to"
+  MentorTraining }|--|| Mentor : "belongs to"
+  MentorTraining }|--|| Provider : "belongs to"
+  Partnership }|--|| Provider : "belongs to"
+  Partnership }|--|| School : "belongs to"
+  PlacementAdditionalSubject }|--|| Placement : "belongs to"
+  PlacementAdditionalSubject }|--|| Subject : "belongs to"
+  PlacementMentorJoin }|--|| Mentor : "belongs to"
+  PlacementMentorJoin }|--|| Placement : "belongs to"
+  Placement }|--o| Provider : "belongs to"
   Placement }|--|| School : "belongs to"
-
-  Subject ||--|{ PlacementSubjectJoin : "has many"
-
-  Mentor |o--|{ MentorTraining : "has many"
-  Mentor ||--|{ PlacementMentorJoin : "has many"
-  Provider |o--|{ MentorTraining : "has many"
-
-  School ||--|{ Claim : "has many"
-  Claim }|--|{ MentorTraining : "has and belongs to many"
-  Claim }|--|| Provider : "groups Mentor Trainings belonging to Provider"
-
-  User ||--|{ UserMembership : "has many"
-  UserMembership }|--o| Provider : "belongs to (polymorphic)"
-  UserMembership }|--o| School : "belongs to (polymorphic)"
-
+  Placement }|--|| Subject : "belongs to"
+  SchoolContact |o--|| School : "belongs to"
+  School }|--|| Region : "belongs to"
   School }|--o| Trust : "belongs to"
-  School }|--|| Region : "has many"
+  School }|--|| User : "claims grant condition accepted by"
+  Subject }|--o| Subject : "belongs to parent subject"
+  UserMembership }|--|| User : "belongs to"
 ```
 
 ## Onboarding Schools and Providers into the services
