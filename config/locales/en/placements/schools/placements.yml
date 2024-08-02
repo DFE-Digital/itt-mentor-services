@@ -19,6 +19,11 @@ en:
             year_group:
               invalid: Select a year group
   placements:
+    providers:
+      partner_schools:
+        sub_navigation:
+          school_details: School details
+          placements: Placements
     schools:
       placements:
         table:
