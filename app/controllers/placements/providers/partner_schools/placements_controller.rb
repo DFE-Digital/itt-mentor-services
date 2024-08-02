@@ -1,6 +1,7 @@
 class Placements::Providers::PartnerSchools::PlacementsController < ApplicationController
   before_action :set_provider, only: %i[index show]
   before_action :set_partner_school, only: %i[index show]
+
   def index
     placements_assigned_to_provider = @partner_school.placements.where(provider_id: @provider.id)
     other_placements = @partner_school.placements.where.not(id: placements_assigned_to_provider.ids)
@@ -10,7 +11,7 @@ class Placements::Providers::PartnerSchools::PlacementsController < ApplicationC
 
   def show
     @placement = @partner_school.placements.find(params.require(:id)).decorate
-    @partner_school = @partner_school.decorate
+    @partner_school = @placement.school
   end
 
   private
