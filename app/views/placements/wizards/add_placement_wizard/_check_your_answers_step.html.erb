@@ -73,7 +73,7 @@
 
       <div class="govuk-button-group">
         <%= f.govuk_submit t(".publish_placement") %>
-        <%= govuk_link_to t(".preview_placement"), step_path(:preview_placement) %>
+        <%= govuk_link_to t(".preview_placement"), step_path(:preview_placement), no_visited_state: true %>
       </div>
     </div>
   </div>
