@@ -70,8 +70,9 @@ RSpec.describe Placements::TravelTime do
 
     it "caches the travel time data" do
       fingerprint = Digest::SHA256.hexdigest(["SW1A 1AA", destinations.pluck(:latitude, :longitude), "DRIVE"].to_json)
-      service
 
+      expect(google_routes_client).to receive(:travel_time).with(origin_address, destinations, travel_mode: "DRIVE").once
+      expect(service).to eq(described_class.call(origin_address:, destinations:))
       expect(Rails.cache.exist?("placements_travel_time_#{fingerprint}")).to be true
     end
   end
