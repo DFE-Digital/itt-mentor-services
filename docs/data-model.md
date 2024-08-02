@@ -239,6 +239,8 @@ erDiagram
   School }|--|| User : "claims grant condition accepted by"
   Subject }|--o| Subject : "belongs to parent subject"
   UserMembership }|--|| User : "belongs to"
+  UserMembership }|--o| Provider : "belongs to (polymorphic)"
+  UserMembership }|--o| School : "belongs to (polymorphic)"
 ```
 
 ## Onboarding Schools and Providers into the services
