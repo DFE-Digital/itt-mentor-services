@@ -44,8 +44,12 @@ en:
 
             ofsted_rating: Ofsted rating
             percentage_free_school_meals: Percentage free school meals
-
           index:
+            title: Placements
+            placements_assigned_to_you: Placements assigned to you
             subject: Subject
             mentors: Mentors
+            other_placements: Other placements
+            status: Status
+
           show:
