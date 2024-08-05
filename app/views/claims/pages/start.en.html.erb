@@ -52,17 +52,19 @@
         If your organisation has not been set up to claim funding for mentor training, send an email to <%= mail_to t("claims.support_email") %>.
       </p>
 
-      <h2 class="govuk-heading-m">Latest news and updates</h2>
+      <% if service_updates.any? %>
+        <h2 class="govuk-heading-m">Latest news and updates</h2>
 
-      <%= govuk_list type: :bullet do |list| %>
-        <% start_page_service_updates.each do |service_update| %>
-          <%= tag.li govuk_link_to(service_update["title"], claims_service_updates_path(anchor: service_update["title"].parameterize)) %>
+        <%= govuk_list type: :bullet do |list| %>
+          <% service_updates.each do |service_update| %>
+            <%= tag.li govuk_link_to(service_update["title"], claims_service_updates_path(anchor: service_update["title"].parameterize)) %>
+          <% end %>
         <% end %>
-      <% end %>
 
-      <p class="govuk-body">
-        <%= govuk_link_to "View all news and updates", claims_service_updates_path %>
-      </p>
+        <p class="govuk-body">
+          <%= govuk_link_to "View all news and updates", claims_service_updates_path %>
+        </p>
+      <% end %>
     </div>
 
     <div class="govuk-grid-column-one-third">

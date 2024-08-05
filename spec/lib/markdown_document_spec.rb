@@ -24,6 +24,7 @@ RSpec.describe MarkdownDocument do
       expect(from_directory).to eq([
         described_class.new(file_fixture("example.md").read),
         described_class.new(file_fixture("example_without_front_matter.md").read),
+        described_class.new(file_fixture("service_update.md").read),
       ])
     end
   end

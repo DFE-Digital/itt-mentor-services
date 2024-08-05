@@ -18,6 +18,8 @@
       <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
       <% @service_updates.each do |service_update| %>
+        <h2 class="govuk-heading-m"><%= service_update["title"] %></h2>
+        <p class="govuk-body"><%= l(service_update["date"], format: :long) %></p>
         <%= render_markdown(service_update.to_s, headings_start_with: "m") %>
         <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
       <% end %>
