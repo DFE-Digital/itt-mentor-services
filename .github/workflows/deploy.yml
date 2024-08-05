@@ -9,11 +9,11 @@ on:
         type: choice
         default: review
         options:
-        - qa
-        - review
-        - staging
-        - sandbox
-        - dv
+          - qa
+          - review
+          - staging
+          - sandbox
+          - dv
       sha:
         description: Commit sha to be deployed
         required: true
@@ -54,15 +54,6 @@ jobs:
           docker-image: ${{ github.event.inputs.sha }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
           pull-request-number: ${{ github.event.inputs.pr_number }}
-
-      - name: Seed Review App
-        shell: bash
-        if: github.event.inputs.pr_number!= '' && ${{ github.event.inputs.environment == 'review' }}
-        run: |
-          make ci review get-cluster-credentials
-          kubectl exec -n bat-qa deployment/itt-mentor-services-${{ github.event.inputs.pr_number }} -- sh -c "export GIAS_CSV_BASE_URL=https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public  && export PUBLISH_BASE_URL=https://qa.api.publish-teacher-training-courses.service.gov.uk// && cd /app && /usr/local/bin/rake db:seed"
-        env:
-          PR_NUMBER: ${{ github.event.inputs.pr_number }}
 
       - name: Post comment to Pull Request ${{ github.event.inputs.pr_number }}
         if: ${{ github.event.inputs.environment == 'review' }}
