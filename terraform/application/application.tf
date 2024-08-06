@@ -34,7 +34,14 @@ resource "kubernetes_job" "migrations" {
 
   spec {
     template {
-      metadata {}
+      metadata {
+        labels = { app = "${var.service_name}-${var.environment}-migrations" }
+        annotations = {
+          "logit.io/send"        = "true"
+          "fluentbit.io/exclude" = "true"
+        }
+      }
+
       spec {
         container {
           name    = "migrate"
