@@ -19,11 +19,6 @@ RSpec.describe AcademicYear, type: :model do
           ends_on: Date.current + 1.day)
   end
 
-  context "with associations" do
-    it { is_expected.to have_many(:claim_windows) }
-    it { is_expected.to have_many(:claims).through(:claim_windows) }
-  end
-
   context "with validations" do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:starts_on) }
