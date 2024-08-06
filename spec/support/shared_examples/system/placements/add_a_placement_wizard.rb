@@ -176,6 +176,72 @@ RSpec.shared_examples "an add a placement wizard" do
             and_i_see_the_error_message("Select a mentor or not yet known")
           end
         end
+
+        context "when I preview my placement" do
+          it "I can see the placement details" do
+            when_i_visit_the_placements_page
+            and_i_click_on("Add placement")
+            when_i_choose_a_subject(subject_1.name)
+            and_i_click_on("Continue")
+            when_i_choose_a_year_group("Year 1")
+            and_i_click_on("Continue")
+            when_i_check_a_mentor(mentor_1.full_name)
+            and_i_click_on("Continue")
+            then_i_see_the_check_your_answers_page(school.phase, mentor_1)
+            when_i_click_on("Preview placement")
+            then_i_see_the_preview_page(phase: school.phase, subject: subject_1)
+          end
+
+          it "I can go back to the check your answers page" do
+            when_i_visit_the_placements_page
+            and_i_click_on("Add placement")
+            when_i_choose_a_subject(subject_1.name)
+            and_i_click_on("Continue")
+            when_i_choose_a_year_group("Year 1")
+            and_i_click_on("Continue")
+            when_i_check_a_mentor(mentor_1.full_name)
+            and_i_click_on("Continue")
+            then_i_see_the_check_your_answers_page(school.phase, mentor_1)
+            when_i_click_on("Preview placement")
+            then_i_see_the_preview_page(phase: school.phase, subject: subject_1)
+            and_i_click_on("Back")
+            then_i_see_the_check_your_answers_page(school.phase, mentor_1)
+          end
+
+          it "I can go back and edit my placement" do
+            when_i_visit_the_placements_page
+            and_i_click_on("Add placement")
+            when_i_choose_a_subject(subject_1.name)
+            and_i_click_on("Continue")
+            when_i_choose_a_year_group("Year 1")
+            and_i_click_on("Continue")
+            when_i_check_a_mentor(mentor_1.full_name)
+            and_i_click_on("Continue")
+            then_i_see_the_check_your_answers_page(school.phase, mentor_1)
+            when_i_click_on("Preview placement")
+            then_i_see_the_preview_page(phase: school.phase, subject: subject_1)
+            and_i_click_on("Edit placement")
+            then_i_see_the_check_your_answers_page(school.phase, mentor_1)
+          end
+
+          it "I can publish my placement" do
+            when_i_visit_the_placements_page
+            and_i_click_on("Add placement")
+            when_i_choose_a_subject(subject_1.name)
+            and_i_click_on("Continue")
+            when_i_choose_a_year_group("Year 1")
+            and_i_click_on("Continue")
+            when_i_check_a_mentor(mentor_1.full_name)
+            and_i_click_on("Continue")
+            then_i_see_the_check_your_answers_page(school.phase, mentor_1)
+            when_i_click_on("Preview placement")
+            then_i_see_the_preview_page(phase: school.phase, subject: subject_1)
+            and_i_click_on("Publish placement")
+            then_i_see_the_placements_page
+            and_i_see_my_placement(school.phase)
+            and_i_see_success_message("Placement published")
+          end
+        end
       end
     end
 
@@ -598,6 +664,12 @@ RSpec.shared_examples "an add a placement wizard" do
 
   def when_i_uncheck(text)
     uncheck(text)
+  end
+
+  def then_i_see_the_preview_page(phase:, subject:)
+    expect(page).to have_content("This is a preview of how your placement will appear to teacher training providers.")
+    expect(page).to have_content(phase)
+    expect(page).to have_content(subject.name)
   end
 
   alias_method :and_i_click_on, :when_i_click_on

@@ -10,6 +10,9 @@
 
     <%= render "placements/placements/placement_details", school: @wizard.school.decorate, placement: preview_placement_step.placement.decorate %>
 
-    <%= f.govuk_submit t(".publish_placement") %>
+    <div class="govuk-button-group">
+      <%= f.govuk_submit t(".publish_placement") %>
+      <%= govuk_button_link_to t(".edit_placement"), step_path(:check_your_answers), secondary: true %>
+    </div>
   <% end %>
 </div>
