@@ -1,4 +1,4 @@
-<%= content_for :page_title, sanitize(t(".page_title", subject_names: @placement.title)) %>
+<%= content_for :page_title, sanitize(t(".page_title", subject_names: @placement.title, school_name: @school.name)) %>
 
 <%= render "placements/support/primary_navigation", current_navigation: :organisations %>
 
@@ -14,7 +14,7 @@
         <%= t(".are_you_sure") %>
       </label>
 
-      <%= govuk_button_to t(".remove_placement"),
+      <%= govuk_button_to t(".delete_placement"),
         placements_support_school_placement_path(@school, @placement),
         warning: true,
         method: :delete %>

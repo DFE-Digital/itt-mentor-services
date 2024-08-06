@@ -16,7 +16,7 @@
 
       <%= render "placements/schools/placements/details", school: @school, placement: @placement, support: true %>
 
-      <%= govuk_link_to t(".remove_placement"),
+      <%= govuk_link_to t(".delete_placement"),
                         remove_placements_support_school_placement_path(@school, @placement),
                         class: "app-link app-link--destructive" %>
 

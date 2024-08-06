@@ -24,7 +24,7 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
     authorize @placement
 
     @placement.destroy!
-    redirect_to placements_school_placements_path(@school), flash: { success: t(".placement_deleted") }
+    redirect_to index_path, flash: { success: t(".placement_deleted") }
   end
 
   private
@@ -51,5 +51,9 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
 
   def add_mentor_path
     placements_school_mentors_path
+  end
+
+  def index_path
+    placements_school_placements_path(@school)
   end
 end
