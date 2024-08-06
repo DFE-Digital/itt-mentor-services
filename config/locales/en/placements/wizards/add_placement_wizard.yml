@@ -54,5 +54,6 @@ en:
           important: Important
           this_is_a_preview: This is a preview of how your placement will appear to teacher training providers.
           publish_placement: Publish placement
+          edit_placement: Edit placement
         update:
           success: Placement published

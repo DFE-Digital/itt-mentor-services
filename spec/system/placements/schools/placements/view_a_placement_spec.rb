@@ -299,6 +299,6 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
   end
 
   def then_i_see_the_placement_preview_page
-    expect(page).to have_content("This is a preview of how your placement will appear to teacher training providers.")
+    expect(page).to have_content("This is a preview of how your placement appears to teacher training providers.")
   end
 end
