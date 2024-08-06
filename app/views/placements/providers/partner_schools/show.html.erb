@@ -9,9 +9,9 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-l"><%= @partner_school.name %></h1>
+      <%= render "placements/providers/partner_schools/sub_navigation", school: @partner_school, provider: @provider, current_navigation: :school_details %>
     </div>
 
-    <%= render "placements/providers/partner_schools/sub_navigation", school: @partner_school, provider: @provider, current_navigation: :school_details %>
 
     <div class="govuk-grid-column-two-thirds">
       <%= render "shared/organisations/organisation_details", organisation: @partner_school %>
