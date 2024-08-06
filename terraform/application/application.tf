@@ -53,6 +53,30 @@ resource "kubernetes_job" "migrations" {
               name = module.application_configuration.kubernetes_secret_name
             }
           }
+
+          resources {
+            requests = {
+              cpu    = module.cluster_data.configuration_map.cpu_min
+              memory = "1Gi"
+            }
+            limits = {
+              cpu    = 1
+              memory = "1Gi"
+            }
+          }
+
+          security_context {
+            allow_privilege_escalation = false
+
+            seccomp_profile {
+              type = "RuntimeDefault"
+            }
+
+            capabilities {
+              drop = ["ALL"]
+              add  = ["NET_BIND_SERVICE"]
+            }
+          }
         }
 
         restart_policy = "Never"
