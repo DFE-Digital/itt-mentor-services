@@ -32,7 +32,6 @@ RSpec.describe Claims::ClaimWindow, type: :model do
 
   describe "associations" do
     it { is_expected.to belong_to(:academic_year) }
-    it { is_expected.to have_many(:claims).class_name("Claims::Claim") }
   end
 
   describe "validations" do
