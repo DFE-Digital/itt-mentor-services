@@ -18,7 +18,7 @@
 
       <% table.with_head do |head| %>
         <% head.with_row do |row| %>
-          <% row.with_cell(text: t(".subject")) %>
+          <% row.with_cell(text: t(".subject"), width: "govuk-!-width-one-half") %>
           <% row.with_cell(text: t(".mentors")) %>
         <% end %>
       <% end %>
@@ -38,7 +38,7 @@
 
       <% table.with_head do |head| %>
         <% head.with_row do |row| %>
-          <% row.with_cell(text: t(".subject")) %>
+          <% row.with_cell(text: t(".subject"), width: "govuk-!-width-one-half") %>
           <% row.with_cell(text: t(".status")) %>
         <% end %>
       <% end %>
