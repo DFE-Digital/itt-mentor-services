@@ -5,5 +5,11 @@
     <h3 class="govuk-heading-m"><%= t(".this_is_a_preview") %></h3>
   <% end %>
 
-  <%= render "placements/placements/placement_details", school: @wizard.school.decorate, placement: preview_placement_step.placement.decorate %>
+  <%= form_for(preview_placement_step, url: current_step_path, method: :put) do |f| %>
+    <%= f.govuk_error_summary %>
+
+    <%= render "placements/placements/placement_details", school: @wizard.school.decorate, placement: preview_placement_step.placement.decorate %>
+
+    <%= f.govuk_submit t(".publish_placement") %>
+  <% end %>
 </div>

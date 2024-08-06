@@ -53,5 +53,6 @@ en:
           page_title: Preview placement - %{contextual_text}
           important: Important
           this_is_a_preview: This is a preview of how your placement will appear to teacher training providers.
+          publish_placement: Publish placement
         update:
           success: Placement published
