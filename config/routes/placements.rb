@@ -71,8 +71,6 @@ scope module: :placements,
             put "edit/:step", to: "placements/edit_placement#update"
           end
 
-          collection { get :check }
-
           collection do
             get "new", to: "placements/add_placement#new", as: :new_add_placement
             get "new/:step", to: "placements/add_placement#edit", as: :add_placement

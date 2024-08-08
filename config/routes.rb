@@ -32,11 +32,6 @@ Rails.application.routes.draw do
   namespace :api do
     resources :school_suggestions, only: [:index]
     resources :provider_suggestions, only: [:index]
-
-    namespace :placements do
-      resources :school_suggestions, only: [:index]
-      resources :provider_suggestions, only: [:index]
-    end
   end
 
   draw :placements
