@@ -29,7 +29,6 @@ class Claims::ClaimWindow < ApplicationRecord
   validates :starts_on, presence: true
   validates :ends_on, presence: true, comparison: { greater_than_or_equal_to: :starts_on }
 
-  validate :is_not_longer_than_an_academic_year
   validate :does_not_start_within_another_claim_window
   validate :does_not_end_within_another_claim_window
 
@@ -54,14 +53,6 @@ class Claims::ClaimWindow < ApplicationRecord
   end
 
   private
-
-  def is_not_longer_than_an_academic_year
-    return if starts_on.blank? || ends_on.blank?
-
-    if (ends_on - starts_on).to_i > 365
-      errors.add(:base, :longer_than_academic_year)
-    end
-  end
 
   def does_not_start_within_another_claim_window
     return unless Claims::ClaimWindow.where.not(id:).where("starts_on <= :starts_on AND ends_on >= :starts_on", starts_on:).exists?

@@ -46,14 +46,6 @@ RSpec.describe Claims::ClaimWindow, type: :model do
       expect(claim_window.errors[:ends_on]).to include("Enter a window closing date that is after the opening date")
     end
 
-    it "validates that the duration of a claim window does not exceed a year" do
-      claim_window.starts_on = Date.parse("17 July 2024")
-      claim_window.ends_on = Date.parse("18 July 2025")
-
-      expect(claim_window).to be_invalid
-      expect(claim_window.errors[:base]).to include("Claim window must be shorter than an academic year")
-    end
-
     context "with validating against existing claim windows" do
       before do
         create(:claim_window, starts_on: Date.parse("1 July 2024"), ends_on: Date.parse("31 July 2024"), academic_year:)

@@ -76,10 +76,10 @@ en:
               blank: Enter a date of birth
               less_than: Date of birth must be in the past
         placements/edit_placement_wizard/provider_step:
-            attributes:
-              provider_id:
-                blank: Select a provider or not yet known
-                inclusion: Select a provider or not yet known
+          attributes:
+            provider_id:
+              blank: Select a provider or not yet known
+              inclusion: Select a provider or not yet known
         placements/add_support_user_wizard/support_user_step:
           attributes:
             first_name:
@@ -106,6 +106,19 @@ en:
           attributes:
             mentor_ids:
               blank: Select a mentor
+        claims/claim_window_form:
+          attributes:
+            base:
+              longer_than_academic_year: Claim window must be shorter than an academic year
+            academic_year_id:
+              blank: Select an academic year
+            starts_on:
+              blank: Enter a window opening date
+              overlap: Select a date that is not within an existing claim window
+            ends_on:
+              blank: Enter a window closing date
+              overlap: Select a date that is not within an existing claim window
+              greater_than_or_equal_to: Enter a window closing date that is after the opening date
         placements/mentor_form:
           attributes:
             trn:
