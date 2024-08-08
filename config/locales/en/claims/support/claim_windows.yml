@@ -22,6 +22,8 @@ en:
           page_heading: Check your answers
           submit: Save claim window
           cancel: Cancel
+        create:
+          success: Claim window added
         edit:
           page_caption: Change claim window
           page_title: Changing %{window}
@@ -34,9 +36,13 @@ en:
           warning: Setting the current claim window to a date in the past will close the window and prevent users from making any claims.
           submit: Save claim window
           cancel: Cancel
+        update:
+          success: Claim window updated
         remove:
           page_title: Are you sure you want to remove this claim window?
           submit: Remove claim window
           cancel: Cancel
           description: This will soft-delete the claim window.
           warning: This is the current claim window. Soft-deleting the current claim window means users cannot make any claims.
+        destroy:
+          success: Claim window removed

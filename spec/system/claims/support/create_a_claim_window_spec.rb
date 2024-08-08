@@ -17,14 +17,14 @@ RSpec.describe "Create a claim window", freeze: "20 July 2024", service: :claims
     then_i_see_a_form_error("Enter a window opening date")
     then_i_see_a_form_error("Enter a window closing date")
 
-    when_i_fill_in_the_form(starts_on: Date.parse("21 July 2024"), ends_on: Date.parse("31 July 2024"))
+    when_i_fill_in_the_form(starts_on: Date.parse("21 July 2024"), ends_on: Date.parse("31 July 2024"), academic_year: "2023 to 2024")
     and_i_click_continue
     then_i_see_the_claim_window_details_check_page_with(start_date: "21 July 2024", end_date: "31 July 2024")
 
     when_i_click_on_change
     then_i_see_the_form_to_create_a_claim_window
 
-    when_i_fill_in_the_form(starts_on: Date.parse("22 July 2024"), ends_on: Date.parse("31 July 2024"))
+    when_i_fill_in_the_form(starts_on: Date.parse("22 July 2024"), ends_on: Date.parse("31 July 2024"), academic_year: "2023 to 2024")
     and_i_click_continue
     then_i_see_the_claim_window_details_check_page_with(start_date: "22 July 2024", end_date: "31 July 2024")
 
@@ -54,14 +54,20 @@ RSpec.describe "Create a claim window", freeze: "20 July 2024", service: :claims
     expect(page).to have_css("legend", text: "Window closes")
   end
 
-  def when_i_fill_in_the_form(starts_on:, ends_on:)
-    fill_in "claims_claim_window[starts_on(3i)]", with: starts_on.day
-    fill_in "claims_claim_window[starts_on(2i)]", with: starts_on.month
-    fill_in "claims_claim_window[starts_on(1i)]", with: starts_on.year
+  def when_i_fill_in_the_form(starts_on:, ends_on:, academic_year:)
+    within_fieldset "Window opens" do
+      fill_in "Day", with: starts_on.day
+      fill_in "Month", with: starts_on.month
+      fill_in "Year", with: starts_on.year
+    end
 
-    fill_in "claims_claim_window[ends_on(3i)]", with: ends_on.day
-    fill_in "claims_claim_window[ends_on(2i)]", with: ends_on.month
-    fill_in "claims_claim_window[ends_on(1i)]", with: ends_on.year
+    within_fieldset "Window closes" do
+      fill_in "Day", with: ends_on.day
+      fill_in "Month", with: ends_on.month
+      fill_in "Year", with: ends_on.year
+    end
+
+    choose academic_year
   end
 
   def and_i_click_continue
@@ -84,7 +90,7 @@ RSpec.describe "Create a claim window", freeze: "20 July 2024", service: :claims
   end
 
   def then_i_see_the_claim_window_created_successfully_with(start_date:, end_date:)
-    expect(page).to have_content("Claim window created")
+    expect(page).to have_content("Claim window added")
     expect(page).to have_content("#{start_date} to #{end_date}")
   end
 
