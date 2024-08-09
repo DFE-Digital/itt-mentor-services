@@ -1,7 +1,7 @@
 require "rails_helper"
 require "dfe/analytics/rspec/matchers"
 
-RSpec.describe "DfE Analytics integration", type: :request do
+RSpec.describe "DfE Analytics integration", service: :placements, type: :request do
   before do
     # DfE Analytics is usually disabled in tests
     # Switch it on just for these tests
