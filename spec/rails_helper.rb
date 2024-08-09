@@ -127,6 +127,8 @@ RSpec.configure do |config|
     starts_on = "02/05/2024".to_date
     ends_on = "19/07/2024".to_date
     academic_year = AcademicYear.for_date(starts_on)
+    next if Claims::ClaimWindow.find_by(academic_year:, starts_on:, ends_on:)
+
     create(:claim_window, starts_on:, ends_on:, academic_year:)
   end
 
