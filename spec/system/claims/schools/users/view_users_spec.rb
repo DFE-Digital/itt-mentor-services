@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Invite and view a users details", type: :system do
+RSpec.describe "Invite and view a users details", service: :claims, type: :system do
   let(:school) { create(:claims_school, :claims, urn: "123456") }
   let(:anne) { create(:claims_user, :anne) }
   let(:another_school) { create(:claims_school, :claims) }

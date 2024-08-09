@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "School Page", type: :system do
+RSpec.describe "School Page", service: :claims, type: :system do
   let(:school1) { create(:school, :claims, name: "School B") }
   let(:school2) { create(:school, :claims, name: "School A") }
 
