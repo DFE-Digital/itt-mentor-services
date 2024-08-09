@@ -24,11 +24,7 @@ require "rails_helper"
 RSpec.describe Claims::ClaimWindow, type: :model do
   subject(:claim_window) { build(:claim_window, academic_year:) }
 
-  let(:academic_year) { academic_years("2023_to_2024") }
-
-  before do
-    described_class.destroy_all
-  end
+  let(:academic_year) { create(:academic_year, :current) }
 
   describe "associations" do
     it { is_expected.to belong_to(:academic_year) }
