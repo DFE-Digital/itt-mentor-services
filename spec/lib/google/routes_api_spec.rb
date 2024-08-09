@@ -44,7 +44,7 @@ RSpec.describe Google::RoutesApi do
           "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
           "Content-Type" => "application/json;odata.metadata=minimal",
           "User-Agent" => "Ruby",
-          "X-Goog-Api-Key" => "",
+          "X-Goog-Api-Key" => ENV.fetch("GOOGLE_MAPS_API_KEY", "").to_s,
           "X-Goog-Fieldmask" => "localizedValues,destinationIndex",
         },
       )
