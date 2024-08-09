@@ -122,6 +122,14 @@ RSpec.configure do |config|
     end
   end
 
+  # System specs for the Claims service expect this specific Claim Window to exist
+  config.before(:each, service: :claims, type: :system) do
+    starts_on = "02/05/2024".to_date
+    ends_on = "19/07/2024".to_date
+    academic_year = AcademicYear.for_date(starts_on)
+    create(:claim_window, starts_on:, ends_on:, academic_year:)
+  end
+
   private
 
   def service_host(service)
