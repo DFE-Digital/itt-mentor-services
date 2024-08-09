@@ -36,7 +36,7 @@ RSpec.describe Claims::GenerateClaimsCsv do
     expect(generate_claims_csv.lines.first.chomp).to eq("claim_reference,urn,school_name,local_authority,claim_amount,establishment_type,date_submitted")
   end
 
-  it "contains all clims" do
+  it "contains all claims" do
     expect(generate_claims_csv.lines.sort).to eq([
       "claim_reference,urn,school_name,local_authority,claim_amount,establishment_type,date_submitted\n",
       "12345670,5679,School name 3,blah,45.10,Academy,\n",
