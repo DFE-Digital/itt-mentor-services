@@ -31,10 +31,10 @@ class AcademicYear < ApplicationRecord
     start_year = date.month < START_DATE[:month] ? date.year - 1 : date.year
     starts_on = Date.new(start_year, START_DATE[:month], START_DATE[:day])
     ends_on = Date.new(start_year + 1, END_DATE[:month], END_DATE[:day])
-    puts date
-    puts starts_on
-    puts ends_on
-    puts start_year
+    Rails.logger.debug date
+    Rails.logger.debug starts_on
+    Rails.logger.debug ends_on
+    Rails.logger.debug start_year
 
     create!(
       starts_on:,
