@@ -76,13 +76,13 @@ RSpec.describe "Update a claim window", freeze: "17 July 2024", service: :claims
   end
 
   def when_i_fill_in_the_form(starts_on:, ends_on:)
-    fill_in "claims_claim_window[starts_on(3i)]", with: starts_on.day
-    fill_in "claims_claim_window[starts_on(2i)]", with: starts_on.month
-    fill_in "claims_claim_window[starts_on(1i)]", with: starts_on.year
+    fill_in "claims_claim_window_form[starts_on(3i)]", with: starts_on.day
+    fill_in "claims_claim_window_form[starts_on(2i)]", with: starts_on.month
+    fill_in "claims_claim_window_form[starts_on(1i)]", with: starts_on.year
 
-    fill_in "claims_claim_window[ends_on(3i)]", with: ends_on.day
-    fill_in "claims_claim_window[ends_on(2i)]", with: ends_on.month
-    fill_in "claims_claim_window[ends_on(1i)]", with: ends_on.year
+    fill_in "claims_claim_window_form[ends_on(3i)]", with: ends_on.day
+    fill_in "claims_claim_window_form[ends_on(2i)]", with: ends_on.month
+    fill_in "claims_claim_window_form[ends_on(1i)]", with: ends_on.year
   end
 
   def and_i_click_continue

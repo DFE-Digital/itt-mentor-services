@@ -10,5 +10,6 @@
 #  updated_at :datetime         not null
 #
 2023_to_2024:
+  name: 2023 to 2024
   starts_on: 2023-09-01
   ends_on: 2024-08-31

@@ -2,13 +2,14 @@
 <% render "claims/support/primary_navigation", current: :settings %>
 
 <%= content_for(:before_content) do %>
-  <%= govuk_back_link(href: new_claims_support_claim_window_path(claims_claim_window: @claim_window.slice(:starts_on, :ends_on))) %>
+  <%= govuk_back_link(href: claim_window_form.new_back_path) %>
 <% end %>
 
 <div class="govuk-width-container">
-  <%= form_with(model: @claim_window, url: claims_support_claim_windows_path, method: :post) do |f| %>
+  <%= form_with(model: claim_window_form, url: claims_support_claim_windows_path, method: :post) do |f| %>
     <%= f.hidden_field :starts_on, value: f.object.starts_on %>
     <%= f.hidden_field :ends_on, value: f.object.ends_on %>
+    <%= f.hidden_field :academic_year_id, value: f.object.academic_year_id %>
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
@@ -18,10 +19,10 @@
         <%= govuk_summary_list do |summary_list| %>
           <% summary_list.with_row do |row| %>
             <% row.with_key text: Claims::ClaimWindow.human_attribute_name(:starts_on) %>
-            <% row.with_value text: l(@claim_window.starts_on, format: :long) %>
+            <% row.with_value text: l(claim_window_form.starts_on, format: :long) %>
             <% row.with_action(
               text: t("change"),
-              href: new_claims_support_claim_window_path(claims_claim_window: @claim_window.slice(:starts_on, :ends_on)),
+              href: claim_window_form.new_back_path,
               visually_hidden_text: Claims::ClaimWindow.human_attribute_name(:starts_on),
               classes: ["govuk-link--no-visited-state"],
             ) %>
@@ -29,10 +30,10 @@
 
           <% summary_list.with_row do |row| %>
             <% row.with_key text: Claims::ClaimWindow.human_attribute_name(:ends_on) %>
-            <% row.with_value text: l(@claim_window.ends_on, format: :long) %>
+            <% row.with_value text: l(claim_window_form.ends_on, format: :long) %>
             <% row.with_action(
               text: t("change"),
-              href: new_claims_support_claim_window_path(claims_claim_window: @claim_window.slice(:starts_on, :ends_on)),
+              href: claim_window_form.new_back_path,
               visually_hidden_text: Claims::ClaimWindow.human_attribute_name(:ends_on),
               classes: ["govuk-link--no-visited-state"],
             ) %>
@@ -40,7 +41,13 @@
 
           <% summary_list.with_row do |row| %>
             <% row.with_key text: Claims::ClaimWindow.human_attribute_name(:academic_year) %>
-            <% row.with_value text: @claim_window.academic_year_name %>
+            <% row.with_value text: claim_window_form.academic_year_name %>
+            <% row.with_action(
+              text: t("change"),
+              href: claim_window_form.new_back_path,
+              visually_hidden_text: Claims::ClaimWindow.human_attribute_name(:academic_year),
+              classes: ["govuk-link--no-visited-state"],
+            ) %>
           <% end %>
         <% end %>
 

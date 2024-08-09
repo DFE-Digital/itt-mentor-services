@@ -33,10 +33,8 @@ en:
               enter_mentor_name: Enter a mentor's name
         claims/claim_window:
           attributes:
-            base:
-              longer_than_academic_year: Claim window must be shorter than an academic year
             academic_year:
-              required: Window opening date is required to set the academic year for this window
+              required: Select an academic year
             starts_on:
               blank: Enter a window opening date
               overlap: Select a date that is not within an existing claim window
