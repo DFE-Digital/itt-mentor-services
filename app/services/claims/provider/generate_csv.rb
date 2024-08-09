@@ -14,22 +14,16 @@ class Claims::Provider::GenerateCsv
     CSV.generate(headers: true) do |csv|
       csv << HEADERS
 
-      mentor_trainings.group_by { |training| training.claim.school }
-        .sort_by { |school, _school_mentor_trainings| school.name }
-        .each do |school, school_mentor_trainings|
-        school_mentor_trainings.group_by(&:mentor)
-          .sort_by { |mentor, _trainings| mentor.full_name }
-          .each do |mentor, trainings|
-          csv << [
-            school.name,
-            school.urn,
-            school.postcode,
-            mentor.full_name,
-            trainings.pluck(:hours_completed).sum,
-            # claim_assured,
-            # claim_assured_reason,
-          ]
-        end
+      mentor_trainings.each do |mentor_training|
+        csv << [
+          mentor_training.school_name,
+          mentor_training.school_urn,
+          mentor_training.school_postcode,
+          mentor_training.mentor_full_name,
+          mentor_training.total_hours_completed,
+          # claim_assured,
+          # claim_assured_reason,
+        ]
       end
     end
   end
@@ -39,9 +33,20 @@ class Claims::Provider::GenerateCsv
   attr_reader :provider, :academic_year
 
   def mentor_trainings
-    Claims::MentorTraining.includes(:mentor, :provider, claim: %i[school academic_year])
-      .where(provider: { id: provider.id })
-      .where(academic_year: { id: academic_year.id })
-      .where(claim: { status: "submitted" })
+    Claims::MentorTraining
+      .joins(:mentor, :provider, claim: %i[school academic_year])
+      .where(providers: { id: provider.id })
+      .where(academic_years: { id: academic_year.id })
+      .where(claims: { status: "submitted" })
+      .group("schools.name", "schools.urn", "schools.postcode", "mentors.id")
+      .select(
+        "schools.name AS school_name",
+        "schools.urn AS school_urn",
+        "schools.postcode AS school_postcode",
+        "mentors.id AS mentor_id",
+        "CONCAT(mentors.first_name, ' ', mentors.last_name) AS mentor_full_name",
+        "SUM(mentor_trainings.hours_completed) AS total_hours_completed",
+      )
+      .order("schools.name", "mentors.first_name", "mentors.last_name")
   end
 end
