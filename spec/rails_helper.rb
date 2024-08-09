@@ -124,6 +124,8 @@ RSpec.configure do |config|
 
   # System specs for the Claims service expect this specific Claim Window to exist
   config.before(:each, service: :claims, type: :system) do
+    next if self.class.metadata[:smoke_test]
+
     starts_on = "02/05/2024".to_date
     ends_on = "19/07/2024".to_date
     academic_year = AcademicYear.for_date(starts_on)
