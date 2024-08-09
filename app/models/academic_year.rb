@@ -32,13 +32,10 @@ class AcademicYear < ApplicationRecord
     starts_on = Date.new(start_year, START_DATE[:month], START_DATE[:day])
     ends_on = Date.new(start_year + 1, END_DATE[:month], END_DATE[:day])
 
-    create!(
+    self.create!(
       starts_on:,
       ends_on:,
       name: "#{start_year} to #{start_year + 1}",
     )
-
-  rescue StandardError => e
-    raise "Error is #{e.message}"
   end
 end
