@@ -30,34 +30,34 @@ RSpec.describe AcademicYear, type: :model do
     let!(:existing_academic_year) do
       create(:academic_year,
              name: "2024 to 2025",
-             starts_on: Date.new(2024, 9, 1),
-             ends_on: Date.new(2025, 8, 31))
+             starts_on: Date.parse("1 September 2024"),
+             ends_on: Date.parse("31 August 2025"))
     end
 
     context "when date is within an existing academic year" do
       it "returns the existing academic year" do
-        date = Date.new(2024, 11, 7)
+        date = Date.parse("7 November 2024")
         expect(described_class.for_date(date)).to eq(existing_academic_year)
       end
     end
 
     context "when date is not within an existing academic year" do
       it "creates a new academic year" do
-        date = Date.new(2026, 10, 5)
+        date = Date.parse("5 October 2026")
         expect { described_class.for_date(date) }.to change(described_class, :count).by(1)
         new_academic_year = described_class.for_date(date)
-        expect(new_academic_year.starts_on).to eq(Date.new(2026, 9, 1))
-        expect(new_academic_year.ends_on).to eq(Date.new(2027, 8, 31))
+        expect(new_academic_year.starts_on).to eq(Date.parse("1 September 2026"))
+        expect(new_academic_year.ends_on).to eq(Date.parse("31 August 2027"))
         expect(new_academic_year.name).to eq("2026 to 2027")
       end
     end
 
     context "when start month is before September and academic year does not exist" do
       it "creates a new academic year starting the previous year" do
-        date = Date.new(2026, 3, 14)
+        date = Date.parse("14 March 2026")
         new_academic_year = described_class.for_date(date)
-        expect(new_academic_year.starts_on).to eq(Date.new(2025, 9, 1))
-        expect(new_academic_year.ends_on).to eq(Date.new(2026, 8, 31))
+        expect(new_academic_year.starts_on).to eq(Date.parse("1 September 2025"))
+        expect(new_academic_year.ends_on).to eq(Date.parse("31 August 2026"))
         expect(new_academic_year.name).to eq("2025 to 2026")
       end
     end

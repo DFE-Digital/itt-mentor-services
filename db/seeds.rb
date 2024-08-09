@@ -78,30 +78,26 @@ end
 # Create subjects
 PublishTeacherTraining::Subject::Import.call
 
-# Create academic years
+# Create current academic year
 current_date = Date.current
-
-# Create academic years here
 current_academic_year = AcademicYear.for_date(current_date)
-previous_academic_year = AcademicYear.for_date(current_date - 1.year)
-next_academic_year = AcademicYear.for_date(current_date + 1.year)
 
-# Loop through to create a claim windows only for the current year
-[previous_academic_year, current_academic_year, next_academic_year].each do |academic_year|
-  next unless academic_year == current_academic_year
+# Create a previous and subsequent academic years
+AcademicYear.for_date(current_date - 1.year)
+AcademicYear.for_date(current_date + 1.year)
 
-  Claims::ClaimWindow.find_or_create_by!(
-    starts_on: Date.parse("2 May #{academic_year.ends_on.year}"),
-    ends_on: Date.parse("19 July #{academic_year.ends_on.year}"),
-    academic_year:,
-  )
+# Create claim windows for current academic year
+Claims::ClaimWindow.find_or_create_by!(
+  starts_on: Date.parse("2 May #{current_academic_year.ends_on.year}"),
+  ends_on: Date.parse("19 July #{current_academic_year.ends_on.year}"),
+  academic_year: current_academic_year,
+)
 
-  Claims::ClaimWindow.find_or_create_by!(
-    starts_on: Date.parse("29 July #{academic_year.ends_on.year}"),
-    ends_on: Date.parse("9 August #{academic_year.ends_on.year}"),
-    academic_year:,
-  )
-end
+Claims::ClaimWindow.find_or_create_by!(
+  starts_on: Date.parse("29 July #{current_academic_year.ends_on.year}"),
+  ends_on: Date.parse("9 August #{current_academic_year.ends_on.year}"),
+  academic_year: current_academic_year,
+)
 
 # Create placements
 Placements::School.find_each do |school|
