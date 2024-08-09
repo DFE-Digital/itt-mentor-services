@@ -7,3 +7,4 @@ en:
           background_jobs: Background jobs
           claim_windows: Claim windows
           emails: Emails
+          reset_database: Reset database
