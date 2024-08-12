@@ -14,6 +14,7 @@ scope module: :placements,
     get :privacy, action: :show, page: :privacy
     get :accessibility, action: :show, page: :accessibility
     get :terms_and_conditions, action: :show, page: :terms_and_conditions
+    get :map, action: :show, page: :map
   end
 
   namespace :support do
