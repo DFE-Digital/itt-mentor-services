@@ -2,7 +2,8 @@ class Placements::OrganisationsController < Placements::ApplicationController
   before_action :auto_redirect_if_only_one, only: :index
 
   def index
-    @memberships = memberships.filter(&:placements_service).sort_by(&:name)
+    scope = policy_scope(memberships)
+    @memberships = scope.filter(&:placements_service).sort_by(&:name)
   end
 
   def show
@@ -23,16 +24,12 @@ class Placements::OrganisationsController < Placements::ApplicationController
   def load_organisation(membership)
     organisation = membership.organisation
 
-    set_current_provider(organisation)
+    set_current_organisation(organisation)
     redirect_to landing_page_path(organisation)
   end
 
-  def set_current_provider(organisation)
-    if organisation.is_a?(Provider)
-      session["placements_provider_id"] = organisation.id
-    else
-      session.delete("placements_provider_id")
-    end
+  def set_current_organisation(organisation)
+    session["current_organisation"] = { id: organisation.id, type: organisation.class.name }
   end
 
   def landing_page_path(organisation)
