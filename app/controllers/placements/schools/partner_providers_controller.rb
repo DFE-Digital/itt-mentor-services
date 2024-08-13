@@ -1,6 +1,7 @@
 class Placements::Schools::PartnerProvidersController < Placements::PartnershipsController
   def index
-    @pagy, @partner_providers = pagy(@school.partner_providers.order_by_name)
+    scope = policy_scope(@school.partner_providers)
+    @pagy, @partner_providers = pagy(scope.order_by_name)
   end
 
   def destroy
