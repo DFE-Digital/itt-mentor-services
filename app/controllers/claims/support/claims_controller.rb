@@ -43,6 +43,7 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
       :submitted_before,
       provider_ids: [],
       school_ids: [],
+      statuses: [],
     )
   end
 

@@ -21,40 +21,52 @@ RSpec.describe "View claims", :js, service: :claims, type: :system do
 
   scenario "Support user visits the claims index page" do
     when_i_visit_claim_index_page
-    then_i_see_a_list_of_submitted_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
+    then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
     and_i_see_no_draft_claims
     when_i_check_school_filter(school_1)
-    then_i_see_a_list_of_submitted_claims([claim_2, claim_3, claim_4, claim_5, claim_6])
+    then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6])
     when_i_check_provider_filter(provider_1)
-    then_i_see_a_list_of_submitted_claims([claim_2, claim_3, claim_4, claim_5])
+    then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5])
     when_i_set_submitted_after(5, 4, 2024)
-    then_i_see_a_list_of_submitted_claims([claim_2, claim_3, claim_4])
+    then_i_see_a_list_of_claims([claim_2, claim_3, claim_4])
     when_i_set_submitted_before(6, 4, 2024)
-    then_i_see_a_list_of_submitted_claims([claim_3, claim_4])
+    then_i_see_a_list_of_claims([claim_3, claim_4])
     when_i_search_for_claim_reference(claim_3.reference)
-    then_i_see_a_list_of_submitted_claims([claim_3])
+    then_i_see_a_list_of_claims([claim_3])
     when_i_remove_my_search
-    then_i_see_a_list_of_submitted_claims([claim_3, claim_4])
+    then_i_see_a_list_of_claims([claim_3, claim_4])
     when_i_remove_the_filter("06/04/2024")
-    then_i_see_a_list_of_submitted_claims([claim_2, claim_3, claim_4])
+    then_i_see_a_list_of_claims([claim_2, claim_3, claim_4])
     when_i_remove_the_filter("05/04/2024")
-    then_i_see_a_list_of_submitted_claims([claim_2, claim_3, claim_4, claim_5])
+    then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5])
     when_i_remove_the_filter(provider_1.name)
-    then_i_see_a_list_of_submitted_claims([claim_2, claim_3, claim_4, claim_5, claim_6])
+    then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6])
     when_i_remove_the_filter(school_1.name)
-    then_i_see_a_list_of_submitted_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
+    then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
+  end
+
+  context "when filtering by a status" do
+    scenario "Support user filters claims in a submitted status" do
+      when_i_visit_claim_index_page
+      then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
+      and_i_see_no_draft_claims
+      when_i_check_status_filter("Submitted")
+      then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
+      when_i_remove_the_filter("Submitted")
+      then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
+    end
   end
 
   scenario "Support user uses the js filter search" do
     when_i_visit_claim_index_page
-    then_i_see_a_list_of_submitted_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
+    then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
     when_i_search_the_school_filter_with(school_2.name)
     then_i_see_only_my_filter_school_as_an_option
     when_i_check_school_filter(school_2)
-    then_i_see_a_list_of_submitted_claims([claim_7])
+    then_i_see_a_list_of_claims([claim_7])
     when_i_search_the_provider_filter_with(provider_2.name)
     when_i_check_provider_filter(provider_2)
-    then_i_see_a_list_of_submitted_claims([claim_7])
+    then_i_see_a_list_of_claims([claim_7])
   end
 
   private
@@ -68,7 +80,7 @@ RSpec.describe "View claims", :js, service: :claims, type: :system do
     click_on("Claims")
   end
 
-  def then_i_see_a_list_of_submitted_claims(claims)
+  def then_i_see_a_list_of_claims(claims)
     claims.each_with_index do |claim, index|
       within(".claim-card:nth-child(#{index + 1})") do
         expect(page).to have_content(claim.school.name)
@@ -93,6 +105,11 @@ RSpec.describe "View claims", :js, service: :claims, type: :system do
 
   def when_i_check_provider_filter(provider)
     page.find("#claims-support-claims-filter-form-provider-ids-#{provider.id}-field", visible: :all).check
+    click_on("Apply filters")
+  end
+
+  def when_i_check_status_filter(status)
+    page.find("#claims-support-claims-filter-form-statuses-#{status.downcase}-field", visible: :all).check
     click_on("Apply filters")
   end
 
