@@ -102,6 +102,7 @@ shared:
     - first_name
     - last_name
     - email
+    - current_organisation
   :mentors:
     - first_name
     - last_name
