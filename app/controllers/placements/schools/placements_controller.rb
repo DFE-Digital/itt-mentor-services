@@ -6,7 +6,8 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
   helper_method :edit_attribute_path, :add_provider_path, :add_mentor_path
 
   def index
-    @pagy, placements = pagy(@school.placements.includes(:subject, :mentors, :additional_subjects, :provider).order("subjects.name"))
+    scope = policy_scope(@school.placements)
+    @pagy, placements = pagy(scope.includes(:subject, :mentors, :additional_subjects, :provider).order("subjects.name"))
     @placements = placements.decorate
   end
 

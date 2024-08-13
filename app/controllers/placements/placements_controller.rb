@@ -7,12 +7,9 @@ class Placements::PlacementsController < Placements::ApplicationController
     @establishment_groups = compact_school_attribute_values(:group)
     @schools = schools_scope.order_by_name.select(:id, :name)
     @year_groups ||= Placement.year_groups_as_options
+    scope = policy_scope(Placements::PlacementsQuery.call(params: query_params))
 
-    @pagy, @placements = pagy(
-      Placements::PlacementsQuery.call(
-        params: query_params,
-      ),
-    )
+    @pagy, @placements = pagy(scope)
   end
 
   def show
@@ -31,9 +28,9 @@ class Placements::PlacementsController < Placements::ApplicationController
   end
 
   def set_provider
-    return redirect_to organisations_path if session["placements_provider_id"].blank?
+    return redirect_to organisations_path if current_user.current_organisation.blank?
 
-    @provider = Placements::Provider.find(session["placements_provider_id"])
+    @provider = current_user.current_organisation
   end
 
   def filter_form
