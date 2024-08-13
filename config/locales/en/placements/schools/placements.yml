@@ -29,7 +29,7 @@ en:
         table:
           subject: Subject
           mentor: Mentor
-          status: Status
+          provider: Provider
         add_placement:
           edit:
             cancel: Cancel
