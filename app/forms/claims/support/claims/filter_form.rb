@@ -12,6 +12,7 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
   attribute "submitted_before(3i)"
   attribute :school_ids, default: []
   attribute :provider_ids, default: []
+  attribute :statuses, default: []
 
   def initialize(params = {})
     params[:school_ids].compact_blank! if params[:school_ids].present?
@@ -24,7 +25,8 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
     school_ids.present? ||
       provider_ids.present? ||
       submitted_after.present? ||
-      submitted_before.present?
+      submitted_before.present? ||
+      statuses.present?
   end
 
   def index_path_without_filter(filter:, value: nil)
@@ -80,6 +82,7 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
       provider_ids:,
       submitted_after:,
       submitted_before:,
+      statuses:,
     }
   end
 

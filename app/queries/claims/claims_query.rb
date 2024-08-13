@@ -1,11 +1,12 @@
 class Claims::ClaimsQuery < ApplicationQuery
   def call
-    scope = Claims::Claim.submitted
+    scope = Claims::Claim.not_draft_status
     scope = search_condition(scope)
     scope = school_condition(scope)
     scope = provider_condition(scope)
     scope = submitted_after(scope)
     scope = submitted_before(scope)
+    scope = status_condition(scope)
 
     scope.order_created_at_desc
   end
@@ -40,5 +41,11 @@ class Claims::ClaimsQuery < ApplicationQuery
     return scope if params[:submitted_before].nil?
 
     scope.where(submitted_at: ..params[:submitted_before])
+  end
+
+  def status_condition(scope)
+    return scope if params[:statuses].blank?
+
+    scope.where(status: params[:statuses])
   end
 end

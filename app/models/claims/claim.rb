@@ -59,9 +59,11 @@ class Claims::Claim < ApplicationRecord
   )
 
   ACTIVE_STATUSES = %i[draft submitted].freeze
+  DRAFT_STATUSES = %i[internal_draft draft].freeze
 
   scope :active, -> { where(status: ACTIVE_STATUSES) }
   scope :order_created_at_desc, -> { order(created_at: :desc) }
+  scope :not_draft_status, -> { where.not(status: DRAFT_STATUSES) }
 
   enum :status,
        { internal_draft: "internal_draft", draft: "draft", submitted: "submitted" },

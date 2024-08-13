@@ -17,6 +17,7 @@ en:
           provider: Accredited provider
           submit: Search
           clear: Clear search
+          status: Status
         show:
           page_caption: Claim - %{reference}
           page_title: Claim - %{school_name}

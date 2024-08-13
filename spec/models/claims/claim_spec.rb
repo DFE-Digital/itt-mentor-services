@@ -120,6 +120,21 @@ RSpec.describe Claims::Claim, type: :model do
         )
       end
     end
+
+    describe "not_draft_status" do
+      let!(:submitted_claim) { create(:claim, :submitted) }
+      let(:draft_claim) { create(:claim, :draft) }
+      let(:internal_draft_claim) { create(:claim) }
+
+      before do
+        draft_claim
+        internal_draft_claim
+      end
+
+      it "returns all claims which are not in a draft or internal draft status" do
+        expect(described_class.not_draft_status).to contain_exactly(submitted_claim)
+      end
+    end
   end
 
   describe "#submitted_on" do

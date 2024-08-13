@@ -70,5 +70,18 @@ describe Claims::ClaimsQuery do
         expect(claims_query).to contain_exactly(expected_claim)
       end
     end
+
+    context "when given statuses" do
+      let(:params) { { statuses: %w[submitted] } }
+
+      it "filters the results by status" do
+        _internal_claim = create(:claim)
+        _draft_claim = create(:claim, :draft)
+        expected_claim = create(:claim, :submitted)
+        # TODO: Add unexpected claim with a different status, once additional statuses have been added.
+
+        expect(claims_query).to contain_exactly(expected_claim)
+      end
+    end
   end
 end

@@ -3,6 +3,25 @@ require "rails_helper"
 describe Claims::Support::Claims::FilterForm, type: :model do
   include Rails.application.routes.url_helpers
 
+  describe "attributes" do
+    it do
+      expect(described_class.new).to have_attributes(
+        search: nil,
+        search_school: nil,
+        search_provider: nil,
+        "submitted_after(1i)" => nil,
+        "submitted_after(2i)" => nil,
+        "submitted_after(3i)" => nil,
+        "submitted_before(1i)" => nil,
+        "submitted_before(2i)" => nil,
+        "submitted_before(3i)" => nil,
+        school_ids: [],
+        provider_ids: [],
+        statuses: [],
+      )
+    end
+  end
+
   describe "#filters_selected?" do
     it "returns true if school_ids present" do
       params = { school_ids: %w[school_id] }
@@ -35,6 +54,16 @@ describe Claims::Support::Claims::FilterForm, type: :model do
         "submitted_before(2i)" => "1",
         "submitted_before(3i)" => "2",
       }
+      form = described_class.new(params)
+
+      expect(form.filters_selected?).to be(true)
+    end
+
+    it "returns true if statuses are present" do
+      params = {
+        "statuses" => %w[submitted],
+      }
+
       form = described_class.new(params)
 
       expect(form.filters_selected?).to be(true)
@@ -194,6 +223,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
         "submitted_before(3i)" => "2",
         school_ids: %w[school_id],
         provider_ids: %w[provider_id],
+        statuses: %w[submitted],
       }
 
       call = described_class.new(params).query_params
@@ -206,6 +236,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
         search_school: "school_name",
         submitted_after: Date.new(2024, 1, 2),
         submitted_before: Date.new(2023, 1, 2),
+        statuses: %w[submitted],
       )
     end
   end
