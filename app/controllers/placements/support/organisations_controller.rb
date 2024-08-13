@@ -1,4 +1,6 @@
 class Placements::Support::OrganisationsController < Placements::ApplicationController
+  skip_after_action :verify_policy_scoped
+
   def index
     @pagy, @organisations = pagy(organisations)
     @filters = filters_param
