@@ -50,6 +50,10 @@ RSpec/SpecFilePathSuffix:
 RSpec/VerifiedDoubleReference:
   Enabled: false
 
+Rails/LexicallyScopedActionFilter:
+  Exclude:
+    - app/controllers/placements/application_controller.rb
+
 RSpec/NoExpectationExample:
   Exclude:
     - spec/support/shared_examples/system/**/*.rb
