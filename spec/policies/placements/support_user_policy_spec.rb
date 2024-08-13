@@ -15,4 +15,25 @@ describe Placements::SupportUserPolicy do
       expect(support_user_policy).to permit(support_user_1, support_user_2)
     end
   end
+
+  describe "scope" do
+    let(:support_user) { create(:placements_support_user) }
+    let(:scope) { Placements::SupportUser.all }
+
+    before { support_user }
+
+    context "when the user is a support user" do
+      it "returns all support users" do
+        expect(support_user_policy::Scope.new(support_user_1, scope).resolve).to eq(scope)
+      end
+    end
+
+    context "when the user is not a support user" do
+      let(:user) { create(:placements_user) }
+
+      it "returns no support users" do
+        expect(support_user_policy::Scope.new(user, scope).resolve).to eq(scope.none)
+      end
+    end
+  end
 end

@@ -3,7 +3,8 @@ class Placements::Support::SupportUsersController < Placements::ApplicationContr
   before_action :authorize_support_user, only: %i[remove destroy]
 
   def index
-    @support_users = Placements::SupportUser.order_by_full_name
+    scope = policy_scope(Placements::SupportUser)
+    @support_users = scope.order_by_full_name
   end
 
   def show; end
