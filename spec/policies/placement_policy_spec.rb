@@ -44,4 +44,55 @@ RSpec.describe PlacementPolicy do
       end
     end
   end
+
+  describe "scope" do
+    let(:scope) { Placement.all }
+
+    before do
+      create_list(:placement, 3)
+    end
+
+    context "when the user is a support user" do
+      let(:user) { create(:placements_support_user) }
+
+      it "returns all placements" do
+        expect(placement_policy::Scope.new(user, scope).resolve).to eq(scope)
+      end
+    end
+
+    context "when the user is a school user" do
+      let(:user) { create(:placements_user, schools: [school]) }
+      let(:school) { create(:placements_school) }
+
+      before do
+        user.current_organisation = school
+        school.placements << create(:placement)
+      end
+
+      it "returns the school's placements" do
+        expect(placement_policy::Scope.new(user, scope).resolve).to eq(school.placements)
+      end
+    end
+
+    context "when the user is a provider user" do
+      let(:user) { create(:placements_user, providers: [provider]) }
+      let(:provider) { create(:placements_provider) }
+
+      before do
+        user.current_organisation = provider
+      end
+
+      it "returns the provider's placements" do
+        expect(placement_policy::Scope.new(user, scope).resolve).to eq(scope)
+      end
+    end
+
+    context "when the user is none of the above" do
+      let(:user) { create(:placements_user) }
+
+      it "returns no placements" do
+        expect(placement_policy::Scope.new(user, scope).resolve).to eq(scope.none)
+      end
+    end
+  end
 end

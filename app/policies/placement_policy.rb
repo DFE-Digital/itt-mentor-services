@@ -1,4 +1,16 @@
 class PlacementPolicy < ApplicationPolicy
+  class Scope < ApplicationPolicy::Scope
+    def resolve
+      if user.current_organisation.is_a?(Placements::School)
+        scope.where(school: user.current_organisation)
+      elsif user.current_organisation.is_a?(Placements::Provider) || user.support_user?
+        scope
+      else
+        scope.none
+      end
+    end
+  end
+
   def new?
     record.school.school_contact.present?
   end
