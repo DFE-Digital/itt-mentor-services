@@ -25,7 +25,6 @@ RSpec.describe Placements::SupportUser do
     it { is_expected.to have_attributes(current_organisation: nil) }
   end
 
-
   context "with validations" do
     subject { build(:placements_support_user) }
 
