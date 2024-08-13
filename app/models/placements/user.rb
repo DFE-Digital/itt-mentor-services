@@ -28,6 +28,8 @@ class Placements::User < User
            source: :organisation,
            source_type: "Provider"
 
+  attribute :current_organisation
+
   def service
     :placements
   end

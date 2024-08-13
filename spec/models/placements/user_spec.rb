@@ -38,6 +38,10 @@ RSpec.describe Placements::User do
     end
   end
 
+  describe "attributes" do
+    it { is_expected.to have_attributes(current_organisation: nil) }
+  end
+
   describe "default scope" do
     let(:email) { "same_email@email.co.uk" }
     let!(:user_with_placements_service) { create(:placements_user, email:) }
