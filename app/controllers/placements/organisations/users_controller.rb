@@ -5,7 +5,8 @@ class Placements::Organisations::UsersController < Placements::ApplicationContro
   before_action :authorize_user, only: %i[remove destroy]
 
   def index
-    @users = users.order_by_full_name
+    scope = policy_scope(users)
+    @users = scope.order_by_full_name
   end
 
   def show; end
