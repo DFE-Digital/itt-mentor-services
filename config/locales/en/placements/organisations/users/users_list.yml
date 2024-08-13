@@ -4,3 +4,4 @@ en:
       users:
         list:
           name: Name
+          no_users: No users found
