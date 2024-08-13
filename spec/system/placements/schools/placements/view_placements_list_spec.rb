@@ -29,6 +29,18 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
       given_i_sign_in_as_anne
       then_i_see_mentor_names("Not yet known")
     end
+
+    scenario "when the placement has a provider" do
+      given_a_placement_exists_with_a_provider
+      given_i_sign_in_as_anne
+      then_i_see_the_provider_name("Springfield University")
+    end
+
+    scenario "when the placement does not have a provider" do
+      given_a_placement_exists
+      given_i_sign_in_as_anne
+      then_i_see_the_provider_name("Not yet known")
+    end
   end
 
   private
@@ -79,6 +91,17 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
     within("tbody tr:nth-child(1) td:nth-child(2)") do
       expect(page).to have_content names
     end
+  end
+
+  def then_i_see_the_provider_name(name)
+    within("tbody tr:nth-child(1) td:nth-child(3)") do
+      expect(page).to have_content name
+    end
+  end
+
+  def given_a_placement_exists_with_a_provider
+    provider = build(:placements_provider, name: "Springfield University")
+    create(:placement, school:, provider:, subject: create(:subject, name: "Biology"))
   end
 
   def given_a_placement_exists_with_multiple_mentors
