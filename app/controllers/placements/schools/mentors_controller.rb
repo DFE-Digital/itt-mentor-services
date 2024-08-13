@@ -4,7 +4,8 @@ class Placements::Schools::MentorsController < Placements::ApplicationController
   before_action :set_mentor_membership, only: %i[remove destroy]
 
   def index
-    @pagy, @mentors = pagy(@school.mentors.order_by_full_name)
+    scope = policy_scope(@school.mentors)
+    @pagy, @mentors = pagy(scope.order_by_full_name)
   end
 
   def show; end
