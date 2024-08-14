@@ -77,4 +77,14 @@ Rails.application.configure do
   config.log_level = :info                        # Or :debug
   config.log_format = :color                      # Console colorised non-json output
   config.semantic_logger.backtrace_level = :debug # Show file and line number (expensive: not for production)
+
+  # Bullet gem configuration
+  config.after_initialize do
+    Bullet.enable        = true
+    Bullet.alert         = false
+    Bullet.bullet_logger = true
+    Bullet.console       = true
+    Bullet.rails_logger  = true
+    Bullet.add_footer    = true
+  end
 end
