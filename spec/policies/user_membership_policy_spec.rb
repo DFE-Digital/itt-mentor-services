@@ -12,11 +12,11 @@ RSpec.describe UserMembershipPolicy do
 
     context "when the user is a school user" do
       let(:user) { create(:placements_user, schools: [school]) }
-      let(:school) { create(:placements_school) }
+      let(:school) { build(:placements_school) }
 
       before do
         user.current_organisation = school
-        school.user_memberships << create(:user_membership)
+        create(:user_membership, organisation: school)
       end
 
       it "returns the school's user memberships" do

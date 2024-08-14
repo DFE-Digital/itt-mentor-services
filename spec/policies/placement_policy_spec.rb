@@ -62,11 +62,11 @@ RSpec.describe PlacementPolicy do
 
     context "when the user is a school user" do
       let(:user) { create(:placements_user, schools: [school]) }
-      let(:school) { create(:placements_school) }
+      let(:school) { build(:placements_school) }
 
       before do
         user.current_organisation = school
-        school.placements << create(:placement)
+        create(:placement, school:)
       end
 
       it "returns the school's placements" do
