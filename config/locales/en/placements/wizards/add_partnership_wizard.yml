@@ -13,8 +13,8 @@ en:
             provider: Add a provider
             school: Add a school
           hint:
-            provider: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode
-            school: Enter a school name, unique reference number (URN) or postcode
+            provider: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode.
+            school: Enter a school name, unique reference number (URN) or postcode.
         check_your_answers_step:
           page_title: Check your answers - %{contextual_text}
           title: Check your answers
