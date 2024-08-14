@@ -9,5 +9,5 @@ en:
           not_known: Not yet known
           continue: Continue
           help_with_providers: My provider is not listed
-          you_need_to_add_a_provider: You mush %{link} before they can be assigned to a specific placement.
+          you_need_to_add_a_provider: You must %{link} before they can be assigned to a specific placement.
           add_a_provider: add providers to your school's provider
