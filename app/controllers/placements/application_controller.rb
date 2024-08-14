@@ -11,7 +11,6 @@ class Placements::ApplicationController < ApplicationController
       return user unless current_org
 
       user.current_organisation = current_org.is_a?(School) ? current_org.becomes(Placements::School) : current_org.becomes(Placements::Provider)
-      user
     end
   end
 
