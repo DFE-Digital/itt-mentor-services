@@ -18,6 +18,7 @@
       <%= content_tag(:div, class: class_names("govuk-form-group", "govuk-form-group--error": f.object.errors.present?)) do %>
         <%= f.govuk_text_field input[:field_name], value: input[:value],
                                                    label: { text: input[:label], size: "l" },
+                                                   hint: { text: input[:hint] },
                                                    caption: { text: input[:caption], size: "l" },
                                                    data: { autocomplete_target: "serverInput",
                                                            previous_search: input[:previous_search] } %>
