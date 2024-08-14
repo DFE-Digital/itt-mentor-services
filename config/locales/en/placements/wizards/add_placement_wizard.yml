@@ -35,12 +35,12 @@ en:
           hint:
             unpublished: |
               Some placements may have more than one mentor. 
-              For example if a mentor works part time.
+              For example, if a mentor works part time.
 
               You can change who the mentor is after you have published the placement.
             published: |
               Some placements may have more than one mentor. 
-              For example if a mentor works part time.
+              For example, if a mentor works part time.
           continue: Continue
           mentors: Mentors
           not_known: Not yet known
