@@ -10,7 +10,7 @@
         <%= f.govuk_check_boxes_fieldset :mentor_ids,
           legend: { size: "l",
                     text: t(".select_a_mentor") },
-          hint: { text: @placement.present? ? t(".hint.published") : t(".hint.unpublished") } do %>
+          hint: { text: @placement.present? ? t(".hint.published") : t(".hint.unpublished_html") } do %>
           <% mentors_step.mentors_for_selection.each_with_index do |mentor, index| %>
             <%= f.govuk_check_box :mentor_ids, mentor.id, label: { text: mentor.full_name }, link_errors: index.zero? %>
           <% end %>
