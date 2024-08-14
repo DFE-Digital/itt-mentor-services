@@ -5,7 +5,8 @@ en:
         mentors:
           add_mentor:
             edit:
-              add_mentor: Add mentor - %{school_name}
+              contextual_text: "- %{school_name}"
+              add_mentor: Add mentor
               cancel: Cancel
           index:
             heading: Mentors
