@@ -7,7 +7,7 @@
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l"><%= contextual_text %></span>
 
-      <%= f.govuk_radio_buttons_fieldset :provider_id, legend: { size: "l", text: t(".provider") } do %>
+      <%= f.govuk_radio_buttons_fieldset :provider_id, legend: { size: "l", text: t(".select_a_provider") } do %>
         <% provider_step.providers_for_selection.each do |provider| %>
           <%= f.govuk_radio_button :provider_id, provider.id, label: { text: provider.name },
                                                               checked: provider_step.provider_id == provider.id %>

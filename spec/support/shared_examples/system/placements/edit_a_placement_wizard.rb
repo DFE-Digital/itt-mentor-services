@@ -399,7 +399,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
 
   def then_i_should_see_the_edit_provider_page
     expect(page).to have_content("Placement details")
-    expect(page).to have_content("Provider")
+    expect(page).to have_content("Select a provider")
   end
 
   def when_i_select_provider(provider)
