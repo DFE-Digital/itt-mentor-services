@@ -1,3 +1,4 @@
+<% caption = current_user.support_user? ? "#{t(".caption")} #{contextual_text}" : t(".caption") %>
 <%= content_for :page_title, sanitize(t(".page_title", caption:)) %>
 
 <%= form_for(check_your_answers_step, url: current_step_path, method: :put) do |f| %>
