@@ -1,9 +1,9 @@
 class AutocompleteSelectFormComponent < ApplicationComponent
-  attr_reader :model, :scope, :url, :method, :data, :input
+  attr_reader :model, :scope, :url, :method, :data, :input, :hint
 
   # data: { :turbo, :controller, :autocomplete_path_value,
   #         :autocomplete_return_attributes_value, :input_name }
-  # input: { :field_name, :value, :label, :caption, :previous_search }
+  # input: { :field_name, :value, :label, :hint, :caption, :previous_search }
 
   def initialize(model:, scope:, url:, method: :get, data: {},
                  input: {}, classes: [], html_attributes: {})
