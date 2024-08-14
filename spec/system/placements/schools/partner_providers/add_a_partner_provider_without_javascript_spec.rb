@@ -117,7 +117,7 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
   alias_method :and_i_click_on, :when_i_click_on
 
   def and_i_enter_a_provider_named(provider_name)
-    fill_in "Enter a provider name", with: provider_name
+    fill_in "Add a provider", with: provider_name
   end
 
   def then_i_see_list_of_placements_providers
@@ -133,7 +133,7 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
   alias_method :when_i_choose, :then_i_choose
 
   def then_i_see_the_check_details_page_for_provider(provider_name)
-    expect(page).to have_css(".govuk-caption-l", text: "Add partner provider")
+    expect(page).to have_css(".govuk-caption-l", text: "Partner provider details")
     expect(page).to have_content("Check your answers")
     org_name_row = page.all(".govuk-summary-list__row")[0]
     expect(org_name_row).to have_content(provider_name)
@@ -175,7 +175,7 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
   end
 
   def then_i_see_the_search_input_pre_filled_with(provider_name)
-    find_field "Enter a provider name", with: provider_name
+    find_field "Add a provider", with: provider_name
   end
 
   def partner_provider_notification(user)
