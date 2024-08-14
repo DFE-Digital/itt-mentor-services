@@ -66,7 +66,7 @@ RSpec.shared_examples "an add a placement wizard" do
           and_i_click_on("Continue")
           then_i_see_the_add_a_placement_mentor_page
           when_i_expand_the_summary_text
-          and_i_click_on("add a mentor")
+          and_i_click_on("add mentors to your school's profile")
           then_i_see_the_new_mentor_page
         end
       end
@@ -522,22 +522,22 @@ RSpec.shared_examples "an add a placement wizard" do
   end
 
   def then_i_see_the_add_a_placement_add_phase_page
-    expect(page).to have_content("Add placement")
-    expect(page).to have_content("Phase")
+    expect(page).to have_content("Placement details")
+    expect(page).to have_content("Select a phase")
     expect(page).to have_content("Primary")
     expect(page).to have_content("Secondary")
   end
 
   def then_i_see_the_add_a_placement_subject_page(phase)
     opposite_phase = phase == "Primary" ? "Secondary" : "Primary"
-    expect(page).to have_content("Add placement")
-    expect(page).to have_content("Subject")
+    expect(page).to have_content("Placement details")
+    expect(page).to have_content("Select a subject")
     expect(page).to have_content("#{phase} subject")
     expect(page).not_to have_content("#{opposite_phase} subject")
   end
 
   def then_i_see_the_add_additional_subjects_page(subject)
-    expect(page).to have_content("Add placement")
+    expect(page).to have_content("Placement details")
     expect(page).to have_content(subject.name)
 
     subject.child_subjects.each do |child_subject|
@@ -560,8 +560,8 @@ RSpec.shared_examples "an add a placement wizard" do
   end
 
   def then_i_see_the_add_year_group_page(year_group)
-    expect(page).to have_content("Add placement")
-    expect(page).to have_content("Year group")
+    expect(page).to have_content("Placement details")
+    expect(page).to have_content("Select a year group")
     expect(page).to have_content(year_group)
   end
 
@@ -582,8 +582,8 @@ RSpec.shared_examples "an add a placement wizard" do
   end
 
   def then_i_see_the_add_a_placement_mentor_page
-    expect(page).to have_content("Add placement")
-    expect(page).to have_content("Mentor")
+    expect(page).to have_content("Placement details")
+    expect(page).to have_content("Select a mentor")
     expect(page).to have_content(mentor_1.full_name)
     expect(page).to have_content(mentor_2.full_name)
   end
