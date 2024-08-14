@@ -129,6 +129,6 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User removes a
 
   def then_i_see_i_cannot_remove_the_mentor(mentor_name)
     expect(page).to have_content(mentor_name)
-    expect(page).to have_content("You can not remove this mentor")
+    expect(page).to have_content("You cannot delete this mentor")
   end
 end

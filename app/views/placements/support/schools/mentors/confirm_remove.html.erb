@@ -12,7 +12,7 @@
         <%= t(".are_you_sure") %>
       </label>
 
-      <%= govuk_button_to t(".remove_mentor"),
+      <%= govuk_button_to t(".delete_mentor"),
         placements_support_school_mentor_path(@school, @mentor),
         warning: true,
         method: :delete %>
