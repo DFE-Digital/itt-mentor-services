@@ -15,12 +15,12 @@ describe Placements::MentorPolicy do
     end
 
     context "when the user is a school user" do
+      let(:school) { build(:placements_school) }
       let(:user) { create(:placements_user, schools: [school]) }
-      let(:school) { create(:placements_school) }
 
       before do
         user.current_organisation = school
-        school.mentors << create(:placements_mentor)
+        create(:placements_mentor, schools: [school])
       end
 
       it "returns the school's mentors" do
