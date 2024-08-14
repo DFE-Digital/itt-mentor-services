@@ -33,12 +33,12 @@ en:
         add_placement:
           edit:
             cancel: Cancel
-            add_placement: Add placement
+            placement_details: Placement details
         edit_placement:
           update:
             success: "%{step_attribute} updated"
           edit:
-            edit_placement: Manage a placement
+            edit_placement: Placement details
             cancel: Cancel
           success: Placement updated
         terms:

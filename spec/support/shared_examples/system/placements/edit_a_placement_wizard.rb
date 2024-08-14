@@ -367,8 +367,8 @@ RSpec.shared_examples "an edit placement wizard", :js do
   end
 
   def then_i_should_see_the_edit_mentors_page
-    expect(page).to have_content("Manage a placement")
-    expect(page).to have_content("Mentor")
+    expect(page).to have_content("Placement details")
+    expect(page).to have_content("Select a mentor")
   end
 
   def when_i_select_mentor_2
@@ -398,7 +398,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
   end
 
   def then_i_should_see_the_edit_provider_page
-    expect(page).to have_content("Manage a placement")
+    expect(page).to have_content("Placement details")
     expect(page).to have_content("Provider")
   end
 
@@ -429,8 +429,8 @@ RSpec.shared_examples "an edit placement wizard", :js do
   end
 
   def then_i_should_see_the_edit_year_group_page
-    expect(page).to have_content("Manage a placement")
-    expect(page).to have_content("Year group")
+    expect(page).to have_content("Placement details")
+    expect(page).to have_content("Select a year group")
   end
 
   def when_i_select_year(year)

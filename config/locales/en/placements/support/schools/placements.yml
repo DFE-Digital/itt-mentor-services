@@ -6,12 +6,12 @@ en:
           add_placement:
             edit:
               cancel: Cancel
-              add_placement: Add placement - %{organisation_name}
+              add_placement: Placement details - %{organisation_name}
           edit_placement:
             update:
               success: "%{step_attribute} updated"
             edit:
-              edit_placement: Manage a placement - %{organisation_name}
+              edit_placement: Placement details - %{organisation_name}
               cancel: Cancel
             success: Placement updated
           index:

@@ -6,6 +6,11 @@ class Placements::AddPlacementWizard::AdditionalSubjectsStep < Placements::BaseS
 
   delegate :name, to: :parent_subject, prefix: true
 
+  def addition_subject_category
+    # For Modern languages this returns "modern language"
+    parent_subject_name.singularize.downcase
+  end
+
   def additional_subject_ids=(value)
     super Array(value).compact_blank
   end
