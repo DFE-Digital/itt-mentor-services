@@ -551,7 +551,7 @@ RSpec.shared_examples "an add a placement wizard" do
   end
 
   def then_i_see_the_new_mentor_page
-    expect(page).to have_content("Add mentor")
+    expect(page).to have_content("Mentor details")
     expect(page).to have_content("Find teacher")
   end
 

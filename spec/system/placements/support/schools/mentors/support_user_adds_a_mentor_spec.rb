@@ -244,7 +244,7 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
   end
 
   def then_i_see_the_error(message, school_name, title = message, field_index = 0)
-    expect(page).to have_title "Error: #{title} - Add mentor - #{school_name}"
+    expect(page).to have_title "Error: #{title} - Mentor details - #{school_name}"
     within(".govuk-error-summary") do
       expect(page).to have_content message
     end
@@ -269,7 +269,7 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
 
   def then_i_see_no_results_page(_school_name, trn)
     expect(page).to have_title "No results found for ‘#{trn}’"
-    expect(page).to have_content "Add mentor - #{school.name}"
+    expect(page).to have_content "Mentor not found - #{school.name}"
     expect(page).to have_content "No results found for ‘#{trn}’"
   end
 
