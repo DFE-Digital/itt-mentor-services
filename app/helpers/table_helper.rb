@@ -5,7 +5,7 @@ module TableHelper
     end
   end
 
-  def make_not_yet_known_secondary_colour(placement)
-    placement.provider_name == I18n.t("placements.schools.placements.not_yet_known") || placement.mentor_names == I18n.t("placements.schools.placements.not_yet_known") ? "secondary-text" : ""
+  def table_text_class(data)
+    data == "Not yet known" ? "secondary-text" : ""
   end
 end
