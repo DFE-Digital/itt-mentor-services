@@ -25,7 +25,7 @@ en:
         can_not_remove:
           page_title: You cannot delete this mentor - %{user_name}
         destroy:
-          mentor_deleted: Mentor deleted
+          mentor_removed: Mentor removed
           caption: "Mentors - %{school_name}"
           attributes:
             mentors:

@@ -112,7 +112,7 @@ RSpec.describe "Placements / Schools / Mentors / Remove a mentor", service: :pla
     mentors_is_selected_in_primary_nav
     expect(mentor.mentor_memberships.find_by(school:)).to be_nil
     within(".govuk-notification-banner__content") do
-      expect(page).to have_content "Mentor deleted"
+      expect(page).to have_content "Mentor removed"
     end
 
     expect(page).not_to have_content mentor.full_name
