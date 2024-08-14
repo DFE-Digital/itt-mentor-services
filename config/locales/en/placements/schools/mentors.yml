@@ -12,19 +12,20 @@ en:
           add_mentor: Add mentor
           page_title: Mentors
         show:
-          remove_mentor: Remove mentor
+          delete_mentor: Delete mentor
           attributes:
             mentors:
               trn: Teacher reference number (TRN)
         confirm_remove:
-          page_title: Are you sure you want to remove this mentor? - %{user_name}
-          are_you_sure: Are you sure you want to remove this mentor?
-          remove_mentor: Remove mentor
+          page_title: Are you sure you want to delete this mentor? - %{user_name}
+          are_you_sure: Are you sure you want to delete this mentor?
+          delete_mentor: Delete mentor
+          you_will_no_longer: You will no longer be able to assign %{user_name} to placements.
           cancel: Cancel
         can_not_remove:
-          page_title: You can not remove this mentor - %{user_name}
+          page_title: You cannot delete this mentor - %{user_name}
         destroy:
-          mentor_removed: Mentor removed
+          mentor_deleted: Mentor deleted
           caption: "Mentors - %{school_name}"
           attributes:
             mentors:
