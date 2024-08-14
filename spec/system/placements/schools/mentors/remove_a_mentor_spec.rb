@@ -19,15 +19,15 @@ RSpec.describe "Placements / Schools / Mentors / Remove a mentor", service: :pla
   end
 
   context "when the mentor has no placements" do
-    scenario "User removes a mentor from a school" do
+    scenario "User deletes a mentor from a school" do
       when_i_visit_the_show_page_for(school, mentor_1)
-      and_i_click_on("Remove mentor")
+      and_i_click_on("Delete mentor")
       then_i_am_asked_to_confirm(school, mentor_1)
       when_i_click_on("Cancel")
       then_i_return_to_mentor_page(school, mentor_1)
-      when_i_click_on("Remove mentor")
+      when_i_click_on("Delete mentor")
       then_i_am_asked_to_confirm(school, mentor_1)
-      when_i_click_on("Remove mentor")
+      when_i_click_on("Delete mentor")
       then_the_mentor_is_removed_from_the_school(school, mentor_1)
       and_a_school_mentor_remains_called("Agatha Christie")
     end
@@ -36,9 +36,9 @@ RSpec.describe "Placements / Schools / Mentors / Remove a mentor", service: :pla
   context "when the mentor has placements" do
     before { create(:placement, mentors: [mentor_1], school:) }
 
-    scenario "User can not remove the mentor from the school" do
+    scenario "User cannot remove the mentor from the school" do
       when_i_visit_the_show_page_for(school, mentor_1)
-      and_i_click_on("Remove mentor")
+      and_i_click_on("Delete mentor")
       then_i_see_i_cannot_remove_the_mentor("John Doe")
     end
   end
@@ -87,10 +87,10 @@ RSpec.describe "Placements / Schools / Mentors / Remove a mentor", service: :pla
   def then_i_am_asked_to_confirm(_school, mentor)
     mentors_is_selected_in_primary_nav
     expect(page).to have_title(
-      "Are you sure you want to remove this mentor? - #{mentor.full_name} - Manage school placements",
+      "Are you sure you want to delete this mentor? - #{mentor.full_name} - Manage school placements",
     )
     expect(page).to have_content mentor.full_name
-    expect(page).to have_content "Are you sure you want to remove this mentor?"
+    expect(page).to have_content "Are you sure you want to delete this mentor?"
   end
 
   def mentors_is_selected_in_primary_nav
@@ -112,7 +112,7 @@ RSpec.describe "Placements / Schools / Mentors / Remove a mentor", service: :pla
     mentors_is_selected_in_primary_nav
     expect(mentor.mentor_memberships.find_by(school:)).to be_nil
     within(".govuk-notification-banner__content") do
-      expect(page).to have_content "Mentor removed"
+      expect(page).to have_content "Mentor deleted"
     end
 
     expect(page).not_to have_content mentor.full_name
@@ -124,6 +124,6 @@ RSpec.describe "Placements / Schools / Mentors / Remove a mentor", service: :pla
 
   def then_i_see_i_cannot_remove_the_mentor(mentor_name)
     expect(page).to have_content(mentor_name)
-    expect(page).to have_content("You can not remove this mentor")
+    expect(page).to have_content("You cannot delete this mentor")
   end
 end
