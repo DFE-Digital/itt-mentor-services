@@ -5,7 +5,7 @@ en:
         user_step:
           title_with_error: "Error: Personal details - %{caption}"
           title: Personal details - %{caption}
-          add_user: Add user
+          caption: User details
           continue: Continue
           personal_details: Personal details
         check_your_answers_step:
