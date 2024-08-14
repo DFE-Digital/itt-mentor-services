@@ -33,9 +33,9 @@ en:
           title_with_error: "Error: Select a mentor - %{contextual_text}"
           select_a_mentor: Select a mentor
           hint:
-            unpublished: |
+            unpublished_html: |
               Some placements may have more than one mentor. 
-              For example, if a mentor works part time.
+              For example, if a mentor works part time.<br>
 
               You can change who the mentor is after you have published the placement.
             published: |
