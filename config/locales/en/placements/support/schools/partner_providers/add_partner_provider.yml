@@ -5,7 +5,7 @@ en:
         partner_providers:
           add_partner_provider:
             edit:
-              caption: Add partner provider - %{organisation_name}
+              caption: Partner provider details - %{organisation_name}
               cancel: Cancel
             update:
               success: Partner provider added

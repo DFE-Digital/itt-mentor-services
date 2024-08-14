@@ -119,7 +119,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school 
   end
 
   def and_i_enter_a_school_named(school_name)
-    fill_in "Enter a school name", with: school_name
+    fill_in "Add a school", with: school_name
   end
 
   def then_i_see_list_of_placements_schools
@@ -135,7 +135,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school 
   alias_method :when_i_choose, :then_i_choose
 
   def then_i_see_the_check_details_page_for_school(school_name)
-    expect(page).to have_css(".govuk-caption-l", text: "Add partner school")
+    expect(page).to have_css(".govuk-caption-l", text: "Partner school details")
     expect(page).to have_content("Check your answers")
     org_name_row = page.all(".govuk-summary-list__row")[0]
     expect(org_name_row).to have_content(school_name)
@@ -169,7 +169,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school 
   end
 
   def then_i_see_the_search_input_pre_filled_with(school_name)
-    find_field "Enter a school name", with: school_name
+    find_field "Add a school", with: school_name
   end
 
   def partner_school_notification(user)

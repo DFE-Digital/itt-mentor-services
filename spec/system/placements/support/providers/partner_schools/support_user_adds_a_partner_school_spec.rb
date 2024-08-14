@@ -115,7 +115,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
   alias_method :and_i_click_on, :when_i_click_on
 
   def and_i_enter_a_school_named(school_name)
-    fill_in "Enter a school name", with: school_name
+    fill_in "Add a school", with: school_name
   end
 
   def then_i_see_a_dropdown_item_for(school_name)
@@ -127,7 +127,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
   end
 
   def then_i_see_the_check_details_page_for_school(school_name)
-    expect(page).to have_css(".govuk-caption-l", text: "Add partner school")
+    expect(page).to have_css(".govuk-caption-l", text: "Partner school details")
     expect(page).to have_content("Check your answers")
     org_name_row = page.all(".govuk-summary-list__row")[0]
     expect(org_name_row).to have_content(school_name)
@@ -186,7 +186,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
 
   def then_i_see_the_search_input_pre_filled_with(school_name)
     within(".autocomplete__wrapper") do
-      find_field "Enter a school name", with: school_name
+      find_field "Add a school", with: school_name
     end
   end
 

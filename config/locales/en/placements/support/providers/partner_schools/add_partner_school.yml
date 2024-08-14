@@ -5,7 +5,7 @@ en:
         partner_schools:
           add_partner_school:
             edit:
-              caption: Add partner school - %{organisation_name}
+              caption: Partner school details - %{organisation_name}
               cancel: Cancel
             update:
               success: Partner school added
