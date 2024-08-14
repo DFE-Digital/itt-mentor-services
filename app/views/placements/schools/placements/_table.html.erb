@@ -23,8 +23,8 @@
             no_visited_state: true,
           )) %>
         <% end %>
-        <% row.with_cell(text: placement.mentor_names, html_attributes: { class: make_not_yet_known_secondary_colour(placement) }) %>
-        <% row.with_cell(text: placement.provider_name, html_attributes: { class: make_not_yet_known_secondary_colour(placement) }) %>
+        <% row.with_cell(text: placement.mentor_names, html_attributes: { class: table_text_class(placement.mentor_names) }) %>
+        <% row.with_cell(text: placement.provider_name, html_attributes: { class: table_text_class(placement.provider_name) }) %>
       <% end %>
     <% end %>
   <% end %>
