@@ -13,12 +13,15 @@
       </label>
 
       <%= simple_format(t(".you_will_no_longer")) %>
-
+      
+      <% if @partner_provider.becomes(Placements::Provider).placements.where(school: @school).exists? %>
+      <p class="govuk-body">Placements with this provider are:</p>
       <ul class="govuk-list govuk-list--bullet">
         <% @partner_provider.becomes(Placements::Provider).placements.where(school: @school).find_each do |placement| %>
           <li><%= govuk_link_to(placement.decorate.title, placements_school_placement_path(@school, placement), target: "_blank") %></li>
         <% end %>
       </ul>
+      <% end %>
 
       <%= render GovukComponent::WarningTextComponent.new(
         text: t(".provider_will_be_sent_an_email",

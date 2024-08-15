@@ -21,11 +21,7 @@ en:
           cancel: Cancel
           delete_partner_provider: Delete partner provider
           are_you_sure: Are you sure you no longer want %{provider_name} as one of your partner providers?
-          you_will_no_longer: | 
-              You will no longer be able to assign this provider to placements. They will remain assigned to current placements unless you remove them. 
-              
-              Placements with this provider are:
-              
+          you_will_no_longer: You will no longer be able to assign this provider to placements. They will remain assigned to current placements unless you remove them.               
           provider_will_be_sent_an_email: We will send an email to %{provider_name} to let them know they are no longer a partner provider. It is your responsibility to confirm with them whether they should still fulfil existing assigned placements.
         destroy:
           partner_provider_removed: Partner provider removed
