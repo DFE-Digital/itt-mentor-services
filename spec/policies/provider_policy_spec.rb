@@ -16,16 +16,19 @@ RSpec.describe ProviderPolicy do
     end
 
     context "when the user is a school user" do
+      let(:school) { build(:placements_school) }
       let(:user) { create(:placements_user, schools: [school]) }
-      let(:school) { create(:placements_school) }
+      let!(:provider_1) { create(:placements_provider, partner_schools: [school]) }
+      let(:provider_2) { create(:placements_provider) }
 
       before do
         user.current_organisation = school
-        school.partner_providers << placements_provider
+        provider_2
       end
 
       it "returns the school's partner providers" do
-        expect(provider_policy::Scope.new(user, scope).resolve).to eq(school.partner_providers)
+        # Scope returns Providers, but partner schools association is only on Placements::Provider
+        expect(provider_policy::Scope.new(user, scope).resolve).to eq([provider_1.becomes(Provider)])
       end
     end
   end

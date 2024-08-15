@@ -11,16 +11,18 @@ RSpec.describe UserMembershipPolicy do
     end
 
     context "when the user is a school user" do
-      let(:user) { create(:placements_user, schools: [school]) }
       let(:school) { build(:placements_school) }
+      let(:user) { create(:placements_user, user_memberships: [user_membership_1]) }
+      let(:user_membership_1) { build(:user_membership, organisation: school) }
+      let(:user_membership_2) { create(:user_membership) }
 
       before do
         user.current_organisation = school
-        create(:user_membership, organisation: school)
+        user_membership_2
       end
 
       it "returns the school's user memberships" do
-        expect(user_membership_policy::Scope.new(user, scope).resolve).to eq(user.user_memberships)
+        expect(user_membership_policy::Scope.new(user, scope).resolve).to eq([user_membership_1])
       end
     end
   end
