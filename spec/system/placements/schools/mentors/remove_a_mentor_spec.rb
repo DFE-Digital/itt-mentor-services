@@ -39,7 +39,7 @@ RSpec.describe "Placements / Schools / Mentors / Remove a mentor", service: :pla
     scenario "User cannot remove the mentor from the school" do
       when_i_visit_the_show_page_for(school, mentor_1)
       and_i_click_on("Delete mentor")
-      then_i_see_i_cannot_remove_the_mentor("John Doe")
+      then_i_see_i_cannot_remove_the_mentor(mentor_1)
     end
   end
 
@@ -122,8 +122,12 @@ RSpec.describe "Placements / Schools / Mentors / Remove a mentor", service: :pla
     expect(page).to have_content(mentor_name)
   end
 
-  def then_i_see_i_cannot_remove_the_mentor(mentor_name)
-    expect(page).to have_content(mentor_name)
+  def then_i_see_i_cannot_remove_the_mentor(mentor)
+    expect(page).to have_content(mentor.full_name)
     expect(page).to have_content("You cannot delete this mentor")
+
+    mentor.placements.where(school:).find_each do |placement|
+      expect(page).to have_link(placement.decorate.title, href: placements_school_placement_path(school, placement))
+    end
   end
 end
