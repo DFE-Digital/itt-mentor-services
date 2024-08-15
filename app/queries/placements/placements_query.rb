@@ -2,7 +2,7 @@ class Placements::PlacementsQuery < ApplicationQuery
   MAX_LOCATION_DISTANCE = 50
 
   def call
-    scope = Placement.includes(:school, :subject, :additional_subjects)
+    scope = Placement.includes(:school, :subject, :additional_subjects, :provider)
 
     scope = school_condition(scope)
     scope = partner_school_condition(scope)
