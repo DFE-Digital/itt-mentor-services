@@ -7,19 +7,12 @@
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <label class="govuk-label govuk-label--l">
-        <span class="govuk-caption-l"><%= @mentor.full_name %></span>
-        <%= t(".are_you_sure") %>
-      </label>
 
-      <p class="govuk-body">
-        <%= t(".you_will_no_longer", user_name: @mentor.full_name) %>
-      </p>
-
-      <%= govuk_button_to t(".delete_mentor"),
-        placements_school_mentor_path(@school, @mentor),
-        warning: true,
-        method: :delete %>
+      <%= render "delete",
+        caption: @mentor.full_name,
+        school: @school,
+        mentor: @mentor,
+        delete_link: placements_school_mentor_path(@school, @mentor) %>
 
       <p class="govuk-body">
         <%= govuk_link_to(t(".cancel"), placements_school_mentor_path(@school, @mentor), no_visited_state: true) %>

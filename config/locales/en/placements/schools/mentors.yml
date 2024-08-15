@@ -18,10 +18,11 @@ en:
               trn: Teacher reference number (TRN)
         confirm_remove:
           page_title: Are you sure you want to delete this mentor? - %{user_name}
+          cancel: Cancel
+        delete:
           are_you_sure: Are you sure you want to delete this mentor?
           delete_mentor: Delete mentor
           you_will_no_longer: You will no longer be able to assign %{user_name} to placements.
-          cancel: Cancel
         can_not_remove:
           page_title: You cannot delete this mentor - %{user_name}
         destroy:
