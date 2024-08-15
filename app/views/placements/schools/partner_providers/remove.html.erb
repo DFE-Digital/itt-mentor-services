@@ -13,7 +13,7 @@
       </label>
 
       <%= simple_format(t(".you_will_no_longer")) %>
-      
+
       <% if @partner_provider.becomes(Placements::Provider).placements.where(school: @school).exists? %>
       <p class="govuk-body">Placements with this provider are:</p>
       <ul class="govuk-list govuk-list--bullet">
