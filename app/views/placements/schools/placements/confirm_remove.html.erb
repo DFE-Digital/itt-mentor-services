@@ -12,6 +12,8 @@
         <%= t(".are_you_sure") %>
       </label>
 
+      <%= simple_format(t(".it_is_your_responsibility")) %>
+
       <%= govuk_button_to t(".delete_placement"),
         placements_school_placement_path(@school, @placement),
         warning: true,
