@@ -4,8 +4,10 @@ RSpec.describe ProviderPolicy do
   subject(:provider_policy) { described_class }
 
   describe "scope" do
-    let!(:placements_provider) { create(:placements_provider) }
+    let(:placements_provider) { create(:placements_provider) }
     let(:scope) { Provider.all }
+
+    before { placements_provider }
 
     context "when the user is a support user" do
       let(:user) { create(:placements_support_user) }
