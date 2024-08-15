@@ -17,5 +17,6 @@ en:
           delete_user: Delete user
           cancel: Cancel
           change_organisation: Change organisation
+          user_will_no_longer: '%{user_name} will no longer be able to access placement information.'
           user_will_be_sent_an_email: The user will be sent an email to tell them you deleted them from %{organisation_name}
         you_cannot_perform_this_action: You cannot perform this action
