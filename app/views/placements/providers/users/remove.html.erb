@@ -15,7 +15,7 @@
         text: t(".user_will_be_sent_an_email", organisation_name: @organisation.name),
       ) %>
 
-      <%= govuk_button_to t(".remove_user"), placements_provider_user_path(@organisation, @user), warning: true, method: :delete %>
+      <%= govuk_button_to t(".delete_user"), placements_provider_user_path(@organisation, @user), warning: true, method: :delete %>
 
       <p class="govuk-body">
         <%= govuk_link_to(t(".cancel"), placements_provider_user_path(@organisation, @user), no_visited_state: true) %>
