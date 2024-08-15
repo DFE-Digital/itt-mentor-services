@@ -18,7 +18,7 @@
   </div>
 
   <% if policy(@partnership).remove? %>
-    <%= link_to(t(".remove_partner_provider"),
+    <%= link_to(t(".delete_partner_provider"),
       remove_placements_school_partner_provider_path(@school, @partner_provider),
       class: "app-link app-link--destructive") %>
   <% end %>
