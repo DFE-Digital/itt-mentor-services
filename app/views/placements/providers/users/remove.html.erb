@@ -11,6 +11,9 @@
         <span class="govuk-caption-l"><%= @user.full_name.to_s %></span>
         <%= t(".are_you_sure") %>
       </label>
+
+      <%= simple_format(t(".user_will_no_longer", user_name: @user.full_name)) %>
+
       <%= render GovukComponent::WarningTextComponent.new(
         text: t(".user_will_be_sent_an_email", organisation_name: @organisation.name),
       ) %>
