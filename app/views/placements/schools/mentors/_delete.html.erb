@@ -1,0 +1,14 @@
+<%# caption:, school:, mentor:, delete_link: %>
+<label class="govuk-label govuk-label--l">
+  <span class="govuk-caption-l"><%= caption %></span>
+  <%= t(".are_you_sure") %>
+</label>
+
+<p class="govuk-body">
+  <%= t(".you_will_no_longer", user_name: mentor.full_name) %>
+</p>
+
+<%= govuk_button_to t(".delete_mentor"),
+  delete_link,
+  warning: true,
+  method: :delete %>

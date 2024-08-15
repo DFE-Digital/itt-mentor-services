@@ -16,21 +16,14 @@ en:
           show:
             page_title: "%{mentor_name} - Mentors - %{school_name}"
             caption: "Mentors - %{school_name}"
-            remove_mentor: Remove mentor
+            delete_mentor: Delete mentor
             attributes:
               mentors:
                 trn: Teacher reference number (TRN)
           confirm_remove:
-            page_title: Are you sure you want to remove this mentor? - %{user_name} - %{school_name}
-            are_you_sure: Are you sure you want to remove this mentor?
+            page_title: Are you sure you want to delete this mentor? - %{user_name} - %{school_name}
             cancel: Cancel
-            delete_mentor: Remove mentor
           can_not_remove:
-            page_title: You can not remove this mentor - %{user_name} - %{school_name}
-          remove:
-            page_title: Are you sure you want to remove this mentor? - %{user_name} - %{school_name}
-            are_you_sure: Are you sure you want to remove this mentor?
-            cancel: Cancel
-            remove_mentor: Remove mentor
+            page_title: You can not delete this mentor - %{user_name} - %{school_name}
           destroy:
             mentor_deleted: Mentor deleted
