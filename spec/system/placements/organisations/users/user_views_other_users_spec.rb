@@ -88,11 +88,11 @@ RSpec.describe "Placements user views other users in their organisation", servic
   end
 
   def and_i_see_the_remove_user_link
-    expect(page).to have_link "Remove user"
+    expect(page).to have_link "Delete user"
   end
 
   def and_i_do_not_see_the_remove_user_link
-    expect(page).not_to have_link "Remove user"
+    expect(page).not_to have_link "Delete user"
   end
 
   def and_users_is_selected_in_schools_primary_nav
