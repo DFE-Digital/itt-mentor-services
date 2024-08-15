@@ -8,7 +8,7 @@
 
   <%= simple_format(t(".description", mentor_name: mentor.full_name)) %>
 
-  <ul class="govuk-list">
+  <ul class="govuk-list govuk-list--bullet">
     <% mentor.placements.where(school:).find_each do |placement| %>
       <li><%= govuk_link_to(placement.decorate.title, placements_school_placement_path(school, placement), target: "_blank") %></li>
     <% end %>
