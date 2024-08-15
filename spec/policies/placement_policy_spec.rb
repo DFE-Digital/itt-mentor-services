@@ -61,16 +61,18 @@ RSpec.describe PlacementPolicy do
     end
 
     context "when the user is a school user" do
-      let(:user) { create(:placements_user, schools: [school]) }
       let(:school) { build(:placements_school) }
+      let(:user) { create(:placements_user, schools: [school]) }
+      let!(:placement_1) { create(:placement, school:) }
+      let(:placement_2) { create(:placement) }
 
       before do
         user.current_organisation = school
-        create(:placement, school:)
+        placement_2
       end
 
       it "returns the school's placements" do
-        expect(placement_policy::Scope.new(user, scope).resolve).to eq(school.placements)
+        expect(placement_policy::Scope.new(user, scope).resolve).to eq([placement_1])
       end
     end
 

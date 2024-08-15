@@ -17,14 +17,16 @@ describe Placements::MentorPolicy do
     context "when the user is a school user" do
       let(:school) { build(:placements_school) }
       let(:user) { create(:placements_user, schools: [school]) }
+      let!(:mentor_1) { create(:placements_mentor, schools: [school]) }
+      let(:mentor_2) { create(:placements_mentor) }
 
       before do
         user.current_organisation = school
-        create(:placements_mentor, schools: [school])
+        mentor_2
       end
 
       it "returns the school's mentors" do
-        expect(described_class::Scope.new(user, scope).resolve).to eq(school.mentors)
+        expect(described_class::Scope.new(user, scope).resolve).to eq([mentor_1])
       end
     end
 
