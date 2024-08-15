@@ -25,13 +25,13 @@ RSpec.describe "Placements / Schools / Partner providers / Remove a partner prov
   scenario "User removes a partner provider" do
     given_i_sign_in_as_anne
     when_i_view_the_partner_provider_show_page
-    and_i_click_on("Remove partner provider")
+    and_i_click_on("Delete partner provider")
     then_i_am_asked_to_confirm_partner_provider(provider)
     when_i_click_on("Cancel")
     then_i_return_to_partner_provider_page(provider)
-    when_i_click_on("Remove partner provider")
+    when_i_click_on("Delete partner provider")
     then_i_am_asked_to_confirm_partner_provider(provider)
-    when_i_click_on("Remove partner provider")
+    when_i_click_on("Delete partner provider")
     then_the_partner_provider_is_removed(provider)
     and_a_partner_provider_remains_called("Another provider")
     and_a_notification_email_is_sent_to(provider_user)
@@ -41,13 +41,13 @@ RSpec.describe "Placements / Schools / Partner providers / Remove a partner prov
     given_the_provider_is_not_onboarded_on_placements_service(provider)
     given_i_sign_in_as_anne
     when_i_view_the_partner_provider_show_page
-    and_i_click_on("Remove partner provider")
+    and_i_click_on("Delete partner provider")
     then_i_am_asked_to_confirm_partner_provider(provider)
     when_i_click_on("Cancel")
     then_i_return_to_partner_provider_page(provider)
-    when_i_click_on("Remove partner provider")
+    when_i_click_on("Delete partner provider")
     then_i_am_asked_to_confirm_partner_provider(provider)
-    when_i_click_on("Remove partner provider")
+    when_i_click_on("Delete partner provider")
     then_the_partner_provider_is_removed(provider)
     and_a_partner_provider_remains_called("Another provider")
     and_a_notification_email_is_not_sent_to(provider_user)
@@ -78,10 +78,10 @@ RSpec.describe "Placements / Schools / Partner providers / Remove a partner prov
     expect_partner_providers_to_be_selected_in_primary_navigation
 
     expect(page).to have_title(
-      "Are you sure you want to remove this partner provider? - #{provider.name} - Manage school placements",
+      "Are you sure you want to delete this partner provider? - #{provider.name} - Manage school placements",
     )
     expect(page).to have_content provider.name
-    expect(page).to have_content "Are you sure you want to remove this partner provider?"
+    expect(page).to have_content "Are you sure you no longer want #{provider.name} as one of your partner providers?"
   end
 
   def then_i_return_to_partner_provider_page(provider)

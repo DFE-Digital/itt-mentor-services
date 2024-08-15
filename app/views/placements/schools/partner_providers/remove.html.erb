@@ -9,15 +9,24 @@
     <div class="govuk-grid-column-two-thirds">
       <label class="govuk-label govuk-label--l">
         <span class="govuk-caption-l"><%= @partner_provider.name %></span>
-        <%= t(".are_you_sure") %>
+        <%= t(".are_you_sure", provider_name: @partner_provider.name) %>
       </label>
+
+      <%= simple_format(t(".you_will_no_longer")) %>
+
+      <ul class="govuk-list">
+        <% @partner_provider.becomes(Placements::Provider).placements.where(school: @school).find_each do |placement| %>
+          <li><%= govuk_link_to(placement.decorate.title, placements_school_placement_path(@school, placement), target: "_blank") %></li>
+        <% end %>
+      </ul>
+
       <%= render GovukComponent::WarningTextComponent.new(
         text: t(".provider_will_be_sent_an_email",
           school_name: @school.name,
           provider_name: @partner_provider.name),
       ) %>
 
-      <%= govuk_button_to t(".remove_partner_provider"), placements_school_partner_provider_path(@school, @partner_provider), warning: true, method: :delete %>
+      <%= govuk_button_to t(".delete_partner_provider"), placements_school_partner_provider_path(@school, @partner_provider), warning: true, method: :delete %>
 
       <p class="govuk-body">
         <%= govuk_link_to(t(".cancel"), placements_school_partner_provider_path(@school, @partner_provider), no_visited_state: true) %>
