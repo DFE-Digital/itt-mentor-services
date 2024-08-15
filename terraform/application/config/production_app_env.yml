@@ -4,12 +4,12 @@ HOSTING_ENV: production
 # Primary hostname for the Funding Mentors service
 CLAIMS_HOST: claim-funding-for-mentor-training.education.gov.uk
 # Additional hostnames that may be used – e.g. the CDN origin (comma separated)
-CLAIMS_HOSTS: claim-funding-for-mentor-training.education.gov.uk,track-and-pay-production.teacherservices.cloud
+CLAIMS_HOSTS: claim-funding-for-mentor-training.education.gov.uk,track-and-pay-production.teacherservices.cloud,track-and-pay-tmp.teacherservices.cloud
 
 # Primary hostname for the School Placements service
 PLACEMENTS_HOST: manage-school-placements.education.gov.uk
 # Additional hostnames that may be used – e.g. the CDN origin (comma separated)
-PLACEMENTS_HOSTS: manage-school-placements.education.gov.uk,manage-school-placements-production.teacherservices.cloud
+PLACEMENTS_HOSTS: manage-school-placements.education.gov.uk,manage-school-placements-production.teacherservices.cloud,manage-school-placements-tmp.teacherservices.cloud
 
 # API integrations
 GIAS_CSV_BASE_URL: https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public
