@@ -7,7 +7,7 @@ class Placements::OrganisationFinder
   end
 
   def call
-    organisations.where(organisation_type: organisation_types)
+    organisations.includes([:searchable]).where(organisation_type: organisation_types)
   end
 
   private
