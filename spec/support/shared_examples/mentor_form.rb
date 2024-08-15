@@ -125,6 +125,14 @@ RSpec.shared_examples "a mentor form" do
     end
   end
 
+  describe "#trn" do
+    it "returns the inputted trn without whitespaces" do
+      form = described_class.new(trn: " 123 456 7 ")
+
+      expect(form.trn).to eq("1234567")
+    end
+  end
+
   def stub_teaching_record_response(trn:, date_of_birth: "1991-01-22")
     allow(TeachingRecord::GetTeacher).to receive(:call).with(trn:, date_of_birth:).and_return(
       { "trn" => "1234567",

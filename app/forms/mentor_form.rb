@@ -59,6 +59,10 @@ class MentorForm < ApplicationForm
     end
   end
 
+  def trn
+    super&.remove("\s")
+  end
+
   private
 
   def validate_membership
