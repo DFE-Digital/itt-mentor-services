@@ -1,0 +1,18 @@
+<%# caption:, provider:, partner_school:, delete_link: %>
+<label class="govuk-label govuk-label--l">
+  <span class="govuk-caption-l"><%= partner_school.name %></span>
+  <%= t(".are_you_sure") %>
+</label>
+
+<%= simple_format(t(".school_will_no_longer")) %>
+
+<%= render GovukComponent::WarningTextComponent.new(
+  text: t(".school_will_be_sent_an_email",
+    provider_name: provider.name,
+    school_name: partner_school.name),
+) %>
+
+<%= govuk_button_to t(".delete_partner_school"),
+  delete_link,
+  warning: true,
+  method: :delete %>
