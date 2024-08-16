@@ -13,7 +13,10 @@ en:
                 email: Email
           remove:
             page_title: Are you sure you want to delete this user? - %{user_name} - %{organisation_name}
+            are_you_sure: Are you sure you want to delete this user?
+            delete_user: Delete user
             cancel: Cancel
+            user_will_be_sent_an_email: The user will be sent an email to tell them you deleted them from %{organisation_name}
           show:
             delete_user: Delete user
           destroy:

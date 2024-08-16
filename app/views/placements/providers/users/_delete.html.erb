@@ -1,13 +1,14 @@
 <%# caption:, user:, organisation:, delete_link: %>
+
 <label class="govuk-label govuk-label--l">
   <span class="govuk-caption-l"><%= caption %></span>
   <%= t(".are_you_sure") %>
 </label>
 
-<%= simple_format(t(".user_will_no_longer", user_name: user.full_name)) %>
+<%= simple_format(t(".user_will_no_longer", user_name: @user.full_name)) %>
 
 <%= render GovukComponent::WarningTextComponent.new(
-  text: t(".user_will_be_sent_an_email", organisation_name: organisation.name),
+  text: t(".user_will_be_sent_an_email", organisation_name: @organisation.name),
 ) %>
 
 <%= govuk_button_to t(".delete_user"), delete_link, warning: true, method: :delete %>
