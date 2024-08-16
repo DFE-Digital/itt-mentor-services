@@ -25,11 +25,7 @@ en:
         can_not_remove:
           page_title: You cannot delete this mentor - %{user_name}
         destroy:
-          mentor_removed: Mentor removed
-          caption: "Mentors - %{school_name}"
-          attributes:
-            mentors:
-              trn: Teacher reference number (TRN)
+          mentor_deleted: Mentor deleted
         new:
           page_title: Find teacher - Add mentor
           page_title_with_error: "Error: Find teacher - Add mentor"
