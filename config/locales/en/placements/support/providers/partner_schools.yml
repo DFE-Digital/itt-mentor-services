@@ -26,4 +26,4 @@ en:
             are_you_sure: Are you sure you want to remove this partner school?
             school_will_be_sent_an_email: We will send an email to %{school_name}. This will let them know you have removed them as a partner school for %{provider_name}.
           destroy:
-            partner_school_removed: Partner school removed
+            partner_school_deleted: Partner school deleted
