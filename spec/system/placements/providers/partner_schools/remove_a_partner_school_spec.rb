@@ -25,13 +25,13 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
   scenario "User removes a partner school" do
     given_i_sign_in_as_patricia
     when_i_view_the_partner_school_show_page
-    and_i_click_on("Remove partner school")
+    and_i_click_on("Delete partner school")
     then_i_am_asked_to_confirm_partner_school(school)
     when_i_click_on("Cancel")
     then_i_return_to_partner_school_page(school)
-    when_i_click_on("Remove partner school")
+    when_i_click_on("Delete partner school")
     then_i_am_asked_to_confirm_partner_school(school)
-    when_i_click_on("Remove partner school")
+    when_i_click_on("Delete partner school")
     then_the_partner_school_is_removed(school)
     and_a_partner_provider_remains_called("Another school")
     and_a_notification_email_is_sent_to(school_user)
@@ -41,13 +41,13 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
     given_the_school_is_not_onboarded_on_placements_service(school)
     given_i_sign_in_as_patricia
     when_i_view_the_partner_school_show_page
-    and_i_click_on("Remove partner school")
+    and_i_click_on("Delete partner school")
     then_i_am_asked_to_confirm_partner_school(school)
     when_i_click_on("Cancel")
     then_i_return_to_partner_school_page(school)
-    when_i_click_on("Remove partner school")
+    when_i_click_on("Delete partner school")
     then_i_am_asked_to_confirm_partner_school(school)
-    when_i_click_on("Remove partner school")
+    when_i_click_on("Delete partner school")
     then_the_partner_school_is_removed(school)
     and_a_partner_provider_remains_called("Another school")
     and_a_notification_email_is_not_sent_to(school_user)
@@ -78,10 +78,10 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
     expect_partner_schools_to_be_selected_in_primary_navigation
 
     expect(page).to have_title(
-      "Are you sure you want to remove this partner school? - #{school.name} - Manage school placements",
+      "Are you sure you want to delete this partner school? - #{school.name} - Manage school placements",
     )
     expect(page).to have_content school.name
-    expect(page).to have_content "Are you sure you want to remove this partner school?"
+    expect(page).to have_content "Are you sure you want to delete this partner school?"
   end
 
   def then_i_return_to_partner_school_page(school)
@@ -95,7 +95,7 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
 
     expect(provider.partner_schools.find_by(id: school.id)).to be_nil
     within(".govuk-notification-banner__content") do
-      expect(page).to have_content "Partner school removed"
+      expect(page).to have_content "Partner school deleted"
     end
 
     expect(page).not_to have_content school.name
