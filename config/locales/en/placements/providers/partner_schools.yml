@@ -23,6 +23,7 @@ en:
         remove:
           page_title: Are you sure you want to delete this partner school? - %{school_name}
           cancel: Cancel
+        delete:
           delete_partner_school: Delete partner school
           are_you_sure: Are you sure you want to delete this partner school?
           school_will_no_longer: The school will no longer be able to assign you to their placements. You can still view placements at this school.
