@@ -5,8 +5,13 @@ RSpec.describe ProviderDecorator do
     it "returns placements belonging to a partner provider" do
       provider = create(:provider)
       subject = create(:subject)
-      school = Placements::School.create(name: "Springfield Elementary")
-      placement = Placement.create(provider:, school:, subject:)
+      region = Region.create!(name: "Springfield")
+      school = Placements::School.create!(
+        name: "Springfield Elementary",
+        urn: "1234567890",
+        region:,
+      )
+      placement = Placement.create!(provider:, school:, subject:)
 
       decorated_provider = provider.decorate
       result = decorated_provider.partner_provider_placements(school)
