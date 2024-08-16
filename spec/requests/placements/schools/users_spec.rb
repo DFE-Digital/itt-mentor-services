@@ -17,7 +17,7 @@ RSpec.describe "School users", service: :placements, type: :request do
       it "deletes the user" do
         expect(school.users).to include(user)
         delete placements_school_user_path(school, user)
-        expect(flash[:success]).to eq "User removed"
+        expect(flash[:success]).to eq "User deleted"
         expect(school.users).not_to include(user)
       end
     end
