@@ -91,7 +91,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
 
     expect(school.partner_providers.find_by(id: provider.id)).to be_nil
     within(".govuk-notification-banner__content") do
-      expect(page).to have_content "Partner provider removed"
+      expect(page).to have_content "Partner provider deleted"
     end
 
     expect(page).not_to have_content provider.name

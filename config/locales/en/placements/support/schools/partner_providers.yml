@@ -23,4 +23,4 @@ en:
             are_you_sure: Are you sure you want to remove this partner provider?
             provider_will_be_sent_an_email: We will send an email to %{provider_name}. This will let them know you have removed them as a partner provider for %{school_name}.
           destroy:
-            partner_provider_removed: Partner provider removed
+            partner_provider_deleted: Partner provider deleted
