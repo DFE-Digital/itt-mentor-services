@@ -24,5 +24,5 @@ en:
           you_will_no_longer: You will no longer be able to assign this provider to placements. They will remain assigned to current placements unless you remove them.               
           provider_will_be_sent_an_email: We will send an email to %{provider_name} to let them know they are no longer a partner provider. It is your responsibility to confirm with them whether they should still fulfil existing assigned placements.
         destroy:
-          partner_provider_removed: Partner provider removed
+          partner_provider_deleted: Partner provider deleted
 

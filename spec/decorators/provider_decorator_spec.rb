@@ -1,6 +1,21 @@
 require "rails_helper"
 
 RSpec.describe ProviderDecorator do
+  describe "#partner_provider_placements" do
+    it "returns placements belonging to a partner provider" do
+      provider = create(:provider)
+      subject = create(:subject)
+      school = Placements::School.create(name: "Springfield Elementary")
+      placement = Placement.create(provider:, school:, subject:)
+
+      decorated_provider = provider.decorate
+      result = decorated_provider.partner_provider_placements(school)
+      decorated_placement = placement.decorate
+
+      expect(result).to include(decorated_placement)
+    end
+  end
+
   describe "#formatted_address" do
     it "returns a formatted address" do
       provider = create(:provider,
