@@ -11,6 +11,7 @@ RSpec.describe "Placements support user removes a user from an organisation", se
     let(:school) { create(:placements_school) }
     let(:anne) { create(:placements_user, :anne) }
     let(:mary) { create(:placements_user, :mary) }
+    let(:success_message) { "User removed" }
 
     before do
       [anne, mary].each do |user|
@@ -43,6 +44,7 @@ RSpec.describe "Placements support user removes a user from an organisation", se
     let(:provider) { create(:placements_provider) }
     let(:anne) { create(:placements_user, :anne) }
     let(:mary) { create(:placements_user, :mary) }
+    let(:success_message) { "User deleted" }
 
     before "message is sent to user" do
       [anne, mary].each do |user|
@@ -175,7 +177,7 @@ RSpec.describe "Placements support user removes a user from an organisation", se
 
     expect(user.user_memberships.find_by(organisation:)).to be_nil
     within(".govuk-notification-banner__content") do
-      expect(page).to have_content "User deleted"
+      expect(page).to have_content success_message
     end
 
     expect(page).not_to have_content user.full_name

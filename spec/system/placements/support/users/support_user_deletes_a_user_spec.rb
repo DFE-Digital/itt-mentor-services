@@ -42,13 +42,13 @@ RSpec.describe "Placements support user deletes a user from an organisation", se
       given_i_am_signed_in_as_a_support_user
       and_i_visit_the_user_page(provider)
       when_i_click_on("Delete user")
-      then_i_am_asked_to_confirm(provider)
+      then_i_am_asked_to_confirm_the_deletion(provider)
       when_i_click_on("Cancel")
       then_i_return_to_user_page(provider)
       when_i_click_on("Delete user")
-      then_i_am_asked_to_confirm(provider)
+      then_i_am_asked_to_confirm_the_deletion(provider)
       when_i_click_on("Delete user")
-      then_the_user_is_deleted_from_the_organisation(provider)
+      then_the_user_is_deleted_from_the_organisation(provider, message: "User deleted")
       and_email_is_sent(user.email, provider)
     end
   end
@@ -115,6 +115,16 @@ RSpec.describe "Placements support user deletes a user from an organisation", se
     expect(page).to have_content "The user will be sent an email to tell them you deleted them from #{organisation.name}"
   end
 
+  def then_i_am_asked_to_confirm_the_deletion(organisation)
+    organisations_is_selected_in_primary_nav
+    expect(page).to have_title(
+      "Are you sure you want to delete this user? - #{user.full_name} - #{organisation.name} - Manage school placements",
+    )
+    expect(page).to have_content "#{user.full_name} - #{organisation.name}"
+    expect(page).to have_content "Are you sure you want to delete this user?"
+    expect(page).to have_content "The user will be sent an email to tell them you deleted them from #{organisation.name}"
+  end
+
   def organisations_is_selected_in_primary_nav
     within(".app-primary-navigation__nav") do
       expect(page).to have_link "Organisations", current: "page"
@@ -146,12 +156,12 @@ RSpec.describe "Placements support user deletes a user from an organisation", se
     end
   end
 
-  def then_the_user_is_deleted_from_the_organisation(organisation)
+  def then_the_user_is_deleted_from_the_organisation(organisation, message: "User removed")
     organisations_is_selected_in_primary_nav
     users_is_selected_in_secondary_nav(organisation)
     expect(user.user_memberships.find_by(organisation:)).to be_nil
     within(".govuk-notification-banner__content") do
-      expect(page).to have_content "User deleted"
+      expect(page).to have_content message
     end
 
     expect(page).not_to have_content user.full_name
