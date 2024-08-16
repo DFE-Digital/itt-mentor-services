@@ -15,7 +15,7 @@ class Placements::Organisations::UsersController < Placements::ApplicationContro
   def destroy
     User::Remove.call(user: @user, organisation: @organisation)
     redirect_to_index
-    flash[:success] = t(".user_removed")
+    flash[:success] = t(".user_deleted")
   end
 
   private

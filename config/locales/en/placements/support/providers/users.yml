@@ -20,4 +20,4 @@ en:
           show:
             remove_user: Remove user
           destroy:
-            user_removed: User removed
+            user_deleted: User deleted

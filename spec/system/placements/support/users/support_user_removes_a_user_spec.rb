@@ -76,7 +76,7 @@ RSpec.describe "Placements support user removes a user from an organisation", se
   def when_i_remove_user_from_school
     click_on "Remove user"
     click_on "Remove user"
-    expect(page).to have_content "User removed"
+    expect(page).to have_content "User deleted"
     expect(user.user_memberships.find_by(organisation: school)).to be_nil
   end
 
@@ -151,7 +151,7 @@ RSpec.describe "Placements support user removes a user from an organisation", se
     users_is_selected_in_secondary_nav(organisation)
     expect(user.user_memberships.find_by(organisation:)).to be_nil
     within(".govuk-notification-banner__content") do
-      expect(page).to have_content "User removed"
+      expect(page).to have_content "User deleted"
     end
 
     expect(page).not_to have_content user.full_name
