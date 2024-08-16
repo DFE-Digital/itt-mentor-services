@@ -12,7 +12,7 @@ en:
                 email: Email
             empty_state: There are no users for %{school_name}.
           destroy:
-            user_removed: User removed
+            user_deleted: User deleted
           show:
             remove_user: Remove user
           remove:

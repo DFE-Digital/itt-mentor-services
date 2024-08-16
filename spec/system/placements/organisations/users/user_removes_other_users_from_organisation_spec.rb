@@ -175,7 +175,7 @@ RSpec.describe "Placements support user removes a user from an organisation", se
 
     expect(user.user_memberships.find_by(organisation:)).to be_nil
     within(".govuk-notification-banner__content") do
-      expect(page).to have_content "User removed"
+      expect(page).to have_content "User deleted"
     end
 
     expect(page).not_to have_content user.full_name
