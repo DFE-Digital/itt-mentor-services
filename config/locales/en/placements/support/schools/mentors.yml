@@ -32,4 +32,4 @@ en:
             cancel: Cancel
             remove_mentor: Remove mentor
           destroy:
-            mentor_removed: Mentor removed
+            mentor_deleted: Mentor deleted
