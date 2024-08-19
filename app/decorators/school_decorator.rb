@@ -23,6 +23,13 @@ class SchoolDecorator < OrganisationDecorator
     "#{percentage_free_school_meals}%" if percentage_free_school_meals.present?
   end
 
+  def partner_provider_placements(provider)
+    @partner_provider_placements ||= becomes(Placements::School)
+      .placements
+      .where(provider:)
+      .decorate
+  end
+
   private
 
   def address_parts

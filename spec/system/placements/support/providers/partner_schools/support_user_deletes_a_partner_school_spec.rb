@@ -37,6 +37,38 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
     and_a_notification_email_is_sent_to(school_user)
   end
 
+  context "when the provider has placements associated with the partnership" do
+    let(:english) { create(:subject, name: "English") }
+    let(:maths) { create(:subject, name: "Mathematics") }
+    let(:science) { create(:subject, name: "Science") }
+
+    let(:placements_school) { school.becomes(Placements::School) }
+    let(:english_placement) { create(:placement, school: placements_school, provider:, subject: english) }
+    let(:maths_placement) { create(:placement, school: placements_school, provider:, subject: maths) }
+    let(:science_placement) { create(:placement, school: placements_school, provider:, subject: science) }
+
+    before do
+      english_placement
+      maths_placement
+      science_placement
+    end
+
+    scenario "Support user deletes a partner school, and see the placements listed" do
+      when_i_visit_the_partner_schools_page_for(provider:, school:)
+      and_i_click_on("Delete partner school")
+      then_i_am_asked_to_confirm_partner_school(school)
+      and_i_see_a_list_of_associated_placements_with_partner_school_and_provider
+      when_i_click_on("Cancel")
+      then_i_return_to_partner_school_page(school)
+      when_i_click_on("Delete partner school")
+      then_i_am_asked_to_confirm_partner_school(school)
+      when_i_click_on("Delete partner school")
+      then_the_partner_school_is_deleted(school)
+      and_a_partner_provider_remains_called("Another school")
+      and_a_notification_email_is_sent_to(school_user)
+    end
+  end
+
   scenario "Support user deletes a partner school, which is not onboarded on the placements service" do
     given_the_school_is_not_onboarded_on_placements_service(school)
     when_i_visit_the_partner_schools_page_for(provider:, school:)
@@ -137,5 +169,11 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
 
   def given_the_school_is_not_onboarded_on_placements_service(school)
     school.update!(placements_service: false)
+  end
+
+  def and_i_see_a_list_of_associated_placements_with_partner_school_and_provider
+    expect(page).to have_link("English (opens in new tab)")
+    expect(page).to have_link("Mathematics (opens in new tab)")
+    expect(page).to have_link("Science (opens in new tab)")
   end
 end

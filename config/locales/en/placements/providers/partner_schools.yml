@@ -27,6 +27,8 @@ en:
           delete_partner_school: Delete partner school
           are_you_sure: Are you sure you want to delete this partner school?
           school_will_no_longer: The school will no longer be able to assign you to their placements. You can still view placements at this school.
+          school_will_remain_assigned: You will remain assigned to current placements unless the school removes you.
+          you_are_currently_assigned_to: "You are currently assigned to:"
           school_will_be_sent_an_email: We will send an email to %{school_name}. This will let them know you have deleted them as a partner school for %{provider_name}.
         destroy: 
           partner_school_deleted: Partner school deleted

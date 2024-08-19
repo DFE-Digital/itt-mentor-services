@@ -6,6 +6,19 @@
 
 <%= simple_format(t(".school_will_no_longer")) %>
 
+<%= simple_format(t(".school_will_remain_assigned")) %>
+
+<% if @partner_school.partner_provider_placements(provider).any? %>
+  <p class="govuk-body"><%= t(".you_are_currently_assigned_to") %></p>
+  <ul class="govuk-list govuk-list--bullet">
+    <% @partner_school.partner_provider_placements(provider).each do |placement| %>
+      <li>
+        <%= govuk_link_to(placement.title, placements_placement_path(placement), target: "_blank", new_tab: true, no_visited_state: true) %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
 <%= render GovukComponent::WarningTextComponent.new(
   text: t(".school_will_be_sent_an_email",
     provider_name: provider.name,
