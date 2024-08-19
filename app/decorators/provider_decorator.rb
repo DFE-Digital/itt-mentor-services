@@ -4,8 +4,8 @@ class ProviderDecorator < OrganisationDecorator
     parts.join(", ")
   end
 
-  def partner_provider_placements(school)
-    @partner_provider_placements ||= becomes(Placements::Provider).placements.where(school:).decorate
+  def partner_school_placements(school)
+    @partner_school_placements ||= becomes(Placements::Provider).placements.where(school:).decorate
   end
 
   private
