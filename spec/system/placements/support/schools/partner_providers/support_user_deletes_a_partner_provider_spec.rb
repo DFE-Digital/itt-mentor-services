@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Support / Schools / Partner providers / Support user removes a partner provider",
+RSpec.describe "Placements / Support / Schools / Partner providers / Support user deletes a partner provider",
                service: :placements, type: :system do
   include ActiveJob::TestHelper
 
@@ -23,31 +23,31 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
     given_i_am_signed_in_as_a_support_user
   end
 
-  scenario "Support user removes a partner provider" do
+  scenario "Support user deletes a partner provider" do
     when_i_view_the_partner_provider_show_page_for(school:, provider:)
-    and_i_click_on("Remove partner provider")
+    and_i_click_on("Delete partner provider")
     then_i_am_asked_to_confirm_partner_provider(provider)
     when_i_click_on("Cancel")
     then_i_return_to_partner_provider_page(provider)
-    when_i_click_on("Remove partner provider")
+    when_i_click_on("Delete partner provider")
     then_i_am_asked_to_confirm_partner_provider(provider)
-    when_i_click_on("Remove partner provider")
-    then_the_partner_provider_is_removed(provider)
+    when_i_click_on("Delete partner provider")
+    then_the_partner_provider_is_deleted(provider)
     and_a_partner_provider_remains_called("Another provider")
     and_a_notification_email_is_sent_to(provider_user)
   end
 
-  scenario "Support user removes a partner provider, which is not onboarded on the placements service" do
+  scenario "Support user deletes a partner provider, which is not onboarded on the placements service" do
     given_the_provider_is_not_onboarded_on_placements_service(provider)
     when_i_view_the_partner_provider_show_page_for(school:, provider:)
-    and_i_click_on("Remove partner provider")
+    and_i_click_on("Delete partner provider")
     then_i_am_asked_to_confirm_partner_provider(provider)
     when_i_click_on("Cancel")
     then_i_return_to_partner_provider_page(provider)
-    when_i_click_on("Remove partner provider")
+    when_i_click_on("Delete partner provider")
     then_i_am_asked_to_confirm_partner_provider(provider)
-    when_i_click_on("Remove partner provider")
-    then_the_partner_provider_is_removed(provider)
+    when_i_click_on("Delete partner provider")
+    then_the_partner_provider_is_deleted(provider)
     and_a_partner_provider_remains_called("Another provider")
     and_a_notification_email_is_not_sent_to(provider_user)
   end
@@ -74,11 +74,11 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
 
   def then_i_am_asked_to_confirm_partner_provider(provider)
     expect(page).to have_title(
-      "Are you sure you want to remove this partner provider? - #{provider.name} " \
-        "- #{school.name} - Manage school placements",
+      "Are you sure you want to delete this partner provider? - #{provider.name}" \
+        " - #{school.name} - Manage school placements",
     )
     expect(page).to have_content provider.name
-    expect(page).to have_content "Are you sure you want to remove this partner provider?"
+    expect(page).to have_content "You will no longer be able to assign this provider to placements. They will remain assigned to current placements unless you delete them."
   end
 
   def then_i_return_to_partner_provider_page(provider)
@@ -86,7 +86,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
                                       ignore_query: true
   end
 
-  def then_the_partner_provider_is_removed(provider)
+  def then_the_partner_provider_is_deleted(provider)
     partner_schools_is_selected_in_secondary_nav
 
     expect(school.partner_providers.find_by(id: provider.id)).to be_nil

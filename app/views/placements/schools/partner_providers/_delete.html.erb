@@ -1,0 +1,25 @@
+<%# partner_provider:, school:, delete_link: %>
+
+<label class="govuk-label govuk-label--l">
+  <span class="govuk-caption-l"><%= partner_provider.name %></span>
+  <%= t(".are_you_sure", provider_name: partner_provider.name) %>
+</label>
+
+<%= simple_format(t(".you_will_no_longer")) %>
+
+<% if partner_provider.partner_provider_placements(school).any? %>
+  <p class="govuk-body">Placements with this provider are:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <% partner_provider.partner_provider_placements(school).each do |placement| %>
+      <li><%= govuk_link_to(placement.title, placements_school_placement_path(school, placement), target: "_blank", no_visited_state: true) %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= render GovukComponent::WarningTextComponent.new(
+  text: t(".provider_will_be_sent_an_email",
+          school_name: school.name,
+          provider_name: partner_provider.name),
+) %>
+
+<%= govuk_button_to t(".delete_partner_provider"), delete_link, warning: true, method: :delete %>
