@@ -7,12 +7,16 @@ RSpec.describe ProviderDecorator do
     let(:school) { create(:placements_school) }
     let!(:placement) { create(:placement, provider:, subject: a_subject, school:) }
 
+    before do
+      _random_placement = create(:placement)
+    end
+
     it "returns placements belonging to a partner school" do
       decorated_provider = provider.decorate
       result = decorated_provider.partner_school_placements(school)
       decorated_placement = placement.decorate
 
-      expect(result).to include(decorated_placement)
+      expect(result).to contain_exactly(decorated_placement)
     end
   end
 
