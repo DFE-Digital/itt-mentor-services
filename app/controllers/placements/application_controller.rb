@@ -1,5 +1,4 @@
 class Placements::ApplicationController < ApplicationController
-  include Pundit::Authorization
   after_action :verify_policy_scoped, only: %i[index]
   before_action :authorize_support_user!
 
