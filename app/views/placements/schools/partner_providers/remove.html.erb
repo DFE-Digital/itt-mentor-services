@@ -7,38 +7,12 @@
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <label class="govuk-label govuk-label--l">
-        <span class="govuk-caption-l"><%= @partner_provider.name %></span>
-        <%= t(".are_you_sure", provider_name: @partner_provider.name) %>
-      </label>
-
-      <%= simple_format(t(".you_will_no_longer")) %>
-
-      <% if @partner_provider.partner_school_placements(@school).any? %>
-        <p class="govuk-body"><%= t(".placements_with_provider") %></p>
-        <ul class="govuk-list govuk-list--bullet">
-          <% @partner_provider.partner_school_placements(@school).each do |placement| %>
-            <li>
-              <%= govuk_link_to(placement.title,
-              placements_school_placement_path(@school, placement),
-              target: "_blank",
-              new_tab: true,
-              no_visited_state: true) %>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
-
-      <%= render GovukComponent::WarningTextComponent.new(
-        text: t(".provider_will_be_sent_an_email",
-          school_name: @school.name,
-          provider_name: @partner_provider.name),
-      ) %>
-
-      <%= govuk_button_to t(".delete_partner_provider"), placements_school_partner_provider_path(@school, @partner_provider), warning: true, method: :delete %>
+      <%= render "delete", partner_provider: @partner_provider, school: @school,
+                           delete_link: placements_school_partner_provider_path(@school, @partner_provider) %>
 
       <p class="govuk-body">
-        <%= govuk_link_to(t(".cancel"), placements_school_partner_provider_path(@school, @partner_provider), no_visited_state: true) %>
+        <%= govuk_link_to(t(".cancel"), placements_school_partner_provider_path(@school, @partner_provider),
+                          no_visited_state: true) %>
       </p>
     </div>
   </div>
