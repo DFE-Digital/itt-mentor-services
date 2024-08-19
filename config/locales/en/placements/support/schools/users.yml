@@ -16,8 +16,5 @@ en:
           show:
             delete_user: Delete user
           remove:
-            page_title: Are you sure you want to remove this user? - %{user_name} - %{organisation_name}
-            are_you_sure: Are you sure you want to remove this user?
-            remove_user: Remove user
+            page_title: Are you sure you want to delete this user? - %{user_name} - %{organisation_name}
             cancel: Cancel
-            user_will_be_sent_an_email: The user will be sent an email to tell them you removed them from %{organisation_name}
