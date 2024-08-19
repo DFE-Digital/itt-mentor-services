@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements support user removes a user from an organisation", service: :placements, type: :system do
+RSpec.describe "Placements support user deletes a user from an organisation", service: :placements, type: :system do
   include ActiveJob::TestHelper
 
   around do |example|
@@ -15,17 +15,17 @@ RSpec.describe "Placements support user removes a user from an organisation", se
       create(:user_membership, user:, organisation: school)
     end
 
-    scenario "user is removed from a school" do
+    scenario "user is deleted from a school" do
       given_i_am_signed_in_as_a_support_user
       and_i_visit_the_user_page(school)
-      when_i_click_on("Remove user")
+      when_i_click_on("Delete user")
       then_i_am_asked_to_confirm(school)
       when_i_click_on("Cancel")
       then_i_return_to_user_page(school)
-      when_i_click_on("Remove user")
+      when_i_click_on("Delete user")
       then_i_am_asked_to_confirm(school)
-      when_i_click_on("Remove user")
-      then_the_user_is_removed_from_the_organisation(school)
+      when_i_click_on("Delete user")
+      then_the_user_is_deleted_from_the_organisation(school)
       and_email_is_sent(user.email, school)
     end
   end
@@ -38,17 +38,17 @@ RSpec.describe "Placements support user removes a user from an organisation", se
       create(:user_membership, user:, organisation: provider)
     end
 
-    scenario "user is removed from a provider" do
+    scenario "user is deleted from a provider" do
       given_i_am_signed_in_as_a_support_user
       and_i_visit_the_user_page(provider)
-      when_i_click_on("Remove user")
+      when_i_click_on("Delete user")
       then_i_am_asked_to_confirm(provider)
       when_i_click_on("Cancel")
       then_i_return_to_user_page(provider)
-      when_i_click_on("Remove user")
+      when_i_click_on("Delete user")
       then_i_am_asked_to_confirm(provider)
-      when_i_click_on("Remove user")
-      then_the_user_is_removed_from_the_organisation(provider)
+      when_i_click_on("Delete user")
+      then_the_user_is_deleted_from_the_organisation(provider)
       and_email_is_sent(user.email, provider)
     end
   end
@@ -63,19 +63,19 @@ RSpec.describe "Placements support user removes a user from an organisation", se
       create(:user_membership, user:, organisation: provider)
     end
 
-    scenario "user is removed from one organisation but when other memberships exist" do
+    scenario "user is deleted from one organisation but when other memberships exist" do
       given_i_am_signed_in_as_a_support_user
       and_i_visit_the_user_page(school)
-      when_i_remove_user_from_school
+      when_i_delete_user_from_school
       then_user_is_still_member_of_provider
     end
   end
 
   private
 
-  def when_i_remove_user_from_school
-    click_on "Remove user"
-    click_on "Remove user"
+  def when_i_delete_user_from_school
+    click_on "Delete user"
+    click_on "Delete user"
     expect(page).to have_content "User deleted"
     expect(user.user_memberships.find_by(organisation: school)).to be_nil
   end
@@ -108,11 +108,11 @@ RSpec.describe "Placements support user removes a user from an organisation", se
   def then_i_am_asked_to_confirm(organisation)
     organisations_is_selected_in_primary_nav
     expect(page).to have_title(
-      "Are you sure you want to remove this user? - #{user.full_name} - #{organisation.name} - Manage school placements",
+      "Are you sure you want to delete this user? - #{user.full_name} - #{organisation.name} - Manage school placements",
     )
     expect(page).to have_content "#{user.full_name} - #{organisation.name}"
-    expect(page).to have_content "Are you sure you want to remove this user?"
-    expect(page).to have_content "The user will be sent an email to tell them you removed them from #{organisation.name}"
+    expect(page).to have_content "Are you sure you want to delete this user?"
+    expect(page).to have_content "The user will be sent an email to tell them you deleted them from #{organisation.name}"
   end
 
   def organisations_is_selected_in_primary_nav
@@ -146,7 +146,7 @@ RSpec.describe "Placements support user removes a user from an organisation", se
     end
   end
 
-  def then_the_user_is_removed_from_the_organisation(organisation)
+  def then_the_user_is_deleted_from_the_organisation(organisation)
     organisations_is_selected_in_primary_nav
     users_is_selected_in_secondary_nav(organisation)
     expect(user.user_memberships.find_by(organisation:)).to be_nil
