@@ -29,7 +29,7 @@ class Placements::OrganisationsController < Placements::ApplicationController
   end
 
   def set_current_organisation(organisation)
-    session["current_organisation"] = { id: organisation.id, type: organisation.class.name }
+    session["current_organisation"] = { "id" => organisation.id, "type" => organisation.class.name }
   end
 
   def landing_page_path(organisation)

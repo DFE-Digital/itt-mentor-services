@@ -5,12 +5,16 @@ class Placements::ApplicationController < ApplicationController
 
   def current_user
     @current_user ||= sign_in_user&.user&.tap do |user|
-      organisation_id = session.dig("current_organisation", :id)
-      organisation_type = session.dig("current_organisation", :type)
-      current_org = user.user_memberships.find_by(organisation_id:, organisation_type:)&.organisation
-      return user unless current_org
+      organisation_id = session.dig("current_organisation", "id")
+      organisation_type = session.dig("current_organisation", "type")
+      organisation = user.user_memberships.find_by(organisation_id:, organisation_type:)&.organisation
 
-      user.current_organisation = current_org.is_a?(School) ? current_org.becomes(Placements::School) : current_org.becomes(Placements::Provider)
+      user.current_organisation = case organisation
+                                  when School
+                                    organisation.becomes(Placements::School)
+                                  when Provider
+                                    organisation.becomes(Placements::Provider)
+                                  end
     end
   end
 
