@@ -12,7 +12,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <% if policy([:placements, @user_membership]).destroy? %>
-        <%= govuk_link_to(t(".remove_user"),
+        <%= govuk_link_to(t(".delete_user"),
                     remove_placements_support_school_user_path(@school, @user),
                     no_visited_state: true,
                     class: "app-link app-link--destructive") %>
