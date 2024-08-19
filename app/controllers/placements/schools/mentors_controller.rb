@@ -10,6 +10,8 @@ class Placements::Schools::MentorsController < Placements::ApplicationController
   def show; end
 
   def remove
+    @mentor = @mentor.decorate
+
     if policy(@mentor_membership).destroy?
       render "confirm_remove"
     else
