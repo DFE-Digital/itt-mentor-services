@@ -11,8 +11,14 @@
   <ul class="govuk-list govuk-list--bullet">
     <% mentor.placements.where(school:).decorate.each do |placement| %>
       <li>
+        <% if support %>
+          <% placement_link = placements_support_school_placement_path(school, placement) %>
+        <% else %>
+          <% placement_link = placements_school_placement_path(school, placement) %>
+        <% end %>
+
         <%= govuk_link_to(placement.title,
-          placements_school_placement_path(school, placement),
+          placement_link,
           target: "_blank",
           new_tab: true,
           no_visited_state: true) %>
