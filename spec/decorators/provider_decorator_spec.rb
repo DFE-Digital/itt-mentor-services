@@ -1,20 +1,15 @@
 require "rails_helper"
 
 RSpec.describe ProviderDecorator do
-  describe "#partner_provider_placements" do
-    it "returns placements belonging to a partner provider" do
-      provider = create(:provider)
-      subject = create(:subject)
-      region = Region.create!(name: "Springfield")
-      school = Placements::School.create!(
-        name: "Springfield Elementary",
-        urn: "1234567890",
-        region:,
-      )
-      placement = Placement.create!(provider:, school:, subject:)
+  describe "#partner_school_placements" do
+    let(:provider) { create(:provider) }
+    let(:a_subject) { create(:subject) }
+    let(:school) { create(:placements_school) }
+    let!(:placement) { create(:placement, provider:, subject: a_subject, school:) }
 
+    it "returns placements belonging to a partner school" do
       decorated_provider = provider.decorate
-      result = decorated_provider.partner_provider_placements(school)
+      result = decorated_provider.partner_school_placements(school)
       decorated_placement = placement.decorate
 
       expect(result).to include(decorated_placement)
