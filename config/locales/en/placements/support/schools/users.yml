@@ -14,7 +14,7 @@ en:
           destroy:
             user_deleted: User deleted
           show:
-            remove_user: Remove user
+            delete_user: Delete user
           remove:
             page_title: Are you sure you want to remove this user? - %{user_name} - %{organisation_name}
             are_you_sure: Are you sure you want to remove this user?

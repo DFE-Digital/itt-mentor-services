@@ -13,9 +13,9 @@ en:
           user_deleted: User deleted
         remove:
           page_title: Are you sure you want to delete this user? - %{user_name}
+          cancel: Cancel
+        delete:
           are_you_sure: Are you sure you want to delete this user?
           delete_user: Delete user
-          cancel: Cancel
-          change_organisation: Change organisation
           user_will_no_longer: "%{user_name} will no longer be able to view, create or manage placements at your school."
           user_will_be_sent_an_email: The user will be sent an email to tell them you deleted them from %{organisation_name}.
