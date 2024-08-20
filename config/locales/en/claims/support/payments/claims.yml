@@ -1,0 +1,31 @@
+en:
+  claims:
+    support:
+      payments:
+        claims:
+          show:
+            page_caption: Payments - Claim %{reference}
+            provider: Accredited provider
+            unpaid_reason: "This payment was not approved because: %{reason}"
+            submitted_by: Submitted by %{name} on %{date}.
+            actions:
+              information_sent: Confirm information sent
+              reject: Reject claim
+          check_information_sent:
+            page_caption: Payments - Claim %{reference}
+            page_title: Are you sure you want to update the claim?
+            description: You confirm that you have sent the ESFA the information they requested so they can pay the claim.
+            warning: This action cannot be undone.
+            submit: Update claim
+            cancel: Cancel
+          information_sent:
+            success: Claim updated
+          check_reject:
+            page_caption: Payments - Claim %{reference}
+            page_title: Are you sure you want to reject the claim?
+            description: This will result in this claim not being paid.
+            warning: This action cannot be undone.
+            submit: Reject claim
+            cancel: Cancel
+          reject:
+            success: Claim updated

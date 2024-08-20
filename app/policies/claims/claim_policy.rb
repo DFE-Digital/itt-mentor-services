@@ -4,7 +4,7 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
   end
 
   def edit?
-    claim_claim_window_current? && !record.submitted?
+    claim_claim_window_current? && (record.internal_draft? || record.draft?)
   end
 
   def update?

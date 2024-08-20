@@ -17,7 +17,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_09_164610) do
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
-  create_enum "claim_status", ["internal_draft", "draft", "submitted", "payment_in_progress"]
+  create_enum "claim_status", ["internal_draft", "draft", "submitted", "payment_in_progress", "paid", "payment_information_requested", "payment_information_sent", "payment_not_approved"]
   create_enum "mentor_training_type", ["refresher", "initial"]
   create_enum "placement_status", ["draft", "published"]
   create_enum "placement_year_group", ["year_1", "year_2", "year_3", "year_4", "year_5", "year_6"]
@@ -81,6 +81,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_09_164610) do
     t.uuid "previous_revision_id"
     t.boolean "reviewed", default: false
     t.uuid "claim_window_id"
+    t.string "unpaid_reason"
     t.index ["claim_window_id"], name: "index_claims_on_claim_window_id"
     t.index ["created_by_type", "created_by_id"], name: "index_claims_on_created_by"
     t.index ["previous_revision_id"], name: "index_claims_on_previous_revision_id"
@@ -229,6 +230,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_09_164610) do
     t.index ["provider_id"], name: "index_partnerships_on_provider_id"
     t.index ["school_id", "provider_id"], name: "index_partnerships_on_school_id_and_provider_id", unique: true
     t.index ["school_id"], name: "index_partnerships_on_school_id"
+  end
+
+  create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "sent_by_id", null: false
+    t.string "claim_ids", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sent_by_id"], name: "index_payments_on_sent_by_id"
   end
 
   create_table "pg_search_documents", force: :cascade do |t|
@@ -457,6 +466,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_09_164610) do
   add_foreign_key "mentor_trainings", "providers"
   add_foreign_key "partnerships", "providers"
   add_foreign_key "partnerships", "schools"
+  add_foreign_key "payments", "users", column: "sent_by_id"
   add_foreign_key "placement_additional_subjects", "placements"
   add_foreign_key "placement_additional_subjects", "subjects"
   add_foreign_key "placement_mentor_joins", "mentors"

@@ -81,6 +81,7 @@ shared:
     - reviewed
     - previous_revision_id
     - claim_window_id
+    - unpaid_reason
   :schools:
     - id
     - urn
@@ -189,5 +190,11 @@ shared:
     - id
     - placement_id
     - term_id
+    - created_at
+    - updated_at
+  :payments:
+    - id
+    - sent_by_id
+    - claim_ids
     - created_at
     - updated_at
