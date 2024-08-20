@@ -78,8 +78,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_120510) do
     t.enum "status", enum_type: "claim_status"
     t.string "submitted_by_type"
     t.uuid "submitted_by_id"
-    t.boolean "reviewed", default: false
     t.uuid "previous_revision_id"
+    t.boolean "reviewed", default: false
     t.uuid "claim_window_id"
     t.index ["claim_window_id"], name: "index_claims_on_claim_window_id"
     t.index ["created_by_type", "created_by_id"], name: "index_claims_on_created_by"
@@ -279,8 +279,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_120510) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "placements_service", default: false
-    t.enum "provider_type", null: false, enum_type: "provider_type"
-    t.string "name", null: false
+    t.enum "provider_type", default: "scitt", null: false, enum_type: "provider_type"
+    t.string "name", default: "", null: false
     t.string "ukprn"
     t.string "urn"
     t.string "email_address"

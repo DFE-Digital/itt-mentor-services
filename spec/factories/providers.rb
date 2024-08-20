@@ -11,10 +11,10 @@
 #  code               :string           not null
 #  county             :string
 #  email_address      :string
-#  name               :string           not null
+#  name               :string           default(""), not null
 #  placements_service :boolean          default(FALSE)
 #  postcode           :string
-#  provider_type      :enum             not null
+#  provider_type      :enum             default("scitt"), not null
 #  telephone          :string
 #  town               :string
 #  ukprn              :string
