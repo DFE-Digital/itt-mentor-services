@@ -1,0 +1,17 @@
+en:
+  claims:
+    payment_mailer:
+      payment_created_notification:
+        subject: Claims from funding mentors service - ready for payment
+        body: |
+          Linked below is the latest CSV file from the Claim funding for mentor training service:
+
+          [%{link_to}](%{link_to})
+
+          Please review these claims and mark them as 'paid' or 'unpaid.
+
+          If the claim is 'unpaid' please use the next column to give details. These details will help our support team follow-up on questions or any further information that’s required.
+
+          Regards
+
+          %{service_name} team

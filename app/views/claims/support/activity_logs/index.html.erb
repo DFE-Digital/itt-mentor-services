@@ -1,0 +1,47 @@
+<%= render "claims/support/primary_navigation", current: :claims %>
+<%= content_for :page_title, t(".heading") %>
+
+<div class="govuk-width-container">
+  <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
+
+  <%= render "claims/support/claims/secondary_navigation" %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-m"><%= t(".sub_heading") %></h2>
+
+      <% if @activity_logs.any? %>
+        <div class="app-timeline">
+          <% @activity_logs.each do |activity_log| %>
+            <div class="app-timeline__item">
+              <div class="app-timeline__header">
+                <h3 class="app-timeline__title">
+                  <%= Claims::ActivityLog.human_attribute_name("activity.#{activity_log.activity}") %>
+                </h3>
+
+                <p class="app-timeline__byline">
+                  <%= t(".byline", user: activity_log.user.full_name, time: l(activity_log.created_at, format: :date_at_time)) %>
+                </p>
+              </div>
+
+              <div class="app-timeline__description">
+                <ul class="app-timeline__documents">
+                  <li class="app-timeline__document-item">
+                    <%= govuk_link_to "#", class: "app-timeline__document-link" do %>
+                      <%= image_tag "icon-document.svg", class: "app-timeline__document-link__icon" %>
+                      Claims sent to ESFA
+                    <% end %>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <%= render PaginationComponent.new(pagy: @pagy) %>
+      <% else %>
+        <p class="govuk-body"><%= t(".no_activity") %></p>
+      <% end %>
+    </div>
+  </div>
+</div>

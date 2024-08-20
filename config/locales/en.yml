@@ -31,3 +31,4 @@ en:
       long_with_seconds: "%e %B %Y %H:%M:%S"
       time: "%H:%M"
       time_on_date: "%l:%M%P on %A %-d %B %Y"
+      date_at_time: "%-d %B %Y at %l:%M%P"

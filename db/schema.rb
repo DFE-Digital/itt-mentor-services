@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_16_120228) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_24_145704) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
-  create_enum "claim_status", ["internal_draft", "draft", "submitted", "payment_in_progress"]
+  create_enum "claim_status", ["internal_draft", "draft", "submitted", "payment_in_progress", "paid", "payment_information_requested", "payment_information_sent", "payment_not_approved"]
   create_enum "mentor_training_type", ["refresher", "initial"]
   create_enum "placement_status", ["draft", "published"]
   create_enum "placement_year_group", ["nursery", "reception", "year_1", "year_2", "year_3", "year_4", "year_5", "year_6"]
@@ -59,6 +59,18 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_16_120228) do
     t.uuid "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "activity_logs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "activity"
+    t.enum "service", enum_type: "service"
+    t.uuid "user_id", null: false
+    t.string "record_type", null: false
+    t.uuid "record_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["record_type", "record_id"], name: "index_activity_logs_on_record"
+    t.index ["user_id"], name: "index_activity_logs_on_user_id"
   end
 
   create_table "audits", force: :cascade do |t|
@@ -109,6 +121,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_16_120228) do
     t.uuid "previous_revision_id"
     t.boolean "reviewed", default: false
     t.uuid "claim_window_id"
+    t.string "unpaid_reason"
     t.index ["claim_window_id"], name: "index_claims_on_claim_window_id"
     t.index ["created_by_type", "created_by_id"], name: "index_claims_on_created_by"
     t.index ["previous_revision_id"], name: "index_claims_on_previous_revision_id"
@@ -257,6 +270,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_16_120228) do
     t.index ["provider_id"], name: "index_partnerships_on_provider_id"
     t.index ["school_id", "provider_id"], name: "index_partnerships_on_school_id_and_provider_id", unique: true
     t.index ["school_id"], name: "index_partnerships_on_school_id"
+  end
+
+  create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "sent_by_id", null: false
+    t.string "claim_ids", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sent_by_id"], name: "index_payments_on_sent_by_id"
   end
 
   create_table "pg_search_documents", force: :cascade do |t|
@@ -477,6 +498,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_16_120228) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "activity_logs", "users"
   add_foreign_key "claim_windows", "academic_years"
   add_foreign_key "claims", "providers"
   add_foreign_key "claims", "schools"
@@ -487,6 +509,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_16_120228) do
   add_foreign_key "mentor_trainings", "providers"
   add_foreign_key "partnerships", "providers"
   add_foreign_key "partnerships", "schools"
+  add_foreign_key "payments", "users", column: "sent_by_id"
   add_foreign_key "placement_additional_subjects", "placements"
   add_foreign_key "placement_additional_subjects", "subjects"
   add_foreign_key "placement_mentor_joins", "mentors"

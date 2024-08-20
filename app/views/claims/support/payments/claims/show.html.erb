@@ -1,0 +1,37 @@
+<%= render "claims/support/primary_navigation", current: :claims %>
+<% content_for(:page_title) { @claim.school.name } %>
+
+<% content_for(:before_content) do %>
+  <%= govuk_back_link href: claims_support_payments_path %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <header>
+        <div class="govuk-caption-l"><%= t(".page_caption", reference: @claim.reference) %></div>
+        <h1 class="govuk-heading-l">
+          <%= @claim.school.name %>
+          <%= render Claim::StatusTagComponent.new(claim: @claim) %>
+        </h1>
+      </header>
+
+      <% if @claim.unpaid_reason.present? %>
+        <%= govuk_inset_text text: t(".unpaid_reason", reason: @claim.unpaid_reason) %>
+      <% end %>
+
+      <% if @claim.payment_information_requested? %>
+        <div class="govuk-button-group">
+          <%= govuk_button_link_to t(".actions.information_sent"), information_sent_claims_support_payments_claim_path(@claim) %>
+          <%= govuk_button_link_to t(".actions.reject"), reject_claims_support_payments_claim_path(@claim), secondary: true %>
+        </div>
+      <% end %>
+
+      <% if @claim.submitted_by_id? %>
+        <p class="govuk-body"><%= t(".submitted_by", name: @claim.submitted_by.full_name, date: l(@claim.submitted_on, format: :long)) %></p>
+      <% end %>
+
+      <%= render "claims/support/claims/details", claim: @claim %>
+    </div>
+  </div>
+</div>

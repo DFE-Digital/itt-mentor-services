@@ -16,13 +16,13 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
   def download_csv
     csv_data = Claims::Claim::GenerateCSV.call(claims: @filtered_claims)
 
-    send_data csv_data, filename: "claims-#{Date.current}.csv", type: "text/csv", disposition: "attachment"
+    send_data csv_data, filename: "claims-#{Time.current.iso8601}.csv", type: "text/csv", disposition: "attachment"
   end
 
   private
 
   def set_filtered_claims
-    @filtered_claims = Claims::ClaimsQuery.call(params: filter_form.query_params)
+    @filtered_claims = Claims::ClaimsQuery.call(params: filter_form.query_params.merge(query_params))
   end
 
   def filter_form
@@ -47,6 +47,10 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
       statuses: [],
       academic_year_ids: [],
     )
+  end
+
+  def query_params
+    request.query_parameters.symbolize_keys
   end
 
   def set_claim

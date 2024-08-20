@@ -139,3 +139,12 @@ shared:
     - data
     - created_at
     - updated_at
+  :activity_logs:
+    - id
+    - user_id
+    - activity
+    - record_id
+    - record_type
+    - service
+    - created_at
+    - updated_at

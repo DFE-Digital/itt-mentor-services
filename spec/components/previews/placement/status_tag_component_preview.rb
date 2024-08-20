@@ -1,4 +1,4 @@
-class Placement::SummaryComponentPreview < ApplicationComponentPreview
+class Placement::StatusTagComponentPreview < ApplicationComponentPreview
   def default
     placement = create(:placement)
 

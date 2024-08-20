@@ -8,6 +8,7 @@ class Claims::ClaimsQuery < ApplicationQuery
     scope = submitted_before(scope)
     scope = status_condition(scope)
     scope = academic_year_condition(scope)
+    scope = payment_condition(scope)
 
     scope.order_created_at_desc
   end
@@ -54,5 +55,11 @@ class Claims::ClaimsQuery < ApplicationQuery
     return scope if params[:academic_year_ids].blank?
 
     scope.where(claim_window_id: Claims::ClaimWindow.select(:id).where(academic_year_id: params[:academic_year_ids]))
+  end
+
+  def payment_condition(scope)
+    return scope if params[:payment_id].blank?
+
+    scope.where(id: Claims::Payment.find_by(id: params[:payment_id]).claim_ids)
   end
 end

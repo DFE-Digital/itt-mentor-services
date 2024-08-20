@@ -1,0 +1,34 @@
+en:
+  claims:
+    support:
+      payments:
+        index:
+          heading: Claims
+          sub_heading: Payments
+          results:
+            one: "%{count} claim needs processing"
+            other: "%{count} claims need processing"
+          send_to_esfa: Send claims to ESFA
+          upload_esfa_response: Upload ESFA response
+          no_claims: There are no claims waiting to be processed.
+        new:
+          cancel: Cancel
+        new_payment:
+          caption: Payments
+          heading: Send claims to ESFA
+          information:
+            one: There is 1 claim included in this submission.
+            other: There are %{count} claims included in this submission.
+          description: "Selecting ‘Send claims’ will:"
+          list:
+            - create a CSV containing a list of all ‘Submitted’ claims
+            - send an email to the ESFA containing a link to the generated CSV - this link expires after 7 days
+            - update the claim status from ‘Submitted’ to ‘Payment in progress’
+          disclaimer: This action cannot be undone.
+          submit: Send claims
+        no_submitted_claims:
+          caption: Payments
+          heading: There are no claims to send for payment
+          description: You cannot send any claims to the ESFA because there are no claims pending payment.
+        create:
+          success: Claims sent to ESFA
