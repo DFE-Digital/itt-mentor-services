@@ -2,6 +2,11 @@ en:
   claims:
     support:
       claims:
+        secondary_navigation:
+          claims: All claims
+          payment: Payments
+          sampling: Sampling
+          clawback: Clawback
         index:
           heading: Claims (%{count})
           download_csv: Download CSV

@@ -2,9 +2,18 @@
 <%= content_for :page_title, t(".heading", count: @pagy.count) %>
 
 <div class="govuk-width-container" data-controller="filter">
-  <h1 class="govuk-heading-l"><%= t(".heading", count: @pagy.count) %></h1>
+  <div class="app-page-header">
+    <div class="app-page-header__title">
+      <h1 class="govuk-heading-l"><%= t(".heading", count: @pagy.count) %></h1>
+    </div>
 
-  <%= govuk_link_to t(".download_csv"), download_csv_claims_support_claims_path(**request.query_parameters), class: "govuk-button", method: :get %>
+    <div class="app-page-header__actions">
+      <%= govuk_link_to t(".download_csv"), download_csv_claims_support_claims_path(**request.query_parameters), class: "govuk-button", method: :get %>
+    </div>
+  </div>
+
+  <%= render "claims/support/claims/secondary_navigation" %>
+
   <div>
     <button class="govuk-button govuk-button--secondary show-filter-button" type="button" data-action="click->filter#open"><%= t("show_filter") %></button>
   </div>

@@ -1,0 +1,16 @@
+en:
+  claims:
+    support:
+      claims:
+        payments:
+          show:
+            heading: Payments
+            steps:
+              - Download a CSV of all submitted claims.
+              - Send the CSV from step one to ESFA.
+              - Once ESFA have completed payments, they will return the CSV with successfully paid claims marked as "Paid".
+              - When ESFA return the CSV, upload it here.
+              - The CSV will the payments to the payments tab.
+            labels:
+              file: Upload a CSV
+            submit: Save and continue

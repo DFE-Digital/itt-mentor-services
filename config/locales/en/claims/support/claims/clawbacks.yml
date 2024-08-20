@@ -1,0 +1,14 @@
+en:
+  claims:
+    support:
+      claims:
+        clawbacks:
+          show:
+            heading: Clawback
+            steps:
+              - Fetch the download CSV of sample claims.
+              - Upload it.
+              - Do we need any other instructions for the user here?
+            labels:
+              file: Upload a CSV
+            submit: Save and continue

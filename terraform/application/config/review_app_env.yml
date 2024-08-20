@@ -15,3 +15,6 @@ SIGN_IN_METHOD: persona
 BIGQUERY_TABLE_NAME: events
 BIGQUERY_PROJECT_ID: rugged-abacus-218110
 BIGQUERY_DATASET: itt_mentor_events_qa
+
+# ENV feature flags
+FEATURE_FLAG_CLAIMS_TABS: true

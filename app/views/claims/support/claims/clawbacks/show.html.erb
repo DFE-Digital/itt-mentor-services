@@ -1,0 +1,24 @@
+<%= render "claims/support/primary_navigation", current: :claims %>
+<%= content_for :page_title, t(".heading") %>
+
+<div class="govuk-width-container" data-controller="filter">
+  <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
+
+  <%= render "claims/support/claims/secondary_navigation" %>
+
+  <% if @claims.any? %>
+    List of Claims and filters
+  <% else %>
+    <%= form_with url: claims_support_claims_clawback_path do |f| %>
+      <%= govuk_list type: :number do |list| %>
+        <% t(".steps").each do |step| %>
+          <%= tag.li step %>
+        <% end %>
+      <% end %>
+
+      <%= f.govuk_file_field :file, label: { text: t(".labels.file") } %>
+
+      <%= f.govuk_submit t(".submit") %>
+    <% end %>
+  <% end %>
+</div>

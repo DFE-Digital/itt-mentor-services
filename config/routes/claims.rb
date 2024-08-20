@@ -62,6 +62,14 @@ scope module: :claims, as: :claims, constraints: {
 
     resources :claims, only: %i[index show] do
       get :download_csv, on: :collection
+
+      if ENV["FEATURE_FLAG_CLAIMS_TABS"] == "true"
+        collection do
+          resource :payment, only: %i[show create], module: :claims, as: :claims_payment
+          resource :sampling, only: %i[show create], module: :claims, as: :claims_sampling
+          resource :clawback, only: %i[show create], module: :claims, as: :claims_clawback
+        end
+      end
     end
 
     resources :support_users, path: "support-users" do

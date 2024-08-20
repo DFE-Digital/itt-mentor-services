@@ -1,0 +1,8 @@
+<% if ENV["FEATURE_FLAG_CLAIMS_TABS"] == "true" %>
+  <%= render SecondaryNavigationComponent.new do |component| %>
+    <% component.with_navigation_item t(".claims"), claims_support_claims_path %>
+    <% component.with_navigation_item t(".payment"), claims_support_claims_payment_path %>
+    <% component.with_navigation_item t(".sampling"), claims_support_claims_sampling_path %>
+    <% component.with_navigation_item t(".clawback"), claims_support_claims_clawback_path %>
+  <% end %>
+<% end %>
