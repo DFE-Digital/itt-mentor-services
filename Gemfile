@@ -111,7 +111,7 @@ gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.14.0"
 gem "strong_migrations"
 
 # Data Migrate [https://github.com/ilyakatz/data-migrate]
-gem "data_migrate", "~> 9.4"
+gem "data_migrate", "9.4.2"
 
 # OK Computer [https://github.com/sportngin/okcomputer]
 gem "okcomputer"
