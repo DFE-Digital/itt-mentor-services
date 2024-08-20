@@ -1,0 +1,5 @@
+<%= render SecondaryNavigationComponent.new do |component| %>
+  <% component.with_navigation_item t(".claims"), claims_support_claims_path, current: local_assigns[:current] == :claims %>
+  <% component.with_navigation_item t(".payments"), claims_support_claims_payments_path, current: local_assigns[:current] == :payments %>
+  <% component.with_navigation_item t(".activity_log"), claims_support_claims_activity_logs_path, current: local_assigns[:current] == :activity_log %>
+<% end %>

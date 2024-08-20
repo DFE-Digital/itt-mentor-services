@@ -9,6 +9,7 @@
 #  status               :enum
 #  submitted_at         :datetime
 #  submitted_by_type    :string
+#  unpaid_reason        :string
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  claim_window_id      :uuid
@@ -71,6 +72,10 @@ class Claims::Claim < ApplicationRecord
          draft: "draft",
          submitted: "submitted",
          payment_in_progress: "payment_in_progress",
+         paid: "paid",
+         payment_information_requested: "payment_information_requested",
+         payment_information_sent: "payment_information_sent",
+         payment_not_approved: "payment_not_approved",
        },
        validate: true
 
@@ -117,6 +122,10 @@ class Claims::Claim < ApplicationRecord
     claim_record = claim_record.previous_revision while claim_record.present? && !claim_record.draft?
 
     claim_record.nil? ? false : claim_record.draft?
+  end
+
+  def self.policy_class
+    "ClaimPolicy"
   end
 
   private

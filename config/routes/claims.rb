@@ -13,6 +13,12 @@ scope module: :claims, as: :claims, constraints: {
 
   resources :service_updates, path: "service-updates", only: %i[index show]
 
+  namespace :payments do
+    resources :claims, only: [] do
+      get :download, on: :collection
+    end
+  end
+
   resources :schools, only: %i[index show] do
     scope module: :schools do
       resources :claims do
@@ -58,6 +64,24 @@ scope module: :claims, as: :claims, constraints: {
       resource :database, only: %i[destroy] do
         get :reset
       end
+    end
+
+    namespace :claims do
+      resources :activity_logs, only: %i[index show]
+
+      namespace :payments do
+        resources :confirmations, only: %i[new create]
+        resources :claims, only: %i[show] do
+          member do
+            get :check_information_sent, path: "information-sent"
+            put :information_sent, path: "information-sent"
+            get :check_reject, path: "reject"
+            put :reject
+          end
+        end
+      end
+
+      resources :payments, only: %i[index new create]
     end
 
     resources :claims, only: %i[index show] do

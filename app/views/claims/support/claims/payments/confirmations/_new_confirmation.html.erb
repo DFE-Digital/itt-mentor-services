@@ -1,0 +1,7 @@
+<span class="govuk-caption-l"><%= t(".caption") %></span>
+<h1 class="govuk-heading-l"><%= t(".heading") %></h1>
+
+<%= form_with url: claims_support_payments_confirmations_path do |f| %>
+  <%= f.govuk_file_field :file, label: { text: t(".label") }, accept: "text/csv" %>
+  <%= f.govuk_submit t(".submit") %>
+<% end %>

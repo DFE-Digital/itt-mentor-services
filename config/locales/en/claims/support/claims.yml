@@ -2,8 +2,13 @@ en:
   claims:
     support:
       claims:
+        secondary_navigation:
+          claims: All claims
+          payments: Payments
+          activity_log: Activity log
         index:
-          heading: Claims (%{count})
+          heading: Claims
+          sub_heading: All claims
           download_csv: Download CSV
           search_label: Search by claim reference
           school: School
@@ -22,10 +27,6 @@ en:
         show:
           page_caption: Claim %{reference}
           page_title: "%{school_name} - Claim %{reference}"
-          status: Status
-          provider: Accredited provider
-          mentor_with_index: Mentor %{index}
-          mentor: Mentor
           submitted_by: Submitted by %{name} on %{date}.
         details:
           hour: hour

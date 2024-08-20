@@ -1,0 +1,250 @@
+<div data-controller="filter">
+  <div>
+    <button class="govuk-button govuk-button--secondary show-filter-button" type="button" data-action="click->filter#open"><%= t("show_filter") %></button>
+  </div>
+
+  <%= form_with(
+    model: filter_form,
+    url: request.original_url,
+    method: "get",
+    builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+  ) do |form| %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-third">
+        <div class="app-filter-layout display-none-on-mobile " data-filter-target="filter">
+          <div class="app-filter-layout__filter">
+            <div class="app-filter__header">
+              <div class="app-filter__header-title">
+                <h2 class="govuk-heading-m"><%= t("filter") %></h2>
+              </div>
+              <div class="app-filter__header-action">
+                <button class="app-filter__close" type="button" data-action="click->filter#close"><%= t("close") %></button>
+              </div>
+            </div>
+
+            <div class="app-filter-layout__content">
+              <% if filter_form.filters_selected? %>
+                <div class="app-filter-layout__selected">
+                  <div class="app-filter__selected-heading">
+                    <div class="app-filter__heading-title">
+                      <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><%= t("selected_filters") %></h2>
+                      <p class="govuk-body">
+                        <%= govuk_link_to(
+                          t("clear_filters"),
+                          filter_form.clear_filters_path,
+                          no_visited_state: true,
+                        ) %>
+                      </p>
+                    </div>
+                  </div>
+
+                  <% if filter_form.academic_year_ids.present? %>
+                    <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.academic_year") %></h3>
+                    <ul class="app-filter-tags">
+                      <% filter_form.academic_years.each do |academic_year| %>
+                        <li>
+                          <%= govuk_link_to(
+                            academic_year.name,
+                            filter_form.index_path_without_filter(filter: "academic_year_ids", value: academic_year.id),
+                            class: "app-filter__tag",
+                            no_visited_state: true,
+                          ) %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  <% end %>
+
+                  <% if filter_form.statuses.present? %>
+                    <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.status") %></h3>
+                    <ul class="app-filter-tags">
+                      <% filter_form.statuses.each do |status| %>
+                        <li>
+                        <%= govuk_link_to(
+                          status.humanize,
+                          filter_form.index_path_without_filter(filter: "statuses", value: status),
+                          class: "app-filter__tag",
+                          no_visited_state: true,
+                        ) %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  <% end %>
+
+                  <% if filter_form.school_ids.present? %>
+                    <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.school") %></h3>
+                    <ul class="app-filter-tags">
+                      <% filter_form.schools.each do |school| %>
+                        <li>
+                        <%= govuk_link_to(
+                          school.name,
+                          filter_form.index_path_without_filter(filter: "school_ids", value: school.id),
+                          class: "app-filter__tag",
+                          no_visited_state: true,
+                        ) %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  <% end %>
+
+                  <% if filter_form.provider_ids.present? %>
+                    <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.accredited_provider") %></h3>
+                    <ul class="app-filter-tags">
+                      <% filter_form.providers.each do |provider| %>
+                        <li>
+                        <%= govuk_link_to(
+                          provider.name,
+                          filter_form.index_path_without_filter(filter: "provider_ids", value: provider.id),
+                          class: "app-filter__tag",
+                          no_visited_state: true,
+                        ) %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  <% end %>
+
+                  <% if filter_form.submitted_after.present? %>
+                    <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.submitted_after") %></h3>
+                    <%= govuk_link_to(
+                      safe_l(filter_form.submitted_after, format: :short),
+                      filter_form.index_path_without_submitted_dates("submitted_after"),
+                      class: "app-filter__tag",
+                      no_visited_state: true,
+                    ) %>
+                  <% end %>
+
+                  <% if filter_form.submitted_before.present? %>
+                    <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.submitted_before") %></h3>
+                    <%= govuk_link_to(
+                      safe_l(filter_form.submitted_before, format: :short),
+                      filter_form.index_path_without_submitted_dates("submitted_before"),
+                      class: "app-filter__tag",
+                      no_visited_state: true,
+                    ) %>
+                  <% end %>
+                </div>
+              <% end %>
+
+              <div class="app-filter__options">
+                <%= form.govuk_submit t("apply_filters") %>
+
+                <%= form.hidden_field :search, value: filter_form.search %>
+
+                <% if @academic_years.many? %>
+                  <div class="app-filter__option">
+                    <%= form.govuk_check_boxes_fieldset(
+                      :academic_year_ids,
+                      legend: {
+                        text: t("claims.support.claims.index.academic_year"),
+                        size: "s",
+                      },
+                      small: true,
+                    ) do %>
+                      <% @academic_years.each do |academic_year| %>
+                        <%= form.govuk_check_box :academic_year_ids, academic_year.id, label: { text: academic_year.name } %>
+                      <% end %>
+                    <% end %>
+                  </div>
+                <% end %>
+
+                <div class="app-filter__option">
+                  <%= form.govuk_check_boxes_fieldset(
+                    :school_ids,
+                    legend: {
+                      text: t("claims.support.claims.index.status"),
+                      size: "s",
+                    },
+                    small: true,
+                  ) do %>
+
+                    <% @statuses.each do |status| %>
+                      <%= form.govuk_check_box :statuses, status, label: { text: status.humanize } %>
+                    <% end %>
+                  <% end %>
+                </div>
+
+                <div class="app-filter__option" data-controller="filter-search">
+                  <%= form.govuk_check_boxes_fieldset(
+                    :school_ids,
+                    legend: {
+                      text: t("claims.support.claims.index.school"),
+                      size: "s",
+                    },
+                    small: true,
+                  ) do %>
+
+                    <% @schools.find_each do |school| %>
+                      <%= form.govuk_check_box :school_ids, school.id, label: { text: school.name } %>
+                    <% end %>
+                  <% end %>
+                </div>
+
+                <div class="app-filter__option" data-controller="filter-search">
+                  <%= form.govuk_check_boxes_fieldset(
+                    :provider_ids,
+                    legend: {
+                      text: t("claims.support.claims.index.provider"),
+                      size: "s",
+                    },
+                    small: true,
+                  ) do %>
+                    <% @providers.each do |provider| %>
+                      <%= form.govuk_check_box :provider_ids, provider.id, label: { text: provider.name } %>
+                    <% end %>
+                  <% end %>
+                </div>
+
+                <div class="app-filter__option">
+                  <%= form.govuk_date_field(
+                    :submitted_after,
+                    date_of_birth: true,
+                    maxlength_enabled: true,
+                    legend: { text: t("claims.support.claims.index.submitted_after"), size: "s" },
+                    hint: { text: t("claims.support.claims.index.submitted_after_hint"), size: "s" },
+                  ) %>
+                </div>
+
+                <div class="app-filter__option">
+                  <%= form.govuk_date_field(
+                    :submitted_before,
+                    maxlength_enabled: true,
+                    legend: { text: t("claims.support.claims.index.submitted_before"), size: "s" },
+                    hint: { text: t("claims.support.claims.index.submitted_before_hint"), size: "s" },
+                  ) %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-form-group search-form">
+          <%= form.govuk_text_field :search, type: :search, value: filter_form.search, label: { text: t(".search_label"), size: "s" } %>
+          <%= form.govuk_submit t(".submit") %>
+
+          <% filter_form.attributes.except("search", "school_ids", "provider_ids", "academic_year_ids").each do |key, value| %>
+            <%= form.hidden_field key, value: %>
+          <% end %>
+
+          <% filter_form.school_ids.each do |school_id| %>
+            <%= form.hidden_field :school_ids, value: school_id, multiple: true %>
+          <% end %>
+
+          <% filter_form.provider_ids.each do |provider_id| %>
+            <%= form.hidden_field :provider_ids, value: provider_id, multiple: true %>
+          <% end %>
+        </div>
+
+        <% unless filter_form.search.blank? %>
+          <p class="clear-search">
+            <%= govuk_link_to t(".clear"), filter_form.clear_search_path, no_visited_state: true %>
+          </p>
+        <% end %>
+
+        <div class="govuk-section-break govuk-section-break--m govuk-section-break--visible"></div>
+
+        <%= content %>
+      </div>
+    </div>
+  <% end %>
+</div>

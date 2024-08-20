@@ -1,0 +1,6 @@
+en:
+  components:
+    claims:
+      activity_log:
+        timeline_item_component:
+          byline: "%{user} on %{time}"

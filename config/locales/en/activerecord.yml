@@ -15,6 +15,8 @@ en:
         window: Claim window
         starts_on: Window opens
         ends_on: Window closes
+      activity_log/activity:
+        payment_delivered: Claims sent to ESFA for payment
 
     errors:
       models:

@@ -1,0 +1,24 @@
+<div class="app-timeline__item">
+  <div class="app-timeline__header">
+    <h3 class="app-timeline__title">
+      <%= Claims::ActivityLog.human_attribute_name("activity.#{activity_log.activity}") %>
+    </h3>
+
+    <p class="app-timeline__byline">
+      <%= t(".byline", user: activity_log.user.full_name, time: l(activity_log.created_at, format: :date_at_time)) %>
+    </p>
+  </div>
+
+  <div class="app-timeline__description">
+    <ul class="app-timeline__documents">
+      <% attachments.each do |attachment| %>
+        <li class="app-timeline__document-item">
+          <%= govuk_link_to attachment, class: "app-timeline__document-link" do %>
+            <%= image_tag "icon-document.svg", class: "app-timeline__document-link__icon" %>
+            Claims sent to ESFA
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

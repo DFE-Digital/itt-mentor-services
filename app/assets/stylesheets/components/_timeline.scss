@@ -1,0 +1,108 @@
+.app-timeline {
+  margin-bottom: govuk-spacing(4);
+  // overflow: hidden;
+  position: relative;
+
+  &:before {
+    background-color: govuk-colour("blue");
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: govuk-spacing(2);
+    width: 5px;
+  }
+}
+
+.app-timeline--full {
+  margin-bottom: 0;
+  &:before {
+    height: calc(100% - 75px);
+  }
+}
+
+.app-timeline__item {
+  padding-bottom: govuk-spacing(6);
+  padding-left: govuk-spacing(4);
+  position: relative;
+
+  &:before {
+    background-color: govuk-colour("blue");
+    content: "";
+    height: 5px;
+    left: 0;
+    position: absolute;
+    top: govuk-spacing(2);
+    width: 15px;
+  }
+}
+
+.app-timeline__item:last-child {
+  &:after {
+    background-color: govuk-colour("blue");
+    content: "";
+    height: 5px;
+    left: -5px;
+    position: absolute;
+    bottom: -10px;
+    width: 15px;
+  }
+}
+
+.app-timeline__title {
+  @include govuk-font($size: 19, $weight: bold);
+  display: inline;
+}
+
+.app-timeline__byline {
+  @include govuk-font($size: 19);
+  color: $govuk-secondary-text-colour;
+  // display: inline;
+  margin: 0;
+}
+
+.app-timeline__date {
+  @include govuk-font($size: 16);
+  margin-top: govuk-spacing(1);
+  margin-bottom: 0;
+}
+
+.app-timeline__description {
+  @include govuk-font($size: 19);
+  margin-top: govuk-spacing(4);
+}
+
+/* ==========================================================================
+   #TIMELINE DOCUMENT STYLES – FOR BACKWARDS COMPATIBILITY
+   ========================================================================== */
+
+.app-timeline__documents {
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+.app-timeline__document-item {
+  margin-bottom: govuk-spacing(1);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.app-timeline__document-link {
+  display: flex;
+  align-items: flex-start;
+  gap: govuk-spacing(1);
+
+  &:focus {
+    color: govuk-colour("black");
+  }
+
+  &__icon {
+    display: block;
+    width: 20px;
+    height: 16px;
+    padding-top: govuk-spacing(1);
+  }
+}
