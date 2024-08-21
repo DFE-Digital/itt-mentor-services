@@ -1,17 +1,18 @@
-<%# partner_provider:, school:, delete_link: %>
+<%# partner_provider:, school:, caption:, delete_link: %>
 
 <label class="govuk-label govuk-label--l">
-  <span class="govuk-caption-l"><%= partner_provider.name %></span>
+  <span class="govuk-caption-l"><%= caption %></span>
   <%= t(".are_you_sure", provider_name: partner_provider.name) %>
 </label>
 
 <%= simple_format(t(".you_will_no_longer")) %>
 
 <% if school.partner_provider_placements(partner_provider).any? %>
-  <p class="govuk-body">Placements with this provider are:</p>
+  <p class="govuk-body"><%= t(".placements_with_provider") %></p>
   <ul class="govuk-list govuk-list--bullet">
     <% school.partner_provider_placements(partner_provider).each do |placement| %>
-      <li><%= govuk_link_to(placement.title, placements_school_placement_path(school, placement), target: "_blank", no_visited_state: true) %></li>
+      <li><%= govuk_link_to(placement.title, placements_school_placement_path(school, placement), target: "_blank",
+                                                                                                  new_tab: true, no_visited_state: true) %></li>
     <% end %>
   </ul>
 <% end %>
