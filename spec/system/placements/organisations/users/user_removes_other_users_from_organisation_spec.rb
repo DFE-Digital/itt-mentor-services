@@ -11,7 +11,7 @@ RSpec.describe "Placements support user removes a user from an organisation", se
     let(:school) { create(:placements_school) }
     let(:anne) { create(:placements_user, :anne) }
     let(:mary) { create(:placements_user, :mary) }
-    let(:success_message) { "User removed" }
+    let(:success_message) { "User deleted" }
 
     before do
       [anne, mary].each do |user|
@@ -19,7 +19,7 @@ RSpec.describe "Placements support user removes a user from an organisation", se
       end
     end
 
-    scenario "user is removed from a school" do
+    scenario "user is deleted from a school" do
       given_i_am_signed_in_as_mary
       and_i_visit_the_user_page(anne)
       when_i_click_on("Delete user")
@@ -29,7 +29,7 @@ RSpec.describe "Placements support user removes a user from an organisation", se
       when_i_click_on("Delete user")
       then_i_am_asked_to_confirm(anne, school)
       when_i_click_on("Delete user")
-      then_the_the_user_is_removed_from_the_organisation(anne, school)
+      then_the_the_user_is_deleted_from_the_organisation(anne, school)
       and_message_is_sent_to_user(anne, school)
     end
 
@@ -52,7 +52,7 @@ RSpec.describe "Placements support user removes a user from an organisation", se
       end
     end
 
-    scenario "user is removed from a provider" do
+    scenario "user is deleted from a provider" do
       given_i_am_signed_in_as_mary
       and_i_visit_the_user_page(anne)
       when_i_click_on("Delete user")
@@ -62,7 +62,7 @@ RSpec.describe "Placements support user removes a user from an organisation", se
       when_i_click_on("Delete user")
       then_i_am_asked_to_confirm(anne, provider)
       when_i_click_on("Delete user")
-      then_the_the_user_is_removed_from_the_organisation(anne, provider)
+      then_the_the_user_is_deleted_from_the_organisation(anne, provider)
       and_message_is_sent_to_user(anne, provider)
     end
 
@@ -167,7 +167,7 @@ RSpec.describe "Placements support user removes a user from an organisation", se
     end
   end
 
-  def then_the_the_user_is_removed_from_the_organisation(user, organisation)
+  def then_the_the_user_is_deleted_from_the_organisation(user, organisation)
     case organisation
     when School
       users_is_selected_in_schools_primary_nav

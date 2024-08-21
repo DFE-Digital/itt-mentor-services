@@ -156,7 +156,7 @@ RSpec.describe "Placements support user deletes a user from an organisation", se
     end
   end
 
-  def then_the_user_is_deleted_from_the_organisation(organisation, message: "User removed")
+  def then_the_user_is_deleted_from_the_organisation(organisation, message: "User deleted")
     organisations_is_selected_in_primary_nav
     users_is_selected_in_secondary_nav(organisation)
     expect(user.user_memberships.find_by(organisation:)).to be_nil

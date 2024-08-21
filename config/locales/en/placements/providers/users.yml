@@ -10,7 +10,7 @@ en:
           change_organisation: Change organisation
           delete_user: Delete user
         destroy:
-          user_removed: User deleted
+          user_deleted: User deleted
         remove:
           page_title: Are you sure you want to delete this user? - %{user_name}
           cancel: Cancel
