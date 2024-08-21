@@ -8,6 +8,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= render "delete", partner_provider: @partner_provider, school: @school.decorate,
+                           caption: t(".caption", provider_name: @partner_provider.name),
                            delete_link: placements_school_partner_provider_path(@school, @partner_provider) %>
 
       <p class="govuk-body">
