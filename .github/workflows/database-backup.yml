@@ -51,13 +51,14 @@ jobs:
         echo "RESOURCE_GROUP_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg" >> $GITHUB_ENV
         echo "STORAGE_ACCOUNT_NAME=${AZURE_RESOURCE_PREFIX}${SERVICE_SHORT}dbbkp${CONFIG_SHORT}sa" >> $GITHUB_ENV
         TODAY=$(date +"%F")
-        echo "BACKUP_FILE=${SERVICE_SHORT}_${CONFIG_SHORT}_${TODAY}.sql" >> $GITHUB_ENV
+        echo "BACKUP_FILE=${SERVICE_SHORT}_${CONFIG_SHORT}_${TODAY}" >> $GITHUB_ENV
         echo "DB_SERVER=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-pg" >> $GITHUB_ENV
 
     - name: Set PTR variables
       if: ${{ github.event.inputs.PTRdatabase == 'true' }}
       run: |
-        echo "PTR_DB_SERVER=${{ env.DB_SERVER }}-PTR" >> $GITHUB_ENV
+        echo "PTR_DB_SERVER=${{ env.DB_SERVER }}-ptr" >> $GITHUB_ENV
+        echo "BACKUP_FILE=${{ env.BACKUP_FILE }}-ptr" >> $GITHUB_ENV
 
     - name: Backup ${{ env.DEPLOY_ENV }} postgres
       uses: DFE-Digital/github-actions/backup-postgres@master
@@ -67,5 +68,5 @@ jobs:
         app-name: ${{ env.SERVICE_NAME }}-${{ env.DEPLOY_ENV }}
         cluster: ${{ env.CLUSTER }}
         azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
-        backup-file: ${{ env.BACKUP_FILE }}
+        backup-file: ${{ env.BACKUP_FILE }}.sql
         ptr-db-server-name: ${{ env.PTR_DB_SERVER }}
