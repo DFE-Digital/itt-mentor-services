@@ -2,23 +2,26 @@
 #
 # Table name: placements
 #
-#  id          :uuid             not null, primary key
-#  year_group  :enum
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  provider_id :uuid
-#  school_id   :uuid
-#  subject_id  :uuid
+#  id               :uuid             not null, primary key
+#  year_group       :enum
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  academic_year_id :uuid             not null
+#  provider_id      :uuid
+#  school_id        :uuid
+#  subject_id       :uuid
 #
 # Indexes
 #
-#  index_placements_on_provider_id  (provider_id)
-#  index_placements_on_school_id    (school_id)
-#  index_placements_on_subject_id   (subject_id)
-#  index_placements_on_year_group   (year_group)
+#  index_placements_on_academic_year_id  (academic_year_id)
+#  index_placements_on_provider_id       (provider_id)
+#  index_placements_on_school_id         (school_id)
+#  index_placements_on_subject_id        (subject_id)
+#  index_placements_on_year_group        (year_group)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (academic_year_id => academic_years.id)
 #  fk_rails_...  (provider_id => providers.id)
 #  fk_rails_...  (school_id => schools.id)
 #  fk_rails_...  (subject_id => subjects.id)
@@ -30,8 +33,9 @@ class Placement < ApplicationRecord
   has_many :placement_additional_subjects, class_name: "Placements::PlacementAdditionalSubject", dependent: :destroy
   has_many :additional_subjects, through: :placement_additional_subjects, source: :subject
 
+  belongs_to :academic_year, class_name: "Placements::AcademicYear"
   belongs_to :school, class_name: "Placements::School"
-  belongs_to :provider, optional: true, class_name: "::Provider"
+  belongs_to :provider, class_name: "::Provider", optional: true
   belongs_to :subject, class_name: "::Subject"
 
   accepts_nested_attributes_for :mentors, allow_destroy: true

@@ -2,23 +2,26 @@
 #
 # Table name: placements
 #
-#  id          :uuid             not null, primary key
-#  year_group  :enum
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  provider_id :uuid
-#  school_id   :uuid
-#  subject_id  :uuid
+#  id               :uuid             not null, primary key
+#  year_group       :enum
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  academic_year_id :uuid             not null
+#  provider_id      :uuid
+#  school_id        :uuid
+#  subject_id       :uuid
 #
 # Indexes
 #
-#  index_placements_on_provider_id  (provider_id)
-#  index_placements_on_school_id    (school_id)
-#  index_placements_on_subject_id   (subject_id)
-#  index_placements_on_year_group   (year_group)
+#  index_placements_on_academic_year_id  (academic_year_id)
+#  index_placements_on_provider_id       (provider_id)
+#  index_placements_on_school_id         (school_id)
+#  index_placements_on_subject_id        (subject_id)
+#  index_placements_on_year_group        (year_group)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (academic_year_id => academic_years.id)
 #  fk_rails_...  (provider_id => providers.id)
 #  fk_rails_...  (school_id => schools.id)
 #  fk_rails_...  (subject_id => subjects.id)
@@ -33,9 +36,10 @@ RSpec.describe Placement, type: :model do
     it { is_expected.to have_many(:placement_additional_subjects).class_name("Placements::PlacementAdditionalSubject").dependent(:destroy) }
     it { is_expected.to have_many(:additional_subjects).through(:placement_additional_subjects).class_name("Subject") }
 
-    it { is_expected.to belong_to(:school) }
-    it { is_expected.to belong_to(:provider).optional }
-    it { is_expected.to belong_to(:subject) }
+    it { is_expected.to belong_to(:academic_year).class_name("Placements::AcademicYear") }
+    it { is_expected.to belong_to(:school).class_name("Placements::School") }
+    it { is_expected.to belong_to(:provider).class_name("::Provider").optional }
+    it { is_expected.to belong_to(:subject).class_name("::Subject") }
   end
 
   describe "validations" do
