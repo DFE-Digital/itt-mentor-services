@@ -1,6 +1,6 @@
 class BackfillPlacementsAcademicYear < ActiveRecord::Migration[7.1]
   def up
-    Placement.update_all(academic_year_id: Placements::AcademicYear.current_academic_year.id)
+    Placement.update_all(academic_year_id: Placements::AcademicYear.current.id)
   end
 
   def down
