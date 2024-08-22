@@ -268,7 +268,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_22_141750) do
     t.uuid "provider_id"
     t.uuid "subject_id"
     t.enum "year_group", enum_type: "placement_year_group"
-    t.uuid "academic_year_id"
+    t.uuid "academic_year_id", null: false
     t.index ["academic_year_id"], name: "index_placements_on_academic_year_id"
     t.index ["provider_id"], name: "index_placements_on_provider_id"
     t.index ["school_id"], name: "index_placements_on_school_id"
