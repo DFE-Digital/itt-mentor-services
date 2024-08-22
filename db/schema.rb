@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_22_141750) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_22_150613) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -448,6 +448,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_22_141750) do
   add_foreign_key "placement_additional_subjects", "subjects"
   add_foreign_key "placement_mentor_joins", "mentors"
   add_foreign_key "placement_mentor_joins", "placements"
+  add_foreign_key "placements", "academic_years"
   add_foreign_key "placements", "providers"
   add_foreign_key "placements", "schools"
   add_foreign_key "placements", "subjects"
