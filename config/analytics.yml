@@ -158,6 +158,7 @@ shared:
     - updated_at
     - provider_id
     - year_group
+    - academic_year_id
   :school_contacts:
     - id
     - school_id
