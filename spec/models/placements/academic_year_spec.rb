@@ -12,8 +12,12 @@
 require "rails_helper"
 
 RSpec.describe Placements::AcademicYear, type: :model do
+  describe "associations" do
+    it { is_expected.to have_many(:placements) }
+  end
+
   describe ".current" do
-    let!(:current_academic_year) { create(:placements_academic_year, :current) }
+    let!(:current_academic_year) { create(:placements_academic_year) }
 
     it "returns the academic year for the current date" do
       expect(described_class.current).to eq(current_academic_year)

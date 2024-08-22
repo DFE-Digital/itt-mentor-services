@@ -10,6 +10,8 @@
 #  updated_at :datetime         not null
 #
 class Placements::AcademicYear < AcademicYear
+  has_many :placements
+
   def self.current
     for_date(Date.current)
   end
