@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_22_120510) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_22_141750) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -268,6 +268,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_120510) do
     t.uuid "provider_id"
     t.uuid "subject_id"
     t.enum "year_group", enum_type: "placement_year_group"
+    t.uuid "academic_year_id"
+    t.index ["academic_year_id"], name: "index_placements_on_academic_year_id"
     t.index ["provider_id"], name: "index_placements_on_provider_id"
     t.index ["school_id"], name: "index_placements_on_school_id"
     t.index ["subject_id"], name: "index_placements_on_subject_id"
