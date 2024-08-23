@@ -8,8 +8,7 @@
 #  updated_at :datetime         not null
 #
 class Placements::Term < ApplicationRecord
-  VALID_NAMES = ["Summer term", "Spring term", "Autumn term", "Any time in the academic year"].freeze
-  private_constant :VALID_NAMES
+  VALID_NAMES = ["Summer term", "Spring term", "Autumn term"].freeze
 
   validates :name, presence: true, inclusion: { in: VALID_NAMES }
 end
