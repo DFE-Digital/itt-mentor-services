@@ -99,6 +99,10 @@ Claims::ClaimWindow.find_or_create_by!(
   academic_year: current_academic_year,
 )
 
+Placements::Term::VALID_NAMES.each do |term_name|
+  Placements::Term.find_or_create_by!(name: term_name)
+end
+
 # Create placements
 Placements::School.find_each do |school|
   # A school must have a school contact before creating placements
