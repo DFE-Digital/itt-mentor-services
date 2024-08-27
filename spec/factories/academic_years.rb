@@ -17,4 +17,12 @@ FactoryBot.define do
       name { "#{starts_on.year} to #{ends_on.year}" }
     end
   end
+
+  factory :placements_academic_year, class: "Placements::AcademicYear", parent: :academic_year do
+    trait :current do
+      starts_on { Date.parse("1 September #{Date.current.year - 1}") }
+      ends_on { Date.parse("31 August #{Date.current.year}") }
+      name { "#{starts_on.year} to #{ends_on.year}" }
+    end
+  end
 end
