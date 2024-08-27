@@ -11,4 +11,7 @@ class Placements::Term < ApplicationRecord
   VALID_NAMES = ["Summer term", "Spring term", "Autumn term"].freeze
 
   validates :name, presence: true, inclusion: { in: VALID_NAMES }
+
+  has_many :placement_windows, class_name: "Placements::PlacementWindow"
+  has_many :placements, through: :placement_windows
 end
