@@ -4,6 +4,8 @@ en:
       add_placement_wizard:
         edit:
           cancel: Cancel
+        academic_year_step:
+          
         phase_step:
           title: Select a phase - %{contextual_text}
           title_with_error: "Error: Select a phase - %{contextual_text}"
