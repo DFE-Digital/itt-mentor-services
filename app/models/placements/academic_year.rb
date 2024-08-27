@@ -10,15 +10,15 @@
 #  updated_at :datetime         not null
 #
 class Placements::AcademicYear < AcademicYear
-  def self.current_academic_year
+  def self.current
     for_date(Date.current)
   end
 
-  def next_academic_year
+  def next
     Placements::AcademicYear.for_date(starts_on + 1.year)
   end
 
-  def previous_academic_year
+  def previous
     Placements::AcademicYear.for_date(starts_on - 1.year)
   end
 end
