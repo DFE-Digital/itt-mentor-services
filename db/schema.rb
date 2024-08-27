@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_22_161105) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_23_124208) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -261,6 +261,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_22_161105) do
     t.index ["placement_id"], name: "index_placement_mentor_joins_on_placement_id"
   end
 
+  create_table "placement_windows", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "placement_id", null: false
+    t.uuid "term_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["placement_id"], name: "index_placement_windows_on_placement_id"
+    t.index ["term_id"], name: "index_placement_windows_on_term_id"
+  end
+
   create_table "placements", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "school_id"
     t.datetime "created_at", null: false
@@ -455,6 +464,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_22_161105) do
   add_foreign_key "placement_mentor_joins", "mentors"
   add_foreign_key "placement_mentor_joins", "placements"
   add_foreign_key "placements", "academic_years"
+  add_foreign_key "placement_windows", "placements"
+  add_foreign_key "placement_windows", "terms"
   add_foreign_key "placements", "providers"
   add_foreign_key "placements", "schools"
   add_foreign_key "placements", "subjects"
