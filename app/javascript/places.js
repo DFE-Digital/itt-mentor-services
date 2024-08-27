@@ -9,22 +9,17 @@ async function initMap() {
   
     //@ts-ignore
     document.getElementById("place-autocomplete-card").appendChild(placeAutocomplete);
-  
-
-    // TODO: Currently not working due to the following error:
-    // MapsRequestError: PLACES_GET_PLACE: PERMISSION_DENIED: Error fetching fields: 
-    // Requests to this API places.googleapis.com method google.maps.places.v1.Places.GetPlace are blocked.
     
     // Inject HTML UI.
     const selectedPlaceTitle = document.createElement("p");
   
     selectedPlaceTitle.textContent = "";
-    document.getElementById("map").appendChild(selectedPlaceTitle);
+    document.getElementById("google-map").appendChild(selectedPlaceTitle);
   
     const selectedPlaceInfo = document.createElement("pre");
   
     selectedPlaceInfo.textContent = "";
-    document.getElementById("map").appendChild(selectedPlaceInfo);
+    document.getElementById("google-map").appendChild(selectedPlaceInfo);
     // Add the gmp-placeselect listener, and display the results.
     //@ts-ignore
     placeAutocomplete.addEventListener("gmp-placeselect", async ({ place }) => {

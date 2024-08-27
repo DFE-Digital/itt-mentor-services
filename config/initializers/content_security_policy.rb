@@ -14,7 +14,7 @@ Rails.application.configure do
     policy.object_src  :none
     policy.script_src  :self, :https, "strict-dynamic", "unsafe-eval", :blob
     policy.style_src   :self, :https, :unsafe_inline, "https://fonts.googleapis.com"
-    policy.frame_src "*.google.com"
+    policy.frame_src   "*.google.com"
     policy.connect_src :self, :data, :blob, "https://*.googleapis.com", "*.google.com", "https://*.gstatic.com"
 
     # Specify URI for violation reports

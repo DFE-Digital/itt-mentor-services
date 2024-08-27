@@ -15,3 +15,6 @@ application.register("filter", FilterController)
 
 import SelectAutocompleteController from "./select_autocomplete_controller"
 application.register("select-autocomplete", SelectAutocompleteController)
+
+import PlacesAutocompleteController from "./places_autocomplete_controller"
+application.register("places-autocomplete", PlacesAutocompleteController)

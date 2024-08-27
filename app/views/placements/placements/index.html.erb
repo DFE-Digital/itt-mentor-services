@@ -20,7 +20,16 @@
 
     <div class="govuk-grid-column-two-thirds">
       <h2 class="govuk-heading-m"><%= t(".enter_a_location") %></h2>
-      <%= render partial: "shared/search_form", locals: {
+      <%= render(Placement::PlacesAutocompleteComponent.new(
+        url: placements_placements_path,
+        label: { hidden: true },
+        caption: { text: t(".location_search_example") },
+        name: :search_location,
+        clear_search_url: placements_placements_path(filters: filter_form.attributes),
+        filters: filter_form.attributes,
+        value: @search_location,
+      )) %>
+      <%#= render partial: "shared/search_form", locals: {
         url: placements_placements_path,
         label: { hidden: true },
         caption: { text: t(".location_search_example") },
