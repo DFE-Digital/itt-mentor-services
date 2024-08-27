@@ -16,4 +16,9 @@ RSpec.describe Placements::Term, type: :model do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_inclusion_of(:name).in_array(term_names) }
   end
+
+  describe "associations" do
+    it { is_expected.to have_many(:placement_windows).class_name("Placements::PlacementWindow") }
+    it { is_expected.to have_many(:placements).through(:placement_windows) }
+  end
 end
