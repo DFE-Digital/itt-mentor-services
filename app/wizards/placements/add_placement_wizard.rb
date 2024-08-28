@@ -13,6 +13,8 @@ module Placements
       add_step(SubjectStep)
       add_step(AdditionalSubjectsStep) if steps[:subject].subject_has_child_subjects?
       add_step(YearGroupStep) if placement_phase == School::PRIMARY_PHASE
+      # AcademicYearStep goes here
+      add_step(TermsStep)
       add_step(MentorsStep) if school.mentors.present?
       add_step(CheckYourAnswersStep)
       add_step(PreviewPlacementStep) if current_step == :preview_placement
@@ -46,6 +48,10 @@ module Placements
 
       if steps[:mentors].present?
         placement.mentors = steps[:mentors].mentors
+      end
+
+      if steps[:terms].present?
+        placement.terms = steps[:terms].terms
       end
 
       placement

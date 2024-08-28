@@ -57,6 +57,15 @@
           <% end %>
         <% end %>
 
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".expected_date")) %>
+          <% row.with_value(text: @wizard.steps[:terms].term_names || t(".any_term")) %>
+          <% row.with_action(text: t(".change"),
+                             href: step_path(:terms),
+                             visually_hidden_text: t(".expected_date"),
+                             classes: ["govuk-link--no-visited-state"]) %>
+        <% end %>
+
         <% if @wizard.steps.include?(:mentors) %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".mentor")) %>
