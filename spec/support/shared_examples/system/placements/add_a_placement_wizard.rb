@@ -2,6 +2,8 @@ RSpec.shared_examples "an add a placement wizard" do
   let!(:subject_1) { create(:subject, name: "Primary subject", subject_area: :primary) }
   let!(:subject_2) { create(:subject, name: "Secondary subject", subject_area: :secondary) }
   let!(:subject_3) { create(:subject, name: "Secondary subject 2", subject_area: :secondary) }
+  let!(:current_academic_year) { create(:placements_academic_year) }
+  let!(:next_academic_year) { create(:placements_academic_year, :next) }
   let!(:mentor_1) { create(:placements_mentor) }
   let!(:mentor_2) { create(:placements_mentor) }
   let(:summer_term) { create(:placements_term, :summer) }
@@ -33,6 +35,9 @@ RSpec.shared_examples "an add a placement wizard" do
           then_i_see_the_add_year_group_page("Year 1")
           when_i_choose_a_year_group("Year 1")
           and_i_click_on("Continue")
+          then_i_see_the_academic_year_page
+          when_i_choose_an_academic_year(current_academic_year.name)
+          and_i_click_on("Continue")
           then_i_see_the_add_a_term_page
           when_i_check_a_term(summer_term.name)
           and_i_click_on("Continue")
@@ -54,6 +59,9 @@ RSpec.shared_examples "an add a placement wizard" do
           and_i_click_on("Continue")
           then_i_see_the_add_year_group_page("Year 1")
           when_i_choose_a_year_group("Year 1")
+          and_i_click_on("Continue")
+          then_i_see_the_academic_year_page
+          when_i_choose_an_academic_year(current_academic_year.name)
           and_i_click_on("Continue")
           then_i_see_the_add_a_term_page
           when_i_check_a_term(summer_term.name)
@@ -79,6 +87,9 @@ RSpec.shared_examples "an add a placement wizard" do
           then_i_see_the_add_year_group_page("Year 1")
           when_i_choose_a_year_group("Year 1")
           and_i_click_on("Continue")
+          then_i_see_the_academic_year_page
+          when_i_choose_an_academic_year(current_academic_year.name)
+          and_i_click_on("Continue")
           then_i_see_the_add_a_term_page
           when_i_check_a_term(summer_term.name)
           and_i_click_on("Continue")
@@ -97,6 +108,9 @@ RSpec.shared_examples "an add a placement wizard" do
           and_i_click_on("Continue")
           then_i_see_the_add_year_group_page("Year 1")
           when_i_choose_a_year_group("Year 1")
+          and_i_click_on("Continue")
+          then_i_see_the_academic_year_page
+          when_i_choose_an_academic_year(current_academic_year.name)
           and_i_click_on("Continue")
           then_i_see_the_add_a_term_page
           when_i_check_a_term(summer_term.name)
@@ -119,6 +133,9 @@ RSpec.shared_examples "an add a placement wizard" do
           and_i_click_on("Continue")
           then_i_see_the_add_year_group_page("Year 1")
           when_i_choose_a_year_group("Year 1")
+          and_i_click_on("Continue")
+          then_i_see_the_academic_year_page
+          when_i_choose_an_academic_year(current_academic_year.name)
           and_i_click_on("Continue")
           then_i_see_the_add_a_term_page
           when_i_check_a_term(summer_term.name)
@@ -167,6 +184,9 @@ RSpec.shared_examples "an add a placement wizard" do
             and_i_click_on("Continue")
             when_i_choose_a_year_group("Year 1")
             and_i_click_on("Continue")
+            then_i_see_the_academic_year_page
+            when_i_choose_an_academic_year(current_academic_year.name)
+            and_i_click_on("Continue")
             when_i_check_a_term(summer_term.name)
             and_i_click_on("Continue")
             when_i_check_a_mentor(mentor_1.full_name)
@@ -175,6 +195,9 @@ RSpec.shared_examples "an add a placement wizard" do
 
             when_i_click_on("Back")
             then_my_chosen_mentor_is_checked(mentor_1.full_name)
+
+            when_i_click_on("Back")
+            then_my_chosen_academic_year_is_selected(current_academic_year.name)
 
             when_i_click_on("Back")
             then_my_chosen_term_is_checked("Summer term")
@@ -191,47 +214,43 @@ RSpec.shared_examples "an add a placement wizard" do
         end
 
         context "when I've checked my answers and I click on change" do
-          context "when I uncheck mentors" do
-            it "when I do not enter valid options" do
-              when_i_visit_the_placements_page
-              and_i_click_on("Add placement")
-              and_i_click_on("Continue")
-              then_i_see_the_add_a_placement_subject_page(school.phase)
-              and_i_see_the_error_message("Select a subject")
-              when_i_choose_a_subject(subject_1.name)
-              and_i_click_on("Continue")
-              then_i_see_the_add_year_group_page("Year 1")
-              and_i_click_on("Continue")
-              and_i_see_the_error_message("Select a year group")
-              when_i_choose_a_year_group("Year 1")
-              and_i_click_on("Continue")
-              when_i_check_a_term(summer_term.name)
-              and_i_click_on("Continue")
-              then_i_see_the_add_a_placement_mentor_page
-              when_i_uncheck("Not yet known")
-              when_i_click_on("Continue")
-              and_i_see_the_error_message("Select a mentor or not yet known")
-            end
-          end
+          it "when I do not enter valid options" do
+            when_i_visit_the_placements_page
+            and_i_click_on("Add placement")
+            and_i_click_on("Continue")
 
-          context "when I uncheck terms" do
-            it "when I do not enter valid options" do
-              when_i_visit_the_placements_page
-              and_i_click_on("Add placement")
-              and_i_click_on("Continue")
-              then_i_see_the_add_a_placement_subject_page(school.phase)
-              and_i_see_the_error_message("Select a subject")
-              when_i_choose_a_subject(subject_1.name)
-              and_i_click_on("Continue")
-              then_i_see_the_add_year_group_page("Year 1")
-              and_i_click_on("Continue")
-              and_i_see_the_error_message("Select a year group")
-              when_i_choose_a_year_group("Year 1")
-              and_i_click_on("Continue")
-              when_i_uncheck("Any time in the academic year")
-              and_i_click_on("Continue")
-              and_i_see_the_error_message("Select a term or any time in the academic year")
-            end
+            # Subject error
+            then_i_see_the_add_a_placement_subject_page(school.phase)
+            and_i_see_the_error_message("Select a subject")
+            when_i_choose_a_subject(subject_1.name)
+            and_i_click_on("Continue")
+
+            # Year group error
+            then_i_see_the_add_year_group_page("Year 1")
+            and_i_click_on("Continue")
+            and_i_see_the_error_message("Select a year group")
+            when_i_choose_a_year_group("Year 1")
+            and_i_click_on("Continue")
+
+            # Academic year error
+            then_i_see_the_academic_year_page
+            and_i_click_on("Continue")
+            and_i_see_the_error_message("Select an academic year")
+            when_i_choose_an_academic_year(current_academic_year.name)
+            and_i_click_on("Continue")
+            
+            # Term error
+            when_i_uncheck("Any time in the academic year")
+            and_i_click_on("Continue")
+            and_i_see_the_error_message("Select a term or any time in the academic year")
+            when_i_check_a_term(summer_term.name)
+            and_i_click_on("Continue")
+
+            # Mentor error
+            then_i_see_the_add_a_placement_mentor_page
+            when_i_uncheck("Not yet known")
+            when_i_click_on("Continue")
+            and_i_see_the_error_message("Select a mentor or not yet known")
           end
         end
 
@@ -242,6 +261,8 @@ RSpec.shared_examples "an add a placement wizard" do
             when_i_choose_a_subject(subject_1.name)
             and_i_click_on("Continue")
             when_i_choose_a_year_group("Year 1")
+            and_i_click_on("Continue")
+            when_i_choose_an_academic_year(current_academic_year.name)
             and_i_click_on("Continue")
             when_i_check_a_term(summer_term.name)
             and_i_click_on("Continue")
@@ -258,6 +279,8 @@ RSpec.shared_examples "an add a placement wizard" do
             when_i_choose_a_subject(subject_1.name)
             and_i_click_on("Continue")
             when_i_choose_a_year_group("Year 1")
+            and_i_click_on("Continue")
+            when_i_choose_an_academic_year(current_academic_year.name)
             and_i_click_on("Continue")
             when_i_check_a_term(summer_term.name)
             and_i_click_on("Continue")
@@ -277,6 +300,8 @@ RSpec.shared_examples "an add a placement wizard" do
             and_i_click_on("Continue")
             when_i_choose_a_year_group("Year 1")
             and_i_click_on("Continue")
+            when_i_choose_an_academic_year(current_academic_year.name)
+            and_i_click_on("Continue")
             when_i_check_a_term(summer_term.name)
             and_i_click_on("Continue")
             when_i_check_a_mentor(mentor_1.full_name)
@@ -294,6 +319,8 @@ RSpec.shared_examples "an add a placement wizard" do
             when_i_choose_a_subject(subject_1.name)
             and_i_click_on("Continue")
             when_i_choose_a_year_group("Year 1")
+            and_i_click_on("Continue")
+            when_i_choose_an_academic_year(current_academic_year.name)
             and_i_click_on("Continue")
             when_i_check_a_term(summer_term.name)
             and_i_click_on("Continue")
@@ -324,6 +351,9 @@ RSpec.shared_examples "an add a placement wizard" do
         then_i_see_the_add_a_placement_subject_page(school.phase)
         when_i_choose_a_subject(subject_2.name)
         and_i_click_on("Continue")
+        then_i_see_the_academic_year_page
+        when_i_choose_an_academic_year(current_academic_year.name)
+        and_i_click_on("Continue")
         when_i_check_a_term(summer_term.name)
         and_i_click_on("Continue")
         then_i_see_the_add_a_placement_mentor_page
@@ -349,6 +379,9 @@ RSpec.shared_examples "an add a placement wizard" do
           when_i_choose_a_subject(subject_2.name)
           and_i_click_on("Continue")
           and_i_check_the_subject(subject_3.name)
+          and_i_click_on("Continue")
+          then_i_see_the_academic_year_page
+          when_i_choose_an_academic_year(current_academic_year.name)
           and_i_click_on("Continue")
           when_i_check_a_term(summer_term.name)
           and_i_click_on("Continue")
@@ -387,7 +420,7 @@ RSpec.shared_examples "an add a placement wizard" do
           then_i_see_the_add_a_placement_subject_page(school.phase)
           when_i_choose_a_subject(subject_4.name)
           and_i_click_on("Continue")
-          then_i_see_the_add_a_term_page
+          then_i_see_the_academic_year_page
         end
       end
     end
@@ -411,6 +444,9 @@ RSpec.shared_examples "an add a placement wizard" do
           and_i_click_on("Continue")
           then_i_see_the_add_year_group_page("Year 1")
           when_i_choose_a_year_group("Year 1")
+          and_i_click_on("Continue")
+          then_i_see_the_academic_year_page
+          when_i_choose_an_academic_year(current_academic_year.name)
           and_i_click_on("Continue")
           when_i_check_a_term("Any time in the academic year")
           and_i_click_on("Continue")
@@ -437,6 +473,9 @@ RSpec.shared_examples "an add a placement wizard" do
           then_i_see_the_add_a_placement_subject_page("Secondary")
           when_i_choose_a_subject(subject_2.name)
           and_i_choose_the_subject(subject_3.name)
+          and_i_click_on("Continue")
+          then_i_see_the_academic_year_page
+          when_i_choose_an_academic_year(current_academic_year.name)
           and_i_click_on("Continue")
           when_i_check_a_term(summer_term.name)
           and_i_click_on("Continue")
@@ -471,6 +510,8 @@ RSpec.shared_examples "an add a placement wizard" do
           and_i_click_on("Continue")
           when_i_choose_a_subject(subject_2.name)
           and_i_click_on("Continue")
+          when_i_choose_an_academic_year(current_academic_year.name)
+          and_i_click_on("Continue")
           when_i_check_a_term(summer_term.name)
           and_i_click_on("Continue")
           when_i_check_a_mentor(mentor_1.full_name)
@@ -484,6 +525,8 @@ RSpec.shared_examples "an add a placement wizard" do
           when_i_click_on("Continue")
           then_i_see_the_add_year_group_page("Year 1")
           when_i_choose_a_year_group("Year 1")
+          and_i_click_on("Continue")
+          then_i_see_the_academic_year_page
           and_i_click_on("Continue")
           then_i_see_the_add_a_term_page
           and_i_click_on("Continue")
@@ -501,6 +544,8 @@ RSpec.shared_examples "an add a placement wizard" do
           and_i_click_on("Continue")
           when_i_choose_a_subject(subject_2.name)
           and_i_click_on("Continue")
+          when_i_choose_an_academic_year(current_academic_year.name)
+          and_i_click_on("Continue")
           when_i_check_a_term(summer_term.name)
           and_i_click_on("Continue")
           when_i_check_a_mentor(mentor_1.full_name)
@@ -509,6 +554,8 @@ RSpec.shared_examples "an add a placement wizard" do
           then_i_see_the_add_a_placement_add_phase_page
           and_i_click_on("Continue")
           then_i_see_the_add_a_placement_subject_page("Secondary")
+          and_i_click_on("Continue")
+          then_i_see_the_academic_year_page
           and_i_click_on("Continue")
           then_i_see_the_add_a_term_page
           and_i_click_on("Continue")
@@ -528,6 +575,8 @@ RSpec.shared_examples "an add a placement wizard" do
           and_i_click_on("Continue")
           when_i_choose_a_subject(subject_2.name)
           and_i_click_on("Continue")
+          when_i_choose_an_academic_year(current_academic_year.name)
+          and_i_click_on("Continue")
           when_i_check_a_term(summer_term.name)
           and_i_click_on("Continue")
           when_i_check_a_mentor(mentor_1.full_name)
@@ -535,6 +584,9 @@ RSpec.shared_examples "an add a placement wizard" do
           when_i_change_my_subject
           then_i_see_the_add_a_placement_subject_page("Secondary")
           when_i_choose_a_subject(subject_3.name)
+          and_i_click_on("Continue")
+          then_i_see_the_academic_year_page
+          when_i_choose_an_academic_year(current_academic_year.name)
           and_i_click_on("Continue")
           then_i_see_the_add_a_term_page
           and_i_click_on("Continue")
@@ -552,12 +604,16 @@ RSpec.shared_examples "an add a placement wizard" do
           and_i_click_on("Continue")
           when_i_choose_a_subject(subject_2.name)
           and_i_click_on("Continue")
+          when_i_choose_an_academic_year(current_academic_year.name)
+          and_i_click_on("Continue")
           when_i_check_a_term(summer_term.name)
           and_i_click_on("Continue")
           when_i_check_a_mentor(mentor_1.full_name)
           and_i_click_on("Continue")
           when_i_change_my_subject
           then_i_see_the_add_a_placement_subject_page("Secondary")
+          and_i_click_on("Continue")
+          then_i_see_the_academic_year_page
           and_i_click_on("Continue")
           then_i_see_the_add_a_term_page
           and_i_click_on("Continue")
@@ -576,6 +632,8 @@ RSpec.shared_examples "an add a placement wizard" do
           when_i_choose_a_phase("Secondary")
           and_i_click_on("Continue")
           when_i_choose_a_subject(subject_2.name)
+          and_i_click_on("Continue")
+          when_i_choose_an_academic_year(current_academic_year.name)
           and_i_click_on("Continue")
           when_i_check_a_term(summer_term.name)
           and_i_click_on("Continue")
@@ -597,6 +655,8 @@ RSpec.shared_examples "an add a placement wizard" do
           when_i_choose_a_phase("Secondary")
           and_i_click_on("Continue")
           when_i_choose_a_subject(subject_2.name)
+          and_i_click_on("Continue")
+          when_i_choose_an_academic_year(current_academic_year.name)
           and_i_click_on("Continue")
           when_i_check_a_term(summer_term.name)
           and_i_click_on("Continue")
@@ -621,6 +681,8 @@ RSpec.shared_examples "an add a placement wizard" do
           and_i_click_on("Continue")
           when_i_choose_a_subject(subject_2.name)
           and_i_click_on("Continue")
+          when_i_choose_an_academic_year(current_academic_year.name)
+          and_i_click_on("Continue")
           when_i_check_a_term(summer_term.name)
           and_i_click_on("Continue")
           when_i_check_a_mentor(mentor_1.full_name)
@@ -643,6 +705,8 @@ RSpec.shared_examples "an add a placement wizard" do
           and_i_click_on("Continue")
           when_i_choose_a_subject(subject_2.name)
           and_i_click_on("Continue")
+          when_i_choose_an_academic_year(current_academic_year.name)
+          and_i_click_on("Continue")
           when_i_check_a_term(summer_term.name)
           and_i_click_on("Continue")
           when_i_check_a_mentor(mentor_1.full_name)
@@ -661,6 +725,8 @@ RSpec.shared_examples "an add a placement wizard" do
           when_i_choose_a_phase("Secondary")
           and_i_click_on("Continue")
           when_i_choose_a_subject(subject_2.name)
+          and_i_click_on("Continue")
+          when_i_choose_an_academic_year(current_academic_year.name)
           and_i_click_on("Continue")
           when_i_check_a_term(summer_term.name)
           and_i_click_on("Continue")
@@ -852,6 +918,20 @@ RSpec.shared_examples "an add a placement wizard" do
     expect(page).to have_content("This is a preview of how your placement will appear to teacher training providers.")
     expect(page).to have_content(phase)
     expect(page).to have_content(subject.name)
+  end
+
+  def then_i_see_the_academic_year_page
+    expect(page).to have_content("Select an academic year")
+    expect(page).to have_content("This academic year (#{current_academic_year.name})")
+    expect(page).to have_content("Next academic year (#{next_academic_year.name})")
+  end
+
+  def when_i_choose_an_academic_year(academic_year_name)
+    page.choose("This academic year (#{academic_year_name})")
+  end
+
+  def then_my_chosen_academic_year_is_selected(academic_year_name)
+    expect(page).to have_checked_field("This academic year (#{academic_year_name})")
   end
 
   alias_method :and_i_click_on, :when_i_click_on
