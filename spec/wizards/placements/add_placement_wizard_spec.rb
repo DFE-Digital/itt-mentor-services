@@ -30,30 +30,30 @@ RSpec.describe Placements::AddPlacementWizard do
     context "with a primary school" do
       let(:school) { primary_school }
 
-      it { is_expected.to eq %i[subject year_group terms mentors check_your_answers] }
+      it { is_expected.to eq %i[subject year_group academic_year terms mentors check_your_answers] }
     end
 
     context "with a secondary school" do
       let(:school) { secondary_school }
 
-      it { is_expected.to eq %i[subject terms mentors check_your_answers] }
+      it { is_expected.to eq %i[subject academic_year terms mentors check_your_answers] }
     end
 
     context "with an all-through school" do
       let(:school) { all_through_school }
 
-      it { is_expected.to eq %i[phase subject terms mentors check_your_answers] }
+      it { is_expected.to eq %i[phase subject academic_year terms mentors check_your_answers] }
 
       context "when the Primary phase has been chosen" do
         let(:state) { { "phase" => { "phase" => "Primary" } } }
 
-        it { is_expected.to eq %i[phase subject year_group terms mentors check_your_answers] }
+        it { is_expected.to eq %i[phase subject year_group academic_year terms mentors check_your_answers] }
       end
 
       context "when the Secondary phase has been chosen" do
         let(:state) { { "phase" => { "phase" => "Secondary" } } }
 
-        it { is_expected.to eq %i[phase subject terms mentors check_your_answers] }
+        it { is_expected.to eq %i[phase subject academic_year terms mentors check_your_answers] }
       end
     end
 
@@ -61,20 +61,20 @@ RSpec.describe Placements::AddPlacementWizard do
       let(:school) { secondary_school }
       let(:mentors) { [] }
 
-      it { is_expected.to eq %i[subject terms check_your_answers] }
+      it { is_expected.to eq %i[subject academic_year terms check_your_answers] }
     end
 
     context "when the chosen subject has child subjects" do
       let(:school) { secondary_school }
       let(:state) { { "subject" => { "subject_id" => modern_foreign_languages.id } } }
 
-      it { is_expected.to eq %i[subject additional_subjects terms mentors check_your_answers] }
+      it { is_expected.to eq %i[subject additional_subjects academic_year terms mentors check_your_answers] }
     end
 
     context "when the preview placement step is active" do
       let(:current_step) { :preview_placement }
 
-      it { is_expected.to eq %i[subject terms mentors check_your_answers preview_placement] }
+      it { is_expected.to eq %i[subject academic_year terms mentors check_your_answers preview_placement] }
     end
   end
 
@@ -82,6 +82,7 @@ RSpec.describe Placements::AddPlacementWizard do
     subject(:placement) { wizard.create_placement }
 
     let(:selected_mentor) { school.mentors.sample }
+    let(:academic_year) { create(:placements_academic_year) }
     let(:mentor_not_known) { Placements::AddPlacementWizard::MentorsStep::NOT_KNOWN }
 
     context "when primary with a mentor" do
@@ -90,6 +91,7 @@ RSpec.describe Placements::AddPlacementWizard do
         {
           "subject" => { "subject_id" => primary.id },
           "year_group" => { "year_group" => "year_3" },
+          "academic_year" => { "academic_year_id" => academic_year.id },
           "terms" => { "term_ids" => %w[any_term] },
           "mentors" => { "mentor_ids" => [selected_mentor.id] },
         }
@@ -99,6 +101,7 @@ RSpec.describe Placements::AddPlacementWizard do
         expect(placement).to be_persisted
         expect(placement.subject).to eq(primary)
         expect(placement.year_group).to eq("year_3")
+        expect(placement.academic_year).to eq(academic_year)
         expect(placement.mentors).to eq [selected_mentor]
       end
     end
@@ -109,6 +112,7 @@ RSpec.describe Placements::AddPlacementWizard do
         {
           "subject" => { "subject_id" => primary.id },
           "year_group" => { "year_group" => "year_3" },
+          "academic_year" => { "academic_year_id" => academic_year.id },
           "terms" => { "term_ids" => %w[any_term] },
           "mentors" => { "mentor_ids" => mentor_not_known },
         }
@@ -118,6 +122,7 @@ RSpec.describe Placements::AddPlacementWizard do
         expect(placement).to be_persisted
         expect(placement.subject).to eq(primary)
         expect(placement.year_group).to eq("year_3")
+        expect(placement.academic_year).to eq(academic_year)
         expect(placement.mentors).to be_empty
       end
     end
@@ -127,6 +132,7 @@ RSpec.describe Placements::AddPlacementWizard do
       let(:state) do
         {
           "subject" => { "subject_id" => drama.id },
+          "academic_year" => { "academic_year_id" => academic_year.id },
           "terms" => { "term_ids" => %w[any_term] },
           "mentors" => { "mentor_ids" => [selected_mentor.id] },
         }
@@ -135,6 +141,7 @@ RSpec.describe Placements::AddPlacementWizard do
       it "creates a placement" do
         expect(placement).to be_persisted
         expect(placement.subject).to eq(drama)
+        expect(placement.academic_year).to eq(academic_year)
         expect(placement.mentors).to eq [selected_mentor]
       end
     end
@@ -144,6 +151,7 @@ RSpec.describe Placements::AddPlacementWizard do
       let(:state) do
         {
           "subject" => { "subject_id" => drama.id },
+          "academic_year" => { "academic_year_id" => academic_year.id },
           "terms" => { "term_ids" => %w[any_term] },
           "mentors" => { "mentor_ids" => mentor_not_known },
         }
@@ -152,6 +160,7 @@ RSpec.describe Placements::AddPlacementWizard do
       it "creates a placement" do
         expect(placement).to be_persisted
         expect(placement.subject).to eq(drama)
+        expect(placement.academic_year).to eq(academic_year)
         expect(placement.mentors).to be_empty
       end
     end
@@ -162,6 +171,7 @@ RSpec.describe Placements::AddPlacementWizard do
         {
           "subject" => { "subject_id" => modern_foreign_languages.id },
           "additional_subjects" => { "additional_subject_ids" => [french.id, german.id] },
+          "academic_year" => { "academic_year_id" => academic_year.id },
           "terms" => { "term_ids" => %w[any_term] },
           "mentors" => { "mentor_ids" => mentor_not_known },
         }
@@ -171,6 +181,7 @@ RSpec.describe Placements::AddPlacementWizard do
         expect(placement).to be_persisted
         expect(placement.subject).to eq(modern_foreign_languages)
         expect(placement.additional_subjects).to contain_exactly(french, german)
+        expect(placement.academic_year).to eq(academic_year)
         expect(placement.mentors).to be_empty
       end
     end
@@ -181,6 +192,7 @@ RSpec.describe Placements::AddPlacementWizard do
       let(:state) do
         {
           "subject" => { "subject_id" => drama.id },
+          "academic_year" => { "academic_year_id" => academic_year.id },
           "terms" => { "term_ids" => %w[any_term] },
         }
       end
@@ -188,6 +200,7 @@ RSpec.describe Placements::AddPlacementWizard do
       it "creates a placement" do
         expect(placement).to be_persisted
         expect(placement.subject).to eq(drama)
+        expect(placement.academic_year).to eq(academic_year)
         expect(placement.mentors).to be_empty
       end
     end
