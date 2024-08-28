@@ -104,6 +104,8 @@ Placements::Term::VALID_NAMES.each do |term_name|
 end
 
 # Create placements
+placements_academic_year = current_academic_year.becomes(Placements::AcademicYear)
+
 Placements::School.find_each do |school|
   # A school must have a school contact before creating placements
   if school.school_contact.blank?
@@ -124,7 +126,12 @@ Placements::School.find_each do |school|
     year_group = nil
     subject = Subject.secondary.first
   end
-  placement = Placement.create!(school:, subject:, year_group:)
+  placement = Placement.create!(
+    school:,
+    subject:,
+    year_group:,
+    academic_year: placements_academic_year,
+  )
 
   PlacementMentorJoin.create!(placement:, mentor: Placements::Mentor.first)
 end
