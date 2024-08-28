@@ -20,6 +20,10 @@ en:
           attributes:
             mentor_ids:
               blank: Select a mentor or not yet known
+        placements/add_placement_wizard/academic_year_step:
+          attributes:
+            academic_year_id:
+              blank: Select an academic year
         placements/add_placement_wizard/terms_step:
           attributes:
             term_ids:
