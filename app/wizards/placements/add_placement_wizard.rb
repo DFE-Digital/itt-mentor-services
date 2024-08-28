@@ -13,7 +13,7 @@ module Placements
       add_step(SubjectStep)
       add_step(AdditionalSubjectsStep) if steps[:subject].subject_has_child_subjects?
       add_step(YearGroupStep) if placement_phase == School::PRIMARY_PHASE
-      # AcademicYearStep goes here
+      add_step(AcademicYearStep)
       add_step(TermsStep)
       add_step(MentorsStep) if school.mentors.present?
       add_step(CheckYourAnswersStep)
