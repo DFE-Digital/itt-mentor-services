@@ -43,17 +43,17 @@ RSpec.describe Claims::Provider::GenerateCsv do
     let(:mentor_3) { create(:claims_mentor, schools: [school_b], first_name: "Mentor", last_name: "C") }
     let(:mentor_4) { create(:claims_mentor, schools: [school_c], first_name: "Mentor", last_name: "D") }
 
-    let(:claim_for_school_a_1) { create(:claim, :submitted, school: school_a, provider:, academic_year:) }
-    let(:claim_for_school_a_2) { create(:claim, :submitted, school: school_a, provider:, academic_year:) }
-    let(:claim_for_school_b) { create(:claim, :submitted, school: school_b, provider:, academic_year:) }
-    let(:claim_for_school_c) { create(:claim, :submitted, school: school_c, provider:, academic_year:) }
+    let(:claim_for_school_a_1) { create(:claim, :submitted, school: school_a, provider:, claim_window:) }
+    let(:claim_for_school_a_2) { create(:claim, :submitted, school: school_a, provider:, claim_window:) }
+    let(:claim_for_school_b) { create(:claim, :submitted, school: school_b, provider:, claim_window:) }
+    let(:claim_for_school_c) { create(:claim, :submitted, school: school_c, provider:, claim_window:) }
     let(:claim_for_another_provider) do
       create(:claim, :submitted, school: school_c, provider: another_provider, claim_window:)
     end
     let(:claim_for_another_academic_year) do
       create(:claim, :submitted, school: school_c, provider:, claim_window: another_claim_window)
     end
-    let(:draft_claim) { create(:claim, :draft, school: school_c, provider:, academic_year:) }
+    let(:draft_claim) { create(:claim, :draft, school: school_c, provider:, claim_window:) }
 
     let(:mentor_training_for_claim_for_school_a_1_mentor_1) do
       create(:mentor_training,
@@ -118,6 +118,7 @@ RSpec.describe Claims::Provider::GenerateCsv do
       mentor_training_for_claim_for_school_b_mentor_3
       mentor_training_for_claim_for_school_c_mentor_4
       # These claims should not appear in the CSV
+
       mentor_training_for_claim_for_another_provider_mentor_4
       mentor_training_for_claim_for_another_academic_year_mentor_4
       mentor_training_for_draft_claim
