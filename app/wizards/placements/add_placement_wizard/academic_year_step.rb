@@ -11,10 +11,9 @@ class Placements::AddPlacementWizard::AcademicYearStep < Placements::BaseStep
   end
 
   def academic_year_display_name(academic_year)
-    case academic_year
-    when current_academic_year
+    if academic_year == current_academic_year
       I18n.t("placements.wizards.add_placement_wizard.academic_year_step.current_academic_year", academic_year: academic_year.name)
-    when current_academic_year.next
+    else
       I18n.t("placements.wizards.add_placement_wizard.academic_year_step.next_academic_year", academic_year: academic_year.name)
     end
   end
