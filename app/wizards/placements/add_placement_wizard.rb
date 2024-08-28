@@ -35,7 +35,7 @@ module Placements
 
     def build_placement
       placement = school.placements.build
-      placement.academic_year = ::Placements::AcademicYear.current
+      placement.academic_year = steps[:academic_year].academic_year
       placement.subject = steps[:subject].subject
       placement.terms = steps[:terms].terms
 
