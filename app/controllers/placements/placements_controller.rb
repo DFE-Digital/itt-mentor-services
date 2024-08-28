@@ -3,6 +3,7 @@ class Placements::PlacementsController < Placements::ApplicationController
   helper_method :filter_form, :location_coordinates
 
   def index
+    @current_academic_year = Placements::AcademicYear.current
     @subjects = Subject.order_by_name.select(:id, :name)
     @establishment_groups = compact_school_attribute_values(:group)
     @schools = schools_scope.order_by_name.select(:id, :name)
@@ -55,6 +56,7 @@ class Placements::PlacementsController < Placements::ApplicationController
   def filter_params
     params.fetch(:filters, {}).permit(
       :placements_to_show,
+      :academic_year_id,
       :only_partner_schools,
       school_ids: [],
       subject_ids: [],
