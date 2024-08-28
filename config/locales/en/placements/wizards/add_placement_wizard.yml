@@ -60,6 +60,8 @@ en:
           publish_placement: Publish placement
           preview_placement: Preview placement
           not_yet_known: Not yet known
+          expected_date: Expected date
+          any_term: Any time in the academic year
         preview_placement_step:
           page_title: Preview placement - %{contextual_text}
           important: Important
@@ -68,3 +70,13 @@ en:
           edit_placement: Edit placement
         update:
           success: Placement published
+        terms_step:
+          title: Select when the placement could be - %{contextual_text}
+          title_with_error: "Error: Select when the placement could be - %{contextual_text}"
+          select_a_term: Select when the placement could be
+          description: | 
+            Terms are used as an estimate as some providers have different start and end dates.
+            Discuss specific dates with your chosen provider once the placment is published.
+          any_term: Any time in the academic year
+          continue: Continue
+          

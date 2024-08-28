@@ -8,7 +8,20 @@
 #  updated_at :datetime         not null
 #
 class Placements::Term < ApplicationRecord
-  VALID_NAMES = ["Summer term", "Spring term", "Autumn term"].freeze
+  SUMMER_TERM = "Summer term".freeze
+  SPRING_TERM = "Spring term".freeze
+  AUTUMN_TERM = "Autumn term".freeze
+  VALID_NAMES = [SUMMER_TERM, SPRING_TERM, AUTUMN_TERM].freeze
+
+  scope :order_by_term, lambda {
+    order(Arel.sql("
+      CASE
+        WHEN name = '#{SUMMER_TERM}' THEN '1'
+        WHEN name = '#{SPRING_TERM}' THEN '2'
+        WHEN name = '#{AUTUMN_TERM}' THEN '3'
+      END
+    "))
+  }
 
   validates :name, presence: true, inclusion: { in: VALID_NAMES }
 
