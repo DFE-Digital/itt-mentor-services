@@ -20,6 +20,10 @@ en:
           attributes:
             mentor_ids:
               blank: Select a mentor or not yet known
+        placements/add_placement_wizard/terms_step:
+          attributes:
+            term_ids:
+              blank: Select a term or any time in the academic year
         placements/add_placement_wizard/phase_step:
           attributes:
             phase:

@@ -30,30 +30,30 @@ RSpec.describe Placements::AddPlacementWizard do
     context "with a primary school" do
       let(:school) { primary_school }
 
-      it { is_expected.to eq %i[subject year_group mentors check_your_answers] }
+      it { is_expected.to eq %i[subject year_group terms mentors check_your_answers] }
     end
 
     context "with a secondary school" do
       let(:school) { secondary_school }
 
-      it { is_expected.to eq %i[subject mentors check_your_answers] }
+      it { is_expected.to eq %i[subject terms mentors check_your_answers] }
     end
 
     context "with an all-through school" do
       let(:school) { all_through_school }
 
-      it { is_expected.to eq %i[phase subject mentors check_your_answers] }
+      it { is_expected.to eq %i[phase subject terms mentors check_your_answers] }
 
       context "when the Primary phase has been chosen" do
         let(:state) { { "phase" => { "phase" => "Primary" } } }
 
-        it { is_expected.to eq %i[phase subject year_group mentors check_your_answers] }
+        it { is_expected.to eq %i[phase subject year_group terms mentors check_your_answers] }
       end
 
       context "when the Secondary phase has been chosen" do
         let(:state) { { "phase" => { "phase" => "Secondary" } } }
 
-        it { is_expected.to eq %i[phase subject mentors check_your_answers] }
+        it { is_expected.to eq %i[phase subject terms mentors check_your_answers] }
       end
     end
 
@@ -61,20 +61,20 @@ RSpec.describe Placements::AddPlacementWizard do
       let(:school) { secondary_school }
       let(:mentors) { [] }
 
-      it { is_expected.to eq %i[subject check_your_answers] }
+      it { is_expected.to eq %i[subject terms check_your_answers] }
     end
 
     context "when the chosen subject has child subjects" do
       let(:school) { secondary_school }
       let(:state) { { "subject" => { "subject_id" => modern_foreign_languages.id } } }
 
-      it { is_expected.to eq %i[subject additional_subjects mentors check_your_answers] }
+      it { is_expected.to eq %i[subject additional_subjects terms mentors check_your_answers] }
     end
 
     context "when the preview placement step is active" do
       let(:current_step) { :preview_placement }
 
-      it { is_expected.to eq %i[subject mentors check_your_answers preview_placement] }
+      it { is_expected.to eq %i[subject terms mentors check_your_answers preview_placement] }
     end
   end
 
@@ -90,6 +90,7 @@ RSpec.describe Placements::AddPlacementWizard do
         {
           "subject" => { "subject_id" => primary.id },
           "year_group" => { "year_group" => "year_3" },
+          "terms" => { "term_ids" => %w[any_term] },
           "mentors" => { "mentor_ids" => [selected_mentor.id] },
         }
       end
@@ -108,6 +109,7 @@ RSpec.describe Placements::AddPlacementWizard do
         {
           "subject" => { "subject_id" => primary.id },
           "year_group" => { "year_group" => "year_3" },
+          "terms" => { "term_ids" => %w[any_term] },
           "mentors" => { "mentor_ids" => mentor_not_known },
         }
       end
@@ -125,6 +127,7 @@ RSpec.describe Placements::AddPlacementWizard do
       let(:state) do
         {
           "subject" => { "subject_id" => drama.id },
+          "terms" => { "term_ids" => %w[any_term] },
           "mentors" => { "mentor_ids" => [selected_mentor.id] },
         }
       end
@@ -141,6 +144,7 @@ RSpec.describe Placements::AddPlacementWizard do
       let(:state) do
         {
           "subject" => { "subject_id" => drama.id },
+          "terms" => { "term_ids" => %w[any_term] },
           "mentors" => { "mentor_ids" => mentor_not_known },
         }
       end
@@ -158,6 +162,7 @@ RSpec.describe Placements::AddPlacementWizard do
         {
           "subject" => { "subject_id" => modern_foreign_languages.id },
           "additional_subjects" => { "additional_subject_ids" => [french.id, german.id] },
+          "terms" => { "term_ids" => %w[any_term] },
           "mentors" => { "mentor_ids" => mentor_not_known },
         }
       end
@@ -176,6 +181,7 @@ RSpec.describe Placements::AddPlacementWizard do
       let(:state) do
         {
           "subject" => { "subject_id" => drama.id },
+          "terms" => { "term_ids" => %w[any_term] },
         }
       end
 
@@ -188,15 +194,32 @@ RSpec.describe Placements::AddPlacementWizard do
 
     context "when there are invalid steps" do
       let(:school) { secondary_school }
-      let(:state) do
-        {
-          "subject" => { "subject_id" => drama.id },
-          "mentors" => { "mentor_ids" => [] }, # invalid
-        }
+
+      context "when not mentor is given in the mentors step" do
+        let(:state) do
+          {
+            "subject" => { "subject_id" => drama.id },
+            "terms" => { "term_ids" => %w[any_term] },
+            "mentors" => { "mentor_ids" => [] }, # invalid
+          }
+        end
+
+        it "raises an error" do
+          expect { wizard.create_placement }.to raise_error "Invalid wizard state"
+        end
       end
 
-      it "raises an error" do
-        expect { wizard.create_placement }.to raise_error "Invalid wizard state"
+      context "when no term is given in the terms step" do
+        let(:state) do
+          {
+            "subject" => { "subject_id" => drama.id },
+            "terms" => { "term_ids" => [] },
+          }
+        end
+
+        it "raises an error" do
+          expect { wizard.create_placement }.to raise_error "Invalid wizard state"
+        end
       end
     end
   end

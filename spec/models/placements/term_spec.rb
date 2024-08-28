@@ -21,4 +21,16 @@ RSpec.describe Placements::Term, type: :model do
     it { is_expected.to have_many(:placement_windows).class_name("Placements::PlacementWindow") }
     it { is_expected.to have_many(:placements).through(:placement_windows) }
   end
+
+  describe "scopes" do
+    describe "#order_by_term" do
+      let!(:autumn_term) { create(:placements_term, :autumn) }
+      let!(:spring_term) { create(:placements_term, :spring) }
+      let!(:summer_term) { create(:placements_term, :summer) }
+
+      it "returns a collection of terms, in the order of Summer, Spring, Autumn" do
+        expect(described_class.order_by_term).to eq([summer_term, spring_term, autumn_term])
+      end
+    end
+  end
 end

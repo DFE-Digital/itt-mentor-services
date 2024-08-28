@@ -5,6 +5,7 @@ RSpec.describe "Support console / 'Add placement' journey", service: :placements
   let(:school) { create(:placements_school, :secondary, name: "Hogwarts") }
   let(:school_id) { school.id }
   let(:drama) { create(:subject, :secondary, name: "Drama") }
+  let(:summer_term) { create(:placements_term, :summer) }
   let(:start_path) { new_add_placement_placements_support_school_placements_path(school_id:) }
 
   before { sign_in_as current_user }
@@ -13,6 +14,7 @@ RSpec.describe "Support console / 'Add placement' journey", service: :placements
     before do
       # Populate the wizard so it has some existing state
       put step_path(:subject), params: { "placements_add_placement_wizard_subject_step[subject_id]" => drama.id }
+      put step_path(:terms), params: { "placements_add_placement_wizard_terms_step[term_ids]" => [summer_term.id] }
     end
 
     it "resets the wizard state" do
@@ -32,6 +34,7 @@ RSpec.describe "Support console / 'Add placement' journey", service: :placements
       # Populate the wizard so it's ready to submit
       get start_path
       put step_path(:subject), params: { "placements_add_placement_wizard_subject_step[subject_id]" => drama.id }
+      put step_path(:terms), params: { "placements_add_placement_wizard_terms_step[term_ids]" => [summer_term.id] }
     end
 
     it "creates a placement" do
