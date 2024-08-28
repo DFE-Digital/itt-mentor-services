@@ -5,11 +5,12 @@ class Placements::Placements::FilterForm < ApplicationForm
   attribute :subject_ids, default: []
   attribute :year_groups, default: []
   attribute :placements_to_show, default: "available_placements"
+  attribute :academic_year_id, default: Placements::AcademicYear.current.id
   attribute :only_partner_schools, :boolean, default: false
 
   def initialize(params = {})
     params.each_value { |v| v.compact_blank! if v.is_a?(Array) }
-
+    
     super(params)
   end
 
@@ -40,6 +41,7 @@ class Placements::Placements::FilterForm < ApplicationForm
       year_groups:,
       only_partner_schools:,
       placements_to_show:,
+      academic_year_id:,
     }
   end
 
