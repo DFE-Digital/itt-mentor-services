@@ -27,7 +27,7 @@ class AcademicYear < ApplicationRecord
   def self.for_date(date)
     existing_academic_year = find_by(starts_on: ..date, ends_on: date..)
     return existing_academic_year if existing_academic_year.present?
-    
+
     start_year = date.month < START_DATE[:month] ? date.year - 1 : date.year
     starts_on = Date.new(start_year, START_DATE[:month], START_DATE[:day])
     ends_on = Date.new(start_year + 1, END_DATE[:month], END_DATE[:day])

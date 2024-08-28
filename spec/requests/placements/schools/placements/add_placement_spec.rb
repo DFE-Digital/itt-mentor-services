@@ -4,6 +4,7 @@ RSpec.describe "'Add placement' journey", service: :placements, type: :request d
   let(:current_user) { create(:placements_user, schools: [school]) }
   let(:school) { create(:placements_school, :secondary, name: "Hogwarts") }
   let(:school_id) { school.id }
+  let(:current_academic_year) { create(:placements_academic_year) }
   let(:drama) { create(:subject, :secondary, name: "Drama") }
   let(:summer_term) { create(:placements_term, :summer) }
   let(:start_path) { new_add_placement_placements_school_placements_path(school_id:) }
@@ -14,6 +15,7 @@ RSpec.describe "'Add placement' journey", service: :placements, type: :request d
     before do
       # Populate the wizard so it has some existing state
       put step_path(:subject), params: { "placements_add_placement_wizard_subject_step[subject_id]" => drama.id }
+      put step_path(:academic_year), params: { "placements_add_placement_wizard_academic_year_step[academic_year_id]" => current_academic_year.id }
       put step_path(:terms), params: { "placements_add_placement_wizard_terms_step[term_ids]" => [summer_term.id] }
     end
 
@@ -33,7 +35,12 @@ RSpec.describe "'Add placement' journey", service: :placements, type: :request d
     before do
       # Populate the wizard so it's ready to submit
       get start_path
-      put step_path(:subject), params: { "placements_add_placement_wizard_subject_step[subject_id]" => drama.id }
+      put step_path(:subject), params: {
+        "placements_add_placement_wizard_subject_step[subject_id]" => drama.id,
+      }
+      put step_path(:academic_year), params: {
+        "placements_add_placement_wizard_academic_year_step[academic_year_id]" => current_academic_year.id,
+      }
       put step_path(:terms), params: { "placements_add_placement_wizard_terms_step[term_ids]" => [summer_term.id] }
     end
 
