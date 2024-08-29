@@ -143,19 +143,19 @@
         <div class="app-filter__option">
             <%= form.govuk_radio_buttons_fieldset(
               :academic_year_id,
-              legend: { text: "Academic year", size: "s" },
+              legend: { text: t(".academic_year.label"), size: "s" },
               small: true,
               multiple: false,
             ) do %>
               <%= form.govuk_radio_button :academic_year_id,
                 @current_academic_year.id,
-                label: { text: "This academic year (#{@current_academic_year.name})" },
+                label: { text: @current_academic_year.display_name },
                 checked: filter_form.academic_year_id == @current_academic_year.id,
                 multiple: false %>
               <%= form.govuk_radio_button :academic_year_id,
-                @current_academic_year.next.id,
-                label: { text: "Next academic year (#{@current_academic_year.next.name})" },
-                checked: filter_form.academic_year_id == @current_academic_year.next.id,
+                @next_academic_year.id,
+                label: { text: @next_academic_year.display_name },
+                checked: filter_form.academic_year_id == @next_academic_year.id,
                 multiple: false %>
             <% end %>
           </div>
