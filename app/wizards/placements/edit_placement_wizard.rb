@@ -13,6 +13,7 @@ module Placements
       add_step(ProviderStep) if current_step == :provider
       add_step(AddPlacementWizard::YearGroupStep) if current_step == :year_group
       add_step(AddPlacementWizard::MentorsStep) if current_step == :mentors
+      add_step(AddPlacementWizard::TermsStep) if current_step == :terms
     end
 
     def update_placement
@@ -30,6 +31,10 @@ module Placements
         placement.mentors = steps[:mentors].mentors
       end
 
+      if steps[:terms].present?
+        placement.terms = step[:terms].terms
+      end
+
       placement.save!
     end
 
@@ -37,6 +42,7 @@ module Placements
       state["provider"] = { "provider_id" => placement.provider_id }
       state["year_group"] = { "year_group" => placement.year_group }
       state["mentors"] = { "mentor_ids" => placement.mentors.ids }
+      state["terms"] = { "term_ids" => placement.terms.ids }
     end
   end
 end
