@@ -10,16 +10,8 @@ class Placements::AddPlacementWizard::AcademicYearStep < Placements::BaseStep
     ]
   end
 
-  def academic_year_display_name(academic_year)
-    if academic_year == current_academic_year
-      I18n.t("placements.wizards.add_placement_wizard.academic_year_step.current_academic_year", academic_year: academic_year.name)
-    else
-      I18n.t("placements.wizards.add_placement_wizard.academic_year_step.next_academic_year", academic_year: academic_year.name)
-    end
-  end
-
   def academic_year
-    @academic_year ||= Placements::AcademicYear.find(academic_year_id)
+    @academic_year ||= Placements::AcademicYear.find(academic_year_id).decorate
   end
 
   private
@@ -29,6 +21,6 @@ class Placements::AddPlacementWizard::AcademicYearStep < Placements::BaseStep
   end
 
   def create_struct_for_academic_year_selection(academic_year)
-    OpenStruct.new value: academic_year.id, name: academic_year_display_name(academic_year)
+    OpenStruct.new value: academic_year.id, name: academic_year.decorate.display_name
   end
 end
