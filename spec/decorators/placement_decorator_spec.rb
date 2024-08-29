@@ -111,4 +111,36 @@ RSpec.describe PlacementDecorator do
       expect(placement.decorate.additional_subject_names).to eq("French and Spanish")
     end
   end
+
+  describe "#term_names" do
+    context "when the placement has no terms" do
+      it "returns Any term" do
+        placement = build(:placement)
+
+        expect(placement.decorate.term_names).to eq("Any time in the academic year")
+      end
+    end
+
+    context "when the placement has one term" do
+      it "returns the term name" do
+        placement = create(:placement)
+        term = create(:placements_term, :autumn)
+        placement.terms << term
+
+        expect(placement.decorate.term_names).to eq("Autumn term")
+      end
+    end
+
+    context "when the placement has multiple terms" do
+      it "returns a list of term names" do
+        placement = create(:placement)
+        term1 = create(:placements_term, :autumn)
+        term2 = create(:placements_term, :spring)
+        placement.terms << term1
+        placement.terms << term2
+
+        expect(placement.decorate.term_names).to eq("Spring term - Autumn term")
+      end
+    end
+  end
 end
