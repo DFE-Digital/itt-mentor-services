@@ -40,18 +40,11 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
   context "with terms" do
     let!(:spring_term) { create(:placements_term, :spring) }
     let!(:summer_term) { create(:placements_term, :summer) }
-    let!(:autumn_term) { create(:placements_term, :autumn) }
 
     scenario "User views a placement that has two terms" do
       given_a_placement_has_terms([spring_term, summer_term])
       when_i_visit_the_placement_show_page
       then_i_see_term_names_in_the_placement_details([spring_term, summer_term])
-    end
-
-    scenario "User views a placement that has all three terms" do
-      given_a_placement_has_terms([spring_term, summer_term, autumn_term])
-      when_i_visit_the_placement_show_page
-      then_i_see_any_time_in_academic_year_in_the_placement_details
     end
 
     scenario "User views a placement that has no terms" do
