@@ -27,8 +27,10 @@ RSpec.describe "Placements / Placements / View a placement",
   end
   let!(:subject_1) { create(:subject, name: "Biology") }
   let(:additional_subjects) { [] }
+  let(:academic_year) { create(:placements_academic_year).decorate }
+  let(:terms) { [create(:placements_term, :summer)] }
   let!(:placement) do
-    create(:placement, subject: placement_subject, school:, additional_subjects:)
+    create(:placement, subject: placement_subject, school:, additional_subjects:, academic_year:, terms:)
   end
 
   before { given_i_sign_in_as_patricia }
@@ -38,6 +40,7 @@ RSpec.describe "Placements / Placements / View a placement",
 
     scenario "User views a placement details" do
       when_i_visit_the_placement_show_page
+      then_i_see_the_placement_dates(academic_year, terms)
       then_i_see_details_for_the_school
       and_i_see_the_subject_name("Biology")
       and_i_see_the_itt_placement_contact_details_for_the_school
@@ -88,6 +91,16 @@ RSpec.describe "Placements / Placements / View a placement",
       expect(page).to have_link "Partner schools", current: "false"
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Organisation details", current: "false"
+    end
+  end
+
+  def then_i_see_the_placement_dates(academic_year, terms)
+    expect(page).to have_content("Placement dates")
+    expect(page).to have_content("Academic year")
+    expect(page).to have_content(academic_year.display_name)
+
+    terms.each do |term|
+      expect(page).to have_content(term.name)
     end
   end
 
