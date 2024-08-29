@@ -35,6 +35,7 @@ en:
         table:
           subject: Subject
           mentor: Mentor
+          expected_date: Expected date
           provider: Provider
         add_placement:
           edit:
@@ -51,6 +52,7 @@ en:
           autumn: Autumn
           spring: Spring
           summer: Summer
+          any_term: Any time in the academic year
         not_yet_known: Not yet known
         year_groups:
           year_1: Year 1
