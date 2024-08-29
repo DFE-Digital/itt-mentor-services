@@ -37,6 +37,7 @@ module Placements
       placement = school.placements.build
       placement.academic_year = ::Placements::AcademicYear.current
       placement.subject = steps[:subject].subject
+      placement.terms = steps[:terms].terms
 
       if steps[:additional_subjects].present?
         placement.additional_subjects = steps[:additional_subjects].additional_subjects
@@ -48,10 +49,6 @@ module Placements
 
       if steps[:mentors].present?
         placement.mentors = steps[:mentors].mentors
-      end
-
-      if steps[:terms].present?
-        placement.terms = steps[:terms].terms
       end
 
       placement
