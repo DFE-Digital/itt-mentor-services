@@ -10,7 +10,7 @@ class Placements::AddPlacementWizard::TermsStep < Placements::BaseStep
   def term_names
     return if term_ids == ANY_TERM
 
-    terms.pluck(:name).to_sentence
+    terms.pluck(:name).join(", ")
   end
 
   def terms_for_selection
