@@ -1,5 +1,9 @@
 en:
   placements:
+    academic_year:
+      current_academic_year: This academic year (%{academic_year})
+      next_academic_year: Next academic year (%{academic_year})
+      previous_academic_year: Previous academic year (%{academic_year})
     placements:
       index:
         placements_found:
@@ -26,6 +30,8 @@ en:
           assigned_to_me: Assigned to me
           all_placements: All placements
         year_group: Primary year group
+        academic_year:
+          label: Academic year
       placement_details:
         contact_details: Contact details
         itt_placement_contact: Placement contact
