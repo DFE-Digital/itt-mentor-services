@@ -32,6 +32,12 @@ RSpec.describe Placements::EditPlacementWizard do
 
       it { is_expected.to eq %i[year_group] }
     end
+
+    context "with the terms step" do
+      let(:current_step) { :terms }
+
+      it { is_expected.to eq %i[terms] }
+    end
   end
 
   describe "#update_placement" do
@@ -41,6 +47,7 @@ RSpec.describe Placements::EditPlacementWizard do
     let(:selected_provider) { school.partner_providers.sample }
     let(:mentor_not_known) { Placements::AddPlacementWizard::MentorsStep::NOT_KNOWN }
     let(:selected_year_group) { :year_1 }
+    let(:selected_term) { create(:placements_term, :summer) }
 
     context "when the step is valid" do
       before { edit_wizard }
@@ -111,6 +118,20 @@ RSpec.describe Placements::EditPlacementWizard do
 
         it "updates the placement" do
           expect(placement.year_group).to eq "year_1"
+        end
+      end
+
+      context "when the step is terms" do
+        let(:current_step) { :terms }
+
+        let(:state) do
+          {
+            "terms" => { "term_ids" => [selected_term.id] },
+          }
+        end
+
+        it "updates the placement" do
+          expect(placement.terms).to contain_exactly(selected_term)
         end
       end
     end

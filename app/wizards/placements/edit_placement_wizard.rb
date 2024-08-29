@@ -32,7 +32,7 @@ module Placements
       end
 
       if steps[:terms].present?
-        placement.terms = step[:terms].terms
+        placement.terms = steps[:terms].terms
       end
 
       placement.save!
