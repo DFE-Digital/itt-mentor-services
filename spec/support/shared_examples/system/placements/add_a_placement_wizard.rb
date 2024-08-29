@@ -590,6 +590,29 @@ RSpec.shared_examples "an add a placement wizard" do
           then_i_see_the_check_your_answers_page("Secondary", mentor_1, spring_term.name)
         end
 
+        it "I select all terms separately" do
+          school.update!(phase: "Nursery")
+          when_i_visit_the_placements_page
+          and_i_click_on("Add placement")
+          when_i_choose_a_phase("Secondary")
+          and_i_click_on("Continue")
+          when_i_choose_a_subject(subject_2.name)
+          and_i_click_on("Continue")
+          when_i_check_a_term(summer_term.name)
+          and_i_click_on("Continue")
+          when_i_check_a_mentor(mentor_1.full_name)
+          and_i_click_on("Continue")
+          when_i_change_my_term
+          then_i_see_the_add_a_term_page
+          when_i_check_a_term(summer_term.name)
+          when_i_check_a_term(spring_term.name)
+          when_i_check_a_term(autumn_term.name)
+          and_i_click_on("Continue")
+          then_i_see_the_add_a_placement_mentor_page
+          and_i_click_on("Continue")
+          then_i_see_the_check_your_answers_page("Secondary", mentor_1, "Any time in the academic year")
+        end
+
         it "I do not decide to change my term" do
           school.update!(phase: "Nursery")
           when_i_visit_the_placements_page
