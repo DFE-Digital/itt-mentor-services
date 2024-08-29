@@ -8,8 +8,6 @@ en:
           title: Select an academic year - %{contextual_text}
           title_with_error: "Error: Select an academic year - %{contextual_text}"
           select_an_academic_year: Select an academic year
-          current_academic_year: This academic year (%{academic_year})
-          next_academic_year: Next academic year (%{academic_year})
           continue: Continue
         phase_step:
           title: Select a phase - %{contextual_text}
