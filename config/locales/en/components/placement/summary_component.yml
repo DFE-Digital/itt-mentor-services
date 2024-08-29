@@ -3,6 +3,8 @@ en:
     placement:
       summary_component:
         phase: Phase
+        academic_year: Academic year
+        terms: Expected date
         age_range: Age range
         establishment_group: Establishment group
         gender: Gender
