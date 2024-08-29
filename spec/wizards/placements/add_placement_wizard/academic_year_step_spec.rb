@@ -28,8 +28,8 @@ RSpec.describe Placements::AddPlacementWizard::AcademicYearStep, type: :model do
   end
 
   describe "#academic_years_for_selection" do
-    let!(:current_academic_year) { create(:placements_academic_year) }
-    let!(:next_academic_year) { create(:placements_academic_year, :next) }
+    let!(:current_academic_year) { Placements::AcademicYear.current }
+    let!(:next_academic_year) { current_academic_year.next }
     let!(:academic_years) do
       [
         OpenStruct.new(value: current_academic_year.id, name: "This academic year (#{current_academic_year.name})"),
