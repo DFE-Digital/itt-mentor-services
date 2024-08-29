@@ -41,6 +41,18 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
       given_i_sign_in_as_anne
       then_i_see_the_provider_name("Not yet known")
     end
+
+    scenario "when the placement has no terms" do
+      given_a_placement_exists
+      given_i_sign_in_as_anne
+      then_i_see_term_name("Any time in the academic year")
+    end
+
+    scenario "when the placement has terms" do
+      given_a_placement_exists(with_term: true)
+      given_i_sign_in_as_anne
+      then_i_see_term_name("Autumn term")
+    end
   end
 
   private
@@ -53,8 +65,8 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
     click_on "Sign in using DfE Sign In"
   end
 
-  def given_a_placement_exists
-    create(:placement, school:)
+  def given_a_placement_exists(with_term: false)
+    with_term ? create(:placement, school:, terms: [create(:placements_term, :autumn)]) : create(:placement, school:)
   end
 
   def then_i_see_the_placements_page
@@ -93,8 +105,14 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
     end
   end
 
-  def then_i_see_the_provider_name(name)
+  def then_i_see_term_name(name)
     within("tbody tr:nth-child(1) td:nth-child(3)") do
+      expect(page).to have_content name
+    end
+  end
+
+  def then_i_see_the_provider_name(name)
+    within("tbody tr:nth-child(1) td:nth-child(4)") do
       expect(page).to have_content name
     end
   end

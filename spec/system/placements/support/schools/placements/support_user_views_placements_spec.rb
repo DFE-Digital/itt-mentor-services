@@ -49,6 +49,22 @@ RSpec.describe "Placements / Support / Schools / Placements / Support User views
       and_i_dont_see_placements_from_another_school
       then_i_see_the_provider_is_not_assigned
     end
+
+    scenario "when the placement has no terms" do
+      user_exists_in_dfe_sign_in(user: colin)
+      given_i_sign_in
+      when_i_visit_the_support_school_placements_page(school)
+      then_i_see_a_list_of_the_schools_placements
+      then_i_see_the_term_name("Any time in the academic year")
+    end
+
+    scenario "when the placement has terms" do
+      user_exists_in_dfe_sign_in(user: colin)
+      given_i_sign_in
+      and_the_placement_has_terms(placement1)
+      when_i_visit_the_support_school_placements_page(school)
+      then_i_see_the_term_name("Autumn term")
+    end
   end
 
   private
@@ -77,6 +93,10 @@ RSpec.describe "Placements / Support / Schools / Placements / Support User views
     end
 
     within("tbody tr:nth-child(1) td:nth-child(3)") do
+      expect(page).to have_content("Any time in the academic year")
+    end
+
+    within("tbody tr:nth-child(1) td:nth-child(4)") do
       expect(page).to have_content(placement1.provider.name)
     end
   end
@@ -86,18 +106,29 @@ RSpec.describe "Placements / Support / Schools / Placements / Support User views
     expect(page).not_to have_content(placement3.mentors.map(&:full_name).to_sentence)
   end
 
+  def and_the_placement_has_terms(placement)
+    term = create(:placements_term, :autumn)
+    placement.terms << term
+  end
+
   def then_i_see_no_results
     expect(page).to have_content("There are no placements for #{another_school.name}.")
   end
 
-  def then_i_see_the_provider_name(name)
+  def then_i_see_the_term_name(name)
     within("tbody tr:nth-child(1) td:nth-child(3)") do
       expect(page).to have_content name
     end
   end
 
+  def then_i_see_the_provider_name(name)
+    within("tbody tr:nth-child(1) td:nth-child(4)") do
+      expect(page).to have_content name
+    end
+  end
+
   def then_i_see_the_provider_is_not_assigned
-    within("tbody tr:nth-child(2) td:nth-child(3)") do
+    within("tbody tr:nth-child(2) td:nth-child(4)") do
       expect(page).to have_content "Not yet known"
     end
   end
