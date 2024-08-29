@@ -47,8 +47,6 @@ class Placements::PlacementsQuery < ApplicationQuery
   end
 
   def academic_year_condition(scope)
-    return scope if filter_params[:academic_year_id].blank?
-
     scope.where(academic_year_id: filter_params[:academic_year_id])
   end
 
