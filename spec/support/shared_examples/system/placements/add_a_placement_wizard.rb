@@ -197,10 +197,10 @@ RSpec.shared_examples "an add a placement wizard" do
             then_my_chosen_mentor_is_checked(mentor_1.full_name)
 
             when_i_click_on("Back")
-            then_my_chosen_academic_year_is_selected(current_academic_year.name)
+            then_my_chosen_term_is_checked("Summer term")
 
             when_i_click_on("Back")
-            then_my_chosen_term_is_checked("Summer term")
+            then_my_chosen_academic_year_is_selected(current_academic_year.name)
 
             when_i_click_on("Back")
             then_my_chosen_year_group_is_selected("Year 1")
@@ -238,7 +238,7 @@ RSpec.shared_examples "an add a placement wizard" do
             and_i_see_the_error_message("Select an academic year")
             when_i_choose_an_academic_year(current_academic_year.name)
             and_i_click_on("Continue")
-            
+
             # Term error
             when_i_uncheck("Any time in the academic year")
             and_i_click_on("Continue")
