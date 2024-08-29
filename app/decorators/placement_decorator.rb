@@ -35,4 +35,12 @@ class PlacementDecorator < Draper::Decorator
     reload unless new_record?
     additional_subjects.map(&:name).sort.to_sentence
   end
+
+  def term_names
+    if terms.exists?
+      terms.order_by_term.pluck(:name).join(" - ")
+    else
+      I18n.t("placements.schools.placements.terms.any_term")
+    end
+  end
 end
