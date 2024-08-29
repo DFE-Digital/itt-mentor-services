@@ -10,16 +10,16 @@ class Placements::Placements::FilterForm < ApplicationForm
 
   def initialize(params = {})
     params.each_value { |v| v.compact_blank! if v.is_a?(Array) }
-    
+
     super(params)
   end
 
   def filters_selected?
-    attributes.except("placements_to_show").values.compact.flatten.any?
+    attributes.except("placements_to_show", "academic_year_id").values.compact.flatten.any?
   end
 
   def clear_filters_path(search_location: nil)
-    placements_placements_path(search_location:, filters: { placements_to_show: })
+    placements_placements_path(search_location:, filters: { placements_to_show:, academic_year_id: })
   end
 
   def index_path_without_filter(filter:, value: nil, search_location: nil)
