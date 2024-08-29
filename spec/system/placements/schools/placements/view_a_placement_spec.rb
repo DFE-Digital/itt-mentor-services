@@ -5,6 +5,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
   let!(:school) { create(:placements_school, name: "School 1", phase: "Primary") }
   let!(:placement) { create(:placement, school:) }
   let!(:subject_1) { create(:subject, name: "Subject 1", subject_area: :primary) }
+  let!(:current_academic_year) { Placements::AcademicYear.current }
   let!(:provider) { create(:provider, name: "Provider 1") }
   let(:partnership) { create(:placements_partnership, provider:, school:) }
 
@@ -26,6 +27,30 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
       given_a_placement_with_a_subject_which_has_child_subjects(subject_1, [subject_2, subject_3])
       when_i_visit_the_placement_show_page
       then_i_see_all_of_the_subjects_names_in_the_placement_details(["Subject 2", "Subject 3"])
+    end
+  end
+
+  context "with academic years" do
+    scenario "User views a placement with an academic year" do
+      when_i_visit_the_placement_show_page
+      then_i_see_the_academic_year_in_the_placement_details(current_academic_year)
+    end
+  end
+
+  context "with terms" do
+    let!(:spring_term) { create(:placements_term, :spring) }
+    let!(:summer_term) { create(:placements_term, :summer) }
+
+    scenario "User views a placement that has two terms" do
+      given_a_placement_has_terms([spring_term, summer_term])
+      when_i_visit_the_placement_show_page
+      then_i_see_term_names_in_the_placement_details([spring_term, summer_term])
+    end
+
+    scenario "User views a placement that has no terms" do
+      given_a_placement_has_no_terms
+      when_i_visit_the_placement_show_page
+      then_i_see_any_time_in_academic_year_in_the_placement_details
     end
   end
 
@@ -207,6 +232,34 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
     expect(page.find(".govuk-heading-l")).to have_content(additional_subject_names.sort.to_sentence)
     within(".govuk-summary-list") do
       expect(page).to have_content(additional_subject_names.sort.to_sentence)
+    end
+  end
+
+  def then_i_see_the_academic_year_in_the_placement_details(academic_year)
+    within(".govuk-summary-list") do
+      expect(page).to have_content(academic_year.name)
+    end
+  end
+
+  def given_a_placement_has_terms(terms)
+    placement.update!(terms:)
+  end
+
+  def given_a_placement_has_no_terms
+    placement.update!(terms: [])
+  end
+
+  def then_i_see_term_names_in_the_placement_details(terms)
+    within(".govuk-summary-list") do
+      terms.each do |term|
+        expect(page).to have_content(term.name)
+      end
+    end
+  end
+
+  def then_i_see_any_time_in_academic_year_in_the_placement_details
+    within(".govuk-summary-list") do
+      expect(page).to have_content(I18n.t("placements.schools.placements.terms.any_term"))
     end
   end
 
