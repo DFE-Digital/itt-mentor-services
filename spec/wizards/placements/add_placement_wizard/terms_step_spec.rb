@@ -46,7 +46,7 @@ RSpec.describe Placements::AddPlacementWizard::TermsStep, type: :model do
 
       it "returns the names of the terms as a string" do
         expect(step.term_names).to eq(
-          "#{summer_term.name}, #{spring_term.name}, and #{autumn_term.name}",
+          "#{summer_term.name}, #{spring_term.name}, #{autumn_term.name}",
         )
       end
     end
