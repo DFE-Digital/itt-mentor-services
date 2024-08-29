@@ -3,7 +3,8 @@ class Placements::PlacementsController < Placements::ApplicationController
   helper_method :filter_form, :location_coordinates
 
   def index
-    @current_academic_year = Placements::AcademicYear.current
+    @current_academic_year = Placements::AcademicYear.current.decorate
+    @next_academic_year = @current_academic_year.next.decorate
     @subjects = Subject.order_by_name.select(:id, :name)
     @establishment_groups = compact_school_attribute_values(:group)
     @schools = schools_scope.order_by_name.select(:id, :name)
