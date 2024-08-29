@@ -1,6 +1,7 @@
 class PlacementDecorator < Draper::Decorator
   delegate_all
   decorates_association :school
+  decorates_association :academic_year
 
   delegate :name, to: :subject, prefix: true, allow_nil: true
 

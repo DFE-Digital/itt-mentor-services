@@ -95,6 +95,8 @@ en:
               school_level: School level
               subject: Subject
               additional_subjects: Additional subjects
+              academic_year: Academic year
+              terms: Expected date
               year_group: Year group
               mentor: Mentor
               status: Status
