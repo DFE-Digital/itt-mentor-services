@@ -4,6 +4,7 @@ describe Placements::Placements::FilterForm, type: :model do
   include Rails.application.routes.url_helpers
 
   let(:provider) { create(:placements_provider) }
+  let(:current_academic_year) { Placements::AcademicYear.current }
 
   describe "#filters_selected?" do
     subject(:filter_form) { described_class.new(params).filters_selected? }
@@ -54,7 +55,10 @@ describe Placements::Placements::FilterForm, type: :model do
 
     it "returns the placements index page path" do
       expect(filter_form.clear_filters_path).to eq(
-        placements_placements_path(filters: { placements_to_show: "available_placements" }),
+        placements_placements_path(filters: {
+          placements_to_show: "available_placements",
+          academic_year_id: current_academic_year.id,
+        }),
       )
     end
   end
@@ -76,6 +80,7 @@ describe Placements::Placements::FilterForm, type: :model do
         ).to eq(
           placements_placements_path(filters: {
             placements_to_show: "available_placements",
+            academic_year_id: current_academic_year.id,
             school_ids: %w[school_id_2],
           }),
         )
@@ -94,7 +99,10 @@ describe Placements::Placements::FilterForm, type: :model do
             value: false,
           ),
         ).to eq(
-          placements_placements_path(filters: { placements_to_show: "available_placements" }),
+          placements_placements_path(filters: {
+            placements_to_show: "available_placements",
+            academic_year_id: current_academic_year.id,
+          }),
         )
       end
     end
@@ -113,6 +121,7 @@ describe Placements::Placements::FilterForm, type: :model do
         ).to eq(
           placements_placements_path(filters: {
             placements_to_show: "available_placements",
+            academic_year_id: current_academic_year.id,
             subject_ids: %w[subject_id_2],
           }),
         )
@@ -133,6 +142,7 @@ describe Placements::Placements::FilterForm, type: :model do
         ).to eq(
           placements_placements_path(filters: {
             placements_to_show: "available_placements",
+            academic_year_id: current_academic_year.id,
             year_groups: %w[year_group_2],
           }),
         )
@@ -145,6 +155,7 @@ describe Placements::Placements::FilterForm, type: :model do
       expect(described_class.new.query_params).to eq(
         {
           placements_to_show: "available_placements",
+          academic_year_id: current_academic_year.id,
           school_ids: [],
           only_partner_schools: false,
           subject_ids: [],
