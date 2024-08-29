@@ -412,12 +412,12 @@ RSpec.shared_examples "an add a placement wizard" do
           then_i_see_the_add_year_group_page("Year 1")
           when_i_choose_a_year_group("Year 1")
           and_i_click_on("Continue")
-          when_i_check_a_term(summer_term.name)
+          when_i_check_a_term("Any time in the academic year")
           and_i_click_on("Continue")
           then_i_see_the_add_a_placement_mentor_page
           when_i_check_a_mentor(mentor_1.full_name)
           and_i_click_on("Continue")
-          then_i_see_the_check_your_answers_page("Primary", mentor_1, summer_term.name)
+          then_i_see_the_check_your_answers_page("Primary", mentor_1, "Any time in the academic year")
           and_i_can_change_the_phase
           when_i_click_on("Publish placement")
           then_i_see_the_placements_page

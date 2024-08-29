@@ -40,6 +40,26 @@ RSpec.describe Placements::AddPlacementWizard::TermsStep, type: :model do
     end
   end
 
+  describe "#term_names" do
+    context "when term_ids contains term ids" do
+      let(:attributes) { { term_ids: [terms.pluck(:id)] } }
+
+      it "returns the names of the terms as a string" do
+        expect(step.term_names).to eq(
+          "#{summer_term.name}, #{spring_term.name}, and #{autumn_term.name}",
+        )
+      end
+    end
+
+    context "when term_ids is 'any_term'" do
+      let(:attributes) { { term_ids: %w[any_term] } }
+
+      it "returns nil" do
+        expect(step.term_names).to be_nil
+      end
+    end
+  end
+
   describe "#term_ids=" do
     context "when the value is blank" do
       it "remains blank" do
