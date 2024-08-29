@@ -19,7 +19,7 @@ class Placements::AddPlacementWizard::AcademicYearStep < Placements::BaseStep
   end
 
   def academic_year
-    Placements::AcademicYear.find(academic_year_id)
+    @academic_year ||= Placements::AcademicYear.find(academic_year_id)
   end
 
   private
