@@ -28,8 +28,9 @@
 #
 FactoryBot.define do
   factory :placement do
+    academic_year { Placements::AcademicYear.current }
+
     association :school, factory: :placements_school
     association :subject, factory: :subject
-    association :academic_year, factory: :placements_academic_year
   end
 end
