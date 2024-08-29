@@ -8,6 +8,11 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-m govuk-!-margin-top-0">
+      <%= t(".itt_placement_dates") %>
+    </h2>
+    <%= render "placements/placements/placement_dates", school:, placement: %>
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-0">
       <%= t(".itt_placement_contact") %>
     </h2>
     <%= render "shared/schools/school_contact_details",

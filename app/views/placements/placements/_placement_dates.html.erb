@@ -1,0 +1,12 @@
+<%# locals: (school:, placement:) -%>
+<%= govuk_summary_list(actions: false) do |summary_list| %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".academic_year")) %>
+    <% row.with_value(text: placement.academic_year.display_name) %>
+  <% end %>
+
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".terms")) %>
+    <% row.with_value(text: placement.term_names) %>
+  <% end %>
+<% end %>

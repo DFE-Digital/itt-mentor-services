@@ -35,12 +35,16 @@ en:
       placement_details:
         contact_details: Contact details
         itt_placement_contact: Placement contact
+        itt_placement_dates: Placement dates
         location: Location
         additional_details: Additional details
         placement: "Placement - %{school_name}"
       show:
         page_title: "%{subject_name} - Placements - %{school_name}"
         placement: "Placement - %{school_name}"
+      placement_dates:
+        academic_year: Academic year
+        terms: Expected date
       school_details:
         establishment_group: Establishment group
         school_phase: School phase
