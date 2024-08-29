@@ -10,6 +10,8 @@ en:
               invalid: Select an additional subject
             provider_id:
               invalid: Select a provider
+            academic_year:
+              invalid: Select an academic year
         placement:
           attributes:
             mentor_ids:
@@ -20,6 +22,8 @@ en:
               invalid: Select a provider or not yet known
             year_group:
               invalid: Select a year group
+            academic_year:
+              invalid: Select an academic year
   placements:
     providers:
       partner_schools:
