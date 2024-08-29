@@ -33,6 +33,22 @@
     </div>
     <div class="app-result-detail__row">
       <dt class="app-result-detail__key">
+        <%= t(".academic_year") %>
+      </dt>
+      <dd class="app-result-detail__value">
+        <%= placement.academic_year.display_name %>
+      </dd>
+    </div>
+        <div class="app-result-detail__row">
+      <dt class="app-result-detail__key">
+        <%= t(".terms") %>
+      </dt>
+      <dd class="app-result-detail__value">
+        <%= placement.term_names %>
+      </dd>
+    </div>
+    <div class="app-result-detail__row">
+      <dt class="app-result-detail__key">
         <%= t(".age_range") %>
       </dt>
       <dd class="app-result-detail__value">

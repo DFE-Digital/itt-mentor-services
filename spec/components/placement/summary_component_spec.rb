@@ -7,6 +7,8 @@ RSpec.describe Placement::SummaryComponent, type: :component do
 
   let(:subject_1) { create(:subject, name: "Biology") }
   let(:subject_2) { create(:subject, name: "Classics") }
+  let(:academic_year) { create(:placements_academic_year) }
+  let(:terms) { [create(:placements_term, :summer)] }
   let(:school) do
     create(
       :placements_school,
@@ -23,8 +25,8 @@ RSpec.describe Placement::SummaryComponent, type: :component do
       longitude: -0.570409,
     )
   end
-  let(:placement_1) { create(:placement, school:, subject: placement_subject, mentors:) }
-  let(:placement_2) { create(:placement, school:, subject: subject_2, mentors:) }
+  let(:placement_1) { create(:placement, school:, subject: placement_subject, mentors:, academic_year:, terms:) }
+  let(:placement_2) { create(:placement, school:, subject: subject_2, mentors:, academic_year:, terms:) }
   let(:provider) { create(:provider) }
 
   context "when given multiple placements" do
@@ -46,6 +48,12 @@ RSpec.describe Placement::SummaryComponent, type: :component do
       # Subject details
       expect(page).to have_content("Biology", count: 1)
       expect(page).to have_content("Classics", count: 1)
+
+      # Academic year details
+      expect(page).to have_content("2023 to 2024", count: 2)
+      
+      # Expected date details
+      expect(page).to have_content("Summer term", count: 2)
     end
   end
 
