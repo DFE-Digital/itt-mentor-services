@@ -77,11 +77,25 @@ RSpec.describe Placements::AddPlacementWizard::TermsStep, type: :model do
       end
     end
 
-    context "when the value includes term ids" do
-      it "retains the term ids" do
-        step.term_ids = terms.pluck(:id)
+    context "when the value includes all 3 terms (summer, spring, autumn)" do
+      it "return any_term" do
+        step.term_ids = terms.pluck(:id).sort
 
-        expect(step.term_ids).to match_array(terms.pluck(:id))
+        expect(step.term_ids).to eq(%w[any_term])
+      end
+    end
+
+    context "when the value includes term ids (but not all term ids)" do
+      before do
+        summer_term
+        spring_term
+        autumn_term
+      end
+
+      it "retains the term ids" do
+        step.term_ids = [summer_term.id]
+
+        expect(step.term_ids).to match_array(summer_term.id)
       end
     end
   end
