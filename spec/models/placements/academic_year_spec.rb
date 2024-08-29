@@ -12,7 +12,7 @@
 require "rails_helper"
 
 RSpec.describe Placements::AcademicYear, type: :model do
-  let!(:current_academic_year) { create(:placements_academic_year) }
+  let!(:current_academic_year) { described_class.find_by(starts_on: ..Date.current, ends_on: Date.current..) }
 
   describe "associations" do
     it { is_expected.to have_many(:placements) }
