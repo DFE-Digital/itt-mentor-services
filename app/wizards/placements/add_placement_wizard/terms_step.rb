@@ -32,7 +32,7 @@ class Placements::AddPlacementWizard::TermsStep < Placements::BaseStep
       []
     elsif term_ids.include?("any_term")
       ANY_TERM
-    elsif term_ids.sort == terms_for_selection.ids.sort
+    elsif term_ids.reject(&:empty?).sort == terms_for_selection.ids.sort
       ANY_TERM
     else
       terms_for_selection.where(id: term_ids).ids

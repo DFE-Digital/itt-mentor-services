@@ -50,7 +50,12 @@ RSpec.describe Placements::EditPlacementWizard do
     let(:selected_term) { create(:placements_term, :summer) }
 
     context "when the step is valid" do
-      before { edit_wizard }
+      before do
+        selected_term
+        _spring_term = create(:placements_term, :spring)
+        _autumn_term = create(:placements_term, :autumn)
+        edit_wizard
+      end
 
       context "when the step is mentors" do
         let(:current_step) { :mentors }
