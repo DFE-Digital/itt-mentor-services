@@ -15,6 +15,7 @@ RSpec.describe "Placements / Support / Schools / Placements / Support User views
   let!(:school) { create(:placements_school, mentors: [mentor1, mentor2]) }
   let!(:another_school) { create(:placements_school) }
   let!(:colin) { create(:placements_support_user, :colin) }
+  let(:term) { create(:placements_term, :autumn) }
 
   scenario "view a school's empty placements list" do
     user_exists_in_dfe_sign_in(user: colin)
@@ -61,7 +62,7 @@ RSpec.describe "Placements / Support / Schools / Placements / Support User views
     scenario "when the placement has terms" do
       user_exists_in_dfe_sign_in(user: colin)
       given_i_sign_in
-      and_the_placement_has_terms(placement1)
+      and_the_placement_has_terms(placement1, term)
       when_i_visit_the_support_school_placements_page(school)
       then_i_see_the_term_name("Autumn term")
     end
@@ -106,8 +107,7 @@ RSpec.describe "Placements / Support / Schools / Placements / Support User views
     expect(page).not_to have_content(placement3.mentors.map(&:full_name).to_sentence)
   end
 
-  def and_the_placement_has_terms(placement)
-    term = create(:placements_term, :autumn)
+  def and_the_placement_has_terms(placement, term)
     placement.terms << term
   end
 
