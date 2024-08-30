@@ -242,11 +242,7 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
   end
 
   def given_a_placement_has_terms(terms)
-<<<<<<< HEAD
     placement.update!(terms:)
-=======
-    placement.update!(terms: terms)
->>>>>>> f978074d (WIP)
   end
 
   def given_a_placement_has_no_terms
