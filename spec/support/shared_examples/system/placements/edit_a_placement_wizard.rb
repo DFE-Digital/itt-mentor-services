@@ -148,7 +148,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
       then_i_should_see_the_year_group_in_the_placement_details(
         year_group_name: "Year 4",
       )
-      and_i_see_success_message("Year Group updated")
+      and_i_see_success_message("Year group updated")
     end
   end
 
@@ -185,7 +185,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         when_i_select_mentor_2
         and_i_click_on("Continue")
         then_i_should_see_the_mentor_name_in_the_placement_details(mentor_name: mentor_2.full_name)
-        and_i_see_success_message("Mentors updated")
+        and_i_see_success_message("Mentor updated")
       end
 
       it "User does not select a mentor" do
@@ -245,7 +245,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         then_i_should_see_the_mentor_name_in_the_placement_details(
           mentor_name: mentor_2.full_name,
         )
-        and_i_see_success_message("Mentors updated")
+        and_i_see_success_message("Mentor updated")
       end
 
       it "User does not select a mentor" do
@@ -310,8 +310,78 @@ RSpec.shared_examples "an edit placement wizard", :js do
         when_i_select_not_yet_known
         and_i_click_on("Continue")
         then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
-        and_i_see_success_message("Mentors updated")
+        and_i_see_success_message("Mentor updated")
       end
+    end
+  end
+
+  context "when I edit the expected date (terms)" do
+    let(:summer_term) { create(:placements_term, :summer) }
+    let(:spring_term) { create(:placements_term, :spring) }
+    let(:autumn_term) { create(:placements_term, :autumn) }
+
+    before do
+      summer_term
+      spring_term
+      autumn_term
+    end
+
+    it "User selects a different term" do
+      when_i_visit_the_placement_show_page
+      then_i_see_expected_date_in_the_placement_details(
+        term: "Any time in the academic year",
+      )
+      when_i_click_link(
+        text: "Change",
+        href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :terms),
+      )
+      then_i_should_see_the_edit_terms_page
+      when_i_select_term("Summer term")
+      and_i_click_on("Continue")
+      then_i_see_expected_date_in_the_placement_details(
+        term: "Summer term",
+      )
+      and_i_see_success_message("Expected date updated")
+    end
+
+    it "User selects all 3 terms" do
+      given_the_placement_has_terms([summer_term])
+      when_i_visit_the_placement_show_page
+      then_i_see_expected_date_in_the_placement_details(
+        term: "Summer term",
+      )
+      when_i_click_link(
+        text: "Change",
+        href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :terms),
+      )
+      then_i_should_see_the_edit_terms_page
+      when_i_select_term("Summer term")
+      when_i_select_term("Spring term")
+      when_i_select_term("Autumn term")
+      and_i_click_on("Continue")
+      then_i_see_expected_date_in_the_placement_details(
+        term: "Any time in the academic year",
+      )
+      and_i_see_success_message("Expected date updated")
+    end
+
+    it "User selects 'Any time in the academic year'" do
+      given_the_placement_has_terms([summer_term])
+      when_i_visit_the_placement_show_page
+      then_i_see_expected_date_in_the_placement_details(
+        term: "Summer term",
+      )
+      when_i_click_link(
+        text: "Change",
+        href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :terms),
+      )
+      then_i_should_see_the_edit_terms_page
+      when_i_select_term("Any time in the academic year")
+      and_i_click_on("Continue")
+      then_i_see_expected_date_in_the_placement_details(
+        term: "Any time in the academic year",
+      )
+      and_i_see_success_message("Expected date updated")
     end
   end
 
@@ -331,6 +401,12 @@ RSpec.shared_examples "an edit placement wizard", :js do
     within(".govuk-summary-list") do
       expect(page).to have_content(mentor_name)
       expect(page).to have_content(change_link)
+    end
+  end
+
+  def then_i_see_expected_date_in_the_placement_details(term:)
+    within(".govuk-summary-list") do
+      expect(page).to have_content(term)
     end
   end
 
@@ -402,8 +478,17 @@ RSpec.shared_examples "an edit placement wizard", :js do
     expect(page).to have_content("Select a provider")
   end
 
+  def then_i_should_see_the_edit_terms_page
+    expect(page).to have_content("Placement details")
+    expect(page).to have_content("Select when the placement could be")
+  end
+
   def when_i_select_provider(provider)
     choose provider.name
+  end
+
+  def when_i_select_term(term_name)
+    check term_name
   end
 
   def then_i_should_see_the_provider_name_in_the_placement_details(provider_name:, change_link: "Change")
@@ -450,6 +535,10 @@ RSpec.shared_examples "an edit placement wizard", :js do
       delivery.to.include?(user.email) &&
         delivery.subject == subject
     end
+  end
+
+  def given_the_placement_has_terms(terms)
+    placement.terms = terms
   end
 
   alias_method :and_i_click_on, :when_i_click_on

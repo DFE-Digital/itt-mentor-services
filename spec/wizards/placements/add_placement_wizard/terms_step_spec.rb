@@ -83,6 +83,14 @@ RSpec.describe Placements::AddPlacementWizard::TermsStep, type: :model do
 
         expect(step.term_ids).to eq(%w[any_term])
       end
+
+      context "when the value includes an empty string" do
+        it "returns any_term" do
+          step.term_ids = terms.pluck(:id).sort << ""
+
+          expect(step.term_ids).to eq(%w[any_term])
+        end
+      end
     end
 
     context "when the value includes term ids (but not all term ids)" do

@@ -43,7 +43,11 @@ en:
             placement_details: Placement details
         edit_placement:
           update:
-            success: "%{step_attribute} updated"
+            success: 
+              mentors: Mentor updated
+              provider: Provider updated
+              year_group: Year group updated
+              terms: Expected date updated
           edit:
             edit_placement: Placement details
             cancel: Cancel

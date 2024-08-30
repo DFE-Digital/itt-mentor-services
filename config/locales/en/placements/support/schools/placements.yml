@@ -9,7 +9,11 @@ en:
               add_placement: Placement details - %{organisation_name}
           edit_placement:
             update:
-              success: "%{step_attribute} updated"
+              success: 
+                mentors: Mentor updated
+                provider: Provider updated
+                year_group: Year group updated
+                terms: Expected date updated
             edit:
               edit_placement: Placement details - %{organisation_name}
               cancel: Cancel
