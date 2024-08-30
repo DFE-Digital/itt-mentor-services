@@ -26,8 +26,10 @@ RSpec.describe "Placements / Placements / View placements list",
   let!(:subject_1) { create(:subject, name: "Primary with mathematics") }
   let!(:subject_2) { create(:subject, name: "Chemistry") }
   let!(:subject_3) { create(:subject, name: "Physics") }
-  let(:placement_1) { create(:placement, subject: subject_1, school: primary_school, year_group: :year_1) }
-  let(:placement_2) { create(:placement, subject: subject_2, school: secondary_school) }
+  let(:summer_term) { build(:placements_term, :summer) }
+  let(:autumn_term) { build(:placements_term, :autumn) }
+  let(:placement_1) { create(:placement, subject: subject_1, school: primary_school, year_group: :year_1, terms: [summer_term]) }
+  let(:placement_2) { create(:placement, subject: subject_2, school: secondary_school, terms: [autumn_term]) }
   let(:placement_3) { create(:placement, subject: subject_3, school: secondary_school, provider: build(:placements_provider)) }
 
   before do
@@ -71,6 +73,24 @@ RSpec.describe "Placements / Placements / View placements list",
       and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
       and_i_can_see_the_status_tag_for_placement_1
       and_i_can_see_the_status_tag_for_placement_2
+    end
+
+    scenario "User can filter placements by term" do
+      when_i_visit_the_placements_index_page
+      # Show all placements
+      and_i_check_filter_option("placements-to-show", "all-placements")
+      and_i_click_on("Apply filters")
+      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+      and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
+      and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Physics")
+      when_i_check_filter_option("term-ids", summer_term.id)
+      and_i_click_on("Apply filters")
+      # This placement has the summer term we're filtering for
+      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+      # This placement has no terms (aka any term), so should always be visible
+      and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Physics")
+      # This placement has the autumn term, and should not be visible
+      and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
     end
 
     scenario "User can filter placements by partner school" do
@@ -142,6 +162,17 @@ RSpec.describe "Placements / Placements / View placements list",
     end
 
     context "when a filter is pre-selected in the URL params" do
+      scenario "User can remove a terms filter" do
+        when_i_visit_the_placements_index_page({ filters: { term_ids: [summer_term.id] } })
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
+        and_i_can_see_a_preset_filter("Expected date", "Summer term")
+        when_i_click_to_remove_filter("Expected date", "Summer term")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
+        and_i_can_not_see_any_selected_filters
+      end
+
       scenario "User can remove a partner school filter" do
         given_a_partnership_exists_between(provider, primary_school)
         when_i_visit_the_placements_index_page({ filters: { only_partner_schools: true } })
@@ -196,6 +227,7 @@ RSpec.describe "Placements / Placements / View placements list",
               school_ids: [primary_school.id],
               subject_ids: [subject_1.id],
               year_groups: [:year_1],
+              term_ids: [summer_term.id],
             },
           },
         )
@@ -205,6 +237,7 @@ RSpec.describe "Placements / Placements / View placements list",
         and_i_can_see_a_preset_filter("School", "Primary School")
         and_i_can_see_a_preset_filter("Subject", "Primary with mathematics")
         and_i_can_see_a_preset_filter("Primary year group", "Year 1")
+        and_i_can_see_a_preset_filter("Expected date", "Summer term")
         when_i_click_on("Clear filters")
         then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
         and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
