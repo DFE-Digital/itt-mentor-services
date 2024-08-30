@@ -9,7 +9,7 @@
 #
 FactoryBot.define do
   factory :placements_term, class: "Placements::Term" do
-    name { "Any time in the academic year" }
+    name { "Spring term" }
 
     trait :spring do
       name { "Spring term" }
