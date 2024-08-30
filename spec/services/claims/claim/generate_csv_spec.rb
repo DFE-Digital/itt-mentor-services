@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Claims::GenerateClaimsCSV do
+RSpec.describe Claims::Claim::GenerateCSV do
   subject(:generate_claims_csv) { described_class.call(claims:) }
 
   let(:claims) { Claims::Claim.all }

@@ -1,11 +1,12 @@
 require "csv"
 
-class Claims::GenerateClaimsCSV
+class Claims::Claim::GenerateCSV
   include ServicePattern
 
   HEADERS = %w[claim_reference urn school_name local_authority claim_amount establishment_type date_submitted].freeze
 
   def initialize(claims:)
+    super()
     @claims = claims
   end
 
