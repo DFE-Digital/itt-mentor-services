@@ -25,6 +25,14 @@ describe Placements::Placements::FilterForm, type: :model do
       end
     end
 
+    context "when given term id params" do
+      let(:params) { { term_ids: %w[term_id] } }
+
+      it "returns true" do
+        expect(filter_form).to be(true)
+      end
+    end
+
     context "when given year group params" do
       let(:params) { { year_groups: %w[year_group] } }
 
@@ -128,6 +136,27 @@ describe Placements::Placements::FilterForm, type: :model do
       end
     end
 
+    context "when removing term id params" do
+      let(:params) do
+        { term_ids: %w[term_id_1 term_id_2] }
+      end
+
+      it "returns the placements index page path without the given term id param" do
+        expect(
+          filter_form.index_path_without_filter(
+            filter: "term_ids",
+            value: "term_id_1",
+          ),
+        ).to eq(
+          placements_placements_path(filters: {
+            placements_to_show: "available_placements",
+            academic_year_id: current_academic_year.id,
+            term_ids: %w[term_id_2],
+          }),
+        )
+      end
+    end
+
     context "when removing year group params" do
       let(:params) do
         { year_groups: %w[year_group_1 year_group_2] }
@@ -159,6 +188,7 @@ describe Placements::Placements::FilterForm, type: :model do
           school_ids: [],
           only_partner_schools: false,
           subject_ids: [],
+          term_ids: [],
           year_groups: [],
         },
       )
@@ -182,6 +212,16 @@ describe Placements::Placements::FilterForm, type: :model do
       expect(
         described_class.new(subject_ids: subjects.pluck(:id)).subjects,
       ).to match_array(subjects)
+    end
+  end
+
+  describe "#terms" do
+    it "returns the terms associated with the term_id params given" do
+      terms = create_list(:placements_term, 2, :spring)
+
+      expect(
+        described_class.new(term_ids: terms.pluck(:id)).terms,
+      ).to match_array(terms)
     end
   end
 end

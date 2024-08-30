@@ -4,6 +4,7 @@ class Placements::Placements::FilterForm < ApplicationForm
   attribute :school_ids, default: []
   attribute :subject_ids, default: []
   attribute :year_groups, default: []
+  attribute :term_ids, default: []
   attribute :placements_to_show, default: "available_placements"
   attribute :academic_year_id, default: Placements::AcademicYear.current.id
   attribute :only_partner_schools, :boolean, default: false
@@ -42,6 +43,7 @@ class Placements::Placements::FilterForm < ApplicationForm
       only_partner_schools:,
       placements_to_show:,
       academic_year_id:,
+      term_ids:,
     }
   end
 
@@ -51,6 +53,10 @@ class Placements::Placements::FilterForm < ApplicationForm
 
   def subjects
     @subjects ||= Subject.where(id: subject_ids).order_by_name
+  end
+
+  def terms
+    @terms ||= Placements::Term.where(id: term_ids).order_by_term
   end
 
   private
