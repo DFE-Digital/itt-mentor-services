@@ -28,6 +28,8 @@ class Placements::PlacementsController < Placements::ApplicationController
   end
 
   def set_current_organisation
+    return redirect_to organisations_path if current_user.current_organisation.blank?
+
     @provider = current_user.current_organisation
   end
 
