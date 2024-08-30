@@ -38,7 +38,7 @@ jobs:
       with:
         azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Deploy maintenance app
-      run: make ${{ inputs.environment }} maintenance-fail-over
-      env:
-        MAINTENANCE_IMAGE_TAG: ${{steps.build-image.outputs.tag}}
+    # - name: Deploy maintenance app
+    #   run: make ${{ inputs.environment }} maintenance-fail-over
+    #   env:
+    #     MAINTENANCE_IMAGE_TAG: ${{steps.build-image.outputs.tag}}
