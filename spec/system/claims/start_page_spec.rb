@@ -71,7 +71,7 @@ RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :sy
       expect(page).to have_content("Claim funding for mentor training")
     end
 
-    expect(page).to have_content("Use this service to claim for mentors who supported, or intended to support, trainee teachers from September 2023 to July 2024.")
+    expect(page).to have_content("Use this service to claim for mentors who supported trainee teachers from September 2023 to July 2024.")
     expect(page).to have_content("The service is open for claims. Deadline to submit claims is: 11:59pm on Friday 19 July 2024")
     expect(page).to have_content("You must wait until May 2025 to claim for training that took place from April 2024 for the school year starting September 2025.")
     expect(page).to have_content(
