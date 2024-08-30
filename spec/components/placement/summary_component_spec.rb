@@ -7,7 +7,7 @@ RSpec.describe Placement::SummaryComponent, type: :component do
 
   let(:subject_1) { create(:subject, name: "Biology") }
   let(:subject_2) { create(:subject, name: "Classics") }
-  let(:academic_year) { create(:placements_academic_year) }
+  let(:academic_year) { Placements::AcademicYear.current }
   let(:terms) { [create(:placements_term, :summer)] }
   let(:school) do
     create(
@@ -50,8 +50,8 @@ RSpec.describe Placement::SummaryComponent, type: :component do
       expect(page).to have_content("Classics", count: 1)
 
       # Academic year details
-      expect(page).to have_content("2023 to 2024", count: 2)
-      
+      expect(page).to have_content(academic_year.name, count: 2)
+
       # Expected date details
       expect(page).to have_content("Summer term", count: 2)
     end
