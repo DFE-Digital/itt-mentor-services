@@ -26,6 +26,26 @@
             </div>
           </div>
 
+          <% if filter_form.terms.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".terms") %></h3>
+            <ul class="app-filter-tags">
+              <% filter_form.terms.each do |term| %>
+                <li>
+                  <%= govuk_link_to(
+                        term.name,
+                        filter_form.index_path_without_filter(
+                          filter: "term_ids",
+                          value: term.id,
+                          search_location:,
+                        ),
+                        class: "app-filter__tag",
+                        no_visited_state: true,
+                      ) %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+
           <% if filter_form.subject_ids.present? %>
             <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".subject") %></h3>
             <ul class="app-filter-tags">
@@ -157,6 +177,21 @@
                 label: { text: @next_academic_year.display_name },
                 checked: filter_form.academic_year_id == @next_academic_year.id,
                 multiple: false %>
+            <% end %>
+          </div>
+
+          <div class="app-filter__option">
+            <%= form.govuk_check_boxes_fieldset(
+              :term_ids,
+              legend: { text: t(".terms"), size: "s" },
+              multiple: false,
+              small: true,
+            ) do %>
+              <% @terms.each do |term| %>
+                <%= form.govuk_check_box :term_ids,
+                                         term.id,
+                                         label: { text: term.name } %>
+              <% end %>
             <% end %>
           </div>
 

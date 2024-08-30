@@ -16,6 +16,7 @@ en:
         location_search_example: For example, Sunderland or SR2
       filter:
         partner_schools: Partner schools
+        terms: Expected date
         only_show_partner_schools: Only show placements offered by my partner schools
         school: School
         subject: Subject
