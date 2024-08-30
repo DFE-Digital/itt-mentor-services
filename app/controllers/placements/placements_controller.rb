@@ -9,6 +9,7 @@ class Placements::PlacementsController < Placements::ApplicationController
     @establishment_groups = compact_school_attribute_values(:group)
     @schools = schools_scope.order_by_name.select(:id, :name)
     @year_groups ||= Placement.year_groups_as_options
+    @terms = Placements::Term.order_by_term.select(:id, :name)
     scope = policy_scope(Placements::PlacementsQuery.call(params: query_params))
 
     @pagy, @placements = pagy(scope)
@@ -63,6 +64,7 @@ class Placements::PlacementsController < Placements::ApplicationController
       :only_partner_schools,
       school_ids: [],
       subject_ids: [],
+      term_ids: [],
       establishment_groups: [],
       year_groups: [],
     )
