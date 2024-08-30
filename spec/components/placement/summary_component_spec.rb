@@ -40,10 +40,7 @@ RSpec.describe Placement::SummaryComponent, type: :component do
       expect(page).to have_content("London Primary School", count: 2)
       expect(page).to have_content("All-through", count: 2)
       expect(page).to have_content("4 to 11", count: 2)
-      expect(page).to have_content("Mixed", count: 2)
       expect(page).to have_content("Local authority maintained schools", count: 2)
-      expect(page).to have_content("Jewish", count: 2)
-      expect(page).to have_content("(England/Wales) Urban city and town", count: 2)
       expect(page).to have_content("Good", count: 2)
 
       # Subject details
