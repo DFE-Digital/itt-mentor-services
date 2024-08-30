@@ -139,7 +139,7 @@ RSpec.describe PlacementDecorator do
         placement.terms << term1
         placement.terms << term2
 
-        expect(placement.decorate.term_names).to eq("Spring term - Autumn term")
+        expect(placement.decorate.term_names).to eq("Spring term, Autumn term")
       end
     end
   end
