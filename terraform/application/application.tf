@@ -47,7 +47,7 @@ resource "kubernetes_job" "migrations" {
           name    = "migrate"
           image   = var.docker_image
           command = ["bundle"]
-          args    = ["exec", "rails", "db:prepare", "data:migrate"]
+          args    = ["exec", "rails", "db:prepare:with_data"]
 
           env_from {
             config_map_ref {
@@ -102,7 +102,7 @@ resource "kubernetes_job" "migrations" {
 }
 
 module "web_application" {
-  source = "./vendor/modules/aks//aks/application"
+  source     = "./vendor/modules/aks//aks/application"
   depends_on = [kubernetes_job.migrations]
 
   is_web = true
@@ -124,7 +124,7 @@ module "web_application" {
 }
 
 module "worker_application" {
-  source = "./vendor/modules/aks//aks/application"
+  source     = "./vendor/modules/aks//aks/application"
   depends_on = [kubernetes_job.migrations]
 
   name    = "worker"
