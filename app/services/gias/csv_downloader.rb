@@ -1,5 +1,5 @@
 module Gias
-  class CsvDownloader
+  class CSVDownloader
     include ServicePattern
 
     def call

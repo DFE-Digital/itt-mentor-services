@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Gias::CsvImporter do
+RSpec.describe Gias::CSVImporter do
   subject(:gias_importer) { described_class.call(csv_path) }
 
   let(:csv_path) { "spec/fixtures/gias/import_with_trusts_and_regions.csv" }

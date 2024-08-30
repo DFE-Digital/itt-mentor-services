@@ -13,8 +13,8 @@ WORKDIR /app
 
 # Add the timezone (builder image) as it's not configured by default in Alpine
 RUN apk add --update --no-cache tzdata && \
-    cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
-    echo "Europe/London" > /etc/timezone
+  cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
+  echo "Europe/London" > /etc/timezone
 
 # build-base: dependencies for bundle
 # yarn: node package manager
@@ -27,11 +27,11 @@ COPY .ruby-version Gemfile Gemfile.lock ./
 
 # Install gems and remove gem cache
 RUN bundler -v && \
-    bundle config set no-cache 'true' && \
-    bundle config set no-binstubs 'true' && \
-    bundle config set without 'development test' && \
-    bundle install --retry=5 --jobs=4 && \
-    rm -rf /usr/local/bundle/cache
+  bundle config set no-cache 'true' && \
+  bundle config set no-binstubs 'true' && \
+  bundle config set without 'development test' && \
+  bundle install --retry=5 --jobs=4 && \
+  rm -rf /usr/local/bundle/cache
 
 # Install node packages defined in package.json
 COPY package.json yarn.lock ./
@@ -42,16 +42,16 @@ COPY . .
 
 # Precompile assets
 RUN RAILS_ENV=production SECRET_KEY_BASE=required-to-run-but-not-used \
-    bundle exec rails assets:precompile
+  bundle exec rails assets:precompile
 
 # Cleanup to save space in the production image
 RUN rm -rf node_modules log/* tmp/* /tmp && \
-    rm -rf /usr/local/bundle/cache && \
-    rm -rf .env && \
-    find /usr/local/bundle/gems -name "*.c" -delete && \
-    find /usr/local/bundle/gems -name "*.h" -delete && \
-    find /usr/local/bundle/gems -name "*.o" -delete && \
-    find /usr/local/bundle/gems -name "*.html" -delete
+  rm -rf /usr/local/bundle/cache && \
+  rm -rf .env && \
+  find /usr/local/bundle/gems -name "*.c" -delete && \
+  find /usr/local/bundle/gems -name "*.h" -delete && \
+  find /usr/local/bundle/gems -name "*.o" -delete && \
+  find /usr/local/bundle/gems -name "*.html" -delete
 
 # Build runtime image
 FROM ruby:3.3.1-alpine as production
@@ -63,13 +63,13 @@ WORKDIR /app
 
 # Add the timezone (prod image) as it's not configured by default in Alpine
 RUN apk add --update --no-cache tzdata && \
-    cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
-    echo "Europe/London" > /etc/timezone
+  cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
+  echo "Europe/London" > /etc/timezone
 
 # libpq: required to run postgres
 RUN apk add --no-cache libpq
 
-# proj-util: provides cs2cs, required by Gias::CsvTransformer::CoordinateTransformer
+# proj-util: provides cs2cs, required by Gias::CSVTransformer::CoordinateTransformer
 RUN apk add --no-cache proj-util
 
 # Copy files generated in the builder image

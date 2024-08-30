@@ -1,7 +1,7 @@
 require "csv"
 
 module Gias
-  class CsvImporter
+  class CSVImporter
     include ServicePattern
     include RegionalAreas
 

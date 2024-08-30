@@ -1,6 +1,6 @@
 require "csv"
 
-class Claims::GenerateClaimsCsv
+class Claims::GenerateClaimsCSV
   include ServicePattern
 
   HEADERS = %w[claim_reference urn school_name local_authority claim_amount establishment_type date_submitted].freeze

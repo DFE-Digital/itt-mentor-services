@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Gias::CsvDownloader do
+RSpec.describe Gias::CSVDownloader do
   subject(:gias_csv_downloader) { described_class.call }
 
   let(:file) { Tempfile.new }
