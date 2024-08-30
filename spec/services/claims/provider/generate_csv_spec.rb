@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Claims::Provider::GenerateCsv do
+RSpec.describe Claims::Provider::GenerateCSV do
   subject(:generate_csv) { described_class.call(provider:, academic_year:) }
 
   let!(:provider) { create(:provider) }

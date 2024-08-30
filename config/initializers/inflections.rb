@@ -14,4 +14,5 @@
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym "DfE"
   inflect.acronym "QA"
+  inflect.acronym "CSV"
 end

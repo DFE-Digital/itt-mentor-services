@@ -1,5 +1,5 @@
 module Gias
-  class CsvTransformer
+  class CSVTransformer
     include ServicePattern
 
     def initialize(input_file)

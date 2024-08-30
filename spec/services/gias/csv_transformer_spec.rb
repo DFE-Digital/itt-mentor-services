@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Gias::CsvTransformer do
+RSpec.describe Gias::CSVTransformer do
   subject(:output_file) { described_class.call(input_file) }
 
   let(:input_file_path) { "spec/fixtures/gias/gias_subset.csv" }
@@ -11,7 +11,7 @@ RSpec.describe Gias::CsvTransformer do
   end
 
   it "transforms the GIAS CSV" do
-    # Stub Gias::CsvTransformer::CoordinateTransformer to control the latitude/longitude
+    # Stub Gias::CSVTransformer::CoordinateTransformer to control the latitude/longitude
     # values in this test, because proj cs2cs output can vary slightly depending on platform
     # and we need it to exactly match the values in the transformed CSV.
     # This test is primarily concerned with the overall content and strucutre of the
@@ -58,8 +58,8 @@ RSpec.describe Gias::CsvTransformer do
       { easting: "385990", northing: "150305" } => { latitude: 51.2517381483, longitude: -2.2021246541 },
     }
 
-    stub = instance_double(Gias::CsvTransformer::CoordinateTransformer)
-    allow(Gias::CsvTransformer::CoordinateTransformer).to receive(:new).and_return(stub)
+    stub = instance_double(Gias::CSVTransformer::CoordinateTransformer)
+    allow(Gias::CSVTransformer::CoordinateTransformer).to receive(:new).and_return(stub)
 
     allow(stub).to receive(:close)
     coordinates.each do |easting_northing, latitude_longitude|

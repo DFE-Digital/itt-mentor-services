@@ -1,14 +1,14 @@
 require "rails_helper"
 
 RSpec.describe Gias::SyncAllSchoolsJob, type: :job do
-  it "calls Gias::CsvDownloader, then Gias::CsvTransformer, then Gias::CsvImporter" do
+  it "calls Gias::CSVDownloader, then Gias::CSVTransformer, then Gias::CSVImporter" do
     downloaded_csv = instance_double(Tempfile)
     transformed_csv = instance_double(Tempfile, path: "/fake/path/to/stubbed/file.csv")
 
-    allow(Gias::CsvDownloader).to receive(:call).and_return(downloaded_csv)
-    allow(Gias::CsvTransformer).to receive(:call).with(downloaded_csv).and_return(transformed_csv)
+    allow(Gias::CSVDownloader).to receive(:call).and_return(downloaded_csv)
+    allow(Gias::CSVTransformer).to receive(:call).with(downloaded_csv).and_return(transformed_csv)
 
-    expect(Gias::CsvImporter).to receive(:call).with(transformed_csv.path).ordered
+    expect(Gias::CSVImporter).to receive(:call).with(transformed_csv.path).ordered
     expect(downloaded_csv).to receive(:unlink).ordered
     expect(transformed_csv).to receive(:unlink).ordered
 

@@ -5,5 +5,5 @@ brew "pkg-config"
 # required by "rails-erd" gem
 brew "graphviz"
 
-# required by Gias::CsvTransformer::CoordinateTransformer
+# required by Gias::CSVTransformer::CoordinateTransformer
 brew "proj"

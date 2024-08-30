@@ -1,6 +1,6 @@
 require "csv"
 
-class Claims::Provider::GenerateCsv
+class Claims::Provider::GenerateCSV
   include ServicePattern
 
   HEADERS = %w[school_name school_urn school_post_code mentor_full_name hours_of_training claim_assured claim_assured_reason].freeze
