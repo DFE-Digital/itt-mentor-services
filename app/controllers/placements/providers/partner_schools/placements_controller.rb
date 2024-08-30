@@ -1,4 +1,5 @@
-class Placements::Providers::PartnerSchools::PlacementsController < ApplicationController
+class Placements::Providers::PartnerSchools::PlacementsController < Placements::ApplicationController
+  skip_after_action :verify_policy_scoped, only: %i[index]
   before_action :set_provider, only: %i[index show]
   before_action :set_partner_school, only: %i[index show]
 
