@@ -27,7 +27,7 @@ RSpec.describe "Placements / Placements / View a placement",
   end
   let!(:subject_1) { create(:subject, name: "Biology") }
   let(:additional_subjects) { [] }
-  let(:academic_year) { create(:placements_academic_year).decorate }
+  let(:academic_year) { Placements::AcademicYear.current.decorate }
   let(:terms) { [create(:placements_term, :summer)] }
   let!(:placement) do
     create(:placement, subject: placement_subject, school:, additional_subjects:, academic_year:, terms:)
