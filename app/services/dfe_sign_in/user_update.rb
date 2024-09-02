@@ -1,7 +1,5 @@
 module DfESignIn
-  class UserUpdate
-    include ServicePattern
-
+  class UserUpdate < ApplicationService
     attr_reader :current_user, :successful
     alias_method :successful?, :successful
 

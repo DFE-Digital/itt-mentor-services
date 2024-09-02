@@ -1,8 +1,6 @@
 require "csv"
 
-class UpdateSchoolEmails
-  include ServicePattern
-
+class UpdateSchoolEmails < ApplicationService
   def initialize(csv_string:)
     @csv_string = csv_string
   end

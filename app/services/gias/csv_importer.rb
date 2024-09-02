@@ -1,8 +1,7 @@
 require "csv"
 
 module Gias
-  class CSVImporter
-    include ServicePattern
+  class CSVImporter < ApplicationService
     include RegionalAreas
 
     SUPPORTED_BY_A_TRUST = "1".freeze

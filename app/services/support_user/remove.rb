@@ -1,6 +1,4 @@
-class SupportUser::Remove
-  include ServicePattern
-
+class SupportUser::Remove < ApplicationService
   attr_reader :support_user
 
   def initialize(support_user:)

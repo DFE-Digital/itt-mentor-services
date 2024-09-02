@@ -1,8 +1,6 @@
 module PublishTeacherTraining
   module Subject
-    class Api
-      include ServicePattern
-
+    class Api < ApplicationService
       def call
         response = HTTParty.get(link)
         JSON.parse(response.to_s)

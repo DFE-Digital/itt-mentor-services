@@ -1,6 +1,4 @@
-class User::Remove
-  include ServicePattern
-
+class User::Remove < ApplicationService
   def initialize(user:, organisation:)
     @user = user
     @organisation = organisation

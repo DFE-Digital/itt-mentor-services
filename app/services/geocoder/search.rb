@@ -1,7 +1,5 @@
 module Geocoder
-  class Search
-    include ServicePattern
-
+  class Search < ApplicationService
     COUNTRY = "United Kingdom".freeze
 
     def initialize(search_params)

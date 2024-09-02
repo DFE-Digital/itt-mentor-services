@@ -1,5 +1,4 @@
-class MentorBuilder
-  include ServicePattern
+class MentorBuilder < ApplicationService
   class_attribute :mentor_class
 
   def initialize(trn:, date_of_birth:, first_name: nil, last_name: nil)

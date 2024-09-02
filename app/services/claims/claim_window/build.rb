@@ -1,6 +1,4 @@
-class Claims::ClaimWindow::Build
-  include ServicePattern
-
+class Claims::ClaimWindow::Build < ApplicationService
   def initialize(claim_window_params:, claim_window: nil)
     @claim_window = claim_window
     @claim_window_params = claim_window_params

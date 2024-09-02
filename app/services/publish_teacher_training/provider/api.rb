@@ -1,8 +1,6 @@
 module PublishTeacherTraining
   module Provider
-    class Api
-      include ServicePattern
-
+    class Api < ApplicationService
       def initialize(link: nil)
         @link = link.presence || all_providers_url
       end

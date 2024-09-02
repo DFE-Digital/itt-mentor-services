@@ -1,8 +1,6 @@
 require "csv"
 
-class Claims::Provider::GenerateCSV
-  include ServicePattern
-
+class Claims::Provider::GenerateCSV < ApplicationService
   HEADERS = %w[school_name school_urn school_post_code mentor_full_name hours_of_training claim_assured claim_assured_reason].freeze
 
   def initialize(provider:, academic_year:)

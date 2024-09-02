@@ -1,6 +1,4 @@
-class Claims::Claim::Review
-  include ServicePattern
-
+class Claims::Claim::Review < ApplicationService
   def initialize(claim:)
     @claim = claim
   end

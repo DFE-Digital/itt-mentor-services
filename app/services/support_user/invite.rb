@@ -1,6 +1,4 @@
-class SupportUser::Invite
-  include ServicePattern
-
+class SupportUser::Invite < ApplicationService
   attr_reader :support_user
 
   def initialize(support_user:)

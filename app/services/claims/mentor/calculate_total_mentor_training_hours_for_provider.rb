@@ -1,6 +1,4 @@
-class Claims::Mentor::CalculateTotalMentorTrainingHoursForProvider
-  include ServicePattern
-
+class Claims::Mentor::CalculateTotalMentorTrainingHoursForProvider < ApplicationService
   def initialize(mentor:, provider:, claim: nil)
     @mentor = mentor
     @provider = provider

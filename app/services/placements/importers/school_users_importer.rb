@@ -2,9 +2,7 @@ require "csv"
 
 module Placements
   module Importers
-    class SchoolUsersImporter
-      include ServicePattern
-
+    class SchoolUsersImporter < ApplicationService
       attr_reader :csv_path
 
       def initialize(csv_path)
