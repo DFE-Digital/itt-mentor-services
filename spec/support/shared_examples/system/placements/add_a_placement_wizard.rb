@@ -2,8 +2,8 @@ RSpec.shared_examples "an add a placement wizard" do
   let!(:subject_1) { create(:subject, name: "Primary subject", subject_area: :primary) }
   let!(:subject_2) { create(:subject, name: "Secondary subject", subject_area: :secondary) }
   let!(:subject_3) { create(:subject, name: "Secondary subject 2", subject_area: :secondary) }
-  let!(:current_academic_year) { create(:placements_academic_year) }
-  let!(:next_academic_year) { create(:placements_academic_year, :next) }
+  let!(:current_academic_year) { Placements::AcademicYear.current }
+  let!(:next_academic_year) { current_academic_year.next }
   let!(:mentor_1) { create(:placements_mentor) }
   let!(:mentor_2) { create(:placements_mentor) }
   let(:summer_term) { create(:placements_term, :summer) }
