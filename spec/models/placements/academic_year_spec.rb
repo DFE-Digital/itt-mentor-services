@@ -71,7 +71,6 @@ RSpec.describe Placements::AcademicYear, type: :model do
   end
 
   context "when the previous academic year does not exist" do
-
     it "creates a new academic year for the previous year" do
       expect { current_academic_year.previous }.to change(described_class, :count).by(1)
 

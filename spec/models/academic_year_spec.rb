@@ -29,14 +29,14 @@ RSpec.describe AcademicYear, type: :model do
   describe ".for_date" do
     let!(:existing_academic_year) do
       create(:academic_year,
-             name: "2024 to 2025",
-             starts_on: Date.parse("1 September 2024"),
-             ends_on: Date.parse("31 August 2025"))
+             name: "2022 to 2023",
+             starts_on: Date.parse("1 September 2022"),
+             ends_on: Date.parse("31 August 2023"))
     end
 
     context "when date is within an existing academic year" do
       it "returns the existing academic year" do
-        date = Date.parse("7 November 2024")
+        date = Date.parse("7 November 2022")
         expect(described_class.for_date(date)).to eq(existing_academic_year)
       end
     end
