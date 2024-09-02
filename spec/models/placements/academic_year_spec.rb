@@ -17,10 +17,17 @@ RSpec.describe Placements::AcademicYear, type: :model do
   end
 
   describe ".current" do
-    let!(:current_academic_year) { create(:placements_academic_year) }
+    let!(:current_academic_year) do
+      create(:placements_academic_year,
+             starts_on: Date.parse("1 September 2024"),
+             ends_on: Date.parse("31 August 2025"),
+             name: "2024 to 2025")
+    end
 
     it "returns the academic year for the current date" do
-      expect(described_class.current).to eq(current_academic_year)
+      Timecop.travel(Date.parse("1 September 2024")) do
+        expect(described_class.current).to eq(current_academic_year)
+      end
     end
   end
 
