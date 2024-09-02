@@ -14,8 +14,8 @@ require "rails_helper"
 RSpec.describe Placements::AcademicYear, type: :model do
   let!(:current_academic_year) do
     create(:placements_academic_year,
-           starts_on: Date.parse("1 September 2024"),
-           ends_on: Date.parse("31 August 2025"),
+           starts_on: Date.parse("1 September 2020"),
+           ends_on: Date.parse("31 August 2021"),
            name: "2024 to 2025")
   end
 
@@ -25,7 +25,7 @@ RSpec.describe Placements::AcademicYear, type: :model do
 
   describe ".current" do
     it "returns the academic year for the current date" do
-      Timecop.travel(Date.parse("1 September 2024")) do
+      Timecop.travel(Date.parse("1 September 2020")) do
         expect(described_class.current).to eq(current_academic_year)
       end
     end
@@ -47,35 +47,22 @@ RSpec.describe Placements::AcademicYear, type: :model do
   end
 
   context "when the next academic year does not exist" do
-    let!(:current_academic_year) do
-      create(:placements_academic_year,
-             starts_on: Date.parse("1 September 2030"),
-             ends_on: Date.parse("31 August 2031"),
-             name: "2030 to 2031")
-    end
-
     it "creates a new academic year for the next year" do
       expect { current_academic_year.next }.to change(described_class, :count).by(1)
 
       created_academic_year = current_academic_year.next
-      expect(created_academic_year.starts_on).to eq(Date.parse("1 September 2031"))
-      expect(created_academic_year.ends_on).to eq(Date.parse("31 August 2032"))
-      expect(created_academic_year.name).to eq("2031 to 2032")
+      expect(created_academic_year.starts_on).to eq(Date.parse("1 September 2021"))
+      expect(created_academic_year.ends_on).to eq(Date.parse("31 August 2022"))
+      expect(created_academic_year.name).to eq("2021 to 2022")
     end
   end
 
   describe "#previous" do
-    let!(:current_academic_year) do
-      create(:placements_academic_year,
-             starts_on: Date.parse("1 September 2024"),
-             ends_on: Date.parse("31 August 2025"),
-             name: "2024 to 2025")
-    end
     let!(:previous_academic_year) do
       create(:placements_academic_year,
-             starts_on: Date.parse("1 September 2023"),
-             ends_on: Date.parse("31 August 2024"),
-             name: "2023 to 2024")
+             starts_on: Date.parse("1 September 2019"),
+             ends_on: Date.parse("31 August 2020"),
+             name: "2019 to 2020")
     end
 
     it "returns the previous academic year" do
@@ -84,20 +71,14 @@ RSpec.describe Placements::AcademicYear, type: :model do
   end
 
   context "when the previous academic year does not exist" do
-    let!(:current_academic_year) do
-      create(:placements_academic_year,
-             starts_on: Date.parse("1 September 2030"),
-             ends_on: Date.parse("31 August 2031"),
-             name: "2030 to 2031")
-    end
 
     it "creates a new academic year for the previous year" do
       expect { current_academic_year.previous }.to change(described_class, :count).by(1)
 
       created_academic_year = current_academic_year.previous
-      expect(created_academic_year.starts_on).to eq(Date.parse("1 September 2029"))
-      expect(created_academic_year.ends_on).to eq(Date.parse("31 August 2030"))
-      expect(created_academic_year.name).to eq("2029 to 2030")
+      expect(created_academic_year.starts_on).to eq(Date.parse("1 September 2019"))
+      expect(created_academic_year.ends_on).to eq(Date.parse("31 August 2020"))
+      expect(created_academic_year.name).to eq("2019 to 2020")
     end
   end
 end
