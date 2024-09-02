@@ -1,8 +1,6 @@
 module PublishTeacherTraining
   module Subject
-    class Import
-      include ServicePattern
-
+    class Import < ApplicationService
       PRIMARY_ID = "PrimarySubject".freeze
       SECONDARY_ID = "SecondarySubject".freeze
       MODERN_LANGUAGES_ID = "ModernLanguagesSubject".freeze

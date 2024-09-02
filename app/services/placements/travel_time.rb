@@ -1,6 +1,4 @@
-class Placements::TravelTime
-  include ServicePattern
-
+class Placements::TravelTime < ApplicationService
   def initialize(origin_address:, destinations:)
     @origin_address = origin_address
     @destinations = destinations

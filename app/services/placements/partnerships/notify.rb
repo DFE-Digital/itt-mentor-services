@@ -1,8 +1,6 @@
 module Placements
   module Partnerships
-    class Notify
-      include ServicePattern
-
+    class Notify < ApplicationService
       def initialize(source_organisation:, partner_organisation:)
         @source_organisation = source_organisation
         @partner_organisation = partner_organisation

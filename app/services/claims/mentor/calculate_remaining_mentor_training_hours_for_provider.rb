@@ -1,6 +1,4 @@
-class Claims::Mentor::CalculateRemainingMentorTrainingHoursForProvider
-  include ServicePattern
-
+class Claims::Mentor::CalculateRemainingMentorTrainingHoursForProvider < ApplicationService
   MAXIMUM_CLAIMABLE_HOURS_PER_PROVIDER = 20
 
   def initialize(mentor:, provider:, claim: nil, mentor_training: nil)

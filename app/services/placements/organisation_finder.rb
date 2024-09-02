@@ -1,6 +1,4 @@
-class Placements::OrganisationFinder
-  include ServicePattern
-
+class Placements::OrganisationFinder < ApplicationService
   def initialize(filters: [], search_term: "")
     @filters = filters
     @search_term = search_term

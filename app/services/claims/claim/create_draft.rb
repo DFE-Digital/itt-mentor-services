@@ -1,6 +1,4 @@
-class Claims::Claim::CreateDraft
-  include ServicePattern
-
+class Claims::Claim::CreateDraft < ApplicationService
   def initialize(claim:)
     @claim = claim
   end

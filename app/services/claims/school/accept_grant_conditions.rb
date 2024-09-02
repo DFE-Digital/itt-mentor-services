@@ -1,6 +1,4 @@
-class Claims::School::AcceptGrantConditions
-  include ServicePattern
-
+class Claims::School::AcceptGrantConditions < ApplicationService
   def initialize(school:, user:)
     @school = school
     @user = user

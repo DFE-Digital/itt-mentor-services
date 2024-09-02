@@ -1,7 +1,5 @@
 module Gias
-  class CSVDownloader
-    include ServicePattern
-
+  class CSVDownloader < ApplicationService
     def call
       yesterday = Time.zone.yesterday.strftime("%Y%m%d")
       gias_filename = "edubasealldata#{yesterday}.csv"

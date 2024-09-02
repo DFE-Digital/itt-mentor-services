@@ -1,6 +1,4 @@
-class Claims::Claim::Submit
-  include ServicePattern
-
+class Claims::Claim::Submit < ApplicationService
   def initialize(claim:, user:)
     @claim = claim
     @user = user

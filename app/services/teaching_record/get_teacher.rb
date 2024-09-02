@@ -1,7 +1,5 @@
 module TeachingRecord
-  class GetTeacher
-    include ServicePattern
-
+  class GetTeacher < ApplicationService
     def initialize(trn:, date_of_birth: nil)
       @trn = trn
       @date_of_birth = date_of_birth

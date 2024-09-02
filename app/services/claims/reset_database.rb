@@ -1,6 +1,4 @@
-class Claims::ResetDatabase
-  include ServicePattern
-
+class Claims::ResetDatabase < ApplicationService
   def call
     return if HostingEnvironment.env.production?
 

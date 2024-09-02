@@ -1,6 +1,4 @@
-class Claims::Claim::RemoveEmptyMentorTrainingHours
-  include ServicePattern
-
+class Claims::Claim::RemoveEmptyMentorTrainingHours < ApplicationService
   def initialize(claim:)
     @claim = claim
   end

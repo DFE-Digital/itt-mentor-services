@@ -1,8 +1,6 @@
 module Placements
   module Placements
-    class NotifyProvider
-      include ServicePattern
-
+    class NotifyProvider < ApplicationService
       def initialize(provider:, placement:)
         @provider = provider
         @placement = placement

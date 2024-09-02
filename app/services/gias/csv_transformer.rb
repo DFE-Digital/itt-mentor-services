@@ -1,7 +1,5 @@
 module Gias
-  class CSVTransformer
-    include ServicePattern
-
+  class CSVTransformer < ApplicationService
     def initialize(input_file)
       @input_file = input_file
       @output_file = Tempfile.new

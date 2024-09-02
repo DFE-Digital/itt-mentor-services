@@ -1,6 +1,4 @@
-class User::Invite
-  include ServicePattern
-
+class User::Invite < ApplicationService
   def initialize(user:, organisation:)
     @user = user
     @organisation = organisation

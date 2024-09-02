@@ -1,8 +1,6 @@
 require "csv"
 
-class Claims::ImportSchools
-  include ServicePattern
-
+class Claims::ImportSchools < ApplicationService
   def initialize(csv_string:)
     @csv_string = csv_string
   end

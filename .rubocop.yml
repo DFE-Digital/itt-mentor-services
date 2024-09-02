@@ -22,13 +22,17 @@ Style/FrozenStringLiteralComment:
 Layout/AccessModifierIndentation:
   EnforcedStyle: indent
 
+Lint/MissingSuper:
+  AllowedParentClasses:
+    - ApplicationService
+
 RSpec/Dialect:
-   Enabled: true
-   PreferredMethods:
-     background: :before
-     given: :let
-     given!: :let!
-     feature: :describe
+  Enabled: true
+  PreferredMethods:
+    background: :before
+    given: :let
+    given!: :let!
+    feature: :describe
 
 RSpec/IndexedLet:
   Enabled: false

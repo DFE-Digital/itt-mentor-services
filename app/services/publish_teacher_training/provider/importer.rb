@@ -1,8 +1,6 @@
 module PublishTeacherTraining
   module Provider
-    class Importer
-      include ServicePattern
-
+    class Importer < ApplicationService
       def call
         @invalid_records = []
         @records = []

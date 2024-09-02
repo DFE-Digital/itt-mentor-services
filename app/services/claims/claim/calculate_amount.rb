@@ -1,6 +1,4 @@
-class Claims::Claim::CalculateAmount
-  include ServicePattern
-
+class Claims::Claim::CalculateAmount < ApplicationService
   def initialize(claim:)
     @claim = claim
   end
