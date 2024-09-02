@@ -78,6 +78,22 @@ end
 # Create subjects
 PublishTeacherTraining::Subject::Import.call
 
+# Create initial claim windows
+initial_claim_date = Date.parse("1 September 2023")
+initial_claim_academic_year = AcademicYear.for_date(initial_claim_date)
+
+Claims::ClaimWindow.find_or_create_by!(
+  starts_on: Date.parse("2 May 2024"),
+  ends_on: Date.parse("19 July 2024"),
+  academic_year: initial_claim_academic_year,
+)
+
+Claims::ClaimWindow.find_or_create_by!(
+  starts_on: Date.parse("29 July 2024"),
+  ends_on: Date.parse("9 August 2024"),
+  academic_year: initial_claim_academic_year,
+)
+
 # Create current academic year
 current_date = Date.current
 current_academic_year = AcademicYear.for_date(current_date)
@@ -86,16 +102,10 @@ current_academic_year = AcademicYear.for_date(current_date)
 AcademicYear.for_date(current_date - 1.year)
 AcademicYear.for_date(current_date + 1.year)
 
-# Create claim windows for current academic year
+# Create a current claim window
 Claims::ClaimWindow.find_or_create_by!(
-  starts_on: Date.parse("2 May #{current_academic_year.ends_on.year}"),
-  ends_on: Date.parse("19 July #{current_academic_year.ends_on.year}"),
-  academic_year: current_academic_year,
-)
-
-Claims::ClaimWindow.find_or_create_by!(
-  starts_on: Date.parse("29 July #{current_academic_year.ends_on.year}"),
-  ends_on: Date.parse("9 August #{current_academic_year.ends_on.year}"),
+  starts_on: Date.current.beginning_of_month,
+  ends_on: Date.current.end_of_month,
   academic_year: current_academic_year,
 )
 
