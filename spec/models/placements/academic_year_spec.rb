@@ -12,20 +12,18 @@
 require "rails_helper"
 
 RSpec.describe Placements::AcademicYear, type: :model do
-  let!(:current_academic_year) { described_class.find_by(starts_on: ..Date.current, ends_on: Date.current..) }
+  let!(:current_academic_year) do
+    create(:placements_academic_year,
+           starts_on: Date.parse("1 September 2024"),
+           ends_on: Date.parse("31 August 2025"),
+           name: "2024 to 2025")
+  end
 
   describe "associations" do
     it { is_expected.to have_many(:placements) }
   end
 
   describe ".current" do
-    let!(:current_academic_year) do
-      create(:placements_academic_year,
-             starts_on: Date.parse("1 September 2024"),
-             ends_on: Date.parse("31 August 2025"),
-             name: "2024 to 2025")
-    end
-
     it "returns the academic year for the current date" do
       Timecop.travel(Date.parse("1 September 2024")) do
         expect(described_class.current).to eq(current_academic_year)
@@ -67,13 +65,17 @@ RSpec.describe Placements::AcademicYear, type: :model do
   end
 
   describe "#previous" do
-    let(:previous_start_year) { current_academic_year.starts_on.year - 1 }
-    let(:previous_end_year) { current_academic_year.ends_on.year - 1 }
+    let!(:current_academic_year) do
+      create(:placements_academic_year,
+             starts_on: Date.parse("1 September 2024"),
+             ends_on: Date.parse("31 August 2025"),
+             name: "2024 to 2025")
+    end
     let!(:previous_academic_year) do
       create(:placements_academic_year,
-             starts_on: Date.parse("1 September #{previous_start_year}"),
-             ends_on: Date.parse("31 August #{previous_end_year}"),
-             name: "#{previous_start_year} to #{previous_end_year}")
+             starts_on: Date.parse("1 September 2023"),
+             ends_on: Date.parse("31 August 2024"),
+             name: "2023 to 2024")
     end
 
     it "returns the previous academic year" do
