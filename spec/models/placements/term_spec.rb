@@ -29,7 +29,7 @@ RSpec.describe Placements::Term, type: :model do
       let!(:summer_term) { create(:placements_term, :summer) }
 
       it "returns a collection of terms, in the order of Summer, Spring, Autumn" do
-        expect(described_class.order_by_term).to eq([summer_term, spring_term, autumn_term])
+        expect(described_class.order_by_term).to eq([autumn_term, spring_term, summer_term])
       end
     end
   end

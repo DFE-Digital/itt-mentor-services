@@ -16,9 +16,9 @@ class Placements::Term < ApplicationRecord
   scope :order_by_term, lambda {
     order(Arel.sql("
       CASE
-        WHEN name = '#{SUMMER_TERM}' THEN '1'
+        WHEN name = '#{AUTUMN_TERM}' THEN '1'
         WHEN name = '#{SPRING_TERM}' THEN '2'
-        WHEN name = '#{AUTUMN_TERM}' THEN '3'
+        WHEN name = '#{SUMMER_TERM}' THEN '3'
       END
     "))
   }
