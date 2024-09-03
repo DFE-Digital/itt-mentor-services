@@ -213,6 +213,47 @@ RSpec.shared_examples "an add a placement wizard" do
           end
         end
 
+        context "when I view a page with checkboxes" do
+          context "when I view the terms step" do
+            it "when I first visit the page" do
+              when_i_visit_the_placements_page
+              and_i_click_on("Add placement")
+              then_i_see_the_add_a_placement_subject_page(school.phase)
+              when_i_choose_a_subject(subject_1.name)
+              and_i_click_on("Continue")
+              then_i_see_the_add_year_group_page("Year 1")
+              when_i_choose_a_year_group("Year 1")
+              and_i_click_on("Continue")
+              then_i_see_the_academic_year_page
+              when_i_choose_an_academic_year(current_academic_year.name)
+              and_i_click_on("Continue")
+              then_i_see_the_add_a_term_page
+              then_no_terms_checkboxes_are_checked
+            end
+          end
+
+          context "when I view the mentor step" do
+            it "when I first visit the page" do
+              when_i_visit_the_placements_page
+              and_i_click_on("Add placement")
+              then_i_see_the_add_a_placement_subject_page(school.phase)
+              when_i_choose_a_subject(subject_1.name)
+              and_i_click_on("Continue")
+              then_i_see_the_add_year_group_page("Year 1")
+              when_i_choose_a_year_group("Year 1")
+              and_i_click_on("Continue")
+              then_i_see_the_academic_year_page
+              when_i_choose_an_academic_year(current_academic_year.name)
+              and_i_click_on("Continue")
+              then_i_see_the_add_a_term_page
+              when_i_check_a_term(summer_term.name)
+              and_i_click_on("Continue")
+              then_i_see_the_add_a_placement_mentor_page
+              then_no_mentor_checkboxes_are_checked
+            end
+          end
+        end
+
         context "when I've checked my answers and I click on change" do
           it "when I do not enter valid options" do
             when_i_visit_the_placements_page
@@ -932,6 +973,19 @@ RSpec.shared_examples "an add a placement wizard" do
 
   def then_my_chosen_academic_year_is_selected(academic_year_name)
     expect(page).to have_checked_field("This academic year (#{academic_year_name})")
+  end
+
+  def then_no_terms_checkboxes_are_checked
+    expect(page).not_to have_checked_field("Any time in the academic year")
+    expect(page).not_to have_checked_field(summer_term.name)
+    expect(page).not_to have_checked_field(spring_term.name)
+    expect(page).not_to have_checked_field(autumn_term.name)
+  end
+
+  def then_no_mentor_checkboxes_are_checked
+    expect(page).not_to have_checked_field(mentor_1.full_name)
+    expect(page).not_to have_checked_field(mentor_2.full_name)
+    expect(page).not_to have_checked_field("Not yet known")
   end
 
   alias_method :and_i_click_on, :when_i_click_on
