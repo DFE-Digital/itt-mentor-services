@@ -201,7 +201,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_03_124152) do
   end
 
   create_table "mentor_trainings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.enum "training_type", null: false, enum_type: "mentor_training_type"
+    t.enum "training_type", default: "initial", null: false, enum_type: "mentor_training_type"
     t.integer "hours_completed"
     t.datetime "date_completed"
     t.uuid "claim_id"
