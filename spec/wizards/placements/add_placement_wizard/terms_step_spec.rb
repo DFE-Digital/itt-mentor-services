@@ -33,7 +33,7 @@ RSpec.describe Placements::AddPlacementWizard::TermsStep, type: :model do
       autumn_term
     end
 
-    it "returns mentors for the school, ordered by name" do
+    it "returns all terms in order" do
       expect(step.terms_for_selection).to eq([
         autumn_term, spring_term, summer_term
       ])
