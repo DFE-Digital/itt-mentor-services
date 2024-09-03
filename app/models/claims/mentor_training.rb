@@ -5,7 +5,7 @@
 #  id              :uuid             not null, primary key
 #  date_completed  :datetime
 #  hours_completed :integer
-#  training_type   :enum
+#  training_type   :enum             not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  claim_id        :uuid

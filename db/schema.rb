@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_23_124208) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_03_124152) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -201,7 +201,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_23_124208) do
   end
 
   create_table "mentor_trainings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.enum "training_type", enum_type: "mentor_training_type"
+    t.enum "training_type", null: false, enum_type: "mentor_training_type"
     t.integer "hours_completed"
     t.datetime "date_completed"
     t.uuid "claim_id"
