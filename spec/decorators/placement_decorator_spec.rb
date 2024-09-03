@@ -134,12 +134,12 @@ RSpec.describe PlacementDecorator do
     context "when the placement has multiple terms" do
       it "returns a list of term names" do
         placement = create(:placement)
-        term1 = create(:placements_term, :autumn)
-        term2 = create(:placements_term, :spring)
+        term1 = create(:placements_term, :spring)
+        term2 = create(:placements_term, :autumn)
         placement.terms << term1
         placement.terms << term2
 
-        expect(placement.decorate.term_names).to eq("Spring term, Autumn term")
+        expect(placement.decorate.term_names).to eq("Autumn term, Spring term")
       end
     end
   end
