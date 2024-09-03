@@ -31,6 +31,11 @@ class Claims::MentorTraining < ApplicationRecord
 
   audited associated_with: :claim
 
+  enum :training_type, {
+    initial: "initial",
+    refresher: "refresher",
+  }, default: :initial, validate: { allow_nil: false }
+
   validates(
     :hours_completed,
     numericality: { greater_than: 0, less_than_or_equal_to: 20, only_integer: true },

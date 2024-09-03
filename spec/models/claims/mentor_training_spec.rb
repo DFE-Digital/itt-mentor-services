@@ -39,6 +39,17 @@ RSpec.describe Claims::MentorTraining, type: :model do
     it { is_expected.to be_audited.associated_with(:claim) }
   end
 
+  describe "enums" do
+    subject(:mentor_training) { described_class.new }
+
+    it "defines the expected values for training_type" do
+      expect(mentor_training).to define_enum_for(:training_type)
+                         .with_values(initial: "initial", refresher: "refresher")
+                         .backed_by_column_of_type(:enum)
+                         .with_default(:initial)
+    end
+  end
+
   context "with validations" do
     it {
       expect(mentor_training).to validate_numericality_of(:hours_completed)
