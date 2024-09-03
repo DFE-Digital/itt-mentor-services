@@ -816,7 +816,7 @@ RSpec.shared_examples "an add a placement wizard" do
 
   def then_i_see_the_add_a_term_page
     expect(page).to have_content("Placement details")
-    expect(page).to have_content("Select when the placement could be")
+    expect(page).to have_content("When could the placement take place?")
     expect(page).to have_content(summer_term.name)
     expect(page).to have_content(spring_term.name)
     expect(page).to have_content(autumn_term.name)

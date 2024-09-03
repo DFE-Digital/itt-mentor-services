@@ -79,10 +79,9 @@ en:
         terms_step:
           title: Select when the placement could be - %{contextual_text}
           title_with_error: "Error: Select when the placement could be - %{contextual_text}"
-          select_a_term: Select when the placement could be
-          description: | 
-            Terms are used as an estimate as some providers have different start and end dates.
-            Discuss specific dates with your chosen provider once the placment is published.
+          select_a_term: When could the placement take place?
+          description: |
+            Provide estimate term dates. You can discuss specific start and end dates with providers after the placement
+            is published.
           any_term: Any time in the academic year
           continue: Continue
-          

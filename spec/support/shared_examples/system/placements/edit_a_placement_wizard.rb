@@ -480,7 +480,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
 
   def then_i_should_see_the_edit_terms_page
     expect(page).to have_content("Placement details")
-    expect(page).to have_content("Select when the placement could be")
+    expect(page).to have_content("When could the placement take place?")
   end
 
   def when_i_select_provider(provider)
