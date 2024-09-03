@@ -5,7 +5,6 @@ en:
         mentor_step:
           page_title: Find teacher - %{contextual_text}
           page_title_with_error: "Error: %{error} - %{contextual_text}"
-          add_mentor_caption: "%{contextual_text}"
           caption: Mentor details
           cancel: Cancel
           continue: Continue
@@ -20,7 +19,6 @@ en:
           date_of_birth_hint: For example, 31 3 1980
         check_your_answers_step:
           page_title: Check your answers - Add mentor - %{contextual_text}
-          add_mentor_caption: Add mentor %{contextual_text}
           add_mentor: Add mentor
           cancel: Cancel
           change: Change
