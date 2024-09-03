@@ -1,3 +1,4 @@
+<% caption = current_user.support_user? ? "#{t(".add_mentor")} #{contextual_text}" : t(".add_mentor") %>
 <% content_for :page_title, t(".page_title", contextual_text:) %>
 
 <div class="govuk-width-container">
@@ -5,7 +6,7 @@
     <div class="govuk-grid-column-two-thirds">
       <%= form_with(model: check_your_answers_step, url: current_step_path, method: :put) do |f| %>
         <label class="govuk-label govuk-label--l">
-          <span class="govuk-caption-l"><%= t(".add_mentor_caption", contextual_text:) %></span>
+          <span class="govuk-caption-l"><%= caption %></span>
           <%= t(".check_your_answers") %>
         </label>
 
