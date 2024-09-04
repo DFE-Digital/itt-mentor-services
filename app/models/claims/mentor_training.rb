@@ -34,7 +34,7 @@ class Claims::MentorTraining < ApplicationRecord
   enum :training_type, {
     initial: "initial",
     refresher: "refresher",
-  }, default: :initial, validate: { allow_nil: false }
+  }, default: :initial, validate: true
 
   validates(
     :hours_completed,
