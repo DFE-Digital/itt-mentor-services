@@ -57,3 +57,12 @@ jobs:
         restore-time: ${{ inputs.restore-time }}
         cluster: ${{ env.CLUSTER }}
         azure-credentials: ${{ secrets.AZURE_CREDENTIALS}}
+
+    - name: Restore Summary
+      if: success()
+      run: |
+        echo 'RESTORE SUCCESSFUL!' >> $GITHUB_STEP_SUMMARY
+        echo '  ENV: ${{ inputs.environment }}' >> $GITHUB_STEP_SUMMARY
+        echo '  SOURCE SERVER: ${{ env.DB_SERVER }}' >> $GITHUB_STEP_SUMMARY
+        echo '  RESTORED SERVER: ${{ env.DB_SERVER }}-ptr' >> $GITHUB_STEP_SUMMARY
+        echo '  RESTORE POINT: ${{ inputs.restore-time }} UTC' >> $GITHUB_STEP_SUMMARY

@@ -12,12 +12,13 @@ on:
         options:
         - 'staging'
         - 'production'
-      overwriteThisMorningsBackup:
-        required: true
-        type: boolean
-        default: false
-      PTRdatabase:
-        description: Are you backing up a PTR database copy
+      backupFileName:
+        description: Backup file name. Default is [SERVICE_SHORT]_[CONFIG_SHORT]_adhoc_YYYY-MM-DD
+        required: false
+        type: string
+        default: default
+      backupPTRServer:
+        description: Set to true if backing up a point in time restored database server
         required: false
         type: boolean
         default: false
@@ -32,12 +33,12 @@ env:
 jobs:
   backup:
     name: Backup AKS Database
-    if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.overwriteThisMorningsBackup == 'true') }}
     runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.environment || 'production' }}
     env:
       DEPLOY_ENV: ${{ inputs.environment || 'production'  }}
+      BACKUP_FILE: ${{ inputs.backupFileName || 'schedule'  }}
 
     steps:
     - uses: actions/checkout@v4
@@ -51,11 +52,18 @@ jobs:
         echo "RESOURCE_GROUP_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg" >> $GITHUB_ENV
         echo "STORAGE_ACCOUNT_NAME=${AZURE_RESOURCE_PREFIX}${SERVICE_SHORT}dbbkp${CONFIG_SHORT}sa" >> $GITHUB_ENV
         TODAY=$(date +"%F")
-        echo "BACKUP_FILE=${SERVICE_SHORT}_${CONFIG_SHORT}_${TODAY}" >> $GITHUB_ENV
         echo "DB_SERVER=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-pg" >> $GITHUB_ENV
+        if [ "${{ env.BACKUP_FILE }}" == "schedule" ]; then
+          BACKUP_FILE=${SERVICE_SHORT}_${CONFIG_SHORT}_${TODAY}
+        elif [ "${{ env.BACKUP_FILE }}" == "default" ]; then
+          BACKUP_FILE=${SERVICE_SHORT}_${CONFIG_SHORT}_adhoc_${TODAY}
+        else
+          BACKUP_FILE=${{ env.BACKUP_FILE }}
+        fi
+        echo "BACKUP_FILE=$BACKUP_FILE" >> $GITHUB_ENV
 
     - name: Set PTR variables
-      if: ${{ github.event.inputs.PTRdatabase == 'true' }}
+      if: ${{ github.event.inputs.backupPTRServer == 'true' }}
       run: |
         echo "PTR_DB_SERVER=${{ env.DB_SERVER }}-ptr" >> $GITHUB_ENV
         echo "BACKUP_FILE=${{ env.BACKUP_FILE }}-ptr" >> $GITHUB_ENV
@@ -70,3 +78,12 @@ jobs:
         azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
         backup-file: ${{ env.BACKUP_FILE }}.sql
         ptr-db-server-name: ${{ env.PTR_DB_SERVER }}
+
+    - name: Backup Summary
+      if: success()
+      run: |
+        echo 'BACKUP SUCCESSFUL!' >> $GITHUB_STEP_SUMMARY
+        echo '  ENV: ${{ env.DEPLOY_ENV }}' >> $GITHUB_STEP_SUMMARY
+        echo '  DB SERVER: ${{ env.PTR_DB_SERVER || env.DB_SERVER  }}' >> $GITHUB_STEP_SUMMARY
+        echo '  STORAGE ACCOUNT: ${{ env.STORAGE_ACCOUNT_NAME }}' >> $GITHUB_STEP_SUMMARY
+        echo '  FILENAME: ${{ env.BACKUP_FILE }}.sql.gz' >> $GITHUB_STEP_SUMMARY
