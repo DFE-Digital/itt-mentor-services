@@ -150,6 +150,10 @@ RSpec.describe ApplicationForm do
 
         expect(example_form.date_of_birth).to eq(DateAttributes::IncompleteDate.new(2024, 5, nil))
       end
+
+      it "returns nil if all of the date components are missing" do
+        expect(example_form.date_of_birth).to be_nil
+      end
     end
   end
 end

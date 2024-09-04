@@ -30,9 +30,9 @@ module DateAttributes
       define_method attribute_name do
         year, month, day = %w[year month day].map { |date_part| send("#{attribute_name}_#{date_part}") }
 
-        if year.present? && month.present? && day.present?
+        if [year, month, day].all?(&:present?)
           Date.new(year.to_i, month.to_i, day.to_i)
-        else
+        elsif [year, month, day].any?(&:present?)
           IncompleteDate.new(year, month, day)
         end
       end
