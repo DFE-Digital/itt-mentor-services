@@ -76,6 +76,8 @@ en:
         index:
           page_title: Placements
           placements: Placements
+          this_year: This year (%{academic_year_name})
+          next_year: Next year (%{academic_year_name})
           add_placement: Add placement
           you_must_add_itt_placement_contact: |
             Before you add a placement, you must %{link_to} so that the teacher training providers can contact you.

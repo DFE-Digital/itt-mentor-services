@@ -53,6 +53,29 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
       given_i_sign_in_as_anne
       then_i_see_term_name("Autumn term")
     end
+
+    context "when using the academic year navigation" do
+      let(:current_academic_year) { Placements::AcademicYear.current }
+      let(:next_academic_year) { current_academic_year.next }
+      # Subjects were added to make sure tha placement titles are always unique.
+      let(:current_subject) { create(:subject, name: "Current academic year studies") }
+      let(:next_subject) { create(:subject, name: "Next academic year studies") }
+      let!(:current_academic_year_placement) { create(:placement, school:, academic_year: current_academic_year, subject: current_subject) }
+      let!(:next_academic_year_placement) { create(:placement, school:, academic_year: next_academic_year, subject: next_subject) }
+
+      scenario "when I view placements for the current academic year" do
+        given_i_sign_in_as_anne
+        then_i_see_placement(current_academic_year_placement)
+        and_i_do_not_see_placement(next_academic_year_placement)
+      end
+
+      scenario "when I view placements for the next academic year" do
+        given_i_sign_in_as_anne
+        and_i_click_on("Next year (#{next_academic_year.name})")
+        then_i_see_placement(next_academic_year_placement)
+        and_i_do_not_see_placement(current_academic_year_placement)
+      end
+    end
   end
 
   private
@@ -69,10 +92,18 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
     with_term ? create(:placement, school:, terms: [create(:placements_term, :autumn)]) : create(:placement, school:)
   end
 
+  def then_i_see_placement(placement)
+    expect(page).to have_content placement.decorate.title
+  end
+
+  def and_i_do_not_see_placement(placement)
+    expect(page).not_to have_content placement.decorate.title
+  end
+
   def then_i_see_the_placements_page
     expect_placements_is_selected_in_the_primary_navigation
     expect(page).to have_title "Placements"
-    expect(page).to have_current_path placements_school_placements_path(school)
+    expect(page).to have_current_path placements_school_placements_path(school, params: { year: :current })
     within(".govuk-heading-l") do
       expect(page).to have_content "Placements"
     end
@@ -140,5 +171,9 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
       expect(page).to have_content "Mentor"
       expect(page).to have_content "Start date"
     end
+  end
+
+  def and_i_click_on(link_text)
+    click_on link_text
   end
 end
