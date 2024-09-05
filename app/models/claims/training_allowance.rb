@@ -1,8 +1,9 @@
 class Claims::TrainingAllowance
-  def initialize(mentor:, provider:, academic_year:)
+  def initialize(mentor:, provider:, academic_year:, claim_to_exclude: nil)
     @mentor = mentor
     @provider = provider
     @academic_year = academic_year
+    @claim_to_exclude = claim_to_exclude
   end
 
   def training_type
@@ -16,6 +17,9 @@ class Claims::TrainingAllowance
       6
     end
   end
+
+  def remaining_hours
+    total_hours - hours_completed
   end
 
   private
