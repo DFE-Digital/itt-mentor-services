@@ -43,7 +43,7 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
   end
 
   def when_i_visit_the_placements_page
-    visit placements_school_placements_path(school)
+    visit placements_school_placements_path(school, params: { year: :current })
   end
 
   def then_i_see_content(text)
