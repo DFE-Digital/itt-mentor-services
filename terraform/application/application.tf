@@ -106,6 +106,7 @@ module "web_application" {
   depends_on = [kubernetes_job.migrations]
 
   is_web = true
+  send_traffic_to_maintenance_page = true
 
   namespace    = var.namespace
   environment  = var.environment
