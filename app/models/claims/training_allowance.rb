@@ -22,6 +22,10 @@ class Claims::TrainingAllowance
     total_hours - hours_completed
   end
 
+  def available?
+    remaining_hours.positive?
+  end
+
   private
 
   attr_reader :mentor, :provider, :academic_year, :claim_to_exclude
