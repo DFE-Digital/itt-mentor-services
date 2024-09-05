@@ -34,7 +34,7 @@ class Placements::OrganisationsController < Placements::ApplicationController
 
   def landing_page_path(organisation)
     if organisation.is_a?(School)
-      placements_school_placements_path(organisation)
+      placements_school_placements_path(organisation, params: { year: :current })
     else # Provider
       placements_placements_path
     end

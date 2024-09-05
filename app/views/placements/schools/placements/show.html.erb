@@ -3,7 +3,7 @@
 <%= render "placements/schools/primary_navigation", school: @school, current_navigation: :placements %>
 
 <%= content_for(:before_content) do %>
-  <%= govuk_back_link(href: placements_school_placements_path(@school.id)) %>
+  <%= govuk_back_link(href: placements_school_placements_path(@school.id, params: { year: :current })) %>
 <% end %>
 
 <div class="govuk-width-container">
