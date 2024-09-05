@@ -5,7 +5,7 @@
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-l"><%= t(".placements") %></h1>
       <%= render SecondaryNavigationComponent.new do |component| %>
-        <% component.with_navigation_item t(".this_year", academic_year_name: @current_academic_year.name ), placements_school_placements_path(@school, params: { year: :current }) %>
+        <% component.with_navigation_item t(".this_year", academic_year_name: @current_academic_year.name), placements_school_placements_path(@school, params: { year: :current }) %>
         <% component.with_navigation_item t(".next_year", academic_year_name: @current_academic_year.next.name), placements_school_placements_path(@school, params: { year: :next }) %>
       <% end %>
 
