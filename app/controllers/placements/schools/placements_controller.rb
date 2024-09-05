@@ -2,12 +2,12 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
   before_action :set_school
   before_action :set_placement, only: %i[show remove destroy preview]
   before_action :set_decorated_placement, only: %i[show remove preview]
+  before_action :current_academic_year, only: :index
 
   helper_method :edit_attribute_path, :add_provider_path, :add_mentor_path
 
   def index
-    scope = policy_scope(@school.placements)
-    @pagy, placements = pagy(scope.includes(:subject, :mentors, :additional_subjects, :provider).order("subjects.name"))
+    @pagy, placements = pagy(placements_scope.includes(:subject, :mentors, :additional_subjects, :provider).order("subjects.name"))
     @placements = placements.decorate
   end
 
@@ -31,6 +31,18 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
   def preview; end
 
   private
+
+  def placements_scope
+    policy_scope(@school.placements.where(academic_year: academic_year_scope))
+  end
+
+  def current_academic_year
+    @current_academic_year ||= Placements::AcademicYear.current
+  end
+
+  def academic_year_scope
+    params[:year] == "next" ? current_academic_year.next : current_academic_year
+  end
 
   def set_placement
     @placement = @school.placements.find(params.require(:id))
@@ -57,6 +69,6 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
   end
 
   def index_path
-    placements_school_placements_path(@school)
+    placements_school_placements_path(@school, params: { year: :current })
   end
 end
