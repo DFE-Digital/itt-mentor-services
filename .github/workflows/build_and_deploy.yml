@@ -24,7 +24,7 @@ jobs:
 
       - name: Build and push docker image
         id: build-image
-        uses: DFE-Digital/github-actions/build-docker-image@master
+        uses: DFE-Digital/github-actions/build-docker-image@dependabot/github_actions/build-docker-image/gh-actions-bf940bc907
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           context: .
