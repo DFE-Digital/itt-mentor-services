@@ -121,6 +121,8 @@ module "web_application" {
   replicas                   = var.app_replicas
   docker_image               = var.docker_image
   enable_logit               = true
+
+  send_traffic_to_maintenance_page = false
 }
 
 module "worker_application" {
