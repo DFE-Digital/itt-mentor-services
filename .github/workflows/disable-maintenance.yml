@@ -31,3 +31,11 @@ jobs:
 
     - name: Disable maintenance app
       run: make ${{ inputs.environment }} disable-maintenance
+
+    - name: Maintenance Summary
+      if: success()
+      run: |
+        NOW=$(date +"%F %R")
+        echo 'MAINTENANCE PAGE DISABLED!' >> $GITHUB_STEP_SUMMARY
+        echo 'ENV: ${{ inputs.environment }}' >> $GITHUB_STEP_SUMMARY
+        echo "AT : ${NOW}" >> $GITHUB_STEP_SUMMARY
