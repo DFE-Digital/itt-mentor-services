@@ -71,7 +71,9 @@ jobs:
     - name: Restore Summary
       if: success()
       run: |
+        NOW=$(TZ=Europe/London date +"%F %R")
         echo 'RESTORE SUCCESSFUL!' >> $GITHUB_STEP_SUMMARY
         echo '  ENV: ${{ inputs.environment }}' >> $GITHUB_STEP_SUMMARY
+        echo "  AT : ${NOW}" >> $GITHUB_STEP_SUMMARY
         echo '  DB SERVER: ${{ env.DB_SERVER }}' >> $GITHUB_STEP_SUMMARY
         echo '  BACKUP FILE RESTORED: ${{ env.BACKUP_FILE }}' >> $GITHUB_STEP_SUMMARY

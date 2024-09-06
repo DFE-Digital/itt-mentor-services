@@ -82,8 +82,10 @@ jobs:
     - name: Backup Summary
       if: success()
       run: |
+        NOW=$(TZ=Europe/London date +"%F %R")
         echo 'BACKUP SUCCESSFUL!' >> $GITHUB_STEP_SUMMARY
         echo '  ENV: ${{ env.DEPLOY_ENV }}' >> $GITHUB_STEP_SUMMARY
+        echo "  AT : ${NOW}" >> $GITHUB_STEP_SUMMARY
         echo '  DB SERVER: ${{ env.PTR_DB_SERVER || env.DB_SERVER  }}' >> $GITHUB_STEP_SUMMARY
         echo '  STORAGE ACCOUNT: ${{ env.STORAGE_ACCOUNT_NAME }}' >> $GITHUB_STEP_SUMMARY
         echo '  FILENAME: ${{ env.BACKUP_FILE }}.sql.gz' >> $GITHUB_STEP_SUMMARY
