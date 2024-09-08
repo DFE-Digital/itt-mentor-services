@@ -260,7 +260,7 @@ RSpec.describe "Create claim", service: :claims, type: :system do
     expect(page).to have_content("We have emailed you a copy of your claim.")
     expect(page).to have_content("This claim will be shared with #{claim.provider_name}.")
     expect(page).to have_content("We will check your claim before processing payment. If we need to contact you for further information, we will use the email you used to access this service.")
-    expect(page).to have_content("We will process this claim at the end of July 2024 and all payments will be paid from September 2024.")
+    expect(page).to have_content("We will process this claim at the end of September 2024 and all payments will be paid from December 2024.")
   end
 
   def then_i_expect_the_training_hours_for(hours, mentor)
