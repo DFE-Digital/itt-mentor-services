@@ -381,7 +381,7 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
   end
 
   def then_i_can_see_the_placements_school_placements_page
-    expect(page).to have_current_path(placements_school_placements_path(organisation, params: { year: :current }))
+    expect(page).to have_current_path(placements_school_placements_path(organisation))
   end
 
   def then_i_can_see_the_placements_page

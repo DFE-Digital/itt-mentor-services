@@ -30,7 +30,7 @@ class Placements::Schools::Placements::AddPlacementController < Placements::Appl
   private
 
   def after_create_placement_path(school)
-    placements_school_placements_path(school, params: { year: :current })
+    placements_school_placements_path(school)
   end
 
   def set_school
@@ -59,7 +59,7 @@ class Placements::Schools::Placements::AddPlacementController < Placements::Appl
     if @wizard.previous_step.present?
       step_path(@wizard.previous_step)
     else
-      placements_school_placements_path(@school, params: { year: :current })
+      placements_school_placements_path(@school)
     end
   end
 
