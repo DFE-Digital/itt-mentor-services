@@ -172,7 +172,7 @@ GEM
     cssbundling-rails (1.4.1)
       railties (>= 6.0.0)
     csv (3.3.0)
-    data_migrate (9.4.2)
+    data_migrate (11.0.0)
       activerecord (>= 6.1)
       railties (>= 6.1)
     date (3.3.4)
@@ -506,7 +506,7 @@ GEM
       psych (>= 4.0.0)
     redcarpet (3.6.0)
     regexp_parser (2.9.2)
-    reline (0.5.9)
+    reline (0.5.10)
       io-console (~> 0.5)
     representable (3.2.0)
       declarative (< 0.1.0)
@@ -720,7 +720,7 @@ DEPENDENCIES
   climate_control
   cssbundling-rails
   csv
-  data_migrate (= 9.4.2)
+  data_migrate (= 11.0.0)
   debug
   dfe-analytics!
   discard
