@@ -64,7 +64,7 @@ gem "good_job", "~> 4.2"
 # Store user sessions in the database
 gem "activerecord-session_store"
 
-gem "govuk-components", "~> 5.5.0"
+gem "govuk-components", "~> 5.6.1"
 gem "govuk_design_system_formbuilder", "~> 5.5"
 
 # DfE Sign-in
