@@ -71,9 +71,23 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
 
       scenario "when I view placements for the next academic year" do
         given_i_sign_in_as_anne
-        and_i_click_on("Next year (#{next_academic_year.name})")
+        when_i_click_on("Next year (#{next_academic_year.name})")
         then_i_see_placement(next_academic_year_placement)
         and_i_do_not_see_placement(current_academic_year_placement)
+      end
+
+      scenario "I can switch between academic years" do
+        given_i_sign_in_as_anne
+        then_i_see_placement(current_academic_year_placement)
+        and_i_do_not_see_placement(next_academic_year_placement)
+
+        when_i_click_on("Next year (#{next_academic_year.name})")
+        then_i_see_placement(next_academic_year_placement)
+        and_i_do_not_see_placement(current_academic_year_placement)
+
+        when_i_click_on("This year (#{current_academic_year.name})")
+        then_i_see_placement(current_academic_year_placement)
+        and_i_do_not_see_placement(next_academic_year_placement)
       end
     end
   end
@@ -173,7 +187,7 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
     end
   end
 
-  def and_i_click_on(link_text)
+  def when_i_click_on(link_text)
     click_on link_text
   end
 end
