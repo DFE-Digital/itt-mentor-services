@@ -9,7 +9,7 @@ class ChangeMentorTrainingTrainingTypeDefault < ActiveRecord::Migration[7.1]
     up_only do
       # We require callbacks for BigQuery to stay in sync with the data.
       MentorTrainingForMigration.where(training_type: nil).find_each do |mentor_training|
-        mentor_training.update(training_type: Claims::MentorTraining.training_types[:initial])
+        mentor_training.update(training_type: "initial")
       end
     end
   end
