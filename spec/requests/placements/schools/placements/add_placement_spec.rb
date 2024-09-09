@@ -63,7 +63,7 @@ RSpec.describe "'Add placement' journey", service: :placements, type: :request d
 
     it "redirects to the school's list of placements" do
       put step_path(:check_your_answers)
-      expect(response).to redirect_to placements_school_placements_path(school_id:, params: { year: :current })
+      expect(response).to redirect_to placements_school_placements_path(school_id:)
     end
   end
 

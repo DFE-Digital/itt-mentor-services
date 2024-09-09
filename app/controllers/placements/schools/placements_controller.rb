@@ -69,6 +69,6 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
   end
 
   def index_path
-    placements_school_placements_path(@school, params: { year: :current })
+    placements_school_placements_path(@school)
   end
 end

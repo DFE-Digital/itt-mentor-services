@@ -103,7 +103,7 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
   def then_i_see_the_placements_page
     expect_placements_is_selected_in_the_primary_navigation
     expect(page).to have_title "Placements"
-    expect(page).to have_current_path placements_school_placements_path(school, params: { year: :current })
+    expect(page).to have_current_path placements_school_placements_path(school)
     within(".govuk-heading-l") do
       expect(page).to have_content "Placements"
     end
