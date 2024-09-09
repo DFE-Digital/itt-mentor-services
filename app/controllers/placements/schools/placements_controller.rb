@@ -2,7 +2,6 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
   before_action :set_school
   before_action :set_placement, only: %i[show remove destroy preview]
   before_action :set_decorated_placement, only: %i[show remove preview]
-  before_action :current_academic_year, only: :index
 
   helper_method :edit_attribute_path, :add_provider_path, :add_mentor_path
 
