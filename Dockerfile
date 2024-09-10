@@ -76,4 +76,8 @@ RUN apk add --no-cache proj-util
 COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 
+# Set the SHA environment variable for the healthcheck
+ARG COMMIT_SHA
+ENV SHA=${COMMIT_SHA}
+
 CMD bundle exec rails server -b 0.0.0.0
