@@ -121,8 +121,6 @@ group :development do
   gem "prettier_print", require: false
   gem "rladr"
   gem "rubocop-govuk", require: false
-  gem "solargraph", require: false
-  gem "solargraph-rails", require: false
   gem "syntax_tree", require: false
   gem "syntax_tree-haml", require: false
   gem "syntax_tree-rbs", require: false
