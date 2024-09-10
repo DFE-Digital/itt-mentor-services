@@ -6,17 +6,34 @@ on:
     - main
     types:
     - closed
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: PR number of review app to delete
+        required: true
+        type: string
+
 
 jobs:
   delete-review-app:
     name: Delete Review App ${{ github.event.pull_request.number }}
     concurrency: deploy_review_${{ github.event.pull_request.number }}
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') }}
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name == 'workflow_dispatch' }}
     environment: review
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+
+    - name: set PR_NUMBER
+      id: config
+      run: |
+        if [ ${{ github.event_name }} == 'workflow_dispatch' ]; then
+          PR_NUMBER=${{ github.event.inputs.pr_number }}
+        else
+          PR_NUMBER=${{ github.event.pull_request.number }}
+        fi
+        echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
 
     - uses: hashicorp/setup-terraform@v3
       with:
@@ -31,7 +48,7 @@ jobs:
       run: |
         make ci review terraform-destroy
       env:
-        PR_NUMBER: ${{ github.event.pull_request.number }}
+        PR_NUMBER: ${{ env.PR_NUMBER }}
 
     - name: Post Pull Request Comment
       if: ${{ github.event_name == 'pull_request' }}
@@ -39,5 +56,5 @@ jobs:
       with:
         header: aks
         message: |
-                Review app  track and pay deployed to <https://track-and-pay-${{ github.event.number }}.test.teacherservices.cloud> was deleted
-                Review app  school placements deployed to <https://manage-school-placements-${{ github.event.number }}.test.teacherservices.cloud> was deleted
+                Review app  track and pay deployed to <https://track-and-pay-${{ env.PR_NUMBER }}.test.teacherservices.cloud> was deleted
+                Review app  school placements deployed to <https://manage-school-placements-${{ env.PR_NUMBER }}.test.teacherservices.cloud> was deleted
