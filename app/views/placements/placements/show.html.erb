@@ -1,5 +1,5 @@
 <% content_for(:page_title) { t(".page_title", school_name: @school.name, subject_name: @placement.title) } %>
-<%= render "placements/providers/primary_navigation", provider: @provider, current_navigation: :placements %>
+<%= render "placements/providers/primary_navigation", provider: @organisation, current_navigation: :placements %>
 
 <%= content_for(:before_content) do %>
   <%= govuk_back_link(href: :back) %>

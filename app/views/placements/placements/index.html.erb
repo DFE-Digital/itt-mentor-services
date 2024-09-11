@@ -1,5 +1,5 @@
 <% content_for(:page_title) { t(".placements") } %>
-<%= render "placements/providers/primary_navigation", provider: @provider, current_navigation: :placements %>
+<%= render "placements/providers/primary_navigation", provider: @organisation, current_navigation: :placements %>
 
 <div class="govuk-width-container" data-controller="filter">
   <h1 class="govuk-heading-l">
@@ -31,7 +31,7 @@
       } %>
       <% if @placements.any? %>
         <ul class="app-search-results">
-          <%= render(Placement::SummaryComponent.with_collection(@placements, provider: @provider, location_coordinates:)) %>
+          <%= render(Placement::SummaryComponent.with_collection(@placements, provider: @organisation, location_coordinates:)) %>
         </ul>
         <%= render PaginationComponent.new(pagy: @pagy) %>
       <% else %>

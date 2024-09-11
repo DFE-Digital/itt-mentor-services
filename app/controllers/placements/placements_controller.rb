@@ -1,6 +1,6 @@
 class Placements::PlacementsController < Placements::ApplicationController
-  before_action :set_current_organisation
   helper_method :filter_form, :location_coordinates
+
 
   def index
     @current_academic_year = Placements::AcademicYear.current.decorate
@@ -24,16 +24,10 @@ class Placements::PlacementsController < Placements::ApplicationController
 
   def schools_scope
     if filter_params[:only_partner_schools].present?
-      @provider.partner_schools
+      @organisation.partner_schools
     else
       Placements::School.all
     end
-  end
-
-  def set_current_organisation
-    return redirect_to organisations_path if current_user.current_organisation.blank?
-
-    @provider = current_user.current_organisation
   end
 
   def filter_form
@@ -74,7 +68,7 @@ class Placements::PlacementsController < Placements::ApplicationController
     {
       filters: filter_form.query_params,
       location_coordinates:,
-      current_provider: @provider,
+      current_provider: @organisation,
     }
   end
 
