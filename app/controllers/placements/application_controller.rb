@@ -1,6 +1,7 @@
 class Placements::ApplicationController < ApplicationController
   after_action :verify_policy_scoped, only: %i[index]
   before_action :authorize_support_user!
+  before_action :set_current_organisation
 
   def current_user
     @current_user ||= sign_in_user&.user&.tap do |user|
@@ -31,5 +32,16 @@ class Placements::ApplicationController < ApplicationController
   def restricted_placements_controller?
     # All users should be able to access routes to the PagesController
     !instance_of?(::Placements::PagesController)
+  end
+
+
+  def set_current_organisation
+    return if current_user&.support_user?
+
+    if current_user&.current_organisation.present?
+      @organisation = current_user&.current_organisation
+    else
+      redirect_to organisations_path
+    end
   end
 end
