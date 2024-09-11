@@ -20,4 +20,4 @@ The `maintenance_page.html` file is in the `maintenance_page/html` directory. Th
 
 ## Current Deployment SHA Ref
 
-To find the SHA ref of the current deployment, check the health check endpoint at `/healthcheck/all` from the temporary ingress URL. The SHA ref is listed under the "commit SHA" label.
+To find the SHA ref of the current deployment, check the health check endpoint at `/healthcheck/sha` from the temporary ingress URL. The SHA ref is listed under the "sha" label.
