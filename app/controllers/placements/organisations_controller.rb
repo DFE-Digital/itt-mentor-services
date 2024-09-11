@@ -1,6 +1,6 @@
 class Placements::OrganisationsController < Placements::ApplicationController
   before_action :auto_redirect_if_only_one, only: :index
-  skip_before_action :set_current_organisation
+  skip_before_action :ensure_current_organisation_present
 
   def index
     scope = policy_scope(memberships)
@@ -24,20 +24,15 @@ class Placements::OrganisationsController < Placements::ApplicationController
 
   def load_organisation(membership)
     organisation = membership.organisation
+    current_user.current_organisation = case organisation
+                                when School
+                                  organisation.becomes(Placements::School)
+                                when Provider
+                                  organisation.becomes(Placements::Provider)
+                                end
 
-    set_session_current_organisation(organisation)
-    redirect_to landing_page_path(organisation)
-  end
-
-  def set_session_current_organisation(organisation)
     session["current_organisation"] = { "id" => organisation.id, "type" => organisation.class.name }
-  end
 
-  def landing_page_path(organisation)
-    if organisation.is_a?(School)
-      placements_school_placements_path(organisation)
-    else # Provider
-      placements_placements_path
-    end
+    redirect_to after_sign_in_path
   end
 end

@@ -1,7 +1,10 @@
 class Placements::ApplicationController < ApplicationController
   after_action :verify_policy_scoped, only: %i[index]
   before_action :authorize_support_user!
-  before_action :set_current_organisation
+  before_action :ensure_current_organisation_present
+
+  delegate :current_organisation, to: :current_user, allow_nil: true
+  helper_method :current_organisation
 
   def current_user
     @current_user ||= sign_in_user&.user&.tap do |user|
@@ -34,14 +37,23 @@ class Placements::ApplicationController < ApplicationController
     !instance_of?(::Placements::PagesController)
   end
 
-
-  def set_current_organisation
+  def ensure_current_organisation_present
     return if current_user&.support_user?
 
-    if current_user&.current_organisation.present?
-      @organisation = current_user&.current_organisation
-    else
-      redirect_to organisations_path
+    redirect_to after_sign_in_path if current_organisation.blank?
+  end
+
+  def after_sign_in_path
+    if current_user.support_user?
+      support_root_path
+    elsif current_organisation.blank?
+      organisations_path
+    elsif requested_path.present?
+      requested_path
+    elsif current_organisation.instance_of?(Placements::School)
+      placements_school_placements_path(current_organisation)
+    elsif current_organisation.instance_of?(Placements::Provider)
+      placements_placements_path
     end
   end
 end
