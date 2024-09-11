@@ -4,7 +4,7 @@ class Placements::UserPolicy < ApplicationPolicy
       if user.support_user?
         scope
       else
-        scope.joins(:user_memberships).where(user_memberships: { organisation: user.current_organisation })
+        scope.where(id: UserMembership.select(:user_id).where(organisation: user.current_organisation))
       end
     end
   end
