@@ -11,7 +11,7 @@ class Claims::TrainingAllowance
   end
 
   def total_hours
-    training_type == INITIAL_TRAINING ? 20 : 6
+    training_type == INITIAL_TRAINING ? INITIAL_TRAINING_HOURS : REFRESHER_TRAINING_HOURS
   end
 
   def remaining_hours
@@ -27,9 +27,12 @@ class Claims::TrainingAllowance
   attr_reader :mentor, :provider, :academic_year, :claim_to_exclude
 
   INITIAL_TRAINING = :initial
+  INITIAL_TRAINING_HOURS = 20
   REFRESHER_TRAINING = :refresher
+  REFRESHER_TRAINING_HOURS = 6
 
-  private_constant :INITIAL_TRAINING, :REFRESHER_TRAINING
+  private_constant :INITIAL_TRAINING, :INITIAL_TRAINING_HOURS, :REFRESHER_TRAINING,
+                   :REFRESHER_TRAINING_HOURS
 
   def mentor_training_scope
     @mentor_training_scope ||= provider.mentor_trainings
