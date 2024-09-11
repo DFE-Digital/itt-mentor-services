@@ -102,7 +102,6 @@ RSpec.describe "User authorization", service: :placements, type: :request do
 
         it "denies access" do
           placements_provider_routes.each do |route|
-            puts route.path
             get route.path.gsub("(.:format)", "")
               .gsub(":provider_id", provider.id)
               .gsub(":partner_school_id", school.id)
