@@ -7,18 +7,16 @@
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <label class="govuk-label govuk-label--l">
-          <span class="govuk-caption-l">
-            <%= @placement.title %>
-          </span>
-          <%= t(".title") %>
-        </label>
+      <span class="govuk-caption-l">
+        <%= @placement.title %>
+      </span>
+      <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
-        <p class="govuk-body">
-          <%= simple_format(t(".description",
-            subject_names: @placement.title,
-            provider_name: @placement.provider.name)) %>
-        </p>
+      <p class="govuk-body">
+        <%= simple_format(t(".description",
+          subject_names: @placement.title,
+          provider_name: @placement.provider.name)) %>
+      </p>
     </div>
   </div>
 </div>
