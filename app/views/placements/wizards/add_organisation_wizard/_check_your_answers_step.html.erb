@@ -5,10 +5,8 @@
     <%= form_for(check_your_answers_step, url: current_step_path, method: :put) do |f| %>
       <%= f.govuk_error_summary %>
 
-      <label class="govuk-label govuk-label--l">
-        <span class="govuk-caption-l"><%= t(".add_organisation") %></span>
-        <%= t(".title") %>
-      </label>
+      <span class="govuk-caption-l"><%= t(".add_organisation") %></span>
+      <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
       <%= render "shared/organisations/organisation_details", organisation: @wizard.organisation, change_link: step_path(:organisation) %>
       <% if @wizard.steps[:organisation_type].school? %>

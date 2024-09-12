@@ -9,7 +9,8 @@
 
         <%= f.govuk_check_boxes_fieldset :term_ids,
           legend: { size: "l",
-                    text: t(".select_a_term") },
+                    text: t(".select_a_term"),
+                    tag: "h1" },
           hint: { text: t(".description") } do %>
           <% terms_step.terms_for_selection.each_with_index do |term, index| %>
             <%= f.govuk_check_box :term_ids, term.id, label: { text: term.name }, link_errors: index.zero? %>

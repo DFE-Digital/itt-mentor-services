@@ -2,7 +2,7 @@
 
 <div class="govuk-width-container">
   <%= render(GovukComponent::NotificationBannerComponent.new(title_text: t(".important"))) do %>
-    <h3 class="govuk-heading-m"><%= t(".this_is_a_preview") %></h3>
+    <h1 class="govuk-heading-m"><%= t(".this_is_a_preview") %></h1>
   <% end %>
 
   <%= form_for(preview_placement_step, url: current_step_path, method: :put) do |f| %>
