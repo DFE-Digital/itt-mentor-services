@@ -17,10 +17,8 @@
         <%= f.hidden_field :last_name, value: @user_form.last_name %>
         <%= f.hidden_field :email, value: @user_form.email %>
 
-        <label class="govuk-label govuk-label--l">
-          <span class="govuk-caption-l"><%= t(".caption", school_name: @school.name) %></span>
-          <%= t(".title") %>
-        </label>
+        <span class="govuk-caption-l"><%= t(".caption", school_name: @school.name) %></span>
+        <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
         <%= govuk_summary_list(actions: false) do |summary_list| %>
           <% summary_list.with_row do |row| %>
@@ -48,6 +46,6 @@
           <%= govuk_link_to(t(".cancel"), claims_school_users_path(@school), no_visited_state: true) %>
         </p>
       <% end %>
-    <div>
-  <div>
+    </div>
+  </div>
 </div>

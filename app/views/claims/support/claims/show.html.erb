@@ -12,8 +12,8 @@
         <span class="govuk-caption-l"><%= t(".page_caption", reference: @claim.reference) %></span>
 
         <div class="govuk-heading-group">
-          <%= t(".page_title", school_name: @claim.school.name) %>
-          <%= render Claim::StatusTagComponent.new(claim: @claim) %>
+          <h1 class="govuk-heading-l"><%= t(".page_title", school_name: @claim.school.name) %></h1>
+          <span><%= render Claim::StatusTagComponent.new(claim: @claim) %></span>
         </div>
       </h1>
 

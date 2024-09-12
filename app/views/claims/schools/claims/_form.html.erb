@@ -5,13 +5,12 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l"><%= t(".add_claim") %></span>
-
       <%= f.govuk_collection_radio_buttons(
         :provider_id,
         Provider.private_beta_providers.order_by_name,
         :id,
         :name,
-        legend: { text: t(".heading"), size: "l" },
+        legend: { text: t(".heading"), size: "l", tag: "h1" },
       ) %>
 
       <%= f.govuk_submit t("continue") %>

@@ -17,10 +17,8 @@
         <%= f.hidden_field :last_name, value: @user_form.last_name %>
         <%= f.hidden_field :email, value: @user_form.email %>
 
-        <label class="govuk-label govuk-label--l">
-          <span class="govuk-caption-l"><%= t(".caption", school_name: @school.name) %></span>
-          <%= t(".title") %>
-        </label>
+        <span class="govuk-caption-l"><%= t(".caption", school_name: @school.name) %></span>
+        <h1><%= t(".title") %></h1>
 
         <dl class="govuk-summary-list">
           <div class="govuk-summary-list__row">

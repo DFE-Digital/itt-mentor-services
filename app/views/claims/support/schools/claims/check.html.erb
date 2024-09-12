@@ -8,10 +8,9 @@
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <label class="govuk-label govuk-label--l">
-        <span class="govuk-caption-l"><%= t(".add_claim", school: @school.name) %></span>
-        <%= t(".page_title") %>
-      </label>
+
+      <span class="govuk-caption-l"><%= t(".add_claim", school: @school.name) %></span>
+      <h1 class="govuk-heading-l"><%= t(".page_title") %></h1>
 
       <%= govuk_summary_list do |summary_list| %>
         <% summary_list.with_row do |row| %>
@@ -87,6 +86,6 @@
       <p class="govuk-body">
         <%= govuk_link_to t("cancel"), claims_support_school_claims_path(@school), no_visited_state: true %>
       </p>
-    <div>
-  <div>
+    </div>
+  </div>
 </div>

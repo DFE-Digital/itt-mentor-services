@@ -9,7 +9,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l"><%= t(".caption", reference: @claim.reference) %></span>
-      <h2 class="govuk-heading-l"><%= t(".warning") %></h2>
+      <h1 class="govuk-heading-l"><%= t(".warning") %></h1>
 
       <%= govuk_button_to t(".remove_claim"), claims_school_claim_path(@school, @claim), warning: true, method: :delete %>
 

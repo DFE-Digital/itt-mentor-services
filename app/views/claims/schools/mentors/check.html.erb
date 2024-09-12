@@ -14,10 +14,8 @@
         <%= f.hidden_field :trn, value: mentor_form.trn %>
         <%= f.govuk_date_field :date_of_birth, hidden: true, date_of_birth: true %>
 
-        <label class="govuk-label govuk-label--l">
-          <span class="govuk-caption-l"><%= t(".add_mentor") %></span>
-          <%= t(".check_your_answers") %>
-        </label>
+        <span class="govuk-caption-l"><%= t(".add_mentor") %></span>
+        <h1 class="govuk-heading-l"><%= t(".check_your_answers") %></h1>
 
         <%= govuk_summary_list do |summary_list| %>
           <% summary_list.with_row do |row| %>
