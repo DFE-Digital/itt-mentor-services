@@ -2,3 +2,4 @@ en:
   placements:
     service_name: Manage school placements
     support_email: Manage.SchoolPlacements@education.gov.uk
+    support_email_html: Manage.SchoolPlacements<wbr>@education.gov.uk

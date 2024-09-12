@@ -63,6 +63,6 @@
   <% end %>
 
   <% unless policy(Claims::Claim).create? %>
-    <p class="govuk-body"><%= sanitize t(".window_closed_support", link_to: govuk_mail_to(t("claims.support_email"))) %></p>
+    <p class="govuk-body"><%= sanitize t(".window_closed_support", link_to: govuk_mail_to(t("claims.support_email_html"))) %></p>
   <% end %>
 </div>

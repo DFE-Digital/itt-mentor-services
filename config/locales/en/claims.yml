@@ -2,3 +2,4 @@ en:
   claims:
     service_name: Claim funding for mentor training
     support_email: ittmentor.funding@education.gov.uk
+    support_email_html: ittmentor.funding<wbr>@education.gov.uk

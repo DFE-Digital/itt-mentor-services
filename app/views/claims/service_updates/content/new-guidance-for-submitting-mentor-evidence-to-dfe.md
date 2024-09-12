@@ -28,4 +28,4 @@ To help accredited providers, the types of evidence schools may need are:
 - number of hours of initial mentor training completed
 - details of accredited provider and lead mentor who delivered the training
 
-If you have any questions about providing supporting evidence, please email <a href="mailto:ittmentor.training@education.gov.uk">ittmentor.training@education.gov.uk</a>
+If you have any questions about providing supporting evidence, please email <a href="mailto:ittmentor.training@education.gov.uk">ittmentor.training<wbr>@education.gov.uk</a>

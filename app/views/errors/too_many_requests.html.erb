@@ -15,7 +15,7 @@
     </p>
 
     <p class="govuk-body">
-      <%== t(".support_message", email_link: mail_to(t("#{current_service}.support_email"), class: "govuk-link")) %>
+      <%== t(".support_message", email_link: mail_to(t("#{current_service}.support_email"), t("#{current_service}.support_email_html"), class: "govuk-link")) %>
     </p>
   </div>
 </div>
