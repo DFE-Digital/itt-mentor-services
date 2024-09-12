@@ -11,10 +11,8 @@
       <%= form_with(model: @school, url: claims_support_schools_path, method: "post", data: { turbo: false }) do |f| %>
         <%= f.hidden_field :id, value: @school.id %>
 
-        <label class="govuk-label govuk-label--l">
           <span class="govuk-caption-l"><%= t(".add_organisation") %></span>
-          <%= t(".title") %>
-        </label>
+          <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
         <%= govuk_summary_list do |summary_list| %>
           <% summary_list.with_row do |row| %>

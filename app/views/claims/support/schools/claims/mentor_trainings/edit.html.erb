@@ -1,7 +1,7 @@
 <% content_for(
-  :page_title,
-  t(".page_title", mentor: mentor_training_form.mentor_training.mentor_full_name),
-) %>
+     :page_title,
+     t(".page_title", mentor: mentor_training_form.mentor_training.mentor_full_name),
+   ) %>
 
 <% render "claims/support/primary_navigation", current: :organisations %>
 
@@ -24,7 +24,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <span class="govuk-caption-l"><%= t(".add_claim", school: @school.name) %></span>
-        <h2 class="govuk-heading-l"><%= t(".hours_of_training_for_mentor", mentor: mentor_training_form.mentor_full_name) %> </h2>
+        <h1 class="govuk-heading-l"><%= t(".hours_of_training_for_mentor", mentor: mentor_training_form.mentor_full_name) %> </h1>
 
         <%= render Claims::Claim::MentorTrainingForm::DisclaimerComponent.new(mentor_training_form:) %>
 
@@ -53,6 +53,7 @@
         <p class="govuk-body">
           <%= govuk_link_to(t("cancel"), claims_support_school_claims_path(@school), no_visited_state: true) %>
         </p>
+      </div>
     </div>
   <% end %>
 </div>

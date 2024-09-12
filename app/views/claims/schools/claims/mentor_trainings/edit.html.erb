@@ -24,7 +24,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <span class="govuk-caption-l"><%= t(".add_claim", school: @claim.provider.name) %></span>
-        <h2 class="govuk-heading-l"><%= t(".hours_of_training_for_mentor", mentor: mentor_training_form.mentor_full_name) %> </h2>
+        <h1 class="govuk-heading-l"><%= t(".hours_of_training_for_mentor", mentor: mentor_training_form.mentor_full_name) %> </h1>
 
         <%= render Claims::Claim::MentorTrainingForm::DisclaimerComponent.new(mentor_training_form:) %>
 

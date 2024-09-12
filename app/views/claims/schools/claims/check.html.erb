@@ -8,10 +8,8 @@
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <label class="govuk-label govuk-label--l">
-        <span class="govuk-caption-l"><%= @claim.draft? ? t(".caption_draft", reference: @claim.reference) : t(".caption") %></span>
-        <%= @claim.draft? ? t(".declaration") : t(".page_title") %>
-      </label>
+      <span class="govuk-caption-l"><%= @claim.draft? ? t(".caption_draft", reference: @claim.reference) : t(".caption") %></span>
+      <h1 class="govuk-heading-l"><%= @claim.draft? ? t(".declaration") : t(".page_title") %></h1>
 
       <%= govuk_summary_list(actions: !@claim.draft?) do |summary_list| %>
         <% summary_list.with_row do |row| %>
