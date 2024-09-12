@@ -78,6 +78,7 @@ RSpec.describe Claims::Claim, type: :model do
     it { is_expected.to delegate_method(:name).to(:provider).with_prefix }
     it { is_expected.to delegate_method(:users).to(:school).with_prefix }
     it { is_expected.to delegate_method(:full_name).to(:submitted_by).with_prefix.allow_nil }
+    it { is_expected.to delegate_method(:name).to(:academic_year).with_prefix.allow_nil }
   end
 
   describe "auditing" do

@@ -77,6 +77,7 @@ class Claims::Claim < ApplicationRecord
   delegate :name, to: :provider, prefix: true, allow_nil: true
   delegate :users, to: :school, prefix: true
   delegate :full_name, to: :submitted_by, prefix: true, allow_nil: true
+  delegate :name, to: :academic_year, prefix: true, allow_nil: true
 
   def valid_mentor_training_hours?
     mentor_trainings_without_current_claim = Claims::MentorTraining.joins(:claim)
