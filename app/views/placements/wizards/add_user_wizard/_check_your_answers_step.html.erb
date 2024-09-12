@@ -6,45 +6,41 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <label class="govuk-label govuk-label--l">
-          <span class="govuk-caption-l"><%= caption %></span>
-          <%= t(".check_your_answers") %>
-        </label>
+      <span class="govuk-caption-l"><%= caption %></span>
+      <h1 class="govuk-heading-l"><%= t(".check_your_answers") %></h1>
 
-        <%= govuk_summary_list do |summary_list| %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(text: User.human_attribute_name(:first_name)) %>
-            <% row.with_value(text: @wizard.steps[:user].first_name) %>
-            <% row.with_action(text: t(".change"),
-                               href: step_path(:user),
-                               visually_hidden_text: User.human_attribute_name(:first_name),
-                               classes: ["govuk-link--no-visited-state"]) %>
-          <% end %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(text: User.human_attribute_name(:last_name)) %>
-            <% row.with_value(text: @wizard.steps[:user].last_name) %>
-            <% row.with_action(text: t(".change"),
-                               href: step_path(:user),
-                               visually_hidden_text: User.human_attribute_name(:last_name),
-                               classes: ["govuk-link--no-visited-state"]) %>
 
-          <% end %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(text: User.human_attribute_name(:email)) %>
-            <% row.with_value(text: @wizard.steps[:user].email) %>
-            <% row.with_action(text: t(".change"),
-                               href: step_path(:user),
-                               visually_hidden_text: User.human_attribute_name(:email),
-                               classes: ["govuk-link--no-visited-state"]) %>
-          <% end %>
+      <%= govuk_summary_list do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: User.human_attribute_name(:first_name)) %>
+          <% row.with_value(text: @wizard.steps[:user].first_name) %>
+          <% row.with_action(text: t(".change"),
+                             href: step_path(:user),
+                             visually_hidden_text: User.human_attribute_name(:first_name),classes: ["govuk-link--no-visited-state"]) %>
         <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: User.human_attribute_name(:last_name)) %>
+          <% row.with_value(text: @wizard.steps[:user].last_name) %>
+          <% row.with_action(text: t(".change"),
+                             href: step_path(:user),visually_hidden_text: User.human_attribute_name(:last_name),
+                             classes: ["govuk-link--no-visited-state"]) %>
 
-        <div class="govuk-warning-text">
-          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-          <strong class="govuk-warning-text__text"><%= t(".warning", organisation_name: @wizard.organisation.name) %></strong>
-        </div>
+        <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: User.human_attribute_name(:email)) %>
+          <% row.with_value(text: @wizard.steps[:user].email) %>
+          <% row.with_action(text: t(".change"),
+                             href: step_path(:user),
+                             visually_hidden_text: User.human_attribute_name(:email),classes: ["govuk-link--no-visited-state"]) %>
+        <% end %>
+      <% end %>
 
-        <%= f.govuk_submit t(".add_user") %>
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text"><%= t(".warning", organisation_name: @wizard.organisation.name) %></strong>
+      </div>
+
+      <%= f.govuk_submit t(".add_user") %>
     </div>
   </div>
 <% end %>

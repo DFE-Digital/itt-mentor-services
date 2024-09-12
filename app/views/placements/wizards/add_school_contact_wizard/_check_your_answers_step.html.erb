@@ -5,40 +5,36 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <label class="govuk-label govuk-label--l">
-          <span class="govuk-caption-l"><%= contextual_text %></span>
-          <%= t(".check_your_answers") %>
-        </label>
+      <span class="govuk-caption-l"><%= contextual_text %></span>
+      <h1 class="govuk-heading-l"><%= t(".check_your_answers") %></h1>
 
-        <%= govuk_summary_list do |summary_list| %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(text: User.human_attribute_name(:first_name)) %>
-            <% row.with_value(text: @wizard.steps[:school_contact].first_name) %>
-            <% row.with_action(text: t(".change"),
-                               href: step_path(:school_contact),
-                               visually_hidden_text: User.human_attribute_name(:first_name),
-                               classes: ["govuk-link--no-visited-state"]) %>
-          <% end %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(text: User.human_attribute_name(:last_name)) %>
-            <% row.with_value(text: @wizard.steps[:school_contact].last_name) %>
-            <% row.with_action(text: t(".change"),
-                               href: step_path(:school_contact),
-                               visually_hidden_text: User.human_attribute_name(:last_name),
-                               classes: ["govuk-link--no-visited-state"]) %>
 
-          <% end %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(text: User.human_attribute_name(:email_address)) %>
-            <% row.with_value(text: @wizard.steps[:school_contact].email_address) %>
-            <% row.with_action(text: t(".change"),
-                               href: step_path(:school_contact),
-                               visually_hidden_text: User.human_attribute_name(:email_address),
-                               classes: ["govuk-link--no-visited-state"]) %>
-          <% end %>
+      <%= govuk_summary_list do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: User.human_attribute_name(:first_name)) %>
+          <% row.with_value(text: @wizard.steps[:school_contact].first_name) %>
+          <% row.with_action(text: t(".change"),
+                             href: step_path(:school_contact),
+                             visually_hidden_text: User.human_attribute_name(:first_name),classes: ["govuk-link--no-visited-state"]) %>
         <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: User.human_attribute_name(:last_name)) %>
+          <% row.with_value(text: @wizard.steps[:school_contact].last_name) %>
+          <% row.with_action(text: t(".change"),
+                             href: step_path(:school_contact),visually_hidden_text: User.human_attribute_name(:last_name),
+                             classes: ["govuk-link--no-visited-state"]) %>
 
-        <%= f.govuk_submit t(".add_the_itt_placement_contact") %>
+        <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: User.human_attribute_name(:email_address)) %>
+          <% row.with_value(text: @wizard.steps[:school_contact].email_address) %>
+          <% row.with_action(text: t(".change"),
+                             href: step_path(:school_contact),
+                             visually_hidden_text: User.human_attribute_name(:email_address),classes: ["govuk-link--no-visited-state"]) %>
+        <% end %>
+      <% end %>
+
+      <%= f.govuk_submit t(".add_the_itt_placement_contact") %>
     </div>
   </div>
 <% end %>
