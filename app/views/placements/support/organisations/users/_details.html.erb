@@ -3,7 +3,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l"><%= t(".caption", organisation_name: organisation.name) %></span>
-      <h2 class="govuk-heading-l"><%= user.full_name %></h2>
+      <h1 class="govuk-heading-l"><%= user.full_name %></h1>
 
       <%= govuk_summary_list(actions: false) do |summary_list| %>
         <% summary_list.with_row do |row| %>

@@ -1,21 +1,19 @@
 <%# locals: (mentor:, school:, support: false) -%>
-<label class="govuk-label govuk-label--l">
-  <span class="govuk-caption-l">
-    <%= support ? "#{mentor.full_name} - #{school.name}" : mentor.full_name %>
-  </span>
-  <%= t(".title") %>
-</label>
+<span class="govuk-caption-l">
+  <%= support ? "#{mentor.full_name} - #{school.name}" : mentor.full_name %>
+</span>
+<h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
-  <%= simple_format(t(".description", mentor_name: mentor.full_name)) %>
+<%= simple_format(t(".description", mentor_name: mentor.full_name)) %>
 
-  <ul class="govuk-list govuk-list--bullet">
-    <% mentor.mentor_school_placements(school).each do |placement| %>
-      <li>
-        <%= govuk_link_to(placement.title,
-          placements_school_placement_details_path(school:, placement:, support:),
-          target: "_blank",
-          new_tab: true,
-          no_visited_state: true) %>
-      </li>
-    <% end %>
-  </ul>
+<ul class="govuk-list govuk-list--bullet">
+  <% mentor.mentor_school_placements(school).each do |placement| %>
+    <li>
+      <%= govuk_link_to(placement.title,
+        placements_school_placement_details_path(school:, placement:, support:),
+        target: "_blank",
+        new_tab: true,
+        no_visited_state: true) %>
+    </li>
+  <% end %>
+</ul>

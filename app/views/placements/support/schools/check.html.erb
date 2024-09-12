@@ -10,10 +10,10 @@
       <%= form_with(model: @school, url: placements_support_schools_path, method: "post", data: { turbo: false }) do |f| %>
         <%= f.hidden_field :id, value: @school.id %>
 
-        <label class="govuk-label govuk-label--l">
-          <span class="govuk-caption-l"><%= t(".add_organisation") %></span>
-          <%= t(".title") %>
-        </label>
+
+        <span class="govuk-caption-l"><%= t(".add_organisation") %></span>
+        <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+
 
         <%= render "shared/organisations/organisation_details", organisation: @school, change_link: @back_link %>
         <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".additional_details") %></h2>

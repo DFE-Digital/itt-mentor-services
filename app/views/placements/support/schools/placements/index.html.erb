@@ -7,7 +7,7 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-l"><%= t(".placements") %></h1>
+      <h2 class="govuk-heading-m"><%= t(".placements") %></h2>
       <%= govuk_button_link_to(t(".add_placement"), new_add_placement_placements_support_school_placements_path) %>
 
       <% if @placements.any? %>

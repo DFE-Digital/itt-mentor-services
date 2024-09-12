@@ -7,10 +7,9 @@
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <label class="govuk-label govuk-label--l">
-        <span class="govuk-caption-l"><%= @placement.title %></span>
-        <%= t(".are_you_sure") %>
-      </label>
+
+      <span class="govuk-caption-l"><%= @placement.title %></span>
+      <h1 class="govuk-heading-l"><%= t(".are_you_sure") %></h1>
 
       <%= simple_format(t(".it_is_your_responsibility")) %>
 
