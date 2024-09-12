@@ -47,7 +47,7 @@ resource "kubernetes_job" "migrations" {
           name    = "migrate"
           image   = var.docker_image
           command = ["bundle"]
-          args    = ["exec", "rails", "db:prepare:with_data"]
+          args    = ["exec", "rails", "db:prepare"]
 
           env_from {
             config_map_ref {
