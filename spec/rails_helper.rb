@@ -29,9 +29,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 #
 # Rails.root.glob('spec/support/**/*.rb').sort.each { |f| require f }
 
-if ENV["SMOKE_TEST"] == "true"
-  ActiveRecord::Base.establish_connection adapter: :nulldb
-else
+unless ENV["SMOKE_TEST"] == "true"
   # Checks for pending migrations and applies them before tests are run.
   # If you are not using ActiveRecord, you can remove these lines.
   begin
@@ -46,15 +44,17 @@ RSpec.configure do |config|
   config.include DfESignInUserHelper
   config.include GeocodingHelper
 
-  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_paths = [Rails.root.join("spec/fixtures")]
+  unless ENV["SMOKE_TEST"] == "true"
+    # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
+    config.fixture_paths = [Rails.root.join("spec/fixtures")]
 
-  config.global_fixtures = :all unless ENV["SMOKE_TEST"] == "true"
+    config.global_fixtures = :all
 
-  # If you're not using ActiveRecord, or you'd prefer not to run each of your
-  # examples within a transaction, remove the following line or assign false
-  # instead of true.
-  config.use_transactional_fixtures = true
+    # If you're not using ActiveRecord, or you'd prefer not to run each of your
+    # examples within a transaction, remove the following line or assign false
+    # instead of true.
+    config.use_transactional_fixtures = true
+  end
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
