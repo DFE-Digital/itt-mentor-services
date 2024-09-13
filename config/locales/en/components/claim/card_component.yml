@@ -3,4 +3,3 @@ en:
     claim:
       card_component:
         claim_title: "%{reference} - %{school_name}"
-        academic_year: Academic year
