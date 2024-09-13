@@ -90,7 +90,12 @@ RSpec.describe Claims::Claim, type: :model do
 
     it "defines the expected values" do
       expect(claim).to define_enum_for(:status)
-        .with_values(internal_draft: "internal_draft", draft: "draft", submitted: "submitted")
+        .with_values(
+          internal_draft: "internal_draft",
+          draft: "draft",
+          submitted: "submitted",
+          sent_to_esfa: "sent_to_esfa",
+        )
         .backed_by_column_of_type(:enum)
     end
   end

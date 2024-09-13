@@ -66,7 +66,12 @@ class Claims::Claim < ApplicationRecord
   scope :not_draft_status, -> { where.not(status: DRAFT_STATUSES) }
 
   enum :status,
-       { internal_draft: "internal_draft", draft: "draft", submitted: "submitted" },
+       {
+         internal_draft: "internal_draft",
+         draft: "draft",
+         submitted: "submitted",
+         sent_to_esfa: "sent_to_esfa",
+       },
        validate: true
 
   delegate :name, to: :provider, prefix: true, allow_nil: true
