@@ -8,6 +8,7 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
     @pagy, @claims = pagy(@filtered_claims)
     @schools = Claims::School.all
     @providers = Claims::Provider.private_beta_providers
+    @academic_years = AcademicYear.order_by_date
   end
 
   def show; end
@@ -44,6 +45,7 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
       provider_ids: [],
       school_ids: [],
       statuses: [],
+      academic_year_ids: [],
     )
   end
 
