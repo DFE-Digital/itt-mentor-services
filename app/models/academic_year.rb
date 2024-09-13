@@ -14,6 +14,8 @@ class AcademicYear < ApplicationRecord
   validates :starts_on, presence: true
   validates :ends_on, presence: true, comparison: { greater_than_or_equal_to: :starts_on }
 
+  scope :order_by_date, -> { order(starts_on: :asc) }
+
   START_DATE = {
     day: 1,
     month: 9, # September
