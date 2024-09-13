@@ -13,10 +13,12 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
   attribute :school_ids, default: []
   attribute :provider_ids, default: []
   attribute :statuses, default: []
+  attribute :academic_year_ids, default: []
 
   def initialize(params = {})
     params[:school_ids].compact_blank! if params[:school_ids].present?
     params[:provider_ids].compact_blank! if params[:provider_ids].present?
+    params[:academic_year_ids].compact_blank! if params[:academic_year_ids].present?
 
     super(params)
   end
@@ -26,7 +28,8 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
       provider_ids.present? ||
       submitted_after.present? ||
       submitted_before.present? ||
-      statuses.present?
+      statuses.present? ||
+      academic_year_ids.present?
   end
 
   def index_path_without_filter(filter:, value: nil)
@@ -73,6 +76,10 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
     @providers ||= Claims::Provider.find(provider_ids)
   end
 
+  def academic_years
+    @academic_years ||= AcademicYear.find(academic_year_ids)
+  end
+
   def query_params
     {
       search:,
@@ -83,6 +90,7 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
       submitted_after:,
       submitted_before:,
       statuses:,
+      academic_year_ids:,
     }
   end
 
