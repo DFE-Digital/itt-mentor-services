@@ -20,7 +20,7 @@ RSpec.describe Claim::CardComponent, type: :component do
     expect(page).to have_content(claim.reference)
     expect(page).to have_content("Submitted")
 
-    expect(page).to have_content("Academic year #{claim.academic_year_name}")
+    expect(page).to have_content(claim.academic_year_name)
     expect(page).to have_content(claim.provider.name)
     expect(page).to have_content("08/04/2024")
     expect(page).to have_content("£1,072.00")
