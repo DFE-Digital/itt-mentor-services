@@ -6,9 +6,13 @@ RSpec.describe "View claims", :js, service: :claims, type: :system do
   let!(:school_2) { create(:claims_school) }
   let!(:provider_1) { create(:claims_provider, :best_practice_network) }
   let!(:provider_2) { create(:claims_provider, :niot) }
+  let(:academic_year_1) { build(:academic_year, starts_on: Date.parse("1 September 2001"), ends_on: Date.parse("31 August 2002"), name: "2001 to 2002") }
+  let(:academic_year_2) { build(:academic_year, starts_on: Date.parse("1 September 2002"), ends_on: Date.parse("31 August 2003"), name: "2002 to 2003") }
+  let(:claim_window_1) { build(:claim_window, academic_year: academic_year_1, starts_on: Date.parse("1 September 2001"), ends_on: Date.parse("31 August 2002")) }
+  let(:claim_window_2) { build(:claim_window, academic_year: academic_year_2, starts_on: Date.parse("1 September 2002"), ends_on: Date.parse("31 August 2003")) }
   let!(:claim_1) { create(:claim, :draft, school: school_1) }
-  let!(:claim_2) { create(:claim, :submitted, school: school_1, provider: provider_1, submitted_at: Date.new(2024, 4, 7), created_at: Date.new(2024, 4, 7)) }
-  let!(:claim_3) { create(:claim, :submitted, school: school_1, provider: provider_1, submitted_at: Date.new(2024, 4, 6), created_at: Date.new(2024, 4, 6)) }
+  let!(:claim_2) { create(:claim, :submitted, claim_window: claim_window_1, school: school_1, provider: provider_1, submitted_at: Date.new(2024, 4, 7), created_at: Date.new(2024, 4, 7)) }
+  let!(:claim_3) { create(:claim, :submitted, claim_window: claim_window_2, school: school_1, provider: provider_1, submitted_at: Date.new(2024, 4, 6), created_at: Date.new(2024, 4, 6)) }
   let!(:claim_4) { create(:claim, :submitted, school: school_1, provider: provider_1, submitted_at: Date.new(2024, 4, 5), created_at: Date.new(2024, 4, 5)) }
   let!(:claim_5) { create(:claim, :submitted, school: school_1, provider: provider_1, submitted_at: Date.new(2024, 4, 4), created_at: Date.new(2024, 4, 4)) }
   let!(:claim_6) { create(:claim, :submitted, school: school_1, provider: provider_2, submitted_at: Date.new(2024, 4, 3), created_at: Date.new(2024, 4, 3)) }
@@ -53,6 +57,32 @@ RSpec.describe "View claims", :js, service: :claims, type: :system do
       when_i_check_status_filter("Submitted")
       then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
       when_i_remove_the_filter("Submitted")
+      then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
+    end
+  end
+
+  context "when filtering by academic years" do
+    scenario "a support user filters claims by a single academic year" do
+      when_i_visit_claim_index_page
+      then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
+      and_i_see_no_draft_claims
+      when_i_check_academic_year_filter(academic_year_1)
+      then_i_see_a_list_of_claims([claim_2])
+      when_i_remove_the_filter(academic_year_1.name)
+      then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
+    end
+
+    scenario "a support user filters claims by multiple academic years" do
+      when_i_visit_claim_index_page
+      then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
+      and_i_see_no_draft_claims
+      when_i_check_academic_year_filter(academic_year_1)
+      then_i_see_a_list_of_claims([claim_2])
+      when_i_check_academic_year_filter(academic_year_2)
+      then_i_see_a_list_of_claims([claim_2, claim_3])
+      when_i_remove_the_filter(academic_year_2.name)
+      then_i_see_a_list_of_claims([claim_2])
+      when_i_remove_the_filter(academic_year_1.name)
       then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
     end
   end
@@ -110,6 +140,11 @@ RSpec.describe "View claims", :js, service: :claims, type: :system do
 
   def when_i_check_status_filter(status)
     page.find("#claims-support-claims-filter-form-statuses-#{status.downcase}-field", visible: :all).check
+    click_on("Apply filters")
+  end
+
+  def when_i_check_academic_year_filter(academic_year)
+    page.find("#claims-support-claims-filter-form-academic-year-ids-#{academic_year.id}-field", visible: :all).check
     click_on("Apply filters")
   end
 
