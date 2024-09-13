@@ -18,6 +18,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
         school_ids: [],
         provider_ids: [],
         statuses: [],
+        academic_year_ids: [],
       )
     end
   end
@@ -32,6 +33,13 @@ describe Claims::Support::Claims::FilterForm, type: :model do
 
     it "returns true if provider_ids present" do
       params = { provider_ids: %w[provider_id] }
+      form = described_class.new(params)
+
+      expect(form.filters_selected?).to be(true)
+    end
+
+    it "returns true if academic_year_ids present" do
+      params = { academic_year_ids: %w[academic_year_id] }
       form = described_class.new(params)
 
       expect(form.filters_selected?).to be(true)
@@ -85,7 +93,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
 
       expect(call).to eq(
         claims_support_claims_path(
-          params: { claims_support_claims_filter_form: { school_ids: [], provider_ids: [] } },
+          params: { claims_support_claims_filter_form: { school_ids: [], provider_ids: [], academic_year_ids: [] } },
         ),
       )
     end
@@ -103,7 +111,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
 
         expect(call).to eq(
           claims_support_claims_path(
-            params: { claims_support_claims_filter_form: { school_ids: [], provider_ids: [] } },
+            params: { claims_support_claims_filter_form: { school_ids: [], provider_ids: [], academic_year_ids: [] } },
           ),
         )
       end
@@ -120,7 +128,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
 
         expect(call).to eq(
           claims_support_claims_path(
-            params: { claims_support_claims_filter_form: { school_ids: [], provider_ids: [] } },
+            params: { claims_support_claims_filter_form: { school_ids: [], provider_ids: [], academic_year_ids: [] } },
           ),
         )
       end
@@ -209,6 +217,25 @@ describe Claims::Support::Claims::FilterForm, type: :model do
     end
   end
 
+  describe "#academic_years" do
+    it "returns a collection of academic years based on academic_year_ids param" do
+      academic_year = AcademicYear.first
+      params = { academic_year_ids: [academic_year.id] }
+      call = described_class.new(params).academic_years
+
+      expect(call).to eq([academic_year])
+    end
+
+    context "when academic_year_ids is empty" do
+      it "returns empty array" do
+        params = { academic_year_ids: [] }
+        call = described_class.new(params).academic_years
+
+        expect(call).to eq([])
+      end
+    end
+  end
+
   describe "#query_params" do
     it "returns the query params meant for searching the database" do
       params = {
@@ -224,6 +251,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
         school_ids: %w[school_id],
         provider_ids: %w[provider_id],
         statuses: %w[submitted],
+        academic_year_ids: %w[academic_year_id],
       }
 
       call = described_class.new(params).query_params
@@ -237,6 +265,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
         submitted_after: Date.new(2024, 1, 2),
         submitted_before: Date.new(2023, 1, 2),
         statuses: %w[submitted],
+        academic_year_ids: %w[academic_year_id],
       )
     end
   end
