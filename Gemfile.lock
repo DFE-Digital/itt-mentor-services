@@ -85,8 +85,6 @@ GEM
       activemodel (= 7.2.1)
       activesupport (= 7.2.1)
       timeout (>= 0.4.0)
-    activerecord-nulldb-adapter (0.5.1)
-      activerecord (>= 5.2.0)
     activerecord-session_store (2.1.0)
       actionpack (>= 6.1)
       activerecord (>= 6.1)
@@ -671,7 +669,6 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  activerecord-nulldb-adapter
   activerecord-session_store
   amazing_print
   annotate
