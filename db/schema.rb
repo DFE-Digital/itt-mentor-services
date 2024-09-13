@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_03_124152) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_13_144518) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -88,9 +88,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_03_124152) do
     t.index ["reference"], name: "index_claims_on_reference"
     t.index ["school_id"], name: "index_claims_on_school_id"
     t.index ["submitted_by_type", "submitted_by_id"], name: "index_claims_on_submitted_by"
-  end
-
-  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
   end
 
   create_table "flipflop_features", force: :cascade do |t|
