@@ -29,7 +29,7 @@ RSpec.describe AcademicYear, type: :model do
   describe "scopes" do
     describe "order_by_date" do
       # Academic years already exist and to avoid duplicating logic for this test, I have chosen to exclude them.
-      let!(:academic_year_ids_to_exclude) { AcademicYear.ids }
+      let!(:academic_year_ids_to_exclude) { described_class.ids }
       let(:academic_year_1) { create(:academic_year, starts_on: Date.parse("1 September 2021"), ends_on: Date.parse("31 August 2022"), name: "2021 to 2022") }
       let(:academic_year_2) { create(:academic_year, starts_on: Date.parse("1 September 2022"), ends_on: Date.parse("31 August 2023"), name: "2022 to 2023") }
       let(:academic_year_3) { create(:academic_year, starts_on: Date.parse("1 September 2023"), ends_on: Date.parse("31 August 2024"), name: "2023 to 2024") }
