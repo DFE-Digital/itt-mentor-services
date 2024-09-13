@@ -26,6 +26,28 @@ RSpec.describe AcademicYear, type: :model do
     it { is_expected.to validate_comparison_of(:ends_on).is_greater_than_or_equal_to(:starts_on) }
   end
 
+  describe "scopes" do
+    describe "order_by_date" do
+      # Academic years already exist and to avoid duplicating logic for this test, I have chosen to exclude them.
+      let!(:academic_year_ids_to_exclude) { AcademicYear.ids }
+      let(:academic_year_1) { create(:academic_year, starts_on: Date.parse("1 September 2021"), ends_on: Date.parse("31 August 2022"), name: "2021 to 2022") }
+      let(:academic_year_2) { create(:academic_year, starts_on: Date.parse("1 September 2022"), ends_on: Date.parse("31 August 2023"), name: "2022 to 2023") }
+      let(:academic_year_3) { create(:academic_year, starts_on: Date.parse("1 September 2023"), ends_on: Date.parse("31 August 2024"), name: "2023 to 2024") }
+      let(:academic_year_4) { create(:academic_year, starts_on: Date.parse("1 September 2024"), ends_on: Date.parse("31 August 2025"), name: "2024 to 2025") }
+
+      before do
+        academic_year_2
+        academic_year_4
+        academic_year_3
+        academic_year_1
+      end
+
+      it "orders by starts_on date in ascending order" do
+        expect(described_class.where.not(id: academic_year_ids_to_exclude).order_by_date).to eq([academic_year_1, academic_year_2, academic_year_3, academic_year_4])
+      end
+    end
+  end
+
   describe ".for_date" do
     let!(:existing_academic_year) do
       create(:academic_year,
