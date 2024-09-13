@@ -15,6 +15,7 @@ en:
           school_ids: School
           provider_ids: Accredited provider
           provider: Accredited provider
+          academic_year: Academic year
           submit: Search
           clear: Clear search
           status: Status

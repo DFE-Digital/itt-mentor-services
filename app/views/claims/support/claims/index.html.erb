@@ -26,7 +26,7 @@
           <%= f.govuk_text_field :search, type: :search, value: filter_form.search, label: { text: t(".search_label"), size: "s" } %>
           <%= f.govuk_submit t(".submit") %>
 
-          <% filter_form.attributes.except("search", "school_ids", "provider_ids").each do |key, value| %>
+          <% filter_form.attributes.except("search", "school_ids", "provider_ids", "academic_year_ids").each do |key, value| %>
             <%= f.hidden_field key, value: %>
           <% end %>
 

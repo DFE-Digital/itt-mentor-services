@@ -24,6 +24,22 @@
             </div>
           </div>
 
+          <% if filter_form.academic_year_ids.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.academic_year") %></h3>
+            <ul class="app-filter-tags">
+              <% filter_form.academic_years.each do |academic_year| %>
+                <li>
+                  <%= govuk_link_to(
+                    academic_year.name,
+                    filter_form.index_path_without_filter(filter: "academic_year_ids", value: academic_year.id),
+                    class: "app-filter__tag",
+                    no_visited_state: true,
+                  ) %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+
           <% if filter_form.statuses.present? %>
             <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.status") %></h3>
             <ul class="app-filter-tags">
@@ -103,6 +119,21 @@
           <%= form.govuk_submit t("apply_filters") %>
 
           <%= form.hidden_field :search, value: filter_form.search %>
+
+          <div class="app-filter__option">
+            <%= form.govuk_check_boxes_fieldset(
+              :academic_year_ids,
+              legend: {
+                text: t("claims.support.claims.index.academic_year"),
+                size: "s",
+              },
+              small: true,
+              ) do %>
+              <% @academic_years.each do |academic_year| %>
+                <%= form.govuk_check_box :academic_year_ids, academic_year.id, label: { text: academic_year.name } %>
+              <% end %>
+            <% end %>
+          </div>
 
           <div class="app-filter__option">
             <%= form.govuk_check_boxes_fieldset(
