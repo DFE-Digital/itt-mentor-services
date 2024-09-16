@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "View support users", type: :system do
+RSpec.describe "View support users", service: :claims, type: :system do
   let!(:support_user) { create(:claims_support_user, :colin, created_at: "2024-02-01") }
   let!(:support_user_2) { create(:claims_support_user, created_at: "2024-01-01") }
 

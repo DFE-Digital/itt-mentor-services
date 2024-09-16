@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "View users for school", type: :system do
+RSpec.describe "View users for school", service: :claims, type: :system do
   let(:school) { create(:school, :claims, urn: "123456") }
 
   before do

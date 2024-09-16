@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Remove a users agreement to the grant conditions for a school", type: :system do
+RSpec.describe "Remove a users agreement to the grant conditions for a school", service: :claims, type: :system do
   let!(:support_user) { create(:claims_support_user, :colin) }
   let!(:claims_user) { create(:claims_user, first_name: "George", last_name: "Barlow") }
 

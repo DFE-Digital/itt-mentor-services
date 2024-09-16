@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Invite a user to a school", type: :system do
+RSpec.describe "Invite a user to a school", service: :claims, type: :system do
   include ActiveJob::TestHelper
 
   around do |example|

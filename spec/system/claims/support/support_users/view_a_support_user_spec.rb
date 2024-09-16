@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "View a support user", type: :system do
+RSpec.describe "View a support user", service: :claims, type: :system do
   let!(:support_user) { create(:claims_support_user, :colin) }
 
   scenario "View a support user" do

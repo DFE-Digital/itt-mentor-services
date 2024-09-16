@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Re-add a discarded support user", type: :system do
+RSpec.describe "Re-add a discarded support user", service: :claims, type: :system do
   include ActiveJob::TestHelper
 
   around do |example|

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "View a users details", type: :system do
+RSpec.describe "View a users details", service: :claims, type: :system do
   let(:user) { create(:claims_user, first_name: "Barry", last_name: "Garlow", email: "barry.garlow@gmail.com") }
   let(:school) { create(:school, :claims, urn: "123456", name: "Test School") }
 
