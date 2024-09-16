@@ -121,6 +121,10 @@ group :development do
   gem "syntax_tree", require: false
   gem "syntax_tree-haml", require: false
   gem "syntax_tree-rbs", require: false
+
+  # Ruby LSP addon for RSpec [https://github.com/Shopify/ruby-lsp]
+  gem "ruby-lsp-rspec", require: false
+
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "rails-erd"
   gem "web-console"
