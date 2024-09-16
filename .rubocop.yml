@@ -61,3 +61,4 @@ Rails/LexicallyScopedActionFilter:
 RSpec/NoExpectationExample:
   Exclude:
     - spec/support/shared_examples/system/**/*.rb
+    - spec/smoke_tests/**/*.rb
