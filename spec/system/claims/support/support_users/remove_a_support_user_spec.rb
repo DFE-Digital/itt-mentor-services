@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Remove a support user", type: :system do
+RSpec.describe "Remove a support user", service: :claims, type: :system do
   include ActiveJob::TestHelper
 
   around do |example|

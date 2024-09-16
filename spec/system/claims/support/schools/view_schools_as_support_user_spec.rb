@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "View schools as support user", type: :system do
+RSpec.describe "View schools as support user", service: :claims, type: :system do
   let!(:schools) do
     [
       create(:school, :claims, name: "Manchester School", postcode: "M1234"),
