@@ -105,7 +105,7 @@ gem "geocoder"
 gem "audited"
 
 # BigQuery
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.14.1"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.14.2"
 
 # Migrations
 gem "strong_migrations"
