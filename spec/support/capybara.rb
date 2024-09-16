@@ -26,17 +26,3 @@ Capybara.javascript_driver = :selenium_chrome_headless
 # This needs to be enabled when using custom-styled checkboxes and radios, such as those
 # in the GOV.UK Design System.
 Capybara.automatic_label_click = true
-
-RSpec.configure do |config|
-  config.around(:each, :smoke_test, type: :system) do |example|
-    Capybara.current_driver = Capybara.javascript_driver
-    Capybara.run_server = false
-    example.run
-    Capybara.run_server = true
-    Capybara.current_driver = Capybara.default_driver
-  end
-
-  config.before(:each, type: :system) do
-    driven_by Capybara.current_driver
-  end
-end

@@ -29,14 +29,12 @@ Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 #
 # Rails.root.glob('spec/support/**/*.rb').sort.each { |f| require f }
 
-unless ENV["SMOKE_TEST"] == "true"
-  # Checks for pending migrations and applies them before tests are run.
-  # If you are not using ActiveRecord, you can remove these lines.
-  begin
-    ActiveRecord::Migration.maintain_test_schema!
-  rescue ActiveRecord::PendingMigrationError => e
-    abort e.to_s.strip
-  end
+# Checks for pending migrations and applies them before tests are run.
+# If you are not using ActiveRecord, you can remove these lines.
+begin
+  ActiveRecord::Migration.maintain_test_schema!
+rescue ActiveRecord::PendingMigrationError => e
+  abort e.to_s.strip
 end
 
 RSpec.configure do |config|
@@ -44,17 +42,15 @@ RSpec.configure do |config|
   config.include DfESignInUserHelper
   config.include GeocodingHelper
 
-  unless ENV["SMOKE_TEST"] == "true"
-    # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-    config.fixture_paths = [Rails.root.join("spec/fixtures")]
+  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
+  config.fixture_paths = [Rails.root.join("spec/fixtures")]
 
-    config.global_fixtures = :all
+  config.global_fixtures = :all
 
-    # If you're not using ActiveRecord, or you'd prefer not to run each of your
-    # examples within a transaction, remove the following line or assign false
-    # instead of true.
-    config.use_transactional_fixtures = true
-  end
+  # If you're not using ActiveRecord, or you'd prefer not to run each of your
+  # examples within a transaction, remove the following line or assign false
+  # instead of true.
+  config.use_transactional_fixtures = true
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
@@ -88,20 +84,14 @@ RSpec.configure do |config|
   end
 
   config.around(:each, type: :system) do |example|
-    service = self.class.metadata[:service] || :claims
+    driven_by Capybara.current_driver
+
+    service = self.class.metadata[:service]
 
     Capybara.app_host = "http://#{service_host(service)}"
     Capybara.asset_host = "http://#{service_host(service)}:#{ENV["PORT"]}"
     example.run
     Capybara.asset_host = nil
-    Capybara.app_host = nil
-  end
-
-  config.around(:each, :smoke_test, type: :system) do |example|
-    service = self.class.metadata[:service] || :claims
-
-    Capybara.app_host = "http://#{service_external_host(service)}"
-    example.run
     Capybara.app_host = nil
   end
 
@@ -124,8 +114,6 @@ RSpec.configure do |config|
 
   # System specs for the Claims service expect this specific Claim Window to exist
   config.before(:each, service: :claims, type: :system) do
-    next if self.class.metadata[:smoke_test]
-
     starts_on = "02/05/2024".to_date
     ends_on = "19/07/2024".to_date
     academic_year = AcademicYear.for_date(starts_on)
@@ -142,15 +130,6 @@ RSpec.configure do |config|
       ENV["CLAIMS_HOST"]
     when "placements"
       ENV["PLACEMENTS_HOST"]
-    end
-  end
-
-  def service_external_host(service)
-    case service.to_s
-    when "claims"
-      ENV["CLAIMS_EXTERNAL_HOST"]
-    when "placements"
-      ENV["PLACEMENTS_EXTERNAL_HOST"]
     end
   end
 end
