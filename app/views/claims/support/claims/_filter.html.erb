@@ -128,7 +128,7 @@
                 size: "s",
               },
               small: true,
-              ) do %>
+            ) do %>
               <% @academic_years.each do |academic_year| %>
                 <%= form.govuk_check_box :academic_year_ids, academic_year.id, label: { text: academic_year.name } %>
               <% end %>
