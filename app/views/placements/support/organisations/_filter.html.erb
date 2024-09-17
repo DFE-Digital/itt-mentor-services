@@ -1,12 +1,15 @@
 <%# locals: (search_param: "", filters: []) -%>
 
-<div class="app-filter-layout">
+<div class="app-filter-layout display-none-on-mobile" data-filter-target="filter">
   <div class="app-filter-layout__filter">
     <div class="app-filter__header">
       <div class="app-filter__header-title">
         <h2 class="govuk-heading-m"><%= t("placements.support.organisations.index.filter") %></h2>
       </div>
       <div class="app-filter__header-action"></div>
+        <button class="app-filter__close" type="button" data-action="click->filter#close">
+          <%= t("close") %>
+        </button>
     </div>
     <div class="app-filter-layout__content">
      <% if filters.any? %>
