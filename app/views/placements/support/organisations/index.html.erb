@@ -1,11 +1,16 @@
 <%= content_for :page_title, t(".title", organisation_count: @pagy.count) %>
 <%= render "placements/support/primary_navigation", current_navigation: :organisations %>
-<div class="govuk-width-container">
+<div class="govuk-width-container" data-controller="filter">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l"><%= t(".title", organisation_count: @pagy.count) %></h1>
       <%= govuk_button_link_to(t(".add_organisation"), new_add_organisation_placements_support_organisations_path) %>
     </div>
+  </div>
+  <div>
+    <button class="govuk-button govuk-button--secondary show-filter-button" type="button" data-action="click->filter#open">
+      <%= t("show_filter") %>
+    </button>
   </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-third">
