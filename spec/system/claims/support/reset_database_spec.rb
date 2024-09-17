@@ -10,7 +10,7 @@ RSpec.describe "Reset claims database", service: :claims, type: :system do
 
   scenario "Support user resets claims database for testing purposes" do
     when_i_visit_the_reset_database_page
-    then_i_see "Are you sure you want to reset the Test database?"
+    then_i_see "Are you sure you want to reset the Test environment database?"
 
     when_i_click_on "Reset database"
     then_i_see "Database has been reset"
