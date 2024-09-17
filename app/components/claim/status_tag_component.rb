@@ -25,6 +25,7 @@ class Claim::StatusTagComponent < ApplicationComponent
     {
       draft: "grey",
       submitted: "blue",
+      sent_to_esfa: "light-blue",
     }.with_indifferent_access
   end
 end
