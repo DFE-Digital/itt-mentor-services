@@ -23,6 +23,7 @@ class Claim::StatusTagComponent < ApplicationComponent
 
   def status_colours
     {
+      internal_draft: "grey",
       draft: "grey",
       submitted: "blue",
       sent_to_esfa: "light-blue",

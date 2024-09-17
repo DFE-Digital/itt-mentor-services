@@ -30,4 +30,14 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
       expect(page).to have_css(".govuk-tag--light-blue", text: "Sent to ESFA")
     end
   end
+
+  Claims::Claim.statuses.each_key do |status|
+    context "with a claim of status '#{status}'" do
+      let(:claim) { build(:claim, status:) }
+
+      it "renders successfully" do
+        expect(page).to have_css(".govuk-tag")
+      end
+    end
+  end
 end
