@@ -15,6 +15,11 @@
 
       <%= govuk_summary_list do |summary_list| %>
         <% summary_list.with_row do |row| %>
+          <% row.with_key(text: Claims::ClaimWindow.human_attribute_name(:academic_year)) %>
+          <% row.with_value(text: Claims::ClaimWindow.current.academic_year_name) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
           <% row.with_key(text: Claims::Claim.human_attribute_name(:accredited_provider)) %>
           <% row.with_value(text: @claim.provider_name) %>
           <% row.with_action(text: t("change"),
@@ -87,6 +92,6 @@
       <p class="govuk-body">
         <%= govuk_link_to t("cancel"), claims_support_school_claims_path(@school), no_visited_state: true %>
       </p>
-    <div>
-  <div>
+    </div>
+  </div>
 </div>
