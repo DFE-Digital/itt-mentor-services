@@ -8,7 +8,7 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
     @pagy, @claims = pagy(@filtered_claims)
     @schools = Claims::School.all
     @providers = Claims::Provider.private_beta_providers
-    @academic_years = AcademicYear.order_by_date
+    @academic_years = AcademicYear.where(id: Claims::ClaimWindow.select(:academic_year_id)).order_by_date
   end
 
   def show; end
