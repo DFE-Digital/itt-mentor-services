@@ -6,6 +6,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
+      <p class="govuk-body"><%= t(".intro_text") %></p>
 
       <%= govuk_button_link_to(t(".add_mentor"), new_add_mentor_placements_school_mentors_path) %>
 
@@ -32,7 +33,7 @@
         <% end %>
         <%= render PaginationComponent.new(pagy: @pagy) %>
       <% else %>
-        <p>
+        <p class="govuk-body">
           <%= t("no_records_for", records: "mentors", for: @school.name) %>
         </p>
       <% end %>

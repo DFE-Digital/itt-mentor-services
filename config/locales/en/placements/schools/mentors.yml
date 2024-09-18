@@ -7,7 +7,8 @@ en:
             add_mentor: Add mentor
             cancel: Cancel
         index:
-          heading: Mentors
+          heading: Mentors at your school
+          intro_text: Add mentors to be able to assign them to your placements.
           trn: Teacher reference number (TRN)
           add_mentor: Add mentor
           page_title: Mentors
