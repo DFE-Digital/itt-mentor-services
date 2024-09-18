@@ -8,14 +8,11 @@
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-l">
-        <span class="govuk-caption-l"><%= t(".page_caption", reference: @claim.reference) %></span>
-
-        <div class="govuk-heading-group">
-          <h1 class="govuk-heading-l"><%= t(".page_title", school_name: @claim.school.name) %></h1>
-          <span><%= render Claim::StatusTagComponent.new(claim: @claim) %></span>
-        </div>
-      </h1>
+      <span class="govuk-caption-l"><%= t(".page_caption", reference: @claim.reference) %></span>
+      <div class="govuk-heading-group">
+        <h1 class="govuk-heading-l"><%= t(".page_title", school_name: @claim.school.name) %></h1>
+        <span><%= render Claim::StatusTagComponent.new(claim: @claim) %></span>
+      </div>
 
       <% if @claim.submitted? %>
         <p class="govuk-body"><%= t(".submitted_by", name: @claim.submitted_by.full_name, date: l(@claim.submitted_on, format: :long)) %></p>
