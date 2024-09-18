@@ -7,11 +7,11 @@ class Claims::TrainingAllowance
   end
 
   def training_type
-    @training_type ||= has_initial_training? ? REFRESHER_TRAINING : INITIAL_TRAINING
+    @training_type ||= has_initial_training? ? REFRESHER_TRAINING_TYPE : INITIAL_TRAINING_TYPE
   end
 
   def total_hours
-    training_type == INITIAL_TRAINING ? INITIAL_TRAINING_HOURS : REFRESHER_TRAINING_HOURS
+    training_type == INITIAL_TRAINING_TYPE ? INITIAL_TRAINING_HOURS : REFRESHER_TRAINING_HOURS
   end
 
   def remaining_hours
@@ -26,28 +26,28 @@ class Claims::TrainingAllowance
 
   attr_reader :mentor, :provider, :academic_year, :claim_to_exclude
 
-  INITIAL_TRAINING = :initial
+  INITIAL_TRAINING_TYPE = :initial
   INITIAL_TRAINING_HOURS = 20
-  REFRESHER_TRAINING = :refresher
+  REFRESHER_TRAINING_TYPE = :refresher
   REFRESHER_TRAINING_HOURS = 6
 
-  private_constant :INITIAL_TRAINING, :INITIAL_TRAINING_HOURS, :REFRESHER_TRAINING,
+  private_constant :INITIAL_TRAINING_TYPE, :INITIAL_TRAINING_HOURS, :REFRESHER_TRAINING_TYPE,
                    :REFRESHER_TRAINING_HOURS
 
   def mentor_training_scope
     @mentor_training_scope ||= provider.mentor_trainings
                                        .where(mentor:)
                                        .joins(claim: { claim_window: :academic_year })
+                                       .merge(Claims::Claim.not_draft_status)
   end
 
   def has_initial_training?
-    mentor_training_scope.where(claims: { claim_windows: { academic_years: { ends_on: ..academic_year.starts_on } } }).where.not(claims: { status: %i[draft internal_draft] }).exists?
+    mentor_training_scope.where(academic_years: { ends_on: ..academic_year.starts_on }).exists?
   end
 
   def hours_completed
     mentor_training_scope
-      .where(claims: { claim_windows: { academic_year: } }).where.not(claims: { status: %i[draft internal_draft] })
-      .merge(Claims::Claim.active)
+      .where(claims: { claim_windows: { academic_year: } })
       .where.not(claim_id: [claim_to_exclude&.id, claim_to_exclude&.previous_revision_id])
       .sum(:hours_completed)
   end
