@@ -229,7 +229,7 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
     within("dl.govuk-summary-list:nth(1)") do
       within(".govuk-summary-list__row:nth(2)") do
         expect(page).to have_content("Academic year")
-        expect(page).to have_content(claim.claim_window.academic_year_name)
+        expect(page).to have_content(claim.academic_year_name)
       end
 
       within(".govuk-summary-list__row:nth(3)") do

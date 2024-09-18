@@ -30,7 +30,7 @@
 
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: Claims::ClaimWindow.human_attribute_name(:academic_year)) %>
-          <% row.with_value(text: @claim.claim_window.academic_year_name) %>
+          <% row.with_value(text: @claim.academic_year_name) %>
         <% end %>
 
         <% if @claim.provider %>
