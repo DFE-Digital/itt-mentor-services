@@ -16,6 +16,7 @@
             <% row.with_value(text: @wizard.steps[:support_user].first_name) %>
             <% row.with_action(text: t(".change"),
                                href: step_path(:support_user),
+                               visually_hidden_text: User.human_attribute_name(:first_name),
                                classes: ["govuk-link--no-visited-state"]) %>
 
           <% end %>
@@ -24,6 +25,7 @@
             <% row.with_value(text: @wizard.steps[:support_user].last_name) %>
             <% row.with_action(text: t(".change"),
                                href: step_path(:support_user),
+                               visually_hidden_text: User.human_attribute_name(:last_name),
                                classes: ["govuk-link--no-visited-state"]) %>
 
           <% end %>
@@ -32,6 +34,7 @@
             <% row.with_value(text: @wizard.steps[:support_user].email) %>
             <% row.with_action(text: t(".change"),
                                href: step_path(:support_user),
+                               visually_hidden_text: User.human_attribute_name(:email),
                                classes: ["govuk-link--no-visited-state"]) %>
           <% end %>
         <% end %>

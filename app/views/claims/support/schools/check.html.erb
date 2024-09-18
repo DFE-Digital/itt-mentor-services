@@ -24,7 +24,8 @@
                                href: new_claims_support_school_path(@school_form.as_form_params),
                                html_attributes: {
                                  class: "govuk-link--no-visited-state",
-                               }) %>
+                               },
+                               visually_hidden_text: t(".organisation_name")) %>
           <% end %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".ukprn")) %>

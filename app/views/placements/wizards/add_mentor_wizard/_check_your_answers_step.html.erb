@@ -24,6 +24,7 @@
             <% row.with_value(text: @wizard.steps[:mentor].mentor.trn) %>
             <% row.with_action(text: t(".change"),
                                href: step_path(:mentor),
+                               visually_hidden_text: t(".trn"),
                                classes: ["govuk-link--no-visited-state"]) %>
           <% end %>
           <% summary_list.with_row do |row| %>
@@ -31,6 +32,7 @@
             <% row.with_value(text: safe_l(@wizard.steps[:mentor].date_of_birth, format: :short)) %>
             <% row.with_action(text: t(".change"),
                                href: step_path(:mentor),
+                               visually_hidden_text: t(".date_of_birth"),
                                classes: ["govuk-link--no-visited-state"]) %>
           <% end %>
         <% end %>

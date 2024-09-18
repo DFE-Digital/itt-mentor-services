@@ -7,6 +7,7 @@
       <% if changeable %>
         <% row.with_action(text: t(".change"),
                            href: new_edit_school_contact_placements_school_school_contact_path(school, school_contact),
+                           visually_hidden_text: t(".first_name"),
                            classes: ["govuk-link--no-visited-state"]) %>
       <% end %>
     <% end %>
@@ -16,6 +17,7 @@
       <% if changeable %>
         <% row.with_action(text: t(".change"),
                            href: new_edit_school_contact_placements_school_school_contact_path(school, school_contact),
+                           visually_hidden_text: t(".last_name"),
                            classes: ["govuk-link--no-visited-state"]) %>
       <% end %>
     <% end %>
@@ -25,6 +27,7 @@
       <% if changeable %>
         <% row.with_action(text: t(".change"),
                            href: new_edit_school_contact_placements_school_school_contact_path(school, school_contact),
+                           visually_hidden_text: t(".email"),
                            classes: ["govuk-link--no-visited-state"]) %>
       <% end %>
     <% end %>
