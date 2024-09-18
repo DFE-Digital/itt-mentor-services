@@ -91,16 +91,16 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
       when_i_enter_trn(claims_mentor.trn)
       when_i_enter_date_of_birth(1, 1, 1990)
       and_i_click_on("Continue")
-      then_i_see_check_page_for(claims_mentor, school)
+      then_i_see_check_page_for(claims_mentor)
       when_i_click_on("Back")
       then_i_see_form_with_trn_and_date_of_birth(claims_mentor.trn, 1, 1, 1990)
       when_i_click_on("Continue")
-      then_i_see_check_page_for(claims_mentor, school)
+      then_i_see_check_page_for(claims_mentor)
       when_i_click_on("Change")
       then_i_see_form_with_trn_and_date_of_birth(claims_mentor.trn, 1, 1, 1990)
       when_i_click_on("Continue")
-      then_i_see_check_page_for(claims_mentor, school)
-      when_i_click_on("Add mentor")
+      then_i_see_check_page_for(claims_mentor)
+      when_i_click_on("Confirm and add mentor")
       then_mentor_is_added(claims_mentor.full_name)
     end
   end
@@ -119,12 +119,12 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
       when_i_enter_trn(placements_mentor.trn)
       when_i_enter_date_of_birth(1, 1, 1990)
       and_i_click_on("Continue")
-      then_i_see_check_page_for(placements_mentor, school)
+      then_i_see_check_page_for(placements_mentor)
       when_i_click_on("Back")
       then_i_see_form_with_trn_and_date_of_birth(placements_mentor.trn, 1, 1, 1990)
       when_i_click_on("Continue")
-      then_i_see_check_page_for(placements_mentor, school)
-      when_i_click_on("Add mentor")
+      then_i_see_check_page_for(placements_mentor)
+      when_i_click_on("Confirm and add mentor")
       then_mentor_is_added(placements_mentor.full_name)
     end
   end
@@ -161,8 +161,8 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
       when_i_enter_trn(new_mentor.trn)
       when_i_enter_date_of_birth(1, 1, 1990)
       and_i_click_on("Continue")
-      then_i_see_check_page_for(new_mentor, school)
-      when_i_click_on("Add mentor")
+      then_i_see_check_page_for(new_mentor)
+      when_i_click_on("Confirm and add mentor")
       then_mentor_is_added(new_mentor.full_name)
     end
   end
@@ -197,10 +197,10 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
     find("span", text: "Help with the TRN").click
   end
 
-  def then_i_see_check_page_for(mentor, school)
+  def then_i_see_check_page_for(mentor)
     expect_organisations_to_be_selected_in_primary_navigation
-    expect(page).to have_content "Add mentor - #{school.name}"
-    expect(page).to have_content "Check your answers"
+    expect(page).to have_content "Confirm and add mentor"
+    expect(page).to have_content "Confirm mentor details"
     name_row = page.all(".govuk-summary-list__row")[0]
     within(name_row) do
       expect(page).to have_content "First name"
