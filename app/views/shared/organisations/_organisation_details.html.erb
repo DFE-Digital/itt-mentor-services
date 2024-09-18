@@ -6,6 +6,7 @@
     <% if change_link.present? %>
       <% row.with_action(text: t(".change"),
                          href: change_link,
+                         visually_hidden_text: t(".organisation_name"),
                          classes: ["govuk-link--no-visited-state"]) %>
     <% end %>
   <% end %>

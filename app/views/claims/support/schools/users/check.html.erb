@@ -35,7 +35,8 @@
                     new_claims_support_school_user_path(
                       @user_form.as_form_params.merge(school_id: @school.id),
                     ),
-                    no_visited_state: true) %>
+                    no_visited_state: true,
+                    visually_hidden_suffix: t(".first_name")) %>
                 </li>
               </ul>
             </dd>
@@ -52,7 +53,8 @@
                     new_claims_support_school_user_path(
                       @user_form.as_form_params.merge(school_id: @school.id),
                     ),
-                    no_visited_state: true) %>
+                    no_visited_state: true,
+                    visually_hidden_suffix: t(".last_name")) %>
                 </li>
               </ul>
             </dd>
@@ -69,7 +71,8 @@
                     new_claims_support_school_user_path(
                       @user_form.as_form_params.merge(school_id: @school.id),
                     ),
-                    no_visited_state: true) %>
+                    no_visited_state: true,
+                    visually_hidden_suffix: t(".email")) %>
                 </li>
               </ul>
             </dd>
