@@ -1,9 +1,9 @@
 <%= content_for :page_title, sanitize(t(".page_title", contextual_text:)) %>
 
 <div class="govuk-width-container">
-  <%= render(GovukComponent::NotificationBannerComponent.new(title_text: t(".important"))) do %>
-    <h1 class="govuk-heading-m"><%= t(".this_is_a_preview") %></h1>
-  <% end %>
+  <%= render(GovukComponent::NotificationBannerComponent.new(title_text: t(".important"))) do |nb|
+        nb.with_heading(text: t(".this_is_a_preview"))
+      end %>
 
   <%= form_for(preview_placement_step, url: current_step_path, method: :put) do |f| %>
     <%= f.govuk_error_summary %>
