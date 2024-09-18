@@ -144,7 +144,7 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
 
   def when_i_click_change_provider
     within("dl.govuk-summary-list:nth(1)") do
-      within(".govuk-summary-list__row:nth(2)") do
+      within(".govuk-summary-list__row:nth(3)") do
         click_link("Change")
       end
     end
@@ -152,7 +152,7 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
 
   def when_i_click_change_mentors
     within("dl.govuk-summary-list:nth(1)") do
-      within(".govuk-summary-list__row:nth(3)") do
+      within(".govuk-summary-list__row:nth(4)") do
         click_link("Change")
       end
     end
@@ -228,11 +228,16 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
 
     within("dl.govuk-summary-list:nth(1)") do
       within(".govuk-summary-list__row:nth(2)") do
+        expect(page).to have_content("Academic year")
+        expect(page).to have_content(claim.claim_window.academic_year_name)
+      end
+
+      within(".govuk-summary-list__row:nth(3)") do
         expect(page).to have_content("Accredited provider")
         expect(page).to have_content(provider.name)
       end
 
-      within(".govuk-summary-list__row:nth(3)") do
+      within(".govuk-summary-list__row:nth(4)") do
         expect(page).to have_content("Mentors")
         mentors.each do |mentor|
           expect(page).to have_content(mentor.full_name)
