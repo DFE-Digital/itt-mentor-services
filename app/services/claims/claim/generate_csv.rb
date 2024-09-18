@@ -1,7 +1,18 @@
 require "csv"
 
 class Claims::Claim::GenerateCSV < ApplicationService
-  HEADERS = %w[claim_reference urn school_name local_authority claim_amount type_of_establishment establishment_type date_submitted claim_status].freeze
+  HEADERS = %w[
+    claim_reference
+    school_urn
+    school_name
+    school_local_authority
+    claim_amount
+    school_type_of_establishment
+    school_group
+    claim_submission_date
+    claim_status
+    claim_unpaid_reason
+  ].freeze
 
   def initialize(claims:)
     @claims = claims

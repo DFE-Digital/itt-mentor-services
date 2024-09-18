@@ -33,12 +33,12 @@ RSpec.describe Claims::Claim::GenerateCSV do
   end
 
   it "inserts the correct headers" do
-    expect(generate_claims_csv.lines.first.chomp).to eq("claim_reference,urn,school_name,local_authority,claim_amount,type_of_establishment,establishment_type,date_submitted,claim_status")
+    expect(generate_claims_csv.lines.first.chomp).to eq("claim_reference,school_urn,school_name,school_local_authority,claim_amount,school_type_of_establishment,school_group,claim_submission_date,claim_status,claim_unpaid_reason")
   end
 
   it "contains all claims" do
     expect(generate_claims_csv.lines.sort).to eq([
-      "claim_reference,urn,school_name,local_authority,claim_amount,type_of_establishment,establishment_type,date_submitted,claim_status\n",
+      "claim_reference,school_urn,school_name,school_local_authority,claim_amount,school_type_of_establishment,school_group,claim_submission_date,claim_status,claim_unpaid_reason\n",
       "12345670,5679,School name 3,blah,45.10,Academy converter,Academy,,draft\n",
       "12345671,5679,School name 3,blah,90.20,Academy converter,Academy,2023-08-29T22:35:00Z,submitted\n",
       "12345677,5679,School name 3,blah,676.50,Academy converter,Academy,2023-08-29T22:35:00Z,submitted\n",
