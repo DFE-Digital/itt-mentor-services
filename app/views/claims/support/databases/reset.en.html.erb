@@ -7,7 +7,7 @@
 
 <div class="govuk-width-container">
   <span class="govuk-caption-l">Reset database</span>
-  <h1 class="govuk-heading-l">Are you sure you want to reset the <%= hosting_environment_phase(current_service) %> environment database?</h1>
+  <h1 class="govuk-heading-l">Are you sure you want to reset the <%= hosting_environment_phase(current_service).downcase %> environment database?</h1>
 
   <p class="govuk-body">This action will truncate the following tables:</p>
 
