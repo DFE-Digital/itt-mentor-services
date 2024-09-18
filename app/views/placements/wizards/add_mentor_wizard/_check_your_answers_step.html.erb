@@ -1,13 +1,14 @@
-<% caption = current_user.support_user? ? "#{t(".add_mentor")} #{contextual_text}" : t(".add_mentor") %>
 <% content_for :page_title, t(".page_title", contextual_text:) %>
 
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= form_with(model: check_your_answers_step, url: current_step_path, method: :put) do |f| %>
-        <span class="govuk-caption-l"><%= caption %></span>
-        <h1 class="govuk-heading-l"><%= t(".check_your_answers") %></h1>
+        <h1 class="govuk-heading-l"><%= t(".confirm_details") %></h1>
 
+        <p class="govuk-body"><%= t(".intro_text") %></p>
+
+        <h2 class="govuk-heading-m"><%= t(".mentor") %></h2>
         <%= govuk_summary_list do |summary_list| %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: Mentor.human_attribute_name("first_name")) %>
@@ -38,9 +39,8 @@
         <p class="govuk-inset-text">
           <%= embedded_link_text(
                 t(".confirm_mentor_informed",
-                  mentor_name: @wizard.steps[:mentor].mentor.full_name,
                   link: govuk_link_to(
-                    t(".privacy_notice"), placements_privacy_path, no_visited_state: true
+                    t(".privacy_notice"), placements_privacy_path, new_tab: true, no_visited_state: true
                   )),
               ) %>
         </p>

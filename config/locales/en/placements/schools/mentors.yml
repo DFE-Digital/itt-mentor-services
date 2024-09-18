@@ -10,7 +10,8 @@ en:
             success_heading: Mentor added
             success_body: You can now assign them to placements.
         index:
-          heading: Mentors
+          heading: Mentors at your school
+          intro_text: Add mentors to be able to assign them to your placements.
           trn: Teacher reference number (TRN)
           add_mentor: Add mentor
           page_title: Mentors
