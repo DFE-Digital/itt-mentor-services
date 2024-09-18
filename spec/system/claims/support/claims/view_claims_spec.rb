@@ -148,11 +148,11 @@ RSpec.describe "View claims", :js, service: :claims, type: :system do
   end
 
   def when_i_search_the_school_filter_with(school_name)
-    find("legend", text: "School").sibling("input[type=search]").fill_in(with: school_name)
+    fill_in("Filter School", with: school_name)
   end
 
   def when_i_search_the_provider_filter_with(provider_name)
-    find("legend", text: "Accredited provider").sibling("input[type=search]").fill_in(with: provider_name)
+    fill_in("Filter Accredited provider", with: provider_name)
   end
 
   def then_i_see_only_my_filter_school_as_an_option

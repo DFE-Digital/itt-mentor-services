@@ -133,7 +133,7 @@ RSpec.describe "Placements / Placements / Searches filter options for a placemen
   alias_method :and_i_see_checkbox_option_for, :then_i_see_checkbox_option_for
 
   def when_i_search_the_school_filter_with(filter_name, option_name)
-    find("legend", text: filter_name).sibling("input[type=search]").fill_in(with: option_name)
+    fill_in("Filter #{filter_name}", with: option_name)
   end
   alias_method :and_i_search_the_school_filter_with, :when_i_search_the_school_filter_with
 
