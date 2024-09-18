@@ -2,27 +2,41 @@ import { Controller } from "@hotwired/stimulus";
 
 // Connects to data-controller="filter-search"
 export default class extends Controller {
-  static targets = ["optionsList", "searchInput"];
+  static targets = ["optionsList", "searchInput", "legend"];
+
+  static instanceCounter = 0;
 
   connect() {
     const list = this.element.querySelector(".govuk-checkboxes, .govuk-radios");
-
-    if (!list) {
-      throw new Error("Could not find checkboxes or radios to attach to");
-    }
-
     list.dataset.filterSearchTarget = "optionsList";
+
+    const legend = this.element.querySelector("legend");
+    legend.dataset.filterSearchTarget = "legend";
+
+    // This will be unique for each filter-search instance
+    this.instanceId = this.constructor.instanceCounter++;
+
     const searchInput = this.createSearchInput();
     list.before(searchInput);
   }
 
   createSearchInput() {
-    const searchInput = document.createElement("input");
-    searchInput.type = "search";
-    searchInput.className = "govuk-input govuk-!-margin-bottom-1";
-    searchInput.dataset.action = `input->${this.identifier}#search`;
-    searchInput.dataset.filterSearchTarget = "searchInput";
-    return searchInput;
+    const container = document.createElement("div");
+
+    const inputId = `${this.identifier}-${this.instanceId}-input`;
+    const labelText = `Filter ${this.legendTarget.innerText}`;
+
+    container.innerHTML = `
+      <label for="${inputId}" class="govuk-label govuk-visually-hidden">
+        ${labelText}
+      </label>
+      <input type="search" id="${inputId}"
+        class="govuk-input govuk-!-margin-bottom-1"
+        data-action="input->${this.identifier}#search"
+        data-filter-search-target="searchInput">
+    `;
+
+    return container;
   }
 
   search() {
