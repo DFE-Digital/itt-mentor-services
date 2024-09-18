@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Create claim", service: :claims, type: :system do
+  let!(:claim_window) { create(:claim_window, :current) }
   let(:mentor1) { build(:claims_mentor, first_name: "Anne") }
   let(:mentor2) { build(:claims_mentor, first_name: "Joe") }
   let!(:school) { create(:claims_school, mentors: [mentor1, mentor2], region: regions(:inner_london)) }
@@ -213,11 +214,16 @@ RSpec.describe "Create claim", service: :claims, type: :system do
 
     within("dl.govuk-summary-list:nth(1)") do
       within(".govuk-summary-list__row:nth(2)") do
+        expect(page).to have_content("Academic year")
+        expect(page).to have_content(claim_window.academic_year_name)
+      end
+
+      within(".govuk-summary-list__row:nth(3)") do
         expect(page).to have_content("Accredited provider")
         expect(page).to have_content(bpn.name)
       end
 
-      within(".govuk-summary-list__row:nth(3)") do
+      within(".govuk-summary-list__row:nth(4)") do
         expect(page).to have_content("Mentors")
         expect(page).to have_content(mentor1.full_name)
         expect(page).to have_content(mentor2.full_name)
