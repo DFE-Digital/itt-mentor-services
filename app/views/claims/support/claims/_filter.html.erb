@@ -120,20 +120,22 @@
 
           <%= form.hidden_field :search, value: filter_form.search %>
 
-          <div class="app-filter__option">
-            <%= form.govuk_check_boxes_fieldset(
-              :academic_year_ids,
-              legend: {
-                text: t("claims.support.claims.index.academic_year"),
-                size: "s",
-              },
-              small: true,
-            ) do %>
-              <% @academic_years.each do |academic_year| %>
-                <%= form.govuk_check_box :academic_year_ids, academic_year.id, label: { text: academic_year.name } %>
+          <% if @academic_years.many? %>
+            <div class="app-filter__option">
+              <%= form.govuk_check_boxes_fieldset(
+                :academic_year_ids,
+                legend: {
+                  text: t("claims.support.claims.index.academic_year"),
+                  size: "s",
+                },
+                small: true,
+              ) do %>
+                <% @academic_years.each do |academic_year| %>
+                  <%= form.govuk_check_box :academic_year_ids, academic_year.id, label: { text: academic_year.name } %>
+                <% end %>
               <% end %>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
 
           <div class="app-filter__option">
             <%= form.govuk_check_boxes_fieldset(
