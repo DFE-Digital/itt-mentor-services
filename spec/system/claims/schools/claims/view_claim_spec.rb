@@ -71,6 +71,7 @@ RSpec.describe "View a claim", service: :claims, type: :system do
   def then_i_can_then_see_the_submitted_claim_details
     expect(page).to have_content("Claim - #{submitted_claim.reference}")
     expect(page).to have_content("SchoolA School")
+    expect(page).to have_content("Academic year#{submitted_claim.academic_year.name}")
     expect(page).to have_content("Submitted")
     expect(page).to have_content("Submitted by #{anne.full_name} on 5 March 2024.")
     expect(page).to have_content("Accredited providerBest Practice Network")
@@ -86,6 +87,7 @@ RSpec.describe "View a claim", service: :claims, type: :system do
   def then_i_can_then_see_the_draft_claim_details
     expect(page).to have_content("Claim - #{draft_claim.reference}")
     expect(page).to have_content("SchoolA School")
+    expect(page).to have_content("Academic year#{draft_claim.academic_year.name}")
     expect(page).to have_content("Draft")
     expect(page).not_to have_content("Submitted by")
     expect(page).to have_content("Accredited providerBest Practice Network")
@@ -101,6 +103,7 @@ RSpec.describe "View a claim", service: :claims, type: :system do
   def then_i_can_then_see_the_draft_claim_details_without_change_buttons
     expect(page).to have_content("Claim - #{draft_claim.reference}")
     expect(page).to have_content("SchoolA School")
+    expect(page).to have_content("Academic year#{draft_claim.academic_year.name}")
     expect(page).not_to have_content("Submitted by")
     expect(page).to have_content("Accredited providerBest Practice Network")
     expect(page).to have_content("Mentors\nBarry Garlow")
