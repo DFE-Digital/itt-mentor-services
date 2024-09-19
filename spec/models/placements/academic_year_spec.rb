@@ -31,6 +31,19 @@ RSpec.describe Placements::AcademicYear, type: :model do
     end
   end
 
+  describe "#current?" do
+    let!(:current_academic_year) { described_class.current }
+    let!(:next_academic_year) { current_academic_year.next }
+
+    it "returns true if the academic year is the current academic year" do
+      expect(current_academic_year.current?).to be(true)
+    end
+
+    it "returns false if the academic year is not the current academic year" do
+      expect(next_academic_year.current?).to be(false)
+    end
+  end
+
   describe "#next" do
     let(:next_start_year) { current_academic_year.starts_on.year + 1 }
     let(:next_end_year) { current_academic_year.ends_on.year + 1 }

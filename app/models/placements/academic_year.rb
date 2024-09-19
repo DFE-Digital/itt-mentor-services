@@ -16,6 +16,10 @@ class Placements::AcademicYear < AcademicYear
     for_date(Date.current)
   end
 
+  def current?
+    self == self.class.current
+  end
+
   def next
     Placements::AcademicYear.for_date(starts_on + 1.year)
   end
