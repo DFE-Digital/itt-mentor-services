@@ -40,7 +40,7 @@ RSpec.describe "Placements / Schools / Partner providers / View a list of partne
   end
 
   def then_i_see_the_empty_state
-    expect(page).to have_content "There are no partner providers for #{school.name}"
+    expect(page).to have_content "There are no providers for #{school.name}"
   end
 
   def given_a_partnership_exists_between(school, provider)
@@ -66,7 +66,7 @@ RSpec.describe "Placements / Schools / Partner providers / View a list of partne
       expect(page).to have_link "Mentors", current: "false"
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Organisation details", current: "false"
-      expect(page).to have_link "Partner providers", current: "page"
+      expect(page).to have_link "Providers", current: "page"
     end
   end
 end

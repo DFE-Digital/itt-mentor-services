@@ -4,6 +4,7 @@
 <h1 class="govuk-heading-l"><%= t(".are_you_sure", provider_name: partner_provider.name) %></h1>
 
 <%= simple_format(t(".you_will_no_longer")) %>
+<%= simple_format(t(".they_will_remain")) %>
 
 <% if school.partner_provider_placements(partner_provider).any? %>
   <p class="govuk-body"><%= t(".placements_with_provider") %></p>
@@ -21,4 +22,4 @@
           provider_name: partner_provider.name),
 ) %>
 
-<%= govuk_button_to t(".delete_partner_provider"), delete_link, warning: true, method: :delete %>
+<%= govuk_button_to t(".delete_provider"), delete_link, warning: true, method: :delete %>
