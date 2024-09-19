@@ -1,5 +1,5 @@
 .app-header {
-  @include govuk-media-query($from: tablet) {
+  @include govuk-media-query($from: desktop) {
     .govuk-header__container {
       display: flex;
       justify-content: space-between;
