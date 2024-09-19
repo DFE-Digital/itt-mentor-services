@@ -25,7 +25,7 @@ en:
           delete_provider: Delete provider
           are_you_sure: Are you sure you want to delete this provider?
           you_will_no_longer: You will no longer be able to assign this provider to placements.
-          they_will_remain: They will remain assigned to current placements unless you delete them.
+          they_will_remain: They will remain assigned to current placements unless you remove them.
           provider_will_be_sent_an_email: We will send an email to %{provider_name} to let them know they are no longer one of your providers. It is your responsibility to confirm with them whether they should still fulfil existing assigned placements.
           placements_with_provider: "Placements with this provider are:"
         destroy:
