@@ -79,7 +79,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
     )
     expect(page).to have_content provider.name
     expect(page).to have_content "You will no longer be able to assign this provider to placements."
-    expect(page).to have_content "They will remain assigned to current placements unless you delete them."
+    expect(page).to have_content "They will remain assigned to current placements unless you remove them."
   end
 
   def then_i_return_to_partner_provider_page(provider)
