@@ -50,7 +50,7 @@ RSpec.describe "Placements / Providers / View provider details", service: :place
 
   def then_i_see_the_details_for_my_provider
     expect(page.find(".govuk-heading-l")).to have_content("Organisation detail")
-    expect(page).to have_content("Organisation name")
+    expect(page).to have_content("Name")
     expect(page).to have_content("London Provider")
     expect(page).to have_content("UK provider reference number (UKPRN)")
     expect(page).to have_content("456654")

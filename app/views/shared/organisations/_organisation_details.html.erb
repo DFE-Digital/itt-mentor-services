@@ -1,5 +1,5 @@
 <%# locals: (organisation:, change_link: nil) -%>
-<%= govuk_summary_list(html_attributes: { id: "organisation-details" }, actions: change_link.present?) do |summary_list| %>
+<%= govuk_summary_list(html_attributes: { class: "govuk-!-margin-bottom-0", id: "organisation-details" }, actions: change_link.present?) do |summary_list| %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".organisation_name")) %>
     <% row.with_value(**summary_row_value(value: organisation.name)) %>
@@ -13,7 +13,7 @@
     <% row.with_key(text: t(".ukprn")) %>
     <% row.with_value(**summary_row_value(value: organisation.ukprn)) %>
   <% end %>
-  <% summary_list.with_row do |row| %>
+    <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".urn")) %>
     <% row.with_value(**summary_row_value(value: organisation.urn)) %>
   <% end %>

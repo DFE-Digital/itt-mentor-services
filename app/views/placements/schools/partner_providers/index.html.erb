@@ -1,18 +1,19 @@
-<% content_for :page_title, t(".partner_providers") %>
+<% content_for :page_title, t(".providers") %>
 <%= render "placements/schools/primary_navigation", school: @school, current_navigation: :partner_providers %>
 
 <div class="govuk-width-container">
-  <h1 class="govuk-heading-l"><%= t(".partner_providers") %></h1>
+  <h1 class="govuk-heading-l"><%= t(".providers") %></h1>
+  <p><%= t(".intro_text") %></p>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= govuk_button_link_to(t(".add_partner_provider"), new_add_partner_provider_placements_school_partner_providers_path) %>
+      <%= govuk_button_link_to(t(".add_provider"), new_add_partner_provider_placements_school_partner_providers_path) %>
 
       <% if @partner_providers.any? %>
         <%= app_table do |table| %>
           <% table.with_head do |head| %>
             <% head.with_row do |row| %>
-              <% row.with_cell(header: true, text: t(".attributes.partner_providers.name")) %>
-              <% row.with_cell(header: true, text: t(".attributes.partner_providers.ukprn")) %>
+              <% row.with_cell(header: true, text: t(".attributes.providers.name")) %>
+              <% row.with_cell(header: true, text: t(".attributes.providers.ukprn")) %>
             <% end %>
           <% end %>
           <% table.with_body do |body| %>

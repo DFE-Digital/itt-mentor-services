@@ -16,12 +16,16 @@ en:
             provider: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode.
             school: Enter a school name, unique reference number (URN) or postcode.
         check_your_answers_step:
-          page_title: Check your answers - %{contextual_text}
-          title: Check your answers
-          add_partner_provider: Add partner provider
+          page_title_provider: Confirm provider details - %{contextual_text}
+          page_title_school: Confirm school details - %{contextual_text}
+          title_provider: Confirm provider details
+          title_school: Confirm school details
+          intro_text: Adding them means you will be able to assign them to your placements. We will send them an email to let them know you have added them.
+          header_provider: Provider
+          header_school: School
+          add_partner_provider: Confirm and add provider
           add_partner_school: Add partner school
           address: Address
-          contact_details: Contact details
           additional_details: Additional details
           ofsted: Ofsted
           send: Special educational needs and disabilities (SEND)

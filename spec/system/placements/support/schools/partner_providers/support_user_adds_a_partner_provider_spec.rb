@@ -24,7 +24,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
     when_i_click_the_dropdown_item_for("Provider 1")
     and_i_click_on("Continue")
     then_i_see_the_check_details_page_for_provider("Provider 1")
-    when_i_click_on("Add partner provider")
+    when_i_click_on("Confirm and add provider")
     then_i_return_to_partner_provider_index
     and_a_provider_is_listed(provider_name: "Provider 1")
     and_i_see_success_message
@@ -71,7 +71,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
     when_i_click_the_dropdown_item_for("Provider 1")
     and_i_click_on("Continue")
     then_i_see_the_check_details_page_for_provider("Provider 1")
-    when_i_click_on("Add partner provider")
+    when_i_click_on("Confirm and add provider")
     then_i_return_to_partner_provider_index
     and_a_provider_is_listed(provider_name: "Provider 1")
     and_i_see_success_message
@@ -112,8 +112,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   end
 
   def then_i_see_the_check_details_page_for_provider(provider_name)
-    expect(page).to have_css(".govuk-caption-l", text: "Partner provider details")
-    expect(page).to have_content("Check your answers")
+    expect(page).to have_content("Confirm provider details")
     org_name_row = page.all(".govuk-summary-list__row")[0]
     expect(org_name_row).to have_content(provider_name)
   end

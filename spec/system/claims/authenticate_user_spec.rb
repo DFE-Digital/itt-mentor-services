@@ -34,7 +34,7 @@ RSpec.describe "Authentication", service: :claims, type: :system do
   end
 
   def then_i_am_able_to_access_the_page
-    expect(page).to have_content("Organisation nameSchool")
+    expect(page).to have_content("NameSchool")
   end
 
   def when_i_visit_the_sign_in_path

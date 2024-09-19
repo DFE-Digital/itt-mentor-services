@@ -41,7 +41,7 @@ RSpec.describe "Placements / Providers / Partner schools / Views a partner schoo
     expect(page).to have_content "Contact details"
 
     within("#organisation-details") do
-      expect(page).to have_content "Organisation name"
+      expect(page).to have_content "Name"
       expect(page).to have_content "UK provider reference number (UKPRN)"
       expect(page).to have_content "Unique reference number (URN)"
     end
@@ -73,7 +73,7 @@ RSpec.describe "Placements / Providers / Partner schools / Views a partner schoo
 
     within("#contact-details") do
       expect(page).to have_content "Email address"
-      expect(page).to have_content "Telephone number"
+      expect(page).to have_content "Telephone"
       expect(page).to have_content "Website"
       expect(page).to have_content "Address"
     end
