@@ -28,7 +28,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
     when_i_choose("Manchester 1")
     and_i_click_on("Continue")
     then_i_see_the_check_details_page_for_provider("Manchester 1")
-    and_i_click_on("Add partner provider")
+    and_i_click_on("Confirm and add provider")
     then_i_return_to_partner_provider_index
     and_a_provider_is_listed(provider_name: "Manchester 1")
     and_i_see_success_message
@@ -90,7 +90,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
     when_i_choose("Manchester 1")
     and_i_click_on("Continue")
     then_i_see_the_check_details_page_for_provider("Manchester 1")
-    and_i_click_on("Add partner provider")
+    and_i_click_on("Confirm and add provider")
     then_i_return_to_partner_provider_index
     and_a_provider_is_listed(provider_name: "Manchester 1")
     and_i_see_success_message
@@ -141,8 +141,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   alias_method :when_i_choose, :then_i_choose
 
   def then_i_see_the_check_details_page_for_provider(provider_name)
-    expect(page).to have_css(".govuk-caption-l", text: "Partner provider details")
-    expect(page).to have_content("Check your answers")
+    expect(page).to have_content("Confirm provider details")
     org_name_row = page.all(".govuk-summary-list__row")[0]
     expect(org_name_row).to have_content(provider_name)
   end
@@ -214,7 +213,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
       expect(page).to have_link "Mentors", current: "false"
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Organisation details", current: "false"
-      expect(page).to have_link "Partner providers", current: "page"
+      expect(page).to have_link "Providers", current: "page"
     end
   end
 

@@ -107,7 +107,7 @@ RSpec.describe "Placements / Schools / School Contacts / Edit a school contact",
       expect(page).to have_link "Mentors", current: "false"
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Organisation details", current: "page"
-      expect(page).to have_link "Partner providers", current: "false"
+      expect(page).to have_link "Providers", current: "false"
     end
   end
 

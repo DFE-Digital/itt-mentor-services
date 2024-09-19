@@ -31,7 +31,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
     then_i_return_to_partner_provider_page(provider)
     when_i_click_on("Delete partner provider")
     then_i_am_asked_to_confirm_partner_provider(provider)
-    when_i_click_on("Delete partner provider")
+    when_i_click_on("Delete provider")
     then_the_partner_provider_is_deleted(provider)
     and_a_partner_provider_remains_called("Another provider")
     and_a_notification_email_is_sent_to(provider_user)
@@ -46,7 +46,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
     then_i_return_to_partner_provider_page(provider)
     when_i_click_on("Delete partner provider")
     then_i_am_asked_to_confirm_partner_provider(provider)
-    when_i_click_on("Delete partner provider")
+    when_i_click_on("Delete provider")
     then_the_partner_provider_is_deleted(provider)
     and_a_partner_provider_remains_called("Another provider")
     and_a_notification_email_is_not_sent_to(provider_user)
@@ -78,7 +78,8 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
         " - #{school.name} - Manage school placements",
     )
     expect(page).to have_content provider.name
-    expect(page).to have_content "You will no longer be able to assign this provider to placements. They will remain assigned to current placements unless you delete them."
+    expect(page).to have_content "You will no longer be able to assign this provider to placements."
+    expect(page).to have_content "They will remain assigned to current placements unless you delete them."
   end
 
   def then_i_return_to_partner_provider_page(provider)

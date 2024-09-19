@@ -18,13 +18,13 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
 
   scenario "User adds a partner provider", :js, retry: 3 do
     when_i_view_the_partner_providers_page
-    and_i_click_on("Add partner provider")
+    and_i_click_on("Add provider")
     and_i_enter_a_provider_named("Provider 1")
     then_i_see_a_dropdown_item_for("Provider 1")
     when_i_click_the_dropdown_item_for("Provider 1")
     and_i_click_on("Continue")
     then_i_see_the_check_details_page_for_provider("Provider 1")
-    when_i_click_on("Add partner provider")
+    when_i_click_on("Confirm and add provider")
     then_i_return_to_partner_provider_index
     and_a_provider_is_listed(provider_name: "Provider 1")
     and_i_see_success_message
@@ -34,7 +34,7 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
   scenario "User adds a partner provider which already exists", :js, retry: 3 do
     given_a_partnership_exists_between(school, provider)
     when_i_view_the_partner_providers_page
-    and_i_click_on("Add partner provider")
+    and_i_click_on("Add provider")
     and_i_enter_a_provider_named("Provider 1")
     then_i_see_a_dropdown_item_for("Provider 1")
     when_i_click_the_dropdown_item_for("Provider 1")
@@ -50,7 +50,7 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
 
   scenario "User reconsiders selecting a provider using back link", :js, retry: 3 do
     when_i_view_the_partner_providers_page
-    and_i_click_on("Add partner provider")
+    and_i_click_on("Add provider")
     and_i_enter_a_provider_named("Provider 1")
     then_i_see_a_dropdown_item_for("Provider 1")
     when_i_click_the_dropdown_item_for("Provider 1")
@@ -64,7 +64,7 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
 
   scenario "User reconsiders selecting a provider using change link", :js, retry: 3 do
     when_i_view_the_partner_providers_page
-    and_i_click_on("Add partner provider")
+    and_i_click_on("Add provider")
     and_i_enter_a_provider_named("Provider 1")
     then_i_see_a_dropdown_item_for("Provider 1")
     when_i_click_the_dropdown_item_for("Provider 1")
@@ -79,13 +79,13 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
   scenario "User adds a partner provider, which is not onboarded on the placements service", :js, retry: 3 do
     given_the_provider_is_not_onboarded_on_placements_service(provider)
     when_i_view_the_partner_providers_page
-    and_i_click_on("Add partner provider")
+    and_i_click_on("Add provider")
     and_i_enter_a_provider_named("Provider 1")
     then_i_see_a_dropdown_item_for("Provider 1")
     when_i_click_the_dropdown_item_for("Provider 1")
     and_i_click_on("Continue")
     then_i_see_the_check_details_page_for_provider("Provider 1")
-    when_i_click_on("Add partner provider")
+    when_i_click_on("Confirm and add provider")
     then_i_return_to_partner_provider_index
     and_a_provider_is_listed(provider_name: "Provider 1")
     and_i_see_success_message
@@ -126,14 +126,13 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
   end
 
   def then_i_see_the_check_details_page_for_provider(provider_name)
-    expect(page).to have_css(".govuk-caption-l", text: "Partner provider details")
-    expect(page).to have_content("Check your answers")
+    expect(page).to have_content("Confirm provider details")
     org_name_row = page.all(".govuk-summary-list__row")[0]
     expect(org_name_row).to have_content(provider_name)
   end
 
   def then_i_return_to_partner_provider_index
-    expect(page.find(".govuk-heading-l")).to have_content("Partner providers")
+    expect(page.find(".govuk-heading-l")).to have_content("Providers you work with")
   end
 
   def and_a_provider_is_listed(provider_name:)
@@ -141,7 +140,7 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
   end
 
   def and_i_see_success_message
-    expect(page).to have_content "Partner provider added"
+    expect(page).to have_content "Provider added"
   end
 
   def given_a_partnership_exists_between(school, provider)
@@ -204,7 +203,7 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
       expect(page).to have_link "Mentors", current: "false"
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Organisation details", current: "false"
-      expect(page).to have_link "Partner providers", current: "page"
+      expect(page).to have_link "Providers", current: "page"
     end
   end
 
