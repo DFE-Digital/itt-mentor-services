@@ -6,6 +6,7 @@ en:
           users: Users
           add_user: Add user
           change_organisation: Change organisation
+          intro_text: Users are other members of staff at your school. Adding a user will allow them to view, edit and create placements.
         show:
           change_organisation: Change organisation
           delete_user: Delete user
