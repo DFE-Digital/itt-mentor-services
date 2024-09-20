@@ -6,18 +6,10 @@
       <%= f.govuk_error_summary %>
 
       <h1 class="govuk-heading-l"><%= t(".title_#{@wizard.partner_organisation_type}") %></h1>
-      <p class="govuk-body"><%= t(".intro_text") %></p>
+      <p class="govuk-body"><%= t(".intro_text_#{@wizard.partner_organisation_type}_html") %></p>
 
       <h2 class="govuk-heading-m"><%= t(".header_#{@wizard.partner_organisation_type}") %></h2>
       <%= render "shared/organisations/organisation_details", organisation: @wizard.partner_organisation, change_link: step_path(:partnership) %>
-      <% if @wizard.partner_organisation.is_a?(School) %>
-        <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".additional_details") %></h2>
-        <%= render "shared/schools/additional_details", school: @wizard.partner_organisation %>
-        <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".send") %></h2>
-        <%= render "shared/schools/send_details", school: @wizard.partner_organisation %>
-        <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".ofsted") %></h2>
-        <%= render "shared/schools/ofsted_details", school: @wizard.partner_organisation %>
-      <% end %>
 
       <%= f.govuk_submit t(".add_partner_#{@wizard.partner_organisation_type}") %>
     <% end %>
