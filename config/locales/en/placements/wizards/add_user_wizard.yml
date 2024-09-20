@@ -9,10 +9,9 @@ en:
           continue: Continue
           personal_details: Personal details
         check_your_answers_step:
-          page_title: Check your answers - %{caption}
-          caption: Add user
-          add_user: Add user
-          check_your_answers: Check your answers
+          page_title: Confirm user details
+          user: User
+          intro_text: Once added, they will be able to view, edit and create placements at your school.
+          we_will_send_them_an_email: We will send them an email with information on how to access the Manage school placements service.
+          add_user: Confirm and add user
           change: Change
-          continue: Continue
-          warning: "The user will be sent an email to tell them you’ve added them to %{organisation_name}."
