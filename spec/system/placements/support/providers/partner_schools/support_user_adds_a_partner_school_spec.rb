@@ -24,7 +24,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
     when_i_click_the_dropdown_item_for("School 1")
     and_i_click_on("Continue")
     then_i_see_the_check_details_page_for_school("School 1")
-    when_i_click_on("Add partner school")
+    when_i_click_on("Confirm and add school")
     then_i_return_to_partner_school_index_for(provider)
     and_a_school_is_listed(school_name: "School 1")
     and_i_see_success_message
@@ -71,7 +71,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
     when_i_click_the_dropdown_item_for("School 1")
     and_i_click_on("Continue")
     then_i_see_the_check_details_page_for_school("School 1")
-    when_i_click_on("Add partner school")
+    when_i_click_on("Confirm and add school")
     then_i_return_to_partner_school_index_for(provider)
     and_a_school_is_listed(school_name: "School 1")
     and_i_see_success_message

@@ -88,7 +88,7 @@ RSpec.describe "Placements / Placements / View a placement",
 
     within(nav) do
       expect(page).to have_link "Placements", current: "page"
-      expect(page).to have_link "Partner schools", current: "false"
+      expect(page).to have_link "Schools", current: "false"
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Organisation details", current: "false"
     end
