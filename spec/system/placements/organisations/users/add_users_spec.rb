@@ -23,13 +23,13 @@ RSpec.describe "Placements users invite other users to organisations", service: 
         when_i_click_add_user
         and_i_enter_valid_user_details
         and_user_is_selected_in_provider_primary_navigation
-        then_i_can_check_my_answers(one_provider)
+        then_i_can_check_my_answers(:provider)
         when_i_click_back
         then_i_see_prepopulated_form
         when_i_change_user_details
         then_i_see_changes_in_check_form
         and_user_is_selected_in_provider_primary_navigation
-        when_i_click_add_user
+        when_i_click_confirm
         then_the_user_is_added(one_provider)
         and_an_email_is_sent("firsty_lasty@email.co.uk", one_provider)
         and_user_is_selected_in_provider_primary_navigation
@@ -45,14 +45,14 @@ RSpec.describe "Placements users invite other users to organisations", service: 
         when_i_click_add_user
         and_user_is_selected_in_school_primary_navigation
         and_i_enter_valid_user_details
-        then_i_can_check_my_answers(one_school)
+        then_i_can_check_my_answers(:school)
         when_i_click_back
         then_i_see_prepopulated_form
         and_user_is_selected_in_school_primary_navigation
         when_i_change_user_details
         then_i_see_changes_in_check_form
         and_user_is_selected_in_school_primary_navigation
-        when_i_click_add_user
+        when_i_click_confirm
         then_the_user_is_added(one_school)
         and_an_email_is_sent("firsty_lasty@email.co.uk", one_school)
       end
@@ -165,7 +165,7 @@ RSpec.describe "Placements users invite other users to organisations", service: 
     fill_in "Last name", with: new_user.last_name
     fill_in "Email", with: new_user.email
     click_on "Continue"
-    click_on "Add user"
+    click_on "Confirm and add user"
   end
 
   def then_the_user_is_added_successfully(_organisation)
@@ -187,6 +187,10 @@ RSpec.describe "Placements users invite other users to organisations", service: 
     click_on "Add user"
   end
 
+  def when_i_click_confirm
+    click_on "Confirm and add user"
+  end
+
   def and_i_enter_valid_user_details
     fill_in "First name", with: "First Namey"
     fill_in "Last name", with: "Last Namey"
@@ -194,11 +198,14 @@ RSpec.describe "Placements users invite other users to organisations", service: 
     click_on "Continue"
   end
 
-  def then_i_can_check_my_answers(organisation)
+  def then_i_can_check_my_answers(organisation_type)
     expect(page).to have_content "First Namey"
     expect(page).to have_content "Last Namey"
     expect(page).to have_content "firsty_lasty@email.co.uk"
-    expect(page).to have_content "The user will be sent an email to tell them you’ve added them to #{organisation.name}."
+    if organisation_type == :school
+      expect(page).to have_content "Once added, they will be able to view, edit and create placements at your school."
+    end
+    expect(page).to have_content "We will send them an email with information on how to access the Manage school placements service."
   end
 
   def when_i_click_back
