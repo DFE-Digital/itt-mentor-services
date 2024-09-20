@@ -1,9 +1,9 @@
 en:
   placements:
     academic_year:
-      current_academic_year: This academic year (%{academic_year})
-      next_academic_year: Next academic year (%{academic_year})
-      previous_academic_year: Previous academic year (%{academic_year})
+      current_academic_year: This year (%{academic_year})
+      next_academic_year: Next year (%{academic_year})
+      previous_academic_year: Previous year (%{academic_year})
     placements:
       index:
         placements_found:
