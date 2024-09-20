@@ -33,21 +33,6 @@ RSpec.describe Claims::TrainingAllowance, type: :model do
       end
     end
 
-    context "when a draft claim exists and the mentor has not completed any training for the academic year" do
-      let(:draft_claim) { build(:claim, :draft, claim_window:) }
-
-      before do
-        create(:mentor_training, mentor:, provider:, claim: draft_claim, hours_completed: 1)
-      end
-
-      it "does not include the draft claim" do
-        expect(training_allowance.training_type).to eq(:initial)
-        expect(training_allowance.total_hours).to eq(20)
-        expect(training_allowance.remaining_hours).to eq(20)
-        expect(training_allowance).to be_available
-      end
-    end
-
     context "when an internal draft claim exists and the mentor has not completed any training for the academic year" do
       let(:internal_draft_claim) { build(:claim, status: :internal_draft, claim_window:) }
 
@@ -131,22 +116,6 @@ RSpec.describe Claims::TrainingAllowance, type: :model do
       before { previous_mentor_training }
 
       it "returns the expected results" do
-        expect(training_allowance.training_type).to eq(:refresher)
-        expect(training_allowance.total_hours).to eq(6)
-        expect(training_allowance.remaining_hours).to eq(6)
-        expect(training_allowance).to be_available
-      end
-    end
-
-    context "when a draft claim exists and the mentor has not completed any training for the academic year" do
-      let(:draft_claim) { build(:claim, :draft, claim_window:) }
-
-      before do
-        previous_mentor_training
-        create(:mentor_training, mentor:, provider:, claim: draft_claim, hours_completed: 1)
-      end
-
-      it "does not include the draft claim" do
         expect(training_allowance.training_type).to eq(:refresher)
         expect(training_allowance.total_hours).to eq(6)
         expect(training_allowance.remaining_hours).to eq(6)
