@@ -1,5 +1,5 @@
 <%# locals: (organisation:, change_link: nil) -%>
-<%= govuk_summary_list(html_attributes: { class: "govuk-!-margin-bottom-0", id: "organisation-details" }, actions: change_link.present?) do |summary_list| %>
+<%= govuk_summary_list(html_attributes: { id: "organisation-details" }, actions: change_link.present?) do |summary_list| %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".organisation_name")) %>
     <% row.with_value(**summary_row_value(value: organisation.name)) %>
@@ -13,8 +13,38 @@
     <% row.with_key(text: t(".ukprn")) %>
     <% row.with_value(**summary_row_value(value: organisation.ukprn)) %>
   <% end %>
-    <% summary_list.with_row do |row| %>
+  <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".urn")) %>
     <% row.with_value(**summary_row_value(value: organisation.urn)) %>
+  <% end %>
+    <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".email_address")) %>
+    <% if organisation.email_address.present? %>
+      <% row.with_value do %>
+        <%= govuk_mail_to(organisation.email_address, organisation.email_address) %>
+      <% end %>
+    <% else %>
+      <% row.with_value(**summary_row_value) %>
+    <% end %>
+  <% end %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".telephone_number")) %>
+    <% row.with_value(**summary_row_value(value: organisation.telephone)) %>
+  <% end %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".website")) %>
+    <% if organisation.website.present? %>
+      <% row.with_value do %>
+        <%= govuk_link_to(organisation.website,
+                          external_link(organisation.website),
+                          new_tab: true) %>
+      <% end %>
+    <% else %>
+      <% row.with_value(**summary_row_value) %>
+    <% end %>
+  <% end %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".address")) %>
+    <% row.with_value(**summary_row_value(value: organisation.formatted_address)) %>
   <% end %>
 <% end %>

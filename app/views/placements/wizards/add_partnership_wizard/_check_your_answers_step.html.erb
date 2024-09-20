@@ -8,7 +8,7 @@
       <label class="govuk-label govuk-label--l">
         <%= t(".title_#{@wizard.partner_organisation_type}") %>
       </label>
-      <p><%= t(".intro_text") %></p>
+      <p class="govuk-body"><%= t(".intro_text") %></p>
 
       <h2 class="govuk-heading-m"><%= t(".header_#{@wizard.partner_organisation_type}") %></h2>
       <%= render "shared/organisations/organisation_details", organisation: @wizard.partner_organisation, change_link: step_path(:partnership) %>
@@ -20,7 +20,6 @@
         <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".ofsted") %></h2>
         <%= render "shared/schools/ofsted_details", school: @wizard.partner_organisation %>
       <% end %>
-      <%= render "shared/organisations/contact_details", organisation: @wizard.partner_organisation %>
 
       <%= f.govuk_submit t(".add_partner_#{@wizard.partner_organisation_type}") %>
     <% end %>
