@@ -6,3 +6,8 @@ en:
         ukprn: UK provider reference number (UKPRN)
         urn: Unique reference number (URN)
         change: Change
+        email_address: Email address
+        telephone_number: Telephone number
+        website: Website
+        address: Address
+
