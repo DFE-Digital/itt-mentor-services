@@ -7,7 +7,7 @@ class Claims::TrainingAllowance
   end
 
   def training_type
-    @training_type ||= has_initial_training? ? REFRESHER_TRAINING_TYPE : INITIAL_TRAINING_TYPE
+    @training_type ||= has_trained_in_a_previous_year? ? REFRESHER_TRAINING_TYPE : INITIAL_TRAINING_TYPE
   end
 
   def total_hours
@@ -38,17 +38,20 @@ class Claims::TrainingAllowance
     @mentor_training_scope ||= provider.mentor_trainings
                                        .where(mentor:)
                                        .joins(claim: { claim_window: :academic_year })
-                                       .merge(Claims::Claim.not_draft_status)
   end
 
-  def has_initial_training?
-    mentor_training_scope.where(academic_years: { ends_on: ..academic_year.starts_on }).exists?
+  def has_trained_in_a_previous_year?
+    mentor_training_scope
+      .where(academic_years: { ends_on: ..academic_year.starts_on })
+      .merge(Claims::Claim.not_draft_status)
+      .exists?
   end
 
   def hours_completed
     mentor_training_scope
       .where(claims: { claim_windows: { academic_year: } })
       .where.not(claim_id: [claim_to_exclude&.id, claim_to_exclude&.previous_revision_id])
+      .merge(Claims::Claim.active)
       .sum(:hours_completed)
   end
 end
