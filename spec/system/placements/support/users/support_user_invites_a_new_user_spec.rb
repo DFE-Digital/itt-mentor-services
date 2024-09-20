@@ -30,7 +30,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
       and_i_click("Continue")
       then_i_see_support_navigation_with_organisation_selected
       then_i_see_the_new_users_details
-      and_i_click("Add user")
+      and_i_click("Confirm and add user")
       then_i_see_support_navigation_with_organisation_selected
       then_i_see_the_new_user_has_been_added(school)
       and_email_is_sent("test@example.com", school)
@@ -47,7 +47,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
       then_i_change_the_first_name
       and_i_click("Continue")
       then_i_see_edited_details
-      when_i_click("Add user")
+      when_i_click("Confirm and add user")
       then_i_see_edited_new_user_details
     end
   end
@@ -62,7 +62,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
       and_i_click("Continue")
       then_i_see_support_navigation_with_organisation_selected
       then_i_see_the_new_users_details
-      and_i_click("Add user")
+      and_i_click("Confirm and add user")
       then_i_see_support_navigation_with_organisation_selected
       then_i_see_the_new_user_has_been_added(provider)
       and_email_is_sent("test@example.com", provider)
@@ -76,7 +76,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
       and_i_enter_the_details_for_a_new_user
       and_i_click("Continue")
       then_i_see_the_new_users_details
-      and_i_click("Add user")
+      and_i_click("Confirm and add user")
       then_i_see_the_new_user_has_been_added(provider)
       and_email_is_sent("test@example.com", provider)
 
@@ -86,7 +86,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
       and_i_enter_the_details_for_a_new_user
       and_i_click("Continue")
       then_i_see_the_new_users_details
-      and_i_click("Add user")
+      and_i_click("Confirm and add user")
       then_i_see_the_new_user_has_been_added(school)
       and_email_is_sent("test@example.com", school)
 

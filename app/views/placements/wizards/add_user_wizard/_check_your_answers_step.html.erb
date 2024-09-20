@@ -1,13 +1,19 @@
-<% caption = current_user.support_user? ? "#{t(".caption")} #{contextual_text}" : t(".caption") %>
-<%= content_for :page_title, sanitize(t(".page_title", caption:)) %>
+<%= content_for :page_title, sanitize(t(".page_title")) %>
 
 <%= form_for(check_your_answers_step, url: current_step_path, method: :put) do |f| %>
   <%= f.govuk_error_summary %>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l"><%= caption %></span>
-      <h1 class="govuk-heading-l"><%= t(".check_your_answers") %></h1>
+      <h1 class="govuk-heading-l"><%= t(".page_title") %></h1>
+
+      <% if @wizard.organisation.organisation_type == "school" %>
+        <p><%= t(".intro_text") %></p>
+      <% end %>
+
+      <p><%= t(".we_will_send_them_an_email") %></p>
+
+      <h2 class="govuk-heading-m"><%= t(".user") %></h2>
 
       <%= govuk_summary_list do |summary_list| %>
         <% summary_list.with_row do |row| %>
@@ -33,11 +39,6 @@
                              visually_hidden_text: User.human_attribute_name(:email), classes: ["govuk-link--no-visited-state"]) %>
         <% end %>
       <% end %>
-
-      <div class="govuk-warning-text">
-        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-        <strong class="govuk-warning-text__text"><%= t(".warning", organisation_name: @wizard.organisation.name) %></strong>
-      </div>
 
       <%= f.govuk_submit t(".add_user") %>
     </div>
