@@ -918,16 +918,16 @@ RSpec.shared_examples "an add a placement wizard" do
 
   def then_i_see_the_academic_year_page
     expect(page).to have_content("Select an academic year")
-    expect(page).to have_content("This academic year (#{current_academic_year.name})")
-    expect(page).to have_content("Next academic year (#{next_academic_year.name})")
+    expect(page).to have_content("This year (#{current_academic_year.name})")
+    expect(page).to have_content("Next year (#{next_academic_year.name})")
   end
 
   def when_i_choose_an_academic_year(academic_year_name)
-    page.choose("This academic year (#{academic_year_name})")
+    page.choose("This year (#{academic_year_name})")
   end
 
   def then_my_chosen_academic_year_is_selected(academic_year_name)
-    expect(page).to have_checked_field("This academic year (#{academic_year_name})")
+    expect(page).to have_checked_field("This year (#{academic_year_name})")
   end
 
   alias_method :and_i_click_on, :when_i_click_on

@@ -8,7 +8,7 @@ RSpec.describe AcademicYearDecorator do
       let(:decorated_academic_year) { current_academic_year.decorate }
 
       it "returns the academic year name with 'This academic year'" do
-        expect(decorated_academic_year.display_name).to eq("This academic year (#{current_academic_year.name})")
+        expect(decorated_academic_year.display_name).to eq("This year (#{current_academic_year.name})")
       end
     end
 
@@ -17,7 +17,7 @@ RSpec.describe AcademicYearDecorator do
       let(:decorated_academic_year) { next_academic_year.decorate }
 
       it "returns the academic year name with 'Next academic year'" do
-        expect(decorated_academic_year.display_name).to eq("Next academic year (#{next_academic_year.name})")
+        expect(decorated_academic_year.display_name).to eq("Next year (#{next_academic_year.name})")
       end
     end
 
@@ -26,7 +26,7 @@ RSpec.describe AcademicYearDecorator do
       let(:decorated_academic_year) { previous_academic_year.decorate }
 
       it "returns the academic year name with 'Previous academic year'" do
-        expect(decorated_academic_year.display_name).to eq("Previous academic year (#{previous_academic_year.name})")
+        expect(decorated_academic_year.display_name).to eq("Previous year (#{previous_academic_year.name})")
       end
     end
   end
