@@ -31,7 +31,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
     then_i_return_to_partner_school_page(school)
     when_i_click_on("Delete partner school")
     then_i_am_asked_to_confirm_partner_school(school)
-    when_i_click_on("Delete partner school")
+    when_i_click_on("Delete school")
     then_the_partner_school_is_deleted(school)
     and_a_partner_provider_remains_called("Another school")
     and_a_notification_email_is_sent_to(school_user)
@@ -62,7 +62,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
       then_i_return_to_partner_school_page(school)
       when_i_click_on("Delete partner school")
       then_i_am_asked_to_confirm_partner_school(school)
-      when_i_click_on("Delete partner school")
+      when_i_click_on("Delete school")
       then_the_partner_school_is_deleted(school)
       and_a_partner_provider_remains_called("Another school")
       and_a_notification_email_is_sent_to(school_user)
@@ -78,7 +78,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
     then_i_return_to_partner_school_page(school)
     when_i_click_on("Delete partner school")
     then_i_am_asked_to_confirm_partner_school(school)
-    when_i_click_on("Delete partner school")
+    when_i_click_on("Delete school")
     then_the_partner_school_is_deleted(school)
     and_a_partner_provider_remains_called("Another school")
     and_a_notification_email_is_not_sent_to(school_user)
@@ -110,7 +110,6 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
     within(".app-secondary-navigation__list") do
       expect(page).to have_link "Details", current: "false"
       expect(page).to have_link "Users", current: "false"
-      expect(page).to have_link "Partner schools", current: "page"
     end
   end
 
@@ -125,7 +124,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
         "- #{provider.name} - Manage school placements",
     )
     expect(page).to have_content school.name
-    expect(page).to have_content "Are you sure you want to delete this partner school?"
+    expect(page).to have_content "Are you sure you want to delete this school?"
   end
 
   def then_i_return_to_partner_school_page(school)

@@ -28,7 +28,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school 
     when_i_choose("Manchester 1")
     and_i_click_on("Continue")
     then_i_see_the_check_details_page_for_school("Manchester 1")
-    and_i_click_on("Add partner school")
+    and_i_click_on("Confirm and add school")
     then_i_return_to_partner_school_index
     and_a_school_is_listed(school_name: "Manchester 1")
     and_i_see_success_message
@@ -90,7 +90,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school 
     when_i_choose("Manchester 1")
     and_i_click_on("Continue")
     then_i_see_the_check_details_page_for_school("Manchester 1")
-    and_i_click_on("Add partner school")
+    and_i_click_on("Confirm and add school")
     then_i_return_to_partner_school_index
     and_a_school_is_listed(school_name: "Manchester 1")
     and_i_see_success_message
@@ -141,7 +141,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school 
   end
 
   def then_i_return_to_partner_school_index
-    expect(page.find(".govuk-heading-l")).to have_content("Partner schools")
+    expect(page.find(".govuk-heading-l")).to have_content("Schools you work with")
   end
 
   def and_a_school_is_listed(school_name:)
@@ -149,7 +149,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school 
   end
 
   def and_i_see_success_message
-    expect(page).to have_content "Partner school added"
+    expect(page).to have_content "School added"
   end
 
   def given_a_partnership_exists_between(school, provider)
@@ -195,7 +195,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school 
 
     within(nav) do
       expect(page).to have_link "Placements", current: "false"
-      expect(page).to have_link "Partner schools", current: "page"
+      expect(page).to have_link "Schools", current: "page"
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Organisation details", current: "false"
     end

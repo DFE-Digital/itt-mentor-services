@@ -3,8 +3,10 @@ en:
     providers:
       partner_schools:
         index:
-          partner_schools: Partner schools
-          add_partner_school: Add partner school
+          schools_you_work_with: Schools you work with
+          view_all_placements: View all placements your schools have published.
+          only_schools_you_work_with: Only schools you work with are able to assign you their placements.
+          add_school: Add school
           change_organisation: Change organisation
           empty_state: There are no partner schools for %{provider_name}.
           attributes: 
@@ -19,19 +21,19 @@ en:
           ofsted: Ofsted
           send: Special educational needs and disabilities (SEND)
           contact_details: Contact details
-          delete_partner_school: Delete partner school
+          delete_school: Delete school
         remove:
           page_title: Are you sure you want to delete this partner school? - %{school_name}
           cancel: Cancel
         delete:
-          delete_partner_school: Delete partner school
-          are_you_sure: Are you sure you want to delete this partner school?
+          delete_school: Delete school
+          are_you_sure: Are you sure you want to delete this school?
           school_will_no_longer: The school will no longer be able to assign you to their placements. You can still view placements at this school.
           school_will_remain_assigned: You will remain assigned to current placements unless the school removes you.
           you_are_currently_assigned_to: "You are currently assigned to:"
-          school_will_be_sent_an_email: We will send an email to %{school_name}. This will let them know you have deleted them as a partner school for %{provider_name}.
+          school_will_be_sent_an_email: We will send an email to %{school_name}. This will let them know they can no longer assign you to placements.
         destroy: 
-          partner_school_deleted: Partner school deleted
+          partner_school_deleted: School deleted
         placements:
           details:
             placement_contact: Placement contact
