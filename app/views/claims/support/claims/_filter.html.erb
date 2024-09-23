@@ -46,7 +46,7 @@
               <% filter_form.statuses.each do |status| %>
                 <li>
                  <%= govuk_link_to(
-                   status.titleize,
+                   status.humanize,
                    filter_form.index_path_without_filter(filter: "statuses", value: status),
                    class: "app-filter__tag",
                    no_visited_state: true,
@@ -148,7 +148,7 @@
             ) do %>
 
               <% claim_statuses_for_selection.each do |status| %>
-                <%= form.govuk_check_box :statuses, status, label: { text: status.titleize } %>
+                <%= form.govuk_check_box :statuses, status, label: { text: status.humanize } %>
                <% end %>
              <% end %>
           </div>
