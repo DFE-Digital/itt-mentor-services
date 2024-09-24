@@ -17,8 +17,6 @@
         <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".ofsted") %></h2>
         <%= render "shared/schools/ofsted_details", school: @wizard.organisation %>
       <% end %>
-      <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".contact_details") %></h2>
-      <%= render "shared/organisations/contact_details", organisation: @wizard.organisation %>
 
       <%= f.govuk_submit t(".add_organisation") %>
     <% end %>
