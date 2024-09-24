@@ -8,11 +8,10 @@
       <label class="govuk-label govuk-label--l">
         <%= t(".title_#{@wizard.partner_organisation_type}") %>
       </label>
-      <p><%= t(".intro_text_#{@wizard.partner_organisation_type}_html") %></p>
+      <p class="govuk-body"><%= t(".intro_text_#{@wizard.partner_organisation_type}_html") %></p>
 
       <h2 class="govuk-heading-m"><%= t(".header_#{@wizard.partner_organisation_type}") %></h2>
       <%= render "shared/organisations/organisation_details", organisation: @wizard.partner_organisation, change_link: step_path(:partnership) %>
-      <%= render "shared/organisations/contact_details", organisation: @wizard.partner_organisation %>
       <%= f.govuk_submit t(".add_partner_#{@wizard.partner_organisation_type}") %>
     <% end %>
   </div>
