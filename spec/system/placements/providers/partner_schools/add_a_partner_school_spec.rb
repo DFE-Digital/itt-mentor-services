@@ -18,13 +18,13 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
 
   scenario "User adds a partner school", :js, retry: 3 do
     when_i_view_the_partner_schools_page
-    and_i_click_on("Add partner school")
+    and_i_click_on("Add school")
     and_i_enter_a_school_named("School 1")
     then_i_see_a_dropdown_item_for("School 1")
     when_i_click_the_dropdown_item_for("School 1")
     and_i_click_on("Continue")
     then_i_see_the_check_details_page_for_school("School 1")
-    when_i_click_on("Add partner school")
+    when_i_click_on("Confirm and add school")
     then_i_return_to_partner_school_index
     and_a_school_is_listed(school_name: "School 1")
     and_i_see_success_message
@@ -34,7 +34,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
   scenario "User adds a partner school which already exists", :js, retry: 3 do
     given_a_partnership_exists_between(school, provider)
     when_i_view_the_partner_schools_page
-    and_i_click_on("Add partner school")
+    and_i_click_on("Add school")
     and_i_enter_a_school_named("School 1")
     then_i_see_a_dropdown_item_for("School 1")
     when_i_click_the_dropdown_item_for("School 1")
@@ -50,7 +50,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
 
   scenario "User reconsiders selecting a school using back link", :js, retry: 3 do
     when_i_view_the_partner_schools_page
-    and_i_click_on("Add partner school")
+    and_i_click_on("Add school")
     and_i_enter_a_school_named("School 1")
     then_i_see_a_dropdown_item_for("School 1")
     when_i_click_the_dropdown_item_for("School 1")
@@ -64,7 +64,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
 
   scenario "User reconsiders selecting a school using change link", :js, retry: 3 do
     when_i_view_the_partner_schools_page
-    and_i_click_on("Add partner school")
+    and_i_click_on("Add school")
     and_i_enter_a_school_named("School 1")
     then_i_see_a_dropdown_item_for("School 1")
     when_i_click_the_dropdown_item_for("School 1")
@@ -79,13 +79,13 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
   scenario "User adds a partner school, which is not onboarded on the placements service", :js, retry: 3 do
     given_the_school_is_not_onboarded_on_placements_service(school)
     when_i_view_the_partner_schools_page
-    and_i_click_on("Add partner school")
+    and_i_click_on("Add school")
     and_i_enter_a_school_named("School 1")
     then_i_see_a_dropdown_item_for("School 1")
     when_i_click_the_dropdown_item_for("School 1")
     and_i_click_on("Continue")
     then_i_see_the_check_details_page_for_school("School 1")
-    when_i_click_on("Add partner school")
+    when_i_click_on("Confirm and add school")
     then_i_return_to_partner_school_index
     and_a_school_is_listed(school_name: "School 1")
     and_i_see_success_message
@@ -132,7 +132,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
   end
 
   def then_i_return_to_partner_school_index
-    expect(page.find(".govuk-heading-l")).to have_content("Partner schools")
+    expect(page.find(".govuk-heading-l")).to have_content("Schools you work with")
   end
 
   def and_a_school_is_listed(school_name:)
@@ -140,7 +140,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
   end
 
   def and_i_see_success_message
-    expect(page).to have_content "Partner school added"
+    expect(page).to have_content "School added"
   end
 
   def given_a_partnership_exists_between(school, provider)
@@ -192,7 +192,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
 
     within(nav) do
       expect(page).to have_link "Placements", current: "false"
-      expect(page).to have_link "Partner schools", current: "page"
+      expect(page).to have_link "Schools", current: "page"
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Organisation details", current: "false"
     end

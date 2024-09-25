@@ -38,12 +38,15 @@ RSpec.describe "Placements / Providers / Partner schools / Views a partner schoo
     expect(page).to have_content "Additional details"
     expect(page).to have_content "Special educational needs and disabilities (SEND)"
     expect(page).to have_content "Ofsted"
-    expect(page).to have_content "Contact details"
 
     within("#organisation-details") do
       expect(page).to have_content "Name"
       expect(page).to have_content "UK provider reference number (UKPRN)"
       expect(page).to have_content "Unique reference number (URN)"
+      expect(page).to have_content "Email address"
+      expect(page).to have_content "Telephone number"
+      expect(page).to have_content "Website"
+      expect(page).to have_content "Address"
     end
 
     within("#additional-details") do
@@ -70,13 +73,6 @@ RSpec.describe "Placements / Providers / Partner schools / Views a partner schoo
       expect(page).to have_content "Rating"
       expect(page).to have_content "Last inspection date"
     end
-
-    within("#contact-details") do
-      expect(page).to have_content "Email address"
-      expect(page).to have_content "Telephone"
-      expect(page).to have_content "Website"
-      expect(page).to have_content "Address"
-    end
   end
 
   def expect_partner_schools_to_be_selected_in_primary_navigation
@@ -84,7 +80,7 @@ RSpec.describe "Placements / Providers / Partner schools / Views a partner schoo
 
     within(nav) do
       expect(page).to have_link "Placements", current: "false"
-      expect(page).to have_link "Partner schools", current: "page"
+      expect(page).to have_link "Schools", current: "page"
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Organisation details", current: "false"
     end

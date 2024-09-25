@@ -1,11 +1,13 @@
-<% content_for(:page_title) { t(".partner_schools") } %>
+<% content_for(:page_title) { t(".schools_you_work_with") } %>
 <%= render "placements/providers/primary_navigation", provider: @provider, current_navigation: :partner_schools %>
 
 <div class="govuk-width-container">
-  <h1 class="govuk-heading-l"><%= t(".partner_schools") %></h1>
+  <h1 class="govuk-heading-l"><%= t(".schools_you_work_with") %></h1>
+  <p><%= t(".view_all_placements") %></p>
+  <p><%= t(".only_schools_you_work_with") %></p>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= govuk_button_link_to(t(".add_partner_school"), new_add_partner_school_placements_provider_partner_schools_path) %>
+      <%= govuk_button_link_to(t(".add_school"), new_add_partner_school_placements_provider_partner_schools_path) %>
       <% if @partner_schools.any? %>
         <%= app_table do |table| %>
           <% table.with_head do |head| %>
