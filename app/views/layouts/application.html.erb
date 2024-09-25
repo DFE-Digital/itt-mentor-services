@@ -54,10 +54,16 @@
 
     <main class="govuk-main-wrapper" id="main-content" role="main">
       <div class="govuk-width-container">
-        <% flash.each do |key, message| %>
+        <% if flash[:heading].present? %>
           <div class="govuk-!-margin-bottom-0">
-            <%= render(GovukComponent::NotificationBannerComponent.new(title_text: t(".#{key}"), success: key == "success")) do %>
-              <h3 class="govuk-heading-m"><%= message %></h3>
+            <%= render(GovukComponent::NotificationBannerComponent.new(
+              title_text: t(".success"),
+              success: flash[:success] != false,
+            )) do %>
+              <h3 class="govuk-heading-m"><%= flash[:heading] %></h3>
+              <% if flash[:body].present? %>
+                <p class="govuk-body"><%= flash[:body] %></p>
+              <% end %>
             <% end %>
           </div>
         <% end %>
