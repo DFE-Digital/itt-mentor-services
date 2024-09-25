@@ -8,4 +8,4 @@ en:
             title: Edit placement contact
             cancel: Cancel
           update:
-            success: Placement contact updated
+            success_heading: Placement contact updated

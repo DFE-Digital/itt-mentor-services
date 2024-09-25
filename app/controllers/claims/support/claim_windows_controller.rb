@@ -17,7 +17,9 @@ class Claims::Support::ClaimWindowsController < Claims::Support::ApplicationCont
   def create
     claim_window_form.save!
 
-    redirect_to claims_support_claim_windows_path, flash: { success: t(".success") }
+    redirect_to claims_support_claim_windows_path, flash: {
+      heading: t(".success"),
+    }
   end
 
   def show; end
@@ -31,7 +33,9 @@ class Claims::Support::ClaimWindowsController < Claims::Support::ApplicationCont
   def update
     claim_window_form.save!
 
-    redirect_to claims_support_claim_window_path(@claim_window), flash: { success: t(".success") }
+    redirect_to claims_support_claim_window_path(@claim_window), flash: {
+      heading: t(".success"),
+    }
   end
 
   def remove; end
@@ -39,7 +43,9 @@ class Claims::Support::ClaimWindowsController < Claims::Support::ApplicationCont
   def destroy
     @claim_window.discard!
 
-    redirect_to claims_support_claim_windows_path, flash: { success: t(".success") }
+    redirect_to claims_support_claim_windows_path, flash: {
+      heading: t(".success"),
+    }
   end
 
   private

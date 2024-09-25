@@ -19,7 +19,9 @@ class Placements::Support::SupportUsers::AddSupportUserController < Placements::
       support_user = @wizard.create_support_user
       SupportUser::Invite.call(support_user:)
       @wizard.reset_state
-      redirect_to index_path, flash: { success: t(".success") }
+      redirect_to index_path, flash: {
+        heading: t(".success_heading"),
+      }
     end
   end
 

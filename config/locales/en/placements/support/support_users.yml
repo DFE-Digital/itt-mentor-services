@@ -16,5 +16,5 @@ en:
           submit: Remove support user
           cancel: Cancel
         destroy:
-          success: Support user removed
+          success_heading: Support user removed
           failure: There was a problem removing the support user

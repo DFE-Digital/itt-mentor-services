@@ -24,7 +24,9 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
     authorize @placement
 
     @placement.destroy!
-    redirect_to index_path, flash: { success: t(".placement_deleted") }
+    redirect_to index_path, flash: {
+      heading: t(".placement_deleted"),
+    }
   end
 
   def preview; end

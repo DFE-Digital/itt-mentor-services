@@ -41,16 +41,6 @@
 
     <main class="govuk-main-wrapper" id="main-content" role="main">
       <div class="govuk-width-container">
-        <% flash.each do |key, message| %>
-          <div class="govuk-!-margin-bottom-0">
-            <%= render(GovukComponent::NotificationBannerComponent.new(title_text: t(".#{key}"), success: key == "success")) do %>
-              <h3 class="govuk-heading-m"><%= message %></h3>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-
-      <div class="govuk-width-container">
         <%= yield %>
       </div>
     </main>

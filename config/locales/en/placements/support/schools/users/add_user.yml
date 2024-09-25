@@ -9,4 +9,4 @@ en:
               caption: User details
               cancel: Cancel
             update:
-              success: User added
+              success_heading: User added

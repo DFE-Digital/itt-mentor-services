@@ -6,4 +6,4 @@ en:
           edit:
             cancel: Cancel
           update:
-            success: Support user added
+            success_heading: Support user added

@@ -19,7 +19,10 @@ class Placements::Schools::Mentors::AddMentorController < Placements::Applicatio
     else
       @wizard.create_mentor
       @wizard.reset_state
-      redirect_to index_path, flash: { success: t("placements.wizards.add_mentor_wizard.update.success") }
+      redirect_to index_path, flash: {
+        heading: t(".success_heading"),
+        body: t(".success_body"),
+      }
     end
   end
 

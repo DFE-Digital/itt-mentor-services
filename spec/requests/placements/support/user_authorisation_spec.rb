@@ -42,7 +42,8 @@ RSpec.describe "Support console / user authorization", service: :placements, typ
         get path
         expect(response).not_to have_http_status(:ok), "Route loaded when it shouldn't have: #{path}"
         expect(response.location).to eq(placements_root_url)
-        expect(flash[:alert]).to eq("You cannot perform this action")
+        expect(flash[:heading]).to eq("You cannot perform this action")
+        expect(flash[:success]).to be false
       end
     end
   end

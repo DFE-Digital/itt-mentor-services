@@ -6,6 +6,9 @@ en:
           edit:
             add_mentor: Add mentor
             cancel: Cancel
+          update:
+            success_heading: Mentor added
+            success_body: You can now assign them to placements.
         index:
           heading: Mentors
           trn: Teacher reference number (TRN)
