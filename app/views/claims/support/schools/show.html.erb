@@ -8,13 +8,13 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= render "shared/organisations/organisation_details", organisation: @school %>
+      <%= render "claims/schools/organisation_details", organisation: @school %>
       <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".grant_conditions") %></h2>
       <%= render "shared/organisations/grant_conditions", organisation: @school %>
       <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".grant_funding") %></h2>
       <%= render "shared/organisations/grant_funding", organisation: @school %>
       <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".contact_details") %></h2>
-      <%= render "shared/organisations/contact_details", organisation: @school %>
+      <%= render "claims/schools/contact_details", organisation: @school %>
     </div>
   </div>
 </div>
