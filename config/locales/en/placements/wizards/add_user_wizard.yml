@@ -11,7 +11,7 @@ en:
         check_your_answers_step:
           page_title: Confirm user details
           user: User
-          intro_text: Once added, they will be able to view, edit and create placements at your school.
+          school_intro_text: Once added, they will be able to view, edit and create placements at your school.
           we_will_send_them_an_email: We will send them an email with information on how to access the Manage school placements service.
           add_user: Confirm and add user
           change: Change

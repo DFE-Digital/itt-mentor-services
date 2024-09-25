@@ -8,10 +8,10 @@
       <h1 class="govuk-heading-l"><%= t(".page_title") %></h1>
 
       <% if @wizard.organisation.organisation_type == "school" %>
-        <p><%= t(".intro_text") %></p>
+        <p class="govuk-body"><%= t(".school_intro_text") %></p>
       <% end %>
 
-      <p><%= t(".we_will_send_them_an_email") %></p>
+      <p class="govuk-body"><%= t(".we_will_send_them_an_email") %></p>
 
       <h2 class="govuk-heading-m"><%= t(".user") %></h2>
 
