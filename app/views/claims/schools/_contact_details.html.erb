@@ -1,6 +1,6 @@
 <%= govuk_summary_list(html_attributes: { id: "contact-details" }, actions: false) do |summary_list| %>
   <% summary_list.with_row do |row| %>
-    <% row.with_key(text: t("claims.schools.show.email_address")) %>
+    <% row.with_key(text: t(".email_address")) %>
     <% if @school.email_address.present? %>
       <% row.with_value do %>
         <%= govuk_mail_to(@school.email_address, @school.email_address) %>
@@ -10,11 +10,11 @@
     <% end %>
   <% end %>
   <% summary_list.with_row do |row| %>
-    <% row.with_key(text: t("claims.schools.show.telephone_number")) %>
+    <% row.with_key(text: t(".telephone_number")) %>
     <% row.with_value(**summary_row_value(value: @school.telephone)) %>
   <% end %>
   <% summary_list.with_row do |row| %>
-    <% row.with_key(text: t("claims.schools.show.website")) %>
+    <% row.with_key(text: t(".website")) %>
     <% if @school.website.present? %>
       <% row.with_value do %>
         <%= govuk_link_to(@school.website,
@@ -27,7 +27,7 @@
     <% end %>
   <% end %>
   <% summary_list.with_row do |row| %>
-    <% row.with_key(text: t("claims.schools.show.address")) %>
+    <% row.with_key(text: t(".address")) %>
     <% row.with_value(**summary_row_value(value: @school.formatted_address)) %>
   <% end %>
 <% end %>

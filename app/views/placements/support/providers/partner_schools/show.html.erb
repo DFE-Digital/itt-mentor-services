@@ -12,15 +12,13 @@
       <span class="govuk-caption-l"><%= t(".caption", provider_name: @provider.name) %></span>
       <h1 class="govuk-heading-l"><%= @partner_school.name %></h1>
 
-      <%= render "shared/organisations/organisation_details", organisation: @partner_school %>
+      <%= render "placements/organisations/organisation_details", organisation: @partner_school %>
         <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".additional_details") %></h2>
         <%= render "shared/schools/additional_details", school: @partner_school %>
         <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".send") %></h2>
         <%= render "shared/schools/send_details", school: @partner_school %>
         <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".ofsted") %></h2>
         <%= render "shared/schools/ofsted_details", school: @partner_school %>
-        <h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".contact_details") %></h2>
-        <%= render "shared/organisations/contact_details", organisation: @partner_school %>
     </div>
   </div>
 

@@ -1,0 +1,8 @@
+en:
+  claims:
+    schools:
+      organisation_details:
+        organisation_name: Name
+        ukprn: UK provider reference number (UKPRN)
+        urn: Unique reference number (URN)
+        change: Change
