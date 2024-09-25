@@ -1,6 +1,4 @@
 class Claims::Claim::MentorTrainingForm < ApplicationForm
-  MAXIMUM_CLAIMABLE_HOURS_PER_PROVIDER = 20
-
   attr_accessor :claim, :mentor_training, :hours_completed, :custom_hours_completed
 
   validates(
@@ -62,11 +60,11 @@ class Claims::Claim::MentorTrainingForm < ApplicationForm
   end
 
   def max_hours
-    @max_hours ||= Claims::Mentor::CalculateRemainingMentorTrainingHoursForProvider.call(mentor:, provider:, mentor_training:)
+    @max_hours ||= training_allowance.remaining_hours
   end
 
   def max_hours_equals_maximum_claimable_hours?
-    max_hours == MAXIMUM_CLAIMABLE_HOURS_PER_PROVIDER
+    max_hours == training_allowance.total_hours
   end
 
   private
@@ -77,5 +75,9 @@ class Claims::Claim::MentorTrainingForm < ApplicationForm
 
   def previous_mentor_training
     mentor_trainings[mentor_trainings.index(mentor_training) - 1]
+  end
+
+  def training_allowance
+    @training_allowance ||= Claims::TrainingAllowance.new(mentor:, provider:, academic_year: Claims::ClaimWindow.current.academic_year)
   end
 end
