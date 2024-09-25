@@ -17,7 +17,9 @@ class Claims::Support::SupportUsersController < Claims::Support::ApplicationCont
   def create
     support_user_form.save!
     SupportUser::Invite.call(support_user: support_user_form.support_user)
-    redirect_to claims_support_support_users_path, flash: { success: t(".success") }
+    redirect_to claims_support_support_users_path, flash: {
+      heading: t(".success"),
+    }
   end
 
   def show; end
@@ -27,7 +29,9 @@ class Claims::Support::SupportUsersController < Claims::Support::ApplicationCont
   def destroy
     SupportUser::Remove.call(support_user: @support_user)
 
-    redirect_to claims_support_support_users_path, flash: { success: t(".success") }
+    redirect_to claims_support_support_users_path, flash: {
+      heading: t(".success"),
+    }
   end
 
   private

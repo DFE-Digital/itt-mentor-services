@@ -1,0 +1,5 @@
+en:
+  layouts:
+    notification_banner:
+     success: Success
+     alert: Important

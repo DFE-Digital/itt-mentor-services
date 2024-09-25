@@ -23,7 +23,9 @@ class Placements::Partnerships::AddPartnershipController < Placements::Applicati
         partner_organisation: @wizard.partner_organisation,
       )
       @wizard.reset_state
-      redirect_to index_path, flash: { success: t(".success") }
+      redirect_to index_path, flash: {
+        heading: t(".success_heading"),
+      }
     end
   end
 

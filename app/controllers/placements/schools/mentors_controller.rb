@@ -24,7 +24,7 @@ class Placements::Schools::MentorsController < Placements::ApplicationController
     authorize @mentor_membership
     @mentor_membership.destroy!
 
-    flash[:success] = t(".mentor_deleted")
+    flash[:heading] = t(".mentor_deleted")
     redirect_to_index_path
   end
 

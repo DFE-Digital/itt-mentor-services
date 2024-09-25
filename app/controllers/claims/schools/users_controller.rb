@@ -20,7 +20,9 @@ class Claims::Schools::UsersController < Claims::ApplicationController
   def create
     user_form.save!
     User::Invite.call(user: user_form.user, organisation: @school)
-    redirect_to claims_school_users_path(@school), flash: { success: t(".success") }
+    redirect_to claims_school_users_path(@school), flash: {
+      heading: t(".success"),
+    }
   end
 
   def show; end
@@ -30,7 +32,9 @@ class Claims::Schools::UsersController < Claims::ApplicationController
   def destroy
     User::Remove.call(user: @user, organisation: @school)
 
-    redirect_to claims_school_users_path(@school), flash: { success: t(".success") }
+    redirect_to claims_school_users_path(@school), flash: {
+      heading: t(".success"),
+    }
   end
 
   private

@@ -173,7 +173,9 @@ class AddPlacementController < ApplicationController
       # All steps completed – create the placement & reset the wizard's state.
       # e.g. @wizard.create_placement
       @wizard.reset_state
-      redirect_to some_path, flash: { success: "Placement created" }
+      redirect_to some_path, flash: {
+        heading: "Placement created",
+      }
     end
   end
 

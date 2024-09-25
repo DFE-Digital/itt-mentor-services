@@ -7,7 +7,7 @@ class Placements::Providers::PartnerSchoolsController < Placements::Partnerships
   def destroy
     super
 
-    flash[:success] = t(".partner_school_deleted")
+    flash[:heading] = t(".partner_school_deleted")
   end
 
   private

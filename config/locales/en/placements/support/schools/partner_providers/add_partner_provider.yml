@@ -8,4 +8,4 @@ en:
               caption: Partner provider details - %{organisation_name}
               cancel: Cancel
             update:
-              success: Partner provider added
+              success_heading: Partner provider added

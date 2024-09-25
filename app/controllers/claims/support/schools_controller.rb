@@ -21,7 +21,9 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
 
   def remove_grant_conditions_acceptance
     @school.update!(claims_grant_conditions_accepted_at: nil, claims_grant_conditions_accepted_by: nil)
-    redirect_to claims_support_school_path(@school), flash: { success: t(".success") }
+    redirect_to claims_support_school_path(@school), flash: {
+      heading: t(".success"),
+    }
   end
 
   def school_options
@@ -56,8 +58,9 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
 
   def create
     school_form.save!
-    flash[:success] = I18n.t("claims.support.schools.create.organisation_added")
-    redirect_to claims_support_schools_path
+    redirect_to claims_support_schools_path, flash: {
+      heading: I18n.t("claims.support.schools.create.organisation_added"),
+    }
   end
 
   private

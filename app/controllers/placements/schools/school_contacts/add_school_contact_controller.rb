@@ -21,7 +21,9 @@ class Placements::Schools::SchoolContacts::AddSchoolContactController < Placemen
       @wizard.create_school_contact
       Placements::SchoolSlackNotifier.school_onboarded_notification(@school).deliver_later
       @wizard.reset_state
-      redirect_to placements_school_path(@school), flash: { success: t(".success") }
+      redirect_to placements_school_path(@school), flash: {
+        heading: t(".success_heading"),
+      }
     end
   end
 

@@ -18,7 +18,9 @@ class Placements::Support::Organisations::AddOrganisationController < Placements
     else
       @wizard.onboard_organisation
       @wizard.reset_state
-      redirect_to placements_support_organisations_path, flash: { success: t(".success") }
+      redirect_to placements_support_organisations_path, flash: {
+        heading: t(".success_heading"),
+      }
     end
   end
 

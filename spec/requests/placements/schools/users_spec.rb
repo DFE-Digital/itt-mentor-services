@@ -17,7 +17,7 @@ RSpec.describe "School users", service: :placements, type: :request do
       it "deletes the user" do
         expect(school.users).to include(user)
         delete placements_school_user_path(school, user)
-        expect(flash[:success]).to eq "User deleted"
+        expect(flash[:heading]).to eq "User deleted"
         expect(school.users).not_to include(user)
       end
     end
@@ -25,7 +25,8 @@ RSpec.describe "School users", service: :placements, type: :request do
     context "when the current user tries to delete themselves" do
       it "shows an error message" do
         delete placements_school_user_path(school, current_user)
-        expect(flash[:alert]).to eq "You cannot perform this action"
+        expect(flash[:heading]).to eq "You cannot perform this action"
+        expect(flash[:success]).to be false
         expect(school.users).to include(current_user)
       end
     end

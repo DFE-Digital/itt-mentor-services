@@ -4,6 +4,8 @@ class Claims::Support::DatabasesController < Claims::Support::ApplicationControl
   def destroy
     Claims::ResetDatabase.call
 
-    redirect_to claims_support_settings_path, flash: { success: t(".success") }
+    redirect_to claims_support_settings_path, flash: {
+      heading: t(".success"),
+    }
   end
 end

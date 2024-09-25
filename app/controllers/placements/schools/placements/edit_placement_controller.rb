@@ -23,7 +23,9 @@ class Placements::Schools::Placements::EditPlacementController < Placements::App
       @wizard.update_placement
       notify_provider(@wizard.placement) if @wizard.placement.saved_change_to_provider_id?
       @wizard.reset_state
-      redirect_to after_update_placement_path, flash: { success: t(".success.#{params[:step]}") }
+      redirect_to after_update_placement_path, flash: {
+        heading: t(".success.#{params[:step]}"),
+      }
     end
   end
 

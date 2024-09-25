@@ -6,4 +6,4 @@ en:
           edit:
             cancel: Cancel
           update:
-            success: Organisation added
+            success_heading: Organisation added
