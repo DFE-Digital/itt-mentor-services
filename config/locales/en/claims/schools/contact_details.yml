@@ -1,6 +1,6 @@
 en:
-  shared:
-    organisations:
+  claims:
+    schools:
       contact_details:
         email_address: Email address
         telephone_number: Telephone number
