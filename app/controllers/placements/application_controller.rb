@@ -1,5 +1,5 @@
 class Placements::ApplicationController < ApplicationController
-  after_action :verify_policy_scoped, only: %i[index]
+  after_action :verify_policy_scoped, if: ->(c) { c.action_name == "index" }
   before_action :authorize_support_user!
 
   def current_user
