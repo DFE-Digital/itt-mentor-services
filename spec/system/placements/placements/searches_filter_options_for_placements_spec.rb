@@ -125,7 +125,7 @@ RSpec.describe "Placements / Placements / Searches filter options for a placemen
   end
 
   def then_i_see_checkbox_option_for(filter_name, option_name)
-    checkboxes = page.find("legend", text: filter_name).sibling(".govuk-checkboxes")
+    checkboxes = page.find("legend", exact_text: filter_name).sibling(".govuk-checkboxes")
     within(checkboxes) do
       expect(page).to have_content(option_name)
     end
@@ -138,7 +138,7 @@ RSpec.describe "Placements / Placements / Searches filter options for a placemen
   alias_method :and_i_search_the_school_filter_with, :when_i_search_the_school_filter_with
 
   def and_i_do_not_see_checkbox_option_for(filter_name, option_name)
-    checkboxes = page.find("legend", text: filter_name).sibling(".govuk-checkboxes")
+    checkboxes = page.find("legend", exact_text: filter_name).sibling(".govuk-checkboxes")
     within(checkboxes) do
       expect(page).not_to have_content(option_name)
     end
