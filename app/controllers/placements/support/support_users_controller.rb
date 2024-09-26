@@ -13,7 +13,9 @@ class Placements::Support::SupportUsersController < Placements::ApplicationContr
 
   def destroy
     SupportUser::Remove.call(support_user: @support_user)
-    redirect_to placements_support_support_users_path, flash: { success: t(".success") }
+    redirect_to placements_support_support_users_path, flash: {
+      heading: t(".success_heading"),
+    }
   end
 
   private

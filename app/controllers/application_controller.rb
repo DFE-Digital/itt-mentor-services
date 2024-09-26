@@ -64,7 +64,8 @@ class ApplicationController < ActionController::Base
   end
 
   def user_not_authorized
-    flash[:alert] = t("you_cannot_perform_this_action")
+    flash[:heading] = t("you_cannot_perform_this_action")
+    flash[:success] = false
     can_be_infinite_redirect = request.url == request.referer
 
     if can_be_infinite_redirect

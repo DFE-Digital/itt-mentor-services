@@ -18,7 +18,9 @@ class Claims::Support::Schools::MentorsController < Claims::Support::Application
   def create
     mentor_form.save!
 
-    redirect_to claims_support_school_mentors_path(@school), flash: { success: t(".success") }
+    redirect_to claims_support_school_mentors_path(@school), flash: {
+      heading: t(".success"),
+    }
   end
 
   def check
@@ -35,7 +37,9 @@ class Claims::Support::Schools::MentorsController < Claims::Support::Application
     mentor_membership = @mentor.mentor_memberships.find_by!(school: @school)
     mentor_membership.destroy!
 
-    redirect_to claims_support_school_mentors_path(@school), flash: { success: t(".success") }
+    redirect_to claims_support_school_mentors_path(@school), flash: {
+      heading: t(".success"),
+    }
   end
 
   private

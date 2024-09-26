@@ -21,7 +21,9 @@ class Claims::Support::Schools::UsersController < Claims::Support::ApplicationCo
 
     User::Invite.call(user: user_form.user, organisation: @school)
 
-    redirect_to claims_support_school_users_path(@school), flash: { success: t(".success") }
+    redirect_to claims_support_school_users_path(@school), flash: {
+      heading: t(".success"),
+    }
   end
 
   def show; end
@@ -31,7 +33,9 @@ class Claims::Support::Schools::UsersController < Claims::Support::ApplicationCo
   def destroy
     User::Remove.call(user: @user, organisation: @school)
 
-    redirect_to claims_support_school_users_path(@school), flash: { success: t(".success") }
+    redirect_to claims_support_school_users_path(@school), flash: {
+      heading: t(".success"),
+    }
   end
 
   private

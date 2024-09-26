@@ -68,7 +68,9 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   def destroy
     @claim.destroy!
 
-    redirect_to claims_school_claims_path(@school, @claim), flash: { success: t(".success") }
+    redirect_to claims_school_claims_path(@school, @claim), flash: {
+      heading: t(".success"),
+    }
   end
 
   private

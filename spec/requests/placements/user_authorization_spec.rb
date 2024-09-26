@@ -68,7 +68,7 @@ RSpec.describe "User authorization", service: :placements, type: :request do
           get route.path.gsub("(.:format)", "").gsub(":school_id", school.id)
           expect(response).not_to have_http_status(:ok), "Route loaded when it shouldn't have: #{path}"
           expect(response.location).to eq(placements_root_url)
-          expect(flash[:alert]).to eq("You cannot perform this action")
+          expect(flash[:heading]).to eq("You cannot perform this action")
         end
       end
     end
@@ -107,7 +107,7 @@ RSpec.describe "User authorization", service: :placements, type: :request do
               .gsub(":partner_school_id", school.id)
             expect(response).not_to have_http_status(:ok), "Route loaded when it shouldn't have: #{path}"
             expect(response.location).to eq(placements_root_url)
-            expect(flash[:alert]).to eq("You cannot perform this action")
+            expect(flash[:heading]).to eq("You cannot perform this action")
           end
         end
       end

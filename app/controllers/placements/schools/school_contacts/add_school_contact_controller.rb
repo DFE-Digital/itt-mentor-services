@@ -23,7 +23,6 @@ class Placements::Schools::SchoolContacts::AddSchoolContactController < Placemen
       @wizard.reset_state
       redirect_to placements_school_path(@school), flash: {
         heading: t(".success_heading"),
-        success: true,
       }
     end
   end

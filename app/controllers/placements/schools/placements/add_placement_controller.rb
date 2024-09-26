@@ -25,7 +25,6 @@ class Placements::Schools::Placements::AddPlacementController < Placements::Appl
       @wizard.reset_state
       redirect_to after_create_placement_path(@school), flash: {
         heading: t("placements.wizards.add_placement_wizard.update.success_heading"),
-        success: true,
       }
     end
   end

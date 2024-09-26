@@ -6,7 +6,10 @@ class Claims::Support::ApplicationController < Claims::ApplicationController
   def authorize_user!
     return if current_user.support_user?
 
-    redirect_to sign_in_path, alert: t("you_cannot_perform_this_action")
+    redirect_to sign_in_path, flash: {
+      heading: t("you_cannot_perform_this_action"),
+      success: false,
+    }
   end
 
   def support_controller?

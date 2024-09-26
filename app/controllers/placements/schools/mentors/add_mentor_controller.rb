@@ -22,7 +22,6 @@ class Placements::Schools::Mentors::AddMentorController < Placements::Applicatio
       redirect_to index_path, flash: {
         heading: t(".success_heading"),
         body: t(".success_body"),
-        success: true,
       }
     end
   end

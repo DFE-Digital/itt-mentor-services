@@ -7,4 +7,4 @@ en:
             caption: Add user
             cancel: Cancel
           update:
-            success: User added
+            success_heading: User added

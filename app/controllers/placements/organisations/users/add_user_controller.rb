@@ -20,7 +20,9 @@ class Placements::Organisations::Users::AddUserController < Placements::Applicat
       user = @wizard.create_user
       User::Invite.call(user:, organisation: @organisation)
       @wizard.reset_state
-      redirect_to index_path, flash: { success: t(".success") }
+      redirect_to index_path, flash: {
+        heading: t(".success_heading"),
+      }
     end
   end
 

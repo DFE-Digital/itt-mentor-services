@@ -8,4 +8,4 @@ en:
               caption: Partner school details - %{organisation_name}
               cancel: Cancel
             update:
-              success: Partner school added
+              success_heading: Partner school added

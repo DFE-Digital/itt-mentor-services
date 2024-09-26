@@ -25,7 +25,6 @@ class Placements::Schools::Placements::EditPlacementController < Placements::App
       @wizard.reset_state
       redirect_to after_update_placement_path, flash: {
         heading: t(".success.#{params[:step]}"),
-        success: true,
       }
     end
   end

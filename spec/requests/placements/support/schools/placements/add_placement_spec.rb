@@ -82,7 +82,8 @@ RSpec.describe "Support console / 'Add placement' journey", service: :placements
       test_paths.each do |path|
         get path
         expect(response).to redirect_to(placements_root_url)
-        expect(flash[:alert]).to eq("You cannot perform this action")
+        expect(flash[:heading]).to eq("You cannot perform this action")
+        expect(flash[:success]).to be false
       end
     end
   end

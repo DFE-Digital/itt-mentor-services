@@ -20,7 +20,9 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
   def destroy
     @claim.destroy!
 
-    redirect_to claims_support_school_claims_path(@school, @claim), flash: { success: t(".success") }
+    redirect_to claims_support_school_claims_path(@school, @claim), flash: {
+      heading: t(".success"),
+    }
   end
 
   def create
@@ -73,7 +75,9 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
       Claims::Claim::CreateDraft.call(claim: @claim)
     end
 
-    redirect_to claims_support_school_claims_path(@school), flash: { success: success_message }
+    redirect_to claims_support_school_claims_path(@school), flash: {
+      heading: success_message,
+    }
   end
 
   def rejected; end
