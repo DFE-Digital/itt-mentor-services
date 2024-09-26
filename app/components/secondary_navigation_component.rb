@@ -2,8 +2,6 @@ class SecondaryNavigationComponent < ApplicationComponent
   renders_many :navigation_items, "NavigationItemComponent"
 
   class NavigationItemComponent < ApplicationComponent
-    attr_reader :name, :url
-
     def initialize(name, url, current: false, classes: [], html_attributes: {})
       @name = name
       @url = url
@@ -20,7 +18,7 @@ class SecondaryNavigationComponent < ApplicationComponent
 
     private
 
-    attr_reader :current
+    attr_reader :name, :url, :current
 
     def current?(url)
       current || current_page?(url)
