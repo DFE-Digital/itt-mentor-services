@@ -173,13 +173,13 @@ RSpec.describe "Placements / Placements / View placements list",
         and_i_can_not_see_any_selected_filters
       end
 
-      scenario "User can remove a partner school filter" do
+      scenario "User can remove a schools I work with filter" do
         given_a_partnership_exists_between(provider, primary_school)
         when_i_visit_the_placements_index_page({ filters: { only_partner_schools: true } })
         then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
         and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
-        and_i_can_see_a_preset_filter("Partner schools", "Partner schools")
-        when_i_click_to_remove_filter("Partner schools", "Partner schools")
+        and_i_can_see_a_preset_filter("Schools I work with", "Schools I work with")
+        when_i_click_to_remove_filter("Schools I work with", "Schools I work with")
         then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
         and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
         and_i_can_not_see_any_selected_filters
@@ -233,7 +233,7 @@ RSpec.describe "Placements / Placements / View placements list",
         )
         then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
         and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
-        and_i_can_see_a_preset_filter("Partner schools", "Partner schools")
+        and_i_can_see_a_preset_filter("Schools I work with", "Schools I work with")
         and_i_can_see_a_preset_filter("School", "Primary School")
         and_i_can_see_a_preset_filter("Subject", "Primary with mathematics")
         and_i_can_see_a_preset_filter("Primary year group", "Year 1")
