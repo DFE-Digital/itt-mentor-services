@@ -23,4 +23,5 @@ en:
             page_title: "Are you sure you want to delete this partner school? - %{school_name} - %{provider_name}"
             cancel: Cancel
           destroy:
-            partner_school_deleted: Partner school deleted
+              success_heading: School deleted
+              success_body: "%{school_name} can no longer assign you to their placements."

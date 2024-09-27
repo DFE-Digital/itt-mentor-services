@@ -9,7 +9,7 @@ en:
           add_school: Add school
           change_organisation: Change organisation
           empty_state: There are no partner schools for %{provider_name}.
-          attributes: 
+          attributes:
             partner_schools:
               name: Name
               urn: Unique reference number (URN)
@@ -32,8 +32,9 @@ en:
           school_will_remain_assigned: You will remain assigned to current placements unless the school removes you.
           you_are_currently_assigned_to: "You are currently assigned to:"
           school_will_be_sent_an_email: We will send an email to %{school_name}. This will let them know they can no longer assign you to placements.
-        destroy: 
-          partner_school_deleted: School deleted
+        destroy:
+          success_heading: School deleted
+          success_body: "%{school_name} can no longer assign you to their placements."
         placements:
           details:
             placement_contact: Placement contact

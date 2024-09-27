@@ -8,3 +8,4 @@ en:
             cancel: Cancel
           update:
             success_heading: User added
+            success_body: "%{user_name} can now access placement information."

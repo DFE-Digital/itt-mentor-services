@@ -75,7 +75,7 @@ en:
           publish_placement: Publish placement
           edit_placement: Edit placement
         update:
-          success_heading: Placement published
+          success_heading: Placement added
         terms_step:
           title: Select when the placement could be - %{contextual_text}
           title_with_error: "Error: Select when the placement could be - %{contextual_text}"
