@@ -3,7 +3,7 @@
 # production: runs the actual app
 
 # Build builder image
-FROM ruby:3.3.1-alpine3.20 as builder
+FROM ruby:3.3.5-alpine3.20 as builder
 
 # RUN apk -U upgrade && \
 #     apk add --update --no-cache gcc git libc6-compat libc-dev make nodejs \
@@ -54,7 +54,7 @@ RUN rm -rf node_modules log/* tmp/* /tmp && \
   find /usr/local/bundle/gems -name "*.html" -delete
 
 # Build runtime image
-FROM ruby:3.3.1-alpine as production
+FROM ruby:3.3.5-alpine as production
 
 # Use rails production environment when deployed using docker
 ENV RAILS_ENV=production
