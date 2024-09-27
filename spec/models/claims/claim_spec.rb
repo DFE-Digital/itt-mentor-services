@@ -109,9 +109,7 @@ RSpec.describe Claims::Claim, type: :model do
         claim2 = create(:claim, :submitted)
         create(:claim, :internal_draft)
 
-        expect(described_class.active).to eq(
-          [claim1, claim2],
-        )
+        expect(described_class.active).to contain_exactly(claim1, claim2)
       end
     end
 
