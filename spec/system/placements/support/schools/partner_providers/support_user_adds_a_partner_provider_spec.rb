@@ -128,7 +128,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   end
 
   def and_i_see_success_message
-    expect(page).to have_content "Partner provider added"
+    expect(page).to have_content "Provider added"
   end
 
   def given_a_partnership_exists_between(school, provider)

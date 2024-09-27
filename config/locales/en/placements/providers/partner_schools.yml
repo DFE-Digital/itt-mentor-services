@@ -31,7 +31,8 @@ en:
           you_are_currently_assigned_to: "You are currently assigned to:"
           school_will_be_sent_an_email: We will send an email to %{school_name}. This will let them know you have deleted them as a partner school for %{provider_name}.
         destroy: 
-          partner_school_deleted: Partner school deleted
+          success_heading: School deleted
+          success_body: "%{school_name} can no longer assign you to their placements."
         placements:
           details:
             placement_contact: Placement contact

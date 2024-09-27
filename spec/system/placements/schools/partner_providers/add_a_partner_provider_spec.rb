@@ -126,7 +126,7 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
   end
 
   def then_i_see_the_check_details_page_for_provider(provider_name)
-    expect(page).to have_css(".govuk-caption-l", text: "Partner provider details")
+    expect(page).to have_css(".govuk-caption-l", text: "Provider details")
     expect(page).to have_content("Check your answers")
     org_name_row = page.all(".govuk-summary-list__row")[0]
     expect(org_name_row).to have_content(provider_name)
@@ -141,7 +141,7 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
   end
 
   def and_i_see_success_message
-    expect(page).to have_content "Partner provider added"
+    expect(page).to have_content "Provider added"
   end
 
   def given_a_partnership_exists_between(school, provider)

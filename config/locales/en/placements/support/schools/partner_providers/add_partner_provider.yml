@@ -8,4 +8,5 @@ en:
               caption: Partner provider details - %{organisation_name}
               cancel: Cancel
             update:
-              success_heading: Partner provider added
+              success_heading: Provider added
+              success_body: You can now add %{partner_name} to your placements.

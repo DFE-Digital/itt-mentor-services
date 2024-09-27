@@ -17,11 +17,11 @@ class Placements::Schools::Mentors::AddMentorController < Placements::Applicatio
     elsif @wizard.next_step.present?
       redirect_to step_path(@wizard.next_step)
     else
-      @wizard.create_mentor
+      mentor = @wizard.create_mentor
       @wizard.reset_state
       redirect_to index_path, flash: {
         heading: t(".success_heading"),
-        body: t(".success_body"),
+        body: t(".success_body", user_name: mentor.full_name),
       }
     end
   end
