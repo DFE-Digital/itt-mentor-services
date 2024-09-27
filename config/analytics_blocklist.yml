@@ -63,6 +63,7 @@ shared:
     - enqueued_at
     - discarded_at
     - finished_at
+    - jobs_finished_at
   :good_jobs:
     - id
     - queue_name
