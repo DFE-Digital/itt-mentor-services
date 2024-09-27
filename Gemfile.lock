@@ -390,9 +390,10 @@ GEM
       validate_url
       webfinger (~> 2.0)
     os (1.1.4)
+    ostruct (0.6.0)
     pagy (9.0.9)
     parallel (1.25.1)
-    parser (3.3.4.0)
+    parser (3.3.5.0)
       ast (~> 2.4.1)
       racc
     pg (1.5.8)
@@ -714,6 +715,7 @@ DEPENDENCIES
   omniauth
   omniauth-rails_csrf_protection
   omniauth_openid_connect
+  ostruct (~> 0.6.0)
   pagy (~> 9.0)
   pg (~> 1.5)
   pg_search
@@ -754,7 +756,7 @@ DEPENDENCIES
   webmock
 
 RUBY VERSION
-   ruby 3.3.1p55
+   ruby 3.3.5p100
 
 BUNDLED WITH
    2.5.9

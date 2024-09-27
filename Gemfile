@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.3.1"
+ruby "3.3.5"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem "rails", "~> 7.2.1"
@@ -112,6 +112,9 @@ gem "strong_migrations"
 
 # OK Computer [https://github.com/sportngin/okcomputer]
 gem "okcomputer"
+
+# OpenStruct [https://github.com/ruby/ostruct]
+gem "ostruct", "~> 0.6.0"
 
 group :development do
   gem "annotate", require: false
