@@ -5,7 +5,7 @@
 <% end %>
 
 <% if policy(@mentor_membership).destroy? %>
-  <%= render partial: "claims/schools/mentors/remove_mentor" %>
+  <%= render "remove_mentor" %>
 <% else %>
-  <%= render partial: "claims/schools/mentors/cannot_remove_mentor" %>
+  <%= render "cannot_remove_mentor" %>
 <% end %>
