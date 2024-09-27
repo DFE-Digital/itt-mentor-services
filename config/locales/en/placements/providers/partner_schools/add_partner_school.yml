@@ -7,4 +7,5 @@ en:
             caption: School details
             cancel: Cancel
           update:
-            success: School added
+            success_heading: School added
+            success_body: "%{partner_name} can now assign you to their placements."

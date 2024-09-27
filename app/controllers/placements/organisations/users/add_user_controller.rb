@@ -22,6 +22,7 @@ class Placements::Organisations::Users::AddUserController < Placements::Applicat
       @wizard.reset_state
       redirect_to index_path, flash: {
         heading: t(".success_heading"),
+        body: t(".success_body", user_name: user.full_name),
       }
     end
   end

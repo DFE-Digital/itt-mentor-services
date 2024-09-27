@@ -7,4 +7,5 @@ en:
             caption: Provider details
             cancel: Cancel
           update:
-            success: Provider added
+            success_heading: Provider added
+            success_body: You can now add %{partner_name} to your placements.

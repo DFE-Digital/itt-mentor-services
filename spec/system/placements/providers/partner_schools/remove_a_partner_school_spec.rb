@@ -131,7 +131,7 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
       expect(page).to have_content "School deleted"
     end
 
-    expect(page).not_to have_content school.name
+    expect(page).to have_content school.name, count: 1
   end
 
   def and_a_partner_provider_remains_called(provider_name)

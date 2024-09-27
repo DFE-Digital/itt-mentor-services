@@ -142,7 +142,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
   end
 
   def and_i_see_success_message
-    expect(page).to have_content "Partner school added"
+    expect(page).to have_content "School added"
   end
 
   def partner_school_notification(user)

@@ -49,7 +49,7 @@ RSpec.shared_examples "an add a placement wizard" do
           when_i_click_on("Publish placement")
           then_i_see_the_placements_page
           and_i_see_my_placement(school.phase)
-          and_i_see_success_message("Placement published")
+          and_i_see_success_message("Placement added")
         end
 
         it "when I select not known for the mentor" do
@@ -76,7 +76,7 @@ RSpec.shared_examples "an add a placement wizard" do
           and_i_click_on("Publish placement")
           then_i_see_the_placements_page
           and_i_see_my_placement(school.phase)
-          and_i_see_success_message("Placement published")
+          and_i_see_success_message("Placement added")
         end
 
         it "I am redirected to the add mentor page if I click on the link in the help text" do
@@ -334,7 +334,7 @@ RSpec.shared_examples "an add a placement wizard" do
             and_i_click_on("Publish placement")
             then_i_see_the_placements_page
             and_i_see_my_placement(school.phase)
-            and_i_see_success_message("Placement published")
+            and_i_see_success_message("Placement added")
           end
         end
       end
@@ -366,7 +366,7 @@ RSpec.shared_examples "an add a placement wizard" do
         when_i_click_on("Publish placement")
         then_i_see_the_placements_page
         and_i_see_my_placement(school.phase)
-        and_i_see_success_message("Placement published")
+        and_i_see_success_message("Placement added")
       end
 
       context "when I select a subject with child subjects" do
@@ -395,7 +395,7 @@ RSpec.shared_examples "an add a placement wizard" do
           when_i_click_on("Publish placement")
           then_i_see_the_placements_page
           and_i_see_my_placement(school.phase)
-          and_i_see_success_message("Placement published")
+          and_i_see_success_message("Placement added")
         end
 
         it "I see a validation message if I do not select an additional subject" do
@@ -460,7 +460,7 @@ RSpec.shared_examples "an add a placement wizard" do
           when_i_click_on("Publish placement")
           then_i_see_the_placements_page
           and_i_see_my_placement("Primary")
-          and_i_see_success_message("Placement published")
+          and_i_see_success_message("Placement added")
         end
       end
 
@@ -488,7 +488,7 @@ RSpec.shared_examples "an add a placement wizard" do
           and_i_click_on("Publish placement")
           then_i_see_the_placements_page
           and_i_see_my_placement("Secondary")
-          and_i_see_success_message("Placement published")
+          and_i_see_success_message("Placement added")
         end
       end
 
