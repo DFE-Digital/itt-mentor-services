@@ -25,8 +25,4 @@ module ApplicationHelper
       "-"
     end
   end
-
-  def text_or_dash(value)
-    value.nil? ? "-" : value
-  end
 end
