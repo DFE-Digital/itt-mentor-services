@@ -78,6 +78,11 @@ class Claims::Claim::MentorTrainingForm < ApplicationForm
   end
 
   def training_allowance
-    @training_allowance ||= Claims::TrainingAllowance.new(mentor:, provider:, academic_year: Claims::ClaimWindow.current.academic_year)
+    @training_allowance ||= Claims::TrainingAllowance.new(
+      mentor:,
+      provider:,
+      academic_year: Claims::ClaimWindow.current.academic_year,
+      claim_to_exclude: claim,
+    )
   end
 end
