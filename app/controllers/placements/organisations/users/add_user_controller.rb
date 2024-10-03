@@ -5,7 +5,6 @@ class Placements::Organisations::Users::AddUserController < Placements::Applicat
   helper_method :step_path, :current_step_path, :back_link_path
 
   def new
-    @wizard.reset_state
     redirect_to step_path(@wizard.first_step)
   end
 
@@ -30,8 +29,13 @@ class Placements::Organisations::Users::AddUserController < Placements::Applicat
   private
 
   def set_wizard
+    state = session[state_key] ||= {}
     current_step = params[:step]&.to_sym
-    @wizard = Placements::AddUserWizard.new(organisation: @organisation, params:, session:, current_step:)
+    @wizard = Placements::AddUserWizard.new(organisation: @organisation, params:, state:, current_step:)
+  end
+
+  def state_key
+    @state_key ||= params.fetch(:state_key, SecureRandom.uuid)
   end
 
   def current_step_path
