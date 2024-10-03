@@ -6,7 +6,7 @@ class Placements::Support::Schools::Mentors::AddMentorController < Placements::S
   end
 
   def step_path(step)
-    add_mentor_placements_support_school_mentors_path(step:)
+    add_mentor_placements_support_school_mentors_path(state_key:, step:)
   end
 
   def index_path
