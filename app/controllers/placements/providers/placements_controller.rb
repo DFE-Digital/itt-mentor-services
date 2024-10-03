@@ -1,5 +1,5 @@
-class Placements::PlacementsController < Placements::ApplicationController
-  before_action :set_current_organisation
+class Placements::Providers::PlacementsController < Placements::ApplicationController
+  before_action :set_current_provider
   helper_method :filter_form, :location_coordinates
 
   def index
@@ -30,14 +30,12 @@ class Placements::PlacementsController < Placements::ApplicationController
     end
   end
 
-  def set_current_organisation
-    return redirect_to organisations_path if current_user.current_organisation.blank?
-
-    @provider = current_user.current_organisation
+  def set_current_provider
+    @provider = current_user.providers.find(params[:provider_id])
   end
 
   def filter_form
-    @filter_form ||= Placements::Placements::FilterForm.new(filter_params)
+    @filter_form ||= Placements::Placements::FilterForm.new(@provider, filter_params)
   end
 
   def search_location

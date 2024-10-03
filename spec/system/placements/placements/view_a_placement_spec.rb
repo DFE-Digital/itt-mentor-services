@@ -78,7 +78,7 @@ RSpec.describe "Placements / Placements / View a placement",
   end
 
   def when_i_visit_the_placement_show_page
-    visit placements_placement_path(placement)
+    visit placements_provider_placement_path(provider, placement)
 
     expect_placements_to_be_selected_in_primary_navigation
   end

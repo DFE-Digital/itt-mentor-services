@@ -558,8 +558,8 @@ RSpec.describe UserMailer, type: :mailer do
       expect(placement_provider_assigned_notification.body).to have_content <<~EMAIL
         Provider 1 has been assigned to the following placement:
 
-        [School 1](http://placements.localhost/placements/#{placement.id})
-        [Mathematics](http://placements.localhost/placements/#{placement.id})
+        [School 1](http://placements.localhost/providers/#{provider.id}/placements/#{placement.id})
+        [Mathematics](http://placements.localhost/providers/#{provider.id}/placements/#{placement.id})
 
         # What happens next?
 
@@ -594,8 +594,8 @@ RSpec.describe UserMailer, type: :mailer do
       expect(placement_provider_removed_notification.body).to have_content <<~EMAIL
         Provider 1 is no longer able to allocate a trainee on the following placement:
 
-        [School 1](http://placements.localhost/placements/#{placement.id})
-        [Mathematics](http://placements.localhost/placements/#{placement.id})
+        [School 1](http://placements.localhost/providers/#{provider.id}/placements/#{placement.id})
+        [Mathematics](http://placements.localhost/providers/#{provider.id}/placements/#{placement.id})
 
         # What happens next?
 

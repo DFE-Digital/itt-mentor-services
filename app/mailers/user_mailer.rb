@@ -106,7 +106,7 @@ class UserMailer < ApplicationMailer
   end
 
   def placement_provider_assigned_notification(user, provider, placement)
-    placement_link = placements_placement_url(placement)
+    placement_link = placements_provider_placement_url(provider, placement)
     school = placement.school
 
     notify_email(
@@ -124,7 +124,7 @@ class UserMailer < ApplicationMailer
   end
 
   def placement_provider_removed_notification(user, provider, placement)
-    placement_link = placements_placement_url(placement)
+    placement_link = placements_provider_placement_url(provider, placement)
     school = placement.school
 
     notify_email(

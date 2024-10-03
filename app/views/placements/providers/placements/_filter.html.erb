@@ -129,7 +129,7 @@
         <%= form_with(
           model: filter_form,
           scope: :filters,
-          url: placements_placements_path,
+          url: placements_provider_placements_path(@provider),
           method: "get",
         ) do |form| %>
           <%= form.govuk_submit t("apply_filters") %>

@@ -8,7 +8,7 @@
   <%= form_for(preview_placement_step, url: current_step_path, method: :put) do |f| %>
     <%= f.govuk_error_summary %>
 
-    <%= render "placements/placements/placement_details", school: @wizard.school.decorate, placement: preview_placement_step.placement.decorate %>
+    <%= render "shared/placements/placement_details", school: @wizard.school.decorate, placement: preview_placement_step.placement.decorate %>
 
     <div class="govuk-button-group">
       <%= f.govuk_submit t(".publish_placement") %>

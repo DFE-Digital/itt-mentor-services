@@ -7,7 +7,7 @@ describe Placements::Placements::FilterForm, type: :model do
   let(:current_academic_year) { Placements::AcademicYear.current }
 
   describe "#filters_selected?" do
-    subject(:filter_form) { described_class.new(params).filters_selected? }
+    subject(:filter_form) { described_class.new(provider, params).filters_selected? }
 
     context "when given school id params" do
       let(:params) { { school_ids: %w[school_id] } }
@@ -59,20 +59,23 @@ describe Placements::Placements::FilterForm, type: :model do
   end
 
   describe "#clear_filters_path" do
-    subject(:filter_form) { described_class.new }
+    subject(:filter_form) { described_class.new(provider) }
 
     it "returns the placements index page path" do
       expect(filter_form.clear_filters_path).to eq(
-        placements_placements_path(filters: {
-          placements_to_show: "available_placements",
-          academic_year_id: current_academic_year.id,
-        }),
+        placements_provider_placements_path(
+          provider,
+          filters: {
+            placements_to_show: "available_placements",
+            academic_year_id: current_academic_year.id,
+          },
+        ),
       )
     end
   end
 
   describe "index_path_without_filter" do
-    subject(:filter_form) { described_class.new(params) }
+    subject(:filter_form) { described_class.new(provider, params) }
 
     context "when removing school id params" do
       let(:params) do
@@ -86,11 +89,14 @@ describe Placements::Placements::FilterForm, type: :model do
             value: "school_id_1",
           ),
         ).to eq(
-          placements_placements_path(filters: {
-            placements_to_show: "available_placements",
-            academic_year_id: current_academic_year.id,
-            school_ids: %w[school_id_2],
-          }),
+          placements_provider_placements_path(
+            provider,
+            filters: {
+              placements_to_show: "available_placements",
+              academic_year_id: current_academic_year.id,
+              school_ids: %w[school_id_2],
+            },
+          ),
         )
       end
     end
@@ -107,10 +113,13 @@ describe Placements::Placements::FilterForm, type: :model do
             value: false,
           ),
         ).to eq(
-          placements_placements_path(filters: {
-            placements_to_show: "available_placements",
-            academic_year_id: current_academic_year.id,
-          }),
+          placements_provider_placements_path(
+            provider,
+            filters: {
+              placements_to_show: "available_placements",
+              academic_year_id: current_academic_year.id,
+            },
+          ),
         )
       end
     end
@@ -127,11 +136,14 @@ describe Placements::Placements::FilterForm, type: :model do
             value: "subject_id_1",
           ),
         ).to eq(
-          placements_placements_path(filters: {
-            placements_to_show: "available_placements",
-            academic_year_id: current_academic_year.id,
-            subject_ids: %w[subject_id_2],
-          }),
+          placements_provider_placements_path(
+            provider,
+            filters: {
+              placements_to_show: "available_placements",
+              academic_year_id: current_academic_year.id,
+              subject_ids: %w[subject_id_2],
+            },
+          ),
         )
       end
     end
@@ -148,11 +160,14 @@ describe Placements::Placements::FilterForm, type: :model do
             value: "term_id_1",
           ),
         ).to eq(
-          placements_placements_path(filters: {
-            placements_to_show: "available_placements",
-            academic_year_id: current_academic_year.id,
-            term_ids: %w[term_id_2],
-          }),
+          placements_provider_placements_path(
+            provider,
+            filters: {
+              placements_to_show: "available_placements",
+              academic_year_id: current_academic_year.id,
+              term_ids: %w[term_id_2],
+            },
+          ),
         )
       end
     end
@@ -169,11 +184,14 @@ describe Placements::Placements::FilterForm, type: :model do
             value: "year_group_1",
           ),
         ).to eq(
-          placements_placements_path(filters: {
-            placements_to_show: "available_placements",
-            academic_year_id: current_academic_year.id,
-            year_groups: %w[year_group_2],
-          }),
+          placements_provider_placements_path(
+            provider,
+            filters: {
+              placements_to_show: "available_placements",
+              academic_year_id: current_academic_year.id,
+              year_groups: %w[year_group_2],
+            },
+          ),
         )
       end
     end
@@ -181,7 +199,7 @@ describe Placements::Placements::FilterForm, type: :model do
 
   describe "#query_params" do
     it "returns the expected result" do
-      expect(described_class.new.query_params).to eq(
+      expect(described_class.new(provider).query_params).to eq(
         {
           placements_to_show: "available_placements",
           academic_year_id: current_academic_year.id,
@@ -200,7 +218,7 @@ describe Placements::Placements::FilterForm, type: :model do
       schools = create_list(:school, 2)
 
       expect(
-        described_class.new(school_ids: schools.pluck(:id)).schools,
+        described_class.new(provider, school_ids: schools.pluck(:id)).schools,
       ).to match_array(schools)
     end
   end
@@ -210,7 +228,7 @@ describe Placements::Placements::FilterForm, type: :model do
       subjects = create_list(:subject, 2)
 
       expect(
-        described_class.new(subject_ids: subjects.pluck(:id)).subjects,
+        described_class.new(provider, subject_ids: subjects.pluck(:id)).subjects,
       ).to match_array(subjects)
     end
   end
@@ -220,7 +238,7 @@ describe Placements::Placements::FilterForm, type: :model do
       terms = create_list(:placements_term, 2, :spring)
 
       expect(
-        described_class.new(term_ids: terms.pluck(:id)).terms,
+        described_class.new(provider, term_ids: terms.pluck(:id)).terms,
       ).to match_array(terms)
     end
   end

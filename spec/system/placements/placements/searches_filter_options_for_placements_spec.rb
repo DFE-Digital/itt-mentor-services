@@ -108,7 +108,7 @@ RSpec.describe "Placements / Placements / Searches filter options for a placemen
   alias_method :and_i_click_on, :when_i_click_on
 
   def when_i_visit_the_placements_index_page(params = {})
-    visit placements_placements_path(params)
+    visit placements_provider_placements_path(provider, params)
 
     expect_placements_to_be_selected_in_primary_navigation
   end

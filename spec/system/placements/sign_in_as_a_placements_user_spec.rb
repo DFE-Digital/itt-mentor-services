@@ -369,7 +369,7 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
   end
 
   def when_i_visit_the_placements_path
-    visit placements_placements_path
+    visit placements_provider_placements_path(organisation)
   end
 
   def then_i_am_redirected_to_the_school_users_page(organisation)
@@ -385,7 +385,7 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
   end
 
   def then_i_can_see_the_placements_page
-    expect(page).to have_current_path(placements_placements_path)
+    expect(page).to have_current_path(placements_provider_placements_path(organisation))
   end
 
   def and_i_see_an_empty_organsations_page

@@ -333,7 +333,7 @@ RSpec.describe "Placements / Placements / View placements list",
   alias_method :and_i_click_on, :when_i_click_on
 
   def when_i_visit_the_placements_index_page(params = {})
-    visit placements_placements_path(params)
+    visit placements_provider_placements_path(provider, params)
 
     expect_placements_to_be_selected_in_primary_navigation
   end
@@ -350,7 +350,7 @@ RSpec.describe "Placements / Placements / View placements list",
   end
 
   def then_i_see_the_empty_state
-    expect(page).to have_content I18n.t("placements.placements.index.no_results")
+    expect(page).to have_content I18n.t("placements.providers.placements.index.no_results")
   end
 
   def then_i_can_see_a_placement_for_school_and_subject(school_name, subject_name)
