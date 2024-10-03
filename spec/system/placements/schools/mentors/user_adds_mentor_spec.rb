@@ -162,6 +162,57 @@ RSpec.describe "Placements school user adds mentors to schools", service: :place
     end
   end
 
+  describe "when I use multiple tabs to add mentors", :js do
+    let(:elizabeth) { build(:placements_mentor, first_name: "Elizabeth", last_name: "Daly") }
+    let(:barbara) { build(:placements_mentor, first_name: "Barbara", last_name: "Dolphin") }
+
+    let(:windows) do
+      {
+        open_new_window => { mentor: elizabeth, trn: "1234555", date_of_birth: %w[01 01 1990] },
+        open_new_window => { mentor: barbara, trn: "1234546", date_of_birth: %w[08 11 1990] },
+      }
+    end
+
+    before do
+      windows.each_value do |details|
+        stub_valid_teaching_record_response(trn: details[:trn],
+                                            date_of_birth: details[:date_of_birth].reverse.join("-"),
+                                            mentor: details[:mentor])
+      end
+    end
+
+    it "persists the mentor details for each tab upon refresh" do
+      windows.each do |window, details|
+        within_window window do
+          visit placements_school_placements_path(school)
+          given_i_navigate_to_schools_mentors_list
+          and_i_click_on("Add mentor")
+          when_i_enter_trn(details[:trn])
+          when_i_enter_date_of_birth(*details[:date_of_birth])
+          and_i_click_on("Continue")
+          then_i_see_check_page_for(details[:mentor], date_of_birth: details[:date_of_birth].join("/"))
+        end
+      end
+
+      # We need this test to be A -> B -> A -> B, so we can't combine the loops.
+      # rubocop:disable Style/CombinableLoops
+      windows.each do |window, details|
+        within_window window do
+          when_i_refresh_the_page
+          then_the_mentor_details_have_not_changed(details[:mentor], date_of_birth: details[:date_of_birth].join("/"))
+          when_i_click_on("Confirm and add mentor")
+          then_mentor_is_added(details[:mentor].full_name)
+        end
+      end
+      # rubocop:enable Style/CombinableLoops
+
+      given_i_navigate_to_schools_mentors_list
+      then_i_see_my_mentors(windows.values)
+    end
+  end
+
+  private
+
   def given_i_sign_in_as_anne
     user = create(:placements_user, :anne)
     create(:user_membership, user:, organisation: school)
@@ -192,7 +243,7 @@ RSpec.describe "Placements school user adds mentors to schools", service: :place
     find("span", text: "Help with the TRN").click
   end
 
-  def then_i_see_check_page_for(mentor)
+  def then_i_see_check_page_for(mentor, date_of_birth: "01/01/1990")
     expect_organisations_to_be_selected_in_primary_navigation
     expect(page).to have_content "Confirm and add mentor"
     expect(page).to have_content "Confirm mentor details"
@@ -204,7 +255,7 @@ RSpec.describe "Placements school user adds mentors to schools", service: :place
     date_of_birth_row = page.all(".govuk-summary-list__row")[3]
     within(date_of_birth_row) do
       expect(page).to have_content "Date of birth"
-      expect(page).to have_content "01/01/1990"
+      expect(page).to have_content date_of_birth
     end
   end
 
@@ -294,5 +345,18 @@ RSpec.describe "Placements school user adds mentors to schools", service: :place
       .and_return teaching_record_valid_response(mentor)
   end
 
+  def when_i_refresh_the_page
+    visit current_path
+  end
+
+  def then_i_see_my_mentors(mentor_details)
+    mentor_details.each do |mentor|
+      expect(page).to have_content mentor[:mentor].first_name
+      expect(page).to have_content mentor[:mentor].last_name
+      expect(page).to have_content mentor[:trn]
+    end
+  end
+
   alias_method :and_i_click_on, :when_i_click_on
+  alias_method :then_the_mentor_details_have_not_changed, :then_i_see_check_page_for
 end
