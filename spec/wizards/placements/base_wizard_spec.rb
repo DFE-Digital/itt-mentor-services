@@ -179,7 +179,7 @@ RSpec.describe Placements::BaseWizard do
 
       let(:state) do
         {
-            "choose_burger" => { "burger" => "beef" },
+          "choose_burger" => { "burger" => "beef" },
         }
       end
 

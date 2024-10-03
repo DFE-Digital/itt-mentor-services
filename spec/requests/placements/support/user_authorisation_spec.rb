@@ -7,6 +7,8 @@ RSpec.describe "Support console / user authorization", service: :placements, typ
   let(:school) { create(:placements_school) }
   let(:provider) { create(:placements_provider) }
 
+  let!(:state_key) { SecureRandom.uuid }
+
   let(:support_console_paths) do
     [
       placements_support_organisations_path,
@@ -16,7 +18,7 @@ RSpec.describe "Support console / user authorization", service: :placements, typ
       placements_support_school_partner_providers_path(school),
       placements_support_school_mentors_path(school),
       placements_support_school_placements_path(school),
-      add_placement_placements_support_school_placements_path(school, step: :phase),
+      add_placement_placements_support_school_placements_path(school, state_key:, step: :phase),
       placements_support_provider_path(provider),
       placements_support_provider_users_path(provider),
       placements_support_provider_partner_schools_path(provider),
