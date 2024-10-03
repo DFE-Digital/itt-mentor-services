@@ -199,7 +199,7 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
     find("span", text: "Help with the TRN").click
   end
 
-  def then_i_see_check_page_for(mentor)
+  def then_i_see_check_page_for(mentor, date_of_birth: "01/01/1990")
     expect_organisations_to_be_selected_in_primary_navigation
     expect(page).to have_content "Confirm and add mentor"
     expect(page).to have_content "Confirm mentor details"
@@ -211,7 +211,7 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
     date_of_birth_row = page.all(".govuk-summary-list__row")[3]
     within(date_of_birth_row) do
       expect(page).to have_content "Date of birth"
-      expect(page).to have_content "01/01/1990"
+      expect(page).to have_content date_of_birth
     end
   end
 
@@ -299,5 +299,18 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
                                            .and_return teaching_record_valid_response(mentor)
   end
 
+  def when_i_refresh_the_page
+    visit current_path
+  end
+
+  def then_i_see_my_mentors(mentor_details)
+    mentor_details.each do |mentor|
+      expect(page).to have_content mentor[:mentor].first_name
+      expect(page).to have_content mentor[:mentor].last_name
+      expect(page).to have_content mentor[:trn]
+    end
+  end
+
   alias_method :and_i_click_on, :when_i_click_on
+  alias_method :then_the_mentor_details_have_not_changed, :then_i_see_check_page_for
 end

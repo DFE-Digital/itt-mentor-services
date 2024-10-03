@@ -60,8 +60,8 @@ scope module: :placements,
 
         collection do
           get "new", to: "mentors/add_mentor#new", as: :new_add_mentor
-          get "new/:step", to: "mentors/add_mentor#edit", as: :add_mentor
-          put "new/:step", to: "mentors/add_mentor#update"
+          get "new/:state_key/:step", to: "mentors/add_mentor#edit", as: :add_mentor
+          put "new/:state_key/:step", to: "mentors/add_mentor#update"
         end
       end
 

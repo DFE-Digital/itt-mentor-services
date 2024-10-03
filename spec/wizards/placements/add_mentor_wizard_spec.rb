@@ -1,9 +1,8 @@
 require "rails_helper"
 
 RSpec.describe Placements::AddMentorWizard do
-  subject(:wizard) { described_class.new(school:, session:, params:, current_step: nil) }
+  subject(:wizard) { described_class.new(school:, state:, params:, current_step: nil) }
 
-  let(:session) { { "Placements::AddMentorWizard" => state } }
   let(:state) { {} }
   let(:params_data) { {} }
   let(:params) { ActionController::Parameters.new(params_data) }
