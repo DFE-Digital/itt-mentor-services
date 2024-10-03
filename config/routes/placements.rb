@@ -36,8 +36,8 @@ scope module: :placements,
     resources :organisations, only: %i[index] do
       collection do
         get "new", to: "organisations/add_organisation#new", as: :new_add_organisation
-        get "new/:step", to: "organisations/add_organisation#edit", as: :add_organisation
-        put "new/:step", to: "organisations/add_organisation#update"
+        get "new/:state_key/:step", to: "organisations/add_organisation#edit", as: :add_organisation
+        put "new/:state_key/:step", to: "organisations/add_organisation#update"
       end
     end
   end
