@@ -8,7 +8,8 @@ RSpec.describe "'Edit placement' journey", service: :placements, type: :request 
   let(:provider) { create(:placements_provider) }
   let(:school_id) { school.id }
   let(:year_group) { :year_6 }
-  let(:start_path) { new_edit_placement_placements_school_placement_path(school, placement, step:) }
+  let(:start_path) { new_edit_placement_placements_school_placement_path(school, placement, state_key:, step:) }
+  let!(:state_key) { SecureRandom.uuid }
 
   before { sign_in_as current_user }
 
@@ -135,6 +136,6 @@ RSpec.describe "'Edit placement' journey", service: :placements, type: :request 
   private
 
   def step_path(step)
-    edit_placement_placements_school_placement_path(school_id:, id: placement, step:)
+    edit_placement_placements_school_placement_path(school_id:, id: placement, state_key:, step:)
   end
 end

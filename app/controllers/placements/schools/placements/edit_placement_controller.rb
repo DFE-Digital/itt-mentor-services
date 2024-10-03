@@ -9,7 +9,6 @@ class Placements::Schools::Placements::EditPlacementController < Placements::App
   attr_reader :school
 
   def new
-    @wizard.reset_state
     @wizard.setup_state
     redirect_to step_path(@wizard.first_step)
   end
@@ -32,8 +31,9 @@ class Placements::Schools::Placements::EditPlacementController < Placements::App
   private
 
   def set_wizard
+    state = session[state_key] ||= {}
     current_step = params.fetch(:step).to_sym
-    @wizard = Placements::EditPlacementWizard.new(school:, placement: @placement, session:, params:, current_step:)
+    @wizard = Placements::EditPlacementWizard.new(school:, placement: @placement, state:, params:, current_step:)
   end
 
   def authorize_placement
@@ -45,7 +45,11 @@ class Placements::Schools::Placements::EditPlacementController < Placements::App
   end
 
   def step_path(step)
-    edit_placement_placements_school_placement_path(step:)
+    edit_placement_placements_school_placement_path(state_key:, step:)
+  end
+
+  def state_key
+    @state_key ||= params.fetch(:state_key, SecureRandom.uuid)
   end
 
   def current_step_path
