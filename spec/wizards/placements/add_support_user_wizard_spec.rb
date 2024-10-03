@@ -1,9 +1,8 @@
 require "rails_helper"
 
 RSpec.describe Placements::AddSupportUserWizard do
-  subject(:wizard) { described_class.new(session:, params:, current_step: nil) }
+  subject(:wizard) { described_class.new(state:, params:, current_step: nil) }
 
-  let(:session) { { "Placements::AddSupportUserWizard" => state } }
   let(:state) { {} }
   let(:params_data) { {} }
   let(:params) { ActionController::Parameters.new(params_data) }

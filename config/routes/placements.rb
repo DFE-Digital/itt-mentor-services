@@ -28,8 +28,8 @@ scope module: :placements,
 
       collection do
         get "new", to: "support_users/add_support_user#new", as: :new_add_support_user
-        get "new/:step", to: "support_users/add_support_user#edit", as: :add_support_user
-        put "new/:step", to: "support_users/add_support_user#update"
+        get "new/:state_key/:step", to: "support_users/add_support_user#edit", as: :add_support_user
+        put "new/:state_key/:step", to: "support_users/add_support_user#update"
       end
     end
 
