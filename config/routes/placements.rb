@@ -76,8 +76,8 @@ scope module: :placements,
 
         collection do
           get "new", to: "placements/add_placement#new", as: :new_add_placement
-          get "new/:step", to: "placements/add_placement#edit", as: :add_placement
-          put "new/:step", to: "placements/add_placement#update"
+          get "new/:state_key/:step", to: "placements/add_placement#edit", as: :add_placement
+          put "new/:state_key/:step", to: "placements/add_placement#update"
         end
       end
 
