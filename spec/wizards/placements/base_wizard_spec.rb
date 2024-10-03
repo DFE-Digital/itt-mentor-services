@@ -4,9 +4,9 @@ require "rails_helper"
 require_relative "./burger_order_wizard_mock"
 
 RSpec.describe Placements::BaseWizard do
-  subject(:wizard) { BurgerOrderWizard.new(session:, params:, current_step:) }
+  subject(:wizard) { BurgerOrderWizard.new(state:, params:, current_step:) }
 
-  let(:session) { {} }
+  let(:state) { {} }
   let(:params_data) { {} }
   let(:params) { ActionController::Parameters.new(params_data) }
   let(:current_step) { nil }
@@ -26,12 +26,10 @@ RSpec.describe Placements::BaseWizard do
     end
 
     context "when relevant steps have been completed" do
-      let(:session) do
+      let(:state) do
         {
-          "BurgerOrderWizard" => {
-            "choose_burger" => { "burger" => "beef" },
-            "meal_deal" => { "make_it_a_meal_deal" => "yes" },
-          },
+          "choose_burger" => { "burger" => "beef" },
+          "meal_deal" => { "make_it_a_meal_deal" => "yes" },
         }
       end
 
@@ -106,12 +104,10 @@ RSpec.describe Placements::BaseWizard do
     context "when current step is a conditional step" do
       let(:current_step) { :choose_side }
 
-      let(:session) do
+      let(:state) do
         {
-          "BurgerOrderWizard" => {
-            "choose_burger" => { "burger" => "beef" },
-            "meal_deal" => { "make_it_a_meal_deal" => "yes" },
-          },
+          "choose_burger" => { "burger" => "beef" },
+          "meal_deal" => { "make_it_a_meal_deal" => "yes" },
         }
       end
 
@@ -141,7 +137,7 @@ RSpec.describe Placements::BaseWizard do
       expect(wizard.steps[:choose_burger]).to be(mock_step)
     end
 
-    context "when there is no session state present" do
+    context "when there is no state present" do
       it "does not set attributes" do
         wizard.add_step(BurgerOrderWizard::ChooseBurgerStep)
         expect(wizard.steps[:choose_burger]).to have_attributes(burger: nil)
@@ -149,15 +145,13 @@ RSpec.describe Placements::BaseWizard do
     end
 
     context "when there is existing state for the step" do
-      let(:session) do
+      let(:state) do
         {
-          "BurgerOrderWizard" => {
-            "choose_burger" => { "burger" => "beef" },
-          },
+          "choose_burger" => { "burger" => "beef" },
         }
       end
 
-      it "populates attributes from the session state" do
+      it "populates attributes from the state" do
         wizard.add_step(BurgerOrderWizard::ChooseBurgerStep)
         expect(wizard.steps[:choose_burger]).to have_attributes(burger: "beef")
       end
@@ -176,22 +170,20 @@ RSpec.describe Placements::BaseWizard do
       end
     end
 
-    context "when a form submission has been received and existing state is in the session" do
+    context "when a form submission has been received and there is an existing state" do
       let(:params_data) do
         {
           "burger_order_wizard_choose_burger_step" => { "burger" => "chicken" },
         }
       end
 
-      let(:session) do
+      let(:state) do
         {
-          "BurgerOrderWizard" => {
             "choose_burger" => { "burger" => "beef" },
-          },
         }
       end
 
-      it "uses the submitted form params in favour of the session state" do
+      it "uses the submitted form params in favour of the state" do
         wizard.add_step(BurgerOrderWizard::ChooseBurgerStep)
         expect(wizard.steps[:choose_burger]).to have_attributes(burger: "chicken")
       end
@@ -199,20 +191,18 @@ RSpec.describe Placements::BaseWizard do
   end
 
   describe "#reset_state" do
-    let(:session) do
+    let(:state) do
       {
-        "BurgerOrderWizard" => {
-          "choose_burger" => { "burger" => "beef" },
-          "meal_deal" => { "make_it_a_meal_deal" => "yes" },
-        },
+        "choose_burger" => { "burger" => "beef" },
+        "meal_deal" => { "make_it_a_meal_deal" => "yes" },
       }
     end
 
-    it "clears the wizard state and updates the session" do
-      expect(wizard.state).to eq(session["BurgerOrderWizard"])
+    it "clears the wizard state" do
+      expect(wizard.state).to eq(state)
       wizard.reset_state
       expect(wizard.state).to eq({})
-      expect(session).to eq({ "BurgerOrderWizard" => {} })
+      expect(state).to eq({})
     end
   end
 
@@ -227,28 +217,28 @@ RSpec.describe Placements::BaseWizard do
     context "when the step is valid" do
       let(:attributes) { { burger: "veggie" } }
 
-      it "returns true and updates the session" do
-        expect(session).to eq({ "BurgerOrderWizard" => {} })
+      it "returns true and updates the state" do
+        expect(state).to eq({})
 
         expect(wizard.step.valid?).to be(true)
         expect(wizard.save_step).to be(true)
 
-        expect(session).to eq({ "BurgerOrderWizard" => {
+        expect(state).to eq({
           "choose_burger" => { "burger" => "veggie" },
-        } })
+        })
       end
     end
 
     context "when the step is invalid" do
       let(:attributes) { { burger: "pineapple" } }
 
-      it "returns false and does not update the session" do
-        expect(session).to eq({ "BurgerOrderWizard" => {} })
+      it "returns false and does not update the state" do
+        expect(state).to eq({})
 
         expect(wizard.step.valid?).to be(false)
         expect(wizard.save_step).to be(false)
 
-        expect(session).to eq({ "BurgerOrderWizard" => {} })
+        expect(state).to eq({})
       end
     end
   end
@@ -257,14 +247,12 @@ RSpec.describe Placements::BaseWizard do
     subject { wizard.valid? }
 
     context "when all steps are valid" do
-      let(:session) do
+      let(:state) do
         {
-          "BurgerOrderWizard" => {
-            "choose_burger" => { "burger" => "beef" },
-            "meal_deal" => { "make_it_a_meal_deal" => "yes" },
-            "choose_side" => { "side" => "fries" },
-            "choose_drink" => { "drink" => "cola" },
-          },
+          "choose_burger" => { "burger" => "beef" },
+          "meal_deal" => { "make_it_a_meal_deal" => "yes" },
+          "choose_side" => { "side" => "fries" },
+          "choose_drink" => { "drink" => "cola" },
         }
       end
 
@@ -272,14 +260,12 @@ RSpec.describe Placements::BaseWizard do
     end
 
     context "when there's an invalid step" do
-      let(:session) do
+      let(:state) do
         {
-          "BurgerOrderWizard" => {
-            "choose_burger" => { "burger" => "beef" },
-            "meal_deal" => { "make_it_a_meal_deal" => "yes" },
-            "choose_side" => { "side" => "bread roll" }, # invalid
-            "choose_drink" => { "drink" => "cola" },
-          },
+          "choose_burger" => { "burger" => "beef" },
+          "meal_deal" => { "make_it_a_meal_deal" => "yes" },
+          "choose_side" => { "side" => "bread roll" }, # invalid
+          "choose_drink" => { "drink" => "cola" },
         }
       end
 
