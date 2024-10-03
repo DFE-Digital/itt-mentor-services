@@ -6,7 +6,6 @@ class Placements::Schools::SchoolContacts::EditSchoolContactController < Placeme
   helper_method :step_path, :current_step_path, :back_link_path, :add_mentor_path
 
   def new
-    @wizard.reset_state
     @wizard.setup_state
     redirect_to step_path(@wizard.first_step)
   end
@@ -34,12 +33,17 @@ class Placements::Schools::SchoolContacts::EditSchoolContactController < Placeme
   end
 
   def set_wizard
+    state = session[state_key] ||= {}
     current_step = params[:step]&.to_sym
-    @wizard = Placements::EditSchoolContactWizard.new(school: @school, school_contact: @school_contact, params:, session:, current_step:)
+    @wizard = Placements::EditSchoolContactWizard.new(school: @school, school_contact: @school_contact, params:, state:, current_step:)
   end
 
   def step_path(step)
-    edit_school_contact_placements_school_school_contact_path(step:)
+    edit_school_contact_placements_school_school_contact_path(state_key:, step:)
+  end
+
+  def state_key
+    @state_key ||= params.fetch(:state_key, SecureRandom.uuid)
   end
 
   def current_step_path
