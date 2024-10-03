@@ -11,7 +11,7 @@ class Placements::Support::Schools::Placements::AddPlacementController < Placeme
   end
 
   def step_path(step)
-    add_placement_placements_support_school_placements_path(step:)
+    add_placement_placements_support_school_placements_path(state_key:, step:)
   end
 
   def back_link_path
