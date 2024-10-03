@@ -6,7 +6,7 @@ class Placements::Providers::Users::AddUserController < Placements::Organisation
   end
 
   def step_path(step)
-    add_user_placements_provider_users_path(step:)
+    add_user_placements_provider_users_path(state_key:, step:)
   end
 
   def index_path

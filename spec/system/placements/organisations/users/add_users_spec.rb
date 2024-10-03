@@ -30,7 +30,7 @@ RSpec.describe "Placements users invite other users to organisations", service: 
         then_i_see_changes_in_check_form
         and_user_is_selected_in_provider_primary_navigation
         when_i_click_confirm
-        then_the_user_is_added(one_provider)
+        then_the_user_is_added
         and_an_email_is_sent("firsty_lasty@email.co.uk", one_provider)
         and_user_is_selected_in_provider_primary_navigation
       end
@@ -53,7 +53,7 @@ RSpec.describe "Placements users invite other users to organisations", service: 
         then_i_see_changes_in_check_form
         and_user_is_selected_in_school_primary_navigation
         when_i_click_confirm
-        then_the_user_is_added(one_school)
+        then_the_user_is_added
         and_an_email_is_sent("firsty_lasty@email.co.uk", one_school)
       end
     end
@@ -96,6 +96,48 @@ RSpec.describe "Placements users invite other users to organisations", service: 
     and_user_is_already_assigned_to_a_school
     when_i_try_to_add_the_user_to_the_same_school
     then_i_see_the_email_taken_error
+  end
+
+  describe "when I use multiple tabs to add users", :js do
+    let(:windows) do
+      {
+        open_new_window => { first_name: "Herschel", last_name: "Fowler", email: "herschel.fowler@example.com" },
+        open_new_window => { first_name: "Barbara", last_name: "Heaton", email: "barbara.heaton@example.com" },
+      }
+    end
+
+    before { given_i_am_logged_in_as_a_user_with_one_organisation(one_school) }
+
+    it "persists the user details for each tab upon refresh" do
+      windows.each do |window, details|
+        within_window window do
+          visit placements_school_placements_path(one_school)
+          when_i_click_users
+          then_i_see_the_users_page
+          and_user_is_selected_in_school_primary_navigation
+          when_i_click_add_user
+          and_user_is_selected_in_school_primary_navigation
+          and_i_enter_valid_user_details(**details)
+          then_i_can_check_my_answers(:school, **details)
+        end
+      end
+
+      # We need this test to be A -> B -> A -> B, so we can't combine the loops.
+      # rubocop:disable Style/CombinableLoops
+      windows.each do |window, details|
+        within_window window do
+          when_i_refresh_the_page
+          then_the_user_details_have_not_changed(:school, **details)
+          when_i_click_confirm
+          then_the_user_is_added(**details)
+        end
+      end
+      # rubocop:enable Style/CombinableLoops
+
+      visit placements_school_placements_path(one_school)
+      when_i_click_users
+      then_i_see_my_users(windows.values)
+    end
   end
 
   private
@@ -191,17 +233,17 @@ RSpec.describe "Placements users invite other users to organisations", service: 
     click_on "Confirm and add user"
   end
 
-  def and_i_enter_valid_user_details
-    fill_in "First name", with: "First Namey"
-    fill_in "Last name", with: "Last Namey"
-    fill_in "Email", with: "firsty_lasty@email.co.uk"
+  def and_i_enter_valid_user_details(first_name: "First Namey", last_name: "Last Namey", email: "firsty_lasty@email.co.uk")
+    fill_in "First name", with: first_name
+    fill_in "Last name", with: last_name
+    fill_in "Email", with: email
     click_on "Continue"
   end
 
-  def then_i_can_check_my_answers(organisation_type)
-    expect(page).to have_content "First Namey"
-    expect(page).to have_content "Last Namey"
-    expect(page).to have_content "firsty_lasty@email.co.uk"
+  def then_i_can_check_my_answers(organisation_type, first_name: "First Namey", last_name: "Last Namey", email: "firsty_lasty@email.co.uk")
+    expect(page).to have_content first_name
+    expect(page).to have_content last_name
+    expect(page).to have_content email
     if organisation_type == :school
       expect(page).to have_content "Once added, they will be able to view, edit and create placements at your school."
     end
@@ -229,10 +271,10 @@ RSpec.describe "Placements users invite other users to organisations", service: 
     expect(page).to have_content "firsty_lasty@email.co.uk"
   end
 
-  def then_the_user_is_added(_organisation)
+  def then_the_user_is_added(first_name: "New First Name", last_name: "Last Namey", email: "firsty_lasty@email.co.uk")
     expect(page.find(".govuk-notification-banner__content")).to have_content("User added")
-    expect(page).to have_content "New First Name Last Namey"
-    expect(page).to have_content "firsty_lasty@email.co.uk"
+    expect(page).to have_content "#{first_name} #{last_name}"
+    expect(page).to have_content email
   end
 
   def and_user_is_selected_in_school_primary_navigation
@@ -269,4 +311,18 @@ RSpec.describe "Placements users invite other users to organisations", service: 
 
     expect(invite_email).to be_nil
   end
+
+  def when_i_refresh_the_page
+    visit current_path
+  end
+
+  def then_i_see_my_users(users)
+    users.each do |user|
+      expect(page).to have_content(user[:first_name])
+      expect(page).to have_content(user[:last_name])
+      expect(page).to have_content(user[:email])
+    end
+  end
+
+  alias_method :then_the_user_details_have_not_changed, :then_i_can_check_my_answers
 end
