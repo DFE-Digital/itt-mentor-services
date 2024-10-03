@@ -1,0 +1,14 @@
+en:
+  shared:
+    placements:
+      school_details:
+        establishment_group: Establishment group
+        school_phase: School phase
+        gender: Gender
+        age_range: Age range
+        religious_character: Religious character
+        urban_or_rural: Urban or rural
+        admissions_policy: Admissions policy
+        percentage_free_school_meals: Percentage free school meals
+        ofsted_rating: Ofsted rating
+

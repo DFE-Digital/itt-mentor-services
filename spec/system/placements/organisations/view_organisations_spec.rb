@@ -22,7 +22,7 @@ RSpec.describe "View organisations", service: :placements, type: :system do
     when_i_click_on_change_organisation
     i_am_redirected_to_organisation_index
     when_i_click_on_provider_name
-    then_i_see_the_placements_search_page
+    then_i_see_the_placements_search_page(multi_org_provider)
     when_i_click_on_change_organisation
     i_am_redirected_to_organisation_index
   end
@@ -112,8 +112,8 @@ RSpec.describe "View organisations", service: :placements, type: :system do
     click_on "Provider 1"
   end
 
-  def then_i_see_the_placements_search_page
-    expect(page).to have_current_path placements_placements_path, ignore_query: true
+  def then_i_see_the_placements_search_page(provider)
+    expect(page).to have_current_path placements_provider_placements_path(provider), ignore_query: true
     within(".app-primary-navigation__nav") do
       expect(page).to have_link "Placements", current: "page"
       expect(page).to have_link "Schools", current: "false"
@@ -137,7 +137,7 @@ RSpec.describe "View organisations", service: :placements, type: :system do
 
   def then_i_see_the_one_provider
     expect(page).not_to have_content "Change organisation"
-    then_i_see_the_placements_search_page
+    then_i_see_the_placements_search_page(one_provider)
   end
 
   def when_i_visit_sign_in_path

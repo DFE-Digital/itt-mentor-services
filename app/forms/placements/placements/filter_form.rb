@@ -9,7 +9,8 @@ class Placements::Placements::FilterForm < ApplicationForm
   attribute :academic_year_id, default: Placements::AcademicYear.current.id
   attribute :only_partner_schools, :boolean, default: false
 
-  def initialize(params = {})
+  def initialize(provider, params = {})
+    @provider = provider
     params.each_value { |v| v.compact_blank! if v.is_a?(Array) }
 
     super(params)
@@ -20,7 +21,10 @@ class Placements::Placements::FilterForm < ApplicationForm
   end
 
   def clear_filters_path(search_location: nil)
-    placements_placements_path(search_location:, filters: { placements_to_show:, academic_year_id: })
+    placements_provider_placements_path(
+      @provider,
+      search_location:, filters: { placements_to_show:, academic_year_id: },
+    )
   end
 
   def index_path_without_filter(filter:, value: nil, search_location: nil)
@@ -30,7 +34,8 @@ class Placements::Placements::FilterForm < ApplicationForm
                        compacted_attributes.merge(filter => compacted_attributes[filter].reject { |filter_value| filter_value == value })
                      end
 
-    placements_placements_path(
+    placements_provider_placements_path(
+      @provider,
       params: { filters: without_filter, search_location: },
     )
   end

@@ -204,8 +204,8 @@ scope module: :placements,
           resources :placements, only: %i[index show]
         end
       end
+
+      resources :placements, only: %i[index show]
     end
   end
-
-  resources :placements, only: %i[index show]
 end

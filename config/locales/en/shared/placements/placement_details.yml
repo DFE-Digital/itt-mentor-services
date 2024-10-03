@@ -1,0 +1,10 @@
+en:
+  shared:
+    placements:
+      placement_details:
+        contact_details: Contact details
+        itt_placement_contact: Placement contact
+        itt_placement_dates: Placement dates
+        location: Location
+        additional_details: Additional details
+        placement: "Placement - %{school_name}"

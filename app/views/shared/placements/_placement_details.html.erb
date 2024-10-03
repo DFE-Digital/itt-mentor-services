@@ -10,7 +10,7 @@
     <h2 class="govuk-heading-m govuk-!-margin-top-0">
       <%= t(".itt_placement_dates") %>
     </h2>
-    <%= render "placements/placements/placement_dates", school:, placement: %>
+    <%= render "shared/placements/placement_dates", school:, placement: %>
 
     <h2 class="govuk-heading-m govuk-!-margin-top-0">
       <%= t(".itt_placement_contact") %>
@@ -28,6 +28,6 @@
     <h2 class="govuk-heading-m govuk-!-margin-top-0">
       <%= t(".additional_details") %>
     </h2>
-    <%= render "placements/placements/school_details", school:, placement: %>
+    <%= render "shared/placements/school_details", school:, placement: %>
   </div>
 </div>
