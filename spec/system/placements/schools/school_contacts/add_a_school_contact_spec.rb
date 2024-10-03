@@ -75,6 +75,50 @@ RSpec.describe "Placements / Schools / School Contacts / Add a school contact",
     then_i_see_an_error("Enter an email address in the correct format, like name@example.com")
   end
 
+  describe "when I use multiple tabs to add a school contact", :js do
+    let(:windows) do
+      {
+        open_new_window => { first_name: "Bob", last_name: "Bob", email_address: "bob@bob.bob" },
+        open_new_window => { first_name: "Alice", last_name: "Alice", email_address: "alice@alice.alice" },
+      }
+    end
+
+    it "persists the school contact details for each tab upon refresh" do
+      windows.each do |window, details|
+        within_window window do
+          when_i_view_my_organisation_details_page
+          then_i_see_no_school_contact_details
+          when_i_click_on("Add placement contact")
+          and_i_fill_out_the_school_contact_form(**details)
+          and_i_click_on("Continue")
+          then_i_see_the_check_your_answers_page(**details)
+        end
+      end
+
+      # We need this test to be A -> B -> A -> B, so we can't combine the loops.
+      # rubocop:disable Style/CombinableLoops
+      windows.each do |window, details|
+        within_window window do
+          when_i_refresh_the_page
+          then_the_contact_details_have_not_changed(**details)
+        end
+      end
+      # rubocop:enable Style/CombinableLoops
+
+      within_window windows.keys.first do
+        when_i_click_on("Add placement contact")
+        then_i_return_to_my_organisation_details_page
+        and_i_see_the_school_contact_details(**windows.values.first)
+        and_i_see_success_message
+      end
+
+      within_window windows.keys.second do
+        when_i_click_on("Add placement contact")
+        then_i_see_a_notification("You cannot perform this action")
+      end
+    end
+  end
+
   private
 
   def given_i_sign_in_as_anne
@@ -159,4 +203,16 @@ RSpec.describe "Placements / Schools / School Contacts / Add a school contact",
     # Error above input
     expect(page.find(".govuk-error-message")).to have_content(error_message)
   end
+
+  def then_i_see_a_notification(message)
+    within ".govuk-notification-banner" do
+      expect(page).to have_content(message)
+    end
+  end
+
+  def when_i_refresh_the_page
+    visit current_path
+  end
+
+  alias_method :then_the_contact_details_have_not_changed, :then_i_see_the_check_your_answers_page
 end

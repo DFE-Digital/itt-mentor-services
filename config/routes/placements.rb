@@ -89,8 +89,8 @@ scope module: :placements,
         end
         collection do
           get "new", to: "school_contacts/add_school_contact#new", as: :new_add_school_contact
-          get "new/:step", to: "school_contacts/add_school_contact#edit", as: :add_school_contact
-          put "new/:step", to: "school_contacts/add_school_contact#update"
+          get "new/:state_key/:step", to: "school_contacts/add_school_contact#edit", as: :add_school_contact
+          put "new/:state_key/:step", to: "school_contacts/add_school_contact#update"
         end
       end
 

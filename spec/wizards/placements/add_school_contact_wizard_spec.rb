@@ -1,9 +1,8 @@
 require "rails_helper"
 
 RSpec.describe Placements::AddSchoolContactWizard do
-  subject(:wizard) { described_class.new(session:, params:, school:, current_step: nil) }
+  subject(:wizard) { described_class.new(state:, params:, school:, current_step: nil) }
 
-  let(:session) { { "Placements::AddSchoolContactWizard" => state } }
   let(:state) { {} }
   let(:params_data) { {} }
   let(:params) { ActionController::Parameters.new(params_data) }
