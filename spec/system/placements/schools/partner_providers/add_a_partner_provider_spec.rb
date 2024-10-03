@@ -92,6 +92,47 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
     and_a_notification_email_is_not_sent_to(provider_user)
   end
 
+  describe "when I use multiple tabs to add partner providers", :js do
+    let(:provider_2) { create(:placements_provider, name: "Provider 2") }
+    let(:windows) do
+      {
+        open_new_window => { provider: },
+        open_new_window => { provider: provider_2 },
+      }
+    end
+
+    it "persists the partner provider details for each tab upon refresh" do
+      windows.each do |window, details|
+        within_window window do
+          when_i_view_the_partner_providers_page
+          and_i_click_on("Add provider")
+          and_i_enter_a_provider_named(details[:provider].name)
+          then_i_see_a_dropdown_item_for(details[:provider].name)
+          when_i_click_the_dropdown_item_for(details[:provider].name)
+          and_i_click_on("Continue")
+          then_i_see_the_check_details_page_for_provider(details[:provider].name)
+        end
+      end
+
+      # We need this test to be A -> B -> A -> B, so we can't combine the loops.
+      # rubocop:disable Style/CombinableLoops
+      windows.each do |window, details|
+        within_window window do
+          when_i_refresh_the_page
+          then_the_provider_details_have_not_changed(details[:provider].name)
+          when_i_click_on("Confirm and add provider")
+          then_i_return_to_partner_provider_index
+          and_a_provider_is_listed(provider_name: details[:provider].name)
+          and_i_see_success_message
+        end
+      end
+      # rubocop:enable Style/CombinableLoops
+
+      when_i_view_the_partner_providers_page
+      then_i_see_my_providers(windows.values)
+    end
+  end
+
   private
 
   def given_i_sign_in_as_anne
@@ -210,4 +251,16 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
   def given_the_provider_is_not_onboarded_on_placements_service(provider)
     provider.update!(placements_service: false)
   end
+
+  def when_i_refresh_the_page
+    visit current_path
+  end
+
+  def then_i_see_my_providers(providers)
+    providers.each do |provider|
+      expect(page).to have_content(provider[:provider].name)
+    end
+  end
+
+  alias_method :then_the_provider_details_have_not_changed, :then_i_see_the_check_details_page_for_provider
 end

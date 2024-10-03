@@ -83,8 +83,8 @@ scope module: :placements,
 
           collection do
             get "new", to: "partner_providers/add_partner_provider#new", as: :new_add_partner_provider
-            get "new/:step", to: "partner_providers/add_partner_provider#edit", as: :add_partner_provider
-            put "new/:step", to: "partner_providers/add_partner_provider#update"
+            get "new/:state_key/:step", to: "partner_providers/add_partner_provider#edit", as: :add_partner_provider
+            put "new/:state_key/:step", to: "partner_providers/add_partner_provider#update"
           end
         end
       end
@@ -107,8 +107,8 @@ scope module: :placements,
 
           collection do
             get "new", to: "partner_schools/add_partner_school#new", as: :new_add_partner_school
-            get "new/:step", to: "partner_schools/add_partner_school#edit", as: :add_partner_school
-            put "new/:step", to: "partner_schools/add_partner_school#update"
+            get "new/:state_key/:step", to: "partner_schools/add_partner_school#edit", as: :add_partner_school
+            put "new/:state_key/:step", to: "partner_schools/add_partner_school#update"
           end
         end
       end
@@ -172,8 +172,8 @@ scope module: :placements,
 
         collection do
           get "new", to: "partner_providers/add_partner_provider#new", as: :new_add_partner_provider
-          get "new/:step", to: "partner_providers/add_partner_provider#edit", as: :add_partner_provider
-          put "new/:step", to: "partner_providers/add_partner_provider#update"
+          get "new/:state_key/:step", to: "partner_providers/add_partner_provider#edit", as: :add_partner_provider
+          put "new/:state_key/:step", to: "partner_providers/add_partner_provider#update"
         end
       end
     end
@@ -196,8 +196,8 @@ scope module: :placements,
 
         collection do
           get "new", to: "partner_schools/add_partner_school#new", as: :new_add_partner_school
-          get "new/:step", to: "partner_schools/add_partner_school#edit", as: :add_partner_school
-          put "new/:step", to: "partner_schools/add_partner_school#update"
+          get "new/:state_key/:step", to: "partner_schools/add_partner_school#edit", as: :add_partner_school
+          put "new/:state_key/:step", to: "partner_schools/add_partner_school#update"
         end
 
         scope module: :partner_schools do
