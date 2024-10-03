@@ -1,9 +1,8 @@
 require "rails_helper"
 
 RSpec.describe Placements::AddOrganisationWizard do
-  subject(:wizard) { described_class.new(session:, params:, current_step: nil) }
+  subject(:wizard) { described_class.new(state:, params:, current_step: nil) }
 
-  let(:session) { { "Placements::AddOrganisationWizard" => state } }
   let(:state) { {} }
   let(:params_data) { {} }
   let(:params) { ActionController::Parameters.new(params_data) }
