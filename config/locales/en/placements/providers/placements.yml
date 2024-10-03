@@ -16,9 +16,9 @@ en:
           enter_a_location: Enter a location
           location_search_example: For example, Sunderland or SR2
         filter:
-          partner_schools: Partner schools
+          partner_schools: Schools I work with
           terms: Expected date
-          only_show_partner_schools: Only show placements offered by my partner schools
+          only_show_partner_schools: Only show placements from schools I work with
           school: School
           subject: Subject
           school_phase: School phase
