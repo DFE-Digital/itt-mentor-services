@@ -7,7 +7,7 @@ class Placements::Support::Schools::PartnerProviders::AddPartnerProviderControll
   end
 
   def step_path(step)
-    add_partner_provider_placements_support_school_partner_providers_path(step:)
+    add_partner_provider_placements_support_school_partner_providers_path(state_key:, step:)
   end
 
   def index_path
