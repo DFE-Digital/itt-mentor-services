@@ -48,8 +48,8 @@ scope module: :placements,
 
           collection do
             get "new", to: "users/add_user#new", as: :new_add_user
-            get "new/:step", to: "users/add_user#edit", as: :add_user
-            put "new/:step", to: "users/add_user#update"
+            get "new/:state_key/:step", to: "users/add_user#edit", as: :add_user
+            put "new/:state_key/:step", to: "users/add_user#update"
           end
         end
 
@@ -97,8 +97,8 @@ scope module: :placements,
 
           collection do
             get "new", to: "users/add_user#new", as: :new_add_user
-            get "new/:step", to: "users/add_user#edit", as: :add_user
-            put "new/:step", to: "users/add_user#update"
+            get "new/:state_key/:step", to: "users/add_user#edit", as: :add_user
+            put "new/:state_key/:step", to: "users/add_user#update"
           end
         end
 
@@ -123,8 +123,8 @@ scope module: :placements,
 
         collection do
           get "new", to: "users/add_user#new", as: :new_add_user
-          get "new/:step", to: "users/add_user#edit", as: :add_user
-          put "new/:step", to: "users/add_user#update"
+          get "new/:state_key/:step", to: "users/add_user#edit", as: :add_user
+          put "new/:state_key/:step", to: "users/add_user#update"
         end
       end
 
@@ -186,8 +186,8 @@ scope module: :placements,
 
         collection do
           get "new", to: "users/add_user#new", as: :new_add_user
-          get "new/:step", to: "users/add_user#edit", as: :add_user
-          put "new/:step", to: "users/add_user#update"
+          get "new/:state_key/:step", to: "users/add_user#edit", as: :add_user
+          put "new/:state_key/:step", to: "users/add_user#update"
         end
       end
 
