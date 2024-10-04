@@ -18,10 +18,6 @@ RSpec.describe SchoolPolicy do
       let(:user) { create(:placements_user, schools: [school]) }
       let(:school) { create(:placements_school) }
 
-      before do
-        user.current_organisation = school
-      end
-
       it "returns the school's partner providers" do
         expect(school_policy::Scope.new(user, scope).resolve).to eq(school.partner_providers)
       end
@@ -30,10 +26,6 @@ RSpec.describe SchoolPolicy do
     context "when the user is a provider user" do
       let(:user) { create(:placements_user, providers: [provider]) }
       let(:provider) { create(:placements_provider) }
-
-      before do
-        user.current_organisation = provider
-      end
 
       it "returns the provider's partner schools" do
         expect(school_policy::Scope.new(user, scope).resolve).to eq(provider.partner_schools)

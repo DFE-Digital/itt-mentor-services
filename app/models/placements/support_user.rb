@@ -20,6 +20,4 @@
 #
 class Placements::SupportUser < User
   include ActsAsSupportUser
-
-  attribute :current_organisation
 end

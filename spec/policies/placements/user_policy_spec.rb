@@ -24,7 +24,6 @@ RSpec.describe Placements::UserPolicy do
       let(:user_2) { create(:placements_user) }
 
       before do
-        user_1.current_organisation = school
         user_2
       end
 

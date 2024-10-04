@@ -21,7 +21,6 @@ describe Placements::MentorPolicy do
       let(:mentor_2) { create(:placements_mentor) }
 
       before do
-        user.current_organisation = school
         mentor_2
       end
 

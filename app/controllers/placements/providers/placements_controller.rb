@@ -10,7 +10,10 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
     @schools = schools_scope.order_by_name.select(:id, :name)
     @year_groups ||= Placement.year_groups_as_options
     @terms = Placements::Term.order_by_term.select(:id, :name)
-    scope = policy_scope(Placements::PlacementsQuery.call(params: query_params))
+    scope = policy_scope(
+      Placements::PlacementsQuery.call(params: query_params),
+      policy_scope_class: Placements::Provider::PlacementPolicy::Scope,
+    )
 
     @pagy, @placements = pagy(scope)
   end

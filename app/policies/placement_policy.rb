@@ -1,13 +1,9 @@
 class PlacementPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
-      if user.current_organisation.is_a?(Placements::School)
-        scope.where(school: user.current_organisation)
-      elsif user.current_organisation.is_a?(Placements::Provider) || user.support_user?
-        scope
-      else
-        scope.none
-      end
+      return scope if user.support_user?
+
+      scope.where(school: user.schools)
     end
   end
 

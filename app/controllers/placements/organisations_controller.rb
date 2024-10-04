@@ -24,12 +24,7 @@ class Placements::OrganisationsController < Placements::ApplicationController
   def load_organisation(membership)
     organisation = membership.organisation
 
-    set_current_organisation(organisation)
     redirect_to landing_page_path(organisation)
-  end
-
-  def set_current_organisation(organisation)
-    session["current_organisation"] = { "id" => organisation.id, "type" => organisation.class.name }
   end
 
   def landing_page_path(organisation)
