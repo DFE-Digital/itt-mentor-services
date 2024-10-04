@@ -55,10 +55,6 @@ class Claims::Claim::MentorTrainingForm < ApplicationForm
     end
   end
 
-  def custom_hours_selected?
-    @custom_hours_selected ||= hours_completed == "custom"
-  end
-
   def max_hours
     @max_hours ||= training_allowance.remaining_hours
   end
@@ -84,5 +80,9 @@ class Claims::Claim::MentorTrainingForm < ApplicationForm
 
   def previous_mentor_training
     mentor_trainings[mentor_trainings.index(mentor_training) - 1]
+  end
+
+  def custom_hours_selected?
+    hours_completed == "custom"
   end
 end
