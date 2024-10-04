@@ -56,7 +56,7 @@ class Claims::Claim::MentorTrainingForm < ApplicationForm
   end
 
   def max_hours
-    @max_hours ||= training_allowance.remaining_hours
+    training_allowance.remaining_hours
   end
 
   def training_allowance
