@@ -3,7 +3,7 @@ class ProviderPolicy < ApplicationPolicy
     def resolve
       return scope if user.support_user?
 
-      scope.where(id: user.current_organisation.partner_providers.select(:id))
+      scope.where(id: Placements::Partnership.select(:provider_id).where(school: user.schools))
     end
   end
 end

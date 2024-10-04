@@ -17,7 +17,6 @@ RSpec.describe UserMembershipPolicy do
       let(:user_membership_2) { create(:user_membership) }
 
       before do
-        user.current_organisation = school
         user_membership_2
       end
 

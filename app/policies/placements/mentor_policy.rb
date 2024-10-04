@@ -3,7 +3,7 @@ class Placements::MentorPolicy < ApplicationPolicy
     def resolve
       return scope if user.support_user?
 
-      scope.where(id: Placements::MentorMembership.select(:mentor_id).where(school: user.current_organisation))
+      scope.where(id: Placements::MentorMembership.select(:mentor_id).where(school: user.schools))
     end
   end
 end

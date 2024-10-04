@@ -24,7 +24,6 @@ RSpec.describe ProviderPolicy do
       let(:provider_2) { create(:placements_provider) }
 
       before do
-        user.current_organisation = school
         provider_2
       end
 
