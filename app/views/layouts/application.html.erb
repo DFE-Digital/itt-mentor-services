@@ -29,7 +29,9 @@
       <% header.with_product_name(name: service_name) %>
 
       <% if current_user %>
-        <% header.with_navigation_item(text: t(".your_account"), href: account_path) %>
+        <% if current_service == :claims %>
+          <% header.with_navigation_item(text: t(".your_account"), href: account_path) %>
+        <% end %>
         <% header.with_navigation_item(text: t(".sign_out"), href: sign_out_path) %>
       <% end %>
     <% end %>
