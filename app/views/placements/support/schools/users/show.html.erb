@@ -1,5 +1,5 @@
 <%= content_for :page_title, sanitize("#{@user.full_name} - #{@school.name}") %>
-<%= render "placements/support/primary_navigation", current_navigation: :organisations %>
+
 <%= content_for(:before_content) do %>
   <%= govuk_back_link(href: placements_support_school_users_path(@school)) %>
 <% end %>

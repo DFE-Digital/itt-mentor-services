@@ -32,6 +32,10 @@
         <% if claims_service? %>
           <% header.with_navigation_item(text: t(".your_account"), href: account_path) %>
         <% end %>
+
+        <% if current_user.support_user? && !claims_service? %>
+          <%= render "placements/support/header_navigation", header: %>
+        <% end %>
         <% header.with_navigation_item(text: t(".sign_out"), href: sign_out_path) %>
       <% end %>
     <% end %>
