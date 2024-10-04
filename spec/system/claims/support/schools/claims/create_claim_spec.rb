@@ -1,7 +1,13 @@
 require "rails_helper"
 
 RSpec.describe "Create claim", service: :claims, type: :system do
-  let!(:claim_window) { create(:claim_window, :current) }
+  let(:academic_year) do
+    build(:academic_year,
+          starts_on: Date.parse("1 September 2020"),
+          ends_on: Date.parse("31 August 2021"),
+          name: "2020 to 2021")
+  end
+  let!(:claim_window) { create(:claim_window, :current, academic_year:) }
   let!(:school) { create(:claims_school) }
   let!(:mentor1) { create(:claims_mentor, first_name: "Anne", schools: [school]) }
   let!(:mentor2) { create(:claims_mentor, first_name: "Joe", schools: [school]) }
