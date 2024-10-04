@@ -77,7 +77,7 @@ jobs:
         cluster: ${{ env.CLUSTER }}
         azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
         backup-file: ${{ env.BACKUP_FILE }}.sql
-        ptr-db-server-name: ${{ env.PTR_DB_SERVER }}
+        db-server-name: ${{ env.PTR_DB_SERVER }}
 
     - name: Backup Summary
       if: success()
