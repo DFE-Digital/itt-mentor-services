@@ -90,9 +90,9 @@ RSpec.describe "Placements / Support / Schools / Support User adds a School",
   end
 
   def then_i_see_support_navigation_with_organisation_selected
-    within(".app-primary-navigation__nav") do
-      expect(page).to have_link "Organisations", current: "page"
-      expect(page).to have_link "Support users", current: "false"
+    within(".govuk-header__navigation-list") do
+      expect(page).to have_link "Organisations"
+      expect(page).to have_link "Support users"
     end
   end
 
