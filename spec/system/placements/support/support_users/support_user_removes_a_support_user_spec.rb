@@ -39,7 +39,7 @@ RSpec.describe "Placements / Support Users / Support users removes a support use
   end
 
   def and_i_visit_the_support_users_page
-    within(".app-primary-navigation nav") do
+    within(".govuk-header__navigation-list") do
       click_on "Support users"
     end
   end
