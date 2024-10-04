@@ -63,8 +63,13 @@ class Claims::Claim::MentorTrainingForm < ApplicationForm
     @max_hours ||= training_allowance.remaining_hours
   end
 
-  def max_hours_equals_maximum_claimable_hours?
-    max_hours == training_allowance.total_hours
+  def training_allowance
+    @training_allowance ||= Claims::TrainingAllowance.new(
+      mentor:,
+      provider:,
+      academic_year:,
+      claim_to_exclude: claim,
+    )
   end
 
   private
@@ -79,14 +84,5 @@ class Claims::Claim::MentorTrainingForm < ApplicationForm
 
   def previous_mentor_training
     mentor_trainings[mentor_trainings.index(mentor_training) - 1]
-  end
-
-  def training_allowance
-    @training_allowance ||= Claims::TrainingAllowance.new(
-      mentor:,
-      provider:,
-      academic_year:,
-      claim_to_exclude: claim,
-    )
   end
 end

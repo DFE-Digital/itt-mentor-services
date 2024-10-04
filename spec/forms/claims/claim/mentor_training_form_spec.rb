@@ -150,28 +150,4 @@ describe Claims::Claim::MentorTrainingForm, type: :model do
       end
     end
   end
-
-  describe "#max_hours_equals_maximum_claimable_hours?" do
-    it "returns true when a mentor has 20 hours available to claim" do
-      expect(mentor_training_form.max_hours_equals_maximum_claimable_hours?).to be(true)
-    end
-
-    context "when a mentor has already claimed any amount of hours" do
-      let(:submitted_claim) { create(:claim, :submitted) }
-
-      before do
-        create(
-          :mentor_training,
-          claim: submitted_claim,
-          provider: mentor_training.provider,
-          mentor: mentor_training.mentor,
-          hours_completed: 1,
-        )
-      end
-
-      it "returns false" do
-        expect(mentor_training_form.max_hours_equals_maximum_claimable_hours?).to be(false)
-      end
-    end
-  end
 end
