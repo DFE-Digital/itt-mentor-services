@@ -36,7 +36,7 @@
 FactoryBot.define do
   factory :claim, class: "Claims::Claim" do
     association :school, factory: :claims_school
-    association :provider
+    association :provider, factory: :claims_provider
     association :created_by, factory: :claims_user
     association :submitted_by, factory: :claims_user
 
