@@ -69,6 +69,10 @@ class Claims::Claim::MentorTrainingForm < ApplicationForm
 
   private
 
+  def academic_year
+    claim.claim_window.academic_year
+  end
+
   def mentor_trainings
     @mentor_trainings ||= claim.mentor_trainings.order_by_mentor_full_name
   end
@@ -81,7 +85,7 @@ class Claims::Claim::MentorTrainingForm < ApplicationForm
     @training_allowance ||= Claims::TrainingAllowance.new(
       mentor:,
       provider:,
-      academic_year: Claims::ClaimWindow.current.academic_year,
+      academic_year:,
       claim_to_exclude: claim,
     )
   end
