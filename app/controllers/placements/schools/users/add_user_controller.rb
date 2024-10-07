@@ -2,8 +2,7 @@ class Placements::Schools::Users::AddUserController < Placements::Organisations:
   private
 
   def set_organisation
-    school_id = params.require(:school_id)
-    @organisation = current_user.schools.find(school_id)
+    @organisation = set_school
   end
 
   def step_path(step)
