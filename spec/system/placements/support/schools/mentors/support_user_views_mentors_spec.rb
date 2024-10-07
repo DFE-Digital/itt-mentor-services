@@ -12,7 +12,7 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User views men
   scenario "View a school's mentors as a support user" do
     user_exists_in_dfe_sign_in(user: colin)
     given_i_sign_in
-    when_i_visit_the_support_school_mentors_page(school)
+    when_i_visit_the_school_mentors_page(school)
     then_i_see_a_list_of_the_schools_mentors
     and_i_dont_see_mentors_from_another_school
   end
@@ -20,7 +20,7 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User views men
   scenario "View a school's empty mentors list" do
     user_exists_in_dfe_sign_in(user: colin)
     given_i_sign_in
-    when_i_visit_the_support_school_mentors_page(another_school)
+    when_i_visit_the_school_mentors_page(another_school)
     then_i_see_no_results
   end
 
@@ -31,8 +31,8 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User views men
     click_on "Sign in using DfE Sign In"
   end
 
-  def when_i_visit_the_support_school_mentors_page(school)
-    visit placements_support_school_mentors_path(school)
+  def when_i_visit_the_school_mentors_page(school)
+    visit placements_school_mentors_path(school)
   end
 
   def then_i_see_a_list_of_the_schools_mentors

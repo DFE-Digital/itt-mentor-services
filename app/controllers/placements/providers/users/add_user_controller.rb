@@ -2,8 +2,7 @@ class Placements::Providers::Users::AddUserController < Placements::Organisation
   private
 
   def set_organisation
-    provider_id = params.require(:provider_id)
-    @organisation = current_user.providers.find(provider_id)
+    @organisation = set_provider
   end
 
   def step_path(step)

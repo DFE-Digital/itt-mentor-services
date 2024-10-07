@@ -10,7 +10,7 @@
   <% mentor.mentor_school_placements(school).each do |placement| %>
     <li>
       <%= govuk_link_to(placement.title,
-        placements_school_placement_details_path(school:, placement:, support:),
+        placements_school_placement_path(school, placement),
         target: "_blank",
         new_tab: true,
         no_visited_state: true) %>

@@ -30,10 +30,6 @@ class Placements::Schools::MentorsController < Placements::ApplicationController
 
   private
 
-  def set_school
-    @school = current_user.schools.find(params.require(:school_id))
-  end
-
   def set_mentor
     @mentor = @school.mentors.find(params.require(:id))
   end

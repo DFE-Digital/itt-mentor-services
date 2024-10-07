@@ -29,11 +29,6 @@ class Placements::Schools::SchoolContacts::AddSchoolContactController < Placemen
 
   private
 
-  def set_school
-    school_id = params.require(:school_id)
-    @school = current_user.schools.find(school_id)
-  end
-
   def set_wizard
     current_step = params[:step]&.to_sym
     @wizard = Placements::AddSchoolContactWizard.new(school: @school, params:, session:, current_step:)

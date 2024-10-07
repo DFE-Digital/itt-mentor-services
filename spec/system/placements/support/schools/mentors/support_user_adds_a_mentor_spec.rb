@@ -96,7 +96,7 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
       then_i_see_form_with_trn_and_date_of_birth(claims_mentor.trn, 1, 1, 1990)
       when_i_click_on("Continue")
       then_i_see_check_page_for(claims_mentor)
-      when_i_click_on("Change")
+      when_i_click_on("Change Teacher reference number (TRN)")
       then_i_see_form_with_trn_and_date_of_birth(claims_mentor.trn, 1, 1, 1990)
       when_i_click_on("Continue")
       then_i_see_check_page_for(claims_mentor)
@@ -167,6 +167,8 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
     end
   end
 
+  private
+
   def given_i_sign_in_as_colin
     user = create(:placements_support_user, :colin)
     user_exists_in_dfe_sign_in(user:)
@@ -184,7 +186,7 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
 
   def given_i_navigate_to_schools_mentors_list(school)
     click_on school.name
-    within(".app-secondary-navigation") do
+    within(".app-primary-navigation") do
       click_on "Mentors"
     end
   end
@@ -240,11 +242,11 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
   end
 
   def then_i_see_the_index_page(school)
-    expect(page).to have_current_path placements_support_school_mentors_path(school), ignore_query: true
+    expect(page).to have_current_path placements_school_mentors_path(school), ignore_query: true
   end
 
-  def then_i_see_the_error(message, school_name, title = message, field_index = 0)
-    expect(page).to have_title "Error: #{title} - Mentor details - #{school_name}"
+  def then_i_see_the_error(message, _school_name, title = message, field_index = 0)
+    expect(page).to have_title "Error: #{title} - Mentor details"
     within(".govuk-error-summary") do
       expect(page).to have_content message
     end
@@ -269,7 +271,7 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
 
   def then_i_see_no_results_page(_school_name, trn)
     expect(page).to have_title "No results found for ‘#{trn}’"
-    expect(page).to have_content "Mentor not found - #{school.name}"
+    expect(page).to have_content "Mentor not found"
     expect(page).to have_content "No results found for ‘#{trn}’"
   end
 

@@ -49,10 +49,6 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
     @placement = @school.placements.find(params.require(:id))
   end
 
-  def set_school
-    @school = current_user.schools.find(params.require(:school_id))
-  end
-
   def set_decorated_placement
     @placement = @placement.decorate
   end

@@ -1,12 +1,11 @@
-<% caption = current_user.support_user? ? "#{t(".caption")} #{contextual_text}" : t(".caption") %>
-<% content_for :page_title, user_step.errors.any? ? t(".title_with_error", caption:) : t(".title", caption:) %>
+<% content_for :page_title, user_step.errors.any? ? t(".title_with_error", caption: t(".caption")) : t(".title", caption: t(".caption")) %>
 
 <%= form_for(user_step, url: current_step_path, method: :put) do |f| %>
   <%= f.govuk_error_summary %>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l"><%= caption %></span>
+      <span class="govuk-caption-l"><%= t(".caption") %></span>
       <h1 class="govuk-heading-l"><%= t(".personal_details") %></h1>
 
       <div class="govuk-form-group">

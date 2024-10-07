@@ -31,7 +31,7 @@ RSpec.describe "Placements / Support / Schools / Placements / Add a placement",
   end
 
   def when_i_visit_the_placements_page
-    visit placements_support_school_placements_path(school)
+    visit placements_school_placements_path(school)
   end
 
   def then_i_see_content(text)

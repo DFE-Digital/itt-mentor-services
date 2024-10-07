@@ -17,7 +17,7 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User views a m
 
   scenario "Support User views a school mentor's details" do
     given_a_mentor_exists_in(school:)
-    when_i_visit_the_support_show_page_for(school, mentor)
+    when_i_visit_the_show_page_for(school, mentor)
     then_i_see_the_mentor_details(
       school_name: "School 1",
       first_name: "John",
@@ -51,8 +51,8 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User views a m
     create(:placements_mentor_membership, school:, mentor:)
   end
 
-  def when_i_visit_the_support_show_page_for(school, mentor)
-    visit placements_support_school_mentor_path(
+  def when_i_visit_the_show_page_for(school, mentor)
+    visit placements_school_mentor_path(
       school_id: school.id,
       id: mentor.id,
     )
