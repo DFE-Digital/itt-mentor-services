@@ -28,11 +28,6 @@ class Placements::Schools::SchoolContacts::EditSchoolContactController < Placeme
 
   private
 
-  def set_school
-    school_id = params.require(:school_id)
-    @school = current_user.schools.find(school_id)
-  end
-
   def set_school_contact
     school_contact_id = params.require(:id)
     @school_contact = Placements::SchoolContact.find_by!(id: school_contact_id, school: @school)

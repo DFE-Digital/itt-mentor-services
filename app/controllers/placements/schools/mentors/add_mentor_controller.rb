@@ -28,10 +28,6 @@ class Placements::Schools::Mentors::AddMentorController < Placements::Applicatio
 
   private
 
-  def set_school
-    @school = current_user.schools.find(params.require(:school_id))
-  end
-
   def set_wizard
     current_step = params[:step]&.to_sym
     @wizard = Placements::AddMentorWizard.new(school: @school, params:, session:, current_step:)
