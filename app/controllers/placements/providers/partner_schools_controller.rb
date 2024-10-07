@@ -14,7 +14,7 @@ class Placements::Providers::PartnerSchoolsController < Placements::Partnerships
   private
 
   def set_organisation
-    @provider = current_user.providers.find(params.fetch(:provider_id))
+    set_provider
   end
 
   def source_organisation

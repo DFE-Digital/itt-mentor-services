@@ -2,8 +2,6 @@ require "rails_helper"
 
 RSpec.describe "Placements / Support / Schools / Placements / Edit a placement",
                service: :placements, type: :system do
-  let(:context_for_path) { "support_school" }
-
   before { given_i_sign_in_as_colin }
 
   it_behaves_like "an edit placement wizard"
@@ -23,18 +21,18 @@ RSpec.describe "Placements / Support / Schools / Placements / Edit a placement",
   end
 
   def when_i_visit_the_placement_show_page
-    visit placements_support_school_placement_path(school, placement)
+    visit placements_school_placement_path(school, placement)
   end
 
   def then_i_am_redirected_to_add_a_partner_provider
     expect(page).to have_current_path(
-      placements_support_school_partner_providers_path(school), ignore_query: true
+      placements_school_partner_providers_path(school), ignore_query: true
     )
   end
 
   def then_i_am_redirected_to_add_a_mentor
     expect(page).to have_current_path(
-      placements_support_school_mentors_path(school), ignore_query: true
+      placements_school_mentors_path(school), ignore_query: true
     )
   end
 end

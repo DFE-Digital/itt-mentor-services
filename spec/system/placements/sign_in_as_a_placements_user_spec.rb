@@ -266,11 +266,11 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
   end
 
   def and_i_visit_a_school_show_page
-    visit placements_support_school_path(organisation)
+    visit placements_school_path(organisation)
   end
 
   def then_i_see_school_show_page
-    expect(page).to have_current_path placements_support_school_path(organisation), ignore_query: true
+    expect(page).to have_current_path placements_school_path(organisation), ignore_query: true
     expect(page).to have_content(organisation.name)
   end
 

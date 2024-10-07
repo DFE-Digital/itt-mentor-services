@@ -25,11 +25,11 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
 
   scenario "Support user deletes a partner provider" do
     when_i_view_the_partner_provider_show_page_for(school:, provider:)
-    and_i_click_on("Delete partner provider")
+    and_i_click_on("Delete provider")
     then_i_am_asked_to_confirm_partner_provider(provider)
     when_i_click_on("Cancel")
     then_i_return_to_partner_provider_page(provider)
-    when_i_click_on("Delete partner provider")
+    when_i_click_on("Delete provider")
     then_i_am_asked_to_confirm_partner_provider(provider)
     when_i_click_on("Delete provider")
     then_the_partner_provider_is_deleted(provider)
@@ -40,11 +40,11 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   scenario "Support user deletes a partner provider, which is not onboarded on the placements service" do
     given_the_provider_is_not_onboarded_on_placements_service(provider)
     when_i_view_the_partner_provider_show_page_for(school:, provider:)
-    and_i_click_on("Delete partner provider")
+    and_i_click_on("Delete provider")
     then_i_am_asked_to_confirm_partner_provider(provider)
     when_i_click_on("Cancel")
     then_i_return_to_partner_provider_page(provider)
-    when_i_click_on("Delete partner provider")
+    when_i_click_on("Delete provider")
     then_i_am_asked_to_confirm_partner_provider(provider)
     when_i_click_on("Delete provider")
     then_the_partner_provider_is_deleted(provider)
@@ -62,7 +62,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   end
 
   def when_i_view_the_partner_provider_show_page_for(school:, provider:)
-    visit placements_support_school_partner_provider_path(school, provider)
+    visit placements_school_partner_provider_path(school, provider)
 
     then_i_see_support_navigation_with_organisation_selected
   end
@@ -74,8 +74,8 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
 
   def then_i_am_asked_to_confirm_partner_provider(provider)
     expect(page).to have_title(
-      "Are you sure you want to delete this partner provider? - #{provider.name}" \
-        " - #{school.name} - Manage school placements",
+      "Are you sure you want to delete this provider? - #{provider.name}" \
+        " - Manage school placements",
     )
     expect(page).to have_content provider.name
     expect(page).to have_content "You will no longer be able to assign this provider to placements."
@@ -83,7 +83,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   end
 
   def then_i_return_to_partner_provider_page(provider)
-    expect(page).to have_current_path placements_support_school_partner_provider_path(school, provider),
+    expect(page).to have_current_path placements_school_partner_provider_path(school, provider),
                                       ignore_query: true
   end
 
@@ -129,10 +129,10 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   end
 
   def partner_schools_is_selected_in_secondary_nav
-    within(".app-secondary-navigation__list") do
-      expect(page).to have_link "Details", current: "false"
+    within(".app-primary-navigation__list") do
+      expect(page).to have_link "Organisation details", current: "false"
       expect(page).to have_link "Users", current: "false"
-      expect(page).to have_link "Partner providers", current: "page"
+      expect(page).to have_link "Providers", current: "page"
       expect(page).to have_link "Mentors", current: "false"
       expect(page).to have_link "Placements", current: "false"
     end

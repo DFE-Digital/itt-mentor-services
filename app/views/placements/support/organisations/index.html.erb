@@ -29,7 +29,7 @@
           <% @organisations.each do |org| %>
             <%= render OrganisationListItem.new(
               organisation: org.searchable,
-              organisation_url: placements_support_organisation_path(org.searchable),
+              organisation_url: placements_organisation_path(id: org.searchable_id, type: org.searchable_type),
               show_details: true,
             ) %>
           <% end %>

@@ -21,7 +21,7 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User deletes a
 
   context "when the mentor has no placements" do
     scenario "Support User deletes a mentor from a school" do
-      when_i_visit_the_support_show_page_for(school, mentor_1)
+      when_i_visit_the_show_page_for(school, mentor_1)
       and_i_click_on("Delete mentor")
       then_i_am_asked_to_confirm(school, mentor_1)
       when_i_click_on("Cancel")
@@ -38,7 +38,7 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User deletes a
     before { create(:placement, mentors: [mentor_1], school:) }
 
     scenario "Suppoer User can not delete the mentor from the school" do
-      when_i_visit_the_support_show_page_for(school, mentor_1)
+      when_i_visit_the_show_page_for(school, mentor_1)
       and_i_click_on("Delete mentor")
       then_i_see_i_cannot_delete_the_mentor("John Doe")
     end
@@ -71,8 +71,8 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User deletes a
     end
   end
 
-  def when_i_visit_the_support_show_page_for(school, mentor)
-    visit placements_support_school_mentor_path(school, mentor)
+  def when_i_visit_the_show_page_for(school, mentor)
+    visit placements_school_mentor_path(school, mentor)
   end
 
   def when_i_click_on(text)
@@ -80,12 +80,12 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User deletes a
   end
   alias_method :and_i_click_on, :when_i_click_on
 
-  def then_i_am_asked_to_confirm(school, mentor)
+  def then_i_am_asked_to_confirm(_school, mentor)
     organisations_is_selected_in_primary_nav
     expect(page).to have_title(
-      "Are you sure you want to delete this mentor? - #{mentor.full_name} - #{school.name} - Manage school placements",
+      "Are you sure you want to delete this mentor? - #{mentor.full_name} - Manage school placements",
     )
-    expect(page).to have_content "#{mentor.full_name} - #{school.name}"
+    expect(page).to have_content mentor.full_name
     expect(page).to have_content "Are you sure you want to delete this mentor?"
   end
 
@@ -98,7 +98,7 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User deletes a
 
   def then_i_return_to_mentor_page(school, mentor)
     organisations_is_selected_in_primary_nav
-    expect(page).to have_current_path placements_support_school_mentor_path(school, mentor),
+    expect(page).to have_current_path placements_school_mentor_path(school, mentor),
                                       ignore_query: true
   end
 
@@ -114,12 +114,12 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User deletes a
   end
 
   def mentors_is_selected_in_secondary_nav
-    within(".app-secondary-navigation__list") do
-      expect(page).to have_link "Details", current: "false"
+    within(".app-primary-navigation__list") do
+      expect(page).to have_link "Organisation details", current: "false"
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Mentors", current: "page"
       expect(page).to have_link "Placements", current: "false"
-      expect(page).to have_link "Partner providers", current: "false"
+      expect(page).to have_link "Providers", current: "false"
     end
   end
 

@@ -18,7 +18,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
 
   scenario "Support user adds a partner provider", :js, retry: 3 do
     when_i_visit_the_partner_providers_page_for(school)
-    and_i_click_on("Add partner provider")
+    and_i_click_on("Add provider")
     and_i_enter_a_provider_named("Provider 1")
     then_i_see_a_dropdown_item_for("Provider 1")
     when_i_click_the_dropdown_item_for("Provider 1")
@@ -34,7 +34,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   scenario "Support user adds a partner provider which already exists", :js, retry: 3 do
     given_a_partnership_exists_between(school, provider)
     when_i_visit_the_partner_providers_page_for(school)
-    and_i_click_on("Add partner provider")
+    and_i_click_on("Add provider")
     and_i_enter_a_provider_named("Provider 1")
     then_i_see_a_dropdown_item_for("Provider 1")
     when_i_click_the_dropdown_item_for("Provider 1")
@@ -50,7 +50,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
 
   scenario "Support user reconsiders selecting a provider", :js, retry: 3 do
     when_i_visit_the_partner_providers_page_for(school)
-    and_i_click_on("Add partner provider")
+    and_i_click_on("Add provider")
     and_i_enter_a_provider_named("Provider 1")
     then_i_see_a_dropdown_item_for("Provider 1")
     when_i_click_the_dropdown_item_for("Provider 1")
@@ -65,7 +65,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   scenario "Support user adds a partner provider, which is not onboarded on the placements service", :js, retry: 3 do
     given_the_provider_is_not_onboarded_on_placements_service(provider)
     when_i_visit_the_partner_providers_page_for(school)
-    and_i_click_on("Add partner provider")
+    and_i_click_on("Add provider")
     and_i_enter_a_provider_named("Provider 1")
     then_i_see_a_dropdown_item_for("Provider 1")
     when_i_click_the_dropdown_item_for("Provider 1")
@@ -88,7 +88,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   end
 
   def when_i_visit_the_partner_providers_page_for(school)
-    visit placements_support_school_partner_providers_path(school)
+    visit placements_school_partner_providers_path(school)
 
     then_i_see_support_navigation_with_organisation_selected
     partner_providers_is_selected_in_secondary_nav
@@ -118,8 +118,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   end
 
   def then_i_return_to_partner_provider_index
-    expect(page.find(".govuk-heading-l")).to have_content(school.name)
-    find(".govuk-heading-m", text: "Partner providers")
+    expect(page.find(".govuk-heading-l")).to have_content("Providers you work with")
   end
 
   def and_a_provider_is_listed(provider_name:)
@@ -146,7 +145,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   end
 
   def when_i_visit_the_add_partner_provider_page
-    visit new_add_partner_provider_placements_support_school_partner_providers_path(school)
+    visit new_add_partner_provider_placements_school_partner_providers_path(school)
   end
 
   def partner_provider_notification(user)
@@ -182,10 +181,10 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   end
 
   def partner_providers_is_selected_in_secondary_nav
-    within(".app-secondary-navigation__list") do
-      expect(page).to have_link "Details", current: "false"
+    within(".app-primary-navigation__list") do
+      expect(page).to have_link "Organisation details", current: "false"
       expect(page).to have_link "Users", current: "false"
-      expect(page).to have_link "Partner providers", current: "page"
+      expect(page).to have_link "Providers", current: "page"
       expect(page).to have_link "Mentors", current: "false"
       expect(page).to have_link "Placements", current: "false"
     end

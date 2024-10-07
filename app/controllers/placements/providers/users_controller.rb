@@ -2,7 +2,7 @@ class Placements::Providers::UsersController < Placements::Organisations::UsersC
   private
 
   def set_organisation
-    @organisation = current_user.providers.find(params.fetch(:provider_id))
+    @organisation = set_provider
   end
 
   def redirect_to_index

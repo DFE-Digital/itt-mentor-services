@@ -81,7 +81,7 @@ RSpec.describe "Placements support user deletes a user from an organisation", se
   end
 
   def then_user_is_still_member_of_provider
-    visit placements_support_provider_users_path(provider)
+    visit placements_provider_users_path(provider)
 
     expect(page).to have_content user.full_name
   end
@@ -95,7 +95,7 @@ RSpec.describe "Placements support user deletes a user from an organisation", se
 
   def and_i_visit_the_user_page(organisation)
     click_on organisation.name
-    within(".app-secondary-navigation__list") do
+    within(".app-primary-navigation__list") do
       click_on "Users"
     end
     click_on user.full_name
@@ -108,9 +108,9 @@ RSpec.describe "Placements support user deletes a user from an organisation", se
   def then_i_am_asked_to_confirm(organisation)
     organisations_is_selected_in_primary_nav
     expect(page).to have_title(
-      "Are you sure you want to delete this user? - #{user.full_name} - #{organisation.name} - Manage school placements",
+      "Are you sure you want to delete this user? - #{user.full_name} - Manage school placements",
     )
-    expect(page).to have_content "#{user.full_name} - #{organisation.name}"
+    expect(page).to have_content user.full_name
     expect(page).to have_content "Are you sure you want to delete this user?"
     expect(page).to have_content "The user will be sent an email to tell them you deleted them from #{organisation.name}"
   end
@@ -123,14 +123,14 @@ RSpec.describe "Placements support user deletes a user from an organisation", se
   end
 
   def users_is_selected_in_secondary_nav(organisation)
-    within(".app-secondary-navigation__list") do
-      expect(page).to have_link "Details", current: "false"
+    within(".app-primary-navigation__list") do
+      expect(page).to have_link "Organisation details", current: "false"
       expect(page).to have_link "Users", current: "page"
       if organisation.is_a?(Provider)
-        expect(page).to have_link "Partner schools", current: "false"
+        expect(page).to have_link "Schools", current: "false"
       else
         expect(page).to have_link "Mentors", current: "false"
-        expect(page).to have_link "Partner providers", current: "false"
+        expect(page).to have_link "Providers", current: "false"
         expect(page).to have_link "Placements", current: "false"
       end
     end
@@ -140,9 +140,9 @@ RSpec.describe "Placements support user deletes a user from an organisation", se
     organisations_is_selected_in_primary_nav
     case organisation
     when School
-      expect(page).to have_current_path placements_support_school_user_path(organisation, user), ignore_query: true
+      expect(page).to have_current_path placements_school_user_path(organisation, user), ignore_query: true
     when Provider
-      expect(page).to have_current_path placements_support_provider_user_path(organisation, user), ignore_query: true
+      expect(page).to have_current_path placements_provider_user_path(organisation, user), ignore_query: true
     end
   end
 

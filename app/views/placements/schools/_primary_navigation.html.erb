@@ -1,9 +1,13 @@
 <%# locals: (current_navigation: nil, school:) -%>
-<% if current_user.organisation_count > 1 %>
+<% if current_user.support_user? ||  current_user.organisation_count > 1 %>
   <%= content_for(:header_content) do %>
     <%= render(ContentHeaderComponent.new(
       title: school.name,
-      actions: [govuk_link_to(t(".change_organisation"), placements_organisations_path, no_visited_state: true)],
+      actions: [govuk_link_to(
+        t(".change_organisation"),
+        current_user.support_user? ? placements_support_organisations_path : placements_organisations_path,
+        no_visited_state: true,
+      )],
     )) %>
   <% end %>
 <% end %>

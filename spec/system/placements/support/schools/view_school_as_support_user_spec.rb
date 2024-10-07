@@ -11,9 +11,11 @@ RSpec.describe "Placements / Organisations / Support user views a School", type:
   scenario "Support user navigates to different organisations on the list" do
     given_i_am_signed_in_as_a_support_user
     when_i_click_on_a_organisation_name(school.name)
+    and_i_click_on("Organisation details")
     then_i_see_the_school_details
     when_i_navigate_back_to_the_organisations_list
     when_i_click_on_a_organisation_name(university.name)
+    and_i_click_on("Organisation details")
     then_i_see_the_provider_details
   end
 
@@ -31,11 +33,8 @@ RSpec.describe "Placements / Organisations / Support user views a School", type:
   end
 
   def then_i_see_the_provider_details
-    within(".govuk-heading-l") do
-      expect(page).to have_content university.name
-    end
-
     within("#organisation-details") do
+      expect(page).to have_content university.name
       expect(page).to have_content "Name"
       expect(page).to have_content "UK provider reference number (UKPRN)"
       expect(page).to have_content "Unique reference number (URN)"
@@ -99,5 +98,9 @@ RSpec.describe "Placements / Organisations / Support user views a School", type:
 
   def and_i_navigate_to_the_school_details_page
     visit placements_support_school_path(school)
+  end
+
+  def and_i_click_on(text)
+    click_on text
   end
 end

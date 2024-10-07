@@ -2,7 +2,7 @@ class Placements::Schools::UsersController < Placements::Organisations::UsersCon
   private
 
   def set_organisation
-    @organisation = current_user.schools.find(params.fetch(:school_id))
+    @organisation = set_school
   end
 
   def redirect_to_index

@@ -21,7 +21,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
       end
 
       scenario "Support User views a school placement's details, with school level displayed" do
-        when_i_visit_the_support_show_page_for(school, placement)
+        when_i_visit_the_show_page_for(school, placement)
         then_i_see_the_placement_details(
           school_name: "School 1",
           school_level: "Primary",
@@ -41,7 +41,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
       end
 
       scenario "Support User views a school placement's details, with no school level displayed" do
-        when_i_visit_the_support_show_page_for(school, placement)
+        when_i_visit_the_show_page_for(school, placement)
         then_i_see_the_placement_details(
           school_name: "School 1",
           year_group: "Year 1",
@@ -60,7 +60,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
       end
 
       scenario "Support User views a school placement's details, with no school level displayed" do
-        when_i_visit_the_support_show_page_for(school, placement)
+        when_i_visit_the_show_page_for(school, placement)
         then_i_see_the_placement_details(
           school_name: "School 1",
           subject: "Maths",
@@ -79,7 +79,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
       end
 
       scenario "Support User views a school placement's details" do
-        when_i_visit_the_support_show_page_for(school, placement)
+        when_i_visit_the_show_page_for(school, placement)
         then_i_see_the_placement_details(
           school_name: "School 1",
           school_level: "Primary",
@@ -98,7 +98,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
       end
 
       scenario "Support User views a school placement's details, with mentor name displayed" do
-        when_i_visit_the_support_show_page_for(school, placement)
+        when_i_visit_the_show_page_for(school, placement)
         then_i_see_the_placement_details(
           school_name: "School 1",
           school_level: "Primary",
@@ -118,7 +118,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
       end
 
       scenario "Support User views a school placement's details, with all mentor names displayed" do
-        when_i_visit_the_support_show_page_for(school, placement)
+        when_i_visit_the_show_page_for(school, placement)
         then_i_see_the_placement_details(
           school_name: "School 1",
           school_level: "Primary",
@@ -139,7 +139,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
       end
 
       scenario "Support User views a school placement's details" do
-        when_i_visit_the_support_show_page_for(school, placement)
+        when_i_visit_the_show_page_for(school, placement)
         then_i_see_the_placement_details(
           school_name: "School 1",
           school_level: "Secondary",
@@ -158,7 +158,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
       end
 
       scenario "Support User views a school placement's details" do
-        when_i_visit_the_support_show_page_for(school, placement)
+        when_i_visit_the_show_page_for(school, placement)
         then_i_see_the_placement_details(
           school_name: "School 1",
           school_level: "Secondary",
@@ -193,8 +193,8 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
     and_i_click_sign_in
   end
 
-  def when_i_visit_the_support_show_page_for(school, placement)
-    visit placements_support_school_placement_path(school, placement)
+  def when_i_visit_the_show_page_for(school, placement)
+    visit placements_school_placement_path(school, placement)
   end
 
   def then_i_see_the_placement_details(school_name:, subject:, mentors:,

@@ -7,7 +7,7 @@ class Placements::SchoolSlackNotifier < Placements::ApplicationSlackNotifier
           type: "section",
           text: {
             type: "mrkdwn",
-            text: ":new: *School onboarded:* <#{placements_support_school_url(school)}|#{school.name}> have added their placement contact details. They can now start listing placements.",
+            text: ":new: *School onboarded:* <#{placements_school_url(school)}|#{school.name}> have added their placement contact details. They can now start listing placements.",
           },
         },
       ],

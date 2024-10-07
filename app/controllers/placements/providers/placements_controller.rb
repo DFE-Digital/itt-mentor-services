@@ -1,5 +1,5 @@
 class Placements::Providers::PlacementsController < Placements::ApplicationController
-  before_action :set_current_provider
+  before_action :set_provider
   helper_method :filter_form, :location_coordinates
 
   def index
@@ -31,10 +31,6 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
     else
       Placements::School.all
     end
-  end
-
-  def set_current_provider
-    @provider = current_user.providers.find(params[:provider_id])
   end
 
   def filter_form
