@@ -14,7 +14,7 @@ RSpec.describe "Grant conditions Page", service: :claims, type: :system do
 
   def then_i_can_see_the_grant_conditions_page
     within(".govuk-heading-l") do
-      expect(page).to have_content("General mentor training conditions of grant for early adopters")
+      expect(page).to have_content("General mentor training conditions of grant")
     end
   end
 end
