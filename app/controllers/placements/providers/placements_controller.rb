@@ -60,6 +60,7 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
       :placements_to_show,
       :academic_year_id,
       :only_partner_schools,
+      :search_location,
       school_ids: [],
       subject_ids: [],
       term_ids: [],

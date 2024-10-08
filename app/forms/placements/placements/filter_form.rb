@@ -3,6 +3,7 @@ class Placements::Placements::FilterForm < ApplicationForm
 
   attribute :school_ids, default: []
   attribute :subject_ids, default: []
+  attribute :search_location, default: nil
   attribute :year_groups, default: []
   attribute :term_ids, default: []
   attribute :placements_to_show, default: "available_placements"
@@ -23,7 +24,7 @@ class Placements::Placements::FilterForm < ApplicationForm
   def clear_filters_path(search_location: nil)
     placements_provider_placements_path(
       @provider,
-      search_location:, filters: { placements_to_show:, academic_year_id: },
+      search_location: nil, filters: { placements_to_show:, academic_year_id: },
     )
   end
 
@@ -36,7 +37,7 @@ class Placements::Placements::FilterForm < ApplicationForm
 
     placements_provider_placements_path(
       @provider,
-      params: { filters: without_filter, search_location: },
+      params: { filters: without_filter },
     )
   end
 
@@ -49,6 +50,7 @@ class Placements::Placements::FilterForm < ApplicationForm
       placements_to_show:,
       academic_year_id:,
       term_ids:,
+      search_location:,
     }
   end
 
@@ -66,7 +68,7 @@ class Placements::Placements::FilterForm < ApplicationForm
 
   private
 
-  SINGULAR_ATTRIBUTES = %w[only_partner_schools placements_to_show].freeze
+  SINGULAR_ATTRIBUTES = %w[only_partner_schools placements_to_show search_location].freeze
 
   def compacted_attributes
     @compacted_attributes ||= attributes.compact_blank

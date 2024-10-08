@@ -270,25 +270,13 @@ RSpec.describe "Placements / Placements / View placements list",
           and_i_see_placements_for(school_name: "Primary School", list_item: 0, distance: 0.0)
         end
 
-        scenario "User can clear all filters, and the location search persists" do
-          when_i_visit_the_placements_index_page(
-            { search_location: "London", filters: { school_ids: [primary_school.id] } },
-          )
-          and_i_can_see_a_preset_filter("School", "Primary School")
-          when_i_click_on("Clear filters")
-          then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
-          and_i_can_not_see_any_selected_filters
-          and_i_can_see_search_location_is_set_as("London")
-          and_i_see_placements_for(school_name: "Primary School", list_item: 0, distance: 0.0)
-        end
-
         scenario "User can clear the location search, and the filters persist" do
           when_i_visit_the_placements_index_page(
             { search_location: "London", filters: { school_ids: [primary_school.id] } },
           )
           and_i_can_see_search_location_is_set_as("London")
           and_i_can_see_a_preset_filter("School", "Primary School")
-          when_i_click_on("Clear search")
+          when_i_click_on("Clear filters")
           then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
           and_i_can_see_a_preset_filter("School", "Primary School")
           and_i_can_see_search_location_is_set_as(nil)
@@ -354,14 +342,15 @@ RSpec.describe "Placements / Placements / View placements list",
   end
 
   def then_i_can_see_a_placement_for_school_and_subject(school_name, subject_name)
-    expect(page).to have_content("#{school_name} #{subject_name}")
+    expect(page).to have_selector("span", text: subject_name)
+    expect(page).to have_selector("span", text: school_name)
   end
 
   alias_method :and_i_can_see_a_placement_for_school_and_subject,
                :then_i_can_see_a_placement_for_school_and_subject
 
   def then_i_can_not_see_a_placement_for_school_and_subject(school_name, subject_name)
-    expect(page).not_to have_content("#{school_name} #{subject_name}")
+    expect(page).not_to have_content("#{school_name} - #{subject_name}")
   end
 
   alias_method :and_i_can_not_see_a_placement_for_school_and_subject,
@@ -409,11 +398,11 @@ RSpec.describe "Placements / Placements / View placements list",
   end
 
   def then_i_can_see_a_placement_for_placement_1
-    expect(page).to have_content("Primary School\nPrimary with mathematics")
+    expect(page).to have_content("Primary School – Primary with mathematics")
   end
 
   def and_i_cannot_see_a_placement_for_placement_2
-    expect(page).not_to have_content("Secondary School\nChemistry")
+    expect(page).not_to have_content("Secondary School - Chemistry")
   end
 
   def and_i_can_see_the_status_tag_for_placement_1
@@ -429,7 +418,7 @@ RSpec.describe "Placements / Placements / View placements list",
   end
 
   def and_i_can_see_search_location_is_set_as(search_location)
-    expect(page.find("#search-location-field").value).to eq(search_location)
+    expect(page.find("#filters-search-location-field").value).to eq(search_location)
   end
 
   def then_i_see_placements_for(school_name:, list_item:, distance:)
