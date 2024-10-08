@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe SchoolPolicy do
+RSpec.describe Placements::Partnership::SchoolPolicy do
   subject(:school_policy) { described_class }
 
   describe "scope" do

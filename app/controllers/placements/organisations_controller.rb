@@ -24,9 +24,9 @@ class Placements::OrganisationsController < Placements::ApplicationController
     @organisation ||= if !current_user.support_user?
                         memberships.find(params.require(:id)).organisation
                       elsif params.fetch(:type) == "School"
-                        School.find(params.require(:id))
+                        policy_scope(Placements::School).find(params.require(:id))
                       else
-                        Provider.find(params.require(:id))
+                        policy_scope(Placements::Provider).find(params.require(:id))
                       end
   end
 

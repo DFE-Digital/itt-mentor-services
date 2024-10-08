@@ -10,20 +10,23 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
     @schools = schools_scope.order_by_name.select(:id, :name)
     @year_groups ||= Placement.year_groups_as_options
     @terms = Placements::Term.order_by_term.select(:id, :name)
-    scope = policy_scope(
-      Placements::PlacementsQuery.call(params: query_params),
-      policy_scope_class: Placements::Provider::PlacementPolicy::Scope,
-    )
-
-    @pagy, @placements = pagy(scope)
+    query = Placements::PlacementsQuery.call(params: query_params)
+    @pagy, @placements = pagy(placements.merge(query))
   end
 
   def show
-    @placement = Placement.find(params[:id]).decorate
+    @placement = @placement = placements.find(params.require(:id)).decorate
     @school = @placement.school
   end
 
   private
+
+  def placements
+    policy_scope(
+      Placement.all,
+      policy_scope_class: Placements::Provider::PlacementPolicy::Scope,
+    )
+  end
 
   def schools_scope
     if filter_params[:only_partner_schools].present?

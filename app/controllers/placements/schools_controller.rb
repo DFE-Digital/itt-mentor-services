@@ -6,6 +6,6 @@ class Placements::SchoolsController < Placements::ApplicationController
   private
 
   def schools
-    current_user.support_user? ? Placements::School.all : current_user.schools
+    policy_scope(Placements::School)
   end
 end

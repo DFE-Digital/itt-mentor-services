@@ -5,19 +5,11 @@ class Placements::ApplicationController < ApplicationController
   private
 
   def set_school
-    @school = if current_user.support_user?
-                Placements::School.find(params.require(:school_id))
-              else
-                current_user.schools.find(params.require(:school_id))
-              end
+    @school = policy_scope(Placements::School).find(params.require(:school_id))
   end
 
   def set_provider
-    @provider = if current_user.support_user?
-                  Placements::Provider.find(params.require(:provider_id))
-                else
-                  current_user.providers.find(params.require(:provider_id))
-                end
+    @provider = policy_scope(Placements::Provider).find(params.require(:provider_id))
   end
 
   def authorize_support_user!
