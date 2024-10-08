@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_27_160048) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_08_153148) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -20,7 +20,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_27_160048) do
   create_enum "claim_status", ["internal_draft", "draft", "submitted", "sent_to_esfa"]
   create_enum "mentor_training_type", ["refresher", "initial"]
   create_enum "placement_status", ["draft", "published"]
-  create_enum "placement_year_group", ["year_1", "year_2", "year_3", "year_4", "year_5", "year_6"]
+  create_enum "placement_year_group", ["nursery", "reception", "year_1", "year_2", "year_3", "year_4", "year_5", "year_6"]
   create_enum "provider_type", ["scitt", "lead_school", "university"]
   create_enum "service", ["claims", "placements"]
   create_enum "subject_area", ["primary", "secondary"]
