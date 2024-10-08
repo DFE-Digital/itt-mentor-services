@@ -79,9 +79,9 @@ class Claims::Claim < ApplicationRecord
   delegate :name, to: :academic_year, prefix: true, allow_nil: true
 
   def valid_mentor_training_hours?
-    mentors.all? do |mentor|
-      training_allowance = Claims::TrainingAllowance.new(mentor:, provider:, academic_year:)
-      training_allowance.remaining_hours >= 0
+    mentor_trainings.all? do |mentor_training|
+      training_allowance = Claims::TrainingAllowance.new(mentor: mentor_training.mentor, provider:, academic_year:)
+      training_allowance.remaining_hours >= mentor_training.hours_completed
     end
   end
 
