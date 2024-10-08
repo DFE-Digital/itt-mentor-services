@@ -6,6 +6,6 @@ class Placements::ProvidersController < Placements::ApplicationController
   private
 
   def providers
-    current_user.support_user? ? Placements::Provider.all : current_user.providers
+    policy_scope(Placements::Provider)
   end
 end

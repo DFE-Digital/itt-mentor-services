@@ -1,7 +1,6 @@
 class Placements::Providers::PartnerSchoolsController < Placements::PartnershipsController
   def index
-    scope = policy_scope(@provider.partner_schools)
-    @pagy, @partner_schools = pagy(scope.order_by_name)
+    @pagy, @partner_schools = pagy(partner_schools.order_by_name)
   end
 
   def destroy
@@ -22,7 +21,14 @@ class Placements::Providers::PartnerSchoolsController < Placements::Partnerships
   end
 
   def set_decorated_partner_organisation
-    @partner_school = @provider.partner_schools.find(params.require(:id)).decorate
+    @partner_school = partner_schools.find(params.require(:id)).decorate
+  end
+
+  def partner_schools
+    policy_scope(
+      @provider.partner_schools,
+      policy_scope_class: Placements::Partnership::SchoolPolicy::Scope,
+    )
   end
 
   def set_partnership

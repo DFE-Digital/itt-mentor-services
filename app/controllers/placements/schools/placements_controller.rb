@@ -6,8 +6,13 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
   helper_method :edit_attribute_path, :add_provider_path, :add_mentor_path
 
   def index
-    @pagy, placements = pagy(placements_scope.includes(:subject, :mentors, :additional_subjects, :provider).order("subjects.name"))
-    @placements = placements.decorate
+    @pagy, scoped_placements = pagy(
+      placements
+        .where(academic_year: academic_year_scope)
+        .includes(:subject, :mentors, :additional_subjects, :provider)
+        .order("subjects.name"),
+    )
+    @placements = scoped_placements.decorate
   end
 
   def show; end
@@ -33,8 +38,8 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
 
   private
 
-  def placements_scope
-    policy_scope(@school.placements.where(academic_year: academic_year_scope))
+  def placements
+    policy_scope(@school.placements)
   end
 
   def current_academic_year
@@ -46,7 +51,7 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
   end
 
   def set_placement
-    @placement = @school.placements.find(params.require(:id))
+    @placement = placements.find(params.require(:id))
   end
 
   def set_decorated_placement

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ProviderPolicy do
+RSpec.describe Placements::Partnership::ProviderPolicy do
   subject(:provider_policy) { described_class }
 
   describe "scope" do
