@@ -256,12 +256,16 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
 
   def then_i_see_support_navigation_with_organisation_selected
 <<<<<<< HEAD
+<<<<<<< HEAD
     within(".govuk-header__navigation-list") do
       expect(page).to have_link "Organisations"
       expect(page).to have_link "Support users"
     end
 =======
     # TODO: Re-added in https://github.com/DFE-Digital/itt-mentor-services/pull/1085 
+=======
+    # TODO: Re-added in https://github.com/DFE-Digital/itt-mentor-services/pull/1085
+>>>>>>> ddfffe1e (Fix linter errors)
     # when the nav is moved to the service header
     # within(".app-primary-navigation__nav") do
     #   expect(page).to have_link "Organisations", current: "page"
