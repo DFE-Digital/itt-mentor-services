@@ -81,7 +81,7 @@ RSpec.describe "Placements support user deletes a user from an organisation", se
   end
 
   def then_user_is_still_member_of_provider
-    visit placements_support_provider_users_path(provider)
+    visit placements_provider_users_path(provider)
 
     expect(page).to have_content user.full_name
   end
