@@ -109,6 +109,8 @@ RSpec.describe Placement, type: :model do
 
       expect(options).to eq(
         [
+          OpenStruct.new(value: "nursery", name: "Nursery", description: "3 to 4 years"),
+          OpenStruct.new(value: "reception", name: "Reception", description: "4 to 5 years"),
           OpenStruct.new(value: "year_1", name: "Year 1", description: "5 to 6 years"),
           OpenStruct.new(value: "year_2", name: "Year 2", description: "6 to 7 years"),
           OpenStruct.new(value: "year_3", name: "Year 3", description: "7 to 8 years"),

@@ -59,6 +59,10 @@ en:
           any_term: Any time in the academic year
         not_yet_known: Not yet known
         year_groups:
+          nursery: Nursery
+          nursery_description: 3 to 4 years
+          reception: Reception
+          reception_description: 4 to 5 years
           year_1: Year 1
           year_1_description: 5 to 6 years
           year_2: Year 2
