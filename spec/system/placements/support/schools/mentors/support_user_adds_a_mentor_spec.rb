@@ -216,7 +216,7 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
   end
 
   def expect_organisations_to_be_selected_in_primary_navigation
-    # TODO: Re-added in https://github.com/DFE-Digital/itt-mentor-services/pull/1085 
+    # TODO: Re-added in https://github.com/DFE-Digital/itt-mentor-services/pull/1085
     # when the nav is moved to the service header
     # within(".app-primary-navigation__nav") do
     #   expect(page).to have_link "Organisations", current: "page"
@@ -247,7 +247,7 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
     expect(page).to have_current_path placements_school_mentors_path(school), ignore_query: true
   end
 
-  def then_i_see_the_error(message, school_name, title = message, field_index = 0)
+  def then_i_see_the_error(message, _school_name, title = message, field_index = 0)
     expect(page).to have_title "Error: #{title} - Mentor details"
     within(".govuk-error-summary") do
       expect(page).to have_content message

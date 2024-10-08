@@ -46,7 +46,7 @@ RSpec.describe "Placements / Organisations / Support user views a School", type:
   end
 
   def when_i_navigate_back_to_the_organisations_list
-    # TODO: Re-added in https://github.com/DFE-Digital/itt-mentor-services/pull/1085 
+    # TODO: Re-added in https://github.com/DFE-Digital/itt-mentor-services/pull/1085
     # when the nav is moved to the service header
     # within(".app-primary-navigation__list") do
     #   click_on "Organisations"

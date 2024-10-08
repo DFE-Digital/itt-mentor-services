@@ -160,7 +160,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   end
 
   def then_i_see_the_navigation_bars_with_organisations_and_users_selected(organisation)
-    # TODO: Re-added in https://github.com/DFE-Digital/itt-mentor-services/pull/1085 
+    # TODO: Re-added in https://github.com/DFE-Digital/itt-mentor-services/pull/1085
     # when the nav is moved to the service header
     # within(".app-primary-navigation__nav") do
     #   expect(page).to have_link "Organisations", current: "page"
@@ -257,7 +257,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   end
 
   def then_i_see_support_navigation_with_organisation_selected
-    # TODO: Re-added in https://github.com/DFE-Digital/itt-mentor-services/pull/1085 
+    # TODO: Re-added in https://github.com/DFE-Digital/itt-mentor-services/pull/1085
     # when the nav is moved to the service header
     # within(".app-primary-navigation__nav") do
     #   expect(page).to have_link "Organisations", current: "page"

@@ -116,7 +116,7 @@ RSpec.describe "Placements support user deletes a user from an organisation", se
   end
 
   def organisations_is_selected_in_primary_nav
-    # TODO: Re-added in https://github.com/DFE-Digital/itt-mentor-services/pull/1085 
+    # TODO: Re-added in https://github.com/DFE-Digital/itt-mentor-services/pull/1085
     # when the nav is moved to the service header
     # within(".app-primary-navigation__nav") do
     #   expect(page).to have_link "Organisations", current: "page"
