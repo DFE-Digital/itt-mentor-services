@@ -67,7 +67,6 @@ shared:
     - updated_at
   :mentors:
     - id
-    - trn
     - created_at
     - updated_at
   :claims:
@@ -191,8 +190,8 @@ shared:
     - created_at
     - updated_at
   :placement_windows:
-      - id
-      - placement_id
-      - term_id
-      - created_at
-      - updated_at
+    - id
+    - placement_id
+    - term_id
+    - created_at
+    - updated_at

@@ -106,6 +106,7 @@ shared:
   :mentors:
     - first_name
     - last_name
+    - trn
   :providers:
     - email_address
     - telephone
