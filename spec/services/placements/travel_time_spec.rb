@@ -58,9 +58,8 @@ RSpec.describe Placements::TravelTime do
     it "returns the school collection, with the travel data appended" do
       results = service
       expect(results.pluck(:drive_travel_duration)).to eq ["36 mins", "42 mins", "46 mins"]
-      expect(results.pluck(:drive_travel_distance)).to eq ["17.5 mi", "20 mi", "22 mi"]
       expect(results.pluck(:transit_travel_duration)).to eq ["36 mins", "42 mins", "46 mins"]
-      expect(results.pluck(:transit_travel_distance)).to eq ["17.5 mi", "20 mi", "22 mi"]
+      expect(results.pluck(:walk_travel_duration)).to eq ["36 mins", "42 mins", "46 mins"]
     end
 
     it "returns the school collection, sorted by travel duration" do

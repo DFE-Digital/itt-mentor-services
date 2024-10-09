@@ -14,6 +14,7 @@ class Placements::TravelTime < ApplicationService
 
   DRIVE_TRAVEL_MODE = "DRIVE".freeze
   TRANSIT_TRAVEL_MODE = "TRANSIT".freeze
+  WALK_TRAVEL_MODE = "WALK".freeze
 
   def routes_client
     @routes_client ||= Google::RoutesApi.new
@@ -22,16 +23,17 @@ class Placements::TravelTime < ApplicationService
   def combine_destinations_with_travel_data
     drive_travel_data = travel_data(travel_mode: DRIVE_TRAVEL_MODE)
     transit_travel_data = travel_data(travel_mode: TRANSIT_TRAVEL_MODE)
+    walk_travel_data = travel_data(travel_mode: WALK_TRAVEL_MODE)
 
     destinations.map.with_index do |destination, index|
       drive_travel_datum = drive_travel_data.find { |datum| datum["destinationIndex"] == index }
       transit_travel_datum = transit_travel_data.find { |datum| datum["destinationIndex"] == index }
+      walk_travel_datum = walk_travel_data.find { |datum| datum["destinationIndex"] == index }
 
       destination.assign_attributes(
         drive_travel_duration: drive_travel_datum.dig("localizedValues", "duration", "text"),
-        drive_travel_distance: drive_travel_datum.dig("localizedValues", "distance", "text"),
         transit_travel_duration: transit_travel_datum.dig("localizedValues", "duration", "text"),
-        transit_travel_distance: transit_travel_datum.dig("localizedValues", "distance", "text"),
+        walk_travel_duration: walk_travel_datum.dig("localizedValues", "duration", "text"),
       )
     end
 
