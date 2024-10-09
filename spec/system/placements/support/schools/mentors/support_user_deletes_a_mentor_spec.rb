@@ -80,7 +80,7 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User deletes a
   end
   alias_method :and_i_click_on, :when_i_click_on
 
-  def then_i_am_asked_to_confirm(school, mentor)
+  def then_i_am_asked_to_confirm(_school, mentor)
     organisations_is_selected_in_primary_nav
     expect(page).to have_title(
       "Are you sure you want to delete this mentor? - #{mentor.full_name} - Manage school placements",

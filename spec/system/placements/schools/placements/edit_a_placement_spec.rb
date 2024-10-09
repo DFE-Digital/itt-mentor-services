@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe "Placements / Schools / Placements / Edit a placement",
                service: :placements, type: :system do
-
   before { given_i_sign_in_as_anne }
 
   it_behaves_like "an edit placement wizard"
