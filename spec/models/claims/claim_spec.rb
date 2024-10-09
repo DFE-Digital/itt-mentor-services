@@ -95,7 +95,7 @@ RSpec.describe Claims::Claim, type: :model do
           internal_draft: "internal_draft",
           draft: "draft",
           submitted: "submitted",
-          sent_to_esfa: "sent_to_esfa",
+          payment_in_progress: "payment_in_progress",
         )
         .backed_by_column_of_type(:enum)
     end
