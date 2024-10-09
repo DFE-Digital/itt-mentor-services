@@ -91,9 +91,8 @@ shared:
     - locked_at
   :schools:
     - transit_travel_duration
-    - transit_travel_distance
+    - walk_travel_duration
     - drive_travel_duration
-    - drive_travel_distance
   :school_contacts:
     - name
     - email_address
