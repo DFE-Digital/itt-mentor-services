@@ -23,11 +23,11 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
     end
   end
 
-  context "when the claim's status is 'sent_to_esfa'" do
-    let(:claim) { build(:claim, status: :sent_to_esfa) }
+  context "when the claim's status is 'payment_in_progress'" do
+    let(:claim) { build(:claim, status: :payment_in_progress) }
 
     it "renders a light blue tag" do
-      expect(page).to have_css(".govuk-tag--light-blue", text: "Sent to ESFA")
+      expect(page).to have_css(".govuk-tag--light-blue", text: "Payment in progress")
     end
   end
 

@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_27_160048) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_09_164610) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
-  create_enum "claim_status", ["internal_draft", "draft", "submitted", "sent_to_esfa"]
+  create_enum "claim_status", ["internal_draft", "draft", "submitted", "payment_in_progress"]
   create_enum "mentor_training_type", ["refresher", "initial"]
   create_enum "placement_status", ["draft", "published"]
   create_enum "placement_year_group", ["year_1", "year_2", "year_3", "year_4", "year_5", "year_6"]

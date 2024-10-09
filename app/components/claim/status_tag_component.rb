@@ -26,7 +26,7 @@ class Claim::StatusTagComponent < ApplicationComponent
       internal_draft: "grey",
       draft: "grey",
       submitted: "blue",
-      sent_to_esfa: "light-blue",
+      payment_in_progress: "light-blue",
     }.with_indifferent_access
   end
 end

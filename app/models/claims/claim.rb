@@ -70,7 +70,7 @@ class Claims::Claim < ApplicationRecord
          internal_draft: "internal_draft",
          draft: "draft",
          submitted: "submitted",
-         sent_to_esfa: "sent_to_esfa",
+         payment_in_progress: "payment_in_progress",
        },
        validate: true
 
