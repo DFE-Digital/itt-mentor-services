@@ -50,7 +50,7 @@ RSpec.describe "Placements / Placements / View placements list",
 
     scenario "User can view available placements by default" do
       when_i_visit_the_placements_index_page
-      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
       and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Physics")
       and_i_can_see_the_status_tag_for_placement_1
     end
@@ -61,7 +61,7 @@ RSpec.describe "Placements / Placements / View placements list",
       placement_3.update!(provider:)
       and_i_check_filter_option("placements-to-show", "assigned-to-me")
       and_i_click_on("Apply filters")
-      and_i_can_not_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+      and_i_can_not_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
       then_i_can_see_a_placement_for_school_and_subject("Secondary School", "Physics")
     end
 
@@ -69,10 +69,23 @@ RSpec.describe "Placements / Placements / View placements list",
       when_i_visit_the_placements_index_page
       and_i_check_filter_option("placements-to-show", "all-placements")
       and_i_click_on("Apply filters")
-      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
       and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
       and_i_can_see_the_status_tag_for_placement_1
       and_i_can_see_the_status_tag_for_placement_2
+    end
+
+    context "when filtering placements by location" do
+      before { stub_london_geocoder_search }
+
+      scenario "User can filter placements by location" do
+        when_i_visit_the_placements_index_page
+        and_i_enter_location_in_search_box("London")
+        and_i_click_on("Apply filters")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
+        and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
+        and_i_can_see_search_location_is_set_as("London")
+      end
     end
 
     scenario "User can filter placements by term" do
@@ -80,13 +93,13 @@ RSpec.describe "Placements / Placements / View placements list",
       # Show all placements
       and_i_check_filter_option("placements-to-show", "all-placements")
       and_i_click_on("Apply filters")
-      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
       and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
       and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Physics")
       when_i_check_filter_option("term-ids", summer_term.id)
       and_i_click_on("Apply filters")
       # This placement has the summer term we're filtering for
-      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
       # This placement has no terms (aka any term), so should always be visible
       and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Physics")
       # This placement has the autumn term, and should not be visible
@@ -96,31 +109,31 @@ RSpec.describe "Placements / Placements / View placements list",
     scenario "User can filter placements by partner school" do
       given_a_partnership_exists_between(provider, primary_school)
       when_i_visit_the_placements_index_page
-      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
       and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
       when_i_check_filter_option("only-partner-schools", true)
       and_i_click_on("Apply filters")
-      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
       and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
     end
 
     scenario "User can filter placements by school" do
       when_i_visit_the_placements_index_page
-      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
       and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
       when_i_check_filter_option("school-ids", primary_school.id)
       and_i_click_on("Apply filters")
-      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
       and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
     end
 
     scenario "User can filter placements by subject" do
       when_i_visit_the_placements_index_page
-      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
       and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
       when_i_check_filter_option("subject-ids", subject_1.id)
       and_i_click_on("Apply filters")
-      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+      then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
       and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
     end
 
@@ -137,26 +150,26 @@ RSpec.describe "Placements / Placements / View placements list",
 
       scenario "User can filter placements by additional subjects" do
         when_i_visit_the_placements_index_page
-        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
         and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
         and_i_can_see_a_placement_for_school_and_subject("Secondary School", "French and Spanish")
         when_i_check_filter_option("subject-ids", additional_subject.id)
         and_i_click_on("Apply filters")
         then_i_can_see_a_placement_for_school_and_subject("Secondary School", "French and Spanish")
-        and_i_can_not_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        and_i_can_not_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
         and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
       end
 
       scenario "User can filter placements by subject and additional subjects together" do
         when_i_visit_the_placements_index_page
-        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
         and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
-        and_i_can_see_a_placement_for_school_and_subject("Secondary School", "French")
+        and_i_can_see_a_placement_for_school_and_subject("Secondary School", "French and Spanish")
         when_i_check_filter_option("subject-ids", additional_subject.id)
         when_i_check_filter_option("subject-ids", subject_1.id)
         and_i_click_on("Apply filters")
-        then_i_can_see_a_placement_for_school_and_subject("Secondary School", "French")
-        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        then_i_can_see_a_placement_for_school_and_subject("Secondary School", "French and Spanish")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
         and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
       end
     end
@@ -164,11 +177,11 @@ RSpec.describe "Placements / Placements / View placements list",
     context "when a filter is pre-selected in the URL params" do
       scenario "User can remove a terms filter" do
         when_i_visit_the_placements_index_page({ filters: { term_ids: [summer_term.id] } })
-        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
         and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
         and_i_can_see_a_preset_filter("Expected date", "Summer term")
         when_i_click_to_remove_filter("Expected date", "Summer term")
-        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
         and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
         and_i_can_not_see_any_selected_filters
       end
@@ -176,44 +189,44 @@ RSpec.describe "Placements / Placements / View placements list",
       scenario "User can remove a schools I work with filter" do
         given_a_partnership_exists_between(provider, primary_school)
         when_i_visit_the_placements_index_page({ filters: { only_partner_schools: true } })
-        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
         and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
         and_i_can_see_a_preset_filter("Schools I work with", "Schools I work with")
         when_i_click_to_remove_filter("Schools I work with", "Schools I work with")
-        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
         and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
         and_i_can_not_see_any_selected_filters
       end
 
       scenario "User can remove a school filter" do
         when_i_visit_the_placements_index_page({ filters: { school_ids: [primary_school.id] } })
-        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
         and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
         and_i_can_see_a_preset_filter("School", "Primary School")
         when_i_click_to_remove_filter("School", "Primary School")
-        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
         and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
         and_i_can_not_see_any_selected_filters
       end
 
       scenario "User can remove a subject filter" do
         when_i_visit_the_placements_index_page({ filters: { subject_ids: [subject_1.id] } })
-        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
         and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
         and_i_can_see_a_preset_filter("Subject", "Primary with mathematics")
         when_i_click_to_remove_filter("Subject", "Primary with mathematics")
-        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
         and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
         and_i_can_not_see_any_selected_filters
       end
 
       scenario "User can remove a year group filter" do
         when_i_visit_the_placements_index_page({ filters: { year_groups: [:year_1] } })
-        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
         and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
         and_i_can_see_a_preset_filter("Primary year group", "Year 1")
         when_i_click_to_remove_filter("Primary year group", "Year 1")
-        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
         and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
         and_i_can_not_see_any_selected_filters
       end
@@ -231,7 +244,7 @@ RSpec.describe "Placements / Placements / View placements list",
             },
           },
         )
-        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
         and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
         and_i_can_see_a_preset_filter("Schools I work with", "Schools I work with")
         and_i_can_see_a_preset_filter("School", "Primary School")
@@ -239,7 +252,7 @@ RSpec.describe "Placements / Placements / View placements list",
         and_i_can_see_a_preset_filter("Primary year group", "Year 1")
         and_i_can_see_a_preset_filter("Expected date", "Summer term")
         when_i_click_on("Clear filters")
-        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
         and_i_can_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
         and_i_can_not_see_any_selected_filters
       end
@@ -249,10 +262,10 @@ RSpec.describe "Placements / Placements / View placements list",
       before { stub_london_geocoder_search }
 
       scenario "User can filter placements by school, and the location search persists" do
-        when_i_visit_the_placements_index_page({ search_location: "London" })
+        when_i_visit_the_placements_index_page({ filters: { search_location: "London" } })
         and_i_check_filter_option("school-ids", primary_school.id)
         and_i_click_on("Apply filters")
-        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+        then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
         and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
         and_i_can_see_search_location_is_set_as("London")
         and_i_see_placements_for(school_name: "Primary School", list_item: 0, distance: 0.0)
@@ -261,25 +274,13 @@ RSpec.describe "Placements / Placements / View placements list",
       context "when a filter is pre-selected in the URL params" do
         scenario "User can remove a school filter, and the location search persists" do
           when_i_visit_the_placements_index_page(
-            { search_location: "London", filters: { school_ids: [primary_school.id] } },
+            { filters: { search_location: "London", school_ids: [primary_school.id] } },
           )
           and_i_can_see_a_preset_filter("School", "Primary School")
           when_i_click_to_remove_filter("School", "Primary School")
-          then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
+          then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
           and_i_can_see_search_location_is_set_as("London")
           and_i_see_placements_for(school_name: "Primary School", list_item: 0, distance: 0.0)
-        end
-
-        scenario "User can clear the location search, and the filters persist" do
-          when_i_visit_the_placements_index_page(
-            { search_location: "London", filters: { school_ids: [primary_school.id] } },
-          )
-          and_i_can_see_search_location_is_set_as("London")
-          and_i_can_see_a_preset_filter("School", "Primary School")
-          when_i_click_on("Clear filters")
-          then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics")
-          and_i_can_see_a_preset_filter("School", "Primary School")
-          and_i_can_see_search_location_is_set_as(nil)
         end
       end
     end
@@ -342,15 +343,14 @@ RSpec.describe "Placements / Placements / View placements list",
   end
 
   def then_i_can_see_a_placement_for_school_and_subject(school_name, subject_name)
-    expect(page).to have_selector("span", text: subject_name)
-    expect(page).to have_selector("span", text: school_name)
+    expect(page).to have_selector("a", text: "#{subject_name} – #{school_name}")
   end
 
   alias_method :and_i_can_see_a_placement_for_school_and_subject,
                :then_i_can_see_a_placement_for_school_and_subject
 
   def then_i_can_not_see_a_placement_for_school_and_subject(school_name, subject_name)
-    expect(page).not_to have_content("#{school_name} - #{subject_name}")
+    expect(page).not_to have_selector("a", text: "#{subject_name} – #{school_name}")
   end
 
   alias_method :and_i_can_not_see_a_placement_for_school_and_subject,
@@ -377,6 +377,10 @@ RSpec.describe "Placements / Placements / View placements list",
   end
 
   alias_method :and_i_can_see_a_preset_filter, :then_i_can_see_a_preset_filter
+
+  def and_i_enter_location_in_search_box(location)
+    fill_in "filters-search-location-field", with: location
+  end
 
   def when_i_click_to_remove_filter(_filter, value)
     selected_filters = page.find(".app-filter-layout__selected")
