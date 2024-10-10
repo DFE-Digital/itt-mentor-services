@@ -15,7 +15,7 @@
       <% row.with_value(text: claim.provider.name) %>
       <% if policy(claim).edit? %>
         <% row.with_action(text: t("change"),
-                           href: create_revision_claims_support_school_claim_path(@school, claim),
+                           href: create_revision_claims_support_school_claim_path(claim.school, claim),
                            html_attributes: {
                 class: "govuk-link--no-visited-state",
                 }) %>
@@ -39,7 +39,7 @@
     <% end %>
     <% if policy(claim).edit? %>
       <% row.with_action(text: t("change"),
-                         href: create_revision_claims_support_school_claim_mentors_path(@school, claim),
+                         href: create_revision_claims_support_school_claim_mentors_path(claim.school, claim),
                          html_attributes: {
                   class: "govuk-link--no-visited-state",
                 }) %>
@@ -56,7 +56,7 @@
     <% if policy(claim).edit? %>
       <% row.with_action(text: t("change"),
                          href: create_revision_claims_support_school_claim_mentor_training_path(
-                           @school,
+                           claim.school,
                            claim,
                            mentor_training.mentor_id,
                          ),
