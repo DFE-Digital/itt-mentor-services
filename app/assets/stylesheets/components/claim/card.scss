@@ -8,9 +8,13 @@
 
   .claim-card__header {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    align-items: flex-start;
-    gap: govuk-spacing(2);
+    gap: govuk-spacing(1) govuk-spacing(2);
+
+    @include govuk-media-query($until: desktop) {
+      flex-direction: column;
+    }
 
     .claim-card__header__name {
       display: flex;
