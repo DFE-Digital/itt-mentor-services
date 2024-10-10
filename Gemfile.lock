@@ -402,7 +402,7 @@ GEM
       activesupport (>= 6.1)
     prettier_print (1.2.1)
     prism (1.1.0)
-    propshaft (1.0.0)
+    propshaft (1.1.0)
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
       rack
