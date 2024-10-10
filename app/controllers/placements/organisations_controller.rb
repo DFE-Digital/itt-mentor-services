@@ -7,24 +7,27 @@ class Placements::OrganisationsController < Placements::ApplicationController
   end
 
   def show
-    membership = memberships.find(params[:id])
-    load_organisation(membership)
+    redirect_to landing_page_path(organisation)
   end
 
   private
 
   def auto_redirect_if_only_one
-    load_organisation(memberships.first) if memberships.one?
+    redirect_to landing_page_path(memberships.first.organisation) if memberships.one?
   end
 
   def memberships
     current_user.user_memberships.includes(:organisation)
   end
 
-  def load_organisation(membership)
-    organisation = membership.organisation
-
-    redirect_to landing_page_path(organisation)
+  def organisation
+    @organisation ||= if !current_user.support_user?
+                        memberships.find(params.require(:id)).organisation
+                      elsif params.fetch(:type) == "School"
+                        School.find(params.require(:id))
+                      else
+                        Provider.find(params.require(:id))
+                      end
   end
 
   def landing_page_path(organisation)

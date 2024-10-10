@@ -107,16 +107,18 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   end
 
   def when_i_visit_the_add_partner_provider_page_for(school)
-    visit new_add_partner_provider_placements_support_school_partner_providers_path(school)
+    visit new_add_partner_provider_placements_school_partner_providers_path(school)
 
     then_i_see_support_navigation_with_organisation_selected
   end
 
   def then_i_see_support_navigation_with_organisation_selected
-    within(".app-primary-navigation__nav") do
-      expect(page).to have_link "Organisations", current: "page"
-      expect(page).to have_link "Support users", current: "false"
-    end
+    # TODO: Re-added in https://github.com/DFE-Digital/itt-mentor-services/pull/1085
+    # when the nav is moved to the service header
+    # within(".app-primary-navigation__nav") do
+    #   expect(page).to have_link "Organisations", current: "page"
+    #   expect(page).to have_link "Support users", current: "false"
+    # end
   end
 
   def when_i_click_on(text)
@@ -147,8 +149,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   end
 
   def then_i_return_to_partner_provider_index
-    expect(page.find(".govuk-heading-l")).to have_content(school.name)
-    find(".govuk-heading-m", text: "Partner providers")
+    expect(page.find(".govuk-heading-l")).to have_content("Providers you work with")
   end
 
   def and_a_provider_is_listed(provider_name:)
