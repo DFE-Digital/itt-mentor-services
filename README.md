@@ -7,7 +7,7 @@ This application has two main services:
 - Claim funding for mentor training: A service for placement partners to claim funding for their general mentors’ training.
 - Manage school placements: A service for training providers and placement partners to manage their mentors and placements.
 
-## Live Environments
+## Live environments
 
 ### Claim funding for mentor training
 
