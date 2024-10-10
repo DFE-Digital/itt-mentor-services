@@ -90,9 +90,9 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User deletes a
   end
 
   def organisations_is_selected_in_primary_nav
-    within(".app-primary-navigation__nav") do
-      expect(page).to have_link "Organisations", current: "page"
-      expect(page).to have_link "Support users", current: "false"
+    within(".govuk-header__navigation-list") do
+      expect(page).to have_link "Organisations"
+      expect(page).to have_link "Support users"
     end
   end
 

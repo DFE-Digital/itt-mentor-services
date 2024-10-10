@@ -160,9 +160,9 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   end
 
   def then_i_see_the_navigation_bars_with_organisations_and_users_selected(organisation)
-    within(".app-primary-navigation__nav") do
-      expect(page).to have_link "Organisations", current: "page"
-      expect(page).to have_link "Support users", current: "false"
+    within(".govuk-header__navigation-list") do
+      expect(page).to have_link "Organisations"
+      expect(page).to have_link "Support users"
     end
 
     within(".app-secondary-navigation") do
@@ -255,9 +255,9 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
   end
 
   def then_i_see_support_navigation_with_organisation_selected
-    within(".app-primary-navigation__nav") do
-      expect(page).to have_link "Organisations", current: "page"
-      expect(page).to have_link "Support users", current: "false"
+    within(".govuk-header__navigation-list") do
+      expect(page).to have_link "Organisations"
+      expect(page).to have_link "Support users"
     end
   end
 end

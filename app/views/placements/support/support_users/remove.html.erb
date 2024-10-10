@@ -1,7 +1,5 @@
 <% content_for(:page_title) { t(".page_title", user_name: @support_user.full_name) } %>
 
-<%= render "placements/support/primary_navigation", current_navigation: :users %>
-
 <%= content_for(:before_content) do %>
   <%= govuk_back_link(href: placements_support_support_user_path(@support_user)) %>
 <% end %>
