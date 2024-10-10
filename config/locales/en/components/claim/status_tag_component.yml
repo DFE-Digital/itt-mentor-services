@@ -4,3 +4,8 @@ en:
       status_tag_component:
         draft: Draft
         submitted: Submitted
+        payment_in_progress: Payment in progress
+        paid: Paid
+        payment_information_requested: Information requested
+        payment_information_sent: Information sent
+        payment_not_approved: Payment not approved
