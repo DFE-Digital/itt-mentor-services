@@ -1,13 +1,11 @@
-This service is for:
+Use this service if you are involved in arranging school placements for trainees in England.
 
-- schools offering placements for trainee teachers
-- teacher training providers in England
+### If you work in a school
 
-### If you are a school, use this service to: ###
+Publish placement opportunities for trainee teachers.
+Your chosen teacher training providers can then contact you to arrange placements for their trainees.
 
-- publish placement opportunities for trainee teachers so that teacher training providers can contact you
-- add and assign mentors to placements to track capacity
+### If you are a teacher training provider
 
-### If you are a teacher training provider, use this service to: ###
-
-- find schools that are offering placements for trainee teachers
+Find schools that are offering placements for trainee teachers.
+View opportunities from the schools you work with, as well as information about other schools.
