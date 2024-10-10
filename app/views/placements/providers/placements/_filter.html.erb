@@ -26,6 +26,24 @@
             </div>
           </div>
 
+          <% if @search_location.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".search_location") %></h3>
+            <ul class="app-filter-tags">
+                <li>
+                  <%= govuk_link_to(
+                        @search_location,
+                        filter_form.index_path_without_filter(
+                          filter: "search_location",
+                          value: @search_location,
+                          search_location:,
+                        ),
+                        class: "app-filter__tag",
+                        no_visited_state: true,
+                      ) %>
+                </li>
+            </ul>
+          <% end %>
+
           <% if filter_form.terms.present? %>
             <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".terms") %></h3>
             <ul class="app-filter-tags">
@@ -133,7 +151,19 @@
           method: "get",
         ) do |form| %>
           <%= form.govuk_submit t("apply_filters") %>
-          <%= form.hidden_field :search_location, value: search_location %>
+
+          <div class="app-filter__option">
+            <h1 class="govuk-label-wrapper">
+              <label class="govuk-label govuk-label--s"><%= t(".search_by_location") %></label>
+            </h1>
+
+          <div class="app-filter__option">
+            <div class="govuk-form-group">
+              <%= form.govuk_text_field :search_location, type: :search, value: search_location, label: { hidden: true }, caption: { text: t(".location_search_prompt") } %>
+            <p class="govuk-body-s secondary-text"><%= t(".google_attribution") %></p>
+            </div>
+          </div>
+      </div>
 
           <div class="app-filter__option">
             <%= form.govuk_radio_buttons_fieldset(
