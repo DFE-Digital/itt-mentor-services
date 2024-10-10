@@ -6,6 +6,12 @@ class SupportUserConstraint
   end
 end
 
+class ClaimsOnlyConstraint
+  def self.matches?(request)
+    HostingEnvironment.current_service(request) == :claims
+  end
+end
+
 Rails.application.routes.draw do
   scope via: :all do
     get "/404", to: "errors#not_found", as: :not_found
@@ -15,7 +21,7 @@ Rails.application.routes.draw do
   end
 
   # User Account Details
-  get "/account", to: "account#show"
+  get "/account", to: "account#show", constraints: ClaimsOnlyConstraint
   get "/sign-in", to: "sessions#new", as: :sign_in
 
   # Persona Sign In

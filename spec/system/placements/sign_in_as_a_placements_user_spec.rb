@@ -7,9 +7,6 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
     when_i_click_sign_in
     then_i_dont_get_redirected_to_support_organisations
     and_i_see_an_empty_organsations_page
-
-    and_i_visit_my_account_page
-    then_i_see_user_details_for_anne
   end
 
   context "when the user is assigned to a school" do
@@ -59,9 +56,6 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
     when_i_visit_the_sign_in_path
     when_i_click_sign_in
     then_i_see_a_list_of_organisations
-
-    and_i_visit_my_account_page
-    then_i_see_user_details_for_colin
   end
 
   context "when response from dfe sign in is invalid" do
@@ -111,8 +105,6 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
         when_i_visit_the_sign_in_path
         when_i_click_sign_in
         then_i_dont_get_redirected_to_support_organisations
-        and_i_visit_my_account_page
-        then_i_see_user_details_for_anne
       end
     end
 
@@ -123,9 +115,6 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
         when_i_visit_the_sign_in_path
         when_i_click_sign_in
         then_i_see_a_list_of_organisations
-
-        and_i_visit_my_account_page
-        then_i_see_user_details_for_colin
       end
     end
   end
@@ -246,10 +235,10 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
         scenario "I am redirected to the support organisation list page" do
           given_there_is_an_existing_support_user_for("Colin")
           and_there_are_placement_organisations
-          and_i_visit_my_account_page
+          and_i_visit_a_school_show_page
           then_i_am_redirected_to_the_sign_in_page
           when_i_click_sign_in
-          then_i_see_user_details_for_colin
+          then_i_see_school_show_page
           when_i_visit_the placements_root_path
           and_i_click_on "Start now"
           then_i_see_a_list_of_organisations
@@ -276,6 +265,15 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
     visit sign_in_path
   end
 
+  def and_i_visit_a_school_show_page
+    visit placements_support_school_path(School.last)
+  end
+
+  def then_i_see_school_show_page
+    expect(page).to have_current_path placements_support_school_path(School.last), ignore_query: true
+    expect(page).to have_content("Placement School")
+  end
+
   def and_there_are_placement_organisations
     create(:school, :placements, name: "Placement School")
     create(:placements_provider, name: "Provider 1")
@@ -289,11 +287,6 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
     click_on text
   end
 
-  def and_i_visit_my_account_page
-    visit account_path
-  end
-  alias_method :when_i_visit_my_account_page, :and_i_visit_my_account_page
-
   def when_i_visit_the(path)
     visit path
   end
@@ -306,24 +299,6 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
 
   def then_i_dont_get_redirected_to_support_organisations
     expect(page).to have_no_current_path placements_support_organisations_path, ignore_query: true
-  end
-
-  def then_i_see_user_details_for_anne
-    expect(page).to have_current_path account_path
-    page_has_user_content(
-      first_name: "Anne",
-      last_name: "Wilson",
-      email: "anne_wilson@example.org",
-    )
-  end
-
-  def then_i_see_user_details_for_colin
-    expect(page).to have_current_path account_path
-    page_has_user_content(
-      first_name: "Colin",
-      last_name: "Chapman",
-      email: "colin.chapman@education.gov.uk",
-    )
   end
 
   def page_has_user_content(first_name:, last_name:, email:)
