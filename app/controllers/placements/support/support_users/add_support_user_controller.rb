@@ -4,7 +4,6 @@ class Placements::Support::SupportUsers::AddSupportUserController < Placements::
   helper_method :step_path, :current_step_path, :back_link_path
 
   def new
-    @wizard.reset_state
     redirect_to step_path(@wizard.first_step)
   end
 
@@ -28,8 +27,9 @@ class Placements::Support::SupportUsers::AddSupportUserController < Placements::
   private
 
   def set_wizard
+    state = session[state_key] ||= {}
     current_step = params[:step]&.to_sym
-    @wizard = Placements::AddSupportUserWizard.new(params:, session:, current_step:)
+    @wizard = Placements::AddSupportUserWizard.new(params:, state:, current_step:)
   end
 
   def current_step_path
@@ -37,7 +37,11 @@ class Placements::Support::SupportUsers::AddSupportUserController < Placements::
   end
 
   def step_path(step)
-    add_support_user_placements_support_support_users_path(step:)
+    add_support_user_placements_support_support_users_path(state_key:, step:)
+  end
+
+  def state_key
+    @state_key ||= params.fetch(:state_key, SecureRandom.uuid)
   end
 
   def back_link_path

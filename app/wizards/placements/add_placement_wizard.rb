@@ -2,9 +2,9 @@ module Placements
   class AddPlacementWizard < BaseWizard
     attr_reader :school
 
-    def initialize(school:, params:, session:, current_step: nil)
+    def initialize(school:, params:, state:, current_step: nil)
       @school = school
-      super(session:, params:, current_step:)
+      super(state:, params:, current_step:)
     end
 
     def define_steps

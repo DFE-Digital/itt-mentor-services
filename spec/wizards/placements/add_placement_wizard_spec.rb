@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Placements::AddPlacementWizard do
-  subject(:wizard) { described_class.new(session:, params:, school:, current_step:) }
+  subject(:wizard) { described_class.new(state:, params:, school:, current_step:) }
 
   let(:current_step) { nil }
 
@@ -17,7 +17,6 @@ RSpec.describe Placements::AddPlacementWizard do
   let(:german) { build(:subject, :secondary, name: "German") }
   let(:primary) { create(:subject, :primary, name: "Primary") }
 
-  let(:session) { { "Placements::AddPlacementWizard" => state } }
   let(:state) { {} }
   let(:params_data) { {} }
   let(:params) { ActionController::Parameters.new(params_data) }

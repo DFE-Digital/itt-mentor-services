@@ -2,9 +2,9 @@ module Placements
   class AddPartnershipWizard < BaseWizard
     attr_reader :organisation
 
-    def initialize(organisation:, params:, session:, current_step: nil)
+    def initialize(organisation:, params:, state:, current_step: nil)
       @organisation = organisation
-      super(session:, params:, current_step:)
+      super(state:, params:, current_step:)
     end
 
     def define_steps
