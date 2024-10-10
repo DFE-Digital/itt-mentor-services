@@ -1,5 +1,4 @@
 class Placements::Providers::PartnerSchools::PlacementsController < Placements::ApplicationController
-  skip_after_action :verify_policy_scoped, only: %i[index]
   before_action :set_provider, only: %i[index show]
   before_action :set_partner_school, only: %i[index show]
 
@@ -21,6 +20,6 @@ class Placements::Providers::PartnerSchools::PlacementsController < Placements::
   end
 
   def placements_scope
-    @partner_school.placements
+    policy_scope(@partner_school.placements, policy_scope_class: Placements::Provider::PlacementPolicy::Scope)
   end
 end

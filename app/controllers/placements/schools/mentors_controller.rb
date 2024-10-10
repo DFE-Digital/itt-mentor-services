@@ -31,7 +31,7 @@ class Placements::Schools::MentorsController < Placements::ApplicationController
   private
 
   def set_mentor
-    @mentor = @school.mentors.find(params.require(:id))
+    @mentor = policy_scope(@school.mentors).find(params.require(:id))
   end
 
   def set_mentor_membership

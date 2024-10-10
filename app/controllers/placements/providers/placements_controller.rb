@@ -19,7 +19,10 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
   end
 
   def show
-    @placement = Placement.find(params[:id]).decorate
+    @placement = policy_scope(
+      Placement.all,
+      policy_scope_class: Placements::Provider::PlacementPolicy::Scope,
+    ).find(params.require(:id)).decorate
     @school = @placement.school
   end
 
