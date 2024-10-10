@@ -46,7 +46,7 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
   end
 
   def set_placement
-    @placement = @school.placements.find(params.require(:id))
+    @placement = policy_scope(@school.placements).find(params.require(:id))
   end
 
   def set_decorated_placement

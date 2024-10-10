@@ -22,7 +22,7 @@ class Placements::Providers::PartnerSchoolsController < Placements::Partnerships
   end
 
   def set_decorated_partner_organisation
-    @partner_school = @provider.partner_schools.find(params.require(:id)).decorate
+    @partner_school = policy_scope(@provider.partner_schools).find(params.require(:id)).decorate
   end
 
   def set_partnership
