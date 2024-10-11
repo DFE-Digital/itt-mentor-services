@@ -8,12 +8,16 @@ class User::Remove < ApplicationService
 
   def call
     user_membership.destroy!
-    UserMailer.with(service: user.service).user_membership_destroyed_notification(user, organisation).deliver_later
+    user_mailer_class(user.service).user_membership_destroyed_notification(user, organisation).deliver_later
   end
 
   private
 
   def user_membership
     @user_membership ||= user.user_memberships.find_by!(organisation:)
+  end
+
+  def user_mailer_class(service)
+    service == :placements ? Placements::UserMailer : Claims::UserMailer
   end
 end

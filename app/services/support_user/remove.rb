@@ -17,6 +17,10 @@ class SupportUser::Remove < ApplicationService
   private
 
   def send_email_notification
-    SupportUserMailer.with(service: support_user.service).support_user_removal_notification(support_user).deliver_later
+    support_user_mailer_class(support_user.service).support_user_removal_notification(support_user).deliver_later
+  end
+
+  def support_user_mailer_class(service)
+    service == :placements ? Placements::SupportUserMailer : Claims::SupportUserMailer
   end
 end

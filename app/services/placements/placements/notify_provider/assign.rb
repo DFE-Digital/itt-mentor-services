@@ -6,7 +6,7 @@ module Placements
 
         def notify_users
           @provider.users.each do |user|
-            UserMailer.with(service: :placements)
+            ::Placements::UserMailer
               .placement_provider_assigned_notification(
                 user, @provider, @placement
               ).deliver_later

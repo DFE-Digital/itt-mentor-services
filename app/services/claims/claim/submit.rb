@@ -18,7 +18,7 @@ class Claims::Claim::Submit < ApplicationService
   attr_reader :claim, :user
 
   def send_claim_submitted_notification_email
-    UserMailer.with(service: :claims)
+    Claims::UserMailer
       .claim_submitted_notification(user, claim).deliver_later
   end
 
