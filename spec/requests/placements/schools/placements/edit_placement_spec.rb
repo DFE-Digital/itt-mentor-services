@@ -8,10 +8,13 @@ RSpec.describe "'Edit placement' journey", service: :placements, type: :request 
   let(:provider) { create(:placements_provider) }
   let(:school_id) { school.id }
   let(:year_group) { :year_6 }
-  let(:start_path) { new_edit_placement_placements_school_placement_path(school, placement, state_key:, step:) }
+  let(:start_path) { new_edit_placement_placements_school_placement_path(school, placement, step:) }
   let!(:state_key) { SecureRandom.uuid }
 
-  before { sign_in_as current_user }
+  before do
+    allow(Placements::BaseWizard).to receive(:generate_state_key).and_return(state_key)
+    sign_in_as current_user
+  end
 
   context "when editing the mentors" do
     let(:step) { :mentors }

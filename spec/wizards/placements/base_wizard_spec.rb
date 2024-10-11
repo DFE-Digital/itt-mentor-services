@@ -272,4 +272,15 @@ RSpec.describe Placements::BaseWizard do
       it { is_expected.to be(false) }
     end
   end
+
+  describe ".generate_state_key" do
+    before do
+      allow(SecureRandom).to receive(:uuid).and_call_original
+      described_class.generate_state_key
+    end
+
+    it "returns a SecureRandom UUID" do
+      expect(SecureRandom).to have_received(:uuid).once
+    end
+  end
 end

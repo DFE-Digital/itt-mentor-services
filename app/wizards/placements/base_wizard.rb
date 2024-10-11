@@ -1,6 +1,10 @@
 class Placements::BaseWizard
   attr_reader :state, :params, :current_step, :steps
 
+  def self.generate_state_key
+    SecureRandom.uuid
+  end
+
   def initialize(state:, params:, current_step: nil)
     @state = state
     @params = params

@@ -1,8 +1,12 @@
 RSpec.shared_examples "an 'Add mentor' journey" do
   let(:school) { create(:placements_school, :secondary, name: "Hogwarts") }
   let(:school_id) { school.id }
+  let(:state_key) { SecureRandom.uuid }
 
-  before { sign_in_as current_user }
+  before do
+    sign_in_as current_user
+    allow(Placements::BaseWizard).to receive(:generate_state_key).and_return(state_key)
+  end
 
   context "when starting a new wizard journey" do
     before do

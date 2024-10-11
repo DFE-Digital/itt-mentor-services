@@ -2,8 +2,7 @@ require "rails_helper"
 
 RSpec.describe "'Add mentor' journey", service: :placements, type: :request do
   let(:current_user) { create(:placements_user, schools: [school]) }
-  let!(:state_key) { SecureRandom.uuid }
-  let(:start_path) { new_add_mentor_placements_school_mentors_path(state_key:, school_id:) }
+  let(:start_path) { new_add_mentor_placements_school_mentors_path(school_id:) }
 
   it_behaves_like "an 'Add mentor' journey"
 

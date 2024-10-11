@@ -41,7 +41,7 @@ class Placements::Support::SupportUsers::AddSupportUserController < Placements::
   end
 
   def state_key
-    @state_key ||= params.fetch(:state_key, SecureRandom.uuid)
+    @state_key ||= params.fetch(:state_key, Placements::BaseWizard.generate_state_key)
   end
 
   def back_link_path

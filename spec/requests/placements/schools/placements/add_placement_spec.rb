@@ -7,10 +7,13 @@ RSpec.describe "'Add placement' journey", service: :placements, type: :request d
   let(:current_academic_year) { create(:placements_academic_year) }
   let(:drama) { create(:subject, :secondary, name: "Drama") }
   let(:summer_term) { create(:placements_term, :summer) }
-  let(:start_path) { new_add_placement_placements_school_placements_path(state_key:, school_id:) }
+  let(:start_path) { new_add_placement_placements_school_placements_path(school_id:) }
   let!(:state_key) { SecureRandom.uuid }
 
-  before { sign_in_as current_user }
+  before do
+    allow(Placements::BaseWizard).to receive(:generate_state_key).and_return(state_key)
+    sign_in_as current_user
+  end
 
   context "when starting a new wizard journey" do
     before do
