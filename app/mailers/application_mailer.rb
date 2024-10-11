@@ -16,32 +16,11 @@ class ApplicationMailer < Mail::Notify::Mailer
     "[#{HostingEnvironment.env.upcase}] "
   end
 
-  def service
-    params[:service]
-  end
-
-  def service_name
-    I18n.t("#{service}.service_name")
-  end
-
-  def support_email
-    I18n.t("#{service}.support_email")
-  end
-
   def default_url_options
     { host:, port: ENV["PORT"], protocol: }
   end
 
   def protocol
     Rails.env.production? ? "https" : "http"
-  end
-
-  def host
-    case service.to_s
-    when "claims"
-      ENV["CLAIMS_HOST"]
-    when "placements"
-      ENV["PLACEMENTS_HOST"]
-    end
   end
 end
