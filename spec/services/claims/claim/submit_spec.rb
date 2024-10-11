@@ -19,7 +19,7 @@ describe Claims::Claim::Submit do
       allow(SecureRandom).to receive(:random_number).with(99_999_999).and_return(123)
 
       expect { submit_service }.to change(claim, :reference).from(nil).to("123")
-        .and(have_enqueued_mail(UserMailer, :claim_submitted_notification).once)
+        .and(have_enqueued_mail(Claims::UserMailer, :claim_submitted_notification).once)
         .and(have_enqueued_job(SlackNotifier::Message::DeliveryJob).once)
 
       expect(claim.status).to eq("submitted")
@@ -32,7 +32,7 @@ describe Claims::Claim::Submit do
         service = described_class.call(claim: claim_with_reference, user:)
 
         expect { service }.to not_change(claim, :reference)
-          .and(not_have_enqueued_mail(UserMailer, :claim_submitted_notification))
+          .and(not_have_enqueued_mail(Claims::UserMailer, :claim_submitted_notification))
           .and(not_have_enqueued_job(SlackNotifier::Message::DeliveryJob))
       end
     end
@@ -43,7 +43,7 @@ describe Claims::Claim::Submit do
         service = described_class.call(claim: submitted_claim, user:)
 
         expect { service }.to not_change(claim, :reference)
-          .and(not_have_enqueued_mail(UserMailer, :claim_submitted_notification))
+          .and(not_have_enqueued_mail(Claims::UserMailer, :claim_submitted_notification))
           .and(not_have_enqueued_job(SlackNotifier::Message::DeliveryJob))
 
         expect(service).to be_nil
@@ -57,7 +57,7 @@ describe Claims::Claim::Submit do
         allow(SecureRandom).to receive(:random_number).with(99_999_999).and_return(123, 456)
 
         expect { submit_service }.to change(claim, :reference).from(nil).to("456")
-          .and(have_enqueued_mail(UserMailer, :claim_submitted_notification).once)
+          .and(have_enqueued_mail(Claims::UserMailer, :claim_submitted_notification).once)
           .and(have_enqueued_job(SlackNotifier::Message::DeliveryJob).once)
 
         expect(claim.status).to eq("submitted")

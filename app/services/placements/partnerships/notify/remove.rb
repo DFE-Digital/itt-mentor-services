@@ -6,7 +6,7 @@ module Placements
 
         def notify_users
           partner_organisation_users.each do |user|
-            UserMailer.with(service: :placements)
+            ::Placements::UserMailer
               .partnership_destroyed_notification(
                 user, @source_organisation, @partner_organisation
               ).deliver_later
