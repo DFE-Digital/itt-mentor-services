@@ -167,6 +167,7 @@ group :test, :development do
   gem "erb_lint", require: false
   gem "factory_bot_rails"
   gem "faker"
+  gem 'parallel_tests'
   gem "pry"
   gem "pry-byebug"
   gem "pry-rails"

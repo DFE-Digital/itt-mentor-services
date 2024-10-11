@@ -13,7 +13,8 @@ development:
 
 test:
   <<: *default
-  database: itt_mentor_services_test
+  database: itt_mentor_services_test<%= ENV['TEST_ENV_NUMBER'] %>
+
 
 production:
   <<: *default
