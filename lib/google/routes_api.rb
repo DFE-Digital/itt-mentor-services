@@ -17,7 +17,7 @@ module Google
     private
 
     def options(origin_address, destinations, travel_mode)
-      @options ||= {
+      {
         origins: [transform_origin(origin_address)],
         destinations: destinations.map { |destination| transform_destination(destination) },
         travelMode: travel_mode,
