@@ -43,7 +43,7 @@ class Placements::Schools::SchoolContacts::EditSchoolContactController < Placeme
   end
 
   def state_key
-    @state_key ||= params.fetch(:state_key, SecureRandom.uuid)
+    @state_key ||= params.fetch(:state_key, Placements::BaseWizard.generate_state_key)
   end
 
   def current_step_path
