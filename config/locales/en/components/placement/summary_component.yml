@@ -13,3 +13,7 @@ en:
         ofsted_rating: Ofsted rating
         distance: "Distance"
         distance_in_miles: "%{distance} miles"
+        travel_time: Travel time
+        public_transport: Public transport
+        driving: Driving
+        walking: Walking
