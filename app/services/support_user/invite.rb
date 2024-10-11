@@ -6,6 +6,12 @@ class SupportUser::Invite < ApplicationService
   end
 
   def call
-    SupportUserMailer.with(service: support_user.service).support_user_invitation(support_user).deliver_later
+    support_user_mailer_class(support_user.service).support_user_invitation(support_user).deliver_later
+  end
+
+  private
+
+  def support_user_mailer_class(service)
+    service == :placements ? Placements::SupportUserMailer : Claims::SupportUserMailer
   end
 end
