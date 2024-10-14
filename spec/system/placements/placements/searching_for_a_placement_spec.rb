@@ -37,6 +37,7 @@ RSpec.describe "Placements / Placements / Searching for a placements list",
     bath_placement
 
     given_i_sign_in_as_patricia
+    stub_travel_time_service
   end
 
   context "when searching for placements near a location (London)" do
@@ -60,7 +61,7 @@ RSpec.describe "Placements / Placements / Searching for a placements list",
       and_i_fill_in_location_search_with("Guildford")
       and_i_click_on("Apply filters")
       then_i_see_placements_for(school_name: "Guildford School", list_item: 0, distance: 0.0)
-      and_i_see_placements_for(school_name: "London School", list_item: 1, distance: 26.7)
+      then_i_see_placements_for(school_name: "London School", list_item: 1, distance: 26.7)
       and_i_do_not_see_placements_for(school_name: "Bath School")
     end
   end
@@ -199,5 +200,12 @@ RSpec.describe "Placements / Placements / Searching for a placements list",
     allow(geocoder_results).to receive(:first).and_return(geocoder_result)
     allow(geocoder_result).to receive(:coordinates).and_return([55.378051, -3.435973])
     allow(Geocoder).to receive(:search).and_return(geocoder_results)
+  end
+
+  def stub_travel_time_service
+    allow(Placements::TravelTime).to receive(:call).and_return([
+      london_school.assign_attributes(transit_travel_duration: "0 mins", drive_travel_duration: "0 mins", walk_travel_duration: "0 mins"),
+      guildford_school.assign_attributes(transit_travel_duration: "0 mins", drive_travel_duration: "0 mins", walk_travel_duration: "0 mins"),
+    ])
   end
 end
