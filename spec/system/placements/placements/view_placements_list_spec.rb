@@ -34,6 +34,7 @@ RSpec.describe "Placements / Placements / View placements list",
 
   before do
     given_i_sign_in_as_patricia
+    stub_travel_time_service
   end
 
   scenario "User views all placements page, when no placements exist" do
@@ -453,5 +454,12 @@ RSpec.describe "Placements / Placements / View placements list",
     allow(geocoder_results).to receive(:first).and_return(geocoder_result)
     allow(geocoder_result).to receive(:coordinates).and_return([51.5072178, -0.1275862])
     allow(Geocoder).to receive(:search).and_return(geocoder_results)
+  end
+
+  def stub_travel_time_service
+    allow(Placements::TravelTime).to receive(:call).and_return([
+      primary_school.assign_attributes(drive_travel_duration: "0 mins", transit_travel_duration: "0 mins", walk_travel_duration: "0 mins"),
+      secondary_school.assign_attributes(drive_travel_duration: "15 mins", transit_travel_duration: "20 mins", walk_travel_duration: "30 mins"),
+    ])
   end
 end
