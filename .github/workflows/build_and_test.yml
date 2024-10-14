@@ -69,7 +69,7 @@ jobs:
         run: |
           bundle exec rails test:prepare db:test:prepare
           bundle exec rails zeitwerk:check
-          bundle exec rake parallel:spec --format progress
+          bundle exec rspec --format progress
       - name: Upload code coverage report
         uses: actions/upload-artifact@v4
         with:
