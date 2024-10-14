@@ -15,7 +15,6 @@ test:
   <<: *default
   database: itt_mentor_services_test<%= ENV['TEST_ENV_NUMBER'] %>
 
-
 production:
   <<: *default
   database: itt_mentor_services_production
