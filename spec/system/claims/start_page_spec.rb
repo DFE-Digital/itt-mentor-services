@@ -71,17 +71,34 @@ RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :sy
       expect(page).to have_content("Claim funding for mentor training")
     end
 
-    expect(page).to have_content("Use this service to claim for mentors who supported trainee teachers from September 2023 to July 2024.")
-    expect(page).to have_content("The service is open for claims. Deadline to submit claims is: 11:59pm on Friday 19 July 2024")
-    expect(page).to have_content("You must wait until May 2025 to claim for training that took place from April 2024 for the school year starting September 2025.")
+    expect(page).to have_content("Use this service to make a claim for the time spent becoming an initial teacher training (ITT) mentor.")
+
+    expect(page).to have_content(
+      "Who can use this service\n"\
+      "You can use this service if you are a school or education organisation that:\n"\
+      "offers ITT placements with an accredited provider "\
+      "has at least one team member who has started or is due to start their ITT mentor training "\
+      "is registered with Get information about schools (GIAS)",
+    )
+
+    expect(page).to have_content("This funding is not available for training early career framework (ECF) mentors. To claim for ECF mentors, you need a different service.")
+
+    expect(page).to have_content(
+      "When to submit a claim\n"\
+      "For the school year starting September 2024:\n"\
+      "you can add your ITT mentor training hours and submit a claim from May 2025 "\
+      "when you are registered in the service, we will email you reminders of claim opening dates and deadlines",\
+    )
+
     expect(page).to have_content(
       "Before you start\n"\
-      "You’ll be asked for:\n"\
-      "initial teacher training (ITT) provider name "\
+      "You will be asked for:\n"\
+      "the name of your accredited ITT provider "\
       "your mentors’ teacher reference numbers (TRN) "\
       "your mentors’ dates of birth "\
-      "hours of training each mentor completed",
+      "completed training hours - you should check these with your provider",
     )
+
     expect(page).to have_content("Related content")
     expect(page).to have_link(
       "Guidance for providers on initial teacher training (ITT)",

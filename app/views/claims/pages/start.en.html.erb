@@ -8,48 +8,61 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <p class="govuk-body">
-        Use this service to claim for mentors who supported trainee teachers from September 2023 to July 2024.
+        Use this service to make a claim for the time spent becoming an initial teacher training (ITT) mentor.
       </p>
 
-      <% if claim_window.current? %>
-        <p class="govuk-body">
-          The service is open for claims. Deadline to submit claims is: <strong><%= l(claim_window.ends_on.end_of_day, format: :time_on_date) %></strong>
-        </p>
-      <% else %>
-        <p class="govuk-body">
-          We are no longer accepting claims for academic year <%= academic_year.name %>.
-        </p>
-
-        <p class="govuk-body">
-          You can still add a mentor.
-        </p>
-      <% end %>
+      <h2 class="govuk-heading-m">Who can use this service</h2>
 
       <p class="govuk-body">
-        You must wait until May 2025 to claim for training that took place from April 2024 for the school year starting September 2025.
+        You can use this service if you are a school or education organisation that:
       </p>
+
+      <%= govuk_list type: :bullet do %>
+        <li>offers ITT placements with an accredited provider</li>
+        <li>has at least one team member who has started or is due to start their ITT mentor training</li>
+        <li>is registered with <%= govuk_link_to "Get information about schools (GIAS)", "https://get-information-schools.service.gov.uk" %></li>
+      <% end %>
+
+      <%= govuk_inset_text do %>
+        This funding is not available for training early career framework (ECF) mentors. To claim for ECF mentors, <%= govuk_link_to "you need a different service", "https://manage-training-for-early-career-teachers.education.gov.uk" %>.
+      <% end %>
+
+      <h2 class="govuk-heading-m">When to submit a claim</h2>
+
+      <p class="govuk-body">For the school year starting September 2024:</p>
+
+      <%= govuk_list type: :bullet do %>
+        <li>you can add your ITT mentor training hours and submit a claim from May 2025</li>
+        <li>when you are registered in the service, we will email you reminders of claim opening dates and deadlines</li>
+      <% end %>
 
       <h2 class="govuk-heading-m">Before you start</h2>
 
-      <p class="govuk-body">You’ll be asked for:</p>
+      <p class="govuk-body">You will be asked for:</p>
 
-      <ul class="govuk-list govuk-list--bullet">
-        <li>initial teacher training (ITT) provider name</li>
+      <%= govuk_list type: :bullet do %>
+        <li>the name of your accredited ITT provider</li>
         <li>your mentors’ teacher reference numbers (TRN)</li>
         <li>your mentors’ dates of birth</li>
-        <li>hours of training each mentor completed</li>
-      </ul>
+        <li>completed training hours - you should check these with your provider</li>
+      <% end %>
 
-      <%= govuk_start_button(text: "Start now", href: sign_in_path, classes: "govuk-!-margin-top-4") %>
+      <p class="govuk-body">To access this service, you will be asked to sign in or create a Department for Education (DfE) Sign-in account. DfE Sign-in is how schools and other education organisations access DfE online services.</p>
 
-      <h2 class="govuk-heading-m">Get an account to claim funding for mentor training</h2>
+      <%= govuk_start_button text: "Start now", href: sign_in_path, classes: "govuk-!-margin-top-4" %>
+
+      <h2 class="govuk-heading-m">Get a claim funding for mentor training account</h2>
 
       <p class="govuk-body">
-        Ask a colleague within your organisation to add you if you do not have an account.
+        Most eligible organisations will automatically be set up with an account to claim funding for mentor training.
       </p>
 
       <p class="govuk-body">
-        If your organisation has not been set up to claim funding for mentor training, send an email to <%= mail_to t("claims.support_email"), t("claims.support_email_html") %>.
+        If you cannot access your organisation’s account, you may need to ask a colleague to add you.
+      </p>
+
+      <p class="govuk-body">
+        If your organisation is eligible but has not been set up with an account, send an email to <%= mail_to t("claims.support_email"), t("claims.support_email_html") %>. You will get a response within 5 working days.
       </p>
 
       <% if service_updates.any? %>
@@ -71,14 +84,14 @@
       <aside class="app-related" role="complementary">
         <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Related content</h2>
 
-        <ul class="govuk-list">
+        <%= govuk_list do %>
           <li class="app-related__list-item">
             <%= govuk_link_to "Guidance for providers on initial teacher training (ITT)", "https://www.gov.uk/government/collections/initial-teacher-training" %>
           </li>
           <li class="app-related__list-item">
             <%= govuk_link_to "Find out what a teacher reference number (TRN) is and how to find or request a TRN", "https://www.gov.uk/guidance/teacher-reference-number-trn" %>
           </li>
-        </ul>
+        <% end %>
       </aside>
     </div>
   </div>
