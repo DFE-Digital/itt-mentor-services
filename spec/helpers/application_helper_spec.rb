@@ -54,4 +54,20 @@ RSpec.describe ApplicationHelper do
       end
     end
   end
+
+  describe "#claims_service?" do
+    context "when current_service is claims" do
+      it "returns true" do
+        allow(HostingEnvironment).to receive(:current_service).and_return(:claims)
+        expect(claims_service?).to be(true)
+      end
+    end
+
+    context "when current_service is placements" do
+      it "returns true" do
+        allow(HostingEnvironment).to receive(:current_service).and_return(:placements)
+        expect(claims_service?).to be(false)
+      end
+    end
+  end
 end

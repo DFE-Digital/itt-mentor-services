@@ -238,7 +238,7 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
           and_i_visit_a_school_show_page
           then_i_am_redirected_to_the_sign_in_page
           when_i_click_sign_in
-          then_i_see_school_show_page
+          then_i_see_school_show_page()
           when_i_visit_the placements_root_path
           and_i_click_on "Start now"
           then_i_see_a_list_of_organisations
@@ -266,12 +266,12 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
   end
 
   def and_i_visit_a_school_show_page
-    visit placements_support_school_path(School.last)
+    visit placements_support_school_path(organisation)
   end
 
   def then_i_see_school_show_page
-    expect(page).to have_current_path placements_support_school_path(School.last), ignore_query: true
-    expect(page).to have_content("Placement School")
+    expect(page).to have_current_path placements_support_school_path(organisation), ignore_query: true
+    expect(page).to have_content(organisation.name)
   end
 
   def and_there_are_placement_organisations

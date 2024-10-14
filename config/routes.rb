@@ -1,17 +1,3 @@
-class SupportUserConstraint
-  def self.matches?(request)
-    service = HostingEnvironment.current_service(request)
-    current_user = DfESignInUser.load_from_session(request.session, service:)&.user
-    current_user&.support_user?
-  end
-end
-
-class ClaimsOnlyConstraint
-  def self.matches?(request)
-    HostingEnvironment.current_service(request) == :claims
-  end
-end
-
 Rails.application.routes.draw do
   scope via: :all do
     get "/404", to: "errors#not_found", as: :not_found
@@ -21,7 +7,7 @@ Rails.application.routes.draw do
   end
 
   # User Account Details
-  get "/account", to: "account#show", constraints: ClaimsOnlyConstraint
+  get "/account", to: "account#show", constraints: ClaimsOnlyConstraint.new
   get "/sign-in", to: "sessions#new", as: :sign_in
 
   # Persona Sign In
@@ -44,6 +30,6 @@ Rails.application.routes.draw do
   draw :claims
 
   # GoodJob admin interface – only accessible to support users
-  mount GoodJob::Engine => "/good_job", constraints: SupportUserConstraint
+  mount GoodJob::Engine => "/good_job", constraints: SupportUserConstraint.new
   get "/good_job", to: redirect("/support")
 end

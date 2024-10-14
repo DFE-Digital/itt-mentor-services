@@ -9,6 +9,10 @@ module ApplicationHelper
     t("#{current_service}.service_name")
   end
 
+  def claims_service?
+    current_service == :claims
+  end
+
   def external_link(link)
     return if link.blank?
 
