@@ -238,7 +238,7 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
           and_i_visit_a_school_show_page
           then_i_am_redirected_to_the_sign_in_page
           when_i_click_sign_in
-          then_i_see_school_show_page()
+          then_i_see_school_show_page
           when_i_visit_the placements_root_path
           and_i_click_on "Start now"
           then_i_see_a_list_of_organisations
