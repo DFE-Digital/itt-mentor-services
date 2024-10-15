@@ -21,14 +21,14 @@ class Placements::Placements::FilterForm < ApplicationForm
     attributes.except("placements_to_show", "academic_year_id").values.compact.flatten.any?
   end
 
-  def clear_filters_path(*)
+  def clear_filters_path
     placements_provider_placements_path(
       @provider,
       filters: { placements_to_show:, academic_year_id: },
     )
   end
 
-  def index_path_without_filter(filter:, value: nil, search_location: nil)
+  def index_path_without_filter(filter:, value: nil)
     without_filter = if SINGULAR_ATTRIBUTES.include?(filter)
                        compacted_attributes.reject { |key, _| key == filter }
                      else
@@ -37,7 +37,6 @@ class Placements::Placements::FilterForm < ApplicationForm
 
     placements_provider_placements_path(
       @provider,
-      search_location,
       params: { filters: without_filter },
     )
   end

@@ -19,7 +19,7 @@
               <p class="govuk-body">
                 <%= govuk_link_to(
                   t("clear_filters"),
-                  filter_form.clear_filters_path(search_location:),
+                  filter_form.clear_filters_path,
                   no_visited_state: true,
                 ) %>
               </p>
@@ -35,7 +35,6 @@
                         filter_form.index_path_without_filter(
                           filter: "search_location",
                           value: @search_location,
-                          search_location:,
                         ),
                         class: "app-filter__tag",
                         no_visited_state: true,
@@ -54,7 +53,6 @@
                         filter_form.index_path_without_filter(
                           filter: "term_ids",
                           value: term.id,
-                          search_location:,
                         ),
                         class: "app-filter__tag",
                         no_visited_state: true,
@@ -74,7 +72,6 @@
                         filter_form.index_path_without_filter(
                           filter: "subject_ids",
                           value: subject.id,
-                          search_location:,
                         ),
                         class: "app-filter__tag",
                         no_visited_state: true,
@@ -112,7 +109,6 @@
                       filter_form.index_path_without_filter(
                         filter: "only_partner_schools",
                         value: true,
-                        search_location:,
                       ),
                       class: "app-filter__tag",
                       no_visited_state: true,
@@ -131,7 +127,6 @@
                     filter_form.index_path_without_filter(
                       filter: "school_ids",
                       value: school.id,
-                      search_location:,
                     ),
                     class: "app-filter__tag",
                     no_visited_state: true,
