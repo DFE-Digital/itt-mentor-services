@@ -17,8 +17,12 @@ module "application_configuration" {
       ENVIRONMENT_NAME = var.environment
       PGSSLMODE        = local.postgres_ssl_mode
   })
+
   secret_variables = {
-    DATABASE_URL = module.postgres.url
+    DATABASE_URL               = module.postgres.url
+    AZURE_STORAGE_ACCOUNT_NAME = local.azure_storage_account_name
+    AZURE_STORAGE_ACCESS_KEY   = local.azure_storage_access_key
+    AZURE_STORAGE_CONTAINER    = local.azure_storage_container
   }
 }
 

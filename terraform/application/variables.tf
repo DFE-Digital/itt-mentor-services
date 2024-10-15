@@ -87,21 +87,45 @@ variable "statuscake_alerts" {
 locals {
   postgres_ssl_mode       = var.enable_postgres_ssl ? "require" : "disable"
   app_env_values_from_yml = yamldecode(file("${path.module}/config/${var.config}_app_env.yml"))
+
   ingress_domain_map = {
     INGRESS_CLAIMS_HOST     = "track-and-pay-${var.environment}.${module.cluster_data.ingress_domain}"
     INGRESS_PLACEMENTS_HOST = "manage-school-placements-${var.environment}.${module.cluster_data.ingress_domain}"
   }
+
   claims_domain_map = (
     contains(keys(local.app_env_values_from_yml), "CLAIMS_HOST") ?
     {} : { CLAIMS_HOST = local.ingress_domain_map["INGRESS_CLAIMS_HOST"] }
   )
+
   placements_domain_map = (
     contains(keys(local.app_env_values_from_yml), "PLACEMENTS_HOST") ?
     {} : { PLACEMENTS_HOST = local.ingress_domain_map["INGRESS_PLACEMENTS_HOST"] }
   )
+
   app_env_values = merge(
     local.app_env_values_from_yml,
     local.claims_domain_map,
     local.placements_domain_map
   )
+
+  app_resource_group_name = "${var.azure_resource_prefix}-${var.service_short}-${var.config_short}-rg"
+
+  # If there are multiple environments per config (as in review apps), we need the environment name without hyphens.
+  # e.g.
+  #   production   -> pd
+  #   review-12345 -> review-12345
+  #
+  # In this case, the `environment` variable value for review apps are only the PR number, but the code below is generic.
+  # e.g.
+  #   12345 -> 12345
+  environment_compact = var.config == var.environment ? var.config_short : replace(var.environment, "-", "")
+
+  # Combined with the `environment_compact` variable, this will be the name of the storage account, as storage account names don't allow hyphens.
+  # e.g.
+  #   production   -> [s189p01][ittms][pd]appsa       -> s189p01ittmspdappsa
+  #   review-12345 -> [s189t01][ittms][rv-12345]appsa -> s189t01ittmsrv12345appsa
+  azure_storage_account_name = "${var.azure_resource_prefix}${var.service_short}${local.environment_compact}appsa"
+  azure_storage_access_key   = azurerm_storage_account.general_storage_account.primary_access_key
+  azure_storage_container    = azurerm_storage_container.general_container.name
 }
