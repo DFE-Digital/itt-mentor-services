@@ -43,31 +43,31 @@ variable "enable_monitoring" {
 }
 variable "app_replicas" {
   description = "number of replicas of the web app"
-  default = 1
+  default     = 1
 }
 variable "worker_replicas" {
   description = "number of replicas of the workers"
-  default = 1
+  default     = 1
 }
 variable "key_vault_resource_group" {
   default     = null
   description = "The name of the key vault resorce group"
 }
 
-variable "azure_maintenance_window" { 
-  default = null 
+variable "azure_maintenance_window" {
+  default = null
 }
-variable "postgres_flexible_server_sku" { 
-  default = "B_Standard_B1ms" 
+variable "postgres_flexible_server_sku" {
+  default = "B_Standard_B1ms"
 }
-variable "postgres_enable_high_availability" { 
-  default = false 
+variable "postgres_enable_high_availability" {
+  default = false
 }
-variable "azure_enable_backup_storage" { 
-  default = false 
+variable "azure_enable_backup_storage" {
+  default = false
 }
-variable "enable_container_monitoring" { 
-  default = false 
+variable "enable_container_monitoring" {
+  default = false
 }
 
 variable "statuscake_contact_groups" {
@@ -88,7 +88,7 @@ locals {
   postgres_ssl_mode       = var.enable_postgres_ssl ? "require" : "disable"
   app_env_values_from_yml = yamldecode(file("${path.module}/config/${var.config}_app_env.yml"))
   ingress_domain_map = {
-    INGRESS_CLAIMS_HOST = "track-and-pay-${var.environment}.${module.cluster_data.ingress_domain}"
+    INGRESS_CLAIMS_HOST     = "track-and-pay-${var.environment}.${module.cluster_data.ingress_domain}"
     INGRESS_PLACEMENTS_HOST = "manage-school-placements-${var.environment}.${module.cluster_data.ingress_domain}"
   }
   claims_domain_map = (
