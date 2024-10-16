@@ -1,0 +1,18 @@
+en:
+  claims:
+    support:
+      payments:
+        confirmations:
+          new:
+            cancel: Cancel
+          new_confirmation:
+            caption: Payments
+            heading: Upload response from ESFA
+            label: Upload a file
+            submit: Continue
+          no_claims_sent_to_esfa:
+            caption: Payments
+            heading: You cannot upload a response from the ESFA
+            description: You cannot upload a response from the ESFA as there are no claims pending payment.
+          create:
+            success: ESFA response uploaded
