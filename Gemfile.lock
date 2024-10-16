@@ -121,6 +121,8 @@ GEM
     audited (5.7.0)
       activerecord (>= 5.2, < 8.0)
       activesupport (>= 5.2, < 8.0)
+    azure-blob (0.5.2)
+      rexml
     base64 (0.2.0)
     better_html (2.1.1)
       actionview (>= 6.0)
@@ -684,6 +686,7 @@ DEPENDENCIES
   amazing_print
   annotate
   audited
+  azure-blob
   better_html
   bootsnap
   brakeman

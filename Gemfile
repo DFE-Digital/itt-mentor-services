@@ -116,6 +116,9 @@ gem "okcomputer"
 # OpenStruct [https://github.com/ruby/ostruct]
 gem "ostruct", "~> 0.6.0"
 
+# Azure Storage adapter for Active Storage
+gem "azure-blob"
+
 group :development do
   gem "annotate", require: false
   gem "prettier_print", require: false
