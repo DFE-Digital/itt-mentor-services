@@ -17,7 +17,7 @@ class Claims::Claim::CreateDraft < ApplicationService
 
   def send_claim_created_support_notification_email
     claim.school_users.each do |user|
-      UserMailer.with(service: :claims)
+      Claims::UserMailer
         .claim_created_support_notification(claim, user).deliver_later
     end
   end
