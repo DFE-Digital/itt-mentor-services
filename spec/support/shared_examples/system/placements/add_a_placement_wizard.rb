@@ -26,7 +26,7 @@ RSpec.shared_examples "an add a placement wizard" do
           create(:placements_mentor_membership, mentor: mentor_2, school:)
         end
 
-        it "I can create my placement" do
+        scenario "I can create my placement" do
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
           then_i_see_the_add_a_placement_subject_page(school.phase)
@@ -52,7 +52,7 @@ RSpec.shared_examples "an add a placement wizard" do
           and_i_see_success_message("Placement added")
         end
 
-        it "when I select not known for the mentor" do
+        scenario "when I select not known for the mentor" do
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
           when_i_choose_a_subject(subject_1.name)
@@ -79,7 +79,7 @@ RSpec.shared_examples "an add a placement wizard" do
           and_i_see_success_message("Placement added")
         end
 
-        it "I am redirected to the add mentor page if I click on the link in the help text" do
+        scenario "I am redirected to the add mentor page if I click on the link in the help text" do
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
           when_i_choose_a_subject(subject_1.name)
@@ -101,7 +101,7 @@ RSpec.shared_examples "an add a placement wizard" do
       end
 
       context "when I have no mentors" do
-        it "I do not see the add mentors page" do
+        scenario "I do not see the add mentors page" do
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
           when_i_choose_a_subject(subject_1.name)
@@ -125,7 +125,7 @@ RSpec.shared_examples "an add a placement wizard" do
           create(:placements_mentor_membership, mentor: mentor_2, school:)
         end
 
-        it "I can navigate back to the index page with cancel" do
+        scenario "I can navigate back to the index page with cancel" do
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
           then_i_see_the_add_a_placement_subject_page(school.phase)
@@ -177,7 +177,7 @@ RSpec.shared_examples "an add a placement wizard" do
         end
 
         context "when navigating back through the steps" do
-          it "my selected options are rendered and I go to the previous step" do
+          scenario "my selected options are rendered and I go to the previous step" do
             when_i_visit_the_placements_page
             and_i_click_on("Add placement")
             when_i_choose_a_subject(subject_1.name)
@@ -214,7 +214,7 @@ RSpec.shared_examples "an add a placement wizard" do
         end
 
         context "when I've checked my answers and I click on change" do
-          it "when I do not enter valid options" do
+          scenario "when I do not enter valid options" do
             when_i_visit_the_placements_page
             and_i_click_on("Add placement")
             and_i_click_on("Continue")
@@ -257,7 +257,7 @@ RSpec.shared_examples "an add a placement wizard" do
         end
 
         context "when I preview my placement" do
-          it "I can see the placement details" do
+          scenario "I can see the placement details" do
             when_i_visit_the_placements_page
             and_i_click_on("Add placement")
             when_i_choose_a_subject(subject_1.name)
@@ -275,7 +275,7 @@ RSpec.shared_examples "an add a placement wizard" do
             then_i_see_the_preview_page(phase: school.phase, subject: subject_1)
           end
 
-          it "I can go back to the check your answers page" do
+          scenario "I can go back to the check your answers page" do
             when_i_visit_the_placements_page
             and_i_click_on("Add placement")
             when_i_choose_a_subject(subject_1.name)
@@ -295,7 +295,7 @@ RSpec.shared_examples "an add a placement wizard" do
             then_i_see_the_check_your_answers_page(school.phase, mentor_1, summer_term.name)
           end
 
-          it "I can go back and edit my placement" do
+          scenario "I can go back and edit my placement" do
             when_i_visit_the_placements_page
             and_i_click_on("Add placement")
             when_i_choose_a_subject(subject_1.name)
@@ -315,7 +315,7 @@ RSpec.shared_examples "an add a placement wizard" do
             then_i_see_the_check_your_answers_page(school.phase, mentor_1, summer_term.name)
           end
 
-          it "I can publish my placement" do
+          scenario "I can publish my placement" do
             when_i_visit_the_placements_page
             and_i_click_on("Add placement")
             when_i_choose_a_subject(subject_1.name)
@@ -346,7 +346,7 @@ RSpec.shared_examples "an add a placement wizard" do
         create(:placements_mentor_membership, mentor: mentor_2, school:)
       end
 
-      it "I can create my placement" do
+      scenario "I can create my placement" do
         school.update!(phase: "Secondary")
         when_i_visit_the_placements_page
         and_i_click_on("Add placement")
@@ -373,7 +373,7 @@ RSpec.shared_examples "an add a placement wizard" do
         let!(:subject_3) { create(:subject, name: "Secondary subject 3", subject_area: :secondary, parent_subject: subject_2) }
         let!(:subject_4) { create(:subject, name: "Secondary subject 4", subject_area: :secondary) }
 
-        it "I can create my placement" do
+        scenario "I can create my placement" do
           school.update!(phase: "Secondary")
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
@@ -398,7 +398,7 @@ RSpec.shared_examples "an add a placement wizard" do
           and_i_see_success_message("Placement added")
         end
 
-        it "I see a validation message if I do not select an additional subject" do
+        scenario "I see a validation message if I do not select an additional subject" do
           school.update!(phase: "Secondary")
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
@@ -410,7 +410,7 @@ RSpec.shared_examples "an add a placement wizard" do
           and_i_see_the_error_message("Select an additional subject")
         end
 
-        it "If I change the subject, I do not see the additional subject page" do
+        scenario "If I change the subject, I do not see the additional subject page" do
           school.update!(phase: "Secondary")
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
@@ -434,7 +434,7 @@ RSpec.shared_examples "an add a placement wizard" do
       end
 
       context "and I choose the Primary phase" do
-        it "I can create my placement" do
+        scenario "I can create my placement" do
           school.update!(phase: "Nursery")
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
@@ -465,7 +465,7 @@ RSpec.shared_examples "an add a placement wizard" do
       end
 
       context "and I choose the Secondary phase" do
-        it "I can create my placement" do
+        scenario "I can create my placement" do
           school.update!(phase: "Nursery")
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
@@ -493,7 +493,7 @@ RSpec.shared_examples "an add a placement wizard" do
       end
 
       context "and I do not choose a phase" do
-        it "I see an error message" do
+        scenario "I see an error message" do
           school.update!(phase: "Nursery")
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
@@ -504,7 +504,7 @@ RSpec.shared_examples "an add a placement wizard" do
       end
 
       context "and I click on change my phase" do
-        it "I decide to change my phase" do
+        scenario "I decide to change my phase" do
           school.update!(phase: "Nursery")
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
@@ -538,7 +538,7 @@ RSpec.shared_examples "an add a placement wizard" do
           and_my_selection_has_changed_to("Primary")
         end
 
-        it "I do not decide to change my phase" do
+        scenario "I do not decide to change my phase" do
           school.update!(phase: "Nursery")
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
@@ -569,7 +569,7 @@ RSpec.shared_examples "an add a placement wizard" do
       end
 
       context "and I click on change my subject" do
-        it "I decide to change my subject" do
+        scenario "I decide to change my subject" do
           school.update!(phase: "Nursery")
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
@@ -598,7 +598,7 @@ RSpec.shared_examples "an add a placement wizard" do
           and_my_selection_has_changed_to(subject_3.name)
         end
 
-        it "I do not decide to change my subject" do
+        scenario "I do not decide to change my subject" do
           school.update!(phase: "Nursery")
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
@@ -627,7 +627,7 @@ RSpec.shared_examples "an add a placement wizard" do
       end
 
       context "and I click on change my term" do
-        it "I decide to change my term" do
+        scenario "I decide to change my term" do
           school.update!(phase: "Nursery")
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
@@ -650,7 +650,7 @@ RSpec.shared_examples "an add a placement wizard" do
           then_i_see_the_check_your_answers_page("Secondary", mentor_1, spring_term.name)
         end
 
-        it "I select all terms separately" do
+        scenario "I select all terms separately" do
           school.update!(phase: "Nursery")
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
@@ -675,7 +675,7 @@ RSpec.shared_examples "an add a placement wizard" do
           then_i_see_the_check_your_answers_page("Secondary", mentor_1, "Any time in the academic year")
         end
 
-        it "I do not decide to change my term" do
+        scenario "I do not decide to change my term" do
           school.update!(phase: "Nursery")
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
@@ -699,7 +699,7 @@ RSpec.shared_examples "an add a placement wizard" do
       end
 
       context "and I click on change my mentor" do
-        it "I decide to change my mentor" do
+        scenario "I decide to change my mentor" do
           school.update!(phase: "Nursery")
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
@@ -720,7 +720,7 @@ RSpec.shared_examples "an add a placement wizard" do
           then_i_see_the_check_your_answers_page("Secondary", mentor_2, summer_term.name)
         end
 
-        it "I do not decide to change my mentor" do
+        scenario "I do not decide to change my mentor" do
           school.update!(phase: "Nursery")
           when_i_visit_the_placements_page
           and_i_click_on("Add placement")
