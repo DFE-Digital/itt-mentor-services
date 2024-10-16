@@ -1,8 +1,12 @@
 class Placements::BaseWizard
   attr_reader :state, :params, :current_step, :steps
 
-  def initialize(session:, params:, current_step: nil)
-    @state = session[self.class.name] ||= {}
+  def self.generate_state_key
+    SecureRandom.uuid
+  end
+
+  def initialize(state:, params:, current_step: nil)
+    @state = state
     @params = params
 
     # Initialise steps

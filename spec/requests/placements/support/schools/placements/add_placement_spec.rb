@@ -7,9 +7,13 @@ RSpec.describe "Support console / 'Add placement' journey", service: :placements
   let(:current_academic_year) { create(:placements_academic_year) }
   let(:drama) { create(:subject, :secondary, name: "Drama") }
   let(:summer_term) { create(:placements_term, :summer) }
+  let!(:state_key) { SecureRandom.uuid }
   let(:start_path) { new_add_placement_placements_support_school_placements_path(school_id:) }
 
-  before { sign_in_as current_user }
+  before do
+    allow(Placements::BaseWizard).to receive(:generate_state_key).and_return(state_key)
+    sign_in_as current_user
+  end
 
   context "when starting a new wizard journey" do
     before do
@@ -19,12 +23,6 @@ RSpec.describe "Support console / 'Add placement' journey", service: :placements
         "placements_add_placement_wizard_academic_year_step[academic_year_id]" => current_academic_year.id,
       }
       put step_path(:terms), params: { "placements_add_placement_wizard_terms_step[term_ids]" => [summer_term.id] }
-    end
-
-    it "resets the wizard state" do
-      expect(request.session["Placements::AddPlacementWizard"]).to be_present
-      get start_path
-      expect(request.session["Placements::AddPlacementWizard"]).to be_empty
     end
 
     it "redirects to the first step of the wizard" do
@@ -56,9 +54,9 @@ RSpec.describe "Support console / 'Add placement' journey", service: :placements
     end
 
     it "resets the wizard state" do
-      expect(request.session["Placements::AddPlacementWizard"]).to be_present
+      expect(request.session[state_key]).to be_present
       put step_path(:check_your_answers)
-      expect(request.session["Placements::AddPlacementWizard"]).to be_empty
+      expect(request.session[state_key]).to be_empty
     end
 
     it "redirects to the school's list of placements" do
@@ -91,6 +89,6 @@ RSpec.describe "Support console / 'Add placement' journey", service: :placements
   private
 
   def step_path(step)
-    add_placement_placements_support_school_placements_path(school_id:, step:)
+    add_placement_placements_support_school_placements_path(school_id:, state_key:, step:)
   end
 end

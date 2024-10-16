@@ -2,10 +2,10 @@ module Placements
   class EditPlacementWizard < BaseWizard
     attr_reader :school, :placement
 
-    def initialize(school:, params:, placement:, session:, current_step: nil)
+    def initialize(school:, params:, placement:, state:, current_step: nil)
       @school = school
       @placement = placement
-      super(session:, params:, current_step:)
+      super(state:, params:, current_step:)
     end
 
     def define_steps

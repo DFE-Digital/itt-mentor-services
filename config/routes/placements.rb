@@ -28,16 +28,16 @@ scope module: :placements,
 
       collection do
         get "new", to: "support_users/add_support_user#new", as: :new_add_support_user
-        get "new/:step", to: "support_users/add_support_user#edit", as: :add_support_user
-        put "new/:step", to: "support_users/add_support_user#update"
+        get "new/:state_key/:step", to: "support_users/add_support_user#edit", as: :add_support_user
+        put "new/:state_key/:step", to: "support_users/add_support_user#update"
       end
     end
 
     resources :organisations, only: %i[index] do
       collection do
         get "new", to: "organisations/add_organisation#new", as: :new_add_organisation
-        get "new/:step", to: "organisations/add_organisation#edit", as: :add_organisation
-        put "new/:step", to: "organisations/add_organisation#update"
+        get "new/:state_key/:step", to: "organisations/add_organisation#edit", as: :add_organisation
+        put "new/:state_key/:step", to: "organisations/add_organisation#update"
       end
     end
 
@@ -48,8 +48,8 @@ scope module: :placements,
 
           collection do
             get "new", to: "users/add_user#new", as: :new_add_user
-            get "new/:step", to: "users/add_user#edit", as: :add_user
-            put "new/:step", to: "users/add_user#update"
+            get "new/:state_key/:step", to: "users/add_user#edit", as: :add_user
+            put "new/:state_key/:step", to: "users/add_user#update"
           end
         end
 
@@ -58,8 +58,8 @@ scope module: :placements,
 
           collection do
             get "new", to: "mentors/add_mentor#new", as: :new_add_mentor
-            get "new/:step", to: "mentors/add_mentor#edit", as: :add_mentor
-            put "new/:step", to: "mentors/add_mentor#update"
+            get "new/:state_key/:step", to: "mentors/add_mentor#edit", as: :add_mentor
+            put "new/:state_key/:step", to: "mentors/add_mentor#update"
           end
         end
 
@@ -67,14 +67,14 @@ scope module: :placements,
           member do
             get :remove
             get "edit", to: "placements/edit_placement#new", as: :new_edit_placement
-            get "edit/:step", to: "placements/edit_placement#edit", as: :edit_placement
-            put "edit/:step", to: "placements/edit_placement#update"
+            get "edit/:state_key/:step", to: "placements/edit_placement#edit", as: :edit_placement
+            put "edit/:state_key/:step", to: "placements/edit_placement#update"
           end
 
           collection do
             get "new", to: "placements/add_placement#new", as: :new_add_placement
-            get "new/:step", to: "placements/add_placement#edit", as: :add_placement
-            put "new/:step", to: "placements/add_placement#update"
+            get "new/:state_key/:step", to: "placements/add_placement#edit", as: :add_placement
+            put "new/:state_key/:step", to: "placements/add_placement#update"
           end
         end
 
@@ -83,8 +83,8 @@ scope module: :placements,
 
           collection do
             get "new", to: "partner_providers/add_partner_provider#new", as: :new_add_partner_provider
-            get "new/:step", to: "partner_providers/add_partner_provider#edit", as: :add_partner_provider
-            put "new/:step", to: "partner_providers/add_partner_provider#update"
+            get "new/:state_key/:step", to: "partner_providers/add_partner_provider#edit", as: :add_partner_provider
+            put "new/:state_key/:step", to: "partner_providers/add_partner_provider#update"
           end
         end
       end
@@ -97,8 +97,8 @@ scope module: :placements,
 
           collection do
             get "new", to: "users/add_user#new", as: :new_add_user
-            get "new/:step", to: "users/add_user#edit", as: :add_user
-            put "new/:step", to: "users/add_user#update"
+            get "new/:state_key/:step", to: "users/add_user#edit", as: :add_user
+            put "new/:state_key/:step", to: "users/add_user#update"
           end
         end
 
@@ -107,8 +107,8 @@ scope module: :placements,
 
           collection do
             get "new", to: "partner_schools/add_partner_school#new", as: :new_add_partner_school
-            get "new/:step", to: "partner_schools/add_partner_school#edit", as: :add_partner_school
-            put "new/:step", to: "partner_schools/add_partner_school#update"
+            get "new/:state_key/:step", to: "partner_schools/add_partner_school#edit", as: :add_partner_school
+            put "new/:state_key/:step", to: "partner_schools/add_partner_school#update"
           end
         end
       end
@@ -123,8 +123,8 @@ scope module: :placements,
 
         collection do
           get "new", to: "users/add_user#new", as: :new_add_user
-          get "new/:step", to: "users/add_user#edit", as: :add_user
-          put "new/:step", to: "users/add_user#update"
+          get "new/:state_key/:step", to: "users/add_user#edit", as: :add_user
+          put "new/:state_key/:step", to: "users/add_user#update"
         end
       end
 
@@ -133,8 +133,8 @@ scope module: :placements,
 
         collection do
           get "new", to: "mentors/add_mentor#new", as: :new_add_mentor
-          get "new/:step", to: "mentors/add_mentor#edit", as: :add_mentor
-          put "new/:step", to: "mentors/add_mentor#update"
+          get "new/:state_key/:step", to: "mentors/add_mentor#edit", as: :add_mentor
+          put "new/:state_key/:step", to: "mentors/add_mentor#update"
         end
       end
 
@@ -142,28 +142,28 @@ scope module: :placements,
         member do
           get :remove
           get "edit", to: "placements/edit_placement#new", as: :new_edit_placement
-          get "edit/:step", to: "placements/edit_placement#edit", as: :edit_placement
-          put "edit/:step", to: "placements/edit_placement#update"
+          get "edit/:state_key/:step", to: "placements/edit_placement#edit", as: :edit_placement
+          put "edit/:state_key/:step", to: "placements/edit_placement#update"
           get "preview", to: "placements#preview", as: :preview_placement
         end
 
         collection do
           get "new", to: "placements/add_placement#new", as: :new_add_placement
-          get "new/:step", to: "placements/add_placement#edit", as: :add_placement
-          put "new/:step", to: "placements/add_placement#update"
+          get "new/:state_key/:step", to: "placements/add_placement#edit", as: :add_placement
+          put "new/:state_key/:step", to: "placements/add_placement#update"
         end
       end
 
       resources :school_contacts, only: [] do
         member do
           get "edit", to: "school_contacts/edit_school_contact#new", as: :new_edit_school_contact
-          get "edit/:step", to: "school_contacts/edit_school_contact#edit", as: :edit_school_contact
-          put "edit/:step", to: "school_contacts/edit_school_contact#update"
+          get "edit/:state_key/:step", to: "school_contacts/edit_school_contact#edit", as: :edit_school_contact
+          put "edit/:state_key/:step", to: "school_contacts/edit_school_contact#update"
         end
         collection do
           get "new", to: "school_contacts/add_school_contact#new", as: :new_add_school_contact
-          get "new/:step", to: "school_contacts/add_school_contact#edit", as: :add_school_contact
-          put "new/:step", to: "school_contacts/add_school_contact#update"
+          get "new/:state_key/:step", to: "school_contacts/add_school_contact#edit", as: :add_school_contact
+          put "new/:state_key/:step", to: "school_contacts/add_school_contact#update"
         end
       end
 
@@ -172,8 +172,8 @@ scope module: :placements,
 
         collection do
           get "new", to: "partner_providers/add_partner_provider#new", as: :new_add_partner_provider
-          get "new/:step", to: "partner_providers/add_partner_provider#edit", as: :add_partner_provider
-          put "new/:step", to: "partner_providers/add_partner_provider#update"
+          get "new/:state_key/:step", to: "partner_providers/add_partner_provider#edit", as: :add_partner_provider
+          put "new/:state_key/:step", to: "partner_providers/add_partner_provider#update"
         end
       end
     end
@@ -186,8 +186,8 @@ scope module: :placements,
 
         collection do
           get "new", to: "users/add_user#new", as: :new_add_user
-          get "new/:step", to: "users/add_user#edit", as: :add_user
-          put "new/:step", to: "users/add_user#update"
+          get "new/:state_key/:step", to: "users/add_user#edit", as: :add_user
+          put "new/:state_key/:step", to: "users/add_user#update"
         end
       end
 
@@ -196,8 +196,8 @@ scope module: :placements,
 
         collection do
           get "new", to: "partner_schools/add_partner_school#new", as: :new_add_partner_school
-          get "new/:step", to: "partner_schools/add_partner_school#edit", as: :add_partner_school
-          put "new/:step", to: "partner_schools/add_partner_school#update"
+          get "new/:state_key/:step", to: "partner_schools/add_partner_school#edit", as: :add_partner_school
+          put "new/:state_key/:step", to: "partner_schools/add_partner_school#update"
         end
 
         scope module: :partner_schools do
