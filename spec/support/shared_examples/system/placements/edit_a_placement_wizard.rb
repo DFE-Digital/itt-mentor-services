@@ -14,7 +14,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
       )
       when_i_click_link(
         text: "Add a partner provider",
-        href: public_send("placements_#{context_for_path}_partner_providers_path", school),
+        href: public_send("placements_school_partner_providers_path", school),
       )
       then_i_am_redirected_to_add_a_partner_provider
     end
@@ -37,7 +37,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
         when_i_click_link(
           text: "Assign a provider",
-          href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :provider),
+          href: public_send("new_edit_placement_placements_school_placement_path", school, placement, step: :provider),
         )
         then_i_should_see_the_edit_provider_page
         when_i_select_provider(provider_2)
@@ -54,7 +54,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
         when_i_click_link(
           text: "Assign a provider",
-          href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :provider),
+          href: public_send("new_edit_placement_placements_school_placement_path", school, placement, step: :provider),
         )
         then_i_should_see_the_edit_provider_page
         and_i_click_on("Continue")
@@ -66,7 +66,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
         when_i_click_link(
           text: "Assign a provider",
-          href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :provider),
+          href: public_send("new_edit_placement_placements_school_placement_path", school, placement, step: :provider),
         )
         then_i_should_see_the_edit_provider_page
         when_i_select_provider(provider_2)
@@ -79,7 +79,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
         when_i_click_link(
           text: "Assign a provider",
-          href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :provider),
+          href: public_send("new_edit_placement_placements_school_placement_path", school, placement, step: :provider),
         )
         then_i_should_see_the_edit_provider_page
         and_i_click_on("Back")
@@ -96,7 +96,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         )
         when_i_click_link(
           text: "Change",
-          href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :provider),
+          href: public_send("new_edit_placement_placements_school_placement_path", school, placement, step: :provider),
         )
         then_i_should_see_the_edit_provider_page
         when_i_select_provider(provider_2)
@@ -117,14 +117,14 @@ RSpec.shared_examples "an edit placement wizard", :js do
         )
         when_i_click_link(
           text: "Change",
-          href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :provider),
+          href: public_send("new_edit_placement_placements_school_placement_path", school, placement, step: :provider),
         )
         then_i_should_see_the_edit_provider_page
         when_i_choose_not_yet_known
         and_i_click_on("Continue")
         then_i_see_link(
           text: "Assign a provider",
-          href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :provider),
+          href: public_send("new_edit_placement_placements_school_placement_path", school, placement, step: :provider),
         )
         and_i_see_success_message("Provider updated")
         and_the_provider_is_notified_they_have_been_removed_from_the_placement(provider_1_user)
@@ -140,7 +140,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
       )
       when_i_click_link(
         text: "Change",
-        href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :year_group),
+        href: public_send("new_edit_placement_placements_school_placement_path", school, placement, step: :year_group),
       )
       then_i_should_see_the_edit_year_group_page
       when_i_select_year("Year 4")
@@ -160,7 +160,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
       )
       when_i_click_link(
         text: "Add a mentor",
-        href: public_send("placements_#{context_for_path}_mentors_path", school),
+        href: public_send("placements_school_mentors_path", school),
       )
       then_i_am_redirected_to_add_a_mentor
     end
@@ -178,7 +178,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
         when_i_click_link(
           text: "Select a mentor",
-          href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :mentors),
+          href: public_send("new_edit_placement_placements_school_placement_path", school, placement, step: :mentors),
         )
         then_i_should_see_the_edit_mentors_page
         when_i_uncheck("Not yet known")
@@ -193,7 +193,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
         when_i_click_link(
           text: "Select a mentor",
-          href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :mentors),
+          href: public_send("new_edit_placement_placements_school_placement_path", school, placement, step: :mentors),
         )
         when_i_uncheck("Not yet known")
         then_i_should_see_the_edit_mentors_page
@@ -206,7 +206,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
         when_i_click_link(
           text: "Select a mentor",
-          href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :mentors),
+          href: public_send("new_edit_placement_placements_school_placement_path", school, placement, step: :mentors),
         )
         then_i_should_see_the_edit_mentors_page
         when_i_select_mentor_2
@@ -219,7 +219,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
         when_i_click_link(
           text: "Select a mentor",
-          href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :mentors),
+          href: public_send("new_edit_placement_placements_school_placement_path", school, placement, step: :mentors),
         )
         then_i_should_see_the_edit_mentors_page
         and_i_click_on("Back")
@@ -237,7 +237,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         )
         when_i_click_link(
           text: "Change",
-          href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :mentors),
+          href: public_send("new_edit_placement_placements_school_placement_path", school, placement, step: :mentors),
         )
         then_i_should_see_the_edit_mentors_page
         when_i_select_mentor_2
@@ -255,7 +255,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         )
         when_i_click_link(
           text: "Change",
-          href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :mentors),
+          href: public_send("new_edit_placement_placements_school_placement_path", school, placement, step: :mentors),
         )
         then_i_should_see_the_edit_mentors_page
         when_i_uncheck(mentor_1.full_name)
@@ -271,7 +271,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         )
         when_i_click_link(
           text: "Change",
-          href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :mentors),
+          href: public_send("new_edit_placement_placements_school_placement_path", school, placement, step: :mentors),
         )
         then_i_should_see_the_edit_mentors_page
         when_i_select_mentor_2
@@ -288,7 +288,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         )
         when_i_click_link(
           text: "Change",
-          href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :mentors),
+          href: public_send("new_edit_placement_placements_school_placement_path", school, placement, step: :mentors),
         )
         then_i_should_see_the_edit_mentors_page
         and_i_click_on("Back")
@@ -304,7 +304,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         )
         when_i_click_link(
           text: "Change",
-          href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :mentors),
+          href: public_send("new_edit_placement_placements_school_placement_path", school, placement, step: :mentors),
         )
         then_i_should_see_the_edit_mentors_page
         when_i_select_not_yet_known
@@ -333,7 +333,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
       )
       when_i_click_link(
         text: "Change",
-        href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :terms),
+        href: public_send("new_edit_placement_placements_school_placement_path", school, placement, step: :terms),
       )
       then_i_should_see_the_edit_terms_page
       when_i_select_term("Summer term")
@@ -352,7 +352,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
       )
       when_i_click_link(
         text: "Change",
-        href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :terms),
+        href: public_send("new_edit_placement_placements_school_placement_path", school, placement, step: :terms),
       )
       then_i_should_see_the_edit_terms_page
       when_i_select_term("Summer term")
@@ -373,7 +373,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
       )
       when_i_click_link(
         text: "Change",
-        href: public_send("new_edit_placement_placements_#{context_for_path}_placement_path", school, placement, step: :terms),
+        href: public_send("new_edit_placement_placements_school_placement_path", school, placement, step: :terms),
       )
       then_i_should_see_the_edit_terms_page
       when_i_select_term("Any time in the academic year")

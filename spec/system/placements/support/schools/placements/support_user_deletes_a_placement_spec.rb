@@ -17,7 +17,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User delete
   before do
     placement_2
     given_i_sign_in_as_colin
-    when_i_visit_the_support_show_page_for(school, placement_1)
+    when_i_visit_the_show_page_for(school, placement_1)
   end
 
   scenario "Support User deletes a placement from a school" do
@@ -59,8 +59,8 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User delete
     and_i_click_sign_in
   end
 
-  def when_i_visit_the_support_show_page_for(school, placement)
-    visit placements_support_school_placement_path(school, placement)
+  def when_i_visit_the_show_page_for(school, placement)
+    visit placements_school_placement_path(school, placement)
   end
 
   def when_i_click_on(text)
@@ -68,10 +68,10 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User delete
   end
   alias_method :and_i_click_on, :when_i_click_on
 
-  def then_i_am_asked_to_confirm(school, placement)
+  def then_i_am_asked_to_confirm(_school, placement)
     organisations_is_selected_in_primary_nav
     expect(page).to have_title(
-      "Are you sure you want to delete this placement? - #{placement.decorate.title} - #{school.name} - Manage school placements",
+      "Are you sure you want to delete this placement? - #{placement.decorate.title} - Manage school placements",
     )
     expect(page).to have_content "Are you sure you want to delete this placement?"
   end
@@ -85,7 +85,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User delete
 
   def then_i_return_to_placement_page(school, placement)
     organisations_is_selected_in_primary_nav
-    expect(page).to have_current_path placements_support_school_placement_path(school, placement),
+    expect(page).to have_current_path placements_school_placement_path(school, placement),
                                       ignore_query: true
   end
 
@@ -101,12 +101,12 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User delete
   end
 
   def placements_is_selected_in_secondary_nav
-    within(".app-secondary-navigation__list") do
-      expect(page).to have_link "Details", current: "false"
+    within(".app-primary-navigation__list") do
+      expect(page).to have_link "Organisation details", current: "false"
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Mentors", current: "false"
       expect(page).to have_link "Placements", current: "page"
-      expect(page).to have_link "Partner providers", current: "false"
+      expect(page).to have_link "Providers", current: "false"
     end
   end
 

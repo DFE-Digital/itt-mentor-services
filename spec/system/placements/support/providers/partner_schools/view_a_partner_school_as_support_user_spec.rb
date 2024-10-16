@@ -27,7 +27,7 @@ RSpec.describe "Placements / Support/ Providers / Partner schools / View a partn
   end
 
   def when_i_visit_the_partner_schools_page_for(provider)
-    visit placements_support_provider_partner_schools_path(provider)
+    visit placements_provider_partner_schools_path(provider)
 
     then_i_see_support_navigation_with_organisation_selected
     partner_schools_is_selected_in_secondary_nav
@@ -62,10 +62,10 @@ RSpec.describe "Placements / Support/ Providers / Partner schools / View a partn
   end
 
   def partner_schools_is_selected_in_secondary_nav
-    within(".app-secondary-navigation__list") do
-      expect(page).to have_link "Details", current: "false"
+    within(".app-primary-navigation__list") do
+      expect(page).to have_link "Organisation details", current: "false"
       expect(page).to have_link "Users", current: "false"
-      expect(page).to have_link "Partner schools", current: "page"
+      expect(page).to have_link "Schools", current: "page"
     end
   end
 end

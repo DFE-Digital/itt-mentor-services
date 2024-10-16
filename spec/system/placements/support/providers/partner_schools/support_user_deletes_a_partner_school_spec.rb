@@ -25,11 +25,11 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
 
   scenario "Support user deletes a partner school" do
     when_i_visit_the_partner_schools_page_for(provider:, school:)
-    and_i_click_on("Delete partner school")
+    and_i_click_on("Delete school")
     then_i_am_asked_to_confirm_partner_school(school)
     when_i_click_on("Cancel")
     then_i_return_to_partner_school_page(school)
-    when_i_click_on("Delete partner school")
+    when_i_click_on("Delete school")
     then_i_am_asked_to_confirm_partner_school(school)
     when_i_click_on("Delete school")
     then_the_partner_school_is_deleted(school)
@@ -55,12 +55,12 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
 
     scenario "Support user deletes a partner school, and see the placements listed" do
       when_i_visit_the_partner_schools_page_for(provider:, school:)
-      and_i_click_on("Delete partner school")
+      and_i_click_on("Delete school")
       then_i_am_asked_to_confirm_partner_school(school)
       and_i_see_a_list_of_associated_placements_with_partner_school_and_provider
       when_i_click_on("Cancel")
       then_i_return_to_partner_school_page(school)
-      when_i_click_on("Delete partner school")
+      when_i_click_on("Delete school")
       then_i_am_asked_to_confirm_partner_school(school)
       when_i_click_on("Delete school")
       then_the_partner_school_is_deleted(school)
@@ -72,11 +72,11 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
   scenario "Support user deletes a partner school, which is not onboarded on the placements service" do
     given_the_school_is_not_onboarded_on_placements_service(school)
     when_i_visit_the_partner_schools_page_for(provider:, school:)
-    and_i_click_on("Delete partner school")
+    and_i_click_on("Delete school")
     then_i_am_asked_to_confirm_partner_school(school)
     when_i_click_on("Cancel")
     then_i_return_to_partner_school_page(school)
-    when_i_click_on("Delete partner school")
+    when_i_click_on("Delete school")
     then_i_am_asked_to_confirm_partner_school(school)
     when_i_click_on("Delete school")
     then_the_partner_school_is_deleted(school)
@@ -94,7 +94,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
   end
 
   def when_i_visit_the_partner_schools_page_for(provider:, school:)
-    visit placements_support_provider_partner_school_path(provider, school)
+    visit placements_provider_partner_school_path(provider, school)
 
     then_i_see_support_navigation_with_organisation_selected
   end
@@ -107,8 +107,8 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
   end
 
   def partner_schools_is_selected_in_secondary_nav
-    within(".app-secondary-navigation__list") do
-      expect(page).to have_link "Details", current: "false"
+    within(".app-primary-navigation__list") do
+      expect(page).to have_link "Organisation details", current: "false"
       expect(page).to have_link "Users", current: "false"
     end
   end
@@ -121,14 +121,14 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
   def then_i_am_asked_to_confirm_partner_school(school)
     expect(page).to have_title(
       "Are you sure you want to delete this partner school? - #{school.name} " \
-        "- #{provider.name} - Manage school placements",
+        "- Manage school placements",
     )
     expect(page).to have_content school.name
     expect(page).to have_content "Are you sure you want to delete this school?"
   end
 
   def then_i_return_to_partner_school_page(school)
-    expect(page).to have_current_path placements_support_provider_partner_school_path(provider, school),
+    expect(page).to have_current_path placements_provider_partner_school_path(provider, school),
                                       ignore_query: true
   end
 

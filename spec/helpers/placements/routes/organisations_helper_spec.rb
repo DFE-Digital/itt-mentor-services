@@ -24,29 +24,6 @@ RSpec.describe Placements::Routes::OrganisationsHelper do
     end
   end
 
-  describe "#placements_support_organisation_path" do
-    context "when organisation is a school" do
-      it "returns the support school path" do
-        organisation = create(:school)
-        expect(placements_support_organisation_path(organisation)).to eq(placements_support_school_path(organisation))
-      end
-    end
-
-    context "when organisation is a provider" do
-      it "returns the support provider path" do
-        organisation = create(:provider)
-        expect(placements_support_organisation_path(organisation)).to eq(placements_support_provider_path(organisation))
-      end
-    end
-
-    context "when organisation is not a school or provider" do
-      it "raises NotImplementedError" do
-        organisation = create(:claim)
-        expect { placements_support_organisation_path(organisation) }.to raise_error(NotImplementedError)
-      end
-    end
-  end
-
   describe "#placements_organisation_user_path" do
     context "when organisation is a school" do
       it "returns the school user path" do
@@ -69,29 +46,6 @@ RSpec.describe Placements::Routes::OrganisationsHelper do
         organisation = create(:claim)
         user = create(:user, type: "Placements::User")
         expect { placements_organisation_user_path(organisation, user) }.to raise_error(NotImplementedError)
-      end
-    end
-  end
-
-  describe "#placements_support_users_path" do
-    context "when organisation is a school" do
-      it "returns the support school users path" do
-        organisation = create(:school)
-        expect(placements_support_users_path(organisation)).to eq(placements_support_school_users_path(organisation))
-      end
-    end
-
-    context "when organisation is a provider" do
-      it "returns the support provider users path" do
-        organisation = create(:provider)
-        expect(placements_support_users_path(organisation)).to eq(placements_support_provider_users_path(organisation))
-      end
-    end
-
-    context "when organisation is not a school or provider" do
-      it "raises NotImplementedError" do
-        organisation = create(:claim)
-        expect { placements_support_users_path(organisation) }.to raise_error(NotImplementedError)
       end
     end
   end
