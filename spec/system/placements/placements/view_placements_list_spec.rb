@@ -76,13 +76,17 @@ RSpec.describe "Placements / Placements / View placements list",
     end
 
     context "when filtering placements by location" do
-      before { stub_london_geocoder_search }
+      before do
+        stub_london_geocoder_search
+        stub_routes_api_travel_time
+      end
 
       scenario "User can filter placements by location" do
         when_i_visit_the_placements_index_page
         and_i_enter_location_in_search_box("London")
         and_i_click_on("Apply filters")
         then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
+        and_i_see_travel_times(list_item: 0, expected_travel_time: "42 minutes")
         and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
         and_i_can_see_search_location_is_set_as("London")
       end
@@ -259,13 +263,17 @@ RSpec.describe "Placements / Placements / View placements list",
     end
 
     context "when a search location has been pre-entered" do
-      before { stub_london_geocoder_search }
+      before do
+        stub_london_geocoder_search
+        stub_routes_api_travel_time
+      end
 
       scenario "User can filter placements by school, and the location search persists" do
         when_i_visit_the_placements_index_page({ filters: { search_location: "London" } })
         and_i_check_filter_option("school-ids", primary_school.id)
         and_i_click_on("Apply filters")
         then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
+        and_i_see_travel_times(list_item: 0, expected_travel_time: "42 minutes")
         and_i_can_not_see_a_placement_for_school_and_subject("Secondary School", "Chemistry")
         and_i_can_see_search_location_is_set_as("London")
         and_i_see_placements_for(school_name: "Primary School", list_item: 0, distance: 0.0)
@@ -279,6 +287,7 @@ RSpec.describe "Placements / Placements / View placements list",
           and_i_can_see_a_preset_filter("School", "Primary School")
           when_i_click_to_remove_filter("School", "Primary School")
           then_i_can_see_a_placement_for_school_and_subject("Primary School", "Primary with mathematics (Year 1)")
+          and_i_see_travel_times(list_item: 0, expected_travel_time: "42 minutes")
           and_i_can_see_search_location_is_set_as("London")
           and_i_see_placements_for(school_name: "Primary School", list_item: 0, distance: 0.0)
         end
@@ -288,6 +297,7 @@ RSpec.describe "Placements / Placements / View placements list",
     context "when a user views a placement and returns to the index page" do
       before do
         stub_london_geocoder_search
+        stub_routes_api_travel_time
         create_list(:placement, 30, subject: subject_1, school: primary_school)
       end
 
@@ -300,6 +310,7 @@ RSpec.describe "Placements / Placements / View placements list",
         and_i_click_on("Back")
         then_i_can_see_a_preset_filter("Subject", subject_1.name)
         and_i_can_see_search_location_is_set_as("London")
+        and_i_see_travel_times(list_item: 0, expected_travel_time: "42 minutes")
         and_the_pagination_remains_selected("2")
       end
     end
@@ -348,6 +359,19 @@ RSpec.describe "Placements / Placements / View placements list",
 
   alias_method :and_i_can_see_a_placement_for_school_and_subject,
                :then_i_can_see_a_placement_for_school_and_subject
+
+  def and_i_see_travel_times(list_item:, expected_travel_time:)
+    within(".app-search-results") do
+      placement_div = page.all(".app-search-results__item")[list_item]
+      expect(placement_div).to have_content("Travel time")
+      expect(placement_div).to have_content("Public transport")
+      expect(placement_div).to have_content(expected_travel_time)
+      expect(placement_div).to have_content("Driving")
+      expect(placement_div).to have_content(expected_travel_time)
+      expect(placement_div).to have_content("Walking")
+      expect(placement_div).to have_content(expected_travel_time)
+    end
+  end
 
   def then_i_can_not_see_a_placement_for_school_and_subject(school_name, subject_name)
     expect(page).not_to have_selector("a", text: "#{subject_name} – #{school_name}")
@@ -453,5 +477,20 @@ RSpec.describe "Placements / Placements / View placements list",
     allow(geocoder_results).to receive(:first).and_return(geocoder_result)
     allow(geocoder_result).to receive(:coordinates).and_return([51.5072178, -0.1275862])
     allow(Geocoder).to receive(:search).and_return(geocoder_results)
+  end
+
+  def stub_routes_api_travel_time
+    body = [
+      {
+        "destinationIndex" => 0,
+        "localizedValues" => {
+          "distance" => { "text" => "20 mi" },
+          "duration" => { "text" => "42 mins" },
+          "staticDuration" => { "text" => "36 mins" },
+        },
+      },
+    ].to_json
+
+    stub_request(:post, "https://routes.googleapis.com/distanceMatrix/v2:computeRouteMatrix").to_return(status: 200, body:, headers: { "Content-Type" => "application/json" })
   end
 end

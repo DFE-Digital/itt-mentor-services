@@ -4,7 +4,6 @@
       <%= placement.title %> – <%= school.name %>
     <% end %>
   </h2>
-
   <div class="app-result-detail">
     <%= render Placement::StatusTagComponent.new(placement:) %>
   </div>
@@ -69,5 +68,34 @@
         <%= school.rating %>
       </dd>
     </div>
+      <% if location_coordinates.present? %>
+      <div class="app-result-detail">
+        <h3 class="govuk-heading-s govuk-!-margin-top-3 govuk-!-margin-bottom-0"><%= t(".travel_time") %></h3>
+      </div>
+      <div class="app-result-detail__row">
+      <dt class="app-result-detail__key">
+        <%= t(".public_transport") %>
+      </dt>
+      <dd class="app-result-detail__value">
+        <%= @school.formatted_duration("transit") %>
+      </dd>
+    </div>
+          <div class="app-result-detail__row">
+      <dt class="app-result-detail__key">
+        <%= t(".driving") %>
+      </dt>
+      <dd class="app-result-detail__value">
+        <%= @school.formatted_duration("drive") %>
+      </dd>
+    </div>
+    <div class="app-result-detail__row">
+      <dt class="app-result-detail__key">
+        <%= t(".walking") %>
+      </dt>
+      <dd class="app-result-detail__value">
+        <%= @school.formatted_duration("walk") %>
+      </dd>
+    </div>
+  <% end %>
   </dl>
 </li>
