@@ -77,7 +77,7 @@
         <%= t(".public_transport") %>
       </dt>
       <dd class="app-result-detail__value">
-        <%= @school.transit_travel_duration %>
+        <%= @school.formatted_duration("transit") %>
       </dd>
     </div>
           <div class="app-result-detail__row">
@@ -85,7 +85,7 @@
         <%= t(".driving") %>
       </dt>
       <dd class="app-result-detail__value">
-        <%= @school.drive_travel_duration %>
+        <%= @school.formatted_duration("drive") %>
       </dd>
     </div>
     <div class="app-result-detail__row">
@@ -93,7 +93,7 @@
         <%= t(".walking") %>
       </dt>
       <dd class="app-result-detail__value">
-        <%= @school.walk_travel_duration %>
+        <%= @school.formatted_duration("walk") %>
       </dd>
     </div>
   <% end %>
