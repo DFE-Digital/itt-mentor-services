@@ -24,11 +24,12 @@ jobs:
 
       - name: Build and push docker image
         id: build-image
-        uses: DFE-Digital/github-actions/build-docker-image@master
+        uses: DFE-Digital/github-actions/build-docker-image@add-max-caching-to-build-docker-image
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           context: .
           snyk-token: ${{ secrets.SNYK_TOKEN }}
+          max-cache: true
 
   deploy_review:
     name: Deploy to review environment
