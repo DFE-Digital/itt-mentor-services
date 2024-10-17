@@ -37,50 +37,67 @@ RSpec.describe "Placements / Placements / Searching for a placements list",
     bath_placement
 
     given_i_sign_in_as_patricia
-    stub_travel_time_service
   end
 
   context "when searching for placements near a location (London)" do
-    before { stub_london_geocoder_search }
+    before do
+      stub_london_geocoder_search
+      stub_routes_api_travel_time
+    end
 
     scenario "User sees a list of placements ordered by distance, closest to the given search" do
       when_i_visit_the_placements_index_page
       and_i_fill_in_location_search_with("London")
       and_i_click_on("Apply filters")
       then_i_see_placements_for(school_name: "London School", list_item: 0, distance: 0.0)
-      and_i_see_placements_for(school_name: "Guildford School", list_item: 1, distance: 26.7)
+      and_i_see_travel_times(list_item: 0, expected_travel_time: "42 minutes")
+      then_i_see_placements_for(school_name: "Guildford School", list_item: 1, distance: 26.7)
+      and_i_see_travel_times(list_item: 1, expected_travel_time: "42 minutes")
       and_i_do_not_see_placements_for(school_name: "Bath School")
     end
   end
 
   context "when searching for placements near a location (Guildford)" do
-    before { stub_guildford_geocoder_search }
+    before do
+      stub_guildford_geocoder_search
+      stub_routes_api_travel_time
+    end
 
     scenario "User sees a list of placements ordered by distance, closest to the given search" do
       when_i_visit_the_placements_index_page
       and_i_fill_in_location_search_with("Guildford")
       and_i_click_on("Apply filters")
       then_i_see_placements_for(school_name: "Guildford School", list_item: 0, distance: 0.0)
+      and_i_see_travel_times(list_item: 0, expected_travel_time: "42 minutes")
       then_i_see_placements_for(school_name: "London School", list_item: 1, distance: 26.7)
+      and_i_see_travel_times(list_item: 1, expected_travel_time: "42 minutes")
       and_i_do_not_see_placements_for(school_name: "Bath School")
     end
   end
 
   context "when searching for placements using a postcode" do
-    before { stub_london_geocoder_search }
+    before do
+      stub_london_geocoder_search
+      stub_routes_api_travel_time
+    end
 
     scenario "User sees a list of placements ordered by distance, closest to the given search" do
       when_i_visit_the_placements_index_page
       and_i_fill_in_location_search_with("WC1")
       and_i_click_on("Apply filters")
       then_i_see_placements_for(school_name: "London School", list_item: 0, distance: 0.0)
-      and_i_see_placements_for(school_name: "Guildford School", list_item: 1, distance: 26.7)
+      and_i_see_travel_times(list_item: 0, expected_travel_time: "42 minutes")
+      then_i_see_placements_for(school_name: "Guildford School", list_item: 1, distance: 26.7)
+      and_i_see_travel_times(list_item: 1, expected_travel_time: "42 minutes")
       and_i_do_not_see_placements_for(school_name: "Bath School")
     end
   end
 
   context "when searching for placements near a location, with pre-selected filters" do
-    before { stub_london_geocoder_search }
+    before do
+      stub_london_geocoder_search
+      stub_routes_api_travel_time
+    end
 
     scenario "User sees a list of placements ordered by distance, closest to the given search" do
       when_i_visit_the_placements_index_page(
@@ -93,6 +110,7 @@ RSpec.describe "Placements / Placements / Searching for a placements list",
       and_i_fill_in_location_search_with("WC1")
       and_i_click_on("Apply filters")
       then_i_see_placements_for(school_name: "London School", list_item: 0, distance: 0.0)
+      and_i_see_travel_times(list_item: 0, expected_travel_time: "42 minutes")
       and_i_do_not_see_placements_for(school_name: "Bath School")
       and_i_do_not_see_placements_for(school_name: "York School")
       and_i_can_see_a_preset_filter("School", "London School")
@@ -155,6 +173,19 @@ RSpec.describe "Placements / Placements / Searching for a placements list",
   end
   alias_method :and_i_see_placements_for, :then_i_see_placements_for
 
+  def and_i_see_travel_times(list_item:, expected_travel_time:)
+    within(".app-search-results") do
+      placement_div = page.all(".app-search-results__item")[list_item]
+      expect(placement_div).to have_content("Travel time")
+      expect(placement_div).to have_content("Public transport")
+      expect(placement_div).to have_content(expected_travel_time)
+      expect(placement_div).to have_content("Driving")
+      expect(placement_div).to have_content(expected_travel_time)
+      expect(placement_div).to have_content("Walking")
+      expect(placement_div).to have_content(expected_travel_time)
+    end
+  end
+
   def then_i_do_not_see_placements_for(school_name:)
     within(".app-search-results") do
       expect(page).not_to have_content(school_name)
@@ -202,10 +233,18 @@ RSpec.describe "Placements / Placements / Searching for a placements list",
     allow(Geocoder).to receive(:search).and_return(geocoder_results)
   end
 
-  def stub_travel_time_service
-    allow(Placements::TravelTime).to receive(:call).and_return([
-      london_school.assign_attributes(transit_travel_duration: "0 mins", drive_travel_duration: "0 mins", walk_travel_duration: "0 mins"),
-      guildford_school.assign_attributes(transit_travel_duration: "0 mins", drive_travel_duration: "0 mins", walk_travel_duration: "0 mins"),
-    ])
+  def stub_routes_api_travel_time
+    body = [
+      {
+        "destinationIndex" => 0,
+        "localizedValues" => {
+          "distance" => { "text" => "20 mi" },
+          "duration" => { "text" => "42 mins" },
+          "staticDuration" => { "text" => "36 mins" },
+        },
+      },
+    ].to_json
+
+    stub_request(:post, "https://routes.googleapis.com/distanceMatrix/v2:computeRouteMatrix").to_return(status: 200, body:, headers: { "Content-Type" => "application/json" })
   end
 end

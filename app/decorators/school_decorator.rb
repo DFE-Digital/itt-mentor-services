@@ -3,6 +3,13 @@ class SchoolDecorator < OrganisationDecorator
   attribute :walk_travel_duration
   attribute :drive_travel_duration
 
+  def formatted_duration(mode)
+    duration = send("#{mode}_travel_duration")
+    return "" if duration.blank?
+
+    duration.gsub(/\bmins\b/, I18n.t("components.placement.summary_component.minutes"))
+  end
+
   def formatted_inspection_date
     return "" if last_inspection_date.blank?
 
