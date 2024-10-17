@@ -45,7 +45,7 @@ RSpec.describe "Placements / Placements / Searching for a placements list",
     scenario "User sees a list of placements ordered by distance, closest to the given search" do
       when_i_visit_the_placements_index_page
       and_i_fill_in_location_search_with("London")
-      and_i_click_on("Search")
+      and_i_click_on("Apply filters")
       then_i_see_placements_for(school_name: "London School", list_item: 0, distance: 0.0)
       and_i_see_placements_for(school_name: "Guildford School", list_item: 1, distance: 26.7)
       and_i_do_not_see_placements_for(school_name: "Bath School")
@@ -58,7 +58,7 @@ RSpec.describe "Placements / Placements / Searching for a placements list",
     scenario "User sees a list of placements ordered by distance, closest to the given search" do
       when_i_visit_the_placements_index_page
       and_i_fill_in_location_search_with("Guildford")
-      and_i_click_on("Search")
+      and_i_click_on("Apply filters")
       then_i_see_placements_for(school_name: "Guildford School", list_item: 0, distance: 0.0)
       and_i_see_placements_for(school_name: "London School", list_item: 1, distance: 26.7)
       and_i_do_not_see_placements_for(school_name: "Bath School")
@@ -71,7 +71,7 @@ RSpec.describe "Placements / Placements / Searching for a placements list",
     scenario "User sees a list of placements ordered by distance, closest to the given search" do
       when_i_visit_the_placements_index_page
       and_i_fill_in_location_search_with("WC1")
-      and_i_click_on("Search")
+      and_i_click_on("Apply filters")
       then_i_see_placements_for(school_name: "London School", list_item: 0, distance: 0.0)
       and_i_see_placements_for(school_name: "Guildford School", list_item: 1, distance: 26.7)
       and_i_do_not_see_placements_for(school_name: "Bath School")
@@ -90,7 +90,7 @@ RSpec.describe "Placements / Placements / Searching for a placements list",
         },
       )
       and_i_fill_in_location_search_with("WC1")
-      and_i_click_on("Search")
+      and_i_click_on("Apply filters")
       then_i_see_placements_for(school_name: "London School", list_item: 0, distance: 0.0)
       and_i_do_not_see_placements_for(school_name: "Bath School")
       and_i_do_not_see_placements_for(school_name: "York School")
@@ -104,7 +104,7 @@ RSpec.describe "Placements / Placements / Searching for a placements list",
     scenario "User sees a message that no placements were found" do
       when_i_visit_the_placements_index_page
       and_i_fill_in_location_search_with("Chicken")
-      and_i_click_on("Search")
+      and_i_click_on("Apply filters")
       then_i_see_the_empty_state
     end
   end
@@ -142,7 +142,7 @@ RSpec.describe "Placements / Placements / Searching for a placements list",
   end
 
   def and_i_fill_in_location_search_with(search_text)
-    fill_in "search-location-field", with: search_text
+    fill_in "filters-search-location-field", with: search_text
   end
 
   def then_i_see_placements_for(school_name:, list_item:, distance:)

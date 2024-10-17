@@ -8,18 +8,23 @@ en:
       placements:
         index:
           placements_found:
-            zero: No placements found
-            one: 1 placement found
-            other: "%{count} placements found"
-          placements: Placements
+            zero: No placements
+            one: 1 placement
+            other: "%{count} placements"
+          find_placements: Find placements
           no_results: There are no placements that match your selection. Try searching again, or removing one or more filters.
           enter_a_location: Enter a location
-          location_search_example: For example, Sunderland or SR2
+          results_sorted_alpha: Results sorted alphabetically
+          results_sorted_distance: Results sorted by distance from %{search_location}
         filter:
+          google_attribution: Powered by Google
+          location_search_prompt: Enter a town, city or postcode
           partner_schools: Schools I work with
           terms: Expected date
           only_show_partner_schools: Only show placements from schools I work with
           school: School
+          search_location: Location
+          search_by_location: Search by location
           subject: Subject
           school_phase: School phase
           establishment_group: Establishment group

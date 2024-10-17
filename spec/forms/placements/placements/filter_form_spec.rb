@@ -205,6 +205,7 @@ describe Placements::Placements::FilterForm, type: :model do
           academic_year_id: current_academic_year.id,
           school_ids: [],
           only_partner_schools: false,
+          search_location: nil,
           subject_ids: [],
           term_ids: [],
           year_groups: [],
