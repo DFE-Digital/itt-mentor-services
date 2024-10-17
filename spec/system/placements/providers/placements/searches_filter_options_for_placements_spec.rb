@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Placements / Searches filter options for a placements list", :js, service: :placements, type: :system do
+RSpec.describe "Placements / Providers / Placements / Searches filter options for a placements list", :js, service: :placements, type: :system do
   let(:provider) { create(:placements_provider, name: "Provider") }
   let(:london_school) do
     create(
