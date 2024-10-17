@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Placements / View a placement",
+RSpec.describe "Placements / Providers / Placements / View a placement",
                service: :placements, type: :system do
   let(:provider) { create(:placements_provider, name: "Provider") }
   let(:school) do
