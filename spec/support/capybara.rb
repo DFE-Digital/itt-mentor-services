@@ -17,6 +17,9 @@ Capybara.register_driver :selenium_chrome_headless do |app|
     opts.add_argument("--window-size=1400,1400")
   end
 
+  # options.add_preference(:download, prompt_for_download: false, default_directory: "tmp/downloads")
+  # options.add_preference(:browser, set_download_behavior: { behavior: "allow" })
+
   Capybara::Selenium::Driver.new(app, browser: :chrome, options:)
 end
 
