@@ -9,7 +9,7 @@ RSpec.describe "Placements / Schools / Placements / Delete a placement",
   let(:subject_2) { build(:subject, name: "Subject 2", subject_area: :primary) }
 
   before do
-    given_i_sign_in_as_anne
+    given_i_am_signed_in_as_a_placements_user(organisations: [school])
     placement_2
     when_i_visit_the_placement_show_page(placement_1)
   end
@@ -34,28 +34,8 @@ RSpec.describe "Placements / Schools / Placements / Delete a placement",
 
   private
 
-  def and_there_is_an_existing_user_for(user_name)
-    user = create(:placements_user, user_name.downcase.to_sym)
-    user_exists_in_dfe_sign_in(user:)
-    create(:user_membership, user:, organisation: school)
-  end
-
-  def and_i_visit_the_sign_in_path
-    visit sign_in_path
-  end
-
-  def and_i_click_sign_in
-    click_on "Sign in using DfE Sign In"
-  end
-
   def when_i_visit_the_placement_show_page(placement)
     visit placements_school_placement_path(school, placement)
-  end
-
-  def given_i_sign_in_as_anne
-    and_there_is_an_existing_user_for("Anne")
-    and_i_visit_the_sign_in_path
-    and_i_click_sign_in
   end
 
   def when_i_click_on(text)

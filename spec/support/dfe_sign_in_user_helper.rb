@@ -1,4 +1,13 @@
 module DfESignInUserHelper
+  def sign_in_placements_user(organisations: [])
+    @current_user = create(:placements_user)
+    organisations.each do |organisation|
+      create(:user_membership, user: @current_user, organisation:)
+    end
+    sign_in_as(@current_user)
+  end
+  alias_method :given_i_am_signed_in_as_a_placements_user, :sign_in_placements_user
+
   def sign_in_placements_support_user
     @current_user = create(:placements_support_user)
     sign_in_as(@current_user)
