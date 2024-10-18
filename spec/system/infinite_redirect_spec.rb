@@ -1,10 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Infinite redirect", service: :placements, type: :system do
-  let!(:user) { create(:placements_support_user) }
-
   scenario "When the support users permissions are removed they aren't stuck in an infinite loop" do
-    given_i_am_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
     when_i_view_all_organisations
     and_the_support_user_is_removed_as_a_support_user
     and_i_click_link("Organisations")
@@ -14,16 +12,12 @@ RSpec.describe "Infinite redirect", service: :placements, type: :system do
 
   private
 
-  def given_i_am_a_support_user
-    sign_in_as user
-  end
-
   def when_i_view_all_organisations
     visit placements_support_organisations_path
   end
 
   def and_the_support_user_is_removed_as_a_support_user
-    user.update!(type: "Placements::User")
+    @current_user.update!(type: "Placements::User")
   end
 
   def and_i_click_link(text)

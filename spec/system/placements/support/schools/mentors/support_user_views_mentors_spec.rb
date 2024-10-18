@@ -7,29 +7,21 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User views men
   let!(:mentor3) { create(:mentor, trn: "1231233") }
   let!(:school) { create(:placements_school, mentors: [mentor1, mentor2]) }
   let!(:another_school) { create(:placements_school) }
-  let!(:colin) { create(:placements_support_user, :colin) }
+
+  before { given_i_am_signed_in_as_a_placements_support_user }
 
   scenario "View a school's mentors as a support user" do
-    user_exists_in_dfe_sign_in(user: colin)
-    given_i_sign_in
     when_i_visit_the_school_mentors_page(school)
     then_i_see_a_list_of_the_schools_mentors
     and_i_dont_see_mentors_from_another_school
   end
 
   scenario "View a school's empty mentors list" do
-    user_exists_in_dfe_sign_in(user: colin)
-    given_i_sign_in
     when_i_visit_the_school_mentors_page(another_school)
     then_i_see_no_results
   end
 
   private
-
-  def given_i_sign_in
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
 
   def when_i_visit_the_school_mentors_page(school)
     visit placements_school_mentors_path(school)

@@ -7,7 +7,7 @@ RSpec.describe "Placements school user adds mentors to schools", service: :place
   let(:placements_mentor) { create(:placements_mentor) }
   let(:new_mentor) { build(:placements_mentor) }
 
-  before { given_i_sign_in_as_anne }
+  before { given_i_am_signed_in_as_a_placements_user(organisations: [school]) }
 
   scenario "I can navigate back to the index page" do
     given_i_navigate_to_schools_mentors_list
@@ -212,14 +212,6 @@ RSpec.describe "Placements school user adds mentors to schools", service: :place
   end
 
   private
-
-  def given_i_sign_in_as_anne
-    user = create(:placements_user, :anne)
-    create(:user_membership, user:, organisation: school)
-    user_exists_in_dfe_sign_in(user:)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
 
   def given_a_claims_mentor_exists
     create(:claims_mentor_membership, school: another_school, mentor: claims_mentor)

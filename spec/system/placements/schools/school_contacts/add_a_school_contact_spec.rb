@@ -5,7 +5,7 @@ RSpec.describe "Placements / Schools / School Contacts / Add a school contact",
   let(:school) { build(:placements_school, with_school_contact: false) }
 
   before do
-    given_i_sign_in_as_anne
+    given_i_am_signed_in_as_a_placements_user(organisations: [school])
   end
 
   scenario "User adds a school contact to their organisation" do
@@ -120,14 +120,6 @@ RSpec.describe "Placements / Schools / School Contacts / Add a school contact",
   end
 
   private
-
-  def given_i_sign_in_as_anne
-    user = create(:placements_user, :anne)
-    create(:user_membership, user:, organisation: school)
-    user_exists_in_dfe_sign_in(user:)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
 
   def when_i_view_my_organisation_details_page
     visit placements_school_path(school)

@@ -6,18 +6,12 @@ RSpec.describe "Placements / Support Users / Support user views support users",
   let!(:support_user_2) { create(:placements_support_user, created_at: "2024-01-01") }
 
   scenario "View list of all support users" do
-    when_i_sign_in_as_a_support_user(support_user)
+    given_i_sign_in_as(support_user)
     and_i_visit_the_support_users_page
     i_see_the_list_of_all_support_users_ordered_by_latest_created_at_first
   end
 
   private
-
-  def when_i_sign_in_as_a_support_user(support_user)
-    user_exists_in_dfe_sign_in(user: support_user)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
 
   def and_i_visit_the_support_users_page
     within(".govuk-header__navigation-list") do

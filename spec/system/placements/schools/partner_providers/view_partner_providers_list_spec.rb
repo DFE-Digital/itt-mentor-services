@@ -8,7 +8,7 @@ RSpec.describe "Placements / Schools / Partner providers / View a list of partne
   let!(:another_provider) { create(:placements_provider, name: "Burns University", ukprn: "5678") }
 
   scenario "User views school partner providers page where school has no partner providers" do
-    given_i_sign_in_as_anne
+    given_i_am_signed_in_as_a_placements_user(organisations: [school])
     when_i_view_the_partner_providers_page
     then_i_see_the_empty_state
   end
@@ -16,22 +16,13 @@ RSpec.describe "Placements / Schools / Partner providers / View a list of partne
   scenario "User views school partner providers page where school has partner providers" do
     given_a_partnership_exists_between(school, provider)
     and_a_partnership_exists_between(another_school, another_provider)
-    and_i_sign_in_as_anne
+    given_i_am_signed_in_as_a_placements_user(organisations: [school])
     when_i_view_the_partner_providers_page
     then_i_see_partner_provider(provider)
     and_i_cannot_see_partner_provider(another_provider)
   end
 
   private
-
-  def given_i_sign_in_as_anne
-    user = create(:placements_user, :anne)
-    create(:user_membership, user:, organisation: school)
-    user_exists_in_dfe_sign_in(user:)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
-  alias_method :and_i_sign_in_as_anne, :given_i_sign_in_as_anne
 
   def when_i_view_the_partner_providers_page
     visit placements_school_partner_providers_path(school)

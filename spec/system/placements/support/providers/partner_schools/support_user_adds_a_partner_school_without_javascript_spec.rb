@@ -17,7 +17,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
     create(:school, :placements, name: "London")
     create(:school, :claims, name: "Claims")
 
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
   end
 
   scenario "Support user adds a partner school" do
@@ -98,13 +98,6 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
   end
 
   private
-
-  def given_i_am_signed_in_as_a_support_user
-    user = create(:placements_support_user, :colin)
-    user_exists_in_dfe_sign_in(user:)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
 
   def when_i_visit_the_add_partner_school_page_for(provider)
     visit new_add_partner_school_placements_provider_partner_schools_path(provider)

@@ -10,20 +10,12 @@ RSpec.describe "Authentication", service: :placements, type: :system do
   end
 
   scenario "As a user who has signed in" do
-    given_there_is_an_existing_placements_user_with_a_school_for(anne)
-    when_i_visit_the_sign_in_path
-    and_i_click_sign_in
+    given_i_am_signed_in_as_a_placements_user(organisations: [school])
     and_i_visit_placements_schools_details_path
     then_i_am_able_to_access_the_page
   end
 
   private
-
-  def given_there_is_an_existing_user_for(user_name)
-    user = create(:placements_user, user_name.downcase.to_sym)
-    create(:user_membership, user:, organisation: school, email: user.email)
-    user
-  end
 
   def when_i_visit_placements_schools_details_path
     visit placements_school_path(school.id)
@@ -37,23 +29,5 @@ RSpec.describe "Authentication", service: :placements, type: :system do
     expect(page).to have_content("NameSchool")
   end
 
-  def when_i_visit_the_sign_in_path
-    visit sign_in_path
-  end
-
-  def when_i_click_sign_in
-    click_on "Sign in using DfE Sign In"
-  end
-
-  def given_there_is_an_existing_placements_user_with_a_school_for(user)
-    user_exists_in_dfe_sign_in(user:)
-    create(
-      :user_membership,
-      user:,
-      organisation: school,
-    )
-  end
-
-  alias_method :and_i_click_sign_in, :when_i_click_sign_in
   alias_method :and_i_visit_placements_schools_details_path, :when_i_visit_placements_schools_details_path
 end
