@@ -44,6 +44,8 @@ class Placement < ApplicationRecord
 
   attribute :year_group, :string
   enum :year_group, {
+    nursery: "nursery",
+    reception: "reception",
     year_1: "year_1",
     year_2: "year_2",
     year_3: "year_3",
