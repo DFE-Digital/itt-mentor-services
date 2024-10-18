@@ -9,7 +9,7 @@ RSpec.describe "'Add mentor' journey", service: :placements, type: :request do
   private
 
   def step_path(step)
-    add_mentor_placements_school_mentors_path(school_id:, step:)
+    add_mentor_placements_school_mentors_path(school_id:, state_key:, step:)
   end
 
   def school_mentors_path

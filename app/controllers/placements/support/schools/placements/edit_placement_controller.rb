@@ -11,7 +11,7 @@ class Placements::Support::Schools::Placements::EditPlacementController < Placem
   end
 
   def step_path(step)
-    edit_placement_placements_support_school_placement_path(step:)
+    edit_placement_placements_support_school_placement_path(state_key:, step:)
   end
 
   def back_link_path
