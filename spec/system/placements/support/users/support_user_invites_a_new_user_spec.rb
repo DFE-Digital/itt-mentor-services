@@ -138,7 +138,7 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
 
   def when_i_visit_the_users_page_for(organisation:)
     click_on organisation.name
-    within(".app-secondary-navigation__list") do
+    within(".app-primary-navigation__list") do
       click_on "Users"
     end
   end
@@ -165,14 +165,14 @@ RSpec.describe "Placements / Support / Users / Support User Invites A New User",
       expect(page).to have_link "Support users"
     end
 
-    within(".app-secondary-navigation") do
-      expect(page).to have_link "Details", current: "false"
+    within(".app-primary-navigation") do
+      expect(page).to have_link "Organisation details", current: "false"
       expect(page).to have_link "Users", current: "page"
       if organisation.is_a?(Provider)
-        expect(page).to have_link "Partner schools", current: "false"
+        expect(page).to have_link "Schools", current: "false"
       else
         expect(page).to have_link "Mentors", current: "false"
-        expect(page).to have_link "Partner providers", current: "false"
+        expect(page).to have_link "Providers", current: "false"
         expect(page).to have_link "Placements", current: "false"
       end
     end

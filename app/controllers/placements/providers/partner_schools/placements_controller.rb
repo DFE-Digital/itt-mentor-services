@@ -20,11 +20,6 @@ class Placements::Providers::PartnerSchools::PlacementsController < Placements::
     @partner_school = @provider.partner_schools.find(params.require(:partner_school_id)).becomes(Placements::School)
   end
 
-  def set_provider
-    provider_id = params.fetch(:provider_id)
-    @provider = current_user.providers.find(provider_id)
-  end
-
   def placements_scope
     @partner_school.placements
   end
