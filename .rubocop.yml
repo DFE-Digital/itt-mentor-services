@@ -28,6 +28,8 @@ Lint/MissingSuper:
 
 RSpec/Dialect:
   Enabled: true
+  Exclude:
+    - spec/support/shared_examples/system/**/*.rb
   PreferredMethods:
     background: :before
     given: :let

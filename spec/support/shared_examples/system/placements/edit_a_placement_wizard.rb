@@ -7,7 +7,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
   let(:provider_2) { create(:provider, :placements, name: "Provider 2") }
 
   context "when the school has no partner providers" do
-    it "User is redirected to add a partner provider" do
+    scenario "User is redirected to add a partner provider" do
       when_i_visit_the_placement_show_page
       then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details(
         change_link: "Add a partner provider",
@@ -32,7 +32,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
     end
 
     context "with no provider" do
-      it "User edits the provider", :js do
+      scenario "User edits the provider", :js do
         when_i_visit_the_placement_show_page
         then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
         when_i_click_link(
@@ -49,7 +49,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         and_the_provider_is_notified_they_have_been_assigned_to_the_placement(provider_2_user)
       end
 
-      it "User does not select a provider" do
+      scenario "User does not select a provider" do
         when_i_visit_the_placement_show_page
         then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
         when_i_click_link(
@@ -61,7 +61,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
       end
 
-      it "User edits the provider and cancels" do
+      scenario "User edits the provider and cancels" do
         when_i_visit_the_placement_show_page
         then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
         when_i_click_link(
@@ -74,7 +74,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
       end
 
-      it "User clicks on back" do
+      scenario "User clicks on back" do
         when_i_visit_the_placement_show_page
         then_i_should_see_the_provider_is_not_known_yet_in_the_placement_details
         when_i_click_link(
@@ -88,7 +88,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
     end
 
     context "with a provider" do
-      it "User edits the provider" do
+      scenario "User edits the provider" do
         given_the_placement_has_a_provider(provider_1)
         when_i_visit_the_placement_show_page
         then_i_should_see_the_provider_name_in_the_placement_details(
@@ -109,7 +109,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         and_the_provider_is_notified_they_have_been_assigned_to_the_placement(provider_2_user)
       end
 
-      it "User does not select a provider" do
+      scenario "User does not select a provider" do
         given_the_placement_has_a_provider(provider_1)
         when_i_visit_the_placement_show_page
         then_i_should_see_the_provider_name_in_the_placement_details(
@@ -133,7 +133,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
   end
 
   context "when I edit the year group" do
-    it "User edits the year group" do
+    scenario "User edits the year group" do
       when_i_visit_the_placement_show_page
       then_i_should_see_the_year_group_in_the_placement_details(
         year_group_name: "Year 1",
@@ -153,7 +153,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
   end
 
   context "when the school has no mentors" do
-    it "User is redirected to add a mentor" do
+    scenario "User is redirected to add a mentor" do
       when_i_visit_the_placement_show_page
       then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details(
         change_link: "Add a mentor",
@@ -173,7 +173,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
     end
 
     context "with no mentors" do
-      it "User edits the mentors" do
+      scenario "User edits the mentors" do
         when_i_visit_the_placement_show_page
         then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
         when_i_click_link(
@@ -188,7 +188,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         and_i_see_success_message("Mentor updated")
       end
 
-      it "User does not select a mentor" do
+      scenario "User does not select a mentor" do
         when_i_visit_the_placement_show_page
         then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
         when_i_click_link(
@@ -201,7 +201,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         then_i_should_see_an_error_message
       end
 
-      it "User edits the mentor and cancels" do
+      scenario "User edits the mentor and cancels" do
         when_i_visit_the_placement_show_page
         then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
         when_i_click_link(
@@ -214,7 +214,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
       end
 
-      it "User clicks on back" do
+      scenario "User clicks on back" do
         when_i_visit_the_placement_show_page
         then_i_should_see_the_mentor_is_not_yet_known_in_the_placement_details
         when_i_click_link(
@@ -230,7 +230,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
     context "with mentors" do
       let(:placement) { create(:placement, school:, provider: provider_1, mentors: [mentor_1]) }
 
-      it "User edits the mentors" do
+      scenario "User edits the mentors" do
         when_i_visit_the_placement_show_page
         then_i_should_see_the_mentor_name_in_the_placement_details(
           mentor_name: mentor_1.full_name,
@@ -248,7 +248,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         and_i_see_success_message("Mentor updated")
       end
 
-      it "User does not select a mentor" do
+      scenario "User does not select a mentor" do
         when_i_visit_the_placement_show_page
         then_i_should_see_the_mentor_name_in_the_placement_details(
           mentor_name: mentor_1.full_name,
@@ -264,7 +264,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         then_i_should_see_an_error_message
       end
 
-      it "User edits the mentor and cancels" do
+      scenario "User edits the mentor and cancels" do
         when_i_visit_the_placement_show_page
         then_i_should_see_the_mentor_name_in_the_placement_details(
           mentor_name: mentor_1.full_name,
@@ -281,7 +281,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         )
       end
 
-      it "User clicks on back" do
+      scenario "User clicks on back" do
         when_i_visit_the_placement_show_page
         then_i_should_see_the_mentor_name_in_the_placement_details(
           mentor_name: mentor_1.full_name,
@@ -297,7 +297,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
         )
       end
 
-      it "User selects not yet known" do
+      scenario "User selects not yet known" do
         when_i_visit_the_placement_show_page
         then_i_should_see_the_mentor_name_in_the_placement_details(
           mentor_name: mentor_1.full_name,
@@ -326,7 +326,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
       autumn_term
     end
 
-    it "User selects a different term" do
+    scenario "User selects a different term" do
       when_i_visit_the_placement_show_page
       then_i_see_expected_date_in_the_placement_details(
         term: "Any time in the academic year",
@@ -344,7 +344,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
       and_i_see_success_message("Expected date updated")
     end
 
-    it "User selects all 3 terms" do
+    scenario "User selects all 3 terms" do
       given_the_placement_has_terms([summer_term])
       when_i_visit_the_placement_show_page
       then_i_see_expected_date_in_the_placement_details(
@@ -365,7 +365,7 @@ RSpec.shared_examples "an edit placement wizard", :js do
       and_i_see_success_message("Expected date updated")
     end
 
-    it "User selects 'Any time in the academic year'" do
+    scenario "User selects 'Any time in the academic year'" do
       given_the_placement_has_terms([summer_term])
       when_i_visit_the_placement_show_page
       then_i_see_expected_date_in_the_placement_details(
