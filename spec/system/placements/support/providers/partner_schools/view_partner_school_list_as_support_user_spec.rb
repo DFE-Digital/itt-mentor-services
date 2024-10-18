@@ -8,7 +8,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / View a part
   let!(:another_school) { create(:placements_school, name: "Shelbyville Elementary School", urn: "5678") }
 
   before do
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
   end
 
   scenario "Support user views provider partner schools page for a provider with no partner schools" do
@@ -25,13 +25,6 @@ RSpec.describe "Placements / Support / Providers / Partner schools / View a part
   end
 
   private
-
-  def given_i_am_signed_in_as_a_support_user
-    user = create(:placements_support_user, :colin)
-    user_exists_in_dfe_sign_in(user:)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
 
   def when_i_visit_the_partner_schools_page_for(provider)
     visit placements_provider_partner_schools_path(provider)

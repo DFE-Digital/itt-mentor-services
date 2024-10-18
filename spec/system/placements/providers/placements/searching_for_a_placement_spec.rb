@@ -36,7 +36,7 @@ RSpec.describe "Placements / Providers / Placements / Searching for a placements
     guildford_placement
     bath_placement
 
-    given_i_sign_in_as_patricia
+    given_i_am_signed_in_as_a_placements_user(organisations: [provider])
   end
 
   context "when searching for placements near a location (London)" do
@@ -132,14 +132,6 @@ RSpec.describe "Placements / Providers / Placements / Searching for a placements
   end
 
   private
-
-  def given_i_sign_in_as_patricia
-    user = create(:placements_user, :patricia)
-    create(:user_membership, user:, organisation: provider)
-    user_exists_in_dfe_sign_in(user:)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
 
   def when_i_click_on(text)
     click_on text

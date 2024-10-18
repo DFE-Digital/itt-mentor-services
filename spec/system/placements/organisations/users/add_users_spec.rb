@@ -7,19 +7,17 @@ RSpec.describe "Placements users invite other users to organisations", service: 
     perform_enqueued_jobs { example.run }
   end
 
-  let(:anne) { create(:placements_user, :anne) }
   let(:one_school) { create(:placements_school, name: "One School") }
   let(:one_provider) { create(:placements_provider, name: "One Provider") }
-  let(:mary) { create(:placements_user, :mary) }
   let(:another_school) { create(:placements_school, name: "Another School") }
   let(:new_user) { create(:placements_user) }
 
   describe "Ann invites a member successfully" do
     context "with provider" do
       scenario "user invites a member to a provider" do
-        given_i_am_logged_in_as_a_user_with_one_organisation(one_provider)
+        given_i_am_signed_in_as_a_placements_user(organisations: [one_provider])
         when_i_click_users
-        then_i_see_the_users_page
+        then_i_see_the_users_page_for_provider(one_provider)
         when_i_click_add_user
         and_i_enter_valid_user_details
         and_user_is_selected_in_provider_primary_navigation
@@ -38,9 +36,9 @@ RSpec.describe "Placements users invite other users to organisations", service: 
 
     context "with school" do
       scenario "user invites a member to a school" do
-        given_i_am_logged_in_as_a_user_with_one_organisation(one_school)
+        given_i_am_signed_in_as_a_placements_user(organisations: [one_school])
         when_i_click_users
-        then_i_see_the_users_page
+        then_i_see_the_users_page_for_school(one_school)
         and_user_is_selected_in_school_primary_navigation
         when_i_click_add_user
         and_user_is_selected_in_school_primary_navigation
@@ -60,14 +58,10 @@ RSpec.describe "Placements users invite other users to organisations", service: 
   end
 
   describe "Mary invites a members to second organisation" do
-    before "user is sent an invitation" do
-      create(:user_membership, user: mary, organisation: one_school)
-      create(:user_membership, user: mary, organisation: another_school)
-      create(:user_membership, user: mary, organisation: one_provider)
-    end
-
     scenario "user adds a user to multiple organisations" do
-      given_i_am_logged_in_as_a_user_with_multiple_organisations
+      given_i_am_signed_in_as_a_placements_user(
+        organisations: [one_provider, one_school, another_school],
+      )
       and_user_is_already_assigned_to_a_school
       when_i_navigate_to_that_schools_users
       then_i_see_the_user_on_that_schools_user_list
@@ -83,16 +77,16 @@ RSpec.describe "Placements users invite other users to organisations", service: 
   end
 
   scenario "user tries to submit invalid form" do
-    given_i_am_logged_in_as_a_user_with_one_organisation(one_school)
+    given_i_am_signed_in_as_a_placements_user(organisations: [one_school])
     when_i_click_users
-    then_i_see_the_users_page
+    then_i_see_the_users_page_for_school(one_school)
     when_i_click_add_user
     and_try_to_submit_invalid_form_data
     then_i_see_form_errors
   end
 
   scenario "user tries to add an existing user to the organisation" do
-    given_i_am_logged_in_as_a_user_with_one_organisation(one_school)
+    given_i_am_signed_in_as_a_placements_user(organisations: [one_school])
     and_user_is_already_assigned_to_a_school
     when_i_try_to_add_the_user_to_the_same_school
     then_i_see_the_email_taken_error
@@ -106,14 +100,14 @@ RSpec.describe "Placements users invite other users to organisations", service: 
       }
     end
 
-    before { given_i_am_logged_in_as_a_user_with_one_organisation(one_school) }
+    before { given_i_am_signed_in_as_a_placements_user(organisations: [one_school]) }
 
     it "persists the user details for each tab upon refresh" do
       windows.each do |window, details|
         within_window window do
           visit placements_school_placements_path(one_school)
           when_i_click_users
-          then_i_see_the_users_page
+          then_i_see_the_users_page_for_school(one_school)
           and_user_is_selected_in_school_primary_navigation
           when_i_click_add_user
           and_user_is_selected_in_school_primary_navigation
@@ -157,19 +151,6 @@ RSpec.describe "Placements users invite other users to organisations", service: 
   def then_i_see_the_email_taken_error
     expect(page.find(".govuk-error-summary")).to have_content "There is a problem"
     expect(page).to have_content("Email address already in use")
-  end
-
-  def given_i_am_logged_in_as_a_user_with_one_organisation(organisation)
-    user_exists_in_dfe_sign_in(user: anne)
-    create(:user_membership, user: anne, organisation:)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
-
-  def given_i_am_logged_in_as_a_user_with_multiple_organisations
-    user_exists_in_dfe_sign_in(user: mary)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
   end
 
   def and_user_is_already_assigned_to_a_school
@@ -220,9 +201,12 @@ RSpec.describe "Placements users invite other users to organisations", service: 
     click_on "Users"
   end
 
-  def then_i_see_the_users_page
-    expect(page).to have_content "Anne Wilson"
-    expect(page).to have_content "anne_wilson@example.org"
+  def then_i_see_the_users_page_for_school(school)
+    expect(page).to have_current_path placements_school_users_path(school), ignore_query: true
+  end
+
+  def then_i_see_the_users_page_for_provider(provider)
+    expect(page).to have_current_path placements_provider_users_path(provider), ignore_query: true
   end
 
   def when_i_click_add_user

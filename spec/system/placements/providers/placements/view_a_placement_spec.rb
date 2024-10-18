@@ -33,7 +33,7 @@ RSpec.describe "Placements / Providers / Placements / View a placement",
     create(:placement, subject: placement_subject, school:, additional_subjects:, academic_year:, terms:)
   end
 
-  before { given_i_sign_in_as_patricia }
+  before { given_i_am_signed_in_as_a_placements_user(organisations: [provider]) }
 
   context "when the placement has a subject without child subjects" do
     let(:placement_subject) { subject_1 }
@@ -68,14 +68,6 @@ RSpec.describe "Placements / Providers / Placements / View a placement",
   end
 
   private
-
-  def given_i_sign_in_as_patricia
-    user = create(:placements_user, :patricia)
-    create(:user_membership, user:, organisation: provider)
-    user_exists_in_dfe_sign_in(user:)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
 
   def when_i_visit_the_placement_show_page
     visit placements_provider_placement_path(provider, placement)

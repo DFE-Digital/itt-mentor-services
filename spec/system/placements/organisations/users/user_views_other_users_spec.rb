@@ -4,17 +4,19 @@ RSpec.describe "Placements user views other users in their organisation", servic
   let(:school) { create(:placements_school, name: "Placements School 1") }
   let(:provider) { create(:placements_provider, name: "Placements Provider 1") }
   let(:anne) { create(:placements_user, :anne) }
-  let(:mary) { create(:placements_user, :mary) }
 
   describe "schools" do
+    before do
+      create(:user_membership, user: anne, organisation: school)
+    end
+
     scenario "user can view other school users" do
-      user_exists_in_dfe_sign_in(user: mary)
-      given_users_have_been_assigned_to_the(organisation: school)
+      given_i_am_signed_in_as_a_placements_user(organisations: [school])
       when_i_visit_the_users_page
       then_i_see_the_organisation_users
       and_users_is_selected_in_schools_primary_nav
-      when_i_click_on_a_users_name(mary.full_name)
-      then_i_see_user_details(:school, user: mary)
+      when_i_click_on_a_users_name(@current_user.full_name)
+      then_i_see_user_details(:school, user: @current_user)
       and_users_is_selected_in_schools_primary_nav
       and_i_do_not_see_the_remove_user_link
       when_i_click_back
@@ -26,35 +28,30 @@ RSpec.describe "Placements user views other users in their organisation", servic
   end
 
   describe "providers" do
+    before do
+      create(:user_membership, user: anne, organisation: provider)
+    end
+
     scenario "users can view other provider users" do
-      user_exists_in_dfe_sign_in(user: anne)
-      given_users_have_been_assigned_to_the(organisation: provider)
+      given_i_am_signed_in_as_a_placements_user(organisations: [provider])
       when_i_visit_the_users_page
       then_i_see_the_organisation_users
       and_users_is_selected_in_providers_primary_nav
-      when_i_click_on_a_users_name(mary.full_name)
-      then_i_see_user_details(:provider, user: mary)
+      when_i_click_on_a_users_name(@current_user.full_name)
+      then_i_see_user_details(:provider, user: @current_user)
       and_users_is_selected_in_providers_primary_nav
-      and_i_see_the_remove_user_link
+      and_i_do_not_see_the_remove_user_link
       when_i_click_back
       when_i_click_on_a_users_name(anne.full_name)
       then_i_see_user_details(:provider, user: anne)
       and_users_is_selected_in_providers_primary_nav
-      and_i_do_not_see_the_remove_user_link
+      and_i_see_the_remove_user_link
     end
   end
 
   private
 
-  def given_users_have_been_assigned_to_the(organisation:)
-    [mary, anne].each do |user|
-      create(:user_membership, user:, organisation:)
-    end
-  end
-
   def when_i_visit_the_users_page
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
     within(".app-primary-navigation__nav") do
       click_on "Users"
     end
@@ -64,8 +61,8 @@ RSpec.describe "Placements user views other users in their organisation", servic
     expect(page).to have_content anne.full_name
     expect(page).to have_content anne.email
 
-    expect(page).to have_content mary.full_name
-    expect(page).to have_content mary.email
+    expect(page).to have_content @current_user.full_name
+    expect(page).to have_content @current_user.email
   end
 
   def when_i_click_on_a_users_name(user_name)

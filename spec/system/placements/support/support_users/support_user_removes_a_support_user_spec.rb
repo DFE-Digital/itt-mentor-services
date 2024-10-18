@@ -12,7 +12,7 @@ RSpec.describe "Placements / Support Users / Support users removes a support use
   let!(:support_user_to_be_removed) { create(:placements_support_user) }
 
   scenario "Remove a support user" do
-    when_i_sign_in_as_a_support_user(support_user)
+    given_i_am_signed_in_as_a_placements_support_user
     and_i_visit_the_support_users_page
     and_i_click_on_a_support_user(support_user_to_be_removed)
     and_i_click_on_remove
@@ -23,7 +23,7 @@ RSpec.describe "Placements / Support Users / Support users removes a support use
   end
 
   scenario "A support user can not remove themselves as a support user" do
-    when_i_sign_in_as_a_support_user(support_user)
+    given_i_sign_in_as(support_user)
     and_i_visit_the_support_users_page
     and_i_click_on_a_support_user(support_user)
     then_i_can_not_see_a_remove_link

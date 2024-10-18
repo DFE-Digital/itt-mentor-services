@@ -13,7 +13,7 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
   let!(:provider_user) { create(:placements_user, providers: [provider]) }
 
   before do
-    given_i_sign_in_as_anne
+    given_i_am_signed_in_as_a_placements_user(organisations: [school])
   end
 
   scenario "User adds a partner provider", :js, retry: 3 do
@@ -134,14 +134,6 @@ RSpec.describe "Placements / Schools / Partner providers / Add a partner provide
   end
 
   private
-
-  def given_i_sign_in_as_anne
-    user = create(:placements_user, :anne)
-    create(:user_membership, user:, organisation: school)
-    user_exists_in_dfe_sign_in(user:)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
 
   def when_i_view_the_partner_providers_page
     visit placements_school_partner_providers_path(school)

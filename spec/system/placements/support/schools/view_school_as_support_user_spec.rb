@@ -9,7 +9,7 @@ RSpec.describe "Placements / Organisations / Support user views a School", type:
   end
 
   scenario "Support user navigates to different organisations on the list" do
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
     when_i_click_on_a_organisation_name(school.name)
     and_i_click_on("Organisation details")
     then_i_see_the_school_details
@@ -20,13 +20,6 @@ RSpec.describe "Placements / Organisations / Support user views a School", type:
   end
 
   private
-
-  def given_i_am_signed_in_as_a_support_user
-    user = create(:placements_support_user, :colin)
-    user_exists_in_dfe_sign_in(user:)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
 
   def when_i_click_on_a_organisation_name(name)
     click_on name
