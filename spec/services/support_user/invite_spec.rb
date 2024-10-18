@@ -14,8 +14,8 @@ RSpec.describe SupportUser::Invite do
       let(:support_user) { create(:claims_support_user) }
 
       it "enqueues an invitation email" do
-        expect { invite_support_user }.to have_enqueued_mail(SupportUserMailer, :support_user_invitation)
-          .with(params: { service: :claims }, args: [support_user])
+        expect { invite_support_user }.to have_enqueued_mail(Claims::SupportUserMailer, :support_user_invitation)
+          .with(support_user)
       end
     end
 
@@ -23,8 +23,8 @@ RSpec.describe SupportUser::Invite do
       let(:support_user) { create(:placements_support_user) }
 
       it "enqueues an invitation email" do
-        expect { invite_support_user }.to have_enqueued_mail(SupportUserMailer, :support_user_invitation)
-          .with(params: { service: :placements }, args: [support_user])
+        expect { invite_support_user }.to have_enqueued_mail(Placements::SupportUserMailer, :support_user_invitation)
+          .with(support_user)
       end
     end
   end
