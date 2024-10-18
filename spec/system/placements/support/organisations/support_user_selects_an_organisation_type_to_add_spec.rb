@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Placements / Support / Organisations / Support User Selects An Organisation Type To Add",
                service: :placements, type: :system do
   before do
-    given_i_sign_in_as_colin
+    given_i_am_signed_in_as_a_support_user
     when_i_click_add_organisation
     then_i_see_support_navigation_with_organisation_selected
   end
@@ -26,25 +26,6 @@ RSpec.describe "Placements / Support / Organisations / Support User Selects An O
   end
 
   private
-
-  def and_there_is_an_existing_user_for(user_name)
-    user = create(:placements_support_user, user_name.downcase.to_sym)
-    user_exists_in_dfe_sign_in(user:)
-  end
-
-  def and_i_visit_the_sign_in_page
-    visit sign_in_path
-  end
-
-  def and_i_click_sign_in
-    click_on "Sign in using DfE Sign In"
-  end
-
-  def given_i_sign_in_as_colin
-    and_there_is_an_existing_user_for("Colin")
-    and_i_visit_the_sign_in_page
-    and_i_click_sign_in
-  end
 
   def and_i_click_continue
     click_on "Continue"

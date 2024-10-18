@@ -183,13 +183,6 @@ RSpec.describe "Support user filters and searches for organisations", service: :
     expect(page).not_to have_content("Lead Partner London")
   end
 
-  def given_i_am_signed_in_as_a_support_user
-    user = create(:placements_support_user, :colin)
-    user_exists_in_dfe_sign_in(user:)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
-
   def then_i_see_support_navigation_with_organisation_selected
     within(".govuk-header__navigation-list") do
       expect(page).to have_link "Organisations"

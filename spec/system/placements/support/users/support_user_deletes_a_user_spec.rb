@@ -86,13 +86,6 @@ RSpec.describe "Placements support user deletes a user from an organisation", se
     expect(page).to have_content user.full_name
   end
 
-  def given_i_am_signed_in_as_a_support_user
-    user = create(:placements_support_user, :colin)
-    user_exists_in_dfe_sign_in(user:)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
-
   def and_i_visit_the_user_page(organisation)
     click_on organisation.name
     within(".app-secondary-navigation__list") do

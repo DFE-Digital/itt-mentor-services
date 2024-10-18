@@ -8,15 +8,13 @@ RSpec.describe "Placements / Support Users / Support user re-adds a discarded su
     perform_enqueued_jobs { example.run }
   end
 
-  let!(:support_user) { create(:placements_support_user, :colin) }
-
   scenario "Re-add a discarded support user" do
     given_a_discarded_support_user_with(
       email_address: "john.doe@education.gov.uk",
       first_name: "John",
       last_name: "Doe",
     )
-    when_i_sign_in_as_a_support_user(support_user)
+    given_i_am_signed_in_as_a_support_user
     and_i_visit_the_support_users_page
     and_i_click_on_add_a_support_user
     and_i_fill_in_the_support_user_form(
@@ -41,7 +39,7 @@ RSpec.describe "Placements / Support Users / Support user re-adds a discarded su
       first_name: "John",
       last_name: "Doe",
     )
-    when_i_sign_in_as_a_support_user(support_user)
+    given_i_am_signed_in_as_a_support_user
     and_i_visit_the_support_users_page
     and_i_click_on_add_a_support_user
     and_i_fill_in_the_support_user_form(
@@ -66,7 +64,7 @@ RSpec.describe "Placements / Support Users / Support user re-adds a discarded su
       first_name: "John",
       last_name: "Doe",
     )
-    when_i_sign_in_as_a_support_user(support_user)
+    given_i_am_signed_in_as_a_support_user
     and_i_visit_the_support_users_page
     and_i_click_on_add_a_support_user
     and_i_fill_in_the_support_user_form(
@@ -82,12 +80,6 @@ RSpec.describe "Placements / Support Users / Support user re-adds a discarded su
 
   def given_a_discarded_support_user_with(email_address:, first_name:, last_name:)
     create(:placements_support_user, :discarded, email: email_address, first_name:, last_name:)
-  end
-
-  def when_i_sign_in_as_a_support_user(support_user)
-    user_exists_in_dfe_sign_in(user: support_user)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
   end
 
   def and_i_visit_the_support_users_page
