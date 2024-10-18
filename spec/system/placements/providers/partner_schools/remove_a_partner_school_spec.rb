@@ -23,7 +23,7 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
   end
 
   scenario "User removes a partner school" do
-    given_i_sign_in_as_patricia
+    given_i_am_signed_in_as_a_placements_user(organisations: [provider])
     when_i_view_the_partner_school_show_page
     and_i_click_on("Delete school")
     then_i_am_asked_to_confirm_partner_school(school)
@@ -54,7 +54,7 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
     end
 
     scenario "User removes a partner school, and see the placements listed" do
-      given_i_sign_in_as_patricia
+      given_i_am_signed_in_as_a_placements_user(organisations: [provider])
       when_i_view_the_partner_school_show_page
       and_i_click_on("Delete school")
       then_i_am_asked_to_confirm_partner_school(school)
@@ -72,7 +72,7 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
 
   scenario "User removes a partner school, which is not onboarded on the placements service" do
     given_the_school_is_not_onboarded_on_placements_service(school)
-    given_i_sign_in_as_patricia
+    given_i_am_signed_in_as_a_placements_user(organisations: [provider])
     when_i_view_the_partner_school_show_page
     and_i_click_on("Delete school")
     then_i_am_asked_to_confirm_partner_school(school)
@@ -87,14 +87,6 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
   end
 
   private
-
-  def given_i_sign_in_as_patricia
-    user = create(:placements_user, :patricia)
-    create(:user_membership, user:, organisation: provider)
-    user_exists_in_dfe_sign_in(user:)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
 
   def when_i_view_the_partner_school_show_page
     visit placements_provider_partner_school_path(provider, school)

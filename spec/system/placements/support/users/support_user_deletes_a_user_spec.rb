@@ -16,7 +16,7 @@ RSpec.describe "Placements support user deletes a user from an organisation", se
     end
 
     scenario "user is deleted from a school" do
-      given_i_am_signed_in_as_a_support_user
+      given_i_am_signed_in_as_a_placements_support_user
       and_i_visit_the_user_page(school)
       when_i_click_on("Delete user")
       then_i_am_asked_to_confirm(school)
@@ -39,7 +39,7 @@ RSpec.describe "Placements support user deletes a user from an organisation", se
     end
 
     scenario "user is deleted from a provider" do
-      given_i_am_signed_in_as_a_support_user
+      given_i_am_signed_in_as_a_placements_support_user
       and_i_visit_the_user_page(provider)
       when_i_click_on("Delete user")
       then_i_am_asked_to_confirm(provider)
@@ -64,7 +64,7 @@ RSpec.describe "Placements support user deletes a user from an organisation", se
     end
 
     scenario "user is deleted from one organisation but when other memberships exist" do
-      given_i_am_signed_in_as_a_support_user
+      given_i_am_signed_in_as_a_placements_support_user
       and_i_visit_the_user_page(school)
       when_i_delete_user_from_school
       then_user_is_still_member_of_provider
@@ -84,13 +84,6 @@ RSpec.describe "Placements support user deletes a user from an organisation", se
     visit placements_provider_users_path(provider)
 
     expect(page).to have_content user.full_name
-  end
-
-  def given_i_am_signed_in_as_a_support_user
-    user = create(:placements_support_user, :colin)
-    user_exists_in_dfe_sign_in(user:)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
   end
 
   def and_i_visit_the_user_page(organisation)

@@ -17,7 +17,7 @@ RSpec.describe "Placements / Support / Users / Support User Views A User", servi
   end
 
   before do
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
   end
 
   describe "schools" do
@@ -51,25 +51,6 @@ RSpec.describe "Placements / Support / Users / Support User Views A User", servi
   end
 
   private
-
-  def and_there_is_an_existing_user_for(user_name)
-    user = create(:placements_support_user, user_name.downcase.to_sym)
-    user_exists_in_dfe_sign_in(user:)
-  end
-
-  def and_i_visit_the_sign_in_page
-    visit sign_in_path
-  end
-
-  def and_i_click_sign_in
-    click_on "Sign in using DfE Sign In"
-  end
-
-  def given_i_am_signed_in_as_a_support_user
-    and_there_is_an_existing_user_for("Colin")
-    and_i_visit_the_sign_in_page
-    and_i_click_sign_in
-  end
 
   def given_users_have_been_assigned_to_the(organisation:)
     [mary, anne].each do |user|

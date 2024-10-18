@@ -23,7 +23,7 @@ RSpec.describe "Placements / Schools / Partner providers / Remove a partner prov
   end
 
   scenario "User removes a partner provider" do
-    given_i_sign_in_as_anne
+    given_i_am_signed_in_as_a_placements_user(organisations: [school])
     when_i_view_the_partner_provider_show_page
     and_i_click_on("Delete provider")
     then_i_am_asked_to_confirm_partner_provider(provider)
@@ -39,7 +39,7 @@ RSpec.describe "Placements / Schools / Partner providers / Remove a partner prov
 
   scenario "User removes a partner provider, which is not onboarded on the placements service" do
     given_the_provider_is_not_onboarded_on_placements_service(provider)
-    given_i_sign_in_as_anne
+    given_i_am_signed_in_as_a_placements_user(organisations: [school])
     when_i_view_the_partner_provider_show_page
     and_i_click_on("Delete provider")
     then_i_am_asked_to_confirm_partner_provider(provider)
@@ -54,14 +54,6 @@ RSpec.describe "Placements / Schools / Partner providers / Remove a partner prov
   end
 
   private
-
-  def given_i_sign_in_as_anne
-    user = create(:placements_user, :anne)
-    create(:user_membership, user:, organisation: school)
-    user_exists_in_dfe_sign_in(user:)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
 
   def when_i_view_the_partner_provider_show_page
     visit placements_school_partner_provider_path(school, provider)

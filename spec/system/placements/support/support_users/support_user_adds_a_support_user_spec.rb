@@ -8,10 +8,8 @@ RSpec.describe "Placements / Support Users / Support user adds a support user",
     perform_enqueued_jobs { example.run }
   end
 
-  let!(:support_user) { create(:placements_support_user, :colin) }
-
   scenario "Add a support user" do
-    when_i_sign_in_as_a_support_user(support_user)
+    given_i_am_signed_in_as_a_placements_support_user
     and_i_visit_the_support_users_page
     and_i_click_on_add_a_support_user
     and_i_fill_in_the_support_user_form(email_address: "john.doe@education.gov.uk")
@@ -22,7 +20,7 @@ RSpec.describe "Placements / Support Users / Support user adds a support user",
   end
 
   scenario "Attempt to add a support user without an @education.gov.uk email address" do
-    when_i_sign_in_as_a_support_user(support_user)
+    given_i_am_signed_in_as_a_placements_support_user
     and_i_visit_the_support_users_page
     and_i_click_on_add_a_support_user
     and_i_fill_in_the_support_user_form(email_address: "john.doe@example.com")
@@ -32,7 +30,7 @@ RSpec.describe "Placements / Support Users / Support user adds a support user",
 
   scenario "Attempt to add a support user with an email that already exists in the system" do
     given_there_is_a_support_user_with(email_address: "john.doe@education.gov.uk")
-    when_i_sign_in_as_a_support_user(support_user)
+    given_i_am_signed_in_as_a_placements_support_user
     and_i_visit_the_support_users_page
     and_i_click_on_add_a_support_user
     and_i_fill_in_the_support_user_form(email_address: "john.doe@education.gov.uk")
@@ -41,7 +39,7 @@ RSpec.describe "Placements / Support Users / Support user adds a support user",
   end
 
   scenario "Make changes while adding a support user" do
-    when_i_sign_in_as_a_support_user(support_user)
+    given_i_am_signed_in_as_a_placements_support_user
     and_i_visit_the_support_users_page
     and_i_click_on_add_a_support_user
     and_i_fill_in_the_support_user_form(email_address: "john.doe@education.gov.uk")
@@ -57,12 +55,6 @@ RSpec.describe "Placements / Support Users / Support user adds a support user",
 
   def given_there_is_a_support_user_with(email_address:)
     create(:placements_support_user, email: email_address)
-  end
-
-  def when_i_sign_in_as_a_support_user(support_user)
-    user_exists_in_dfe_sign_in(user: support_user)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
   end
 
   def and_i_visit_the_support_users_page

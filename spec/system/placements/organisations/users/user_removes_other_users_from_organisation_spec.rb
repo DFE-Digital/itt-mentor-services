@@ -13,13 +13,11 @@ RSpec.describe "Placements support user removes a user from an organisation", se
     let(:mary) { create(:placements_user, :mary) }
 
     before do
-      [anne, mary].each do |user|
-        create(:user_membership, user:, organisation: school)
-      end
+      create(:user_membership, user: anne, organisation: school)
+      given_i_am_signed_in_as_a_placements_user(organisations: [school])
     end
 
     scenario "user is removed from a school" do
-      given_i_am_signed_in_as_mary
       and_i_visit_the_user_page(anne)
       when_i_click_on("Delete user")
       then_i_am_asked_to_confirm(anne, school)
@@ -33,8 +31,7 @@ RSpec.describe "Placements support user removes a user from an organisation", se
     end
 
     scenario "I try to remove myself from a school" do
-      given_i_am_signed_in_as_mary
-      when_i_try_to_visit_the_remove_path_for(mary, school)
+      when_i_try_to_visit_the_remove_path_for(@current_user, school)
       then_i_am_redirected_back
     end
   end
@@ -45,13 +42,11 @@ RSpec.describe "Placements support user removes a user from an organisation", se
     let(:mary) { create(:placements_user, :mary) }
 
     before "message is sent to user" do
-      [anne, mary].each do |user|
-        create(:user_membership, user:, organisation: provider)
-      end
+      create(:user_membership, user: anne, organisation: provider)
+      given_i_am_signed_in_as_a_placements_user(organisations: [provider])
     end
 
     scenario "user is removed from a provider" do
-      given_i_am_signed_in_as_mary
       and_i_visit_the_user_page(anne)
       when_i_click_on("Delete user")
       then_i_am_asked_to_confirm(anne, provider)
@@ -65,19 +60,12 @@ RSpec.describe "Placements support user removes a user from an organisation", se
     end
 
     scenario "I try to remove myself from a school" do
-      given_i_am_signed_in_as_mary
-      when_i_try_to_visit_the_remove_path_for(mary, provider)
+      when_i_try_to_visit_the_remove_path_for(@current_user, provider)
       then_i_am_redirected_back
     end
   end
 
   private
-
-  def given_i_am_signed_in_as_mary
-    user_exists_in_dfe_sign_in(user: mary)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
 
   def email_removal_notification(email, _organisation)
     ActionMailer::Base.deliveries.find do |delivery|

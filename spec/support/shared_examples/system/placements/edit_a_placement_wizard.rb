@@ -387,14 +387,6 @@ RSpec.shared_examples "an edit placement wizard", :js do
 
   private
 
-  def and_i_visit_the_sign_in_path
-    visit sign_in_path
-  end
-
-  def and_i_click_sign_in
-    click_on "Sign in using DfE Sign In"
-  end
-
   def then_i_should_see_the_mentor_name_in_the_placement_details(
     mentor_name:, change_link: "Change"
   )
