@@ -14,28 +14,23 @@ RSpec.describe "Placements / Support / Schools / Placements / Support User views
   let!(:placement3) { create(:placement, mentors: [mentor3], subject: subject3) }
   let!(:school) { create(:placements_school, mentors: [mentor1, mentor2]) }
   let!(:another_school) { create(:placements_school) }
-  let!(:colin) { create(:placements_support_user, :colin) }
   let(:term) { create(:placements_term, :autumn) }
 
+  before { given_i_am_signed_in_as_a_support_user }
+
   scenario "view a school's empty placements list" do
-    user_exists_in_dfe_sign_in(user: colin)
-    given_i_sign_in
     when_i_visit_the_support_school_placements_page(another_school)
     then_i_see_no_results
   end
 
   context "with placements" do
     scenario "view a school's placements as a support user" do
-      user_exists_in_dfe_sign_in(user: colin)
-      given_i_sign_in
       when_i_visit_the_support_school_placements_page(school)
       then_i_see_a_list_of_the_schools_placements
       and_i_dont_see_placements_from_another_school
     end
 
     scenario "where the placement has a provider" do
-      user_exists_in_dfe_sign_in(user: colin)
-      given_i_sign_in
       when_i_visit_the_support_school_placements_page(school)
       then_i_see_a_list_of_the_schools_placements
       and_i_dont_see_placements_from_another_school
@@ -43,8 +38,6 @@ RSpec.describe "Placements / Support / Schools / Placements / Support User views
     end
 
     scenario "where the placement has no provider" do
-      user_exists_in_dfe_sign_in(user: colin)
-      given_i_sign_in
       when_i_visit_the_support_school_placements_page(school)
       then_i_see_a_list_of_the_schools_placements
       and_i_dont_see_placements_from_another_school
@@ -52,16 +45,12 @@ RSpec.describe "Placements / Support / Schools / Placements / Support User views
     end
 
     scenario "when the placement has no terms" do
-      user_exists_in_dfe_sign_in(user: colin)
-      given_i_sign_in
       when_i_visit_the_support_school_placements_page(school)
       then_i_see_a_list_of_the_schools_placements
       then_i_see_the_term_name("Any time in the academic year")
     end
 
     scenario "when the placement has terms" do
-      user_exists_in_dfe_sign_in(user: colin)
-      given_i_sign_in
       and_the_placement_has_terms(placement1, term)
       when_i_visit_the_support_school_placements_page(school)
       then_i_see_the_term_name("Autumn term")
@@ -69,11 +58,6 @@ RSpec.describe "Placements / Support / Schools / Placements / Support User views
   end
 
   private
-
-  def given_i_sign_in
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
 
   def when_i_visit_the_support_school_placements_page(school)
     visit placements_support_school_placements_path(school)

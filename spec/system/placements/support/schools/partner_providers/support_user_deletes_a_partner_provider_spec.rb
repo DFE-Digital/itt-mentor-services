@@ -54,13 +54,6 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
 
   private
 
-  def given_i_am_signed_in_as_a_support_user
-    user = create(:placements_support_user, :colin)
-    user_exists_in_dfe_sign_in(user:)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
-
   def when_i_view_the_partner_provider_show_page_for(school:, provider:)
     visit placements_support_school_partner_provider_path(school, provider)
 
