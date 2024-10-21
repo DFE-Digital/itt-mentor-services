@@ -118,6 +118,7 @@ scope module: :claims, as: :claims, constraints: {
     get :settings, to: "settings#index"
 
     resources :mailers, only: :index
+    resources :view_components, only: :index
 
     resources :claim_windows do
       get :new_check, path: :check, on: :collection
