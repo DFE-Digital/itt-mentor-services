@@ -60,7 +60,7 @@ en:
           You are receiving this notification because %{source_organisation} has removed %{partner_organisation} from its list of partner providers.
           
           View or manage your list of partner schools %{link}
-
+          
       placement_provider_assigned_notification:
         subject: "%{school_name} wants you to place a trainee with them"
         body: |
@@ -74,7 +74,7 @@ en:
           Contact the school to suggest a trainee you think would suit this placement. 
           Get in touch at [%{school_email}](mailto:%{school_email})
           
-          %{service_name} service
+          Manage school placements service
 
       placement_provider_removed_notification:
         subject: "%{school_name} has removed you from a placement"
@@ -89,4 +89,4 @@ en:
           No further action is required. 
           If you think this is a mistake, contact the school at [%{school_email}](mailto:%{school_email})
           
-          %{service_name} service
+          Manage school placements service
