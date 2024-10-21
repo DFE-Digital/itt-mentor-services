@@ -46,10 +46,6 @@ RSpec.describe "Placements / Schools / Mentors / Delete a mentor", service: :pla
 
   private
 
-  def and_user_has_one_school(user:)
-    create(:user_membership, user:, organisation: school)
-  end
-
   def given_the_school_has_mentors(school:, mentors:)
     mentors.each do |mentor|
       create(:placements_mentor_membership, school:, mentor:)

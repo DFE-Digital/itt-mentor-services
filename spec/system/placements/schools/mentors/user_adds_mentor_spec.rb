@@ -162,6 +162,8 @@ RSpec.describe "Placements school user adds mentors to schools", service: :place
     end
   end
 
+  private
+
   def given_a_claims_mentor_exists
     create(:claims_mentor_membership, school: another_school, mentor: claims_mentor)
   end

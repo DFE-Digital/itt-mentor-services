@@ -187,12 +187,6 @@ RSpec.describe "Placements / Schools / Placements / View a placement",
 
   alias_method :given_i_visit_the_placement_show_page, :when_i_visit_the_placement_show_page
 
-  def given_i_sign_in_as_anne
-    and_there_is_an_existing_user_for("Anne")
-    and_i_visit_the_sign_in_path
-    and_i_click_sign_in
-  end
-
   def given_a_placement_has_one_subject(placements_subject)
     placement.update(subject: placements_subject)
   end

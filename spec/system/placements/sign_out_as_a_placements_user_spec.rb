@@ -10,9 +10,7 @@ RSpec.describe "Sign out as a Placements User", service: :placements, type: :sys
   end
 
   scenario "I sign out" do
-    given_there_is_an_existing_placements_user_with_a_school_for(colin)
-    when_i_visit_the_sign_in_path
-    when_i_click_sign_in
+    given_i_am_signed_in_as_a_support_user
     i_should_see_a_sign_out_button
     when_i_click_sign_out
     i_expect_to_be_on_sign_in_page
@@ -21,23 +19,6 @@ RSpec.describe "Sign out as a Placements User", service: :placements, type: :sys
   end
 
   private
-
-  def given_there_is_an_existing_placements_user_with_a_school_for(user)
-    user_exists_in_dfe_sign_in(user:)
-    create(
-      :user_membership,
-      user:,
-      organisation: create(:school, :placements),
-    )
-  end
-
-  def when_i_visit_the_sign_in_path
-    visit sign_in_path
-  end
-
-  def when_i_click_sign_in
-    click_on "Sign in using DfE Sign In"
-  end
 
   def i_should_see_a_sign_out_button
     expect(page).to have_content("Sign out")

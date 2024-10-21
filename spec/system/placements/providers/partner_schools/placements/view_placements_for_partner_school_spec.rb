@@ -21,7 +21,7 @@ RSpec.describe "Placements / Providers / Partner schools / Placements / View pla
   end
 
   private
-  
+
   def when_i_view_the_partner_school_show_page
     visit placements_provider_partner_school_path(provider, school)
   end

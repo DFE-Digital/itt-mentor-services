@@ -22,14 +22,6 @@ RSpec.describe "Placements / Schools / Placements / Add a placement",
 
   private
 
-  def and_i_visit_the_sign_in_path
-    visit sign_in_path
-  end
-
-  def and_i_click_sign_in
-    click_on "Sign in using DfE Sign In"
-  end
-
   def when_i_visit_the_placements_page
     visit placements_school_placements_path(school)
   end
