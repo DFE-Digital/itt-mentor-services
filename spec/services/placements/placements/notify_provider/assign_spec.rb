@@ -15,12 +15,12 @@ RSpec.describe Placements::Placements::NotifyProvider::Assign do
 
     it "sends a notification email to every user belonging to the provider" do
       expect { notify_provider_service }.to have_enqueued_mail(
-        Placements::UserMailer,
+        Placements::ProviderUserMailer,
         :placement_provider_assigned_notification,
       ).with(
         user_1, provider, placement
       ).and have_enqueued_mail(
-        Placements::UserMailer,
+        Placements::ProviderUserMailer,
         :placement_provider_assigned_notification,
       ).with(
         user_2, provider, placement
