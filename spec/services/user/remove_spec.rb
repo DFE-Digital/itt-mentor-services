@@ -26,7 +26,7 @@ RSpec.describe User::Remove do
       let!(:membership) { create(:user_membership, user:, organisation:) }
 
       it "calls mailer with correct params" do
-        expect { remove_user_service }.to have_enqueued_mail(Placements::UserMailer, :user_membership_destroyed_notification).with(user, organisation)
+        expect { remove_user_service }.to have_enqueued_mail(Placements::SchoolUserMailer, :user_membership_destroyed_notification).with(user, organisation)
 
         expect { membership.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
