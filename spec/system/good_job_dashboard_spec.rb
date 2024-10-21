@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "GoodJob admin dashboard", service: :placements, type: :system do
   scenario "Access the dashboard as a support user" do
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
     when_i_go_to_the_dashboard_path
     then_i_can_see_the_dashboard
   end

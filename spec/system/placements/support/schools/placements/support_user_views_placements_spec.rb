@@ -16,7 +16,7 @@ RSpec.describe "Placements / Support / Schools / Placements / Support User views
   let!(:another_school) { create(:placements_school) }
   let(:term) { create(:placements_term, :autumn) }
 
-  before { given_i_am_signed_in_as_a_support_user }
+  before { given_i_am_signed_in_as_a_placements_support_user }
 
   scenario "view a school's empty placements list" do
     when_i_visit_the_support_school_placements_page(another_school)

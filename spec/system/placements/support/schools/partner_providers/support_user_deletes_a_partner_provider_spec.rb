@@ -20,7 +20,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   before do
     partnership
     another_partnership
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
   end
 
   scenario "Support user deletes a partner provider" do

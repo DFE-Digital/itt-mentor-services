@@ -9,7 +9,7 @@ RSpec.describe "Placements / Organisations / Support user views a School", type:
   end
 
   scenario "Support user navigates to different organisations on the list" do
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
     when_i_click_on_a_organisation_name(school.name)
     then_i_see_the_school_details
     when_i_navigate_back_to_the_organisations_list

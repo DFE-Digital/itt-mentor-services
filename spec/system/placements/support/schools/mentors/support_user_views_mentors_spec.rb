@@ -8,7 +8,7 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User views men
   let!(:school) { create(:placements_school, mentors: [mentor1, mentor2]) }
   let!(:another_school) { create(:placements_school) }
 
-  before { given_i_am_signed_in_as_a_support_user }
+  before { given_i_am_signed_in_as_a_placements_support_user }
 
   scenario "View a school's mentors as a support user" do
     when_i_visit_the_support_school_mentors_page(school)

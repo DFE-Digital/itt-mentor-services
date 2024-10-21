@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Support user filters and searches for organisations", service: :placements, type: :system do
   before do
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
     and_placement_schools_and_providers_exist
     then_i_see_support_navigation_with_organisation_selected
   end

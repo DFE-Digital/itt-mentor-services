@@ -8,7 +8,7 @@ RSpec.describe "Placements / Support/ Providers / Partner schools / View a partn
 
   before do
     partnership
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
   end
 
   scenario "Support User views a provider partner school" do

@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Placements / Support / Schools / Placements / Add a placement",
                service: :placements, type: :system do
   before do
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
   end
 
   it_behaves_like "an add a placement wizard"

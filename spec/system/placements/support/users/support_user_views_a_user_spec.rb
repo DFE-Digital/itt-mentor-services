@@ -17,7 +17,7 @@ RSpec.describe "Placements / Support / Users / Support User Views A User", servi
   end
 
   before do
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
   end
 
   describe "schools" do

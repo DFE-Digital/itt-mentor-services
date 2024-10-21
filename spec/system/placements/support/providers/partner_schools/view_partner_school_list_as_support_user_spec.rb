@@ -8,7 +8,7 @@ RSpec.describe "Placements / Support / Providers / Partner schools / View a part
   let!(:another_school) { create(:placements_school, name: "Shelbyville Elementary School", urn: "5678") }
 
   before do
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
   end
 
   scenario "Support user views provider partner schools page for a provider with no partner schools" do

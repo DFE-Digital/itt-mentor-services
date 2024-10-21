@@ -4,7 +4,7 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
   let(:provider) { create(:provider, name: "Provider 1") }
 
   before do
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
     provider
   end
 

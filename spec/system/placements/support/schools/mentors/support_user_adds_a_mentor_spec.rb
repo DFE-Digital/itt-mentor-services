@@ -7,7 +7,7 @@ RSpec.describe "Placements support user adds mentors to schools", service: :plac
   let(:placements_mentor) { create(:placements_mentor) }
   let(:new_mentor) { build(:placements_mentor) }
 
-  before { given_i_am_signed_in_as_a_support_user }
+  before { given_i_am_signed_in_as_a_placements_support_user }
 
   scenario "I can navigate back to the index page" do
     given_i_navigate_to_schools_mentors_list(school)

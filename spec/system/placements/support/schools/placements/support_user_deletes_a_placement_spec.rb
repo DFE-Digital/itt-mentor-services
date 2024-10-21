@@ -16,7 +16,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User delete
 
   before do
     placement_2
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
     when_i_visit_the_support_show_page_for(school, placement_1)
   end
 

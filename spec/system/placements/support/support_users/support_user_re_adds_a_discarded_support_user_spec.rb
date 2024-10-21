@@ -14,7 +14,7 @@ RSpec.describe "Placements / Support Users / Support user re-adds a discarded su
       first_name: "John",
       last_name: "Doe",
     )
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
     and_i_visit_the_support_users_page
     and_i_click_on_add_a_support_user
     and_i_fill_in_the_support_user_form(
@@ -39,7 +39,7 @@ RSpec.describe "Placements / Support Users / Support user re-adds a discarded su
       first_name: "John",
       last_name: "Doe",
     )
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
     and_i_visit_the_support_users_page
     and_i_click_on_add_a_support_user
     and_i_fill_in_the_support_user_form(
@@ -64,7 +64,7 @@ RSpec.describe "Placements / Support Users / Support user re-adds a discarded su
       first_name: "John",
       last_name: "Doe",
     )
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
     and_i_visit_the_support_users_page
     and_i_click_on_add_a_support_user
     and_i_fill_in_the_support_user_form(

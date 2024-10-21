@@ -4,7 +4,7 @@ RSpec.describe "Placements / Support Users / Support user views a support user",
   let!(:support_user) { create(:placements_support_user) }
 
   scenario "View a support user" do
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
     and_i_visit_the_support_users_page
     and_i_click_on_a_support_user(support_user)
     i_see_the_details_of_the_support_user(support_user)

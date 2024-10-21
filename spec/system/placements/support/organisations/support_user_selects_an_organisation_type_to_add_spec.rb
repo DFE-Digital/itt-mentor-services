@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Placements / Support / Organisations / Support User Selects An Organisation Type To Add",
                service: :placements, type: :system do
   before do
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
     when_i_click_add_organisation
     then_i_see_support_navigation_with_organisation_selected
   end

@@ -13,7 +13,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   end
 
   before do
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
   end
 
   scenario "Support user adds a partner provider", :js, retry: 3 do

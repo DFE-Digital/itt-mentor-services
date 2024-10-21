@@ -10,7 +10,7 @@ RSpec.describe "Sign out as a Placements User", service: :placements, type: :sys
   end
 
   scenario "I sign out" do
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
     i_should_see_a_sign_out_button
     when_i_click_sign_out
     i_expect_to_be_on_sign_in_page

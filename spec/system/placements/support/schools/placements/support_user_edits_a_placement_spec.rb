@@ -4,7 +4,7 @@ RSpec.describe "Placements / Support / Schools / Placements / Edit a placement",
                service: :placements, type: :system do
   let(:context_for_path) { "support_school" }
 
-  before { given_i_am_signed_in_as_a_support_user }
+  before { given_i_am_signed_in_as_a_placements_support_user }
 
   it_behaves_like "an edit placement wizard"
 

@@ -6,7 +6,7 @@ RSpec.describe "Support User adds a Provider without JavaScript", service: :plac
     create(:provider, name: "Manchester 2")
     create(:provider, name: "London")
 
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
   end
 
   scenario "Colin adds a new Provider" do

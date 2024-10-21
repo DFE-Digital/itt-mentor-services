@@ -11,7 +11,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User views 
 
   before do
     school
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
   end
 
   describe "school phases" do

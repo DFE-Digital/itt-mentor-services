@@ -16,7 +16,7 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User deletes a
 
   before do
     given_the_school_has_mentors(school:, mentors: [mentor_1, mentor_2])
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
   end
 
   context "when the mentor has no placements" do

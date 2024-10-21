@@ -4,7 +4,7 @@ RSpec.describe "View Emails", service: :placements, type: :system do
   let(:support_user) { create(:placements_support_user) }
 
   before do
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
   end
 
   scenario "User visits the emails page" do

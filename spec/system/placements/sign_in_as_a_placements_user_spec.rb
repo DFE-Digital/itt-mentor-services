@@ -40,7 +40,7 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
 
   scenario "I sign in as a support user" do
     given_there_are_placement_organisations
-    given_i_am_signed_in_as_a_support_user
+    given_i_am_signed_in_as_a_placements_support_user
     then_i_see_a_list_of_organisations
   end
 
@@ -92,7 +92,7 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
     context "when the user is a support user" do
       scenario "I sign in as support user Colin, using my email address" do
         given_there_are_placement_organisations
-        given_i_am_signed_in_as_a_support_user(with_dfe_sign_id: false)
+        given_i_am_signed_in_as_a_placements_support_user(with_dfe_sign_id: false)
         then_i_see_a_list_of_organisations
       end
     end
@@ -101,7 +101,7 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
   context "when I use a deep link without being logged in" do
     context "when I am a support user" do
       scenario "when I sign in as Colin I am redirected to my requested page" do
-        given_i_am_signed_in_as_a_support_user(sign_in: false)
+        given_i_am_signed_in_as_a_placements_support_user(sign_in: false)
         when_i_visit_the_support_users_path
         then_i_am_redirected_to_the_sign_in_page
         when_i_click_on("Sign in using DfE Sign In")
@@ -210,7 +210,7 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
       context "when I sign in as support user Colin" do
         scenario "I am redirected to the support organisation list page" do
           given_there_are_placement_organisations
-          given_i_am_signed_in_as_a_support_user(sign_in: false)
+          given_i_am_signed_in_as_a_placements_support_user(sign_in: false)
           and_i_visit_a_school_show_page
           then_i_am_redirected_to_the_sign_in_page
           when_i_click_on("Sign in using DfE Sign In")
