@@ -1,6 +1,6 @@
-class Placement::SummaryComponentPreview < ApplicationComponentPreview
+class Placement::StatusTagComponentPreview < ApplicationComponentPreview
   def default
-    placement = create(:placement)
+    placement = FactoryBot.build(:placement)
 
     render(Placement::StatusTagComponent.new(placement:))
   end
