@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Placements::UserMailer, type: :mailer do
+RSpec.describe Placements::ProviderUserMailer, type: :mailer do
   describe "#user_membership_created_notification" do
     subject(:invite_email) { described_class.user_membership_created_notification(user, organisation) }
 
@@ -206,58 +206,23 @@ RSpec.describe Placements::UserMailer, type: :mailer do
       described_class.partnership_created_notification(user, source_organisation, partner_organisation)
     end
 
-    context "when partner organisation is a provider" do
-      let(:source_organisation) { create(:placements_school, name: "School 1") }
-      let(:partner_organisation) { create(:placements_provider, name: "Provider 1") }
-      let(:user) { create(:placements_user, providers: [partner_organisation]) }
+    let(:source_organisation) { create(:placements_school, name: "School 1") }
+    let(:partner_organisation) { create(:placements_provider, name: "Provider 1") }
+    let(:user) { create(:placements_user, providers: [partner_organisation]) }
 
-      it "sends a notification email to the user of the provider" do
-        expect(partnership_created_notification_email.to).to contain_exactly(user.email)
-        expect(partnership_created_notification_email.subject).to eq(
-          "A school has added your organisation to its list of partner providers",
-        )
+    it "sends a notification email to the user of the provider" do
+      expect(partnership_created_notification_email.to).to contain_exactly(user.email)
+      expect(partnership_created_notification_email.subject).to eq(
+        "A school has added your organisation to its list of partner providers",
+      )
 
-        expect(partnership_created_notification_email.body).to have_content <<~EMAIL
-          Dear #{user.full_name},
+      expect(partnership_created_notification_email.body).to have_content <<~EMAIL
+        Dear #{user.full_name},
 
-          You are receiving this notification because #{source_organisation.name} has added #{partner_organisation.name} to its list of partner providers.
+        You are receiving this notification because #{source_organisation.name} has added #{partner_organisation.name} to its list of partner providers.
 
-          View or manage your list of partner schools http://placements.localhost/providers/#{partner_organisation.id}/partner_schools
-        EMAIL
-      end
-    end
-
-    context "when partner organisation is a school" do
-      let(:source_organisation) { create(:placements_provider, name: "Provider 1") }
-      let(:partner_organisation) { create(:placements_school, name: "School 1") }
-
-      let(:user) { create(:placements_user, schools: [partner_organisation]) }
-
-      it "sends a notification email to the user of the school" do
-        expect(partnership_created_notification_email.to).to contain_exactly(user.email)
-        expect(partnership_created_notification_email.subject).to eq(
-          "A teacher training provider has added your organisation to its list of partner schools",
-        )
-        expect(partnership_created_notification_email.body).to have_content <<~EMAIL
-          Dear #{user.full_name},
-
-          You are receiving this notification because #{source_organisation.name} has added #{partner_organisation.name} to its list of partner schools.
-
-          View or manage your list of partner providers http://placements.localhost/schools/#{partner_organisation.id}/partner_providers
-        EMAIL
-      end
-    end
-
-    context "when partner organisation is not a school or provider" do
-      let(:source_organisation) { create(:placements_provider, name: "Provider 1") }
-      let(:partner_organisation) { nil }
-      let(:user) { create(:placements_user) }
-
-      it "raises an error" do
-        expect { partnership_created_notification_email.to }.to raise_error(
-          InvalidOrganisationError, "#partner_organisation must be either a Provider or School"
-        )
-      end
+        View or manage your list of partner schools http://placements.localhost/providers/#{partner_organisation.id}/partner_schools
+      EMAIL
     end
   end
 
@@ -266,57 +231,22 @@ RSpec.describe Placements::UserMailer, type: :mailer do
       described_class.partnership_destroyed_notification(user, source_organisation, partner_organisation)
     end
 
-    context "when partner organisation is a provider" do
-      let(:source_organisation) { create(:placements_school, name: "School 1") }
-      let(:partner_organisation) { create(:placements_provider, name: "Provider 1") }
-      let(:user) { create(:placements_user, providers: [partner_organisation]) }
+    let(:source_organisation) { create(:placements_school, name: "School 1") }
+    let(:partner_organisation) { create(:placements_provider, name: "Provider 1") }
+    let(:user) { create(:placements_user, providers: [partner_organisation]) }
 
-      it "sends a notification email to the user of the provider" do
-        expect(partnership_destroyed_notification_email.to).to contain_exactly(user.email)
-        expect(partnership_destroyed_notification_email.subject).to eq(
-          "A school has removed your organisation from its list of partner providers",
-        )
-        expect(partnership_destroyed_notification_email.body).to have_content <<~EMAIL
-          Dear #{user.full_name},
+    it "sends a notification email to the user of the provider" do
+      expect(partnership_destroyed_notification_email.to).to contain_exactly(user.email)
+      expect(partnership_destroyed_notification_email.subject).to eq(
+        "A school has removed your organisation from its list of partner providers",
+      )
+      expect(partnership_destroyed_notification_email.body).to have_content <<~EMAIL
+        Dear #{user.full_name},
 
-          You are receiving this notification because #{source_organisation.name} has removed #{partner_organisation.name} from its list of partner providers.
+        You are receiving this notification because #{source_organisation.name} has removed #{partner_organisation.name} from its list of partner providers.
 
-          View or manage your list of partner schools http://placements.localhost/providers/#{partner_organisation.id}/partner_schools
-        EMAIL
-      end
-    end
-
-    context "when partner organisation is a school" do
-      let(:source_organisation) { create(:placements_provider, name: "Provider 1") }
-      let(:partner_organisation) { create(:placements_school, name: "School 1") }
-
-      let(:user) { create(:placements_user, schools: [partner_organisation]) }
-
-      it "sends a notification email to the user of the school" do
-        expect(partnership_destroyed_notification_email.to).to contain_exactly(user.email)
-        expect(partnership_destroyed_notification_email.subject).to eq(
-          "A teacher training provider has removed your organisation from its list of partner schools",
-        )
-        expect(partnership_destroyed_notification_email.body).to have_content <<~EMAIL
-          Dear #{user.full_name},
-
-          You are receiving this notification because #{source_organisation.name} has removed #{partner_organisation.name} from its list of partner schools.
-
-          View or manage your list of partner providers http://placements.localhost/schools/#{partner_organisation.id}/partner_providers
-        EMAIL
-      end
-    end
-
-    context "when partner organisation is not a school or provider" do
-      let(:source_organisation) { create(:placements_provider, name: "Provider 1") }
-      let(:partner_organisation) { nil }
-      let(:user) { create(:placements_user) }
-
-      it "raises an error" do
-        expect { partnership_destroyed_notification_email.to }.to raise_error(
-          InvalidOrganisationError, "#partner_organisation must be either a Provider or School"
-        )
-      end
+        View or manage your list of partner schools http://placements.localhost/providers/#{partner_organisation.id}/partner_schools
+      EMAIL
     end
   end
 

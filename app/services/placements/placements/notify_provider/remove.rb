@@ -6,7 +6,7 @@ module Placements
 
         def notify_users
           @provider.users.each do |user|
-            ::Placements::UserMailer
+            ::Placements::ProviderUserMailer
               .placement_provider_removed_notification(
                 user, @provider, @placement
               ).deliver_later
