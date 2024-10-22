@@ -70,7 +70,7 @@
 require "rails_helper"
 
 RSpec.describe Placements::School do
-  context "with assocations" do
+  context "with associations" do
     it { is_expected.to have_one(:school_contact).dependent(:destroy) }
 
     it { is_expected.to have_many(:mentor_memberships) }
@@ -122,5 +122,9 @@ RSpec.describe Placements::School do
       expect(described_class.all).to contain_exactly(school)
       expect(described_class.all).not_to include(school_without_placements)
     end
+  end
+
+  describe "delegations" do
+    it { is_expected.to delegate_method(:email_address).to(:school_contact).with_prefix(true).allow_nil }
   end
 end
