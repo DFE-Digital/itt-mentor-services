@@ -51,89 +51,40 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
   describe "#user_membership_destroyed_notification" do
     subject(:removal_email) { described_class.user_membership_destroyed_notification(user, organisation) }
 
-    context "when organisation is a school" do
-      let(:user) { create(:placements_user) }
-      let(:organisation) { create(:placements_school) }
+    let(:user) { create(:placements_user) }
+    let(:organisation) { create(:placements_provider) }
 
-      it "sends expected message to user" do
-        expect(removal_email.to).to contain_exactly user.email
-        expect(removal_email.subject).to eq "You have been removed from Manage school placements"
-        expect(removal_email.body).to have_content <<~EMAIL
-          Dear #{user.first_name},
+    it "sends expected message to user" do
+      expect(removal_email.to).to contain_exactly user.email
+      expect(removal_email.subject).to eq "You have been removed from Manage school placements"
+      expect(removal_email.body).to have_content <<~EMAIL
+        #{user.first_name},
 
-          You have been removed from the Manage school placements service for #{organisation.name}.
+        You no longer have access to the Manage school placements service for #{organisation.name}. This is because someone at this organisation removed you.
 
-          # Give feedback or report a problem
+        If you think this is a mistake, speak to someone at your organisation.
 
-          If you have any questions or feedback, please contact the team at [Manage.SchoolPlacements@education.gov.uk](mailto:Manage.SchoolPlacements@education.gov.uk).
+        Manage school placements service
+      EMAIL
+    end
 
-          Regards
-
-          Manage school placements team
-        EMAIL
+    context "when HostingEnvironment.env is 'production'" do
+      before do
+        allow(HostingEnvironment).to receive(:env).and_return("production")
       end
 
-      context "when HostingEnvironment.env is 'production'" do
-        before do
-          allow(HostingEnvironment).to receive(:env).and_return("production")
-        end
-
-        it "does not prepend the hosting environment to the subject" do
-          expect(removal_email.subject).to eq("You have been removed from Manage school placements")
-        end
-      end
-
-      context "when HostingEnvironment.env is 'staging'" do
-        before do
-          allow(HostingEnvironment).to receive(:env).and_return("staging")
-        end
-
-        it "prepends the hosting environment to the subject" do
-          expect(removal_email.subject).to eq("[STAGING] You have been removed from Manage school placements")
-        end
+      it "does not prepend the hosting environment to the subject" do
+        expect(removal_email.subject).to eq("You have been removed from Manage school placements")
       end
     end
 
-    context "when organisation is a provider" do
-      let(:user) { create(:placements_user) }
-      let(:organisation) { create(:placements_provider) }
-
-      it "sends expected message to user" do
-        expect(removal_email.to).to contain_exactly user.email
-        expect(removal_email.subject).to eq "You have been removed from Manage school placements"
-        expect(removal_email.body).to have_content <<~EMAIL
-          Dear #{user.first_name},
-
-          You have been removed from the Manage school placements service for #{organisation.name}.
-
-          # Give feedback or report a problem
-
-          If you have any questions or feedback, please contact the team at [Manage.SchoolPlacements@education.gov.uk](mailto:Manage.SchoolPlacements@education.gov.uk).
-
-          Regards
-
-          Manage school placements team
-        EMAIL
+    context "when HostingEnvironment.env is 'staging'" do
+      before do
+        allow(HostingEnvironment).to receive(:env).and_return("staging")
       end
 
-      context "when HostingEnvironment.env is 'production'" do
-        before do
-          allow(HostingEnvironment).to receive(:env).and_return("production")
-        end
-
-        it "does not prepend the hosting environment to the subject" do
-          expect(removal_email.subject).to eq("You have been removed from Manage school placements")
-        end
-      end
-
-      context "when HostingEnvironment.env is 'staging'" do
-        before do
-          allow(HostingEnvironment).to receive(:env).and_return("staging")
-        end
-
-        it "prepends the hosting environment to the subject" do
-          expect(removal_email.subject).to eq("[STAGING] You have been removed from Manage school placements")
-        end
+      it "prepends the hosting environment to the subject" do
+        expect(removal_email.subject).to eq("[STAGING] You have been removed from Manage school placements")
       end
     end
   end
