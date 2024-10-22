@@ -4,109 +4,46 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
   describe "#user_membership_created_notification" do
     subject(:invite_email) { described_class.user_membership_created_notification(user, organisation) }
 
-    context "when organisation is school" do
-      let(:user) { create(:placements_user) }
-      let(:organisation) { create(:placements_school) }
+    let(:user) { create(:placements_user) }
+    let(:organisation) { create(:placements_school) }
 
-      it "sends invitation email" do
-        expect(invite_email.to).to contain_exactly(user.email)
+    it "sends invitation email" do
+      expect(invite_email.to).to contain_exactly(user.email)
+      expect(invite_email.subject).to eq("Invitation to join Manage school placements")
+      expect(invite_email.body).to have_content <<~EMAIL
+        #{user.first_name},
+
+        You have been invited to join the Manage school placements service for #{organisation.name}.
+
+        This service allows you to publish and manage placements at your school. You can assign your preferred providers to fulfil your placements with suitable trainees.
+
+        [Sign in to Manage school placements](http://placements.localhost/sign-in)
+
+        If you do not have DfE Sign-in, create an account. You can then return to this email to access the service.
+
+        If you need help or have feedback for us, contact [Manage.SchoolPlacements@education.gov.uk](mailto:Manage.SchoolPlacements@education.gov.uk).
+
+        Manage school placements service
+      EMAIL
+    end
+
+    context "when HostingEnvironment.env is 'production'" do
+      before do
+        allow(HostingEnvironment).to receive(:env).and_return("production")
+      end
+
+      it "does not prepend the hosting environment to the subject" do
         expect(invite_email.subject).to eq("Invitation to join Manage school placements")
-        expect(invite_email.body).to have_content <<~EMAIL
-          Dear #{user.first_name},
-
-          You have been invited to join the Manage school placements service for #{organisation.name}.
-
-          # Sign in to manage your school placements
-
-          If you have a DfE Sign-in account, you can use it to sign in:
-
-          [http://placements.localhost/sign-in](http://placements.localhost/sign-in)
-
-          If you need to create a DfE Sign-in account, you can do this after clicking "Sign in using DfE Sign-in"
-
-          After creating a DfE Sign-in account, you will need to return to this email and [sign in to access the service](http://placements.localhost/sign-in).
-
-          # Give feedback or report a problem
-
-          If you have any questions or feedback, please contact the team at [Manage.SchoolPlacements@education.gov.uk](mailto:Manage.SchoolPlacements@education.gov.uk).
-
-          Regards
-
-          Manage school placements team
-        EMAIL
-      end
-
-      context "when HostingEnvironment.env is 'production'" do
-        before do
-          allow(HostingEnvironment).to receive(:env).and_return("production")
-        end
-
-        it "does not prepend the hosting environment to the subject" do
-          expect(invite_email.subject).to eq("Invitation to join Manage school placements")
-        end
-      end
-
-      context "when HostingEnvironment.env is 'staging'" do
-        before do
-          allow(HostingEnvironment).to receive(:env).and_return("staging")
-        end
-
-        it "prepends the hosting environment to the subject" do
-          expect(invite_email.subject).to eq("[STAGING] Invitation to join Manage school placements")
-        end
       end
     end
 
-    context "when organisation is provider" do
-      let(:user) { create(:placements_user) }
-      let(:organisation) { create(:placements_provider) }
-
-      it "sends invitation email" do
-        expect(invite_email.to).to contain_exactly(user.email)
-        expect(invite_email.subject).to eq("Invitation to join Manage school placements")
-        expect(invite_email.body).to have_content <<~EMAIL
-          Dear #{user.first_name},
-
-          You have been invited to join the Manage school placements service for #{organisation.name}.
-
-          # Sign in to manage your school placements
-
-          If you have a DfE Sign-in account, you can use it to sign in:
-
-          [http://placements.localhost/sign-in](http://placements.localhost/sign-in)
-
-          If you need to create a DfE Sign-in account, you can do this after clicking "Sign in using DfE Sign-in"
-
-          After creating a DfE Sign-in account, you will need to return to this email and [sign in to access the service](http://placements.localhost/sign-in).
-
-          # Give feedback or report a problem
-
-          If you have any questions or feedback, please contact the team at [Manage.SchoolPlacements@education.gov.uk](mailto:Manage.SchoolPlacements@education.gov.uk).
-
-          Regards
-
-          Manage school placements team
-        EMAIL
+    context "when HostingEnvironment.env is 'staging'" do
+      before do
+        allow(HostingEnvironment).to receive(:env).and_return("staging")
       end
 
-      context "when HostingEnvironment.env is 'production'" do
-        before do
-          allow(HostingEnvironment).to receive(:env).and_return("production")
-        end
-
-        it "does not prepend the hosting environment to the subject" do
-          expect(invite_email.subject).to eq("Invitation to join Manage school placements")
-        end
-      end
-
-      context "when HostingEnvironment.env is 'staging'" do
-        before do
-          allow(HostingEnvironment).to receive(:env).and_return("staging")
-        end
-
-        it "prepends the hosting environment to the subject" do
-          expect(invite_email.subject).to eq("[STAGING] Invitation to join Manage school placements")
-        end
+      it "prepends the hosting environment to the subject" do
+        expect(invite_email.subject).to eq("[STAGING] Invitation to join Manage school placements")
       end
     end
   end
