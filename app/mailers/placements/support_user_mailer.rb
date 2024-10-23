@@ -9,14 +9,10 @@ class Placements::SupportUserMailer < Placements::ApplicationMailer
   end
 
   def support_user_removal_notification(support_user)
-    subject = t(".subject", service_name:)
-    body = t(
-      ".body",
-      user_name: support_user.first_name,
-      service_name:,
-      slack_url: t("placements.support_slack_url"),
-    )
+    @user_name = support_user.first_name
+    @service_name = service_name
+    @slack_url = slack_url
 
-    notify_email to: support_user.email, subject:, body:
+    notify_email to: support_user.email, subject: t(".subject", service_name:)
   end
 end
