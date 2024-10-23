@@ -11,7 +11,8 @@ module Google
             "X-Goog-FieldMask" => "localizedValues,destinationIndex"
 
     def travel_time(origin_address, destinations, travel_mode: "DRIVE")
-      self.class.post("/distanceMatrix/v2:computeRouteMatrix", body: options(origin_address, destinations, travel_mode))
+      response = self.class.post("/distanceMatrix/v2:computeRouteMatrix", body: options(origin_address, destinations, travel_mode))
+      JSON.parse(response.body)
     end
 
     private
