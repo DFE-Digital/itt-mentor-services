@@ -16,7 +16,7 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User delete
 
   before do
     placement_2
-    given_i_sign_in_as_colin
+    given_i_am_signed_in_as_a_placements_support_user
     when_i_visit_the_show_page_for(school, placement_1)
   end
 
@@ -39,25 +39,6 @@ RSpec.describe "Placements / Support / Schools / Placement / Support User delete
   end
 
   private
-
-  def and_there_is_an_existing_user_for(user_name)
-    user = create(:placements_support_user, user_name.downcase.to_sym)
-    user_exists_in_dfe_sign_in(user:)
-  end
-
-  def and_i_visit_the_sign_in_path
-    visit sign_in_path
-  end
-
-  def and_i_click_sign_in
-    click_on "Sign in using DfE Sign In"
-  end
-
-  def given_i_sign_in_as_colin
-    and_there_is_an_existing_user_for("Colin")
-    and_i_visit_the_sign_in_path
-    and_i_click_sign_in
-  end
 
   def when_i_visit_the_show_page_for(school, placement)
     visit placements_school_placement_path(school, placement)

@@ -2,23 +2,11 @@ require "rails_helper"
 
 RSpec.describe "Placements / Schools / Placements / Edit a placement",
                service: :placements, type: :system do
-  before { given_i_sign_in_as_anne }
+  before { given_i_am_signed_in_as_a_placements_user(organisations: [school]) }
 
   it_behaves_like "an edit placement wizard"
 
   private
-
-  def given_i_sign_in_as_anne
-    and_there_is_an_existing_user_for("Anne")
-    and_i_visit_the_sign_in_path
-    and_i_click_sign_in
-  end
-
-  def and_there_is_an_existing_user_for(user_name)
-    user = create(:placements_user, user_name.downcase.to_sym)
-    user_exists_in_dfe_sign_in(user:)
-    create(:user_membership, user:, organisation: school)
-  end
 
   def then_i_am_redirected_to_add_a_partner_provider
     expect(page).to have_current_path(

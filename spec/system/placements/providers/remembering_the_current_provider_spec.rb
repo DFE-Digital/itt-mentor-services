@@ -5,7 +5,7 @@ RSpec.describe "Remembering the current provider", service: :placements, type: :
   let(:provider_two) { build(:placements_provider, name: "Ctrl + Alt + Teach") }
 
   scenario "A multi-org user switches between different providers" do
-    given_i_sign_in_with_access_to_multiple_providers
+    given_i_am_signed_in_as_a_placements_user(organisations: [provider_one, provider_two])
 
     when_i_click_on "The Chalkboard Champions"
     then_my_current_provider_is "The Chalkboard Champions"
@@ -20,13 +20,6 @@ RSpec.describe "Remembering the current provider", service: :placements, type: :
   end
 
   private
-
-  def given_i_sign_in_with_access_to_multiple_providers
-    user = create(:placements_user, providers: [provider_one, provider_two])
-    user_exists_in_dfe_sign_in(user:)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
 
   def when_i_click_on(text)
     click_on text

@@ -9,20 +9,12 @@ RSpec.describe "Placements / Providers / Partner schools / Views a partner schoo
   before { partnership }
 
   scenario "User views a provider partner school" do
-    given_i_sign_in_as_patricia
+    given_i_am_signed_in_as_a_placements_user(organisations: [provider])
     when_i_view_the_partner_school_show_page
     then_i_see_the_details_of(school)
   end
 
   private
-
-  def given_i_sign_in_as_patricia
-    user = create(:placements_user, :patricia)
-    create(:user_membership, user:, organisation: provider)
-    user_exists_in_dfe_sign_in(user:)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
 
   def when_i_view_the_partner_school_show_page
     visit placements_provider_partner_school_path(provider, school)

@@ -5,52 +5,52 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
   let!(:another_school) { create(:placements_school) }
 
   scenario "View school placements page where school has no placements" do
-    given_i_sign_in_as_anne
+    given_i_am_signed_in_as_a_placements_user(organisations: [school])
     then_i_see_the_placements_page
     then_i_see_the_empty_state
   end
 
   scenario "where placements for another school exists" do
     given_placement_exists_for_another_school
-    given_i_sign_in_as_anne
+    given_i_am_signed_in_as_a_placements_user(organisations: [school])
     then_i_see_the_empty_state
   end
 
   context "with placements" do
     scenario "where placement has multiple mentors" do
       given_a_placement_exists_with_multiple_mentors
-      given_i_sign_in_as_anne
+      given_i_am_signed_in_as_a_placements_user(organisations: [school])
       then_i_see_mentor_names("Bart Simpson and Lisa Simpson")
       and_i_see_subject_names("Biology")
     end
 
     scenario "where placement has no mentors attached" do
       given_a_placement_exists
-      given_i_sign_in_as_anne
+      given_i_am_signed_in_as_a_placements_user(organisations: [school])
       then_i_see_mentor_names("Not yet known")
     end
 
     scenario "when the placement has a provider" do
       given_a_placement_exists_with_a_provider
-      given_i_sign_in_as_anne
+      given_i_am_signed_in_as_a_placements_user(organisations: [school])
       then_i_see_the_provider_name("Springfield University")
     end
 
     scenario "when the placement does not have a provider" do
       given_a_placement_exists
-      given_i_sign_in_as_anne
+      given_i_am_signed_in_as_a_placements_user(organisations: [school])
       then_i_see_the_provider_name("Not yet known")
     end
 
     scenario "when the placement has no terms" do
       given_a_placement_exists
-      given_i_sign_in_as_anne
+      given_i_am_signed_in_as_a_placements_user(organisations: [school])
       then_i_see_term_name("Any time in the academic year")
     end
 
     scenario "when the placement has terms" do
       given_a_placement_exists(with_term: true)
-      given_i_sign_in_as_anne
+      given_i_am_signed_in_as_a_placements_user(organisations: [school])
       then_i_see_term_name("Autumn term")
     end
 
@@ -64,20 +64,20 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
       let!(:next_academic_year_placement) { create(:placement, school:, academic_year: next_academic_year, subject: next_subject) }
 
       scenario "when I view placements for the current academic year" do
-        given_i_sign_in_as_anne
+        given_i_am_signed_in_as_a_placements_user(organisations: [school])
         then_i_see_placement(current_academic_year_placement)
         and_i_do_not_see_placement(next_academic_year_placement)
       end
 
       scenario "when I view placements for the next academic year" do
-        given_i_sign_in_as_anne
+        given_i_am_signed_in_as_a_placements_user(organisations: [school])
         when_i_click_on("Next year (#{next_academic_year.name})")
         then_i_see_placement(next_academic_year_placement)
         and_i_do_not_see_placement(current_academic_year_placement)
       end
 
       scenario "I can switch between academic years" do
-        given_i_sign_in_as_anne
+        given_i_am_signed_in_as_a_placements_user(organisations: [school])
         then_i_see_placement(current_academic_year_placement)
         and_i_do_not_see_placement(next_academic_year_placement)
 
@@ -93,14 +93,6 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
   end
 
   private
-
-  def given_i_sign_in_as_anne
-    user = create(:placements_user, :anne)
-    create(:user_membership, user:, organisation: school)
-    user_exists_in_dfe_sign_in(user:)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
-  end
 
   def given_a_placement_exists(with_term: false)
     with_term ? create(:placement, school:, terms: [create(:placements_term, :autumn)]) : create(:placement, school:)
