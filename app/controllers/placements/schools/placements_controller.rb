@@ -6,13 +6,13 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
   helper_method :edit_attribute_path, :add_provider_path, :add_mentor_path
 
   def index
-    @pagy, scoped_placements = pagy(
+    @pagy, @placements = pagy(
       placements
         .where(academic_year: academic_year_scope)
         .includes(:subject, :mentors, :additional_subjects, :provider)
         .order("subjects.name"),
     )
-    @placements = scoped_placements.decorate
+    @placements = @placements.decorate
   end
 
   def show; end

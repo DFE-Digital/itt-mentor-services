@@ -6,7 +6,14 @@
       <% if @memberships.any? %>
         <ul class="govuk-list">
           <% @memberships.each do |membership| %>
-            <li><%= govuk_link_to(membership.name, placements_organisation_path(membership)) %></li>
+            <li>
+              <%= govuk_link_to(
+                membership.name, placements_organisation_path(
+                  id: membership.organisation_id,
+                  type: membership.organisation_type,
+                )
+              ) %>
+            </li>
           <% end %>
         </ul>
       <% else %>
