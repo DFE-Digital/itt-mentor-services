@@ -65,18 +65,16 @@ class Placements::ProviderUserMailer < Placements::ApplicationMailer
   end
 
   def placement_provider_removed_notification(user, provider, placement)
-    notify_email(
-      to: user.email,
-      subject: t(".subject", school_name: school(placement).name),
-      body: t(
-        ".body",
-        provider_name: provider.name,
-        placement_name: placement.decorate.title,
-        school_name: school(placement).name,
-        school_email: school(placement).school_contact.email_address,
-        link: placements_provider_placement_url(provider, placement),
-      ),
-    )
+    @user_name = user.first_name
+    @provider_name = provider.name
+    @school_name = school(placement).name
+    @itt_contact_email = school(placement).school_contact_email_address
+    @placement_name = placement.decorate.title
+    @placement_url = placements_provider_placement_url(provider, placement)
+    @service_name = service_name
+    @sign_in_url = sign_in_url
+
+    notify_email to: user.email, subject: t(".subject")
   end
 
   private
