@@ -56,10 +56,4 @@ class Placements::ProviderUserMailer < Placements::UserMailer
   def school(placement)
     @school ||= placement.school
   end
-
-  private
-
-  def school(placement)
-    @school ||= placement.school
-  end
 end
