@@ -52,15 +52,13 @@ RSpec.describe Placements::SupportUserMailer, type: :mailer do
       expect(removal_email.to).to contain_exactly(user.email)
       expect(removal_email.subject).to eq("You have been removed from Manage school placements")
       expect(removal_email.body).to have_content <<~EMAIL
-        Dear John,
+        John,
 
         You have been removed from the Manage school placements service.
 
         If you think this was a mistake, [contact the service team on Slack](https://ukgovernmentdfe.slack.com/archives/C04MLBVP876).
 
-        Regards
-
-        Manage school placements team
+        Manage school placements service
       EMAIL
     end
 
