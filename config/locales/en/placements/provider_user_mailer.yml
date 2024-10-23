@@ -6,14 +6,7 @@ en:
       user_membership_destroyed_notification:
         subject: You have been removed from %{service_name}
       partnership_created_notification:
-        subject: A school has added your organisation to its list of partner providers
-        body: |
-          Dear %{user_name},
-          
-          You are receiving this notification because %{source_organisation} has added %{partner_organisation} to its list of partner providers.
-          
-          View or manage your list of partner schools %{link}
-
+        subject: A school has added you
       partnership_destroyed_notification:
         subject: A school has removed your organisation from its list of partner providers
         body: |

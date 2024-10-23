@@ -101,15 +101,23 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
     it "sends a notification email to the user of the provider" do
       expect(partnership_created_notification_email.to).to contain_exactly(user.email)
       expect(partnership_created_notification_email.subject).to eq(
-        "A school has added your organisation to its list of partner providers",
+        "A school has added you",
       )
 
       expect(partnership_created_notification_email.body).to have_content <<~EMAIL
-        Dear #{user.full_name},
+        #{user.first_name},
 
-        You are receiving this notification because #{source_organisation.name} has added #{partner_organisation.name} to its list of partner providers.
+        #{source_organisation.name} has added #{partner_organisation.name} as one of the providers they would like to work with.
 
-        View or manage your list of partner schools http://placements.localhost/providers/#{partner_organisation.id}/partner_schools
+        ##What happens next?
+        They can now assign you to their placements. Once assigned to a specific placement, you should plan to place a trainee.
+
+        Contact the school on [#{source_organisation.school_contact_email_address}](mailto:#{source_organisation.school_contact_email_address}) if you have any questions.
+
+        ##Your account
+        [Sign in to Manage school placements](http://placements.localhost/sign-in)
+
+        Manage school placements service
       EMAIL
     end
   end
