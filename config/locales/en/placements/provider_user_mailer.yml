@@ -10,20 +10,7 @@ en:
       partnership_destroyed_notification:
         subject: A school has removed you
       placement_provider_assigned_notification:
-        subject: "%{school_name} wants you to place a trainee with them"
-        body: |
-          %{provider_name} has been assigned to the following placement:
-          
-          [%{school_name}](%{link})
-          [%{placement_name}](%{link})
-          
-          # What happens next?
-          
-          Contact the school to suggest a trainee you think would suit this placement. 
-          Get in touch at [%{school_email}](mailto:%{school_email})
-          
-          Manage school placements service
-
+        subject: A school wants you to place a trainee with them
       placement_provider_removed_notification:
         subject: "%{school_name} has removed you from a placement"
         body: |
