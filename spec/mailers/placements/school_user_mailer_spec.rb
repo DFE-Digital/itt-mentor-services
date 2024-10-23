@@ -169,7 +169,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
           ## What happens next?
           They will remain assigned to current placements unless you remove them. These placements are:
 
-          - [#{placement.decorate.title}](http://placements.localhost/providers/#{source_organisation.id}/placements/#{placement.id})
+          - [#{placement.decorate.title}](http://placements.localhost/schools/#{partner_organisation.id}/placements/#{placement.id})
 
           We recommend you speak to the provider to avoid confusion about placing trainees at your school. Contact them on [#{source_organisation.email_address}](mailto:#{source_organisation.email_address}).
 

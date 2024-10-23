@@ -23,7 +23,7 @@ class Placements::SchoolUserMailer < Placements::UserMailer
     @provider_email_address = source_organisation.email_address
     placements_school = partner_organisation.becomes(Placements::School)
     @placements = placements_school.placements.where(provider: source_organisation).decorate.map do |placement|
-      { title: placement.title, url: placements_provider_placement_url(source_organisation, placement) }
+      { title: placement.title, url: placements_school_placement_url(placements_school, placement) }
     end
     @sign_in_url = sign_in_url
     @service_name = service_name
