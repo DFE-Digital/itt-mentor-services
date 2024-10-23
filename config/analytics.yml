@@ -126,6 +126,7 @@ shared:
     - local_authority_code
     - claims_grant_conditions_accepted_at
     - claims_grant_conditions_accepted_by_id
+    - claims_private_beta
   :providers:
     - id
     - code

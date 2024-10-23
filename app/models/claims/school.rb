@@ -8,6 +8,7 @@
 #  address3                               :string
 #  admissions_policy                      :string
 #  claims_grant_conditions_accepted_at    :datetime
+#  claims_private_beta                    :boolean          default(FALSE)
 #  claims_service                         :boolean          default(FALSE)
 #  district_admin_code                    :string
 #  district_admin_name                    :string
