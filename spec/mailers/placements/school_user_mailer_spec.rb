@@ -94,7 +94,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
       described_class.partnership_created_notification(user, source_organisation, partner_organisation)
     end
 
-    let(:source_organisation) { create(:placements_provider, name: "Provider 1") }
+    let(:source_organisation) { create(:placements_provider, name: "Provider 1", email_address: "example@provider.org") }
     let(:partner_organisation) { create(:placements_school, name: "School 1") }
     let(:user) { create(:placements_user, schools: [partner_organisation]) }
 
@@ -109,7 +109,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
         ## What happens next?
         You can now assign them to your placements.
 
-        Contact the provider on [#{source_organisation.email_address}](#{source_organisation.email_address}) if you have any questions.
+        Contact the provider on [#{source_organisation.email_address}](mailto:#{source_organisation.email_address}) if you have any questions.
 
         ## Your account
         [Sign in to Manage school placements](http://placements.localhost/sign-in)
@@ -124,23 +124,61 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
       described_class.partnership_destroyed_notification(user, source_organisation, partner_organisation)
     end
 
-    let(:source_organisation) { create(:placements_provider, name: "Provider 1") }
+    let(:source_organisation) { create(:placements_provider, name: "Provider 1", email_address: "example@provider.org") }
     let(:partner_organisation) { create(:placements_school, name: "School 1") }
 
     let(:user) { create(:placements_user, schools: [partner_organisation]) }
 
-    it "sends a notification email to the user of the school" do
-      expect(partnership_destroyed_notification_email.to).to contain_exactly(user.email)
-      expect(partnership_destroyed_notification_email.subject).to eq(
-        "A teacher training provider has removed your organisation from its list of partner schools",
-      )
-      expect(partnership_destroyed_notification_email.body).to have_content <<~EMAIL
-        Dear #{user.full_name},
+    context "when the provider does not have placements with the school" do
+      it "sends a notification email to the user of the school" do
+        expect(partnership_destroyed_notification_email.to).to contain_exactly(user.email)
+        expect(partnership_destroyed_notification_email.subject).to eq(
+          "A provider has removed you",
+        )
+        expect(partnership_destroyed_notification_email.body).to have_content <<~EMAIL
+          #{user.first_name},
 
-        You are receiving this notification because #{source_organisation.name} has removed #{partner_organisation.name} from its list of partner schools.
+          #{source_organisation.name} has deleted #{partner_organisation.name} from the list of schools they work with.
 
-        View or manage your list of partner providers http://placements.localhost/schools/#{partner_organisation.id}/partner_providers
-      EMAIL
+          ## What happens next?
+          You will no longer be able to assign placements to this provider unless they add you again or you add them to your list of providers.
+
+          If you think this is a mistake, contact them on [#{source_organisation.email_address}](mailto:#{source_organisation.email_address}).
+
+          ## Your account
+          [Sign in to Manage school placements](http://placements.localhost/sign-in)
+
+          Manage school placements service
+        EMAIL
+      end
+    end
+
+    context "when the provider has placements with the school" do
+      let(:placement) { create(:placement, school: partner_organisation, provider: source_organisation) }
+
+      before { placement }
+
+      it "sends a notification email to the user of the school" do
+        expect(partnership_destroyed_notification_email.to).to contain_exactly(user.email)
+        expect(partnership_destroyed_notification_email.subject).to eq("A provider has removed you",)
+        expect(partnership_destroyed_notification_email.body).to have_content <<~EMAIL
+          #{user.first_name},
+
+          #{source_organisation.name} has deleted #{partner_organisation.name} from the list of schools they work with.
+
+          ## What happens next?
+          They will remain assigned to current placements unless you remove them. These placements are:
+
+          - [#{placement.decorate.title}](http://placements.localhost/providers/#{source_organisation.id}/placements/#{placement.id})
+
+          We recommend you speak to the provider to avoid confusion about placing trainees at your school. Contact them on [#{source_organisation.email_address}](mailto:#{source_organisation.email_address}).
+
+          ## Your account
+          [Sign in to Manage school placements](http://placements.localhost/sign-in)
+
+          Manage school placements service
+        EMAIL
+      end
     end
   end
 end

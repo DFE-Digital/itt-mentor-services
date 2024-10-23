@@ -8,10 +8,10 @@ class Placements::SchoolUserMailerPreview < ActionMailer::Preview
   end
 
   def partnership_created_notification
-    Placements::SchoolUserMailer.partnership_created_notification(Placements::User.first, Placements::School.first, Placements::Provider.first)
+    Placements::SchoolUserMailer.partnership_created_notification(Placements::User.first, Placements::Provider.first, Placements::School.first)
   end
 
   def partnership_destroyed_notification
-    Placements::SchoolUserMailer.partnership_destroyed_notification(Placements::User.first, Placements::School.first, Placements::Provider.first)
+    Placements::SchoolUserMailer.partnership_destroyed_notification(Placements::User.first, Placements::Provider.first, Placements::School.first)
   end
 end
