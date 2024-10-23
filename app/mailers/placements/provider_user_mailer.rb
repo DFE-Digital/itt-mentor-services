@@ -37,17 +37,18 @@ class Placements::ProviderUserMailer < Placements::ApplicationMailer
   end
 
   def partnership_destroyed_notification(user, source_organisation, partner_organisation)
-    notify_email(
-      to: user.email,
-      subject: t(".subject", organisation: partner_organisation.name),
-      body: t(
-        ".body",
-        user_name: user.full_name,
-        source_organisation: source_organisation.name,
-        partner_organisation: partner_organisation.name,
-        link: placements_provider_partner_schools_url(partner_organisation),
-      ),
-    )
+    @user_name = user.first_name
+    @provider_name = partner_organisation.name
+    @school_name = source_organisation.name
+    placements_school = source_organisation.becomes(Placements::School)
+    @itt_contact_email = placements_school.school_contact_email_address
+    @placements = placements_school.placements.where(provider: partner_organisation).decorate.map do |placement|
+      { title: placement.title, url: placements_provider_placement_url(partner_organisation, placement) }
+    end
+    @sign_in_url = sign_in_url
+    @service_name = service_name
+
+    notify_email to: user.email, subject: t(".subject")
   end
 
   def placement_provider_assigned_notification(user, provider, placement)

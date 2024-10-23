@@ -8,14 +8,7 @@ en:
       partnership_created_notification:
         subject: A school has added you
       partnership_destroyed_notification:
-        subject: A school has removed your organisation from its list of partner providers
-        body: |
-          Dear %{user_name},
-          
-          You are receiving this notification because %{source_organisation} has removed %{partner_organisation} from its list of partner providers.
-          
-          View or manage your list of partner schools %{link}
-          
+        subject: A school has removed you
       placement_provider_assigned_notification:
         subject: "%{school_name} wants you to place a trainee with them"
         body: |
