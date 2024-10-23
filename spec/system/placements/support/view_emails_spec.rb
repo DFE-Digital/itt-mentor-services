@@ -30,8 +30,18 @@ RSpec.describe "View Emails", service: :placements, type: :system do
     expect(page).to have_link("support_user_invitation (opens in new tab)", href: "/rails/mailers/placements/support_user_mailer/support_user_invitation")
     expect(page).to have_link("support_user_removal_notification (opens in new tab)", href: "/rails/mailers/placements/support_user_mailer/support_user_removal_notification")
 
-    expect(page).to have_content("User Mailer")
-    expect(page).to have_link("user_membership_created_notification (opens in new tab)", href: "/rails/mailers/placements/user_mailer/user_membership_created_notification")
-    expect(page).to have_link("user_membership_destroyed_notification (opens in new tab)", href: "/rails/mailers/placements/user_mailer/user_membership_destroyed_notification")
+    expect(page).to have_content("Provider User Mailer")
+    expect(page).to have_link("partnership_created_notification (opens in new tab)", href: "/rails/mailers/placements/provider_user_mailer/partnership_created_notification")
+    expect(page).to have_link("partnership_destroyed_notification (opens in new tab)", href: "/rails/mailers/placements/provider_user_mailer/partnership_destroyed_notification")
+    expect(page).to have_link("placement_provider_assigned_notification (opens in new tab)", href: "/rails/mailers/placements/provider_user_mailer/placement_provider_assigned_notification")
+    expect(page).to have_link("placement_provider_removed_notification (opens in new tab)", href: "/rails/mailers/placements/provider_user_mailer/placement_provider_removed_notification")
+    expect(page).to have_link("user_membership_created_notification (opens in new tab)", href: "/rails/mailers/placements/provider_user_mailer/user_membership_created_notification")
+    expect(page).to have_link("user_membership_destroyed_notification (opens in new tab)", href: "/rails/mailers/placements/provider_user_mailer/user_membership_destroyed_notification")
+
+    expect(page).to have_content("School User Mailer")
+    expect(page).to have_link("partnership_created_notification (opens in new tab)", href: "/rails/mailers/placements/school_user_mailer/partnership_created_notification")
+    expect(page).to have_link("partnership_destroyed_notification (opens in new tab)", href: "/rails/mailers/placements/school_user_mailer/partnership_destroyed_notification")
+    expect(page).to have_link("user_membership_created_notification (opens in new tab)", href: "/rails/mailers/placements/school_user_mailer/user_membership_created_notification")
+    expect(page).to have_link("user_membership_destroyed_notification (opens in new tab)", href: "/rails/mailers/placements/school_user_mailer/user_membership_destroyed_notification")
   end
 end

@@ -13,6 +13,10 @@ class User::Invite < ApplicationService
   private
 
   def user_mailer_class(service)
-    service == :placements ? Placements::UserMailer : Claims::UserMailer
+    service == :placements ? placements_mailer_class : Claims::UserMailer
+  end
+
+  def placements_mailer_class
+    organisation.is_a?(School) ? ::Placements::SchoolUserMailer : ::Placements::ProviderUserMailer
   end
 end
