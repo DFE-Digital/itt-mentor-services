@@ -41,7 +41,7 @@
     <% end %>
 
     <div class="govuk-width-container">
-      <%= govuk_phase_banner(tag: { text: hosting_environment_phase(current_service), colour: hosting_environment_color }, classes: [class_names("app-phase-banner", "app-phase-banner__env--#{HostingEnvironment.env}", "app-phase-banner--no-border-bottom": content_for(:no_phase_banner_border) || support_controller?)]) do %>
+      <%= govuk_phase_banner(tag: { text: hosting_environment_phase(current_service), colour: hosting_environment_color }, classes: [class_names("app-phase-banner", "app-phase-banner__env--#{HostingEnvironment.env}")]) do %>
         <%== t(".#{current_service}.phase_banner.description", feedback_link: govuk_link_to(t(".#{current_service}.phase_banner.feedback"), feedback_url, target: "_blank", rel: "noreferrer", class: "govuk-link--no-visited-state")) %>
       <% end %>
 

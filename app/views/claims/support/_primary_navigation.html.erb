@@ -5,6 +5,4 @@
     <% component.with_navigation_item t(".support_users"), claims_support_support_users_path, current: local_assigns[:current] == :users %>
     <% component.with_navigation_item t(".settings"), claims_support_settings_path, current: local_assigns[:current] == :settings %>
   <% end %>
-
-  <% content_for(:no_phase_banner_border, true) %>
 <% end %>
