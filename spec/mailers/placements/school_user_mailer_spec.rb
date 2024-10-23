@@ -160,7 +160,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
 
       it "sends a notification email to the user of the school" do
         expect(partnership_destroyed_notification_email.to).to contain_exactly(user.email)
-        expect(partnership_destroyed_notification_email.subject).to eq("A provider has removed you",)
+        expect(partnership_destroyed_notification_email.subject).to eq("A provider has removed you")
         expect(partnership_destroyed_notification_email.body).to have_content <<~EMAIL
           #{user.first_name},
 

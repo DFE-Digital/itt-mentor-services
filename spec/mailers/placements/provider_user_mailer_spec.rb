@@ -132,28 +132,28 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
     let(:user) { create(:placements_user, providers: [partner_organisation]) }
 
     context "when the provider does not have placements associated with the school" do
-    it "sends a notification email to the user of the provider" do
-      expect(partnership_destroyed_notification_email.to).to contain_exactly(user.email)
-      expect(partnership_destroyed_notification_email.subject).to eq(
-        "A school has removed you",
-      )
-      expect(partnership_destroyed_notification_email.body).to have_content <<~EMAIL
-        #{user.first_name},
+      it "sends a notification email to the user of the provider" do
+        expect(partnership_destroyed_notification_email.to).to contain_exactly(user.email)
+        expect(partnership_destroyed_notification_email.subject).to eq(
+          "A school has removed you",
+        )
+        expect(partnership_destroyed_notification_email.body).to have_content <<~EMAIL
+          #{user.first_name},
 
-        #{source_organisation.name} has deleted #{partner_organisation.name} from the list of providers they work with.
+          #{source_organisation.name} has deleted #{partner_organisation.name} from the list of providers they work with.
 
-        ##What happens next?
-        You will no longer be assigned placements by this school unless they add you again or you add them to your list of schools.
+          ##What happens next?
+          You will no longer be assigned placements by this school unless they add you again or you add them to your list of schools.
 
-        If you think this is a mistake, contact them on [#{source_organisation.school_contact_email_address}](mailto:#{source_organisation.school_contact_email_address}).
+          If you think this is a mistake, contact them on [#{source_organisation.school_contact_email_address}](mailto:#{source_organisation.school_contact_email_address}).
 
-        ##Your account
-        [Sign in to Manage school placements](http://placements.localhost/sign-in)
+          ##Your account
+          [Sign in to Manage school placements](http://placements.localhost/sign-in)
 
-        Manage school placements service
-      EMAIL
+          Manage school placements service
+        EMAIL
+      end
     end
-  end
 
     context "when the provider has one placement associated with the school" do
       let(:placement) { create(:placement, school: source_organisation, provider: partner_organisation) }
@@ -189,7 +189,10 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
       let(:placement_one) { create(:placement, school: source_organisation, provider: partner_organisation) }
       let(:placement_two) { create(:placement, school: source_organisation, provider: partner_organisation) }
 
-      before { placement_one; placement_two }
+      before do
+        placement_one
+        placement_two
+      end
 
       it "sends a notification email to the user of the provider" do
         expect(partnership_destroyed_notification_email.to).to contain_exactly(user.email)
@@ -233,18 +236,22 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
     it "sends a provider assigned notification email to the user of the provider" do
       expect(placement_provider_assigned_notification.to).to contain_exactly(provider_user.email)
       expect(placement_provider_assigned_notification.subject).to eq(
-        "School 1 wants you to place a trainee with them",
+        "A school wants you to place a trainee with them",
       )
       expect(placement_provider_assigned_notification.body).to have_content <<~EMAIL
-        Provider 1 has been assigned to the following placement:
+        #{provider_user.first_name},
 
-        [School 1](http://placements.localhost/providers/#{provider.id}/placements/#{placement.id})
-        [Mathematics](http://placements.localhost/providers/#{provider.id}/placements/#{placement.id})
+        #{school.name} has assigned #{provider.name} to the following placement:
 
-        # What happens next?
+        - [#{placement.decorate.title}](http://placements.localhost/providers/#{provider.id}/placements/#{placement.id})
 
-        Contact the school to suggest a trainee you think would suit this placement.#{" "}
-        Get in touch at [#{school_contact_email}](mailto:#{school_contact_email})
+        ##What happens next?
+        You should now arrange for one of your trainees to fulfil this placement.
+
+        Contact the school at [#{school.school_contact_email_address}](mailto:#{school.school_contact_email_address}).
+
+        ##Your account
+        [Sign in to Manage school placements](http://placements.localhost/sign-in)
 
         Manage school placements service
       EMAIL
