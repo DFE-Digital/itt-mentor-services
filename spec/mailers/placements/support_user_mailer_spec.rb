@@ -8,29 +8,17 @@ RSpec.describe Placements::SupportUserMailer, type: :mailer do
 
     it "is addressed to the user's email and contains a link to the placements sign in url" do
       expect(invite_email.to).to contain_exactly(user.email)
-      expect(invite_email.subject).to eq("Invitation to join Manage school placements")
+      expect(invite_email.subject).to eq("Your invite to the Manage school placements service")
       expect(invite_email.body).to have_content <<~EMAIL
-        Dear John,
+        John,
 
-        You have been invited to join the Manage school placements service
+        You have been invited to join the Manage school placements service as a support user.
 
-        # Sign in to the support site
+        [Sign in to the support console for Manage school placements](http://placements.localhost/sign-in)
 
-        If you have a DfE Sign-in account, you can use it to sign in:
+        If you need help [contact the service team on Slack](https://ukgovernmentdfe.slack.com/archives/C04MLBVP876).
 
-        [http://placements.localhost/sign-in](http://placements.localhost/sign-in)
-
-        If you need to create a DfE Sign-in account, you can do this after clicking "Sign in using DfE Sign-in"
-
-        After creating a DfE Sign-in account, you will need to return to this email and [sign in to access the service](http://placements.localhost/sign-in).
-
-        # Give feedback or report a problem
-
-        If you have any questions or feedback, please [contact the service team on Slack](https://ukgovernmentdfe.slack.com/archives/C04MLBVP876)
-
-        Regards
-
-        Manage school placements team
+        Manage school placements service
       EMAIL
     end
 
@@ -40,7 +28,7 @@ RSpec.describe Placements::SupportUserMailer, type: :mailer do
       end
 
       it "does not prepend the hosting environment to the subject" do
-        expect(invite_email.subject).to eq("Invitation to join Manage school placements")
+        expect(invite_email.subject).to eq("Your invite to the Manage school placements service")
       end
     end
 
@@ -50,7 +38,7 @@ RSpec.describe Placements::SupportUserMailer, type: :mailer do
       end
 
       it "prepends the hosting environment to the subject" do
-        expect(invite_email.subject).to eq("[STAGING] Invitation to join Manage school placements")
+        expect(invite_email.subject).to eq("[STAGING] Your invite to the Manage school placements service")
       end
     end
   end
