@@ -12,16 +12,4 @@ en:
       placement_provider_assigned_notification:
         subject: A school wants you to place a trainee with them
       placement_provider_removed_notification:
-        subject: "%{school_name} has removed you from a placement"
-        body: |
-          %{provider_name} is no longer able to allocate a trainee on the following placement:
-          
-          [%{school_name}](%{link})
-          [%{placement_name}](%{link})
-          
-          # What happens next?
-          
-          No further action is required. 
-          If you think this is a mistake, contact the school at [%{school_email}](mailto:%{school_email})
-          
-          Manage school placements service
+        subject: A school has removed you from a placement
