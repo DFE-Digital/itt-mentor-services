@@ -48,6 +48,6 @@ RSpec.describe Google::RoutesApi do
           "X-Goog-Fieldmask" => "localizedValues,destinationIndex",
         },
       )
-      .to_return(status: 200, body: "", headers: {})
+      .to_return(status: 200, body: {}.to_json, headers: {})
   end
 end
