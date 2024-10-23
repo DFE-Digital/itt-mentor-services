@@ -5,13 +5,3 @@ en:
         subject: "Your invite to the %{service_name} service"
       support_user_removal_notification:
         subject: "You have been removed from %{service_name}"
-        body: |
-          Dear %{user_name},
-  
-          You have been removed from the %{service_name} service.
-  
-          If you think this was a mistake, [contact the service team on Slack](%{slack_url}).
-  
-          Regards
-  
-          %{service_name} team
