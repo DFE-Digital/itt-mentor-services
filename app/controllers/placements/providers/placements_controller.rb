@@ -15,7 +15,7 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
   end
 
   def show
-    @placement = @placement = placements.find(params.require(:id)).decorate
+    @placement = placements.find(params.require(:id)).decorate
     @school = @placement.school
   end
 
