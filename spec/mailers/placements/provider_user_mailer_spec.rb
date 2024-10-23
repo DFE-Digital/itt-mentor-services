@@ -275,18 +275,22 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
     it "sends a provider assigned notification email to the user of the provider" do
       expect(placement_provider_removed_notification.to).to contain_exactly(provider_user.email)
       expect(placement_provider_removed_notification.subject).to eq(
-        "School 1 has removed you from a placement",
+        "A school has removed you from a placement",
       )
       expect(placement_provider_removed_notification.body).to have_content <<~EMAIL
-        Provider 1 is no longer able to allocate a trainee on the following placement:
+        #{provider_user.first_name},
 
-        [School 1](http://placements.localhost/providers/#{provider.id}/placements/#{placement.id})
-        [Mathematics](http://placements.localhost/providers/#{provider.id}/placements/#{placement.id})
+        #{school.name} has removed #{provider.name} from the following placement:
 
-        # What happens next?
+        - [#{placement.decorate.title}](http://placements.localhost/providers/#{provider.id}/placements/#{placement.id})
 
-        No further action is required.#{" "}
-        If you think this is a mistake, contact the school at [#{school_contact_email}](mailto:#{school_contact_email})
+        You can no longer allocate a trainee onto this placement.
+
+        ##What happens next?
+        If you think this is a mistake, contact the school on [#{school.school_contact_email_address}](mailto:#{school.school_contact_email_address}).
+
+        ##Your account
+        [Sign in to Manage school placements](http://placements.localhost/sign-in)
 
         Manage school placements service
       EMAIL
