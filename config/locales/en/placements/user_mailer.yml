@@ -92,7 +92,7 @@ en:
           Contact the school to suggest a trainee you think would suit this placement. 
           Get in touch at [%{school_email}](mailto:%{school_email})
   
-          Manage school placements service
+          %{service_name} service
 
       placement_provider_removed_notification:
         subject: "%{school_name} has removed you from a placement"
@@ -106,5 +106,5 @@ en:
   
           No further action is required. 
           If you think this is a mistake, contact the school at [%{school_email}](mailto:%{school_email})
-  
-          Manage school placements service
+          
+          %{service_name} service

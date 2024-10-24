@@ -57,5 +57,3 @@ class Claims::UserMailer < Claims::ApplicationMailer
                  )
   end
 end
-
-class InvalidOrganisationError < StandardError; end

@@ -87,6 +87,7 @@ class Placements::UserMailer < Placements::ApplicationMailer
         school_name: school.name,
         school_email: school.school_contact.email_address,
         link: placement_link,
+        service_name:,
       ),
     )
   end
@@ -105,6 +106,7 @@ class Placements::UserMailer < Placements::ApplicationMailer
         school_name: school.name,
         school_email: school.school_contact.email_address,
         link: placement_link,
+        service_name:,
       ),
     )
   end
