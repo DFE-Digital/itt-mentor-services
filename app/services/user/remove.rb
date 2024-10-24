@@ -21,7 +21,7 @@ class User::Remove < ApplicationService
     if user.service == :claims
       Claims::UserMailer
     else
-      Placements::SchoolUserMailer
+      organisation.is_a?(::School) ? ::Placements::SchoolUserMailer : ::Placements::ProviderUserMailer
     end
   end
 end
