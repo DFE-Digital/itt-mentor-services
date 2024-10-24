@@ -12,6 +12,12 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
     @terms = Placements::Term.order_by_term.select(:id, :name)
     query = Placements::PlacementsQuery.call(params: query_params)
     @pagy, @placements = pagy(placements.merge(query))
+    @placements = @placements.decorate
+
+    Placements::TravelTime.call(
+      origin_address: search_location,
+      destinations: @placements.map(&:school),
+    )
   end
 
   def show
