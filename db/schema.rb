@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_16_120228) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_22_112629) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -404,6 +404,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_16_120228) do
     t.string "local_authority_code"
     t.datetime "claims_grant_conditions_accepted_at"
     t.uuid "claims_grant_conditions_accepted_by_id"
+    t.boolean "claims_private_beta", default: false
     t.index ["claims_grant_conditions_accepted_by_id"], name: "index_schools_on_claims_grant_conditions_accepted_by_id"
     t.index ["claims_service"], name: "index_schools_on_claims_service"
     t.index ["latitude"], name: "index_schools_on_latitude"
