@@ -1,0 +1,10 @@
+<%= content_for(:header_content) do %>
+  <%= render(ContentHeaderComponent.new(
+    title: organisation.name,
+    actions: [govuk_link_to(
+      t(".change_organisation"),
+      change_organisation_link,
+      no_visited_state: true,
+    )],
+  )) %>
+<% end %>
