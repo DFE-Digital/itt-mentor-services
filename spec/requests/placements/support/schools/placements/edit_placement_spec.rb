@@ -8,7 +8,7 @@ RSpec.describe "Support console / 'Edit placement' journey", service: :placement
   let(:provider) { create(:provider) }
   let(:school_id) { school.id }
   let(:year_group) { :year_6 }
-  let(:start_path) { new_edit_placement_placements_support_school_placement_path(school, placement, step:) }
+  let(:start_path) { new_edit_placement_placements_school_placement_path(school, placement, step:) }
   let!(:state_key) { SecureRandom.uuid }
 
   before do
@@ -36,7 +36,7 @@ RSpec.describe "Support console / 'Edit placement' journey", service: :placement
 
       it "redirects to the placements show page" do
         put step_path(:mentors)
-        expect(response).to redirect_to placements_support_school_placement_path(school_id:, id: placement.id)
+        expect(response).to redirect_to placements_school_placement_path(school_id:, id: placement.id)
       end
     end
   end
@@ -61,7 +61,7 @@ RSpec.describe "Support console / 'Edit placement' journey", service: :placement
 
       it "redirects to the placements show page" do
         put step_path(:provider)
-        expect(response).to redirect_to placements_support_school_placement_path(school_id:, id: placement.id)
+        expect(response).to redirect_to placements_school_placement_path(school_id:, id: placement.id)
       end
     end
   end
@@ -86,7 +86,7 @@ RSpec.describe "Support console / 'Edit placement' journey", service: :placement
 
       it "redirects to the placements show page" do
         put step_path(:year_group)
-        expect(response).to redirect_to placements_support_school_placement_path(school_id:, id: placement.id)
+        expect(response).to redirect_to placements_school_placement_path(school_id:, id: placement.id)
       end
     end
   end
@@ -94,6 +94,6 @@ RSpec.describe "Support console / 'Edit placement' journey", service: :placement
   private
 
   def step_path(step)
-    edit_placement_placements_support_school_placement_path(school_id:, id: placement, state_key:, step:)
+    edit_placement_placements_school_placement_path(school_id:, id: placement, state_key:, step:)
   end
 end

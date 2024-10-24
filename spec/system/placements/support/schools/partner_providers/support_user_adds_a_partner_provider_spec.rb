@@ -91,7 +91,7 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
       windows.each do |window, details|
         within_window window do
           when_i_visit_the_partner_providers_page_for(school)
-          and_i_click_on("Add partner provider")
+          and_i_click_on("Add provider")
           and_i_enter_a_provider_named(details[:provider].name)
           then_i_see_a_dropdown_item_for(details[:provider].name)
           when_i_click_the_dropdown_item_for(details[:provider].name)
