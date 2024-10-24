@@ -22,6 +22,7 @@ scope module: :placements,
     get :settings, to: "settings#index"
 
     resources :mailers, only: :index
+    resources :view_components, only: :index
 
     resources :support_users, only: %i[index show destroy] do
       member { get :remove }

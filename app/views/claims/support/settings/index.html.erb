@@ -11,6 +11,7 @@
         govuk_link_to(t(".claim_windows"), claims_support_claim_windows_path, no_visited_state: true),
         govuk_link_to(t(".emails"), claims_support_mailers_path, no_visited_state: true),
         (govuk_link_to(t(".reset_database"), reset_claims_support_database_path, no_visited_state: true) unless HostingEnvironment.env.production?),
+        govuk_link_to(t(".view_components"), claims_support_view_components_path, no_visited_state: true),
       ], spaced: true %>
     </div>
   </div>
