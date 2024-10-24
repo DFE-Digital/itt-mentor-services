@@ -65,20 +65,8 @@ jobs:
         with:
           node-version: 20.9.0
           cache: "npm"
-      - name: Setup parallel database
-        env:
-          RAILS_ENV: test
-        run: |
-          bundle exec rake parallel:create
-          bundle exec rake parallel:rake[db:schema:load] || true
-      - name: Zeitwerk check
-        run: bundle exec rails zeitwerk:check
-      - name: Rspec tests
-        env:
-          RAILS_ENV: test
-        run: |
-          bundle exec rake assets:precompile
-          bundle exec parallel_rspec --verbose spec
+      - name: Run RSpec tests
+        run: bundle exec rails test:prepare parallel:setup zeitwerk:check parallel:spec
       - name: Upload code coverage report
         uses: actions/upload-artifact@v4
         with:
