@@ -1,9 +1,4 @@
-class SupportUserMailer < ApplicationMailer
-  TEAM_SLACK_CHANNEL_URLS = {
-    claims: "https://ukgovernmentdfe.slack.com/archives/C0657JE64HX",
-    placements: "https://ukgovernmentdfe.slack.com/archives/C04MLBVP876",
-  }.with_indifferent_access.freeze
-
+class Placements::SupportUserMailer < Placements::ApplicationMailer
   def support_user_invitation(support_user)
     subject = t(".subject", service_name:)
     body = t(
@@ -11,7 +6,7 @@ class SupportUserMailer < ApplicationMailer
       user_name: support_user.first_name,
       service_name:,
       sign_in_url:,
-      slack_url:,
+      slack_url: t("placements.support_slack_url"),
     )
 
     notify_email to: support_user.email, subject:, body:
@@ -23,15 +18,9 @@ class SupportUserMailer < ApplicationMailer
       ".body",
       user_name: support_user.first_name,
       service_name:,
-      slack_url:,
+      slack_url: t("placements.support_slack_url"),
     )
 
     notify_email to: support_user.email, subject:, body:
-  end
-
-  private
-
-  def slack_url
-    TEAM_SLACK_CHANNEL_URLS.fetch(service)
   end
 end

@@ -17,8 +17,7 @@ describe Claims::Claim::CreateDraft do
       create(:claims_user, email: "email@gmail.com", user_memberships: [create(:user_membership, organisation: school)])
 
       mailer_stub = class_double("mailer")
-      expect(UserMailer).to receive(:with).with(any_args).twice.and_return(mailer_stub)
-      expect(mailer_stub).to receive(:claim_created_support_notification).twice.and_return(mailer_stub)
+      expect(Claims::UserMailer).to receive(:claim_created_support_notification).twice.and_return(mailer_stub)
       expect(mailer_stub).to receive(:deliver_later).twice
 
       expect { draft_service }.to change(claim, :reference).from(nil).to("123")
@@ -40,7 +39,7 @@ describe Claims::Claim::CreateDraft do
         service = described_class.call(claim: submitted_claim)
 
         expect(service).to be_nil
-        expect(UserMailer).not_to receive(:with).with(any_args)
+        expect(Claims::UserMailer).not_to receive(:with).with(any_args)
       end
     end
 
