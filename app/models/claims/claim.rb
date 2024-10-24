@@ -34,7 +34,6 @@
 #  fk_rails_...  (school_id => schools.id)
 #
 class Claims::Claim < ApplicationRecord
-  MAXIMUM_CLAIMABLE_HOURS = 20
   audited
   has_associated_audits
 
@@ -80,14 +79,10 @@ class Claims::Claim < ApplicationRecord
   delegate :name, to: :academic_year, prefix: true, allow_nil: true
 
   def valid_mentor_training_hours?
-    mentor_trainings_without_current_claim = Claims::MentorTraining.joins(:claim)
-      .merge(Claims::Claim.active).where(
-        mentor_id: mentor_trainings.select(:mentor_id),
-        provider_id:,
-      ).where.not(claim_id: [id, previous_revision_id])
-    grouped_trainings = [*mentor_trainings, *mentor_trainings_without_current_claim].group_by { [_1.mentor_id, _1.provider_id] }
-
-    grouped_trainings.transform_values { _1.sum(&:hours_completed) }.values.all? { _1 <= MAXIMUM_CLAIMABLE_HOURS }
+    mentor_trainings.all? do |mentor_training|
+      training_allowance = Claims::TrainingAllowance.new(mentor: mentor_training.mentor, provider:, academic_year:)
+      training_allowance.remaining_hours >= mentor_training.hours_completed
+    end
   end
 
   def submitted_on
