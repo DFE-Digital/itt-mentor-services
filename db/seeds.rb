@@ -1,3 +1,6 @@
+# Don't run seeds in test or production environments
+return unless Rails.env.development?
+
 # Persona Creation (Dummy User Creation)
 Rails.logger.debug "Creating Personas"
 
