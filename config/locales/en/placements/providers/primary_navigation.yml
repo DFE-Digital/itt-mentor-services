@@ -2,7 +2,6 @@ en:
   placements:
     providers:
       primary_navigation:
-        change_organisation: Change organisation
         placements: Placements
         schools: Schools
         users: Users

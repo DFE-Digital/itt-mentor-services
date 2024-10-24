@@ -1,16 +1,6 @@
 <%# locals: (current_navigation: nil, provider:) -%>
-<% if current_user.support_user? || current_user.organisation_count > 1 %>
-  <%= content_for(:header_content) do %>
-    <%= render(ContentHeaderComponent.new(
-      title: provider.name,
-      actions: [govuk_link_to(
-        t(".change_organisation"),
-        current_user.support_user? ? placements_support_organisations_path : placements_organisations_path,
-        no_visited_state: true,
-      )],
-    )) %>
-  <% end %>
-<% end %>
+
+<%= render Placement::OrganisationSwitcherComponent.new(user: current_user, organisation: provider) %>
 
 <%= content_for(:primary_navigation_content) do %>
   <%= render PrimaryNavigationComponent.new do |component| %>
