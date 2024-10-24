@@ -1,0 +1,21 @@
+<%= render "claims/support/primary_navigation", current: :claims %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: claims_support_payments_path) %>
+<% end %>
+
+<div class="govuk-width-container" data-controller="filter">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <% if policy.create? %>
+        <%= render "new_confirmation" %>
+      <% else %>
+        <%= render "no_claims_sent_to_esfa" %>
+      <% end %>
+
+      <p class="govuk-body">
+        <%= govuk_link_to t(".cancel"), claims_support_payments_path %>
+      </p>
+    </div>
+  </div>
+</div>

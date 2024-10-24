@@ -1,0 +1,7 @@
+en:
+  components:
+    claims:
+      claim:
+        filter_form_component:
+          search_label: Search by claim reference
+          submit: Search

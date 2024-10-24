@@ -2,8 +2,13 @@ en:
   claims:
     support:
       claims:
+        secondary_navigation:
+          claims: All claims
+          payments: Payments
+          activity_log: Activity log
         index:
-          heading: Claims (%{count})
+          heading: Claims
+          sub_heading: All claims
           download_csv: Download CSV
           search_label: Search by claim reference
           school: School
@@ -20,13 +25,13 @@ en:
           clear: Clear search
           status: Status
         show:
-          page_caption: Claim - %{reference}
-          page_title: Claim - %{school_name}
-          status: Status
+          page_caption: Claim %{reference}
           provider: Accredited provider
-          mentor_with_index: Mentor %{index}
-          mentor: Mentor
+          unpaid_reason: "This payment was not approved because: %{reason}"
           submitted_by: Submitted by %{name} on %{date}.
+          actions:
+            information_sent_to_esfa: Information sent to ESFA
+            payment_not_approved: Payment not approved
         details:
           hour: hour
           hourly_rate: Hourly rate

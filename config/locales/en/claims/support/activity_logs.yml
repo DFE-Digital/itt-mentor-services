@@ -1,0 +1,9 @@
+en:
+  claims:
+    support:
+      activity_logs:
+        index:
+          heading: Claims
+          sub_heading: Activity log
+          no_activity: There is no activity.
+          byline: "%{user} on %{time}"
