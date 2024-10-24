@@ -15,7 +15,7 @@ jobs:
           - tests: rubocop
             command: bundle exec rubocop
           - tests: erblint
-            command: bundle exec erblint app
+            command: bundle exec erb_lint app
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

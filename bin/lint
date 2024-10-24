@@ -1,4 +1,4 @@
 #!/bin/sh
 
 bin/bundle exec rubocop --autocorrect-all
-bin/bundle exec erblint --lint-all --autocorrect
+bin/bundle exec erb_lint --lint-all --autocorrect
