@@ -1,0 +1,23 @@
+<%= @user_name %>,
+
+<%= @provider_name %> has deleted <%= @school_name %> from the list of schools they work with.
+
+## What happens next?
+<% if @placements.present? %>
+They will remain assigned to current placements unless you remove them. These placements are:
+
+<% @placements.each do |placement| %>
+- [<%= placement[:title] %>](<%= placement[:url] %>)
+<% end %>
+
+We recommend you speak to the provider to avoid confusion about placing trainees at your school. Contact them on [<%= @provider_email_address %>](mailto:<%= @provider_email_address %>).
+<% else %>
+You will no longer be able to assign placements to this provider unless they add you again or you add them to your list of providers.
+
+If you think this is a mistake, contact them on [<%= @provider_email_address %>](mailto:<%= @provider_email_address %>).
+<% end %>
+
+## Your account
+[Sign in to Manage school placements](<%= @sign_in_url %>)
+
+<%= @service_name %> service
