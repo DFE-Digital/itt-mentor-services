@@ -280,7 +280,8 @@ RSpec.describe Placements::BaseWizard do
     end
 
     it "returns a SecureRandom UUID" do
-      expect(SecureRandom).to have_received(:uuid).once
+      expect(SecureRandom).to receive(:uuid).once.and_return("pineapple")
+      expect(described_class.generate_state_key).to eq("pineapple")
     end
   end
 end
