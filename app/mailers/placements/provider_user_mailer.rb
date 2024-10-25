@@ -28,8 +28,8 @@ class Placements::ProviderUserMailer < Placements::UserMailer
   def placement_provider_assigned_notification(user, provider, placement)
     @user_name = user.first_name
     @provider_name = provider.name
-    @school_name = school(placement).name
-    @itt_contact_email = school(placement).school_contact_email_address
+    @school_name = placement.school.name
+    @itt_contact_email = placement.school.school_contact_email_address
     @placement_name = placement.decorate.title
     @placement_url = placements_provider_placement_url(provider, placement)
     @service_name = service_name
@@ -41,19 +41,13 @@ class Placements::ProviderUserMailer < Placements::UserMailer
   def placement_provider_removed_notification(user, provider, placement)
     @user_name = user.first_name
     @provider_name = provider.name
-    @school_name = school(placement).name
-    @itt_contact_email = school(placement).school_contact_email_address
+    @school_name = placement.school.name
+    @itt_contact_email = placement.school.school_contact_email_address
     @placement_name = placement.decorate.title
     @placement_url = placements_provider_placement_url(provider, placement)
     @service_name = service_name
     @sign_in_url = sign_in_url
 
     notify_email to: user.email, subject: t(".subject")
-  end
-
-  private
-
-  def school(placement)
-    @school ||= placement.school
   end
 end
