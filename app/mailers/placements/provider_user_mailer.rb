@@ -30,13 +30,13 @@ class Placements::ProviderUserMailer < Placements::UserMailer
   def placement_provider_assigned_notification(user, provider, placement)
     notify_email(
       to: user.email,
-      subject: t(".subject", school_name: school(placement).name),
+      subject: t(".subject", school_name: placement.school.name),
       body: t(
         ".body",
         provider_name: provider.name,
         placement_name: placement.decorate.title,
-        school_name: school(placement).name,
-        school_email: school(placement).school_contact.email_address,
+        school_name: placement.school.name,
+        school_email: placement.school.school_contact.email_address,
         link: placements_provider_placement_url(provider, placement),
         service_name:,
       ),
@@ -46,22 +46,16 @@ class Placements::ProviderUserMailer < Placements::UserMailer
   def placement_provider_removed_notification(user, provider, placement)
     notify_email(
       to: user.email,
-      subject: t(".subject", school_name: school(placement).name),
+      subject: t(".subject", school_name: placement.school.name),
       body: t(
         ".body",
         provider_name: provider.name,
         placement_name: placement.decorate.title,
-        school_name: school(placement).name,
-        school_email: school(placement).school_contact.email_address,
+        school_name: placement.school.name,
+        school_email: placement.school.school_contact.email_address,
         link: placements_provider_placement_url(provider, placement),
         service_name:,
       ),
     )
-  end
-
-  private
-
-  def school(placement)
-    @school ||= placement.school
   end
 end
