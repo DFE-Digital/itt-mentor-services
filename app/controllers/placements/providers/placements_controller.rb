@@ -65,7 +65,7 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
 
     Placements::TravelTime.call(
       origin_address: search_location,
-      destinations: @placements.map(&:school),
+      destinations: @placements.map(&:school).uniq, # travel times are attributes on decorated schools
     )
   end
 
