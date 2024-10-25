@@ -109,12 +109,12 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
 
         #{source_organisation.name} has added #{partner_organisation.name} as one of the providers they would like to work with.
 
-        ##What happens next?
+        ## What happens next?
         They can now assign you to their placements. Once assigned to a specific placement, you should plan to place a trainee.
 
         Contact the school on [#{source_organisation.school_contact_email_address}](mailto:#{source_organisation.school_contact_email_address}) if you have any questions.
 
-        ##Your account
+        ## Your account
         [Sign in to Manage school placements](http://placements.localhost/sign-in)
 
         Manage school placements service
@@ -142,12 +142,12 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
 
           #{source_organisation.name} has deleted #{partner_organisation.name} from the list of providers they work with.
 
-          ##What happens next?
+          ## What happens next?
           You will no longer be assigned placements by this school unless they add you again or you add them to your list of schools.
 
           If you think this is a mistake, contact them on [#{source_organisation.school_contact_email_address}](mailto:#{source_organisation.school_contact_email_address}).
 
-          ##Your account
+          ## Your account
           [Sign in to Manage school placements](http://placements.localhost/sign-in)
 
           Manage school placements service
@@ -170,14 +170,14 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
 
           #{source_organisation.name} has deleted #{partner_organisation.name} from the list of providers they work with.
 
-          ##What happens next?
+          ## What happens next?
           You will remain assigned to current placements for this academic year unless the school removes you. This placement is:
 
           - [#{placement.decorate.title}](http://placements.localhost/providers/#{partner_organisation.id}/placements/#{placement.id})
 
           We recommend you speak to the school to check whether they expect you to fill this placement. Contact them on [#{source_organisation.school_contact_email_address}](mailto:#{source_organisation.school_contact_email_address}).
 
-          ##Your account
+          ## Your account
           [Sign in to Manage school placements](http://placements.localhost/sign-in)
 
           Manage school placements service
@@ -202,7 +202,7 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
 
           #{source_organisation.name} has deleted #{partner_organisation.name} from the list of providers they work with.
 
-          ##What happens next?
+          ## What happens next?
           You will remain assigned to current placements for this academic year unless the school removes you. These placements are:
 
           - [#{placement_one.decorate.title}](http://placements.localhost/providers/#{partner_organisation.id}/placements/#{placement_one.id})
@@ -210,7 +210,7 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
 
           We recommend you speak to the school to check whether they expect you to fill these placements. Contact them on [#{source_organisation.school_contact_email_address}](mailto:#{source_organisation.school_contact_email_address}).
 
-          ##Your account
+          ## Your account
           [Sign in to Manage school placements](http://placements.localhost/sign-in)
 
           Manage school placements service
@@ -245,12 +245,12 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
 
         - [#{placement.decorate.title}](http://placements.localhost/providers/#{provider.id}/placements/#{placement.id})
 
-        ##What happens next?
+        ## What happens next?
         You should now arrange for one of your trainees to fulfil this placement.
 
         Contact the school at [#{school.school_contact_email_address}](mailto:#{school.school_contact_email_address}).
 
-        ##Your account
+        ## Your account
         [Sign in to Manage school placements](http://placements.localhost/sign-in)
 
         Manage school placements service
@@ -286,10 +286,10 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
 
         You can no longer allocate a trainee onto this placement.
 
-        ##What happens next?
+        ## What happens next?
         If you think this is a mistake, contact the school on [#{school.school_contact_email_address}](mailto:#{school.school_contact_email_address}).
 
-        ##Your account
+        ## Your account
         [Sign in to Manage school placements](http://placements.localhost/sign-in)
 
         Manage school placements service
