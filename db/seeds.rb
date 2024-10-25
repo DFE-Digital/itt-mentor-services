@@ -1,5 +1,5 @@
 # Don't run seeds in test or production environments
-return unless Rails.env.development?
+return unless Rails.env.development? || HostingEnvironment.env.review?
 
 # Persona Creation (Dummy User Creation)
 Rails.logger.debug "Creating Personas"
