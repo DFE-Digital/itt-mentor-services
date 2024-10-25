@@ -14,10 +14,7 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
     @pagy, @placements = pagy(placements.merge(query))
     @placements = @placements.decorate
 
-    Placements::TravelTime.call(
-      origin_address: search_location,
-      destinations: @placements.map(&:school),
-    )
+    calculate_travel_time
   end
 
   def show
@@ -61,6 +58,15 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
       # latitude and longitude
       location.coordinates
     end
+  end
+
+  def calculate_travel_time
+    return if search_location.blank?
+
+    Placements::TravelTime.call(
+      origin_address: search_location,
+      destinations: @placements.map(&:school),
+    )
   end
 
   def filter_params

@@ -302,9 +302,9 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
       end
 
       scenario "User filters are preserved when using the back button" do
-        when_i_visit_the_placements_index_page({ search_location: "London" })
-        when_i_check_filter_option("subject-ids", subject_1.id)
-        and_i_click_on("Apply filters")
+        when_i_visit_the_placements_index_page(
+          { filters: { search_location: "London", subject_ids: [subject_1.id] } },
+        )
         and_i_navigate_to("2")
         when_i_click_on_the_first_placement
         and_i_click_on("Back")
@@ -479,18 +479,21 @@ RSpec.describe "Placements / Providers / Placements / View placements list",
     allow(Geocoder).to receive(:search).and_return(geocoder_results)
   end
 
-  def stub_routes_api_travel_time
-    body = [
-      {
-        "destinationIndex" => 0,
-        "localizedValues" => {
-          "distance" => { "text" => "20 mi" },
-          "duration" => { "text" => "42 mins" },
-          "staticDuration" => { "text" => "36 mins" },
-        },
+  def create_destination_for_routes_api_travel_time(index)
+    {
+      "destinationIndex" => index,
+      "localizedValues" => {
+        "distance" => { "text" => "20 mi" },
+        "duration" => { "text" => "42 mins" },
+        "staticDuration" => { "text" => "36 mins" },
       },
-    ].to_json
+    }
+  end
 
-    stub_request(:post, "https://routes.googleapis.com/distanceMatrix/v2:computeRouteMatrix").to_return(status: 200, body:, headers: { "Content-Type" => "application/json" })
+  def stub_routes_api_travel_time
+    body = (0..30).map { |index| create_destination_for_routes_api_travel_time(index) }.to_json
+
+    stub_request(:post, "https://routes.googleapis.com/distanceMatrix/v2:computeRouteMatrix")
+      .to_return(status: 200, body:, headers: { "Content-Type" => "application/json" })
   end
 end
