@@ -118,7 +118,10 @@ RSpec.describe "Placements / Providers / Placements / Searching for a placements
   end
 
   context "when searching for a location that doesn't exist" do
-    before { stub_unknown_geocoder_search }
+    before do
+      stub_unknown_geocoder_search
+      stub_routes_api_travel_time
+    end
 
     scenario "User sees a message that no placements were found" do
       when_i_visit_the_placements_index_page
@@ -237,6 +240,14 @@ RSpec.describe "Placements / Providers / Placements / Searching for a placements
     body = [
       {
         "destinationIndex" => 0,
+        "localizedValues" => {
+          "distance" => { "text" => "20 mi" },
+          "duration" => { "text" => "42 mins" },
+          "staticDuration" => { "text" => "36 mins" },
+        },
+      },
+      {
+        "destinationIndex" => 1,
         "localizedValues" => {
           "distance" => { "text" => "20 mi" },
           "duration" => { "text" => "42 mins" },
