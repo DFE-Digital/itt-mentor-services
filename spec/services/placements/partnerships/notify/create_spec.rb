@@ -25,6 +25,7 @@ RSpec.describe Placements::Partnerships::Notify::Create do
 
         let!(:user_1) { create(:placements_user, providers: [provider]) }
         let!(:user_2) { create(:placements_user, providers: [provider]) }
+        let!(:user_3) { create(:claims_user, schools: [school]) }
 
         it "sends a notification email to every user belonging to the provider" do
           expect { partnership_notify_creation }.to have_enqueued_mail(
@@ -37,6 +38,15 @@ RSpec.describe Placements::Partnerships::Notify::Create do
             :partnership_created_notification,
           ).with(
             user_2, school, provider
+          )
+        end
+
+        it "does not send a notification email to users not belonging to the placements service" do
+          expect { partnership_notify_creation }.not_to have_enqueued_mail(
+            Placements::ProviderUserMailer,
+            :partnership_created_notification,
+          ).with(
+            user_3, provider, school
           )
         end
       end
@@ -70,12 +80,6 @@ RSpec.describe Placements::Partnerships::Notify::Create do
         it "does not send a notification email to users not belonging to the placements service" do
           expect { partnership_notify_creation }.not_to have_enqueued_mail(
             Placements::SchoolUserMailer,
-            :partnership_created_notification,
-          ).with(
-            user_3, provider, school
-          )
-          expect { partnership_notify_creation }.not_to have_enqueued_mail(
-            Placements::ProviderUserMailer,
             :partnership_created_notification,
           ).with(
             user_3, provider, school
