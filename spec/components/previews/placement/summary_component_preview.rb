@@ -1,6 +1,6 @@
 class Placement::SummaryComponentPreview < ApplicationComponentPreview
   def default
-    provider = FactoryBot.build(:provider, id: SecureRandom.uuid)
+    provider = FactoryBot.build_stubbed(:provider)
     school = FactoryBot.build(
       :placements_school,
       with_school_contact: false,
@@ -8,9 +8,8 @@ class Placement::SummaryComponentPreview < ApplicationComponentPreview
       group: "Academies",
       rating: "Good",
     )
-    placement_1 = FactoryBot.build(
+    placement_1 = FactoryBot.build_stubbed(
       :placement,
-      id: SecureRandom.uuid,
       school:,
       year_group: :year_1,
     )
@@ -22,7 +21,7 @@ class Placement::SummaryComponentPreview < ApplicationComponentPreview
   end
 
   def with_location_search
-    provider = FactoryBot.build(:provider, id: SecureRandom.uuid)
+    provider = FactoryBot.build_stubbed(:provider)
     school = FactoryBot.build(
       :placements_school,
       with_school_contact: false,
@@ -32,9 +31,8 @@ class Placement::SummaryComponentPreview < ApplicationComponentPreview
       longitude: -0.1888492108,
       latitude: 51.4472362417,
     )
-    placement_1 = FactoryBot.build(
+    placement_1 = FactoryBot.build_stubbed(
       :placement,
-      id: SecureRandom.uuid,
       school: school.decorate,
       year_group: :year_1,
     )
