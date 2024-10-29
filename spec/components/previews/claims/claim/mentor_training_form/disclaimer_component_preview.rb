@@ -1,8 +1,7 @@
 class Claims::Claim::MentorTrainingForm::DisclaimerComponentPreview < ApplicationComponentPreview
   def default
-    school = FactoryBot.build(
+    school = FactoryBot.build_stubbed(
       :claims_school,
-      id: SecureRandom.uuid,
       mentors: [FactoryBot.build(:claims_mentor)],
     )
     claim = FactoryBot.build(:claim, :submitted, school:)
