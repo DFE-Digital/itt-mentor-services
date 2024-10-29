@@ -15,7 +15,7 @@ class Claims::Claim::MentorTrainingForm::DisclaimerComponentPreview < Applicatio
   class PreviewMentorTrainingForm < Claims::Claim::MentorTrainingForm
     def training_allowance
       PreviewClaimsTrainingAllowance.new(
-        mentor: FactoryBot.build(:claims_mentor), 
+        mentor: FactoryBot.build(:claims_mentor),
         provider: FactoryBot.build(:claims_provider),
         academic_year: FactoryBot.build(:academic_year, :current),
       )
