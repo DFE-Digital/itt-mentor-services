@@ -18,7 +18,7 @@ RSpec.describe Placements::Term, type: :model do
   end
 
   describe "associations" do
-    it { is_expected.to have_many(:placement_windows).class_name("Placements::PlacementWindow").dependent(:destroy) }
+    it { is_expected.to have_many(:placement_windows).class_name("Placements::PlacementWindow").dependent(:restrict_with_exception) }
     it { is_expected.to have_many(:placements).through(:placement_windows) }
   end
 

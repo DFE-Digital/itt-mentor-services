@@ -25,6 +25,6 @@ class Placements::Term < ApplicationRecord
 
   validates :name, presence: true, inclusion: { in: VALID_NAMES }
 
-  has_many :placement_windows, class_name: "Placements::PlacementWindow", dependent: :destroy
+  has_many :placement_windows, class_name: "Placements::PlacementWindow", dependent: :restrict_with_exception
   has_many :placements, through: :placement_windows
 end
