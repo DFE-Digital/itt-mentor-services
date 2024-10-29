@@ -1,9 +1,20 @@
-class Placement::OrganisationSwitcherComponent < ApplicationComponent
+class Placements::OrganisationSwitcherComponent < ApplicationComponent
   def initialize(user:, organisation:, classes: [], html_attributes: {})
     super(classes:, html_attributes:)
 
     @user = user
     @organisation = organisation
+  end
+
+  def call
+    render ContentHeaderComponent.new(
+      title: organisation.name,
+      actions: [govuk_link_to(
+        t(".change_organisation"),
+        change_organisation_link,
+        no_visited_state: true,
+      )],
+    )
   end
 
   def render?
