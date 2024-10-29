@@ -1,5 +1,5 @@
 en:
   components:
-    placement:
+    placements:
       organisation_switcher_component:
         change_organisation: Change organisation

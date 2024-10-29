@@ -1,6 +1,8 @@
 <%# locals: (current_navigation: nil, provider:) -%>
 
-<%= render Placement::OrganisationSwitcherComponent.new(user: current_user, organisation: provider) %>
+<%= content_for(:header_content) do %>
+  <%= render Placements::OrganisationSwitcherComponent.new(user: current_user, organisation: provider) %>
+<% end %>
 
 <%= content_for(:primary_navigation_content) do %>
   <%= render PrimaryNavigationComponent.new do |component| %>

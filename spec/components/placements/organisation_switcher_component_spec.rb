@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Placement::OrganisationSwitcherComponent, type: :component do
+RSpec.describe Placements::OrganisationSwitcherComponent, type: :component do
   subject(:component) do
     described_class.new(user:, organisation:)
   end
@@ -13,13 +13,11 @@ RSpec.describe Placement::OrganisationSwitcherComponent, type: :component do
     it "renders the organisation switcher" do
       render_inline(component)
 
-      within(".content-header") do
-        expect(page).to have_content(organisation.name)
-        expect(page).to have_link(
-          text: "Change organisation",
-          href: public_send("placements_support_organisations_path"),
-        )
-      end
+      expect(page).to have_content(organisation.name)
+      expect(page).to have_link(
+        text: "Change organisation",
+        href: "/support/organisations",
+      )
     end
   end
 
@@ -31,13 +29,11 @@ RSpec.describe Placement::OrganisationSwitcherComponent, type: :component do
       it "renders the organisation switcher" do
         render_inline(component)
 
-        within(".content-header") do
-          expect(page).to have_content(organisation.name)
-          expect(page).to have_link(
-            text: "Change organisation",
-            href: public_send("placements_organisations_path"),
-          )
-        end
+        expect(page).to have_content(organisation.name)
+        expect(page).to have_link(
+          text: "Change organisation",
+          href: "/organisations",
+        )
       end
     end
 
@@ -47,13 +43,11 @@ RSpec.describe Placement::OrganisationSwitcherComponent, type: :component do
       it "does not render the organisation switcher" do
         render_inline(component)
 
-        within(".content-header") do
-          expect(page).not_to have_content(organisation.name)
-          expect(page).not_to have_link(
-            text: "Change organisation",
-            href: public_send("placements_organisations_path"),
-          )
-        end
+        expect(page).not_to have_content(organisation.name)
+        expect(page).not_to have_link(
+          text: "Change organisation",
+          href: "/organisations",
+        )
       end
     end
   end
