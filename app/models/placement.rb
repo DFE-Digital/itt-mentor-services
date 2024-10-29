@@ -32,7 +32,7 @@ class Placement < ApplicationRecord
 
   has_many :placement_additional_subjects, class_name: "Placements::PlacementAdditionalSubject", dependent: :destroy
   has_many :additional_subjects, through: :placement_additional_subjects, source: :subject
-  has_many :placement_windows, class_name: "Placements::PlacementWindow"
+  has_many :placement_windows, class_name: "Placements::PlacementWindow", dependent: :destroy
   has_many :terms, class_name: "Placements::Term", through: :placement_windows
 
   belongs_to :academic_year, class_name: "Placements::AcademicYear"
