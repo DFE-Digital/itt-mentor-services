@@ -1,2 +1,2 @@
-class Placements::AddPartnershipWizard::CheckYourAnswersStep < Placements::BaseStep
+class Placements::AddPartnershipWizard::CheckYourAnswersStep < BaseStep
 end

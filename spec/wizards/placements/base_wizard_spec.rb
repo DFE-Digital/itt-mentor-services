@@ -3,7 +3,7 @@ require "rails_helper"
 # A mock wizard so we can test the base class
 require_relative "./burger_order_wizard_mock"
 
-RSpec.describe Placements::BaseWizard do
+RSpec.describe BaseWizard do
   subject(:wizard) { BurgerOrderWizard.new(state:, params:, current_step:) }
 
   let(:state) { {} }
@@ -14,7 +14,7 @@ RSpec.describe Placements::BaseWizard do
   describe "#steps" do
     it "is a Hash of Step objects" do
       expect(wizard.steps).to be_a(Hash)
-      expect(wizard.steps.values).to all be_a(Placements::BaseStep)
+      expect(wizard.steps.values).to all be_a(BaseStep)
     end
 
     it "holds steps in order of the user journey" do

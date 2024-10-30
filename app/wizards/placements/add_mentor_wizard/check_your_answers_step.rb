@@ -1,2 +1,2 @@
-class Placements::AddMentorWizard::CheckYourAnswersStep < Placements::BaseStep
+class Placements::AddMentorWizard::CheckYourAnswersStep < BaseStep
 end

@@ -1,2 +1,2 @@
-class Placements::AddOrganisationWizard::CheckYourAnswersStep < Placements::BaseStep
+class Placements::AddOrganisationWizard::CheckYourAnswersStep < BaseStep
 end

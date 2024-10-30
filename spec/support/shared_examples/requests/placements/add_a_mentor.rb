@@ -5,7 +5,7 @@ RSpec.shared_examples "an 'Add mentor' journey" do
 
   before do
     sign_in_as current_user
-    allow(Placements::BaseWizard).to receive(:generate_state_key).and_return(state_key)
+    allow(BaseWizard).to receive(:generate_state_key).and_return(state_key)
   end
 
   context "when starting a new wizard journey" do

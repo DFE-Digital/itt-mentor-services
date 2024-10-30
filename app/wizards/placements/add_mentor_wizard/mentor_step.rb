@@ -1,4 +1,4 @@
-class Placements::AddMentorWizard::MentorStep < Placements::BaseStep
+class Placements::AddMentorWizard::MentorStep < BaseStep
   include ActiveModel::Attributes
 
   attribute :trn

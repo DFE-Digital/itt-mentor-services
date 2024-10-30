@@ -3,7 +3,7 @@ require "rails_helper"
 # A mock wizard so we can test the base class
 require_relative "./burger_order_wizard_mock"
 
-RSpec.describe Placements::BaseStep, type: :model do
+RSpec.describe BaseStep, type: :model do
   subject(:step) { BurgerOrderWizard::ChooseBurgerStep.new(wizard:, attributes:) }
 
   let(:wizard) { instance_double(BurgerOrderWizard) }

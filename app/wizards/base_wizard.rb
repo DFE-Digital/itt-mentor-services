@@ -1,4 +1,4 @@
-class Placements::BaseWizard
+class BaseWizard
   attr_reader :state, :params, :current_step, :steps
 
   def self.generate_state_key

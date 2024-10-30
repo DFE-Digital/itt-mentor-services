@@ -1,4 +1,4 @@
-class Placements::AddUserWizard::UserStep < Placements::BaseStep
+class Placements::AddUserWizard::UserStep < BaseStep
   attribute :first_name
   attribute :last_name
   attribute :email

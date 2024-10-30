@@ -1,4 +1,4 @@
-class Placements::AddPlacementWizard::YearGroupStep < Placements::BaseStep
+class Placements::AddPlacementWizard::YearGroupStep < BaseStep
   attribute :year_group, default: nil
 
   validates :year_group, presence: true

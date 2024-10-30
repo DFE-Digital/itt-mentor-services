@@ -1,2 +1,2 @@
-class Placements::AddSchoolContactWizard::CheckYourAnswersStep < Placements::BaseStep
+class Placements::AddSchoolContactWizard::CheckYourAnswersStep < BaseStep
 end

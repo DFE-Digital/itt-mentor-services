@@ -1,2 +1,2 @@
-class Placements::AddUserWizard::CheckYourAnswersStep < Placements::BaseStep
+class Placements::AddUserWizard::CheckYourAnswersStep < BaseStep
 end

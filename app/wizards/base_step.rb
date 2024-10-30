@@ -1,4 +1,4 @@
-class Placements::BaseStep
+class BaseStep
   include ActiveModel::Model
   include ActiveModel::Attributes
 

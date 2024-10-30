@@ -1,4 +1,4 @@
-class Placements::AddPlacementWizard::SubjectStep < Placements::BaseStep
+class Placements::AddPlacementWizard::SubjectStep < BaseStep
   attribute :subject_id
 
   validates :subject_id, presence: true, inclusion: { in: ->(step) { step.subjects_for_selection.ids } }
