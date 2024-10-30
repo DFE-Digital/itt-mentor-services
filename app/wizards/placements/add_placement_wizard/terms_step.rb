@@ -1,4 +1,4 @@
-class Placements::AddPlacementWizard::TermsStep < Placements::BaseStep
+class Placements::AddPlacementWizard::TermsStep < BaseStep
   attribute :term_ids, default: []
 
   validates :term_ids, presence: true

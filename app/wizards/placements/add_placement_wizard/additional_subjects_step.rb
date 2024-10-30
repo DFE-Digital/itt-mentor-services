@@ -1,4 +1,4 @@
-class Placements::AddPlacementWizard::AdditionalSubjectsStep < Placements::BaseStep
+class Placements::AddPlacementWizard::AdditionalSubjectsStep < BaseStep
   attribute :additional_subject_ids, default: []
 
   validates :additional_subject_ids, presence: true,

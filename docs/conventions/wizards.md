@@ -48,7 +48,7 @@ Think of step objects as a hybrid between form objects and decorators:
 
 ```ruby
 # app/wizards/placements/add_placement_wizard/subject_step.rb
-class Placements::AddPlacementWizard::SubjectStep < Placements::BaseStep
+class Placements::AddPlacementWizard::SubjectStep < BaseStep
   attribute :subject_id
   validates :subject_id, presence: true
 
@@ -64,7 +64,7 @@ end
 
 ```ruby
 # app/wizards/placements/add_placement_wizard/mentors_step.rb
-class Placements::AddPlacementWizard::MentorsStep < Placements::BaseStep
+class Placements::AddPlacementWizard::MentorsStep < BaseStep
   attribute :mentor_ids
   validates :mentor_ids, presence: true
 
@@ -76,7 +76,7 @@ end
 
 ```ruby
 # app/wizards/placements/add_placement_wizard/check_your_answers_step.rb
-class Placements::AddPlacementWizard::CheckYourAnswersStep < Placements::BaseStep
+class Placements::AddPlacementWizard::CheckYourAnswersStep < BaseStep
   # This step has no attributes of its own
 end
 ```

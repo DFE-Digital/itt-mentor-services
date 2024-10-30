@@ -1,3 +1,3 @@
-class Placements::AddPlacementWizard::CheckYourAnswersStep < Placements::BaseStep
+class Placements::AddPlacementWizard::CheckYourAnswersStep < BaseStep
   # Silence is bliss
 end

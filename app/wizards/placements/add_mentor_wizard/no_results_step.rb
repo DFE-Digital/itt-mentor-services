@@ -1,2 +1,2 @@
-class Placements::AddMentorWizard::NoResultsStep < Placements::BaseStep
+class Placements::AddMentorWizard::NoResultsStep < BaseStep
 end

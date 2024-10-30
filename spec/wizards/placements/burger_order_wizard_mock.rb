@@ -1,6 +1,6 @@
 # A mock wizard implementation so we can test BaseWizard and BaseStep without
 # being dependent on a particular wizard implementation within the app itself.
-class BurgerOrderWizard < Placements::BaseWizard
+class BurgerOrderWizard < BaseWizard
   def define_steps
     # Define the wizard steps here
     add_step(ChooseBurgerStep)
@@ -10,12 +10,12 @@ class BurgerOrderWizard < Placements::BaseWizard
     add_step(CheckYourAnswersStep)
   end
 
-  class ChooseBurgerStep < Placements::BaseStep
+  class ChooseBurgerStep < BaseStep
     attribute :burger
     validates :burger, inclusion: { in: %w[beef chicken veggie] }
   end
 
-  class MealDealStep < Placements::BaseStep
+  class MealDealStep < BaseStep
     attribute :make_it_a_meal_deal
     validates :make_it_a_meal_deal, inclusion: { in: %w[yes no] }
 
@@ -24,17 +24,17 @@ class BurgerOrderWizard < Placements::BaseWizard
     end
   end
 
-  class ChooseSideStep < Placements::BaseStep
+  class ChooseSideStep < BaseStep
     attribute :side
     validates :side, inclusion: { in: %w[fries salad coleslaw] }
   end
 
-  class ChooseDrinkStep < Placements::BaseStep
+  class ChooseDrinkStep < BaseStep
     attribute :drink
     validates :drink, inclusion: { in: %w[cola water tea coffee] }
   end
 
-  class CheckYourAnswersStep < Placements::BaseStep
+  class CheckYourAnswersStep < BaseStep
     # This is a read-only step, so it doesn't have attributes.
   end
 end

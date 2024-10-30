@@ -1,4 +1,4 @@
-class Placements::AddPlacementWizard::MentorsStep < Placements::BaseStep
+class Placements::AddPlacementWizard::MentorsStep < BaseStep
   attribute :mentor_ids, default: []
 
   validates :mentor_ids, presence: true

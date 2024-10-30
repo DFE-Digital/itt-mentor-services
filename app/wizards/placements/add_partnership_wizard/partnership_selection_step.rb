@@ -1,4 +1,4 @@
-class Placements::AddPartnershipWizard::PartnershipSelectionStep < Placements::BaseStep
+class Placements::AddPartnershipWizard::PartnershipSelectionStep < BaseStep
   attribute :id
 
   validate :id_presence

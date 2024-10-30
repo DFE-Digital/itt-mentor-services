@@ -1,4 +1,4 @@
-class Placements::AddOrganisationWizard::OrganisationSelectionStep < Placements::BaseStep
+class Placements::AddOrganisationWizard::OrganisationSelectionStep < BaseStep
   attribute :id
 
   validate :id_presence

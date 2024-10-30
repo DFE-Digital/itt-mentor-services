@@ -1,4 +1,4 @@
-class Placements::AddPlacementWizard::PreviewPlacementStep < Placements::BaseStep
+class Placements::AddPlacementWizard::PreviewPlacementStep < BaseStep
   delegate :build_placement, to: :wizard
 
   def placement

@@ -1,4 +1,4 @@
-class Placements::EditPlacementWizard::ProviderStep < Placements::BaseStep
+class Placements::EditPlacementWizard::ProviderStep < BaseStep
   attribute :provider_id
 
   validates :provider_id, inclusion: { in: ->(step) { step.providers_for_selection.ids } }, if: -> { provider_id != NOT_KNOWN }

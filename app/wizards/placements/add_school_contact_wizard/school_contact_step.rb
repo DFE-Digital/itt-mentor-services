@@ -1,4 +1,4 @@
-class Placements::AddSchoolContactWizard::SchoolContactStep < Placements::BaseStep
+class Placements::AddSchoolContactWizard::SchoolContactStep < BaseStep
   attribute :first_name
   attribute :last_name
   attribute :email_address

@@ -1,4 +1,4 @@
-class Placements::AddPlacementWizard::PhaseStep < Placements::BaseStep
+class Placements::AddPlacementWizard::PhaseStep < BaseStep
   attribute :phase
 
   VALID_PHASES = [Placements::School::PRIMARY_PHASE, Placements::School::SECONDARY_PHASE].freeze

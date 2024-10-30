@@ -12,7 +12,7 @@ RSpec.describe "'Edit placement' journey", service: :placements, type: :request 
   let!(:state_key) { SecureRandom.uuid }
 
   before do
-    allow(Placements::BaseWizard).to receive(:generate_state_key).and_return(state_key)
+    allow(BaseWizard).to receive(:generate_state_key).and_return(state_key)
     sign_in_as current_user
   end
 

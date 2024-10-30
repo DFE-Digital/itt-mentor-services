@@ -1,4 +1,4 @@
-class Placements::AddPlacementWizard::AcademicYearStep < Placements::BaseStep
+class Placements::AddPlacementWizard::AcademicYearStep < BaseStep
   attribute :academic_year_id
 
   validates :academic_year_id, presence: true
