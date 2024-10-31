@@ -30,12 +30,4 @@ class Placements::Partnerships::AddPartnershipController < Placements::Applicati
     current_step = params[:step]&.to_sym
     @wizard = Placements::AddPartnershipWizard.new(organisation: @organisation, params:, state:, current_step:)
   end
-
-  def back_link_path
-    if @wizard.previous_step.present?
-      step_path(@wizard.previous_step)
-    else
-      index_path
-    end
-  end
 end

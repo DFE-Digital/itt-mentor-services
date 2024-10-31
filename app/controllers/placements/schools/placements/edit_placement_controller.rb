@@ -48,7 +48,7 @@ class Placements::Schools::Placements::EditPlacementController < Placements::App
     edit_placement_placements_school_placement_path(state_key:, step:)
   end
 
-  def back_link_path
+  def index_path
     placements_school_placement_path(@school, @placement)
   end
 
