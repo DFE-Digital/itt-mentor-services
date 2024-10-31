@@ -41,6 +41,7 @@ RSpec.configure do |config|
   config.include ViewComponent::TestHelpers, type: :component
   config.include DfESignInUserHelper
   config.include GeocodingHelper
+  config.include GovukComponentMatchers, type: :system
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = [Rails.root.join("spec/fixtures")]
