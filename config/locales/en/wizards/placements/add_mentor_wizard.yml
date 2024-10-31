@@ -1,0 +1,42 @@
+en:
+  wizards:
+    placements:
+      add_mentor_wizard:
+        mentor_step:
+          page_title: Find teacher - %{contextual_text}
+          page_title_with_error: "Error: %{error} - %{contextual_text}"
+          caption: Mentor details
+          cancel: Cancel
+          continue: Continue
+          trn: Teacher reference number (TRN)
+          trn_hint: A TRN is a 7 digit number that uniquely identifies people in the education sector in England.
+          find_teacher: Find teacher
+          trn_guidance: TRN guidance
+          what_is_a_trn: |
+            If you do not know a teacher’s TRN, you can ask them for it. 
+            They can find a lost TRN, or apply for a new one by following the instructions in the %{link}.
+          help_with_the_trn: Help with the TRN
+          date_of_birth_hint: For example, 31 3 1980
+        check_your_answers_step:
+          page_title: Confirm mentor details - Add mentor - %{contextual_text}
+          add_mentor: Confirm and add mentor
+          cancel: Cancel
+          change: Change
+          confirm_details: Confirm mentor details
+          intro_text: Once added, you will be able to assign them to placements.
+          mentor: Mentor
+          trn: Teacher reference number (TRN)
+          date_of_birth: Date of birth
+          confirm_mentor_informed: |
+            Mentor data is stored in line with the %{link}. 
+            I confirm that I have read, understood and accept how DfE uses mentor information as part of the Manage school placements service.
+          privacy_notice: Department for Education's (DfE) privacy notice
+        no_results_step:
+          page_title: No results found for ‘%{trn}’ - %{contextual_text}
+          caption: Mentor not found
+          add_mentor: Add mentor
+          change_your_search: Change your search
+          help_text: Check that you typed in the teacher reference number (TRN) correctly.
+          no_results_found: No results found for ‘%{trn}’
+        update:
+          success: Mentor added

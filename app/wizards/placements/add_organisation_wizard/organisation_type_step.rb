@@ -10,11 +10,11 @@ class Placements::AddOrganisationWizard::OrganisationTypeStep < BaseStep
   def organisation_types_for_selection
     [
       OpenStruct.new(
-        name: I18n.t("placements.wizards.add_organisation_wizard.organisation_type_step.#{PROVIDER}"),
+        name: I18n.t("wizards.placements.add_organisation_wizard.organisation_type_step.#{PROVIDER}"),
         value: PROVIDER,
       ),
       OpenStruct.new(
-        name: I18n.t("placements.wizards.add_organisation_wizard.organisation_type_step.#{SCHOOL}"),
+        name: I18n.t("wizards.placements.add_organisation_wizard.organisation_type_step.#{SCHOOL}"),
         value: SCHOOL,
       ),
     ]

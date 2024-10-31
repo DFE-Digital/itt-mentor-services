@@ -1,13 +1,9 @@
 class Placements::Support::SupportUsers::AddSupportUserController < Placements::ApplicationController
+  include WizardController
+
   before_action :set_wizard
 
   helper_method :step_path, :current_step_path, :back_link_path
-
-  def new
-    redirect_to step_path(@wizard.first_step)
-  end
-
-  def edit; end
 
   def update
     if !@wizard.save_step
@@ -32,24 +28,8 @@ class Placements::Support::SupportUsers::AddSupportUserController < Placements::
     @wizard = Placements::AddSupportUserWizard.new(params:, state:, current_step:)
   end
 
-  def current_step_path
-    step_path(@wizard.current_step)
-  end
-
   def step_path(step)
     add_support_user_placements_support_support_users_path(state_key:, step:)
-  end
-
-  def state_key
-    @state_key ||= params.fetch(:state_key, BaseWizard.generate_state_key)
-  end
-
-  def back_link_path
-    if @wizard.previous_step.present?
-      step_path(@wizard.previous_step)
-    else
-      index_path
-    end
   end
 
   def index_path

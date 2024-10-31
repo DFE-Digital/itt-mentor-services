@@ -1,16 +1,16 @@
 class Placements::Schools::SchoolContacts::EditSchoolContactController < Placements::ApplicationController
+  include WizardController
+
   before_action :set_school
   before_action :set_school_contact
   before_action :set_wizard
 
-  helper_method :step_path, :current_step_path, :back_link_path, :add_mentor_path
+  helper_method :step_path
 
   def new
     @wizard.setup_state
     redirect_to step_path(@wizard.first_step)
   end
-
-  def edit; end
 
   def update
     if !@wizard.save_step
@@ -40,14 +40,6 @@ class Placements::Schools::SchoolContacts::EditSchoolContactController < Placeme
 
   def step_path(step)
     edit_school_contact_placements_school_school_contact_path(state_key:, step:)
-  end
-
-  def state_key
-    @state_key ||= params.fetch(:state_key, BaseWizard.generate_state_key)
-  end
-
-  def current_step_path
-    step_path(@wizard.current_step)
   end
 
   def back_link_path

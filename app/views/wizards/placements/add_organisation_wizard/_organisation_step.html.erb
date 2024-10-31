@@ -1,0 +1,18 @@
+<% content_for :page_title, current_step.errors.any? ? t(".title_with_error.#{wizard.organisation_type}") : t(".title.#{wizard.organisation_type}") %>
+
+<%= render AutocompleteSelectFormComponent.new(
+  model: current_step,
+  scope: current_step.scope,
+  url: current_step_path,
+  method: :put,
+  data: {
+    autocomplete_path_value: current_step.autocomplete_path_value,
+    autocomplete_return_attributes_value: current_step.autocomplete_return_attributes_value,
+  },
+  input: {
+    value: current_step.organisation_name,
+    label: t(".title.#{wizard.organisation_type}"),
+    caption: t(".caption"),
+    previous_search: current_step.id,
+  },
+) %>
