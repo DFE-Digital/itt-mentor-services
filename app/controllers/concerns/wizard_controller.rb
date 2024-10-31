@@ -2,7 +2,7 @@ module WizardController
   extend ActiveSupport::Concern
 
   included do
-    helper_method :current_step_path, :back_link_path
+    helper_method :current_step_path, :back_link_path, :step_path
 
     def new
       redirect_to step_path(@wizard.first_step)

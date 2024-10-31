@@ -3,8 +3,6 @@ class Placements::Support::SupportUsers::AddSupportUserController < Placements::
 
   before_action :set_wizard
 
-  helper_method :step_path, :current_step_path, :back_link_path
-
   def update
     if !@wizard.save_step
       render "edit"

@@ -4,8 +4,6 @@ class Placements::Schools::Mentors::AddMentorController < Placements::Applicatio
   before_action :set_school
   before_action :set_wizard
 
-  helper_method :step_path
-
   def update
     if !@wizard.save_step
       render "edit"
