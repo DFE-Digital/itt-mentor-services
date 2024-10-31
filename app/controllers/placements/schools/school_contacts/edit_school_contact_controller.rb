@@ -40,7 +40,7 @@ class Placements::Schools::SchoolContacts::EditSchoolContactController < Placeme
     edit_school_contact_placements_school_school_contact_path(state_key:, step:)
   end
 
-  def back_link_path
+  def index_path
     placements_school_path(@school)
   end
 end
