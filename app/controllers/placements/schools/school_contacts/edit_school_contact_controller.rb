@@ -5,8 +5,6 @@ class Placements::Schools::SchoolContacts::EditSchoolContactController < Placeme
   before_action :set_school_contact
   before_action :set_wizard
 
-  helper_method :step_path
-
   def new
     @wizard.setup_state
     redirect_to step_path(@wizard.first_step)

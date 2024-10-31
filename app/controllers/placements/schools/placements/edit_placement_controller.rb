@@ -6,7 +6,7 @@ class Placements::Schools::Placements::EditPlacementController < Placements::App
   before_action :set_wizard
   before_action :authorize_placement
 
-  helper_method :step_path, :add_mentor_path, :unlisted_provider_path
+  helper_method :add_mentor_path, :unlisted_provider_path
 
   attr_reader :school
 

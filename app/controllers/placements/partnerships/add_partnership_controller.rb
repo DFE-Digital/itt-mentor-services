@@ -4,8 +4,6 @@ class Placements::Partnerships::AddPartnershipController < Placements::Applicati
   before_action :set_organisation
   before_action :set_wizard
 
-  helper_method :step_path
-
   def update
     if !@wizard.save_step
       render "edit"

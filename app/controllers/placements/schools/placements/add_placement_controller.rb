@@ -5,7 +5,7 @@ class Placements::Schools::Placements::AddPlacementController < Placements::Appl
   before_action :set_wizard
   before_action :authorize_placement
 
-  helper_method :step_path, :current_step_path, :back_link_path, :add_mentor_path
+  helper_method :add_mentor_path
 
   attr_reader :school
 

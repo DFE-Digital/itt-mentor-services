@@ -5,8 +5,6 @@ class Placements::Schools::SchoolContacts::AddSchoolContactController < Placemen
   before_action :set_wizard
   before_action :authorize_school_contact
 
-  helper_method :step_path
-
   def update
     if !@wizard.save_step
       render "edit"

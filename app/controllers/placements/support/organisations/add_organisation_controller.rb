@@ -3,8 +3,6 @@ class Placements::Support::Organisations::AddOrganisationController < Placements
 
   before_action :set_wizard
 
-  helper_method :step_path
-
   def update
     if !@wizard.save_step
       render "edit"
