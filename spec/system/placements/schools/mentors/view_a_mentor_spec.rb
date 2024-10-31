@@ -37,12 +37,9 @@ RSpec.describe "Placements / Schools / Mentors / View a mentor", service: :place
   end
 
   def then_i_see_the_mentor_details(first_name:, last_name:, trn:)
-    expect(page).to have_content("#{first_name} #{last_name}")
-
-    within(".govuk-summary-list") do
-      expect(page).to have_content(first_name)
-      expect(page).to have_content(last_name)
-      expect(page).to have_content(trn)
-    end
+    expect(page).to have_h1("#{first_name} #{last_name}")
+    expect(page).to have_summary_list_row("First name", first_name)
+    expect(page).to have_summary_list_row("Last name", last_name)
+    expect(page).to have_summary_list_row("Teacher reference number (TRN)", trn)
   end
 end

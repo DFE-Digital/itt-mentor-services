@@ -262,20 +262,11 @@ RSpec.describe "Placements users invite other users to organisations", service: 
   end
 
   def and_user_is_selected_in_school_primary_navigation
-    within(".app-primary-navigation__nav") do
-      expect(page).to have_link "Placements", current: "false"
-      expect(page).to have_link "Mentors", current: "false"
-      expect(page).to have_link "Users", current: "page"
-      expect(page).to have_link "Organisation details", current: "false"
-    end
+    expect(primary_navigation).to have_current_item("Users")
   end
 
   def and_user_is_selected_in_provider_primary_navigation
-    within(".app-primary-navigation__nav") do
-      expect(page).to have_link "Placements", current: "false"
-      expect(page).to have_link "Users", current: "page"
-      expect(page).to have_link "Organisation details", current: "false"
-    end
+    expect(primary_navigation).to have_current_item("Users")
   end
 
   def email_invite_notification(email, _organisation)
