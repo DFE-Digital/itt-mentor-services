@@ -1,0 +1,40 @@
+en:
+  wizards:
+    placements:
+      add_partnership_wizard:
+        partnership_step:
+          page_title_with_error: 
+            provider: "Error: Add a provider - %{contextual_text}"
+            school: "Error: Add a school - %{contextual_text}"
+          page_title:
+            provider: "Add a provider - %{contextual_text}"
+            school: "Add a school - %{contextual_text}"
+          title:
+            provider: Add a provider
+            school: Add a school
+          hint:
+            provider: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode
+            school: Enter a school name, unique reference number (URN) or postcode
+        check_your_answers_step:
+          page_title_provider: Confirm provider details - %{contextual_text}
+          page_title_school: Confirm school details - %{contextual_text}
+          title_provider: Confirm provider details
+          title_school: Confirm school details
+          intro_text_provider_html: | 
+            Adding them means you will be able to assign them to your placements. 
+            We will send them an email to let them know you have added them.
+          intro_text_school_html: | 
+            <br>Once added, they will be able to assign you to their placements. 
+            <br>
+            <br>We will send them an email to let them know you have added them.
+          header_provider: Provider
+          header_school: School
+          add_partner_provider: Confirm and add provider
+          add_partner_school: Confirm and add school
+          address: Address
+          additional_details: Additional details
+          ofsted: Ofsted
+          send: Special educational needs and disabilities (SEND)
+        partnership_options_step:
+          page_title: "%{results_count} results found for ‘%{search_param}’ - %{contextual_text}"
+          page_title_with_error: "Error: %{results_count} results found for ‘%{search_param}’- %{contextual_text}"

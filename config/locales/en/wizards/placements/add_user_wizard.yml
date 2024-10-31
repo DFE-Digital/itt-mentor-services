@@ -1,0 +1,17 @@
+en:
+  wizards:
+    placements:
+      add_user_wizard:
+        user_step:
+          title_with_error: "Error: Personal details - %{caption}"
+          title: Personal details - %{caption}
+          caption: User details
+          continue: Continue
+          personal_details: Personal details
+        check_your_answers_step:
+          page_title: Confirm user details
+          user: User
+          school_intro_text: Once added, they will be able to view, edit and create placements at your school.
+          we_will_send_them_an_email: We will send them an email with information on how to access the Manage school placements service.
+          add_user: Confirm and add user
+          change: Change

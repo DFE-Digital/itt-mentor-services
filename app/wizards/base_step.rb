@@ -10,7 +10,7 @@ class BaseStep
   end
 
   def to_partial_path
-    partial_path = self.class.name.underscore.sub("placements/", "")
-    "placements/wizards/#{partial_path}"
+    partial_path = self.class.name.underscore
+    "wizards/#{partial_path}"
   end
 end

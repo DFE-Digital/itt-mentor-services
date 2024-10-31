@@ -1,0 +1,19 @@
+<% content_for :page_title, current_step.errors.any? ? t(".page_title_with_error.#{current_step.partner_organisation_type}", contextual_text:) : t(".page_title.#{current_step.partner_organisation_type}", contextual_text:) %>
+
+<%= render AutocompleteSelectFormComponent.new(
+  model: current_step,
+  scope: current_step.scope,
+  url: current_step_path,
+  method: :put,
+  data: {
+    autocomplete_path_value: current_step.autocomplete_path_value,
+    autocomplete_return_attributes_value: current_step.autocomplete_return_attributes_value,
+  },
+  input: {
+    value: current_step.partner_organisation_name,
+    label: t(".title.#{current_step.partner_organisation_type}"),
+    hint: t(".hint.#{current_step.partner_organisation_type}"),
+    caption: contextual_text,
+    previous_search: current_step.id,
+  },
+) %>

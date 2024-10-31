@@ -1,0 +1,100 @@
+<%= content_for :page_title, sanitize(t(".page_title", contextual_text:)) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l">
+        <%= contextual_text %>
+      </span>
+
+      <h1 class="govuk-heading-l">
+        <%= t(".title") %>
+      </h1>
+
+      <%= govuk_summary_list do |summary_list| %>
+
+        <% if wizard.steps.include?(:phase) %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key { t(".phase") } %>
+            <% row.with_value(text: wizard.steps[:phase].phase) %>
+            <% row.with_action(text: t(".change"),
+                               href: step_path(:phase),
+                               visually_hidden_text: t(".phase"),
+                               classes: ["govuk-link--no-visited-state"]) %>
+          <% end %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".subject")) %>
+          <% row.with_value(text: wizard.steps[:subject].subject_name) %>
+          <% row.with_action(text: t(".change"),
+                             href: step_path(:subject),
+                             visually_hidden_text: t(".subject"),
+                             classes: ["govuk-link--no-visited-state"]) %>
+        <% end %>
+
+        <% if wizard.steps.include?(:additional_subjects) %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".additional_subjects")) %>
+            <% row.with_value(text: wizard.steps[:additional_subjects].additional_subject_names) %>
+            <% row.with_action(text: t(".change"),
+                               href: step_path(:additional_subjects),
+                               visually_hidden_text: t(".additional_subjects"),
+                               classes: ["govuk-link--no-visited-state"]) %>
+          <% end %>
+        <% end %>
+
+        <% if wizard.steps.include?(:year_group) %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".year_group")) %>
+            <% row.with_value(text: t("placements.schools.placements.year_groups.#{wizard.steps[:year_group].year_group}")) %>
+            <% row.with_action(text: t(".change"),
+                               href: step_path(:year_group),
+                               visually_hidden_text: t(".year_group"),
+                               classes: ["govuk-link--no-visited-state"]) %>
+          <% end %>
+        <% end %>
+
+        <% if wizard.steps.include?(:academic_year) %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".academic_year")) %>
+            <% row.with_value(text: wizard.steps[:academic_year].academic_year.display_name) %>
+            <% row.with_action(text: t(".change"),
+                               href: step_path(:academic_year),
+                               visually_hidden_text: t(".academic_year"),
+                               classes: ["govuk-link--no-visited-state"]) %>
+          <% end %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".expected_date")) %>
+          <% row.with_value(text: wizard.steps[:terms].term_names || t(".any_term")) %>
+          <% row.with_action(text: t(".change"),
+                             href: step_path(:terms),
+                             visually_hidden_text: t(".expected_date"),
+                             classes: ["govuk-link--no-visited-state"]) %>
+        <% end %>
+
+        <% if wizard.steps.include?(:mentors) %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".mentor")) %>
+            <% row.with_value(text: wizard.steps[:mentors].mentor_names || t(".not_yet_known")) %>
+            <% row.with_action(text: t(".change"),
+                               href: step_path(:mentors),
+                               visually_hidden_text: t(".mentor"),
+                               classes: ["govuk-link--no-visited-state"]) %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%= govuk_inset_text(text: t(".info_text")) %>
+
+      <div class="govuk-button-group">
+        <%= f.govuk_submit t(".publish_placement") %>
+        <%= govuk_link_to t(".preview_placement"), step_path(:preview_placement), no_visited_state: true %>
+      </div>
+    </div>
+  </div>
+<% end %>

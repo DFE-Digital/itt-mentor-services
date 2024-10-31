@@ -1,0 +1,15 @@
+en:
+  wizards:
+    placements:
+      add_school_contact_wizard:
+        school_contact_step:
+          title_with_error: "Error: Add placement contact - %{contextual_text}"
+          title: Add placement contact - %{contextual_text}
+          continue: Continue
+          add_placement_contact: Add placement contact
+          description: Add an email address for the main contact for school placements. This can also be a shared inbox.
+        check_your_answers_step:
+          page_title: Check your answers - %{contextual_text}
+          check_your_answers: Check your answers
+          add_the_itt_placement_contact: Add placement contact
+          change: Change

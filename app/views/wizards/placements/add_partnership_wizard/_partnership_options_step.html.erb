@@ -1,0 +1,23 @@
+<% if current_step.errors.any? %>
+  <% content_for :page_title, t(".page_title_with_error",
+    results_count: current_step.partnership_options.count,
+    search_param: current_step.search_params,
+    contextual_text:) %>
+<% else %>
+  <% content_for :page_title, t(".page_title",
+    results_count: current_step.partnership_options.count,
+    search_param: current_step.search_params,
+    contextual_text:) %>
+<% end %>
+
+<%= render OptionsFormComponent.new(
+  model: current_step,
+  scope: current_step.scope,
+  url: current_step_path,
+  search_param: current_step.search_params,
+  records: current_step.partnership_options,
+  records_klass: current_step.partner_organisation_type,
+  back_link: back_link_path,
+  title: contextual_text,
+  method: :put,
+) %>

@@ -3,7 +3,7 @@
 <% end %>
 
 <div class="govuk-width-container">
-  <%= render @wizard.step, object: @wizard.step %>
+  <%= render_wizard(@wizard) %>
 
   <p class="govuk-body">
     <%= govuk_link_to(t(".cancel"), placements_support_organisations_path, no_visited_state: true) %>

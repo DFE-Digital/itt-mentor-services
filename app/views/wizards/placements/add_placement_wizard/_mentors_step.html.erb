@@ -1,0 +1,35 @@
+<% content_for :page_title, current_step.errors.any? ? t(".title_with_error", contextual_text:) : t(".title", contextual_text:) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l"><%= contextual_text %></span>
+
+        <%= f.govuk_check_boxes_fieldset :mentor_ids,
+          legend: { size: "l",
+                    text: t(".select_a_mentor"),
+                    tag: "h1" },
+          hint: { text: @placement.present? ? t(".hint.published") : t(".hint.unpublished_html") } do %>
+          <% current_step.mentors_for_selection.each_with_index do |mentor, index| %>
+            <%= f.govuk_check_box :mentor_ids, mentor.id, label: { text: mentor.full_name }, link_errors: index.zero? %>
+          <% end %>
+          <%= f.govuk_check_box_divider %>
+          <%= f.govuk_check_box :mentor_ids, "not_known", label: { text: t(".not_known") }, checked: current_step.mentor_ids.include?("not_known"), exclusive: true %>
+        <% end %>
+
+        <%= govuk_details(
+          summary_text: t(".mentor_not_listed"),
+          text: embedded_link_text(
+            t(".you_need_to_add_a_mentor",
+              link: govuk_link_to(
+                t(".add_a_mentor"), add_mentor_path, no_visited_state: true
+              )),
+          ),
+        ) %>
+
+        <%= f.govuk_submit t(".continue") %>
+      </div>
+    </div>
+<% end %>

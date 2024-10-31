@@ -1,0 +1,52 @@
+<% content_for :page_title, t(".page_title", contextual_text:) %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= form_with(model: current_step, url: current_step_path, method: :put) do |f| %>
+        <h1 class="govuk-heading-l"><%= t(".confirm_details") %></h1>
+
+        <p class="govuk-body"><%= t(".intro_text") %></p>
+
+        <h2 class="govuk-heading-m"><%= t(".mentor") %></h2>
+        <%= govuk_summary_list do |summary_list| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: Mentor.human_attribute_name("first_name")) %>
+            <% row.with_value(text: wizard.steps[:mentor].mentor.first_name) %>
+          <% end %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: Mentor.human_attribute_name("last_name")) %>
+            <% row.with_value(text: wizard.steps[:mentor].mentor.last_name) %>
+          <% end %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".trn")) %>
+            <% row.with_value(text: wizard.steps[:mentor].mentor.trn) %>
+            <% row.with_action(text: t(".change"),
+                               href: step_path(:mentor),
+                               visually_hidden_text: t(".trn"),
+                               classes: ["govuk-link--no-visited-state"]) %>
+          <% end %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".date_of_birth")) %>
+            <% row.with_value(text: safe_l(wizard.steps[:mentor].date_of_birth, format: :short)) %>
+            <% row.with_action(text: t(".change"),
+                               href: step_path(:mentor),
+                               visually_hidden_text: t(".date_of_birth"),
+                               classes: ["govuk-link--no-visited-state"]) %>
+          <% end %>
+        <% end %>
+
+        <p class="govuk-inset-text">
+          <%= embedded_link_text(
+                t(".confirm_mentor_informed",
+                  link: govuk_link_to(
+                    t(".privacy_notice"), placements_privacy_path, new_tab: true, no_visited_state: true
+                  )),
+              ) %>
+        </p>
+
+        <%= f.govuk_submit t(".add_mentor") %>
+      <% end %>
+    </div>
+  </div>
+</div>
