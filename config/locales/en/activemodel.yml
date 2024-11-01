@@ -98,6 +98,16 @@ en:
               blank: Enter an email address
               taken: Email address already in use
               invalid: Enter a Department for Education email address in the correct format, like name@education.gov.uk
+        claims/add_user_wizard/user_step:
+          attributes:
+            first_name:
+              blank: Enter a first name
+            last_name:
+              blank: Enter a last name
+            email:
+              blank: Enter an email address
+              taken: Email address already in use
+              invalid: Enter an email address in the correct format, like name@example.com
         claims/claim/mentor_training_form:
           attributes:
             custom_hours_completed:

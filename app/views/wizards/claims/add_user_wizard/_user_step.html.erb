@@ -1,0 +1,30 @@
+<%= content_for :page_title, current_step.errors.any? ? sanitize(t(".page_title_with_error")) : sanitize(t(".page_title")) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".caption", school_name: @school.name) %></span>
+      <h1 class="govuk-heading-l"><%= t(".description") %></h1>
+
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :first_name,
+                                class: "govuk-input--width-20",
+                                label: { text: User.human_attribute_name("first_name"), size: "s" } %>
+      </div>
+
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :last_name,
+                                class: "govuk-input--width-20",
+                                label: { text: User.human_attribute_name("last_name"), size: "s" } %>
+      </div>
+
+      <div class="govuk-form-group">
+        <%= f.govuk_text_field :email, label: { text: User.human_attribute_name("email"), size: "s" } %>
+      </div>
+
+      <%= f.govuk_submit t(".continue") %>
+    </div>
+  </div>
+<% end %>

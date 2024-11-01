@@ -23,6 +23,10 @@ class Claims::ApplicationPolicy < ApplicationPolicy
     new?
   end
 
+  def update?
+    true
+  end
+
   def edit?
     update?
   end
