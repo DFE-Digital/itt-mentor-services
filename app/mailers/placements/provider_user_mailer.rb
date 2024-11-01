@@ -14,9 +14,8 @@ class Placements::ProviderUserMailer < Placements::UserMailer
     @user_name = user.first_name
     @provider_name = partner_organisation.name
     @school_name = source_organisation.name
-    placements_school = source_organisation.becomes(Placements::School)
-    @itt_contact_email = placements_school.school_contact_email_address
-    @placements = placements_school.placements.where(provider: partner_organisation).decorate.map do |placement|
+    @itt_contact_email = source_organisation.school_contact_email_address
+    @placements = source_organisation.placements.where(provider: partner_organisation).decorate.map do |placement|
       { title: placement.title, url: placements_provider_placement_url(partner_organisation, placement) }
     end
     @sign_in_url = sign_in_url
