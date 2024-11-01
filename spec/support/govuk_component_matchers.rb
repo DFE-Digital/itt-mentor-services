@@ -62,6 +62,15 @@ module GovukComponentMatchers
     end
   end
 
+  matcher :have_important_banner do |text|
+    match do |page|
+      within ".govuk-notification-banner" do
+        page.find(".govuk-notification-banner__title", text: "Important")
+        page.find(".govuk-notification-banner__heading", text:)
+      end
+    end
+  end
+
   matcher :have_validation_error do |text|
     match do |page|
       within ".govuk-error-summary" do
