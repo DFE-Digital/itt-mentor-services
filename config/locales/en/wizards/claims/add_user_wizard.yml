@@ -1,0 +1,17 @@
+en:
+  wizards:
+    claims:
+      add_user_wizard:
+        user_step:
+          page_title_with_error: "Error: Invite a new user"
+          page_title: Invite a new user
+          continue: Continue
+          caption: Add user
+          description: Personal details
+        check_your_answers_step:
+          page_title: Check your answers
+          title: Check your answers
+          caption: Add user
+          submit: Save user
+          warning: "%{user_name} will be sent an email to tell them you’ve added them to %{school_name}."
+
