@@ -12,6 +12,17 @@ module GovukComponentMatchers
     end
   end
 
+  matcher :have_result_detail_row do |expected_key, expected_value|
+    match do |page|
+      key = page.find(".app-result-detail__key", text: expected_key)
+      row = key.find(:xpath, "..", class: "app-result-detail__row")
+      row.find(".app-result-detail__value", text: expected_value)
+      true
+    rescue Capybara::ElementNotFound
+      false
+    end
+  end
+
   matcher :have_h1 do |text|
     match do |page|
       page.find("h1[class^='govuk-heading-']", text:)
