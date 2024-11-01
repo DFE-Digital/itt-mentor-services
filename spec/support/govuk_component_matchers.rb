@@ -6,19 +6,37 @@ module GovukComponentMatchers
       key = page.find(".govuk-summary-list__key", text: expected_key)
       row = key.find(:xpath, "..", class: "govuk-summary-list__row")
       row.find(".govuk-summary-list__value", text: expected_value)
+      true
+    rescue Capybara::ElementNotFound
+      false
     end
   end
 
   matcher :have_h1 do |text|
-    match { |page| page.find("h1[class^='govuk-heading-']", text:) }
+    match do |page|
+      page.find("h1[class^='govuk-heading-']", text:)
+      true
+    rescue Capybara::ElementNotFound
+      false
+    end
   end
 
   matcher :have_h2 do |text|
-    match { |page| page.find("h2[class^='govuk-heading-']", text:) }
+    match do |page|
+      page.find("h2[class^='govuk-heading-']", text:)
+      true
+    rescue Capybara::ElementNotFound
+      false
+    end
   end
 
   matcher :have_h3 do |text|
-    match { |page| page.find("h3[class^='govuk-heading-']", text:) }
+    match do |page|
+      page.find("h3[class^='govuk-heading-']", text:)
+      true
+    rescue Capybara::ElementNotFound
+      false
+    end
   end
 
   matcher :have_success_banner do |text|
@@ -26,6 +44,9 @@ module GovukComponentMatchers
       within ".govuk-notification-banner.govuk-notification-banner--success" do
         page.find(".govuk-notification-banner__title", text: "Success")
         page.find(".govuk-notification-banner__heading", text:)
+        true
+      rescue Capybara::ElementNotFound
+        false
       end
     end
   end
@@ -37,6 +58,9 @@ module GovukComponentMatchers
         page.find(".govuk-error-summary__list a", text:)
       end
       page.find(".govuk-error-message", text:)
+      true
+    rescue Capybara::ElementNotFound
+      false
     end
   end
 
@@ -55,6 +79,9 @@ module GovukComponentMatchers
 
       # assert there is only one current nav item
       page.all("a[aria-current='page']", count: 1)
+      true
+    rescue Capybara::ElementNotFound
+      false
     end
   end
 end
