@@ -1,0 +1,11 @@
+en:
+  claims:
+    support:
+      schools:
+        users:
+          add_user:
+            edit:
+              caption: Add user - %{school_name}
+              cancel: Cancel
+            update:
+              success: User added

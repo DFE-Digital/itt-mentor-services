@@ -1,0 +1,13 @@
+<% render "claims/support/primary_navigation", current: :organisations %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: back_link_path) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <%= render_wizard(@wizard, contextual_text: t(".caption", school_name: @school.name)) %>
+
+  <p class="govuk-body">
+    <%= govuk_link_to(t(".cancel"), claims_support_school_users_path(@school), no_visited_state: true) %>
+  </p>
+</div>

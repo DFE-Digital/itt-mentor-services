@@ -8,24 +8,6 @@ class Claims::Support::Schools::UsersController < Claims::Support::ApplicationCo
     @pagy, @users = pagy(@school.users.order_by_full_name)
   end
 
-  def new
-    @user_form = params[:user_invite_form].present? ? user_form : UserInviteForm.new
-  end
-
-  def check
-    render :new unless user_form.valid?
-  end
-
-  def create
-    user_form.save!
-
-    User::Invite.call(user: user_form.user, organisation: @school)
-
-    redirect_to claims_support_school_users_path(@school), flash: {
-      heading: t(".success"),
-    }
-  end
-
   def show; end
 
   def remove; end
@@ -40,18 +22,8 @@ class Claims::Support::Schools::UsersController < Claims::Support::ApplicationCo
 
   private
 
-  def user_params
-    params.require(:user_invite_form)
-          .permit(:first_name, :last_name, :email)
-          .merge({ service: current_service, organisation: @school })
-  end
-
   def set_user
     @user = @school.users.find(params.require(:id))
-  end
-
-  def user_form
-    @user_form ||= UserInviteForm.new(user_params)
   end
 
   def authorize_user
