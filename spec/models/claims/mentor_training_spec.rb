@@ -29,7 +29,7 @@ require "rails_helper"
 RSpec.describe Claims::MentorTraining, type: :model do
   subject(:mentor_training) { described_class.new }
 
-  context "with associations" do
+  describe "associations" do
     it { is_expected.to belong_to(:claim) }
     it { is_expected.to belong_to(:mentor).optional }
     it { is_expected.to belong_to(:provider).optional }
@@ -40,27 +40,25 @@ RSpec.describe Claims::MentorTraining, type: :model do
   end
 
   describe "enums" do
-    subject(:mentor_training) { described_class.new }
-
     it "defines the expected values for training_type" do
       expect(mentor_training).to define_enum_for(:training_type)
-                         .with_values(initial: "initial", refresher: "refresher")
-                         .backed_by_column_of_type(:enum)
-                         .with_default(:initial)
+        .with_values(initial: "initial", refresher: "refresher")
+        .backed_by_column_of_type(:enum)
+        .with_default(:initial)
     end
   end
 
-  context "with validations" do
+  describe "validations" do
     it {
       expect(mentor_training).to validate_numericality_of(:hours_completed)
-      .only_integer
-      .is_greater_than(0)
-      .is_less_than_or_equal_to(20)
-      .allow_nil
+        .only_integer
+        .is_greater_than(0)
+        .is_less_than_or_equal_to(20)
+        .allow_nil
     }
   end
 
-  context "with scopes" do
+  describe "scopes" do
     describe "#without_hours" do
       it "returns mentor_trainings without completed hours ordered by mentor first nameand last name" do
         mentor1 = create(:mentor, first_name: "Anne", last_name: "Doe")
@@ -91,7 +89,7 @@ RSpec.describe Claims::MentorTraining, type: :model do
     end
   end
 
-  context "with delegations" do
+  describe "#full_name" do
     it { is_expected.to delegate_method(:full_name).to(:mentor).with_prefix.allow_nil }
   end
 end
