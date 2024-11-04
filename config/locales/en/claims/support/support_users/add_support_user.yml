@@ -1,0 +1,9 @@
+en:
+  claims:
+    support:
+      support_users:
+        add_support_user:
+          edit:
+            cancel: Cancel
+          update:
+            success: User added

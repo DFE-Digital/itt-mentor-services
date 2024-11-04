@@ -6,26 +6,6 @@ en:
           page_title: Support users
           add_user: Add user
           heading: Users
-        new:
-          page_title: Personal details - Add user
-          page_title_with_errors: "Error: Personal details - Add user"
-          caption: Add user
-          title: Personal details
-          submit: Continue
-          cancel: Cancel
-          attributes:
-            email:
-              hint: Email must be a valid Department for Education address, like name@education.gov.uk
-        check:
-          page_title: Check your answers - Add user
-          caption: Add user
-          title: Check your answers
-          submit: Save user
-          cancel: Cancel
-          change: Change
-          warning: "%{user_name} will be sent an email to tell them you’ve added them to Claim funding for mentor training."
-        create:
-          success: User added
         show:
           change: Change
           remove_user: Remove user

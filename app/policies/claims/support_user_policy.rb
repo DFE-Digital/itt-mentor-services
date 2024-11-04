@@ -1,4 +1,8 @@
 class Claims::SupportUserPolicy < Claims::ApplicationPolicy
+  def update?
+    true
+  end
+
   def destroy?
     user != record
   end
