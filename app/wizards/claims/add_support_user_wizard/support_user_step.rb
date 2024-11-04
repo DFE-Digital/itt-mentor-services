@@ -1,0 +1,23 @@
+class Claims::AddSupportUserWizard::SupportUserStep < BaseStep
+  attribute :first_name
+  attribute :last_name
+  attribute :email
+
+  validates :first_name, :last_name, presence: true
+  validates :email, presence: true, format: { with: Claims::SupportUser::SUPPORT_EMAIL_REGEXP }
+  validate :new_support_user
+
+  def new_support_user
+    return if Claims::SupportUser.find_by(email:).blank?
+
+    errors.add(:email, :taken)
+  end
+
+  def support_user
+    @support_user ||= Claims::SupportUser.with_discarded
+      .discarded # only find discarded users - existing active users are invalid in this step
+      .find_or_initialize_by(email:).tap do |user|
+        user.assign_attributes(first_name:, last_name:)
+      end
+  end
+end

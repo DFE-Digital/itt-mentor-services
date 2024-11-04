@@ -6,22 +6,6 @@ class Claims::Support::SupportUsersController < Claims::Support::ApplicationCont
     @pagy, @support_users = pagy(Claims::SupportUser.order_by_full_name)
   end
 
-  def new
-    @support_user_form = params[:support_user].present? ? support_user_form : SupportUserInviteForm.new
-  end
-
-  def check
-    render :new unless support_user_form.valid?
-  end
-
-  def create
-    support_user_form.save!
-    SupportUser::Invite.call(support_user: support_user_form.support_user)
-    redirect_to claims_support_support_users_path, flash: {
-      heading: t(".success"),
-    }
-  end
-
   def show; end
 
   def remove; end
@@ -36,18 +20,8 @@ class Claims::Support::SupportUsersController < Claims::Support::ApplicationCont
 
   private
 
-  def support_user_params
-    @support_user_params ||= params.require(:support_user)
-      .permit(:first_name, :last_name, :email)
-      .merge({ service: current_service })
-  end
-
   def set_support_user
     @support_user = Claims::SupportUser.find(params.require(:id))
-  end
-
-  def support_user_form
-    @support_user_form ||= SupportUserInviteForm.new(support_user_params)
   end
 
   def authorize_support_user

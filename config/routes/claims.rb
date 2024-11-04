@@ -69,9 +69,14 @@ scope module: :claims, as: :claims, constraints: {
       get :download_csv, on: :collection
     end
 
-    resources :support_users, path: "support-users" do
-      get :check, on: :collection
+    resources :support_users, path: "support-users", only: %i[index show destroy] do
       get :remove, on: :member
+
+      collection do
+        get "new", to: "support_users/add_support_user#new", as: :new_add_support_user
+        get "new/:state_key/:step", to: "support_users/add_support_user#edit", as: :add_support_user
+        put "new/:state_key/:step", to: "support_users/add_support_user#update"
+      end
     end
 
     resources :schools, except: %i[destroy update] do
