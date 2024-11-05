@@ -168,7 +168,7 @@ RSpec.describe Claims::TrainingAllowance, type: :model do
       end
 
       context "when the mentor has completed 3 hours of training in the current academic year and 20 hours in the previous academic year for a claim they want to exclude" do
-        let(:hours_completed) { 6 }
+        let(:hours_completed) { 3 }
         let(:claim_to_exclude) { claim }
 
         it "excludes the excluded claim" do
