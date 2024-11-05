@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "Adding a placement contact to a school", service: :placements, type: :system do
-  let(:school) { build(:placements_school, with_school_contact: false) }
-
   scenario "User adds a placement contact to their school" do
     given_i_am_signed_in
 
@@ -37,19 +35,20 @@ RSpec.describe "Adding a placement contact to a school", service: :placements, t
   private
 
   def given_i_am_signed_in
-    sign_in_placements_user(organisations: [school])
+    @school = build(:placements_school, with_school_contact: false)
+    sign_in_placements_user(organisations: [@school])
   end
 
   def when_i_view_my_organisation_details_page
     click_on "Organisation details"
     expect(page).to have_title("Organisation details - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Organisation details")
-    expect(page).to have_h1(school.name)
+    expect(page).to have_h1(@school.name)
     expect(page).to have_h2("Placement contact")
     expect(page).to have_h2("School")
-    expect(page).to have_summary_list_row("Name", school.name)
-    expect(page).to have_summary_list_row("UKPRN", school.ukprn)
-    expect(page).to have_summary_list_row("URN", school.urn)
+    expect(page).to have_summary_list_row("Name", @school.name)
+    expect(page).to have_summary_list_row("UKPRN", @school.ukprn)
+    expect(page).to have_summary_list_row("URN", @school.urn)
   end
 
   def then_i_do_not_see_any_placement_contact_details
@@ -129,7 +128,7 @@ RSpec.describe "Adding a placement contact to a school", service: :placements, t
   def then_i_see_my_placement_contact_details
     expect(page).to have_title("Organisation details - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Organisation details")
-    expect(page).to have_h1(school.name)
+    expect(page).to have_h1(@school.name)
     expect(page).to have_h2("Placement contact")
     within "#school-contact-details" do
       expect(page).to have_summary_list_row("First name", "Updated Placement")
