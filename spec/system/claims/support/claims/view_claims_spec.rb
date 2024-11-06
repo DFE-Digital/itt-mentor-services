@@ -117,7 +117,7 @@ RSpec.describe "View claims", :js, service: :claims, type: :system do
         expect(page).to have_content(claim.reference)
         expect(page).to have_content("Submitted")
         expect(page).to have_content(claim.provider.name)
-        expect(page).to have_content(I18n.l(claim.submitted_at.to_date, format: :short))
+        expect(page).to have_content(I18n.l(claim.submitted_at.to_date, format: :long))
         expect(page).to have_content(claim.amount.format(no_cents_if_whole: true))
       end
     end

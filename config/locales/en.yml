@@ -23,11 +23,11 @@ en:
   date:
     formats:
       month: "%B"
-      long: "%e %B %Y"
+      long: "%-d %B %Y"
       short: "%d/%m/%Y"
   time:
     formats:
-      long: "%e %B %Y %H:%M"
-      long_with_seconds: "%e %B %Y %H:%M:%S"
+      long: "%-d %B %Y %H:%M"
+      long_with_seconds: "%-d %B %Y %H:%M:%S"
       time: "%H:%M"
       time_on_date: "%l:%M%P on %A %-d %B %Y"

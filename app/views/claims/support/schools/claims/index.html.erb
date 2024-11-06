@@ -47,7 +47,7 @@
               </ul>
             <% end %>
             <% row.with_cell(text: humanized_money_with_symbol(claim.amount)) %>
-            <% row.with_cell(text: safe_l(claim.submitted_on, format: :short)) %>
+            <% row.with_cell(text: safe_l(claim.submitted_on, format: :long)) %>
             <% row.with_cell(text: render(Claim::StatusTagComponent.new(claim:))) %>
           <% end %>
         <% end %>
