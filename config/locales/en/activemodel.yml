@@ -83,6 +83,13 @@ en:
             date_of_birth:
               blank: Enter a date of birth
               less_than: Date of birth must be in the past
+        claims/add_mentor_wizard/mentor_step:
+          attributes:
+            trn:
+              taken: The mentor has already been added
+            date_of_birth:
+              blank: Enter a date of birth
+              less_than: Date of birth must be in the past
         placements/edit_placement_wizard/provider_step:
           attributes:
             provider_id:
