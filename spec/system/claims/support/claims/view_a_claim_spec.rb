@@ -11,7 +11,7 @@ RSpec.describe "View claims", service: :claims, type: :system do
       :submitted,
       provider:,
       school: create(:claims_school, region: regions(:inner_london)),
-      mentors: [mentor],
+      mentor_trainings: [build(:mentor_training, mentor:)],
       submitted_by: user,
       submitted_at: Time.zone.parse("2024-03-05 12:31:52"),
     )
