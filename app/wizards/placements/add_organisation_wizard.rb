@@ -3,12 +3,12 @@ module Placements
     def define_steps
       add_step(OrganisationTypeStep)
       add_step(OrganisationStep)
-      add_step(OrganisationOptionsStep) if steps[:organisation].organisation.blank?
+      add_step(OrganisationOptionsStep) if steps.fetch(:organisation).organisation.blank?
       add_step(CheckYourAnswersStep)
     end
 
     def organisation_type
-      steps[:organisation_type].organisation_type
+      steps.fetch(:organisation_type).organisation_type
     end
 
     def organisation_model
@@ -20,7 +20,7 @@ module Placements
 
     def organisation
       @organisation ||= (steps[:organisation_options]&.organisation ||
-          steps[:organisation].organisation).decorate
+          steps.fetch(:organisation).organisation).decorate
     end
 
     def onboard_organisation

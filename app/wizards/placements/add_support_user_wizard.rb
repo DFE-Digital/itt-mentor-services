@@ -16,7 +16,7 @@ module Placements
     private
 
     def support_user
-      steps[:support_user].support_user
+      steps.fetch(:support_user).support_user
     end
   end
 end

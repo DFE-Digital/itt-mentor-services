@@ -9,7 +9,7 @@ module Placements
 
     def define_steps
       add_step(MentorStep)
-      if steps[:mentor].mentor.nil?
+      if steps.fetch(:mentor).mentor.nil?
         add_step(NoResultsStep)
       else
         add_step(CheckYourAnswersStep)

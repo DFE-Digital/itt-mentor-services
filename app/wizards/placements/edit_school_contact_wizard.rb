@@ -17,9 +17,9 @@ module Placements
       raise "Invalid wizard state" unless valid?
 
       school_contact.update!(
-        first_name: steps[:school_contact].first_name,
-        last_name: steps[:school_contact].last_name,
-        email_address: steps[:school_contact].email_address,
+        first_name: steps.fetch(:school_contact).first_name,
+        last_name: steps.fetch(:school_contact).last_name,
+        email_address: steps.fetch(:school_contact).email_address,
       )
     end
 

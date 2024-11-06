@@ -9,13 +9,13 @@ module Placements
 
     def define_steps
       add_step(PartnershipStep)
-      add_step(PartnershipOptionsStep) if steps[:partnership].partner_organisation.blank?
+      add_step(PartnershipOptionsStep) if steps.fetch(:partnership).partner_organisation.blank?
       add_step(CheckYourAnswersStep)
     end
 
     def partner_organisation
       @partner_organisation ||= (steps[:partnership_options]&.partner_organisation ||
-          steps[:partnership].partner_organisation).decorate
+          steps.fetch(:partnership).partner_organisation).decorate
     end
 
     def create_partnership
