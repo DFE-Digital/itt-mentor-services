@@ -22,7 +22,7 @@ module Claims
     private
 
     def user
-      @user ||= steps[:user].user
+      steps[:user].user
     end
   end
 end

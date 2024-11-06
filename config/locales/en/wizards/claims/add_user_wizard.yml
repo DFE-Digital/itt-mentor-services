@@ -12,4 +12,5 @@ en:
           title: Check your answers
           submit: Save user
           warning: "%{user_name} will be sent an email to tell them you’ve added them to %{school_name}."
+          change: Change
 
