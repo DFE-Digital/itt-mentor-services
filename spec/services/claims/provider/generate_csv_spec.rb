@@ -79,7 +79,7 @@ RSpec.describe Claims::Provider::GenerateCSV do
     let(:mentor_training_for_claim_for_school_c_mentor_4) do
       create(:mentor_training,
              mentor: mentor_4,
-             hours_completed: 20,
+             hours_completed: 18,
              provider:,
              claim: claim_for_school_c)
     end
@@ -93,14 +93,14 @@ RSpec.describe Claims::Provider::GenerateCSV do
     let(:mentor_training_for_claim_for_another_academic_year_mentor_4) do
       create(:mentor_training,
              mentor: mentor_4,
-             hours_completed: 20,
+             hours_completed: 6,
              provider:,
              claim: claim_for_another_academic_year)
     end
     let(:mentor_training_for_draft_claim) do
       create(:mentor_training,
              mentor: mentor_4,
-             hours_completed: 20,
+             hours_completed: 2,
              provider:,
              claim: draft_claim)
     end
@@ -128,7 +128,7 @@ RSpec.describe Claims::Provider::GenerateCSV do
         "School A,1111111,AAA AAA,Mentor A,12\n",
         "School A,1111111,AAA AAA,Mentor B,14\n",
         "School B,2222222,BBB BBB,Mentor C,6\n",
-        "School C,3333333,CCC CCC,Mentor D,20\n",
+        "School C,3333333,CCC CCC,Mentor D,18\n",
       ])
     end
 
