@@ -2,7 +2,7 @@ module Claims
   class AddSchoolWizard < BaseWizard
     def define_steps
       add_step(SchoolStep)
-      add_step(SchoolOptionsStep) if steps[:school].school.blank?
+      add_step(SchoolOptionsStep) if steps.fetch(:school).school.blank?
       add_step(CheckYourAnswersStep)
     end
 

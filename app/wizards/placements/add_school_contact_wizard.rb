@@ -16,7 +16,7 @@ module Placements
     def create_school_contact
       raise "Invalid wizard state" unless valid?
 
-      school_contact = steps[:school_contact].school_contact
+      school_contact = steps.fetch(:school_contact).school_contact
       school_contact.save!
     end
   end

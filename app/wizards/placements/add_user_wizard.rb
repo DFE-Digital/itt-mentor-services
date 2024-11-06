@@ -22,7 +22,7 @@ module Placements
     private
 
     def user
-      @user ||= steps[:user].user
+      @user ||= steps.fetch(:user).user
     end
   end
 end
