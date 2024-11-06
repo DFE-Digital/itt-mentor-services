@@ -1,7 +1,11 @@
 class AutocompleteSelectFormComponentPreview < ApplicationComponentPreview
   def school_onboarding_form
+    wizard = Claims::AddSchoolWizard.new(state: {}, params: {})
+    step = Claims::AddSchoolWizard::SchoolStep.new(
+      wizard:, attributes: {},
+    )
     render AutocompleteSelectFormComponent.new(
-      model: SchoolOnboardingForm.new,
+      model: step,
       scope: :school,
       url: "#",
       data: {

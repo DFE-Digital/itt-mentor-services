@@ -58,7 +58,7 @@ RSpec.describe AutocompleteSelectFormComponent, type: :component do
   end
 
   context "with school onboarding attributes" do
-    let(:model) { SchoolOnboardingForm.new }
+    let(:model) { instance_double(BaseStep, errors: {}) }
     let(:scope) { :school }
     let(:url) { "" }
     let(:data) do

@@ -79,16 +79,16 @@ scope module: :claims, as: :claims, constraints: {
       end
     end
 
-    resources :schools, except: %i[destroy update] do
+    resources :schools, only: %i[index show] do
       member do
         put :remove_grant_conditions_acceptance, path: "remove-grant-conditions-acceptance"
         get :remove_grant_conditions_acceptance_check, path: "remove-grant-conditions-acceptance"
       end
 
       collection do
-        get :check
-        get :check_school_option
-        get :school_options
+        get "new", to: "schools/add_school#new", as: :new_add_school
+        get "new/:state_key/:step", to: "schools/add_school#edit", as: :add_school
+        put "new/:state_key/:step", to: "schools/add_school#update"
       end
 
       scope module: :schools do

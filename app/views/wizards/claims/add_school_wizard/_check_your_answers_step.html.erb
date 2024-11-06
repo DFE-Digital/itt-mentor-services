@@ -1,25 +1,18 @@
-<% render "claims/support/primary_navigation", current: :organisations %>
-<% content_for(:before_content) do %>
-  <%= govuk_back_link(href: new_claims_support_school_path(
-    @school_form.as_form_params,
-  )) %>
-<% end %>
+<%= content_for :page_title, sanitize(t(".title")) %>
 
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= form_with(model: @school, url: claims_support_schools_path, method: "post", data: { turbo: false }) do |f| %>
-        <%= f.hidden_field :id, value: @school.id %>
-
+      <%= form_with(model: current_step, url: current_step_path, method: :put) do |f| %>
           <span class="govuk-caption-l"><%= t(".add_organisation") %></span>
           <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
         <%= govuk_summary_list do |summary_list| %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".organisation_name")) %>
-            <% row.with_value(text: @school.name) %>
+            <% row.with_value(text: wizard.school.name) %>
             <% row.with_action(text: t(".change"),
-                               href: new_claims_support_school_path(@school_form.as_form_params),
+                               href: step_path(:school),
                                html_attributes: {
                                  class: "govuk-link--no-visited-state",
                                },
@@ -27,11 +20,11 @@
           <% end %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".ukprn")) %>
-            <% row.with_value(text: @school.ukprn) %>
+            <% row.with_value(text: wizard.school.ukprn) %>
           <% end %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".urn")) %>
-            <% row.with_value(text: @school.urn) %>
+            <% row.with_value(text: wizard.school.urn) %>
           <% end %>
         <% end %>
 
@@ -42,24 +35,21 @@
         <%= govuk_summary_list(actions: false) do |summary_list| %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".telephone")) %>
-            <% row.with_value(text: @school.telephone) %>
+            <% row.with_value(text: wizard.school.telephone) %>
           <% end %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".website")) %>
             <% row.with_value do %>
-              <%= govuk_link_to(@school.website, external_link(@school.website), target: "_blank", rel: "noopener noreferrer") %>
+              <%= govuk_link_to(wizard.school.website, external_link(wizard.school.website), target: "_blank", rel: "noopener noreferrer") %>
             <% end %>
           <% end %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".address")) %>
-            <% row.with_value(text: @school.formatted_address) %>
+            <% row.with_value(text: wizard.school.formatted_address) %>
           <% end %>
         <% end %>
 
         <%= f.govuk_submit t(".save_organisation") %>
-        <p class="govuk-body">
-          <%= govuk_link_to(t(".cancel"), claims_support_schools_path, no_visited_state: true) %>
-        </p>
       <% end %>
     </div>
   </div>

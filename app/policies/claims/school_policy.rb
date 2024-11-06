@@ -1,4 +1,8 @@
 class Claims::SchoolPolicy < Claims::ApplicationPolicy
+  def update?
+    true
+  end
+
   def school_options?
     true
   end

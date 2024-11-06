@@ -1,0 +1,10 @@
+en:
+  claims:
+    support:
+      schools:
+        add_school:
+          edit:
+            cancel: Cancel
+          update:
+            success: Organisation added
+          
