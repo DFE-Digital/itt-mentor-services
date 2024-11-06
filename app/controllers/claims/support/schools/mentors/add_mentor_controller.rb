@@ -1,4 +1,4 @@
-class Claims::Schools::Mentors::AddMentorController < Claims::ApplicationController
+class Claims::Support::Schools::Mentors::AddMentorController < Claims::ApplicationController
   include WizardController
   include Claims::BelongsToSchool
 
@@ -31,11 +31,11 @@ class Claims::Schools::Mentors::AddMentorController < Claims::ApplicationControl
   end
 
   def step_path(step)
-    add_mentor_claims_school_mentors_path(state_key:, step:)
+    add_mentor_claims_support_school_mentors_path(state_key:, step:)
   end
 
   def index_path
-    claims_school_mentors_path(@school)
+    claims_support_school_mentors_path(@school)
   end
 
   def authorize_mentor

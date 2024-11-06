@@ -118,9 +118,14 @@ scope module: :claims, as: :claims, constraints: {
           end
         end
 
-        resources :mentors, only: %i[index new create show destroy] do
+        resources :mentors, only: %i[index show destroy] do
           member { get :remove }
-          collection { get :check }
+
+          collection do
+            get "new", to: "mentors/add_mentor#new", as: :new_add_mentor
+            get "new/:state_key/:step", to: "mentors/add_mentor#edit", as: :add_mentor
+            put "new/:state_key/:step", to: "mentors/add_mentor#update"
+          end
         end
 
         resources :users, only: %i[index show destroy] do

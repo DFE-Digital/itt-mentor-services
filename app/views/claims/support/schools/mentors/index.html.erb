@@ -1,17 +1,13 @@
-<% content_for :page_title, "#{@school.name} - #{t(".heading")}" %>
+<% content_for :page_title, t(".page_title") %>
 
-<% render "claims/support/primary_navigation", current: :organisations %>
+<% render "claims/support/primary_navigation", school: @school, current: :mentors %>
 
 <div class="govuk-width-container">
-  <h1 class="govuk-heading-l"><%= @school.name %></h1>
-
-  <%= render "claims/support/schools/secondary_navigation", school: @school %>
-
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h2 class="govuk-heading-m"><%= t(".heading") %></h2>
+      <h1 class="govuk-heading-l"><%= t(".page_title") %></h2>
 
-      <%= govuk_button_to(t(".add_mentor"), new_claims_support_school_mentor_path, method: :get) %>
+      <%= govuk_button_link_to(t(".add_mentor"), new_add_mentor_claims_support_school_mentors_path) %>
 
       <% if @mentors.any? %>
         <%= app_table do |table| %>
@@ -31,9 +27,10 @@
             <% end %>
           <% end %>
         <% end %>
+
         <%= render PaginationComponent.new(pagy: @pagy) %>
       <% else %>
-        <p>
+        <p class="govuk-body">
           <%= t("no_records_for", records: "mentors", for: @school.name) %>
         </p>
       <% end %>
