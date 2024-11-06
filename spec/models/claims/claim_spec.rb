@@ -64,7 +64,7 @@ RSpec.describe Claims::Claim, type: :model do
     end
 
     it "returns false when a mentor has more hours than maximum allocated per provider" do
-      provider = create(:provider)
+      provider = create(:claims_provider)
       claim = create(:claim, :submitted, provider:)
       mentor = create(:claims_mentor)
       create(:mentor_training, claim:, hours_completed: 20, mentor:, provider:)

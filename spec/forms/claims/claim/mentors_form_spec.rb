@@ -2,8 +2,8 @@ require "rails_helper"
 
 describe Claims::Claim::MentorsForm, type: :model do
   let!(:claim) { create(:claim) }
-  let!(:mentor1) { create(:mentor) }
-  let!(:mentor2) { create(:mentor) }
+  let!(:mentor1) { create(:claims_mentor) }
+  let!(:mentor2) { create(:claims_mentor) }
 
   describe "validations" do
     context "when mentors is blank" do
