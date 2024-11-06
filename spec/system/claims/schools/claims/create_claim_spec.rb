@@ -41,7 +41,7 @@ RSpec.describe "Create claim", service: :claims, type: :system do
     when_i_click("Continue")
     then_i_check_my_answers
     when_i_click("Submit claim")
-    then_i_get_a_claim_reference_and_see_next_steps(Claims::Claim.submitted.first)
+    then_i_get_a_claim_reference_and_see_next_steps
   end
 
   scenario "Anne attempts to create a claim but backs off before the check page" do
@@ -117,8 +117,8 @@ RSpec.describe "Create claim", service: :claims, type: :system do
     when_i_add_training_hours("20 hours")
     when_i_click("Continue")
     when_i_click("Submit claim")
-    then_i_get_a_claim_reference_and_see_next_steps(Claims::Claim.submitted.last)
-    given_i_visit_claim_check_page_after_submitting(Claims::Claim.submitted.last)
+    then_i_get_a_claim_reference_and_see_next_steps
+    given_i_visit_claim_check_page_after_submitting
     then_i_am_redirected_to_root_path_with_alert
   end
 
@@ -258,7 +258,9 @@ RSpec.describe "Create claim", service: :claims, type: :system do
     end
   end
 
-  def then_i_get_a_claim_reference_and_see_next_steps(claim)
+  def then_i_get_a_claim_reference_and_see_next_steps
+    claim = Claims::Claim.submitted.order(:submitted_at).last
+
     within(".govuk-panel") do
       expect(page).to have_content("Claim submitted\nYour reference number\n#{claim.reference}")
     end
@@ -284,7 +286,9 @@ RSpec.describe "Create claim", service: :claims, type: :system do
     end
   end
 
-  def given_i_visit_claim_check_page_after_submitting(claim)
+  def given_i_visit_claim_check_page_after_submitting
+    claim = Claims::Claim.submitted.order(:submitted_at).last
+
     Capybara.current_session.driver.header(
       "Referer",
       check_claims_school_claim_url(school, claim),
