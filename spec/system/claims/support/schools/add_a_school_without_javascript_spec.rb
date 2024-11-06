@@ -36,7 +36,7 @@ RSpec.describe "Support User adds a School without JavaScript", service: :claims
   scenario "Colin submits the search form without selecting a school" do
     when_i_visit_the_add_school_page
     and_i_click_continue
-    then_i_see_an_error("Enter a school name, URN or postcode")
+    then_i_see_an_error("Enter a school name, unique reference number (URN) or postcode")
   end
 
   scenario "Colin submits the options form without selecting a school" do
@@ -49,9 +49,17 @@ RSpec.describe "Support User adds a School without JavaScript", service: :claims
   end
 
   scenario "Colin reconsiders onboarding a school" do
-    given_i_have_completed_the_form_to_onboard("Manchester 1")
+    when_i_visit_the_add_school_page
+    and_i_enter_a_school_named("Manch")
+    and_i_click_continue
+    then_i_see_list_of_schools
+    then_i_choose("Manchester 1")
+    and_i_click_continue
+    then_i_see_the_check_details_page_for_school("Manchester 1")
     when_i_click_back
-    then_i_see_the_search_input_pre_filled_with("Manchester 1")
+    and_the_option_for_school_has_been_pre_selected("Manchester 1")
+    when_i_click_back
+    then_i_see_the_search_input_pre_filled_with("Manch")
     and_i_click_continue
     then_i_see_list_of_schools
     then_i_choose("Manchester 1")
@@ -73,11 +81,11 @@ RSpec.describe "Support User adds a School without JavaScript", service: :claims
   end
 
   def when_i_visit_the_add_school_page
-    visit new_claims_support_school_path
+    visit new_add_school_claims_support_schools_path
   end
 
   def and_i_enter_a_school_named(school_name)
-    fill_in "school-id-field", with: school_name
+    fill_in "claims-add-school-wizard-school-step-id-field", with: school_name
   end
 
   def and_i_click_continue
@@ -136,6 +144,10 @@ RSpec.describe "Support User adds a School without JavaScript", service: :claims
   end
 
   def then_i_see_the_search_input_pre_filled_with(school_name)
-    expect(page.find("#school-id-field").value).to eq(school_name)
+    expect(page.find("#claims-add-school-wizard-school-step-id-field").value).to eq(school_name)
+  end
+
+  def and_the_option_for_school_has_been_pre_selected(school_name)
+    expect(page).to have_checked_field(school_name)
   end
 end

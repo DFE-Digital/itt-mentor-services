@@ -1,0 +1,16 @@
+<% if current_step.errors.any? %>
+  <% content_for :page_title, t(".title_with_error", organisation_count: current_step.schools.count, search_param: current_step.search_params) %>
+<% else %>
+  <% content_for :page_title, t(".title", organisation_count: current_step.schools.count, search_param: current_step.search_params) %>
+<% end %>
+
+<%= render OptionsFormComponent.new(
+  model: current_step,
+  scope: current_step.scope,
+  url: current_step_path,
+  search_param: current_step.search_params,
+  records: current_step.schools,
+  records_klass: :school,
+  back_link: back_link_path,
+  method: :put,
+) %>

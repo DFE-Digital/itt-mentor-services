@@ -23,7 +23,7 @@ RSpec.describe Placements::AddOrganisationWizard::OrganisationSelectionStep, typ
     context "when the organisation is a school" do
       let(:organisation) { create(:school) }
 
-      it "returns the provider record" do
+      it "returns the school record" do
         expect(step.organisation).to eq(organisation)
       end
     end

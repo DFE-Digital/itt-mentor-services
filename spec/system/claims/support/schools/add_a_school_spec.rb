@@ -37,11 +37,16 @@ RSpec.describe "Support User adds a School", service: :claims, type: :system do
   scenario "Colin submits the search form without selecting a school", :js, retry: 3 do
     when_i_visit_the_add_school_page
     and_i_click_continue
-    then_i_see_an_error("Enter a school name, URN or postcode")
+    then_i_see_an_error("Enter a school name, unique reference number (URN) or postcode")
   end
 
   scenario "Colin reconsiders onboarding a school", :js, retry: 3 do
-    given_i_have_completed_the_form_to_onboard(school:)
+    when_i_visit_the_add_school_page
+    and_i_enter_a_school_named("School 1")
+    then_i_see_a_dropdown_item_for("School 1")
+    when_i_click_the_dropdown_item_for("School 1")
+    and_i_click_continue
+    then_i_see_the_check_details_page_for_school("School 1")
     when_i_click_back
     then_i_see_the_search_input_pre_filled_with("School 1")
     and_i_click_continue
@@ -68,11 +73,11 @@ RSpec.describe "Support User adds a School", service: :claims, type: :system do
   end
 
   def when_i_visit_the_add_school_page
-    visit new_claims_support_school_path
+    visit new_add_school_claims_support_schools_path
   end
 
   def and_i_enter_a_school_named(school_name)
-    fill_in "school-id-field", with: school_name
+    fill_in "claims-add-school-wizard-school-step-id-field", with: school_name
   end
 
   def then_i_see_a_dropdown_item_for(school_name)
@@ -133,7 +138,7 @@ RSpec.describe "Support User adds a School", service: :claims, type: :system do
 
   def then_i_see_the_search_input_pre_filled_with(school_name)
     within(".autocomplete__wrapper") do
-      expect(page.find("#school-id-field").value).to eq(school_name)
+      expect(page.find("#claims-add-school-wizard-school-step-id-field").value).to eq(school_name)
     end
   end
 end

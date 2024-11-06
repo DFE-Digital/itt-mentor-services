@@ -1,8 +1,12 @@
 class OptionsFormComponentPreview < ApplicationComponentPreview
   def less_than_15_schools
     schools = FactoryBot.build_list(:school, 2)
+    wizard = Claims::AddSchoolWizard.new(state: {}, params: {})
+    step = Claims::AddSchoolWizard::SchoolOptionsStep.new(
+      wizard:, attributes: {},
+    )
     render(OptionsFormComponent.new(
-             model: SchoolOnboardingForm.new,
+             model: step,
              scope: :school,
              url: "",
              search_param: "School",
@@ -14,8 +18,12 @@ class OptionsFormComponentPreview < ApplicationComponentPreview
 
   def more_than_15_schools
     schools = FactoryBot.build_list(:school, 16)
+    wizard = Claims::AddSchoolWizard.new(state: {}, params: {})
+    step = Claims::AddSchoolWizard::SchoolOptionsStep.new(
+      wizard:, attributes: {},
+    )
     render(OptionsFormComponent.new(
-             model: SchoolOnboardingForm.new,
+             model: step,
              scope: :school,
              url: "",
              search_param: "School",

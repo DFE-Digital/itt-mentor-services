@@ -118,6 +118,16 @@ en:
               blank: Enter an email address
               taken: Email address already in use
               invalid: Enter a Department for Education email address in the correct format, like name@education.gov.uk
+        claims/add_school_wizard/school_step:
+          attributes:
+            id:
+              already_added: "%{school_name} has already been added. Try another school"
+              school_blank: Enter a school name, unique reference number (URN) or postcode
+        claims/add_school_wizard/school_options_step:
+          attributes:
+            id:
+              already_added: "%{school_name} has already been added. Try another school"
+              blank: Select a school
         claims/claim/mentor_training_form:
           attributes:
             custom_hours_completed:

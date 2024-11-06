@@ -6,7 +6,7 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l"><%= t(".heading", records: @pagy.count) %></h1>
 
-      <%= govuk_button_to(t(".add_organisation"), new_claims_support_school_path, method: :get) %>
+      <%= govuk_button_to(t(".add_organisation"), new_add_school_claims_support_schools_path, method: :get) %>
 
       <%= render partial: "shared/search_form", locals: {
         url: claims_support_schools_path,

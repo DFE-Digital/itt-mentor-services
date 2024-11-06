@@ -13,10 +13,41 @@ RSpec.describe OptionsFormComponent, type: :component do
     )
   end
 
-  context "when model is SchoolOnboardningForm" do
+  context "when model is a Claims::AddSchoolWizard::SchoolOptionsStep" do
     let(:records) { build_list(:placements_school, 2).map(&:decorate) }
     let(:records_klass) { "school" }
-    let(:model) { SchoolOnboardingForm.new }
+    let(:mock_wizard) { instance_double(Claims::AddSchoolWizard) }
+    let(:model) do
+      Claims::AddSchoolWizard::SchoolOptionsStep.new(
+        wizard: mock_wizard,
+        attributes: {
+          search_param: "school",
+        },
+      )
+    end
+    let(:scope) { :school }
+
+    it "renders a form for selecting a school from a list" do
+      render_inline(component)
+
+      records.each do |record|
+        expect(page).to have_field(record.name)
+      end
+    end
+  end
+
+  context "when model is a Placements::AddOrganisationWizard::OrganisationOptionsStep" do
+    let(:records) { build_list(:placements_school, 2).map(&:decorate) }
+    let(:records_klass) { "school" }
+    let(:mock_wizard) { instance_double(Placements::AddOrganisationWizard) }
+    let(:model) do
+      Placements::AddOrganisationWizard::OrganisationOptionsStep.new(
+        wizard: mock_wizard,
+        attributes: {
+          search_param: "school",
+        },
+      )
+    end
     let(:scope) { :school }
 
     it "renders a form for selecting a school from a list" do
@@ -30,7 +61,15 @@ RSpec.describe OptionsFormComponent, type: :component do
 
   describe "#form_description" do
     context "when records_klass is schools" do
-      let(:model) { SchoolOnboardingForm.new }
+      let(:mock_wizard) { instance_double(Claims::AddSchoolWizard) }
+      let(:model) do
+        Claims::AddSchoolWizard::SchoolOptionsStep.new(
+          wizard: mock_wizard,
+          attributes: {
+            search_param: "school",
+          },
+        )
+      end
       let(:scope) { :school }
       let(:records_klass) { "school" }
 
