@@ -38,7 +38,7 @@
         <div class="govuk-warning-text">
           <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
           <strong class="govuk-warning-text__text">
-            <%= t(".warning", user_name: "#{wizard.steps[:support_user].first_name} #{wizard.steps[:support_user].last_name}") %>
+            <%= t(".warning", user_name: wizard.steps[:support_user].support_user.full_name) %>
           </strong>
         </div>
 
