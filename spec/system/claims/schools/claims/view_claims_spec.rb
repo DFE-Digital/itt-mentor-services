@@ -122,7 +122,7 @@ RSpec.describe "View claims", service: :claims, type: :system do
       expect(page).to have_content(submitted_claim.reference)
       expect(page).to have_content(submitted_claim.provider_name)
       expect(page).to have_content(submitted_claim.mentors.map(&:full_name).join(""))
-      expect(page).to have_content("05/03/2024")
+      expect(page).to have_content("5 March 2024")
       expect(page).to have_content("Submitted")
     end
 
