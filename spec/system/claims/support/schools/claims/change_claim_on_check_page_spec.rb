@@ -9,8 +9,8 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
       user_memberships: [create(:user_membership, organisation: school)],
     )
   end
-  let!(:provider1) { create(:provider, :best_practice_network) }
-  let!(:provider2) { create(:provider, :niot) }
+  let!(:provider1) { create(:claims_provider, :best_practice_network) }
+  let!(:provider2) { create(:claims_provider, :niot) }
 
   let(:mentor1) { create(:mentor, first_name: "Anne") }
   let(:mentor2) { create(:mentor, first_name: "Joe") }

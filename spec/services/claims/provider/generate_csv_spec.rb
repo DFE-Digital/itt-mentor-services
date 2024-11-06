@@ -3,12 +3,12 @@ require "rails_helper"
 RSpec.describe Claims::Provider::GenerateCSV do
   subject(:generate_csv) { described_class.call(provider:, academic_year:) }
 
-  let!(:provider) { create(:provider) }
+  let!(:provider) { create(:claims_provider) }
   let!(:academic_year) { create(:academic_year, :current) }
 
   it_behaves_like "a service object" do
     let(:params) do
-      { provider: create(:provider), academic_year: create(:academic_year, :current) }
+      { provider: create(:claims_provider), academic_year: create(:academic_year, :current) }
     end
   end
 
@@ -32,7 +32,7 @@ RSpec.describe Claims::Provider::GenerateCSV do
              ends_on: Date.parse("19 July 2025"))
     end
 
-    let(:another_provider) { create(:provider) }
+    let(:another_provider) { create(:claims_provider) }
 
     let(:school_a) { create(:claims_school, name: "School A", postcode: "AAA AAA", urn: "1111111") }
     let(:school_b) { create(:claims_school, name: "School B", postcode: "BBB BBB", urn: "2222222") }
