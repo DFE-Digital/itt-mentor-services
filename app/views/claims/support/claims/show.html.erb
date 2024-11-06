@@ -1,5 +1,5 @@
 <%= render "claims/support/primary_navigation", current: :claims %>
-<% content_for(:page_title) { t(".page_title", school_name: @claim.school.name) } %>
+<% content_for(:page_title) { sanitize t(".page_title", school_name: @claim.school.name, reference: @claim.reference) } %>
 
 <% content_for(:before_content) do %>
   <%= govuk_back_link href: claims_support_claims_path %>
@@ -8,11 +8,8 @@
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l"><%= t(".page_caption", reference: @claim.reference) %></span>
-      <div class="govuk-heading-group">
-        <h1 class="govuk-heading-l"><%= t(".page_title", school_name: @claim.school.name) %></h1>
-        <span><%= render Claim::StatusTagComponent.new(claim: @claim) %></span>
-      </div>
+      <p class="govuk-caption-l"><%= t(".page_caption", reference: @claim.reference) %></p>
+      <h1 class="govuk-heading-l"><%= @claim.school.name %> <%= render Claim::StatusTagComponent.new(claim: @claim) %></h1>
 
       <% if @claim.submitted? %>
         <p class="govuk-body"><%= t(".submitted_by", name: @claim.submitted_by.full_name, date: l(@claim.submitted_on, format: :long)) %></p>
