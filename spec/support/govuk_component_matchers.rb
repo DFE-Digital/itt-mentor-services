@@ -23,6 +23,15 @@ module GovukComponentMatchers
     end
   end
 
+  matcher :have_filter_tag do |text|
+    match do |page|
+      page.find(".app-filter-tags .app-filter__tag", text:)
+      true
+    rescue Capybara::ElementNotFound
+      false
+    end
+  end
+
   matcher :have_h1 do |text|
     match do |page|
       page.find("h1[class^='govuk-heading-']", text:)
