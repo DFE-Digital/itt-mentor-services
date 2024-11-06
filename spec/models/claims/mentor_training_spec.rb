@@ -29,6 +29,8 @@ require "rails_helper"
 RSpec.describe Claims::MentorTraining, type: :model do
   subject(:mentor_training) { described_class.new }
 
+  let(:draft_claim) { build(:claim, :draft) }
+
   describe "associations" do
     it { is_expected.to belong_to(:claim) }
     it { is_expected.to belong_to(:mentor) }
@@ -48,14 +50,55 @@ RSpec.describe Claims::MentorTraining, type: :model do
     end
   end
 
-  describe "validations" do
-    it {
-      expect(mentor_training).to validate_numericality_of(:hours_completed)
-        .only_integer
-        .is_greater_than(0)
-        .is_less_than_or_equal_to(20)
-        .allow_nil
-    }
+  context "with initial training" do
+    subject(:mentor_training) { create(:mentor_training, claim: draft_claim) }
+
+    describe "#hours_completed" do
+      let(:maximum_hours_allowed) { 20 }
+
+      it {
+        expect(mentor_training).to validate_numericality_of(:hours_completed)
+          .only_integer
+          .is_greater_than(0)
+          .is_less_than_or_equal_to(maximum_hours_allowed)
+      }
+    end
+
+    describe "#training_type" do
+      it "is initial" do
+        expect(mentor_training.training_type).to eq("initial")
+      end
+    end
+  end
+
+  context "with refresher training" do
+    subject(:mentor_training) { create(:mentor_training, claim: draft_claim, mentor:, provider:) }
+
+    let(:mentor) { build(:claims_mentor) }
+    let(:provider) { build(:claims_provider) }
+    let(:historic_claim) { build(:claim, :submitted, claim_window: build(:claim_window, :historic)) }
+
+    before do
+      # Create initial training in a previous academic year
+      create(:mentor_training, mentor:, provider:, claim: historic_claim)
+    end
+
+    describe "#hours_completed" do
+      let(:maximum_hours_allowed) { 6 }
+
+      it {
+        expect(mentor_training).to validate_numericality_of(:hours_completed)
+          .only_integer
+          .is_greater_than(0)
+          .is_less_than_or_equal_to(maximum_hours_allowed)
+      }
+    end
+
+    describe "#training_type" do
+      it "is refresher" do
+        expect(mentor_training.training_type).to eq("refresher")
+      end
+    end
   end
 
   describe "scopes" do

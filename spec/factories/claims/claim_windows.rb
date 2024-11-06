@@ -26,5 +26,11 @@ FactoryBot.define do
       ends_on { 2.days.from_now }
       association :academic_year, :current
     end
+
+    trait :historic do
+      starts_on { 2.years.ago }
+      ends_on { starts_on + 2.months }
+      academic_year { AcademicYear.for_date(starts_on) }
+    end
   end
 end

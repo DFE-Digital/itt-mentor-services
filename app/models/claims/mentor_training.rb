@@ -36,15 +36,50 @@ class Claims::MentorTraining < ApplicationRecord
     refresher: "refresher",
   }, default: :initial, validate: true
 
-  validates(
-    :hours_completed,
-    numericality: { greater_than: 0, less_than_or_equal_to: 20, only_integer: true },
-    allow_nil: true,
-  )
+  before_validation :set_training_type
+
+  validates :hours_completed,
+            allow_nil: true,
+            # TODO: Remove this 'unless' condition once claim revisions have been removed.
+            # The 'internal draft' state that powers revisions is confusing, but in this case we need to
+            # skip this validation rule so that Claims::Claim::CreateRevision can successfully duplicate
+            # the claim and its mentor training records without breaching the remaining training allowance.
+            # The validity of mentor training records is still checked before claims can be submitted, so this
+            # doesn't open up a loophole. It's just a quirk due to the way claim revisions are modelled.
+            # https://trello.com/c/4riw52nH/230-replace-claim-revisions-with-the-wizard-pattern
+            unless: -> { claim&.internal_draft? },
+            numericality: {
+              greater_than: 0,
+              less_than_or_equal_to: :max_hours,
+              only_integer: true,
+            }
 
   scope :without_hours, -> { where(hours_completed: nil).order_by_mentor_full_name }
   scope :order_by_mentor_full_name, -> { joins(:mentor).merge(Mentor.order_by_full_name) }
 
   delegate :full_name, to: :mentor, prefix: true, allow_nil: true
   delegate :name, to: :provider, prefix: true, allow_nil: true
+
+  private
+
+  def set_training_type
+    return if training_allowance.nil?
+
+    self.training_type = training_allowance.training_type
+  end
+
+  def max_hours
+    training_allowance.remaining_hours
+  end
+
+  def training_allowance
+    return if [mentor, provider, claim].any?(&:nil?)
+
+    @training_allowance ||= Claims::TrainingAllowance.new(
+      mentor:,
+      provider:,
+      academic_year: claim.claim_window.academic_year,
+      claim_to_exclude: claim,
+    )
+  end
 end
