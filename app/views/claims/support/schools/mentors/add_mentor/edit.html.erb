@@ -1,4 +1,4 @@
-<% render "claims/schools/primary_navigation", school: @school, current: :mentors %>
+<% render "claims/support/primary_navigation", school: @school, current: :mentors %>
 <%= content_for(:before_content) do %>
   <%= govuk_back_link(href: back_link_path) %>
 <% end %>
@@ -7,6 +7,6 @@
   <%= render_wizard(@wizard, contextual_text: t(".caption")) %>
 
   <p class="govuk-body">
-    <%= govuk_link_to(t(".cancel"), claims_school_mentors_path(@school), no_visited_state: true) %>
+    <%= govuk_link_to(t(".cancel"), claims_support_school_mentors_path(@school), no_visited_state: true) %>
   </p>
 </div>
