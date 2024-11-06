@@ -26,8 +26,8 @@
 #
 class Claims::MentorTraining < ApplicationRecord
   belongs_to :claim
-  belongs_to :mentor, optional: true
-  belongs_to :provider, optional: true
+  belongs_to :mentor
+  belongs_to :provider
 
   audited associated_with: :claim
 

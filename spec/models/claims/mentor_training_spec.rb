@@ -31,8 +31,8 @@ RSpec.describe Claims::MentorTraining, type: :model do
 
   describe "associations" do
     it { is_expected.to belong_to(:claim) }
-    it { is_expected.to belong_to(:mentor).optional }
-    it { is_expected.to belong_to(:provider).optional }
+    it { is_expected.to belong_to(:mentor) }
+    it { is_expected.to belong_to(:provider) }
   end
 
   describe "auditing" do

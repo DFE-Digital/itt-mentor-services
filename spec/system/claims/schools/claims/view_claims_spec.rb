@@ -21,8 +21,8 @@ RSpec.describe "View claims", service: :claims, type: :system do
       :claim,
       :draft,
       school: school_with_mentors,
-      provider: create(:claims_provider),
-      mentors: [school_with_mentors.mentors.first],
+      provider: build(:claims_provider),
+      mentor_trainings: [build(:mentor_training, mentor: school_with_mentors.mentors.first)],
     )
   end
   let!(:submitted_claim) do
@@ -31,7 +31,7 @@ RSpec.describe "View claims", service: :claims, type: :system do
       :submitted,
       school: school_with_mentors,
       provider: create(:claims_provider),
-      mentors: [school_with_mentors.mentors.first],
+      mentor_trainings: [build(:mentor_training, mentor: school_with_mentors.mentors.first)],
       submitted_at: Time.new(2024, 3, 5, 12, 31, 52, "+00:00"),
     )
   end

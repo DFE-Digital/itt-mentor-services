@@ -15,7 +15,8 @@ RSpec.describe "When removing a mentor", service: :claims, type: :system do
   end
 
   scenario "When I try and remove a mentor who is already part of a submitted claim" do
-    create(:claim, school_id: school.id, reference: "12345678", status: :submitted, mentors: [mentor1])
+    mentor_trainings = [build(:mentor_training, mentor: mentor1)]
+    create(:claim, school_id: school.id, reference: "12345678", status: :submitted, mentor_trainings:)
 
     user_exists_in_dfe_sign_in(user: anne)
     given_i_sign_in
@@ -26,7 +27,8 @@ RSpec.describe "When removing a mentor", service: :claims, type: :system do
   end
 
   scenario "When I try and remove a mentor who is already part of a draft claim" do
-    create(:claim, school_id: school.id, reference: "12345671", status: :draft, mentors: [mentor2])
+    mentor_trainings = [build(:mentor_training, mentor: mentor2)]
+    create(:claim, school_id: school.id, reference: "12345671", status: :draft, mentor_trainings:)
 
     user_exists_in_dfe_sign_in(user: anne)
     given_i_sign_in
