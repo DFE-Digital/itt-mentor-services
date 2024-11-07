@@ -33,8 +33,5 @@ en:
           change_your_search: Change your search
           help_text: Check that you typed in the teacher reference number (TRN) correctly.
           no_results_found: No results found for ‘%{trn}’
-<<<<<<< HEAD
-=======
         update:
           success: Mentor added
->>>>>>> b69632ea (Claims -> School user: refactor add mentor form to use wizard pattern)
