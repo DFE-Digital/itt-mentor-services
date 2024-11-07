@@ -3,33 +3,29 @@ en:
     claims:
       add_mentor_wizard:
         mentor_step:
-          page_title: Find teacher - %{contextual_text}
-          page_title_with_error: "Error: %{error} - %{contextual_text}"
-          caption: Mentor details
+          trn: Teacher reference number (TRN)
+          trn_hint: It’s a 7 digit number. For example, 1234567
+          page_title: Enter a teacher reference number (TRN) - Add mentor
+          page_title_with_error: "Error: Enter a teacher reference number (TRN) - Add mentor"
+          caption: Add mentor
           cancel: Cancel
           continue: Continue
-          trn: Teacher reference number (TRN)
-          trn_hint: A TRN is a 7 digit number that uniquely identifies people in the education sector in England.
-          find_teacher: Find teacher
-          trn_guidance: TRN guidance
-          what_is_a_trn: |
-            If you do not know a teacher’s TRN, you can ask them for it. 
-            They can find a lost TRN, or apply for a new one by following the instructions in the %{link}.
-          help_with_the_trn: Help with the TRN
           date_of_birth_hint: For example, 31 3 1980
+          find_teacher: Find teacher
+          help_with_the_trn: If you do not have the teacher reference number (TRN)
+          guidance_html: If your mentor does not have a TRN, share the %{guidance_link} to find a lost TRN, or apply for one.
+          guidance_link_text: teacher reference number (TRN) guidance
         check_your_answers_step:
-          page_title: Confirm mentor details - Add mentor - %{contextual_text}
-          add_mentor: Confirm and add mentor
+          page_title: Check your answers - Add mentor
+          add_mentor: Add mentor
           cancel: Cancel
           change: Change
-          confirm_details: Confirm mentor details
-          mentor: Mentor
+          check_your_answers: Check your answers
           trn: Teacher reference number (TRN)
           date_of_birth: Date of birth
-          confirm_mentor_informed: |
-            Mentor data is stored in line with the %{link}. 
-            I confirm that I have read, understood and accept how DfE uses mentor information as part of the Funding for mentors service.
-          privacy_notice: Department for Education's (DfE) privacy notice
+          privacy_link: privacy notice
+          disclaimer_html: I confirm that %{mentor_name} has been informed that the Department for Education will store their information in line with the %{privacy_link} and have provided them with a copy of this notice for reference.
+        no_results:
         no_results_step:
           page_title: No results found for ‘%{trn}’ - %{contextual_text}
           caption: Mentor not found
@@ -37,5 +33,3 @@ en:
           change_your_search: Change your search
           help_text: Check that you typed in the teacher reference number (TRN) correctly.
           no_results_found: No results found for ‘%{trn}’
-        update:
-          success: Mentor added

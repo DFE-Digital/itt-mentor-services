@@ -17,11 +17,10 @@ en:
                 trn: Teacher reference number (TRN)
           add_mentor:
             edit:
-              caption: Hello
+              caption: Add mentor
               cancel: Cancel
             update:
               success_heading: Mentor added
-              success_body: "%{user_name} has been added"
           new:
             trn: Teacher reference number (TRN)
             trn_hint: It’s a 7 digit number. For example, 1234567

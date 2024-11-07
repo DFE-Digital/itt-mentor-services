@@ -77,7 +77,7 @@ RSpec.describe "Claims support user adds mentors to schools", service: :claims, 
       then_i_see_form_with_dob("12", "11", "1986")
       when_i_click_on("Continue")
       then_i_see_check_page_for(new_mentor)
-      when_i_click_on("Save mentor")
+      when_i_click_on("Add mentor")
       then_mentor_is_added(claims_mentor.full_name)
     end
   end
@@ -120,7 +120,7 @@ RSpec.describe "Claims support user adds mentors to schools", service: :claims, 
       then_i_see_form_with_dob("14", "9", "1987")
       when_i_click_on("Continue")
       then_i_see_check_page_for(another_claims_mentor)
-      when_i_click_on("Save mentor")
+      when_i_click_on("Add mentor")
       then_mentor_is_added(another_claims_mentor.full_name)
     end
   end
@@ -159,7 +159,7 @@ RSpec.describe "Claims support user adds mentors to schools", service: :claims, 
       when_i_enter_date_of_birth(12, 11, 1986)
       and_i_click_on("Continue")
       then_i_see_check_page_for(new_mentor)
-      when_i_click_on("Save mentor")
+      when_i_click_on("Add mentor")
       then_mentor_is_added(new_mentor.full_name)
     end
   end
@@ -243,7 +243,7 @@ RSpec.describe "Claims support user adds mentors to schools", service: :claims, 
   end
 
   def when_i_enter_trn(trn)
-    fill_in "claims-mentor-form-trn-field", with: trn
+    fill_in "TRN", with: trn
   end
 
   def when_i_enter_date_of_birth(day, month, year)
@@ -272,18 +272,18 @@ RSpec.describe "Claims support user adds mentors to schools", service: :claims, 
   end
 
   def then_i_see_form_with_trn(trn)
-    expect(page.find("#claims-mentor-form-trn-field").value).to eq(trn)
+    expect(page.find("#claims-add-mentor-wizard-mentor-step-trn-field").value).to eq(trn)
   end
 
   def then_i_see_form_with_dob(day, month, year)
-    expect(page.find("#claims_mentor_form_date_of_birth_1i").value).to eq(year)
-    expect(page.find("#claims_mentor_form_date_of_birth_2i").value).to eq(month)
-    expect(page.find("#claims_mentor_form_date_of_birth_3i").value).to eq(day)
+    expect(page.find("#claims_add_mentor_wizard_mentor_step_date_of_birth_1i").value).to eq(year)
+    expect(page.find("#claims_add_mentor_wizard_mentor_step_date_of_birth_2i").value).to eq(month)
+    expect(page.find("#claims_add_mentor_wizard_mentor_step_date_of_birth_3i").value).to eq(day)
   end
 
   def then_i_see_no_results_page(_school_name, trn)
     expect(page).to have_title "No results found for ‘#{trn}’"
-    expect(page).to have_content "Add mentor - #{school.name}"
+    expect(page).to have_content "Add mentor"
     expect(page).to have_content "No results found for ‘#{trn}’"
   end
 

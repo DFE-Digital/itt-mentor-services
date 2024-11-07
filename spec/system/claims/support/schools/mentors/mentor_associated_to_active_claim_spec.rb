@@ -15,7 +15,6 @@ RSpec.describe "When removing a mentor", service: :claims, type: :system do
     user_exists_in_dfe_sign_in(user: colin)
     given_i_sign_in
     when_i_visit_the_support_school_mentors_page(school)
-    click_on "Mentors"
     click_on mentor1.full_name
     click_on "Remove mentor"
     then_i_cant_remove_this_mentor

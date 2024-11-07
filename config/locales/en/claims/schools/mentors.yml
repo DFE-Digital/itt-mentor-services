@@ -8,7 +8,6 @@ en:
             cancel: Cancel
           update:
             success_heading: Mentor added
-            success_body: "%{user_name} has been added"
         index:
           heading: Mentors
           trn: Teacher reference number (TRN)

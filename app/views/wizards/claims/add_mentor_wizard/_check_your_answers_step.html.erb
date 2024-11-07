@@ -4,9 +4,9 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= form_with(model: current_step, url: current_step_path, method: :put) do |f| %>
-        <h1 class="govuk-heading-l"><%= t(".confirm_details") %></h1>
+        <span class="govuk-caption-l"><%= t(".add_mentor") %></span>
+        <h1 class="govuk-heading-l"><%= t(".check_your_answers") %></h1>
 
-        <h2 class="govuk-heading-m"><%= t(".mentor") %></h2>
         <%= govuk_summary_list do |summary_list| %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: Mentor.human_attribute_name("first_name")) %>
@@ -35,12 +35,16 @@
         <% end %>
 
         <p class="govuk-inset-text">
-          <%= embedded_link_text(
-                t(".confirm_mentor_informed",
-                  link: govuk_link_to(
-                    t(".privacy_notice"), claims_privacy_path, new_tab: true, no_visited_state: true
-                  )),
-              ) %>
+        <%= embedded_link_text(
+              t(".disclaimer_html",
+                mentor_name: wizard.steps[:mentor].mentor.first_name,
+                privacy_link: govuk_link_to(
+                  t(".privacy_link"),
+                  claims_privacy_path,
+                  new_tab: true,
+                  no_visited_state: true,
+                )),
+            ) %>
         </p>
 
         <%= f.govuk_submit t(".add_mentor") %>
