@@ -77,7 +77,7 @@ RSpec.describe "Claims support user adds mentors to schools", service: :claims, 
       then_i_see_form_with_dob("12", "11", "1986")
       when_i_click_on("Continue")
       then_i_see_check_page_for(new_mentor)
-      when_i_click_on("Add mentor")
+      when_i_click_on("Save mentor")
       then_mentor_is_added(claims_mentor.full_name)
     end
   end
@@ -120,7 +120,7 @@ RSpec.describe "Claims support user adds mentors to schools", service: :claims, 
       then_i_see_form_with_dob("14", "9", "1987")
       when_i_click_on("Continue")
       then_i_see_check_page_for(another_claims_mentor)
-      when_i_click_on("Add mentor")
+      when_i_click_on("Save mentor")
       then_mentor_is_added(another_claims_mentor.full_name)
     end
   end
@@ -159,7 +159,7 @@ RSpec.describe "Claims support user adds mentors to schools", service: :claims, 
       when_i_enter_date_of_birth(12, 11, 1986)
       and_i_click_on("Continue")
       then_i_see_check_page_for(new_mentor)
-      when_i_click_on("Add mentor")
+      when_i_click_on("Save mentor")
       then_mentor_is_added(new_mentor.full_name)
     end
   end
@@ -283,7 +283,7 @@ RSpec.describe "Claims support user adds mentors to schools", service: :claims, 
 
   def then_i_see_no_results_page(_school_name, trn)
     expect(page).to have_title "No results found for ‘#{trn}’"
-    expect(page).to have_content "Add mentor"
+    expect(page).to have_content "Add mentor - #{school.name}"
     expect(page).to have_content "No results found for ‘#{trn}’"
   end
 

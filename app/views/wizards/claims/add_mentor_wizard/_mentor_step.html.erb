@@ -1,5 +1,4 @@
-<% caption = current_user.support_user? ? "#{t(".caption")} #{contextual_text}" : t(".caption") %>
-<% content_for :page_title, current_step.errors.any? ? t(".page_title_with_error", error: current_step.errors.first.message, contextual_text: caption) : t(".page_title", contextual_text: caption) %>
+<% content_for :page_title, title_with_error_prefix(t(".page_title", school_name: @school.name), error: current_step.errors.any?) %>
 
 <div class="govuk-width-container">
   <%= form_with(model: current_step, url: current_step_path, method: :put) do |f| %>
@@ -7,7 +6,7 @@
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <span class="govuk-caption-l"><%= caption %></span>
+        <span class="govuk-caption-l">  <%= current_user.support_user? ? "#{t(".add_mentor")} - #{@school.name}" : t(".add_mentor") %></span>
         <h1 class="govuk-heading-l"><%= t(".find_teacher") %></h1>
 
         <div class="govuk-form-group">

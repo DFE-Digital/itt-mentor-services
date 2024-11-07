@@ -1,10 +1,10 @@
-<% content_for :page_title, t(".page_title", contextual_text:) %>
+<%= content_for :page_title, current_user.support_user? ? "#{@school.name} - #{t(".page_title")}" : t(".page_title", contextual_text:) %>
 
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= form_with(model: current_step, url: current_step_path, method: :put) do |f| %>
-        <span class="govuk-caption-l"><%= t(".add_mentor") %></span>
+        <span class="govuk-caption-l">  <%= current_user.support_user? ? "#{t(".add_mentor")} - #{@school.name}" : t(".add_mentor") %></span>
         <h1 class="govuk-heading-l"><%= t(".check_your_answers") %></h1>
         <%= govuk_summary_list do |summary_list| %>
           <% summary_list.with_row do |row| %>
@@ -46,7 +46,7 @@
             ) %>
         </p>
 
-        <%= f.govuk_submit t(".add_mentor") %>
+        <%= f.govuk_submit t(".save_mentor") %>
       <% end %>
     </div>
   </div>

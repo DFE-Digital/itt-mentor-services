@@ -7,7 +7,7 @@ en:
           trn_hint: It’s a 7 digit number. For example, 1234567
           page_title: Enter a teacher reference number (TRN) - Add mentor
           page_title_with_error: "Error: Enter a teacher reference number (TRN) - Add mentor"
-          caption: Add mentor
+          add_mentor: Add mentor
           cancel: Cancel
           continue: Continue
           date_of_birth_hint: For example, 31 3 1980
@@ -18,6 +18,7 @@ en:
         check_your_answers_step:
           page_title: Check your answers - Add mentor
           add_mentor: Add mentor
+          save_mentor: Save mentor
           cancel: Cancel
           change: Change
           check_your_answers: Check your answers
@@ -28,7 +29,6 @@ en:
         no_results:
         no_results_step:
           page_title: No results found for ‘%{trn}’ - %{contextual_text}
-          caption: Mentor not found
           add_mentor: Add mentor
           change_your_search: Change your search
           help_text: Check that you typed in the teacher reference number (TRN) correctly.

@@ -9,10 +9,10 @@ module Claims
 
     def define_steps
       add_step(MentorStep)
-      if steps[:mentor].mentor.nil?
+      if steps.fetch(:mentor).mentor.nil?
         add_step(NoResultsStep)
       else
-        add_step(CheckYourAnswersStep) # Jamie did not use this step in his implementation of Claims::AddUserWizard
+        add_step(CheckYourAnswersStep)
       end
     end
 
@@ -28,11 +28,11 @@ module Claims
     private
 
     def mentor
-      @mentor ||= steps[:mentor].mentor
+      @mentor ||= steps.fetch(:mentor).mentor
     end
 
     def mentor_membership
-      @mentor_membership ||= steps[:mentor].mentor_membership
+      @mentor_membership ||= steps.fetch(:mentor).mentor_membership
     end
   end
 end
