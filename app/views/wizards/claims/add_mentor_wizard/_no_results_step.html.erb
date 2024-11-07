@@ -1,7 +1,6 @@
-<% caption = current_user.support_user? ? "#{t(".caption")} #{contextual_text}" : t(".caption") %>
-<% content_for :page_title, t(".page_title", trn: wizard.steps[:mentor].trn, contextual_text: caption) %>
+<% content_for :page_title, t(".page_title", trn: wizard.steps[:mentor].trn, contextual_text:) %>
 <div class="govuk-width-container">
-  <span class="govuk-caption-l"><%= caption %></span>
+        <span class="govuk-caption-l"> <%= current_user.support_user? ? "#{t(".add_mentor")} - #{@school.name}" : t(".add_mentor") %></span>
   <h1 class="govuk-heading-l"><%= t(".no_results_found", trn: wizard.steps[:mentor].trn) %></h1>
 
   <p class="govuk-body">

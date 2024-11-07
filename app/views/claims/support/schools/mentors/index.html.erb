@@ -1,11 +1,14 @@
-<% content_for :page_title, t(".page_title") %>
+<% content_for :page_title, "#{@school.name} - #{t(".heading")}" %>
 
-<% render "claims/support/primary_navigation", school: @school, current: :mentors %>
+<% render "claims/support/primary_navigation", current: :organisations %>
 
 <div class="govuk-width-container">
+  <h1 class="govuk-heading-l"><%= @school.name %></h1>
+  <%= render "claims/support/schools/secondary_navigation", school: @school %>
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-l"><%= t(".page_title") %></h2>
+      <h1 class="govuk-heading-l"><%= t(".page_title") %></h1>
 
       <%= govuk_button_link_to(t(".add_mentor"), new_add_mentor_claims_support_school_mentors_path) %>
 
