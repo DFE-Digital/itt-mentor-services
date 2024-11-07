@@ -53,7 +53,7 @@ class Claims::Claim::MentorsForm < ApplicationForm
         mentor_id:,
         provider_id: claim.provider_id,
         claim_id: claim.id,
-      )
+      ).tap(&:set_training_type)
     end
   end
 end

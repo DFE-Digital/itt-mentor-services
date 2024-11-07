@@ -36,8 +36,6 @@ class Claims::MentorTraining < ApplicationRecord
     refresher: "refresher",
   }, default: :initial, validate: true
 
-  before_validation :set_training_type
-
   validates :hours_completed,
             allow_nil: true,
             # TODO: Remove this 'unless' condition once claim revisions have been removed.
@@ -60,21 +58,17 @@ class Claims::MentorTraining < ApplicationRecord
   delegate :full_name, to: :mentor, prefix: true, allow_nil: true
   delegate :name, to: :provider, prefix: true, allow_nil: true
 
-  private
-
   def set_training_type
-    return if training_allowance.nil?
-
     self.training_type = training_allowance.training_type
   end
+
+  private
 
   def max_hours
     training_allowance.remaining_hours
   end
 
   def training_allowance
-    return if [mentor, provider, claim].any?(&:nil?)
-
     @training_allowance ||= Claims::TrainingAllowance.new(
       mentor:,
       provider:,

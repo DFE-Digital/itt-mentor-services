@@ -16,13 +16,25 @@ describe Claims::Support::Claim::MentorsForm, type: :model do
   end
 
   describe "save" do
+    before do
+      # Give mentor2 initial training in a previous academic year, making them eligible for refresher training this year
+      create(
+        :claim, :submitted,
+        claim_window: build(:claim_window, :historic),
+        mentor_trainings: [build(:mentor_training, provider: claim.provider, mentor: mentor2, hours_completed: 20)]
+      )
+    end
+
     it "creates mentor trainings on the claim" do
       mentor_ids = [mentor1, mentor2].map(&:id)
       form = described_class.new(claim:, mentor_ids:)
 
       expect {
         form.save!
-      }.to change { claim.reload.mentor_trainings }.to contain_exactly(have_attributes(mentor_id: mentor1.id, provider_id: claim.provider_id), have_attributes(mentor_id: mentor2.id, provider_id: claim.provider_id))
+      }.to change { claim.reload.mentor_trainings }.to contain_exactly(
+        have_attributes(mentor_id: mentor1.id, provider_id: claim.provider_id, training_type: "initial"),
+        have_attributes(mentor_id: mentor2.id, provider_id: claim.provider_id, training_type: "refresher"),
+      )
     end
   end
 
