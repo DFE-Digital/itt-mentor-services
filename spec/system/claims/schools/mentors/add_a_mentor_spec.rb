@@ -84,7 +84,7 @@ RSpec.describe "Claims school user adds mentors to schools", service: :claims, t
       then_i_see_form_with_dob("12", "11", "1986")
       when_i_click_on("Continue")
       then_i_see_check_page_for(new_mentor)
-      when_i_click_on("Save mentor")
+      when_i_click_on("Add mentor")
       then_mentor_is_added(claims_mentor.full_name)
     end
   end
@@ -127,7 +127,7 @@ RSpec.describe "Claims school user adds mentors to schools", service: :claims, t
       then_i_see_form_with_dob("14", "9", "1987")
       when_i_click_on("Continue")
       then_i_see_check_page_for(another_claims_mentor)
-      when_i_click_on("Save mentor")
+      when_i_click_on("Add mentor")
       then_mentor_is_added(another_claims_mentor.full_name)
     end
   end
@@ -186,7 +186,7 @@ RSpec.describe "Claims school user adds mentors to schools", service: :claims, t
       when_i_enter_date_of_birth(12, 11, 1986)
       and_i_click_on("Continue")
       then_i_see_check_page_for(new_mentor)
-      when_i_click_on("Save mentor")
+      when_i_click_on("Add mentor")
       then_mentor_is_added(new_mentor.full_name)
     end
   end
@@ -252,7 +252,7 @@ RSpec.describe "Claims school user adds mentors to schools", service: :claims, t
   end
 
   def when_i_enter_trn(trn)
-    fill_in "claims-mentor-form-trn-field", with: trn
+    fill_in "claims-add-mentor-wizard-mentor-step-trn-field", with: trn
   end
 
   def when_i_enter_date_of_birth(day, month, year)
@@ -265,6 +265,17 @@ RSpec.describe "Claims school user adds mentors to schools", service: :claims, t
 
   def then_i_see_the_index_page(school)
     expect(page).to have_current_path claims_school_mentors_path(school), ignore_query: true
+  end
+
+  def then_i_see_the_error(message, field_index = 0)
+    expect(page).to have_title "Error: #{message}"
+    within(".govuk-error-summary") do
+      expect(page).to have_content message
+    end
+
+    within all(".govuk-form-group--error")[field_index] do
+      expect(page).to have_content message
+    end
   end
 
   def then_i_see_errors(errors)
@@ -281,18 +292,18 @@ RSpec.describe "Claims school user adds mentors to schools", service: :claims, t
   end
 
   def then_i_see_form_with_trn(trn)
-    expect(page.find("#claims-mentor-form-trn-field").value).to eq(trn)
+    expect(page.find("#claims-add-mentor-wizard-mentor-step-trn-field").value).to eq(trn)
   end
 
   def then_i_see_form_with_dob(day, month, year)
-    expect(page.find("#claims_mentor_form_date_of_birth_1i").value).to eq(year)
-    expect(page.find("#claims_mentor_form_date_of_birth_2i").value).to eq(month)
-    expect(page.find("#claims_mentor_form_date_of_birth_3i").value).to eq(day)
+    expect(page.find("#claims_add_mentor_wizard_mentor_step_date_of_birth_1i").value).to eq(year)
+    expect(page.find("#claims_add_mentor_wizard_mentor_step_date_of_birth_2i").value).to eq(month)
+    expect(page.find("#claims_add_mentor_wizard_mentor_step_date_of_birth_3i").value).to eq(day)
   end
 
   def then_i_see_no_results_page(_school_name, trn)
     expect(page).to have_title "No results found for ‘#{trn}’"
-    expect(page).to have_content "Add mentor"
+    expect(page).to have_content "Check that you typed in the teacher reference number (TRN) correctly."
     expect(page).to have_content "No results found for ‘#{trn}’"
   end
 
