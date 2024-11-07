@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe "Adding a placement contact to a school", service: :placements, type: :system do
-  scenario "User adds a placement contact to their school" do
+RSpec.describe "School user adds a placement contact to their school", service: :placements, type: :system do
+  scenario do
     given_i_am_signed_in
 
     when_i_view_my_organisation_details_page
@@ -35,7 +35,8 @@ RSpec.describe "Adding a placement contact to a school", service: :placements, t
   private
 
   def given_i_am_signed_in
-    @school = build(:placements_school, with_school_contact: false)
+    @school = build(:placements_school, with_school_contact: false, urn: "500005", ukprn: "10000001",
+                                        name: "Springfield Elementary", phase: :primary)
     sign_in_placements_user(organisations: [@school])
   end
 
@@ -43,12 +44,12 @@ RSpec.describe "Adding a placement contact to a school", service: :placements, t
     click_on "Organisation details"
     expect(page).to have_title("Organisation details - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Organisation details")
-    expect(page).to have_h1(@school.name)
+    expect(page).to have_h1("Springfield Elementary")
     expect(page).to have_h2("Placement contact")
     expect(page).to have_h2("School")
-    expect(page).to have_summary_list_row("Name", @school.name)
-    expect(page).to have_summary_list_row("UKPRN", @school.ukprn)
-    expect(page).to have_summary_list_row("URN", @school.urn)
+    expect(page).to have_summary_list_row("Name", "Springfield Elementary")
+    expect(page).to have_summary_list_row("UKPRN", "10000001")
+    expect(page).to have_summary_list_row("URN", "500005")
   end
 
   def then_i_do_not_see_any_placement_contact_details
@@ -128,7 +129,7 @@ RSpec.describe "Adding a placement contact to a school", service: :placements, t
   def then_i_see_my_placement_contact_details
     expect(page).to have_title("Organisation details - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Organisation details")
-    expect(page).to have_h1(@school.name)
+    expect(page).to have_h1("Springfield Elementary")
     expect(page).to have_h2("Placement contact")
     within "#school-contact-details" do
       expect(page).to have_summary_list_row("First name", "Updated Placement")
