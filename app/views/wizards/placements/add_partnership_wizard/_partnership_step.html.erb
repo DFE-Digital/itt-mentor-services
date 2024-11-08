@@ -1,4 +1,7 @@
-<% content_for :page_title, current_step.errors.any? ? t(".page_title_with_error.#{current_step.partner_organisation_type}", contextual_text:) : t(".page_title.#{current_step.partner_organisation_type}", contextual_text:) %>
+<% content_for :page_title, title_with_error_prefix(
+  t(".page_title.#{current_step.partner_organisation_type}"),
+  error: current_step.errors.any?,
+) %>
 
 <%= render AutocompleteSelectFormComponent.new(
   model: current_step,
@@ -13,7 +16,7 @@
     value: current_step.partner_organisation_name,
     label: t(".title.#{current_step.partner_organisation_type}"),
     hint: t(".hint.#{current_step.partner_organisation_type}"),
-    caption: contextual_text,
+    caption: t(".caption.#{current_step.partner_organisation_type}"),
     previous_search: current_step.id,
   },
 ) %>

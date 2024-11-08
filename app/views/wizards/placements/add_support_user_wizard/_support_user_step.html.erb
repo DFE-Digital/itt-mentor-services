@@ -1,4 +1,4 @@
-<% content_for :page_title, current_step.errors.any? ? t(".title_with_error") : t(".title") %>
+<% content_for :page_title, title_with_error_prefix(t(".title"), error: current_step.errors.any?) %>
 
 <%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
   <%= f.govuk_error_summary %>

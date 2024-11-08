@@ -6,10 +6,8 @@ en:
           caption: Add organisation
           continue: Continue
           title: Enter a school name, URN or postcode
-          title_with_error: "Error: Enter a school name, URN or postcode"
         school_options_step:
           title: "%{organisation_count} results found for ‘%{search_param}’ - Add organisation"
-          title_with_error: "Error: %{organisation_count} results found for ‘%{search_param}’- Add organisation"
         check_your_answers_step:
           add_organisation: Add organisation
           save_organisation: Save organisation

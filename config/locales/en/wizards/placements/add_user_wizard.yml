@@ -3,8 +3,7 @@ en:
     placements:
       add_user_wizard:
         user_step:
-          title_with_error: "Error: Personal details - %{caption}"
-          title: Personal details - %{caption}
+          title: Personal details - User details
           caption: User details
           continue: Continue
           personal_details: Personal details

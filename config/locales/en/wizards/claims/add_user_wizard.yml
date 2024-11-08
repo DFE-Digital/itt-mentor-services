@@ -3,7 +3,6 @@ en:
     claims:
       add_user_wizard:
         user_step:
-          page_title_with_error: "Error: Invite a new user - %{caption}"
           page_title: Invite a new user - %{caption}
           continue: Continue
           description: Personal details

@@ -284,7 +284,7 @@ RSpec.describe "Placements school user adds mentors to schools", service: :place
   end
 
   def then_i_see_the_error(message, field_index = 0)
-    expect(page).to have_title "Error: #{message}"
+    expect(page).to have_title "Error: Find teacher - Mentor details - Manage school placements - GOV.UK"
     within(".govuk-error-summary") do
       expect(page).to have_content message
     end

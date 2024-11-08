@@ -1,14 +1,8 @@
-<% if current_step.errors.any? %>
-  <% content_for :page_title, t(".page_title_with_error",
+<% content_for :page_title, title_with_error_prefix(t(".page_title",
     results_count: current_step.partnership_options.count,
     search_param: current_step.search_params,
-    contextual_text:) %>
-<% else %>
-  <% content_for :page_title, t(".page_title",
-    results_count: current_step.partnership_options.count,
-    search_param: current_step.search_params,
-    contextual_text:) %>
-<% end %>
+    organisation_type: current_step.partner_organisation_type.capitalize),
+    error: current_step.errors.any?) %>
 
 <%= render OptionsFormComponent.new(
   model: current_step,
@@ -18,6 +12,6 @@
   records: current_step.partnership_options,
   records_klass: current_step.partner_organisation_type,
   back_link: back_link_path,
-  title: contextual_text,
+  title: t(".caption.#{current_step.partner_organisation_type}"),
   method: :put,
 ) %>

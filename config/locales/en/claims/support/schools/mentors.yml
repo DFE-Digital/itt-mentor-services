@@ -19,7 +19,6 @@ en:
             trn: Teacher reference number (TRN)
             trn_hint: It’s a 7 digit number. For example, 1234567
             page_title: Enter a teacher reference number (TRN) - Add mentor - %{school_name}
-            page_title_with_error: "Error: Enter a teacher reference number (TRN) - Add mentor - %{school_name}"
             add_mentor_with_school_name: Add mentor - %{school_name}
             cancel: Cancel
             date_of_birth_hint: For example, 31 3 1980

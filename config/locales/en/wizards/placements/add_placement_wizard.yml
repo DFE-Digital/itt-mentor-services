@@ -6,36 +6,30 @@ en:
           cancel: Cancel
         academic_year_step:
           title: Select an academic year - %{contextual_text}
-          title_with_error: "Error: Select an academic year - %{contextual_text}"
           select_an_academic_year: Select an academic year
           continue: Continue
         phase_step:
           title: Select a phase - %{contextual_text}
-          title_with_error: "Error: Select a phase - %{contextual_text}"
           select_a_phase: Select a phase
           primary: Primary
           secondary: Secondary
           continue: Continue
         subject_step:
           title: Select a subject - %{contextual_text}
-          title_with_error: "Error: Select a subject - %{contextual_text}"
           select_a_subject: Select a subject
           continue: Continue
         additional_subjects_step:
           title: Select a %{subject} - %{contextual_text}
-          title_with_error: "Error: Select a %{subject} - %{contextual_text}"
           select_a_subject: Select a %{subject}
           hint: Select all that apply
           continue: Continue
         year_group_step:
           title: Select a year group - %{contextual_text}
-          title_with_error: "Error: Select a year group - %{contextual_text}"
           select_a_year_group: Select a year group
           primary: Primary
           continue: Continue
         mentors_step:
           title: Select a mentor - %{contextual_text}
-          title_with_error: "Error: Select a mentor - %{contextual_text}"
           select_a_mentor: Select a mentor
           hint:
             unpublished_html: |
@@ -78,7 +72,6 @@ en:
           success_heading: Placement added
         terms_step:
           title: Select when the placement could be - %{contextual_text}
-          title_with_error: "Error: Select when the placement could be - %{contextual_text}"
           select_a_term: When could the placement take place?
           description: |
             Provide estimate term dates. You can discuss specific start and end dates with providers after the placement

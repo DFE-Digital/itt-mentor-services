@@ -4,7 +4,6 @@ en:
       partner_schools:
         add_partner_school:
           edit:
-            caption: School details
             cancel: Cancel
           update:
             success_heading: School added

@@ -1,4 +1,7 @@
-<% content_for :page_title, mentor_form.errors.any? ? t(".page_title_with_error", school_name: @school.name) : t(".page_title", school_name: @school.name) %>
+<% content_for :page_title, title_with_error_prefix(
+  t(".page_title", school_name: @school.name),
+  error: mentor_form.errors.any?,
+) %>
 <% render "claims/support/primary_navigation", current: :organisations %>
 
 <%= content_for(:before_content) do %>

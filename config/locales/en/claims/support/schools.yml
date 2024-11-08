@@ -25,7 +25,6 @@ en:
           cancel: Cancel
           continue: Continue
           title: Enter a school name, URN or postcode
-          title_with_error: "Error: Enter a school name, URN or postcode"
         check:
           add_organisation: Add organisation
           save_organisation: Save organisation
