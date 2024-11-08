@@ -82,7 +82,7 @@ RSpec.describe "Provider user filters placements by expected date", service: :pl
   end
 
   def and_i_do_not_see_the_spring_term_placement
-    expect(page).not_to have_h2("Primary with english – Springfield Elementar")
+    expect(page).not_to have_h2("Primary with english – Springfield Elementary")
   end
 
   def and_i_see_my_selected_expected_date_filter

@@ -81,7 +81,7 @@ RSpec.describe "Provider user filters placements by primary year group", service
   end
 
   def and_i_do_not_see_the_year_1_placement
-    expect(page).not_to have_h2("Primary with english (Year 1) – Springfield Elementar")
+    expect(page).not_to have_h2("Primary with english (Year 1) – Springfield Elementary")
   end
 
   def and_i_see_my_selected_primary_year_group_filter
