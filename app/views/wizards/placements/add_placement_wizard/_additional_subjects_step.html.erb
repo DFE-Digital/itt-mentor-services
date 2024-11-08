@@ -1,9 +1,7 @@
-<% if current_step.errors.any? %>
-  <% page_title = t(".title_with_error", contextual_text:, subject: current_step.addition_subject_category) %>
-<% else %>
-  <% page_title = t(".title", contextual_text:, subject: current_step.addition_subject_category) %>
-<% end %>
-<% content_for :page_title, page_title %>
+<% content_for :page_title, title_with_error_prefix(
+  t(".title", contextual_text:, subject: current_step.addition_subject_category),
+  error: current_step.errors.any?,
+) %>
 
 <%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
   <%= f.govuk_error_summary %>

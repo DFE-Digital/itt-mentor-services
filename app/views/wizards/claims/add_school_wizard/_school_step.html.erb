@@ -1,4 +1,4 @@
-<% content_for :page_title, current_step.errors.any? ? t(".title_with_error") : t(".title") %>
+<% content_for :page_title, title_with_error_prefix(t(".title"), error: current_step.errors.any?) %>
 
 <%= render AutocompleteSelectFormComponent.new(
   model: current_step,

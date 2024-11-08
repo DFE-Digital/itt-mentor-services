@@ -1,8 +1,7 @@
-<% if current_step.errors.any? %>
-  <% content_for :page_title, t(".title_with_error", organisation_count: current_step.schools.count, search_param: current_step.search_params) %>
-<% else %>
-  <% content_for :page_title, t(".title", organisation_count: current_step.schools.count, search_param: current_step.search_params) %>
-<% end %>
+<% content_for :page_title, title_with_error_prefix(
+  t(".title", organisation_count: current_step.schools.count, search_param: current_step.search_params),
+  error: current_step.errors.any?,
+) %>
 
 <%= render OptionsFormComponent.new(
   model: current_step,

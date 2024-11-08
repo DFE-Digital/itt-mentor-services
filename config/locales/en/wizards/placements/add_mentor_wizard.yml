@@ -3,8 +3,7 @@ en:
     placements:
       add_mentor_wizard:
         mentor_step:
-          page_title: Find teacher - %{contextual_text}
-          page_title_with_error: "Error: %{error} - %{contextual_text}"
+          page_title: Find teacher - Mentor details
           caption: Mentor details
           cancel: Cancel
           continue: Continue
@@ -18,7 +17,7 @@ en:
           help_with_the_trn: Help with the TRN
           date_of_birth_hint: For example, 31 3 1980
         check_your_answers_step:
-          page_title: Confirm mentor details - Add mentor - %{contextual_text}
+          page_title: Confirm mentor details
           add_mentor: Confirm and add mentor
           cancel: Cancel
           change: Change
@@ -32,7 +31,7 @@ en:
             I confirm that I have read, understood and accept how DfE uses mentor information as part of the Manage school placements service.
           privacy_notice: Department for Education's (DfE) privacy notice
         no_results_step:
-          page_title: No results found for ‘%{trn}’ - %{contextual_text}
+          page_title: No results found for ‘%{trn}’ - Mentor not found
           caption: Mentor not found
           add_mentor: Add mentor
           change_your_search: Change your search

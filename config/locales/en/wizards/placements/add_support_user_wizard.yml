@@ -3,7 +3,6 @@ en:
     placements:
       add_support_user_wizard:
         support_user_step:
-          title_with_error: "Error: Personal details - Add support user"
           title: Personal details - Add support user
           add_support_user: Add support user
           continue: Continue

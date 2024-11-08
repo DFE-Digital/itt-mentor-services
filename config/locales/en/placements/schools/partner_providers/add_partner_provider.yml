@@ -4,7 +4,6 @@ en:
       partner_providers:
         add_partner_provider:
           edit:
-            caption: Provider details
             cancel: Cancel
           update:
             success_heading: Provider added

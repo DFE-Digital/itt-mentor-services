@@ -10,7 +10,6 @@ en:
           caption: Add organisation
           cancel: Cancel
           continue: Continue
-          title_with_error: "Error: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode."
           title: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode.
         check:
           add_organisation: Add organisation
@@ -20,5 +19,4 @@ en:
           title: Check your answers
         provider_options:
           title: "%{provider_count} results found for ‘%{search_param}’ - Add organisation"
-          title_with_error: "Error: %{provider_count} results found for ‘%{search_param}’- Add organisation"
           cancel: Cancel

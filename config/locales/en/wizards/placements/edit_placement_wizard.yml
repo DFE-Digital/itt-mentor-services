@@ -3,7 +3,6 @@ en:
     placements:
       edit_placement_wizard:
         provider_step:
-          title_with_error: "Error: Select a provider - %{contextual_text}"
           title: Select a provider - %{contextual_text}
           select_a_provider: Select a provider
           not_known: Not yet known
