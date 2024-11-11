@@ -114,7 +114,7 @@ gem "strong_migrations"
 gem "okcomputer"
 
 # OpenStruct [https://github.com/ruby/ostruct]
-gem "ostruct", "~> 0.6.0"
+gem "ostruct", "~> 0.6.1"
 
 # Azure Storage adapter for Active Storage
 gem "azure-blob"
