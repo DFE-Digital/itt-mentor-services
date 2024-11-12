@@ -3,12 +3,9 @@ en:
     claims:
       add_mentor_wizard:
         mentor_step:
+          page_title: Enter a teacher reference number (TRN) - %{contextual_text}
           trn: Teacher reference number (TRN)
           trn_hint: It’s a 7 digit number. For example, 1234567
-          page_title: Enter a teacher reference number (TRN) - Add mentor
-          page_title_with_error: "Error: Enter a teacher reference number (TRN) - Add mentor"
-          add_mentor: Add mentor
-          cancel: Cancel
           continue: Continue
           date_of_birth_hint: For example, 31 3 1980
           find_teacher: Find teacher
@@ -16,10 +13,8 @@ en:
           guidance_html: If your mentor does not have a TRN, share the %{guidance_link} to find a lost TRN, or apply for one.
           guidance_link_text: teacher reference number (TRN) guidance
         check_your_answers_step:
-          page_title: Check your answers - Add mentor
-          add_mentor: Add mentor
+          page_title: Check your answers - %{contextual_text}
           save_mentor: Save mentor
-          cancel: Cancel
           change: Change
           check_your_answers: Check your answers
           trn: Teacher reference number (TRN)
@@ -29,7 +24,6 @@ en:
         no_results:
         no_results_step:
           page_title: No results found for ‘%{trn}’ - %{contextual_text}
-          add_mentor: Add mentor
           change_your_search: Change your search
           help_text: Check that you typed in the teacher reference number (TRN) correctly.
           no_results_found: No results found for ‘%{trn}’

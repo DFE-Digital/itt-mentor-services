@@ -1,12 +1,12 @@
 <% content_for :page_title, t(".page_title", trn: wizard.steps[:mentor].trn, contextual_text:) %>
 <div class="govuk-width-container">
-        <span class="govuk-caption-l"> <%= current_user.support_user? ? "#{t(".add_mentor")} - #{@school.name}" : t(".add_mentor") %></span>
+        <span class="govuk-caption-l"> <%= contextual_text %></span>
   <h1 class="govuk-heading-l"><%= t(".no_results_found", trn: wizard.steps[:mentor].trn) %></h1>
 
   <p class="govuk-body">
     <%= t(".help_text") %>
   </p>
-    <p class="govuk-body">
-      <%= govuk_link_to(t(".change_your_search"), step_path(:mentor)) %>
-    </p>
+  <p class="govuk-body">
+    <%= govuk_link_to(t(".change_your_search"), step_path(:mentor)) %>
+  </p>
 </div>

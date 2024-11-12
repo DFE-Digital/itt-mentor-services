@@ -4,7 +4,7 @@
 <% end %>
 
 <div class="govuk-width-container">
-  <%= render_wizard(@wizard, contextual_text: t(".caption")) %>
+  <%= render_wizard(@wizard, contextual_text: t(".caption", school_name: @school.name)) %>
 
   <p class="govuk-body">
     <%= govuk_link_to(t(".cancel"), claims_support_school_mentors_path(@school), no_visited_state: true) %>
