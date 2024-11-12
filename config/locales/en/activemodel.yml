@@ -135,6 +135,28 @@ en:
             id:
               already_added: "%{school_name} has already been added. Try another school"
               blank: Select a school
+        claims/add_claim_wizard/provider_step:
+          attributes:
+            id:
+              blank: Select a provider
+        claims/add_claim_wizard/mentor_step:
+          attributes:
+            mentor_ids:
+              blank: Select a mentor
+        claims/add_claim_wizard/mentor_training_step:
+          attributes:
+            mentor_id:
+              blank: Select a mentor
+            custom_hours_completed:
+              blank: Enter the number of hours
+              not_an_integer: Enter whole numbers only
+              between: Enter the number of hours between %{min} and %{max}
+            hours_completed:
+              blank: Select the number of hours
+        claims/add_claim_wizard/check_your_answers_step:
+          attributes:
+            base:
+              unclaimable: You cannot submit the claim
         claims/claim/mentor_training_form:
           attributes:
             custom_hours_completed:

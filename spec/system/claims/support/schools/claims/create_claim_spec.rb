@@ -15,7 +15,6 @@ RSpec.describe "Create claim", service: :claims, type: :system do
     create(
       :claims_support_user,
       :colin,
-      user_memberships: [create(:user_membership, organisation: school)],
     )
   end
   let!(:bpn) { create(:claims_provider, :best_practice_network) }
