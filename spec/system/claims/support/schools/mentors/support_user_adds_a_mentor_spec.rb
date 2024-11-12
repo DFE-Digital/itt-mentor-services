@@ -272,13 +272,13 @@ RSpec.describe "Claims support user adds mentors to schools", service: :claims, 
   end
 
   def then_i_see_form_with_trn(trn)
-    expect(page.find("#claims-add-mentor-wizard-mentor-step-trn-field").value).to eq(trn)
+    find_field "TRN", with: trn
   end
 
   def then_i_see_form_with_dob(day, month, year)
-    expect(page.find("#claims_add_mentor_wizard_mentor_step_date_of_birth_1i").value).to eq(year)
-    expect(page.find("#claims_add_mentor_wizard_mentor_step_date_of_birth_2i").value).to eq(month)
-    expect(page.find("#claims_add_mentor_wizard_mentor_step_date_of_birth_3i").value).to eq(day)
+    find_field "Day", with: day
+    find_field "Month", with: month
+    find_field "Year", with: year
   end
 
   def then_i_see_no_results_page(_school_name, trn)
