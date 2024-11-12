@@ -8,7 +8,7 @@ class Claims::AddClaimWizard::MentorStep < BaseStep
   def selected_mentors
     return Claims::Mentor.none if mentors_with_claimable_hours.nil?
 
-    @selected_mentors ||= Claims::Mentor.where(id: mentor_ids).order_by_full_name
+    @selected_mentors ||= mentors_with_claimable_hours.where(id: mentor_ids).order_by_full_name
   end
 
   def all_school_mentors_visible?
@@ -17,5 +17,11 @@ class Claims::AddClaimWizard::MentorStep < BaseStep
 
   def mentor_ids=(value)
     super Array(value).compact_blank
+  end
+
+  private
+
+  def provider
+    @wizard.steps.fetch(:provider).provider
   end
 end
