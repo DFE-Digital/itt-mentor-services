@@ -164,20 +164,6 @@ en:
               blank: Enter a window closing date
               overlap: Select a date that is not within an existing claim window
               greater_than_or_equal_to: Enter a window closing date that is after the opening date
-        placements/mentor_form:
-          attributes:
-            trn:
-              taken: The mentor has already been added
-            date_of_birth:
-              blank: Enter a date of birth
-              less_than: Date of birth must be in the past
-        claims/mentor_form:
-          attributes:
-            trn:
-              taken: The mentor has already been added
-            date_of_birth:
-              blank: Enter a date of birth
-              less_than: Date of birth must be in the past
         user_invite_form:
           attributes:
             email:

@@ -1,4 +1,4 @@
-class Claims::Support::Schools::Mentors::AddMentorController < Claims::ApplicationController
+class Claims::Support::Schools::Mentors::AddMentorController < Claims::Support::ApplicationController
   include WizardController
   include Claims::BelongsToSchool
 

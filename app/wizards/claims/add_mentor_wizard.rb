@@ -9,7 +9,7 @@ module Claims
 
     def define_steps
       add_step(MentorStep)
-      if steps.fetch(:mentor).mentor.nil?
+      if mentor.nil?
         add_step(NoResultsStep)
       else
         add_step(CheckYourAnswersStep)

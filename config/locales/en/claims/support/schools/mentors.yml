@@ -17,31 +17,10 @@ en:
                 trn: Teacher reference number (TRN)
           add_mentor:
             edit:
-              caption: Add mentor
+              caption: Add mentor - %{school_name}
               cancel: Cancel
             update:
               success_heading: Mentor added
-          new:
-            trn: Teacher reference number (TRN)
-            trn_hint: It’s a 7 digit number. For example, 1234567
-            page_title: Enter a teacher reference number (TRN) - Add mentor - %{school_name}
-            add_mentor_with_school_name: Add mentor - %{school_name}
-            cancel: Cancel
-            date_of_birth_hint: For example, 31 3 1980
-            find_teacher: Find teacher
-            continue: Continue
-            enter_a_trn: Enter a teacher reference number (TRN)
-            add_mentor: Add mentor - %{school_name}
-          check:
-            save_mentor: Save mentor
-            date_of_birth: Date of birth
-            page_title: Check your answers - Add mentor - %{school_name}
-            add_mentor: Add mentor
-            add_mentor_with_school_name: Add mentor - %{school_name}
-            cancel: Cancel
-            change: Change
-            check_your_answers: Check your answers
-            trn: Teacher reference number (TRN)
           no_results:
             page_title: No results found for ‘%{trn}’ - Add mentor - %{school_name}
             add_mentor_with_school_name: Add mentor - %{school_name}
