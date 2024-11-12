@@ -34,6 +34,12 @@ scope module: :claims, as: :claims, constraints: {
   resources :schools, only: %i[index show] do
     scope module: :schools do
       resources :claims do
+        collection do
+          get "new", to: "claims/add_claim#new", as: :new_add_claim
+          get "new/:state_key/:step", to: "claims/add_claim#edit", as: :add_claim
+          put "new/:state_key/:step", to: "claims/add_claim#update"
+        end
+
         resource :mentors, only: %i[new create edit update], module: :claims do
           member do
             get :create_revision

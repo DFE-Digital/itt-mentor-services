@@ -51,11 +51,11 @@ class Claims::Claim < ApplicationRecord
 
   has_many :mentor_trainings, dependent: :destroy
   has_many :mentors, through: :mentor_trainings
-
   has_many :provider_sampling_claims, dependent: :destroy
   has_many :provider_samplings, through: :provider_sampling_claims
-
   has_many :clawback_claims, dependent: :destroy
+
+  accepts_nested_attributes_for :mentor_trainings
 
   validates :status, presence: true
   validates(
