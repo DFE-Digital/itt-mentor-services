@@ -40,7 +40,7 @@ class PlacementDecorator < Draper::Decorator
   def term_names
     if terms.exists?
       terms.order_by_term.pluck(:name).join(", ")
-    elsif new_record?
+    elsif new_record? && terms.any?
       terms.map(&:name).sort.join(", ")
     else
       I18n.t("placements.schools.placements.terms.any_term")

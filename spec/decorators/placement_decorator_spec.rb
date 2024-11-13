@@ -144,14 +144,34 @@ RSpec.describe PlacementDecorator do
     end
 
     context "when the placement is a new record" do
-      it "returns a list of term names" do
-        placement = build(:placement)
-        term1 = build(:placements_term, :spring)
-        term2 = build(:placements_term, :autumn)
-        placement.terms << term1
-        placement.terms << term2
+      context "and the placement has no terms" do
+        it "returns Any term" do
+          placement = build(:placement)
 
-        expect(placement.decorate.term_names).to eq("Autumn term, Spring term")
+          expect(placement.decorate.term_names).to eq("Any time in the academic year")
+        end
+      end
+
+      context "and the placement has one term" do
+        it "returns the term name" do
+          placement = build(:placement)
+          term = build(:placements_term, :autumn)
+          placement.terms << term
+
+          expect(placement.decorate.term_names).to eq("Autumn term")
+        end
+      end
+
+      context "and the placement has multiple terms" do
+        it "returns a list of term names" do
+          placement = build(:placement)
+          term1 = build(:placements_term, :spring)
+          term2 = build(:placements_term, :autumn)
+          placement.terms << term1
+          placement.terms << term2
+
+          expect(placement.decorate.term_names).to eq("Autumn term, Spring term")
+        end
       end
     end
   end
