@@ -175,6 +175,7 @@ RSpec.describe "Secondary school user adds a placement", service: :placements, t
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
     expect(page).to have_element(:legend, text: "Select a subject", class: "govuk-fieldset__legend")
+    expect(page).to have_link("Cancel", href: "/schools/#{@school.id}/placements")
   end
 
   def and_i_see_the_secondary_subjects
@@ -210,6 +211,7 @@ RSpec.describe "Secondary school user adds a placement", service: :placements, t
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
     expect(page).to have_element(:legend, text: "Select an academic year", class: "govuk-fieldset__legend")
+    expect(page).to have_link("Cancel", href: "/schools/#{@school.id}/placements")
   end
 
   def and_i_see_the_academic_years
@@ -230,6 +232,7 @@ RSpec.describe "Secondary school user adds a placement", service: :placements, t
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
     expect(page).to have_element(:div, text: "Provide estimate term dates. You can discuss specific start and end dates with providers after the placement is published.", class: "govuk-hint")
+    expect(page).to have_link("Cancel", href: "/schools/#{@school.id}/placements")
   end
 
   def and_i_see_the_term_dates
@@ -255,6 +258,7 @@ RSpec.describe "Secondary school user adds a placement", service: :placements, t
     expect(page).to have_element(:legend, text: "Select a mentor", class: "govuk-fieldset__legend")
     expect(page).to have_element(:div, text: "Some placements may have more than one mentor. For example, if a mentor works part time. You can change who the mentor is after you have published the placement.", class: "govuk-hint")
     expect(page).to have_element(:span, text: "My mentor is not listed", class: "govuk-details__summary-text")
+    expect(page).to have_link("Cancel", href: "/schools/#{@school.id}/placements")
   end
 
   def when_i_click_on_my_mentor_is_not_listed
@@ -289,6 +293,7 @@ RSpec.describe "Secondary school user adds a placement", service: :placements, t
     expect(page).to have_element(:div, text: "When a placement is published, it will be visible to teacher training providers.", class: "govuk-inset-text")
     expect(page).to have_button("Publish placement")
     expect(page).to have_element(:a, text: "Preview placement", class: "govuk-link")
+    expect(page).to have_link("Cancel", href: "/schools/#{@school.id}/placements")
   end
 
   def and_i_see_the_placement_details
