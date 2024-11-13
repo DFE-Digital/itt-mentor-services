@@ -176,7 +176,7 @@ RSpec.describe "All-through school user adds a placement", service: :placements,
 
     @mentor_john_smith = create(:placements_mentor, first_name: "John", last_name: "Smith", schools: [@school])
     @mentor_jane_doe = create(:placements_mentor, first_name: "Jane", last_name: "Doe", schools: [@school])
-    
+
     current_academic_year = Placements::AcademicYear.current
     @current_academic_year_name = current_academic_year.name
     @next_academic_year_name = current_academic_year.next.name
@@ -260,7 +260,6 @@ RSpec.describe "All-through school user adds a placement", service: :placements,
     expect(page).not_to have_field("English", type: :radio)
     expect(page).not_to have_field("Mathematics", type: :radio)
   end
-
 
   def when_i_click_on_the_back_link
     click_on "Back"
@@ -560,7 +559,6 @@ RSpec.describe "All-through school user adds a placement", service: :placements,
     expect(page).to have_summary_list_row("Admissions policy", "Not applicable")
     expect(page).to have_summary_list_row("Percentage free school meals", "15%")
     expect(page).to have_summary_list_row("Ofsted rating", "Outstanding")
-
   end
 
   def when_i_click_on_edit_placement
