@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "User publishes a placement after preview", service: :placements, type: :system do
   scenario do
-    given_that_placements_data_exists
+    given_that_placements_exist
     and_i_am_signed_in
 
     when_i_am_on_the_placements_index_page
@@ -32,28 +32,31 @@ RSpec.describe "User publishes a placement after preview", service: :placements,
     when_i_click_on_preview_placement
     then_i_see_the_preview_placement_page
 
-    # Test that the publishing a placement works as expected
+    # Test that publishing a placement works as expected
     when_i_click_on_publish_placement
     then_i_see_the_placement_placements_index_page
     and_i_see_a_success_message
     and_i_see_my_placement
   end
 
-  def given_that_placements_data_exists
-    @school = create(:placements_school, name: "Hogwarts",
-                                         address1: "Westgate Street",
-                                         address2: "Hackney",
-                                         postcode: "E8 3RL",
-                                         group: "Local authority maintained schools",
-                                         phase: "Secondary",
-                                         gender: "Mixed",
-                                         minimum_age: 11,
-                                         maximum_age: 18,
-                                         religious_character: "Does not apply",
-                                         admissions_policy: "Not applicable",
-                                         urban_or_rural: "(England/Wales) Urban major conurbation",
-                                         percentage_free_school_meals: 15,
-                                         rating: "Outstanding")
+  def given_that_placements_exist
+    @school = create(
+      :placements_school,
+      name: "Hogwarts",
+      address1: "Westgate Street",
+      address2: "Hackney",
+      postcode: "E8 3RL",
+      group: "Local authority maintained schools",
+      phase: "Secondary",
+      gender: "Mixed",
+      minimum_age: 11,
+      maximum_age: 18,
+      religious_character: "Does not apply",
+      admissions_policy: "Not applicable",
+      urban_or_rural: "(England/Wales) Urban major conurbation",
+      percentage_free_school_meals: 15,
+      rating: "Outstanding",
+    )
 
     @secondary_english_subject = create(:subject, name: "English", subject_area: :secondary)
 
