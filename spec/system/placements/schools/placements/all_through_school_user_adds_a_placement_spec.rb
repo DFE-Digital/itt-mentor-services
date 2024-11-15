@@ -594,9 +594,11 @@ RSpec.describe "All-through school user adds a placement", service: :placements,
   end
 
   def then_i_see_my_placement
-    expect(page).to have_element(:td, text: "Mathematics", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Jane Doe", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Summer term", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Not yet known", class: "govuk-table__cell")
+    expect(page).to have_table_row({
+      "Subject" => "Mathematics",
+      "Mentor" => "Jane Doe",
+      "Expected date" => "Summer term",
+      "Provider" => "Not yet known",
+    })
   end
 end

@@ -216,9 +216,11 @@ RSpec.describe "User publishes a placement after preview", service: :placements,
   end
 
   def and_i_see_my_placement
-    expect(page).to have_element(:td, text: "English", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "John Smith", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Autumn term, Spring term", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Not yet known", class: "govuk-table__cell")
+    expect(page).to have_table_row({
+      "Subject" => "English",
+      "Mentor" => "John Smith",
+      "Expected date" => "Autumn term, Spring term",
+      "Provider" => "Not yet known",
+    })
   end
 end

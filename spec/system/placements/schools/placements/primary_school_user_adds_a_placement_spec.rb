@@ -550,9 +550,11 @@ RSpec.describe "Primary school user adds a placement", service: :placements, typ
   end
 
   def then_i_see_my_placement
-    expect(page).to have_element(:td, text: "Primary with mathematics (Year 2)", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Jane Doe", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Summer term", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Not yet known", class: "govuk-table__cell")
+    expect(page).to have_table_row({
+      "Subject" => "Primary with mathematics (Year 2)",
+      "Mentor" => "Jane Doe",
+      "Expected date" => "Summer term",
+      "Provider" => "Not yet known",
+    })
   end
 end

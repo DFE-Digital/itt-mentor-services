@@ -23,6 +23,44 @@ module GovukComponentMatchers
     end
   end
 
+  #
+  # Asserts a table row exists with all of the specified column names and values.
+  #
+  # Example usage:
+  #
+  #   expect(page).to have_table_row({
+  #     "Name" => "Joe Bloggs",
+  #     "Email address" => "joe.bloggs@example.com",
+  #   })
+  #
+  # Things to note:
+  #
+  #  - The order of columns within the table does not matter.
+  #  - The table row may contain additional columns. This isn't an exclusive matcher.
+  #  - This matcher simply asserts that all the expected column names and values
+  #    exist within a single table row.
+  #
+  matcher :have_table_row do |expected_row|
+    match do |page|
+      all_rows = page.all("tbody.govuk-table__body tr.govuk-table__row")
+
+      # Does a table row exist which contains...
+      all_rows.any? do |row|
+        thead = row.find(:xpath, "ancestor::table/thead")
+
+        # ...all of the expected header & value pairs?
+        expected_row.all? do |expected_header, expected_value|
+          td = row.find("td.govuk-table__cell", text: expected_value)
+          td_index = td.find_xpath("./preceding-sibling::td").count
+          thead.find("th.govuk-table__header:nth-of-type(#{td_index + 1})", text: expected_header)
+          true
+        rescue Capybara::ElementNotFound
+          false
+        end
+      end
+    end
+  end
+
   matcher :have_filter_tag do |text|
     match do |page|
       page.find(".app-filter-tags .app-filter__tag", text:)
