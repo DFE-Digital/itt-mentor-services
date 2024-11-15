@@ -56,7 +56,11 @@ module Claims
       raise "Invalid wizard state" unless valid?
       return unless claim.valid_mentor_training_hours?
 
-      Claims::Claim::Submit.call(claim:, user: created_by)
+      if created_by.support_user?
+        Claims::Claim::CreateDraft.call(claim: @claim)
+      else
+        Claims::Claim::Submit.call(claim:, user: created_by)
+      end
     end
 
     def mentors_with_claimable_hours

@@ -7,9 +7,11 @@
       <h1 class="govuk-heading-l"><%= t(".page_title") %></h1>
 
       <%= govuk_summary_list do |summary_list| %>
-        <% summary_list.with_row do |row| %>
-          <% row.with_key(text: Claims::Claim.human_attribute_name(:school)) %>
-          <% row.with_value(text: @wizard.school.name) %>
+        <% unless current_user.support_user? %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: Claims::Claim.human_attribute_name(:school)) %>
+            <% row.with_value(text: @wizard.school.name) %>
+          <% end %>
         <% end %>
 
         <% summary_list.with_row do |row| %>
@@ -104,7 +106,7 @@
         </div>
       <% end %>
 
-      <%= f.govuk_submit t(".submit") %>
+      <%= f.govuk_submit current_user.support_user? ? t(".save") : t(".submit") %>
     </div>
   </div>
 <% end %>

@@ -41,6 +41,7 @@ en:
           hour: hour
           grant_funding: Grant funding
           hours_of_training: Hours of training
+          save: Save claim
         no_mentors_step:
           heading_empty: No mentors for %{provider_name}
           no_mentors_with_claimable_hours: There are no mentors you can include in a claim because they have already had 20 hours of training claimed for with %{provider_name}.

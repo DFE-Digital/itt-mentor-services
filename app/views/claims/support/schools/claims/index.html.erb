@@ -10,7 +10,7 @@
     <% if @school.mentors.any? %>
       <%= govuk_inset_text text: t(".guidance", start_year: Claims::ClaimWindow.current.academic_year.starts_on.year, end_year: Claims::ClaimWindow.current.academic_year.ends_on.year) %>
 
-      <%= govuk_button_link_to t(".add_claim"), new_claims_support_school_claim_path %>
+      <%= govuk_button_link_to t(".add_claim"), new_add_claim_claims_support_school_claims_path %>
     <% else %>
       <%= govuk_inset_text text: t(".add_mentor_guidance_html", link_to: govuk_link_to(t(".add_a_mentor"), claims_support_school_mentors_path(@school))) %>
     <% end %>
