@@ -36,7 +36,7 @@ RSpec.describe "Support user publishes a placement after preview", service: :pla
 
     # Test that publishing a placement works as expected
     when_i_click_on_publish_placement
-    then_i_see_the_placement_placements_index_page
+    then_i_see_the_placements_index_page
     and_i_see_a_success_message
     and_i_see_my_placement
   end
@@ -211,7 +211,7 @@ RSpec.describe "Support user publishes a placement after preview", service: :pla
     click_on "Publish placement"
   end
 
-  def then_i_see_the_placement_placements_index_page
+  def then_i_see_the_placements_index_page
     expect(page).to have_title("Placements - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
