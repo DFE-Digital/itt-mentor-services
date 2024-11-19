@@ -11,8 +11,6 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
     @pagy, @claims = pagy(@school.claims.active.order_created_at_desc)
   end
 
-  def new; end
-
   def show; end
 
   def remove; end
@@ -23,14 +21,6 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
     redirect_to claims_support_school_claims_path(@school, @claim), flash: {
       heading: t(".success"),
     }
-  end
-
-  def create
-    if claim_provider_form.save
-      redirect_to new_claims_support_school_claim_mentors_path(@school, claim_provider_form.claim)
-    else
-      render :new
-    end
   end
 
   def create_revision

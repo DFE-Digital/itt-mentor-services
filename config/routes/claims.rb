@@ -33,7 +33,7 @@ scope module: :claims, as: :claims, constraints: {
 
   resources :schools, only: %i[index show] do
     scope module: :schools do
-      resources :claims do
+      resources :claims, except: %i[new create] do
         collection do
           get "new", to: "claims/add_claim#new", as: :new_add_claim
           get "new/:state_key/:step", to: "claims/add_claim#edit", as: :add_claim
@@ -217,7 +217,7 @@ scope module: :claims, as: :claims, constraints: {
       end
 
       scope module: :schools do
-        resources :claims do
+        resources :claims, except: %i[new create] do
           collection do
             get "new", to: "claims/add_claim#new", as: :new_add_claim
             get "new/:state_key/:step", to: "claims/add_claim#edit", as: :add_claim

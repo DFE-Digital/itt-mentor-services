@@ -12,16 +12,6 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
     @pagy, @claims = pagy(@school.claims.active.order_created_at_desc)
   end
 
-  def new; end
-
-  def create
-    if claim_provider_form.save
-      redirect_to new_claims_school_claim_mentors_path(@school, claim_provider_form.claim)
-    else
-      render :new
-    end
-  end
-
   def create_revision
     revision = Claims::Claim::CreateRevision.call(claim: @claim)
     redirect_to edit_claims_school_claim_path(@school, revision)
