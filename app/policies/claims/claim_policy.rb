@@ -28,7 +28,14 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
   end
 
   def confirmation?
-    record.submitted?
+    !user.support_user? && record.submitted?
+  end
+
+  # TODO: Remove record.draft? and not create drafts for existing drafts
+  def draft?
+    return true if record.new_record?
+
+    current_claim_window? && user.support_user? && (record.internal_draft? || record.draft?)
   end
 
   def check?

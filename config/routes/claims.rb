@@ -56,9 +56,12 @@ scope module: :claims, as: :claims, constraints: {
           get :remove
           get :check
           get :confirmation
-          get :rejected
           get :create_revision
           post :submit
+        end
+
+        collection do
+          get :rejected
         end
       end
 
@@ -235,9 +238,12 @@ scope module: :claims, as: :claims, constraints: {
           member do
             get :remove
             get :check
-            get :rejected
             post :draft
             get :create_revision
+          end
+
+          collection do
+            get :rejected
           end
         end
 

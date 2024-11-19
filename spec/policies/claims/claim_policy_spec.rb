@@ -6,7 +6,7 @@ describe Claims::ClaimPolicy do
   let(:user) { build(:claims_user) }
   let(:internal_draft_claim) { build(:claim) }
   let(:draft_claim) { build(:claim, :draft) }
-  let(:submitted_claim) { build(:claim, :submitted) }
+  let(:submitted_claim) { create(:claim, :submitted) }
 
   let(:payment_in_progress_claim) { create(:claim, :submitted, status: :payment_in_progress) }
   let(:payment_information_requested_claim) do
@@ -143,7 +143,21 @@ describe Claims::ClaimPolicy do
 
     context "when the user has a payment information requested claim" do
       it "denies access" do
-        expect(claim_policy).not_to permit(user, payment_information_requested_claim)
+        expect(claim_policy).not_to permit(support_user, submitted_claim)
+      end
+    end
+  end
+
+  permissions :rejected? do
+    context "when user has an new claim (unsaved)" do
+      it "grants access" do
+        expect(claim_policy).to permit(user, Claims::Claim.new)
+      end
+    end
+
+    context "when user has an internal draft claim" do
+      it "grants access" do
+        expect(claim_policy).to permit(user, internal_draft_claim)
       end
     end
 
