@@ -4,6 +4,7 @@ class Claims::AddClaimWizard::MentorTrainingStep < BaseStep
   attribute :custom_hours_completed
 
   validates :mentor_id, presence: true
+  validates :hours_completed, presence: true
   validates(
     :hours_completed,
     presence: true,
@@ -22,6 +23,10 @@ class Claims::AddClaimWizard::MentorTrainingStep < BaseStep
     between: { min: 1, max: :max_hours },
     if: :custom_hours_selected?,
   )
+
+  delegate :full_name, to: :mentor, prefix: true
+  delegate :name, to: :provider, prefix: true
+  delegate :provider, to: :wizard
 
   def mentor
     @mentor ||= @wizard.steps.fetch(:mentor).selected_mentors.find_by(id: mentor_id)
@@ -42,10 +47,6 @@ class Claims::AddClaimWizard::MentorTrainingStep < BaseStep
   def total_hours_completed
     (custom_hours_completed.presence || hours_completed).to_i
   end
-
-  delegate :full_name, to: :mentor, prefix: true
-  delegate :name, to: :provider, prefix: true
-  delegate :provider, to: :wizard
 
   private
 
