@@ -11,14 +11,16 @@ class Claims::Support::Schools::Claims::AddClaimController < Claims::Support::Ap
       render "edit"
     elsif @wizard.next_step.present?
       redirect_to step_path(@wizard.next_step)
-    elsif @wizard.valid?
-      @wizard.create_claim
-      @wizard.reset_state
-      redirect_to claims_support_school_claims_path(@school), flash: {
-        heading: t(".success"),
-      }
     else
-      redirect_to rejected_claims_support_school_claim_path(@school)
+      begin
+        @wizard.create_claim
+        @wizard.reset_state
+        redirect_to claims_support_school_claims_path(@school), flash: {
+          heading: t(".success"),
+        }
+      rescue StandardError
+        redirect_to rejected_claims_support_school_claims_path(@school)
+      end
     end
   end
 

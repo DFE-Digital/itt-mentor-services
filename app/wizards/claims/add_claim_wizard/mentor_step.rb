@@ -18,10 +18,4 @@ class Claims::AddClaimWizard::MentorStep < BaseStep
   def mentor_ids=(value)
     super Array(value).compact_blank
   end
-
-  private
-
-  def provider
-    @wizard.steps.fetch(:provider).provider
-  end
 end

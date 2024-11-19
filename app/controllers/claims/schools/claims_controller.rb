@@ -2,7 +2,7 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   include Claims::BelongsToSchool
 
   before_action :has_school_accepted_grant_conditions?
-  before_action :set_claim, only: %i[show check confirmation submit edit update rejected create_revision remove destroy]
+  before_action :set_claim, only: %i[show check confirmation submit edit update create_revision remove destroy]
   before_action :authorize_claim
   before_action :get_valid_revision, only: :check
 
@@ -103,7 +103,7 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   end
 
   def authorize_claim
-    authorize @claim || Claims::Claim
+    authorize @claim || Claims::Claim.new
   end
 
   def get_valid_revision

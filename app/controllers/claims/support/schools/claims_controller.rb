@@ -1,7 +1,7 @@
 class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationController
   include Claims::BelongsToSchool
 
-  before_action :set_claim, only: %i[check draft show edit update remove destroy rejected create_revision]
+  before_action :set_claim, only: %i[check draft show edit update remove destroy create_revision]
   before_action :authorize_claim
   before_action :get_valid_revision, only: :check
 
@@ -112,7 +112,7 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
   end
 
   def authorize_claim
-    authorize @claim || Claims::Claim
+    authorize @claim || Claims::Claim.new
   end
 
   def get_valid_revision
