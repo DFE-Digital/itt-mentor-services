@@ -218,22 +218,6 @@ RSpec.describe Claims::AddClaimWizard do
         end
       end
     end
-
-    context "when the mentors have no available training hours with the provider" do
-      before do
-        existing_claim = create(:claim, :submitted, provider:, school:, claim_window:)
-        create(:mentor_training,
-               claim: existing_claim,
-               hours_completed: 20,
-               mentor: mentor_1,
-               provider:,
-               date_completed: claim_window.starts_on)
-      end
-
-      it "does not create a claim" do
-        expect { create_claim }.to raise_error("Invalid wizard state")
-      end
-    end
   end
 
   describe "#mentors_with_claimable_hours" do

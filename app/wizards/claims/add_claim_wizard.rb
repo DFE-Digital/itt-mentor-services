@@ -53,8 +53,6 @@ module Claims
     end
 
     def create_claim
-      raise "Invalid wizard state" unless valid?
-
       if created_by.support_user?
         Claims::Claim::CreateDraft.call(claim:)
       else
