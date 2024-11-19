@@ -60,6 +60,10 @@ scope module: :claims, as: :claims, constraints: {
           get :create_revision
           post :submit
         end
+
+        collection do
+          get :rejected
+        end
       end
 
       resource :grant_conditions, only: %i[show update]
@@ -228,6 +232,10 @@ scope module: :claims, as: :claims, constraints: {
             get :check
             post :draft
             get :create_revision
+          end
+
+          collection do
+            get :rejected
           end
         end
 
