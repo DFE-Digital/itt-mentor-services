@@ -99,28 +99,31 @@ module GovukComponentMatchers
 
   matcher :have_success_banner do |text|
     match do |page|
-      within ".govuk-notification-banner.govuk-notification-banner--success" do
+      page.within(".govuk-notification-banner.govuk-notification-banner--success") do
         page.find(".govuk-notification-banner__title", text: "Success")
         page.find(".govuk-notification-banner__heading", text:)
-        true
-      rescue Capybara::ElementNotFound
-        false
       end
+      true
+    rescue Capybara::ElementNotFound
+      false
     end
   end
 
   matcher :have_important_banner do |text|
     match do |page|
-      within ".govuk-notification-banner" do
+      page.within(".govuk-notification-banner") do
         page.find(".govuk-notification-banner__title", text: "Important")
         page.find(".govuk-notification-banner__heading", text:)
       end
+      true
+    rescue Capybara::ElementNotFound
+      false
     end
   end
 
   matcher :have_validation_error do |text|
     match do |page|
-      within ".govuk-error-summary" do
+      page.within(".govuk-error-summary") do
         page.find(".govuk-error-summary__title", text: "There is a problem")
         page.find(".govuk-error-summary__list a", text:)
       end
