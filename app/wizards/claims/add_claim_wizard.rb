@@ -83,7 +83,7 @@ module Claims
 
     def step_name(step_class, id = nil)
       # e.g. YearGroupStep becomes :year_group
-      name = step_class.name.chomp("Step").demodulize.underscore
+      name = super(step_class)
       return name.to_sym if id.blank?
 
       # e.g. with id it becomes :year_group_#{id}
