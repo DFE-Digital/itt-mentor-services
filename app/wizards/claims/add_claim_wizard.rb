@@ -54,10 +54,9 @@ module Claims
 
     def create_claim
       raise "Invalid wizard state" unless valid?
-      return unless claim.valid_mentor_training_hours?
 
       if created_by.support_user?
-        Claims::Claim::CreateDraft.call(claim: @claim)
+        Claims::Claim::CreateDraft.call(claim:)
       else
         Claims::Claim::Submit.call(claim:, user: created_by)
       end
