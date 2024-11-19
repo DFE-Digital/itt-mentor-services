@@ -4,7 +4,7 @@ class Claims::AddClaimWizard::ProviderStep < BaseStep
   validates :id, presence: true, inclusion: { in: ->(step) { step.providers_for_selection.ids } }
 
   def providers_for_selection
-    Claims::Provider.private_beta_providers.select(:id, :name)
+    Claims::Provider.private_beta_providers.order_by_name.select(:id, :name)
   end
 
   def provider
