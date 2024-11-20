@@ -11,7 +11,7 @@ RSpec.describe "Placements / Support / Schools / Support User adds a School",
 
   after { Capybara.app_host = nil }
 
-  scenario "Colin adds a new School", :js, retry: 3 do
+  scenario "Colin adds a new School", :js do
     when_i_visit_the_add_organisation_page
     and_choose_to_add_a_school
     and_i_click_continue
@@ -26,7 +26,7 @@ RSpec.describe "Placements / Support / Schools / Support User adds a School",
     and_i_see_success_message
   end
 
-  scenario "Colin adds a school which already exists", :js, retry: 3 do
+  scenario "Colin adds a school which already exists", :js do
     given_a_school_already_exists_for_placements
     when_i_visit_the_add_organisation_page
     and_choose_to_add_a_school
@@ -38,7 +38,7 @@ RSpec.describe "Placements / Support / Schools / Support User adds a School",
     then_i_see_an_error("Placements School has already been added. Try another school")
   end
 
-  scenario "Colin submits the search form without selecting a school", :js, retry: 3 do
+  scenario "Colin submits the search form without selecting a school", :js do
     when_i_visit_the_add_organisation_page
     and_choose_to_add_a_school
     and_i_click_continue
@@ -47,7 +47,7 @@ RSpec.describe "Placements / Support / Schools / Support User adds a School",
     then_i_see_an_error("Enter a school name, unique reference number (URN) or postcode")
   end
 
-  scenario "Colin reconsiders onboarding a school", :js, retry: 3 do
+  scenario "Colin reconsiders onboarding a school", :js do
     when_i_visit_the_add_organisation_page
     and_choose_to_add_a_school
     and_i_click_continue
@@ -82,7 +82,7 @@ RSpec.describe "Placements / Support / Schools / Support User adds a School",
   end
 
   def then_i_see_a_dropdown_item_for(school_name)
-    expect(page).to have_css(".autocomplete__option", text: school_name)
+    expect(page).to have_css(".autocomplete__option", text: school_name, wait: 10)
   end
 
   def when_i_click_the_dropdown_item_for(school_name)

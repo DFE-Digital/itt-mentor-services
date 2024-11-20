@@ -12,7 +12,6 @@
 # the additional setup, and require it from the spec files that actually need
 # it.
 
-require "rspec/retry"
 require "pundit/rspec"
 require "audited-rspec"
 require "simplecov"
@@ -128,11 +127,4 @@ RSpec.configure do |config|
   #   # test failures related to randomization by passing the same `--seed` value
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
-
-  # Configuration for re-trying flaky tests.
-  # See https://github.com/DFE-Digital/rspec-retry for documentation
-  # (Optional) show retry status in spec process
-  config.verbose_retry = true
-  # (Optional) show exception that triggers a retry if verbose_retry is set to true
-  config.display_try_failure_messages = true
 end
