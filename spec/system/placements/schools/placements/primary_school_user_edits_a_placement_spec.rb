@@ -171,8 +171,7 @@ RSpec.describe "Primary school user edits a placement", service: :placements, ty
   def then_i_see_the_placement_details_page
     expect(page).to have_title("Primary with english (Year 1) - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
-    # TODO: create tag matcher
-    expect(page).to have_element(:strong, text: "Available", class: "govuk-tag govuk-tag--turquoise")
+    expect(page).to have_tag("Available", "turquoise")
     expect(page).to have_summary_list_row("Subject", "Primary")
     expect(page).to have_summary_list_row("Year group", "Year 1")
     expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
@@ -237,8 +236,7 @@ RSpec.describe "Primary school user edits a placement", service: :placements, ty
   def then_i_see_the_placement_details_page_with_my_updated_year_group
     expect(page).to have_title("Primary with english (Year 2) - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
-    # TODO: create tag matcher
-    expect(page).to have_element(:strong, text: "Available", class: "govuk-tag govuk-tag--turquoise")
+    expect(page).to have_tag("Available", "turquoise")
     expect(page).to have_summary_list_row("Subject", "Primary")
     expect(page).to have_summary_list_row("Year group", "Year 2")
     expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
@@ -355,7 +353,7 @@ RSpec.describe "Primary school user edits a placement", service: :placements, ty
   end
 
   def then_i_see_the_placement_details_page_with_jane_doe
-    expect(page).to have_element(:strong, text: "Available", class: "govuk-tag govuk-tag--turquoise")
+    expect(page).to have_tag("Available", "turquoise")
     expect(page).to have_summary_list_row("Subject", "Primary")
     expect(page).to have_summary_list_row("Year group", "Year 2")
     expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
@@ -401,7 +399,7 @@ RSpec.describe "Primary school user edits a placement", service: :placements, ty
   def then_i_see_the_placement_details_page_with_aes_sedai_trust
     expect(page).to have_title("Primary with english (Year 2) - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_element(:strong, text: "Unavailable", class: "govuk-tag govuk-tag--orange")
+    expect(page).to have_tag("Unavailable", "orange")
     expect(page).to have_summary_list_row("Subject", "Primary")
     expect(page).to have_summary_list_row("Year group", "Year 2")
     expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
@@ -426,7 +424,7 @@ RSpec.describe "Primary school user edits a placement", service: :placements, ty
   def then_i_see_the_placement_details_page_with_the_ashaman_trust
     expect(page).to have_title("Primary with english (Year 2) - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_element(:strong, text: "Unavailable", class: "govuk-tag govuk-tag--orange")
+    expect(page).to have_tag("Unavailable", "orange")
     expect(page).to have_summary_list_row("Subject", "Primary")
     expect(page).to have_summary_list_row("Year group", "Year 2")
     expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
