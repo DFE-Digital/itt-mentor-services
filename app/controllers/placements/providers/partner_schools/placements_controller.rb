@@ -20,6 +20,6 @@ class Placements::Providers::PartnerSchools::PlacementsController < Placements::
   end
 
   def placements
-    policy_scope(@partner_school.placements, policy_scope_class: Placements::Provider::PlacementPolicy::Scope)
+    policy_scope([:provider, @partner_school.placements])
   end
 end

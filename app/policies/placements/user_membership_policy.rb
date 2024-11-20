@@ -13,4 +13,10 @@ class Placements::UserMembershipPolicy < ApplicationPolicy
   def remove?
     destroy?
   end
+
+  class Scope < ApplicationPolicy::Scope
+    def resolve
+      scope.where(user_id: user.id)
+    end
+  end
 end

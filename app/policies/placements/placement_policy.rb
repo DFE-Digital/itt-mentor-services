@@ -1,4 +1,4 @@
-class PlacementPolicy < ApplicationPolicy
+class Placements::PlacementPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
       return scope if user.support_user?

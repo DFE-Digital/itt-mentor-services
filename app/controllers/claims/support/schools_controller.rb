@@ -42,6 +42,6 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
   end
 
   def authorize_school
-    authorize @school || Claims::School, policy_class: Claims::SchoolPolicy
+    authorize @school || Claims::School
   end
 end

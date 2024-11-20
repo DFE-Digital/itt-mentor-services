@@ -25,10 +25,7 @@ class Placements::Schools::PartnerProvidersController < Placements::Partnerships
   end
 
   def partner_providers
-    policy_scope(
-      @school.partner_providers,
-      policy_scope_class: Placements::Partnership::ProviderPolicy::Scope,
-    )
+    policy_scope([:partnership, @school.partner_providers])
   end
 
   def set_partnership

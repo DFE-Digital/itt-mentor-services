@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   default_form_builder(GOVUKDesignSystemFormBuilder::FormBuilder)
 
-  helper_method :current_user, :support_controller?
+  helper_method :current_user, :support_controller?, :policy_scope
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
@@ -73,5 +73,9 @@ class ApplicationController < ActionController::Base
     else
       redirect_back(fallback_location: root_path)
     end
+  end
+
+  def unwrap_pundit_scope(scope)
+    scope.is_a?(Array) ? scope : [scope]
   end
 end

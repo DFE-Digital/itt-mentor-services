@@ -1,4 +1,4 @@
-class GrantConditions::Claims::SchoolPolicy < Claims::ApplicationPolicy
+class Claims::GrantConditions::SchoolPolicy < Claims::ApplicationPolicy
   def show?
     record.users.include?(user)
   end

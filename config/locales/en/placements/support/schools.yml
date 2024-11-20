@@ -2,8 +2,6 @@ en:
   placements:
     support:
       schools:
-        school_options:
-          cancel: Cancel
         create:
           organisation_added: Organisation added
         new:

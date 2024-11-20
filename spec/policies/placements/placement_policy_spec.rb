@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe PlacementPolicy do
+RSpec.describe Placements::PlacementPolicy do
   subject(:placement_policy) { described_class }
 
   let(:current_user) { create(:placements_user, schools: [school]) }

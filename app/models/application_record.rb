@@ -1,6 +1,8 @@
 class ApplicationRecord < ActiveRecord::Base
   primary_abstract_class
 
+  include DemodulizesPolicyClass
+
   def valid_attributes?(*attributes)
     attributes.each do |attribute|
       self.class.validators_on(attribute).each do |validator|

@@ -1,4 +1,4 @@
-class Claims::ClaimPolicy < Claims::ApplicationPolicy
+class Claims::Support::ClaimPolicy < Claims::ApplicationPolicy
   def create?
     current_claim_window?
   end
@@ -16,23 +16,28 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
   end
 
   def submit?
-    current_claim_window? && !record.submitted?
+    current_claim_window? && !user.support_user? && !record.submitted?
   end
 
   def rejected?
-    submit?
+    submit? || draft?
   end
 
   def destroy?
     record.draft?
   end
 
-  def confirmation?
-    record.submitted?
+  # TODO: Remove record.draft? and not create drafts for existing drafts
+  def draft?
+    current_claim_window? && user.support_user? && (record.internal_draft? || record.draft?)
   end
 
   def check?
     record.draft? || record.internal_draft?
+  end
+
+  def download_csv?
+    user.support_user?
   end
 
   private
