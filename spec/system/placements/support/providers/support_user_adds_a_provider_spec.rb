@@ -10,7 +10,7 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
 
   after { Capybara.app_host = nil }
 
-  scenario "Colin adds a new Provider", :js, retry: 3 do
+  scenario "Colin adds a new Provider", :js do
     when_i_visit_the_add_organisation_page
     and_choose_to_add_a_provider
     and_i_click_continue
@@ -25,7 +25,7 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
     and_i_see_success_message
   end
 
-  scenario "Colin adds a Provider which already exists", :js, retry: 3 do
+  scenario "Colin adds a Provider which already exists", :js do
     given_a_provider_already_as_already_been_onboarded
     when_i_visit_the_add_organisation_page
     and_choose_to_add_a_provider
@@ -37,7 +37,7 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
     then_i_see_an_error("Provider 1 has already been added. Try another provider")
   end
 
-  scenario "Colin submits the search form without selecting a provider", :js, retry: 3 do
+  scenario "Colin submits the search form without selecting a provider", :js do
     when_i_visit_the_add_organisation_page
     and_choose_to_add_a_provider
     and_i_click_continue
@@ -48,7 +48,7 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
     )
   end
 
-  scenario "Colin reconsiders onboarding a provider", :js, retry: 3 do
+  scenario "Colin reconsiders onboarding a provider", :js do
     when_i_visit_the_add_organisation_page
     and_choose_to_add_a_provider
     and_i_click_continue
@@ -89,7 +89,7 @@ RSpec.describe "Placements / Support / Providers / Support User adds a Provider"
   end
 
   def then_i_see_a_dropdown_item_for(provider_name)
-    expect(page).to have_css(".autocomplete__option", text: provider_name)
+    expect(page).to have_css(".autocomplete__option", text: provider_name, wait: 10)
   end
 
   def when_i_click_the_dropdown_item_for(provider_name)

@@ -10,14 +10,6 @@ GIT
       request_store_rails (~> 2)
 
 GIT
-  remote: https://github.com/DFE-Digital/rspec-retry.git
-  revision: 306b42b8d5853303982e1a165e82d04744c20ea3
-  branch: main
-  specs:
-    rspec-retry (0.7.0)
-      rspec-core (> 3.3)
-
-GIT
   remote: https://github.com/citizensadvice/capybara_accessible_selectors
   revision: 347bbe06cb420416855e80bb4e3a3016b2d5872c
   branch: main
@@ -739,7 +731,6 @@ DEPENDENCIES
   rladr
   rspec
   rspec-rails
-  rspec-retry!
   rubocop-govuk
   ruby-lsp-rspec
   selenium-webdriver
