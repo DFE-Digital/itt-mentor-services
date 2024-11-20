@@ -97,11 +97,15 @@ module GovukComponentMatchers
     end
   end
 
-  matcher :have_success_banner do |text|
+  matcher :have_success_banner do |heading_text, body_text = nil|
     match do |page|
       page.within(".govuk-notification-banner.govuk-notification-banner--success") do
         page.find(".govuk-notification-banner__title", text: "Success")
-        page.find(".govuk-notification-banner__heading", text:)
+        page.find(".govuk-notification-banner__heading", text: heading_text)
+
+        if body_text
+          page.find(".govuk-body", text: body_text)
+        end
       end
       true
     rescue Capybara::ElementNotFound
