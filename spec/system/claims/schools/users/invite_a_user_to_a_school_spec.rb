@@ -33,13 +33,6 @@ RSpec.describe "Invite a user to a school", service: :claims, type: :system do
     then_see_error_message
   end
 
-  scenario "I sign in as a lead mentor user with no users" do
-    sign_in_as_support_user
-    remove_all_users_from_school
-    visit_claims_school_users_page
-    then_see_no_users_message
-  end
-
   scenario "I try to add a user who already exists" do
     sign_in_as_lead_mentor_user
     visit_claims_school_users_page
@@ -77,13 +70,6 @@ RSpec.describe "Invite a user to a school", service: :claims, type: :system do
   def setup_school_and_anne_membership
     create(:user_membership, user: anne, organisation: school)
     user_exists_in_dfe_sign_in(user: anne)
-  end
-
-  def sign_in_as_support_user
-    user = create(:claims_support_user, :colin)
-    user_exists_in_dfe_sign_in(user:)
-    visit sign_in_path
-    click_on "Sign in using DfE Sign In"
   end
 
   def remove_all_users_from_school

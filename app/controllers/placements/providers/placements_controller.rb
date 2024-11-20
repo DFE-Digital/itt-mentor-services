@@ -25,10 +25,7 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
   private
 
   def placements
-    policy_scope(
-      Placement.all,
-      policy_scope_class: Placements::Provider::PlacementPolicy::Scope,
-    )
+    policy_scope([:provider, Placement.all])
   end
 
   def schools_scope

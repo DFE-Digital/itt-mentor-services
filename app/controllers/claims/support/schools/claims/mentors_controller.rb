@@ -1,20 +1,24 @@
-class Claims::Support::Schools::Claims::MentorsController < Claims::ApplicationController
+class Claims::Support::Schools::Claims::MentorsController < Claims::Support::ApplicationController
   include Claims::BelongsToSchool
-  before_action :authorize_claim
 
+  before_action :authorize_claim
   helper_method :claim_mentors_form
 
   def new; end
 
   def create
     if claim_mentors_form.save
-      redirect_to(
-        edit_claims_support_school_claim_mentor_training_path(
-          @school,
-          claim,
-          claim.mentor_trainings.without_hours.first,
-        ),
-      )
+      if claim.mentor_trainings.without_hours.any?
+        redirect_to(
+          edit_claims_support_school_claim_mentor_training_path(
+            @school,
+            claim,
+            claim.mentor_trainings.without_hours.first,
+          ),
+        )
+      else
+        redirect_to check_claims_support_school_claim_path(@school, claim)
+      end
     else
       render :new
     end

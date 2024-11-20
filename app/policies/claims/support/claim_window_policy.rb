@@ -1,4 +1,4 @@
-class Claims::ClaimWindowPolicy < Claims::ApplicationPolicy
+class Claims::Support::ClaimWindowPolicy < Claims::ApplicationPolicy
   def read?
     user.support_user?
   end

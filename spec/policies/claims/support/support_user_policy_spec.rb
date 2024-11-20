@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Claims::SupportUserPolicy do
+describe Claims::Support::SupportUserPolicy do
   subject(:support_user_policy) { described_class }
 
   let(:support_user_1) { create(:claims_support_user) }

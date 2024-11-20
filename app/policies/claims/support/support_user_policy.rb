@@ -1,4 +1,4 @@
-class Claims::SupportUserPolicy < Claims::ApplicationPolicy
+class Claims::Support::SupportUserPolicy < Claims::ApplicationPolicy
   def update?
     true
   end

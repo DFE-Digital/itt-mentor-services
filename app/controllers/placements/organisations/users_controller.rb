@@ -33,6 +33,6 @@ class Placements::Organisations::UsersController < Placements::ApplicationContro
   end
 
   def authorize_user
-    authorize [:placements, @user_membership]
+    authorize @user_membership
   end
 end

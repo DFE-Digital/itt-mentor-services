@@ -2,7 +2,19 @@ class Placements::ApplicationController < ApplicationController
   after_action :verify_policy_scoped, if: ->(c) { c.action_name == "index" }
   before_action :authorize_support_user!
 
+  def authorize(record, query = nil, policy_class: nil)
+    super([:placements, *unwrap_pundit_scope(record)], query, policy_class:)
+  end
+
+  def policy(record)
+    super([:placements, *unwrap_pundit_scope(record)])
+  end
+
   private
+
+  def pundit_policy_scope(scope)
+    super([:placements, *unwrap_pundit_scope(scope)])
+  end
 
   def set_school
     @school = policy_scope(Placements::School).find(params.require(:school_id))

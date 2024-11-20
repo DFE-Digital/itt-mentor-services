@@ -27,7 +27,7 @@ class Claims::Support::Schools::AddSchoolController < Claims::Support::Applicati
   end
 
   def authorize_school
-    authorize Claims::School, policy_class: Claims::SchoolPolicy
+    authorize Claims::School
   end
 
   def step_path(step)

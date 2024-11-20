@@ -1,5 +1,6 @@
 class Claims::Schools::Claims::MentorTrainingsController < Claims::ApplicationController
   include Claims::BelongsToSchool
+
   before_action :authorize_claim
   helper_method :mentor_training_form
 

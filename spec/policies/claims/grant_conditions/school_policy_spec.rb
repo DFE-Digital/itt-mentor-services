@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe GrantConditions::Claims::SchoolPolicy do
+describe Claims::GrantConditions::SchoolPolicy do
   subject(:school_policy) { described_class }
 
   let!(:school) { build(:claims_school) }
