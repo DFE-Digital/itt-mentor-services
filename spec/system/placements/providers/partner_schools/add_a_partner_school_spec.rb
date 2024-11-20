@@ -16,7 +16,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
     given_i_am_signed_in_as_a_placements_user(organisations: [provider])
   end
 
-  scenario "User adds a partner school", :js, retry: 3 do
+  scenario "User adds a partner school", :js do
     when_i_view_the_partner_schools_page
     and_i_click_on("Add school")
     and_i_enter_a_school_named("School 1")
@@ -31,7 +31,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
     and_a_notification_email_is_sent_to(school_user)
   end
 
-  scenario "User adds a partner school which already exists", :js, retry: 3 do
+  scenario "User adds a partner school which already exists", :js do
     given_a_partnership_exists_between(school, provider)
     when_i_view_the_partner_schools_page
     and_i_click_on("Add school")
@@ -42,13 +42,13 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
     then_i_see_an_error("School 1 has already been added. Try another school")
   end
 
-  scenario "User submits the search form without selecting a school", :js, retry: 3 do
+  scenario "User submits the search form without selecting a school", :js do
     when_i_visit_the_add_partner_school_page
     and_i_click_on("Continue")
     then_i_see_an_error("Enter a school name, unique reference number (URN) or postcode")
   end
 
-  scenario "User reconsiders selecting a school using back link", :js, retry: 3 do
+  scenario "User reconsiders selecting a school using back link", :js do
     when_i_view_the_partner_schools_page
     and_i_click_on("Add school")
     and_i_enter_a_school_named("School 1")
@@ -62,7 +62,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
     then_i_see_the_check_details_page_for_school("School 1")
   end
 
-  scenario "User reconsiders selecting a school using change link", :js, retry: 3 do
+  scenario "User reconsiders selecting a school using change link", :js do
     when_i_view_the_partner_schools_page
     and_i_click_on("Add school")
     and_i_enter_a_school_named("School 1")
@@ -76,7 +76,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
     then_i_see_the_check_details_page_for_school("School 1")
   end
 
-  scenario "User adds a partner school, which is not onboarded on the placements service", :js, retry: 3 do
+  scenario "User adds a partner school, which is not onboarded on the placements service", :js do
     given_the_school_is_not_onboarded_on_placements_service(school)
     when_i_view_the_partner_schools_page
     and_i_click_on("Add school")
@@ -151,7 +151,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
   end
 
   def then_i_see_a_dropdown_item_for(school_name)
-    expect(page).to have_css(".autocomplete__option", text: school_name)
+    expect(page).to have_css(".autocomplete__option", text: school_name, wait: 10)
   end
 
   def when_i_click_the_dropdown_item_for(school_name)
