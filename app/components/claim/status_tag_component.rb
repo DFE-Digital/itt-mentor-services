@@ -8,7 +8,7 @@ class Claim::StatusTagComponent < ApplicationComponent
   end
 
   def call
-    govuk_tag(text: claim.status.humanize, colour:)
+    govuk_tag(text: t(".#{claim.status}"), colour:)
   end
 
   private
@@ -26,7 +26,17 @@ class Claim::StatusTagComponent < ApplicationComponent
       internal_draft: "grey",
       draft: "grey",
       submitted: "blue",
-      payment_in_progress: "light-blue",
+      payment_in_progress: "turquoise",
+      payment_information_requested: "light-blue",
+      payment_information_sent: "yellow",
+      paid: "green",
+      payment_not_approved: "red",
+      sampling_in_progress: "purple",
+      sampling_provider_not_approved: "pink",
+      sampling_not_approved: "pink",
+      clawback_requested: "orange",
+      clawback_in_progress: "orange",
+      clawback_complete: "red",
     }.with_indifferent_access
   end
 end

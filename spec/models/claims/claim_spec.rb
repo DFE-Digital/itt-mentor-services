@@ -96,6 +96,16 @@ RSpec.describe Claims::Claim, type: :model do
           draft: "draft",
           submitted: "submitted",
           payment_in_progress: "payment_in_progress",
+          payment_information_requested: "payment_information_requested",
+          payment_information_sent: "payment_information_sent",
+          paid: "paid",
+          payment_not_approved: "payment_not_approved",
+          sampling_in_progress: "sampling_in_progress",
+          sampling_provider_not_approved: "sampling_provider_not_approved",
+          sampling_not_approved: "sampling_not_approved",
+          clawback_requested: "clawback_requested",
+          clawback_in_progress: "clawback_in_progress",
+          clawback_complete: "clawback_complete",
         )
         .backed_by_column_of_type(:enum)
     end
