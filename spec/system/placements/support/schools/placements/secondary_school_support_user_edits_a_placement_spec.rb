@@ -108,7 +108,7 @@ RSpec.describe "Secondary school user edits a placement", service: :placements, 
       percentage_free_school_meals: 15,
       rating: "Outstanding",
       partner_providers: [@aes_sedai_provider, @ashaman_provider],
-      )
+    )
 
     @secondary_english_subject = build(:subject, name: "English", subject_area: :secondary)
 
@@ -157,8 +157,7 @@ RSpec.describe "Secondary school user edits a placement", service: :placements, 
   def then_i_see_the_placement_details_page
     expect(page).to have_title("English - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
-    # TODO: create tag matcher
-    expect(page).to have_element(:strong, text: "Available", class: "govuk-tag govuk-tag--turquoise")
+    expect(page).to have_tag("Available", "turquoise")
     expect(page).to have_summary_list_row("Subject", "English")
     expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term")

@@ -70,6 +70,15 @@ module GovukComponentMatchers
     end
   end
 
+  matcher :have_tag do |text, colour|
+    match do |page|
+      page.find(".govuk-tag.govuk-tag--#{colour}", text:)
+      true
+    rescue Capybara::ElementNotFound
+      false
+    end
+  end
+
   matcher :have_h1 do |text|
     match do |page|
       page.find("h1[class^='govuk-heading-']", text:)
