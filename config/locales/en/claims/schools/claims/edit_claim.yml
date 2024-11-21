@@ -1,0 +1,8 @@
+en:
+  claims:
+    schools:
+      claims:
+        edit_claim:
+          edit:
+            caption: Add claim
+            cancel: Cancel
