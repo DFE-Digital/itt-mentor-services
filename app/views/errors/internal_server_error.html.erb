@@ -18,4 +18,18 @@
       </p>
     </div>
   </div>
+
+  <% if Rails.env.development? && exception = request.env["action_dispatch.exception"]&.cause %>
+    <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l">
+
+    <%= govuk_warning_text text: "This section is visible only in the `development` environment" %>
+
+    <code class="inline-code"><%= exception.detailed_message %></code>
+
+    <%= govuk_inset_text classes: %w[overflow-auto] do %>
+      <% if exception.respond_to?(:source_extract) %>
+        <pre><code><%= exception.source_extract.join("\n") %></code></pre>
+      <% end %>
+    <% end %>
+  <% end %>
 </div>
