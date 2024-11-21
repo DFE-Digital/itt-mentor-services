@@ -28,6 +28,14 @@ class Claims::AddClaimWizard::MentorTrainingStep < BaseStep
   delegate :name, to: :provider, prefix: true
   delegate :provider, to: :wizard
 
+  def initialize(wizard:, attributes:)
+    super
+
+    return if custom_hours_selected?
+
+    self.custom_hours_completed = nil
+  end
+
   def mentor
     @mentor ||= @wizard.steps.fetch(:mentor).selected_mentors.find_by(id: mentor_id)
   end
@@ -45,7 +53,7 @@ class Claims::AddClaimWizard::MentorTrainingStep < BaseStep
   end
 
   def total_hours_completed
-    (custom_hours_completed.presence || hours_completed).to_i
+    (custom_hours_selected? ? custom_hours_completed : hours_completed).to_i
   end
 
   private
