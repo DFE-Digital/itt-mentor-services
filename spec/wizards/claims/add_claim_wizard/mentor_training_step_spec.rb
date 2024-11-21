@@ -127,18 +127,18 @@ RSpec.describe Claims::AddClaimWizard::MentorTrainingStep, type: :model do
     subject(:total_hours_completed) { step.total_hours_completed }
 
     context "when custom hours completed is present" do
-      let(:attributes) { { mentor_id: mentor.id, custom_hours_completed: 20, hours_completed: 18 } }
+      let(:attributes) { { mentor_id: mentor.id, custom_hours_completed: 6, hours_completed: "custom" } }
 
       it "returns hours completed" do
-        expect(total_hours_completed).to eq(20)
+        expect(total_hours_completed).to eq(6)
       end
     end
 
     context "when custom hours completed is not present" do
-      let(:attributes) { { mentor_id: mentor.id, hours_completed: 18 } }
+      let(:attributes) { { mentor_id: mentor.id, hours_completed: 20, custom_hours_completed: 6 } }
 
       it "returns hours completed" do
-        expect(total_hours_completed).to eq(18)
+        expect(total_hours_completed).to eq(20)
       end
     end
   end
