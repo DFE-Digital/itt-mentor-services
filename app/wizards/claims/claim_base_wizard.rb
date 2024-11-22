@@ -7,7 +7,7 @@ module Claims
     end
 
     def total_hours
-      mentor_training_steps.values.map(&:total_hours_completed).sum
+      mentor_training_steps.map(&:hours_completed).sum
     end
 
     def mentors_with_claimable_hours
@@ -22,12 +22,8 @@ module Claims
       )
     end
 
-    def provider
-      steps.fetch(:provider).provider
-    end
-
     def step_name_for_mentor(mentor)
-      step_name(MentorTrainingStep, mentor.id)
+      step_name(::Claims::AddClaimWizard::MentorTrainingStep, mentor.id)
     end
 
     private
@@ -50,7 +46,7 @@ module Claims
     end
 
     def mentor_training_steps
-      steps.values.select { |step| step.is_a?(MentorTrainingStep) }
+      steps.values.select { |step| step.is_a?(::Claims::AddClaimWizard::MentorTrainingStep) }
     end
   end
 end

@@ -58,7 +58,7 @@
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t("wizards.claims.add_claim_wizard.check_your_answers_step.total_hours")) %>
           <% row.with_value(
-            text: pluralize(@wizard.claim.mentor_trainings.sum(:hours_completed), 
+            text: pluralize(@wizard.claim.mentor_trainings.sum(:hours_completed),
             t("wizards.claims.add_claim_wizard.check_your_answers_step.hour")),
           ) %>
         <% end %>
