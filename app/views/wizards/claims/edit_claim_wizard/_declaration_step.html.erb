@@ -1,0 +1,94 @@
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".caption", reference: @wizard.claim.reference) %></span>
+      <h1 class="govuk-heading-l"><%= t(".page_title") %></h1>
+
+      <%= govuk_summary_list do |summary_list| %>
+        <% unless current_user.support_user? %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: Claims::Claim.human_attribute_name(:school)) %>
+            <% row.with_value(text: @wizard.school.name) %>
+          <% end %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: Claims::ClaimWindow.human_attribute_name(:academic_year)) %>
+          <% row.with_value(text: @wizard.academic_year.name) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: Claims::Claim.human_attribute_name(:accredited_provider)) %>
+          <% row.with_value(text: @wizard.claim.provider.name) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: Claims::Claim.human_attribute_name(:mentors)) %>
+          <% row.with_value do %>
+            <ul class="govuk-list">
+              <% @wizard.claim.mentors.each do |mentor| %>
+                <li><%= mentor.full_name %></li>
+              <% end %>
+            </ul>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <h2 class="govuk-heading-m"><%= t("wizards.claims.add_claim_wizard.check_your_answers_step.hours_of_training") %></h2>
+
+      <%= govuk_summary_list do |summary_list| %>
+        <% @wizard.claim.mentor_trainings.each do |mentor_training| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: mentor_training.mentor.full_name) %>
+            <% row.with_value(
+              text: pluralize(
+                mentor_training.hours_completed,
+                t("wizards.claims.add_claim_wizard.check_your_answers_step.hour"),
+              ),
+            ) %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <h2 class="govuk-heading-m"><%= t("wizards.claims.add_claim_wizard.check_your_answers_step.grant_funding") %></h2>
+
+      <%= govuk_summary_list(actions: false) do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t("wizards.claims.add_claim_wizard.check_your_answers_step.total_hours")) %>
+          <% row.with_value(
+            text: pluralize(@wizard.claim.mentor_trainings.sum(:hours_completed), 
+            t("wizards.claims.add_claim_wizard.check_your_answers_step.hour")),
+          ) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t("wizards.claims.add_claim_wizard.check_your_answers_step.hourly_rate")) %>
+          <% row.with_value(text: humanized_money_with_symbol(@wizard.school.region.funding_available_per_hour)) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: Claims::Claim.human_attribute_name(:claim_amount)) %>
+          <% row.with_value(text: humanized_money_with_symbol(@wizard.claim.amount)) %>
+        <% end %>
+      <% end %>
+
+      <p class="govuk-body"><%= t("wizards.claims.add_claim_wizard.check_your_answers_step.disclaimer") %></p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li><%= t("wizards.claims.add_claim_wizard.check_your_answers_step.claim_on_behalf_of_school") %></li>
+        <li><%= t("wizards.claims.add_claim_wizard.check_your_answers_step.read_and_accepted_grant_conditions") %></li>
+        <li><%= t("wizards.claims.add_claim_wizard.check_your_answers_step.accurate_information") %></li>
+        <li><%= t("wizards.claims.add_claim_wizard.check_your_answers_step.provide_evidence") %></li>
+      </ul>
+
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text"><%= t("wizards.claims.add_claim_wizard.check_your_answers_step.warning") %></strong>
+      </div>
+
+      <%= f.govuk_submit current_user.support_user? ? t(".save") : t(".submit") %>
+    </div>
+  </div>
+<% end %>
