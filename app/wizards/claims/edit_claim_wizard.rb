@@ -10,13 +10,20 @@ module Claims
     end
 
     def define_steps
-      add_step(AddClaimWizard::ProviderStep)
-      add_step(AddClaimWizard::MentorStep)
-      selected_mentors.each do |mentor|
-        add_step(AddClaimWizard::MentorTrainingStep, { mentor_id: mentor.id })
+      if current_step == :declaration
+        add_step(DeclarationStep)
+      else
+        add_step(AddClaimWizard::ProviderStep)
+        if mentors_with_claimable_hours.any? || current_step == :check_your_answers
+          add_step(AddClaimWizard::MentorStep)
+          selected_mentors.each do |mentor|
+            add_step(AddClaimWizard::MentorTrainingStep, { mentor_id: mentor.id })
+          end
+          add_step(AddClaimWizard::CheckYourAnswersStep)
+        else
+          add_step(NoMentorsStep)
+        end
       end
-      add_step(AddClaimWizard::CheckYourAnswersStep)
-      # add_step(NoMentorsStep)
     end
 
     def selected_mentors
@@ -29,6 +36,12 @@ module Claims
 
     def update_claim
       raise "Invalid wizard state" unless valid?
+
+      if created_by.support_user?
+        Claims::Claim::CreateDraft.call(claim: updated_claim)
+      else
+        Claims::Claim::Submit.call(claim: updated_claim, user: created_by)
+      end
     end
 
     def setup_state
@@ -49,6 +62,25 @@ module Claims
           hours_completed: is_custom_hours ? "custom" : mentor_training.hours_completed,
           custom_hours_completed: is_custom_hours ? mentor_training.hours_completed : nil,
         }
+      end
+    end
+
+    private
+
+    def updated_claim
+      if steps[:provider].present?
+        claim.provider = steps.fetch(:provider).provider
+      end
+
+      if mentor_training_steps.present?
+        claim.mentor_trainings.each(&:mark_for_destruction)
+        mentor_training_steps.each do |mentor_training_step|
+          claim.mentor_trainings.build(
+            provider: claim.provider,
+            mentor_id: mentor_training_step.mentor_id,
+            hours_completed: mentor_training.total_hours_completed,
+          )
+        end
       end
     end
   end
