@@ -27,30 +27,30 @@ RSpec.describe Claims::AddClaimWizard do
     end
 
     context "when the school has mentors" do
-      let(:mentor) { create(:claims_mentor, schools: [school]) }
-
-      before { mentor }
+      let!(:mentor_1) { create(:claims_mentor, schools: [school], first_name: "Alan", last_name: "Anderson") }
 
       context "with claimable hours" do
         it { is_expected.to eq %i[provider mentor check_your_answers] }
       end
 
       context "when mentors have been selected" do
+        let!(:mentor_2) { create(:claims_mentor, schools: [school], first_name: "Bob", last_name: "Bletcher") }
+
         let(:state) do
           {
             "provider" => { "id" => provider.id },
-            "mentor" => { "mentor_ids" => [mentor.id] },
+            "mentor" => { "mentor_ids" => [mentor_1.id, mentor_2.id] },
           }
         end
 
-        it { is_expected.to eq [:provider, :mentor, "mentor_training_#{mentor.id}".to_sym, :check_your_answers] }
+        it { is_expected.to eq [:provider, :mentor, "mentor_training_#{mentor_1.id}".to_sym, "mentor_training_#{mentor_2.id}".to_sym, :check_your_answers] }
       end
 
       context "with no claimable hours" do
         before do
           create(:mentor_training,
                  hours_completed: 20,
-                 mentor:,
+                 mentor: mentor_1,
                  provider:,
                  date_completed: claim_window.starts_on + 1.day,
                  claim: create(:claim, :submitted, school:, provider:))
@@ -94,16 +94,16 @@ RSpec.describe Claims::AddClaimWizard do
         "provider" => { "id" => provider.id },
         "mentor" => { "mentor_ids" => [mentor_1.id, mentor_2.id, mentor_3.id, mentor_4.id] },
         "mentor_training_#{mentor_1.id}" => {
-          "mentor_id" => mentor_1.id, "hours_completed" => 20
+          "mentor_id" => mentor_1.id, "hours_to_claim" => "maximum"
         },
         "mentor_training_#{mentor_2.id}" => {
-          "mentor_id" => mentor_2.id, "hours_completed" => 20
+          "mentor_id" => mentor_2.id, "hours_to_claim" => "maximum"
         },
         "mentor_training_#{mentor_3.id}" => {
-          "mentor_id" => mentor_3.id, "hours_completed" => "custom", "custom_hours_completed" => 16
+          "mentor_id" => mentor_3.id, "hours_to_claim" => "custom", "custom_hours" => 16
         },
         "mentor_training_#{mentor_4.id}" => {
-          "mentor_id" => mentor_4.id, "hours_completed" => "custom", "custom_hours_completed" => 4
+          "mentor_id" => mentor_4.id, "hours_to_claim" => "custom", "custom_hours" => 4
         },
       }
     end
@@ -121,10 +121,10 @@ RSpec.describe Claims::AddClaimWizard do
         "provider" => { "id" => provider.id },
         "mentor" => { "mentor_ids" => [mentor_1.id, mentor_2.id] },
         "mentor_training_#{mentor_1.id}" => {
-          "mentor_id" => mentor_1.id, "hours_completed" => 20
+          "mentor_id" => mentor_1.id, "hours_to_claim" => "maximum"
         },
         "mentor_training_#{mentor_2.id}" => {
-          "mentor_id" => mentor_2.id, "hours_completed" => "custom", "custom_hours_completed" => 16
+          "mentor_id" => mentor_2.id, "hours_to_claim" => "custom", "custom_hours" => 16
         },
       }
     end
@@ -157,10 +157,10 @@ RSpec.describe Claims::AddClaimWizard do
         "provider" => { "id" => provider.id },
         "mentor" => { "mentor_ids" => [mentor_1.id, mentor_2.id] },
         "mentor_training_#{mentor_1.id}" => {
-          "mentor_id" => mentor_1.id, "hours_completed" => 20
+          "mentor_id" => mentor_1.id, "hours_to_claim" => "maximum"
         },
         "mentor_training_#{mentor_2.id}" => {
-          "mentor_id" => mentor_2.id, "hours_completed" => "custom", "custom_hours_completed" => 16
+          "mentor_id" => mentor_2.id, "hours_to_claim" => "custom", "custom_hours" => 16
         },
       }
     end

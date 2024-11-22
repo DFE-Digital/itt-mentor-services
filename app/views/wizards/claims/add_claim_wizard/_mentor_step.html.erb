@@ -1,10 +1,15 @@
+<% content_for :page_title, title_with_error_prefix(
+  t(".page_title", contextual_text:, provider_name: @wizard.provider.name),
+  error: current_step.errors.any?,
+) %>
+
 <%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
   <%= f.govuk_error_summary %>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l"><%= contextual_text %></span>
-      <h1 class="govuk-heading-l"><%= t(".heading", provider_name: @wizard.steps[:provider].provider.name) %></h1>
+      <h1 class="govuk-heading-l"><%= t(".heading", provider_name: @wizard.provider.name) %></h1>
 
       <%= render Claims::Claim::MentorsForm::DisclaimerComponent.new(mentors_form: current_step) %>
 

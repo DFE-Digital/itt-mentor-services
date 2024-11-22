@@ -1,3 +1,8 @@
+<% content_for :page_title, title_with_error_prefix(
+  t(".page_title", contextual_text:, provider_name: @wizard.provider.name),
+  error: current_step.errors.any?,
+) %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l"><%= t(".heading_empty", provider_name: @wizard.provider.name) %></h1>
