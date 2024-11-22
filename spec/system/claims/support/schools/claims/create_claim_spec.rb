@@ -246,9 +246,9 @@ RSpec.describe "Create claim", service: :claims, type: :system do
     end
   end
 
-  def then_i_expect_the_training_hours_for(hours, mentor)
+  def then_i_expect_the_training_hours_for(_hours, mentor)
     expect(page).to have_content("Hours of training for #{mentor.full_name}")
-    find("#claims-add-claim-wizard-mentor-training-step-hours-completed-#{hours}-field").checked?
+    find("#claims-add-claim-wizard-mentor-training-step-hours-to-claim-maximum-field").checked?
   end
 
   def then_i_am_redirectd_to_index_page(claim)

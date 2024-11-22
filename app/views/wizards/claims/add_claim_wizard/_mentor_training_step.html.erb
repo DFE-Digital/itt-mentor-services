@@ -1,3 +1,8 @@
+<% content_for :page_title, title_with_error_prefix(
+  t(".page_title", contextual_text:, provider_name: @wizard.provider.name, mentor: current_step.mentor.full_name),
+  error: current_step.errors.any?,
+) %>
+
 <%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
   <%= f.govuk_error_summary %>
 
@@ -6,24 +11,25 @@
         <span class="govuk-caption-l"><%= contextual_text %> - <%= @wizard.steps[:provider].provider.name %></span>
         <h1 class="govuk-heading-l"><%= t(".hours_of_training_for_mentor", mentor: current_step.mentor.full_name) %> </h1>
 
-         <!-- TODO: Add disclaimer (see app/views/claims/schools/claims/mentor_trainings/edit.html.erb)-->
          <%= render Claims::Claim::MentorTrainingForm::DisclaimerComponent.new(mentor_training_form: current_step) %>
 
          <%= f.govuk_radio_buttons_fieldset(
-          :hours_completed,
+          :hours_to_claim,
           legend: {
             size: "m",
             text: t(".hours_of_training"),
           },
         ) do %>
-          <%= f.govuk_radio_button :hours_completed, current_step.max_hours, label: { text: t(".hours", count: current_step.max_hours) }, hint: { text: t(".hours_hint.#{current_step.max_hours == 20 ? "full" : "remaining"}", count: current_step.max_hours) } %>
+          <%= f.govuk_radio_button :hours_to_claim, "maximum", label: { text: t(".hours", count: current_step.max_hours) }, hint: { text: t(".hours_hint.#{current_step.max_hours == 20 ? "full" : "remaining"}", count: current_step.max_hours) } %>
 
           <%= f.govuk_radio_divider %>
 
-          <%= f.govuk_radio_button(:hours_completed, "custom", label: { text: t(".other_amount") }) do %>
+          <%= f.govuk_radio_button(:hours_to_claim, "custom", label: { text: t(".other_amount") }) do %>
             <%= f.govuk_number_field(
-              :custom_hours_completed,
+              :custom_hours,
               class: "govuk-input--width-2",
+              min: 1,
+              max: current_step.max_hours,
               label: { text: t(".number_of_hours"), class: "govuk-!-font-weight-bold" },
               hint: { text: t(".custom_hours_completed_hint", count: current_step.max_hours) },
             ) %>

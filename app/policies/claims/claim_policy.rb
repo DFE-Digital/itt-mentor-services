@@ -33,9 +33,7 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
 
   # TODO: Remove record.draft? and not create drafts for existing drafts
   def draft?
-    return true if record.new_record?
-
-    current_claim_window? && user.support_user? && (record.internal_draft? || record.draft?)
+    current_claim_window? && user.support_user? && (record.internal_draft? || record.draft? || record.new_record?)
   end
 
   def check?

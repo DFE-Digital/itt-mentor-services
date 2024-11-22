@@ -6,6 +6,8 @@ class Claims::Schools::Claims::AddClaimController < Claims::ApplicationControlle
   before_action :set_wizard
   before_action :authorize_claim
 
+  helper_method :index_path
+
   def update
     if !@wizard.save_step
       render "edit"

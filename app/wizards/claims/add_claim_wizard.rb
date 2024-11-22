@@ -33,7 +33,7 @@ module Claims
     end
 
     def total_hours
-      mentor_training_steps.values.map(&:total_hours_completed).sum
+      mentor_training_steps.map(&:hours_completed).sum
     end
 
     def claim
@@ -42,10 +42,10 @@ module Claims
         school:,
         created_by:,
         claim_window: Claims::ClaimWindow.current,
-        mentor_trainings_attributes: mentor_training_steps.map do |_k, v|
+        mentor_trainings_attributes: mentor_training_steps.map do |mentor_training_step|
           {
-            mentor_id: v.mentor_id,
-            hours_completed: v.total_hours_completed,
+            mentor_id: mentor_training_step.mentor_id,
+            hours_completed: mentor_training_step.hours_completed,
             provider:,
           }
         end,
@@ -76,6 +76,10 @@ module Claims
       steps.fetch(:provider).provider
     end
 
+    def step_name_for_mentor(mentor)
+      step_name(MentorTrainingStep, mentor.id)
+    end
+
     private
 
     def step_name(step_class, id = nil)
@@ -96,7 +100,7 @@ module Claims
     end
 
     def mentor_training_steps
-      steps.select { |k, _v| k.to_s.include?("mentor_training_") }
+      steps.values.select { |step| step.is_a?(MentorTrainingStep) }
     end
   end
 end

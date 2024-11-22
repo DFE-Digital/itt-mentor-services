@@ -7,11 +7,13 @@ en:
           page_title: Accredited provider - %{contextual_text}
           title: Accredited provider
         mentor_step:
+          page_title: Mentors for %{provider_name} - %{contextual_text}
           continue: Continue
           label: Mentor
           heading: Mentors for %{provider_name}
           select_all_that_apply: Select all that apply
         mentor_training_step:
+          page_title: Hours of training for %{mentor} - %{contextual_text} - %{provider_name}
           hours_of_training_for_mentor: Hours of training for %{mentor}
           hours_of_training: Hours of training
           hours:
@@ -26,8 +28,8 @@ en:
             other: Enter whole numbers up to a maximum of %{count} hours
           number_of_hours: Number of hours
         check_your_answers_step:
-          page_title: Check your answers
-          caption: Add claim
+          page_title: Check your answers - %{contextual_text}
+          title: Check your answers
           warning: You will not be able to change any of the claim details once you have submitted it.
           submit: Submit claim
           declaration: Declaration
@@ -43,6 +45,7 @@ en:
           hours_of_training: Hours of training
           save: Save claim
         no_mentors_step:
+          page_title: No mentors for %{provider_name} - %{contextual_text}
           heading_empty: No mentors for %{provider_name}
           no_mentors_with_claimable_hours: There are no mentors you can include in a claim because they have already had 20 hours of training claimed for with %{provider_name}.
           change_provider: Change the accredited provider
