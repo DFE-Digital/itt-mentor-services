@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+#
+# This script analyses the Placements system specs and lists
+# those which have already been refactored to Cucumber-style specs,
+# and those which still need to be refactored.
+#
+# It produces Markdown format output so it's easy to copy-and-paste into the
+# Trello card: https://trello.com/c/TayQl2rn/244-refactor-system-specs-to-conform-to-new-style-guide
+
+@root_path = File.realpath(File.dirname(__FILE__) + "/..")
+system_specs = Dir["#{@root_path}/spec/system/placements/**/*_spec.rb"]
+
+# Find specs which contain "scenario do" – i.e. a scenario with no description.
+# Use this as an indicator to determine whether or not the spec is written in Cucumber style.
+cucumber_style_regex = /^\s+scenario do$/
+cucumber_style_specs = system_specs.select { |spec| File.read(spec).match?(cucumber_style_regex) }
+specs_to_refactor = system_specs - cucumber_style_specs
+
+# Format a list of paths, grouped and sorted logically
+def format_paths(absolute_paths)
+  local_paths = absolute_paths.map { |path| path.sub("#{@root_path}/", "") }
+  local_paths.group_by { |f| File.dirname(f) }.sort_by(&:first).map(&:last).flat_map(&:sort)
+end
+
+puts "There are #{system_specs.count} specs in total. " \
+     "#{cucumber_style_specs.count} are already in Cucumber format and " \
+     "#{specs_to_refactor.count} still need to be refactored."
+puts
+puts "### #{cucumber_style_specs.count} Cucumber style specs"
+puts
+puts "```"
+puts format_paths(cucumber_style_specs)
+puts "```"
+puts
+puts "### #{specs_to_refactor.count} specs to refactor"
+puts
+puts "```"
+puts format_paths(specs_to_refactor)
+puts "```"
