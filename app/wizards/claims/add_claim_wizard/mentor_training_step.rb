@@ -3,7 +3,9 @@ class Claims::AddClaimWizard::MentorTrainingStep < BaseStep
   attribute :hours_to_claim, :string
   attribute :custom_hours
 
-  HOURS_TO_CLAIM = %w[maximum custom].freeze
+  CUSTOM_HOURS = "custom".freeze
+  MAXIMUM_HOURS = "maximum".freeze
+  HOURS_TO_CLAIM = [CUSTOM_HOURS, MAXIMUM_HOURS].freeze
 
   validates :mentor_id, presence: true
   validates :hours_to_claim, presence: true, inclusion: { in: HOURS_TO_CLAIM }
@@ -18,7 +20,7 @@ class Claims::AddClaimWizard::MentorTrainingStep < BaseStep
 
   delegate :full_name, to: :mentor, prefix: true
   delegate :name, to: :provider, prefix: true
-  delegate :provider, to: :wizard
+  delegate :provider, :claim, to: :wizard
 
   def initialize(wizard:, attributes:)
     super
@@ -41,6 +43,7 @@ class Claims::AddClaimWizard::MentorTrainingStep < BaseStep
       mentor:,
       provider:,
       academic_year: @wizard.academic_year,
+      claim_to_exclude: claim.new_record? ? nil : claim,
     )
   end
 

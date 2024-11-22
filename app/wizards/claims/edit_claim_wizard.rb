@@ -21,7 +21,7 @@ module Claims
           end
           add_step(AddClaimWizard::CheckYourAnswersStep)
         else
-          add_step(NoMentorsStep)
+          add_step(AddClaimWizard::NoMentorsStep)
         end
       end
     end
@@ -56,13 +56,22 @@ module Claims
           claim_to_exclude: claim,
         ).remaining_hours
         is_custom_hours = max_hours != mentor_training.hours_completed
+        hours_to_claim = if is_custom_hours
+                           Claims::AddClaimWizard::MentorTrainingStep::CUSTOM_HOURS
+                         else
+                           Claims::AddClaimWizard::MentorTrainingStep::MAXIMUM_HOURS
+                         end
 
         state[step_name] = {
           mentor_id: mentor_training.mentor_id,
-          hours_completed: is_custom_hours ? "custom" : mentor_training.hours_completed,
-          custom_hours_completed: is_custom_hours ? mentor_training.hours_completed : nil,
+          hours_to_claim:,
+          custom_hours: is_custom_hours ? mentor_training.hours_completed : nil,
         }
       end
+    end
+
+    def provider
+      steps.fetch(:provider).provider || claim.provider
     end
 
     private
@@ -78,10 +87,12 @@ module Claims
           claim.mentor_trainings.build(
             provider: claim.provider,
             mentor_id: mentor_training_step.mentor_id,
-            hours_completed: mentor_training.total_hours_completed,
+            hours_completed: mentor_training_step.hours_completed,
           )
         end
       end
+
+      claim
     end
   end
 end
