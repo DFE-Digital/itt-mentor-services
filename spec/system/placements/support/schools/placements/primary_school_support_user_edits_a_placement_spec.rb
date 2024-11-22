@@ -451,7 +451,7 @@ RSpec.describe "Primary school user edits a placement", service: :placements, ty
     expect(page).to have_title("Primary with english (Year 2) - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placement - Springfield Elementary Primary with english (Year 2)")
-    expect(page).to have_important_banner("This is a preview of how your placement will appear to teacher training providers.")
+    expect(page).to have_important_banner("This is a preview of how your placement appears to teacher training providers.")
     expect(page).to have_h2("Placement dates")
     expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term, Summer term")
