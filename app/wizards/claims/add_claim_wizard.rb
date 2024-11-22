@@ -49,5 +49,9 @@ module Claims
         Claims::Claim::Submit.call(claim:, user: created_by)
       end
     end
+
+    def provider
+      steps.fetch(:provider).provider
+    end
   end
 end
