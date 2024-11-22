@@ -106,6 +106,18 @@ module GovukComponentMatchers
     end
   end
 
+  matcher :have_warning_text do |text|
+    match do |page|
+      page.within(".govuk-warning-text") do
+        page.find(".govuk-warning-text__icon")
+        page.find(".govuk-warning-text__text", text:)
+      end
+      true
+    rescue Capybara::ElementNotFound
+      false
+    end
+  end
+
   matcher :have_success_banner do |heading_text, body_text = nil|
     match do |page|
       page.within(".govuk-notification-banner.govuk-notification-banner--success") do

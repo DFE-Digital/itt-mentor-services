@@ -27,7 +27,7 @@
         <% end %>
         <%= render PaginationComponent.new(pagy: @pagy) %>
       <% else %>
-        <p><%= t(".empty_state", school_name: @school.name) %></p>
+        <p class="govuk-body"><%= t(".empty_state", school_name: @school.name) %></p>
       <% end %>
     </div>
   </div>
