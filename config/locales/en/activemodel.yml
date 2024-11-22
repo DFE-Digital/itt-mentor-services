@@ -147,14 +147,12 @@ en:
           attributes:
             mentor_id:
               blank: Select a mentor
-            custom_hours_completed:
+            custom_hours:
               blank: Enter the number of hours
               not_an_integer: Enter whole numbers only
               between: Enter the number of hours between %{min} and %{max}
-            hours_completed:
+            hours_to_claim:
               blank: Select the number of hours
-              not_an_integer: Enter whole numbers only
-              between: Enter the number of hours between %{min} and %{max}
         claims/add_claim_wizard/check_your_answers_step:
           attributes:
             base:

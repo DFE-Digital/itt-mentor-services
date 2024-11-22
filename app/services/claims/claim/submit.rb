@@ -1,4 +1,6 @@
 class Claims::Claim::Submit < ApplicationService
+  include Claims::Claim::Referencable
+
   def initialize(claim:, user:)
     @claim = claim
     @user = user
@@ -37,14 +39,6 @@ class Claims::Claim::Submit < ApplicationService
       claim.submitted_by = user
       claim.reference = generate_reference if claim.reference.nil?
       claim
-    end
-  end
-
-  def generate_reference
-    loop do
-      reference = SecureRandom.random_number(99_999_999)
-
-      break reference unless Claims::Claim.exists?(reference:)
     end
   end
 end

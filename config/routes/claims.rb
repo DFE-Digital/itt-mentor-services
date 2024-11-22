@@ -38,6 +38,7 @@ scope module: :claims, as: :claims, constraints: {
           get "new", to: "claims/add_claim#new", as: :new_add_claim
           get "new/:state_key/:step", to: "claims/add_claim#edit", as: :add_claim
           put "new/:state_key/:step", to: "claims/add_claim#update"
+          get :rejected
         end
 
         resource :mentors, only: %i[new create edit update], module: :claims do
@@ -58,10 +59,6 @@ scope module: :claims, as: :claims, constraints: {
           get :confirmation
           get :create_revision
           post :submit
-        end
-
-        collection do
-          get :rejected
         end
       end
 
@@ -212,6 +209,7 @@ scope module: :claims, as: :claims, constraints: {
             get "new", to: "claims/add_claim#new", as: :new_add_claim
             get "new/:state_key/:step", to: "claims/add_claim#edit", as: :add_claim
             put "new/:state_key/:step", to: "claims/add_claim#update"
+            get :rejected
           end
 
           resource :mentors, only: %i[new create edit update], module: :claims do
@@ -230,10 +228,6 @@ scope module: :claims, as: :claims, constraints: {
             get :check
             post :draft
             get :create_revision
-          end
-
-          collection do
-            get :rejected
           end
         end
 

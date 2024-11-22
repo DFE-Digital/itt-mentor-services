@@ -29,18 +29,19 @@ RSpec.describe Claims::AddClaimWizard::MentorTrainingStep, type: :model do
   let(:attributes) { nil }
 
   describe "attributes" do
-    it { is_expected.to have_attributes(mentor_id: nil, hours_completed: nil, custom_hours_completed: nil) }
+    it { is_expected.to have_attributes(mentor_id: nil, hours_to_claim: nil, custom_hours: nil) }
   end
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:mentor_id) }
-    it { is_expected.to validate_presence_of(:hours_completed) }
+    it { is_expected.to validate_presence_of(:hours_to_claim) }
+    it { is_expected.to validate_inclusion_of(:hours_to_claim).in_array(described_class::HOURS_TO_CLAIM) }
 
     context "when custom are selected" do
-      let(:attributes) { { hours_completed: "custom", mentor_id: mentor.id } }
+      let(:attributes) { { hours_to_claim: "custom", mentor_id: mentor.id } }
 
       it do
-        expect(step).to validate_numericality_of(:custom_hours_completed)
+        expect(step).to validate_numericality_of(:custom_hours)
           .only_integer
           .is_greater_than_or_equal_to(1)
           .is_less_than_or_equal_to(20)
@@ -49,17 +50,10 @@ RSpec.describe Claims::AddClaimWizard::MentorTrainingStep, type: :model do
     end
 
     context "when custom are not selected" do
-      let(:attributes) { { hours_completed: 20, mentor_id: mentor.id } }
+      let(:attributes) { { hours_to_claim: "maximum", mentor_id: mentor.id } }
 
       it { is_expected.to be_valid }
-      it { is_expected.not_to validate_presence_of(:custom_hours_completed) }
-
-      it do
-        expect(step).to validate_numericality_of(:hours_completed)
-          .only_integer
-          .is_greater_than_or_equal_to(1)
-          .is_less_than_or_equal_to(20)
-      end
+      it { is_expected.not_to validate_presence_of(:custom_hours) }
     end
 
     describe "delegations" do
@@ -123,22 +117,22 @@ RSpec.describe Claims::AddClaimWizard::MentorTrainingStep, type: :model do
     end
   end
 
-  describe "#total_hours_completed" do
-    subject(:total_hours_completed) { step.total_hours_completed }
+  describe "#hours_completed" do
+    subject(:hours_completed) { step.hours_completed }
 
     context "when custom hours completed is present" do
-      let(:attributes) { { mentor_id: mentor.id, custom_hours_completed: 6, hours_completed: "custom" } }
+      let(:attributes) { { mentor_id: mentor.id, custom_hours: 6, hours_to_claim: "custom" } }
 
       it "returns hours completed" do
-        expect(total_hours_completed).to eq(6)
+        expect(hours_completed).to eq(6)
       end
     end
 
     context "when custom hours completed is not present" do
-      let(:attributes) { { mentor_id: mentor.id, hours_completed: 20, custom_hours_completed: 6 } }
+      let(:attributes) { { mentor_id: mentor.id, hours_to_claim: "maximum", custom_hours: 6 } }
 
       it "returns hours completed" do
-        expect(total_hours_completed).to eq(20)
+        expect(hours_completed).to eq(20)
       end
     end
   end

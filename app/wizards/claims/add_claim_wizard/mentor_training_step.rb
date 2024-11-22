@@ -1,23 +1,15 @@
 class Claims::AddClaimWizard::MentorTrainingStep < BaseStep
-  attribute :hours_completed
   attribute :mentor_id
-  attribute :custom_hours_completed
+  attribute :hours_to_claim, :string
+  attribute :custom_hours
+
+  HOURS_TO_CLAIM = %w[maximum custom].freeze
 
   validates :mentor_id, presence: true
-  validates :hours_completed, presence: true
-  validates(
-    :hours_completed,
-    presence: true,
-    numericality: {
-      only_integer: true,
-      greater_than_or_equal_to: 1,
-      less_than_or_equal_to: :max_hours,
-    },
-    unless: :custom_hours_selected?,
-  )
+  validates :hours_to_claim, presence: true, inclusion: { in: HOURS_TO_CLAIM }
 
   validates(
-    :custom_hours_completed,
+    :custom_hours,
     presence: true,
     numericality: { only_integer: true },
     between: { min: 1, max: :max_hours },
@@ -33,7 +25,7 @@ class Claims::AddClaimWizard::MentorTrainingStep < BaseStep
 
     return if custom_hours_selected?
 
-    self.custom_hours_completed = nil
+    self.custom_hours = nil
   end
 
   def mentor
@@ -52,13 +44,13 @@ class Claims::AddClaimWizard::MentorTrainingStep < BaseStep
     )
   end
 
-  def total_hours_completed
-    (custom_hours_selected? ? custom_hours_completed : hours_completed).to_i
+  def hours_completed
+    (hours_to_claim == "maximum" ? max_hours : custom_hours).to_i
   end
 
   private
 
   def custom_hours_selected?
-    hours_completed == "custom"
+    hours_to_claim == "custom"
   end
 end
