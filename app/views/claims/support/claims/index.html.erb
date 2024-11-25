@@ -8,7 +8,7 @@
 
   <h2 class="govuk-heading-m"><%= t(".sub_heading", count: @pagy.count) %></h2>
 
-  <%= govuk_link_to t(".download_csv"), download_csv_claims_support_claims_path(**request.query_parameters), class: "govuk-button", method: :get %>
+  <%= govuk_button_link_to t(".download_csv"), download_csv_claims_support_claims_path(**request.query_parameters), class: "govuk-button" %>
 
   <%= render Claims::Claim::FilterFormComponent.new(filter_form:) do %>
     <% if @claims.any? %>
