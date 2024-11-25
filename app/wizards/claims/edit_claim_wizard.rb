@@ -74,6 +74,10 @@ module Claims
       steps.fetch(:provider).provider || claim.provider
     end
 
+    def claim_to_exclude
+      claim
+    end
+
     private
 
     def updated_claim

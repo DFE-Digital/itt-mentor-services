@@ -5,7 +5,7 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
   before_action :authorize_claim
   before_action :get_valid_revision, only: :check
 
-  helper_method :claim_provider_form
+  helper_method :claim_provider_form, :edit_attribute_path
 
   def index
     @pagy, @claims = pagy(@school.claims.active.order_created_at_desc)
@@ -109,5 +109,9 @@ class Claims::Support::Schools::ClaimsController < Claims::Support::ApplicationC
     revision = @claim.get_valid_revision
 
     redirect_to check_claims_support_school_claim_path(@school, revision) if revision != @claim
+  end
+
+  def edit_attribute_path(attribute)
+    new_edit_claim_claims_support_school_claim_path(@school, @claim, step: attribute)
   end
 end

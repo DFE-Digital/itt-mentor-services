@@ -20,7 +20,7 @@ class Claims::AddClaimWizard::MentorTrainingStep < BaseStep
 
   delegate :full_name, to: :mentor, prefix: true
   delegate :name, to: :provider, prefix: true
-  delegate :provider, :claim, to: :wizard
+  delegate :provider, :claim, :claim_to_exclude, to: :wizard
 
   def initialize(wizard:, attributes:)
     super
@@ -43,7 +43,7 @@ class Claims::AddClaimWizard::MentorTrainingStep < BaseStep
       mentor:,
       provider:,
       academic_year: @wizard.academic_year,
-      claim_to_exclude: claim.new_record? ? nil : claim,
+      claim_to_exclude:,
     )
   end
 
