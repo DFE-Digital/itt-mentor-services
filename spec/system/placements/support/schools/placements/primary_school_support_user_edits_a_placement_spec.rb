@@ -64,6 +64,7 @@ RSpec.describe "Primary school user edits a placement", service: :placements, ty
     and_i_see_my_mentors
 
     when_i_select_jane_doe
+    and_i_deselect_john_smith
     and_i_click_on_continue
     then_i_see_the_placement_details_page_with_jane_doe
     and_i_see_a_mentor_updated_success_message
@@ -358,6 +359,9 @@ RSpec.describe "Primary school user edits a placement", service: :placements, ty
 
   def when_i_select_jane_doe
     check "Jane Doe"
+  end
+
+  def and_i_deselect_john_smith
     uncheck "John Smith"
   end
 
