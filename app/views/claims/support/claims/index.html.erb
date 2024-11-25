@@ -10,6 +10,10 @@
 
   <%= govuk_button_link_to t(".download_csv"), download_csv_claims_support_claims_path(**request.query_parameters), class: "govuk-button" %>
 
+  <div>
+    <button class="govuk-button govuk-button--secondary show-filter-button" type="button" data-action="click->filter#open"><%= t("show_filter") %></button>
+  </div>
+
   <%= render Claims::Claim::FilterFormComponent.new(filter_form:) do %>
     <% if @claims.any? %>
       <div class="govuk-!-margin-bottom-2">

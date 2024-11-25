@@ -153,7 +153,7 @@
                   </div>
                 <% end %>
 
-                <%= content_tag(:div, class: "app-filter__option", data: { controller: @statuses.length > 5 ? "filter-search" : nil }) do %>
+                <div class="app-filter__option" data-controller="filter-search">
                   <%= form.govuk_check_boxes_fieldset(
                     :statuses,
                     legend: {
