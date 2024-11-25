@@ -11,3 +11,22 @@ en:
           upload_buttons:
             upload_claims: Upload claims to be sampled
             upload_provider_response: Upload provider response
+          show:
+            page_caption: Sampling - Claim %{reference}
+            page_title: "%{school_name} - Claim %{reference}"
+            reason: Reason claim is being sampled
+            approve: Approve claim
+            confirm_provider_reject: Confirm provider rejected claim
+            status: Status
+            provider: Accredited provider
+            mentor_with_index: Mentor %{index}
+            mentor: Mentor
+            submitted_by: Submitted by %{name} on %{date}.
+          confirm_approval:
+            page_caption: Sampling - Claim %{reference}
+            page_title: Are you sure you want to approve the claim?
+            mark_as_paid: This will mark the claim as 'Paid'.
+            approve: Approve claim
+            cancel: Cancel
+          update:
+            success_heading: Claim updated
