@@ -29,7 +29,7 @@ class Claims::Support::Claims::SamplingsController < Claims::Support::Applicatio
   end
 
   def set_claim
-    @claim = Claims::Claim.find_by!(id: params.require(:id))
+    @claim = Claims::Claim.find(params.require(:id))
   end
 
   def filter_form
