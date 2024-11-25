@@ -88,7 +88,7 @@
         <strong class="govuk-warning-text__text"><%= t("wizards.claims.add_claim_wizard.check_your_answers_step.warning") %></strong>
       </div>
 
-      <%= f.govuk_submit current_user.support_user? ? t(".save") : t(".submit") %>
+      <%= f.govuk_submit t(".submit") %>
     </div>
   </div>
 <% end %>
