@@ -1,0 +1,8 @@
+en:
+  claims:
+    support:
+      claims:
+        samplings:
+          index:
+            heading: Claims
+            sub_heading: Sampling

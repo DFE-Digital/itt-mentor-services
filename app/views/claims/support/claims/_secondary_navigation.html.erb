@@ -1,0 +1,7 @@
+<%= render SecondaryNavigationComponent.new do |component| %>
+  <% component.with_navigation_item t(".all_claims"), claims_support_claims_path, current: local_assigns[:current] == :all_claims %>
+  <% component.with_navigation_item t(".payments"), claims_support_claims_payments_path, current: local_assigns[:current] == :payments %>
+  <% component.with_navigation_item t(".sampling"), claims_support_claims_samplings_path, current: local_assigns[:current] == :sampling %>
+  <% component.with_navigation_item t(".clawbacks"), claims_support_claims_clawbacks_path, current: local_assigns[:current] == :clawbacks %>
+  <% component.with_navigation_item t(".activity_log"), claims_support_claims_activity_logs_path, current: local_assigns[:current] == :activity_log %>
+<% end %>

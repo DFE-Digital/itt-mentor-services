@@ -1,0 +1,8 @@
+en:
+  claims:
+    support:
+      claims:
+        clawbacks:
+          index:
+            heading: Claims
+            sub_heading: Clawbacks

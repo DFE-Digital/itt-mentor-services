@@ -1,0 +1,10 @@
+en:
+  claims:
+    support:
+      claims:
+        secondary_navigation:
+          all_claims: All claims
+          payments: Payments
+          sampling: Sampling
+          clawbacks: Clawbacks
+          activity_log: Activity log
