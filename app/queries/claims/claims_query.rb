@@ -47,7 +47,7 @@ class Claims::ClaimsQuery < ApplicationQuery
   def status_condition(scope)
     return scope if params[:statuses].blank?
 
-    scope.where(status: params[:statuses])
+    scope.where(status: params[:statuses].reject(&:blank?))
   end
 
   def academic_year_condition(scope)
