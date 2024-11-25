@@ -48,7 +48,7 @@ RSpec.describe "Download filtered claims", service: :claims, type: :system do
     uri = URI.parse(page.current_url)
     query_parameters = CGI.parse(uri.query)
 
-    expect(query_parameters["claims_support_claims_filter_form[provider_ids][]"]).to eq(["", provider.id])
+    expect(query_parameters["claims_support_claims_filter_form[provider_ids][]"]).to eq([provider.id])
   end
 
   def when_i_click_download_claims
@@ -59,6 +59,6 @@ RSpec.describe "Download filtered claims", service: :claims, type: :system do
     uri = URI.parse(page.current_url)
     query_parameters = CGI.parse(uri.query)
 
-    expect(query_parameters["claims_support_claims_filter_form[provider_ids][]"]).to eq(["", provider.id])
+    expect(query_parameters["claims_support_claims_filter_form[provider_ids][]"]).to eq([provider.id])
   end
 end
