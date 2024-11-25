@@ -5,4 +5,5 @@ en:
         add_claim:
           edit:
             caption: Add claim
+            save: Submit claim
             cancel: Cancel

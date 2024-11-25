@@ -1,4 +1,4 @@
-class Claims::Schools::Claims::EditClaimController < Claims::ApplicationController
+class Claims::Support::Schools::Claims::EditClaimController < Claims::Support::ApplicationController
   include WizardController
   include Claims::BelongsToSchool
 
@@ -21,7 +21,9 @@ class Claims::Schools::Claims::EditClaimController < Claims::ApplicationControll
     elsif @wizard.valid?
       @wizard.update_claim
       @wizard.reset_state
-      redirect_to confirmation_claims_school_claim_path(@school, @wizard.claim)
+      redirect_to index_path, flash: {
+        heading: t(".success"),
+      }
     else
       redirect_to rejected_claims_school_claims_path(@school)
     end
@@ -46,10 +48,10 @@ class Claims::Schools::Claims::EditClaimController < Claims::ApplicationControll
   end
 
   def step_path(step)
-    edit_claim_claims_school_claim_path(@school, claim, state_key:, step:)
+    edit_claim_claims_support_school_claim_path(@school, claim, state_key:, step:)
   end
 
   def index_path
-    claims_school_claim_path(@school, claim)
+    claims_support_school_claim_path(@school, claim)
   end
 end

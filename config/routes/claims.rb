@@ -222,7 +222,7 @@ scope module: :claims, as: :claims, constraints: {
       end
 
       scope module: :schools do
-        resources :claims, except: %i[new create] do
+        resources :claims, except: %i[new create edit] do
           collection do
             get "new", to: "claims/add_claim#new", as: :new_add_claim
             get "new/:state_key/:step", to: "claims/add_claim#edit", as: :add_claim
@@ -246,6 +246,10 @@ scope module: :claims, as: :claims, constraints: {
             get :check
             post :draft
             get :create_revision
+
+            get "edit", to: "claims/edit_claim#new", as: :new_edit_claim
+            get "edit/:state_key/:step", to: "claims/edit_claim#edit", as: :edit_claim
+            put "edit/:state_key/:step", to: "claims/edit_claim#update"
           end
 
           collection do
