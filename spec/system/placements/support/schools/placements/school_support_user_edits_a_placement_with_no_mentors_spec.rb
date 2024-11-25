@@ -59,8 +59,6 @@ RSpec.describe "School support user edits a placement with no mentors", service:
     @primary_english_subject = build(:subject, name: "Primary with english", subject_area: :primary)
 
     @autumn_term = build(:placements_term, name: "Autumn term")
-    @spring_term = create(:placements_term, name: "Spring term")
-    @summer_term = create(:placements_term, name: "Summer term")
 
     @current_academic_year_name = Placements::AcademicYear.current.name
 
