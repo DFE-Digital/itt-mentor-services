@@ -70,6 +70,13 @@ scope module: :claims, as: :claims, constraints: {
       end
     end
 
+    namespace :claims do
+      resources :payments, only: %i[index]
+      resources :samplings, path: "sampling", only: %i[index]
+      resources :clawbacks, only: %i[index]
+      resources :activity_logs, path: "activity", only: %i[index]
+    end
+
     resources :claims, only: %i[index show] do
       get :download_csv, on: :collection
     end

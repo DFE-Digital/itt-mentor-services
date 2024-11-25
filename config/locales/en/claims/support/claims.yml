@@ -3,7 +3,8 @@ en:
     support:
       claims:
         index:
-          heading: Claims (%{count})
+          heading: Claims
+          sub_heading: Claims (%{count})
           download_csv: Download CSV
           search_label: Search by claim reference
           school: School
