@@ -10,18 +10,6 @@ module Claims
       mentor_training_steps.map(&:hours_completed).sum
     end
 
-    def mentors_with_claimable_hours
-      return Claims::Mentor.none if provider.blank?
-
-      @mentors_with_claimable_hours ||= Claims::MentorsWithRemainingClaimableHoursQuery.call(
-        params: {
-          school:,
-          provider:,
-          claim: Claims::Claim.new(academic_year:),
-        },
-      )
-    end
-
     def step_name_for_mentor(mentor)
       step_name(::Claims::AddClaimWizard::MentorTrainingStep, mentor.id)
     end
