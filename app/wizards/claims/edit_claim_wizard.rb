@@ -78,6 +78,18 @@ module Claims
       claim
     end
 
+    def mentors_with_claimable_hours
+      return Claims::Mentor.none if provider.blank?
+
+      @mentors_with_claimable_hours ||= Claims::MentorsWithRemainingClaimableHoursQuery.call(
+        params: {
+          school:,
+          provider:,
+          claim:,
+        },
+      )
+    end
+
     private
 
     def updated_claim

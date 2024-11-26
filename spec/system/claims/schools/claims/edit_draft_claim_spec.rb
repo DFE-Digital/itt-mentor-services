@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Edit a claim", service: :claims, type: :system do
+  let!(:claim_window) { create(:claim_window, :current) }
   let(:school) { create(:claims_school, name: "A School", region: regions(:inner_london)) }
 
   let(:anne) do
@@ -11,20 +12,26 @@ RSpec.describe "Edit a claim", service: :claims, type: :system do
     )
   end
 
-  let(:provider) { build(:claims_provider, :best_practice_network) }
-  let(:mentor) { build(:claims_mentor, first_name: "Barry", last_name: "Garlow") }
+  let(:provider) { create(:claims_provider, :best_practice_network) }
+  let(:mentor) { create(:claims_mentor, first_name: "Barry", last_name: "Garlow", schools: [school]) }
 
   let!(:draft_claim) do
-    create(
-      :claim,
-      :draft,
-      school:,
-      reference: "88888888",
-      provider:,
-    )
+    create(:claim,
+           :draft,
+           school:,
+           reference: "88888888",
+           provider:,
+           claim_window:)
   end
 
-  let!(:draft_mentor_training) { create(:mentor_training, claim: draft_claim, mentor:, hours_completed: 6) }
+  let!(:draft_mentor_training) do
+    create(:mentor_training,
+           claim: draft_claim,
+           mentor:,
+           hours_completed: 6,
+           provider:,
+           date_completed: claim_window.starts_on + 1.day)
+  end
 
   before do
     given_there_is_a_current_claim_window
@@ -70,7 +77,7 @@ RSpec.describe "Edit a claim", service: :claims, type: :system do
   end
 
   def given_there_is_a_current_claim_window
-    Claims::ClaimWindow::Build.call(claim_window_params: { starts_on: 2.days.ago, ends_on: 2.days.from_now }).save!(validate: false)
+    claim_window
   end
 
   def and_i_click(button)
