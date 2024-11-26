@@ -57,5 +57,17 @@ module Claims
     def provider
       steps.fetch(:provider).provider
     end
+
+    def mentors_with_claimable_hours
+      return Claims::Mentor.none if provider.blank?
+
+      @mentors_with_claimable_hours ||= Claims::MentorsWithRemainingClaimableHoursQuery.call(
+        params: {
+          school:,
+          provider:,
+          claim: Claims::Claim.new(claim_window: Claims::ClaimWindow.current),
+        },
+      )
+    end
   end
 end

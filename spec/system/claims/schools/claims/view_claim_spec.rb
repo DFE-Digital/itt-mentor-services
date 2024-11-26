@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "View a claim", service: :claims, type: :system do
+  let(:claim_window) { create(:claim_window, :current) }
   let(:school) { create(:claims_school, name: "A School", region: regions(:inner_london)) }
 
   let(:anne) do
@@ -12,32 +13,45 @@ RSpec.describe "View a claim", service: :claims, type: :system do
   end
 
   let!(:provider) { create(:claims_provider, :best_practice_network) }
-  let!(:mentor) { create(:claims_mentor, first_name: "Barry", last_name: "Garlow") }
+  let!(:mentor) { create(:claims_mentor, first_name: "Barry", last_name: "Garlow", schools: [school]) }
+  let(:date_completed) { claim_window.starts_on + 1.day }
 
   let!(:submitted_claim) do
-    create(
-      :claim,
-      :submitted,
-      school:,
-      reference: "12345678",
-      submitted_at: Time.new(2024, 3, 5, 12, 31, 52, "+00:00"),
-      provider:,
-      submitted_by: anne,
-    )
+    create(:claim,
+           :submitted,
+           school:,
+           reference: "12345678",
+           submitted_at: date_completed,
+           provider:,
+           submitted_by: anne,
+           claim_window:)
   end
 
   let!(:draft_claim) do
-    create(
-      :claim,
-      :draft,
-      school:,
-      reference: "88888888",
-      provider:,
-    )
+    create(:claim,
+           :draft,
+           school:,
+           reference: "88888888",
+           provider:,
+           claim_window:)
   end
 
-  let!(:mentor_training) { create(:mentor_training, claim: submitted_claim, mentor:, hours_completed: 6) }
-  let!(:draft_mentor_training) { create(:mentor_training, claim: draft_claim, mentor:, hours_completed: 6) }
+  let!(:mentor_training) do
+    create(:mentor_training,
+           claim: submitted_claim,
+           mentor:,
+           hours_completed: 6,
+           provider:,
+           date_completed:)
+  end
+  let!(:draft_mentor_training) do
+    create(:mentor_training,
+           claim: draft_claim,
+           mentor:,
+           hours_completed: 6,
+           provider:,
+           date_completed:)
+  end
 
   before do
     given_there_is_a_current_claim_window
@@ -48,7 +62,7 @@ RSpec.describe "View a claim", service: :claims, type: :system do
     given_i_sign_in
     when_i_visit_the_claim_show_page(submitted_claim)
     then_i_can_then_see_the_submitted_claim_details
-    then_i_cant_see_submit_button
+    then_i_cant_see_submit_link
   end
 
   scenario "Anne visits the show page of a draft claim" do
@@ -56,7 +70,7 @@ RSpec.describe "View a claim", service: :claims, type: :system do
     given_i_sign_in
     when_i_visit_the_claim_show_page(draft_claim)
     then_i_can_then_see_the_draft_claim_details
-    then_i_can_see_submit_button
+    then_i_can_see_submit_link
     when_i_click("Submit claim")
     then_i_can_see_submit_button
     then_i_can_then_see_the_draft_claim_details_without_change_buttons
@@ -73,7 +87,7 @@ RSpec.describe "View a claim", service: :claims, type: :system do
     expect(page).to have_content("SchoolA School")
     expect(page).to have_content("Academic year#{submitted_claim.academic_year.name}")
     expect(page).to have_content("Submitted")
-    expect(page).to have_content("Submitted by #{anne.full_name} on 5 March 2024.")
+    expect(page).to have_content("Submitted by #{anne.full_name} on #{date_completed.strftime("%d %B %Y")}.")
     expect(page).to have_content("Accredited providerBest Practice Network")
     expect(page).to have_content("Mentors\nBarry Garlow")
     expect(page).to have_content("Hours of training")
@@ -121,11 +135,15 @@ RSpec.describe "View a claim", service: :claims, type: :system do
   end
 
   def given_there_is_a_current_claim_window
-    Claims::ClaimWindow::Build.call(claim_window_params: { starts_on: 2.days.ago, ends_on: 2.days.from_now }).save!(validate: false)
+    claim_window
   end
 
-  def then_i_cant_see_submit_button
-    expect(page).not_to have_button("Submit claim")
+  def then_i_cant_see_submit_link
+    expect(page).not_to have_link("Submit claim")
+  end
+
+  def then_i_can_see_submit_link
+    expect(page).to have_link("Submit claim")
   end
 
   def then_i_can_see_submit_button

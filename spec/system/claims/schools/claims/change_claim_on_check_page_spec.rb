@@ -9,39 +9,48 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
       user_memberships: [create(:user_membership, organisation: school)],
     )
   end
-  let!(:provider1) { create(:claims_provider, :best_practice_network) }
-  let!(:provider2) { create(:claims_provider, :niot) }
+  let!(:bpn) { create(:claims_provider, :best_practice_network) }
+  let!(:niot) { create(:claims_provider, :niot) }
 
   let(:mentor1) { create(:mentor, first_name: "Anne") }
   let(:mentor2) { create(:mentor, first_name: "Joe") }
   let(:mentor3) { create(:mentor, first_name: "Joeana") }
-  let!(:claim) { create(:claim, :internal_draft, school:, provider: provider1, reference: nil) }
 
   before do
     user_exists_in_dfe_sign_in(user: anne)
-    given_i_sign_in
     given_there_is_a_current_claim_window
-    create(:mentor_training, mentor: mentor1, provider: provider1, claim:, hours_completed: 20)
-    create(:mentor_training, mentor: mentor2, provider: provider1, claim:, hours_completed: 12)
+    given_i_sign_in
+
+    when_i_click("Add claim")
+    when_i_choose_a_provider(bpn)
+    when_i_click("Continue")
+    when_i_select_a_mentor(mentor1)
+    when_i_select_a_mentor(mentor2)
+    when_i_click("Continue")
+    then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor1)
+    when_i_add_training_hours("20 hours")
+    when_i_click("Continue")
+    then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor2)
+    when_i_choose_other_amount_and_input_hours(12)
+    when_i_click("Continue")
+    then_i_check_my_answers(bpn, [mentor1, mentor2], [20, 12])
   end
 
   scenario "Anne changes the provider on claim on check page and doesn't need to add the mentor hours again" do
-    given_i_visit_claim_check_page
     when_i_click_change_provider
-    then_i_expect_the_provider_to_be_checked(provider1)
+    then_i_expect_the_provider_to_be_checked(bpn)
     when_i_change_the_provider
-    then_i_expect_the_provider_to_be_checked(provider2)
+    then_i_expect_the_provider_to_be_checked(niot)
     when_i_click("Continue")
-    then_i_check_my_answers(claim, provider2, [mentor1, mentor2], [20, 12])
-    when_i_click_change_mentors
-    when_i_click("Continue")
-    then_i_check_my_answers(claim, provider2, [mentor1, mentor2], [20, 12])
+    when_i_click("Continue") # Mentors step
+    when_i_click("Continue") # Mentors 1 step
+    when_i_click("Continue") # Mentors 2 step
+    then_i_check_my_answers(niot, [mentor1, mentor2], [20, 12])
     when_i_click("Submit claim")
-    then_i_get_a_claim_reference(claim)
+    then_i_get_a_claim_reference
   end
 
   scenario "Anne changes the mentors on claim on check page" do
-    given_i_visit_claim_check_page
     when_i_click_change_mentors
     then_i_expect_the_mentors_to_be_checked([mentor1, mentor2])
     when_i_uncheck_the_mentors([mentor1, mentor2])
@@ -49,74 +58,56 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
     then_i_see_the_error("Select a mentor")
     when_i_check_the_mentor(mentor2)
     when_i_click("Continue")
+    when_i_click("Continue") # Mentors 2 step
     then_i_check_my_answers(
-      Claims::Claim.find_by(previous_revision_id: claim.id),
-      provider1,
+      bpn,
       [mentor2],
       [12],
     )
     when_i_click("Submit claim")
-    then_i_get_a_claim_reference(claim)
+    then_i_get_a_claim_reference
   end
 
   scenario "Anne changes the mentors on claim without inputting hours" do
-    given_i_visit_claim_check_page
     when_i_click_change_mentors
     then_i_expect_the_mentors_to_be_checked([mentor1, mentor2])
     when_i_check_the_mentor(mentor3)
     when_i_click("Continue")
-    when_i_click("Back")
-    then_i_expect_the_training_hours_for(20, mentor2)
-    when_i_click("Back")
     then_i_expect_the_training_hours_for(20, mentor1)
-    when_i_click("Back")
-    then_i_expect_the_mentors_to_be_checked([mentor1, mentor2, mentor3])
-    when_i_click("Back")
-    then_i_check_my_answers(claim, provider1, [mentor1, mentor2], [20, 12])
-    then_i_cant_see_the_mentor(mentor3)
-  end
-
-  scenario "Anne changes the mentors on claim without inputting hours for any mentor" do
-    given_i_visit_claim_check_page
-    when_i_click_change_mentors
-    then_i_expect_the_mentors_to_be_checked([mentor1, mentor2])
-    when_i_uncheck_the_mentors([mentor1, mentor2])
-    when_i_check_the_mentor(mentor3)
     when_i_click("Continue")
-    when_i_click("Back")
-    then_i_expect_the_mentors_to_be_checked([mentor3])
-    when_i_click("Back")
-    then_i_check_my_answers(claim, provider1, [mentor1, mentor2], [20, 12])
-    then_i_cant_see_the_mentor(mentor3)
+    then_i_expect_the_training_hours_for(12, mentor2)
+    when_i_click("Continue")
+    when_i_click("Continue") # I do not imput hours for Mentor 3
+    then_i_see_the_error("Select the number of hours")
+    when_i_add_training_hours("20 hours")
+    when_i_click("Continue")
+    then_i_check_my_answers(bpn, [mentor1, mentor2, mentor3], [20, 12, 20])
   end
 
   scenario "Anne changes the training hours for a mentor on check page" do
-    given_i_visit_claim_check_page
     when_i_click_change_training_hours_for_mentor
-    then_i_expect_the_training_hours_to_be_selected("20")
+    then_i_expect_the_training_hours_to_be_selected(20)
     when_i_choose_other_amount
     when_i_click("Continue")
     then_i_see_the_error("Enter the number of hours")
-    when_i_choose_other_amount_and_input_hours(6, with_error: true)
+    when_i_choose_other_amount_and_input_hours(6)
     when_i_click("Continue")
+    when_i_click("Continue") # Mentor 2 step
     then_i_check_my_answers(
-      Claims::Claim.find_by(previous_revision_id: claim.id),
-      provider1,
+      bpn,
       [mentor1, mentor2],
       [6, 12],
     )
   end
 
   scenario "Anne intends to change the training hours but clicks back link" do
-    given_i_visit_claim_check_page
     when_i_click_change_training_hours_for_mentor
-    then_i_expect_the_training_hours_to_be_selected("20")
+    then_i_expect_the_training_hours_to_be_selected(20)
     when_i_click("Back")
     then_i_see_the_list_of_mentors
   end
 
   scenario "Anne click the back link on the check page" do
-    given_i_visit_claim_check_page
     when_i_click("Back")
     then_i_expect_the_training_hours_for(20, mentor2)
   end
@@ -135,7 +126,7 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
   end
 
   def given_there_is_a_current_claim_window
-    Claims::ClaimWindow::Build.call(claim_window_params: { starts_on: 2.days.ago, ends_on: 2.days.from_now }).save!(validate: false)
+    @claim_window = create(:claim_window, :current)
   end
 
   def given_i_visit_claim_check_page
@@ -170,14 +161,9 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
     page.choose("Another amount")
   end
 
-  def when_i_choose_other_amount_and_input_hours(hours, with_error: false)
+  def when_i_choose_other_amount_and_input_hours(hours)
     page.choose("Another amount")
-
-    if with_error
-      fill_in("claims-claim-mentor-training-form-custom-hours-completed-field-error", with: hours)
-    else
-      fill_in("claims-claim-mentor-training-form-custom-hours-completed-field", with: hours)
-    end
+    fill_in("Number of hours", with: hours)
   end
 
   def then_i_expect_the_provider_to_be_checked(provider)
@@ -195,7 +181,7 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
   end
 
   def when_i_change_the_provider
-    page.choose(provider2.name)
+    page.choose(niot.name)
   end
 
   def when_i_uncheck_the_mentors(mentors)
@@ -213,15 +199,19 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
   end
 
   def then_i_expect_the_training_hours_to_be_selected(hours)
-    find("#claims-claim-mentor-training-form-hours-completed-#{hours}-field").checked?
+    if hours.to_i == 20
+      find("#claims-add-claim-wizard-mentor-training-step-hours-to-claim-maximum-field").checked?
+    else
+      find("#claims-add-claim-wizard-mentor-training-step-hours-to-claim-custom-field").checked?
+    end
   end
 
   def then_i_expect_the_training_hours_for(hours, mentor)
     expect(page).to have_content("Hours of training for #{mentor.full_name}")
-    find("#claims-claim-mentor-training-form-hours-completed-#{hours}-field").checked?
+    then_i_expect_the_training_hours_to_be_selected(hours)
   end
 
-  def then_i_check_my_answers(claim_record, provider, mentors, mentor_hours)
+  def then_i_check_my_answers(provider, mentors, mentor_hours)
     expect(page).to have_content("Check your answers")
     expect(page).to have_content("Hours of training")
     expect(page).to have_content("Grant funding")
@@ -229,7 +219,7 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
     within("dl.govuk-summary-list:nth(1)") do
       within(".govuk-summary-list__row:nth(2)") do
         expect(page).to have_content("Academic year")
-        expect(page).to have_content(claim.academic_year_name)
+        expect(page).to have_content(@claim_window.academic_year.name)
       end
 
       within(".govuk-summary-list__row:nth(3)") do
@@ -246,24 +236,25 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
     end
 
     within("dl.govuk-summary-list:nth(2)") do
-      claim_record.mentor_trainings.each_with_index do |mentor_training, index|
-        expect(page).to have_content(mentor_training.mentor.full_name)
+      mentors.each_with_index do |mentor, index|
+        expect(page).to have_content(mentor.full_name)
         expect(page).to have_content(mentor_hours[index])
       end
     end
 
     within("dl.govuk-summary-list:nth(3)") do
       within(".govuk-summary-list__row:nth(1)") do
-        expect(page).to have_content("Total hours#{claim_record.mentor_trainings.sum(:hours_completed)} hours")
+        expect(page).to have_content("Total hours#{mentor_hours.sum} hours")
       end
 
       within(".govuk-summary-list__row:nth(2)") do
         expect(page).to have_content("Hourly rate£53.60")
       end
 
+      amount = Money.new(mentor_hours.sum * school.region.claims_funding_available_per_hour_pence, "GBP")
       within(".govuk-summary-list__row:nth(3)") do
         expect(page).to have_content("Claim amount")
-        expect(page).to have_content(claim_record.amount.format(symbol: true, decimal_mark: ".", no_cents: true))
+        expect(page).to have_content(amount.format(symbol: true, decimal_mark: ".", no_cents: true))
       end
     end
   end
@@ -282,9 +273,22 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
     end
   end
 
-  def then_i_get_a_claim_reference(claim)
+  def then_i_get_a_claim_reference
+    claim = Claims::Claim.last
     within(".govuk-panel") do
       expect(page).to have_content("Claim submitted\nYour reference number\n#{claim.reference}")
     end
+  end
+
+  def when_i_choose_a_provider(provider)
+    page.choose(provider.name)
+  end
+
+  def when_i_select_a_mentor(mentor)
+    page.check(mentor.full_name)
+  end
+
+  def then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor)
+    expect(page).to have_content("Hours of training for #{mentor.full_name}")
   end
 end
