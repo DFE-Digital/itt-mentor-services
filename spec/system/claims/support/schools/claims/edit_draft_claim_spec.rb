@@ -37,6 +37,7 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
       claim: draft_claim,
       mentor: claims_mentor,
       hours_completed: 6,
+      provider: best_practice_network_provider,
       date_completed: claim_window.starts_on + 1.day,
     )
   end
