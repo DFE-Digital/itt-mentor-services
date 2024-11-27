@@ -33,6 +33,14 @@ describe Placements::Placements::FilterForm, type: :model do
       end
     end
 
+    context "when given phase params" do
+      let(:params) { { phases: %w[primary secondary] } }
+
+      it "returns true" do
+        expect(filter_form).to be(true)
+      end
+    end
+
     context "when given year group params" do
       let(:params) { { year_groups: %w[year_group] } }
 
@@ -200,6 +208,30 @@ describe Placements::Placements::FilterForm, type: :model do
       end
     end
 
+    context "when removing phase params" do
+      let(:params) do
+        { phases: %w[primary secondary] }
+      end
+
+      it "returns the placements index page path without the given phase param" do
+        expect(
+          filter_form.index_path_without_filter(
+            filter: "phases",
+            value: "primary",
+          ),
+        ).to eq(
+          placements_provider_placements_path(
+            provider,
+            filters: {
+              placements_to_show: "available_placements",
+              academic_year_id: current_academic_year.id,
+              phases: %w[secondary],
+            },
+          ),
+        )
+      end
+    end
+
     context "when removing year group params" do
       let(:params) do
         { year_groups: %w[year_group_1 year_group_2] }
@@ -236,6 +268,7 @@ describe Placements::Placements::FilterForm, type: :model do
           search_location: nil,
           subject_ids: [],
           term_ids: [],
+          phases: [],
           year_groups: [],
         },
       )
@@ -269,6 +302,30 @@ describe Placements::Placements::FilterForm, type: :model do
       expect(
         described_class.new(provider, term_ids: terms.pluck(:id)).terms,
       ).to match_array(terms)
+    end
+  end
+
+  describe "#primary_selected?" do
+    subject(:filter_form) { described_class.new(provider, params).primary_selected? }
+
+    context "when primary is included in the phases param" do
+      let(:params) { { phases: %w[primary] } }
+
+      it "returns true" do
+        expect(filter_form).to be(true)
+      end
+    end
+  end
+
+  describe "#secondary_selected?" do
+    subject(:filter_form) { described_class.new(provider, params).secondary_selected? }
+
+    context "when secondary is included in the phases param" do
+      let(:params) { { phases: %w[secondary] } }
+
+      it "returns true" do
+        expect(filter_form).to be(true)
+      end
     end
   end
 end
