@@ -22,7 +22,7 @@ class Claims::MentorsWithRemainingClaimableHoursQuery < ApplicationQuery
   end
 
   def training_allowance_for(mentor)
-    Claims::TrainingAllowance.new(mentor:, provider:, academic_year:)
+    Claims::TrainingAllowance.new(mentor:, provider:, academic_year:, claim_to_exclude: claim)
   end
 
   def academic_year

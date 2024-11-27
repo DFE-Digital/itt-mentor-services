@@ -35,8 +35,6 @@ module Claims
     end
 
     def update_claim
-      raise "Invalid wizard state" unless valid?
-
       if created_by.support_user?
         Claims::Claim::CreateDraft.call(claim: updated_claim)
       else
@@ -79,8 +77,6 @@ module Claims
     end
 
     def mentors_with_claimable_hours
-      return Claims::Mentor.none if provider.blank?
-
       @mentors_with_claimable_hours ||= Claims::MentorsWithRemainingClaimableHoursQuery.call(
         params: {
           school:,
