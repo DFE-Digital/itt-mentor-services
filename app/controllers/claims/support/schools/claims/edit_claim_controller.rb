@@ -37,7 +37,7 @@ class Claims::Support::Schools::Claims::EditClaimController < Claims::Support::A
 
   def set_wizard
     state = session[state_key] ||= {}
-    current_step = params[:step]&.to_sym
+    current_step = params.require(:step).to_sym
     @wizard = Claims::EditClaimWizard.new(
       school: @school, claim:, created_by: current_user, params:, state:, current_step:,
     )
