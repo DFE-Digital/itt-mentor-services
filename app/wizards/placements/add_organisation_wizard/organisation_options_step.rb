@@ -8,7 +8,7 @@ class Placements::AddOrganisationWizard::OrganisationOptionsStep < Placements::A
   end
 
   def organisations
-    return if wizard.organisation_model.blank?
+    return [] if wizard.organisation_model.blank?
 
     @organisations ||= if wizard.steps[:organisation_type].provider?
                          wizard.organisation_model.search_name_urn_ukprn_postcode(
