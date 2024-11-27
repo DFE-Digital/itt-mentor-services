@@ -6,6 +6,7 @@ class Placements::Placements::FilterForm < ApplicationForm
   attribute :search_location, default: nil
   attribute :year_groups, default: []
   attribute :term_ids, default: []
+  attribute :phases, default: []
   attribute :placements_to_show, default: "available_placements"
   attribute :academic_year_id, default: Placements::AcademicYear.current.id
   attribute :only_partner_schools, :boolean, default: false
@@ -56,6 +57,7 @@ class Placements::Placements::FilterForm < ApplicationForm
       placements_to_show:,
       academic_year_id:,
       term_ids:,
+      phases:,
       search_location:,
     }
   end
@@ -70,6 +72,22 @@ class Placements::Placements::FilterForm < ApplicationForm
 
   def terms
     @terms ||= Placements::Term.where(id: term_ids).order_by_term
+  end
+
+  def primary_selected?
+    phases.include?("primary")
+  end
+
+  def secondary_selected?
+    phases.include?("secondary")
+  end
+
+  def primary_only?
+    primary_selected? && !secondary_selected?
+  end
+
+  def secondary_only?
+    !primary_selected? && secondary_selected?
   end
 
   private

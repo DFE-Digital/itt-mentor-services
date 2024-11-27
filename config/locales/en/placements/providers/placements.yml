@@ -21,6 +21,9 @@ en:
           location_search_prompt: Enter a town, city or postcode
           partner_schools: Schools I work with
           terms: Expected date
+          phase: Phase
+          primary: Primary
+          secondary: Secondary
           only_show_partner_schools: Only show placements from schools I work with
           school: School
           search_location: Location
