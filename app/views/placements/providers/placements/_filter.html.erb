@@ -62,6 +62,39 @@
             </ul>
           <% end %>
 
+          <% if filter_form.primary_selected? || filter_form.secondary_selected? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".phase") %></h3>
+            <ul class="app-filter-tags">
+              <% if filter_form.primary_selected? %>
+                <li>
+                  <%= govuk_link_to(
+                    t(".primary"),
+                    filter_form.index_path_without_filter(
+                      filter: "phases",
+                      value: "primary",
+                    ),
+                    class: "app-filter__tag",
+                    no_visited_state: true,
+                  ) %>
+                </li>
+              <% end %>
+
+              <% if filter_form.secondary_selected? %>
+                <li>
+                  <%= govuk_link_to(
+                    t(".secondary"),
+                    filter_form.index_path_without_filter(
+                      filter: "phases",
+                      value: "secondary",
+                    ),
+                    class: "app-filter__tag",
+                    no_visited_state: true,
+                  ) %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+
           <% if filter_form.subject_ids.present? %>
             <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".subject") %></h3>
             <ul class="app-filter-tags">
@@ -220,6 +253,22 @@
             <% end %>
           </div>
 
+          <div class="app-filter__option">
+            <%= form.govuk_check_boxes_fieldset(
+                :phases,
+                legend: { text: t(".phase"), size: "s" },
+                small: true,
+                multiple: true,
+              ) do %>
+              <%= form.govuk_check_box :phases,
+                                      "primary",
+                                      label: { text: t(".primary") } %>
+              <%= form.govuk_check_box :phases,
+                                      "secondary",
+                                      label: { text: t(".secondary") } %>
+            <% end %>
+          </div>
+
           <div class="app-filter__option" data-controller="filter-search">
             <%= form.govuk_check_boxes_fieldset(
               :subject_ids,
@@ -237,6 +286,7 @@
             <% end %>
           </div>
 
+          <% if filter_form.primary_selected? || filter_form.phases.blank? %>
           <div class="app-filter__option">
             <%= form.govuk_check_boxes_fieldset(
               :year_groups,
@@ -250,6 +300,7 @@
               <% end %>
             <% end %>
           </div>
+          <% end %>
 
           <div class="app-filter__option">
             <%= form.govuk_check_boxes_fieldset(
