@@ -152,7 +152,7 @@ RSpec.describe Placements::AddOrganisationWizard::OrganisationOptionsStep, type:
       let(:is_provider) { false }
 
       it "returns nil" do
-        expect(step.organisations).to be_nil
+        expect(step.organisations).to eq([])
       end
     end
   end
