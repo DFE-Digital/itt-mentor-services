@@ -1,7 +1,7 @@
 class Claims::AddClaimWizard::MentorStep < BaseStep
   attribute :mentor_ids, default: []
 
-  validates :mentor_ids, presence: true, inclusion: { in: ->(step) { step.mentors_with_claimable_hours.unscoped.ids } }
+  validates :mentor_ids, presence: true, inclusion: { in: ->(step) { step.mentors_with_claimable_hours.except(:order).ids } }
 
   delegate :school, :claim, :mentors_with_claimable_hours, to: :wizard
 

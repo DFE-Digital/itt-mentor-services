@@ -91,7 +91,7 @@
 
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: Claims::Claim.human_attribute_name(:claim_amount)) %>
-          <% row.with_value(text: humanized_money_with_symbol(@wizard.claim.amount)) %>
+          <% row.with_value(text: humanized_money_with_symbol(@wizard.amount)) %>
         <% end %>
       <% end %>
 

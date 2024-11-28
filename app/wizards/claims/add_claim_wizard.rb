@@ -42,6 +42,8 @@ module Claims
       )
     end
 
+    delegate :amount, to: :claim
+
     def claim_to_exclude
       nil
     end
