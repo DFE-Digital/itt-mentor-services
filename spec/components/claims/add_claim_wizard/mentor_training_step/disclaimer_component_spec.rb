@@ -27,7 +27,7 @@ RSpec.describe Claims::AddClaimWizard::MentorTrainingStep::DisclaimerComponent, 
     let(:remaining_hours) { 20 }
 
     it "does not render" do
-      render_inline described_class.new(mentor_training_form: mentor_training_step)
+      render_inline described_class.new(mentor_training_step:)
 
       expect(page).not_to have_css(".govuk-inset-text")
     end
@@ -37,7 +37,7 @@ RSpec.describe Claims::AddClaimWizard::MentorTrainingStep::DisclaimerComponent, 
     let(:remaining_hours) { 6 }
 
     it "renders an inset text block with the remaining hours left for a mentor to claim for the selected provider" do
-      render_inline described_class.new(mentor_training_form: mentor_training_step)
+      render_inline described_class.new(mentor_training_step:)
 
       expect(page).to have_css(".govuk-inset-text")
       expect(page).to have_content "There are 6 hours left to claim for #{mentor.full_name} for #{provider.name}."
