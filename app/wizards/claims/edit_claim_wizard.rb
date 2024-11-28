@@ -86,6 +86,23 @@ module Claims
       )
     end
 
+    def amount
+      ammended_claim = Claims::Claim.new(
+        provider:,
+        school:,
+        created_by:,
+        claim_window: claim.claim_window,
+        mentor_trainings_attributes: mentor_training_steps.map do |mentor_training_step|
+          {
+            mentor_id: mentor_training_step.mentor_id,
+            hours_completed: mentor_training_step.hours_completed,
+            provider:,
+          }
+        end,
+      )
+      ammended_claim.amount
+    end
+
     private
 
     def updated_claim
