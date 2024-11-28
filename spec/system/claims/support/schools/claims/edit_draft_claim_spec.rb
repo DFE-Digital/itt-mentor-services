@@ -66,6 +66,34 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
     then_i_cant_edit_the_submitted_claim
   end
 
+  scenario "Anne edits the draft claim without selecting a mentor" do
+    when_i_visit_the_draft_claim_show_page
+    when_i_click_to_change_mentors
+    then_i_see_mentor_barry_garlow_selected
+
+    when_i_unselect_mentor_barry_garlow
+    when_i_click("Continue")
+    then_i_see_a_validation_error_for_selecting_a_mentor
+  end
+
+  scenario "Anne submits the draft claim which is invalid" do
+    when_i_visit_the_draft_claim_show_page
+    when_i_click("Change Accredited provider")
+    and_i_select_provider_niot
+    when_i_click("Continue") # To mentors step
+    when_i_click("Continue") # To mentor training step
+    when_i_click("Continue") # To check your answers
+    then_i_see_the_check_your_answers_page(
+      provider: niot_provider,
+      mentor: claims_mentor,
+      hours_completed: 6,
+    )
+
+    when_another_claim_has_been_submitted_for_provider_niot
+    when_i_click("Update claim")
+    then_i_see_i_can_not_sumbit_the_claim
+  end
+
   private
 
   def then_i_update_the_claim(mentor)
@@ -145,5 +173,59 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
 
   def when_i_click(button)
     click_on(button)
+  end
+
+  def when_i_click_to_change_mentors
+    click_on "Change Mentor"
+  end
+
+  def then_i_see_mentor_barry_garlow_selected
+    expect(page).to have_checked_field("Barry Garlow")
+  end
+
+  def when_i_unselect_mentor_barry_garlow
+    uncheck "Barry Garlow"
+  end
+
+  def then_i_see_a_validation_error_for_selecting_a_mentor
+    expect(page).to have_validation_error("Select a mentor")
+  end
+
+  def and_i_select_provider_niot
+    choose "NIoT: National Institute of Teaching, founded by the School-Led Development Trust"
+  end
+
+  def when_another_claim_has_been_submitted_for_provider_niot
+    another_claim = create(:claim,
+                           :submitted,
+                           school:,
+                           reference: "99999999",
+                           provider: niot_provider,
+                           claim_window:)
+
+    create(:mentor_training,
+           claim: another_claim,
+           mentor: claims_mentor,
+           hours_completed: 20,
+           provider: niot_provider,
+           date_completed: claim_window.starts_on + 1.day)
+  end
+
+  def then_i_see_i_can_not_sumbit_the_claim
+    expect(page).to have_h1("You cannot submit the claim")
+    expect(page).to have_content("You cannot submit the claim because your mentors’ information has recently changed.")
+  end
+
+  def then_i_see_the_check_your_answers_page(provider:, mentor:, hours_completed:)
+    expect(page).to have_content("A School")
+    expect(page).not_to have_content("Submitted by")
+    expect(page).to have_content("Accredited provider#{provider.name}")
+    expect(page).to have_content("Mentors\n#{mentor.full_name}")
+    expect(page).to have_content("Hours of training")
+    expect(page).to have_content("Barry Garlow#{hours_completed} hours")
+    expect(page).to have_content("Total hours#{hours_completed} hours")
+    expect(page).to have_content("Hourly rate£53.60")
+    amount = Money.new(hours_completed * school.region.claims_funding_available_per_hour_pence, "GBP")
+    expect(page).to have_content("Claim amount#{amount.format(symbol: true, decimal_mark: ".", no_cents: true)}")
   end
 end
