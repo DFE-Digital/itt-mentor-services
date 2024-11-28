@@ -55,10 +55,7 @@ scope module: :claims, as: :claims, constraints: {
 
         member do
           get :remove
-          get :check
           get :confirmation
-          get :create_revision
-          post :submit
 
           get "edit", to: "claims/edit_claim#new", as: :new_edit_claim
           get "edit/:state_key/:step", to: "claims/edit_claim#edit", as: :edit_claim
@@ -230,22 +227,9 @@ scope module: :claims, as: :claims, constraints: {
             get :rejected
           end
 
-          resource :mentors, only: %i[new create edit update], module: :claims do
-            member do
-              get :create_revision
-            end
-          end
-          resources :mentor_trainings, only: %i[edit update], module: :claims do
-            member do
-              get :create_revision
-            end
-          end
-
           member do
             get :remove
-            get :check
-            post :draft
-            get :create_revision
+            get :confirmation
 
             get "edit", to: "claims/edit_claim#new", as: :new_edit_claim
             get "edit/:state_key/:step", to: "claims/edit_claim#edit", as: :edit_claim

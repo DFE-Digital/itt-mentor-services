@@ -1,12 +1,12 @@
-class Claims::Claim::MentorTrainingForm::DisclaimerComponent < ApplicationComponent
-  attr_reader :mentor_training_form
+class Claims::AddClaimWizard::MentorTrainingStep::DisclaimerComponent < ApplicationComponent
+  attr_reader :mentor_training_step
 
-  delegate :training_allowance, to: :mentor_training_form
+  delegate :training_allowance, to: :mentor_training_step
 
-  def initialize(mentor_training_form:, classes: [], html_attributes: {})
+  def initialize(mentor_training_step:, classes: [], html_attributes: {})
     super(classes:, html_attributes:)
 
-    @mentor_training_form = mentor_training_form
+    @mentor_training_step = mentor_training_step
   end
 
   def call
@@ -23,11 +23,11 @@ class Claims::Claim::MentorTrainingForm::DisclaimerComponent < ApplicationCompon
   private
 
   def mentor_name
-    mentor_training_form.mentor_full_name
+    mentor_training_step.mentor_full_name
   end
 
   def provider_name
-    mentor_training_form.provider_name
+    mentor_training_step.provider_name
   end
 
   def support_link
