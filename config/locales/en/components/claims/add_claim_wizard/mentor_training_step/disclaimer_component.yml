@@ -1,8 +1,8 @@
 en:
   components:
     claims:
-      claim:
-        mentor_training_form:
+      add_claim_wizard:
+        mentor_training_step:
           disclaimer_component:
             disclaimer:
               one: There is <strong>%{count} hour left to claim</strong> for %{mentor_name} for %{provider_name}.
