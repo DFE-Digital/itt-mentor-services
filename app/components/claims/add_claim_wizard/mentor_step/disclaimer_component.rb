@@ -1,10 +1,10 @@
-class Claims::Claim::MentorsForm::DisclaimerComponent < ApplicationComponent
-  attr_reader :mentors_form
+class Claims::AddClaimWizard::MentorStep::DisclaimerComponent < ApplicationComponent
+  attr_reader :mentor_step
 
-  def initialize(mentors_form:, classes: [], html_attributes: {})
+  def initialize(mentor_step:, classes: [], html_attributes: {})
     super(classes:, html_attributes:)
 
-    @mentors_form = mentors_form
+    @mentor_step = mentor_step
   end
 
   def call
@@ -15,13 +15,13 @@ class Claims::Claim::MentorsForm::DisclaimerComponent < ApplicationComponent
   end
 
   def render?
-    !mentors_form.all_school_mentors_visible?
+    !mentor_step.all_school_mentors_visible?
   end
 
   private
 
   def provider_name
-    mentors_form.claim.provider_name
+    mentor_step.claim.provider_name
   end
 
   def email_link
