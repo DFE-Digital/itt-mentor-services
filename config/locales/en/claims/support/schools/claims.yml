@@ -3,26 +3,11 @@ en:
     support:
       schools:
         claims:
-          draft:
-            add_success: Claim added
-            update_success: Claim updated
-          edit:
-            page_title: Accredited provider - Add claim
           rejected:
             page_title: You cannot submit the claim
             add_claim: Add claim
             reject_reason: You cannot submit the claim because your mentors’ information has recently changed.
             view_claims: View claims
-          check:
-            page_title: Check your answers
-            submit: Save claim
-            update: Update claim
-            grant_funding: Grant funding
-            add_claim: Add claim - %{school}
-            hour: hour
-            hourly_rate: Hourly rate
-            total_hours: Total hours
-            hours_of_training: Hours of training
           index:
             heading: Claims
             claim_id: ID
@@ -40,8 +25,6 @@ en:
             page_caption: Claims - %{school_name}
             remove_claim: Remove claim
             submitted_by: Submitted by %{name} on %{date}.
-          new:
-            page_title: Accredited provider - Add claim
           remove:
             page_title: Are you sure you want to remove this claim?
             caption: Claim - %{reference} - %{school_name}
@@ -50,6 +33,3 @@ en:
             remove_claim: Remove claim
           destroy:
             success: Claim has been removed
-          form:
-            add_claim: Add claim - %{school}
-            heading: Accredited provider
