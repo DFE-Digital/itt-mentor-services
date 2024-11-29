@@ -1,6 +1,4 @@
 class Placements::AddOrganisationWizard::OrganisationOptionsStep < Placements::AddOrganisationWizard::OrganisationSelectionStep
-  attribute :search_param
-
   def id_presence
     return if id.present?
 
@@ -12,16 +10,16 @@ class Placements::AddOrganisationWizard::OrganisationOptionsStep < Placements::A
 
     @organisations ||= if wizard.steps[:organisation_type].provider?
                          wizard.organisation_model.search_name_urn_ukprn_postcode(
-                           search_params.downcase,
+                           search_param.downcase,
                          )
                        else
                          wizard.organisation_model.search_name_urn_postcode(
-                           search_params.downcase,
+                           search_param.downcase,
                          )
                        end.decorate
   end
 
-  def search_params
-    @search_params ||= search_param || @wizard.steps[:organisation].id
+  def search_param
+    @wizard.steps[:organisation].id
   end
 end

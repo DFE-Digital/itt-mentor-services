@@ -1,6 +1,6 @@
 <% content_for :page_title, title_with_error_prefix(t(".page_title",
     results_count: current_step.partnership_options.count,
-    search_param: current_step.search_params,
+    search_param: current_step.search_param,
     organisation_type: current_step.partner_organisation_type.capitalize),
     error: current_step.errors.any?) %>
 
@@ -8,7 +8,7 @@
   model: current_step,
   scope: current_step.scope,
   url: current_step_path,
-  search_param: current_step.search_params,
+  search_param: current_step.search_param,
   records: current_step.partnership_options,
   records_klass: current_step.partner_organisation_type,
   back_link: back_link_path,

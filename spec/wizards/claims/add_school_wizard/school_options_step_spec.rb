@@ -81,21 +81,11 @@ RSpec.describe Claims::AddSchoolWizard::SchoolOptionsStep, type: :model do
     end
   end
 
-  describe "search_params" do
+  describe "search_param" do
     let(:school_search_name) { "School" }
 
-    context "when the search_param attribute is present" do
-      let(:attributes) { { search_param: "Primary" } }
-
-      it "returns the search param" do
-        expect(step.search_params).to eq("Primary")
-      end
-    end
-
-    context "when the search_param attribute is not present" do
-      it "returns the school search name" do
-        expect(step.search_params).to eq("School")
-      end
+    it "returns the school search name from the previous step" do
+      expect(step.search_param).to eq("School")
     end
   end
 end
