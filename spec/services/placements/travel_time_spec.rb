@@ -2,10 +2,16 @@ require "rails_helper"
 
 RSpec.describe Placements::TravelTime do
   let(:origin_address) { "SW1A 1AA" }
-  let(:placements_schools) { create_list(:placements_school, 3, longitude: 1.2, latitude: 0.2) }
-  let(:destinations) { Placements::School.all }
+  let(:school_a) { create(:placements_school, name: "Abbey Academy", longitude: 1.2, latitude: 0.2) }
+  let(:school_b) { create(:placements_school, name: "Buxton Boarding School", longitude: 1.2, latitude: 0.2) }
+  let(:school_c) { create(:placements_school, name: "Canterbury College", longitude: 1.2, latitude: 0.2) }
+  let(:destinations) { Placements::School.order_by_name }
 
-  before { placements_schools }
+  before do
+    school_a
+    school_b
+    school_c
+  end
 
   it_behaves_like "a service object" do
     let(:params) do
@@ -64,7 +70,7 @@ RSpec.describe Placements::TravelTime do
 
     it "returns the school collection, sorted by travel duration" do
       results = service
-      expect(results).to eq [placements_schools[1], placements_schools[0], placements_schools[2]]
+      expect(results).to eq [school_b, school_a, school_c]
     end
 
     it "caches the travel time data" do
