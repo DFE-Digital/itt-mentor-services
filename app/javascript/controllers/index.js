@@ -12,6 +12,3 @@ application.register("filter-search", FilterSearchController)
 
 import FilterController from "./filter_controller"
 application.register("filter", FilterController)
-
-import SelectAutocompleteController from "./select_autocomplete_controller"
-application.register("select-autocomplete", SelectAutocompleteController)
