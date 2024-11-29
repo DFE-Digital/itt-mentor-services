@@ -18,7 +18,13 @@ class Placements::Placements::FilterForm < ApplicationForm
   end
 
   def filters_selected?
-    attributes.except("placements_to_show", "academic_year_id").values.compact.flatten.any?
+    attributes
+      .except("placements_to_show", "academic_year_id")
+      .values
+      .compact
+      .flatten
+      .select(&:present?)
+      .any?
   end
 
   def clear_filters_path

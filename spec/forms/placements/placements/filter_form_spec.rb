@@ -42,10 +42,38 @@ describe Placements::Placements::FilterForm, type: :model do
     end
 
     context "when given partner school params" do
-      let(:params) { { only_partner_schools: true } }
+      context "when only partner schools is true" do
+        let(:params) { { only_partner_schools: true } }
 
-      it "returns true" do
-        expect(filter_form).to be(true)
+        it "returns true" do
+          expect(filter_form).to be(true)
+        end
+      end
+
+      context "when only partner schools is false" do
+        let(:params) { { only_partner_schools: false } }
+
+        it "returns true" do
+          expect(filter_form).to be(false)
+        end
+      end
+    end
+
+    context "when given search location params" do
+      context "when search location an empty string" do
+        let(:params) { { search_location: "" } }
+
+        it "return false" do
+          expect(filter_form).to be(false)
+        end
+      end
+
+      context "when search location not an empty string" do
+        let(:params) { { search_location: "London" } }
+
+        it "return true" do
+          expect(filter_form).to be(true)
+        end
       end
     end
 
