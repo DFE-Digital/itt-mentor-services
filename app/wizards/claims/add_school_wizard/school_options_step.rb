@@ -9,11 +9,11 @@ class Claims::AddSchoolWizard::SchoolOptionsStep < Claims::AddSchoolWizard::Scho
 
   def schools
     @schools ||= ::School.search_name_urn_postcode(
-      search_params.downcase,
+      search_param.downcase,
     ).decorate
   end
 
-  def search_params
-    @search_params ||= search_param || @wizard.steps[:school].id
+  def search_param
+    @wizard.steps[:school].id
   end
 end

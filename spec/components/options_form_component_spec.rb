@@ -20,9 +20,7 @@ RSpec.describe OptionsFormComponent, type: :component do
     let(:model) do
       Claims::AddSchoolWizard::SchoolOptionsStep.new(
         wizard: mock_wizard,
-        attributes: {
-          search_param: "school",
-        },
+        attributes: {},
       )
     end
     let(:scope) { :school }
@@ -43,9 +41,7 @@ RSpec.describe OptionsFormComponent, type: :component do
     let(:model) do
       Placements::AddOrganisationWizard::OrganisationOptionsStep.new(
         wizard: mock_wizard,
-        attributes: {
-          search_param: "school",
-        },
+        attributes: {},
       )
     end
     let(:scope) { :school }

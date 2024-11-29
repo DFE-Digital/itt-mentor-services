@@ -143,21 +143,11 @@ RSpec.describe Placements::AddPartnershipWizard::PartnershipOptionsStep, type: :
     end
   end
 
-  describe "search_params" do
+  describe "search_param" do
     let(:organisation_search_name) { "School" }
 
-    context "when the search_param attribute is present" do
-      let(:attributes) { { search_param: "Organisation" } }
-
-      it "returns the search param" do
-        expect(step.search_params).to eq("Organisation")
-      end
-    end
-
-    context "when the search_param attribute is not present" do
-      it "returns the organisation search name" do
-        expect(step.search_params).to eq("School")
-      end
+    it "returns the organisation search name from the previous step" do
+      expect(step.search_param).to eq("School")
     end
   end
 end

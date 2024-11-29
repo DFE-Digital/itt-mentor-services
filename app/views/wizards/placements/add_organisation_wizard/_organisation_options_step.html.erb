@@ -1,5 +1,5 @@
 <% content_for :page_title, title_with_error_prefix(
-  t(".title", organisation_count: current_step.organisations.count, search_param: current_step.search_params),
+  t(".title", organisation_count: current_step.organisations.count, search_param: current_step.search_param),
   error: current_step.errors.any?,
 ) %>
 
@@ -7,7 +7,7 @@
   model: current_step,
   scope: current_step.scope,
   url: current_step_path,
-  search_param: current_step.search_params,
+  search_param: current_step.search_param,
   records: current_step.organisations,
   records_klass: wizard.organisation_type,
   back_link: back_link_path,
