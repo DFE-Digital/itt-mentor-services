@@ -6,5 +6,21 @@
 
   <%= render "claims/support/claims/secondary_navigation", current: :sampling %>
 
-  <h2 class="govuk-heading-m"><%= t(".sub_heading") %></h2>
+  <h2 class="govuk-heading-m"><%= t(".sub_heading", count: @pagy.count) %></h2>
+
+  <%= render Claims::Claim::FilterFormComponent.new(filter_form:, statuses: %w[sampling_in_progress sampling_provider_not_approved]) do %>
+    <% if @claims.any? %>
+      <div class="govuk-!-margin-bottom-2">
+        <% @claims.each do |claim| %>
+          <%= render Claim::CardComponent.new(claim:) %>
+        <% end %>
+      </div>
+
+      <%= render PaginationComponent.new(pagy: @pagy) %>
+    <% else %>
+      <p>
+        <%= t("no_records", records: "claims") %>
+      </p>
+    <% end %>
+  <% end %>
 </div>
