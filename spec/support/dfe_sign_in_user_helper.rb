@@ -16,6 +16,13 @@ module DfESignInUserHelper
   end
   alias_method :given_i_am_signed_in_as_a_placements_support_user, :sign_in_placements_support_user
 
+  def sign_in_claims_support_user(with_dfe_sign_id: true, sign_in: true)
+    @current_user = create(:claims_support_user)
+    @current_user.update!(dfe_sign_in_uid: nil) unless with_dfe_sign_id
+    sign_in ? sign_in_as(@current_user) : user_exists_in_dfe_sign_in(user: @current_user)
+  end
+  alias_method :given_i_am_signed_in_as_a_claims_support_user, :sign_in_claims_support_user
+
   def sign_in_as(user)
     user_exists_in_dfe_sign_in(user:)
 

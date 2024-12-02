@@ -179,4 +179,31 @@ module GovukComponentMatchers
       false
     end
   end
+
+  matcher :have_claim_card do |expected_claim_details|
+    match do |page|
+      all_claim_cards = page.all("div.claim-card")
+
+      # Does a claim card exist which contains...
+      all_claim_cards.any? do |claim_card|
+        # ...all of the expected header & value pairs?
+        expected_claim_details.all? do
+          header = claim_card.find("div.claim-card__header")
+          header.find_link(expected_claim_details["title"], href: expected_claim_details["url"])
+
+          body = claim_card.find("div.claim-card__body")
+          details = body.find("div.claim-card__body__details")
+          details.find("div.govuk-body-s:nth-of-type(1)", text: expected_claim_details["academic_year"])
+          details.find("div.govuk-body-s:nth-of-type(2)", text: expected_claim_details["provider_name"])
+
+          right = body.find("div.claim-card__body__right")
+          right.find("div.govuk-body-s:nth-of-type(1)", text: expected_claim_details["submitted_date"])
+          right.find("div.govuk-body-s:nth-of-type(2)", text: expected_claim_details["amount"])
+          true
+        rescue Capybara::ElementNotFound
+          false
+        end
+      end
+    end
+  end
 end

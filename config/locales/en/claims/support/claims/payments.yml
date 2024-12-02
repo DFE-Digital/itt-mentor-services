@@ -2,7 +2,7 @@ en:
   claims:
     support:
       claims:
-        samplings:
+        payments:
           index:
             heading: Claims
-            sub_heading: Sampling
+            sub_heading: Payments
