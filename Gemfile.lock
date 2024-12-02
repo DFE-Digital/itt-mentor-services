@@ -11,7 +11,7 @@ GIT
 
 GIT
   remote: https://github.com/citizensadvice/capybara_accessible_selectors
-  revision: 347bbe06cb420416855e80bb4e3a3016b2d5872c
+  revision: aed2860e5b5df7f39284fdc35a5bf57bda7e1ad9
   branch: main
   specs:
     capybara_accessible_selectors (0.11.0)
@@ -488,7 +488,7 @@ GEM
     rdoc (6.8.1)
       psych (>= 4.0.0)
     redcarpet (3.6.0)
-    regexp_parser (2.9.2)
+    regexp_parser (2.9.3)
     reline (0.5.12)
       io-console (~> 0.5)
     representable (3.2.0)
