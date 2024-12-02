@@ -79,6 +79,24 @@ module GovukComponentMatchers
     end
   end
 
+  matcher :have_caption do |text|
+    match do |page|
+      page.find(".govuk-caption-l", text:)
+      true
+    rescue Capybara::ElementNotFound
+      false
+    end
+  end
+
+  matcher :have_legend do |text|
+    match do |page|
+      page.find(".govuk-fieldset__legend.govuk-fieldset__legend--l", text:)
+      true
+    rescue Capybara::ElementNotFound
+      false
+    end
+  end
+
   matcher :have_h1 do |text|
     match do |page|
       page.find("h1[class^='govuk-heading-']", text:)
