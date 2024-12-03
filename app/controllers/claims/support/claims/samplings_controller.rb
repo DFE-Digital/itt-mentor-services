@@ -36,6 +36,10 @@ class Claims::Support::Claims::SamplingsController < Claims::Support::Applicatio
       school_ids: [],
       statuses: [],
       academic_year_ids: [],
-    )
+    ).with_defaults(index_path:)
+  end
+
+  def index_path
+    claims_support_claims_samplings_path
   end
 end

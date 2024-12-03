@@ -14,6 +14,7 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
   attribute :provider_ids, default: []
   attribute :statuses, default: []
   attribute :academic_year_ids, default: []
+  attribute :index_path
 
   def initialize(params = {})
     params[:school_ids].compact_blank! if params[:school_ids].present?
@@ -37,9 +38,7 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
       filter => compacted_attributes[filter].reject { |filter_value| filter_value == value },
     )
 
-    claims_support_claims_path(
-      params: { claims_support_claims_filter_form: without_filter },
-    )
+    generate_path({ claims_support_claims_filter_form: without_filter })
   end
 
   def index_path_without_submitted_dates(filter)
@@ -49,23 +48,17 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
       "#{filter}(3i)",
     )
 
-    claims_support_claims_path(
-      params: { claims_support_claims_filter_form: without_filter },
-    )
+    generate_path({ claims_support_claims_filter_form: without_filter })
   end
 
   def clear_filters_path
     filter_params = search.present? ? { claims_support_claims_filter_form: { search: } } : {}
 
-    claims_support_claims_path(
-      params: filter_params,
-    )
+    generate_path(filter_params)
   end
 
   def clear_search_path
-    claims_support_claims_path(
-      params: { claims_support_claims_filter_form: compacted_attributes.except("search") },
-    )
+    generate_path(claims_support_claims_filter_form: compacted_attributes.except("search"))
   end
 
   def schools
@@ -112,6 +105,14 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
     )
   rescue Date::Error
     nil
+  end
+
+  def generate_path(args)
+    path = index_path
+
+    uri = URI(path)
+    uri.query = args.to_query
+    uri.to_s
   end
 
   private
