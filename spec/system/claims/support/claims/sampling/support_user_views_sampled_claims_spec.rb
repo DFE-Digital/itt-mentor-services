@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support user views claims ready for sampling", service: :claims, type: :system do
+RSpec.describe "Support user views sampled claims", service: :claims, type: :system do
   scenario do
     given_claims_exist
     and_i_am_signed_in
