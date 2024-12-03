@@ -52,9 +52,7 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
   end
 
   def clear_filters_path
-    filter_params = search.present? ? { claims_support_claims_filter_form: { search: } } : {}
-
-    generate_path(filter_params)
+    generate_path(claims_support_claims_filter_form: { search: })
   end
 
   def clear_search_path
@@ -108,8 +106,10 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
   end
 
   def generate_path(args)
-    path = index_path
+    return index_path if args.fetch(:claims_support_claims_filter_form)
+      .compact_blank.blank?
 
+    path = index_path
     uri = URI(path)
     uri.query = args.to_query
     uri.to_s
@@ -118,6 +118,6 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
   private
 
   def compacted_attributes
-    @compacted_attributes ||= attributes.compact_blank
+    @compacted_attributes ||= attributes.compact_blank.except("index_path")
   end
 end

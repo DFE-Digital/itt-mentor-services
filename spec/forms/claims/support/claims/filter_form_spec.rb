@@ -3,6 +3,8 @@ require "rails_helper"
 describe Claims::Support::Claims::FilterForm, type: :model do
   include Rails.application.routes.url_helpers
 
+  let(:index_path) { claims_support_claims_path }
+
   describe "attributes" do
     it do
       expect(described_class.new).to have_attributes(
@@ -19,6 +21,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
         provider_ids: [],
         statuses: [],
         academic_year_ids: [],
+        index_path: nil,
       )
     end
   end
@@ -88,13 +91,11 @@ describe Claims::Support::Claims::FilterForm, type: :model do
 
   describe "#index_path_without_filter" do
     it "returns the support claims index path without a filter" do
-      params = { school_ids: %w[school_id] }
+      params = { school_ids: %w[school_id], index_path: }
       call = described_class.new(params).index_path_without_filter(filter: "school_ids", value: "school_id")
 
       expect(call).to eq(
-        claims_support_claims_path(
-          params: { claims_support_claims_filter_form: { school_ids: [], provider_ids: [], academic_year_ids: [] } },
-        ),
+        claims_support_claims_path,
       )
     end
   end
@@ -106,13 +107,12 @@ describe Claims::Support::Claims::FilterForm, type: :model do
           "submitted_after(1i)" => "2024",
           "submitted_after(2i)" => "1",
           "submitted_after(3i)" => "2",
+          index_path:,
         }
         call = described_class.new(params).index_path_without_submitted_dates("submitted_after")
 
         expect(call).to eq(
-          claims_support_claims_path(
-            params: { claims_support_claims_filter_form: { school_ids: [], provider_ids: [], academic_year_ids: [] } },
-          ),
+          claims_support_claims_path,
         )
       end
     end
@@ -123,13 +123,12 @@ describe Claims::Support::Claims::FilterForm, type: :model do
           "submitted_before(1i)" => "2024",
           "submitted_before(2i)" => "1",
           "submitted_before(3i)" => "2",
+          index_path:,
         }
         call = described_class.new(params).index_path_without_submitted_dates("submitted_before")
 
         expect(call).to eq(
-          claims_support_claims_path(
-            params: { claims_support_claims_filter_form: { school_ids: [], provider_ids: [], academic_year_ids: [] } },
-          ),
+          claims_support_claims_path,
         )
       end
     end
@@ -137,7 +136,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
 
   describe "#clear_filters_path" do
     it "returns the support claims index path without filters but with search" do
-      params = { school_ids: %w[school_id], search: "search" }
+      params = { school_ids: %w[school_id], search: "search", index_path: }
       call = described_class.new(params).clear_filters_path
 
       expect(call).to eq(
@@ -149,7 +148,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
 
     context "when search param is not present" do
       it "returns the support claims index path without filters and search" do
-        params = { school_ids: %w[school_id] }
+        params = { school_ids: %w[school_id], index_path: }
         call = described_class.new(params).clear_filters_path
 
         expect(call).to eq(claims_support_claims_path)
@@ -159,7 +158,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
 
   describe "#clear_search_path" do
     it "returns the support claims index path without search but with filters" do
-      params = { school_ids: %w[school_id], search: "search" }
+      params = { school_ids: %w[school_id], search: "search", index_path: }
       call = described_class.new(params).clear_search_path
 
       expect(call).to eq(
@@ -171,7 +170,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
 
     context "when filters are not present" do
       it "returns the support claims index path without search and without filters" do
-        params = { search: "search" }
+        params = { search: "search", index_path: }
         call = described_class.new(params).clear_search_path
 
         expect(call).to eq(claims_support_claims_path)
