@@ -6,6 +6,7 @@
 #  created_by_type      :string
 #  reference            :string
 #  reviewed             :boolean          default(FALSE)
+#  sampling_reason      :text
 #  status               :enum
 #  submitted_at         :datetime
 #  submitted_by_type    :string
