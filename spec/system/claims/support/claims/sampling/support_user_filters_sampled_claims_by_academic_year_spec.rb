@@ -6,33 +6,37 @@ RSpec.describe "Support user filters sampled claims by academic year", service: 
     and_i_am_signed_in
 
     when_i_navigate_to_the_sampling_claims_index_page
-    then_i_see_the_claims_sampling_claims_index_page
+    then_i_see_the_sampling_claims_index_page
     and_i_see_the_sampled_claim_for_the_current_academic_year
     and_i_see_the_sampled_claim_for_the_previous_academic_year
 
     when_i_select_the_previous_year_from_the_academic_year_filter
     and_i_click_on_apply_filters
-    then_i_see_the_sampled_claim_for_the_previous_academic_year
+    then_i_see_only_filtered_claims_on_the_sampling_claims_index_page
+    and_i_see_the_sampled_claim_for_the_previous_academic_year
     and_i_do_not_see_the_sampled_claim_for_the_current_academic_year
     and_i_see_previous_academic_year_is_selected_from_the_academic_year_filter
     and_i_do_not_see_current_academic_year_selected_from_the_academic_year_filter
 
     when_i_select_the_current_year_from_the_academic_year_filter
     and_i_click_on_apply_filters
-    then_i_see_the_sampled_claim_for_the_previous_academic_year
+    then_i_see_all_claims_on_the_claims_sampling_index_page
+    and_i_see_the_sampled_claim_for_the_previous_academic_year
     and_i_see_the_sampled_claim_for_the_current_academic_year
     and_i_see_previous_academic_year_is_selected_from_the_academic_year_filter
     and_i_see_current_academic_year_is_selected_from_the_academic_year_filter
 
     when_i_unselect_the_previous_year_from_the_academic_year_filter
     and_i_click_on_apply_filters
-    then_i_see_the_sampled_claim_for_the_current_academic_year
+    then_i_see_only_filtered_claims_on_the_sampling_claims_index_page
+    and_i_see_the_sampled_claim_for_the_current_academic_year
     and_i_do_not_see_the_sampled_claim_for_the_previous_academic_year
     and_i_see_current_academic_year_is_selected_from_the_academic_year_filter
     and_i_do_not_see_previous_academic_year_selected_from_the_academic_year_filter
 
     when_i_click_on_the_current_academic_year_filter_tag
-    then_i_see_the_sampled_claim_for_the_current_academic_year
+    then_i_see_all_claims_on_the_claims_sampling_index_page
+    and_i_see_the_sampled_claim_for_the_current_academic_year
     and_i_see_the_sampled_claim_for_the_previous_academic_year
     and_i_do_not_see_previous_academic_year_selected_from_the_academic_year_filter
     and_i_do_not_see_current_academic_year_selected_from_the_academic_year_filter
@@ -40,13 +44,15 @@ RSpec.describe "Support user filters sampled claims by academic year", service: 
     when_i_select_the_previous_year_from_the_academic_year_filter
     and_i_select_the_current_year_from_the_academic_year_filter
     and_i_click_on_apply_filters
-    then_i_see_the_sampled_claim_for_the_current_academic_year
+    then_i_see_all_claims_on_the_claims_sampling_index_page
+    and_i_see_the_sampled_claim_for_the_current_academic_year
     and_i_see_the_sampled_claim_for_the_previous_academic_year
     and_i_see_current_academic_year_is_selected_from_the_academic_year_filter
     and_i_see_previous_academic_year_is_selected_from_the_academic_year_filter
 
     when_i_click_clear_filters
-    then_i_see_the_sampled_claim_for_the_current_academic_year
+    then_i_see_all_claims_on_the_claims_sampling_index_page
+    and_i_see_the_sampled_claim_for_the_current_academic_year
     and_i_do_not_see_the_sampled_claim_for_the_previous_academic_year
     and_i_do_not_see_previous_academic_year_selected_from_the_academic_year_filter
     and_i_do_not_see_current_academic_year_selected_from_the_academic_year_filter
@@ -94,15 +100,27 @@ RSpec.describe "Support user filters sampled claims by academic year", service: 
     end
   end
 
-  def then_i_see_the_claims_sampling_claims_index_page
-    expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
-    expect(page).to have_h1("Claims")
+  def then_i_see_the_sampling_claims_index_page
+    i_see_the_sampling_index_page
     expect(page).to have_h2("Sampling (2)")
-    expect(primary_navigation).to have_current_item("Claims")
-    expect(secondary_navigation).to have_current_item("Sampling")
+  end
+  alias_method :then_i_see_all_claims_on_the_claims_sampling_index_page,
+               :then_i_see_the_sampling_claims_index_page
+
+  def then_i_see_only_filtered_claims_on_the_sampling_claims_index_page
+    i_see_the_sampling_index_page
+    expect(page).to have_h2("Sampling (1)")
   end
 
-  def then_i_see_the_sampled_claim_for_the_current_academic_year
+  def i_see_the_sampling_index_page
+    expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
+    expect(page).to have_h1("Claims")
+    expect(primary_navigation).to have_current_item("Claims")
+    expect(secondary_navigation).to have_current_item("Sampling")
+    expect(page).to have_current_path(claims_support_claims_samplings_path, ignore_query: true)
+  end
+
+  def and_i_see_the_sampled_claim_for_the_current_academic_year
     expect(page).to have_claim_card({
       "title" => "#{@current_claim.reference} - #{@current_claim.school.name}",
       "url" => "/support/claims/#{@current_claim.id}",
@@ -113,10 +131,8 @@ RSpec.describe "Support user filters sampled claims by academic year", service: 
       "amount" => "£0.00",
     })
   end
-  alias_method :and_i_see_the_sampled_claim_for_the_current_academic_year,
-               :then_i_see_the_sampled_claim_for_the_current_academic_year
 
-  def then_i_see_the_sampled_claim_for_the_previous_academic_year
+  def and_i_see_the_sampled_claim_for_the_previous_academic_year
     expect(page).to have_claim_card({
       "title" => "#{@previous_claim.reference} - #{@previous_claim.school.name}",
       "url" => "/support/claims/#{@previous_claim.id}",
@@ -127,8 +143,6 @@ RSpec.describe "Support user filters sampled claims by academic year", service: 
       "amount" => "£0.00",
     })
   end
-  alias_method :and_i_see_the_sampled_claim_for_the_previous_academic_year,
-               :then_i_see_the_sampled_claim_for_the_previous_academic_year
 
   def when_i_select_the_previous_year_from_the_academic_year_filter
     check @previous_claim.academic_year.name

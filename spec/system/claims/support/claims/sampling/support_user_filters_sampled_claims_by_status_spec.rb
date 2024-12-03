@@ -6,33 +6,37 @@ RSpec.describe "Support user filters sampled claims by status", service: :claims
     and_i_am_signed_in
 
     when_i_navigate_to_the_sampling_claims_index_page
-    then_i_see_the_claims_sampling_claims_index_page
+    then_i_see_the_sampling_claims_index_page
     and_i_see_claims_with_a_sampling_in_progress_status
     and_i_see_claims_with_a_sampling_provider_not_approved_status
 
     when_i_select_the_sampling_in_progress_filter
     and_i_click_on_apply_filters
-    then_i_see_claims_with_a_sampling_in_progress_status
+    then_i_see_only_filtered_claims_on_the_sampling_claims_index_page
+    and_i_see_claims_with_a_sampling_in_progress_status
     and_i_do_not_see_claims_with_a_sampling_provider_not_approved_status
     and_i_see_sampling_in_progress_selected_from_the_status_filter
     and_i_do_not_see_sampling_provider_not_approved_selected_from_the_status_filter
 
     when_i_select_the_sampling_provider_not_approved_filter
     and_i_click_on_apply_filters
-    then_i_see_claims_with_a_sampling_in_progress_status
+    then_i_see_all_claims_on_the_claims_sampling_index_page
+    and_i_see_claims_with_a_sampling_in_progress_status
     and_i_see_claims_with_a_sampling_provider_not_approved_status
     and_i_see_sampling_in_progress_selected_from_the_status_filter
     and_i_see_sampling_provider_not_approved_selected_from_the_status_filter
 
     when_i_unselect_the_sampling_in_progress_filter
     and_i_click_on_apply_filters
-    then_i_see_claims_with_a_sampling_provider_not_approved_status
+    then_i_see_only_filtered_claims_on_the_sampling_claims_index_page
+    and_i_see_claims_with_a_sampling_provider_not_approved_status
     and_i_do_not_see_claims_with_a_sampling_in_progress_status
     and_i_see_sampling_provider_not_approved_selected_from_the_status_filter
     and_i_do_not_see_sampling_in_progress_selected_from_the_status_filter
 
     when_i_click_on_the_sampling_provider_not_approved_filter_tag
-    then_i_see_claims_with_a_sampling_provider_not_approved_status
+    then_i_see_all_claims_on_the_claims_sampling_index_page
+    and_i_see_claims_with_a_sampling_provider_not_approved_status
     and_i_see_claims_with_a_sampling_in_progress_status
     and_i_do_not_see_sampling_provider_not_approved_selected_from_the_status_filter
     and_i_do_not_see_sampling_in_progress_selected_from_the_status_filter
@@ -40,13 +44,15 @@ RSpec.describe "Support user filters sampled claims by status", service: :claims
     when_i_select_the_sampling_in_progress_filter
     and_i_select_the_sampling_provider_not_approved_filter
     and_i_click_on_apply_filters
-    then_i_see_claims_with_a_sampling_provider_not_approved_status
+    then_i_see_all_claims_on_the_claims_sampling_index_page
+    and_i_see_claims_with_a_sampling_provider_not_approved_status
     and_i_see_claims_with_a_sampling_in_progress_status
     and_i_see_sampling_provider_not_approved_selected_from_the_status_filter
     and_i_see_sampling_in_progress_selected_from_the_status_filter
 
     when_i_click_clear_filters
-    then_i_see_claims_with_a_sampling_provider_not_approved_status
+    then_i_see_all_claims_on_the_claims_sampling_index_page
+    and_i_see_claims_with_a_sampling_provider_not_approved_status
     and_i_see_claims_with_a_sampling_in_progress_status
     and_i_do_not_see_sampling_provider_not_approved_selected_from_the_status_filter
     and_i_do_not_see_sampling_in_progress_selected_from_the_status_filter
@@ -73,15 +79,27 @@ RSpec.describe "Support user filters sampled claims by status", service: :claims
     end
   end
 
-  def then_i_see_the_claims_sampling_claims_index_page
-    expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
-    expect(page).to have_h1("Claims")
+  def then_i_see_the_sampling_claims_index_page
+    i_see_the_sampling_index_page
     expect(page).to have_h2("Sampling (2)")
-    expect(primary_navigation).to have_current_item("Claims")
-    expect(secondary_navigation).to have_current_item("Sampling")
+  end
+  alias_method :then_i_see_all_claims_on_the_claims_sampling_index_page,
+               :then_i_see_the_sampling_claims_index_page
+
+  def then_i_see_only_filtered_claims_on_the_sampling_claims_index_page
+    i_see_the_sampling_index_page
+    expect(page).to have_h2("Sampling (1)")
   end
 
-  def then_i_see_claims_with_a_sampling_in_progress_status
+  def i_see_the_sampling_index_page
+    expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
+    expect(page).to have_h1("Claims")
+    expect(primary_navigation).to have_current_item("Claims")
+    expect(secondary_navigation).to have_current_item("Sampling")
+    expect(page).to have_current_path(claims_support_claims_samplings_path, ignore_query: true)
+  end
+
+  def and_i_see_claims_with_a_sampling_in_progress_status
     expect(page).to have_claim_card({
       "title" => "#{@sampling_in_progress_claim.reference} - #{@sampling_in_progress_claim.school.name}",
       "url" => "/support/claims/#{@sampling_in_progress_claim.id}",
@@ -92,10 +110,8 @@ RSpec.describe "Support user filters sampled claims by status", service: :claims
       "amount" => "£0.00",
     })
   end
-  alias_method :and_i_see_claims_with_a_sampling_in_progress_status,
-               :then_i_see_claims_with_a_sampling_in_progress_status
 
-  def then_i_see_claims_with_a_sampling_provider_not_approved_status
+  def and_i_see_claims_with_a_sampling_provider_not_approved_status
     expect(page).to have_claim_card({
       "title" => "#{@sampling_provider_not_approved_claim.reference} - #{@sampling_provider_not_approved_claim.school.name}",
       "url" => "/support/claims/#{@sampling_provider_not_approved_claim.id}",
@@ -106,8 +122,6 @@ RSpec.describe "Support user filters sampled claims by status", service: :claims
       "amount" => "£0.00",
     })
   end
-  alias_method :and_i_see_claims_with_a_sampling_provider_not_approved_status,
-               :then_i_see_claims_with_a_sampling_provider_not_approved_status
 
   def and_i_click_on_apply_filters
     click_on "Apply filters"

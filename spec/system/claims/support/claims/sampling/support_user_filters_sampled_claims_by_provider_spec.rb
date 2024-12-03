@@ -6,33 +6,37 @@ RSpec.describe "Support user filters sampled claims by provider", service: :clai
     and_i_am_signed_in
 
     when_i_navigate_to_the_sampling_claims_index_page
-    then_i_see_the_claims_sampling_claims_index_page
+    then_i_see_the_sampling_claims_index_page
     and_i_see_the_sampled_claim_for_provider_niot
     and_i_see_the_sampled_claim_for_provider_bpn
 
     when_i_select_niot_from_the_provider_filter
     and_i_click_on_apply_filters
-    then_i_see_the_sampled_claim_for_provider_niot
+    then_i_see_only_filtered_claims_on_the_sampling_claims_index_page
+    and_i_see_the_sampled_claim_for_provider_niot
     and_i_do_not_see_the_sampled_claim_for_provider_bpn
     and_i_see_provider_niot_selected_from_the_provider_filter
     and_i_do_not_see_provider_bpn_selected_from_the_provider_filter
 
     when_i_select_bpn_from_the_provider_filter
     and_i_click_on_apply_filters
-    then_i_see_the_sampled_claim_for_provider_niot
+    then_i_see_all_claims_on_the_claims_sampling_index_page
+    and_i_see_the_sampled_claim_for_provider_niot
     and_i_see_the_sampled_claim_for_provider_bpn
     and_i_see_provider_niot_selected_from_the_provider_filter
     and_i_see_provider_bpn_selected_from_the_provider_filter
 
     when_i_unselect_niot_from_the_provider_filter
     and_i_click_on_apply_filters
-    then_i_see_the_sampled_claim_for_provider_bpn
+    then_i_see_only_filtered_claims_on_the_sampling_claims_index_page
+    and_i_see_the_sampled_claim_for_provider_bpn
     and_i_do_not_see_the_sampled_claim_for_provider_niot
     and_i_see_provider_bpn_selected_from_the_provider_filter
     and_i_do_not_see_provider_niot_selected_from_the_provider_filter
 
     when_i_click_on_the_bpn_provider_filter_tag
-    then_i_see_the_sampled_claim_for_provider_niot
+    then_i_see_all_claims_on_the_claims_sampling_index_page
+    and_i_see_the_sampled_claim_for_provider_niot
     and_i_see_the_sampled_claim_for_provider_bpn
     and_i_do_not_see_provider_niot_selected_from_the_provider_filter
     and_i_do_not_see_provider_bpn_selected_from_the_provider_filter
@@ -40,13 +44,15 @@ RSpec.describe "Support user filters sampled claims by provider", service: :clai
     when_i_select_bpn_from_the_provider_filter
     and_i_select_niot_from_the_provider_filter
     and_i_click_on_apply_filters
-    then_i_see_the_sampled_claim_for_provider_bpn
+    then_i_see_all_claims_on_the_claims_sampling_index_page
+    and_i_see_the_sampled_claim_for_provider_bpn
     and_i_see_the_sampled_claim_for_provider_niot
     and_i_see_provider_bpn_selected_from_the_provider_filter
     and_i_see_provider_niot_selected_from_the_provider_filter
 
     when_i_click_clear_filters
-    then_i_see_the_sampled_claim_for_provider_bpn
+    then_i_see_all_claims_on_the_claims_sampling_index_page
+    and_i_see_the_sampled_claim_for_provider_bpn
     and_i_see_the_sampled_claim_for_provider_niot
     and_i_do_not_see_provider_bpn_selected_from_the_provider_filter
     and_i_do_not_see_provider_niot_selected_from_the_provider_filter
@@ -82,15 +88,27 @@ RSpec.describe "Support user filters sampled claims by provider", service: :clai
     end
   end
 
-  def then_i_see_the_claims_sampling_claims_index_page
-    expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
-    expect(page).to have_h1("Claims")
+  def then_i_see_the_sampling_claims_index_page
+    i_see_the_sampling_index_page
     expect(page).to have_h2("Sampling (2)")
-    expect(primary_navigation).to have_current_item("Claims")
-    expect(secondary_navigation).to have_current_item("Sampling")
+  end
+  alias_method :then_i_see_all_claims_on_the_claims_sampling_index_page,
+               :then_i_see_the_sampling_claims_index_page
+
+  def then_i_see_only_filtered_claims_on_the_sampling_claims_index_page
+    i_see_the_sampling_index_page
+    expect(page).to have_h2("Sampling (1)")
   end
 
-  def then_i_see_the_sampled_claim_for_provider_niot
+  def i_see_the_sampling_index_page
+    expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
+    expect(page).to have_h1("Claims")
+    expect(primary_navigation).to have_current_item("Claims")
+    expect(secondary_navigation).to have_current_item("Sampling")
+    expect(page).to have_current_path(claims_support_claims_samplings_path, ignore_query: true)
+  end
+
+  def and_i_see_the_sampled_claim_for_provider_niot
     expect(page).to have_claim_card({
       "title" => "#{@niot_claim.reference} - #{@niot_claim.school.name}",
       "url" => "/support/claims/#{@niot_claim.id}",
@@ -101,10 +119,8 @@ RSpec.describe "Support user filters sampled claims by provider", service: :clai
       "amount" => "£0.00",
     })
   end
-  alias_method :and_i_see_the_sampled_claim_for_provider_niot,
-               :then_i_see_the_sampled_claim_for_provider_niot
 
-  def then_i_see_the_sampled_claim_for_provider_bpn
+  def and_i_see_the_sampled_claim_for_provider_bpn
     expect(page).to have_claim_card({
       "title" => "#{@bpn_claim.reference} - #{@bpn_claim.school.name}",
       "url" => "/support/claims/#{@bpn_claim.id}",
@@ -115,8 +131,6 @@ RSpec.describe "Support user filters sampled claims by provider", service: :clai
       "amount" => "£0.00",
     })
   end
-  alias_method :and_i_see_the_sampled_claim_for_provider_bpn,
-               :then_i_see_the_sampled_claim_for_provider_bpn
 
   def when_i_select_niot_from_the_provider_filter
     check @provider_niot.name
