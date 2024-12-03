@@ -46,7 +46,7 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
       school_ids: [],
       statuses: [],
       academic_year_ids: [],
-    )
+    ).with_defaults(index_path:)
   end
 
   def set_claim
@@ -55,5 +55,9 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
 
   def authorize_claim
     authorize @claim || Claims::Claim
+  end
+
+  def index_path
+    claims_support_claims_path
   end
 end
