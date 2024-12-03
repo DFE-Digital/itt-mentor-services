@@ -6,29 +6,33 @@ RSpec.describe "Support user filters sampled claims submitted before a date", se
     and_i_am_signed_in
 
     when_i_navigate_to_the_sampling_claims_index_page
-    then_i_see_the_claims_sampling_claims_index_page
+    then_i_see_the_sampling_claims_index_page
     and_i_see_the_sampled_claim_submitted_in_may
     and_i_see_the_sampled_claim_submitted_in_july
 
     when_i_enter_1st_june_into_the_submitted_before_filter
     and_i_click_on_apply_filters
-    then_i_see_the_sampled_claim_submitted_in_may
+    then_i_see_only_filtered_claims_on_the_sampling_claims_index_page
+    and_i_see_the_sampled_claim_submitted_in_may
     and_i_do_not_see_the_sampled_claim_submitted_in_july
     and_i_see_1st_june_entered_into_the_submitted_before_filter
 
     when_i_click_on_the_1st_june_filter_tag
-    then_i_see_the_sampled_claim_submitted_in_may
+    then_i_see_all_claims_on_the_claims_sampling_index_page
+    and_i_see_the_sampled_claim_submitted_in_may
     and_i_see_the_sampled_claim_submitted_in_july
     and_i_do_not_see_1st_june_entered_into_the_submitted_before_filter
 
     when_i_enter_1st_june_into_the_submitted_before_filter
     and_i_click_on_apply_filters
-    then_i_see_the_sampled_claim_submitted_in_may
+    then_i_see_only_filtered_claims_on_the_sampling_claims_index_page
+    and_i_see_the_sampled_claim_submitted_in_may
     and_i_do_not_see_the_sampled_claim_submitted_in_july
     and_i_see_1st_june_entered_into_the_submitted_before_filter
 
     when_i_click_clear_filters
-    then_i_see_the_sampled_claim_submitted_in_may
+    then_i_see_all_claims_on_the_claims_sampling_index_page
+    and_i_see_the_sampled_claim_submitted_in_may
     and_i_see_the_sampled_claim_submitted_in_july
     and_i_do_not_see_1st_june_entered_into_the_submitted_before_filter
   end
@@ -60,15 +64,27 @@ RSpec.describe "Support user filters sampled claims submitted before a date", se
     end
   end
 
-  def then_i_see_the_claims_sampling_claims_index_page
-    expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
-    expect(page).to have_h1("Claims")
+  def then_i_see_the_sampling_claims_index_page
+    i_see_the_sampling_index_page
     expect(page).to have_h2("Sampling (2)")
-    expect(primary_navigation).to have_current_item("Claims")
-    expect(secondary_navigation).to have_current_item("Sampling")
+  end
+  alias_method :then_i_see_all_claims_on_the_claims_sampling_index_page,
+               :then_i_see_the_sampling_claims_index_page
+
+  def then_i_see_only_filtered_claims_on_the_sampling_claims_index_page
+    i_see_the_sampling_index_page
+    expect(page).to have_h2("Sampling (1)")
   end
 
-  def then_i_see_the_sampled_claim_submitted_in_may
+  def i_see_the_sampling_index_page
+    expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
+    expect(page).to have_h1("Claims")
+    expect(primary_navigation).to have_current_item("Claims")
+    expect(secondary_navigation).to have_current_item("Sampling")
+    expect(page).to have_current_path(claims_support_claims_samplings_path, ignore_query: true)
+  end
+
+  def and_i_see_the_sampled_claim_submitted_in_may
     expect(page).to have_claim_card({
       "title" => "#{@may_claim.reference} - #{@may_claim.school.name}",
       "url" => "/support/claims/#{@may_claim.id}",
@@ -79,10 +95,8 @@ RSpec.describe "Support user filters sampled claims submitted before a date", se
       "amount" => "£0.00",
     })
   end
-  alias_method :and_i_see_the_sampled_claim_submitted_in_may,
-               :then_i_see_the_sampled_claim_submitted_in_may
 
-  def then_i_see_the_sampled_claim_submitted_in_july
+  def and_i_see_the_sampled_claim_submitted_in_july
     expect(page).to have_claim_card({
       "title" => "#{@july_claim.reference} - #{@july_claim.school.name}",
       "url" => "/support/claims/#{@july_claim.id}",
@@ -93,8 +107,6 @@ RSpec.describe "Support user filters sampled claims submitted before a date", se
       "amount" => "£0.00",
     })
   end
-  alias_method :and_i_see_the_sampled_claim_submitted_in_july,
-               :then_i_see_the_sampled_claim_submitted_in_july
 
   def and_i_click_on_apply_filters
     click_on "Apply filters"
