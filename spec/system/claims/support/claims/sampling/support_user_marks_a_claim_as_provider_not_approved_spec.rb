@@ -69,6 +69,8 @@ RSpec.describe "Support user marks a claim as provider not approved", service: :
   def when_i_click_on_confirm_provider_rejected_claim
     click_on "Confirm provider rejected claim"
   end
+  alias_method :and_i_click_on_confirm_provider_rejected_claim,
+               :when_i_click_on_confirm_provider_rejected_claim
 
   def then_i_see_the_confirmation_page
     expect(page).to have_title(
@@ -82,10 +84,6 @@ RSpec.describe "Support user marks a claim as provider not approved", service: :
 
   def when_i_click_on_cancel
     click_on "Cancel"
-  end
-
-  def and_i_click_on_confirm_provider_rejected_claim
-    click_on "Confirm provider rejected claim"
   end
 
   def then_i_see_that_the_claim_has_been_updated_to_provider_not_approved
