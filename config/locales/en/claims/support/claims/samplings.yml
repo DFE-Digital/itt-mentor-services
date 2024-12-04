@@ -17,6 +17,7 @@ en:
             reason: Reason claim is being sampled
             approve: Approve claim
             confirm_provider_reject: Confirm provider rejected claim
+            reject_claim: Reject claim
             status: Status
             provider: Accredited provider
             mentor_with_index: Mentor %{index}
@@ -30,3 +31,27 @@ en:
             cancel: Cancel
           update:
             success_heading: Claim updated
+          confirm_provider_rejected:
+            page_title: |
+              Are you sure you want to confirm the provider has rejected the claim? 
+              - Sampling - Claim %{reference}
+            caption: Sampling - Claim %{reference}
+            title: Are you sure you want to confirm the provider has rejected the claim?
+            cancel: Cancel
+            provider_has_rejected: You confirm you have spoken to the provider and they have rejected the claim.
+            move_claim_to_clawbacks: This will move the claim to the clawbacks queue.
+            confirm: Confirm provider rejected claim
+          provider_rejected:
+            success: Claim updated
+          confirm_rejection:
+            page_title: |
+              Are you sure you want to rejected the claim? 
+              - Sampling - Claim %{reference}
+            caption: Sampling - Claim %{reference}
+            title: Are you sure you want to rejected the claim?
+            cancel: Cancel
+            mark_as_claim_not_approved: | 
+              This will mark the claim as 'Claim not approved' and move it into the clawbacks queue.
+            reject_claim: Reject claim
+          reject:
+            success: Claim updated
