@@ -1,7 +1,7 @@
 class Claims::Support::Claims::SamplingsController < Claims::Support::ApplicationController
   before_action :skip_authorization
   before_action :set_filtered_claims, only: %i[index]
-  before_action :set_claim, only: %i[show confirm_approval]
+  before_action :set_claim, only: %i[show confirm_approval update]
   helper_method :filter_form
 
   def index
@@ -14,6 +14,14 @@ class Claims::Support::Claims::SamplingsController < Claims::Support::Applicatio
 
   def confirm_approval; end
 
+  def update
+    @claim.status = :paid
+    @claim.save!
+    redirect_to claims_support_claims_samplings_path, flash: {
+      heading: t(".success_heading"),
+    }
+  end
+
   private
 
   def set_filtered_claims
@@ -21,7 +29,7 @@ class Claims::Support::Claims::SamplingsController < Claims::Support::Applicatio
   end
 
   def set_claim
-    @claim = Claims::Claim.find(params.require(:id))
+    @claim = Claims::Claim.find_by!(id: params.require(:id))
   end
 
   def filter_form

@@ -13,7 +13,7 @@ en:
             upload_provider_response: Upload provider response
           show:
             page_caption: Sampling - Claim %{reference}
-            page_title: "%{school_name} - Claim %{reference}"
+            page_title: "%{school_name} - Sampling - Claim %{reference}"
             reason: Reason claim is being sampled
             approve: Approve claim
             confirm_provider_reject: Confirm provider rejected claim

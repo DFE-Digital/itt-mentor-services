@@ -96,6 +96,7 @@ class Claims::Claim < ApplicationRecord
        validate: true
 
   delegate :name, to: :provider, prefix: true, allow_nil: true
+  delegate :name, to: :school, prefix: true, allow_nil: true
   delegate :name, :users, to: :school, prefix: true
   delegate :full_name, to: :submitted_by, prefix: true, allow_nil: true
   delegate :name, to: :academic_year, prefix: true, allow_nil: true
