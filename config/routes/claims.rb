@@ -80,6 +80,7 @@ scope module: :claims, as: :claims, constraints: {
       resources :samplings, path: "sampling", only: %i[index show] do
         member do
           get :confirm_approval
+          put :update
         end
         collection do
           get "new", to: "samplings/upload_data#new", as: :new_upload_data
