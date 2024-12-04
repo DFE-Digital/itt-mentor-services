@@ -32,9 +32,7 @@ en:
           update:
             success_heading: Claim updated
           confirm_provider_rejected:
-            page_title: |
-              Are you sure you want to confirm the provider has rejected the claim? 
-              - Sampling - Claim %{reference}
+            page_title: Are you sure you want to confirm the provider has rejected the claim? - Sampling - Claim %{reference}
             caption: Sampling - Claim %{reference}
             title: Are you sure you want to confirm the provider has rejected the claim?
             cancel: Cancel
@@ -44,11 +42,9 @@ en:
           provider_rejected:
             success: Claim updated
           confirm_rejection:
-            page_title: |
-              Are you sure you want to rejected the claim? 
-              - Sampling - Claim %{reference}
+            page_title: Are you sure you want to reject the claim? - Sampling - Claim %{reference}
             caption: Sampling - Claim %{reference}
-            title: Are you sure you want to rejected the claim?
+            title: Are you sure you want to reject the claim?
             cancel: Cancel
             mark_as_claim_not_approved: | 
               This will mark the claim as 'Claim not approved' and move it into the clawbacks queue.
