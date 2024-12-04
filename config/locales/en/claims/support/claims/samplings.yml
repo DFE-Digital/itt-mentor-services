@@ -6,3 +6,5 @@ en:
           index:
             heading: Claims
             sub_heading: Sampling (%{count})
+            sub_heading_without_count: Sampling
+            no_claims: There are no claims waiting to be processed.
