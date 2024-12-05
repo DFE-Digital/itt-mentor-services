@@ -77,7 +77,12 @@ scope module: :claims, as: :claims, constraints: {
       end
 
       resources :payments, only: %i[index]
-      resources :samplings, path: "sampling", only: %i[index]
+      resources :samplings, path: "sampling", only: %i[index] do
+        collection do
+          get :upload
+          put :process_upload
+        end
+      end
       resources :clawbacks, only: %i[index]
       resources :activity_logs, path: "activity", only: %i[index]
     end

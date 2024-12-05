@@ -8,3 +8,32 @@ en:
             sub_heading: Sampling (%{count})
             sub_heading_without_count: Sampling
             no_claims: There are no claims waiting to be processed.
+          upload_buttons:
+            upload_claims: Upload claims to be sampled
+            upload_provider_response: Upload provider response
+          can_not_upload:
+            title: You cannot upload any claims to be sampled
+            page_title: You cannot upload any claims to be sampled - Sampling - Claims
+            caption: Sampling
+            you_cannot_upload: You cannot upload a sampling file as there are no claims that have been paid
+            cancel: Cancel
+          upload_form:
+            page_title: Upload claims to be sampled - Sampling - Claims
+            caption: Sampling
+            title: Upload claims to be sampled
+            cancel: Cancel
+            upload_csv_file: Upload CSV file
+            csv_help: Help with the CSV file
+            csv_help_details: |
+              Use this form to upload the CSV file sent by the data and insights team.
+
+              The CSV file must contain the following headers in the first row:
+
+              - claim_id
+              - school_id
+              - provider_id
+              - claim_window_id
+              - claim_reference_number
+              - submitted_at
+              - sample_reason
+
