@@ -86,17 +86,6 @@ RSpec.describe Provider, type: :model do
       end
     end
 
-    describe "#private_beta_providers" do
-      it "returns only the private beta providers" do
-        provider1 = create(:provider, :best_practice_network)
-        provider2 = create(:provider, :niot)
-        provider3 = create(:provider)
-
-        expect(described_class.private_beta_providers).to eq([provider1, provider2])
-        expect(described_class.private_beta_providers).not_to include(provider3)
-      end
-    end
-
     describe "#order_by_name" do
       it "returns the providers ordered by name" do
         provider_1 = create(:provider, name: "Brixton Provider")

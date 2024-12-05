@@ -39,4 +39,17 @@ RSpec.describe Claims::Provider, type: :model do
   context "with associations" do
     it { is_expected.to have_many(:mentor_trainings) }
   end
+
+  describe "scopes" do
+    describe "#private_beta_providers" do
+      it "returns only the private beta providers" do
+        provider1 = create(:claims_provider, :best_practice_network)
+        provider2 = create(:claims_provider, :niot)
+        provider3 = create(:claims_provider)
+
+        expect(described_class.private_beta_providers).to eq([provider1, provider2])
+        expect(described_class.private_beta_providers).not_to include(provider3)
+      end
+    end
+  end
 end
