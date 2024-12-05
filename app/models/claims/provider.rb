@@ -34,5 +34,12 @@
 #  index_providers_on_urn_trigram         (urn) USING gin
 #
 class Claims::Provider < Provider
+  PRIVATE_BETA_PROVIDERS = [
+    "Best Practice Network",
+    "NIoT: National Institute of Teaching, founded by the School-Led Development Trust",
+  ].freeze
+
   has_many :mentor_trainings
+
+  scope :private_beta_providers, -> { where(name: PRIVATE_BETA_PROVIDERS) }
 end
