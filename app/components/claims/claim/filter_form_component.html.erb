@@ -105,28 +105,24 @@
                   <% if filter_form.submitted_after.present? %>
                     <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.submitted_after") %></h3>
                     <ul class="app-filter-tags">
-                      <li>
-                        <%= govuk_link_to(
-                          helpers.safe_l(filter_form.submitted_after, format: :short),
-                          filter_form.index_path_without_submitted_dates("submitted_after"),
-                          class: "app-filter__tag",
-                          no_visited_state: true,
-                        ) %>
-                      </li>
+                    <%= govuk_link_to(
+                      helpers.safe_l(filter_form.submitted_after, format: :short),
+                      filter_form.index_path_without_submitted_dates("submitted_after"),
+                      class: "app-filter__tag",
+                      no_visited_state: true,
+                    ) %>
                     </ul>
                   <% end %>
 
                   <% if filter_form.submitted_before.present? %>
                     <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.submitted_before") %></h3>
                     <ul class="app-filter-tags">
-                      <li>
-                        <%= govuk_link_to(
-                          helpers.safe_l(filter_form.submitted_before, format: :short),
-                          filter_form.index_path_without_submitted_dates("submitted_before"),
-                          class: "app-filter__tag",
-                          no_visited_state: true,
-                        ) %>
-                      </li>
+                    <%= govuk_link_to(
+                      helpers.safe_l(filter_form.submitted_before, format: :short),
+                      filter_form.index_path_without_submitted_dates("submitted_before"),
+                      class: "app-filter__tag",
+                      no_visited_state: true,
+                    ) %>
                     </ul>
                   <% end %>
                 </div>
@@ -167,7 +163,7 @@
                       <%= form.govuk_check_box :statuses, status, label: { text: Claims::Claim.human_attribute_name("status.#{status}") } %>
                     <% end %>
                   <% end %>
-                <% end %>
+                </div>
 
                 <div class="app-filter__option" data-controller="filter-search">
                   <%= form.govuk_check_boxes_fieldset(

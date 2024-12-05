@@ -15,6 +15,10 @@
     <div class="claim-card__body__right">
       <div class="govuk-body-s"><%= l(claim.submitted_at.to_date, format: :long) %></div>
       <div class="govuk-body-s"><%= humanized_money_with_symbol(claim.amount) %></div>
+      <% if claim.status == "clawback_requested" %>
+      <div class="govuk-body-s govuk-!-font-weight-bold"><%= t(".clawback_amount") %></div>
+      <div class="govuk-body-s"><%#TODO: Display clawback amount when implemented %> £9.99</div>
+      <% end %>
     </div>
   </div>
 </div>
