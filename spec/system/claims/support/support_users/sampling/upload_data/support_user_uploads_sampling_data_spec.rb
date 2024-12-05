@@ -141,7 +141,7 @@ RSpec.describe "Support user uploads sampling data", service: :claims, type: :sy
     expect(page).to have_h2("Sampling (1)")
     expect(page).to have_claim_card({
       "title" => "#{@current_claim.reference} - #{@current_claim.school.name}",
-      "url" => "/support/claims/#{@current_claim.id}",
+      "url" => "/support/claims/sampling/#{@current_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @current_claim.academic_year.name,
       "provider_name" => @current_claim.provider.name,

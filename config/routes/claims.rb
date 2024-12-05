@@ -77,14 +77,14 @@ scope module: :claims, as: :claims, constraints: {
       end
 
       resources :payments, only: %i[index]
-      resources :samplings, path: "sampling", only: %i[index] do
+      resources :samplings, path: "sampling", only: %i[index show] do
         collection do
           get "new", to: "samplings/upload_data#new", as: :new_upload_data
           get "new/:state_key/:step", to: "samplings/upload_data#edit", as: :upload_data
           put "new/:state_key/:step", to: "samplings/upload_data#update"
         end
       end
-      resources :clawbacks, only: %i[index]
+      resources :clawbacks, path: "clawbacks/claims", only: %i[index show]
       resources :activity_logs, path: "activity", only: %i[index]
     end
 

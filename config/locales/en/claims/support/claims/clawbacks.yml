@@ -5,4 +5,14 @@ en:
         clawbacks:
           index:
             heading: Claims
-            sub_heading: Clawbacks
+            sub_heading: Clawbacks (%{count})
+            sub_heading_without_count: Clawbacks
+            no_claims: There are no claims waiting to be processed.
+          show:
+            page_caption: Clawbacks - Claim %{reference}
+            page_title: "Clawbacks - %{school_name} - Claim %{reference}"
+            status: Status
+            provider: Accredited provider
+            mentor_with_index: Mentor %{index}
+            mentor: Mentor
+            submitted_by: Submitted by %{name} on %{date}.
