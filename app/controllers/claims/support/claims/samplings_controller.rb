@@ -9,6 +9,17 @@ class Claims::Support::Claims::SamplingsController < Claims::Support::Applicatio
     )
   end
 
+  def upload
+    if paid_claims.present?
+      render "upload_form"
+    else
+      render "can_not_upload"
+    end
+  end
+
+  def process_upload
+  end
+
   private
 
   def set_filtered_claims
@@ -41,5 +52,12 @@ class Claims::Support::Claims::SamplingsController < Claims::Support::Applicatio
 
   def index_path
     claims_support_claims_samplings_path
+  end
+
+  def paid_claims
+    current_academic_year = AcademicYear.for_date(Date.current)
+
+    Claims::Claim.paid.joins(claim_window: :academic_year)
+      .where(academic_years: { id: current_academic_year.id })
   end
 end
