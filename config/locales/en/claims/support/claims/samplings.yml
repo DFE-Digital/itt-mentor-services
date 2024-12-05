@@ -29,11 +29,18 @@ en:
 
               The CSV file must contain the following headers in the first row:
 
-              - claim_id
-              - school_id
-              - provider_id
-              - claim_window_id
-              - claim_reference_number
-              - submitted_at
+              - claim_reference
               - sample_reason
+          confirm_upload:
+            page_title: Are you sure you want to upload the sampling data - Sampling - Claims
+            title: Are you sure you want to upload the sampling data
+            caption: Sampling
+            claims_count: There are %{count} claims included in this upload.
+            providers_will_be_emailed: 
+              Each accredited provider included in the sample data will receive an email
+              instructing them to assure their partner schools' claim.
+            cancel: Cancel
+            upload_data: Upload data
+          process_upload:
+            success: Sampling data uploaded
 

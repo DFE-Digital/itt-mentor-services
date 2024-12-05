@@ -17,7 +17,13 @@ class Claims::Support::Claims::SamplingsController < Claims::Support::Applicatio
     end
   end
 
+  def confirm_upload
+    @claim_ids = Claims::Claim::Sampling::CSV::PaidClaimFinder.call(csv_upload: params[:csv_upload])
+  end
+
   def process_upload
+    Claims::Sampling::FlagAllForSamplingJob.perform_later(params.require(:claim_ids))
+    redirect_to claims_support_claims_samplings_path, flash: { heading: t(".success") }
   end
 
   private
@@ -55,9 +61,6 @@ class Claims::Support::Claims::SamplingsController < Claims::Support::Applicatio
   end
 
   def paid_claims
-    current_academic_year = AcademicYear.for_date(Date.current)
-
-    Claims::Claim.paid.joins(claim_window: :academic_year)
-      .where(academic_years: { id: current_academic_year.id })
+    Claims::Claim.paid_for_current_academic_year
   end
 end
