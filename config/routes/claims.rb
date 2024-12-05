@@ -80,6 +80,7 @@ scope module: :claims, as: :claims, constraints: {
       resources :samplings, path: "sampling", only: %i[index] do
         collection do
           get :upload
+          post :confirm_upload
           put :process_upload
         end
       end

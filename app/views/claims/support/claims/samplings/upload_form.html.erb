@@ -11,8 +11,9 @@
       <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
       <%= form_with(
-        url: process_upload_claims_support_claims_samplings_path,
-        method: "get",
+        url: confirm_upload_claims_support_claims_samplings_path,
+        method: "post",
+        multipart: true,
         data: { turbo: false },
       ) do |f| %>
         <%= f.govuk_file_field :csv_upload, label: { text: t(".upload_csv_file"), size: "s" } %>
