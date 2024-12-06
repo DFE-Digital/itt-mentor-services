@@ -6,6 +6,10 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-class Claims::Sampling < ApplicationRecord
-  has_one :provider_sampling
+require "rails_helper"
+
+RSpec.describe Claims::Sampling, type: :model do
+  describe "associations" do
+    it { is_expected.to have_one(:provider_sampling) }
+  end
 end
