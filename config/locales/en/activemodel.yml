@@ -194,3 +194,9 @@ en:
               already_added: "%{provider_name} has already been added. Try another provider"
               blank: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode
               option_blank: Select a provider
+        claims/upload_sampling_data_wizard/upload_step:
+          attributes:
+            csv_upload:
+              blank: Select a CSV file to upload
+              invalid: The selected file must be a CSV
+              invalid_data: The selected CSV file contains invalid data

@@ -8,6 +8,8 @@ class Claims::Claim::Sampling::CSV::PaidClaimFinder < ApplicationService
   attr_reader :csv_upload
 
   def call
+    raise InvalidFileError unless csv_upload.content_type == "text/csv"
+
     claim_ids = []
     CSV.parse(csv_upload.read, headers: true) do |row|
       claim_ids << paid_claims.find_by!(reference: row["claim_reference"]).id
@@ -19,11 +21,8 @@ class Claims::Claim::Sampling::CSV::PaidClaimFinder < ApplicationService
   private
 
   def paid_claims
-    return @paid_claims if @paid_claims.present?
-
-    current_academic_year = AcademicYear.for_date(Date.current)
-
-    @paid_claims = Claims::Claim.paid.joins(claim_window: :academic_year)
-      .where(academic_years: { id: current_academic_year.id })
+    @paid_claims ||= Claims::Claim.paid_for_current_academic_year
   end
 end
+
+class InvalidFileError < StandardError; end

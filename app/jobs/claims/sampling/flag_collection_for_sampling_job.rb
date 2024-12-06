@@ -1,4 +1,4 @@
-class Claims::Sampling::FlagAllForSamplingJob < ApplicationJob
+class Claims::Sampling::FlagCollectionForSamplingJob < ApplicationJob
   queue_as :default
 
   def perform(claim_ids)

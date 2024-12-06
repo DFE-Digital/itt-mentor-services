@@ -11,36 +11,3 @@ en:
           upload_buttons:
             upload_claims: Upload claims to be sampled
             upload_provider_response: Upload provider response
-          can_not_upload:
-            title: You cannot upload any claims to be sampled
-            page_title: You cannot upload any claims to be sampled - Sampling - Claims
-            caption: Sampling
-            you_cannot_upload: You cannot upload a sampling file as there are no claims that have been paid
-            cancel: Cancel
-          upload_form:
-            page_title: Upload claims to be sampled - Sampling - Claims
-            caption: Sampling
-            title: Upload claims to be sampled
-            cancel: Cancel
-            upload_csv_file: Upload CSV file
-            csv_help: Help with the CSV file
-            csv_help_details: |
-              Use this form to upload the CSV file sent by the data and insights team.
-
-              The CSV file must contain the following headers in the first row:
-
-              - claim_reference
-              - sample_reason
-          confirm_upload:
-            page_title: Are you sure you want to upload the sampling data - Sampling - Claims
-            title: Are you sure you want to upload the sampling data
-            caption: Sampling
-            claims_count: There are %{count} claims included in this upload.
-            providers_will_be_emailed: 
-              Each accredited provider included in the sample data will receive an email
-              instructing them to assure their partner schools' claim.
-            cancel: Cancel
-            upload_data: Upload data
-          process_upload:
-            success: Sampling data uploaded
-
