@@ -1,0 +1,10 @@
+en:
+  claims:
+    support:
+      claims:
+        samplings:
+          upload_data:
+            edit:
+              cancel: Cancel
+            update: 
+              success: "Sampling data uploaded"

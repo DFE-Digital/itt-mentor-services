@@ -1,0 +1,20 @@
+<% content_for(:page_title) { sanitize t(".page_title") } %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l"><%= t(".caption") %></span>
+      <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+
+      <%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+        <%= f.govuk_error_summary %>
+
+        <p class="govuk-body">
+          <%= t(".claims_count", count: current_step.uploaded_claim_ids.count) %>
+        </p>
+
+        <%= f.govuk_submit(t(".upload_data")) %>
+      <% end %>
+
+      <%= govuk_warning_text(text: t(".providers_will_be_emailed")) %>
+  </div>
+</div>
