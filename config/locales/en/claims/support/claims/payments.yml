@@ -5,4 +5,11 @@ en:
         payments:
           index:
             heading: Claims
-            sub_heading: Payments
+            sub_heading:
+              zero: Payments
+              one: Payments (%{count})
+              other: Payments (%{count})
+            description:
+              one: "%{count} claim needs processing"
+              other: "%{count} claims need processing"
+            no_claims: There are no claims waiting to be processed.

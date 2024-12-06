@@ -18,7 +18,7 @@
         </div>
       </h1>
 
-      <% if @claim.submitted? %>
+      <% if @claim.submitted_by_id? %>
         <p class="govuk-body"><%= t(".submitted_by", name: @claim.submitted_by.full_name, date: l(@claim.submitted_on, format: :long)) %></p>
       <% end %>
 

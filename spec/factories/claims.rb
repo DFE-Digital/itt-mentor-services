@@ -2,22 +2,23 @@
 #
 # Table name: claims
 #
-#  id                   :uuid             not null, primary key
-#  created_by_type      :string
-#  reference            :string
-#  reviewed             :boolean          default(FALSE)
-#  sampling_reason      :text
-#  status               :enum
-#  submitted_at         :datetime
-#  submitted_by_type    :string
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
-#  claim_window_id      :uuid
-#  created_by_id        :uuid
-#  previous_revision_id :uuid
-#  provider_id          :uuid
-#  school_id            :uuid             not null
-#  submitted_by_id      :uuid
+#  id                     :uuid             not null, primary key
+#  created_by_type        :string
+#  payment_in_progress_at :datetime
+#  reference              :string
+#  reviewed               :boolean          default(FALSE)
+#  sampling_reason        :text
+#  status                 :enum
+#  submitted_at           :datetime
+#  submitted_by_type      :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  claim_window_id        :uuid
+#  created_by_id          :uuid
+#  previous_revision_id   :uuid
+#  provider_id            :uuid
+#  school_id              :uuid             not null
+#  submitted_by_id        :uuid
 #
 # Indexes
 #
@@ -39,7 +40,6 @@ FactoryBot.define do
     association :school, factory: :claims_school
     association :provider, factory: :claims_provider
     association :created_by, factory: :claims_user
-    association :submitted_by, factory: :claims_user
 
     claim_window { Claims::ClaimWindow.current || create(:claim_window, :current) }
 
@@ -51,9 +51,26 @@ FactoryBot.define do
     end
 
     trait :submitted do
+      draft
       status { :submitted }
       submitted_at { Time.current }
-      reference { SecureRandom.random_number(99_999_999) }
+      association :submitted_by, factory: :claims_user
+    end
+
+    trait :payment_in_progress do
+      submitted
+      status { :payment_in_progress }
+      payment_in_progress_at { Time.current }
+    end
+
+    trait :payment_information_requested do
+      payment_in_progress
+      status { :payment_information_requested }
+    end
+
+    trait :payment_information_sent do
+      payment_information_requested
+      status { :payment_information_sent }
     end
   end
 end
