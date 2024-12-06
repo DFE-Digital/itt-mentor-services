@@ -83,6 +83,10 @@ shared:
     - claim_window_id
     - sampling_reason
     - payment_in_progress_at
+  :samplings:
+    - id
+    - created_at
+    - updated_at
   :schools:
     - id
     - urn
