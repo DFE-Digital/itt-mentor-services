@@ -313,6 +313,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_06_143524) do
     t.index ["year_group"], name: "index_placements_on_year_group"
   end
 
+  create_table "provider_samplings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "sampling_id", null: false
+    t.uuid "provider_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["provider_id"], name: "index_provider_samplings_on_provider_id"
+    t.index ["sampling_id"], name: "index_provider_samplings_on_sampling_id"
+  end
+
   create_table "providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "code", null: false
     t.datetime "created_at", null: false
@@ -504,6 +513,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_06_143524) do
   add_foreign_key "placements", "providers"
   add_foreign_key "placements", "schools"
   add_foreign_key "placements", "subjects"
+  add_foreign_key "provider_samplings", "providers"
+  add_foreign_key "provider_samplings", "samplings"
   add_foreign_key "school_contacts", "schools"
   add_foreign_key "schools", "regions"
   add_foreign_key "schools", "trusts"

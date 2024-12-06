@@ -87,6 +87,12 @@ shared:
     - id
     - created_at
     - updated_at
+  :provider_samplings:
+    - id
+    - sampling_id
+    - provider_id
+    - created_at
+    - updated_at
   :schools:
     - id
     - urn
