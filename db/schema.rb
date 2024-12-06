@@ -351,6 +351,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_06_143524) do
     t.index ["name"], name: "index_regions_on_name", unique: true
   end
 
+  create_table "samplings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "school_contacts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "email_address", null: false
