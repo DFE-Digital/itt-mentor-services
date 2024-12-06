@@ -21,6 +21,7 @@ scope module: :claims, as: :claims, constraints: {
             get :create_revision
           end
         end
+
         resources :mentor_trainings, only: %i[edit update], module: :claims do
           member do
             get :create_revision
@@ -71,6 +72,10 @@ scope module: :claims, as: :claims, constraints: {
     end
 
     namespace :claims do
+      namespace :payments do
+        resources :claims, only: %i[show]
+      end
+
       resources :payments, only: %i[index]
       resources :samplings, path: "sampling", only: %i[index]
       resources :clawbacks, only: %i[index]

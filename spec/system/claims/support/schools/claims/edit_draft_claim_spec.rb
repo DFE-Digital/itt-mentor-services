@@ -15,9 +15,7 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
       :claim,
       :draft,
       school:,
-      reference: "12345678",
       provider: best_practice_network_provider,
-      submitted_by: colin,
       reviewed: true,
     )
   end
@@ -27,10 +25,7 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
       :claim,
       :submitted,
       school:,
-      reference: "12345679",
-      submitted_at: Time.new(2024, 3, 5, 12, 31, 52, "+00:00"),
       provider: best_practice_network_provider,
-      submitted_by: colin,
     )
   end
 

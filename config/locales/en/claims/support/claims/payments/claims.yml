@@ -1,0 +1,14 @@
+en:
+  claims:
+    support:
+      claims:
+        payments:
+          claims:
+            show:
+              page_caption: Claim %{reference}
+              page_title: "%{school_name} - Claim %{reference}"
+              status: Status
+              provider: Accredited provider
+              mentor_with_index: Mentor %{index}
+              mentor: Mentor
+              submitted_by: Submitted by %{name} on %{date}.

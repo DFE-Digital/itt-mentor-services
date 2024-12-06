@@ -3,13 +3,15 @@ require "rails_helper"
 RSpec.describe Claim::CardComponent, type: :component do
   include Rails.application.routes.url_helpers
 
-  subject(:component) { described_class.new(claim:) }
+  subject(:component) { described_class.new(claim:, href:) }
 
   let(:claim) do
     create(:claim, :submitted, submitted_at: "2024/04/08", school:) do |claim|
       claim.mentor_trainings << create(:mentor_training, hours_completed: 20)
     end
   end
+
+  let(:href) { claims_support_claim_path(claim) }
 
   let(:school) { create(:claims_school, region: regions(:inner_london)) }
 
