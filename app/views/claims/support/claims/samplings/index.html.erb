@@ -12,7 +12,7 @@
     <%= render Claims::Claim::FilterFormComponent.new(filter_form:, statuses: %w[sampling_in_progress sampling_provider_not_approved]) do %>
       <div class="govuk-!-margin-bottom-2">
         <% @claims.each do |claim| %>
-          <%= render Claim::CardComponent.new(claim:) %>
+          <%= render Claim::CardComponent.new(claim:, href: claims_support_claim_path(claim)) %>
         <% end %>
       </div>
 
