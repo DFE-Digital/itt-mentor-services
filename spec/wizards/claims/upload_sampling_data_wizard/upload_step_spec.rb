@@ -132,7 +132,7 @@ RSpec.describe Claims::UploadSamplingDataWizard::UploadStep, type: :model do
 
     it "reads a given CSV and assigns the content to the csv_content attribute,
       and assigns the associated claim IDs to the claim_ids attribute" do
-      expect(step.csv_content).to eq("claim_reference,sample_reason\n11111111,Some Reason")
+      expect(step.csv_content).to eq("claim_reference,sample_reason\n11111111,Some Reason\n")
     end
   end
 end
