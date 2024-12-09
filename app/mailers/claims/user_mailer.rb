@@ -33,7 +33,7 @@ class Claims::UserMailer < Claims::ApplicationMailer
                  body: t(
                    ".body",
                    user_name: user.first_name,
-                   organisation_name: claim.school.name,
+                   organisation_name: claim.school_name,
                    reference: claim.reference,
                    amount: claim.amount.format(symbol: true, decimal_mark: ".", no_cents: false),
                    support_email:,
@@ -49,7 +49,7 @@ class Claims::UserMailer < Claims::ApplicationMailer
                  body: t(
                    ".body",
                    user_name: user.first_name,
-                   organisation_name: claim.school.name,
+                   organisation_name: claim.school_name,
                    reference: claim.reference,
                    amount: claim.amount.format(symbol: true, decimal_mark: ".", no_cents: false),
                    support_email:,

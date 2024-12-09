@@ -113,7 +113,7 @@ RSpec.describe "View claims", :js, service: :claims, type: :system do
   def then_i_see_a_list_of_claims(claims)
     claims.each_with_index do |claim, index|
       within(".claim-card:nth-child(#{index + 1})") do
-        expect(page).to have_content(claim.school.name)
+        expect(page).to have_content(claim.school_name)
         expect(page).to have_content(claim.reference)
         expect(page).to have_content("Submitted")
         expect(page).to have_content(claim.provider.name)

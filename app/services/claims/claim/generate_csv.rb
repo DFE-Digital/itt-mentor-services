@@ -26,7 +26,7 @@ class Claims::Claim::GenerateCSV < ApplicationService
         csv << [
           claim.reference,
           claim.school.urn,
-          claim.school.name,
+          claim.school_name,
           claim.school.local_authority_name,
           claim.amount.format(symbol: false, decimal_mark: ".", no_cents: false),
           claim.school.type_of_establishment,

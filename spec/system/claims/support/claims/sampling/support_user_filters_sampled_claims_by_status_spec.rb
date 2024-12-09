@@ -101,7 +101,7 @@ RSpec.describe "Support user filters sampled claims by status", service: :claims
 
   def and_i_see_claims_with_a_sampling_in_progress_status
     expect(page).to have_claim_card({
-      "title" => "#{@sampling_in_progress_claim.reference} - #{@sampling_in_progress_claim.school.name}",
+      "title" => "#{@sampling_in_progress_claim.reference} - #{@sampling_in_progress_claim.school_name}",
       "url" => "/support/claims/#{@sampling_in_progress_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @sampling_in_progress_claim.academic_year.name,
@@ -113,7 +113,7 @@ RSpec.describe "Support user filters sampled claims by status", service: :claims
 
   def and_i_see_claims_with_a_sampling_provider_not_approved_status
     expect(page).to have_claim_card({
-      "title" => "#{@sampling_provider_not_approved_claim.reference} - #{@sampling_provider_not_approved_claim.school.name}",
+      "title" => "#{@sampling_provider_not_approved_claim.reference} - #{@sampling_provider_not_approved_claim.school_name}",
       "url" => "/support/claims/#{@sampling_provider_not_approved_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @sampling_provider_not_approved_claim.academic_year.name,
@@ -145,13 +145,13 @@ RSpec.describe "Support user filters sampled claims by status", service: :claims
 
   def and_i_do_not_see_claims_with_a_sampling_provider_not_approved_status
     expect(page).not_to have_claim_card(
-      { "title" => "#{@sampling_provider_not_approved_claim.reference} - #{@sampling_provider_not_approved_claim.school.name}" },
+      { "title" => "#{@sampling_provider_not_approved_claim.reference} - #{@sampling_provider_not_approved_claim.school_name}" },
     )
   end
 
   def and_i_do_not_see_claims_with_a_sampling_in_progress_status
     expect(page).not_to have_claim_card(
-      { "title" => "#{@sampling_in_progress_claim.reference} - #{@sampling_in_progress_claim.school.name}" },
+      { "title" => "#{@sampling_in_progress_claim.reference} - #{@sampling_in_progress_claim.school_name}" },
     )
   end
 

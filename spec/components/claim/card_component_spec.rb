@@ -18,7 +18,7 @@ RSpec.describe Claim::CardComponent, type: :component do
   it "renders a card with claim details" do
     render_inline(component)
 
-    expect(page).to have_link(claim.school.name, href: claims_support_claim_path(claim))
+    expect(page).to have_link(claim.school_name, href: claims_support_claim_path(claim))
     expect(page).to have_content(claim.reference)
     expect(page).to have_content("Submitted")
 
