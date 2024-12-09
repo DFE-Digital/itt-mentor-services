@@ -29,6 +29,8 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
     validate_csv_file
     return if errors.present?
 
+    reset_claim_ids
+
     CSV.parse(read_csv, headers: true) do |row|
       claim = paid_claims.find_by(reference: row["claim_reference"])
       if claim
@@ -61,5 +63,9 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
 
   def read_csv
     @read_csv ||= csv_upload.read
+  end
+
+  def reset_claim_ids
+    self.claim_ids = []
   end
 end

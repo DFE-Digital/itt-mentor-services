@@ -3,16 +3,10 @@ module Claims
     def define_steps
       if paid_claims.present?
         add_step(UploadStep)
-        add_step(ConfirmationdStep)
+        add_step(ConfirmationStep)
       else
         add_step(NoClaimsStep)
       end
-    end
-
-    def uploaded_claim_ids
-      return [] if steps[:upload].blank?
-
-      steps.fetch(:upload).claim_ids
     end
 
     def upload_data
@@ -23,6 +17,12 @@ module Claims
 
     def paid_claims
       Claims::Claim.paid_for_current_academic_year
+    end
+
+    def uploaded_claim_ids
+      return [] if steps[:upload].blank?
+
+      steps.fetch(:upload).claim_ids
     end
   end
 end
