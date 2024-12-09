@@ -83,11 +83,6 @@ scope module: :claims, as: :claims, constraints: {
           get "new/:state_key/:step", to: "samplings/upload_data#edit", as: :upload_data
           put "new/:state_key/:step", to: "samplings/upload_data#update"
         end
-        collection do
-          get :upload
-          post :confirm_upload
-          put :process_upload
-        end
       end
       resources :clawbacks, only: %i[index]
       resources :activity_logs, path: "activity", only: %i[index]
