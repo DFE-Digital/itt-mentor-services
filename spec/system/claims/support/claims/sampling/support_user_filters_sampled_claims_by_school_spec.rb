@@ -110,7 +110,7 @@ RSpec.describe "Support user filters sampled claims by school", service: :claims
 
   def and_i_see_the_sampled_claim_for_springfield_elementary
     expect(page).to have_claim_card({
-      "title" => "#{@springfield_claim.reference} - #{@springfield_claim.school.name}",
+      "title" => "#{@springfield_claim.reference} - #{@springfield_claim.school_name}",
       "url" => "/support/claims/#{@springfield_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @springfield_claim.academic_year.name,
@@ -122,7 +122,7 @@ RSpec.describe "Support user filters sampled claims by school", service: :claims
 
   def and_i_see_the_sampled_claim_for_hogwarts
     expect(page).to have_claim_card({
-      "title" => "#{@hogwarts_claim.reference} - #{@hogwarts_claim.school.name}",
+      "title" => "#{@hogwarts_claim.reference} - #{@hogwarts_claim.school_name}",
       "url" => "/support/claims/#{@hogwarts_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @hogwarts_claim.academic_year.name,
@@ -154,13 +154,13 @@ RSpec.describe "Support user filters sampled claims by school", service: :claims
 
   def and_i_do_not_see_sampled_claim_for_hogwarts
     expect(page).not_to have_claim_card(
-      { "title" => "#{@hogwarts_claim.reference} - #{@hogwarts_claim.school.name}" },
+      { "title" => "#{@hogwarts_claim.reference} - #{@hogwarts_claim.school_name}" },
     )
   end
 
   def and_i_do_not_see_sampled_claim_for_springfield_elementary
     expect(page).not_to have_claim_card(
-      { "title" => "#{@springfield_claim.reference} - #{@springfield_claim.school.name}" },
+      { "title" => "#{@springfield_claim.reference} - #{@springfield_claim.school_name}" },
     )
   end
 

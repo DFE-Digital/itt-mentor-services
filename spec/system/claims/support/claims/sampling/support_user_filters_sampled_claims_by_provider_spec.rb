@@ -110,7 +110,7 @@ RSpec.describe "Support user filters sampled claims by provider", service: :clai
 
   def and_i_see_the_sampled_claim_for_provider_niot
     expect(page).to have_claim_card({
-      "title" => "#{@niot_claim.reference} - #{@niot_claim.school.name}",
+      "title" => "#{@niot_claim.reference} - #{@niot_claim.school_name}",
       "url" => "/support/claims/#{@niot_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @niot_claim.academic_year.name,
@@ -122,7 +122,7 @@ RSpec.describe "Support user filters sampled claims by provider", service: :clai
 
   def and_i_see_the_sampled_claim_for_provider_bpn
     expect(page).to have_claim_card({
-      "title" => "#{@bpn_claim.reference} - #{@bpn_claim.school.name}",
+      "title" => "#{@bpn_claim.reference} - #{@bpn_claim.school_name}",
       "url" => "/support/claims/#{@bpn_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @bpn_claim.academic_year.name,
@@ -154,13 +154,13 @@ RSpec.describe "Support user filters sampled claims by provider", service: :clai
 
   def and_i_do_not_see_the_sampled_claim_for_provider_bpn
     expect(page).not_to have_claim_card({
-      "title" => "#{@bpn_claim.reference} - #{@bpn_claim.school.name}",
+      "title" => "#{@bpn_claim.reference} - #{@bpn_claim.school_name}",
     })
   end
 
   def and_i_do_not_see_the_sampled_claim_for_provider_niot
     expect(page).not_to have_claim_card({
-      "title" => "#{@niot_claim.reference} - #{@niot_claim.school.name}",
+      "title" => "#{@niot_claim.reference} - #{@niot_claim.school_name}",
     })
   end
 

@@ -117,7 +117,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
         expect(claim_confirmation_email.body.to_s.strip).to eq(<<~EMAIL.strip)
           Dear #{user.first_name},
 
-          You have successfully submitted a claim for mentor training for #{claim.school.name}.
+          You have successfully submitted a claim for mentor training for #{claim.school_name}.
 
           Your claim reference is #{claim.reference}.
 
@@ -175,7 +175,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
         expect(claim_confirmation_email.body.to_s.strip).to eq(<<~EMAIL.strip)
           Dear #{user_of_a_school.first_name},
 
-          We have added a draft claim for mentor training for #{claim.school.name}.
+          We have added a draft claim for mentor training for #{claim.school_name}.
             Your claim reference is #{claim.reference}.
 
           You can view the claim, edit and submit it on Claim funding for mentor training:
