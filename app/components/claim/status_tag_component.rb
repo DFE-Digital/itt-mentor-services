@@ -8,7 +8,7 @@ class Claim::StatusTagComponent < ApplicationComponent
   end
 
   def call
-    govuk_tag(text: t(".#{claim.status}"), colour:)
+    govuk_tag(text: Claims::Claim.human_attribute_name("status.#{claim.status}"), colour:)
   end
 
   private
