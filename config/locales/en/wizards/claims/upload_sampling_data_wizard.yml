@@ -28,4 +28,4 @@ en:
           title: You cannot upload any claims to be sampled
           page_title: You cannot upload any claims to be sampled - Sampling - Claims
           caption: Sampling
-          you_cannot_upload: You cannot upload a sampling file as there are no claims that have been paid
+          you_cannot_upload: You cannot upload a sampling file as there are no claims that have been paid.

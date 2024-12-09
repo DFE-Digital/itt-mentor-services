@@ -48,8 +48,6 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
   private
 
   def csv
-    return [] if csv_content.blank?
-
     @csv ||= CSV.parse(csv_content, headers: true)
   end
 
