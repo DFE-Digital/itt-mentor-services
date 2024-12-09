@@ -60,7 +60,7 @@
                       <% filter_form.statuses.each do |status| %>
                         <li>
                         <%= govuk_link_to(
-                          status.humanize,
+                          Claims::Claim.human_attribute_name("status.#{status}"),
                           filter_form.index_path_without_filter(filter: "statuses", value: status),
                           class: "app-filter__tag",
                           no_visited_state: true,
@@ -164,7 +164,7 @@
                     multiple: false,
                   ) do %>
                     <% @statuses.each do |status| %>
-                      <%= form.govuk_check_box :statuses, status, label: { text: status.humanize } %>
+                      <%= form.govuk_check_box :statuses, status, label: { text: Claims::Claim.human_attribute_name("status.#{status}") } %>
                     <% end %>
                   <% end %>
                 <% end %>

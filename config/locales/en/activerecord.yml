@@ -10,6 +10,21 @@ en:
         id: ID
         reference: Claim reference
         submitted_at: Date submitted
+      claims/claim/status:
+        internal_draft: Internal draft
+        draft: Draft
+        submitted: Submitted
+        payment_in_progress: Payment in progress
+        payment_information_requested: Information requested
+        payment_information_sent: Information sent
+        paid: Paid
+        payment_not_approved: Payment not approved
+        sampling_in_progress: Sampling in progress
+        sampling_provider_not_approved: Provider not approved
+        sampling_not_approved: Claim not approved
+        clawback_requested: Clawback requested
+        clawback_in_progress: Clawback in progress
+        clawback_complete: Clawback complete
       claims/claim_window:
         academic_year: Academic year
         window: Claim window
