@@ -16,8 +16,8 @@ en:
             - claim_reference
             - sample_reason
         confirmation_step:
-          page_title: Are you sure you want to upload the sampling data - Sampling - Claims
-          title: Are you sure you want to upload the sampling data
+          page_title: Are you sure you want to upload the sampling data? - Sampling - Claims
+          title: Are you sure you want to upload the sampling data?
           caption: Sampling
           claims_count: There are %{count} claims included in this upload.
           providers_will_be_emailed: 
