@@ -26,7 +26,7 @@ en:
           title: Are you sure you want to upload the provider's response?
           caption: Sampling
           claims_count: 
-            one: There are %{count} claim included in this upload.
+            one: There is %{count} claim included in this upload.
             other: There are %{count} claims included in this upload.
           upload_data: Upload responses
         no_claims_step:
