@@ -108,7 +108,7 @@ RSpec.describe "Support user uploads sampling data", service: :claims, type: :sy
   def then_i_see_the_confirmation_page_for_uploading_the_sampling_data
     expect(page).to have_h1("Are you sure you want to upload the sampling data?")
     have_element(:span, text: "Sampling", class: "govuk-caption-l")
-    expect(page).to have_element(:p, text: "There are 1 claim included in this upload.", class: "govuk-body")
+    expect(page).to have_element(:p, text: "There is 1 claim included in this upload.", class: "govuk-body")
     expect(page).to have_element(
       :strong,
       text: "WarningEach accredited provider included in the sample data will receive an email instructing them to assure their partner schools' claim.",
