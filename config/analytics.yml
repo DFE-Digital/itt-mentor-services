@@ -83,7 +83,6 @@ shared:
     - claim_window_id
     - sampling_reason
     - payment_in_progress_at
-    - provider_sampling_id
   :samplings:
     - id
     - created_at

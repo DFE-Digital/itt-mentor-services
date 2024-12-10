@@ -17,7 +17,6 @@
 #  created_by_id          :uuid
 #  previous_revision_id   :uuid
 #  provider_id            :uuid
-#  provider_sampling_id :uuid
 #  school_id              :uuid             not null
 #  submitted_by_id        :uuid
 #
@@ -27,7 +26,6 @@
 #  index_claims_on_created_by            (created_by_type,created_by_id)
 #  index_claims_on_previous_revision_id  (previous_revision_id)
 #  index_claims_on_provider_id           (provider_id)
-#  index_claims_on_provider_sampling_id  (provider_sampling_id)
 #  index_claims_on_reference             (reference)
 #  index_claims_on_school_id             (school_id)
 #  index_claims_on_submitted_by          (submitted_by_type,submitted_by_id)
@@ -35,7 +33,6 @@
 # Foreign Keys
 #
 #  fk_rails_...  (provider_id => providers.id)
-#  fk_rails_...  (provider_sampling_id => provider_samplings.id)
 #  fk_rails_...  (school_id => schools.id)
 #
 class Claims::Claim < ApplicationRecord
@@ -48,7 +45,6 @@ class Claims::Claim < ApplicationRecord
   belongs_to :created_by, polymorphic: true
   belongs_to :submitted_by, polymorphic: true, optional: true
   belongs_to :previous_revision, class_name: "Claims::Claim", optional: true
-  belongs_to :provider_sampling, optional: true
 
   has_one :academic_year, through: :claim_window
 
