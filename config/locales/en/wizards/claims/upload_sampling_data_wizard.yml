@@ -20,7 +20,7 @@ en:
           title: Are you sure you want to upload the sampling data?
           caption: Sampling
           claims_count: 
-            one: There are %{count} claim included in this upload.
+            one: There is %{count} claim included in this upload.
             other: There are %{count} claims included in this upload.
           providers_will_be_emailed: 
             Each accredited provider included in the sample data will receive an email
