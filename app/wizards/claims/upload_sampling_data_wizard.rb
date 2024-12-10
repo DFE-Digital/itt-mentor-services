@@ -12,7 +12,7 @@ module Claims
     def upload_data
       raise "Invalid wizard state" unless valid?
 
-      Claims::Sampling::FlagCollectionForSamplingJob.perform_later(steps.fetch(:upload).claim_ids)
+      Claims::Sampling::FlagCollectionForSamplingJob.perform_later(uploaded_claim_ids)
     end
 
     def paid_claims
