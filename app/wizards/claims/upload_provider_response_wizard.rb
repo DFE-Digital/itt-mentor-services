@@ -11,6 +11,8 @@ module Claims
 
     def upload_provider_responses
       raise "Invalid wizard state" unless valid?
+
+      Claims::Sampling::UpdateCollectionWithProviderResponseJob.perform_later(claim_update_details)
     end
 
     def sampled_claims

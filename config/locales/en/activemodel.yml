@@ -200,3 +200,9 @@ en:
               blank: Select a CSV file to upload
               invalid: The selected file must be a CSV
               invalid_data: The selected CSV file contains invalid data
+        claims/upload_provider_response_wizard/upload_step:
+          attributes:
+            csv_upload:
+              blank: Select a CSV file to upload
+              invalid: The selected file must be a CSV
+              invalid_data: The selected CSV file contains invalid data
