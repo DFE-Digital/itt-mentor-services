@@ -7,5 +7,5 @@
 #  updated_at :datetime         not null
 #
 class Claims::Sampling < ApplicationRecord
-  has_one :provider_sampling
+  has_many :provider_samplings
 end
