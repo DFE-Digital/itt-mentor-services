@@ -1,0 +1,34 @@
+en:
+  wizards:
+    claims:
+      upload_provider_response_wizard:
+        upload_step:
+          page_title: Sampling - Claims
+          title: Upload provider response
+          caption: Sampling
+          upload_csv_file: Upload CSV file
+          csv_help: Help with the CSV file
+          csv_help_details: |
+            Use this form to upload the CSV file sent by the provider.
+
+            The CSV file must contain the following headers in the first row:
+
+              - claim_reference
+              - school_urn
+              - school_name
+              - school_postcode
+              - mentor_full_name
+              - mentor_hours_of_training
+              - claim_assured
+              - claim_not_assured_reason
+        confirmation_step:
+          page_title: Are you sure you want to upload the provider's response? - Sampling - Claims
+          title: Are you sure you want to upload the provider's response?
+          caption: Sampling
+          claims_count: There are %{count} claims included in this upload.
+          upload_data: Upload responses
+        no_claims_step:
+          title: You cannot upload a provider response
+          page_title: You cannot upload a provider response - Sampling - Claims
+          caption: Sampling
+          you_cannot_upload: You cannot upload a provider response as there are no claims waiting for a response.
