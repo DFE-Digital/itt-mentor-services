@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_06_143524) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_10_120632) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -111,12 +111,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_06_143524) do
     t.uuid "claim_window_id"
     t.text "sampling_reason"
     t.datetime "payment_in_progress_at"
-    t.uuid "provider_sampling_id"
     t.index ["claim_window_id"], name: "index_claims_on_claim_window_id"
     t.index ["created_by_type", "created_by_id"], name: "index_claims_on_created_by"
     t.index ["previous_revision_id"], name: "index_claims_on_previous_revision_id"
     t.index ["provider_id"], name: "index_claims_on_provider_id"
-    t.index ["provider_sampling_id"], name: "index_claims_on_provider_sampling_id"
     t.index ["reference"], name: "index_claims_on_reference"
     t.index ["school_id"], name: "index_claims_on_school_id"
     t.index ["submitted_by_type", "submitted_by_id"], name: "index_claims_on_submitted_by"
@@ -315,6 +313,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_06_143524) do
     t.index ["year_group"], name: "index_placements_on_year_group"
   end
 
+  create_table "provider_sampling_claims", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "claim_id", null: false
+    t.uuid "provider_sampling_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["claim_id"], name: "index_provider_sampling_claims_on_claim_id"
+    t.index ["provider_sampling_id"], name: "index_provider_sampling_claims_on_provider_sampling_id"
+  end
+
   create_table "provider_samplings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "sampling_id", null: false
     t.uuid "provider_id", null: false
@@ -496,7 +503,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_06_143524) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "claim_windows", "academic_years"
-  add_foreign_key "claims", "provider_samplings"
   add_foreign_key "claims", "providers"
   add_foreign_key "claims", "schools"
   add_foreign_key "mentor_memberships", "mentors"
@@ -516,6 +522,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_06_143524) do
   add_foreign_key "placements", "providers"
   add_foreign_key "placements", "schools"
   add_foreign_key "placements", "subjects"
+  add_foreign_key "provider_sampling_claims", "claims"
+  add_foreign_key "provider_sampling_claims", "provider_samplings"
   add_foreign_key "provider_samplings", "providers"
   add_foreign_key "provider_samplings", "samplings"
   add_foreign_key "school_contacts", "schools"

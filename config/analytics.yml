@@ -93,6 +93,12 @@ shared:
     - provider_id
     - created_at
     - updated_at
+  :provider_sampling_claims:
+    - id
+    - claim_id
+    - provider_sampling_id
+    - created_at
+    - updated_at
   :schools:
     - id
     - urn
