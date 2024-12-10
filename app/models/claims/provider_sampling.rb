@@ -22,7 +22,8 @@ class Claims::ProviderSampling < ApplicationRecord
   belongs_to :sampling
   belongs_to :provider
 
-  has_many :claims
+  has_many :provider_sampling_claims
+  has_many :claims, through: :provider_sampling_claims
 
   has_one_attached :csv_file
 end

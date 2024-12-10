@@ -19,7 +19,7 @@
 #  fk_rails_...  (sampling_id => samplings.id)
 #
 FactoryBot.define do
-  factory :claims_provider_sampling, class: "Claims::ProviderSampling" do
+  factory :provider_sampling, class: "Claims::ProviderSampling" do
     association :sampling, factory: :samplings
     association :provider, factory: :claims_provider
   end

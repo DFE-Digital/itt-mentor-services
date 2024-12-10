@@ -47,6 +47,8 @@ RSpec.describe Claims::Claim, type: :model do
     it { is_expected.to belong_to(:submitted_by).optional }
     it { is_expected.to have_many(:mentor_trainings).dependent(:destroy) }
     it { is_expected.to have_many(:mentors).through(:mentor_trainings) }
+    it { is_expected.to have_many(:provider_sampling_claims).dependent(:destroy) }
+    it { is_expected.to have_many(:provider_samplings).through(:provider_sampling_claims) }
   end
 
   context "with validations" do
