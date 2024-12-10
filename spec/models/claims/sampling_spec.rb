@@ -10,6 +10,6 @@ require "rails_helper"
 
 RSpec.describe Claims::Sampling, type: :model do
   describe "associations" do
-    it { is_expected.to have_one(:provider_sampling) }
+    it { is_expected.to have_many(:provider_samplings) }
   end
 end
