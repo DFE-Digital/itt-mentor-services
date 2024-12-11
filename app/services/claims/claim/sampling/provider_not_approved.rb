@@ -1,5 +1,5 @@
 class Claims::Claim::Sampling::ProviderNotApproved < ApplicationService
-  def initialize(claim:, not_assured_reason:)
+  def initialize(claim:, not_assured_reason: nil)
     @claim = claim
     @not_assured_reason = not_assured_reason
   end

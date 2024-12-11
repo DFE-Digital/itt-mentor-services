@@ -35,8 +35,9 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
     grouped_csv_rows.each do |claim_reference, provider_responses|
       next if claim_reference.nil?
 
-      claim = sampled_claims.find_by(reference: claim_reference)
-      break if claim.blank? || claim.mentor_trainings.count != provider_responses.count
+      claim = sampled_claims.joins(mentor_trainings: :mentor).find_by(reference: claim_reference)
+
+      break if claim.blank? || !mentors_valid?(claim, provider_responses)
 
       claim_update_details << process_responses(claim, provider_responses)
     end
@@ -54,6 +55,10 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
 
   def assign_csv_content
     self.csv_content = read_csv
+  end
+
+  def mentors_valid?(claim, provider_responses)
+    claim.mentors.map(&:full_name).sort == provider_responses.pluck("mentor_full_name").sort
   end
 
   def read_csv
