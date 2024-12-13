@@ -4,7 +4,7 @@ RSpec.describe Claims::Sampling::FlagForSamplingJob, type: :job do
   let(:claim) { create(:claim, :submitted, :paid) }
 
   describe "#perform" do
-    it "enqueues a Claims::Sampling::FlagForSamplingJob per" do
+    it "changes the status of the claim from 'paid' to 'sampling_in_progress'" do
       expect { described_class.perform_now(claim) }.to change(claim, :status)
         .from("paid").to("sampling_in_progress")
     end

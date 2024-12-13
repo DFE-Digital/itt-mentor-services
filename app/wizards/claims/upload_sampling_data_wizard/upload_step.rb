@@ -33,11 +33,9 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
 
     CSV.parse(read_csv, headers: true) do |row|
       claim = paid_claims.find_by(reference: row["claim_reference"])
-      if claim
-        claim_ids << claim.id
-      else
-        break
-      end
+      break if claim.blank?
+
+      claim_ids << claim.id
     end
 
     assign_csv_content
