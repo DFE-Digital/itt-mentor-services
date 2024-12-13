@@ -2,10 +2,11 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
   attribute :csv_upload
   attribute :csv_content
   # input validation attributes
+  attribute :invalid_claim_references, default: []
   attribute :invalid_status_claim_references, default: []
   attribute :missing_mentor_training_claim_references, default: []
   attribute :invalid_assured_status_claim_references, default: []
-  attribute :missing_assured_reason_claim_references, defaukt: []
+  attribute :missing_assured_reason_claim_references, default: []
 
   delegate :sampled_claims, to: :wizard
 
@@ -31,12 +32,17 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
       next if claim_reference.nil?
 
       claim = Claims::Claim.find_by(reference: claim_reference)
-      row_for_each_mentor?(claim, provider_responses)
-      assured_status_for_each_mentor?(claim_reference, provider_responses)
-      not_assured_reason_for_each_mentor?(claim_reference, provider_responses)
+      if claim.present?
+        row_for_each_mentor?(claim, provider_responses)
+        assured_status_for_each_mentor?(claim_reference, provider_responses)
+        not_assured_reason_for_each_mentor?(claim_reference, provider_responses)
+      else
+        invalid_claim_references << claim_reference
+      end
     end
 
-    invalid_status_claim_references.blank? &&
+    invalid_claim_references &&
+      invalid_status_claim_references.blank? &&
       missing_mentor_training_claim_references.blank? &&
       invalid_assured_status_claim_references.blank? &&
       missing_assured_reason_claim_references.blank?
@@ -55,6 +61,11 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
     self.csv_upload = nil
   end
 
+  def grouped_csv_rows
+    @grouped_csv_rows ||= CSV.parse(read_csv, headers: true)
+      .group_by { |row| row["claim_reference"] }
+  end
+
   private
 
   def csv_format
@@ -69,12 +80,8 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
     @read_csv ||= csv_content || csv_upload.read
   end
 
-  def grouped_csv_rows
-    @grouped_csv_rows ||= CSV.parse(read_csv, headers: true)
-      .group_by { |row| row["claim_reference"] }
-  end
-
   def reset_input_attributes
+    self.invalid_claim_references = []
     self.invalid_status_claim_references = []
     self.missing_mentor_training_claim_references = []
     self.invalid_assured_status_claim_references = []

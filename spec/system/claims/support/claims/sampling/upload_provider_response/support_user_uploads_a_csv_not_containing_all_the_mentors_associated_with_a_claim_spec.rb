@@ -16,7 +16,8 @@ RSpec.describe "Support user uploads a CSV not containing all the mentors associ
 
     when_i_upload_a_csv_not_containing_a_row_for_mentor_james_bay
     and_i_click_on_upload_csv_file
-    then_i_see_validation_error_regarding_invalid_data
+    then_i_see_the_errors_page
+    and_i_see_the_csv_was_missing_mentors_associated_with_a_claim
   end
 
   private
@@ -121,5 +122,22 @@ RSpec.describe "Support user uploads a CSV not containing all the mentors associ
   def when_i_upload_a_csv_not_containing_a_row_for_mentor_james_bay
     attach_file "Upload CSV file",
                 "spec/fixtures/claims/sampling/example_provider_response_upload.csv"
+  end
+
+  def then_i_see_the_errors_page
+    expect(page).to have_title(
+      "There is a problem with the CSV file - Sampling - Claims - Claim funding for mentor training - GOV.UK",
+    )
+    expect(page).to have_h1("There is a problem with the CSV file")
+  end
+
+  def and_i_see_the_csv_was_missing_mentors_associated_with_a_claim
+    expect(page).to have_h2("The following claims are missing mentors from the uploaded CSV:-")
+    expect(page).to have_element(:dl, text: "11111111", class: "govuk-summary-list")
+    expect(page).to have_link(text: "View (opens in new tab)", href: "/support/claims/#{@sampling_in_progress_claim_1.id}")
+    expect(page).to have_warning_text(
+      "You can only upload the accredited provider's CSV once they have completed all rows." \
+        " Email the provider and ask them to complete the CSV with the missing information.",
+    )
   end
 end

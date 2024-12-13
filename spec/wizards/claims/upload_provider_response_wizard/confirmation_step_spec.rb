@@ -9,6 +9,6 @@ RSpec.describe Claims::UploadProviderResponseWizard::ConfirmationStep, type: :mo
   let(:attributes) { nil }
 
   describe "delegations" do
-    it { is_expected.to delegate_method(:claim_update_details).to(:wizard) }
+    it { is_expected.to delegate_method(:grouped_csv_rows).to(:wizard) }
   end
 end

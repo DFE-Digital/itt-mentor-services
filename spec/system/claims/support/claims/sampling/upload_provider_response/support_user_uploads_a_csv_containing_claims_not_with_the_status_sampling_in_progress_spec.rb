@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support user uploads a CSV containing claims not with the status 'samping in progress'",
+RSpec.describe "Support user uploads a CSV containing claims not with the status 'sampling in progress'",
                service: :claims,
                type: :system do
   scenario do
@@ -17,7 +17,8 @@ RSpec.describe "Support user uploads a CSV containing claims not with the status
 
     when_i_upload_a_csv_containing_a_claim_not_with_the_status_sampling_in_progress
     and_i_click_on_upload_csv_file
-    then_i_see_validation_error_regarding_invalid_data
+    then_i_see_the_errors_page
+    and_i_see_the_csv_contained_claims_not_with_the_status_sampling_in_progress
   end
 
   private
@@ -105,12 +106,25 @@ RSpec.describe "Support user uploads a CSV containing claims not with the status
     click_on "Upload CSV file"
   end
 
-  def then_i_see_validation_error_regarding_invalid_data
-    expect(page).to have_validation_error("The selected CSV file contains invalid data")
-  end
-
   def when_i_upload_a_csv_containing_a_claim_not_with_the_status_sampling_in_progress
     attach_file "Upload CSV file",
                 "spec/fixtures/claims/sampling/example_provider_response_upload.csv"
+  end
+
+  def then_i_see_the_errors_page
+    expect(page).to have_title(
+      "There is a problem with the CSV file - Sampling - Claims - Claim funding for mentor training - GOV.UK",
+    )
+    expect(page).to have_h1("There is a problem with the CSV file")
+  end
+
+  def and_i_see_the_csv_contained_claims_not_with_the_status_sampling_in_progress
+    expect(page).to have_h2("The following claims do not have the status 'Sampling in progress':-")
+    expect(page).to have_element(:dl, text: "22222222", class: "govuk-summary-list")
+    expect(page).to have_link(text: "View (opens in new tab)", href: "/support/claims/#{@paid_claim.id}")
+    expect(page).to have_warning_text(
+      "You can only upload the accredited provider's CSV once they have completed all rows." \
+        " Email the provider and ask them to complete the CSV with the missing information.",
+    )
   end
 end

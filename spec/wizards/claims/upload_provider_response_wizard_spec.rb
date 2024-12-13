@@ -26,24 +26,18 @@ RSpec.describe Claims::UploadProviderResponseWizard do
       create(:claim, :submitted, status: :sampling_in_progress, reference: 11_111_111)
     end
     let(:mentor) { create(:claims_mentor, first_name: "John", last_name: "Smith") }
-    let(:mentor_trainings) { create(:mentor_training, mentor:, claim: sampling_in_progress_claim) }
     let(:state) do
       {
         "upload" => {
           "csv_upload" => nil,
-          "claim_update_details" => [
-            {
-              id: sampling_in_progress_claim.id,
-              status: :sampling_provider_not_approved,
-              not_assured_reason: nil,
-            },
-          ],
           "csv_content" => csv_content,
         },
       }
     end
 
-    before { mentor_trainings }
+    before do
+      create(:mentor_training, mentor:, claim: sampling_in_progress_claim)
+    end
 
     context "when the steps are valid" do
       let(:csv_content) do
@@ -92,38 +86,42 @@ RSpec.describe Claims::UploadProviderResponseWizard do
       end
     end
 
-    context "when the upload step is not present" do
-      let!(:sampling_in_progress_claims) do
-        create_list(:claim, 2, :submitted, status: :sampling_in_progress)
+    context "when the upload step ispresent" do
+      let(:sampling_in_progress_claim_1) do
+        create(:claim, :submitted, status: :sampling_in_progress, reference: 11_111_111)
       end
-      let(:claim_ids) { [current_year_paid_claim.id] }
+      let(:mentor_john_smith) { create(:claims_mentor, first_name: "John", last_name: "Smith") }
+      let(:sampling_in_progress_claim_2) do
+        create(:claim, :submitted, status: :sampling_in_progress, reference: 22_222_222)
+      end
+      let(:mentor_jane_doe) { create(:claims_mentor, first_name: "Jane", last_name: "Doe") }
+      let(:csv_content) do
+        "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
+        "11111111,John Smith,false,Some reason\r\n" \
+        "22222222,Jane Doe,true,"
+      end
       let(:state) do
         {
           "upload" => {
-            "claim_update_details" => [
-              {
-                id: sampling_in_progress_claims[0].id,
-                status: :sampling_provider_not_approved,
-                not_assured_reason: nil,
-              },
-              {
-                id: sampling_in_progress_claims[1].id,
-                status: :sampling_provider_not_approved,
-                not_assured_reason: nil,
-              },
-            ],
+            "csv_upload" => nil,
+            "csv_content" => csv_content,
           },
         }
       end
 
+      before do
+        create(:mentor_training, mentor: mentor_john_smith, claim: sampling_in_progress_claim_1)
+        create(:mentor_training, mentor: mentor_jane_doe, claim: sampling_in_progress_claim_2)
+      end
+
       it "returns the claim_update_details from the upload step" do
         expect(claim_update_details).to contain_exactly({
-          id: sampling_in_progress_claims[0].id,
+          id: sampling_in_progress_claim_1.id,
           status: :sampling_provider_not_approved,
-          not_assured_reason: nil,
+          not_assured_reason: "Some reason",
         }, {
-          id: sampling_in_progress_claims[1].id,
-          status: :sampling_provider_not_approved,
+          id: sampling_in_progress_claim_2.id,
+          status: :paid,
           not_assured_reason: nil,
         })
       end

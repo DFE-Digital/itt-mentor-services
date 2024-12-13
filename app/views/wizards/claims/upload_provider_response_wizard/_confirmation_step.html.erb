@@ -9,7 +9,7 @@
         <%= f.govuk_error_summary %>
 
         <p class="govuk-body">
-          <%= t(".claims_count", count: current_step.claim_update_details.count) %>
+          <%= t(".claims_count", count: current_step.claims_count) %>
         </p>
 
         <%= f.govuk_submit(t(".upload_data")) %>
