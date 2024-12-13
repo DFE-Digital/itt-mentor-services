@@ -117,3 +117,41 @@
     <% row.with_value(text: humanized_money_with_symbol(claim.amount)) %>
   <% end %>
 <% end %>
+
+  <% if claim.status == "clawback_requested" || claim.status == "clawback_in_progress" %>
+    <h2 class="govuk-heading-m"><%= t(".clawback_details") %></h2>
+    <%= govuk_summary_list do |summary_list| %>
+      <% summary_list.with_row do |row| %>
+        <% row.with_key(text: t(".hours")) %>
+        <% row.with_value %>
+        <% if claim.status == "clawback_requested" %>
+          <% row.with_action(text: t(".change"),
+                             href: request_clawback_claims_support_claims_clawbacks_path(claim_id: claim.id, step: :clawback),
+                             visually_hidden_text: t(".hours"),
+                             classes: ["govuk-link--no-visited-state"]) %>
+        <% end %>
+      <% end %>
+      <% summary_list.with_row do |row| %>
+        <% row.with_key(text: t(".rate")) %>
+        <% row.with_value(text: humanized_money_with_symbol(claim.school.region.funding_available_per_hour)) %>
+      <% end %>
+      <% summary_list.with_row do |row| %>
+        <% row.with_key(text: t(".amount")) %>
+        <% row.with_value %>
+      <% end %>
+      <% summary_list.with_row do |row| %>
+        <% row.with_key(text: t(".reason")) %>
+        <% row.with_value %>
+        <% if claim.status == "clawback_requested" %>
+          <% row.with_action(text: t(".change"),
+                             href: request_clawback_claims_support_claims_clawbacks_path(claim_id: claim.id, step: :clawback),
+                             visually_hidden_text: t(".reason"),
+                             classes: ["govuk-link--no-visited-state"]) %>
+        <% end %>
+      <% end %>
+      <% summary_list.with_row do |row| %>
+        <% row.with_key(text: t(".revised")) %>
+        <% row.with_value %>
+      <% end %>
+    <% end %>
+  <% end %>
