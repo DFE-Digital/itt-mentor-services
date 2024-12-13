@@ -93,7 +93,16 @@ scope module: :claims, as: :claims, constraints: {
         end
       end
 
-      resources :clawbacks, path: "clawbacks/claims", only: %i[index show]
+      resources :clawbacks, path: "clawbacks/claims", only: %i[index show] do
+        get :remove, on: :member
+
+        collection do
+          get "new/:claim_id", to: "request_clawback#new", as: :new_request_clawback
+          get "new/:claim_id/:step", to: "request_clawback#edit", as: :request_clawback
+          put "new/:claim_id/:step", to: "request_clawback#update"
+        end
+      end
+
       resources :activity_logs, path: "activity", only: %i[index]
     end
 

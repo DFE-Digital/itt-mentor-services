@@ -1,0 +1,26 @@
+<% content_for(:page_title) { sanitize t(".page_title", school_name: @claim.school_name, reference: @claim.reference) } %>
+
+  <%= form_with(model: current_step, url: current_step_path, method: :put) do |f| %>
+    <%= f.govuk_error_summary %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+
+        <div class="govuk-form-group">
+          <%= f.govuk_text_field :number_of_hours,
+                                  width: 2,
+                                  label: { text: t(".hours"), size: "s" },
+                                  hint: { text: t(".hours_hint") } %>
+        </div>
+
+        <div class="govuk-form-group">
+          <%= f.govuk_text_area :reason_for_clawback,
+                                  width: "govuk-text-area",
+                                  label: { text: t(".reason"), size: "s" },
+                                  hint: { text: t(".reason_hint") } %>
+        </div>
+
+        <%= f.govuk_submit t(".continue") %>
+      </div>
+    </div>
+  <% end %>

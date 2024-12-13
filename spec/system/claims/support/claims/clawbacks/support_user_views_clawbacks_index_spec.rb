@@ -178,7 +178,7 @@ RSpec.describe "Support user views clawbacks index", service: :claims, type: :sy
     expect(page).to have_title(
       "Clawbacks - #{@clawback_requested_claim.school.name} - Claim #{@clawback_requested_claim.reference} - Claim funding for mentor training - GOV.UK",
     )
-    expect(page).to have_element(:p, text: "Clawbacks - Claim #{@clawback_requested_claim.reference}", class: "govuk-caption-l")
+    expect(page).to have_element(:span, text: "Clawbacks - Claim #{@clawback_requested_claim.reference}", class: "govuk-caption-l")
     expect(page).to have_h1(@clawback_requested_claim.school.name)
     expect(page).to have_element(:strong, text: "Clawback requested", class: "govuk-tag govuk-tag--orange")
   end

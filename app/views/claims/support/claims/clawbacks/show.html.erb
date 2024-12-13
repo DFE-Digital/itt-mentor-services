@@ -8,8 +8,10 @@
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <p class="govuk-caption-l"><%= t(".page_caption", reference: @claim.reference) %></p>
-      <h1 class="govuk-heading-l"><%= @claim.school.name %> <%= render Claim::StatusTagComponent.new(claim: @claim) %></h1>
+      <span class="govuk-caption-l"><%= t(".page_caption", reference: @claim.reference) %></span>
+      <h1 class="govuk-heading-l"><%= @claim.school_name %> <%= render Claim::StatusTagComponent.new(claim: @claim) %></h1>
+
+      <%= govuk_button_link_to("Request clawback", new_request_clawback_claims_support_claims_clawbacks_path(@claim)) %>
 
       <% if @claim.submitted? %>
         <p class="govuk-body"><%= t(".submitted_by", name: @claim.submitted_by.full_name, date: l(@claim.submitted_on, format: :long)) %></p>

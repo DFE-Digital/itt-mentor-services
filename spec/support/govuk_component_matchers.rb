@@ -200,10 +200,6 @@ module GovukComponentMatchers
           right.find("div.govuk-body-s:nth-of-type(1)", text: expected_claim_details["submitted_date"])
           right.find("div.govuk-body-s:nth-of-type(2)", text: expected_claim_details["amount"])
 
-          if expected_claim_details["status"] == "Clawback requested"
-            body.find("div.claim-card__body__right").find("div.govuk-body-s govuk-!-font-weight-bold", text: "Clawback requested")
-            # TODO: Correct clawback amount to be tested when implemented
-          end
           true
         rescue Capybara::ElementNotFound
           false

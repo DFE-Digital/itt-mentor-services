@@ -2,6 +2,10 @@ en:
   claims:
     support:
       claims:
+        request_clawback:
+          edit:
+            caption: Clawbacks - Claim %{reference}
+            cancel: Cancel
         index:
           heading: Claims
           sub_heading: Claims (%{count})
