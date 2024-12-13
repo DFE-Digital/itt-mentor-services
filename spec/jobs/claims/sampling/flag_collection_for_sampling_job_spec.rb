@@ -18,7 +18,7 @@ RSpec.describe Claims::Sampling::FlagCollectionForSamplingJob, type: :job do
   let(:claim_ids) { [current_year_paid_claim.id, another_paid_claim.id, current_year_draft_claim.id] }
 
   describe "#perform" do
-    it "enqueues a Claims::Sampling::FlagForSamplingJob per" do
+    it "enqueues a Claims::Sampling::FlagForSamplingJob per claim ID" do
       expect { described_class.perform_now(claim_ids) }.to have_enqueued_job(
         Claims::Sampling::FlagForSamplingJob,
       ).exactly(:once)
