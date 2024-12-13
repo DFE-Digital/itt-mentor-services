@@ -42,3 +42,10 @@ en:
           mentors: Mentors
           hours_of_training: Hours of training
           grant_funding: Grant funding
+          clawback_details: Clawback details
+          hours: Number of hours
+          rate: Hourly rate
+          amount: Clawback amount
+          reason: Reason for clawback
+          change: Change
+          revised: Revised claim amount
