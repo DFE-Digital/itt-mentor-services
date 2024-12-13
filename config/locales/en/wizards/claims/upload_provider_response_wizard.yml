@@ -34,3 +34,18 @@ en:
           page_title: You cannot upload a provider response - Sampling - Claims
           caption: Sampling
           you_cannot_upload: You cannot upload a provider response as there are no claims waiting for a response.
+        upload_errors_step:
+          title: There is a problem with the CSV file
+          caption: Sampling
+          page_title: There is a problem with the CSV file - Sampling - Claims
+          status: Status
+          claim_reference: Claim reference
+          view: View (opens in new tab)
+          incorrect_status: The following claims do not have the status 'Sampling in progress':-
+          missing_mentors: The following claims are missing mentors from the uploaded CSV:-
+          invalid_assured_status: The following claims are missing a claim assured status:-
+          missing_not_assured_message: The following claims are missing a claim not assured reason:-
+          upload_warning_html: |
+            You can only upload the accredited provider's CSV once they have completed all rows.
+            <br><br>
+            Email the provider and ask them to complete the CSV with the missing information.

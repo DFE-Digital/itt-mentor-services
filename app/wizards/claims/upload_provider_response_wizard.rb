@@ -3,7 +3,11 @@ module Claims
     def define_steps
       if sampled_claims.present?
         add_step(UploadStep)
-        add_step(ConfirmationStep)
+        if steps.fetch(:upload).csv_inputs_valid?
+          add_step(ConfirmationStep)
+        else
+          add_step(UploadErrorsStep)
+        end
       else
         add_step(NoClaimsStep)
       end

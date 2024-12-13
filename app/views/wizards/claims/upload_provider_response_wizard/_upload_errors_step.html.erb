@@ -1,0 +1,104 @@
+<% content_for(:page_title) { sanitize t(".page_title") } %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l"><%= t(".caption") %></span>
+    <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+
+    <% if current_step.invalid_status_claims.present? %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-0">
+        <%= t(".incorrect_status") %>
+      </h2>
+
+      <%= govuk_summary_list do |summary_list| %>
+        <% current_step.invalid_status_claims.each do |invalid_claim| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(
+              text: invalid_claim.reference,
+            ) %>
+            <% row.with_action(
+              text: t(".view"),
+              href: claims_support_claim_path(invalid_claim),
+              visually_hidden_text: invalid_claim.reference,
+              html_attributes: {
+                class: "govuk-link--no-visited-state",
+                target: "_blank",
+                new_tab: true,
+              },
+            ) %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% if current_step.missing_mentor_claims.present? %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-0">
+        <%= t(".missing_mentors") %>
+      </h2>
+
+      <%= govuk_summary_list do |summary_list| %>
+        <% current_step.missing_mentor_claims.each do |invalid_claim| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(
+              text: invalid_claim.reference,
+            ) %>
+            <% row.with_action(
+              text: t(".view"),
+              href: claims_support_claim_path(invalid_claim),
+              visually_hidden_text: invalid_claim.reference,
+              html_attributes: { class: "govuk-link--no-visited-state" },
+            ) %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% if current_step.invalid_assured_status_claims.present? %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-0">
+        <%= t(".invalid_assured_status") %>
+      </h2>
+
+      <%= govuk_summary_list do |summary_list| %>
+        <% current_step.invalid_assured_status_claims.each do |invalid_claim| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(
+              text: invalid_claim.reference,
+            ) %>
+            <% row.with_action(
+              text: t(".view"),
+              href: claims_support_claim_path(invalid_claim),
+              visually_hidden_text: invalid_claim.reference,
+              html_attributes: { class: "govuk-link--no-visited-state" },
+            ) %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% if current_step.missing_assured_reason_claims.present? %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-0">
+        <%= t(".missing_not_assured_message") %>
+      </h2>
+
+      <%= govuk_summary_list do |summary_list| %>
+        <% current_step.missing_assured_reason_claims.each do |invalid_claim| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(
+              text: invalid_claim.reference,
+            ) %>
+            <% row.with_action(
+              text: t(".view"),
+              href: claims_support_claim_path(invalid_claim),
+              visually_hidden_text: invalid_claim.reference,
+              html_attributes: { class: "govuk-link--no-visited-state" },
+            ) %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= govuk_warning_text do %>
+      <%= t(".upload_warning_html") %>
+    <% end %>
+  </div>
+</div>
