@@ -1,5 +1,6 @@
 class Claims::UploadProviderResponseWizard::UploadErrorsStep < BaseStep
-  delegate :invalid_status_claim_references,
+  delegate :invalid_claim_references,
+           :invalid_status_claim_references,
            :missing_mentor_training_claim_references,
            :invalid_assured_status_claim_references,
            :missing_assured_reason_claim_references,

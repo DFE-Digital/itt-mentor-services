@@ -87,9 +87,9 @@ scope module: :claims, as: :claims, constraints: {
           get "new/:state_key/:step", to: "samplings/upload_data#edit", as: :upload_data
           put "new/:state_key/:step", to: "samplings/upload_data#update"
 
-          get "new", to: "samplings/upload_provider_response#new", as: :new_upload_provider_response
-          get "new/:state_key/:step", to: "samplings/upload_provider_response#edit", as: :upload_provider_response
-          put "new/:state_key/:step", to: "samplings/upload_provider_response#update"
+          get "provider_response/new", to: "samplings/upload_provider_response#new", as: :new_upload_provider_response
+          get "provider_response/new/:state_key/:step", to: "samplings/upload_provider_response#edit", as: :upload_provider_response
+          put "provider_response/new/:state_key/:step", to: "samplings/upload_provider_response#update"
         end
       end
 

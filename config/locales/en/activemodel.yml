@@ -205,7 +205,5 @@ en:
             csv_upload:
               blank: Select a CSV file to upload
               invalid: The selected file must be a CSV
-              invalid_data: The selected CSV file contains invalid data
-              invalid_claim_statuses_html: The following claims do not have the status 'Sampling in progress':- %{invalid_claim_references}
 
 
