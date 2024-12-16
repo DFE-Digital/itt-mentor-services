@@ -14,4 +14,8 @@ class Claims::UserMailerPreview < ActionMailer::Preview
   def claim_created_support_notification
     Claims::UserMailer.claim_created_support_notification(Claims::Claim.draft.first, Claims::User.first)
   end
+
+  def claim_requires_clawback
+    Claims::UserMailer.claim_requires_clawback(Claims::Claim.first, Claims::User.first)
+  end
 end

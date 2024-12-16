@@ -213,4 +213,36 @@ RSpec.describe Claims::UserMailer, type: :mailer do
       end
     end
   end
+
+  describe "#claim_requires_clawback" do
+    subject(:clawback_email) { described_class.claim_requires_clawback(claim, user) }
+
+    let(:user) { create(:claims_user) }
+    let(:school) { create(:claims_school, region: regions(:inner_london)) }
+    let(:claim) { create(:claim, reference: "123", school:) }
+
+    it "sends the clawback email" do
+      create(:mentor_training, claim:, hours_completed: 10)
+
+      expect(clawback_email.to).to contain_exactly(user.email)
+      expect(clawback_email.subject).to eq("ITT mentor claim requires a clawback")
+      expect(clawback_email.body.to_s.strip).to eq(<<~EMAIL.strip)
+        Dear #{user.first_name},
+
+        We have amended your claim to reflect the amount being clawed back by the Education and Skills Funding Agency (ESFA). They will contact you to discuss how they will claim this money from you.
+
+        The affected claim reference is: #{claim.reference}
+
+        You can view the updated claim on Claim funding for mentor training:
+
+        http://claims.localhost/schools/#{school.id}/claims/#{claim.id}
+
+        # Give feedback or report a problem
+        If you have any questions or feedback, please contact the team at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk).
+
+        Regards
+        Claim funding for mentor training team
+      EMAIL
+    end
+  end
 end
