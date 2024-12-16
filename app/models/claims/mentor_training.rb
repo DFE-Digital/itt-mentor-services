@@ -3,9 +3,11 @@
 # Table name: mentor_trainings
 #
 #  id              :uuid             not null, primary key
+#  assured            :boolean          default(FALSE)
 #  date_completed  :datetime
 #  hours_completed :integer
 #  hours_rejected  :integer
+#  reason_not_assured :text
 #  reason_rejected :text
 #  rejected        :boolean          default(FALSE)
 #  training_type   :enum             default("initial"), not null
