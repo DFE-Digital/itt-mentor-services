@@ -19,6 +19,27 @@ RSpec.describe Claims::UploadProviderResponseWizard do
 
       it { is_expected.to eq(%i[upload confirmation]) }
     end
+
+    context "when the csv contains invalid inputs" do
+      let(:csv_content) do
+        "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
+        "22222222,John Smith,true,Some reason"
+      end
+      let(:state) do
+        {
+          "upload" => {
+            "csv_upload" => nil,
+            "csv_content" => csv_content,
+          },
+        }
+      end
+
+      before do
+        create(:claim, :submitted, status: :sampling_in_progress, reference: 11_111_111)
+      end
+
+      it { is_expected.to eq(%i[upload upload_errors]) }
+    end
   end
 
   describe "#upload_provider_responses" do\
@@ -53,14 +74,24 @@ RSpec.describe Claims::UploadProviderResponseWizard do
     end
 
     context "when a step is invalid" do
-      let(:csv_content) do
-        "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
-        "11111111,John Smith,true,Some reason\r\n" \
-        "22222222,Maggie Smith,true,Another reason"
+      context "when the a step is valid" do
+        let(:csv_content) { nil }
+
+        it "returns an invalid wizard error" do
+          expect { wizard.upload_provider_responses }.to raise_error("Invalid wizard state")
+        end
       end
 
-      it "returns an invalid wizard error" do
-        expect { wizard.upload_provider_responses }.to raise_error("Invalid wizard state")
+      context "when the uploaded content includes an invalid input" do
+        let(:csv_content) do
+          "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
+          "11111111,John Smith,true,Some reason\r\n" \
+          "22222222,Maggie Smith,true,Another reason"
+        end
+
+        it "returns an invalid wizard error" do
+          expect { wizard.upload_provider_responses }.to raise_error("Invalid wizard state")
+        end
       end
     end
   end
@@ -86,7 +117,7 @@ RSpec.describe Claims::UploadProviderResponseWizard do
       end
     end
 
-    context "when the upload step ispresent" do
+    context "when the upload step is present" do
       let(:sampling_in_progress_claim_1) do
         create(:claim, :submitted, status: :sampling_in_progress, reference: 11_111_111)
       end
@@ -125,6 +156,54 @@ RSpec.describe Claims::UploadProviderResponseWizard do
           not_assured_reason: nil,
         })
       end
+    end
+  end
+
+  describe "#grouped_csv_rows" do
+    let(:sampling_in_progress_claim_1) do
+      create(:claim, :submitted, status: :sampling_in_progress, reference: 11_111_111)
+    end
+    let(:mentor_john_smith) { create(:claims_mentor, first_name: "John", last_name: "Smith") }
+    let(:sampling_in_progress_claim_2) do
+      create(:claim, :submitted, status: :sampling_in_progress, reference: 22_222_222)
+    end
+    let(:mentor_jane_doe) { create(:claims_mentor, first_name: "Jane", last_name: "Doe") }
+    let(:csv_content) do
+      "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
+      "11111111,John Smith,false,Some reason\r\n" \
+      "22222222,Jane Doe,true,"
+    end
+    let(:state) do
+      {
+        "upload" => {
+          "csv_upload" => nil,
+          "csv_content" => csv_content,
+        },
+      }
+    end
+
+    before do
+      create(:mentor_training, mentor: mentor_john_smith, claim: sampling_in_progress_claim_1)
+      create(:mentor_training, mentor: mentor_jane_doe, claim: sampling_in_progress_claim_2)
+    end
+
+    it "returns the groups rows from the CSV uploaded to the upload step" do
+      expect(wizard.grouped_csv_rows["11111111"][0].to_h).to eq(
+        {
+          "claim_reference" => "11111111",
+          "mentor_full_name" => "John Smith",
+          "claim_assured" => "false",
+          "claim_not_assured_reason" => "Some reason",
+        },
+      )
+      expect(wizard.grouped_csv_rows["22222222"][0].to_h).to eq(
+        {
+          "claim_reference" => "22222222",
+          "mentor_full_name" => "Jane Doe",
+          "claim_assured" => "true",
+          "claim_not_assured_reason" => nil,
+        },
+      )
     end
   end
 end
