@@ -225,3 +225,11 @@ shared:
     - claim_id
     - created_at
     - updated_at
+  :claim_activities:
+    - id
+    - action
+    - user_id
+    - record_type
+    - record_id
+    - created_at
+    - updated_at
