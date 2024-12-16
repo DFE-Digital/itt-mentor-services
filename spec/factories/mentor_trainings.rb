@@ -5,6 +5,9 @@
 #  id              :uuid             not null, primary key
 #  date_completed  :datetime
 #  hours_completed :integer
+#  hours_rejected  :integer
+#  reason_rejected :text
+#  rejected        :boolean          default(FALSE)
 #  training_type   :enum             default("initial"), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
