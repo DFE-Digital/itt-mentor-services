@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_16_161048) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_17_132410) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -81,6 +81,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_16_161048) do
     t.index ["created_at"], name: "index_audits_on_created_at"
     t.index ["request_uuid"], name: "index_audits_on_request_uuid"
     t.index ["user_id", "user_type"], name: "user_index"
+  end
+
+  create_table "claim_activities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "action"
+    t.uuid "user_id", null: false
+    t.string "record_type", null: false
+    t.uuid "record_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["record_type", "record_id"], name: "index_claim_activities_on_record"
+    t.index ["user_id"], name: "index_claim_activities_on_user_id"
   end
 
   create_table "claim_windows", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -523,6 +534,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_16_161048) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "claim_activities", "users"
   add_foreign_key "claim_windows", "academic_years"
   add_foreign_key "claims", "providers"
   add_foreign_key "claims", "schools"
