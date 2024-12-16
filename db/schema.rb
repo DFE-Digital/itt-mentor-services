@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_16_150808) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_16_161048) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -240,6 +240,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_16_150808) do
     t.boolean "rejected", default: false
     t.text "reason_rejected"
     t.integer "hours_rejected"
+    t.boolean "assured", default: false
+    t.text "reason_not_assured"
     t.index ["claim_id"], name: "index_mentor_trainings_on_claim_id"
     t.index ["mentor_id"], name: "index_mentor_trainings_on_mentor_id"
     t.index ["provider_id"], name: "index_mentor_trainings_on_provider_id"
