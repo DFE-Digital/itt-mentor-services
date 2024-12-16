@@ -108,7 +108,7 @@ RSpec.describe "Support user uploads a CSV containing claims not with the status
 
   def when_i_upload_a_csv_containing_a_claim_not_with_the_status_sampling_in_progress
     attach_file "Upload CSV file",
-                "spec/fixtures/claims/sampling/example_provider_response_upload.csv"
+                "spec/fixtures/claims/sampling/provider_responses/example_provider_response_upload.csv"
   end
 
   def then_i_see_the_errors_page

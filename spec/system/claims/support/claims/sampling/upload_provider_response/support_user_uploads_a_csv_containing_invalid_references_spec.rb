@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support user uploads a CSV not containing all the mentors associated with a claim",
+RSpec.describe "Support user uploads a CSV not containing invalid references",
                service: :claims,
                type: :system do
   scenario do
@@ -14,22 +14,21 @@ RSpec.describe "Support user uploads a CSV not containing all the mentors associ
     when_i_click_on_upload_provider_response
     then_i_see_the_upload_csv_page
 
-    when_i_upload_a_csv_not_containing_a_row_for_mentor_james_bay
+    when_i_upload_a_file_not_containing_an_assured_status_for_each_mentor
     and_i_click_on_upload_csv_file
     then_i_see_the_errors_page
-    and_i_see_the_csv_was_missing_mentors_associated_with_a_claim
+    and_i_see_the_csv_contained_claims_without_an_assured_status_for_each_mentor
   end
 
   private
 
   def given_claims_exist
-    @sampling_in_progress_claim_1 = create(:claim, :submitted, status: :sampling_in_progress, reference: 11_111_111)
+    @sampling_in_progress_claim_1 = create(:claim, :submitted, status: :sampling_in_progress, reference: 33_333_333)
     @sampling_in_progress_claim_2 = create(:claim, :submitted, status: :sampling_in_progress, reference: 22_222_222)
 
     mentor_john_smith = create(:claims_mentor, first_name: "John", last_name: "Smith")
     mentor_jane_doe = create(:claims_mentor, first_name: "Jane", last_name: "Doe")
     mentor_joe_bloggs = create(:claims_mentor, first_name: "Joe", last_name: "Bloggs")
-    mentor_james_bay = create(:claims_mentor, first_name: "James", last_name: "Bay")
 
     _john_smith_mentor_training = create(
       :mentor_training,
@@ -40,12 +39,6 @@ RSpec.describe "Support user uploads a CSV not containing all the mentors associ
     _jane_doe_mentor_training = create(
       :mentor_training,
       mentor: mentor_jane_doe,
-      claim: @sampling_in_progress_claim_1,
-      hours_completed: 20,
-    )
-    _james_bay_mentor_training = create(
-      :mentor_training,
-      mentor: mentor_james_bay,
       claim: @sampling_in_progress_claim_1,
       hours_completed: 20,
     )
@@ -88,7 +81,7 @@ RSpec.describe "Support user uploads a CSV not containing all the mentors associ
   def and_i_see_two_claims_with_the_status_sampling_in_progress
     expect(page).to have_h2("Sampling (2)")
     expect(page).to have_claim_card({
-      "title" => "11111111 - #{@sampling_in_progress_claim_1.school_name}",
+      "title" => "33333333 - #{@sampling_in_progress_claim_1.school_name}",
       "url" => "/support/claims/#{@sampling_in_progress_claim_1.id}",
       "status" => "Sampling in progress",
       "academic_year" => @sampling_in_progress_claim_1.academic_year.name,
@@ -115,11 +108,7 @@ RSpec.describe "Support user uploads a CSV not containing all the mentors associ
     click_on "Upload CSV file"
   end
 
-  def then_i_see_validation_error_regarding_invalid_data
-    expect(page).to have_validation_error("The selected CSV file contains invalid data")
-  end
-
-  def when_i_upload_a_csv_not_containing_a_row_for_mentor_james_bay
+  def when_i_upload_a_file_not_containing_an_assured_status_for_each_mentor
     attach_file "Upload CSV file",
                 "spec/fixtures/claims/sampling/provider_responses/example_provider_response_upload.csv"
   end
@@ -131,10 +120,9 @@ RSpec.describe "Support user uploads a CSV not containing all the mentors associ
     expect(page).to have_h1("There is a problem with the CSV file")
   end
 
-  def and_i_see_the_csv_was_missing_mentors_associated_with_a_claim
-    expect(page).to have_h2("The following claims are missing mentors from the uploaded CSV:-")
+  def and_i_see_the_csv_contained_claims_without_an_assured_status_for_each_mentor
+    expect(page).to have_h2("There are no claims associated with the following references:-")
     expect(page).to have_element(:dl, text: "11111111", class: "govuk-summary-list")
-    expect(page).to have_link(text: "View (opens in new tab)", href: "/support/claims/#{@sampling_in_progress_claim_1.id}")
     expect(page).to have_warning_text(
       "You can only upload the accredited provider's CSV once they have completed all rows." \
         " Email the provider and ask them to complete the CSV with the missing information.",

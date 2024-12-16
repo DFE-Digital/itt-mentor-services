@@ -1,4 +1,5 @@
 claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason
 11111111,John Smith,true,Some reason
-11111111,Jane Doe,false,Another reason
+11111111,Jane Doe,false,
 22222222,Joe Bloggs,true,Yet another reason
+,,,,

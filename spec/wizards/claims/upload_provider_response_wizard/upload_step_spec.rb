@@ -78,7 +78,7 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadStep, type: :model do
             ActionDispatch::Http::UploadedFile.new({
               filename: "valid.csv",
               type: "text/csv",
-              tempfile: File.open("spec/fixtures/claims/sampling/example_provider_response_upload.csv"),
+              tempfile: File.open("spec/fixtures/claims/sampling/provider_responses/example_provider_response_upload.csv"),
             })
           end
 
@@ -111,7 +111,7 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadStep, type: :model do
       ActionDispatch::Http::UploadedFile.new({
         filename: "valid.csv",
         type: "text/csv",
-        tempfile: File.open("spec/fixtures/claims/sampling/example_provider_response_upload.csv"),
+        tempfile: File.open("spec/fixtures/claims/sampling/provider_responses/example_provider_response_upload.csv"),
       })
     end
 
@@ -127,7 +127,8 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadStep, type: :model do
         "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\n" \
         "11111111,John Smith,true,Some reason\n" \
         "11111111,Jane Doe,false,Another reason\n" \
-        "22222222,Joe Bloggs,true,Yet another reason",
+        "22222222,Joe Bloggs,true,Yet another reason\n" \
+        ",,,,",
       )
     end
   end
