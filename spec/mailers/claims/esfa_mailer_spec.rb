@@ -5,12 +5,16 @@ RSpec.describe Claims::ESFAMailer, type: :mailer do
     subject(:claims_require_clawback_email) { described_class.claims_require_clawback(url_for_csv) }
 
     let(:url_for_csv) { "https://example.com" }
-    let(:esfa_email) { "esfa@example.com" }
+    let(:esfa_emails) { %w[example1@education.gov.uk example2@education.gov.uk] }
     let(:service_name) { "Claim funding for mentor training" }
     let(:support_email) { "ittmentor.funding@education.gov.uk" }
 
+    before do
+      stub_const("ENV", { "CLAIMS_ESFA_EMAIL_ADDRESSES" => esfa_emails })
+    end
+
     it "sends the claims require clawback email" do
-      expect(claims_require_clawback_email.to).to contain_exactly(esfa_email)
+      expect(claims_require_clawback_email.to).to match_array(esfa_emails)
       expect(claims_require_clawback_email.subject).to eq("Claims requiring clawback - Claim funding for mentor training")
       expect(claims_require_clawback_email.body.to_s.squish).to eq(<<~EMAIL.squish)
         To ESFA,
