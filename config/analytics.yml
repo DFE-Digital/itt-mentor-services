@@ -16,6 +16,9 @@ shared:
     - provider_id
     - created_at
     - updated_at
+    - rejected
+    - reason_rejected
+    - hours_rejected
   :user_memberships:
     - id
     - user_id
