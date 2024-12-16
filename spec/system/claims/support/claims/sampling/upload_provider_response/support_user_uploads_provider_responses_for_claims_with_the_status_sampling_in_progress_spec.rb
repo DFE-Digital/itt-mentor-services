@@ -141,7 +141,7 @@ RSpec.describe "Support user uploads provider responses for claims with the stat
 
   def when_i_upload_a_csv_containing_provider_responses_for_all_claims_with_the_status_sampling_in_progress
     attach_file "Upload CSV file",
-                "spec/fixtures/claims/sampling/example_provider_response_upload.csv"
+                "spec/fixtures/claims/sampling/provider_responses/example_provider_response_upload.csv"
   end
   alias_method :and_i_upload_a_csv_containing_provider_responses_for_all_claims_with_the_status_sampling_in_progress,
                :when_i_upload_a_csv_containing_provider_responses_for_all_claims_with_the_status_sampling_in_progress
