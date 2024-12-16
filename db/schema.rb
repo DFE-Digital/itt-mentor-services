@@ -266,6 +266,22 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_16_161048) do
     t.index ["school_id"], name: "index_partnerships_on_school_id"
   end
 
+  create_table "payment_claims", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "payment_id", null: false
+    t.uuid "claim_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["claim_id"], name: "index_payment_claims_on_claim_id"
+    t.index ["payment_id"], name: "index_payment_claims_on_payment_id"
+  end
+
+  create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "sent_by_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sent_by_id"], name: "index_payments_on_sent_by_id"
+  end
+
   create_table "pg_search_documents", force: :cascade do |t|
     t.text "content"
     t.text "organisation_type"
@@ -517,6 +533,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_16_161048) do
   add_foreign_key "mentor_trainings", "providers"
   add_foreign_key "partnerships", "providers"
   add_foreign_key "partnerships", "schools"
+  add_foreign_key "payment_claims", "claims"
+  add_foreign_key "payment_claims", "payments"
+  add_foreign_key "payments", "users", column: "sent_by_id"
   add_foreign_key "placement_additional_subjects", "placements"
   add_foreign_key "placement_additional_subjects", "subjects"
   add_foreign_key "placement_mentor_joins", "mentors"

@@ -214,3 +214,14 @@ shared:
     - term_id
     - created_at
     - updated_at
+  :payments:
+    - id
+    - sent_by_id
+    - created_at
+    - updated_at
+  :payment_claims:
+    - id
+    - payment_id
+    - claim_id
+    - created_at
+    - updated_at
