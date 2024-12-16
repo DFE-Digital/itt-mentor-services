@@ -96,6 +96,135 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadStep, type: :model do
     end
   end
 
+  describe "#csv_inputs_valid?" do
+    subject(:csv_inputs_valid) { step.csv_inputs_valid? }
+
+    context "when the csv_content is blank" do
+      it "returns true" do
+        expect(csv_inputs_valid).to be(true)
+      end
+    end
+
+    context "when csv_content contains invalid references" do
+      let(:csv_content) do
+        "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
+        "11111111,John Smith,true,Some reason"
+      end
+      let(:attributes) { { csv_content: } }
+
+      before { create(:claim, :submitted, status: :paid, reference: 22_222_222) }
+
+      it "returns false and assigns the reference to the 'invalid_claim_references' attribute" do
+        expect(csv_inputs_valid).to be(false)
+        expect(step.invalid_claim_references).to contain_exactly("11111111")
+      end
+    end
+
+    context "when csv_content contains claims not with the status 'sampling_in_progress" do
+      let(:csv_content) do
+        "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
+        "11111111,John Smith,true,Some reason"
+      end
+      let(:attributes) { { csv_content: } }
+
+      before { create(:claim, :submitted, status: :paid, reference: 11_111_111) }
+
+      it "returns false and assigns the reference to the 'invalid_status_claim_references' attribute" do
+        expect(csv_inputs_valid).to be(false)
+        expect(step.invalid_status_claim_references).to contain_exactly("11111111")
+      end
+    end
+
+    context "when csv_content does not contains all the mentors associated with the claims" do
+      let(:csv_content) do
+        "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
+        "11111111,John Smith,true,Some reason"
+      end
+      let(:attributes) { { csv_content: } }
+
+      let(:sampling_in_progress_claim) do
+        create(:claim, :submitted, status: :sampling_in_progress, reference: 11_111_111)
+      end
+      let(:mentor_john_smith) { create(:claims_mentor, first_name: "John", last_name: "Smith") }
+      let(:mentor_jane_doe) { create(:claims_mentor, first_name: "Jane", last_name: "Doe") }
+
+      before do
+        create(:mentor_training, mentor: mentor_john_smith, claim: sampling_in_progress_claim)
+        create(:mentor_training, mentor: mentor_jane_doe, claim: sampling_in_progress_claim)
+      end
+
+      it "returns false and assigns the reference to the 'missing_mentor_training_claim_references' attribute" do
+        expect(csv_inputs_valid).to be(false)
+        expect(step.missing_mentor_training_claim_references).to contain_exactly("11111111")
+      end
+    end
+
+    context "when the csv_content does not contain an assured status for each mentor" do
+      let(:csv_content) do
+        "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
+        "11111111,John Smith,,Some reason"
+      end
+      let(:attributes) { { csv_content: } }
+
+      let(:sampling_in_progress_claim) do
+        create(:claim, :submitted, status: :sampling_in_progress, reference: 11_111_111)
+      end
+      let(:mentor_john_smith) { create(:claims_mentor, first_name: "John", last_name: "Smith") }
+
+      before do
+        create(:mentor_training, mentor: mentor_john_smith, claim: sampling_in_progress_claim)
+      end
+
+      it "returns false and assigns the reference to the 'invalid_assured_status_claim_references' attribute" do
+        expect(csv_inputs_valid).to be(false)
+        expect(step.invalid_assured_status_claim_references).to contain_exactly("11111111")
+      end
+    end
+
+    context "when the csv_content does not contain a not assured reason" do
+      let(:csv_content) do
+        "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
+        "11111111,John Smith,false,"
+      end
+      let(:attributes) { { csv_content: } }
+
+      let(:sampling_in_progress_claim) do
+        create(:claim, :submitted, status: :sampling_in_progress, reference: 11_111_111)
+      end
+      let(:mentor_john_smith) { create(:claims_mentor, first_name: "John", last_name: "Smith") }
+
+      before do
+        create(:mentor_training, mentor: mentor_john_smith, claim: sampling_in_progress_claim)
+      end
+
+      it "returns false and assigns the reference to the 'missing_assured_reason_claim_references' attribute" do
+        expect(csv_inputs_valid).to be(false)
+        expect(step.missing_assured_reason_claim_references).to contain_exactly("11111111")
+      end
+    end
+
+    context "when the csv_content contains valid claim references and all necessary attributes" do
+      let(:csv_content) do
+        "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
+        "11111111,John Smith,false,Some reason"
+      end
+      let(:attributes) { { csv_content: } }
+
+      let(:sampling_in_progress_claim) do
+        create(:claim, :submitted, status: :sampling_in_progress, reference: 11_111_111)
+      end
+      let(:mentor_john_smith) { create(:claims_mentor, first_name: "John", last_name: "Smith") }
+
+      before do
+        create(:mentor_training, mentor: mentor_john_smith, claim: sampling_in_progress_claim)
+      end
+
+      it "returns true" do
+        expect(csv_inputs_valid).to be(true)
+      end
+    end
+  end
+
   describe "#process_csv" do
     let(:sampling_in_progress_claim_1) do
       create(:claim, :submitted, status: :sampling_in_progress, reference: 11_111_111)
@@ -129,6 +258,43 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadStep, type: :model do
         "11111111,Jane Doe,false,Another reason\n" \
         "22222222,Joe Bloggs,true,Yet another reason\n" \
         ",,,,",
+      )
+    end
+  end
+
+  describe "#grouped_csv_rows" do
+    subject(:grouped_csv_rows) { step.grouped_csv_rows }
+
+    let(:csv_content) do
+      "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
+      "11111111,John Smith,false,Some reason\r\n" \
+      "11111111,Jane Doe,true,Another reason\r\n" \
+      "22222222,Joe Bloggs,true,A reason"
+    end
+    let(:attributes) { { csv_content: } }
+
+    it "returns the rows of the CSV grouped by references" do
+      expect(grouped_csv_rows["11111111"].map(&:to_hash)).to contain_exactly(
+        {
+          "claim_reference" => "11111111",
+          "mentor_full_name" => "John Smith",
+          "claim_assured" => "false",
+          "claim_not_assured_reason" => "Some reason",
+        },
+        {
+          "claim_reference" => "11111111",
+          "mentor_full_name" => "Jane Doe",
+          "claim_assured" => "true",
+          "claim_not_assured_reason" => "Another reason",
+        },
+      )
+      expect(grouped_csv_rows["22222222"].map(&:to_hash)).to contain_exactly(
+        {
+          "claim_reference" => "22222222",
+          "mentor_full_name" => "Joe Bloggs",
+          "claim_assured" => "true",
+          "claim_not_assured_reason" => "A reason",
+        },
       )
     end
   end
