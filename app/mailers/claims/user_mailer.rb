@@ -56,4 +56,17 @@ class Claims::UserMailer < Claims::ApplicationMailer
                    link_to_claim:,
                  )
   end
+
+  def claim_requires_clawback(claim, user)
+    link_to_claim = claims_school_claim_url(id: claim.id, school_id: claim.school.id)
+
+    notify_email to: user.email,
+                 subject: t(".subject"),
+                 body: t(".body",
+                         user_name: user.first_name,
+                         reference: claim.reference,
+                         link_to_claim:,
+                         support_email:,
+                         service_name:)
+  end
 end
