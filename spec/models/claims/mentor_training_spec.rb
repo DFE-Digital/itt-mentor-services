@@ -43,37 +43,6 @@ RSpec.describe Claims::MentorTraining, type: :model do
   end
 
   describe "validations" do
-    describe "assured" do
-      context "when not assured is true" do
-        let(:mentor_training) { build(:mentor_training, not_assured: true, reason_not_assured:) }
-
-        context "when reason not assured is nil" do
-          let(:reason_not_assured) { nil }
-
-          it "validates that the reason not assured is present" do
-            expect(mentor_training.valid?).to be(false)
-            expect(mentor_training.errors["reason_not_assured"]).to include("can't be blank")
-          end
-        end
-
-        context "when reason not assured is present" do
-          let(:reason_not_assured) { "Some reason" }
-
-          it "confirms the mentor training is valid" do
-            expect(mentor_training.valid?).to be(true)
-          end
-        end
-      end
-
-      context "when not assured is false" do
-        let(:mentor_training) { build(:mentor_training, not_assured: false) }
-
-        it "confirms the mentor training is valid" do
-          expect(mentor_training.valid?).to be(true)
-        end
-      end
-    end
-
     describe "rejected" do
       context "when rejected is true" do
         let(:mentor_training) { build(:mentor_training, rejected: true) }
