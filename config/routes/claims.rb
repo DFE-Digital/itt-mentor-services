@@ -150,7 +150,11 @@ scope module: :claims, as: :claims, constraints: {
       end
 
       resources :clawbacks, path: "clawbacks/claims", only: %i[index show new create] do
-        get :remove, on: :member
+        member do
+          get "edit/:claim_id/:mentor_training_id", to: "edit_request_clawback#new", as: :new_edit_request_clawback
+          get "edit/:claim_id/:mentor_training_id/:step", to: "edit_request_clawback#edit", as: :edit_request_clawback
+          put "edit/:claim_id/:mentor_training_id/:step", to: "edit_request_clawback#update"
+        end
 
         collection do
           get "new/:claim_id", to: "request_clawback#new", as: :new_request_clawback
