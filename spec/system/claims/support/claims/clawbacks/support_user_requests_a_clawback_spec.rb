@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Support user requests a clawback on a claim", service: :claims, type: :system do
   scenario do
-    given_claims_exist
+    given_claim_exists
     and_i_am_signed_in
 
     when_i_navigate_to_the_clawbacks_index_page
@@ -38,15 +38,11 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
 
   private
 
-  def given_claims_exist
-    @claim_not_approved_claim = create(:claim,
-                                       :submitted,
-                                       status: :sampling_not_approved,
-                                       reference: 11_111_111)
-    @claim_two = create(:claim,
+  def given_claim_exists
+    @claim_one = create(:claim,
                         :submitted,
                         status: :sampling_not_approved,
-                        reference: 22_222_222)
+                        reference: 11_111_111)
   end
 
   def and_i_am_signed_in
@@ -64,13 +60,32 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
   end
 
   def and_i_click_on_claim_one
-    click_on "11111111 - #{@claim_not_approved_claim.school_name}"
+    click_on "11111111 - #{@claim_one.school_name}"
   end
 
   def then_i_see_the_show_page_for_claim_one
-    expect(page).to have_title("Clawbacks - #{@claim_not_approved_claim.school_name} - Claim 11111111 - Claim funding for mentor training - GOV.UK")
+    expect(page).to have_title("Clawbacks - #{@claim_one.school_name} - Claim 11111111 - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Claims")
     expect(page).to have_element(:span, text: "Clawbacks - Claim 11111111", class: "govuk-caption-l")
+    expect(page).to have_h1(@claim_one.school_name)
+    expect(page).to have_element(:strong, text: "Claim not approved", class: "govuk-tag govuk-tag--pink")
+    expect(page).to have_link("Request clawback", href: "/support/claims/clawbacks/claims/new/#{@claim_one.id}")
+    expect(page).to have_summary_list_row("School", @claim_one.school_name)
+    expect(page).to have_summary_list_row("Academic year", @claim_one.academic_year_name)
+    expect(page).to have_summary_list_row("Accredited provider", @claim_one.provider.name)
+    expect(page).to have_summary_list_row("Mentors") do |row|
+      @claim_one.mentors.each do |mentor|
+        expect(row).to have_css("ul.govuk-list li", text: mentor.full_name)
+      end
+    end
+    expect(page).to have_h2("Hours of training")
+    @claim_one.mentor_trainings.order_by_mentor_full_name.each do |mentor_training|
+      expect(page).to have_summary_list_row(mentor_training.mentor.full_name, "#{mentor_training.hours_completed} hours")
+    end
+    expect(page).to have_h2("Grant funding")
+    expect(page).to have_summary_list_row("Total hours", "#{@claim_one.mentor_trainings.sum(:hours_completed)} hours")
+    expect(page).to have_summary_list_row("Hourly rate", @claim_one.school.region.funding_available_per_hour)
+    expect(page).to have_summary_list_row("Claim amount", @claim_one.amount)
   end
 
   def when_i_click_on_request_clawback
@@ -78,7 +93,7 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
   end
 
   def then_i_see_the_clawback_details_page
-    expect(page).to have_title("Clawback details - #{@claim_not_approved_claim.school_name} - Claim 11111111 - Claim funding for mentor training - GOV.UK")
+    expect(page).to have_title("Clawback details - #{@claim_one.school_name} - Claim 11111111 - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Claims")
 
     expect(page).to have_element(:span, text: "Clawbacks - Claim 11111111", class: "govuk-caption-l")
@@ -114,12 +129,12 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
   end
 
   def then_i_see_the_check_your_answers_page
-    expect(page).to have_title("Check your answers - #{@claim_not_approved_claim.school_name} - Claim 11111111 - Claim funding for mentor training - GOV.UK")
+    expect(page).to have_title("Check your answers - #{@claim_one.school_name} - Claim 11111111 - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Claims")
     expect(page).to have_element(:span, text: "Clawbacks - Claim 11111111", class: "govuk-caption-l")
     expect(page).to have_h1("Check your answers")
     expect(page).to have_summary_list_row("Number of hours", "")
-    expect(page).to have_summary_list_row("Hourly rate", @claim_not_approved_claim.school.region.funding_available_per_hour)
+    expect(page).to have_summary_list_row("Hourly rate", @claim_one.school.region.funding_available_per_hour)
     expect(page).to have_summary_list_row("Clawback amount", "")
     expect(page).to have_summary_list_row("Reason for clawback", "")
     expect(page).to have_element(:strong, text: "We will show clawback details to the school.", class: "govuk-warning-text__text")
@@ -143,13 +158,13 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
 
   def and_i_see_the_claim_status_is_clawback_requested
     expect(page).to have_claim_card({
-      "title" => "#{@claim_not_approved_claim.reference} - #{@claim_not_approved_claim.school_name}",
-      "url" => "/support/claims/clawbacks/claims/#{@claim_not_approved_claim.id}",
+      "title" => "#{@claim_one.reference} - #{@claim_one.school_name}",
+      "url" => "/support/claims/clawbacks/claims/#{@claim_one.id}",
       "status" => "Clawback requested",
-      "academic_year" => @claim_not_approved_claim.academic_year.name,
-      "provider_name" => @claim_not_approved_claim.provider.name,
-      "submitted_at" => I18n.l(@claim_not_approved_claim.submitted_at.to_date, format: :long),
-      "amount" => @claim_not_approved_claim.amount,
+      "academic_year" => @claim_one.academic_year.name,
+      "provider_name" => @claim_one.provider.name,
+      "submitted_at" => I18n.l(@claim_one.submitted_at.to_date, format: :long),
+      "amount" => @claim_one.amount,
     })
   end
 end

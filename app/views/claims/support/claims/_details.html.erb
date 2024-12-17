@@ -86,7 +86,7 @@
   <% end %>
 <% end %>
 
-  <% if claim.status == "clawback_requested" || claim.status == "clawback_in_progress" %>
+  <% if claim.clawback_requested? || claim.clawback_in_progress? %>
     <h2 class="govuk-heading-m"><%= t(".clawback_details") %></h2>
     <%= govuk_summary_list do |summary_list| %>
       <% summary_list.with_row do |row| %>
