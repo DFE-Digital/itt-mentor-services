@@ -43,42 +43,58 @@ RSpec.describe Claims::MentorTraining, type: :model do
   end
 
   describe "validations" do
-    context "when rejected is true" do
-      let(:mentor_training) { build(:mentor_training, rejected: true) }
+    describe "assured" do
+      context "when not assured is true" do
+        let(:mentor_training) { build(:mentor_training, not_assured: true, reason_not_assured:) }
 
-      it "validates that the rejected reason is present" do
-        expect(mentor_training.valid?).to be(false)
-        expect(mentor_training.errors["reason_rejected"]).to include("can't be blank")
+        context "when reason not assured is nil" do
+          let(:reason_not_assured) { nil }
+
+          it "validates that the reason not assured is present" do
+            expect(mentor_training.valid?).to be(false)
+            expect(mentor_training.errors["reason_not_assured"]).to include("can't be blank")
+          end
+        end
+
+        context "when reason not assured is present" do
+          let(:reason_not_assured) { "Some reason" }
+
+          it "confirms the mentor training is valid" do
+            expect(mentor_training.valid?).to be(true)
+          end
+        end
       end
 
-      it "validates that the rejected hours is present" do
-        expect(mentor_training.valid?).to be(false)
-        expect(mentor_training.errors["hours_rejected"]).to include("can't be blank")
+      context "when not assured is false" do
+        let(:mentor_training) { build(:mentor_training, not_assured: false) }
+
+        it "confirms the mentor training is valid" do
+          expect(mentor_training.valid?).to be(true)
+        end
       end
     end
 
-    context "when rejected is false" do
-      let(:mentor_training) { build(:mentor_training, rejected: false) }
+    describe "rejected" do
+      context "when rejected is true" do
+        let(:mentor_training) { build(:mentor_training, rejected: true) }
 
-      it "confirms the mentor training is valid" do
-        expect(mentor_training.valid?).to be(true)
+        it "validates that the rejected reason is present" do
+          expect(mentor_training.valid?).to be(false)
+          expect(mentor_training.errors["reason_rejected"]).to include("can't be blank")
+        end
+
+        it "validates that the rejected hours is present" do
+          expect(mentor_training.valid?).to be(false)
+          expect(mentor_training.errors["hours_rejected"]).to include("can't be blank")
+        end
       end
-    end
 
-    context "when not assured is true" do
-      let(:mentor_training) { build(:mentor_training, not_assured: true) }
+      context "when rejected is false" do
+        let(:mentor_training) { build(:mentor_training, rejected: false) }
 
-      it "validates that the reason not assured is present" do
-        expect(mentor_training.valid?).to be(false)
-        expect(mentor_training.errors["reason_not_assured"]).to include("can't be blank")
-      end
-    end
-
-    context "when not assured is false" do
-      let(:mentor_training) { build(:mentor_training, not_assured: false) }
-
-      it "confirms the mentor training is valid" do
-        expect(mentor_training.valid?).to be(true)
+        it "confirms the mentor training is valid" do
+          expect(mentor_training.valid?).to be(true)
+        end
       end
     end
   end
