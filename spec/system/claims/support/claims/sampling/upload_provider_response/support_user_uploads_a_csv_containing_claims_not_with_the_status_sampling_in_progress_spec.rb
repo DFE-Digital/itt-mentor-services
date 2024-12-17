@@ -83,7 +83,7 @@ RSpec.describe "Support user uploads a CSV containing claims not with the status
     expect(page).to have_h2("Sampling (1)")
     expect(page).to have_claim_card({
       "title" => "11111111 - #{@sampling_in_progress_claim.school_name}",
-      "url" => "/support/claims/#{@sampling_in_progress_claim.id}",
+      "url" => "/support/claims/sampling/#{@sampling_in_progress_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @sampling_in_progress_claim.academic_year.name,
       "provider_name" => @sampling_in_progress_claim.provider.name,

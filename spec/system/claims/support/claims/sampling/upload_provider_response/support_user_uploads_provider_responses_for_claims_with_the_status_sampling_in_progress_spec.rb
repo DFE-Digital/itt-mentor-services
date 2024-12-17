@@ -3,6 +3,12 @@ require "rails_helper"
 RSpec.describe "Support user uploads provider responses for claims with the status 'sampling in progress'",
                service: :claims,
                type: :system do
+  include ActiveJob::TestHelper
+
+  around do |example|
+    perform_enqueued_jobs { example.run }
+  end
+
   scenario do
     given_claims_exist
     and_i_am_signed_in
@@ -47,8 +53,8 @@ RSpec.describe "Support user uploads provider responses for claims with the stat
     and_i_can_not_see_claim_22222222
 
     when_i_navigate_to_the_all_claims_index_page
-    then_i_can_see_claim_11111111_has_the_status_provider_not_approved
-    and_i_can_see_claim_22222222_has_the_status_paid
+    then_i_can_see_claim_11111111_has_the_status_provider_not_approved_on_the_all_claims_index_page
+    and_i_can_see_claim_22222222_has_the_status_paid_on_the_all_claims_index_page
   end
 
   private
@@ -113,7 +119,7 @@ RSpec.describe "Support user uploads provider responses for claims with the stat
     expect(page).to have_h2("Sampling (2)")
     expect(page).to have_claim_card({
       "title" => "11111111 - #{@sampling_in_progress_claim_1.school_name}",
-      "url" => "/support/claims/#{@sampling_in_progress_claim_1.id}",
+      "url" => "/support/claims/sampling/#{@sampling_in_progress_claim_1.id}",
       "status" => "Sampling in progress",
       "academic_year" => @sampling_in_progress_claim_1.academic_year.name,
       "provider_name" => @sampling_in_progress_claim_1.provider.name,
@@ -122,7 +128,7 @@ RSpec.describe "Support user uploads provider responses for claims with the stat
     })
     expect(page).to have_claim_card({
       "title" => "22222222 - #{@sampling_in_progress_claim_2.school_name}",
-      "url" => "/support/claims/#{@sampling_in_progress_claim_2.id}",
+      "url" => "/support/claims/sampling/#{@sampling_in_progress_claim_2.id}",
       "status" => "Sampling in progress",
       "academic_year" => @sampling_in_progress_claim_2.academic_year.name,
       "provider_name" => @sampling_in_progress_claim_2.provider.name,
@@ -176,7 +182,7 @@ RSpec.describe "Support user uploads provider responses for claims with the stat
   def then_i_can_see_claim_11111111_has_the_status_provider_not_approved
     expect(page).to have_claim_card({
       "title" => "11111111 - #{@sampling_in_progress_claim_1.school_name}",
-      "url" => "/support/claims/#{@sampling_in_progress_claim_1.id}",
+      "url" => "/support/claims/sampling/#{@sampling_in_progress_claim_1.id}",
       "status" => "Provider not approved",
       "academic_year" => @sampling_in_progress_claim_1.academic_year.name,
       "provider_name" => @sampling_in_progress_claim_1.provider.name,
@@ -199,7 +205,19 @@ RSpec.describe "Support user uploads provider responses for claims with the stat
     end
   end
 
-  def and_i_can_see_claim_22222222_has_the_status_paid
+  def then_i_can_see_claim_11111111_has_the_status_provider_not_approved_on_the_all_claims_index_page
+    expect(page).to have_claim_card({
+      "title" => "11111111 - #{@sampling_in_progress_claim_1.school_name}",
+      "url" => "/support/claims/#{@sampling_in_progress_claim_1.id}",
+      "status" => "Provider not approved",
+      "academic_year" => @sampling_in_progress_claim_1.academic_year.name,
+      "provider_name" => @sampling_in_progress_claim_1.provider.name,
+      "submitted_at" => I18n.l(@sampling_in_progress_claim_1.submitted_at.to_date, format: :long),
+      "amount" => @sampling_in_progress_claim_1.amount.format(symbol: true, decimal_mark: ".", no_cents: true),
+    })
+  end
+
+  def and_i_can_see_claim_22222222_has_the_status_paid_on_the_all_claims_index_page
     expect(page).to have_claim_card({
       "title" => "22222222 - #{@sampling_in_progress_claim_2.school_name}",
       "url" => "/support/claims/#{@sampling_in_progress_claim_2.id}",

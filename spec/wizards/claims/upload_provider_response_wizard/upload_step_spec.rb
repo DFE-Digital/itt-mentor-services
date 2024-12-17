@@ -257,7 +257,7 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadStep, type: :model do
         "11111111,John Smith,true,Some reason\n" \
         "11111111,Jane Doe,false,Another reason\n" \
         "22222222,Joe Bloggs,true,Yet another reason\n" \
-        ",,,,",
+        ",,,,\n",
       )
     end
   end
