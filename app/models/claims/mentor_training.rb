@@ -2,20 +2,20 @@
 #
 # Table name: mentor_trainings
 #
-#  id              :uuid             not null, primary key
-#  not_assured            :boolean          default(FALSE)
-#  date_completed  :datetime
-#  hours_completed :integer
-#  hours_rejected  :integer
+#  id                 :uuid             not null, primary key
+#  date_completed     :datetime
+#  hours_completed    :integer
+#  hours_rejected     :integer
+#  not_assured        :boolean          default(FALSE)
 #  reason_not_assured :text
-#  reason_rejected :text
-#  rejected        :boolean          default(FALSE)
-#  training_type   :enum             default("initial"), not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  claim_id        :uuid
-#  mentor_id       :uuid
-#  provider_id     :uuid
+#  reason_rejected    :text
+#  rejected           :boolean          default(FALSE)
+#  training_type      :enum             default("initial"), not null
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  claim_id           :uuid
+#  mentor_id          :uuid
+#  provider_id        :uuid
 #
 # Indexes
 #

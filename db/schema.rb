@@ -237,11 +237,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_16_161048) do
     t.uuid "provider_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "not_assured", default: false
+    t.text "reason_not_assured"
     t.boolean "rejected", default: false
     t.text "reason_rejected"
     t.integer "hours_rejected"
-    t.boolean "not_assured", default: false
-    t.text "reason_not_assured"
     t.index ["claim_id"], name: "index_mentor_trainings_on_claim_id"
     t.index ["mentor_id"], name: "index_mentor_trainings_on_mentor_id"
     t.index ["provider_id"], name: "index_mentor_trainings_on_provider_id"
