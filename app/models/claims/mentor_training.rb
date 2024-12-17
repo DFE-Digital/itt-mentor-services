@@ -54,6 +54,8 @@ class Claims::MentorTraining < ApplicationRecord
               less_than_or_equal_to: :max_hours,
               only_integer: true,
             }
+  validates :reason_rejected, presence: true, if: -> { rejected }
+  validates :hours_rejected, presence: true, if: -> { rejected }
 
   scope :without_hours, -> { where(hours_completed: nil).order_by_mentor_full_name }
   scope :order_by_mentor_full_name, -> { joins(:mentor).merge(Mentor.order_by_full_name) }
