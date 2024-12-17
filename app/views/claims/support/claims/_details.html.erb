@@ -59,99 +59,113 @@
       <% row.with_value(text: t("none")) %>
     <% end %>
   <% end %>
-
-  <% summary_list.with_row do |row| %>
-    <% row.with_key(text: t(".mentors")) %>
-    <% row.with_value do %>
-      <ul class="govuk-list">
-        <% claim.mentors.each do |mentor| %>
-          <li><%= mentor.full_name %></li>
-        <% end %>
-      </ul>
-    <% end %>
-    <% if policy(claim).edit? %>
-      <% row.with_action(text: t("change"),
-                         href: create_revision_claims_support_school_claim_mentors_path(claim.school, claim),
-                         html_attributes: {
-                  class: "govuk-link--no-visited-state",
-                }) %>
-                <% end %>
-  <% end %>
 <% end %>
 
 <h2 class="govuk-heading-m"><%= t(".hours_of_training") %></h2>
-<%= govuk_summary_list(actions: policy(claim).edit?) do |summary_list| %>
-  <%= claim.mentor_trainings.order_by_mentor_full_name.each do |mentor_training| %>
-  <% summary_list.with_row do |row| %>
-    <% row.with_key(text: mentor_training.mentor.full_name) %>
-    <% row.with_value(text: pluralize(mentor_training.hours_completed, t(".hour"))) %>
-    <% if policy(claim).edit? %>
-      <% row.with_action(text: t("change"),
-                         href: create_revision_claims_support_school_claim_mentor_training_path(
-                           claim.school,
-                           claim,
-                           mentor_training.mentor_id,
-                         ),
-                         html_attributes: {
-                         class: "govuk-link--no-visited-state",
-                        }) %>
+  <% if claim.clawback_requested? || claim.clawback_in_progress? %>
+      <% claim.mentor_trainings.not_assured.order_by_mentor_full_name.each do |mentor_training| %>
+       <%= govuk_summary_list(actions: policy(claim).edit?) do |summary_list| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: mentor_training.mentor.full_name) %>
+          <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".original")) %>
+          <% row.with_value(text: pluralize(mentor_training.hours_completed, t(".hour"))) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".clawed_back")) %>
+          <% row.with_value(text: pluralize(mentor_training.hours_clawed_back, t(".hour"))) %>
+          <% if policy(claim).edit? %>
+            <% row.with_action(text: t("change"),
+                               href: new_edit_request_clawback_claims_support_claims_clawback_path(
+                                claim_id: claim.id,
+                                mentor_training_id: mentor_training.id,
+                              ),
+                               html_attributes: {
+                              class: "govuk-link--no-visited-state",
+                              }) %>
+          <% end %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".reason_clawed_back")) %>
+          <% row.with_value(text: mentor_training.reason_clawed_back) %>
+          <% if policy(claim).edit? %>
+            <% row.with_action(text: t("change"),
+                               href: new_edit_request_clawback_claims_support_claims_clawback_path(
+                                claim_id: claim.id,
+                                mentor_training_id: mentor_training.id,
+                              ),
+                               html_attributes: {
+                              class: "govuk-link--no-visited-state",
+                              }) %>
+          <% end %>
+        <% end %>
       <% end %>
     <% end %>
+  <% else %>
+    <%= govuk_summary_list(actions: policy(claim).edit?) do |summary_list| %>
+      <%= claim.mentor_trainings.order_by_mentor_full_name.each do |mentor_training| %>
+      <% summary_list.with_row do |row| %>
+        <% row.with_key(text: mentor_training.mentor.full_name) %>
+        <% row.with_value(text: pluralize(mentor_training.hours_completed, t(".hour"))) %>
+        <% if policy(claim).edit? %>
+          <% row.with_action(text: t("change"),
+                             href: create_revision_claims_support_school_claim_mentor_training_path(
+                              claim.school,
+                              claim,
+                              mentor_training.mentor_id,
+                            ),
+                             html_attributes: {
+                            class: "govuk-link--no-visited-state",
+                            }) %>
+          <% end %>
+        <% end %>
+      <% end %>
   <% end %>
 <% end %>
 
 <h2 class="govuk-heading-m"><%= t(".grant_funding") %></h2>
-<%= govuk_summary_list(actions: false) do |summary_list| %>
-  <% summary_list.with_row do |row| %>
-    <% row.with_key(text: t(".total_hours")) %>
-    <% row.with_value(text: pluralize(claim.mentor_trainings.sum(:hours_completed), t(".hour"))) %>
-  <% end %>
-
-  <% summary_list.with_row do |row| %>
-    <% row.with_key(text: t(".hourly_rate")) %>
-    <% row.with_value(text: humanized_money_with_symbol(claim.school.region.funding_available_per_hour)) %>
-  <% end %>
-
-  <% summary_list.with_row do |row| %>
-    <% row.with_key(text: Claims::Claim.human_attribute_name(:claim_amount)) %>
-    <% row.with_value(text: humanized_money_with_symbol(claim.amount)) %>
-  <% end %>
-<% end %>
-
-  <% if claim.status == "clawback_requested" || claim.status == "clawback_in_progress" %>
-    <h2 class="govuk-heading-m"><%= t(".clawback_details") %></h2>
-    <%= govuk_summary_list do |summary_list| %>
+  <% if claim.clawback_requested? || claim.clawback_in_progress? %>
+      <%= govuk_summary_list(actions: false) do |summary_list| %>
       <% summary_list.with_row do |row| %>
-        <% row.with_key(text: t(".hours")) %>
-        <% row.with_value %>
-        <% if claim.status == "clawback_requested" %>
-          <% row.with_action(text: t(".change"),
-                             href: request_clawback_claims_support_claims_clawbacks_path(claim_id: claim.id, step: :clawback),
-                             visually_hidden_text: t(".hours"),
-                             classes: ["govuk-link--no-visited-state"]) %>
-        <% end %>
+        <% row.with_key(text: t(".original_amount")) %>
+        <% row.with_value(text: humanized_money_with_symbol(claim.amount)) %>
       <% end %>
+
       <% summary_list.with_row do |row| %>
-        <% row.with_key(text: t(".rate")) %>
+        <% row.with_key(text: t(".hours_clawed_back")) %>
+        <% row.with_value(text: pluralize(claim.mentor_trainings.sum(:hours_clawed_back), t(".hour"))) %>
+      <% end %>
+
+      <% summary_list.with_row do |row| %>
+        <% row.with_key(text: t(".clawback_amount")) %>
+        <% row.with_value(text: humanized_money_with_symbol(claim.total_clawback_amount)) %>
+      <% end %>
+
+      <% adjusted_total = claim.amount - claim.total_clawback_amount %>
+      <% summary_list.with_row do |row| %>
+        <% row.with_key(text: t(".adjusted_total")) %>
+        <% row.with_value(text: humanized_money_with_symbol(adjusted_total)) %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <%= govuk_summary_list(actions: false) do |summary_list| %>
+      <% summary_list.with_row do |row| %>
+        <% row.with_key(text: t(".total_hours")) %>
+        <% row.with_value(text: pluralize(claim.mentor_trainings.sum(:hours_completed), t(".hour"))) %>
+      <% end %>
+
+      <% summary_list.with_row do |row| %>
+        <% row.with_key(text: t(".hourly_rate")) %>
         <% row.with_value(text: humanized_money_with_symbol(claim.school.region.funding_available_per_hour)) %>
       <% end %>
+
       <% summary_list.with_row do |row| %>
-        <% row.with_key(text: t(".amount")) %>
-        <% row.with_value %>
-      <% end %>
-      <% summary_list.with_row do |row| %>
-        <% row.with_key(text: t(".reason")) %>
-        <% row.with_value %>
-        <% if claim.status == "clawback_requested" %>
-          <% row.with_action(text: t(".change"),
-                             href: request_clawback_claims_support_claims_clawbacks_path(claim_id: claim.id, step: :clawback),
-                             visually_hidden_text: t(".reason"),
-                             classes: ["govuk-link--no-visited-state"]) %>
-        <% end %>
-      <% end %>
-      <% summary_list.with_row do |row| %>
-        <% row.with_key(text: t(".revised")) %>
-        <% row.with_value %>
+        <% row.with_key(text: Claims::Claim.human_attribute_name(:claim_amount)) %>
+        <% row.with_value(text: humanized_money_with_symbol(claim.amount)) %>
       <% end %>
     <% end %>
   <% end %>
