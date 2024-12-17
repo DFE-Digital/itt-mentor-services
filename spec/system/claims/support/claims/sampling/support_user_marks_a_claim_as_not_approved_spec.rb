@@ -111,8 +111,8 @@ RSpec.describe "Support user marks a claim as not approved", service: :claims, t
   def then_i_see_that_the_claim_has_been_updated_to_not_approved
     expect(page).to have_claim_card({
       "title" => "#{@claim.reference} - #{@claim.school.name}",
-      "url" => "/support/claims/sampling/#{@claim.id}",
-      "status" => "Sampling not approved",
+      "url" => "/support/claims/#{@claim.id}",
+      "status" => "Claim not approved",
       "academic_year" => @claim.academic_year.name,
       "provider_name" => @claim.provider.name,
       "submitted_at" => I18n.l(@claim.submitted_at.to_date, format: :long),
