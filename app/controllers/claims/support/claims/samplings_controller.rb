@@ -1,7 +1,7 @@
 class Claims::Support::Claims::SamplingsController < Claims::Support::ApplicationController
   before_action :skip_authorization
   before_action :set_filtered_claims, only: %i[index]
-  before_action :set_claim, only: %i[show confirm_approval update]
+  before_action :set_claim, except: %i[index]
   helper_method :filter_form
 
   def index
