@@ -3,7 +3,7 @@
 # Table name: mentor_trainings
 #
 #  id              :uuid             not null, primary key
-#  assured            :boolean          default(FALSE)
+#  not_assured            :boolean          default(FALSE)
 #  date_completed  :datetime
 #  hours_completed :integer
 #  hours_rejected  :integer
