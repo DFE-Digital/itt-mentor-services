@@ -19,7 +19,7 @@ shared:
     - rejected
     - reason_rejected
     - hours_rejected
-    - assured
+    - not_assured
     - reason_not_assured
   :user_memberships:
     - id

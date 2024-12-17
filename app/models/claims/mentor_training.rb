@@ -3,7 +3,7 @@
 # Table name: mentor_trainings
 #
 #  id              :uuid             not null, primary key
-#  assured            :boolean          default(FALSE)
+#  not_assured            :boolean          default(FALSE)
 #  date_completed  :datetime
 #  hours_completed :integer
 #  hours_rejected  :integer
@@ -58,6 +58,7 @@ class Claims::MentorTraining < ApplicationRecord
             }
   validates :reason_rejected, presence: true, if: -> { rejected }
   validates :hours_rejected, presence: true, if: -> { rejected }
+  validates :reason_not_assured, presence: true, if: -> { not_assured }
 
   scope :without_hours, -> { where(hours_completed: nil).order_by_mentor_full_name }
   scope :order_by_mentor_full_name, -> { joins(:mentor).merge(Mentor.order_by_full_name) }
