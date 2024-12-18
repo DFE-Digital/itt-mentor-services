@@ -8,6 +8,5 @@
 #
 FactoryBot.define do
   factory :clawback do
-    
   end
 end

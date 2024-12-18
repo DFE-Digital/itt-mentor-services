@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_18_110840) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_18_111430) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -129,6 +129,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_18_110840) do
     t.index ["reference"], name: "index_claims_on_reference"
     t.index ["school_id"], name: "index_claims_on_school_id"
     t.index ["submitted_by_type", "submitted_by_id"], name: "index_claims_on_submitted_by"
+  end
+
+  create_table "clawback_claims", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "claim_id", null: false
+    t.uuid "clawback_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["claim_id"], name: "index_clawback_claims_on_claim_id"
+    t.index ["clawback_id"], name: "index_clawback_claims_on_clawback_id"
   end
 
   create_table "clawbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -543,6 +552,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_18_110840) do
   add_foreign_key "claim_windows", "academic_years"
   add_foreign_key "claims", "providers"
   add_foreign_key "claims", "schools"
+  add_foreign_key "clawback_claims", "claims"
+  add_foreign_key "clawback_claims", "clawbacks"
   add_foreign_key "mentor_memberships", "mentors"
   add_foreign_key "mentor_memberships", "schools"
   add_foreign_key "mentor_trainings", "claims"

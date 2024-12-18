@@ -104,6 +104,16 @@ shared:
     - provider_sampling_id
     - created_at
     - updated_at
+  :clawbacks:
+    - id
+    - created_at
+    - updated_at
+  :clawback_claims:
+    - id
+    - claim_id
+    - clawback_id
+    - created_at
+    - updated_at
   :schools:
     - id
     - urn

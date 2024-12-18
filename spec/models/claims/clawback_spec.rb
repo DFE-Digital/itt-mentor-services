@@ -6,5 +6,9 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-class Clawback < ApplicationRecord
+require "rails_helper"
+
+RSpec.describe Claims::Clawback, type: :model do
+  it { is_expected.to have_many(:clawback_claims) }
+  it { is_expected.to have_many(:claims).through(:clawback_claims) }
 end
