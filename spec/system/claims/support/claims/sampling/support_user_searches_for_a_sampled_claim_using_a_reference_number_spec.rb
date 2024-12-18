@@ -85,7 +85,7 @@ RSpec.describe "Support user searches for a sampled claim using a reference numb
   def and_i_see_the_sampled_claim_with_reference_11111111
     expect(page).to have_claim_card({
       "title" => "#{@claim_11111111.reference} - #{@claim_11111111.school.name}",
-      "url" => "/support/claims/sampling/#{@claim_11111111.id}",
+      "url" => "/support/claims/sampling/claims/#{@claim_11111111.id}",
       "status" => "Sampling in progress",
       "academic_year" => @claim_11111111.academic_year.name,
       "provider_name" => @claim_11111111.provider.name,
@@ -97,7 +97,7 @@ RSpec.describe "Support user searches for a sampled claim using a reference numb
   def and_i_see_the_sampled_claim_with_reference_22222222
     expect(page).to have_claim_card({
       "title" => "#{@claim_22222222.reference} - #{@claim_22222222.school.name}",
-      "url" => "/support/claims/sampling/#{@claim_22222222.id}",
+      "url" => "/support/claims/sampling/claims/#{@claim_22222222.id}",
       "status" => "Sampling in progress",
       "academic_year" => @claim_22222222.academic_year.name,
       "provider_name" => @claim_22222222.provider.name,

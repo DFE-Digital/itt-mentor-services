@@ -77,7 +77,7 @@ scope module: :claims, as: :claims, constraints: {
       end
 
       resources :payments, only: %i[index]
-      resources :samplings, path: "sampling", only: %i[index show] do
+      resources :samplings, path: "sampling/claims", only: %i[index show] do
         member do
           get :confirm_approval
           put :update

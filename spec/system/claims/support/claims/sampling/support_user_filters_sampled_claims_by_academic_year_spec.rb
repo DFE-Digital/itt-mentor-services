@@ -123,7 +123,7 @@ RSpec.describe "Support user filters sampled claims by academic year", service: 
   def and_i_see_the_sampled_claim_for_the_current_academic_year
     expect(page).to have_claim_card({
       "title" => "#{@current_claim.reference} - #{@current_claim.school.name}",
-      "url" => "/support/claims/sampling/#{@current_claim.id}",
+      "url" => "/support/claims/sampling/claims/#{@current_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @current_claim.academic_year.name,
       "provider_name" => @current_claim.provider.name,
@@ -135,7 +135,7 @@ RSpec.describe "Support user filters sampled claims by academic year", service: 
   def and_i_see_the_sampled_claim_for_the_previous_academic_year
     expect(page).to have_claim_card({
       "title" => "#{@previous_claim.reference} - #{@previous_claim.school.name}",
-      "url" => "/support/claims/sampling/#{@previous_claim.id}",
+      "url" => "/support/claims/sampling/claims/#{@previous_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @previous_claim.academic_year.name,
       "provider_name" => @previous_claim.provider.name,

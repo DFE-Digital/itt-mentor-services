@@ -87,7 +87,7 @@ RSpec.describe "Support user filters sampled claims submitted before a date", se
   def and_i_see_the_sampled_claim_submitted_in_may
     expect(page).to have_claim_card({
       "title" => "#{@may_claim.reference} - #{@may_claim.school.name}",
-      "url" => "/support/claims/sampling/#{@may_claim.id}",
+      "url" => "/support/claims/sampling/claims/#{@may_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @may_claim.academic_year.name,
       "provider_name" => @may_claim.provider.name,
@@ -99,7 +99,7 @@ RSpec.describe "Support user filters sampled claims submitted before a date", se
   def and_i_see_the_sampled_claim_submitted_in_july
     expect(page).to have_claim_card({
       "title" => "#{@july_claim.reference} - #{@july_claim.school.name}",
-      "url" => "/support/claims/sampling/#{@july_claim.id}",
+      "url" => "/support/claims/sampling/claims/#{@july_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @july_claim.academic_year.name,
       "provider_name" => @july_claim.provider.name,

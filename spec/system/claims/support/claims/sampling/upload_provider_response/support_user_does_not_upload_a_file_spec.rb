@@ -59,7 +59,7 @@ RSpec.describe "Support user does not upload a file",
     expect(page).to have_h2("Sampling (1)")
     expect(page).to have_claim_card({
       "title" => "11111111 - #{@claim.school_name}",
-      "url" => "/support/claims/sampling/#{@claim.id}",
+      "url" => "/support/claims/sampling/claims/#{@claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @claim.academic_year.name,
       "provider_name" => @claim.provider.name,
