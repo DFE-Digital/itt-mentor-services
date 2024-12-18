@@ -115,7 +115,7 @@ RSpec.describe "Support user approves a claim", service: :claims, type: :system 
       expect(page).to have_element(:p, text: "Randomly selected for audit", class: "govuk-body")
     end
 
-    expect(page).to have_link("Approve claim", href: "/support/claims/sampling/#{@sampling_claim.id}/confirm_approval")
+    expect(page).to have_link("Approve claim", href: "/support/claims/sampling/claims/#{@sampling_claim.id}/confirm_approval")
   end
 
   def when_i_click_on_approve_claim
@@ -131,7 +131,7 @@ RSpec.describe "Support user approves a claim", service: :claims, type: :system 
     expect(page).to have_h1("Are you sure you want to approve the claim?")
     expect(page).to have_element(:p, text: "This will mark the claim as 'Paid'.", class: "govuk-body")
     expect(page).to have_button("Approve claim")
-    expect(page).to have_link("Cancel", href: "/support/claims/sampling/#{@sampling_claim.id}")
+    expect(page).to have_link("Cancel", href: "/support/claims/sampling/claims/#{@sampling_claim.id}")
   end
 
   def when_i_click_on_cancel

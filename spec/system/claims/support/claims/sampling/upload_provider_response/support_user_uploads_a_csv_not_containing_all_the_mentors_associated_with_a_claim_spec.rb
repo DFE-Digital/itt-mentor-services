@@ -89,7 +89,7 @@ RSpec.describe "Support user uploads a CSV not containing all the mentors associ
     expect(page).to have_h2("Sampling (2)")
     expect(page).to have_claim_card({
       "title" => "11111111 - #{@sampling_in_progress_claim_1.school_name}",
-      "url" => "/support/claims/sampling/#{@sampling_in_progress_claim_1.id}",
+      "url" => "/support/claims/sampling/claims/#{@sampling_in_progress_claim_1.id}",
       "status" => "Sampling in progress",
       "academic_year" => @sampling_in_progress_claim_1.academic_year.name,
       "provider_name" => @sampling_in_progress_claim_1.provider.name,
@@ -98,7 +98,7 @@ RSpec.describe "Support user uploads a CSV not containing all the mentors associ
     })
     expect(page).to have_claim_card({
       "title" => "22222222 - #{@sampling_in_progress_claim_2.school_name}",
-      "url" => "/support/claims/sampling/#{@sampling_in_progress_claim_2.id}",
+      "url" => "/support/claims/sampling/claims/#{@sampling_in_progress_claim_2.id}",
       "status" => "Sampling in progress",
       "academic_year" => @sampling_in_progress_claim_2.academic_year.name,
       "provider_name" => @sampling_in_progress_claim_2.provider.name,
