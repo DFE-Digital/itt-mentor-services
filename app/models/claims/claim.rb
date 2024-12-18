@@ -54,6 +54,8 @@ class Claims::Claim < ApplicationRecord
   has_many :provider_sampling_claims, dependent: :destroy
   has_many :provider_samplings, through: :provider_sampling_claims
 
+  has_many :clawback_claims, dependent: :destroy
+
   validates :status, presence: true
   validates(
     :reference,
