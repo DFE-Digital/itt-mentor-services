@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include RoutesHelper
   include Pagy::Backend
   include Pundit::Authorization
+  include PunditNamespaces
 
   before_action :authenticate_user!
 
@@ -73,9 +74,5 @@ class ApplicationController < ActionController::Base
     else
       redirect_back(fallback_location: root_path)
     end
-  end
-
-  def unwrap_pundit_scope(scope)
-    scope.is_a?(Array) ? scope : [scope]
   end
 end
