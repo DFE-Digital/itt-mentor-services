@@ -32,6 +32,9 @@ env:
   SERVICE_SHORT: ittms
   TF_VARS_PATH: terraform/application/config
 
+permissions:
+  id-token: write
+
 jobs:
   ptr-restore:
     name: PTR Restore AKS Database
@@ -67,4 +70,6 @@ jobs:
         new-server: ${{ env.NEW_DB_SERVER }}
         restore-time: ${{ inputs.restore-time }}
         cluster: ${{ env.CLUSTER }}
-        azure-credentials: ${{ secrets.AZURE_CREDENTIALS}}
+        azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}

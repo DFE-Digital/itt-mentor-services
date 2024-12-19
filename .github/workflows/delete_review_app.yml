@@ -21,6 +21,10 @@ jobs:
     runs-on: ubuntu-22.04
     if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name == 'workflow_dispatch' }}
     environment: review
+    permissions:
+      pull-requests: write
+      id-token: write
+
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -42,7 +46,9 @@ jobs:
 
     - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
       with:
-        azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+        azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
 
     - name: Terraform Destroy
       run: |
