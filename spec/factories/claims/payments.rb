@@ -18,5 +18,7 @@
 FactoryBot.define do
   factory :claims_payment, class: "Claims::Payment" do
     association :sent_by, factory: :claims_support_user
+
+    claims { build_list(:claim, 3, :submitted) }
   end
 end

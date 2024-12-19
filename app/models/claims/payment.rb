@@ -19,5 +19,7 @@ class Claims::Payment < ApplicationRecord
   belongs_to :sent_by, class_name: "Claims::SupportUser"
 
   has_many :payment_claims, dependent: :destroy
-  has_many :claims, through: :payment_claims
+  has_many :claims, through: :payment_claims, class_name: "Claims::Claim"
+
+  has_one_attached :csv_file
 end

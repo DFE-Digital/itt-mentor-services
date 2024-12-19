@@ -1,10 +1,26 @@
 class Claims::Support::Claims::PaymentsController < Claims::Support::ApplicationController
+  append_pundit_namespace :claims
+
   before_action :authorize_claims
 
   helper_method :filter_form
 
   def index
     @pagy, @claims = pagy(filtered_claims)
+  end
+
+  def new
+    @submitted_claims = Claims::Claim.submitted
+
+    unless policy(Claims::Payment).create?
+      render "new_not_permitted"
+    end
+  end
+
+  def create
+    Claims::Payment::CreateAndDeliver.call(current_user:)
+
+    redirect_to claims_support_claims_payments_path, flash: { success: true, heading: "Claims sent to ESFA" }
   end
 
   private
@@ -40,6 +56,6 @@ class Claims::Support::Claims::PaymentsController < Claims::Support::Application
   end
 
   def authorize_claims
-    authorize filtered_claims
+    authorize [:payments, filtered_claims]
   end
 end

@@ -55,5 +55,11 @@ module IttMentorServices
 
     # Store user sessions in the database
     config.session_store :active_record_store
+
+    # Configure message verifiers to generate URL-safe tokens.
+    config.before_initialize do |app|
+      app.message_verifiers.clear_rotations
+      app.message_verifiers.rotate(url_safe: true)
+    end
   end
 end

@@ -1,4 +1,6 @@
 class Claims::Support::Claims::Payments::ClaimsController < Claims::Support::ApplicationController
+  append_pundit_namespace :claims, :payments
+
   before_action :set_claim, only: %i[show]
   before_action :authorize_claim
 
@@ -11,6 +13,6 @@ class Claims::Support::Claims::Payments::ClaimsController < Claims::Support::App
   end
 
   def authorize_claim
-    authorize [:payments, @claim || Claims::Claim]
+    authorize @claim || Claims::Claim
   end
 end
