@@ -1,0 +1,13 @@
+en:
+  claims:
+    payments:
+      claims:
+        index:
+          page_title: Download payments file
+          description_html: Download the Claim funding for mentor training payments <span title="Comma separated values">CSV</span> file.
+          support_html: If you have any questions, email %{mail_to}.
+          submit: Download CSV file
+        error:
+          page_title: Sorry, there is a problem with the download link
+          description: You are seeing this page because the download link is not working. It may have timed out or contained an invalid security token.
+          support_html: Email %{mail_to} to request a new download link.

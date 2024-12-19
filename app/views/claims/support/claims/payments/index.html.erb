@@ -8,6 +8,10 @@
 
   <h2 class="govuk-heading-m"><%= t(".sub_heading", count: @pagy.count) %></h2>
 
+  <div class="govuk-button-group">
+    <%= govuk_button_link_to t(".buttons.send_claims_to_esfa"), new_claims_support_claims_payment_path %>
+  </div>
+
   <% if @claims.any? %>
     <h3 class="govuk-heading-s"><%= t(".description", count: @pagy.count) %></h3>
 

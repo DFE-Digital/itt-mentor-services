@@ -13,6 +13,12 @@ scope module: :claims, as: :claims, constraints: {
 
   resources :service_updates, path: "service-updates", only: %i[index show]
 
+  namespace :payments do
+    resources :claims, only: %i[index] do
+      get :download, on: :collection
+    end
+  end
+
   resources :schools, only: %i[index show] do
     scope module: :schools do
       resources :claims do
@@ -76,7 +82,7 @@ scope module: :claims, as: :claims, constraints: {
         resources :claims, only: %i[show]
       end
 
-      resources :payments, only: %i[index]
+      resources :payments, only: %i[index new create]
       resources :samplings, path: "sampling/claims", only: %i[index show] do
         member do
           get :confirm_approval
@@ -88,6 +94,7 @@ scope module: :claims, as: :claims, constraints: {
           get "provider_rejected/new/:state_key/:step", to: "samplings/provider_rejected#edit", as: :provider_rejected
           put "provider_rejected/new/:state_key/:step", to: "samplings/provider_rejected#update"
         end
+
         collection do
           get "new", to: "samplings/upload_data#new", as: :new_upload_data
           get "new/:state_key/:step", to: "samplings/upload_data#edit", as: :upload_data
