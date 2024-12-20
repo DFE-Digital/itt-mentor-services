@@ -21,6 +21,11 @@ dv_review: dev-cluster
 	$(eval ENVIRONMENT=${PR_NUMBER})
 	$(eval include global_config/dv_review.sh)
 
+pt_review: platform-test-cluster
+	$(if ${PR_NUMBER},,$(error Missing PR_NUMBER))
+	$(eval ENVIRONMENT=${PR_NUMBER})
+	$(eval include global_config/pt_review.sh)
+
 .PHONY: qa
 qa: test-cluster
 	$(eval include global_config/qa.sh)
@@ -140,6 +145,10 @@ domains-apply: domains-init ## Terraform apply for DNS environment domains. Usag
 dev-cluster:
 	$(eval CLUSTER_RESOURCE_GROUP_NAME=s189d01-tsc-dv-rg)
 	$(eval CLUSTER_NAME=s189d01-tsc-${CLUSTER}-aks)
+
+platform-test-cluster:
+	$(eval CLUSTER_RESOURCE_GROUP_NAME=s189t01-tsc-pt-rg)
+	$(eval CLUSTER_NAME=s189t01-tsc-platform-test-aks)
 
 test-cluster:
 	$(eval CLUSTER_RESOURCE_GROUP_NAME=s189t01-tsc-ts-rg)

@@ -13,21 +13,28 @@ on:
           - review
           - staging
           - sandbox
-          - dv
+          - dv_review
+          - pt_review
       sha:
         description: Commit sha to be deployed
         required: true
-      pr_number:
-        description: PR number
+      pr-number:
+        description: PR number for review apps (Optional)
+        required: false
+      dev-cluster:
+        description: Development cluster name (Optional)
         required: false
 
 jobs:
   deploy:
-    name: ${{ github.event.inputs.environment }} deployment
+    name: ${{ inputs.environment }} deployment
     environment:
-      name: ${{ github.event.inputs.environment }}
+      name: ${{ inputs.environment }}
     concurrency: deploy_all
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      id-token: write
 
     steps:
       - name: Checkout
@@ -35,10 +42,12 @@ jobs:
 
       - uses: azure/login@v2
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
 
       - name: Fetch secrets from key vault
-        if: ${{ github.event.inputs.environment != 'review' }}
+        if: ${{ inputs.environment != 'review' && inputs.environment != 'dv_review' }}
         uses: azure/CLI@v2
         id: keyvault-yaml-secret
         with:
@@ -50,13 +59,16 @@ jobs:
       - uses: ./.github/actions/deploy-environment
         id: deploy
         with:
-          environment: ${{ github.event.inputs.environment }}
-          docker-image: ${{ github.event.inputs.sha }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          pull-request-number: ${{ github.event.inputs.pr_number }}
+          environment: ${{ inputs.environment }}
+          docker-image: ${{ inputs.sha }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          pull-request-number: ${{ inputs.pr-number }}
+          dev-cluster: ${{ inputs.dev-cluster }}
 
-      - name: Post comment to Pull Request ${{ github.event.inputs.pr_number }}
-        if: ${{ github.event.inputs.environment == 'review' }}
+      - name: Post comment to Pull Request ${{ inputs.pr-number }}
+        if: ${{ inputs.environment != 'review' && inputs.environment != 'dv_review' }}
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: aks
@@ -65,14 +77,14 @@ jobs:
 
             | App               | URL                                                                                      |
             | ----------------- | ---------------------------------------------------------------------------------------- |
-            | Track & Pay       | <https://track-and-pay-${{ github.event.inputs.pr_number }}.test.teacherservices.cloud>            |
-            | School Placements | <https://manage-school-placements-${{ github.event.inputs.pr_number }}.test.teacherservices.cloud> |
+            | Track & Pay       | <https://track-and-pay-${{ inputs.pr-number }}.test.teacherservices.cloud>            |
+            | School Placements | <https://manage-school-placements-${{ inputs.pr-number }}.test.teacherservices.cloud> |
 
       - name: Slack Notification
-        if: ${{ failure() && github.event.inputs.environment != 'review' }}
+        if: ${{ failure() && inputs.environment != 'review' }}
         uses: rtCamp/action-slack-notify@master
         env:
           SLACK_COLOR: failure
-          SLACK_TITLE: Failure deploying release to${{ github.event.inputs.environment }}
-          SLACK_MESSAGE: Failure deploying release to ${{ github.event.inputs.environment }} - Docker tag ${{ github.event.inputs.sha }}
+          SLACK_TITLE: Failure deploying release to${{ inputs.environment }}
+          SLACK_MESSAGE: Failure deploying release to ${{ inputs.environment }} - Docker tag ${{ inputs.sha }}
           SLACK_WEBHOOK: ${{ steps.keyvault-yaml-secret.outputs.SLACK_WEBHOOK }}
