@@ -48,9 +48,7 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadErrorsStep, type: :mo
       let(:invalid_status_claim_references) { %w[11111111 22222222] }
 
       it "returns a list of claims with the references in the invalid_claim_references attribute" do
-        expect(invalid_status_claims).to eq([
-          claim_1, claim_2
-        ])
+        expect(invalid_status_claims).to contain_exactly(claim_1, claim_2)
       end
     end
   end
@@ -68,9 +66,7 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadErrorsStep, type: :mo
       let(:missing_mentor_training_claim_references) { %w[11111111 22222222] }
 
       it "returns a list of claims with the references in the missing_mentor_training_claim_references attribute" do
-        expect(missing_mentor_claims).to eq([
-          claim_1, claim_2
-        ])
+        expect(missing_mentor_claims).to contain_exactly(claim_1, claim_2)
       end
     end
   end
@@ -88,9 +84,7 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadErrorsStep, type: :mo
       let(:invalid_assured_status_claim_references) { %w[11111111 22222222] }
 
       it "returns a list of claims with the references in the invalid_assured_status_claim_references attribute" do
-        expect(invalid_assured_status_claims).to eq([
-          claim_1, claim_2
-        ])
+        expect(invalid_assured_status_claims).to contain_exactly(claim_1, claim_2)
       end
     end
   end
@@ -108,9 +102,7 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadErrorsStep, type: :mo
       let(:missing_assured_reason_claim_references) { %w[11111111 22222222] }
 
       it "returns a list of claims with the references in the missing_assured_reason_claim_references attribute" do
-        expect(missing_assured_reason_claims).to eq([
-          claim_1, claim_2
-        ])
+        expect(missing_assured_reason_claims).to contain_exactly(claim_1, claim_2)
       end
     end
   end

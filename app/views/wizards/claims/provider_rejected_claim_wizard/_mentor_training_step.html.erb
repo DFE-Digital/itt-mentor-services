@@ -1,0 +1,31 @@
+<% content_for :page_title, title_with_error_prefix(
+  sanitize(t(".page_title", reference: current_step.claim.reference)),
+  error: current_step.errors.any?,
+) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l"><%= t(".caption", reference: current_step.claim.reference) %></span>
+        <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+
+        <%= f.govuk_check_boxes_fieldset :mentor_training_ids,
+          legend: { size: "m",
+                    text: t(".which_mentors"),
+                    tag: "h2" },
+          hint: { text: t(".include_partial_or_whole_clawback") } do %>
+          <% current_step.mentor_trainings.each_with_index do |mentor_training, index| %>
+            <%= f.govuk_check_box :mentor_training_ids,
+              mentor_training.id,
+              label: { text: mentor_training.mentor_full_name },
+              hint: { text: mentor_training.mentor.trn },
+              link_errors: index.zero? %>
+          <% end %>
+        <% end %>
+
+        <%= f.govuk_submit t(".continue") %>
+      </div>
+    </div>
+<% end %>

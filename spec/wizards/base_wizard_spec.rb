@@ -188,6 +188,22 @@ RSpec.describe BaseWizard do
         expect(wizard.steps[:choose_burger]).to have_attributes(burger: "chicken")
       end
     end
+
+    context "when given preset attributes" do
+      it "assigns the preset attributes to the step" do
+        wizard.add_step(BurgerOrderWizard::ChooseBurgerStep, { burger: "beef" })
+        expect(wizard.steps[:choose_burger]).to have_attributes(burger: "beef")
+        expect(wizard.steps.keys).to include(:choose_burger)
+      end
+
+      context "when given a step identifier" do
+        it "appends the step identifier to the key" do
+          wizard.add_step(BurgerOrderWizard::ChooseBurgerStep, { burger: "beef" }, :burger)
+          expect(wizard.steps.keys).to include(:choose_burger_beef)
+          expect(wizard.steps[:choose_burger_beef]).to have_attributes(burger: "beef")
+        end
+      end
+    end
   end
 
   describe "#reset_state" do

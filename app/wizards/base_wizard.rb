@@ -24,9 +24,9 @@ class BaseWizard
     # add_step(FinalStep)
   end
 
-  def add_step(step_class)
-    name = step_name(step_class)
-    attributes = step_attributes(name, step_class)
+  def add_step(step_class, preset_attributes = {}, step_identifier = nil)
+    name = step_name(step_class, preset_attributes[step_identifier])
+    attributes = step_attributes(name, step_class, preset_attributes)
     @steps[name] = step_class.new(wizard: self, attributes:)
   end
 
@@ -69,20 +69,28 @@ class BaseWizard
 
   private
 
-  def step_name(step_class)
+  def step_name(step_class, id = nil)
     # e.g. YearGroupStep becomes :year_group
-    step_class.name.chomp("Step").demodulize.underscore.to_sym
+    name = step_class.name.chomp("Step").demodulize.underscore
+    return name.to_sym if id.blank?
+
+    "#{name}_#{id}".to_sym
   end
 
-  def step_attributes(name, step_class)
+  def step_attributes(name, step_class, preset_attributes = {})
     state_key = name.to_s
 
-    if name == current_step
-      # Try and populate from the params, then fall back to the session
-      params_key = step_class.model_name.param_key
-      params[params_key]&.permit! || state[state_key]
-    else
-      state[state_key]
-    end
+    attributes = if name == current_step
+                   # Try and populate from the params, then fall back to the session
+                   params_key = step_class.model_name.param_key
+                   params[params_key]&.permit! || state[state_key]
+                 else
+                   state[state_key]
+                 end
+
+    return attributes if preset_attributes.blank?
+
+    attributes = {} if attributes.blank?
+    attributes.merge(preset_attributes)
   end
 end

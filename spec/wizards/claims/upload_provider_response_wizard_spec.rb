@@ -139,22 +139,35 @@ RSpec.describe Claims::UploadProviderResponseWizard do
           },
         }
       end
-
-      before do
+      let(:john_smith_mentor_training) do
         create(:mentor_training, mentor: mentor_john_smith, claim: sampling_in_progress_claim_1)
+      end
+      let(:jane_doe_mentor_training) do
         create(:mentor_training, mentor: mentor_jane_doe, claim: sampling_in_progress_claim_2)
       end
 
+      before do
+        john_smith_mentor_training
+        jane_doe_mentor_training
+      end
+
       it "returns the claim_update_details from the upload step" do
-        expect(claim_update_details).to contain_exactly({
-          id: sampling_in_progress_claim_1.id,
-          status: :sampling_provider_not_approved,
-          not_assured_reason: "Some reason",
-        }, {
-          id: sampling_in_progress_claim_2.id,
-          status: :paid,
-          not_assured_reason: nil,
-        })
+        expect(claim_update_details).to contain_exactly(
+          {
+            id: sampling_in_progress_claim_1.id,
+            status: :sampling_provider_not_approved,
+            provider_responses: [
+              { id: john_smith_mentor_training.id, not_assured: true, reason_not_assured: "Some reason" },
+            ],
+          },
+          {
+            id: sampling_in_progress_claim_2.id,
+            status: :paid,
+            provider_responses: [
+              { id: jane_doe_mentor_training.id, not_assured: false, reason_not_assured: nil },
+            ],
+          },
+        )
       end
     end
   end
