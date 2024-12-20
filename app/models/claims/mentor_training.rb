@@ -4,9 +4,10 @@
 #
 #  id                 :uuid             not null, primary key
 #  date_completed     :datetime
+#  hours_clawed_back  :integer
 #  hours_completed    :integer
-#  hours_rejected     :integer
 #  not_assured        :boolean          default(FALSE)
+#  reason_clawed_back :text
 #  reason_not_assured :text
 #  reason_rejected    :text
 #  rejected           :boolean          default(FALSE)
@@ -40,8 +41,6 @@ class Claims::MentorTraining < ApplicationRecord
     initial: "initial",
     refresher: "refresher",
   }, default: :initial, validate: true
-
-  self.ignored_columns += ["hours_rejected"]
 
   validates :hours_completed,
             allow_nil: true,
