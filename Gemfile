@@ -123,7 +123,6 @@ group :development do
   gem "annotate", require: false
   gem "prettier_print", require: false
   gem "rladr"
-  gem "rubocop-govuk", require: false
   gem "syntax_tree", require: false
   gem "syntax_tree-haml", require: false
   gem "syntax_tree-rbs", require: false
@@ -159,6 +158,9 @@ group :test do
   gem "timecop"
   gem "undercover", "~> 0.5.0"
   gem "webmock"
+
+  gem "rubocop-govuk", require: false
+  gem "rubocop-rspec", require: false
 end
 
 group :test, :development do

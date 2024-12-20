@@ -736,6 +736,7 @@ DEPENDENCIES
   rspec
   rspec-rails
   rubocop-govuk
+  rubocop-rspec
   ruby-lsp-rspec
   selenium-webdriver
   sentry-rails
