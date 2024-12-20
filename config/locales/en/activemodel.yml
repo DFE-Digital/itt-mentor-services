@@ -205,5 +205,13 @@ en:
             csv_upload:
               blank: Select a CSV file to upload
               invalid: The selected file must be a CSV
+        claims/provider_rejected_claim_wizard/mentor_training_step:
+          attributes:
+            mentor_training_ids:
+              blank: Select a mentor
+        claims/provider_rejected_claim_wizard/provider_response_step:
+          attributes:
+            reason_not_assured:
+              blank: Enter the reason the provider has given for rejecting this mentor.
 
 

@@ -7,7 +7,7 @@ class Claims::Sampling::UpdateClaimWithProviderResponseJob < ApplicationJob
     else
       Claims::Claim::Sampling::ProviderNotApproved.call(
         claim: claim(claim_update_details.fetch(:id)),
-        not_assured_reason: claim_update_details[:not_assured_reason],
+        provider_responses: claim_update_details.fetch(:provider_responses),
       )
     end
   end

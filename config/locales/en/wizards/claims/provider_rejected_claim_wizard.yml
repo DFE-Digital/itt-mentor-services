@@ -1,0 +1,35 @@
+en:
+  wizards:
+    claims:
+      provider_rejected_claim_wizard:
+        mentor_training_step:
+          page_title: Select a mentor - Rejected by provider - Claim %{reference} - Sampling - Claims
+          title: Rejection details from the provider
+          caption: Rejected by provider - Claim %{reference}
+          continue: Continue
+          which_mentors: Which mentors are being rejected?
+          include_partial_or_whole_clawback: Include mentors which need partial or whole clawback.
+        provider_response_step:
+          page_title:  What reason has the provider given for rejecting %{mentor_name}? - Rejected by provider - Claim %{reference} - Sampling - Claims
+          title: What reason has the provider given for rejecting %{mentor_name}?
+          caption: Rejected by provider - Claim %{reference}
+          mentor_training_assured: Has the provider assured this mentor's training?
+          please_add_reason: Only include details related to [%{mentor_name}].
+          continue: Continue
+          hours_completed: 
+            one: The school originally claimed %{mentor_name} has completed %{count} hour.
+            other: The school originally claimed %{mentor_name} has completed %{count} hours.
+        check_your_answers_step:
+          page_title: Check your answers - Rejected by provider - Claim %{reference} - Sampling - Claims
+          title: Check your answers
+          caption: Rejected by provider - Claim %{reference}
+          reason_for_rejection: Reason for rejection
+          provider_rejection_details: Provider's rejection details %{index}
+          assured: Assured
+          "yes": "Yes"
+          "no": "No"
+          confirm: Confirm and reject claim
+          change: Change
+          original_number_of_hours_claimed: Original number of hours claimed
+          rejecting_these_mentors_will_update_status: |
+            Rejecting these mentors will update the claim status to ‘rejected by provider’.

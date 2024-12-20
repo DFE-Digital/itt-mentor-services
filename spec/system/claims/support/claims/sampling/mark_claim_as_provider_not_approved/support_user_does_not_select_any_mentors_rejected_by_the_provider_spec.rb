@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support user marks a claim as provider not approved", service: :claims, type: :system do
+RSpec.describe "Support user does not select any mentors rejected by the provider", service: :claims, type: :system do
   scenario do
     given_a_claim_exists
     and_i_am_signed_in
@@ -12,14 +12,10 @@ RSpec.describe "Support user marks a claim as provider not approved", service: :
     then_i_see_the_details_of_the_claim
 
     when_i_click_on_confirm_provider_rejected_claim
-    then_i_see_the_confirmation_page
+    then_i_see_the_mentor_selection_page
 
-    when_i_click_on_cancel
-    then_i_see_the_details_of_the_claim
-
-    when_i_click_on_confirm_provider_rejected_claim
-    and_i_click_on_confirm_provider_rejected_claim
-    then_i_see_that_the_claim_has_been_updated_to_provider_not_approved
+    when_i_click_on_continue
+    then_i_see_a_validation_error_select_a_mentor
   end
 
   private
@@ -28,6 +24,10 @@ RSpec.describe "Support user marks a claim as provider not approved", service: :
     @claim = create(:claim,
                     :submitted,
                     status: :sampling_in_progress)
+    @mentor_john_smith = create(:claims_mentor, first_name: "John", last_name: "Smith")
+    @mentor_jane_doe = create(:claims_mentor, first_name: "Jane", last_name: "Doe")
+    @john_smith_mentor_training = create(:mentor_training, mentor: @mentor_john_smith, claim: @claim, hours_completed: 20)
+    @jane_doe_mentor_training = create(:mentor_training, mentor: @mentor_jane_doe, claim: @claim, hours_completed: 15)
   end
 
   def and_i_am_signed_in
@@ -69,32 +69,22 @@ RSpec.describe "Support user marks a claim as provider not approved", service: :
   def when_i_click_on_confirm_provider_rejected_claim
     click_on "Confirm provider rejected claim"
   end
-  alias_method :and_i_click_on_confirm_provider_rejected_claim,
-               :when_i_click_on_confirm_provider_rejected_claim
 
-  def then_i_see_the_confirmation_page
+  def then_i_see_the_mentor_selection_page
     expect(page).to have_title(
-      "Are you sure you want to confirm the provider has rejected the claim? - Sampling - Claim #{@claim.reference} - Claim funding for mentor training - GOV.UK",
+      "Select a mentor - Rejected by provider - Claim #{@claim.reference} - Sampling - Claims - Claim funding for mentor training - GOV.UK",
     )
-    expect(page).to have_element(:span, text: "Sampling - Claim #{@claim.reference}", class: "govuk-caption-l")
-    expect(page).to have_h1("Are you sure you want to confirm the provider has rejected the claim?")
-    expect(page).to have_element(:p, text: "You confirm you have spoken to the provider and they have rejected the claim.", class: "govuk-body")
-    expect(page).to have_element(:p, text: "This will move the claim to the clawbacks queue.", class: "govuk-body")
+    expect(page).to have_element(:span, text: "Rejected by provider - Claim #{@claim.reference}", class: "govuk-caption-l")
+    expect(page).to have_h1("Rejection details from the provider")
+    expect(page).to have_element(:legend, text: "Which mentors are being rejected?")
+    expect(page).to have_element(:div, text: "Include mentors which need partial or whole clawback.", class: "govuk-hint")
   end
 
-  def when_i_click_on_cancel
-    click_on "Cancel"
+  def when_i_click_on_continue
+    click_on "Continue"
   end
 
-  def then_i_see_that_the_claim_has_been_updated_to_provider_not_approved
-    expect(page).to have_current_path(claims_support_claims_sampling_path(@claim), ignore_query: true)
-    expect(page).to have_title(
-      "#{@claim.school.name} - Sampling - Claim #{@claim.reference} - Claim funding for mentor training - GOV.UK",
-    )
-    expect(page).to have_element(:p, text: "Sampling - Claim #{@claim.reference}", class: "govuk-caption-l")
-    expect(page).to have_h1(@claim.school.name)
-
-    expect(page).to have_element(:strong, text: "Provider not approved", class: "govuk-tag govuk-tag--pink")
-    expect(page).to have_success_banner("Claim updated")
+  def then_i_see_a_validation_error_select_a_mentor
+    expect(page).to have_validation_error("Select a mentor")
   end
 end

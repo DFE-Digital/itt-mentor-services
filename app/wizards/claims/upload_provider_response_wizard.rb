@@ -32,22 +32,15 @@ module Claims
 
         claim = sampled_claims.find_by!(reference: claim_reference)
 
-        not_assured_statuses = steps.fetch(:upload).class::NOT_ASSURED_STATUSES
-
         all_assured = provider_responses.none? do |provider_response|
-          not_assured_statuses.include?(provider_response["claim_assured"].to_s.downcase)
+          provider_not_assured_mentor_training?(provider_response)
         end
         new_status = all_assured ? :paid : :sampling_provider_not_approved
-
-        not_assured_reason = if new_status == :sampling_provider_not_approved
-                               provider_responses
-                                 .pluck("claim_not_assured_reason").join("\n")
-                             end
 
         update_details << {
           id: claim.id,
           status: new_status,
-          not_assured_reason:,
+          provider_responses: provider_responses_for_mentor_trainings(claim, provider_responses),
         }
       end
       update_details
@@ -61,6 +54,28 @@ module Claims
 
     def csv_inputs_valid?
       @csv_inputs_valid ||= steps.fetch(:upload).csv_inputs_valid?
+    end
+
+    def provider_responses_for_mentor_trainings(claim, provider_responses)
+      claim.mentor_trainings.map do |mentor_training|
+        provider_response_for_mentor = provider_responses.find do |provider_response|
+          provider_response["mentor_full_name"] == mentor_training.mentor_full_name
+        end
+
+        {
+          id: mentor_training.id,
+          not_assured: provider_not_assured_mentor_training?(provider_response_for_mentor),
+          reason_not_assured: provider_response_for_mentor["claim_not_assured_reason"],
+        }
+      end
+    end
+
+    def not_assured_statuses
+      @not_assured_statuses ||= steps.fetch(:upload).class::NOT_ASSURED_STATUSES
+    end
+
+    def provider_not_assured_mentor_training?(provider_response)
+      not_assured_statuses.include?(provider_response["claim_assured"].to_s.downcase)
     end
   end
 end

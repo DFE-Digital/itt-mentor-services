@@ -1,0 +1,26 @@
+<% content_for :page_title, title_with_error_prefix(
+  sanitize(t(".page_title", mentor_name: current_step.mentor.full_name, reference: current_step.claim.reference)),
+  error: current_step.errors.any?,
+) %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".caption", reference: current_step.claim.reference) %></span>
+      <h1 class="govuk-heading-l"><%= t(".title", mentor_name: current_step.mentor.full_name) %></h1>
+
+      <%= form_for(current_step, url: current_step_path, method: :put, multipart: true) do |f| %>
+        <%= f.govuk_error_summary %>
+
+      <%= govuk_inset_text do %>
+        <p class="govuk-body"><%= t(".hours_completed", count: current_step.hours_completed, mentor_name: current_step.mentor.full_name) %></p>
+      <% end %>
+
+        <%= f.govuk_text_area :reason_not_assured,
+          label: { text: t(".please_add_reason", mentor_name: current_step.mentor.full_name) } %>
+
+        <%= f.govuk_submit t(".continue") %>
+      <% end %>
+    </div>
+  </div>
+</div>

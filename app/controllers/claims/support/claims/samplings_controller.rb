@@ -22,14 +22,6 @@ class Claims::Support::Claims::SamplingsController < Claims::Support::Applicatio
     }
   end
 
-  def confirm_provider_rejected; end
-
-  def provider_rejected
-    Claims::Claim::Sampling::ProviderNotApproved.call(claim: @claim)
-    redirect_to claims_support_claims_sampling_path(@claim),
-                flash: { heading: t(".success") }
-  end
-
   def confirm_rejection; end
 
   def reject
