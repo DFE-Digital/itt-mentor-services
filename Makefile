@@ -12,7 +12,6 @@ help:
 review: test-cluster
 	$(if ${PR_NUMBER},,$(error Missing PR_NUMBER))
 	$(eval ENVIRONMENT=${PR_NUMBER})
-	$(eval export TF_VAR_environment=${ENVIRONMENT})
 	$(eval include global_config/review.sh)
 
 dv_review: dev-cluster
@@ -20,32 +19,23 @@ dv_review: dev-cluster
 	$(if ${CLUSTER},,$(error Missing CLUSTER))
 	$(eval export TF_VAR_cluster=${CLUSTER})
 	$(eval ENVIRONMENT=${PR_NUMBER})
-	$(eval export TF_VAR_environment=${ENVIRONMENT})
 	$(eval include global_config/dv_review.sh)
 
 .PHONY: qa
 qa: test-cluster
-		$(eval ENVIRONMENT=qa)
-		$(eval export TF_VAR_environment=${ENVIRONMENT})
-		$(eval include global_config/qa.sh)
+	$(eval include global_config/qa.sh)
 
 .PHONY: sandbox
 sandbox: production-cluster
-		$(eval ENVIRONMENT=sandbox)
-		$(eval export TF_VAR_environment=${ENVIRONMENT})
-		$(eval include global_config/sandbox.sh)
+	$(eval include global_config/sandbox.sh)
 
 .PHONY: staging
 staging: test-cluster
-		$(eval ENVIRONMENT=staging)
-		$(eval export TF_VAR_environment=${ENVIRONMENT})
-		$(eval include global_config/staging.sh)
+	$(eval include global_config/staging.sh)
 
 .PHONY: production
 production: production-cluster
-		$(eval ENVIRONMENT=production)
-		$(eval export TF_VAR_environment=${ENVIRONMENT})
-		$(eval include global_config/production.sh)
+	$(eval include global_config/production.sh)
 
 composed-variables:
 	$(eval RESOURCE_GROUP_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg)
@@ -86,6 +76,7 @@ terraform-init: composed-variables set-azure-account
 	$(eval export TF_VAR_service_name=${SERVICE_NAME})
 	$(eval export TF_VAR_service_short=${SERVICE_SHORT})
 	$(eval export TF_VAR_docker_image=${DOCKER_REPOSITORY}:${DOCKER_IMAGE_TAG})
+	$(eval export TF_VAR_environment=${ENVIRONMENT})
 
 terraform-plan: terraform-init
 	terraform -chdir=terraform/application plan -var-file "config/${CONFIG}.tfvars.json"
