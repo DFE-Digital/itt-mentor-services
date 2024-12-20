@@ -18,9 +18,10 @@ shared:
     - updated_at
     - rejected
     - reason_rejected
-    - hours_rejected
     - not_assured
     - reason_not_assured
+    - reason_clawed_back
+    - hours_clawed_back
   :user_memberships:
     - id
     - user_id
