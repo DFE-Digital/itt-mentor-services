@@ -41,6 +41,8 @@ class Claims::MentorTraining < ApplicationRecord
     refresher: "refresher",
   }, default: :initial, validate: true
 
+  self.ignored_columns += ["hours_rejected"]
+
   validates :hours_completed,
             allow_nil: true,
             # TODO: Remove this 'unless' condition once claim revisions have been removed.
@@ -57,7 +59,6 @@ class Claims::MentorTraining < ApplicationRecord
               only_integer: true,
             }
   validates :reason_rejected, presence: true, if: -> { rejected }
-  validates :hours_rejected, presence: true, if: -> { rejected }
   validates :reason_not_assured, presence: true, if: -> { not_assured }
 
   scope :without_hours, -> { where(hours_completed: nil).order_by_mentor_full_name }
