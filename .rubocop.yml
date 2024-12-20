@@ -1,8 +1,13 @@
+require:
+  - rubocop-rspec
+
 inherit_gem:
   rubocop-govuk:
     - config/default.yml
     - config/rails.yml
     - config/rspec.yml
+  pundit:
+    - config/rubocop-rspec.yml
 
 inherit_mode:
   merge:

@@ -5,7 +5,7 @@ RSpec.describe Placements::PlacementPolicy do
 
   let(:current_user) { create(:placements_user, schools: [school]) }
 
-  permissions :new?, :edit_provider?, :edit_mentors?, :edit_year_group?, :update?, :add_placement_journey? do
+  permissions :new?, :add_placement_journey?, :edit_mentors?, :edit_provider?, :edit_year_group?, :update? do
     let(:placement) { Placement.new(school:) }
 
     context "when the placement's school has no school contact" do
