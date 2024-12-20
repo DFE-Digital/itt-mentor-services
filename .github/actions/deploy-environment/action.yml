@@ -20,6 +20,9 @@ inputs:
   azure-tenant-id:
     description: Azure tenant ID
     required: true
+  dev-cluster:
+    description: Development cluster name (Optional)
+    required: false
 
 runs:
   using: composite
@@ -43,6 +46,7 @@ runs:
       env:
         DOCKER_IMAGE_TAG: ${{ inputs.docker-image }}
         PR_NUMBER: ${{ inputs.pull-request-number }}
+        CLUSTER: ${{ inputs.dev-cluster }}
 
     - name: Extract Terraform outputs
       shell: bash
