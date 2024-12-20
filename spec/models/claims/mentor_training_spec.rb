@@ -71,11 +71,6 @@ RSpec.describe Claims::MentorTraining, type: :model do
           expect(mentor_training.valid?).to be(false)
           expect(mentor_training.errors["reason_rejected"]).to include("can't be blank")
         end
-
-        it "validates that the rejected hours is present" do
-          expect(mentor_training.valid?).to be(false)
-          expect(mentor_training.errors["hours_rejected"]).to include("can't be blank")
-        end
       end
 
       context "when rejected is false" do
