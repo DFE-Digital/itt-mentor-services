@@ -54,7 +54,7 @@ describe Claims::Claim::Sampling::NotApproved do
         end
 
         it "skips the mentor training not associated with the claim" do
-          expect { call }.not_to change(mentor_training_2, :rejected).from(false)
+          expect { call }.not_to change(mentor_training_1, :rejected).from(false)
         end
       end
     end
