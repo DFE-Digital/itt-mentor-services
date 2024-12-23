@@ -41,8 +41,8 @@ describe Claims::Claim::Sampling::NotApproved do
         expect(mentor_training_2.reload.rejected).to be(false)
       end
 
-      context "when a provider response is not given for a mentor training associated with this claim" do
-        let(:provider_responses) do
+      context "when a school response is not given for a mentor training associated with this claim" do
+        let(:school_responses) do
           [
             { id: mentor_training_1.id, rejected: true, reason_rejected: "Some reason rejected" },
           ]
