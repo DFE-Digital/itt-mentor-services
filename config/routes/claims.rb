@@ -88,11 +88,15 @@ scope module: :claims, as: :claims, constraints: {
           get :confirm_approval
           put :update
           get :confirm_rejection
-          put :reject
+          # put :reject
 
           get "provider_rejected/new", to: "samplings/provider_rejected#new", as: :new_provider_rejected
           get "provider_rejected/new/:state_key/:step", to: "samplings/provider_rejected#edit", as: :provider_rejected
           put "provider_rejected/new/:state_key/:step", to: "samplings/provider_rejected#update"
+
+          get "reject/new", to: "samplings/reject#new", as: :new_rejected
+          get "reject/new/:state_key/:step", to: "samplings/reject#edit", as: :reject
+          put "reject/new/:state_key/:step", to: "samplings/reject#update"
         end
 
         collection do

@@ -25,11 +25,11 @@ en:
           caption: Rejected by provider - Claim %{reference}
           reason_for_rejection: Reason for rejection
           provider_rejection_details: Provider's rejection details %{index}
-          assured: Assured
-          "yes": "Yes"
-          "no": "No"
           confirm: Confirm and reject claim
           change: Change
           original_number_of_hours_claimed: Original number of hours claimed
           rejecting_these_mentors_will_update_status: |
             Rejecting these mentors will update the claim status to ‘rejected by provider’.
+          hours:
+            one: "%{count} hour"
+            other: "%{count} hours"

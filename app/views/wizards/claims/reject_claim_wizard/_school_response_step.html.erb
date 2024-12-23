@@ -13,10 +13,15 @@
         <%= f.govuk_error_summary %>
 
         <%= govuk_inset_text do %>
+          <p class="govuk-heading-s"><%= t(".provider_response") %></strong>
+          <p class="govuk-body"><%= sanitize(current_step.reason_not_assured) %></p>
+        <% end %>
+
+        <%= govuk_inset_text do %>
           <p class="govuk-body"><%= t(".hours_completed", count: current_step.hours_completed, mentor_name: current_step.mentor.full_name) %></p>
         <% end %>
 
-        <%= f.govuk_text_area :reason_not_assured,
+        <%= f.govuk_text_area :reason_rejected,
           label: { text: t(".please_add_reason", mentor_name: current_step.mentor.full_name) } %>
 
         <%= f.govuk_submit t(".continue") %>

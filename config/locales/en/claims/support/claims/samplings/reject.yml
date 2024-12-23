@@ -1,0 +1,10 @@
+en:
+  claims:
+    support:
+      claims:
+        samplings:
+          reject:
+            edit:
+              cancel: Cancel
+            update: 
+              success: Claim updated

@@ -213,5 +213,9 @@ en:
           attributes:
             reason_not_assured:
               blank: Enter the reason the provider has given for rejecting this mentor.
+        claims/reject_claim_wizard/school_response_step:
+          attributes:
+            reason_rejected:
+              blank: Enter the response the school has given for rejecting this mentor.
 
 
