@@ -87,8 +87,6 @@ scope module: :claims, as: :claims, constraints: {
         member do
           get :confirm_approval
           put :update
-          get :confirm_rejection
-          # put :reject
 
           get "provider_rejected/new", to: "samplings/provider_rejected#new", as: :new_provider_rejected
           get "provider_rejected/new/:state_key/:step", to: "samplings/provider_rejected#edit", as: :provider_rejected
