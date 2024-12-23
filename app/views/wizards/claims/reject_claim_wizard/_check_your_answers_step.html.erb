@@ -8,33 +8,29 @@
       <span class="govuk-caption-l"><%= t(".caption", reference: current_step.claim.reference) %></span>
       <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
-      <% @wizard.selected_mentor_trainings.each_with_index do |mentor_training, index| %>
+      <% @wizard.not_assured_mentor_trainings.each_with_index do |mentor_training| %>
         <h2 class="govuk-heading-m">
-          <%= t(".provider_rejection_details", index: index + 1) %>
+          <%= t(".school_rejection_details", mentor_name: mentor_training.mentor_full_name) %>
         </h2>
 
-        <%= govuk_summary_list(html_attributes: { id: "provider_rejection_details_#{index + 1}" }) do |summary_list| %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(text: Claims::MentorTraining.human_attribute_name("mentor")) %>
-            <% row.with_value(text: mentor_training.mentor_full_name) %>
-            <% row.with_action(text: t(".change"),
-                               href: step_path(:mentor_training),
-                               visually_hidden_text: Claims::MentorTraining.human_attribute_name("mentor"),
-                               classes: ["govuk-link--no-visited-state"]) %>
-          <% end %>
-
+        <%= govuk_summary_list(html_attributes: { id: "school_rejection_details_#{mentor_training.id}" }) do |summary_list| %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".original_number_of_hours_claimed")) %>
             <% row.with_value(text: t(".hours", count: mentor_training.hours_completed)) %>
           <% end %>
 
           <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".provider_comments")) %>
+            <% row.with_value(text: sanitize(mentor_training.reason_not_assured)) %>
+          <% end %>
+
+          <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".reason_for_rejection")) %>
             <% row.with_value(
-              text: sanitize(@wizard.steps.fetch(@wizard.step_name_for_provider_response(mentor_training)).reason_not_assured),
+              text: sanitize(@wizard.steps.fetch(@wizard.step_name_for_school_response(mentor_training)).reason_rejected),
             ) %>
             <% row.with_action(text: t(".change"),
-                               href: step_path(@wizard.step_name_for_provider_response(mentor_training)),
+                               href: step_path(@wizard.step_name_for_school_response(mentor_training)),
                                visually_hidden_text: "#{t(".reason_for_rejection")} for #{mentor_training.mentor_full_name}",
                                classes: ["govuk-link--no-visited-state"]) %>
           <% end %>
