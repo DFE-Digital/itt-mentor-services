@@ -8,7 +8,7 @@ en:
           caption: Reject - Claim %{reference}
           continue: Continue
           checklist_html: |
-            <p>To reject this claim, you mush have:</p>
+            <p>To reject this claim, you must have:</p>
             <ol class="govuk-list govuk-list--number">
               <li>reviewed any evidence sent by the school and deemed it insufficient to prove the claim is legitimate</li>
               <li>received second approval from within the support team or policy team</li>
@@ -16,8 +16,8 @@ en:
               <li>told the school which claims you are rejecting and how much will be clawed back</li>
             </ol>
         school_response_step:
-          page_title:  What is the school's response to the claim about %{mentor_name}? - Reject - Claim %{reference} - Sampling - Claims
-          title: What is the school's response to the claim about %{mentor_name}?
+          page_title:  What is the schools response to the claim about %{mentor_name}? - Reject - Claim %{reference} - Sampling - Claims
+          title: What is the schools response to the claim about %{mentor_name}?
           caption: Reject - Claim %{reference}
           continue: Continue
           hours_completed: 
