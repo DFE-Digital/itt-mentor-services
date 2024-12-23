@@ -7,3 +7,10 @@ en:
             heading: Claims
             sub_heading: Activity log
             no_activity: There is no activity.
+            byline: "%{user} on %{time}"
+            showing: "Showing %{count} of %{total_count} files"
+            view_all_files: View all files
+          show:
+            page_caption: Activity log
+            byline: "%{user} on %{time}"
+            files: Files

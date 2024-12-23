@@ -23,10 +23,16 @@ FactoryBot.define do
   factory :claim_activity, class: "Claims::ClaimActivity" do
     association :user, factory: :claims_support_user
 
-    trait :payment_delivered do
-      action { "payment_delivered" }
+    trait :payment_request_delivered do
+      action { "payment_request_delivered" }
 
-      association :record, factory: :claims_payment
+      record { build(:claims_payment, sent_by: user) }
+    end
+
+    trait :sampling_uploaded do
+      action { "sampling_uploaded" }
+
+      record { build(:claims_sampling) }
     end
   end
 end

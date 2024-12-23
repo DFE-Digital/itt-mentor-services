@@ -20,11 +20,17 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Claims::ClaimActivity < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, class_name: "Claims::SupportUser"
   belongs_to :record, polymorphic: true
 
   enum :action, {
-    payment_delivered: "payment_delivered",
-    sampling_in_progress: "sampling_in_progress",
+    payment_request_delivered: "payment_request_delivered",
+    payment_response_uploaded: "payment_response_uploaded",
+    sampling_uploaded: "sampling_uploaded",
+    sampling_response_uploaded: "sampling_response_uploaded",
+    clawback_request_delivered: "clawback_request_delivered",
+    clawback_response_uploaded: "clawback_response_uploaded",
   }
+
+  delegate :full_name, to: :user, prefix: true, allow_nil: true
 end

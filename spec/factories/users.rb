@@ -51,6 +51,8 @@ FactoryBot.define do
 
     trait :support do
       sequence(:email) { |n| "user#{n}@education.gov.uk" }
+
+      first_name { "Support User" }
     end
 
     trait :discarded do

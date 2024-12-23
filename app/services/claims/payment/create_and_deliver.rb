@@ -15,7 +15,7 @@ class Claims::Payment::CreateAndDeliver < ApplicationService
         claim.update!(status: :payment_in_progress, payment_in_progress_at: Time.current)
       end
 
-      Claims::ClaimActivity.create!(action: :payment_delivered, user: current_user, record: payment)
+      Claims::ClaimActivity.create!(action: :payment_request_delivered, user: current_user, record: payment)
 
       transaction.after_commit do
         Claims::PaymentMailer.payment_created_notification(payment).deliver_later

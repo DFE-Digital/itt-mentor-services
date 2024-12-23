@@ -6,7 +6,62 @@
 
   <%= render "claims/support/claims/secondary_navigation", current: :activity_log %>
 
-  <h2 class="govuk-heading-m"><%= t(".sub_heading") %></h2>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-m"><%= t(".sub_heading") %></h2>
 
-  <p class="govuk-body"><%= t(".no_activity") %></p>
+      <% if @claim_activities.any? %>
+        <div class="app-timeline">
+          <% @claim_activities.each do |claim_activity| %>
+            <div class="app-timeline__item">
+              <div class="app-timeline__header">
+                <h3 class="app-timeline__title">
+                  <%= Claims::ClaimActivity.human_attribute_name("action.#{claim_activity.action}") %>
+                </h3>
+
+                <p class="app-timeline__byline">
+                  <%= t(".byline", user: claim_activity.user_full_name, time: l(claim_activity.created_at, format: :date_at_time)) %>
+                </p>
+              </div>
+
+              <div class="app-timeline__description">
+                <% case claim_activity.action %>
+                <% when "payment_request_delivered", "clawback_request_delivered" %>
+                  <ul class="app-timeline__documents">
+                    <li class="app-timeline__document-item">
+                      <%= govuk_link_to claim_activity.record.csv_file, class: "app-timeline__document-link" do %>
+                        <%= image_tag "icon-document.svg", class: "app-timeline__document-link__icon" %> Claims sent to ESFA
+                      <% end %>
+                    </li>
+                  </ul>
+                <% when "sampling_uploaded" %>
+                  <% provider_samplings = claim_activity.record.provider_samplings %>
+
+                  <ul class="app-timeline__documents">
+                    <% provider_samplings.limit(5).each do |provider_sampling| %>
+                      <li class="app-timeline__document-item">
+                        <%= govuk_link_to provider_sampling.csv_file, class: "app-timeline__document-link" do %>
+                          <%= image_tag "icon-document.svg", class: "app-timeline__document-link__icon" %> <%= provider_sampling.provider.name %>
+                        <% end %>
+                      </li>
+                    <% end %>
+                  </ul>
+
+                  <% if provider_samplings.offset(5).any? %>
+                    <p class="govuk-body"><%= t(".showing", count: provider_samplings.limit(5).length, total_count: provider_samplings.count) %></p>
+
+                    <%= govuk_link_to t(".view_all_files"), claims_support_claims_claim_activity_path(claim_activity) %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <%= render PaginationComponent.new(pagy: @pagy) %>
+      <% else %>
+        <p class="govuk-body"><%= t(".no_activity") %></p>
+      <% end %>
+    </div>
+  </div>
 </div>

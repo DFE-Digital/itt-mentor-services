@@ -27,5 +27,7 @@ class Claims::ProviderSampling < ApplicationRecord
 
   has_one_attached :csv_file
 
+  scope :order_by_provider_name, -> { joins(:provider).order(providers: { name: :asc }) }
+
   delegate :email_address, :name, to: :provider, prefix: true
 end
