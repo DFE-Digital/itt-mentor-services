@@ -2,7 +2,7 @@ en:
   claims:
     support:
       claims:
-        activity_logs:
+        claim_activities:
           index:
             heading: Claims
             sub_heading: Activity log
