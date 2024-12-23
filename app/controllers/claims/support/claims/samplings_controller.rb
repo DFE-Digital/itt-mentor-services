@@ -22,14 +22,6 @@ class Claims::Support::Claims::SamplingsController < Claims::Support::Applicatio
     }
   end
 
-  def confirm_rejection; end
-
-  def reject
-    Claims::Claim::Sampling::NotApproved.call(claim: @claim)
-    redirect_to claims_support_claims_samplings_path,
-                flash: { heading: t(".success") }
-  end
-
   private
 
   def set_filtered_claims
@@ -62,9 +54,5 @@ class Claims::Support::Claims::SamplingsController < Claims::Support::Applicatio
       statuses: [],
       academic_year_ids: [],
     ).with_defaults(index_path:)
-  end
-
-  def index_path
-    claims_support_claims_samplings_path
   end
 end
