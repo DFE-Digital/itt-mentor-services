@@ -1,0 +1,28 @@
+<%= content_for :page_title, Claims::ClaimActivity.human_attribute_name("action.#{@claim_activity.action}") %>
+<%= render "claims/support/primary_navigation", current: :claims %>
+
+<% content_for(:before_content) do %>
+  <%= govuk_back_link href: claims_support_claims_claim_activities_path %>
+<% end %>
+
+<div class="govuk-width-container">
+  <p class="govuk-caption-l"><%= t(".page_caption") %></p>
+  <h1 class="govuk-heading-l"><%= Claims::ClaimActivity.human_attribute_name("action.#{@claim_activity.action}") %></h1>
+
+  <p class="govuk-body"><%= t(".byline", user: @claim_activity.user_full_name, time: l(@claim_activity.created_at, format: :date_at_time)) %></p>
+
+  <h2 class="govuk-heading-m"><%= t(".files") %></h2>
+
+  <%= govuk_list type: :bullet do %>
+    <% case @claim_activity.action %>
+    <% when "payment_request_delivered", "clawback_request_delivered" %>
+      <li><%= govuk_link_to "Claims sent to ESFA", @claim_activity.record.csv_file %></li>
+    <% when "sampling_uploaded" %>
+      <% @provider_samplings.each do |provider_sampling| %>
+        <li><%= govuk_link_to provider_sampling.provider.name, provider_sampling.csv_file %></li>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= render PaginationComponent.new(pagy: @pagy) if @pagy %>
+</div>

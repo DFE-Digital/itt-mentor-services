@@ -25,6 +25,13 @@ en:
         clawback_requested: Clawback requested
         clawback_in_progress: Clawback in progress
         clawback_complete: Clawback complete
+      claims/claim_activity/action:
+        payment_request_delivered: Claims sent to ESFA for payment
+        payment_response_uploaded: ESFA payment response uploaded
+        sampling_uploaded: Sampling data uploaded
+        sampling_response_uploaded: Provider sampling response uploaded
+        clawback_request_delivered: Claims sent to ESFA for clawback
+        clawback_response_uploaded: ESFA clawback response uploaded
       claims/claim_window:
         academic_year: Academic year
         window: Claim window

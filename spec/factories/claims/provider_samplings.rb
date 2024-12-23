@@ -20,7 +20,9 @@
 #
 FactoryBot.define do
   factory :provider_sampling, class: "Claims::ProviderSampling" do
-    association :sampling, factory: :samplings
+    association :sampling, factory: :claims_sampling
     association :provider, factory: :claims_provider
+
+    csv_file { file_fixture("example.csv") }
   end
 end

@@ -21,7 +21,7 @@ class Claims::Sampling::CreateAndDeliver < ApplicationService
       end
     end
 
-    Claims::ClaimActivity.create!(action: :sampling_in_progress, user: current_user, record: sampling)
+    Claims::ClaimActivity.create!(action: :sampling_uploaded, user: current_user, record: sampling)
   end
 
   private

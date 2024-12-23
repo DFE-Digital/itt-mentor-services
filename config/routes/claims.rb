@@ -124,7 +124,7 @@ scope module: :claims, as: :claims, constraints: {
         end
       end
 
-      resources :claim_activities, path: "activity", only: %i[index]
+      resources :claim_activities, path: "activity", only: %i[index show]
     end
 
     resources :claims, only: %i[index show] do

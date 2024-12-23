@@ -7,6 +7,7 @@
 #  updated_at :datetime         not null
 #
 FactoryBot.define do
-  factory :samplings, class: "Claims::Sampling" do
+  factory :claims_sampling, class: "Claims::Sampling" do
+    provider_samplings { build_list(:provider_sampling, 7, sampling: nil) }
   end
 end
