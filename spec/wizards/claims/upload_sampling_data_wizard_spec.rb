@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Claims::UploadSamplingDataWizard do
-  subject(:wizard) { described_class.new(state:, params:, current_step: nil) }
+  subject(:wizard) { described_class.new(current_user:, state:, params:, current_step: nil) }
 
   let(:state) { {} }
   let(:params_data) { {} }
@@ -21,6 +21,8 @@ RSpec.describe Claims::UploadSamplingDataWizard do
            claim_window: current_claim_window,
            reference: "11111111")
   end
+
+  let(:current_user) { create(:claims_user) }
 
   describe "#steps" do
     subject { wizard.steps.keys }
@@ -53,7 +55,7 @@ RSpec.describe Claims::UploadSamplingDataWizard do
 
       it "queues a job to flag the claim for sampling" do
         expect { wizard.upload_data }.to have_enqueued_job(
-          Claims::Sampling::FlagCollectionForSamplingJob,
+          Claims::Sampling::CreateAndDeliverJob,
         ).exactly(:once)
       end
     end
