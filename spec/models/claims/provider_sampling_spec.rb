@@ -31,4 +31,9 @@ RSpec.describe Claims::ProviderSampling, type: :model do
   describe "attachments" do
     it { is_expected.to have_one_attached(:csv_file) }
   end
+
+  describe "delegations" do
+    it { is_expected.to delegate_method(:email_address).to(:provider).with_prefix }
+    it { is_expected.to delegate_method(:name).to(:provider).with_prefix }
+  end
 end
