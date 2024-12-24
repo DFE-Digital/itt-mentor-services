@@ -1,0 +1,29 @@
+class Claims::Sampling::ClaimsController < Claims::ApplicationController
+  skip_before_action :authenticate_user!
+
+  before_action :skip_authorization
+  before_action :validate_token
+  before_action :set_provider_sampling
+
+  def download
+    send_data @provider_sampling.csv_file.download, filename: "sampling-claims-#{Time.current.iso8601}.csv"
+  end
+
+  private
+
+  def validate_token
+    @provider_sampling_id = Rails.application.message_verifier(:sampling).verify(token_param)
+  rescue ActiveSupport::MessageVerifier::InvalidSignature
+    render "error"
+  end
+
+  def set_provider_sampling
+    @provider_sampling = Claims::ProviderSampling.find(@provider_sampling_id)
+  rescue ActiveRecord::RecordNotFound
+    render "error"
+  end
+
+  def token_param
+    params.fetch(:token, nil)
+  end
+end
