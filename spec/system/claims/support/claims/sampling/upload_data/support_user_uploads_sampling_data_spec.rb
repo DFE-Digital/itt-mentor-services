@@ -57,11 +57,15 @@ RSpec.describe "Support user uploads sampling data", service: :claims, type: :sy
     current_claim_window = create(:claim_window, academic_year: @current_academic_year,
                                                  starts_on: @current_academic_year.starts_on,
                                                  ends_on: @current_academic_year.starts_on + 2.days)
+
+    provider = create(:claims_provider, email_address: "provider@example.com")
+
     @current_claim = create(:claim,
                             :submitted,
                             status: :paid,
                             claim_window: current_claim_window,
-                            reference: 11_111_111)
+                            reference: 11_111_111,
+                            provider:)
   end
 
   def and_i_am_signed_in
