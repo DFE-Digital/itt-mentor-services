@@ -78,6 +78,7 @@ RSpec.describe "Support user marks a claim as provider not approved", service: :
 
     when_i_click_on_confirm_and_reject_claim
     then_i_see_that_the_claim_has_been_updated_to_provider_not_approved
+    and_i_see_the_providers_response
   end
 
   private
@@ -282,4 +283,12 @@ RSpec.describe "Support user marks a claim as provider not approved", service: :
   end
   alias_method :and_i_enter_a_reason_why_the_provider_rejected_jane_doe,
                :when_i_enter_a_reason_why_the_provider_rejected_jane_doe
+
+  def and_i_see_the_providers_response
+    expect(page).to have_element(
+      :div,
+      text: "Provider response\nJane Doe: Provider rejected Jane DoeJohn Smith: Provider rejected John Smith",
+      class: "govuk-inset-text",
+    )
+  end
 end
