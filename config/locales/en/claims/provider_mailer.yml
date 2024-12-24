@@ -8,7 +8,7 @@ en:
           
           These claims from the Claim funding for mentor training service (Claim) are ready for post-payment assurance. The link to the latest CSV file is valid for 7 days.
           
-          %{url_for_csv}
+          %{download_csv_url}
         
           What you need to do:
         
