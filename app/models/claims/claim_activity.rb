@@ -23,5 +23,8 @@ class Claims::ClaimActivity < ApplicationRecord
   belongs_to :user
   belongs_to :record, polymorphic: true
 
-  enum :action, { payment_delivered: "payment_delivered" }
+  enum :action, {
+    payment_delivered: "payment_delivered",
+    sampling_in_progress: "sampling_in_progress",
+  }
 end
