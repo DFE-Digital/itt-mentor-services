@@ -24,6 +24,7 @@ RSpec.describe "Provider user downloads a sampling CSV with invalid record token
   end
 
   def then_i_see_the_error_page
+    expect(page).to have_title("Sorry, there is a problem with the download link - Claim funding for mentor training - GOV.UK")
     expect(page).to have_h1("Sorry, there is a problem with the download link")
     expect(page).to have_element(:p, text: "You are seeing this page because the download link is not working. It may have timed out or contained an invalid security token.", class: "govuk-body")
     expect(page).to have_element(:p, text: "Email ittmentor.funding@education.gov.uk to request a new download link.", class: "govuk-body")
