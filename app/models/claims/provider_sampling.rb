@@ -26,4 +26,6 @@ class Claims::ProviderSampling < ApplicationRecord
   has_many :claims, through: :provider_sampling_claims
 
   has_one_attached :csv_file
+
+  delegate :email_address, :name, to: :provider, prefix: true
 end
