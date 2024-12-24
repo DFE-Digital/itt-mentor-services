@@ -6,7 +6,8 @@ class Claims::Sampling::ClaimsController < Claims::ApplicationController
   before_action :set_provider_sampling
 
   def download
-    send_data @provider_sampling.csv_file.download, filename: "sampling-claims-#{Time.current.iso8601}.csv"
+    provider_name = @provider_sampling.provider_name.parameterize
+    send_data @provider_sampling.csv_file.download, filename: "sampling-claims-#{provider_name}-#{Time.current.iso8601}.csv"
   end
 
   private

@@ -27,6 +27,7 @@ RSpec.describe "Provider user downloads sampling CSV with valid token", service:
   end
 
   def then_i_see_the_download_page
+    expect(page).to have_title("Download the sampling CSV - Claim funding for mentor training - GOV.UK")
     expect(page).to have_h1("Download the sampling CSV")
     expect(page).to have_element(:p, text: "Download the Claim funding for mentor training sampling CSV file.", class: "govuk-body")
     expect(page).to have_element(:p, text: "If you have any questions, email ittmentor.funding@education.gov.uk", class: "govuk-body")
@@ -39,7 +40,8 @@ RSpec.describe "Provider user downloads sampling CSV with valid token", service:
 
   def then_the_csv_is_downloaded
     current_time = Time.zone.now.utc.strftime("%Y-%m-%dT%H%%3A%M%%3A%SZ")
+    provider_name = @provider_sampling.provider_name.parameterize
     expect(page.response_headers["Content-Type"]).to eq("text/csv")
-    expect(page.response_headers["Content-Disposition"]).to eq("attachment; filename=\"sampling-claims-#{current_time}.csv\"; filename*=UTF-8''sampling-claims-#{current_time}.csv")
+    expect(page.response_headers["Content-Disposition"]).to eq("attachment; filename=\"sampling-claims-#{provider_name}-#{current_time}.csv\"; filename*=UTF-8''sampling-claims-#{provider_name}-#{current_time}.csv")
   end
 end
