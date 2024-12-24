@@ -23,6 +23,7 @@ en:
             mentor_with_index: Mentor %{index}
             mentor: Mentor
             submitted_by: Submitted by %{name} on %{date}.
+            provider_response: Provider response
           confirm_approval:
             page_caption: Sampling - Claim %{reference}
             page_title: Are you sure you want to approve the claim?

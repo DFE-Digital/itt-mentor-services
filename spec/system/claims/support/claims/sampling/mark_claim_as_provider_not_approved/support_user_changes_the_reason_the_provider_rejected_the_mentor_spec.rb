@@ -36,6 +36,7 @@ RSpec.describe "Support user changes the reason the provider rejected the mentor
 
     when_i_click_on_confirm_and_reject_claim
     then_i_see_that_the_claim_has_been_updated_to_provider_not_approved
+    and_i_see_the_providers_response
   end
 
   private
@@ -194,5 +195,13 @@ RSpec.describe "Support user changes the reason the provider rejected the mentor
       expect(page).to have_summary_list_row("Original number of hours claimed", "20")
       expect(page).to have_summary_list_row("Reason for rejection", "New reason the provider rejected John Smith")
     end
+  end
+
+  def and_i_see_the_providers_response
+    expect(page).to have_element(
+      :div,
+      text: "Provider response\nJohn Smith: New reason the provider rejected John Smith",
+      class: "govuk-inset-text",
+    )
   end
 end
