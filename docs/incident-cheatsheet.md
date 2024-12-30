@@ -6,7 +6,7 @@ Stay calm and refer to the [incident playbook](https://tech-docs.teacherservices
 
 ## Maintenance Page
 
-To stop users accessing the app, [enable the maintenance page](https://github.com/DFE-Digital/itt-mentor-services/actions/workflows/enable-maintenance.yml).
+To stop users accessing the app, [enable the maintenance page](https://github.com/DFE-Digital/itt-mentor-services/actions/workflows/maintenance.yml).
 
 ### Temporary Ingress URL
 
@@ -18,7 +18,7 @@ The `application.tf` file is located at [terraform/application/application.tf](/
 
 ### Maintenance Page HTML
 
-The maintenance page is located at [maintenance_page/html/index.html](/maintenance_page/html/index.html). This file is displayed when the maintenance page is enabled.
+The maintenance pages for each service are located at [claim-funding-for-mentor-training](/maintenance_page/html/claim-funding-for-mentor-training.html) and [manage-school-placements](/maintenance_page/html/manage-school-placements.html). Each file is displayed for the corresponding service when the maintenance page is enabled.
 
 ## Current Deployment SHA Ref
 
