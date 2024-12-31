@@ -60,9 +60,9 @@ RSpec.describe "School user uses multilple tabs to add mentors", :js, service: :
   def when_i_am_on_the_mentors_index_page_in_the_first_tab
     within_window @windows.first do
       visit placements_school_mentors_path(@school)
+      expect(page).to have_title("Mentors at your school - Manage school placements - GOV.UK")
       expect(primary_navigation).to have_current_item("Mentors")
 
-      expect(page).to have_title("Mentors at your school - Manage school placements - GOV.UK")
       expect(page).to have_h1("Mentors at your school")
       expect(page).to have_element(:p, text: "Add mentors to be able to assign them to your placements.", class: "govuk-body")
       expect(page).to have_link("Add mentor", href: "/schools/#{@school.id}/mentors/new")
@@ -72,9 +72,9 @@ RSpec.describe "School user uses multilple tabs to add mentors", :js, service: :
   def when_i_am_on_the_mentors_index_page_in_the_second_tab
     within_window @windows.second do
       visit placements_school_mentors_path(@school)
+      expect(page).to have_title("Mentors at your school - Manage school placements - GOV.UK")
       expect(primary_navigation).to have_current_item("Mentors")
 
-      expect(page).to have_title("Mentors at your school - Manage school placements - GOV.UK")
       expect(page).to have_h1("Mentors at your school")
       expect(page).to have_element(:p, text: "Add mentors to be able to assign them to your placements.", class: "govuk-body")
       expect(page).to have_link("Add mentor", href: "/schools/#{@school.id}/mentors/new")
@@ -95,9 +95,9 @@ RSpec.describe "School user uses multilple tabs to add mentors", :js, service: :
 
   def then_i_see_the_tab_one_find_mentor_page
     within_window @windows.first do
+      expect(page).to have_title("Find teacher - Mentor details - Manage school placements - GOV.UK")
       expect(primary_navigation).to have_current_item("Mentors")
 
-      expect(page).to have_title("Find teacher - Mentor details - Manage school placements - GOV.UK")
       expect(page).to have_element(:span, text: "Mentor details", class: "govuk-caption-l")
       expect(page).to have_h1("Find teacher")
     end
@@ -105,9 +105,9 @@ RSpec.describe "School user uses multilple tabs to add mentors", :js, service: :
 
   def then_i_see_the_tab_two_find_mentor_page
     within_window @windows.second do
+      expect(page).to have_title("Find teacher - Mentor details - Manage school placements - GOV.UK")
       expect(primary_navigation).to have_current_item("Mentors")
 
-      expect(page).to have_title("Find teacher - Mentor details - Manage school placements - GOV.UK")
       expect(page).to have_element(:span, text: "Mentor details", class: "govuk-caption-l")
       expect(page).to have_h1("Find teacher")
     end
@@ -152,18 +152,18 @@ RSpec.describe "School user uses multilple tabs to add mentors", :js, service: :
 
   def then_i_see_the_tab_one_confirm_mentor_details_page
     within_window @windows.first do
+      expect(page).to have_title("Confirm mentor details - Manage school placements - GOV.UK")
       expect(primary_navigation).to have_current_item("Mentors")
 
-      expect(page).to have_title("Confirm mentor details - Manage school placements - GOV.UK")
       expect(page).to have_h1("Confirm mentor details")
     end
   end
 
   def then_i_see_the_tab_two_confirm_mentor_details_page
     within_window @windows.second do
+      expect(page).to have_title("Confirm mentor details - Manage school placements - GOV.UK")
       expect(primary_navigation).to have_current_item("Mentors")
 
-      expect(page).to have_title("Confirm mentor details - Manage school placements - GOV.UK")
       expect(page).to have_h1("Confirm mentor details")
     end
   end
@@ -176,11 +176,11 @@ RSpec.describe "School user uses multilple tabs to add mentors", :js, service: :
 
   def then_i_see_the_find_mentor_form_with_the_trn_and_date_of_birth_prefilled_for_mister_bergstrom
     within_window @windows.first do
-      find_field "TRN", with: "1111111"
+      expect(page).to have_field("TRN", with: "1111111")
 
-      find_field "Day", with: "7"
-      find_field "Month", with: "2"
-      find_field "Year", with: "1949"
+      expect(page).to have_field("Day", with: "7")
+      expect(page).to have_field("Month", with: "2")
+      expect(page).to have_field("Year", with: "1949")
     end
   end
 
@@ -210,15 +210,19 @@ RSpec.describe "School user uses multilple tabs to add mentors", :js, service: :
 
   def and_i_see_the_mentors_index_page_with_mister_bergstrom_listed
     within_window @windows.first do
-      expect(page).to have_element(:a, text: "Mister Bergstrom", class: "govuk-link")
-      expect(page).to have_element(:td, text: "1111111", class: "govuk-table__cell")
+      expect(page).to have_table_row({
+        "Name" => "Mister Bergstrom",
+        "Teacher reference number (TRN)" => "1111111",
+      })
     end
   end
 
   def and_i_see_the_mentors_index_page_with_otto_mann_listed
     within_window @windows.second do
-      expect(page).to have_element(:a, text: "Otto Mann", class: "govuk-link")
-      expect(page).to have_element(:td, text: "3333333", class: "govuk-table__cell")
+      expect(page).to have_table_row({
+        "Name" => "Otto Mann",
+        "Teacher reference number (TRN)" => "3333333",
+      })
     end
   end
 

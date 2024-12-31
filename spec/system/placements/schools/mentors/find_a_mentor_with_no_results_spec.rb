@@ -10,7 +10,9 @@ RSpec.describe "School user searches for a mentor with no results", service: :pl
     and_i_am_signed_in
 
     when_i_am_on_the_mentors_index_page
-    and_i_click_on_add_mentor
+    then_i_see_the_mentor_details
+
+    when_i_click_on_add_mentor
     then_i_see_the_find_mentor_page
 
     when_i_click_on_help_with_the_trn
@@ -46,8 +48,7 @@ RSpec.describe "School user searches for a mentor with no results", service: :pl
   private
 
   def given_mentor_and_school_exists
-    @school = build(:school, :placements, name: "Springfield Elementary")
-    @new_mentor = build(:placements_mentor, first_name: "Mister", last_name: "Bergstrom")
+    @school = create(:school, :placements, name: "Springfield Elementary")
   end
 
   def and_i_am_signed_in
@@ -55,23 +56,28 @@ RSpec.describe "School user searches for a mentor with no results", service: :pl
   end
 
   def when_i_am_on_the_mentors_index_page
-    page.find(".app-primary-navigation__nav").click_on("Mentors")
+    within ".app-primary-navigation__nav" do
+      click_on "Mentors"
+    end
+  end
+
+  def then_i_see_the_mentor_details
+    expect(page).to have_title("Mentors at your school - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Mentors")
 
-    expect(page).to have_title("Mentors at your school - Manage school placements - GOV.UK")
     expect(page).to have_h1("Mentors at your school")
     expect(page).to have_element(:p, text: "Add mentors to be able to assign them to your placements.", class: "govuk-body")
     expect(page).to have_link("Add mentor", href: "/schools/#{@school.id}/mentors/new")
   end
 
-  def and_i_click_on_add_mentor
+  def when_i_click_on_add_mentor
     click_on "Add mentor"
   end
 
   def then_i_see_the_find_mentor_page
+    expect(page).to have_title("Find teacher - Mentor details - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Mentors")
 
-    expect(page).to have_title("Find teacher - Mentor details - Manage school placements - GOV.UK")
     expect(page).to have_element(:span, text: "Mentor details", class: "govuk-caption-l")
     expect(page).to have_h1("Find teacher")
     expect(page).to have_element(:label, text: "Teacher reference number (TRN)", class: "govuk-label")
@@ -127,7 +133,7 @@ RSpec.describe "School user searches for a mentor with no results", service: :pl
   end
 
   def and_i_enter_a_trn
-    fill_in "TRN", with: @new_mentor.trn
+    fill_in "TRN", with: "8888888"
   end
 
   def then_i_see_a_validation_error_for_not_entering_a_date_of_birth
@@ -154,8 +160,8 @@ RSpec.describe "School user searches for a mentor with no results", service: :pl
   end
 
   def then_i_see_the_no_results_page
-    expect(primary_navigation).to have_current_item("Mentors")
     expect(page).to have_title("No results found for ‘8888888’ - Mentor not found - Manage school placements - GOV.UK")
+    expect(primary_navigation).to have_current_item("Mentors")
 
     expect(page).to have_element(:span, text: "Mentor not found", class: "govuk-caption-l")
     expect(page).to have_h1("No results found for ‘8888888’")
@@ -167,11 +173,11 @@ RSpec.describe "School user searches for a mentor with no results", service: :pl
   end
 
   def then_i_see_the_find_mentor_form_with_the_trn_and_date_of_birth_prefilled
-    find_field "TRN", with: "8888888"
+    expect(page).to have_field("TRN", with: "8888888")
 
-    find_field "Day", with: "14"
-    find_field "Month", with: "9"
-    find_field "Year", with: "1991"
+    expect(page).to have_field("Day", with: "14")
+    expect(page).to have_field("Month", with: "9")
+    expect(page).to have_field("Year", with: "1991")
   end
 
   def stub_no_results_teaching_record_response
