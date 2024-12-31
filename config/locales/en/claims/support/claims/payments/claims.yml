@@ -12,6 +12,7 @@ en:
               mentor_with_index: Mentor %{index}
               mentor: Mentor
               submitted_by: Submitted by %{name} on %{date}.
+              unpaid_reason_header: Reason claim was not paid
               buttons:
                 information_sent: Confirm information sent
                 paid: Confirm claim paid

@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "View claims", service: :claims, type: :system do
   let!(:support_user) { create(:claims_support_user) }
 
-  let!(:claim) { create(:claim, :payment_information_requested) }
+  let!(:claim) { create(:claim, :payment_information_requested, unpaid_reason: "Some reason") }
 
   before do
     user_exists_in_dfe_sign_in(user: support_user)
@@ -38,5 +38,9 @@ RSpec.describe "View claims", service: :claims, type: :system do
     expect(page).to have_content("School#{claim.school_name}")
     expect(page).to have_content("Academic year#{claim.academic_year_name}")
     expect(page).to have_content("Accredited provider#{claim.provider.name}")
+
+    within(".govuk-inset-text") do
+      expect(page).to have_content("Some reason")
+    end
   end
 end

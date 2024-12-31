@@ -10,6 +10,7 @@
 
   <div class="govuk-button-group">
     <%= govuk_button_link_to t(".buttons.send_claims_to_esfa"), new_claims_support_claims_payment_path %>
+    <%= govuk_button_link_to t(".buttons.upload_esfa_response"), new_claims_support_claims_payment_response_path, secondary: true %>
   </div>
 
   <% if @claims.any? %>

@@ -106,6 +106,10 @@ scope module: :claims, as: :claims, constraints: {
       end
 
       resources :payments, only: %i[index new create]
+      resources :payment_responses, only: %i[new update] do
+        post :check, on: :collection
+      end
+
       resources :samplings, path: "sampling/claims", only: %i[index show] do
         member do
           get :confirm_approval

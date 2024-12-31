@@ -164,6 +164,10 @@ en:
               blank: Enter a window closing date
               overlap: Select a date that is not within an existing claim window
               greater_than_or_equal_to: Enter a window closing date that is after the opening date
+        claims/support/claims/payment_response_form:
+          attributes:
+            csv_file:
+              blank: Select a CSV file to upload
         user_invite_form:
           attributes:
             email:

@@ -22,5 +22,6 @@ RSpec.describe Claims::Payment, type: :model do
     it { is_expected.to belong_to(:sent_by).class_name("Claims::SupportUser") }
     it { is_expected.to have_many(:payment_claims).dependent(:destroy) }
     it { is_expected.to have_many(:claims).through(:payment_claims) }
+    it { is_expected.to have_one_attached(:csv_file) }
   end
 end

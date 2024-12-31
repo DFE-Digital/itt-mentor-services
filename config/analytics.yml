@@ -89,6 +89,7 @@ shared:
     - claim_window_id
     - sampling_reason
     - payment_in_progress_at
+    - unpaid_reason
   :samplings:
     - id
     - created_at
@@ -234,6 +235,12 @@ shared:
     - id
     - payment_id
     - claim_id
+    - created_at
+    - updated_at
+  :payment_responses:
+    - id
+    - user_id
+    - processed
     - created_at
     - updated_at
   :claim_activities:

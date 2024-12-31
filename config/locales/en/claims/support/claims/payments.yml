@@ -11,6 +11,7 @@ en:
               other: Payments (%{count})
             buttons:
               send_claims_to_esfa: Send claims to ESFA
+              upload_esfa_response: Upload ESFA response
             description:
               one: "%{count} claim needs processing"
               other: "%{count} claims need processing"
