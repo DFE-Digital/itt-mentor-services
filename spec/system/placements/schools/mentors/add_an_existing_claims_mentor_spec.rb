@@ -10,7 +10,9 @@ RSpec.describe "School user adds an existing claims mentor", service: :placement
     and_i_am_signed_in
 
     when_i_am_on_the_mentors_index_page
-    and_i_click_on_add_mentor
+    then_i_see_the_mentor_details
+
+    when_i_click_on_add_mentor
     then_i_see_the_find_mentor_page
 
     when_i_enter_the_trn_and_date_of_birth_for_an_existing_claims_mentor
@@ -41,23 +43,28 @@ RSpec.describe "School user adds an existing claims mentor", service: :placement
   end
 
   def when_i_am_on_the_mentors_index_page
-    page.find(".app-primary-navigation__nav").click_on("Mentors")
+    within ".app-primary-navigation__nav" do
+      click_on "Mentors"
+    end
+  end
+
+  def then_i_see_the_mentor_details
+    expect(page).to have_title("Mentors at your school - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Mentors")
 
-    expect(page).to have_title("Mentors at your school - Manage school placements - GOV.UK")
     expect(page).to have_h1("Mentors at your school")
     expect(page).to have_element(:p, text: "Add mentors to be able to assign them to your placements.", class: "govuk-body")
     expect(page).to have_link("Add mentor", href: "/schools/#{@school.id}/mentors/new")
   end
 
-  def and_i_click_on_add_mentor
+  def when_i_click_on_add_mentor
     click_on "Add mentor"
   end
 
   def then_i_see_the_find_mentor_page
+    expect(page).to have_title("Find teacher - Mentor details - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Mentors")
 
-    expect(page).to have_title("Find teacher - Mentor details - Manage school placements - GOV.UK")
     expect(page).to have_element(:span, text: "Mentor details", class: "govuk-caption-l")
     expect(page).to have_h1("Find teacher")
   end
@@ -94,9 +101,9 @@ RSpec.describe "School user adds an existing claims mentor", service: :placement
   end
 
   def then_i_see_the_confirm_mentor_details_page
+    expect(page).to have_title("Confirm mentor details - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Mentors")
 
-    expect(page).to have_title("Confirm mentor details - Manage school placements - GOV.UK")
     expect(page).to have_h1("Confirm mentor details")
     expect(page).to have_element(:p, text: "Once added, you will be able to assign them to placements.", class: "govuk-body")
     expect(page).to have_h2("Mentor")
@@ -110,11 +117,11 @@ RSpec.describe "School user adds an existing claims mentor", service: :placement
   end
 
   def then_i_see_the_find_mentor_form_with_the_trn_and_date_of_birth_prefilled_for_edna_krabappel
-    find_field "TRN", with: "6666666"
+    expect(page).to have_field("TRN", with: "6666666")
 
-    find_field "Day", with: "14"
-    find_field "Month", with: "9"
-    find_field "Year", with: "1991"
+    expect(page).to have_field("Day", with: "14")
+    expect(page).to have_field("Month", with: "9")
+    expect(page).to have_field("Year", with: "1991")
   end
 
   def when_i_click_on_confirm_and_add_mentor
@@ -126,7 +133,9 @@ RSpec.describe "School user adds an existing claims mentor", service: :placement
   end
 
   def and_i_see_the_mentors_index_page_with_edna_krabappel_listed
-    expect(page).to have_element(:a, text: "Edna Krabappel", class: "govuk-link")
-    expect(page).to have_element(:td, text: "6666666", class: "govuk-table__cell")
+    expect(page).to have_table_row({
+      "Name" => "Edna Krabappel",
+      "Teacher reference number (TRN)" => "6666666",
+    })
   end
 end

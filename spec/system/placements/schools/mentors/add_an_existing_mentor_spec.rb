@@ -21,8 +21,8 @@ RSpec.describe "School user attempts to add mentor who is already registered at 
   private
 
   def given_the_mentor_and_school_exist
-    @school = create(:school, :placements, name: "Springfield Elementary")
-    @placements_mentor = create(:placements_mentor, trn: "7777777", first_name: "Elizabeth", last_name: "Hoover")
+    @school = build(:school, :placements, name: "Springfield Elementary")
+    @placements_mentor = build(:placements_mentor, trn: "7777777", first_name: "Elizabeth", last_name: "Hoover")
     create(:placements_mentor_membership, school: @school, mentor: @placements_mentor)
   end
 
@@ -32,9 +32,9 @@ RSpec.describe "School user attempts to add mentor who is already registered at 
 
   def when_i_am_on_the_mentors_index_page
     page.find(".app-primary-navigation__nav").click_on("Mentors")
+    expect(page).to have_title("Mentors at your school - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Mentors")
 
-    expect(page).to have_title("Mentors at your school - Manage school placements - GOV.UK")
     expect(page).to have_h1("Mentors at your school")
     expect(page).to have_element(:p, text: "Add mentors to be able to assign them to your placements.", class: "govuk-body")
     expect(page).to have_link("Add mentor", href: "/schools/#{@school.id}/mentors/new")
@@ -45,9 +45,9 @@ RSpec.describe "School user attempts to add mentor who is already registered at 
   end
 
   def then_i_see_the_find_mentor_page
+    expect(page).to have_title("Find teacher - Mentor details - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Mentors")
 
-    expect(page).to have_title("Find teacher - Mentor details - Manage school placements - GOV.UK")
     expect(page).to have_element(:span, text: "Mentor details", class: "govuk-caption-l")
     expect(page).to have_h1("Find teacher")
   end
