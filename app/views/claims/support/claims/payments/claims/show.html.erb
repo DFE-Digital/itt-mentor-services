@@ -11,6 +11,13 @@
       <p class="govuk-caption-l"><%= t(".page_caption", reference: @claim.reference) %></p>
       <h1 class="govuk-heading-l"><%= @claim.school_name %> <%= render Claim::StatusTagComponent.new(claim: @claim) %></h1>
 
+      <% if @claim.unpaid_reason.present? %>
+        <%= govuk_inset_text do %>
+          <h2 class="govuk-heading-s"><%= t(".unpaid_reason_header") %></h2>
+          <p class="govuk-body"><%= @claim.unpaid_reason %></p>
+        <% end %>
+      <% end %>
+
       <% if @claim.payment_information_requested? %>
         <div class="govuk-button-group">
           <%= govuk_button_link_to t(".buttons.information_sent"), confirm_information_sent_claims_support_claims_payments_claim_path(@claim) %>

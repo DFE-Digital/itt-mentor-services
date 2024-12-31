@@ -1,0 +1,41 @@
+en:
+  claims:
+    support:
+      claims:
+        payment_responses:
+          new:
+            page_caption: Payments
+            page_title: Upload ESFA response
+            label: Upload CSV file
+            help:
+              label: Help with the CSV file
+              description: Use this form to upload the CSV file sent by the ESFA.
+              csv_instructions: "The CSV file must contain the following headers in the first row:"
+              csv_headers:
+                - claim_reference
+                - school_urn
+                - school_name
+                - school_local_authority
+                - school_establishment_type
+                - school_establishment_type_group
+                - claim_amount
+                - claim_submission_date
+                - claim_status
+                - claim_unpaid_reason
+            submit: Upload CSV file
+            cancel: Cancel
+          new_not_permitted:
+            page_caption: Payments
+            page_title: You cannot upload a response from the ESFA
+            description: You cannot upload a response from the ESFA as there are no claims waiting for a response.
+            cancel: Cancel
+          check:
+            page_caption: Payments
+            page_title: Are you sure you want to upload the ESFA response?
+            description:
+              one: There is %{count} claim included in this upload.
+              other: There are %{count} claims included in this upload.
+            submit: Upload response
+            cancel: Cancel
+          update:
+            success: ESFA response uploaded

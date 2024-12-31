@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_20_141331) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_02_102324) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -122,6 +122,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_20_141331) do
     t.uuid "claim_window_id"
     t.text "sampling_reason"
     t.datetime "payment_in_progress_at"
+    t.text "unpaid_reason"
     t.index ["claim_window_id"], name: "index_claims_on_claim_window_id"
     t.index ["created_by_type", "created_by_id"], name: "index_claims_on_created_by"
     t.index ["previous_revision_id"], name: "index_claims_on_previous_revision_id"
@@ -299,6 +300,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_20_141331) do
     t.datetime "updated_at", null: false
     t.index ["claim_id"], name: "index_payment_claims_on_claim_id"
     t.index ["payment_id"], name: "index_payment_claims_on_payment_id"
+  end
+
+  create_table "payment_responses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.boolean "processed", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_payment_responses_on_user_id"
   end
 
   create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -564,6 +573,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_20_141331) do
   add_foreign_key "partnerships", "schools"
   add_foreign_key "payment_claims", "claims"
   add_foreign_key "payment_claims", "payments"
+  add_foreign_key "payment_responses", "users"
   add_foreign_key "payments", "users", column: "sent_by_id"
   add_foreign_key "placement_additional_subjects", "placements"
   add_foreign_key "placement_additional_subjects", "subjects"

@@ -11,6 +11,7 @@
 #  status                 :enum
 #  submitted_at           :datetime
 #  submitted_by_type      :string
+#  unpaid_reason          :text
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  claim_window_id        :uuid

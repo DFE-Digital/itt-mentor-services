@@ -26,11 +26,13 @@
 
               <div class="app-timeline__description">
                 <% case claim_activity.action %>
-                <% when "payment_request_delivered", "clawback_request_delivered" %>
+                <% when "payment_request_delivered", "clawback_request_delivered", "payment_response_uploaded" %>
                   <ul class="app-timeline__documents">
                     <li class="app-timeline__document-item">
                       <%= govuk_link_to claim_activity.record.csv_file, class: "app-timeline__document-link" do %>
-                        <%= image_tag "icon-document.svg", class: "app-timeline__document-link__icon" %> Claims sent to ESFA
+                        <%= image_tag "icon-document.svg", class: "app-timeline__document-link__icon" %>
+
+                        <%= Claims::ClaimActivity.human_attribute_name("document.#{claim_activity.action}") %>
                       <% end %>
                     </li>
                   </ul>

@@ -32,6 +32,12 @@ en:
         sampling_response_uploaded: Provider sampling response uploaded
         clawback_request_delivered: Claims sent to ESFA for clawback
         clawback_response_uploaded: ESFA clawback response uploaded
+      claims/claim_activity/document:
+        payment_request_delivered: Claims sent to ESFA
+        payment_response_uploaded: ESFA payment response
+        sampling_response_uploaded: Provider sampling response
+        clawback_request_delivered: Claims sent to ESFA
+        clawback_response_uploaded: ESFA clawback response
       claims/claim_window:
         academic_year: Academic year
         window: Claim window
@@ -74,6 +80,10 @@ en:
               greater_than: Enter the number of hours between 1 and 20
               less_than_or_equal_to: Enter the number of hours between 1 and 20
               not_an_integer: Enter whole numbers only
+        claims/payment_response:
+          attributes:
+            csv_file:
+              blank: Select a CSV file to upload
         user:
           attributes:
             first_name:

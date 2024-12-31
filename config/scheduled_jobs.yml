@@ -31,6 +31,11 @@ remove_internal_draft_claims:
   class: "Claims::RemoveInternalDraftClaimsJob"
   description: "Remove all internal_draft claims"
 
+remove_unprocessed_claims_payment_responses:
+  cron: "20 0 * * *" # Every day at 00:20.
+  class: "Claims::RemoveUnprocessedPaymentResponsesJob"
+  description: "Remove unprocessed claims payment responses"
+
 send_entity_table_checks_to_bigquery:
   cron: "30 0 * * *" # Every day at 00:30.
   class: "DfE::Analytics::EntityTableCheckJob"
