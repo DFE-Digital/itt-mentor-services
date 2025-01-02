@@ -2,12 +2,18 @@ require "rails_helper"
 
 RSpec.describe Claims::ESFAMailer, type: :mailer do
   describe "#claims_require_clawback" do
-    subject(:claims_require_clawback_email) { described_class.claims_require_clawback(url_for_csv) }
+    subject(:claims_require_clawback_email) { described_class.claims_require_clawback(clawback) }
 
-    let(:url_for_csv) { "https://example.com" }
+    let(:clawback) { create(:claims_clawback) }
+    let(:url_for_csv) { download_claims_clawback_claims_url(token:, host: "claims.localhost") }
+    let(:token) { Rails.application.message_verifier(:clawback).generate(clawback.id, expires_in: 7.days) }
     let(:esfa_emails) { %w[example1@education.gov.uk example2@education.gov.uk] }
     let(:service_name) { "Claim funding for mentor training" }
     let(:support_email) { "ittmentor.funding@education.gov.uk" }
+
+    before do
+      allow(Rails.application.message_verifier(:clawback)).to receive(:generate).and_return("token")
+    end
 
     it "sends the claims require clawback email" do
       ClimateControl.modify CLAIMS_ESFA_EMAIL_ADDRESSES: esfa_emails.join(",") do
