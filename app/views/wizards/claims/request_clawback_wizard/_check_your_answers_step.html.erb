@@ -1,47 +1,63 @@
 <% content_for(:page_title) { sanitize t(".page_title", school_name: @claim.school_name, reference: @claim.reference) } %>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <%= form_with(model: current_step, url: current_step_path, method: :put) do |f| %>
-        <%= f.govuk_error_summary %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with(model: current_step, url: current_step_path, method: :put) do |f| %>
+      <%= f.govuk_error_summary %>
 
-        <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+      <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
-        <%= govuk_summary_list do |summary_list| %>
-            <% summary_list.with_row do |row| %>
-            <% row.with_key(text: t(".hours")) %>
-            <% row.with_value %>
+      <%= govuk_summary_list(html_attributes: { id: "clawback-totals" }) do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".number_of_hours")) %>
+          <% row.with_value(text: current_step.total_clawback_hours) %>
+        <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".rate")) %>
+          <% row.with_value(text: humanized_money_with_symbol(current_step.region_funding_available_per_hour)) %>
+        <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".clawback_amount")) %>
+          <% row.with_value(text: humanized_money_with_symbol(current_step.total_clawback_amount)) %>
+        <% end %>
+      <% end %>
+
+      <% @wizard.mentor_trainings.each do |mentor_training| %>
+        <h2 class="govuk-heading-m"><%= t(".mentor_training_title", mentor_name: mentor_training.mentor_full_name) %></h2>
+        <%= govuk_summary_list(html_attributes: { id: "mentor-training-#{mentor_training.id}" }) do |summary_list| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".number_of_hours")) %>
+            <% row.with_value(text: current_step.mentor_training_clawback_hours(mentor_training)) %>
             <% row.with_action(text: t(".change"),
-                               href: step_path(:clawback),
-                               visually_hidden_text: t(".hours"),
+                               href: step_path(@wizard.step_name_for_mentor_training_clawback(mentor_training)),
+                               visually_hidden_text: t(".number_of_hours"),
                                classes: ["govuk-link--no-visited-state"]) %>
           <% end %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".rate")) %>
-            <% row.with_value(text: humanized_money_with_symbol(@claim.school.region.funding_available_per_hour)) %>
+            <% row.with_value(text: humanized_money_with_symbol(current_step.region_funding_available_per_hour)) %>
           <% end %>
           <% summary_list.with_row do |row| %>
-            <% row.with_key(text: t(".amount")) %>
-            <% row.with_value %>
+            <% row.with_key(text: t(".clawback_amount")) %>
+            <% row.with_value(text: humanized_money_with_symbol(current_step.mentor_training_clawback_amount(mentor_training))) %>
           <% end %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".reason")) %>
-            <% row.with_value %>
+            <% row.with_value(text: current_step.mentor_training_clawback_reason(mentor_training)) %>
             <% row.with_action(text: t(".change"),
-                               href: step_path(:clawback),
+                               href: step_path(@wizard.step_name_for_mentor_training_clawback(mentor_training)),
                                visually_hidden_text: t(".reason"),
                                classes: ["govuk-link--no-visited-state"]) %>
           <% end %>
         <% end %>
+      <% end %>
 
-        <div class="govuk-warning-text">
-          <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-          <strong class="govuk-warning-text__text"><%= t(".warning") %></strong>
-        </div>
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text"><%= t(".warning") %></strong>
+      </div>
 
-        <%= f.submit t(".submit"), class: "govuk-button" %>
-
-    </div>
+      <%= f.submit t(".submit"), class: "govuk-button" %>
+    <% end %>
   </div>
-
-<% end %>
+</div>

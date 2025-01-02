@@ -10,22 +10,29 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
     then_i_see_the_show_page_for_claim_one
 
     when_i_click_on_request_clawback
-    then_i_see_the_clawback_details_page
+    then_i_see_the_clawback_details_page_for_jane_smith
+
+    when_i_click_on_continue
+    then_i_see_a_validation_error_for_not_entering_hours
+    and_i_see_validation_error_for_not_entering_notes
 
     when_i_enter_fifty_hours
     and_i_click_on_continue
-    # then_i_see_a_validation_error_for_entering_too_many_hours
+    then_i_see_a_validation_error_when_entering_too_many_hours_for_jane_smith
 
-    when_i_leave_all_fields_blank
+    when_i_enter_valid_data
     and_i_click_on_continue
-    # then_i_see_validation_errors_for_not_providing_required_data
+    then_i_see_the_clawback_details_page_for_john_doe
 
     when_i_enter_valid_data
     and_i_click_on_continue
     then_i_see_the_check_your_answers_page
 
     when_i_click_on_change
-    then_i_see_the_clawback_details_page
+    then_i_see_the_clawback_details_page_for_jane_smith
+
+    when_i_click_on_continue
+    then_i_see_the_clawback_details_page_for_john_doe
 
     when_i_click_on_continue
     then_i_see_the_check_your_answers_page
@@ -38,15 +45,19 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
 
   private
 
+
   def given_claims_exist
+
     @claim_one = create(:claim,
                         :submitted,
                         status: :sampling_not_approved,
                         reference: 11_111_111)
-    @claim_two = create(:claim,
-                        :submitted,
-                        status: :sampling_not_approved,
-                        reference: 22_222_222)
+
+    @john_doe = create(:claims_mentor, first_name: "John", last_name: "Doe")
+    @jane_smith = create(:claims_mentor, first_name: "Jane", last_name: "Smith")
+
+    @john_doe_training = create(:mentor_training, claim: @claim_one, mentor: @john_doe, not_assured: true, reason_not_assured: "Mismatch in hours recorded compared with hours claimed.")
+    @jane_smith_training = create(:mentor_training, claim: @claim_one, mentor: @jane_smith, not_assured: true, reason_not_assured: "Mismatch in hours recorded compared with hours claimed.")
   end
 
   def and_i_am_signed_in
@@ -96,22 +107,36 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
     click_on "Request clawback"
   end
 
-  def then_i_see_the_clawback_details_page
-    expect(page).to have_title("Clawback details - #{@claim_one.school_name} - Claim 11111111 - Claim funding for mentor training - GOV.UK")
+  def then_i_see_the_clawback_details_page_for_jane_smith
+    expect(page).to have_title("Clawback details for Jane Smith - #{@claim_one.school_name} - Claim 11111111 - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Claims")
 
     expect(page).to have_element(:span, text: "Clawbacks - Claim 11111111", class: "govuk-caption-l")
     expect(page).to have_h1("Clawback details")
     expect(page).to have_element(:label, text: "Number of hours to clawback", class: "govuk-label")
-    expect(page).to have_element(:div, text: "Enter whole numbers up to a maximum of 40 hours", class: "govuk-hint")
-    expect(page).to have_element(:label, text: "Reason for clawback", class: "govuk-label")
-    expect(page).to have_element(:div, text: "Explain why the clawback is being requested. For example, include details of which mentor has received a deduction.", class: "govuk-hint")
+    expect(page).to have_element(:div, text: "Enter whole numbers up to a maximum of 20 hours", class: "govuk-hint")
+    expect(page).to have_element(:label, text: "Notes on your decision", class: "govuk-label")
+    expect(page).to have_element(:div, text: "Only include details related to Jane Smith", class: "govuk-hint")
+    expect(page).to have_button("Continue")
+    expect(page).to have_link("Cancel", href: "/support/claims/clawbacks/claims")
+  end
+
+  def then_i_see_the_clawback_details_page_for_john_doe
+    expect(page).to have_title("Clawback details for John Doe - #{@claim_one.school_name} - Claim 11111111 - Claim funding for mentor training - GOV.UK")
+    expect(primary_navigation).to have_current_item("Claims")
+
+    expect(page).to have_element(:span, text: "Clawbacks - Claim 11111111", class: "govuk-caption-l")
+    expect(page).to have_h1("Clawback details")
+    expect(page).to have_element(:label, text: "Number of hours to clawback", class: "govuk-label")
+    expect(page).to have_element(:div, text: "Enter whole numbers up to a maximum of 20 hours", class: "govuk-hint")
+    expect(page).to have_element(:label, text: "Notes on your decision", class: "govuk-label")
+    expect(page).to have_element(:div, text: "Only include details related to John Doe", class: "govuk-hint")
     expect(page).to have_button("Continue")
     expect(page).to have_link("Cancel", href: "/support/claims/clawbacks/claims")
   end
 
   def when_i_enter_fifty_hours
-    fill_in "claims_request_clawback_wizard_clawback_step[number_of_hours]", with: 50
+    fill_in "claims_request_clawback_wizard_mentor_training_clawback_step[number_of_hours]", with: 50
   end
 
   def and_i_click_on_continue
@@ -119,17 +144,21 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
   end
   alias_method :when_i_click_on_continue, :and_i_click_on_continue
 
-  # def then_i_see_a_validation_error_for_entering_too_many_hours; end
-
-  def when_i_leave_all_fields_blank
-    fill_in "claims_request_clawback_wizard_clawback_step[number_of_hours]", with: ""
+  def then_i_see_a_validation_error_for_not_entering_hours
+    expect(page).to have_validation_error("Enter the number of hours to clawback")
   end
 
-  # def then_i_see_validation_errors_for_not_providing_required_data; end
+  def and_i_see_validation_error_for_not_entering_notes
+    expect(page).to have_validation_error("Enter the details about your decision.")
+  end
+
+  def then_i_see_a_validation_error_when_entering_too_many_hours_for_jane_smith
+    expect(page).to have_validation_error("must be less than or equal to 20")
+  end
 
   def when_i_enter_valid_data
-    fill_in "claims_request_clawback_wizard_clawback_step[number_of_hours]", with: "8"
-    fill_in "claims_request_clawback_wizard_clawback_step[reason_for_clawback]", with: "Mismatch in hours recorded compared with hours claimed."
+    fill_in "claims_request_clawback_wizard_mentor_training_clawback_step[number_of_hours]", with: "8"
+    fill_in "claims_request_clawback_wizard_mentor_training_clawback_step[reason_for_clawback]", with: "Mismatch in hours recorded compared with hours claimed."
   end
 
   def then_i_see_the_check_your_answers_page
@@ -137,10 +166,24 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
     expect(primary_navigation).to have_current_item("Claims")
     expect(page).to have_element(:span, text: "Clawbacks - Claim 11111111", class: "govuk-caption-l")
     expect(page).to have_h1("Check your answers")
-    expect(page).to have_summary_list_row("Number of hours", "")
-    expect(page).to have_summary_list_row("Hourly rate", @claim_one.school.region.funding_available_per_hour)
-    expect(page).to have_summary_list_row("Clawback amount", "")
-    expect(page).to have_summary_list_row("Reason for clawback", "")
+    within "#clawback-totals" do
+      expect(page).to have_summary_list_row("Number of hours", "16")
+      expect(page).to have_summary_list_row("Hourly rate", @claim_one.school.region.funding_available_per_hour)
+      expect(page).to have_summary_list_row("Clawback amount", "£#{@claim_one.school.region.funding_available_per_hour * 16}")
+    end
+
+    within "#mentor-training-#{@john_doe_training.id}" do
+      expect(page).to have_summary_list_row("Number of hours", "8")
+      expect(page).to have_summary_list_row("Hourly rate", @claim_one.school.region.funding_available_per_hour)
+      expect(page).to have_summary_list_row("Clawback amount", "£#{@claim_one.school.region.funding_available_per_hour * 8}")
+    end
+
+    within "#mentor-training-#{@john_doe_training.id}" do
+      expect(page).to have_summary_list_row("Number of hours", "8")
+      expect(page).to have_summary_list_row("Hourly rate", @claim_one.school.region.funding_available_per_hour)
+      expect(page).to have_summary_list_row("Clawback amount", "£#{@claim_one.school.region.funding_available_per_hour * 8}")
+    end
+
     expect(page).to have_element(:strong, text: "We will show clawback details to the school.", class: "govuk-warning-text__text")
     expect(page).to have_button("Request clawback")
     expect(page).to have_link("Cancel", href: "/support/claims/clawbacks/claims")

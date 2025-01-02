@@ -1,10 +1,20 @@
-<% content_for(:page_title) { sanitize t(".page_title", school_name: @claim.school_name, reference: @claim.reference) } %>
+<% content_for(:page_title) { sanitize t(".page_title", mentor_name: current_step.mentor_full_name, school_name: @claim.school_name, reference: @claim.reference) } %>
 
   <%= form_with(model: current_step, url: current_step_path, method: :put) do |f| %>
     <%= f.govuk_error_summary %>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+        <h1 class="govuk-heading-l"><%= t(".title", mentor_name: current_step.mentor_full_name) %></h1>
+
+        <%= govuk_inset_text do %>
+          <p class="govuk-heading-s"><%= t(".comments_from_provider") %></p>
+          <p class="govuk-body"><%= sanitize(current_step.reason_not_assured) %></p>
+        <% end %>
+
+        <%= govuk_inset_text do %>
+          <p class="govuk-heading-s"><%= t(".comments_from_school") %></p>
+          <p class="govuk-body"><%= sanitize(current_step.reason_rejected) %></p>
+        <% end %>
 
         <div class="govuk-form-group">
           <%= f.govuk_text_field :number_of_hours,
@@ -17,7 +27,7 @@
           <%= f.govuk_text_area :reason_for_clawback,
                                   width: "govuk-text-area",
                                   label: { text: t(".reason"), size: "s" },
-                                  hint: { text: t(".reason_hint") } %>
+                                  hint: { text: t(".reason_hint", mentor_name: current_step.mentor_full_name) } %>
         </div>
 
         <%= f.govuk_submit t(".continue") %>
