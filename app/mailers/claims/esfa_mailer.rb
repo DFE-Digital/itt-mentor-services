@@ -4,7 +4,7 @@ class Claims::ESFAMailer < Claims::ApplicationMailer
 
     notify_email to: esfa_email_addresses,
                  subject: t(".subject"),
-                 body: t(".body", url_for_csv: download_claims_clawback_claims_url(token:), support_email:, service_name:)
+                 body: t(".body", url_for_csv: claims_clawback_claims_url(token:), support_email:, service_name:)
   end
 
   private

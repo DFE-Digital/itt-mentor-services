@@ -9,6 +9,12 @@
 require "rails_helper"
 
 RSpec.describe Claims::Clawback, type: :model do
-  it { is_expected.to have_many(:clawback_claims) }
-  it { is_expected.to have_many(:claims).through(:clawback_claims) }
+  describe "associations" do
+    it { is_expected.to have_many(:clawback_claims) }
+    it { is_expected.to have_many(:claims).through(:clawback_claims) }
+  end
+
+  describe "attachments" do
+    it { is_expected.to have_one_attached(:csv_file) }
+  end
 end

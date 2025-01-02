@@ -17,7 +17,7 @@ class Claims::Clawback::ClaimsController < Claims::ApplicationController
     render "error"
   end
 
-  def set_payment
+  def set_clawback
     @clawback = Claims::Clawback.find(@clawback_id)
   rescue ActiveRecord::RecordNotFound
     render "error"

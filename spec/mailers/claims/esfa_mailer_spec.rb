@@ -5,7 +5,7 @@ RSpec.describe Claims::ESFAMailer, type: :mailer do
     subject(:claims_require_clawback_email) { described_class.claims_require_clawback(clawback) }
 
     let(:clawback) { create(:claims_clawback) }
-    let(:url_for_csv) { download_claims_clawback_claims_url(token:, host: "claims.localhost") }
+    let(:url_for_csv) { claims_clawback_claims_url(token:, host: "claims.localhost") }
     let(:token) { Rails.application.message_verifier(:clawback).generate(clawback.id, expires_in: 7.days) }
     let(:esfa_emails) { %w[example1@education.gov.uk example2@education.gov.uk] }
     let(:service_name) { "Claim funding for mentor training" }
