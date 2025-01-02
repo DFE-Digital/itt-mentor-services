@@ -217,5 +217,9 @@ en:
           attributes:
             reason_rejected:
               blank: Enter the response the school has given for rejecting this mentor.
-
-
+        claims/request_clawback_wizard/mentor_training_clawback_step:
+          attributes:
+            number_of_hours:
+              blank: Enter the number of hours to clawback.
+            reason_for_clawback:
+              blank: Enter the details about your decision.
