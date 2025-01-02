@@ -30,7 +30,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Enable or disable maintenance mode
-      uses: DFE-Digital/github-actions/maintenance@master
+      uses: DFE-Digital/github-actions/maintenance@oidc-ga
       with:
         azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
         azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
