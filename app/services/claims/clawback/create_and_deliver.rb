@@ -15,7 +15,7 @@ class Claims::Clawback::CreateAndDeliver < ApplicationService
         claim.update!(status: :clawback_in_progress)
       end
 
-      Claims::ClaimActivity.create!(action: :clawback_in_progress, user: current_user, record: clawback)
+      Claims::ClaimActivity.create!(action: :clawback_request_delivered, user: current_user, record: clawback)
 
       transaction.after_commit do
         Claims::ESFAMailer.claims_require_clawback(clawback).deliver_later
