@@ -17,7 +17,7 @@ class Claims::Support::Claims::RequestClawbackController < Claims::ApplicationCo
     elsif @wizard.next_step.present?
       redirect_to step_path(@wizard.next_step)
     else
-      @wizard.update_status
+      @wizard.submit_esfa_responses
       @wizard.reset_state
       redirect_to index_path, flash: {
         heading: t(".success_heading"),
