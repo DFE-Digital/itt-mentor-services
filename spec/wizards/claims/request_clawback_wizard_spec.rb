@@ -10,6 +10,7 @@ RSpec.describe Claims::RequestClawbackWizard do
   let(:params_data) { {} }
   let(:params) { ActionController::Parameters.new(params_data) }
   let(:claim) { create(:claim, status: "sampling_in_progress") }
+  let!(:mentor_training) { create(:mentor_training, claim:, not_assured: true, reason_not_assured: "reason") }
 
   before do
     allow(claim).to receive(:save!).and_return(true)
@@ -18,7 +19,7 @@ RSpec.describe Claims::RequestClawbackWizard do
   describe "#steps" do
     subject { wizard.steps.keys }
 
-    it { is_expected.to eq %i[clawback check_your_answers] }
+    it { is_expected.to eq ["mentor_training_clawback_#{mentor_training.id}".to_sym, :check_your_answers] }
   end
 
   describe "#update_status" do
