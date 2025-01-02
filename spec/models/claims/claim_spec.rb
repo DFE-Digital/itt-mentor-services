@@ -262,4 +262,39 @@ RSpec.describe Claims::Claim, type: :model do
       expect(claim.was_draft?).to be(false)
     end
   end
+
+  describe "#total_clawback_amount" do
+    let(:claim) { create(:claim) }
+
+    before do
+      allow(claim.school).to receive(:region_funding_available_per_hour).and_return(15)
+    end
+
+    context "when there are multiple not_assured mentor trainings" do
+      it "returns the total clawback amount for the claim calculated from both mentors" do
+        create(:mentor_training, claim:, hours_clawed_back: 10, not_assured: true, reason_not_assured: "reason")
+        create(:mentor_training, claim:, hours_clawed_back: 20, not_assured: true, reason_not_assured: "reason")
+
+        expect(claim.total_clawback_amount).to eq(450.0)
+      end
+    end
+
+    context "when one mentor training is not_assured" do
+      it "returns the total clawback amount for the claim from the not_assured mentor" do
+        create(:mentor_training, claim:, hours_clawed_back: 10, not_assured: false)
+        create(:mentor_training, claim:, hours_clawed_back: 20, not_assured: true, reason_not_assured: "reason")
+
+        expect(claim.total_clawback_amount).to eq(300.0)
+      end
+    end
+
+    context "when there are no not_assured mentor trainings" do
+      it "returns 0" do
+        create(:mentor_training, claim:, hours_clawed_back: 10, not_assured: false)
+        create(:mentor_training, claim:, hours_clawed_back: 20, not_assured: false)
+
+        expect(claim.total_clawback_amount).to eq(0)
+      end
+    end
+  end
 end

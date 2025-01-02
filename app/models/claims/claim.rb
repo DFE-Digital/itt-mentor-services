@@ -139,6 +139,10 @@ class Claims::Claim < ApplicationRecord
     claim_record.nil? ? false : claim_record.draft?
   end
 
+  def total_clawback_amount
+    mentor_trainings.not_assured.sum { |mt| mt.hours_clawed_back * school.region_funding_available_per_hour }
+  end
+
   private
 
   def has_revision?
