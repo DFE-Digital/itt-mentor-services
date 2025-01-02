@@ -79,6 +79,8 @@ class Claims::School < School
 
   belongs_to :claims_grant_conditions_accepted_by, class_name: "User", optional: true
 
+  delegate :funding_available_per_hour, to: :region, prefix: true, allow_nil: true
+
   def grant_conditions_accepted?
     claims_grant_conditions_accepted_at?
   end
