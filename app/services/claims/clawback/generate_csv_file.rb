@@ -31,7 +31,7 @@ class Claims::Clawback::GenerateCSVFile < ApplicationService
             claim.school.local_authority_name,
             claim.school.type_of_establishment,
             claim.school.group,
-            claim.submitted_at&.iso8601,
+            claim.submitted_at.iso8601,
             mentor_training.mentor_full_name,
             mentor_training.reason_clawed_back,
             mentor_training.hours_clawed_back,
