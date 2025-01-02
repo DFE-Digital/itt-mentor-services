@@ -2,22 +2,25 @@ en:
   wizards:
     claims:
       request_clawback_wizard:
-        clawback_step:
-          page_title: Clawback details - %{school_name} - Claim %{reference}
-          title: Clawback details
+        mentor_training_clawback_step:
+          page_title: Clawback details for %{mentor_name} - %{school_name} - Claim %{reference}
+          title: Clawback details for %{mentor_name}
           hours: Number of hours to clawback
-          hours_hint: Enter whole numbers up to a maximum of 40 hours
-          reason: Reason for clawback
-          reason_hint: Explain why the clawback is being requested. For example, include details of which mentor has received a deduction.
+          hours_hint: Enter whole numbers up to a maximum of 20 hours
+          reason: Notes on your decision
+          reason_hint: Only include details related to %{mentor_name}
           continue: Continue
           description: Personal details
+          comments_from_provider: Comments from the provider
+          comments_from_school: Comments from the school
         check_your_answers_step:
           page_title: Check your answers - %{school_name} - Claim %{reference}
           title: Check your answers
-          hours: Number of hours
+          mentor_training_title: Clawback request for %{mentor_name}
           rate: Hourly rate
-          amount: Clawback amount
-          reason: Reason for clawback
+          number_of_hours: Number of hours
+          clawback_amount: Clawback amount
+          reason: Notes on your decision
           submit: Request clawback
           warning: We will show clawback details to the school.
           change: Change
