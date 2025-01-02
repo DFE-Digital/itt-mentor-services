@@ -108,6 +108,10 @@ RSpec.describe Claims::School do
     end
   end
 
+  describe "delegations" do
+    it { is_expected.to delegate_method(:funding_available_per_hour).to(:region).with_prefix(true) }
+  end
+
   describe "default scope" do
     let!(:school_with_claims) { create(:school, :claims) }
     let!(:school_without_claims) { create(:school) }
