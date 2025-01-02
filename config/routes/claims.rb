@@ -91,7 +91,18 @@ scope module: :claims, as: :claims, constraints: {
 
     namespace :claims do
       namespace :payments do
-        resources :claims, only: %i[show]
+        resources :claims, only: %i[show] do
+          member do
+            get :confirm_information_sent, path: "information-sent"
+            put :information_sent, path: "information-sent"
+
+            get :confirm_paid, path: "paid"
+            put :paid, path: "paid"
+
+            get :confirm_reject, path: "reject"
+            put :reject, path: "reject"
+          end
+        end
       end
 
       resources :payments, only: %i[index new create]
