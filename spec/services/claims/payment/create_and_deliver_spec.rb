@@ -17,7 +17,8 @@ describe Claims::Payment::CreateAndDeliver do
         create(:claim, :submitted)
       end
 
-      it "creates a payment, activity, updates claims statuses to 'payment_in_progress', and enqueues the deliver of an email to the ESFA" do
+      it "creates a payment, activity, updates claims statuses to 'payment_in_progress',
+        and enqueues the delivery of an email to the ESFA" do
         expect { create_and_deliver }.to change(Claims::Payment, :count).by(1)
           .and change(Claims::ClaimActivity, :count).by(1)
           .and change { Claims::Claim.pluck(:status).uniq }.from(%w[submitted]).to(%w[payment_in_progress])

@@ -25,6 +25,12 @@ scope module: :claims, as: :claims, constraints: {
     end
   end
 
+  namespace :clawback do
+    resources :claims, only: %i[index] do
+      get :download, on: :collection
+    end
+  end
+
   resources :schools, only: %i[index show] do
     scope module: :schools do
       resources :claims do

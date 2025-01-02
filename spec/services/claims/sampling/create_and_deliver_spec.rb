@@ -8,7 +8,8 @@ describe Claims::Sampling::CreateAndDeliver do
 
   describe "#call" do
     context "when there are submitted claims" do
-      it "does a thing" do
+      it "creates a new claim activity, changes the status of 'paid' claims to 'sampling_in_progress'
+        and enqueues the delivery of an email to the providers" do
         expect { create_and_deliver }.to change(Claims::Sampling, :count).by(1)
         .and change(Claims::ClaimActivity, :count).by(1)
         .and change { Claims::Claim.pluck(:status).uniq }.from(%w[paid]).to(%w[sampling_in_progress])
