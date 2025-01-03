@@ -1,7 +1,10 @@
 class Claims::Support::Claims::ClawbacksController < Claims::Support::ApplicationController
-  before_action :skip_authorization
+  append_pundit_namespace :claims
+
   before_action :set_filtered_claims, only: %i[index]
   before_action :set_claim, only: %i[show]
+  before_action :authorize_claims
+
   helper_method :filter_form
 
   def index
@@ -11,6 +14,20 @@ class Claims::Support::Claims::ClawbacksController < Claims::Support::Applicatio
   end
 
   def show; end
+
+  def new
+    @clawback_requested_claims = Claims::Claim.clawback_requested
+
+    unless policy(Claims::Clawback).create?
+      render "new_not_permitted"
+    end
+  end
+
+  def create
+    Claims::Clawback::CreateAndDeliver.call(current_user:)
+
+    redirect_to claims_support_claims_clawbacks_path, flash: { success: true, heading: t(".success") }
+  end
 
   private
 
@@ -48,5 +65,9 @@ class Claims::Support::Claims::ClawbacksController < Claims::Support::Applicatio
 
   def index_path
     claims_support_claims_clawbacks_path
+  end
+
+  def authorize_claims
+    authorize [:clawbacks, set_filtered_claims]
   end
 end
