@@ -77,7 +77,7 @@ jobs:
           echo "SLACK_WEBHOOK=$SLACK_WEBHOOK" >> $GITHUB_OUTPUT
 
     - name: Backup ${{ env.DEPLOY_ENV }} postgres
-      uses: DFE-Digital/github-actions/backup-postgres@master
+      uses: DFE-Digital/github-actions/backup-postgres@oidc-ga
       with:
         storage-account: ${{ env.STORAGE_ACCOUNT_NAME }}
         resource-group: ${{ env.RESOURCE_GROUP_NAME }}
