@@ -16,11 +16,6 @@ module Claims
       add_step(CheckYourAnswersStep)
     end
 
-    def update_status
-      @claim.status = :clawback_requested
-      @claim.save!
-    end
-
     def mentor_trainings
       @mentor_trainings ||= claim.mentor_trainings.not_assured.order_by_mentor_full_name
     end
