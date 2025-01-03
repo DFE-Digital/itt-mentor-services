@@ -54,8 +54,12 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
     @john_doe = create(:claims_mentor, first_name: "John", last_name: "Doe")
     @jane_smith = create(:claims_mentor, first_name: "Jane", last_name: "Smith")
 
-    @john_doe_training = create(:mentor_training, claim: @claim_one, mentor: @john_doe, not_assured: true, reason_not_assured: "Mismatch in hours recorded compared with hours claimed.")
-    @jane_smith_training = create(:mentor_training, claim: @claim_one, mentor: @jane_smith, not_assured: true, reason_not_assured: "Mismatch in hours recorded compared with hours claimed.")
+    @john_doe_training = create(:mentor_training, claim: @claim_one, mentor: @john_doe,
+                                                  hours_completed: 20, not_assured: true,
+                                                  reason_not_assured: "Mismatch in hours recorded compared with hours claimed.")
+    @jane_smith_training = create(:mentor_training, claim: @claim_one, mentor: @jane_smith,
+                                                    hours_completed: 20, not_assured: true,
+                                                    reason_not_assured: "Mismatch in hours recorded compared with hours claimed.")
   end
 
   def and_i_am_signed_in
@@ -98,7 +102,7 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
     expect(page).to have_h2("Grant funding")
     expect(page).to have_summary_list_row("Total hours", "#{@claim_one.mentor_trainings.sum(:hours_completed)} hours")
     expect(page).to have_summary_list_row("Hourly rate", @claim_one.school.region.funding_available_per_hour)
-    expect(page).to have_summary_list_row("Claim amount", @claim_one.amount)
+    expect(page).to have_summary_list_row("Claim amount", @claim_one.amount.format(symbol: true, decimal_mark: ".", no_cents: true))
   end
 
   def when_i_click_on_request_clawback
@@ -209,7 +213,7 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
       "academic_year" => @claim_one.academic_year.name,
       "provider_name" => @claim_one.provider.name,
       "submitted_at" => I18n.l(@claim_one.submitted_at.to_date, format: :long),
-      "amount" => @claim_one.amount,
+      "amount" => @claim_one.amount.format(symbol: true, decimal_mark: ".", no_cents: true),
     })
   end
 end

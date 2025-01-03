@@ -20,7 +20,7 @@
           <%= f.govuk_text_field :number_of_hours,
                                   width: 2,
                                   label: { text: t(".hours"), size: "s" },
-                                  hint: { text: t(".hours_hint") } %>
+                                  hint: { text: t(".hours_hint", hours_completed: current_step.mentor_training.hours_completed) } %>
         </div>
 
         <div class="govuk-form-group">
