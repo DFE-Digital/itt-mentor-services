@@ -45,9 +45,7 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
 
   private
 
-
   def given_claims_exist
-
     @claim_one = create(:claim,
                         :submitted,
                         status: :sampling_not_approved,
