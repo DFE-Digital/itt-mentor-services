@@ -1,0 +1,19 @@
+<%= render "claims/support/primary_navigation", current: :claims %>
+<% content_for(:page_title) { sanitize t(".page_title") } %>
+
+<% content_for(:before_content) do %>
+  <%= govuk_back_link href: claims_support_claims_clawbacks_path %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-caption-l"><%= t(".caption") %></p>
+      <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+
+      <p class="govuk-body"><%= t(".description") %></p>
+
+      <p class="govuk-body"><%= govuk_link_to t(".cancel"), claims_support_claims_clawbacks_path %></p>
+    </div>
+  </div>
+</div>

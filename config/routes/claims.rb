@@ -120,7 +120,7 @@ scope module: :claims, as: :claims, constraints: {
         end
       end
 
-      resources :clawbacks, path: "clawbacks/claims", only: %i[index show] do
+      resources :clawbacks, path: "clawbacks/claims", only: %i[index show new create] do
         get :remove, on: :member
 
         collection do

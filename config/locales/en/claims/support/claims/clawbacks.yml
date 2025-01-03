@@ -8,6 +8,9 @@ en:
             sub_heading: Clawbacks (%{count})
             sub_heading_without_count: Clawbacks
             no_claims: There are no claims waiting to be processed.
+            buttons:
+              send_claims_to_esfa: Send claims to ESFA
+              upload_esfa_response: Upload ESFA response
           show:
             page_caption: Clawbacks - Claim %{reference}
             page_title: "Clawbacks - %{school_name} - Claim %{reference}"
@@ -16,3 +19,29 @@ en:
             mentor_with_index: Mentor %{index}
             mentor: Mentor
             submitted_by: Submitted by %{name} on %{date}.
+          new: 
+            page_title: Send claims to ESFA - Clawbacks
+            caption: Clawbacks
+            title: Send claims to ESFA
+            description:
+              one: There is %{count} claim included in this submission.
+              other: There are %{count} claims included in this submission.
+            details_html:
+              <p>Selecting ‘Send claims’ will:</p>
+              <ul class="govuk-list govuk-list--bullet">
+                <li>create a CSV containing a list of all claims marked as ‘Clawback requested’</li>
+                <li>send an email to the ESFA containing a link to the generated CSV - this link expires after 7 days</li>
+                <li>update the claim status from ‘Clawback requested’ to ‘Clawback in progress’</li>
+              </ul>
+            warning: This action cannot be undone.
+            submit: Send claims
+            cancel: Cancel
+          create:
+            success: Claims sent to ESFA
+          new_not_permitted:
+            page_title: There are no claims to send for clawback - Clawbacks
+            title: There are no claims to send for clawback
+            caption: Clawbacks
+            cancel: Cancel
+            description: You cannot send any claims to the ESFA because there are no claims with a clawback requested.
+
