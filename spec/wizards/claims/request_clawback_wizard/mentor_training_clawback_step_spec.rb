@@ -19,9 +19,29 @@ RSpec.describe Claims::RequestClawbackWizard::MentorTrainingClawbackStep, type: 
   end
 
   describe "validations" do
+    let(:mentor_training) { create(:mentor_training, claim:, hours_completed: 3, not_assured: true, reason_not_assured: "reason") }
+
     it { is_expected.to validate_presence_of(:mentor_training_id) }
     it { is_expected.to validate_presence_of(:number_of_hours) }
     it { is_expected.to validate_presence_of(:reason_for_clawback) }
+
+    context "when the number of hours is greater than the hours completed" do
+      let(:attributes) { { mentor_training_id: mentor_training.id, number_of_hours: 4, reason_for_clawback: "reason" } }
+
+      it { is_expected.not_to be_valid }
+    end
+
+    context "when the number of hours is less than the hours completed" do
+      let(:attributes) { { mentor_training_id: mentor_training.id, number_of_hours: 1, reason_for_clawback: "reason" } }
+
+      it { is_expected.to be_valid }
+    end
+
+    context "when the number of hours is equal to the hours completed" do
+      let(:attributes) { { mentor_training_id: mentor_training.id, number_of_hours: 3, reason_for_clawback: "reason" } }
+
+      it { is_expected.to be_valid }
+    end
   end
 
   describe "delegations" do
