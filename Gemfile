@@ -156,7 +156,7 @@ group :test do
   # launch browser when inspecting capybara specs
   gem "launchy"
   gem "timecop"
-  gem "undercover", "~> 0.5.0"
+  gem "undercover", "~> 0.6.3"
   gem "webmock"
 
   gem "rubocop-govuk", require: false
