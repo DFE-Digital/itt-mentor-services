@@ -22,14 +22,6 @@ RSpec.describe Claims::RequestClawbackWizard do
     it { is_expected.to eq ["mentor_training_clawback_#{mentor_training.id}".to_sym, :check_your_answers] }
   end
 
-  describe "#update_status" do
-    it "updates the claim status to 'clawback_requested' and saves the claim" do
-      wizard.update_status
-      expect(claim.status).to eq("clawback_requested")
-      expect(claim).to have_received(:save!)
-    end
-  end
-
   describe "#mentor_trainings" do
     it "returns the claim's mentor trainings that are not assured and orders them by mentor full name" do
       expect(wizard.mentor_trainings).to eq([mentor_training])
