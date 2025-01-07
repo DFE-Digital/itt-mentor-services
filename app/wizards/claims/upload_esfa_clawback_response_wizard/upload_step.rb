@@ -34,7 +34,9 @@ class Claims::UploadESFAClawbackResponseWizard::UploadStep < BaseStep
 
   def grouped_csv_rows
     @grouped_csv_rows ||= CSV.parse(read_csv, headers: true)
-      .group_by { |row| row["claim_reference"] }
+      .group_by do |row|
+        row["claim_reference"]
+      end
   end
 
   def csv_inputs_valid?
