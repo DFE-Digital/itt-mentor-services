@@ -1,0 +1,10 @@
+en:
+  claims:
+    support:
+      claims:
+        clawbacks:
+          upload_esfa_response:
+            edit:
+              cancel: Cancel
+            update: 
+              success: ESFA response uploaded

@@ -142,6 +142,10 @@ scope module: :claims, as: :claims, constraints: {
           get "new/:claim_id", to: "request_clawback#new", as: :new_request_clawback
           get "new/:claim_id/:step", to: "request_clawback#edit", as: :request_clawback
           put "new/:claim_id/:step", to: "request_clawback#update"
+
+          get "upload_esfa_response/new", to: "clawbacks/upload_esfa_response#new", as: :new_upload_esfa_response
+          get "upload_esfa_response/new/:state_key/:step", to: "clawbacks/upload_esfa_response#edit", as: :upload_esfa_response
+          put "upload_esfa_response/new/:state_key/:step", to: "clawbacks/upload_esfa_response#update"
         end
       end
 

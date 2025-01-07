@@ -103,6 +103,11 @@ RSpec.describe Claims::UploadProviderResponseWizard do
     let!(:sampling_in_progress_claim) { create(:claim, :submitted, status: :sampling_in_progress) }
     let(:draft_claim) { create(:claim) }
 
+    before do
+      submitted_claim
+      draft_claim
+    end
+
     it "returns all claims with the status 'sampling_in_progress" do
       expect(sampled_claims).to contain_exactly(sampling_in_progress_claim)
     end
