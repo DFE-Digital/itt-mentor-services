@@ -5,12 +5,13 @@ en:
         clawbacks:
           index:
             heading: Claims
-            sub_heading: Clawbacks (%{count})
-            sub_heading_without_count: Clawbacks
+            sub_heading: 
+              zero: Clawbacks
+              one: Clawbacks (%{count})
+              other: Clawbacks (%{count})
             no_claims: There are no claims waiting to be processed.
-            buttons:
-              send_claims_to_esfa: Send claims to ESFA
-              upload_esfa_response: Upload ESFA response
+            send_claims_to_esfa: Send claims to ESFA
+            upload_esfa_response: Upload ESFA response
           show:
             page_caption: Clawbacks - Claim %{reference}
             page_title: "Clawbacks - %{school_name} - Claim %{reference}"
