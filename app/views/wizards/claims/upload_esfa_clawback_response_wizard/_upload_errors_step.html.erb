@@ -1,0 +1,119 @@
+<% content_for(:page_title) { sanitize t(".page_title") } %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l"><%= t(".caption") %></span>
+    <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+    <% if current_step.invalid_claim_references.present? %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-0">
+        <%= t(".incorrect_claim_reference") %>
+      </h2>
+
+      <%= govuk_summary_list(actions: false) do |summary_list| %>
+        <% current_step.invalid_claim_references.each do |invalid_claim_references| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(
+              text: invalid_claim_references,
+            ) %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% if current_step.invalid_status_claims.present? %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-0">
+        <%= t(".incorrect_status") %>
+      </h2>
+
+      <%= govuk_summary_list do |summary_list| %>
+        <% current_step.invalid_status_claims.each do |invalid_claim| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(
+              text: invalid_claim.reference,
+            ) %>
+            <% row.with_action(
+              text: t(".view"),
+              href: claims_support_claim_path(invalid_claim),
+              visually_hidden_text: invalid_claim.reference,
+              html_attributes: {
+                class: "govuk-link--no-visited-state",
+                target: "_blank",
+                new_tab: true,
+              },
+            ) %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% if current_step.missing_mentor_claims.present? %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-0">
+        <%= t(".missing_mentors") %>
+      </h2>
+
+      <%= govuk_summary_list do |summary_list| %>
+        <% current_step.missing_mentor_claims.each do |invalid_claim| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(
+              text: invalid_claim.reference,
+            ) %>
+            <% row.with_action(
+              text: t(".view"),
+              href: claims_support_claim_path(invalid_claim),
+              visually_hidden_text: invalid_claim.reference,
+              html_attributes: { class: "govuk-link--no-visited-state" },
+            ) %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% if current_step.missing_reason_clawed_back_claims.present? %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-0">
+        <%= t(".missing_reason_clawed_back") %>
+      </h2>
+
+      <%= govuk_summary_list do |summary_list| %>
+        <% current_step.missing_reason_clawed_back_claims.each do |invalid_claim| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(
+              text: invalid_claim.reference,
+            ) %>
+            <% row.with_action(
+              text: t(".view"),
+              href: claims_support_claim_path(invalid_claim),
+              visually_hidden_text: invalid_claim.reference,
+              html_attributes: { class: "govuk-link--no-visited-state" },
+            ) %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% if current_step.invalid_hours_clawed_back_claims.present? %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-0">
+        <%= t(".invalid_hours_clawed_back") %>
+      </h2>
+
+      <%= govuk_summary_list do |summary_list| %>
+        <% current_step.invalid_hours_clawed_back_claims.each do |invalid_claim| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(
+              text: invalid_claim.reference,
+            ) %>
+            <% row.with_action(
+              text: t(".view"),
+              href: claims_support_claim_path(invalid_claim),
+              visually_hidden_text: invalid_claim.reference,
+              html_attributes: { class: "govuk-link--no-visited-state" },
+            ) %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= govuk_warning_text do %>
+      <%= t(".upload_warning_html") %>
+    <% end %>
+  </div>
+</div>

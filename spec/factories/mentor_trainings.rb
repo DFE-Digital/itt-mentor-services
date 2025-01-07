@@ -39,5 +39,17 @@ FactoryBot.define do
     trait :submitted do
       claim { create(:claim, :submitted) }
     end
+
+    trait :not_assured do
+      submitted
+      not_assured { true }
+      reason_not_assured { "Not assured" }
+    end
+
+    trait :rejected do
+      not_assured
+      rejected { true }
+      reason_rejected { "Rejected" }
+    end
   end
 end

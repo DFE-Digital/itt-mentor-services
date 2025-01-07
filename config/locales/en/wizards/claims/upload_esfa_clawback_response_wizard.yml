@@ -1,0 +1,54 @@
+en:
+  wizards:
+    claims:
+      upload_esfa_clawback_response_wizard:
+        upload_step:
+          page_title: Upload ESFA response - Claims
+          title: Upload ESFA response
+          caption: Clawbacks
+          upload_csv_file: Upload CSV file
+          csv_help: Help with the CSV file
+          csv_help_details: |
+            Use this form to upload the CSV file sent by the ESFA.
+
+            The CSV file must contain the following headers in the first row:
+
+              - claim_reference
+              - school_urn
+              - school_name
+              - school_local_authority
+              - school_type_of_establishment
+              - school_group
+              - claim_submission_date
+              - mentor_full_name
+              - reason_clawed_back
+              - hours_clawed_back
+        confirmation_step:
+          page_title: Are you sure you want to upload the ESFA response? - Clawbacks - Claims
+          title: Are you sure you want to upload the ESFA response?
+          caption: Clawbacks
+          claims_count: 
+            one: There is %{count} claim included in this upload.
+            other: There are %{count} claims included in this upload.
+          upload_data: Upload responses
+        no_claims_step:
+          title: You cannot upload an ESFA response
+          page_title: You cannot upload an ESFA response - Clawbacks - Claims
+          caption: Clawbacks
+          you_cannot_upload: You cannot upload an ESFA response as there are no claims waiting for a response.
+        upload_errors_step:
+          title: There is a problem with the CSV file
+          caption: Clawbacks
+          page_title: There is a problem with the CSV file - Clawbacks - Claims
+          status: Status
+          claim_reference: Claim reference
+          view: View (opens in new tab)
+          incorrect_claim_reference: There are no claims associated with the following references:-
+          incorrect_status: The following claims do not have the status 'Clawback in progress':-
+          missing_mentors: The following claims are missing mentors from the uploaded CSV:-
+          missing_reason_clawed_back: The following claims are missing a missing a reason why the claim was clawed back:-
+          invalid_hours_clawed_back: The following claims have either no hours or an invalid amount of hours clawed back:-
+          upload_warning_html: |
+            You can only upload the ESFA's CSV once they have completed all rows.
+            <br><br>
+            Email the ESFA and ask them to complete the CSV with the missing information.
