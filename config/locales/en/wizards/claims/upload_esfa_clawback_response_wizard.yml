@@ -46,7 +46,7 @@ en:
           incorrect_claim_reference: There are no claims associated with the following references:-
           incorrect_status: The following claims do not have the status 'Clawback in progress':-
           missing_mentors: The following claims are missing mentors from the uploaded CSV:-
-          missing_reason_clawed_back: The following claims are missing a missing a reason why the claim was clawed back:-
+          missing_reason_clawed_back: The following claims are missing a reason why the claim was clawed back:-
           invalid_hours_clawed_back: The following claims have either no hours or an invalid amount of hours clawed back:-
           upload_warning_html: |
             You can only upload the ESFA's CSV once they have completed all rows.

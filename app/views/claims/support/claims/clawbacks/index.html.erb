@@ -6,29 +6,28 @@
 
   <%= render "claims/support/claims/secondary_navigation", current: :clawbacks %>
 
-    <% if @claims.any? %>
-    <h2 class="govuk-heading-m"><%= t(".sub_heading", count: @pagy.count) %></h2>
+  <h2 class="govuk-heading-m"><%= t(".sub_heading", count: @pagy.count) %></h2>
 
   <div class="govuk-button-group">
-    <%= govuk_button_link_to t(".buttons.send_claims_to_esfa"), new_claims_support_claims_clawback_path %>
-    <%= govuk_button_link_to t(".buttons.upload_esfa_response"),
+    <%= govuk_button_link_to t(".send_claims_to_esfa"), new_claims_support_claims_clawback_path %>
+    <%= govuk_button_link_to t(".upload_esfa_response"),
       new_upload_esfa_response_claims_support_claims_clawbacks_path,
       secondary: true %>
   </div>
 
-    <%= render Claims::Claim::FilterFormComponent.new(filter_form:, statuses: Claims::Claim::CLAWBACK_STATUSES) do %>
-      <div class="govuk-!-margin-bottom-2">
+  <%= render Claims::Claim::FilterFormComponent.new(filter_form:, statuses: Claims::Claim::CLAWBACK_STATUSES) do %>
+    <div class="govuk-!-margin-bottom-2">
+      <% if @claims.any? %>
         <% @claims.each do |claim| %>
           <%= render Claim::CardComponent.new(claim:, href: claims_support_claims_clawback_path(claim)) %>
         <% end %>
-      </div>
+      <% else %>
+        <p class="govuk-body">
+          <%= t(".no_claims") %>
+        </p>
+      <% end %>
+    </div>
 
-      <%= render PaginationComponent.new(pagy: @pagy) %>
-    <% end %>
-  <% else %>
-    <h2 class="govuk-heading-m"><%= t(".sub_heading_without_count") %></h2>
-    <p class="govuk-body">
-      <%= t(".no_claims") %>
-    </p>
+    <%= render PaginationComponent.new(pagy: @pagy) %>
   <% end %>
 </div>
