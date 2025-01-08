@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_02_102324) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_08_211418) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -144,6 +144,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_02_102324) do
   create_table "clawbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "downloaded_at"
   end
 
   create_table "flipflop_features", force: :cascade do |t|
@@ -307,6 +308,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_02_102324) do
     t.boolean "processed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "downloaded_at"
     t.index ["user_id"], name: "index_payment_responses_on_user_id"
   end
 
@@ -314,6 +316,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_02_102324) do
     t.uuid "sent_by_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "downloaded_at"
     t.index ["sent_by_id"], name: "index_payments_on_sent_by_id"
   end
 
@@ -383,6 +386,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_02_102324) do
     t.uuid "provider_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "downloaded_at"
     t.index ["provider_id"], name: "index_provider_samplings_on_provider_id"
     t.index ["sampling_id"], name: "index_provider_samplings_on_sampling_id"
   end

@@ -2,9 +2,10 @@
 #
 # Table name: clawbacks
 #
-#  id         :uuid             not null, primary key
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id            :uuid             not null, primary key
+#  downloaded_at :datetime
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
 #
 require "rails_helper"
 

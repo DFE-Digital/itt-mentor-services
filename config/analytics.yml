@@ -100,6 +100,7 @@ shared:
     - provider_id
     - created_at
     - updated_at
+    - downloaded_at
   :provider_sampling_claims:
     - id
     - claim_id
@@ -110,6 +111,7 @@ shared:
     - id
     - created_at
     - updated_at
+    - downloaded_at
   :clawback_claims:
     - id
     - claim_id
@@ -231,6 +233,7 @@ shared:
     - sent_by_id
     - created_at
     - updated_at
+    - downloaded_at
   :payment_claims:
     - id
     - payment_id
@@ -243,6 +246,7 @@ shared:
     - processed
     - created_at
     - updated_at
+    - downloaded_at
   :claim_activities:
     - id
     - action

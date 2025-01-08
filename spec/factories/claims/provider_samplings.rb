@@ -2,11 +2,12 @@
 #
 # Table name: provider_samplings
 #
-#  id          :uuid             not null, primary key
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  provider_id :uuid             not null
-#  sampling_id :uuid             not null
+#  id            :uuid             not null, primary key
+#  downloaded_at :datetime
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  provider_id   :uuid             not null
+#  sampling_id   :uuid             not null
 #
 # Indexes
 #
