@@ -2,10 +2,11 @@
 #
 # Table name: payments
 #
-#  id         :uuid             not null, primary key
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  sent_by_id :uuid             not null
+#  id            :uuid             not null, primary key
+#  downloaded_at :datetime
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  sent_by_id    :uuid             not null
 #
 # Indexes
 #
