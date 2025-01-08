@@ -23,7 +23,7 @@ require "rails_helper"
 
 RSpec.describe Claims::ClaimActivity, type: :model do
   describe "validations" do
-    it { is_expected.to validate_presence_of(:action) }
+    it { is_expected.to validate_inclusion_of(:action).in_array(described_class.actions.keys) }
   end
 
   describe "associations" do

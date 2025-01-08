@@ -23,8 +23,6 @@ class Claims::ClaimActivity < ApplicationRecord
   belongs_to :user, class_name: "Claims::SupportUser"
   belongs_to :record, polymorphic: true
 
-  validates :action, presence: true
-
   enum :action, {
     payment_request_delivered: "payment_request_delivered",
     payment_response_uploaded: "payment_response_uploaded",
