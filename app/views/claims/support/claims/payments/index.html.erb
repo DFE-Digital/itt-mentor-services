@@ -13,19 +13,19 @@
     <%= govuk_button_link_to t(".buttons.upload_esfa_response"), new_claims_support_claims_payment_response_path, secondary: true %>
   </div>
 
-  <% if @claims.any? %>
-    <h3 class="govuk-heading-s"><%= t(".description", count: @pagy.count) %></h3>
+  <h3 class="govuk-heading-s"><%= t(".description", count: @pagy.count) %></h3>
 
-    <%= render Claims::Claim::FilterFormComponent.new(filter_form:, statuses: Claims::Claim::PAYMENT_ACTIONABLE_STATUSES) do %>
-      <div class="govuk-!-margin-bottom-2">
+  <%= render Claims::Claim::FilterFormComponent.new(filter_form:, statuses: Claims::Claim::PAYMENT_ACTIONABLE_STATUSES) do %>
+    <div class="govuk-!-margin-bottom-2">
+      <% if @claims.any? %>
         <% @claims.each do |claim| %>
           <%= render Claim::CardComponent.new(claim:, href: claims_support_claims_payments_claim_path(claim)) %>
         <% end %>
-      </div>
+      <% else %>
+        <p class="govuk-body"><%= t(".no_claims") %></p>
+      <% end %>
+    </div>
 
-      <%= render PaginationComponent.new(pagy: @pagy) %>
-    <% end %>
-  <% else %>
-    <p class="govuk-body"><%= t(".no_claims") %></p>
+    <%= render PaginationComponent.new(pagy: @pagy) %>
   <% end %>
 </div>

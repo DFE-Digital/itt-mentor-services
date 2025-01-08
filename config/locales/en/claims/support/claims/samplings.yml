@@ -5,10 +5,11 @@ en:
         samplings:
           index:
             heading: Claims
-            sub_heading: Sampling (%{count})
-            sub_heading_without_count: Sampling
+            sub_heading:
+              zero: Sampling
+              one: Sampling (%{count})
+              other: Sampling (%{count})
             no_claims: There are no claims waiting to be processed.
-          upload_buttons:
             upload_claims: Upload claims to be sampled
             upload_provider_response: Upload provider response
           show:
