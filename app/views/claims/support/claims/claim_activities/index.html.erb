@@ -27,25 +27,29 @@
               <div class="app-timeline__description">
                 <% case claim_activity.action %>
                 <% when "payment_request_delivered", "clawback_request_delivered", "payment_response_uploaded" %>
-                  <ul class="app-timeline__documents">
-                    <li class="app-timeline__document-item">
-                      <%= govuk_link_to claim_activity.record.csv_file, class: "app-timeline__document-link" do %>
-                        <%= image_tag "icon-document.svg", class: "app-timeline__document-link__icon" %>
+                  <% if claim_activity.record.csv_file.present? %>
+                    <ul class="app-timeline__documents">
+                      <li class="app-timeline__document-item">
+                        <%= govuk_link_to claim_activity.record.csv_file, class: "app-timeline__document-link" do %>
+                          <%= image_tag "icon-document.svg", class: "app-timeline__document-link__icon" %>
 
-                        <%= Claims::ClaimActivity.human_attribute_name("document.#{claim_activity.action}") %>
-                      <% end %>
-                    </li>
-                  </ul>
+                          <%= Claims::ClaimActivity.human_attribute_name("document.#{claim_activity.action}") %>
+                        <% end %>
+                      </li>
+                    </ul>
+                  <% end %>
                 <% when "sampling_uploaded" %>
                   <% provider_samplings = claim_activity.record.provider_samplings %>
 
                   <ul class="app-timeline__documents">
                     <% provider_samplings.limit(5).each do |provider_sampling| %>
-                      <li class="app-timeline__document-item">
-                        <%= govuk_link_to provider_sampling.csv_file, class: "app-timeline__document-link" do %>
-                          <%= image_tag "icon-document.svg", class: "app-timeline__document-link__icon" %> <%= provider_sampling.provider.name %>
-                        <% end %>
-                      </li>
+                      <% if provider_sampling.csv_file.present? %>
+                        <li class="app-timeline__document-item">
+                          <%= govuk_link_to provider_sampling.csv_file, class: "app-timeline__document-link" do %>
+                            <%= image_tag "icon-document.svg", class: "app-timeline__document-link__icon" %> <%= provider_sampling.provider.name %>
+                          <% end %>
+                        </li>
+                      <% end %>
                     <% end %>
                   </ul>
 
