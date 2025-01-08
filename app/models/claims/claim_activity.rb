@@ -32,7 +32,7 @@ class Claims::ClaimActivity < ApplicationRecord
     sampling_response_uploaded: "sampling_response_uploaded",
     clawback_request_delivered: "clawback_request_delivered",
     clawback_response_uploaded: "clawback_response_uploaded",
-  }
+  }, validate: true
 
   delegate :full_name, to: :user, prefix: true, allow_nil: true
 end
