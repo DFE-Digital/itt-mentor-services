@@ -170,7 +170,7 @@ Claims::School.all.find_each do |school|
         mentor:,
         claim:,
         provider: claim_provider,
-        hours_completed: rand(20),
+        hours_completed: rand(1..20),
         date_completed: Time.current,
       )
     end
