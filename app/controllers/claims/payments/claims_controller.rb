@@ -4,6 +4,7 @@ class Claims::Payments::ClaimsController < Claims::ApplicationController
   before_action :skip_authorization
   before_action :validate_token
   before_action :set_payment
+  after_action :mark_as_downloaded, only: :download
 
   def download
     send_data @payment.csv_file.download, filename: "payments-claims-#{Time.current.iso8601}.csv"
@@ -19,11 +20,18 @@ class Claims::Payments::ClaimsController < Claims::ApplicationController
 
   def set_payment
     @payment = Claims::Payment.find(@payment_id)
-  rescue ActiveRecord::RecordNotFound
+    raise CSVPreviouslyDownloadedError if @payment.downloaded?
+  rescue ActiveRecord::RecordNotFound, CSVPreviouslyDownloadedError
     render "error"
   end
 
   def token_param
     params.fetch(:token, nil)
   end
+
+  def mark_as_downloaded
+    @payment.update!(downloaded_at: Time.current)
+  end
 end
+
+class CSVPreviouslyDownloadedError < StandardError; end

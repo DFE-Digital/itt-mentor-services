@@ -14,6 +14,7 @@ RSpec.describe "Download payment claims", service: :claims, type: :system do
 
     when_i_click_on_the_download_button
     then_a_csv_file_is_downloaded
+    and_the_payment_is_marked_as_downloaded
   end
 
   scenario "ESFA user clicks on an expired link in their email inbox" do
@@ -58,5 +59,9 @@ RSpec.describe "Download payment claims", service: :claims, type: :system do
 
   def then_a_csv_file_is_downloaded
     expect(response_headers["Content-Type"]).to eq "text/csv"
+  end
+
+  def and_the_payment_is_marked_as_downloaded
+    expect(payment.reload.downloaded?).to be(true)
   end
 end

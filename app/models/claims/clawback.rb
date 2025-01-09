@@ -12,4 +12,8 @@ class Claims::Clawback < ApplicationRecord
   has_many :claims, through: :clawback_claims
 
   has_one_attached :csv_file
+
+  def downloaded?
+    downloaded_at.present?
+  end
 end

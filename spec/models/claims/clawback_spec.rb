@@ -18,4 +18,24 @@ RSpec.describe Claims::Clawback, type: :model do
   describe "attachments" do
     it { is_expected.to have_one_attached(:csv_file) }
   end
+
+  describe "#downloaded?" do
+    let(:clawback) { create(:claims_clawback, downloaded_at:) }
+
+    context "when downloaded_at is present" do
+      let(:downloaded_at) { Time.current }
+
+      it "returns true" do
+        expect(clawback.downloaded?).to be(true)
+      end
+    end
+
+    context "when downloaded_at is blank" do
+      let(:downloaded_at) { nil }
+
+      it "returns false" do
+        expect(clawback.downloaded?).to be(false)
+      end
+    end
+  end
 end
