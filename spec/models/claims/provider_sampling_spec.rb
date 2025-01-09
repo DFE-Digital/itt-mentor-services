@@ -37,4 +37,24 @@ RSpec.describe Claims::ProviderSampling, type: :model do
     it { is_expected.to delegate_method(:email_address).to(:provider).with_prefix }
     it { is_expected.to delegate_method(:name).to(:provider).with_prefix }
   end
+
+  describe "#downloaded?" do
+    let(:provider_sampling) { create(:provider_sampling, downloaded_at:) }
+
+    context "when downloaded_at is present" do
+      let(:downloaded_at) { Time.current }
+
+      it "returns true" do
+        expect(provider_sampling.downloaded?).to be(true)
+      end
+    end
+
+    context "when downloaded_at is blank" do
+      let(:downloaded_at) { nil }
+
+      it "returns false" do
+        expect(provider_sampling.downloaded?).to be(false)
+      end
+    end
+  end
 end

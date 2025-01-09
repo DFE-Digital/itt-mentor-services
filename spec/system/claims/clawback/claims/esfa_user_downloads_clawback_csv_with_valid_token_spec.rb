@@ -10,6 +10,7 @@ RSpec.describe "ESFA user downloads clawback CSV with valid token", service: :cl
 
     when_i_click_on_the_download_button
     then_the_csv_is_downloaded
+    and_the_clawback_is_marked_as_downloaded
   end
 
   private
@@ -42,5 +43,9 @@ RSpec.describe "ESFA user downloads clawback CSV with valid token", service: :cl
     current_time = Time.zone.now.utc.strftime("%Y-%m-%dT%H%%3A%M%%3A%SZ")
     expect(page.response_headers["Content-Type"]).to eq("text/csv")
     expect(page.response_headers["Content-Disposition"]).to eq("attachment; filename=\"clawback-claims-#{current_time}.csv\"; filename*=UTF-8''clawback-claims-#{current_time}.csv")
+  end
+
+  def and_the_clawback_is_marked_as_downloaded
+    expect(@clawback.reload.downloaded?).to be(true)
   end
 end

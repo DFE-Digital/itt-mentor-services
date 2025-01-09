@@ -23,4 +23,8 @@ class Claims::Payment < ApplicationRecord
   has_many :claims, through: :payment_claims, class_name: "Claims::Claim"
 
   has_one_attached :csv_file
+
+  def downloaded?
+    downloaded_at.present?
+  end
 end

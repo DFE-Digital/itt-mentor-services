@@ -27,4 +27,8 @@ class Claims::PaymentResponse < ApplicationRecord
   def row_count
     @row_count ||= CSV.parse(csv_file.download, headers: true).length
   end
+
+  def downloaded?
+    downloaded_at.present?
+  end
 end
