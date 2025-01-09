@@ -148,3 +148,33 @@ Placements::School.find_each do |school|
 
   PlacementMentorJoin.create!(placement:, mentor: Placements::Mentor.first)
 end
+
+# Generate claims
+
+reference = 12_345_678
+created_by = Claims::SupportUser.last
+Claims::School.all.find_each do |school|
+  Claims::Provider.private_beta_providers.each do |claim_provider|
+    claim = Claims::Claim.create!(
+      claim_window: Claims::ClaimWindow.current,
+      school:,
+      provider: claim_provider,
+      reference:,
+      created_by:,
+      status: :paid,
+      submitted_at: Time.current,
+      submitted_by: created_by,
+    )
+    school.mentors.find_each do |mentor|
+      Claims::MentorTraining.create!(
+        mentor:,
+        claim:,
+        provider: claim_provider,
+        hours_completed: rand(20),
+        date_completed: Time.current,
+      )
+    end
+
+    reference += 1
+  end
+end
