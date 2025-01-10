@@ -1,2 +1,8 @@
 ---
-shared: {}
+shared:
+  mentors:
+    - first_name
+    - last_name
+  users:
+    - first_name
+    - last_name

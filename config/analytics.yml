@@ -30,6 +30,8 @@ shared:
     - created_at
     - updated_at
   :users:
+    - first_name
+    - last_name
     - created_at
     - updated_at
     - id
@@ -64,6 +66,9 @@ shared:
     - placement_id
     - created_at
     - updated_at
+  :mentors:
+    - first_name
+    - last_name
   :mentor_memberships:
     - id
     - type
