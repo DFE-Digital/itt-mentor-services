@@ -120,13 +120,9 @@ shared:
     - first_name
     - last_name
   :users:
-    - first_name
-    - last_name
     - email
   :mentors:
     - id
-    - first_name
-    - last_name
     - trn
     - created_at
     - updated_at
