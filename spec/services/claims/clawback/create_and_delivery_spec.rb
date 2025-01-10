@@ -4,7 +4,7 @@ describe Claims::Clawback::CreateAndDeliver do
   subject(:create_and_deliver) { described_class.call(current_user:) }
 
   let(:current_user) { create(:claims_support_user) }
-  let(:claims) { [create(:claim, status: :clawback_requested)] }
+  let(:claims) { [create(:claim, :submitted, status: :clawback_requested)] }
 
   describe "#call" do
     context "when there are claims with the status 'clawback_requested'" do
