@@ -19,9 +19,9 @@ describe Claims::Clawback::GenerateCSVFile do
            group: "Independent schools",
            type_of_establishment: "Other independent school")
   end
-  let(:claim_1) { create(:claim, :submitted, status: :clawback_requested, school: school_a, reference: "11111111") }
-  let(:claim_2) { create(:claim, :submitted, status: :clawback_requested, school: school_b, reference: "22222222") }
-  let(:claim_3) { create(:claim, :submitted, status: :clawback_requested, school: school_b, reference: "33333333") }
+  let(:claim_1) { create(:claim, :submitted, status: :clawback_in_progress, school: school_a, reference: "11111111") }
+  let(:claim_2) { create(:claim, :submitted, status: :clawback_in_progress, school: school_b, reference: "22222222") }
+  let(:claim_3) { create(:claim, :submitted, status: :clawback_in_progress, school: school_b, reference: "33333333") }
   let(:mentor_jane_doe) do
     create(:claims_mentor, schools: [school_a, school_b], first_name: "Jane", last_name: "Doe")
   end
@@ -103,22 +103,32 @@ describe Claims::Clawback::GenerateCSVFile do
                                  school_name
                                  school_local_authority
                                  school_type_of_establishment
-                                 school_group
+                                 clawback_amouht
                                  claim_submission_date
-                                 mentor_full_name
-                                 reason_clawed_back
-                                 hours_clawed_back])
+                                 claim_status])
       expect(csv[1]).to eq(
-        ["11111111", "aaaaaaaa", "School A", "Local Auth A", "Academy converter", "Academy", claim_1.submitted_at&.iso8601, "Jane Doe", "Invalid claim", "20"],
+        [
+          "11111111",
+          "aaaaaaaa",
+          "School A",
+          "Local Auth A",
+          "Academy converter",
+          claim_1.total_clawback_amount.format(symbol: false, thousands_separator: false),
+          claim_1.submitted_at&.iso8601,
+          "clawback_in_progress",
+        ],
       )
       expect(csv[2]).to eq(
-        ["22222222", "bbbbbbbb", "School B", "Local Auth B", "Other independent school", "Independent schools", claim_2.submitted_at&.iso8601, "Jane Doe", "Invalid hours given", "2"],
-      )
-      expect(csv[3]).to eq(
-        ["22222222", "bbbbbbbb", "School B", "Local Auth B", "Other independent school", "Independent schools", claim_2.submitted_at&.iso8601, "Joe Bloggs", "Invalid claim", "10"],
-      )
-      expect(csv[4]).to eq(
-        ["22222222", "bbbbbbbb", "School B", "Local Auth B", "Other independent school", "Independent schools", claim_2.submitted_at&.iso8601, "John Smith", "Invalid claim", "20"],
+        [
+          "22222222",
+          "bbbbbbbb",
+          "School B",
+          "Local Auth B",
+          "Other independent school",
+          claim_2.total_clawback_amount.format(symbol: false, thousands_separator: false),
+          claim_2.submitted_at&.iso8601,
+          "clawback_in_progress",
+        ],
       )
     end
   end
