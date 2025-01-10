@@ -1,16 +1,17 @@
 class Claims::Sampling::CreateAndDeliverJob < ApplicationJob
   queue_as :default
 
-  def perform(current_user_id:, claim_ids:)
+  def perform(current_user_id:, claim_ids:, csv_data:)
     @current_user_id = current_user_id
     @claim_ids = claim_ids
+    @csv_data = csv_data
 
-    Claims::Sampling::CreateAndDeliver.call(current_user:, claims:)
+    Claims::Sampling::CreateAndDeliver.call(current_user:, claims:, csv_data:)
   end
 
   private
 
-  attr_reader :current_user_id, :claim_ids
+  attr_reader :current_user_id, :claim_ids, :csv_data
 
   def claims
     @claims ||= Claims::Claim.find(claim_ids)
