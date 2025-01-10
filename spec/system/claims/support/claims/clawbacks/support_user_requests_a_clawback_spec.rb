@@ -41,6 +41,9 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
     then_i_see_a_success_message
     and_i_see_the_clawbacks_index_page
     and_i_see_the_claim_status_is_clawback_requested
+
+    when_i_click_on_claim_one
+    then_i_do_not_see_the_request_clawback_button
   end
 
   private
@@ -215,5 +218,13 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
       "submitted_at" => I18n.l(@claim_one.submitted_at.to_date, format: :long),
       "amount" => @claim_one.amount.format(symbol: true, decimal_mark: ".", no_cents: true),
     })
+  end
+
+  def when_i_click_on_claim_one
+    click_on "11111111 - #{@claim_one.school_name}"
+  end
+
+  def then_i_do_not_see_the_request_clawback_button
+    expect(page).not_to have_link("Request clawback")
   end
 end
