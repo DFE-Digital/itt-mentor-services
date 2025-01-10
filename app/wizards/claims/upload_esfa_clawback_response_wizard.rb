@@ -30,8 +30,6 @@ module Claims
     private
 
     def updatable_claim_ids
-      return [] if steps[:upload].blank?
-
       clawback_completable_rows = csv_rows.select { |row| row["claim_status"] == "clawback_complete" }
       references = clawback_completable_rows.pluck("claim_reference")
       Claims::Claim.where(reference: references).ids
