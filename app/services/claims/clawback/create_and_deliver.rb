@@ -4,10 +4,11 @@ class Claims::Clawback::CreateAndDeliver < ApplicationService
   end
 
   def call
+    clawback_requested_claims = Claims::Claim.clawback_requested
     return if clawback_requested_claims.none?
 
     ActiveRecord::Base.transaction do |transaction|
-      clawback_requested_claims.find_each do |claim|
+      clawback_requested_claims.each do |claim|
         claim.update!(status: :clawback_in_progress)
       end
 
@@ -26,8 +27,4 @@ class Claims::Clawback::CreateAndDeliver < ApplicationService
   private
 
   attr_reader :current_user
-
-  def clawback_requested_claims
-    @clawback_requested_claims ||= Claims::Claim.clawback_requested
-  end
 end
