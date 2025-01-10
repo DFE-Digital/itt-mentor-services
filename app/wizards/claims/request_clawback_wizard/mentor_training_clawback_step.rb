@@ -4,7 +4,7 @@ class Claims::RequestClawbackWizard::MentorTrainingClawbackStep < BaseStep
   attribute :reason_for_clawback
 
   validates :mentor_training_id, presence: true
-  validates :number_of_hours, presence: true, numericality: { only_integer: true, less_than_or_equal_to: proc { |step| step.mentor_training.hours_completed } }
+  validates :number_of_hours, presence: true, numericality: { only_integer: true, less_than_or_equal_to: proc { |step| step.mentor_training.hours_completed }, greater_than: 0 }
   validates :reason_for_clawback, presence: true
 
   delegate :mentor_trainings, to: :wizard
