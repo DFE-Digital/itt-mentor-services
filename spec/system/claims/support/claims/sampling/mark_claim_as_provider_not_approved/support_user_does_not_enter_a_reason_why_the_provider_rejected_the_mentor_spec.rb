@@ -110,7 +110,7 @@ RSpec.describe "Support user does not enter a reason why the provider rejected t
       text: "The school originally claimed John Smith has completed 20 hours.",
       class: "govuk-inset-text",
     )
-    expect(page).to have_element(:label, text: "Only include details related to [John Smith]", class: "govuk-label")
+    expect(page).to have_element(:label, text: "Only include details related to John Smith", class: "govuk-label")
   end
 
   def then_i_see_a_validation_error_for_entering_a_reason_with_john_smith_was_rejected_by_the_provider

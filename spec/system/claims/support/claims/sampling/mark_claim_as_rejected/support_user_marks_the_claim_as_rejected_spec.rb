@@ -170,7 +170,7 @@ RSpec.describe "Support user marks a claim as rejected", service: :claims, type:
   alias_method :and_i_click_on_continue, :when_i_click_on_continue
 
   def when_i_enter_a_reason_why_the_school_rejected_john_smith
-    fill_in "Only include details related to [John Smith]", with: "School rejected John Smith"
+    fill_in "Only include details related to John Smith", with: "School rejected John Smith"
   end
   alias_method :and_i_enter_a_reason_why_the_school_rejected_john_smith,
                :when_i_enter_a_reason_why_the_school_rejected_john_smith
@@ -213,11 +213,11 @@ RSpec.describe "Support user marks a claim as rejected", service: :claims, type:
   end
 
   def and_the_reason_why_the_school_rejected_john_smith_is_prefilled
-    find_field "Only include details related to [John Smith]", with: "School rejected John Smith"
+    find_field "Only include details related to John Smith", with: "School rejected John Smith"
   end
 
   def and_the_reason_why_the_school_rejected_jane_doe_is_prefilled
-    find_field "Only include details related to [Jane Doe]", with: "School rejected Jane Doe"
+    find_field "Only include details related to Jane Doe", with: "School rejected Jane Doe"
   end
 
   def when_i_click_on_confirm_and_reject_claim
@@ -241,7 +241,7 @@ RSpec.describe "Support user marks a claim as rejected", service: :claims, type:
       text: "The school originally claimed Jane Doe has completed 15 hours.",
       class: "govuk-inset-text",
     )
-    expect(page).to have_element(:label, text: "Only include details related to [Jane Doe]", class: "govuk-label")
+    expect(page).to have_element(:label, text: "Only include details related to Jane Doe", class: "govuk-label")
   end
 
   def then_i_see_the_rejection_reason_page_for_john_smith
@@ -261,11 +261,11 @@ RSpec.describe "Support user marks a claim as rejected", service: :claims, type:
       text: "The school originally claimed John Smith has completed 20 hours.",
       class: "govuk-inset-text",
     )
-    expect(page).to have_element(:label, text: "Only include details related to [John Smith]", class: "govuk-label")
+    expect(page).to have_element(:label, text: "Only include details related to John Smith", class: "govuk-label")
   end
 
   def when_i_enter_a_reason_why_the_school_rejected_jane_doe
-    fill_in "Only include details related to [Jane Doe]", with: "School rejected Jane Doe"
+    fill_in "Only include details related to Jane Doe", with: "School rejected Jane Doe"
   end
   alias_method :and_i_enter_a_reason_why_the_school_rejected_jane_doe,
                :when_i_enter_a_reason_why_the_school_rejected_jane_doe

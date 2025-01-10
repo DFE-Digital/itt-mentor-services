@@ -194,11 +194,11 @@ RSpec.describe "Support user marks a claim as provider not approved", service: :
       text: "The school originally claimed John Smith has completed 20 hours.",
       class: "govuk-inset-text",
     )
-    expect(page).to have_element(:label, text: "Only include details related to [John Smith]", class: "govuk-label")
+    expect(page).to have_element(:label, text: "Only include details related to John Smith", class: "govuk-label")
   end
 
   def when_i_enter_a_reason_why_the_provider_rejected_john_smith
-    fill_in "Only include details related to [John Smith]", with: "Provider rejected John Smith"
+    fill_in "Only include details related to John Smith", with: "Provider rejected John Smith"
   end
   alias_method :and_i_enter_a_reason_why_the_provider_rejected_john_smith,
                :when_i_enter_a_reason_why_the_provider_rejected_john_smith
@@ -241,11 +241,11 @@ RSpec.describe "Support user marks a claim as provider not approved", service: :
   end
 
   def and_the_reason_why_the_provider_rejected_john_smith_is_prefilled
-    find_field "Only include details related to [John Smith]", with: "Provider rejected John Smith"
+    find_field "Only include details related to John Smith", with: "Provider rejected John Smith"
   end
 
   def and_the_reason_why_the_provider_rejected_jane_doe_is_prefilled
-    find_field "Only include details related to [Jane Doe]", with: "Provider rejected Jane Doe"
+    find_field "Only include details related to Jane Doe", with: "Provider rejected Jane Doe"
   end
 
   def and_john_smith_is_preselected
@@ -275,11 +275,11 @@ RSpec.describe "Support user marks a claim as provider not approved", service: :
       text: "The school originally claimed Jane Doe has completed 15 hours.",
       class: "govuk-inset-text",
     )
-    expect(page).to have_element(:label, text: "Only include details related to [Jane Doe]", class: "govuk-label")
+    expect(page).to have_element(:label, text: "Only include details related to Jane Doe", class: "govuk-label")
   end
 
   def when_i_enter_a_reason_why_the_provider_rejected_jane_doe
-    fill_in "Only include details related to [Jane Doe]", with: "Provider rejected Jane Doe"
+    fill_in "Only include details related to Jane Doe", with: "Provider rejected Jane Doe"
   end
   alias_method :and_i_enter_a_reason_why_the_provider_rejected_jane_doe,
                :when_i_enter_a_reason_why_the_provider_rejected_jane_doe
