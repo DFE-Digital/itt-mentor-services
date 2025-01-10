@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support user uploads a CSV not containing invalid references",
+RSpec.describe "Support user uploads a CSV containing invalid references",
                service: :claims,
                type: :system do
   scenario do

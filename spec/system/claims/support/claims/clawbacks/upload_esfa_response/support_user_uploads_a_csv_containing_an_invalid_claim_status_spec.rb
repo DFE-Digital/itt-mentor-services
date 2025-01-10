@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support user uploads a CSV not containing a reason clawed back",
+RSpec.describe "Support user uploads a CSV containing an invalid claim status",
                service: :claims,
                type: :system do
   scenario do
@@ -14,10 +14,10 @@ RSpec.describe "Support user uploads a CSV not containing a reason clawed back",
     when_i_click_on_upload_esfa_response
     then_i_see_the_upload_csv_page
 
-    when_i_upload_a_file_not_containing_a_reason_clawed_back_for_each_mentor
+    when_i_upload_a_file_not_containing_an_assured_status_for_each_mentor
     and_i_click_on_upload_csv_file
     then_i_see_the_errors_page
-    and_i_see_the_csv_contained_claims_without_a_not_assured_reason
+    and_i_see_the_csv_contained_claims_without_an_assured_status_for_each_mentor
   end
 
   private
@@ -111,9 +111,9 @@ RSpec.describe "Support user uploads a CSV not containing a reason clawed back",
     click_on "Upload CSV file"
   end
 
-  def when_i_upload_a_file_not_containing_a_reason_clawed_back_for_each_mentor
+  def when_i_upload_a_file_not_containing_an_assured_status_for_each_mentor
     attach_file "Upload CSV file",
-                "spec/fixtures/claims/clawback/esfa_responses/invalid_esfa_clawback_response_upload_missing_reason_clawed_back.csv"
+                "spec/fixtures/claims/clawback/esfa_responses/invalid_esfa_clawback_response_upload_with_invalid_claim_status.csv"
   end
 
   def then_i_see_the_errors_page
@@ -123,10 +123,9 @@ RSpec.describe "Support user uploads a CSV not containing a reason clawed back",
     expect(page).to have_h1("There is a problem with the CSV file")
   end
 
-  def and_i_see_the_csv_contained_claims_without_a_not_assured_reason
-    expect(page).to have_h2("The following claims are missing a reason why the claim was clawed back:-")
+  def and_i_see_the_csv_contained_claims_without_an_assured_status_for_each_mentor
+    expect(page).to have_h2("The following claims are being updated to an invalid status:-")
     expect(page).to have_element(:dl, text: "11111111", class: "govuk-summary-list")
-    expect(page).to have_link(text: "View (opens in new tab)", href: "/support/claims/#{@clawback_in_progress_claim_1.id}")
     expect(page).to have_warning_text(
       "You can only upload the ESFA's CSV once they have completed all rows." \
         " Email the ESFA and ask them to complete the CSV with the missing information.",

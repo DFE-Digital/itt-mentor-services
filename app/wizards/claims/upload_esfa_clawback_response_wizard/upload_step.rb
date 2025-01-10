@@ -4,12 +4,12 @@ class Claims::UploadESFAClawbackResponseWizard::UploadStep < BaseStep
   # input validation attributes
   attribute :invalid_claim_references, default: []
   attribute :invalid_status_claim_references, default: []
-  attribute :missing_mentor_training_claim_references, default: []
-  attribute :missing_reason_clawed_back_claim_references, default: []
-  attribute :invalid_hours_clawed_back_claim_references, default: []
+  attribute :invalid_updated_status_claim_references, default: []
 
   validates :csv_upload, presence: true, if: -> { csv_content.blank? }
   validate :validate_csv_file, if: -> { csv_upload.present? }
+
+  VALID_UPLOAD_STATUSES = %w[clawback_in_progress clawback_complete].freeze
 
   delegate :clawback_in_progress_claims, to: :wizard
 
@@ -32,37 +32,15 @@ class Claims::UploadESFAClawbackResponseWizard::UploadStep < BaseStep
     self.csv_upload = nil
   end
 
-  def grouped_csv_rows
-    @grouped_csv_rows ||= CSV.parse(read_csv, headers: true)
-      .group_by do |row|
-        row["claim_reference"]
-      end
-  end
-
   def csv_inputs_valid?
     return true if csv_content.blank?
 
     reset_input_attributes
-
-    all_claims_valid_status?
-    grouped_csv_rows.each do |claim_reference, esfa_responses|
-      next if claim_reference.nil?
-
-      claim = Claims::Claim.find_by(reference: claim_reference)
-      if claim.present?
-        row_for_each_mentor?(claim, esfa_responses)
-        reason_clawed_back_for_each_mentor?(claim_reference, esfa_responses)
-        hours_clawed_back_for_each_mentor?(claim, esfa_responses)
-      else
-        invalid_claim_references << claim_reference
-      end
-    end
+    validate_csv_rows
 
     invalid_claim_references &&
       invalid_status_claim_references.blank? &&
-      missing_mentor_training_claim_references.blank? &&
-      missing_reason_clawed_back_claim_references.blank? &&
-      invalid_hours_clawed_back_claim_references.blank?
+      invalid_updated_status_claim_references.blank?
   end
 
   private
@@ -82,56 +60,37 @@ class Claims::UploadESFAClawbackResponseWizard::UploadStep < BaseStep
   def reset_input_attributes
     self.invalid_claim_references = []
     self.invalid_status_claim_references = []
-    self.missing_mentor_training_claim_references = []
-    self.missing_reason_clawed_back_claim_references = []
-    self.invalid_hours_clawed_back_claim_references = []
+    self.invalid_updated_status_claim_references = []
   end
 
   ### CSV input valiations
 
-  def all_claims_valid_status?
-    claim_references = grouped_csv_rows.keys.compact
-    valid_references = clawback_in_progress_claims.where(reference: claim_references).pluck(:reference)
-    return true if valid_references.sort == claim_references.sort
-
-    self.invalid_status_claim_references = claim_references - valid_references
+  def validate_csv_rows
+    rows = CSV.parse(read_csv, headers: true).reject { |row| row.all?(&:nil?) }
+    validate_claims(rows)
+    validate_updated_statuses(rows)
   end
 
-  def row_for_each_mentor?(claim, esfa_responses)
-    claim_mentor_names = claim.mentors.map(&:full_name)
-    esfa_responses_mentor_names = esfa_responses.pluck("mentor_full_name")
-    return if claim_mentor_names.sort == esfa_responses_mentor_names.sort
+  def validate_claims(rows)
+    claim_references = rows.pluck("claim_reference").compact.flatten
+    existing_claims = Claims::Claim.where(reference: claim_references)
+    existing_claims_references = existing_claims.pluck(:reference)
 
-    missing_mentor_training_claim_references << claim.reference
+    invalid_references = claim_references - existing_claims_references
+    self.invalid_claim_references = invalid_references if invalid_references.present?
+
+    valid_status_references = clawback_in_progress_claims.where(reference: claim_references).pluck(:reference)
+    invalid_status_references = claim_references - valid_status_references
+    self.invalid_status_claim_references = invalid_status_references if invalid_status_references.present?
   end
 
-  def reason_clawed_back_for_each_mentor?(claim_reference, esfa_responses)
-    reasons_clawed_back = esfa_responses.pluck("reason_clawed_back")
-    return unless reasons_clawed_back.any?(&:blank?)
-
-    missing_reason_clawed_back_claim_references << claim_reference
-  end
-
-  def hours_clawed_back_for_each_mentor?(claim, esfa_responses)
-    hours_clawed_back = esfa_responses.pluck("hours_clawed_back")
-    if hours_clawed_back.any?(&:blank?) || invalid_clawback_hours?(claim, esfa_responses)
-      invalid_hours_clawed_back_claim_references << claim.reference
+  def validate_updated_statuses(rows)
+    invalid_rows = rows.reject do |row|
+      VALID_UPLOAD_STATUSES.include?(row["claim_status"]) ||
+        row["claim_reference"].blank?
     end
-  end
+    return if invalid_rows.blank?
 
-  def invalid_clawback_hours?(claim, esfa_responses)
-    invalid_hours = false
-    mentor_trainings = claim.mentor_trainings.not_assured
-    mentor_trainings.each do |mentor_training|
-      esfa_response_for_mentor = esfa_responses.find do |esfa_response|
-        esfa_response["mentor_full_name"] == mentor_training.mentor_full_name
-      end
-      next if esfa_response_for_mentor.blank? ||
-        esfa_response_for_mentor["hours_clawed_back"].to_i <= mentor_training.hours_completed
-
-      invalid_hours = true
-      break
-    end
-    invalid_hours
+    self.invalid_updated_status_claim_references = invalid_rows.pluck("claim_reference")
   end
 end
