@@ -112,7 +112,7 @@ RSpec.describe "Support user changes the reason the school rejected the mentor",
   alias_method :and_i_click_on_continue, :when_i_click_on_continue
 
   def when_i_enter_a_new_reason_why_the_school_rejected_john_smith
-    fill_in "Only include details related to [John Smith]", with: "New reason school rejected John Smith"
+    fill_in "Only include details related to John Smith", with: "New reason school rejected John Smith"
   end
 
   def then_i_see_the_check_your_answers_page
@@ -149,7 +149,7 @@ RSpec.describe "Support user changes the reason the school rejected the mentor",
   end
 
   def and_the_reason_why_the_school_rejected_john_smith_is_prefilled
-    find_field "Only include details related to [John Smith]", with: "School rejected John Smith"
+    find_field "Only include details related to John Smith", with: "School rejected John Smith"
   end
 
   def when_i_click_on_confirm_and_reject_claim
@@ -173,7 +173,7 @@ RSpec.describe "Support user changes the reason the school rejected the mentor",
       text: "The school originally claimed Jane Doe has completed 15 hours.",
       class: "govuk-inset-text",
     )
-    expect(page).to have_element(:label, text: "Only include details related to [Jane Doe]", class: "govuk-label")
+    expect(page).to have_element(:label, text: "Only include details related to Jane Doe", class: "govuk-label")
   end
 
   def then_i_see_the_rejection_reason_page_for_john_smith
@@ -193,11 +193,11 @@ RSpec.describe "Support user changes the reason the school rejected the mentor",
       text: "The school originally claimed John Smith has completed 20 hours.",
       class: "govuk-inset-text",
     )
-    expect(page).to have_element(:label, text: "Only include details related to [John Smith]", class: "govuk-label")
+    expect(page).to have_element(:label, text: "Only include details related to John Smith", class: "govuk-label")
   end
 
   def when_i_enter_a_reason_why_the_school_rejected_john_smith
-    fill_in "Only include details related to [John Smith]", with: "School rejected John Smith"
+    fill_in "Only include details related to John Smith", with: "School rejected John Smith"
   end
 
   def then_i_see_the_confirmation_page

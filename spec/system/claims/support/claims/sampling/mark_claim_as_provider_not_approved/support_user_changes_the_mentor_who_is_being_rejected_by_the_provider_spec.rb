@@ -145,11 +145,11 @@ RSpec.describe "Support user changes the mentor who is being rejected by the pro
       text: "The school originally claimed John Smith has completed 20 hours.",
       class: "govuk-inset-text",
     )
-    expect(page).to have_element(:label, text: "Only include details related to [John Smith]", class: "govuk-label")
+    expect(page).to have_element(:label, text: "Only include details related to John Smith", class: "govuk-label")
   end
 
   def when_i_enter_a_reason_why_the_provider_rejected_john_smith
-    fill_in "Only include details related to [John Smith]", with: "Provider rejected John Smith"
+    fill_in "Only include details related to John Smith", with: "Provider rejected John Smith"
   end
 
   def then_i_see_the_check_your_answers_page
@@ -210,11 +210,11 @@ RSpec.describe "Support user changes the mentor who is being rejected by the pro
       text: "The school originally claimed Jane Doe has completed 15 hours.",
       class: "govuk-inset-text",
     )
-    expect(page).to have_element(:label, text: "Only include details related to [Jane Doe]", class: "govuk-label")
+    expect(page).to have_element(:label, text: "Only include details related to Jane Doe", class: "govuk-label")
   end
 
   def when_i_enter_a_reason_why_the_provider_rejected_jane_doe
-    fill_in "Only include details related to [Jane Doe]", with: "Provider rejected Jane Doe"
+    fill_in "Only include details related to Jane Doe", with: "Provider rejected Jane Doe"
   end
 
   def and_i_see_the_rejection_details_for_jane_doe

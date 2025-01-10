@@ -14,7 +14,7 @@ en:
           title: What reason has the provider given for rejecting %{mentor_name}?
           caption: Rejected by provider - Claim %{reference}
           mentor_training_assured: Has the provider assured this mentor's training?
-          please_add_reason: Only include details related to [%{mentor_name}].
+          please_add_reason: Only include details related to %{mentor_name}.
           continue: Continue
           hours_completed: 
             one: The school originally claimed %{mentor_name} has completed %{count} hour.

@@ -140,11 +140,11 @@ RSpec.describe "Support user changes the reason the provider rejected the mentor
       text: "The school originally claimed John Smith has completed 20 hours.",
       class: "govuk-inset-text",
     )
-    expect(page).to have_element(:label, text: "Only include details related to [John Smith]", class: "govuk-label")
+    expect(page).to have_element(:label, text: "Only include details related to John Smith", class: "govuk-label")
   end
 
   def when_i_enter_a_reason_why_the_provider_rejected_john_smith
-    fill_in "Only include details related to [John Smith]", with: "Provider rejected John Smith"
+    fill_in "Only include details related to John Smith", with: "Provider rejected John Smith"
   end
 
   def then_i_see_the_check_your_answers_page
@@ -173,7 +173,7 @@ RSpec.describe "Support user changes the reason the provider rejected the mentor
   end
 
   def and_the_reason_why_the_provider_rejected_john_smith_is_prefilled
-    find_field "Only include details related to [John Smith]", with: "Provider rejected John Smith"
+    find_field "Only include details related to John Smith", with: "Provider rejected John Smith"
   end
 
   def when_i_click_on_confirm_and_reject_claim
@@ -185,7 +185,7 @@ RSpec.describe "Support user changes the reason the provider rejected the mentor
   end
 
   def when_i_enter_a_new_reason_why_the_provider_rejected_john_smith
-    fill_in "Only include details related to [John Smith]",
+    fill_in "Only include details related to John Smith",
             with: "New reason the provider rejected John Smith"
   end
 
