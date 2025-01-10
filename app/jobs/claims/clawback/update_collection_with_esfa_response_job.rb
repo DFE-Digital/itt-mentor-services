@@ -1,11 +1,10 @@
 class Claims::Clawback::UpdateCollectionWithESFAResponseJob < ApplicationJob
   queue_as :default
 
-  def perform(claim_update_details)
-    clawback_in_progress_claims(claim_update_details.pluck(:id)).find_in_batches do |batch|
+  def perform(claim_ids)
+    clawback_in_progress_claims(claim_ids).find_in_batches do |batch|
       batch.each do |claim|
-        updated_details_for_claim = claim_update_details.find { |details| details[:id] == claim.id }
-        Claims::Clawback::UpdateClaimWithESFAResponseJob.perform_later(updated_details_for_claim)
+        Claims::Clawback::UpdateClaimWithESFAResponseJob.perform_later(claim)
       end
     end
   end

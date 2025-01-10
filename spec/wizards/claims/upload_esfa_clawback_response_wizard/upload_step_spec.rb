@@ -17,9 +17,7 @@ RSpec.describe Claims::UploadESFAClawbackResponseWizard::UploadStep, type: :mode
         csv_content: nil,
         invalid_claim_references: [],
         invalid_status_claim_references: [],
-        missing_mentor_training_claim_references: [],
-        missing_reason_clawed_back_claim_references: [],
-        invalid_hours_clawed_back_claim_references: [],
+        invalid_updated_status_claim_references: [],
       )
     }
   end
@@ -36,8 +34,8 @@ RSpec.describe Claims::UploadESFAClawbackResponseWizard::UploadStep, type: :mode
 
       context "when the csv_content is present" do
         let(:csv_content) do
-          "claim_reference,mentor_full_name,reason_clawed_back,hours_clawed_back\r\n" \
-          "11111111,John Smith,Some reason,10\r\n"
+          "claim_reference,claim_status\r\n" \
+          "11111111,clawback_complete\r\n"
         end
         let(:attributes) { { csv_content: } }
 
@@ -121,8 +119,8 @@ RSpec.describe Claims::UploadESFAClawbackResponseWizard::UploadStep, type: :mode
 
     context "when csv_content contains invalid references" do
       let(:csv_content) do
-        "claim_reference,mentor_full_name,reason_clawed_back,hours_clawed_back\r\n" \
-        "11111111,John Smith,Some reason,10\r\n" \
+        "claim_reference,claim_status\r\n" \
+        "11111111,clawback_complete\r\n"
       end
       let(:attributes) { { csv_content: } }
 
@@ -136,8 +134,8 @@ RSpec.describe Claims::UploadESFAClawbackResponseWizard::UploadStep, type: :mode
 
     context "when csv_content contains claims not with the status 'clawback_in_progress" do
       let(:csv_content) do
-        "claim_reference,mentor_full_name,reason_clawed_back,hours_clawed_back\r\n" \
-        "11111111,John Smith,Some reason,10"
+        "claim_reference,claim_status\r\n" \
+        "11111111,clawback_complete\r\n"
       end
       let(:attributes) { { csv_content: } }
 
@@ -149,117 +147,25 @@ RSpec.describe Claims::UploadESFAClawbackResponseWizard::UploadStep, type: :mode
       end
     end
 
-    context "when csv_content does not contains all the not assured mentors associated with the claims" do
+    context "when csv_content contains an invalid claims status" do
       let(:csv_content) do
-        "claim_reference,mentor_full_name,reason_clawed_back,hours_clawed_back\r\n" \
-        "11111111,John Smith,Some reason,10"
+        "claim_reference,claim_status\r\n" \
+        "11111111,paid\r\n"
       end
       let(:attributes) { { csv_content: } }
 
-      let(:sampling_in_progress_claim) do
-        create(:claim, :submitted, status: :sampling_in_progress, reference: 11_111_111)
-      end
-      let(:mentor_john_smith) { create(:claims_mentor, first_name: "John", last_name: "Smith") }
-      let(:mentor_jane_doe) { create(:claims_mentor, first_name: "Jane", last_name: "Doe") }
+      before { create(:claim, :submitted, status: :paid, reference: 11_111_111) }
 
-      before do
-        create(:mentor_training,
-               :rejected,
-               hours_completed: 20,
-               mentor: mentor_john_smith,
-               claim: sampling_in_progress_claim)
-        create(:mentor_training,
-               :rejected,
-               hours_completed: 10,
-               mentor: mentor_jane_doe,
-               claim: sampling_in_progress_claim)
-      end
-
-      it "returns false and assigns the reference to the 'missing_mentor_training_claim_references' attribute" do
+      it "returns false and assigns the reference to the 'invalid_updated_status_claim_references' attribute" do
         expect(csv_inputs_valid).to be(false)
-        expect(step.missing_mentor_training_claim_references).to contain_exactly("11111111")
-      end
-    end
-
-    context "when the csv_content does not contain a reason clawed back for each mentor" do
-      let(:csv_content) do
-        "claim_reference,mentor_full_name,reason_clawed_back,hours_clawed_back\r\n" \
-        "11111111,John Smith,,10"
-      end
-      let(:attributes) { { csv_content: } }
-      let(:clawback_in_progress_claim) do
-        create(:claim, :submitted, status: :clawback_in_progress, reference: 11_111_111)
-      end
-      let(:mentor_john_smith) { create(:claims_mentor, first_name: "John", last_name: "Smith") }
-
-      before do
-        create(:mentor_training,
-               :rejected,
-               hours_completed: 20,
-               mentor: mentor_john_smith,
-               claim: clawback_in_progress_claim)
-      end
-
-      it "returns false and assigns the reference to the 'missing_reason_clawed_back_claim_references' attribute" do
-        expect(csv_inputs_valid).to be(false)
-        expect(step.missing_reason_clawed_back_claim_references).to contain_exactly("11111111")
-      end
-    end
-
-    context "when the csv_content does not contain hours clawed back for each mentor" do
-      let(:csv_content) do
-        "claim_reference,mentor_full_name,reason_clawed_back,hours_clawed_back\r\n" \
-        "11111111,John Smith,Some reason,"
-      end
-      let(:attributes) { { csv_content: } }
-      let(:clawback_in_progress_claim) do
-        create(:claim, :submitted, status: :clawback_in_progress, reference: 11_111_111)
-      end
-      let(:mentor_john_smith) { create(:claims_mentor, first_name: "John", last_name: "Smith") }
-
-      before do
-        create(:mentor_training,
-               :rejected,
-               hours_completed: 20,
-               mentor: mentor_john_smith,
-               claim: clawback_in_progress_claim)
-      end
-
-      it "returns false and assigns the reference to the 'invalid_clawed_back_claim_references' attribute" do
-        expect(csv_inputs_valid).to be(false)
-        expect(step.invalid_hours_clawed_back_claim_references).to contain_exactly("11111111")
-      end
-    end
-
-    context "when the csv_content contain hours clawed back greater than the hours completed" do
-      let(:csv_content) do
-        "claim_reference,mentor_full_name,reason_clawed_back,hours_clawed_back\r\n" \
-        "11111111,John Smith,Some reason,20"
-      end
-      let(:attributes) { { csv_content: } }
-      let(:clawback_in_progress_claim) do
-        create(:claim, :submitted, status: :clawback_in_progress, reference: 11_111_111)
-      end
-      let(:mentor_john_smith) { create(:claims_mentor, first_name: "John", last_name: "Smith") }
-
-      before do
-        create(:mentor_training,
-               :rejected,
-               hours_completed: 5,
-               mentor: mentor_john_smith,
-               claim: clawback_in_progress_claim)
-      end
-
-      it "returns false and assigns the reference to the 'invalid_clawed_back_claim_references' attribute" do
-        expect(csv_inputs_valid).to be(false)
-        expect(step.invalid_hours_clawed_back_claim_references).to contain_exactly("11111111")
+        expect(step.invalid_updated_status_claim_references).to contain_exactly("11111111")
       end
     end
 
     context "when the csv_content contains valid claim references and all necessary valid attributes" do
       let(:csv_content) do
-        "claim_reference,mentor_full_name,reason_clawed_back,hours_clawed_back\r\n" \
-        "11111111,John Smith,Some reason,10"
+        "claim_reference,claim_status\r\n" \
+        "11111111,clawback_complete\r\n"
       end
       let(:attributes) { { csv_content: } }
       let(:clawback_in_progress_claim) do
@@ -323,48 +229,10 @@ RSpec.describe Claims::UploadESFAClawbackResponseWizard::UploadStep, type: :mode
     it "reads a given CSV and assigns the content to the csv_content attribute,
         and assigns the associated claim IDs to the claim_ids attribute" do
       expect(step.csv_content).to eq(
-        "claim_reference,mentor_full_name,reason_clawed_back,hours_clawed_back\n" \
-        "11111111,John Smith,Some reason,10\n" \
-        "11111111,Jane Doe,Another reason,5\n" \
-        "22222222,Joe Bloggs,Yet another reason,2\n" \
-        ",,,\n",
-      )
-    end
-  end
-
-  describe "#grouped_csv_rows" do
-    subject(:grouped_csv_rows) { step.grouped_csv_rows }
-
-    let(:csv_content) do
-      "claim_reference,mentor_full_name,reason_clawed_back,hours_clawed_back\n" \
-        "11111111,John Smith,Some reason,10\n" \
-        "11111111,Jane Doe,Another reason,5\n" \
-        "22222222,Joe Bloggs,Yet another reason,2"
-    end
-    let(:attributes) { { csv_content: } }
-
-    it "returns the rows of the CSV grouped by references" do
-      expect(grouped_csv_rows["11111111"].map(&:to_hash)).to contain_exactly(
-        {
-          "claim_reference" => "11111111",
-          "mentor_full_name" => "John Smith",
-          "reason_clawed_back" => "Some reason",
-          "hours_clawed_back" => "10",
-        },
-        {
-          "claim_reference" => "11111111",
-          "mentor_full_name" => "Jane Doe",
-          "reason_clawed_back" => "Another reason",
-          "hours_clawed_back" => "5",
-        },
-      )
-      expect(grouped_csv_rows["22222222"].map(&:to_hash)).to contain_exactly(
-        {
-          "claim_reference" => "22222222",
-          "mentor_full_name" => "Joe Bloggs",
-          "reason_clawed_back" => "Yet another reason",
-          "hours_clawed_back" => "2",
-        },
+        "claim_reference,claim_status\n" \
+        "11111111,clawback_complete\n" \
+        "22222222,clawback_complete\n" \
+        ",\n",
       )
     end
   end
