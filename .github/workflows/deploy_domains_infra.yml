@@ -13,6 +13,8 @@ jobs:
     environment:
       name: production
     permissions:
+      packages: write
+      pull-requests: write
       id-token: write
 
     steps:
