@@ -1,5 +1,6 @@
 name: Deploy Domains Infrastructure
 
+
 on:
   push:
   workflow_dispatch:
