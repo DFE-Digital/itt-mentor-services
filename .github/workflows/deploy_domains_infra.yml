@@ -11,6 +11,8 @@ jobs:
     concurrency: deploy_production
     environment:
       name: production
+    permissions:
+      id-token: write
 
     steps:
       - uses: azure/login@v2
