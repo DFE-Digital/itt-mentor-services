@@ -4,3 +4,14 @@ en:
       databases:
         destroy:
           success: Database has been reset
+        claims:
+          update_to_submitted:
+            success: Claims have been reverted to 'Submitted'
+          revert_to_submitted:
+            title: Are you sure you want to revert all claims in the %{environment} environment database to 'Submitted'?
+            caption: Revert all claims to 'Submitted'
+            warning: This action will not affect claims with the status 'draft' or 'internal_draft'.
+            claims_changes: "This action will perform the following changes to the `claims` table in the %{environment} database:"
+            mentor_trainings_changes: "This action will perform the following changes to the `mentor_trainings` table in the %{environment} database:"
+            claim_activitiy_changes: All `Claims::ClaimActivity` records will be destroyed.
+

@@ -8,3 +8,4 @@ en:
           claim_windows: Claim windows
           emails: Emails
           reset_database: Reset database
+          revert_claims_to_submitted: Revert all claims to 'Submitted'
