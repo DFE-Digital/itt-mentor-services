@@ -1,0 +1,39 @@
+<% content_for :page_title, "Reset database" %>
+<% render "claims/support/primary_navigation", current: :settings %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: claims_support_settings_path) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <span class="govuk-caption-l"><%= t(".caption") %></span>
+  <h1 class="govuk-heading-l"><%= t(".title", environment: hosting_environment_phase(current_service).downcase) %></h1>
+
+  <p class="govuk-body"><%= t(".claims_changes", environment: hosting_environment_phase(current_service).downcase) %></p>
+
+  <%= govuk_list type: :bullet do %>
+    <%= tag.li tag.code("claim.status = 'submitted'", class: "inline-code") %>
+    <%= tag.li tag.code("claim.unpaid_reason = nil", class: "inline-code") %>
+    <%= tag.li tag.code("claim.payment_in_progress_at= nil", class: "inline-code") %>
+    <%= tag.li tag.code("claim.sampling_reason= nil", class: "inline-code") %>
+  <% end %>
+
+  <%= govuk_warning_text text: t(".warning"), classes: ["govuk-!-margin-top-4"] %>
+
+  <p class="govuk-body"><%= t(".mentor_trainings_changes", environment: hosting_environment_phase(current_service).downcase) %></p>
+
+  <%= govuk_list type: :bullet do %>
+    <%= tag.li tag.code("mentor_training.hours_clawed_back = nil", class: "inline-code") %>
+    <%= tag.li tag.code("mentor_training.reason_clawed_back = nil", class: "inline-code") %>
+    <%= tag.li tag.code("mentor_training.reason_not_assured = nil", class: "inline-code") %>
+    <%= tag.li tag.code("mentor_training.not_assured = false", class: "inline-code") %>
+    <%= tag.li tag.code("mentor_training.reason_rejected = nil", class: "inline-code") %>
+    <%= tag.li tag.code("mentor_training.rejected = false", class: "inline-code") %>
+  <% end %>
+
+  <p class="govuk-body"><%= t(".claim_activitiy_changes") %></p>
+
+  <%= govuk_button_to "Revert to Submitted", update_to_submitted_claims_support_database_databases_claims_path, warning: true, method: :put, class: "govuk-button--warning" %>
+
+  <%= govuk_link_to "Cancel", claims_support_settings_path, no_visited_state: true %>
+</div>

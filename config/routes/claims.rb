@@ -85,6 +85,14 @@ scope module: :claims, as: :claims, constraints: {
 
     unless HostingEnvironment.env.production?
       resource :database, only: %i[destroy] do
+        namespace :databases do
+          resources :claims, only: [] do
+            collection do
+              get :revert_to_submitted
+              put :update_to_submitted
+            end
+          end
+        end
         get :reset
       end
     end
