@@ -40,6 +40,7 @@ class Provider < ApplicationRecord
 
   has_many :user_memberships, as: :organisation
   has_many :users, through: :user_memberships
+  has_many :provider_email_addresses, dependent: :destroy
 
   enum :provider_type,
        { scitt: "scitt", lead_school: "lead_school", university: "university" },
@@ -59,4 +60,10 @@ class Provider < ApplicationRecord
   pg_search_scope :search_name_urn_ukprn_postcode,
                   against: %i[name postcode urn ukprn],
                   using: { trigram: { word_similarity: true } }
+
+  accepts_nested_attributes_for :provider_email_addresses, allow_destroy: true
+
+  def email_addresses
+    provider_email_addresses.pluck(:email_address).uniq
+  end
 end

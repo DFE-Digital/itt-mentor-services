@@ -12,26 +12,65 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
 
     it "creates new provider records for responses" do
       expect { importer }.to change(Provider, :count).by(3)
-      expect(Provider.find_by(name: "Provider 1", code: "Prov1", provider_type: :scitt)).to be_present
-      expect(Provider.find_by(name: "Provider 2", code: "Prov2", provider_type: :university)).to be_present
-      expect(Provider.find_by(name: "Provider 3", code: "Prov3", provider_type: :lead_school)).to be_present
+        .and change(ProviderEmailAddress, :count).by(2)
+      expect(
+        Provider.find_by(
+          name: "Provider 1",
+          code: "Prov1",
+          provider_type: :scitt,
+          email_address: "provider_1@example.com",
+        ),
+      ).to be_present
+      expect(
+        Provider.find_by(
+          name: "Provider 2",
+          code: "Prov2",
+          provider_type: :university,
+          email_address: nil,
+        ),
+      ).to be_present
+      expect(
+        Provider.find_by(
+          name: "Provider 3",
+          code: "Prov3",
+          provider_type: :lead_school,
+          email_address: "provider_3@example.com",
+        ),
+      ).to be_present
     end
   end
 
   context "with providers in API response which pre-exist" do
-    let!(:existing_provider) { create(:provider) }
+    let!(:existing_provider) { create(:provider, email_address: "existing_provider@example.com") }
+    let(:existing_provider_email_address) do
+      create(:provider_email_address, provider: existing_provider, email_address: "existing_provider@example.com")
+    end
     let!(:changeable_provider) { create(:provider, name: "Changeable Provider") }
 
     before do
+      existing_provider_email_address
+
       pre_existing_providers_request
     end
 
     it "creates new provider records for responses which don't already exist or are valid,
       and updates any pre-existing providers" do
       expect { importer }.to change(Provider, :count).by(1)
-      expect(Provider.find_by(name: "Provider 1", code: "Prov1", provider_type: :scitt)).to be_present
+        .and change(ProviderEmailAddress, :count).by(2)
+      new_provider = Provider.find_by(
+        name: "Provider 1",
+        code: "Prov1",
+        provider_type: :scitt,
+        email_address: "provider_1@example.com",
+      )
+      expect(new_provider).to be_present
+      expect(
+        ProviderEmailAddress.find_by(provider: new_provider, email_address: "provider_1@example.com"),
+      ).to be_present
       expect(Provider.where(name: existing_provider.name, code: existing_provider.code).count).to eq(1)
-      expect(Provider.find_by(code: changeable_provider.code).name).to eq("Changed Provider")
+      expect(changeable_provider.reload.name).to eq("Changed Provider")
+      expect(changeable_provider.reload.email_address).to eq("changed_provider@example.com")
+      expect(changeable_provider.email_addresses).to contain_exactly("changed_provider@example.com")
     end
   end
 
@@ -82,6 +121,7 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
               "name" => "Provider 1",
               "code" => "Prov1",
               "provider_type" => "scitt",
+              "email" => "provider_1@example.com",
             },
           },
           {
@@ -90,6 +130,7 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
               "name" => "Provider 2",
               "code" => "Prov2",
               "provider_type" => "university",
+              "email" => nil,
             },
           },
           {
@@ -98,6 +139,7 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
               "name" => "Provider 3",
               "code" => "Prov3",
               "provider_type" => "lead_school",
+              "email" => "provider_3@example.com",
             },
           },
         ],
@@ -119,6 +161,7 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
               "name" => "Provider 1",
               "code" => "Prov1",
               "provider_type" => "scitt",
+              "email" => "provider_1@example.com",
             },
           },
           {
@@ -147,6 +190,7 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
               "name" => "Changed Provider",
               "code" => changeable_provider.code,
               "provider_type" => changeable_provider.provider_type,
+              "email" => "changed_provider@example.com",
             },
           },
         ],
