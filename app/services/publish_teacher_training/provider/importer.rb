@@ -71,8 +71,6 @@ module PublishTeacherTraining
       def upsert_emails_attributes
         emails_attributes = []
         @email_details.each do |record|
-          next if record[:email_address].blank?
-
           emails_attributes << {
             email_address: record[:email_address],
             provider_id: provider_by_code(record[:code]).id,
