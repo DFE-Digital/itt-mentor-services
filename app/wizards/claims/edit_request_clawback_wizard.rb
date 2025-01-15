@@ -36,9 +36,9 @@ module Claims
     end
 
     def setup_state
-      state[step_name_for_mentor_training_clawback(mentor_training)] = {
-        "hours_clawed_back" => mentor_training.hours_clawed_back,
-        "reason_clawed_back" => mentor_training.reason_clawed_back,
+      state[step_name_for_mentor_training_clawback(mentor_training).to_s] = {
+        "number_of_hours" => mentor_training.hours_clawed_back,
+        "reason_for_clawback" => mentor_training.reason_clawed_back,
       }
     end
   end

@@ -35,7 +35,7 @@ class Claims::Support::Claims::EditRequestClawbackController < Claims::Applicati
   end
 
   def step_path(step)
-    edit_request_clawback_claims_support_claims_clawback_path(claim: @claim, mentor_training_id:, step:)
+    edit_request_clawback_claims_support_claims_clawback_path(claim: @claim, mentor_training_id:, state_key:, step:)
   end
 
   def mentor_training_id
