@@ -4,6 +4,7 @@ module PublishTeacherTraining
       def call
         @invalid_records = []
         @records = []
+        @email_details = []
 
         fetch_providers
 
@@ -13,6 +14,10 @@ module PublishTeacherTraining
 
         Rails.logger.silence do
           ::Provider.upsert_all(@records, unique_by: :code)
+          ::ProviderEmailAddress.upsert_all(
+            upsert_emails_attributes,
+            unique_by: :unique_provider_email,
+          )
         end
 
         Rails.logger.info "Done!"
@@ -38,7 +43,7 @@ module PublishTeacherTraining
             provider_type: provider_attributes["provider_type"],
             ukprn: provider_attributes["ukprn"],
             urn: provider_attributes["urn"],
-            email_address: provider_attributes["email"],
+            email_address: provider_attributes["email"], # TODO: Remove once 'email_address' is removed from providers tables
             telephone: provider_attributes["telephone"],
             website: provider_attributes["website"],
             address1: provider_attributes["street_address_1"],
@@ -49,11 +54,35 @@ module PublishTeacherTraining
             postcode: provider_attributes["postcode"],
             accredited: provider_attributes["accredited_body"],
           }
+
+          next if provider_attributes["email"].blank?
+
+          @email_details << {
+            email_address: provider_attributes["email"],
+            code: provider_attributes["code"],
+          }
         end
 
         if providers.dig("links", "next").present?
           fetch_providers(providers.dig("links", "next"))
         end
+      end
+
+      def upsert_emails_attributes
+        emails_attributes = []
+        @email_details.each do |record|
+          next if record[:email_address].blank?
+
+          emails_attributes << {
+            email_address: record[:email_address],
+            provider_id: provider_by_code(record[:code]).id,
+          }
+        end
+        emails_attributes
+      end
+
+      def provider_by_code(code)
+        ::Provider.find_by(code:)
       end
     end
   end

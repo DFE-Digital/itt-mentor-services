@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_08_211418) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_14_161953) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -372,6 +372,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_08_211418) do
     t.index ["year_group"], name: "index_placements_on_year_group"
   end
 
+  create_table "provider_email_addresses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "email_address"
+    t.uuid "provider_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email_address", "provider_id"], name: "unique_provider_email", unique: true
+    t.index ["provider_id"], name: "index_provider_email_addresses_on_provider_id"
+  end
+
   create_table "provider_sampling_claims", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "claim_id", null: false
     t.uuid "provider_sampling_id", null: false
@@ -589,6 +598,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_08_211418) do
   add_foreign_key "placements", "providers"
   add_foreign_key "placements", "schools"
   add_foreign_key "placements", "subjects"
+  add_foreign_key "provider_email_addresses", "providers"
   add_foreign_key "provider_sampling_claims", "claims"
   add_foreign_key "provider_sampling_claims", "provider_samplings"
   add_foreign_key "provider_samplings", "providers"
