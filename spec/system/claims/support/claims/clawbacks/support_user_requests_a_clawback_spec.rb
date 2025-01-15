@@ -93,6 +93,11 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
     expect(page).to have_summary_list_row("School", @claim_one.school_name)
     expect(page).to have_summary_list_row("Academic year", @claim_one.academic_year_name)
     expect(page).to have_summary_list_row("Accredited provider", @claim_one.provider.name)
+    expect(page).to have_summary_list_row("Mentors") do |row|
+      @claim_one.mentors.each do |mentor|
+        expect(row).to have_css("ul.govuk-list li", text: mentor.full_name)
+      end
+    end
     expect(page).to have_h2("Hours of training")
     @claim_one.mentor_trainings.order_by_mentor_full_name.each do |mentor_training|
       expect(page).to have_summary_list_row(mentor_training.mentor.full_name, "#{mentor_training.hours_completed} hours")

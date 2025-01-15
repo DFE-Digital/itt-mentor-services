@@ -52,6 +52,7 @@ RSpec.describe "View a claim", service: :claims, type: :system do
     expect(page).to have_content("Submitted")
     expect(page).to have_content("Submitted by #{colin.full_name} on 5 March 2024.")
     expect(page).to have_content("Accredited providerBest Practice Network")
+    expect(page).to have_content("Mentors\nBarry Garlow")
     expect(page).to have_content("Hours of training")
     expect(page).to have_content("Barry Garlow#{mentor_training.hours_completed} hours")
     expect(page).to have_content("Total hours6 hours")

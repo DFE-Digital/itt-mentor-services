@@ -1,8 +1,5 @@
 require "rails_helper"
 
-# TODO: Support user tries to request a clawback of more hours than were claimed
-# TODO: Support user tries to request a clawback of more hours than are available to clawback
-
 RSpec.describe Claims::RequestClawbackWizard do
   subject(:wizard) { described_class.new(claim:, current_user:, state:, params:, current_step: nil) }
 
