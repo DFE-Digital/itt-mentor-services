@@ -152,14 +152,14 @@ scope module: :claims, as: :claims, constraints: {
       resources :clawbacks, path: "clawbacks/claims", only: %i[index show new create] do
         member do
           get "edit/:claim_id/:mentor_training_id", to: "edit_request_clawback#new", as: :new_edit_request_clawback
-          get "edit/:claim_id/:mentor_training_id/:step", to: "edit_request_clawback#edit", as: :edit_request_clawback
-          put "edit/:claim_id/:mentor_training_id/:step", to: "edit_request_clawback#update"
+          get "edit/:state_key/:claim_id/:mentor_training_id/:step", to: "edit_request_clawback#edit", as: :edit_request_clawback
+          put "edit/:state_key/:claim_id/:mentor_training_id/:step", to: "edit_request_clawback#update"
         end
 
         collection do
           get "new/:claim_id", to: "request_clawback#new", as: :new_request_clawback
-          get "new/:claim_id/:step", to: "request_clawback#edit", as: :request_clawback
-          put "new/:claim_id/:step", to: "request_clawback#update"
+          get "new/:state_key/:claim_id/:step", to: "request_clawback#edit", as: :request_clawback
+          put "new/:state_key/:claim_id/:step", to: "request_clawback#update"
 
           get "upload_esfa_response/new", to: "clawbacks/upload_esfa_response#new", as: :new_upload_esfa_response
           get "upload_esfa_response/new/:state_key/:step", to: "clawbacks/upload_esfa_response#edit", as: :upload_esfa_response
