@@ -1,5 +1,7 @@
 class MigrateProviderEmailAddresses < ActiveRecord::Migration[7.2]
   def up
+    return unless Provider.column_names.include?("email_address")
+
     email_attributes = Provider.select(:email_address, :id)
       .map do |provider|
         { provider_id: provider.id, email_address: provider.email_address }
@@ -11,6 +13,6 @@ class MigrateProviderEmailAddresses < ActiveRecord::Migration[7.2]
   end
 
   def down
-    ProviderEmailAddress.destroy_all
+    raise ActiveRecord::IrreversibleMigration
   end
 end
