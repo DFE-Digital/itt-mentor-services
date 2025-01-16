@@ -89,7 +89,7 @@ RSpec.describe "Support user changes the mentor who is being rejected by the pro
     )
     expect(page).to have_element(:p, text: "Sampling - Claim #{@claim.reference}", class: "govuk-caption-l")
     expect(page).to have_h1(@claim.school.name)
-    expect(page).to have_element(:strong, text: "Sampling in progress", class: "govuk-tag govuk-tag--purple")
+    expect(page).to have_element(:strong, text: "Sampling in progress", class: "govuk-tag govuk-tag--yellow")
   end
 
   def when_i_click_on_confirm_provider_rejected_claim
@@ -108,7 +108,7 @@ RSpec.describe "Support user changes the mentor who is being rejected by the pro
     )
     expect(page).to have_h1(@claim.school.name)
 
-    expect(page).to have_element(:strong, text: "Provider not approved", class: "govuk-tag govuk-tag--pink")
+    expect(page).to have_element(:strong, text: "Provider not approved", class: "govuk-tag govuk-tag--turquoise")
     expect(page).to have_success_banner("Claim updated")
   end
 

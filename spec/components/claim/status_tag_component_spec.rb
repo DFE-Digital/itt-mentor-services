@@ -18,32 +18,32 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
   context "when the claim's status is 'draft'" do
     let(:claim) { build(:claim, status: :draft) }
 
-    it "renders a grey tag" do
-      expect(page).to have_css(".govuk-tag--grey", text: "Draft")
+    it "renders a yellow tag" do
+      expect(page).to have_css(".govuk-tag--yellow", text: "Draft")
     end
   end
 
   context "when the claim's status is 'submitted'" do
     let(:claim) { build(:claim, status: :submitted) }
 
-    it "renders a blue tag" do
-      expect(page).to have_css(".govuk-tag--blue", text: "Submitted")
+    it "renders a turquoise tag" do
+      expect(page).to have_css(".govuk-tag--turquoise", text: "Submitted")
     end
   end
 
   context "when the claim's status is 'payment_in_progress'" do
     let(:claim) { build(:claim, status: :payment_in_progress) }
 
-    it "renders a turquoise tag" do
-      expect(page).to have_css(".govuk-tag--turquoise", text: "Payment in progress")
+    it "renders a yellow tag" do
+      expect(page).to have_css(".govuk-tag--yellow", text: "Payment in progress")
     end
   end
 
   context "when the claim's status is 'payment_information_requested'" do
     let(:claim) { build(:claim, status: :payment_information_requested) }
 
-    it "renders a light blue tag" do
-      expect(page).to have_css(".govuk-tag--light-blue", text: "Information requested")
+    it "renders a turquoise tag" do
+      expect(page).to have_css(".govuk-tag--turquoise", text: "Information requested")
     end
   end
 
@@ -58,64 +58,64 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
   context "when the claim's status is 'paid'" do
     let(:claim) { build(:claim, status: :paid) }
 
-    it "renders a green tag" do
-      expect(page).to have_css(".govuk-tag--green", text: "Paid")
+    it "renders a blue tag" do
+      expect(page).to have_css(".govuk-tag--blue", text: "Paid")
     end
   end
 
   context "when the claim's status is 'payment_not_approved'" do
     let(:claim) { build(:claim, status: :payment_not_approved) }
 
-    it "renders a red tag" do
-      expect(page).to have_css(".govuk-tag--red", text: "Payment not approved")
+    it "renders a orange tag" do
+      expect(page).to have_css(".govuk-tag--orange", text: "Payment not approved")
     end
   end
 
   context "when the claim's status is 'sampling_in_progress'" do
     let(:claim) { build(:claim, status: :sampling_in_progress) }
 
-    it "renders a purple tag" do
-      expect(page).to have_css(".govuk-tag--purple", text: "Sampling in progress")
+    it "renders a yellow tag" do
+      expect(page).to have_css(".govuk-tag--yellow", text: "Sampling in progress")
     end
   end
 
   context "when the claim's status is 'sampling_provider_not_approved'" do
     let(:claim) { build(:claim, status: :sampling_provider_not_approved) }
 
-    it "renders a pink tag" do
-      expect(page).to have_css(".govuk-tag--pink", text: "Provider not approved")
+    it "renders a turquoise tag" do
+      expect(page).to have_css(".govuk-tag--turquoise", text: "Provider not approved")
     end
   end
 
   context "when the claim's status is 'sampling_not_approved'" do
     let(:claim) { build(:claim, status: :sampling_not_approved) }
 
-    it "renders a pink tag" do
-      expect(page).to have_css(".govuk-tag--pink", text: "Claim not approved")
+    it "renders a turquoise tag" do
+      expect(page).to have_css(".govuk-tag--turquoise", text: "Claim not approved")
     end
   end
 
   context "when the claim's status is 'clawback_requested'" do
     let(:claim) { build(:claim, status: :clawback_requested) }
 
-    it "renders a orange tag" do
-      expect(page).to have_css(".govuk-tag--orange", text: "Clawback requested")
+    it "renders a turquoise tag" do
+      expect(page).to have_css(".govuk-tag--turquoise", text: "Clawback requested")
     end
   end
 
   context "when the claim's status is 'clawback_in_progress'" do
     let(:claim) { build(:claim, status: :clawback_in_progress) }
 
-    it "renders a orange tag" do
-      expect(page).to have_css(".govuk-tag--orange", text: "Clawback in progress")
+    it "renders a yellow tag" do
+      expect(page).to have_css(".govuk-tag--yellow", text: "Clawback in progress")
     end
   end
 
   context "when the claim's status is 'clawback_complete'" do
     let(:claim) { build(:claim, status: :clawback_complete) }
 
-    it "renders a red tag" do
-      expect(page).to have_css(".govuk-tag--red", text: "Clawback complete")
+    it "renders a blue tag" do
+      expect(page).to have_css(".govuk-tag--blue", text: "Clawback complete")
     end
   end
 
