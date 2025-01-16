@@ -4,7 +4,7 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
   end
 
   def edit?
-    claim_claim_window_current? && !record.submitted?
+    claim_claim_window_current? && record.in_draft?
   end
 
   def update?
@@ -16,7 +16,7 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
   end
 
   def submit?
-    current_claim_window? && !record.submitted?
+    current_claim_window? && record.in_draft?
   end
 
   def rejected?
@@ -32,7 +32,7 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
   end
 
   def check?
-    record.draft? || record.internal_draft?
+    record.in_draft?
   end
 
   private

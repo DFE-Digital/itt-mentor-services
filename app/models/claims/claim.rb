@@ -144,6 +144,10 @@ class Claims::Claim < ApplicationRecord
     mentor_trainings.not_assured.sum { |mt| mt.hours_clawed_back * school.region_funding_available_per_hour }
   end
 
+  def in_draft?
+    DRAFT_STATUSES.include?(status.to_sym)
+  end
+
   private
 
   def has_revision?

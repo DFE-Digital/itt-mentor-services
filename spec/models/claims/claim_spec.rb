@@ -298,4 +298,120 @@ RSpec.describe Claims::Claim, type: :model do
       end
     end
   end
+
+  describe "#in_draft?" do
+    subject(:in_draft) { claim.in_draft? }
+
+    context "when the claim has the status internal draft" do
+      let(:claim) { create(:claim) }
+
+      it "returns true" do
+        expect(in_draft).to be(true)
+      end
+    end
+
+    context "when the claim has the status draft" do
+      let(:claim) { create(:claim, :draft) }
+
+      it "returns true" do
+        expect(in_draft).to be(true)
+      end
+    end
+
+    context "when the claim has status submitted" do
+      let(:claim) { create(:claim, :submitted) }
+
+      it "returns false" do
+        expect(in_draft).to be(false)
+      end
+    end
+
+    context "when the claim has status payment in progress" do
+      let(:claim) { create(:claim, :submitted, status: :payment_in_progress) }
+
+      it "returns false" do
+        expect(in_draft).to be(false)
+      end
+    end
+
+    context "when the claim has status payment information requested" do
+      let(:claim) { create(:claim, :submitted, status: :payment_information_requested) }
+
+      it "returns false" do
+        expect(in_draft).to be(false)
+      end
+    end
+
+    context "when the claim has status payment information sent" do
+      let(:claim) { create(:claim, :submitted, status: :payment_information_sent) }
+
+      it "returns false" do
+        expect(in_draft).to be(false)
+      end
+    end
+
+    context "when the claim has status paid" do
+      let(:claim) { create(:claim, :submitted, status: :paid) }
+
+      it "returns false" do
+        expect(in_draft).to be(false)
+      end
+    end
+
+    context "when the claim has status payment not approved" do
+      let(:claim) { create(:claim, :submitted, status: :payment_not_approved) }
+
+      it "returns false" do
+        expect(in_draft).to be(false)
+      end
+    end
+
+    context "when the claim has status sampling in progress" do
+      let(:claim) { create(:claim, :submitted, status: :sampling_in_progress) }
+
+      it "returns false" do
+        expect(in_draft).to be(false)
+      end
+    end
+
+    context "when the claim has status sampling provider not approved" do
+      let(:claim) { create(:claim, :submitted, status: :sampling_provider_not_approved) }
+
+      it "returns false" do
+        expect(in_draft).to be(false)
+      end
+    end
+
+    context "when the claim has status sampling not approved" do
+      let(:claim) { create(:claim, :submitted, status: :sampling_not_approved) }
+
+      it "returns false" do
+        expect(in_draft).to be(false)
+      end
+    end
+
+    context "when the claim has status clawback requested" do
+      let(:claim) { create(:claim, :submitted, status: :clawback_requested) }
+
+      it "returns false" do
+        expect(in_draft).to be(false)
+      end
+    end
+
+    context "when the claim has status clawback in progress" do
+      let(:claim) { create(:claim, :submitted, status: :clawback_in_progress) }
+
+      it "returns false" do
+        expect(in_draft).to be(false)
+      end
+    end
+
+    context "when the claim has status clawback complete" do
+      let(:claim) { create(:claim, :submitted, status: :clawback_complete) }
+
+      it "returns false" do
+        expect(in_draft).to be(false)
+      end
+    end
+  end
 end
