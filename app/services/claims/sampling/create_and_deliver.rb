@@ -22,7 +22,7 @@ class Claims::Sampling::CreateAndDeliver < ApplicationService
       end
     end
 
-    Claims::ClaimActivity.create!(action: :sampling_approved_manually, user: current_user, record: sampling)
+    Claims::ClaimActivity.create!(action: :sampling_uploaded, user: current_user, record: sampling)
   end
 
   private

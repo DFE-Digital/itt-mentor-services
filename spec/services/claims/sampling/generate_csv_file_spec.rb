@@ -4,7 +4,7 @@ describe Claims::Sampling::GenerateCSVFile do
   subject(:generate_csv_file) { described_class.call(claims:, provider_name:) }
 
   let(:claims) { create_list(:claim, 3, mentor_trainings: [create(:mentor_training, hours_completed: 10)]) }
-  let(:provider_name) { "NIOT"}
+  let(:provider_name) { "NIOT" }
 
   describe "#call" do
     it "generates a CSV file of claims" do
