@@ -1,9 +1,10 @@
 module Claims
   class RejectClaimWizard < BaseWizard
-    attr_reader :claim
+    attr_reader :claim, :current_user
 
-    def initialize(claim:, params:, state:, current_step: nil)
+    def initialize(claim:, current_user:, params:, state:, current_step: nil)
       @claim = claim
+      @current_user = current_user
       super(state:, params:, current_step:)
     end
 
@@ -24,6 +25,8 @@ module Claims
         claim:,
         school_responses: school_responses_for_mentor_trainings,
       )
+
+      Claims::ClaimActivity.create!(action: :rejected_by_school, user: current_user, record: claim)
     end
 
     def not_assured_mentor_trainings

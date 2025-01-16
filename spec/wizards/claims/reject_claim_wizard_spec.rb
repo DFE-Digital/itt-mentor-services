@@ -1,12 +1,13 @@
 require "rails_helper"
 
 RSpec.describe Claims::RejectClaimWizard do
-  subject(:wizard) { described_class.new(claim:, state:, params:, current_step: nil) }
+  subject(:wizard) { described_class.new(claim:, current_user:, state:, params:, current_step: nil) }
 
   let(:state) { {} }
   let(:params_data) { {} }
   let(:params) { ActionController::Parameters.new(params_data) }
   let(:claim) { create(:claim) }
+  let(:current_user) { create(:claims_support_user) }
   let(:mentor_jane_doe) { create(:claims_mentor, first_name: "Jane", last_name: "Doe") }
   let(:mentor_john_smith) { create(:claims_mentor, first_name: "John", last_name: "Smith") }
   let(:mentor_training_1) do
@@ -99,6 +100,13 @@ RSpec.describe Claims::RejectClaimWizard do
         expect(mentor_training_1.reload.reason_rejected).to eq("Some reason")
         expect(mentor_training_2.reload.not_assured).to be(true)
         expect(mentor_training_2.reload.reason_rejected).to eq("Another reason")
+      end
+
+      it "creates a claim activity record" do
+        expect { reject_claim }.to change(Claims::ClaimActivity, :count).by(1)
+        expect(Claims::ClaimActivity.last.action).to eq("rejected_by_school")
+        expect(Claims::ClaimActivity.last.user).to eq(current_user)
+        expect(Claims::ClaimActivity.last.record).to eq(claim)
       end
     end
   end
