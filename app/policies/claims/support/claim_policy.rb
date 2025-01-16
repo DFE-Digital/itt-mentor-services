@@ -4,7 +4,7 @@ class Claims::Support::ClaimPolicy < Claims::ApplicationPolicy
   end
 
   def edit?
-    claim_claim_window_current? && !record.submitted?
+    claim_claim_window_current? && record.in_draft?
   end
 
   def update?
@@ -16,7 +16,7 @@ class Claims::Support::ClaimPolicy < Claims::ApplicationPolicy
   end
 
   def submit?
-    current_claim_window? && !user.support_user? && !record.submitted?
+    current_claim_window? && !user.support_user? && record.in_draft?
   end
 
   def rejected?
@@ -29,11 +29,11 @@ class Claims::Support::ClaimPolicy < Claims::ApplicationPolicy
 
   # TODO: Remove record.draft? and not create drafts for existing drafts
   def draft?
-    current_claim_window? && user.support_user? && (record.internal_draft? || record.draft?)
+    current_claim_window? && user.support_user? && record.in_draft?
   end
 
   def check?
-    record.draft? || record.internal_draft?
+    record.in_draft?
   end
 
   def download_csv?
