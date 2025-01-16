@@ -100,7 +100,7 @@ RSpec.describe "Support user approves a claim", service: :claims, type: :system 
     )
     expect(page).to have_element(:p, text: "Sampling - Claim #{@sampling_claim.reference}", class: "govuk-caption-l")
     expect(page).to have_h1(@sampling_claim.school.name)
-    expect(page).to have_element(:strong, text: "Sampling in progress", class: "govuk-tag govuk-tag--purple")
+    expect(page).to have_element(:strong, text: "Sampling in progress", class: "govuk-tag govuk-tag--yellow")
   end
 
   def when_i_click_on_back
@@ -151,6 +151,6 @@ RSpec.describe "Support user approves a claim", service: :claims, type: :system 
     expect(page).to have_h2("Claims (2)")
     expect(page).to have_link("#{@sampling_claim.reference} - #{@sampling_claim.school.name}", href: "/support/claims/#{@sampling_claim.id}")
     expect(page).to have_link("#{@paid_claim.reference} - #{@paid_claim.school.name}", href: "/support/claims/#{@paid_claim.id}")
-    expect(page).to have_element(:strong, text: "Paid", class: "govuk-tag govuk-tag--green", count: 2)
+    expect(page).to have_element(:strong, text: "Paid", class: "govuk-tag govuk-tag--blue", count: 2)
   end
 end

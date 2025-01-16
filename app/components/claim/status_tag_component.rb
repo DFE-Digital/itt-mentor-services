@@ -24,19 +24,19 @@ class Claim::StatusTagComponent < ApplicationComponent
   def status_colours
     {
       internal_draft: "grey",
-      draft: "grey",
-      submitted: "blue",
-      payment_in_progress: "turquoise",
-      payment_information_requested: "light-blue",
+      draft: "yellow",
+      submitted: "turquoise",
+      payment_in_progress: "yellow",
+      payment_information_requested: "turquoise",
       payment_information_sent: "yellow",
-      paid: "green",
-      payment_not_approved: "red",
-      sampling_in_progress: "purple",
-      sampling_provider_not_approved: "pink",
-      sampling_not_approved: "pink",
-      clawback_requested: "orange",
-      clawback_in_progress: "orange",
-      clawback_complete: "red",
+      paid: "blue",
+      payment_not_approved: "orange",
+      sampling_in_progress: "yellow",
+      sampling_provider_not_approved: "turquoise",
+      sampling_not_approved: "turquoise",
+      clawback_requested: "turquoise",
+      clawback_in_progress: "yellow",
+      clawback_complete: "blue",
     }.with_indifferent_access
   end
 end
