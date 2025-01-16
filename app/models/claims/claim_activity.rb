@@ -30,6 +30,10 @@ class Claims::ClaimActivity < ApplicationRecord
     sampling_response_uploaded: "sampling_response_uploaded",
     clawback_request_delivered: "clawback_request_delivered",
     clawback_response_uploaded: "clawback_response_uploaded",
+    sampling_approved_manually: "sampling_approved_manually",
+    rejected_by_provider: "rejected_by_provider",
+    rejected_by_school: "rejected_by_school",
+    clawback_requested: "clawback_requested",
   }, validate: true
 
   delegate :full_name, to: :user, prefix: true, allow_nil: true
