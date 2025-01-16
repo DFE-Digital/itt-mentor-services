@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_14_161953) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_16_091921) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -377,7 +377,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_14_161953) do
     t.uuid "provider_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "primary", default: false
     t.index ["email_address", "provider_id"], name: "unique_provider_email", unique: true
+    t.index ["primary"], name: "index_provider_email_addresses_on_primary"
     t.index ["provider_id"], name: "index_provider_email_addresses_on_provider_id"
   end
 
@@ -409,7 +411,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_14_161953) do
     t.string "name", default: "", null: false
     t.string "ukprn"
     t.string "urn"
-    t.string "email_address"
     t.string "telephone"
     t.string "website"
     t.string "address1"

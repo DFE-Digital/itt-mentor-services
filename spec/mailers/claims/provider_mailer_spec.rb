@@ -4,7 +4,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
   describe "#sampling_checks_required" do
     subject(:sampling_checks_required_email) { described_class.sampling_checks_required(provider_sampling) }
 
-    let(:provider) { build(:claims_provider, email_address: "aes_sedai_trust@example.com") }
+    let(:provider) { create(:claims_provider) }
     let(:provider_sampling) { create(:provider_sampling, provider:) }
     let(:url_for_csv) { "https://example.com" }
     let(:service_name) { "Claim funding for mentor training" }
@@ -15,7 +15,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
     end
 
     it "sends the sampling checks required email" do
-      expect(sampling_checks_required_email.to).to contain_exactly(provider.email_address)
+      expect(sampling_checks_required_email.to).to match_array(provider.email_addresses)
       expect(sampling_checks_required_email.subject).to eq("ITT mentor claims need to be assured")
       expect(sampling_checks_required_email.body.to_s.squish).to eq(<<~EMAIL.squish)
         Dear #{provider.name},

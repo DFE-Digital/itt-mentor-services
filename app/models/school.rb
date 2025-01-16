@@ -131,4 +131,10 @@ class School < ApplicationRecord
   def primary?
     phase == PRIMARY_PHASE
   end
+
+  def email_addresses
+    return [] if email_address.nil?
+
+    [email_address]
+  end
 end

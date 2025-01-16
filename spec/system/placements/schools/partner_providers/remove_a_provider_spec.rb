@@ -48,17 +48,17 @@ RSpec.describe "User removes a provider from providers list",
   private
 
   def given_providers_exist
-    @springfield_university = build(:placements_provider,
-                                    name: "Springfield University",
-                                    ukprn: "10101010",
-                                    urn: "101010",
-                                    email_address: "reception@springfield.ac.uk",
-                                    telephone: "0101 010 0101",
-                                    website: "http://www.springfield.ac.uk",
-                                    address1: "Undisclosed")
+    @springfield_university = create(:placements_provider,
+                                     name: "Springfield University",
+                                     ukprn: "10101010",
+                                     urn: "101010",
+                                     email_addresses: ["reception@springfield.ac.uk"],
+                                     telephone: "0101 010 0101",
+                                     website: "http://www.springfield.ac.uk",
+                                     address1: "Undisclosed")
     @springfield_university_user = create(:placements_user, providers: [@springfield_university])
 
-    @ogdenville_university = build(:provider, name: "Ogdenville University", ukprn: "11111")
+    @ogdenville_university = create(:provider, name: "Ogdenville University", ukprn: "11111")
     @ogdenville_university_user = create(:placements_user, providers: [@ogdenville_university])
 
     @shelbyville_university = build(:placements_provider, name: "Shelbyville University", ukprn: "22222")

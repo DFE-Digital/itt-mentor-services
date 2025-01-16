@@ -94,7 +94,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
       described_class.partnership_created_notification(user, source_organisation, partner_organisation)
     end
 
-    let(:source_organisation) { create(:placements_provider, name: "Provider 1", email_address: "example@provider.org") }
+    let(:source_organisation) { create(:placements_provider, name: "Provider 1") }
     let(:partner_organisation) { create(:placements_school, name: "School 1") }
     let(:user) { create(:placements_user, schools: [partner_organisation]) }
 
@@ -109,7 +109,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
         ## What happens next?
         You can now assign them to your placements.
 
-        Contact the provider on [#{source_organisation.email_address}](mailto:#{source_organisation.email_address}) if you have any questions.
+        Contact the provider on [#{source_organisation.email_addresses.first}](mailto:#{source_organisation.email_addresses.first}) if you have any questions.
 
         ## Your account
         [Sign in to Manage school placements](http://placements.localhost/sign-in)
@@ -124,7 +124,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
       described_class.partnership_destroyed_notification(user, source_organisation, partner_organisation)
     end
 
-    let(:source_organisation) { create(:placements_provider, name: "Provider 1", email_address: "example@provider.org") }
+    let(:source_organisation) { create(:placements_provider, name: "Provider 1") }
     let(:partner_organisation) { create(:placements_school, name: "School 1") }
 
     let(:user) { create(:placements_user, schools: [partner_organisation]) }
@@ -143,7 +143,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
           ## What happens next?
           You will no longer be able to assign placements to this provider unless they add you again or you add them to your list of providers.
 
-          If you think this is a mistake, contact them on [#{source_organisation.email_address}](mailto:#{source_organisation.email_address}).
+          If you think this is a mistake, contact them on [#{source_organisation.email_addresses.first}](mailto:#{source_organisation.email_addresses.first}).
 
           ## Your account
           [Sign in to Manage school placements](http://placements.localhost/sign-in)
@@ -171,7 +171,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
 
           - [#{placement.decorate.title}](http://placements.localhost/schools/#{partner_organisation.id}/placements/#{placement.id})
 
-          We recommend you speak to the provider to avoid confusion about placing trainees at your school. Contact them on [#{source_organisation.email_address}](mailto:#{source_organisation.email_address}).
+          We recommend you speak to the provider to avoid confusion about placing trainees at your school. Contact them on [#{source_organisation.email_addresses.first}](mailto:#{source_organisation.email_addresses.first}).
 
           ## Your account
           [Sign in to Manage school placements](http://placements.localhost/sign-in)

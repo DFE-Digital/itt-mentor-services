@@ -58,7 +58,7 @@ RSpec.describe "Support user uploads sampling data", service: :claims, type: :sy
                                                  starts_on: @current_academic_year.starts_on,
                                                  ends_on: @current_academic_year.starts_on + 2.days)
 
-    provider = create(:claims_provider, email_address: "provider@example.com")
+    provider = create(:claims_provider)
 
     @current_claim = create(:claim,
                             :submitted,

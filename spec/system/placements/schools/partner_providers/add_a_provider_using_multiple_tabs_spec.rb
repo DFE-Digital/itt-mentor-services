@@ -50,7 +50,7 @@ RSpec.describe "School user adds providers to their list of providers using mult
                                      name: "Springfield University",
                                      ukprn: "10101010",
                                      urn: "101010",
-                                     email_address: "reception@springfield.ac.uk",
+                                     email_addresses: ["reception@springfield.ac.uk"],
                                      telephone: "0101 010 0101",
                                      website: "http://www.springfield.ac.uk",
                                      address1: "Undisclosed")
@@ -59,7 +59,7 @@ RSpec.describe "School user adds providers to their list of providers using mult
                                      name: "Shelbyville University",
                                      ukprn: "99999999",
                                      urn: "999999",
-                                     email_address: "reception@shelbyville.ac.uk",
+                                     email_addresses: ["reception@shelbyville.ac.uk"],
                                      telephone: "9999 999 9999",
                                      website: "http://www.shelbyville.ac.uk",
                                      address1: "1 Sycamore Avenue")

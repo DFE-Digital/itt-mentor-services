@@ -222,4 +222,24 @@ RSpec.describe School, type: :model do
       expect(school.primary?).to be(false)
     end
   end
+
+  describe "#email_addresses" do
+    subject(:email_addresses) { school.email_addresses }
+
+    context "when the school does not have an email address" do
+      let(:school) { create(:school) }
+
+      it "returns an empty array" do
+        expect(email_addresses).to eq([])
+      end
+    end
+
+    context "when the school does have an email address" do
+      let(:school) { create(:school, email_address: "school@example.com") }
+
+      it "returns an array containing the school's email address" do
+        expect(email_addresses).to contain_exactly("school@example.com")
+      end
+    end
+  end
 end

@@ -10,7 +10,6 @@
 #  city               :string
 #  code               :string           not null
 #  county             :string
-#  email_address      :string
 #  name               :string           default(""), not null
 #  placements_service :boolean          default(FALSE)
 #  postcode           :string
@@ -64,6 +63,26 @@ FactoryBot.define do
 
     trait :niot do
       name { "NIoT: National Institute of Teaching, founded by the School-Led Development Trust" }
+    end
+
+    transient do
+      email_addresses { [] }
+    end
+
+    after(:create) do |provider, evaluator|
+      if evaluator.email_addresses.present?
+        evaluator.email_addresses.each_with_index do |email_address, i|
+          create(:provider_email_address,
+                 email_address:,
+                 provider:,
+                 primary: i.zero?)
+        end
+      else
+        create(:provider_email_address,
+               email_address: "#{provider.name.split(" ").join("_").downcase.gsub(/[^a-zA-Z0-9-]_/, "")}@example.com",
+               provider:,
+               primary: true)
+      end
     end
   end
 

@@ -34,7 +34,7 @@ RSpec.describe Claims::ProviderSampling, type: :model do
   end
 
   describe "delegations" do
-    it { is_expected.to delegate_method(:email_address).to(:provider).with_prefix }
+    it { is_expected.to delegate_method(:email_addresses).to(:provider).with_prefix }
     it { is_expected.to delegate_method(:name).to(:provider).with_prefix }
   end
 

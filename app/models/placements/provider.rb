@@ -10,7 +10,6 @@
 #  city               :string
 #  code               :string           not null
 #  county             :string
-#  email_address      :string
 #  name               :string           default(""), not null
 #  placements_service :boolean          default(FALSE)
 #  postcode           :string

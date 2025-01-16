@@ -2,7 +2,7 @@ class Claims::ProviderMailer < Claims::ApplicationMailer
   def sampling_checks_required(provider_sampling)
     @provider_sampling = provider_sampling
 
-    notify_email to: @provider_sampling.provider_email_address,
+    notify_email to: @provider_sampling.provider_email_addresses,
                  subject: t(".subject"),
                  body: t(
                    ".body",
