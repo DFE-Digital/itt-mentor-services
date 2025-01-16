@@ -96,6 +96,11 @@ RSpec.describe Claims::MentorTraining, type: :model do
     end
   end
 
+  describe "delegations" do
+    it { is_expected.to delegate_method(:full_name).to(:mentor).with_prefix.allow_nil }
+    it { is_expected.to delegate_method(:name).to(:provider).with_prefix.allow_nil }
+  end
+
   describe "#hours_completed" do
     subject(:mentor_training) { create(:mentor_training, claim: draft_claim) }
 
@@ -160,10 +165,6 @@ RSpec.describe Claims::MentorTraining, type: :model do
         )
       end
     end
-  end
-
-  describe "#full_name" do
-    it { is_expected.to delegate_method(:full_name).to(:mentor).with_prefix.allow_nil }
   end
 
   describe "#set_training_type" do
