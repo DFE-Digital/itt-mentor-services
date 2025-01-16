@@ -30,7 +30,7 @@ class Claims::Support::Claims::Samplings::RejectController < Claims::Support::Ap
   def set_wizard
     state = session[state_key] ||= {}
     current_step = params[:step]&.to_sym
-    @wizard = Claims::RejectClaimWizard.new(claim: @claim, params:, state:, current_step:)
+    @wizard = Claims::RejectClaimWizard.new(claim: @claim, current_user:, params:, state:, current_step:)
   end
 
   def step_path(step)
