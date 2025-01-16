@@ -1,9 +1,10 @@
 module Claims
   class RequestClawbackWizard < BaseWizard
-    attr_reader :claim
+    attr_reader :claim, :current_user
 
-    def initialize(claim:, params:, state:, current_step: nil)
+    def initialize(claim:, current_user:, params:, state:, current_step: nil)
       @claim = claim
+      @current_user = current_user
       super(state:, params:, current_step:)
     end
 
@@ -42,6 +43,8 @@ module Claims
         claim:,
         esfa_responses: esfa_responses_for_mentor_trainings,
       )
+
+      Claims::ClaimActivity.create!(action: :clawback_requested, user: current_user, record: claim)
     end
   end
 end

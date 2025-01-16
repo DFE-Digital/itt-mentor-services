@@ -4,12 +4,13 @@ require "rails_helper"
 # TODO: Support user tries to request a clawback of more hours than are available to clawback
 
 RSpec.describe Claims::RequestClawbackWizard do
-  subject(:wizard) { described_class.new(claim:, state:, params:, current_step: nil) }
+  subject(:wizard) { described_class.new(claim:, current_user:, state:, params:, current_step: nil) }
 
   let(:state) { {} }
   let(:params_data) { {} }
   let(:params) { ActionController::Parameters.new(params_data) }
   let(:claim) { create(:claim, status: "sampling_in_progress") }
+  let(:current_user) { create(:claims_support_user) }
   let!(:mentor_training) { create(:mentor_training, claim:, not_assured: true, reason_not_assured: "reason", hours_completed: 20) }
 
   before do
@@ -71,6 +72,13 @@ RSpec.describe Claims::RequestClawbackWizard do
       it "calls the ClawbackRequested service with the claim and esfa responses" do
         wizard.submit_esfa_responses
         expect(Claims::Claim::Clawback::ClawbackRequested).to have_received(:call).with(claim:, esfa_responses:)
+      end
+
+      it "creates a claim activity record" do
+        expect { wizard.submit_esfa_responses }.to change(Claims::ClaimActivity, :count).by(1)
+        expect(Claims::ClaimActivity.last.action).to eq("clawback_requested")
+        expect(Claims::ClaimActivity.last.user).to eq(current_user)
+        expect(Claims::ClaimActivity.last.record).to eq(claim)
       end
     end
 

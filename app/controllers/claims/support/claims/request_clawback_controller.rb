@@ -34,7 +34,7 @@ class Claims::Support::Claims::RequestClawbackController < Claims::ApplicationCo
   def set_wizard
     state = session[state_key] ||= {}
     current_step = params[:step]&.to_sym
-    @wizard = Claims::RequestClawbackWizard.new(claim: @claim, params:, state:, current_step:)
+    @wizard = Claims::RequestClawbackWizard.new(claim: @claim, current_user:, params:, state:, current_step:)
   end
 
   def step_path(step)
