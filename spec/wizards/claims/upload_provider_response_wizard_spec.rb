@@ -1,11 +1,12 @@
 require "rails_helper"
 
 RSpec.describe Claims::UploadProviderResponseWizard do
-  subject(:wizard) { described_class.new(state:, params:, current_step: nil) }
+  subject(:wizard) { described_class.new(state:, params:, current_step: nil, current_user:) }
 
   let(:state) { {} }
   let(:params_data) { {} }
   let(:params) { ActionController::Parameters.new(params_data) }
+  let(:current_user) { create(:claims_support_user) }
 
   describe "#steps" do
     subject { wizard.steps.keys }

@@ -38,7 +38,7 @@
                       </li>
                     </ul>
                   <% end %>
-                <% when "sampling_uploaded" %>
+                <% when "sampling_uploaded", "sampling_response_uploaded" %>
                   <% provider_samplings = claim_activity.record.provider_samplings %>
 
                   <ul class="app-timeline__documents">
