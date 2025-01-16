@@ -6,7 +6,7 @@ RSpec.describe "Placements / Providers / View provider details", service: :place
            name: "London Provider",
            urn: "123321",
            ukprn: "456654",
-           email_address: "contact_london_provider@example.com",
+           email_addresses: ["contact_london_provider@example.com"],
            telephone: "01234 567890",
            website: "london_provider@example.com",
            address1: "London Provider",

@@ -10,7 +10,6 @@
 #  city               :string
 #  code               :string           not null
 #  county             :string
-#  email_address      :string
 #  name               :string           default(""), not null
 #  placements_service :boolean          default(FALSE)
 #  postcode           :string
@@ -62,6 +61,10 @@ class Provider < ApplicationRecord
                   using: { trigram: { word_similarity: true } }
 
   accepts_nested_attributes_for :provider_email_addresses, allow_destroy: true
+
+  def primary_email_address
+    provider_email_addresses.primary.last.email_address
+  end
 
   def email_addresses
     provider_email_addresses.pluck(:email_address).uniq

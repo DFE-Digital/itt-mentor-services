@@ -18,7 +18,6 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
           name: "Provider 1",
           code: "Prov1",
           provider_type: :scitt,
-          email_address: "provider_1@example.com",
         ),
       ).to be_present
       expect(
@@ -26,7 +25,6 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
           name: "Provider 2",
           code: "Prov2",
           provider_type: :university,
-          email_address: nil,
         ),
       ).to be_present
       expect(
@@ -34,22 +32,16 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
           name: "Provider 3",
           code: "Prov3",
           provider_type: :lead_school,
-          email_address: "provider_3@example.com",
         ),
       ).to be_present
     end
   end
 
   context "with providers in API response which pre-exist" do
-    let!(:existing_provider) { create(:provider, email_address: "existing_provider@example.com") }
-    let(:existing_provider_email_address) do
-      create(:provider_email_address, provider: existing_provider, email_address: "existing_provider@example.com")
-    end
+    let!(:existing_provider) { create(:provider) }
     let!(:changeable_provider) { create(:provider, name: "Changeable Provider") }
 
     before do
-      existing_provider_email_address
-
       pre_existing_providers_request
     end
 
@@ -61,7 +53,6 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
         name: "Provider 1",
         code: "Prov1",
         provider_type: :scitt,
-        email_address: "provider_1@example.com",
       )
       expect(new_provider).to be_present
       expect(
@@ -69,8 +60,8 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
       ).to be_present
       expect(Provider.where(name: existing_provider.name, code: existing_provider.code).count).to eq(1)
       expect(changeable_provider.reload.name).to eq("Changed Provider")
-      expect(changeable_provider.reload.email_address).to eq("changed_provider@example.com")
-      expect(changeable_provider.email_addresses).to contain_exactly("changed_provider@example.com")
+      expect(changeable_provider.email_addresses).to contain_exactly("changeable_provider@example.com", "changed_provider@example.com")
+      expect(changeable_provider.primary_email_address).to eq("changed_provider@example.com")
     end
   end
 
@@ -172,7 +163,7 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
               "provider_type" => existing_provider.provider_type,
               "ukprn" => existing_provider.ukprn,
               "urn" => existing_provider.urn,
-              "email" => existing_provider.email_address,
+              "email" => existing_provider.primary_email_address,
               "telephone" => existing_provider.telephone,
               "website" => existing_provider.website,
               "street_address_1" => existing_provider.address1,

@@ -43,7 +43,6 @@ module PublishTeacherTraining
             provider_type: provider_attributes["provider_type"],
             ukprn: provider_attributes["ukprn"],
             urn: provider_attributes["urn"],
-            email_address: provider_attributes["email"], # TODO: Remove once 'email_address' is removed from providers tables
             telephone: provider_attributes["telephone"],
             website: provider_attributes["website"],
             address1: provider_attributes["street_address_1"],
@@ -74,6 +73,7 @@ module PublishTeacherTraining
           emails_attributes << {
             email_address: record[:email_address],
             provider_id: provider_by_code(record[:code]).id,
+            primary: true,
           }
         end
         emails_attributes

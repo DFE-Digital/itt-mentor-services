@@ -20,9 +20,11 @@
   <% end %>
     <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".email_address")) %>
-    <% if organisation.email_address.present? %>
+    <% if organisation.email_addresses.present? %>
       <% row.with_value do %>
-        <%= govuk_mail_to(organisation.email_address, organisation.email_address) %>
+        <% organisation.email_addresses.each do |email_address| %>
+          <%= govuk_mail_to(email_address, email_address) %>
+        <% end %>
       <% end %>
     <% else %>
       <% row.with_value(**summary_row_value) %>

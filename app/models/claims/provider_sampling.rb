@@ -30,7 +30,7 @@ class Claims::ProviderSampling < ApplicationRecord
 
   scope :order_by_provider_name, -> { joins(:provider).order(providers: { name: :asc }) }
 
-  delegate :email_address, :name, to: :provider, prefix: true
+  delegate :email_addresses, :name, to: :provider, prefix: true
 
   def downloaded?
     downloaded_at.present?
