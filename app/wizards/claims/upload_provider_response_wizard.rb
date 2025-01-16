@@ -1,5 +1,13 @@
 module Claims
   class UploadProviderResponseWizard < BaseWizard
+    def initialize(current_user:, params:, state:, current_step: nil)
+      @current_user = current_user
+
+      super(state:, params:, current_step:)
+    end
+
+    attr_reader :current_user
+
     def define_steps
       if sampled_claims.present?
         add_step(UploadStep)
@@ -17,6 +25,14 @@ module Claims
       raise "Invalid wizard state" unless valid? && csv_inputs_valid?
 
       Claims::Sampling::UpdateCollectionWithProviderResponseJob.perform_later(claim_update_details)
+      sampling = Claims::Sampling.new
+
+      sampled_claims.where(reference: grouped_csv_rows.keys).joins(:provider).group_by(&:provider).each do |provider, claims|
+        csv = Claims::SamplingResponse::GenerateCSVFile.call(csv_content: steps.fetch(:upload).csv_content, provider_name: provider.name).to_io
+        Claims::ProviderSampling.create!(provider:, claims:, sampling:, csv_file: File.open(csv))
+      end
+
+      Claims::ClaimActivity.create!(action: :sampling_response_uploaded, user: current_user, record: sampling)
     end
 
     def sampled_claims

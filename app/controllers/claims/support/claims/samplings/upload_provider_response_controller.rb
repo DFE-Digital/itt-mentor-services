@@ -24,7 +24,7 @@ class Claims::Support::Claims::Samplings::UploadProviderResponseController < Cla
   def set_wizard
     state = session[state_key] ||= {}
     current_step = params[:step]&.to_sym
-    @wizard = Claims::UploadProviderResponseWizard.new(params:, state:, current_step:)
+    @wizard = Claims::UploadProviderResponseWizard.new(params:, state:, current_step:, current_user:)
   end
 
   def step_path(step)
