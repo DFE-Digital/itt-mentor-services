@@ -83,6 +83,8 @@ RSpec.describe Claims::Claim, type: :model do
   context "with delegations" do
     it { is_expected.to delegate_method(:name).to(:provider).with_prefix }
     it { is_expected.to delegate_method(:users).to(:school).with_prefix }
+    it { is_expected.to delegate_method(:urn).to(:school).with_prefix }
+    it { is_expected.to delegate_method(:postcode).to(:school).with_prefix }
     it { is_expected.to delegate_method(:full_name).to(:submitted_by).with_prefix.allow_nil }
     it { is_expected.to delegate_method(:name).to(:academic_year).with_prefix.allow_nil }
   end
@@ -412,6 +414,17 @@ RSpec.describe Claims::Claim, type: :model do
       it "returns false" do
         expect(in_draft).to be(false)
       end
+    end
+  end
+
+  describe "#total_hours_completed" do
+    let(:claim) { create(:claim) }
+
+    it "returns the total hours completed for the claim" do
+      create(:mentor_training, claim:, hours_completed: 10)
+      create(:mentor_training, claim:, hours_completed: 20)
+
+      expect(claim.total_hours_completed).to eq(30)
     end
   end
 end
