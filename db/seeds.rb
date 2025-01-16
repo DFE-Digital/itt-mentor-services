@@ -155,7 +155,7 @@ reference = 12_345_678
 created_by = Claims::SupportUser.last
 Claims::School.all.find_each do |school|
   Claims::Provider.private_beta_providers.each do |claim_provider|
-    claim = Claims::Claim.create!(
+    claim_paid = Claims::Claim.create!(
       claim_window: Claims::ClaimWindow.current,
       school:,
       provider: claim_provider,
@@ -165,16 +165,37 @@ Claims::School.all.find_each do |school|
       submitted_at: Time.current,
       submitted_by: created_by,
     )
+
+    reference += 1
+
+    claim_submitted = Claims::Claim.create!(
+      claim_window: Claims::ClaimWindow.current,
+      school: school,
+      provider: claim_provider,
+      reference:,
+      created_by: created_by,
+      status: :submitted,
+      submitted_at: Time.current,
+      submitted_by: created_by,
+    )
+
+    reference += 1
+
     school.mentors.find_each do |mentor|
       Claims::MentorTraining.create!(
         mentor:,
-        claim:,
+        claim: claim_paid,
+        provider: claim_provider,
+        hours_completed: rand(1..20),
+        date_completed: Time.current,
+      )
+      Claims::MentorTraining.create!(
+        mentor:,
+        claim: claim_submitted,
         provider: claim_provider,
         hours_completed: rand(1..20),
         date_completed: Time.current,
       )
     end
-
-    reference += 1
   end
 end
