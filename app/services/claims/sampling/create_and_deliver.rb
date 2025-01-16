@@ -14,7 +14,7 @@ class Claims::Sampling::CreateAndDeliver < ApplicationService
           Claims::Claim::Sampling::InProgress.call(claim:, sampling_reason: sampling_reason(claim))
         end
 
-        provider_sampling = Claims::ProviderSampling.create!(provider:, claims: provider_claims, sampling:, csv_file: File.open(csv_for_provider.to_io))
+        provider_sampling = Claims::ProviderSampling.create!(provider:, claims: provider_claims, sampling:, csv_file: File.open(csv_for_provider(provider_claims, provider.name).to_io))
 
         transaction.after_commit do
           Claims::ProviderMailer.sampling_checks_required(provider_sampling).deliver_later
@@ -22,13 +22,13 @@ class Claims::Sampling::CreateAndDeliver < ApplicationService
       end
     end
 
-    Claims::ClaimActivity.create!(action: :sampling_uploaded, user: current_user, record: sampling)
+    Claims::ClaimActivity.create!(action: :sampling_approved_manually, user: current_user, record: sampling)
   end
 
   private
 
-  def csv_for_provider
-    Claims::Sampling::GenerateCSVFile.call(claims:)
+  def csv_for_provider(claims, provider_name)
+    Claims::Sampling::GenerateCSVFile.call(claims:, provider_name:)
   end
 
   def sampling
