@@ -19,7 +19,7 @@ jobs:
       max-parallel: 1
       matrix:
       #  environment: [qa, staging, sandbox, production]
-        environment:  [ sandbox ]
+        environment:  [ staging ]
     environment:
       name: ${{ matrix.environment }}
     permissions:
