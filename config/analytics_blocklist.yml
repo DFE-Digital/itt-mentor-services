@@ -127,8 +127,14 @@ shared:
     - created_at
     - updated_at
   :providers:
-    - email_address
     - telephone
+  :provider_email_addresses:
+    - id
+    - email_address
+    - provider_id
+    - primary
+    - created_at
+    - updated_at
   :sessions:
     - id
     - session_id
