@@ -1,20 +1,21 @@
 name: Deploy Domains Infrastructure
 
-
 on:
   push:
   workflow_dispatch:
 
+permissions:
+  packages: write
+  pull-requests: write
+
 jobs:
   deploy_domains_infra:
     name: Deploy Domains Infrastructure
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     concurrency: deploy_production
     environment:
       name: production
     permissions:
-      packages: write
-      pull-requests: write
       id-token: write
 
     steps:

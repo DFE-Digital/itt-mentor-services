@@ -3,26 +3,33 @@ name: Deploy Domains Environment
 on:
   push:
   workflow_dispatch:
-    inputs:
-      environment:
-        required: true
-        type: choice
-        options:
-        - qa
-        - staging
-        - sandbox
-        - production
+
+permissions:
+  packages: write
+  pull-requests: write
 
 jobs:
   deploy_domains_env:
-    name: Deploy Environment Domains
-    runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
+    name: Deploy Domains to ${{ matrix.environment }} environment
+    runs-on: ubuntu-22.04
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    concurrency: deploy_${{ matrix.environment }}
+    strategy:
+      max-parallel: 1
+      matrix:
+        environment: [qa, staging, sandbox, production]
+    environment:
+      name: ${{ matrix.environment }}
+    permissions:
+      id-token: write
+
 
     steps:
       - uses: azure/login@v2
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          client-id:  ${{ secrets.AZURE_CLIENT_ID  }}
+          tenant-id:  ${{ secrets.AZURE_TENANT_ID   }}
+          subscription-id:  ${{ secrets.AZURE_SUBSCRIPTION_ID   }}
 
       - name: Fetch secrets from key vault
         uses: azure/CLI@v2
@@ -37,7 +44,9 @@ jobs:
         id: deploy_domains_env
         uses: DFE-Digital/github-actions/deploy-domains-env@ci-cd-domains
         with:
-          azure-credentials:  ${{ secrets.AZURE_CREDENTIALS }}
-          environment: ${{ inputs.environment }}
+          client-id:  ${{ secrets.AZURE_CLIENT_ID  }}
+          tenant-id:  ${{ secrets.AZURE_TENANT_ID   }}
+          subscription-id:  ${{ secrets.AZURE_SUBSCRIPTION_ID   }}
+          environment: ${{ matrix.environment }}
           healthcheck: healthcheck/all
           slack-webhook: ${{ steps.keyvault-yaml-secret.outputs.SLACK_WEBHOOK }}
