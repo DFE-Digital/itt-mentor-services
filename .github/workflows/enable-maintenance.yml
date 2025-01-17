@@ -13,7 +13,7 @@ on:
 jobs:
   enable-maintenance:
     name: Enable maintenance app
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     environment: ${{ inputs.environment }}
 
     steps:
