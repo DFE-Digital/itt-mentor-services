@@ -1,9 +1,6 @@
 # Don't run seeds in test or production environments
 return unless Rails.env.development? || HostingEnvironment.env.review?
 
-### DEFINE METHODS HERE
-
-# Methods for making claims
 def create_claim(school:, provider:, created_by:, reference:, status:)
   return unless mentor_remaining_hours(school:, provider:).any?
 
