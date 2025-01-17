@@ -12,8 +12,9 @@ jobs:
   deploy_domains_env:
     name: Deploy Domains to ${{ matrix.environment }} environment
     runs-on: ubuntu-22.04
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     concurrency: deploy_${{ matrix.environment }}
+    # needs: [build, deploy_nonprod, deploy_prod, deploy_domains_infra]
     strategy:
       max-parallel: 1
       matrix:
