@@ -27,11 +27,6 @@ def assign_mentors(claim:, school:)
     next if hours_completed.zero?
 
     create_mentor_training(mentor:, claim:, hours_completed:)
-
-    remaining_hours = hours_completed(mentor:, provider: claim.provider)
-    next if remaining_hours.zero?
-
-    create_mentor_training(mentor:, claim:, hours_completed: remaining_hours)
   end
 end
 
