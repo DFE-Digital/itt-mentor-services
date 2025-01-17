@@ -1,6 +1,72 @@
 # Don't run seeds in test or production environments
 return unless Rails.env.development? || HostingEnvironment.env.review?
 
+### DEFINE METHODS HERE
+
+# Methods for making claims
+def create_claim(school:, provider:, created_by:, reference:, status:)
+  return unless mentor_remaining_hours(school:, provider:).any?
+
+  claim = Claims::Claim.create!(
+    claim_window: Claims::ClaimWindow.current,
+    school:,
+    provider:,
+    reference:,
+    created_by:,
+    status:,
+    submitted_at: Time.current,
+    submitted_by: created_by,
+  )
+
+  assign_mentors(claim:, school:)
+end
+
+def assign_mentors(claim:, school:)
+  school.mentors.each do |mentor|
+    hours_completed = hours_completed(mentor:, provider: claim.provider)
+    next if hours_completed.zero?
+
+    create_mentor_training(mentor:, claim:, hours_completed:)
+
+    remaining_hours = hours_completed(mentor:, provider: claim.provider)
+    next if remaining_hours.zero?
+
+    create_mentor_training(mentor:, claim:, hours_completed: remaining_hours)
+  end
+end
+
+def mentor_remaining_hours(school:, provider:)
+  Claims::MentorsWithRemainingClaimableHoursQuery.call(
+    params: {
+      school:,
+      provider:,
+      claim: Claims::Claim.new(academic_year: Claims::ClaimWindow.current.academic_year),
+    },
+  )
+end
+
+def create_mentor_training(mentor:, claim:, hours_completed:)
+  Claims::MentorTraining.create!(
+    mentor:,
+    claim: claim,
+    provider: claim.provider,
+    hours_completed:,
+    date_completed: Time.current,
+  )
+end
+
+def hours_completed(mentor:, provider:)
+  training_allowance = Claims::TrainingAllowance.new(
+    mentor:,
+    provider:,
+    academic_year: Claims::ClaimWindow.current.academic_year,
+  )
+
+  return 0 if training_allowance.remaining_hours.zero?
+
+  rand(1..training_allowance.remaining_hours)
+end
+
 # Persona Creation (Dummy User Creation)
 Rails.logger.debug "Creating Personas"
 
@@ -155,47 +221,20 @@ reference = 12_345_678
 created_by = Claims::SupportUser.last
 Claims::School.all.find_each do |school|
   Claims::Provider.private_beta_providers.each do |claim_provider|
-    claim_paid = Claims::Claim.create!(
-      claim_window: Claims::ClaimWindow.current,
-      school:,
-      provider: claim_provider,
-      reference:,
-      created_by:,
-      status: :paid,
-      submitted_at: Time.current,
-      submitted_by: created_by,
-    )
+    create_claim(school:,
+                 provider: claim_provider,
+                 created_by:,
+                 reference:,
+                 status: :paid)
 
     reference += 1
 
-    claim_submitted = Claims::Claim.create!(
-      claim_window: Claims::ClaimWindow.current,
-      school: school,
-      provider: claim_provider,
-      reference:,
-      created_by: created_by,
-      status: :submitted,
-      submitted_at: Time.current,
-      submitted_by: created_by,
-    )
+    create_claim(school:,
+                 provider: claim_provider,
+                 created_by:,
+                 reference:,
+                 status: :submitted)
 
     reference += 1
-
-    school.mentors.find_each do |mentor|
-      Claims::MentorTraining.create!(
-        mentor:,
-        claim: claim_paid,
-        provider: claim_provider,
-        hours_completed: rand(1..20),
-        date_completed: Time.current,
-      )
-      Claims::MentorTraining.create!(
-        mentor:,
-        claim: claim_submitted,
-        provider: claim_provider,
-        hours_completed: rand(1..20),
-        date_completed: Time.current,
-      )
-    end
   end
 end
