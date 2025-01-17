@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       docker-image-tag: ${{ steps.build-image.outputs.tag }}
 
@@ -33,7 +33,7 @@ jobs:
   deploy_review:
     name: Deploy to review environment
     concurrency: deploy_review_${{ github.event.pull_request.number }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') }}
     needs: [build]
     environment:
@@ -66,7 +66,7 @@ jobs:
 
   deploy_nonprod:
     name: Deploy to ${{ matrix.environment }} environment
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     concurrency: deploy_${{ matrix.environment }}
     needs: [build]
@@ -115,7 +115,7 @@ jobs:
 
   deploy_prod:
     name: Deploy to production environment
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     concurrency: deploy_production
     needs: [build, deploy_nonprod]
