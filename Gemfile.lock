@@ -265,7 +265,7 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (>= 6, < 10)
       view_component (>= 3.18, < 3.21)
-    govuk_design_system_formbuilder (5.7.1)
+    govuk_design_system_formbuilder (5.8.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -708,7 +708,7 @@ DEPENDENCIES
   geocoder
   good_job (~> 4.7)
   govuk-components (~> 5.7.1)
-  govuk_design_system_formbuilder (~> 5.7)
+  govuk_design_system_formbuilder (~> 5.8)
   govuk_markdown
   httparty
   jsbundling-rails
