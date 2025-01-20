@@ -2,16 +2,20 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
   attribute :csv_upload
   attribute :csv_content
   # input validation attributes
-  attribute :invalid_claim_references, default: []
-  attribute :invalid_status_claim_references, default: []
+  attribute :file_name
+  attribute :invalid_claim_rows, default: []
   attribute :missing_mentor_training_claim_references, default: []
-  attribute :invalid_assured_status_claim_references, default: []
-  attribute :missing_assured_reason_claim_references, default: []
+  attribute :invalid_mentor_full_name_rows, default: []
+  attribute :invalid_assured_status_rows, default: []
+  attribute :missing_assured_reason_rows, default: []
 
   delegate :sampled_claims, to: :wizard
 
   validates :csv_upload, presence: true, if: -> { csv_content.blank? }
   validate :validate_csv_file, if: -> { csv_upload.present? }
+  validate :validate_csv_headers, if: -> { csv_content.present? }
+
+  REQUIRED_HEADERS = %w[claim_reference mentor_full_name claim_assured claim_not_assured_reason].freeze
 
   NOT_ASSURED_STATUSES = %w[false no].freeze
   VALID_ASSURED_STATUS = %w[true false yes no].freeze
@@ -27,29 +31,47 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
 
     reset_input_attributes
 
-    all_claims_valid_status?
-    grouped_csv_rows.each do |claim_reference, provider_responses|
-      next if claim_reference.nil?
+    csv.each_with_index do |row, i|
+      validate_claim_reference(row, i)
 
-      claim = Claims::Claim.find_by(reference: claim_reference)
-      if claim.present?
-        row_for_each_mentor?(claim, provider_responses)
-        assured_status_for_each_mentor?(claim_reference, provider_responses)
-        not_assured_reason_for_each_mentor?(claim_reference, provider_responses)
-      else
-        invalid_claim_references << claim_reference
-      end
+      validate_mentor(row, i) unless invalid_claim_rows.include?(i)
+      validate_assured_status(row, i)
+      validate_not_assured_reason(row, i)
     end
 
-    invalid_claim_references &&
-      invalid_status_claim_references.blank? &&
+    grouped_csv_rows.each do |claim_reference, provider_responses|
+      claim = sampled_claims.find_by(reference: claim_reference)
+      next if claim.blank?
+
+      row_for_each_mentor?(claim, provider_responses)
+    end
+
+    invalid_claim_rows.blank? &&
       missing_mentor_training_claim_references.blank? &&
-      invalid_assured_status_claim_references.blank? &&
-      missing_assured_reason_claim_references.blank?
+      invalid_mentor_full_name_rows.blank? &&
+      invalid_assured_status_rows.blank? &&
+      missing_assured_reason_rows.blank?
   end
 
   def validate_csv_file
     errors.add(:csv_upload, :invalid) unless csv_format
+  end
+
+  def validate_csv_headers
+    csv_headers = CSV.parse(read_csv, headers: true).headers
+    missing_columns = REQUIRED_HEADERS - csv_headers
+    return if missing_columns.empty?
+
+    errors.add(:csv_upload,
+               :invalid_headers,
+               missing_columns: missing_columns.map { |string|
+                 "‘#{string}’"
+               }.to_sentence)
+    errors.add(:csv_upload,
+               :uploaded_headers,
+               uploaded_headers: csv_headers.map { |string|
+                 "‘#{string}’"
+               }.to_sentence)
   end
 
   def process_csv
@@ -57,16 +79,21 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
     return if errors.present?
 
     assign_csv_content
+    self.file_name = csv_upload.original_filename
 
     self.csv_upload = nil
   end
 
   def grouped_csv_rows
-    @grouped_csv_rows ||= CSV.parse(read_csv, headers: true)
+    @grouped_csv_rows ||= csv
       .group_by { |row| row["claim_reference"] }
   end
 
   private
+
+  def csv
+    @csv ||= CSV.parse(read_csv, headers: true, skip_blanks: true)
+  end
 
   def csv_format
     csv_upload.content_type == "text/csv"
@@ -81,21 +108,38 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
   end
 
   def reset_input_attributes
-    self.invalid_claim_references = []
-    self.invalid_status_claim_references = []
+    self.invalid_claim_rows = []
     self.missing_mentor_training_claim_references = []
-    self.invalid_assured_status_claim_references = []
-    self.missing_assured_reason_claim_references = []
+    self.invalid_mentor_full_name_rows = []
+    self.invalid_assured_status_rows = []
+    self.missing_assured_reason_rows = []
   end
 
   ### CSV input valiations
 
-  def all_claims_valid_status?
-    claim_references = grouped_csv_rows.keys.compact
-    valid_references = sampled_claims.where(reference: claim_references).pluck(:reference)
-    return true if valid_references.sort == claim_references.sort
+  def validate_claim_reference(row, row_number)
+    return if sampled_claims.find_by(reference: row["claim_reference"]).present?
 
-    self.invalid_status_claim_references = claim_references - valid_references
+    invalid_claim_rows << row_number
+  end
+
+  def validate_mentor(row, row_number)
+    claim = sampled_claims.find_by(reference: row["claim_reference"])
+    return if claim.mentors.map(&:full_name).include?(row["mentor_full_name"])
+
+    invalid_mentor_full_name_rows << row_number
+  end
+
+  def validate_assured_status(row, row_number)
+    return if VALID_ASSURED_STATUS.include?(row["claim_assured"])
+
+    invalid_assured_status_rows << row_number
+  end
+
+  def validate_not_assured_reason(row, row_number)
+    return unless NOT_ASSURED_STATUSES.include?(row["claim_assured"]) && row["claim_not_assured_reason"].blank?
+
+    missing_assured_reason_rows << row_number
   end
 
   def row_for_each_mentor?(claim, provider_responses)
@@ -104,29 +148,5 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
     return if claim_mentor_names.sort == provider_responses_mentor_names.sort
 
     missing_mentor_training_claim_references << claim.reference
-  end
-
-  def assured_status_for_each_mentor?(claim_reference, provider_responses)
-    assured_statuses = provider_responses.pluck("claim_assured")
-
-    return unless assured_statuses.any? do |assured_status|
-      !VALID_ASSURED_STATUS.include?(assured_status.to_s.downcase)
-    end
-
-    invalid_assured_status_claim_references << claim_reference
-  end
-
-  def not_assured_reason_for_each_mentor?(claim_reference, provider_responses)
-    assured_statuses = provider_responses.pluck("claim_assured")
-    return nil unless assured_statuses.any? do |assured_status|
-      NOT_ASSURED_STATUSES.include?(assured_status.to_s.downcase)
-    end
-
-    return if provider_responses.select { |provider_response|
-      NOT_ASSURED_STATUSES.include?(provider_response["claim_assured"].to_s.downcase) &&
-        provider_response["claim_not_assured_reason"].blank?
-    }.blank?
-
-    missing_assured_reason_claim_references << claim_reference
   end
 end

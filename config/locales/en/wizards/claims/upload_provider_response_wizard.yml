@@ -35,9 +35,9 @@ en:
           caption: Sampling
           you_cannot_upload: You cannot upload a provider response as there are no claims waiting for a response.
         upload_errors_step:
-          title: There is a problem with the CSV file
+          title: Upload provider response
           caption: Sampling
-          page_title: There is a problem with the CSV file - Sampling - Claims
+          page_title: Upload provider response - Sampling - Claims
           status: Status
           claim_reference: Claim reference
           view: View (opens in new tab)

@@ -1,36 +1,32 @@
 class Claims::UploadProviderResponseWizard::UploadErrorsStep < BaseStep
-  delegate :invalid_claim_references,
-           :invalid_status_claim_references,
+  delegate :invalid_claim_rows,
            :missing_mentor_training_claim_references,
-           :invalid_assured_status_claim_references,
-           :missing_assured_reason_claim_references,
+           :invalid_mentor_full_name_rows,
+           :invalid_assured_status_rows,
+           :missing_assured_reason_rows,
+           :file_name,
            to: :upload_step
 
-  def invalid_status_claims
-    return [] if invalid_status_claim_references.blank?
-
-    Claims::Claim.where(reference: invalid_status_claim_references)
+  def row_indexes_with_errors
+    combined_errors.uniq.sort
   end
 
-  def missing_mentor_claims
-    return [] if missing_mentor_training_claim_references.blank?
-
-    Claims::Claim.where(reference: missing_mentor_training_claim_references)
+  def error_count
+    combined_errors.count
   end
 
-  def invalid_assured_status_claims
-    return [] if invalid_assured_status_claim_references.blank?
-
-    Claims::Claim.where(reference: invalid_assured_status_claim_references)
-  end
-
-  def missing_assured_reason_claims
-    return [] if missing_assured_reason_claim_references.blank?
-
-    Claims::Claim.where(reference: missing_assured_reason_claim_references)
+  def csv
+    @csv = CSV.parse(wizard.steps.fetch(:upload).csv_content, headers: true)
   end
 
   private
+
+  def combined_errors
+    invalid_claim_rows +
+      invalid_mentor_full_name_rows +
+      invalid_assured_status_rows +
+      missing_assured_reason_rows
+  end
 
   def upload_step
     @upload_step ||= wizard.steps.fetch(:upload)
