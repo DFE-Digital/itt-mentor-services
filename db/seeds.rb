@@ -48,15 +48,17 @@ def create_mentor_training(mentor:, claim:, hours_completed:)
 end
 
 def hours_completed(mentor:, provider:)
-  training_allowance = Claims::TrainingAllowance.new(
-    mentor:,
-    provider:,
-    academic_year: Claims::ClaimWindow.current.academic_year,
-  )
+  # training_allowance = Claims::TrainingAllowance.new(
+  #   mentor:,
+  #   provider:,
+  #   academic_year: Claims::ClaimWindow.current.academic_year,
+  # )
+  #
+  # return 0 if training_allowance.remaining_hours.zero?
+  #
+  # rand(1..training_allowance.remaining_hours)
 
-  return 0 if training_allowance.remaining_hours.zero?
-
-  rand(1..training_allowance.remaining_hours)
+  5
 end
 
 # Persona Creation (Dummy User Creation)
@@ -208,6 +210,8 @@ Placements::School.find_each do |school|
 end
 
 # Generate claims
+
+# Review environment
 
 reference = 12_345_678
 created_by = Claims::SupportUser.last
