@@ -24,7 +24,7 @@ class Claims::Support::Claims::Clawbacks::UploadESFAResponseController < Claims:
   def set_wizard
     state = session[state_key] ||= {}
     current_step = params[:step]&.to_sym
-    @wizard = Claims::UploadESFAClawbackResponseWizard.new(params:, state:, current_step:)
+    @wizard = Claims::UploadESFAClawbackResponseWizard.new(params:, current_user:, state:, current_step:)
   end
 
   def step_path(step)
