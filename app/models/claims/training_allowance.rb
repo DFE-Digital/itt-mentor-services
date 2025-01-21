@@ -51,7 +51,7 @@ class Claims::TrainingAllowance
     mentor_training_scope
       .where(claims: { claim_windows: { academic_year: } })
       .where.not(claim_id: [claim_to_exclude&.id, claim_to_exclude&.previous_revision_id])
-      .merge(Claims::Claim.not_internal_draft)
+      .merge(Claims::Claim.not_internal_draft.not_payment_not_approved)
       .sum(:hours_completed)
   end
 end
