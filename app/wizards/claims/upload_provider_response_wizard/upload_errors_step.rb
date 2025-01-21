@@ -3,7 +3,7 @@ class Claims::UploadProviderResponseWizard::UploadErrorsStep < BaseStep
            :invalid_status_claim_references,
            :missing_mentor_training_claim_references,
            :invalid_assured_status_claim_references,
-           :missing_assured_reason_claim_references,
+           :missing_rejection_reason_claim_references,
            to: :upload_step
 
   def invalid_status_claims
@@ -25,9 +25,9 @@ class Claims::UploadProviderResponseWizard::UploadErrorsStep < BaseStep
   end
 
   def missing_assured_reason_claims
-    return [] if missing_assured_reason_claim_references.blank?
+    return [] if missing_rejection_reason_claim_references.blank?
 
-    Claims::Claim.where(reference: missing_assured_reason_claim_references)
+    Claims::Claim.where(reference: missing_rejection_reason_claim_references)
   end
 
   private

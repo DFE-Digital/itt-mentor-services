@@ -19,7 +19,7 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadStep, type: :model do
         invalid_status_claim_references: [],
         missing_mentor_training_claim_references: [],
         invalid_assured_status_claim_references: [],
-        missing_assured_reason_claim_references: [],
+        missing_rejection_reason_claim_references: [],
       )
     }
   end
@@ -36,8 +36,8 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadStep, type: :model do
 
       context "when the csv_content is present" do
         let(:csv_content) do
-          "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
-          "11111111,John Smith,true,Some reason"
+          "claim_reference,mentor_full_name,claim_accepted,rejection_reason\r\n" \
+          "11111111,John Smith,yes,Some reason"
         end
         let(:attributes) { { csv_content: } }
 
@@ -107,8 +107,8 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadStep, type: :model do
 
     context "when csv_content contains invalid references" do
       let(:csv_content) do
-        "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
-        "11111111,John Smith,true,Some reason"
+        "claim_reference,mentor_full_name,claim_accepted,rejection_reason\r\n" \
+        "11111111,John Smith,yes,Some reason"
       end
       let(:attributes) { { csv_content: } }
 
@@ -122,8 +122,8 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadStep, type: :model do
 
     context "when csv_content contains claims not with the status 'sampling_in_progress" do
       let(:csv_content) do
-        "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
-        "11111111,John Smith,true,Some reason"
+        "claim_reference,mentor_full_name,claim_accepted,rejection_reason\r\n" \
+        "11111111,John Smith,yes,Some reason"
       end
       let(:attributes) { { csv_content: } }
 
@@ -137,8 +137,8 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadStep, type: :model do
 
     context "when csv_content does not contains all the mentors associated with the claims" do
       let(:csv_content) do
-        "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
-        "11111111,John Smith,true,Some reason"
+        "claim_reference,mentor_full_name,claim_accepted,rejection_reason\r\n" \
+        "11111111,John Smith,yes,Some reason"
       end
       let(:attributes) { { csv_content: } }
 
@@ -161,7 +161,7 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadStep, type: :model do
 
     context "when the csv_content does not contain an assured status for each mentor" do
       let(:csv_content) do
-        "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
+        "claim_reference,mentor_full_name,claim_accepted,rejection_reason\r\n" \
         "11111111,John Smith,,Some reason"
       end
       let(:attributes) { { csv_content: } }
@@ -183,8 +183,8 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadStep, type: :model do
 
     context "when the csv_content does not contain a not assured reason" do
       let(:csv_content) do
-        "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
-        "11111111,John Smith,false,"
+        "claim_reference,mentor_full_name,claim_accepted,rejection_reason\r\n" \
+        "11111111,John Smith,no,"
       end
       let(:attributes) { { csv_content: } }
 
@@ -197,16 +197,16 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadStep, type: :model do
         create(:mentor_training, mentor: mentor_john_smith, claim: sampling_in_progress_claim)
       end
 
-      it "returns false and assigns the reference to the 'missing_assured_reason_claim_references' attribute" do
+      it "returns false and assigns the reference to the 'missing_rejection_reason_claim_references' attribute" do
         expect(csv_inputs_valid).to be(false)
-        expect(step.missing_assured_reason_claim_references).to contain_exactly("11111111")
+        expect(step.missing_rejection_reason_claim_references).to contain_exactly("11111111")
       end
     end
 
     context "when the csv_content contains valid claim references and all necessary attributes" do
       let(:csv_content) do
-        "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
-        "11111111,John Smith,false,Some reason"
+        "claim_reference,mentor_full_name,claim_accepted,rejection_reason\r\n" \
+        "11111111,John Smith,no,Some reason"
       end
       let(:attributes) { { csv_content: } }
 
@@ -253,10 +253,10 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadStep, type: :model do
     it "reads a given CSV and assigns the content to the csv_content attribute,
       and assigns the associated claim IDs to the claim_ids attribute" do
       expect(step.csv_content).to eq(
-        "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\n" \
-        "11111111,John Smith,true,Some reason\n" \
-        "11111111,Jane Doe,false,Another reason\n" \
-        "22222222,Joe Bloggs,true,Yet another reason\n" \
+        "claim_reference,mentor_full_name,claim_accepted,rejection_reason\n" \
+        "11111111,John Smith,yes,Some reason\n" \
+        "11111111,Jane Doe,no,Another reason\n" \
+        "22222222,Joe Bloggs,yes,Yet another reason\n" \
         ",,,,\n",
       )
     end
@@ -266,10 +266,10 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadStep, type: :model do
     subject(:grouped_csv_rows) { step.grouped_csv_rows }
 
     let(:csv_content) do
-      "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
-      "11111111,John Smith,false,Some reason\r\n" \
-      "11111111,Jane Doe,true,Another reason\r\n" \
-      "22222222,Joe Bloggs,true,A reason"
+      "claim_reference,mentor_full_name,claim_accepted,rejection_reason\r\n" \
+      "11111111,John Smith,no,Some reason\r\n" \
+      "11111111,Jane Doe,yes,Another reason\r\n" \
+      "22222222,Joe Bloggs,yes,A reason"
     end
     let(:attributes) { { csv_content: } }
 
@@ -278,22 +278,22 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadStep, type: :model do
         {
           "claim_reference" => "11111111",
           "mentor_full_name" => "John Smith",
-          "claim_assured" => "false",
-          "claim_not_assured_reason" => "Some reason",
+          "claim_accepted" => "no",
+          "rejection_reason" => "Some reason",
         },
         {
           "claim_reference" => "11111111",
           "mentor_full_name" => "Jane Doe",
-          "claim_assured" => "true",
-          "claim_not_assured_reason" => "Another reason",
+          "claim_accepted" => "yes",
+          "rejection_reason" => "Another reason",
         },
       )
       expect(grouped_csv_rows["22222222"].map(&:to_hash)).to contain_exactly(
         {
           "claim_reference" => "22222222",
           "mentor_full_name" => "Joe Bloggs",
-          "claim_assured" => "true",
-          "claim_not_assured_reason" => "A reason",
+          "claim_accepted" => "yes",
+          "rejection_reason" => "A reason",
         },
       )
     end

@@ -26,13 +26,13 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
         What you need to do:
 
-        1. Check the information detailed in the claims matches your information, specifically the mentor names and the hours of training. If it does, mark them as ‘yes’ in the ‘claim_assured’ column.
+        1. Check the information detailed in the claims matches your information, specifically the mentor names and the hours of training. If it does, mark them as ‘yes’ in the ‘claim_accepted’ column.
 
         2. If you disagree with the information, please contact the placement school to discuss it. They may have additional evidence.
 
-        3. If they cannot provide any additional information or cannot provide information that you are not content with, mark the claim as ‘no’ in the ‘claim_assured’ column. In the ‘claim_not_assured_reason’ column, indicate why the claim has not been assured. For example, the mentor’s name is wrong, or the number of hours exceeds the evidence that you have.
+        3. If they cannot provide any additional information or cannot provide information that you are not content with, mark the claim as ‘no’ in the ‘claim_accepted’ column. In the ‘rejection_reason’ column, indicate why the claim has not been assured. For example, the mentor’s name is wrong, or the number of hours exceeds the evidence that you have.
 
-        4. If the placement school provides any additional information you are content with, mark the claim as ‘yes’ in the ‘claim_assured’ column.
+        4. If the placement school provides any additional information you are content with, mark the claim as ‘yes’ in the ‘claim_accepted’ column.
 
         5. Reply to this email and attach the updated CSV.
 

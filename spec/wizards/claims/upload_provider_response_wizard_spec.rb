@@ -23,7 +23,7 @@ RSpec.describe Claims::UploadProviderResponseWizard do
 
     context "when the csv contains invalid inputs" do
       let(:csv_content) do
-        "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
+        "claim_reference,mentor_full_name,claim_accepted,rejection_reason\r\n" \
         "22222222,John Smith,true,Some reason"
       end
       let(:state) do
@@ -63,7 +63,7 @@ RSpec.describe Claims::UploadProviderResponseWizard do
 
     context "when the steps are valid" do
       let(:csv_content) do
-        "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
+        "claim_reference,mentor_full_name,claim_accepted,rejection_reason\r\n" \
         "11111111,John Smith,true,Some reason"
       end
 
@@ -85,7 +85,7 @@ RSpec.describe Claims::UploadProviderResponseWizard do
 
       context "when the uploaded content includes an invalid input" do
         let(:csv_content) do
-          "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
+          "claim_reference,mentor_full_name,claim_accepted,rejection_reason\r\n" \
           "11111111,John Smith,true,Some reason\r\n" \
           "22222222,Maggie Smith,true,Another reason"
         end
@@ -133,7 +133,7 @@ RSpec.describe Claims::UploadProviderResponseWizard do
       end
       let(:mentor_jane_doe) { create(:claims_mentor, first_name: "Jane", last_name: "Doe") }
       let(:csv_content) do
-        "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
+        "claim_reference,mentor_full_name,claim_accepted,rejection_reason\r\n" \
         "11111111,John Smith,false,Some reason\r\n" \
         "22222222,Jane Doe,true,"
       end
@@ -188,7 +188,7 @@ RSpec.describe Claims::UploadProviderResponseWizard do
     end
     let(:mentor_jane_doe) { create(:claims_mentor, first_name: "Jane", last_name: "Doe") }
     let(:csv_content) do
-      "claim_reference,mentor_full_name,claim_assured,claim_not_assured_reason\r\n" \
+      "claim_reference,mentor_full_name,claim_accepted,rejection_reason\r\n" \
       "11111111,John Smith,false,Some reason\r\n" \
       "22222222,Jane Doe,true,"
     end
@@ -211,16 +211,16 @@ RSpec.describe Claims::UploadProviderResponseWizard do
         {
           "claim_reference" => "11111111",
           "mentor_full_name" => "John Smith",
-          "claim_assured" => "false",
-          "claim_not_assured_reason" => "Some reason",
+          "claim_accepted" => "false",
+          "rejection_reason" => "Some reason",
         },
       )
       expect(wizard.grouped_csv_rows["22222222"][0].to_h).to eq(
         {
           "claim_reference" => "22222222",
           "mentor_full_name" => "Jane Doe",
-          "claim_assured" => "true",
-          "claim_not_assured_reason" => nil,
+          "claim_accepted" => "true",
+          "rejection_reason" => nil,
         },
       )
     end

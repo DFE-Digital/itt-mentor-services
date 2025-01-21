@@ -49,6 +49,10 @@ class Claims::Sampling::GenerateCSVFile < ApplicationService
   attr_reader :claims, :provider_name
 
   def file_name
-    Rails.root.join("tmp/#{provider_name}-claims-require-auditing-#{Time.current}.csv")
+    Rails.root.join("tmp/quality_assurance_#{parameterised_provider_name}.csv")
+  end
+
+  def parameterised_provider_name
+    provider_name.parameterize(separator: "_")
   end
 end

@@ -6,7 +6,7 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
   attribute :invalid_status_claim_references, default: []
   attribute :missing_mentor_training_claim_references, default: []
   attribute :invalid_assured_status_claim_references, default: []
-  attribute :missing_assured_reason_claim_references, default: []
+  attribute :missing_rejection_reason_claim_references, default: []
 
   delegate :sampled_claims, to: :wizard
 
@@ -45,7 +45,7 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
       invalid_status_claim_references.blank? &&
       missing_mentor_training_claim_references.blank? &&
       invalid_assured_status_claim_references.blank? &&
-      missing_assured_reason_claim_references.blank?
+      missing_rejection_reason_claim_references.blank?
   end
 
   def validate_csv_file
@@ -85,7 +85,7 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
     self.invalid_status_claim_references = []
     self.missing_mentor_training_claim_references = []
     self.invalid_assured_status_claim_references = []
-    self.missing_assured_reason_claim_references = []
+    self.missing_rejection_reason_claim_references = []
   end
 
   ### CSV input valiations
@@ -107,7 +107,7 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
   end
 
   def assured_status_for_each_mentor?(claim_reference, provider_responses)
-    assured_statuses = provider_responses.pluck("claim_assured")
+    assured_statuses = provider_responses.pluck("claim_accepted")
 
     return unless assured_statuses.any? do |assured_status|
       !VALID_ASSURED_STATUS.include?(assured_status.to_s.downcase)
@@ -117,16 +117,16 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
   end
 
   def not_assured_reason_for_each_mentor?(claim_reference, provider_responses)
-    assured_statuses = provider_responses.pluck("claim_assured")
+    assured_statuses = provider_responses.pluck("claim_accepted")
     return nil unless assured_statuses.any? do |assured_status|
       NOT_ASSURED_STATUSES.include?(assured_status.to_s.downcase)
     end
 
     return if provider_responses.select { |provider_response|
-      NOT_ASSURED_STATUSES.include?(provider_response["claim_assured"].to_s.downcase) &&
-        provider_response["claim_not_assured_reason"].blank?
+      NOT_ASSURED_STATUSES.include?(provider_response["claim_accepted"].to_s.downcase) &&
+        provider_response["rejection_reason"].blank?
     }.blank?
 
-    missing_assured_reason_claim_references << claim_reference
+    missing_rejection_reason_claim_references << claim_reference
   end
 end
