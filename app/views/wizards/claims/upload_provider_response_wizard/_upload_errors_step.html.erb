@@ -1,119 +1,91 @@
 <% content_for(:page_title) { sanitize t(".page_title") } %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-full">
     <span class="govuk-caption-l"><%= t(".caption") %></span>
     <h1 class="govuk-heading-l"><%= t(".title") %></h1>
-    <% if current_step.invalid_claim_references.present? %>
-      <h2 class="govuk-heading-m govuk-!-margin-top-0">
-        <%= t(".incorrect_claim_reference") %>
-      </h2>
 
-      <%= govuk_summary_list(actions: false) do |summary_list| %>
-        <% current_step.invalid_claim_references.each do |invalid_claim_references| %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(
-              text: invalid_claim_references,
-            ) %>
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          There is a problem
+        </h2>
+        <div class="govuk-error-summary__body">
+          <div class="govuk-list govuk-error-summary__list">
+            <% if current_step.missing_mentor_training_claim_references.any? %>
+              <p class="govuk-!-margin-bottom-3 govuk-heading-s">
+                Mentors are missing from claims with the reference 4324252.
+              </p>
+            <% end %>
+            <% if current_step.error_count > 0 %>
+              <p class="govuk-heading-s">
+                You need to fix <%= current_step.error_count %> errors related to specific rows.
+              </p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="govuk-heading-m"><%= current_step.file_name %></h2>
+
+    <%= govuk_table do |table| %>
+      <% table.with_head do |head| %>
+        <% head.with_row do |row| %>
+          <% row.with_cell text: 1 %>
+          <% row.with_cell text: "claim_reference" %>
+          <% row.with_cell text: "mentor_full_name" %>
+          <% row.with_cell text: "claim_assured" %>
+          <% row.with_cell text: "claim_not_assured_reason" %>
+        <% end %>
+      <% end %>
+
+      <% table.with_body do |body| %>
+        <% current_step.row_indexes_with_errors.each do |csv_row_index| %>
+          <% csv_row = current_step.csv[csv_row_index] %>
+          <% body.with_row do |row| %>
+            <% row.with_cell(text: csv_row_index + 2) %>
+            <% row.with_cell do %>
+              <p>
+                <% if current_step.invalid_claim_rows.include?(csv_row_index) %>
+                  <strong class="error-text">Not a valid claim reference</strong><br>
+                <% end %>
+                <%= csv_row["claim_reference"] %>
+              </p>
+            <% end %>
+            <% row.with_cell do %>
+              <p>
+                <% if current_step.invalid_mentor_full_name_rows.include?(csv_row_index) %>
+                  <strong class="error-text">Not a valid mentor name</strong><br>
+                <% end %>
+                <%= csv_row["mentor_full_name"] %>
+              </p>
+            <% end %>
+            <% row.with_cell do %>
+              <p>
+                <% if current_step.invalid_claim_accepted_rows.include?(csv_row_index) %>
+                  <strong class="error-text">Not a valid input</strong><br>
+                <% end %>
+                <%= csv_row["claim_accepted"] %>
+              </p>
+            <% end %>
+            <% row.with_cell do %>
+              <p>
+                <% if current_step.missing_rejection_reason_rows.include?(csv_row_index) %>
+                  <strong class="error-text">Reason needed</strong><br>
+                <% end %>
+                <%= csv_row["rejection_reason"] %>
+              </p>
+            <% end %>
           <% end %>
         <% end %>
       <% end %>
     <% end %>
 
-    <% if current_step.invalid_status_claims.present? %>
-      <h2 class="govuk-heading-m govuk-!-margin-top-0">
-        <%= t(".incorrect_status") %>
-      </h2>
+    <p class="govuk_body govuk-!-text-align-centre">
+      Only showing rows with errors
+    </p>
 
-      <%= govuk_summary_list do |summary_list| %>
-        <% current_step.invalid_status_claims.each do |invalid_claim| %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(
-              text: invalid_claim.reference,
-            ) %>
-            <% row.with_action(
-              text: t(".view"),
-              href: claims_support_claim_path(invalid_claim),
-              visually_hidden_text: invalid_claim.reference,
-              html_attributes: {
-                class: "govuk-link--no-visited-state",
-                target: "_blank",
-                new_tab: true,
-              },
-            ) %>
-          <% end %>
-        <% end %>
-      <% end %>
-    <% end %>
-
-    <% if current_step.missing_mentor_claims.present? %>
-      <h2 class="govuk-heading-m govuk-!-margin-top-0">
-        <%= t(".missing_mentors") %>
-      </h2>
-
-      <%= govuk_summary_list do |summary_list| %>
-        <% current_step.missing_mentor_claims.each do |invalid_claim| %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(
-              text: invalid_claim.reference,
-            ) %>
-            <% row.with_action(
-              text: t(".view"),
-              href: claims_support_claim_path(invalid_claim),
-              visually_hidden_text: invalid_claim.reference,
-              html_attributes: { class: "govuk-link--no-visited-state" },
-            ) %>
-          <% end %>
-        <% end %>
-      <% end %>
-    <% end %>
-
-    <% if current_step.invalid_assured_status_claims.present? %>
-      <h2 class="govuk-heading-m govuk-!-margin-top-0">
-        <%= t(".invalid_assured_status") %>
-      </h2>
-
-      <%= govuk_summary_list do |summary_list| %>
-        <% current_step.invalid_assured_status_claims.each do |invalid_claim| %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(
-              text: invalid_claim.reference,
-            ) %>
-            <% row.with_action(
-              text: t(".view"),
-              href: claims_support_claim_path(invalid_claim),
-              visually_hidden_text: invalid_claim.reference,
-              html_attributes: { class: "govuk-link--no-visited-state" },
-            ) %>
-          <% end %>
-        <% end %>
-      <% end %>
-    <% end %>
-
-    <% if current_step.missing_rejection_reason_claims.present? %>
-      <h2 class="govuk-heading-m govuk-!-margin-top-0">
-        <%= t(".missing_not_assured_message") %>
-      </h2>
-
-      <%= govuk_summary_list do |summary_list| %>
-        <% current_step.missing_rejection_reason_claims.each do |invalid_claim| %>
-          <% summary_list.with_row do |row| %>
-            <% row.with_key(
-              text: invalid_claim.reference,
-            ) %>
-            <% row.with_action(
-              text: t(".view"),
-              href: claims_support_claim_path(invalid_claim),
-              visually_hidden_text: invalid_claim.reference,
-              html_attributes: { class: "govuk-link--no-visited-state" },
-            ) %>
-          <% end %>
-        <% end %>
-      <% end %>
-    <% end %>
-
-    <%= govuk_warning_text do %>
-      <%= t(".upload_warning_html") %>
-    <% end %>
+    <%= govuk_button_link_to "Upload your file again", step_path(:upload) %>
   </div>
 </div>

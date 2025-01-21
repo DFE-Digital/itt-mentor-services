@@ -40,7 +40,7 @@ en:
         upload_errors_step:
           title: There is a problem with the CSV file
           caption: Auditing
-          page_title: There is a problem with the CSV file - Auditing - Claims
+          page_title: Upload provider response - Auditing - Claims
           status: Status
           claim_reference: Claim reference
           view: View (opens in new tab)
