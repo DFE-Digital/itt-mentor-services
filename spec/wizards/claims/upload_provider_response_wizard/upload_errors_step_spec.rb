@@ -89,12 +89,12 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadErrorsStep, type: :mo
     end
   end
 
-  describe "#missing_assured_reason_claims" do
-    subject(:missing_assured_reason_claims) { step.missing_assured_reason_claims }
+  describe "#missing_rejection_reason_claims" do
+    subject(:missing_rejection_reason_claims) { step.missing_rejection_reason_claims }
 
     context "when the upload step missing_rejection_reason_claim_references attribute is nil" do
       it "returns an empty array" do
-        expect(missing_assured_reason_claims).to eq([])
+        expect(missing_rejection_reason_claims).to eq([])
       end
     end
 
@@ -102,7 +102,7 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadErrorsStep, type: :mo
       let(:missing_rejection_reason_claim_references) { %w[11111111 22222222] }
 
       it "returns a list of claims with the references in the missing_rejection_reason_claim_references attribute" do
-        expect(missing_assured_reason_claims).to contain_exactly(claim_1, claim_2)
+        expect(missing_rejection_reason_claims).to contain_exactly(claim_1, claim_2)
       end
     end
   end
