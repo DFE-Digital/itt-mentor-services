@@ -99,7 +99,7 @@ RSpec.describe "Support user approves a provider rejected sampling claim", servi
     )
     expect(page).to have_element(:p, text: "Sampling - Claim #{@provider_rejected_sampling_claim.reference}", class: "govuk-caption-l")
     expect(page).to have_h1(@provider_rejected_sampling_claim.school.name)
-    expect(page).to have_element(:strong, text: "Provider not approved", class: "govuk-tag govuk-tag--pink")
+    expect(page).to have_element(:strong, text: "Provider not approved", class: "govuk-tag govuk-tag--turquoise")
   end
 
   def when_i_click_on_back
@@ -140,6 +140,6 @@ RSpec.describe "Support user approves a provider rejected sampling claim", servi
     expect(page).to have_h2("Claims (2)")
     expect(page).to have_link("#{@provider_rejected_sampling_claim.reference} - #{@provider_rejected_sampling_claim.school.name}", href: "/support/claims/#{@provider_rejected_sampling_claim.id}")
     expect(page).to have_link("#{@paid_claim.reference} - #{@paid_claim.school.name}", href: "/support/claims/#{@paid_claim.id}")
-    expect(page).to have_element(:strong, text: "Paid", class: "govuk-tag govuk-tag--green", count: 2)
+    expect(page).to have_element(:strong, text: "Paid", class: "govuk-tag govuk-tag--blue", count: 2)
   end
 end
