@@ -128,19 +128,19 @@ RSpec.describe "Support user filters sampled claims by status", service: :claims
   end
 
   def when_i_select_the_sampling_in_progress_filter
-    check "Sampling in progress"
+    check "Audit requested"
   end
   alias_method :and_i_select_the_sampling_in_progress_filter,
                :when_i_select_the_sampling_in_progress_filter
 
   def when_i_select_the_sampling_provider_not_approved_filter
-    check "Provider not approved"
+    check "Rejected by provider"
   end
   alias_method :and_i_select_the_sampling_provider_not_approved_filter,
                :when_i_select_the_sampling_provider_not_approved_filter
 
   def when_i_unselect_the_sampling_in_progress_filter
-    uncheck "Sampling in progress"
+    uncheck "Audit requested"
   end
 
   def and_i_do_not_see_claims_with_a_sampling_provider_not_approved_status
@@ -157,29 +157,29 @@ RSpec.describe "Support user filters sampled claims by status", service: :claims
 
   def and_i_see_sampling_in_progress_selected_from_the_status_filter
     expect(page).to have_element(:legend, text: "Status", class: "govuk-fieldset__legend")
-    expect(page).to have_checked_field("Sampling in progress")
-    expect(page).to have_filter_tag("Sampling in progress")
+    expect(page).to have_checked_field("Audit requested")
+    expect(page).to have_filter_tag("Audit requested")
   end
 
   def and_i_see_sampling_provider_not_approved_selected_from_the_status_filter
     expect(page).to have_element(:legend, text: "Status", class: "govuk-fieldset__legend")
-    expect(page).to have_checked_field("Provider not approved")
-    expect(page).to have_filter_tag("Provider not approved")
+    expect(page).to have_checked_field("Rejected by provider")
+    expect(page).to have_filter_tag("Rejected by provider")
   end
 
   def and_i_do_not_see_sampling_provider_not_approved_selected_from_the_status_filter
-    expect(page).not_to have_checked_field("Provider not approved")
-    expect(page).not_to have_filter_tag("Provider not approved")
+    expect(page).not_to have_checked_field("Rejected by provider")
+    expect(page).not_to have_filter_tag("Rejected by provider")
   end
 
   def and_i_do_not_see_sampling_in_progress_selected_from_the_status_filter
-    expect(page).not_to have_checked_field("Sampling in progress")
-    expect(page).not_to have_filter_tag("Sampling in progress")
+    expect(page).not_to have_checked_field("Audit requested")
+    expect(page).not_to have_filter_tag("Audit requested")
   end
 
   def when_i_click_on_the_sampling_provider_not_approved_filter_tag
     within ".app-filter-tags" do
-      click_on "Provider not approved"
+      click_on "Rejected by provider"
     end
   end
 

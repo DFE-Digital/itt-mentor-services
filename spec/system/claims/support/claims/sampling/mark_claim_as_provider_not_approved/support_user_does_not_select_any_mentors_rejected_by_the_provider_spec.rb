@@ -63,7 +63,7 @@ RSpec.describe "Support user does not select any mentors rejected by the provide
     )
     expect(page).to have_element(:p, text: "Sampling - Claim #{@claim.reference}", class: "govuk-caption-l")
     expect(page).to have_h1(@claim.school.name)
-    expect(page).to have_element(:strong, text: "Sampling in progress", class: "govuk-tag govuk-tag--yellow")
+    expect(page).to have_element(:strong, text: "Audit requested", class: "govuk-tag govuk-tag--yellow")
   end
 
   def when_i_click_on_confirm_provider_rejected_claim

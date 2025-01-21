@@ -35,7 +35,7 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
     let(:claim) { build(:claim, status: :payment_in_progress) }
 
     it "renders a yellow tag" do
-      expect(page).to have_css(".govuk-tag--yellow", text: "Payment in progress")
+      expect(page).to have_css(".govuk-tag--yellow", text: "Payer payment review")
     end
   end
 
@@ -43,7 +43,7 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
     let(:claim) { build(:claim, status: :payment_information_requested) }
 
     it "renders a turquoise tag" do
-      expect(page).to have_css(".govuk-tag--turquoise", text: "Information requested")
+      expect(page).to have_css(".govuk-tag--turquoise", text: "Payer needs information")
     end
   end
 
@@ -51,7 +51,7 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
     let(:claim) { build(:claim, status: :payment_information_sent) }
 
     it "renders a yellow tag" do
-      expect(page).to have_css(".govuk-tag--yellow", text: "Information sent")
+      expect(page).to have_css(".govuk-tag--yellow", text: "Information sent to payer")
     end
   end
 
@@ -67,7 +67,7 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
     let(:claim) { build(:claim, status: :payment_not_approved) }
 
     it "renders a orange tag" do
-      expect(page).to have_css(".govuk-tag--orange", text: "Payment not approved")
+      expect(page).to have_css(".govuk-tag--orange", text: "Rejected by payer")
     end
   end
 
@@ -75,7 +75,7 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
     let(:claim) { build(:claim, status: :sampling_in_progress) }
 
     it "renders a yellow tag" do
-      expect(page).to have_css(".govuk-tag--yellow", text: "Sampling in progress")
+      expect(page).to have_css(".govuk-tag--yellow", text: "Audit requested")
     end
   end
 
@@ -83,7 +83,7 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
     let(:claim) { build(:claim, status: :sampling_provider_not_approved) }
 
     it "renders a turquoise tag" do
-      expect(page).to have_css(".govuk-tag--turquoise", text: "Provider not approved")
+      expect(page).to have_css(".govuk-tag--turquoise", text: "Rejected by provider")
     end
   end
 
@@ -91,7 +91,7 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
     let(:claim) { build(:claim, status: :sampling_not_approved) }
 
     it "renders a turquoise tag" do
-      expect(page).to have_css(".govuk-tag--turquoise", text: "Claim not approved")
+      expect(page).to have_css(".govuk-tag--turquoise", text: "Rejected by school")
     end
   end
 
@@ -99,7 +99,7 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
     let(:claim) { build(:claim, status: :clawback_requested) }
 
     it "renders a turquoise tag" do
-      expect(page).to have_css(".govuk-tag--turquoise", text: "Clawback requested")
+      expect(page).to have_css(".govuk-tag--turquoise", text: "Ready for clawback")
     end
   end
 
@@ -107,7 +107,7 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
     let(:claim) { build(:claim, status: :clawback_in_progress) }
 
     it "renders a yellow tag" do
-      expect(page).to have_css(".govuk-tag--yellow", text: "Clawback in progress")
+      expect(page).to have_css(".govuk-tag--yellow", text: "Sent to payer for clawback")
     end
   end
 

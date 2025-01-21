@@ -34,7 +34,7 @@ RSpec.describe "View claims", service: :claims, type: :system do
 
   def then_i_can_see_the_details_of_claim(claim)
     expect(page).to have_content("Claim #{claim.reference}")
-    expect(page).to have_content("Information requested")
+    expect(page).to have_content("Payer needs information")
     expect(page).to have_content("School#{claim.school_name}")
     expect(page).to have_content("Academic year#{claim.academic_year_name}")
     expect(page).to have_content("Accredited provider#{claim.provider.name}")

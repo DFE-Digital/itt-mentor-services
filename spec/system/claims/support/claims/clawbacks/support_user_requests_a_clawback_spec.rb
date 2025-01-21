@@ -88,7 +88,7 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
     expect(primary_navigation).to have_current_item("Claims")
     expect(page).to have_element(:span, text: "Clawbacks - Claim 11111111", class: "govuk-caption-l")
     expect(page).to have_h1(@claim_one.school_name)
-    expect(page).to have_element(:strong, text: "Claim not approved", class: "govuk-tag govuk-tag--turquoise")
+    expect(page).to have_element(:strong, text: "Rejected by school", class: "govuk-tag govuk-tag--turquoise")
     expect(page).to have_link("Request clawback", href: "/support/claims/clawbacks/claims/new/#{@claim_one.id}")
     expect(page).to have_summary_list_row("School", @claim_one.school_name)
     expect(page).to have_summary_list_row("Academic year", @claim_one.academic_year_name)
