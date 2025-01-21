@@ -46,7 +46,7 @@ class Claims::Clawback::GenerateCSVFile < ApplicationService
   attr_reader :claims
 
   def file_name
-    Rails.root.join("tmp/quality-assurance-#{provider_name}-response.csv")
+    Rails.root.join("tmp/clawbacks_for_payer.csv")
   end
 
   def provider_name

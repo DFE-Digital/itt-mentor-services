@@ -46,6 +46,6 @@ class Claims::ClawbackResponse::GenerateCSVFile < ApplicationService
   attr_reader :csv_content
 
   def file_name
-    Rails.root.join("tmp/clawback-response-claims-#{Time.current.to_s.parameterize}.csv")
+    Rails.root.join("tmp/clawbacks_for_payer_response.csv")
   end
 end
