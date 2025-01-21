@@ -209,6 +209,8 @@ end
 
 # Generate claims
 
+# Review environment
+
 reference = 12_345_678
 created_by = Claims::SupportUser.last
 Claims::School.all.find_each do |school|
