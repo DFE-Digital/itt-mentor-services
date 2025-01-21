@@ -99,6 +99,22 @@ RSpec.describe Claims::TrainingAllowance, type: :model do
             expect(training_allowance).to be_available
           end
         end
+
+        context "when a second claim has been paid whilst excluding a previous claim" do
+          let(:second_claim) { build(:claim, :paid, claim_window:, provider:) }
+          let(:second_mentor_training) { create(:mentor_training, mentor:, provider:, claim: second_claim, hours_completed: 3) }
+
+          before do
+            second_mentor_training
+          end
+
+          it "does not exclude other claims" do
+            expect(training_allowance.training_type).to eq(:initial)
+            expect(training_allowance.total_hours).to eq(20)
+            expect(training_allowance.remaining_hours).to eq(17)
+            expect(training_allowance).to be_available
+          end
+        end
       end
     end
   end
@@ -180,6 +196,22 @@ RSpec.describe Claims::TrainingAllowance, type: :model do
 
         context "when a second claim has been made whilst excluding a previous claim" do
           let(:second_claim) { build(:claim, :submitted, claim_window:, provider:) }
+          let(:second_mentor_training) { create(:mentor_training, mentor:, provider:, claim: second_claim, hours_completed: 3) }
+
+          before do
+            second_mentor_training
+          end
+
+          it "does not exclude other claims" do
+            expect(training_allowance.training_type).to eq(:refresher)
+            expect(training_allowance.total_hours).to eq(6)
+            expect(training_allowance.remaining_hours).to eq(3)
+            expect(training_allowance).to be_available
+          end
+        end
+
+        context "when a second claim has been paid whilst excluding a previous claim" do
+          let(:second_claim) { build(:claim, :paid, claim_window:, provider:) }
           let(:second_mentor_training) { create(:mentor_training, mentor:, provider:, claim: second_claim, hours_completed: 3) }
 
           before do
