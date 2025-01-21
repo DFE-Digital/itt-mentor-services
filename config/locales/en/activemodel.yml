@@ -209,6 +209,10 @@ en:
             csv_upload:
               blank: Select a CSV file to upload
               invalid: The selected file must be a CSV
+              invalid_headers:
+                Your file needs a column name called %{missing_columns}.
+              uploaded_headers: 
+                Right now it has columns called %{uploaded_headers}.
         claims/provider_rejected_claim_wizard/mentor_training_step:
           attributes:
             mentor_training_ids:
