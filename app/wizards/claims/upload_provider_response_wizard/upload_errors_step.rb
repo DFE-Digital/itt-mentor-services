@@ -24,7 +24,7 @@ class Claims::UploadProviderResponseWizard::UploadErrorsStep < BaseStep
     Claims::Claim.where(reference: invalid_assured_status_claim_references)
   end
 
-  def missing_assured_reason_claims
+  def missing_rejection_reason_claims
     return [] if missing_rejection_reason_claim_references.blank?
 
     Claims::Claim.where(reference: missing_rejection_reason_claim_references)

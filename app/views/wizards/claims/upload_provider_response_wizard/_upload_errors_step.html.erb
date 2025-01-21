@@ -90,13 +90,13 @@
       <% end %>
     <% end %>
 
-    <% if current_step.missing_assured_reason_claims.present? %>
+    <% if current_step.missing_rejection_reason_claims.present? %>
       <h2 class="govuk-heading-m govuk-!-margin-top-0">
         <%= t(".missing_not_assured_message") %>
       </h2>
 
       <%= govuk_summary_list do |summary_list| %>
-        <% current_step.missing_assured_reason_claims.each do |invalid_claim| %>
+        <% current_step.missing_rejection_reason_claims.each do |invalid_claim| %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(
               text: invalid_claim.reference,

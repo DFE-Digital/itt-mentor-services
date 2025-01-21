@@ -37,4 +37,7 @@ class Claims::ClaimActivity < ApplicationRecord
   }, validate: true
 
   delegate :full_name, to: :user, prefix: true, allow_nil: true
+
+  PAYMENT_OR_CLAWBACK_ACTION = %w[payment_request_delivered clawback_request_delivered payment_response_uploaded clawback_response_uploaded].freeze
+  SAMPLING_ACTION = %w[sampling_uploaded sampling_response_uploaded].freeze
 end
