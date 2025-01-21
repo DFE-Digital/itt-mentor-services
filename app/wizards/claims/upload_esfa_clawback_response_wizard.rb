@@ -1,5 +1,11 @@
 module Claims
   class UploadESFAClawbackResponseWizard < BaseWizard
+    def initialize(current_user:, params:, state:, current_step: nil)
+      @current_user = current_user
+
+      super(state:, params:, current_step:)
+    end
+
     def define_steps
       if clawback_in_progress_claims.present?
         add_step(UploadStep)
@@ -16,7 +22,11 @@ module Claims
     def upload_esfa_responses
       raise "Invalid wizard state" unless valid? && csv_inputs_valid?
 
+      csv_file = Claims::ClawbackResponse::GenerateCSVFile.call(csv_content: steps.fetch(:upload).csv_content)
+      clawback = Claims::Clawback.create!(claims: Claims::Claim.find(updatable_claim_ids), csv_file: File.open(csv_file.to_io))
       Claims::Clawback::UpdateCollectionWithESFAResponseJob.perform_later(updatable_claim_ids)
+
+      Claims::ClaimActivity.create!(action: :clawback_response_uploaded, user: current_user, record: clawback)
     end
 
     def clawback_in_progress_claims
@@ -28,6 +38,8 @@ module Claims
     end
 
     private
+
+    attr_reader :current_user
 
     def updatable_claim_ids
       clawback_completable_rows = csv_rows.select { |row| row["claim_status"] == "clawback_complete" }

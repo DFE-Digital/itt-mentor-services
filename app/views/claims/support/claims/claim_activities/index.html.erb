@@ -26,7 +26,7 @@
 
               <div class="app-timeline__description">
                 <% case claim_activity.action %>
-                <% when "payment_request_delivered", "clawback_request_delivered", "payment_response_uploaded" %>
+                <% when "payment_request_delivered", "clawback_request_delivered", "payment_response_uploaded", "clawback_response_uploaded" %>
                   <% if claim_activity.record.csv_file.present? %>
                     <ul class="app-timeline__documents">
                       <li class="app-timeline__document-item">
