@@ -81,7 +81,7 @@ module Claims
         {
           id: mentor_training.id,
           not_assured: provider_not_assured_mentor_training?(provider_response_for_mentor),
-          reason_not_assured: provider_response_for_mentor["claim_not_assured_reason"],
+          reason_not_assured: provider_response_for_mentor["rejection_reason"],
         }
       end
     end
@@ -91,7 +91,7 @@ module Claims
     end
 
     def provider_not_assured_mentor_training?(provider_response)
-      not_assured_statuses.include?(provider_response["claim_assured"].to_s.downcase)
+      not_assured_statuses.include?(provider_response["claim_accepted"].to_s.downcase)
     end
   end
 end
