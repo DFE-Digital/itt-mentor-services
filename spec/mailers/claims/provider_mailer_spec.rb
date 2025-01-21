@@ -45,7 +45,9 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           # What you need to do
 
-          Use the CSV file to check the accuracy of the claims associated with you and record your answers in the file. It is in a spreadsheet format for you to fill out.
+          Use the CSV file to check the accuracy of the claims associated with you and record your answers in the file. It is in a spreadsheet format for you to fill out.#{"  "}
+
+          Visit the GOV.UK claim funding for mentor training website to download the file:
 
           [http://claims.localhost/sampling/claims?token=token](http://claims.localhost/sampling/claims?token=token)
 
@@ -128,7 +130,9 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           # What you need to do
 
-          Use the CSV file to check the accuracy of the claims associated with you and record your answers in the file. It is in a spreadsheet format for you to fill out.
+          Use the CSV file to check the accuracy of the claims associated with you and record your answers in the file. It is in a spreadsheet format for you to fill out.#{"  "}
+
+          Visit the GOV.UK claim funding for mentor training website to download the file:
 
           [http://claims.localhost/sampling/claims?token=token](http://claims.localhost/sampling/claims?token=token)
 
