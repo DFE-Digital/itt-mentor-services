@@ -143,7 +143,7 @@ RSpec.describe "Support user filters clawback claims by status", service: :claim
     expect(page).to have_claim_card({
       "title" => "#{@sampling_not_approved_claim.reference} - #{@sampling_not_approved_claim.school.name}",
       "url" => "/support/claims/clawbacks/claims/#{@sampling_not_approved_claim.id}",
-      "status" => "Clawback in progress",
+      "status" => "Sent to payer for clawback",
       "academic_year" => @sampling_not_approved_claim.academic_year.name,
       "provider_name" => @sampling_not_approved_claim.provider.name,
       "submitted_at" => I18n.l(@sampling_not_approved_claim.submitted_at.to_date, format: :long),
@@ -156,23 +156,23 @@ RSpec.describe "Support user filters clawback claims by status", service: :claim
   end
 
   def when_i_select_the_clawback_in_progress_filter
-    check "Clawback in progress"
+    check "Sent to payer for clawback"
   end
   alias_method :and_i_select_the_clawback_in_progress_filter,
                :when_i_select_the_clawback_in_progress_filter
 
   def when_i_select_the_clawback_requested_filter
-    check "Clawback requested"
+    check "Ready for clawback"
   end
   alias_method :and_i_select_the_clawback_requested_filter,
                :when_i_select_the_clawback_requested_filter
 
   def when_i_unselect_the_clawback_in_progress_filter
-    uncheck "Clawback in progress"
+    uncheck "Sent to payer for clawback"
   end
 
   def and_i_select_the_sampling_not_approved_filter
-    check "Claim not approved"
+    check "Rejected by school"
   end
 
   def and_i_do_not_see_claims_with_a_clawback_requested_status
@@ -195,25 +195,25 @@ RSpec.describe "Support user filters clawback claims by status", service: :claim
 
   def and_i_see_clawback_in_progress_selected_from_the_status_filter
     expect(page).to have_element(:legend, text: "Status", class: "govuk-fieldset__legend")
-    expect(page).to have_checked_field("Clawback in progress")
-    expect(page).to have_filter_tag("Clawback in progress")
+    expect(page).to have_checked_field("Sent to payer for clawback")
+    expect(page).to have_filter_tag("Sent to payer for clawback")
   end
 
   def and_i_see_clawback_requested_selected_from_the_status_filter
     expect(page).to have_element(:legend, text: "Status", class: "govuk-fieldset__legend")
-    expect(page).to have_checked_field("Clawback requested")
-    expect(page).to have_filter_tag("Clawback requested")
+    expect(page).to have_checked_field("Ready for clawback")
+    expect(page).to have_filter_tag("Ready for clawback")
   end
 
   def and_i_see_sampling_not_approved_selected_from_the_status_filter
     expect(page).to have_element(:legend, text: "Status", class: "govuk-fieldset__legend")
-    expect(page).to have_checked_field("Claim not approved")
-    expect(page).to have_filter_tag("Claim not approved")
+    expect(page).to have_checked_field("Rejected by school")
+    expect(page).to have_filter_tag("Rejected by school")
   end
 
   def and_i_do_not_see_clawback_requested_selected_from_the_status_filter
-    expect(page).not_to have_checked_field("Clawback requested")
-    expect(page).not_to have_filter_tag("Clawback requested")
+    expect(page).not_to have_checked_field("Ready for clawback")
+    expect(page).not_to have_filter_tag("Ready for clawback")
   end
 
   def and_i_do_not_see_sampling_not_approved_selected_from_the_status_filter
@@ -222,13 +222,13 @@ RSpec.describe "Support user filters clawback claims by status", service: :claim
   end
 
   def and_i_do_not_see_clawback_in_progress_selected_from_the_status_filter
-    expect(page).not_to have_checked_field("Clawback in progress")
-    expect(page).not_to have_filter_tag("Clawback in progress")
+    expect(page).not_to have_checked_field("Sent to payer for clawback")
+    expect(page).not_to have_filter_tag("Sent to payer for clawback")
   end
 
   def when_i_click_on_the_clawback_requested_filter_tag
     within ".app-filter-tags" do
-      click_on "Clawback requested"
+      click_on "Ready for clawback"
     end
   end
 

@@ -14,16 +14,16 @@ en:
         internal_draft: Internal draft
         draft: Draft
         submitted: Submitted
-        payment_in_progress: Payment in progress
-        payment_information_requested: Information requested
-        payment_information_sent: Information sent
+        payment_in_progress: Payer payment review
+        payment_information_requested: Payer needs information
+        payment_information_sent: Information sent to payer
         paid: Paid
-        payment_not_approved: Payment not approved
-        sampling_in_progress: Sampling in progress
-        sampling_provider_not_approved: Provider not approved
-        sampling_not_approved: Claim not approved
-        clawback_requested: Clawback requested
-        clawback_in_progress: Clawback in progress
+        payment_not_approved: Rejected by payer
+        sampling_in_progress: Audit requested
+        sampling_provider_not_approved: Rejected by provider
+        sampling_not_approved: Rejected by school
+        clawback_requested: Ready for clawback
+        clawback_in_progress: Sent to payer for clawback
         clawback_complete: Clawback complete
       claims/claim_activity/action:
         payment_request_delivered: Claims sent to ESFA for payment

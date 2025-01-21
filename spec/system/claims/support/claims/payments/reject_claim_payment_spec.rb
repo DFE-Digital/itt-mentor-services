@@ -41,7 +41,7 @@ RSpec.describe "Reject claim payment", service: :claims, type: :system do
     expect(page).to have_content("Claim rejected")
 
     within("h1.govuk-heading-l .govuk-tag") do
-      expect(page).to have_content("Payment not approved")
+      expect(page).to have_content("Rejected by payer")
     end
   end
 end

@@ -100,7 +100,7 @@ RSpec.describe "Support user approves a claim", service: :claims, type: :system 
     )
     expect(page).to have_element(:p, text: "Sampling - Claim #{@sampling_claim.reference}", class: "govuk-caption-l")
     expect(page).to have_h1(@sampling_claim.school.name)
-    expect(page).to have_element(:strong, text: "Sampling in progress", class: "govuk-tag govuk-tag--yellow")
+    expect(page).to have_element(:strong, text: "Audit requested", class: "govuk-tag govuk-tag--yellow")
   end
 
   def when_i_click_on_back
