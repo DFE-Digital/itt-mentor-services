@@ -9,7 +9,11 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
     let(:url_for_csv) { "https://example.com" }
     let(:service_name) { "Claim funding for mentor training" }
     let(:support_email) { "ittmentor.funding@education.gov.uk" }
-    let(:completion_date) { 30.days.from_now.strftime("%d %B %Y") }
+    let(:completion_date) do
+      date = 30.days.from_now
+      date = date.next_weekday if date.on_weekend?
+      date.strftime("%d %B %Y")
+    end
     let(:service_url) { claims_root_url }
 
     before do
