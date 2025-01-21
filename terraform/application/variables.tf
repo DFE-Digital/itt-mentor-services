@@ -84,6 +84,11 @@ variable "statuscake_alerts" {
   default = {}
 }
 
+variable "create_database" {
+  description = "Create the postgres database. If false, rails must create it."
+  default     = true
+}
+
 locals {
   postgres_ssl_mode       = var.enable_postgres_ssl ? "require" : "disable"
   app_env_values_from_yml = yamldecode(file("${path.module}/config/${var.config}_app_env.yml"))
