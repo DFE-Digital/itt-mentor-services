@@ -48,8 +48,4 @@ class Claims::Clawback::GenerateCSVFile < ApplicationService
   def file_name
     Rails.root.join("tmp/clawbacks_for_payer.csv")
   end
-
-  def provider_name
-    claims.first.provider.name.parameterize
-  end
 end
