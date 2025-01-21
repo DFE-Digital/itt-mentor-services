@@ -122,10 +122,7 @@ shared:
   :users:
     - email
   :mentors:
-    - id
     - trn
-    - created_at
-    - updated_at
   :providers:
     - telephone
   :provider_email_addresses:
