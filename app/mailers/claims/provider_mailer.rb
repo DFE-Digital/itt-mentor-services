@@ -8,7 +8,7 @@ class Claims::ProviderMailer < Claims::ApplicationMailer
                    ".body",
                    provider_name: @provider_sampling.provider_name,
                    download_csv_url: claims_sampling_claims_url(token:),
-                   support_email:, service_name:
+                   support_email:, service_name:, completion_date:, service_url: claims_root_url
                  )
   end
 
@@ -18,5 +18,9 @@ class Claims::ProviderMailer < Claims::ApplicationMailer
 
   def token
     Rails.application.message_verifier(:sampling).generate(provider_sampling.id, expires_in: 7.days)
+  end
+
+  def completion_date
+    30.days.from_now.strftime("%d %B %Y")
   end
 end
