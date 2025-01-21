@@ -3,7 +3,8 @@ require "rails_helper"
 describe Claims::Sampling::GenerateCSVFile do
   subject(:generate_csv_file) { described_class.call(claims:, provider_name:) }
 
-  let(:claims) { create_list(:claim, 3, mentor_trainings: [create(:mentor_training, hours_completed: 10)]) }
+  let(:school) { create(:claims_school, name: "School A", urn: "aaaaaaaa", local_authority_name: "Local Auth A", type_of_establishment: "Academy converter", group: "Academy") }
+  let(:claims) { create_list(:claim, 3, submitted_at: Time.current, school:, mentor_trainings: [create(:mentor_training, hours_completed: 10)]) }
   let(:provider_name) { "NIOT" }
 
   describe "#call" do
@@ -15,23 +16,27 @@ describe Claims::Sampling::GenerateCSVFile do
 
       expect(csv.first).to eq(%w[
         claim_reference
-        sampling_reason
         school_urn
         school_name
-        school_postcode
+        school_local_authority
+        school_type_of_establishment
+        school_group
+        claim_submission_date
         mentor_full_name
         mentor_hours_of_training
-        claim_assured
-        claim_not_assured_reason
+        claim_accepted
+        rejection_reason
       ])
 
       claims.each_with_index do |claim, index|
         expect(csv[index + 1]).to eq([
           claim.reference,
-          claim.sampling_reason,
-          claim.school.urn,
-          claim.school.name,
-          claim.school.postcode,
+          school.urn,
+          school.name,
+          school.local_authority_name,
+          school.type_of_establishment,
+          school.group,
+          claim.submitted_at.iso8601,
           claim.mentor_trainings.first.mentor_full_name,
           claim.mentor_trainings.first.hours_completed.to_s,
         ])

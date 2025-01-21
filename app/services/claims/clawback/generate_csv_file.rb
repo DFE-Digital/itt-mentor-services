@@ -6,8 +6,10 @@ class Claims::Clawback::GenerateCSVFile < ApplicationService
     school_urn
     school_name
     school_local_authority
+    claim_amount
+    clawback_amount
     school_type_of_establishment
-    clawback_amouht
+    school_group
     claim_submission_date
     claim_status
   ].freeze
@@ -26,8 +28,10 @@ class Claims::Clawback::GenerateCSVFile < ApplicationService
           claim.school.urn,
           claim.school_name,
           claim.school.local_authority_name,
-          claim.school.type_of_establishment,
+          claim.amount,
           claim.total_clawback_amount,
+          claim.school.type_of_establishment,
+          claim.school.group,
           claim.submitted_at.iso8601,
           claim.status,
         ]
@@ -42,6 +46,10 @@ class Claims::Clawback::GenerateCSVFile < ApplicationService
   attr_reader :claims
 
   def file_name
-    Rails.root.join("tmp/clawback-claims-#{Time.current}.csv")
+    Rails.root.join("tmp/quality-assurance-#{provider_name}-response.csv")
+  end
+
+  def provider_name
+    claims.first.provider.name.parameterize
   end
 end
