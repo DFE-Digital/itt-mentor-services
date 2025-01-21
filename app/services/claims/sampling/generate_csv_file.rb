@@ -3,14 +3,16 @@ require "csv"
 class Claims::Sampling::GenerateCSVFile < ApplicationService
   HEADERS = %w[
     claim_reference
-    sampling_reason
     school_urn
     school_name
-    school_postcode
+    school_local_authority
+    school_type_of_establishment
+    school_group
+    claim_submission_date
     mentor_full_name
     mentor_hours_of_training
-    claim_assured
-    claim_not_assured_reason
+    claim_accepted
+    rejection_reason
   ].freeze
 
   def initialize(claims:, provider_name:)
@@ -26,10 +28,12 @@ class Claims::Sampling::GenerateCSVFile < ApplicationService
         claim.mentor_trainings.each do |mentor_training|
           csv << [
             claim.reference,
-            claim.sampling_reason,
             claim.school_urn,
             claim.school_name,
-            claim.school_postcode,
+            claim.school.local_authority_name,
+            claim.school.type_of_establishment,
+            claim.school.group,
+            claim.submitted_at.iso8601,
             mentor_training.mentor_full_name,
             mentor_training.hours_completed,
           ]

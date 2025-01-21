@@ -5,6 +5,7 @@ describe Claims::Clawback::GenerateCSVFile do
 
   let(:school_a) do
     create(:claims_school,
+           region: Region.first,
            name: "School A",
            urn: "aaaaaaaa",
            local_authority_name: "Local Auth A",
@@ -13,6 +14,7 @@ describe Claims::Clawback::GenerateCSVFile do
   end
   let(:school_b) do
     create(:claims_school,
+           region: Region.second,
            name: "School B",
            urn: "bbbbbbbb",
            local_authority_name: "Local Auth B",
@@ -98,22 +100,28 @@ describe Claims::Clawback::GenerateCSVFile do
 
       csv = CSV.read(generate_csv_file.path)
 
-      expect(csv.first).to eq(%w[claim_reference
-                                 school_urn
-                                 school_name
-                                 school_local_authority
-                                 school_type_of_establishment
-                                 clawback_amouht
-                                 claim_submission_date
-                                 claim_status])
+      expect(csv.first).to eq(%w[
+        claim_reference
+        school_urn
+        school_name
+        school_local_authority
+        claim_amount
+        clawback_amount
+        school_type_of_establishment
+        school_group
+        claim_submission_date
+        claim_status
+      ])
       expect(csv[1]).to eq(
         [
           "11111111",
           "aaaaaaaa",
           "School A",
           "Local Auth A",
+          "876.00",
+          "876.00",
           "Academy converter",
-          claim_1.total_clawback_amount.format(symbol: false, thousands_separator: false),
+          "Academy",
           claim_1.submitted_at&.iso8601,
           "clawback_in_progress",
         ],
@@ -124,8 +132,10 @@ describe Claims::Clawback::GenerateCSVFile do
           "bbbbbbbb",
           "School B",
           "Local Auth B",
+          "2316.00",
+          "1544.00",
           "Other independent school",
-          claim_2.total_clawback_amount.format(symbol: false, thousands_separator: false),
+          "Independent schools",
           claim_2.submitted_at&.iso8601,
           "clawback_in_progress",
         ],

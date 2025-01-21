@@ -1,23 +1,21 @@
 require "csv"
 
-class Claims::SamplingResponse::GenerateCSVFile < ApplicationService
+class Claims::ClawbackResponse::GenerateCSVFile < ApplicationService
   HEADERS = %w[
     claim_reference
     school_urn
     school_name
     school_local_authority
+    claim_amount
+    clawback_amount
     school_type_of_establishment
     school_group
     claim_submission_date
-    mentor_full_name
-    mentor_hours_of_training
-    claim_accepted
-    rejection_reason
+    claim_status
   ].freeze
 
-  def initialize(csv_content:, provider_name:)
+  def initialize(csv_content:)
     @csv_content = csv_content
-    @provider_name = provider_name
   end
 
   def call
@@ -30,13 +28,12 @@ class Claims::SamplingResponse::GenerateCSVFile < ApplicationService
           row["school_urn"],
           row["school_name"],
           row["school_local_authority"],
+          row["claim_amount"],
+          row["clawback_amount"],
           row["school_type_of_establishment"],
           row["school_group"],
           row["claim_submission_date"],
-          row["mentor_full_name"],
-          row["mentor_hours_of_training"],
-          row["claim_accepted"],
-          row["rejection_reason"],
+          row["claim_status"],
         ]
       end
 
@@ -46,9 +43,9 @@ class Claims::SamplingResponse::GenerateCSVFile < ApplicationService
 
   private
 
-  attr_reader :csv_content, :provider_name
+  attr_reader :csv_content
 
   def file_name
-    Rails.root.join("tmp/#{provider_name}-sampling-claims-response-#{Time.current}.csv")
+    Rails.root.join("tmp/clawback-response-claims-#{Time.current.to_s.parameterize}.csv")
   end
 end
