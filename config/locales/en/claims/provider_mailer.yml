@@ -18,7 +18,9 @@ en:
 
           # What you need to do
 
-          Use the CSV file to check the accuracy of the claims associated with you and record your answers in the file. It is in a spreadsheet format for you to fill out.
+          Use the CSV file to check the accuracy of the claims associated with you and record your answers in the file. It is in a spreadsheet format for you to fill out.  
+
+          Visit the GOV.UK claim funding for mentor training website to download the file:
 
           [%{download_csv_url}](%{download_csv_url})
 
