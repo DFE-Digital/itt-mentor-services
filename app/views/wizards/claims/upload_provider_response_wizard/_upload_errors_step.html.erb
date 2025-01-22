@@ -8,18 +8,20 @@
     <div class="govuk-error-summary" data-module="govuk-error-summary">
       <div role="alert">
         <h2 class="govuk-error-summary__title">
-          There is a problem
+          <%= t(".error_summary.title") %>
         </h2>
         <div class="govuk-error-summary__body">
           <div class="govuk-list govuk-error-summary__list">
             <% if current_step.missing_mentor_training_claim_references.any? %>
               <p class="govuk-!-margin-bottom-3 govuk-heading-s">
-                Mentors are missing from claims with the reference 4324252.
+                <%= t(".error_summary.missing_mentors",
+                  references: current_step.missing_mentor_references_as_string,
+                  count: current_step.missing_mentor_training_claim_references.count) %>
               </p>
             <% end %>
             <% if current_step.error_count > 0 %>
               <p class="govuk-heading-s">
-                You need to fix <%= current_step.error_count %> errors related to specific rows.
+                <%= t(".error_summary.errors_to_fix", count: current_step.error_count) %>
               </p>
             <% end %>
           </div>
@@ -33,10 +35,10 @@
       <% table.with_head do |head| %>
         <% head.with_row do |row| %>
           <% row.with_cell text: 1 %>
-          <% row.with_cell text: "claim_reference" %>
-          <% row.with_cell text: "mentor_full_name" %>
-          <% row.with_cell text: "claim_assured" %>
-          <% row.with_cell text: "claim_not_assured_reason" %>
+          <% row.with_cell text: t(".csv_table.headers.claim_reference") %>
+          <% row.with_cell text: t(".csv_table.headers.mentor_full_name") %>
+          <% row.with_cell text: t(".csv_table.headers.claim_accepted") %>
+          <% row.with_cell text: t(".csv_table.headers.rejection_reason") %>
         <% end %>
       <% end %>
 
@@ -48,7 +50,7 @@
             <% row.with_cell do %>
               <p>
                 <% if current_step.invalid_claim_rows.include?(csv_row_index) %>
-                  <strong class="error-text">Not a valid claim reference</strong><br>
+                  <strong class="error-text"><%= t(".csv_table.errors.invalid_claim_reference") %></strong><br>
                 <% end %>
                 <%= csv_row["claim_reference"] %>
               </p>
@@ -56,7 +58,7 @@
             <% row.with_cell do %>
               <p>
                 <% if current_step.invalid_mentor_full_name_rows.include?(csv_row_index) %>
-                  <strong class="error-text">Not a valid mentor name</strong><br>
+                  <strong class="error-text"><%= t(".csv_table.errors.invalid_mentor") %></strong><br>
                 <% end %>
                 <%= csv_row["mentor_full_name"] %>
               </p>
@@ -64,7 +66,7 @@
             <% row.with_cell do %>
               <p>
                 <% if current_step.invalid_claim_accepted_rows.include?(csv_row_index) %>
-                  <strong class="error-text">Not a valid input</strong><br>
+                  <strong class="error-text"><%= t(".csv_table.errors.invalid_input") %></strong><br>
                 <% end %>
                 <%= csv_row["claim_accepted"] %>
               </p>
@@ -72,7 +74,7 @@
             <% row.with_cell do %>
               <p>
                 <% if current_step.missing_rejection_reason_rows.include?(csv_row_index) %>
-                  <strong class="error-text">Reason needed</strong><br>
+                  <strong class="error-text"><%= t(".csv_table.errors.reason_needed") %></strong><br>
                 <% end %>
                 <%= csv_row["rejection_reason"] %>
               </p>
@@ -83,9 +85,9 @@
     <% end %>
 
     <p class="govuk_body govuk-!-text-align-centre">
-      Only showing rows with errors
+      <%= t(".only_showing_rows_with_errors") %>
     </p>
 
-    <%= govuk_button_link_to "Upload your file again", step_path(:upload) %>
+    <%= govuk_button_link_to t(".upload_your_file_again"), step_path(:upload) %>
   </div>
 </div>

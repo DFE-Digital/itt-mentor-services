@@ -62,11 +62,11 @@ module Claims
       update_details
     end
 
+    private
+
     def grouped_csv_rows
       steps.fetch(:upload).grouped_csv_rows
     end
-
-    private
 
     def csv_inputs_valid?
       @csv_inputs_valid ||= steps.fetch(:upload).csv_inputs_valid?

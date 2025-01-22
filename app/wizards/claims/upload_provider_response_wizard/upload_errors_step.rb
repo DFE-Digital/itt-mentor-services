@@ -15,6 +15,10 @@ class Claims::UploadProviderResponseWizard::UploadErrorsStep < BaseStep
     combined_errors.count
   end
 
+  def missing_mentor_references_as_string
+    missing_mentor_training_claim_references.map { |reference| "‘#{reference}’" }.to_sentence
+  end
+
   def csv
     @csv = CSV.parse(wizard.steps.fetch(:upload).csv_content, headers: true)
   end
