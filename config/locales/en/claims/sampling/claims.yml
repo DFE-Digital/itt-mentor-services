@@ -3,9 +3,13 @@ en:
     sampling:
       claims:
         index:
-          page_title: Download the sampling CSV
-          description_html: Download the Claim funding for mentor training sampling <span title="Comma separated values">CSV</span> file.
-          support_html: If you have any questions, email %{mail_to}.
+          page_title: Download the CSV file
+          description: |
+            Download the file to complete quality assurance on mentor funding claims associated with you.
+
+            Instructions on how to complete the CSV file have been sent to you by email.
+          support_html: If you need help, contact the team at %{mail_to}.
+          expire: The ability to download will expire 7 days after receiving the instructions via email. This is due to data security.
           submit: Download CSV file
         error:
           page_title: Sorry, there is a problem with the download link

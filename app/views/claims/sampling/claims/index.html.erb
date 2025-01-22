@@ -5,9 +5,11 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l"><%= t(".page_title") %></h1>
 
-      <p class="govuk-body"><%= t(".description_html") %></p>
+      <p class="govuk-body"><%= t(".description") %></p>
 
       <p class="govuk-body"><%= t(".support_html", mail_to: govuk_mail_to(t("claims.support_email"), t("claims.support_email_html"))) %></p>
+
+      <p class="govuk-body"><%= t(".expire") %></p>
 
       <%= govuk_button_link_to t(".submit"), download_claims_sampling_claims_path(token: params[:token]) %>
     </div>
