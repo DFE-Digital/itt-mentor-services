@@ -39,7 +39,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           # You must complete quality assurance by #{completion_date}
 
-          If you do not check these claims by midnight #{completion_date}, we may escalate the assurance process. This can include removing funding from schools you worked with.
+          If you do not check these claims by 11:59pm on #{completion_date}, we may escalate the assurance process. This can include removing funding from schools you worked with.
 
           ------------
 
@@ -124,7 +124,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           # You must complete quality assurance by #{completion_date}
 
-          If you do not check these claims by midnight #{completion_date}, we may escalate the assurance process. This can include removing funding from schools you worked with.
+          If you do not check these claims by 11:59pm on #{completion_date}, we may escalate the assurance process. This can include removing funding from schools you worked with.
 
           ------------
 
