@@ -28,15 +28,16 @@ RSpec.describe "Provider user downloads sampling CSV with valid token", service:
   end
 
   def then_i_see_the_download_page
-    expect(page).to have_title("Download the sampling CSV - Claim funding for mentor training - GOV.UK")
-    expect(page).to have_h1("Download the sampling CSV")
-    expect(page).to have_element(:p, text: "Download the Claim funding for mentor training sampling CSV file.", class: "govuk-body")
-    expect(page).to have_element(:p, text: "If you have any questions, email ittmentor.funding@education.gov.uk", class: "govuk-body")
-    expect(page).to have_element(:a, text: "Download", class: "govuk-button")
+    expect(page).to have_title("Download the CSV file - Claim funding for mentor training - GOV.UK")
+    expect(page).to have_h1("Download the CSV file")
+    expect(page).to have_element(:p, text: "Download the file to complete quality assurance on mentor funding claims associated with you. Instructions on how to complete the CSV file have been sent to you by email.", class: "govuk-body")
+    expect(page).to have_element(:p, text: "If you need help, contact the team at ittmentor.funding@education.gov.uk", class: "govuk-body")
+    expect(page).to have_element(:p, text: "The ability to download will expire 7 days after receiving the instructions via email. This is due to data security.", class: "govuk-body")
+    expect(page).to have_element(:a, text: "Download CSV file", class: "govuk-button")
   end
 
   def when_i_click_on_the_download_button
-    click_on "Download"
+    click_on "Download CSV file"
   end
 
   def then_the_csv_is_downloaded
