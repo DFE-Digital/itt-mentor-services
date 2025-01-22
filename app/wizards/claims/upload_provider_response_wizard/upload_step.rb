@@ -88,11 +88,11 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
       .group_by { |row| row["claim_reference"] }
   end
 
-  private
-
   def csv
     @csv ||= CSV.parse(read_csv, headers: true, skip_blanks: true)
   end
+
+  private
 
   def csv_format
     csv_upload.content_type == "text/csv"

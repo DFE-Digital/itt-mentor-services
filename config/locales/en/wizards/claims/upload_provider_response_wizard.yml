@@ -25,31 +25,40 @@ en:
               - claim_accepted
               - rejection_reason
         confirmation_step:
-          page_title: Are you sure you want to upload the provider's response? - Auditing - Claims
-          title: Are you sure you want to upload the provider's response?
+          page_title: Upload provider response - Auditing - Claims
+          title: Upload provider response
           caption: Auditing
-          claims_count: 
-            one: There is %{count} claim included in this upload.
-            other: There are %{count} claims included in this upload.
-          upload_data: Upload responses
+          confirm_upload_details: Confirm these are the provider details you want to upload.
+          confirm_upload: Confirm upload
+          only_showing_first_rows: Only showing the first %{row_count} rows
+          showing_all_rows: Showing all rows
         no_claims_step:
           title: You cannot upload a provider response
           page_title: You cannot upload a provider response - Auditing - Claims
           caption: Auditing
           you_cannot_upload: You cannot upload a provider response as there are no claims waiting for a response.
         upload_errors_step:
-          title: There is a problem with the CSV file
+          title: Upload provider response
           caption: Auditing
           page_title: Upload provider response - Auditing - Claims
-          status: Status
-          claim_reference: Claim reference
-          view: View (opens in new tab)
-          incorrect_claim_reference: There are no claims associated with the following references:-
-          incorrect_status: The following claims do not have the status 'Audit in progress':-
-          missing_mentors: The following claims are missing mentors from the uploaded CSV:-
-          invalid_assured_status: The following claims are missing a claim assured status:-
-          missing_not_assured_message: The following claims are missing a claim not assured reason:-
-          upload_warning_html: |
-            You can only upload the accredited provider's CSV once they have completed all rows.
-            <br><br>
-            Email the provider and ask them to complete the CSV with the missing information.
+          error_summary:
+            title: There is a problem
+            missing_mentors: 
+              one: Mentors are missing from the claim with the reference %{references}
+              other: Mentors are missing from claims with the reference %{references}
+            errors_to_fix:
+              one: You need to fix %{count} error related to specific rows
+              other: You need to fix %{count} errors related to specific rows
+          csv_table:
+            headers:
+              claim_reference: claim_reference
+              mentor_full_name: mentor_full_name
+              claim_accepted: claim_accepted
+              rejection_reason: rejection_reason
+            errors:
+              invalid_claim_reference: Not a valid claim reference
+              invalid_mentor: Not a valid mentor name
+              invalid_input: Not a valid input
+              reason_needed: Reason needed
+          only_showing_rows_with_errors: Only showing rows with errors
+          upload_your_file_again: Upload your file again
