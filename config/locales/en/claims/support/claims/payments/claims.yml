@@ -20,7 +20,7 @@ en:
             confirm_information_sent:
               page_caption: Payments - Claim %{reference}
               page_title: Are you sure you want to update the claim?
-              description: You confirm that you have sent the ESFA the information they requested so they can pay the claim.
+              description: You confirm that you have sent the payer the information they requested so they can pay the claim.
               submit: Update claim
               cancel: Cancel
             information_sent:

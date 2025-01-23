@@ -12,7 +12,7 @@ RSpec.describe Claims::PaymentMailer, freeze: "20 December 2024", type: :mailer 
       expect(email.to).to contain_exactly("esfa@example.com")
       expect(email.subject).to eq("Claims ready for payment - Claim funding for mentor training")
       expect(email.body.to_s.squish).to eq(<<~EMAIL.squish)
-        To ESFA,
+        To the payer,
 
         These claims from the Claim funding for mentor training service (Claim) are ready for payment — the link to the latest CSV file is valid for 7 days:
 

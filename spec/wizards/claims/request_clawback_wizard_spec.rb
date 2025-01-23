@@ -69,7 +69,7 @@ RSpec.describe Claims::RequestClawbackWizard do
         }
       end
 
-      it "calls the ClawbackRequested service with the claim and esfa responses" do
+      it "calls the ClawbackRequested service with the claim and payer responses" do
         wizard.submit_esfa_responses
         expect(Claims::Claim::Clawback::ClawbackRequested).to have_received(:call).with(claim:, esfa_responses:)
       end

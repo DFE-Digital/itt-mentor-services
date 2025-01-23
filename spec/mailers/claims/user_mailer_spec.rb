@@ -229,7 +229,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
       expect(clawback_email.body.to_s.strip).to eq(<<~EMAIL.strip)
         Dear #{user.first_name},
 
-        We have amended your claim to reflect the amount being clawed back by the Education and Skills Funding Agency (ESFA). They will contact you to discuss how they will claim this money from you.
+        We have amended your claim to reflect the amount being clawed back by the payer. They will contact you to discuss how they will claim this money from you.
 
         The affected claim reference is: #{claim.reference}
 

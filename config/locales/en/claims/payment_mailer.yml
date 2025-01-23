@@ -4,7 +4,7 @@ en:
       payment_created_notification:
         subject: Claims ready for payment - Claim funding for mentor training
         body: |
-          To ESFA,
+          To the payer,
 
           These claims from the Claim funding for mentor training service (Claim) are ready for payment — the link to the latest CSV file is valid for 7 days:
 

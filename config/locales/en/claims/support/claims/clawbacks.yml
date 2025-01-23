@@ -10,8 +10,8 @@ en:
               one: Clawbacks (%{count})
               other: Clawbacks (%{count})
             no_claims: There are no claims waiting to be processed.
-            send_claims_to_esfa: Send claims to ESFA
-            upload_esfa_response: Upload ESFA response
+            send_claims_to_esfa: Send claims to payer
+            upload_esfa_response: Upload payer response
           show:
             page_caption: Clawbacks - Claim %{reference}
             page_title: "Clawbacks - %{school_name} - Claim %{reference}"
@@ -21,9 +21,9 @@ en:
             mentor: Mentor
             submitted_by: Submitted by %{name} on %{date}.
           new: 
-            page_title: Send claims to ESFA - Clawbacks
+            page_title: Send claims to payer - Clawbacks
             caption: Clawbacks
-            title: Send claims to ESFA
+            title: Send claims to payer
             description:
               one: There is %{count} claim included in this submission.
               other: There are %{count} claims included in this submission.
@@ -31,18 +31,17 @@ en:
               <p>Selecting ‘Send claims’ will:</p>
               <ul class="govuk-list govuk-list--bullet">
                 <li>create a CSV containing a list of all claims marked as ‘Clawback requested’</li>
-                <li>send an email to the ESFA containing a link to the generated CSV - this link expires after 7 days</li>
+                <li>send an email to the payer containing a link to the generated CSV - this link expires after 7 days</li>
                 <li>update the claim status from ‘Clawback requested’ to ‘Clawback in progress’</li>
               </ul>
             warning: This action cannot be undone.
             submit: Send claims
             cancel: Cancel
           create:
-            success: Claims sent to ESFA
+            success: Claims sent to payer
           new_not_permitted:
             page_title: There are no claims to send for clawback - Clawbacks
             title: There are no claims to send for clawback
             caption: Clawbacks
             cancel: Cancel
-            description: You cannot send any claims to the ESFA because there are no claims with a clawback requested.
-
+            description: You cannot send any claims to the payer because there are no claims with a clawback requested.

@@ -4,7 +4,7 @@ en:
       claims_require_clawback:
         subject: Claims requiring clawback - Claim funding for mentor training
         body: |
-          To ESFA,
+          To the payer,
     
           The claims in the CSV file link are ready for clawback— the link to the latest CSV file is valid for 7 days:
             

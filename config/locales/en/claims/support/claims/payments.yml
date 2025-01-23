@@ -10,15 +10,15 @@ en:
               one: Payments (%{count})
               other: Payments (%{count})
             buttons:
-              send_claims_to_esfa: Send claims to ESFA
-              upload_esfa_response: Upload ESFA response
+              send_claims_to_esfa: Send claims to payer
+              upload_esfa_response: Upload payer response
             description:
               one: "%{count} claim needs processing"
               other: "%{count} claims need processing"
             no_claims: There are no claims waiting to be processed.
           new:
             page_caption: Payments
-            page_title: Send claims to ESFA
+            page_title: Send claims to payer
             description:
               one: There is %{count} claim included in this submission.
               other: There are %{count} claims included in this submission.
@@ -26,7 +26,7 @@ en:
               heading: "Selecting ‘Send claims’ will:"
               list:
                 - create a CSV containing a list of all ‘Submitted’ claims
-                - send an email to the ESFA containing a link to the generated CSV - this link expires after 7 days
+                - send an email to the payer containing a link to the generated CSV - this link expires after 7 days
                 - update the claim status from ‘Submitted’ to ‘Payment in progress’
             warning: This action cannot be undone.
             submit: Send claims
@@ -34,5 +34,5 @@ en:
           new_not_permitted:
             page_caption: Payments
             page_title: There are no claims to send for payment
-            description: You cannot send any claims to the ESFA because there are no claims pending payment.
+            description: You cannot send any claims to the payer because there are no claims pending payment.
             cancel: Cancel

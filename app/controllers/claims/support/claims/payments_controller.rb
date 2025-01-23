@@ -20,7 +20,7 @@ class Claims::Support::Claims::PaymentsController < Claims::Support::Application
   def create
     Claims::Payment::CreateAndDeliver.call(current_user:)
 
-    redirect_to claims_support_claims_payments_path, flash: { success: true, heading: "Claims sent to ESFA" }
+    redirect_to claims_support_claims_payments_path, flash: { success: true, heading: "Claims sent to payer" }
   end
 
   private

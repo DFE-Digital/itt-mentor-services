@@ -5,11 +5,11 @@ en:
         payment_responses:
           new:
             page_caption: Payments
-            page_title: Upload ESFA response
+            page_title: Upload payer response
             label: Upload CSV file
             help:
               label: Help with the CSV file
-              description: Use this form to upload the CSV file sent by the ESFA.
+              description: Use this form to upload the CSV file sent by the payer.
               csv_instructions: "The CSV file must contain the following headers in the first row:"
               csv_headers:
                 - claim_reference
@@ -26,16 +26,16 @@ en:
             cancel: Cancel
           new_not_permitted:
             page_caption: Payments
-            page_title: You cannot upload a response from the ESFA
-            description: You cannot upload a response from the ESFA as there are no claims waiting for a response.
+            page_title: You cannot upload a response from the payer
+            description: You cannot upload a response from the payer as there are no claims waiting for a response.
             cancel: Cancel
           check:
             page_caption: Payments
-            page_title: Are you sure you want to upload the ESFA response?
+            page_title: Are you sure you want to upload the payer response?
             description:
               one: There is %{count} claim included in this upload.
               other: There are %{count} claims included in this upload.
             submit: Upload response
             cancel: Cancel
           update:
-            success: ESFA response uploaded
+            success: Payer response uploaded

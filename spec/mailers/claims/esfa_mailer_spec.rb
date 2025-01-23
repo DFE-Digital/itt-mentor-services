@@ -20,7 +20,7 @@ RSpec.describe Claims::ESFAMailer, type: :mailer do
         expect(claims_require_clawback_email.to).to match_array(esfa_emails)
         expect(claims_require_clawback_email.subject).to eq("Claims requiring clawback - Claim funding for mentor training")
         expect(claims_require_clawback_email.body.to_s.squish).to eq(<<~EMAIL.squish)
-          To ESFA,
+          To the payer,
 
           The claims in the CSV file link are ready for clawback— the link to the latest CSV file is valid for 7 days:
 

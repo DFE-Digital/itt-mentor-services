@@ -3,8 +3,8 @@ en:
     claims:
       upload_esfa_clawback_response_wizard:
         upload_step:
-          page_title: Upload ESFA response - Claims
-          title: Upload ESFA response
+          page_title: Upload payer response - Claims
+          title: Upload payer response
           caption: Clawbacks
           upload_csv_file: Upload CSV file
           csv_help: Help with the CSV file
@@ -32,10 +32,10 @@ en:
             other: There are %{count} claims included in this upload.
           upload_data: Upload responses
         no_claims_step:
-          title: You cannot upload an ESFA response
-          page_title: You cannot upload an ESFA response - Clawbacks - Claims
+          title: You cannot upload a payer response
+          page_title: You cannot upload a payer response - Clawbacks - Claims
           caption: Clawbacks
-          you_cannot_upload: You cannot upload an ESFA response as there are no claims waiting for a response.
+          you_cannot_upload: You cannot upload a payer response as there are no claims waiting for a response.
         upload_errors_step:
           title: There is a problem with the CSV file
           caption: Clawbacks
