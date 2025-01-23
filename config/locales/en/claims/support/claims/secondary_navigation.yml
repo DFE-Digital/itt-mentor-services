@@ -5,6 +5,6 @@ en:
         secondary_navigation:
           all_claims: All claims
           payments: Payments
-          sampling: Sampling
+          sampling: Auditing
           clawbacks: Clawbacks
           activity_log: Activity log

@@ -61,7 +61,7 @@ RSpec.describe "Support user uploads a CSV containing claims not with the status
     end
 
     within secondary_navigation do
-      click_on "Sampling"
+      click_on "Auditing"
     end
   end
 
@@ -69,18 +69,18 @@ RSpec.describe "Support user uploads a CSV containing claims not with the status
     expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
     expect(page).to have_h1("Claims")
     expect(primary_navigation).to have_current_item("Claims")
-    expect(secondary_navigation).to have_current_item("Sampling")
+    expect(secondary_navigation).to have_current_item("Auditing")
     expect(page).to have_current_path(claims_support_claims_samplings_path, ignore_query: true)
   end
 
   def then_i_see_the_upload_csv_page
     expect(page).to have_h1("Upload provider response")
-    have_element(:span, text: "Sampling", class: "govuk-caption-l")
+    have_element(:span, text: "Auditing", class: "govuk-caption-l")
     expect(page).to have_element(:label, text: "Upload CSV file")
   end
 
   def and_i_see_a_claim_with_the_status_sampling_in_progress
-    expect(page).to have_h2("Sampling (1)")
+    expect(page).to have_h2("Auditing (1)")
     expect(page).to have_claim_card({
       "title" => "11111111 - #{@sampling_in_progress_claim.school_name}",
       "url" => "/support/claims/sampling/claims/#{@sampling_in_progress_claim.id}",
@@ -113,13 +113,13 @@ RSpec.describe "Support user uploads a CSV containing claims not with the status
 
   def then_i_see_the_errors_page
     expect(page).to have_title(
-      "There is a problem with the CSV file - Sampling - Claims - Claim funding for mentor training - GOV.UK",
+      "There is a problem with the CSV file - Auditing - Claims - Claim funding for mentor training - GOV.UK",
     )
     expect(page).to have_h1("There is a problem with the CSV file")
   end
 
   def and_i_see_the_csv_contained_claims_not_with_the_status_sampling_in_progress
-    expect(page).to have_h2("The following claims do not have the status 'Sampling in progress':-")
+    expect(page).to have_h2("The following claims do not have the status 'Audit in progress':-")
     expect(page).to have_element(:dl, text: "22222222", class: "govuk-summary-list")
     expect(page).to have_link(text: "View (opens in new tab)", href: "/support/claims/#{@paid_claim.id}")
     expect(page).to have_warning_text(

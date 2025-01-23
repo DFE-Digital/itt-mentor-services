@@ -6,16 +6,16 @@ en:
           index:
             heading: Claims
             sub_heading:
-              zero: Sampling
-              one: Sampling (%{count})
-              other: Sampling (%{count})
+              zero: Auditing
+              one: Auditing (%{count})
+              other: Auditing (%{count})
             no_claims: There are no claims waiting to be processed.
-            upload_claims: Upload claims to be sampled
+            upload_claims: Upload claims to be audited
             upload_provider_response: Upload provider response
           show:
-            page_caption: Sampling - Claim %{reference}
-            page_title: "%{school_name} - Sampling - Claim %{reference}"
-            reason: Reason claim is being sampled
+            page_caption: Auditing - Claim %{reference}
+            page_title: "%{school_name} - Auditing - Claim %{reference}"
+            reason: Reason claim is being audited
             approve: Approve claim
             confirm_provider_reject: Confirm provider rejected claim
             reject_claim: Reject claim
@@ -26,7 +26,7 @@ en:
             submitted_by: Submitted by %{name} on %{date}.
             provider_response: Provider response
           confirm_approval:
-            page_caption: Sampling - Claim %{reference}
+            page_caption: Auditing - Claim %{reference}
             page_title: Are you sure you want to approve the claim?
             mark_as_paid: This will mark the claim as 'Paid'.
             approve: Approve claim
@@ -34,8 +34,8 @@ en:
           update:
             success_heading: Claim updated
           confirm_provider_rejected:
-            page_title: Are you sure you want to confirm the provider has rejected the claim? - Sampling - Claim %{reference}
-            caption: Sampling - Claim %{reference}
+            page_title: Are you sure you want to confirm the provider has rejected the claim? - Auditing - Claim %{reference}
+            caption: Auditing - Claim %{reference}
             title: Are you sure you want to confirm the provider has rejected the claim?
             cancel: Cancel
             provider_has_rejected: You confirm you have spoken to the provider and they have rejected the claim.
@@ -44,8 +44,8 @@ en:
           provider_rejected:
             success: Claim updated
           confirm_rejection:
-            page_title: Are you sure you want to reject the claim? - Sampling - Claim %{reference}
-            caption: Sampling - Claim %{reference}
+            page_title: Are you sure you want to reject the claim? - Auditing - Claim %{reference}
+            caption: Auditing - Claim %{reference}
             title: Are you sure you want to reject the claim?
             cancel: Cancel
             mark_as_claim_not_approved: | 

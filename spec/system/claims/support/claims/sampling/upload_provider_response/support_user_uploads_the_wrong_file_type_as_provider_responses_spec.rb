@@ -35,7 +35,7 @@ RSpec.describe "Support user uploads the wrong file type as provider responses",
     end
 
     within secondary_navigation do
-      click_on "Sampling"
+      click_on "Auditing"
     end
   end
 
@@ -43,18 +43,18 @@ RSpec.describe "Support user uploads the wrong file type as provider responses",
     expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
     expect(page).to have_h1("Claims")
     expect(primary_navigation).to have_current_item("Claims")
-    expect(secondary_navigation).to have_current_item("Sampling")
+    expect(secondary_navigation).to have_current_item("Auditing")
     expect(page).to have_current_path(claims_support_claims_samplings_path, ignore_query: true)
   end
 
   def then_i_see_the_upload_csv_page
     expect(page).to have_h1("Upload provider response")
-    have_element(:span, text: "Sampling", class: "govuk-caption-l")
+    have_element(:span, text: "Auditing", class: "govuk-caption-l")
     expect(page).to have_element(:label, text: "Upload CSV file")
   end
 
   def and_i_see_a_claim_with_the_status_sampling_in_progress
-    expect(page).to have_h2("Sampling (1)")
+    expect(page).to have_h2("Auditing (1)")
     expect(page).to have_claim_card({
       "title" => "11111111 - #{@claim.school_name}",
       "url" => "/support/claims/sampling/claims/#{@claim.id}",

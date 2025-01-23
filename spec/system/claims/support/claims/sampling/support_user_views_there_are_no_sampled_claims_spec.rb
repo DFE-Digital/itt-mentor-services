@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support user views there are no sampled sampled claims", service: :claims, type: :system do
+RSpec.describe "Support user views there are no sampled claims", service: :claims, type: :system do
   scenario do
     when_i_am_signed_in
 
@@ -21,16 +21,16 @@ RSpec.describe "Support user views there are no sampled sampled claims", service
     end
 
     within secondary_navigation do
-      click_on "Sampling"
+      click_on "Auditing"
     end
   end
 
   def then_i_see_the_claims_sampling_claims_index_page
     expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
     expect(page).to have_h1("Claims")
-    expect(page).to have_h2("Sampling")
+    expect(page).to have_h2("Auditing")
     expect(primary_navigation).to have_current_item("Claims")
-    expect(secondary_navigation).to have_current_item("Sampling")
+    expect(secondary_navigation).to have_current_item("Auditing")
   end
 
   def and_i_see_there_are_no_claims_waiting_to_be_processed

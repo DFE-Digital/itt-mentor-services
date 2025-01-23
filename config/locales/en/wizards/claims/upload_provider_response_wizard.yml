@@ -3,9 +3,9 @@ en:
     claims:
       upload_provider_response_wizard:
         upload_step:
-          page_title: Sampling - Claims
+          page_title: Auditing - Claims
           title: Upload provider response
-          caption: Sampling
+          caption: Auditing
           upload_csv_file: Upload CSV file
           csv_help: Help with the CSV file
           csv_help_details: |
@@ -25,27 +25,27 @@ en:
               - claim_accepted
               - rejection_reason
         confirmation_step:
-          page_title: Are you sure you want to upload the provider's response? - Sampling - Claims
+          page_title: Are you sure you want to upload the provider's response? - Auditing - Claims
           title: Are you sure you want to upload the provider's response?
-          caption: Sampling
+          caption: Auditing
           claims_count: 
             one: There is %{count} claim included in this upload.
             other: There are %{count} claims included in this upload.
           upload_data: Upload responses
         no_claims_step:
           title: You cannot upload a provider response
-          page_title: You cannot upload a provider response - Sampling - Claims
-          caption: Sampling
+          page_title: You cannot upload a provider response - Auditing - Claims
+          caption: Auditing
           you_cannot_upload: You cannot upload a provider response as there are no claims waiting for a response.
         upload_errors_step:
           title: There is a problem with the CSV file
-          caption: Sampling
-          page_title: There is a problem with the CSV file - Sampling - Claims
+          caption: Auditing
+          page_title: There is a problem with the CSV file - Auditing - Claims
           status: Status
           claim_reference: Claim reference
           view: View (opens in new tab)
           incorrect_claim_reference: There are no claims associated with the following references:-
-          incorrect_status: The following claims do not have the status 'Sampling in progress':-
+          incorrect_status: The following claims do not have the status 'Audit in progress':-
           missing_mentors: The following claims are missing mentors from the uploaded CSV:-
           invalid_assured_status: The following claims are missing a claim assured status:-
           missing_not_assured_message: The following claims are missing a claim not assured reason:-
