@@ -42,10 +42,9 @@ RSpec.describe "Provider user downloads sampling CSV with valid token", service:
   end
 
   def then_the_csv_is_downloaded
-    current_time = Time.zone.now.utc.strftime("%Y-%m-%dT%H%%3A%M%%3A%SZ")
     provider_name = @provider_sampling.provider_name.parameterize
     expect(page.response_headers["Content-Type"]).to eq("text/csv")
-    expect(page.response_headers["Content-Disposition"]).to eq("attachment; filename=\"sampling-claims-#{provider_name}-#{current_time}.csv\"; filename*=UTF-8''sampling-claims-#{provider_name}-#{current_time}.csv")
+    expect(page.response_headers["Content-Disposition"]).to eq("attachment; filename=\"quality_assurance_for_#{provider_name}_response.csv\"; filename*=UTF-8''quality_assurance_for_#{provider_name}_response.csv")
   end
 
   def and_the_sampling_is_marked_as_downloaded

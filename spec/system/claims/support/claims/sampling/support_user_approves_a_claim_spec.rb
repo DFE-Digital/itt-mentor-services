@@ -66,7 +66,7 @@ RSpec.describe "Support user approves a claim", service: :claims, type: :system 
     end
 
     within secondary_navigation do
-      click_on "Sampling"
+      click_on "Auditing"
     end
   end
 
@@ -74,7 +74,7 @@ RSpec.describe "Support user approves a claim", service: :claims, type: :system 
     expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
     expect(page).to have_h1("Claims")
     expect(primary_navigation).to have_current_item("Claims")
-    expect(secondary_navigation).to have_current_item("Sampling")
+    expect(secondary_navigation).to have_current_item("Auditing")
   end
 
   def when_i_click_to_view_the_paid_claim
@@ -96,9 +96,9 @@ RSpec.describe "Support user approves a claim", service: :claims, type: :system 
 
   def then_i_see_the_details_of_the_sampling_claim
     expect(page).to have_title(
-      "#{@sampling_claim.school.name} - Sampling - Claim #{@sampling_claim.reference} - Claim funding for mentor training - GOV.UK",
+      "#{@sampling_claim.school.name} - Auditing - Claim #{@sampling_claim.reference} - Claim funding for mentor training - GOV.UK",
     )
-    expect(page).to have_element(:p, text: "Sampling - Claim #{@sampling_claim.reference}", class: "govuk-caption-l")
+    expect(page).to have_element(:p, text: "Auditing - Claim #{@sampling_claim.reference}", class: "govuk-caption-l")
     expect(page).to have_h1(@sampling_claim.school.name)
     expect(page).to have_element(:strong, text: "Audit requested", class: "govuk-tag govuk-tag--yellow")
   end
@@ -111,7 +111,7 @@ RSpec.describe "Support user approves a claim", service: :claims, type: :system 
     inset_text = page.find("div.govuk-inset-text")
 
     within(inset_text) do
-      expect(page).to have_h3("Reason claim is being sampled")
+      expect(page).to have_h3("Reason claim is being audited")
       expect(page).to have_element(:p, text: "Randomly selected for audit", class: "govuk-body")
     end
 
@@ -127,7 +127,7 @@ RSpec.describe "Support user approves a claim", service: :claims, type: :system 
     expect(page).to have_title("Are you sure you want to approve the claim? - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Claims")
 
-    expect(page).to have_element(:p, text: "Sampling - Claim #{@sampling_claim.reference}", class: "govuk-caption-l")
+    expect(page).to have_element(:p, text: "Auditing - Claim #{@sampling_claim.reference}", class: "govuk-caption-l")
     expect(page).to have_h1("Are you sure you want to approve the claim?")
     expect(page).to have_element(:p, text: "This will mark the claim as 'Paid'.", class: "govuk-body")
     expect(page).to have_button("Approve claim")
@@ -143,7 +143,7 @@ RSpec.describe "Support user approves a claim", service: :claims, type: :system 
   end
 
   def and_i_see_sampling_claim_is_no_longer_listed
-    expect(page).to have_h2("Sampling")
+    expect(page).to have_h2("Auditing")
     expect(page).not_to have_link("#{@sampling_claim.reference} - #{@sampling_claim.school.name}", href: "/support/claims/sampling/#{@sampling_claim.id}")
   end
 

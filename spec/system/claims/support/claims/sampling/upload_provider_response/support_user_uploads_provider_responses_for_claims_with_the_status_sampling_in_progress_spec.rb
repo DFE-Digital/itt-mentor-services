@@ -97,7 +97,7 @@ RSpec.describe "Support user uploads provider responses for claims with the stat
     end
 
     within secondary_navigation do
-      click_on "Sampling"
+      click_on "Auditing"
     end
   end
 
@@ -105,18 +105,18 @@ RSpec.describe "Support user uploads provider responses for claims with the stat
     expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
     expect(page).to have_h1("Claims")
     expect(primary_navigation).to have_current_item("Claims")
-    expect(secondary_navigation).to have_current_item("Sampling")
+    expect(secondary_navigation).to have_current_item("Auditing")
     expect(page).to have_current_path(claims_support_claims_samplings_path, ignore_query: true)
   end
 
   def then_i_see_the_upload_csv_page
     expect(page).to have_h1("Upload provider response")
-    have_element(:span, text: "Sampling", class: "govuk-caption-l")
+    have_element(:span, text: "Auditing", class: "govuk-caption-l")
     expect(page).to have_element(:label, text: "Upload CSV file")
   end
 
   def and_i_see_two_claims_with_the_status_sampling_in_progress
-    expect(page).to have_h2("Sampling (2)")
+    expect(page).to have_h2("Auditing (2)")
     expect(page).to have_claim_card({
       "title" => "11111111 - #{@sampling_in_progress_claim_1.school_name}",
       "url" => "/support/claims/sampling/claims/#{@sampling_in_progress_claim_1.id}",
@@ -154,10 +154,10 @@ RSpec.describe "Support user uploads provider responses for claims with the stat
 
   def then_i_see_the_confirmation_page_for_uploading_provider_responses
     expect(page).to have_title(
-      "Are you sure you want to upload the provider's response? - Sampling - Claims - Claim funding for mentor training - GOV.UK",
+      "Are you sure you want to upload the provider's response? - Auditing - Claims - Claim funding for mentor training - GOV.UK",
     )
     expect(page).to have_h1("Are you sure you want to upload the provider's response?")
-    have_element(:span, text: "Sampling", class: "govuk-caption-l")
+    have_element(:span, text: "Auditing", class: "govuk-caption-l")
     expect(page).to have_element(:p, text: "There are 2 claims included in this upload.", class: "govuk-body")
   end
 

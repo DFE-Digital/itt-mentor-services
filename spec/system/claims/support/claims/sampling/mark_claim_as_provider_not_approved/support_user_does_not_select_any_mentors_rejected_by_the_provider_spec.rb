@@ -40,16 +40,16 @@ RSpec.describe "Support user does not select any mentors rejected by the provide
     end
 
     within secondary_navigation do
-      click_on "Sampling"
+      click_on "Auditing"
     end
   end
 
   def then_i_see_the_sampling_claims_index_page
     expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
     expect(page).to have_h1("Claims")
-    expect(page).to have_h2("Sampling (1)")
+    expect(page).to have_h2("Auditing (1)")
     expect(primary_navigation).to have_current_item("Claims")
-    expect(secondary_navigation).to have_current_item("Sampling")
+    expect(secondary_navigation).to have_current_item("Auditing")
     expect(page).to have_current_path(claims_support_claims_samplings_path, ignore_query: true)
   end
 
@@ -59,9 +59,9 @@ RSpec.describe "Support user does not select any mentors rejected by the provide
 
   def then_i_see_the_details_of_the_claim
     expect(page).to have_title(
-      "#{@claim.school.name} - Sampling - Claim #{@claim.reference} - Claim funding for mentor training - GOV.UK",
+      "#{@claim.school.name} - Auditing - Claim #{@claim.reference} - Claim funding for mentor training - GOV.UK",
     )
-    expect(page).to have_element(:p, text: "Sampling - Claim #{@claim.reference}", class: "govuk-caption-l")
+    expect(page).to have_element(:p, text: "Auditing - Claim #{@claim.reference}", class: "govuk-caption-l")
     expect(page).to have_h1(@claim.school.name)
     expect(page).to have_element(:strong, text: "Audit requested", class: "govuk-tag govuk-tag--yellow")
   end
@@ -72,7 +72,7 @@ RSpec.describe "Support user does not select any mentors rejected by the provide
 
   def then_i_see_the_mentor_selection_page
     expect(page).to have_title(
-      "Select a mentor - Rejected by provider - Claim #{@claim.reference} - Sampling - Claims - Claim funding for mentor training - GOV.UK",
+      "Select a mentor - Rejected by provider - Claim #{@claim.reference} - Auditing - Claims - Claim funding for mentor training - GOV.UK",
     )
     expect(page).to have_element(:span, text: "Rejected by provider - Claim #{@claim.reference}", class: "govuk-caption-l")
     expect(page).to have_h1("Rejection details from the provider")

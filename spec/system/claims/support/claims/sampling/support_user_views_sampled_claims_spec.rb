@@ -53,16 +53,16 @@ RSpec.describe "Support user views sampled claims", service: :claims, type: :sys
     end
 
     within secondary_navigation do
-      click_on "Sampling"
+      click_on "Auditing"
     end
   end
 
   def then_i_see_the_claims_sampling_claims_index_page
     expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
     expect(page).to have_h1("Claims")
-    expect(page).to have_h2("Sampling (2)")
+    expect(page).to have_h2("Auditing (2)")
     expect(primary_navigation).to have_current_item("Claims")
-    expect(secondary_navigation).to have_current_item("Sampling")
+    expect(secondary_navigation).to have_current_item("Auditing")
   end
 
   def and_i_see_claims_with_a_sampling_in_progress_status

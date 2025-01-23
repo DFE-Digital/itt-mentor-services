@@ -3,9 +3,9 @@ en:
     claims:
       upload_sampling_data_wizard:
         upload_step:
-          page_title: Upload claims to be sampled - Sampling - Claims
-          caption: Sampling
-          title: Upload claims to be sampled
+          page_title: Upload claims to be audited - Auditing - Claims
+          caption: Auditing
+          title: Upload claims to be audited
           upload_csv_file: Upload CSV file
           csv_help: Help with the CSV file
           csv_help_details: |
@@ -16,18 +16,17 @@ en:
             - claim_reference
             - sample_reason
         confirmation_step:
-          page_title: Are you sure you want to upload the sampling data? - Sampling - Claims
-          title: Are you sure you want to upload the sampling data?
-          caption: Sampling
+          page_title: Are you sure you want to upload the auditing data? - Auditing - Claims
+          title: Are you sure you want to upload the auditing data?
+          caption: Auditing
           claims_count: 
             one: There is %{count} claim included in this upload.
             other: There are %{count} claims included in this upload.
           providers_will_be_emailed: 
-            Each accredited provider included in the sample data will receive an email
-            instructing them to assure their partner schools' claim.
+            Each accredited provider will receive an email instructing them to assure their partner schools' claim.
           upload_data: Upload data
         no_claims_step:
-          title: You cannot upload any claims to be sampled
-          page_title: You cannot upload any claims to be sampled - Sampling - Claims
-          caption: Sampling
-          you_cannot_upload: You cannot upload a sampling file as there are no claims that have been paid.
+          title: You cannot upload any claims to be audited
+          page_title: You cannot upload any claims to be audited - Auditing - Claims
+          caption: Auditing
+          you_cannot_upload: You cannot upload an auditing file as there are no claims that have been paid.

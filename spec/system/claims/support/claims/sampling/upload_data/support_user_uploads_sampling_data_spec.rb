@@ -78,7 +78,7 @@ RSpec.describe "Support user uploads sampling data", service: :claims, type: :sy
     end
 
     within secondary_navigation do
-      click_on "Sampling"
+      click_on "Auditing"
     end
   end
 
@@ -86,17 +86,17 @@ RSpec.describe "Support user uploads sampling data", service: :claims, type: :sy
     expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
     expect(page).to have_h1("Claims")
     expect(primary_navigation).to have_current_item("Claims")
-    expect(secondary_navigation).to have_current_item("Sampling")
+    expect(secondary_navigation).to have_current_item("Auditing")
     expect(page).to have_current_path(claims_support_claims_samplings_path, ignore_query: true)
   end
 
   def and_i_see_no_sampling_claims_have_been_uploaded
-    expect(page).to have_h2("Sampling")
+    expect(page).to have_h2("Auditing")
     expect(page).to have_element(:p, text: "There are no claims waiting to be processed.")
   end
 
   def when_i_click_on_upload_claims_to_be_sampled
-    click_on "Upload claims to be sampled"
+    click_on "Upload claims to be audited"
   end
 
   def when_i_upload_a_csv_containing_a_valid_sampling_data
@@ -110,12 +110,12 @@ RSpec.describe "Support user uploads sampling data", service: :claims, type: :sy
   end
 
   def then_i_see_the_confirmation_page_for_uploading_the_sampling_data
-    expect(page).to have_h1("Are you sure you want to upload the sampling data?")
-    have_element(:span, text: "Sampling", class: "govuk-caption-l")
+    expect(page).to have_h1("Are you sure you want to upload the auditing data?")
+    have_element(:span, text: "Auditing", class: "govuk-caption-l")
     expect(page).to have_element(:p, text: "There is 1 claim included in this upload.", class: "govuk-body")
     expect(page).to have_element(
       :strong,
-      text: "WarningEach accredited provider included in the sample data will receive an email instructing them to assure their partner schools' claim.",
+      text: "WarningEach accredited provider will receive an email instructing them to assure their partner schools' claim.",
       class: "govuk-warning-text__text",
     )
   end
@@ -131,8 +131,8 @@ RSpec.describe "Support user uploads sampling data", service: :claims, type: :sy
   alias_method :and_i_click_on_back, :when_i_click_on_back
 
   def then_i_see_the_upload_csv_page
-    expect(page).to have_h1("Upload claims to be sampled")
-    have_element(:span, text: "Sampling", class: "govuk-caption-l")
+    expect(page).to have_h1("Upload claims to be audited")
+    have_element(:span, text: "Auditing", class: "govuk-caption-l")
     expect(page).to have_element(:label, text: "Upload CSV file")
   end
 
@@ -141,8 +141,8 @@ RSpec.describe "Support user uploads sampling data", service: :claims, type: :sy
   end
 
   def then_i_see_the_upload_has_been_successful
-    expect(page).to have_success_banner("Sampling data uploaded")
-    expect(page).to have_h2("Sampling (1)")
+    expect(page).to have_success_banner("Auditing data uploaded")
+    expect(page).to have_h2("Auditing (1)")
     expect(page).to have_claim_card({
       "title" => "#{@current_claim.reference} - #{@current_claim.school.name}",
       "url" => "/support/claims/sampling/claims/#{@current_claim.id}",

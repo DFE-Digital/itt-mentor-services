@@ -7,7 +7,7 @@ class Claims::Sampling::ClaimsController < Claims::ApplicationController
 
   def download
     provider_name = @provider_sampling.provider_name.parameterize
-    send_data @provider_sampling.csv_file.download, filename: "sampling-claims-#{provider_name}-#{Time.current.iso8601}.csv"
+    send_data @provider_sampling.csv_file.download, filename: "quality_assurance_for_#{provider_name.parameterize(separator: "_")}_response.csv"
   end
 
   private

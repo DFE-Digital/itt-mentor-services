@@ -32,7 +32,7 @@ RSpec.describe "View claims activity log", service: :claims, type: :system do
 
   def then_i_can_see_the_claims_activities
     within(".app-timeline__item:nth-child(1)") do
-      expect(page).to have_content("Sampling data uploaded")
+      expect(page).to have_content("Audit data uploaded")
       expect(page).to have_content("Colin Chapman on 21 December 2024 at 4:00pm")
     end
 

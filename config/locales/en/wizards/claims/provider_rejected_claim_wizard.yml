@@ -3,14 +3,14 @@ en:
     claims:
       provider_rejected_claim_wizard:
         mentor_training_step:
-          page_title: Select a mentor - Rejected by provider - Claim %{reference} - Sampling - Claims
+          page_title: Select a mentor - Rejected by provider - Claim %{reference} - Auditing - Claims
           title: Rejection details from the provider
           caption: Rejected by provider - Claim %{reference}
           continue: Continue
           which_mentors: Which mentors are being rejected?
           include_partial_or_whole_clawback: Include mentors which need partial or whole clawback.
         provider_response_step:
-          page_title:  What reason has the provider given for rejecting %{mentor_name}? - Rejected by provider - Claim %{reference} - Sampling - Claims
+          page_title:  What reason has the provider given for rejecting %{mentor_name}? - Rejected by provider - Claim %{reference} - Auditing - Claims
           title: What reason has the provider given for rejecting %{mentor_name}?
           caption: Rejected by provider - Claim %{reference}
           mentor_training_assured: Has the provider assured this mentor's training?
@@ -20,7 +20,7 @@ en:
             one: The school originally claimed %{mentor_name} has completed %{count} hour.
             other: The school originally claimed %{mentor_name} has completed %{count} hours.
         check_your_answers_step:
-          page_title: Check your answers - Rejected by provider - Claim %{reference} - Sampling - Claims
+          page_title: Check your answers - Rejected by provider - Claim %{reference} - Auditing - Claims
           title: Check your answers
           caption: Rejected by provider - Claim %{reference}
           reason_for_rejection: Reason for rejection

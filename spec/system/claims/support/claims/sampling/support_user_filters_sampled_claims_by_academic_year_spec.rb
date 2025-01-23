@@ -96,27 +96,27 @@ RSpec.describe "Support user filters sampled claims by academic year", service: 
     end
 
     within secondary_navigation do
-      click_on "Sampling"
+      click_on "Auditing"
     end
   end
 
   def then_i_see_the_sampling_claims_index_page
     i_see_the_sampling_index_page
-    expect(page).to have_h2("Sampling (2)")
+    expect(page).to have_h2("Auditing (2)")
   end
   alias_method :then_i_see_all_claims_on_the_claims_sampling_index_page,
                :then_i_see_the_sampling_claims_index_page
 
   def then_i_see_only_filtered_claims_on_the_sampling_claims_index_page
     i_see_the_sampling_index_page
-    expect(page).to have_h2("Sampling (1)")
+    expect(page).to have_h2("Auditing (1)")
   end
 
   def i_see_the_sampling_index_page
     expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
     expect(page).to have_h1("Claims")
     expect(primary_navigation).to have_current_item("Claims")
-    expect(secondary_navigation).to have_current_item("Sampling")
+    expect(secondary_navigation).to have_current_item("Auditing")
     expect(page).to have_current_path(claims_support_claims_samplings_path, ignore_query: true)
   end
 
