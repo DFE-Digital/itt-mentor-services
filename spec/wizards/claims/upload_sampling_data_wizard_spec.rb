@@ -91,7 +91,7 @@ RSpec.describe Claims::UploadSamplingDataWizard do
     end
 
     it "returns only paid claim, submitted during the current academic year" do
-      expect(paid_claims).to contain_exactly(current_year_paid_claim)
+      expect(paid_claims).to contain_exactly(current_year_paid_claim, another_paid_claim)
     end
   end
 

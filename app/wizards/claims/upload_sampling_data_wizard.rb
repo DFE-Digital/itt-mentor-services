@@ -24,7 +24,7 @@ module Claims
     end
 
     def paid_claims
-      Claims::Claim.paid_for_current_academic_year
+      Claims::Claim.paid
     end
 
     def uploaded_claim_ids
