@@ -30,7 +30,7 @@ RSpec.describe "Confirm claim payment information sent", service: :claims, type:
 
   def then_i_see_a_confirmation_page
     expect(page).to have_content("Are you sure you want to update the claim?")
-    expect(page).to have_content("You confirm that you have sent the ESFA the information they requested so they can pay the claim.")
+    expect(page).to have_content("You confirm that you have sent the payer the information they requested so they can pay the claim.")
   end
 
   def when_i_click_on_update_claim

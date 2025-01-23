@@ -26,18 +26,18 @@ en:
         clawback_in_progress: Sent to payer for clawback
         clawback_complete: Clawback complete
       claims/claim_activity/action:
-        payment_request_delivered: Claims sent to ESFA for payment
-        payment_response_uploaded: ESFA payment response uploaded
+        payment_request_delivered: Claims sent to payer for payment
+        payment_response_uploaded: Payer payment response uploaded
         sampling_uploaded: Sampling data uploaded
         sampling_response_uploaded: Provider sampling response uploaded
-        clawback_request_delivered: Claims sent to ESFA for clawback
-        clawback_response_uploaded: ESFA clawback response uploaded
+        clawback_request_delivered: Claims sent to payer for clawback
+        clawback_response_uploaded: Payer clawback response uploaded
       claims/claim_activity/document:
-        payment_request_delivered: Claims sent to ESFA
-        payment_response_uploaded: ESFA payment response
+        payment_request_delivered: Claims sent to payer
+        payment_response_uploaded: Payer payment response
         sampling_response_uploaded: Provider sampling response
-        clawback_request_delivered: Claims sent to ESFA
-        clawback_response_uploaded: ESFA clawback response
+        clawback_request_delivered: Claims sent to payer
+        clawback_response_uploaded: Payer clawback response
       claims/claim_window:
         academic_year: Academic year
         window: Claim window

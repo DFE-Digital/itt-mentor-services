@@ -1,9 +1,9 @@
 require "rails_helper"
 
-RSpec.describe "Upload ESFA response CSV", service: :claims, type: :system do
+RSpec.describe "Upload payer response CSV", service: :claims, type: :system do
   let(:support_user) { create(:claims_support_user) }
 
-  scenario "Support user attempts to upload ESFA response, but there are no 'payment_in_progress' claims" do
+  scenario "Support user attempts to upload payer response, but there are no 'payment_in_progress' claims" do
     given_i_sign_in
     when_i_visit_claims_payments_index_page
     when_i_click_on_upload_esfa_response
@@ -31,7 +31,7 @@ RSpec.describe "Upload ESFA response CSV", service: :claims, type: :system do
       and_claims_have_been_paid_and_payment_information_requested
     end
 
-    scenario "Support user attempts to upload ESFA response without attaching a file" do
+    scenario "Support user attempts to upload payer response without attaching a file" do
       given_i_sign_in
       when_i_visit_claims_payments_index_page
       when_i_click_on_upload_esfa_response
@@ -54,7 +54,7 @@ RSpec.describe "Upload ESFA response CSV", service: :claims, type: :system do
   end
 
   def when_i_click_on_upload_esfa_response
-    click_on("Upload ESFA response")
+    click_on("Upload payer response")
   end
 
   def then_i_can_see_an_upload_form
@@ -63,8 +63,8 @@ RSpec.describe "Upload ESFA response CSV", service: :claims, type: :system do
 
   def then_i_can_see_an_error_page
     expect(page).to have_css("p.govuk-caption-l", text: "Payments")
-    expect(page).to have_css("h1.govuk-heading-l", text: "You cannot upload a response from the ESFA")
-    expect(page).to have_css("p.govuk-body", text: "You cannot upload a response from the ESFA as there are no claims waiting for a response.")
+    expect(page).to have_css("h1.govuk-heading-l", text: "You cannot upload a response from the payer")
+    expect(page).to have_css("p.govuk-body", text: "You cannot upload a response from the payer as there are no claims waiting for a response.")
     expect(page).to have_link("Cancel", href: claims_support_claims_payments_path)
   end
 
@@ -79,7 +79,7 @@ RSpec.describe "Upload ESFA response CSV", service: :claims, type: :system do
 
   def then_i_can_see_a_confirmation_page
     expect(page).to have_css("p.govuk-caption-l", text: "Payments")
-    expect(page).to have_css("h1.govuk-heading-l", text: "Are you sure you want to upload the ESFA response?")
+    expect(page).to have_css("h1.govuk-heading-l", text: "Are you sure you want to upload the payer response?")
     expect(page).to have_css("p.govuk-body", text: "There are 5 claims included in this upload.")
   end
 
@@ -88,7 +88,7 @@ RSpec.describe "Upload ESFA response CSV", service: :claims, type: :system do
   end
 
   def then_i_see_a_success_flash_message
-    expect(page).to have_content("ESFA response uploaded")
+    expect(page).to have_content("Payer response uploaded")
   end
 
   def then_i_see_the_error_message(message)

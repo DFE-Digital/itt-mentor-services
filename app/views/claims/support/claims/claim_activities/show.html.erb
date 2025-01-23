@@ -16,7 +16,7 @@
   <%= govuk_list type: :bullet do %>
     <% case @claim_activity.action %>
     <% when "payment_request_delivered", "clawback_request_delivered" %>
-      <li><%= govuk_link_to "Claims sent to ESFA", @claim_activity.record.csv_file %></li>
+      <li><%= govuk_link_to "Claims sent to payer", @claim_activity.record.csv_file %></li>
     <% when "sampling_uploaded" %>
       <% @provider_samplings.each do |provider_sampling| %>
         <li><%= govuk_link_to provider_sampling.provider.name, provider_sampling.csv_file %></li>

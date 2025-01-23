@@ -113,7 +113,7 @@ RSpec.describe "Support user uploads ESFA responses for claims with the status '
   end
 
   def then_i_see_the_upload_csv_page
-    expect(page).to have_h1("Upload ESFA response")
+    expect(page).to have_h1("Upload payer response")
     have_element(:span, text: "Clawbacks", class: "govuk-caption-l")
     expect(page).to have_element(:label, text: "Upload CSV file")
   end
@@ -141,7 +141,7 @@ RSpec.describe "Support user uploads ESFA responses for claims with the status '
   end
 
   def when_i_click_on_upload_esfa_response
-    click_on "Upload ESFA response"
+    click_on "Upload payer response"
   end
 
   def and_i_click_on_upload_csv_file

@@ -47,7 +47,7 @@ RSpec.describe "View a claims activity", service: :claims, type: :system do
   end
 
   def then_i_can_see_the_claims_activity_payment_request_delivered_details
-    expect(page).to have_css("h1.govuk-heading-l", text: "Claims sent to ESFA")
+    expect(page).to have_css("h1.govuk-heading-l", text: "Claims sent to payer")
     expect(page).to have_content("Colin Chapman on 20 December 2024 at 4:00pm")
   end
 

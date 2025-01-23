@@ -37,7 +37,7 @@ RSpec.describe "View claims activity log", service: :claims, type: :system do
     end
 
     within(".app-timeline__item:nth-child(2)") do
-      expect(page).to have_content("Claims sent to ESFA for payment")
+      expect(page).to have_content("Claims sent to payer for payment")
       expect(page).to have_content("Colin Chapman on 20 December 2024 at 4:00pm")
     end
   end

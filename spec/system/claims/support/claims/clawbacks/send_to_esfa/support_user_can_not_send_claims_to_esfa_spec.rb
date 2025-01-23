@@ -45,7 +45,7 @@ RSpec.describe "Support user can not send claims to ESFA", service: :claims, typ
   end
 
   def when_i_click_on_send_claims_to_esfa
-    click_on "Send claims to ESFA"
+    click_on "Send claims to payer"
   end
 
   def and_i_see_the_details_of_the_clawback_in_progress_claim
@@ -68,7 +68,7 @@ RSpec.describe "Support user can not send claims to ESFA", service: :claims, typ
     expect(page).to have_element(:p, text: "Clawbacks", class: "govuk-caption-l")
     expect(page).to have_element(
       :p,
-      text: "You cannot send any claims to the ESFA because there are no claims with a clawback requested.",
+      text: "You cannot send any claims to the payer because there are no claims with a clawback requested.",
     )
   end
 end

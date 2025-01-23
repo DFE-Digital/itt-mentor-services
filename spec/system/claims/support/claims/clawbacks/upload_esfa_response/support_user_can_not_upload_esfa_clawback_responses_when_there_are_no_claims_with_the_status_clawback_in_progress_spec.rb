@@ -44,16 +44,16 @@ RSpec.describe "Support user can not upload ESFA clawback responses when there a
   end
 
   def when_i_click_on_upload_esfa_response
-    click_on "Upload ESFA response"
+    click_on "Upload payer response"
   end
 
   def then_i_see_there_are_no_claims_waiting_for_a_response
-    expect(page).to have_title("You cannot upload an ESFA response - Clawbacks - Claims - Claim funding for mentor training - GOV.UK")
-    expect(page).to have_h1("You cannot upload an ESFA response")
+    expect(page).to have_title("You cannot upload a payer response - Clawbacks - Claims - Claim funding for mentor training - GOV.UK")
+    expect(page).to have_h1("You cannot upload a payer response")
     expect(page).to have_element(:span, text: "Clawback")
     expect(page).to have_element(
       :p,
-      text: "You cannot upload an ESFA response as there are no claims waiting for a response.",
+      text: "You cannot upload a payer response as there are no claims waiting for a response.",
       class: "govuk-body",
     )
   end

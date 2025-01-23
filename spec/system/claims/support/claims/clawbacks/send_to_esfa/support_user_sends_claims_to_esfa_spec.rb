@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support user sends claims to ESFA", service: :claims, type: :system do
+RSpec.describe "Support user sends claims to payer", service: :claims, type: :system do
   scenario do
     given_claims_exist
     and_i_am_signed_in
@@ -49,12 +49,12 @@ RSpec.describe "Support user sends claims to ESFA", service: :claims, type: :sys
   end
 
   def when_i_click_on_send_claims_to_esfa
-    click_on "Send claims to ESFA"
+    click_on "Send claims to payer"
   end
 
   def then_i_can_see_a_confirmation_page
     expect(page).to have_element(:p, text: "Clawbacks", class: "govuk-caption-l")
-    expect(page).to have_h1("Send claims to ESFA")
+    expect(page).to have_h1("Send claims to payer")
     expect(page).to have_element(:p, text: "There is 1 claim included in this submission.", class: "govuk-body")
     expect(page).to have_element(:div, text: "Selecting ‘Send claims’ will:", class: "govuk-body")
     expect(page).to have_element(
@@ -63,7 +63,7 @@ RSpec.describe "Support user sends claims to ESFA", service: :claims, type: :sys
     )
     expect(page).to have_element(
       :li,
-      text: "send an email to the ESFA containing a link to the generated CSV - this link expires after 7 days",
+      text: "send an email to the payer containing a link to the generated CSV - this link expires after 7 days",
     )
     expect(page).to have_element(
       :li,
@@ -77,7 +77,7 @@ RSpec.describe "Support user sends claims to ESFA", service: :claims, type: :sys
   end
 
   def then_i_see_a_success_message
-    expect(page).to have_success_banner("Claims sent to ESFA")
+    expect(page).to have_success_banner("Claims sent to payer")
   end
 
   def and_i_see_the_details_of_the_clawback_requested_claim
