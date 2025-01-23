@@ -5,6 +5,7 @@ class Claims::UploadProviderResponseWizard::UploadErrorsStep < BaseStep
            :invalid_claim_accepted_rows,
            :missing_rejection_reason_rows,
            :file_name,
+           :csv,
            to: :upload_step
 
   def row_indexes_with_errors
@@ -17,10 +18,6 @@ class Claims::UploadProviderResponseWizard::UploadErrorsStep < BaseStep
 
   def missing_mentor_references_as_string
     missing_mentor_training_claim_references.map { |reference| "‘#{reference}’" }.to_sentence
-  end
-
-  def csv
-    @csv = CSV.parse(wizard.steps.fetch(:upload).csv_content, headers: true)
   end
 
   private
