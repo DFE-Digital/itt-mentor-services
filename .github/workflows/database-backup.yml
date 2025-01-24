@@ -36,7 +36,7 @@ permissions:
 jobs:
   backup:
     name: Backup AKS Database
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.environment || 'production' }}
     env:
