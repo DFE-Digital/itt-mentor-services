@@ -31,7 +31,7 @@ jobs:
     environment:
       name: ${{ inputs.environment }}
     concurrency: deploy_all
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     permissions:
       pull-requests: write
       id-token: write
