@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Provider user downloads a sampling CSV with expired token", service: :claims, type: :system do
   scenario do
     given_one_of_my_claims_has_been_sampled
-    and_the_token_has_expired
+    and_the_token_has_already_been_used
 
     when_i_visit_the_download_link_in_the_email
     then_i_see_the_error_page
@@ -13,10 +13,12 @@ RSpec.describe "Provider user downloads a sampling CSV with expired token", serv
 
   def given_one_of_my_claims_has_been_sampled
     @provider_sampling = create(:provider_sampling, downloaded_at: Time.current)
+    @download_access_token = create(:download_access_token, activity_record: @provider_sampling, email_address: @provider_sampling.provider.primary_email_address)
   end
 
-  def and_the_token_has_expired
-    @token = Rails.application.message_verifier(:sampling).generate(@provider_sampling.id, expires_in: 7.days)
+  def and_the_token_has_already_been_used
+    @token = @download_access_token.generate_token_for(:csv_download)
+    @download_access_token.update(downloaded_at: Time.current)
   end
 
   def when_i_visit_the_download_link_in_the_email

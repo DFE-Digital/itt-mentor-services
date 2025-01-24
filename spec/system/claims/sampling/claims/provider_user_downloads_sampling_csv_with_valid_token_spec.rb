@@ -17,10 +17,11 @@ RSpec.describe "Provider user downloads sampling CSV with valid token", service:
 
   def given_one_of_my_claims_has_been_sampled
     @provider_sampling = create(:provider_sampling)
+    @download_access_token = create(:download_access_token, activity_record: @provider_sampling, email_address: @provider_sampling.provider.primary_email_address)
   end
 
   def and_the_token_is_valid
-    @token = Rails.application.message_verifier(:sampling).generate(@provider_sampling.id, expires_in: 7.days)
+    @token = @download_access_token.generate_token_for(:csv_download)
   end
 
   def when_i_visit_the_download_link_in_the_email
