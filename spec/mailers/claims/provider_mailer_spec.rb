@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Claims::ProviderMailer, type: :mailer do
   describe "#sampling_checks_required" do
-    subject(:sampling_checks_required_email) { described_class.sampling_checks_required(provider_sampling) }
+    subject(:sampling_checks_required_email) { described_class.sampling_checks_required(provider_sampling, email_address: provider.primary_email_address) }
 
     let(:provider) { create(:claims_provider) }
     let(:provider_sampling) { create(:provider_sampling, provider:) }
@@ -11,9 +11,11 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
     let(:support_email) { "ittmentor.funding@education.gov.uk" }
     let(:service_url) { claims_root_url }
     let(:completion_date) { "19 February 2025" }
+    let(:download_access_token_double) { instance_double(Claims::DownloadAccessToken) }
 
     before do
-      allow(Rails.application.message_verifier(:sampling)).to receive(:generate).and_return("token")
+      allow(Claims::DownloadAccessToken).to receive(:create!).and_return(download_access_token_double)
+      allow(download_access_token_double).to receive(:generate_token_for).with(:csv_download).and_return("token")
     end
 
     context "when the completion date is a weekday" do
@@ -28,7 +30,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
       end
 
       it "sends the sampling checks required email" do
-        expect(sampling_checks_required_email.to).to match_array(provider.email_addresses)
+        expect(sampling_checks_required_email.to).to match_array(provider.primary_email_address)
         expect(sampling_checks_required_email.subject).to eq("ITT mentor claims need to be quality assured")
         expect(sampling_checks_required_email.body.to_s.squish).to eq(<<~EMAIL.squish)
           #{provider.name},
@@ -113,7 +115,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
       end
 
       it "sends the sampling checks required email" do
-        expect(sampling_checks_required_email.to).to match_array(provider.email_addresses)
+        expect(sampling_checks_required_email.to).to match_array(provider.primary_email_address)
         expect(sampling_checks_required_email.subject).to eq("ITT mentor claims need to be quality assured")
         expect(sampling_checks_required_email.body.to_s.squish).to eq(<<~EMAIL.squish)
           #{provider.name},
