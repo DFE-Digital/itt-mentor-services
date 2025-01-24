@@ -6,8 +6,12 @@ class Claims::Sampling::ResendEmails < ApplicationService
 
   def call
     validate_email_addresses
-    email_addresses.each do |email_address|
-      Claims::ProviderMailer.resend_sampling_checks_required(provider_sampling, email_address:).deliver_later
+    provider_sampling.transaction do
+      provider_sampling.download_access_tokens.where(email_address: email_addresses).destroy_all
+
+      email_addresses.each do |email_address|
+        Claims::ProviderMailer.resend_sampling_checks_required(provider_sampling, email_address:).deliver_later
+      end
     end
   end
 
