@@ -2,7 +2,6 @@ class Claims::Sampling::ClaimsController < Claims::ApplicationController
   skip_before_action :authenticate_user!
 
   before_action :skip_authorization
-  before_action :validate_token
   before_action :set_provider_sampling
   after_action :mark_as_downloaded, only: :download
 
@@ -13,17 +12,14 @@ class Claims::Sampling::ClaimsController < Claims::ApplicationController
 
   private
 
-  def validate_token
-    @provider_sampling_id = Rails.application.message_verifier(:sampling).verify(token_param)
-  rescue ActiveSupport::MessageVerifier::InvalidSignature
+  def set_provider_sampling
+    @provider_sampling = download_access_token.activity_record
+  rescue ActiveRecord::RecordNotFound, ActiveSupport::MessageVerifier::InvalidSignature
     render "error"
   end
 
-  def set_provider_sampling
-    @provider_sampling = Claims::ProviderSampling.find(@provider_sampling_id)
-    raise CSVPreviouslyDownloadedError if @provider_sampling.downloaded?
-  rescue ActiveRecord::RecordNotFound, CSVPreviouslyDownloadedError
-    render "error"
+  def download_access_token
+    @download_access_token = Claims::DownloadAccessToken.find_by_token_for!(:csv_download, token_param)
   end
 
   def token_param
@@ -32,7 +28,6 @@ class Claims::Sampling::ClaimsController < Claims::ApplicationController
 
   def mark_as_downloaded
     @provider_sampling.update!(downloaded_at: Time.current)
+    download_access_token.update!(downloaded_at: Time.current)
   end
 end
-
-class CSVPreviouslyDownloadedError < StandardError; end

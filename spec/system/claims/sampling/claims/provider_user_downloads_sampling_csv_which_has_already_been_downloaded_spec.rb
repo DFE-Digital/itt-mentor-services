@@ -18,7 +18,7 @@ RSpec.describe "Provider user downloads a sampling CSV with expired token", serv
 
   def and_the_token_has_already_been_used
     @token = @download_access_token.generate_token_for(:csv_download)
-    @download_access_token.update(downloaded_at: Time.current)
+    @download_access_token.update!(downloaded_at: Time.current)
   end
 
   def when_i_visit_the_download_link_in_the_email
