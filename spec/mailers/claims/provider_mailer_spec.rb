@@ -10,13 +10,13 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
   let(:completion_date) { "19 February 2025" }
   let(:download_access_token_double) { instance_double(Claims::DownloadAccessToken) }
 
+  before do
+    allow(Claims::DownloadAccessToken).to receive(:create!).and_return(download_access_token_double)
+    allow(download_access_token_double).to receive(:generate_token_for).with(:csv_download).and_return("token")
+  end
+
   describe "#sampling_checks_required" do
     subject(:sampling_checks_required_email) { described_class.sampling_checks_required(provider_sampling, email_address: provider.primary_email_address) }
-
-    before do
-      allow(Claims::DownloadAccessToken).to receive(:create!).and_return(download_access_token_double)
-      allow(download_access_token_double).to receive(:generate_token_for).with(:csv_download).and_return("token")
-    end
 
     context "when the completion date is a weekday" do
       let(:current_date) { "20/01/2025" }
@@ -191,11 +191,6 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
   describe "#resend_sampling_checks_required" do
     subject(:resend_sampling_checks_required_email) { described_class.resend_sampling_checks_required(provider_sampling, email_address: provider.primary_email_address) }
-
-    before do
-      allow(Claims::DownloadAccessToken).to receive(:create!).and_return(download_access_token_double)
-      allow(download_access_token_double).to receive(:generate_token_for).with(:csv_download).and_return("token")
-    end
 
     context "when the completion date is a weekday" do
       let(:current_date) { "20/01/2025" }
