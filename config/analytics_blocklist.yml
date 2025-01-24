@@ -50,6 +50,7 @@ shared:
     - activity_record_id
     - created_at
     - updated_at
+    - downloaded_at
   :good_job_settings:
     - id
     - created_at
