@@ -14,7 +14,7 @@
 #
 #  index_download_access_tokens_on_activity_record  (activity_record_type,activity_record_id)
 #
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Claims::DownloadAccessToken, type: :model do
   describe "associations" do

@@ -15,7 +15,7 @@
 #  index_download_access_tokens_on_activity_record  (activity_record_type,activity_record_id)
 #
 FactoryBot.define do
-  factory :download_access_token, class: 'Claims::DownloadAccessToken' do
+  factory :download_access_token, class: "Claims::DownloadAccessToken" do
     email_address { "example@example.com" }
 
     association :activity_record, factory: :provider_sampling
