@@ -43,6 +43,13 @@ shared:
     - record_id
     - blob_id
     - created_at
+  :download_access_tokens:
+    - id
+    - email_address
+    - activity_record_type
+    - activity_record_id
+    - created_at
+    - updated_at
   :good_job_settings:
     - id
     - created_at
