@@ -31,6 +31,8 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
     reset_input_attributes
 
     csv.each_with_index do |row, i|
+      next if row["claim_reference"].blank?
+
       validate_claim_reference(row, i)
 
       validate_mentor(row, i) unless invalid_claim_rows.include?(i)
@@ -39,6 +41,8 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
     end
 
     grouped_csv_rows.each do |claim_reference, provider_responses|
+      next if claim_reference.blank?
+
       claim = sampled_claims.find_by(reference: claim_reference)
       next if claim.blank?
 
