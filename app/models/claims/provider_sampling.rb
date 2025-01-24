@@ -25,6 +25,7 @@ class Claims::ProviderSampling < ApplicationRecord
 
   has_many :provider_sampling_claims
   has_many :claims, through: :provider_sampling_claims
+  has_many :download_access_tokens, as: :activity_record, dependent: :destroy
 
   has_one_attached :csv_file
 

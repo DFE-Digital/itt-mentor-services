@@ -26,7 +26,9 @@ RSpec.describe Claims::ProviderSampling, type: :model do
     it { is_expected.to belong_to(:sampling) }
     it { is_expected.to belong_to(:provider) }
 
+    it { is_expected.to have_many(:provider_sampling_claims) }
     it { is_expected.to have_many(:claims) }
+    it { is_expected.to have_many(:download_access_tokens).dependent(:destroy) }
   end
 
   describe "attachments" do
