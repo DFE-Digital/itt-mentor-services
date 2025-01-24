@@ -1,8 +1,9 @@
 class Claims::ProviderMailer < Claims::ApplicationMailer
-  def sampling_checks_required(provider_sampling)
+  def sampling_checks_required(provider_sampling, email_address:)
     @provider_sampling = provider_sampling
+    @email_address = email_address
 
-    notify_email to: @provider_sampling.provider_email_addresses,
+    notify_email to: email_address,
                  subject: t(".subject"),
                  body: t(
                    ".body",
@@ -14,10 +15,10 @@ class Claims::ProviderMailer < Claims::ApplicationMailer
 
   private
 
-  attr_reader :provider_sampling
+  attr_reader :provider_sampling, :email_address
 
   def token
-    Rails.application.message_verifier(:sampling).generate(provider_sampling.id, expires_in: 7.days)
+    Claims::DownloadAccessToken.create!(activity_record: provider_sampling, email_address:).generate_token_for(:csv_download)
   end
 
   def completion_date
