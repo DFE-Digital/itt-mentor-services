@@ -113,18 +113,15 @@ RSpec.describe "Support user uploads a CSV containing claims not with the status
 
   def then_i_see_the_errors_page
     expect(page).to have_title(
-      "There is a problem with the CSV file - Auditing - Claims - Claim funding for mentor training - GOV.UK",
+      "Upload provider response - Auditing - Claims - Claim funding for mentor training - GOV.UK",
     )
-    expect(page).to have_h1("There is a problem with the CSV file")
+    expect(page).to have_h1("Upload provider response")
   end
 
   def and_i_see_the_csv_contained_claims_not_with_the_status_sampling_in_progress
-    expect(page).to have_h2("The following claims do not have the status 'Audit in progress':-")
-    expect(page).to have_element(:dl, text: "22222222", class: "govuk-summary-list")
-    expect(page).to have_link(text: "View (opens in new tab)", href: "/support/claims/#{@paid_claim.id}")
-    expect(page).to have_warning_text(
-      "You can only upload the accredited provider's CSV once they have completed all rows." \
-        " Email the provider and ask them to complete the CSV with the missing information.",
-    )
+    expect(page).to have_h1("Upload provider response")
+    expect(page).to have_element(:div, text: "You need to fix 1 error related to specific rows", class: "govuk-error-summary")
+    expect(page).to have_element(:td, text: "Not a valid claim reference 22222222", class: "govuk-table__cell")
+    expect(page).to have_element(:p, text: "Only showing rows with errors", class: "govuk-!-text-align-centre")
   end
 end

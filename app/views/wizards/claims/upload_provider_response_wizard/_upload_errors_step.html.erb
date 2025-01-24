@@ -1,4 +1,4 @@
-<% content_for(:page_title) { sanitize t(".page_title") } %>
+<% content_for(:page_title) { sanitize title_with_error_prefix(t(".page_title"), error: true) } %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
