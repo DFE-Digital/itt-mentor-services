@@ -10,7 +10,29 @@ en:
             byline: "%{user} on %{time}"
             showing: "Showing %{count} of %{total_count} files"
             view_all_files: View all files
+            view_details: View details
           show:
             page_caption: Activity log
             byline: "%{user} on %{time}"
             files: Files
+          sampling_activities:
+            providers: Providers
+            download_csv: Download CSV
+            resend_email_to_provider: Resend email to provider
+            claim_reference: Claim reference
+            number_of_mentors: Number of mentors
+            claim_amount: Claim amount
+          payment_and_clawback_activities:
+            providers: Providers
+            download_csv: Download CSV
+            resend_email_to_payer: Resend email to payer
+            claim_reference: Claim reference
+            number_of_mentors: Number of mentors
+            claim_amount: Claim amount
+          manual_activities:
+            providers: Providers
+            claim_reference: Claim reference
+            number_of_mentors: Number of mentors
+            claim_amount: Claim amount
+          payment_response_activity:
+            download_csv: Download CSV

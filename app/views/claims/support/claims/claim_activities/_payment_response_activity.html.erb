@@ -1,0 +1,5 @@
+<%# locals: (claim_activity:) -%>
+
+<div class="govuk-button-group">
+  <%= govuk_button_link_to t(".download_csv"), claim_activity.record.csv_file, secondary: true %>
+</div>

@@ -38,6 +38,7 @@ class Claims::ClaimActivity < ApplicationRecord
 
   delegate :full_name, to: :user, prefix: true, allow_nil: true
 
-  PAYMENT_OR_CLAWBACK_ACTION = %w[payment_request_delivered clawback_request_delivered payment_response_uploaded clawback_response_uploaded].freeze
-  SAMPLING_ACTION = %w[sampling_uploaded sampling_response_uploaded].freeze
+  PAYMENT_AND_CLAWBACK_ACTIONS = %w[payment_request_delivered clawback_request_delivered clawback_response_uploaded].freeze
+  SAMPLING_ACTIONS = %w[sampling_uploaded sampling_response_uploaded].freeze
+  MANUAL_ACTIONS = %w[sampling_approved_manually rejected_by_provider rejected_by_school clawback_requested].freeze
 end

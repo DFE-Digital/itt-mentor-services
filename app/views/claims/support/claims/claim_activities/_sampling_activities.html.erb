@@ -1,0 +1,31 @@
+<%# locals: (claim_activity:) -%>
+
+<h2 class="govuk-heading-m"><%= t(".providers") %></h2>
+
+<% claim_activity.record.provider_samplings.each do |provider_sampling| %>
+  <h3 class="govuk-heading-s"><%= provider_sampling.provider.name %></h3>
+
+  <div class="govuk-button-group">
+    <%= govuk_button_link_to t(".download_csv"), provider_sampling.csv_file, secondary: true %>
+    <%= govuk_button_link_to t(".resend_email_to_provider"), provider_sampling.csv_file, secondary: true %>
+  </div>
+
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header"><%= t(".claim_reference") %></th>
+      <th scope="col" class="govuk-table__header"><%= t(".number_of_mentors") %></th>
+      <th scope="col" class="govuk-table__header"><%= t(".claim_amount") %></th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    <% provider_sampling.claims.each do |claim| %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"><%= govuk_link_to claim.reference, claims_support_claim_path(claim) %></td>
+        <td class="govuk-table__cell"><%= claim.mentors.count %></td>
+        <td class="govuk-table__cell"><%= humanized_money_with_symbol(claim.amount) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
