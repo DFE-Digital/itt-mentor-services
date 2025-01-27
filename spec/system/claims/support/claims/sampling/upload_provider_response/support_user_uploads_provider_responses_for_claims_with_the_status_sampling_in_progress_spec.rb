@@ -154,11 +154,33 @@ RSpec.describe "Support user uploads provider responses for claims with the stat
 
   def then_i_see_the_confirmation_page_for_uploading_provider_responses
     expect(page).to have_title(
-      "Are you sure you want to upload the provider's response? - Auditing - Claims - Claim funding for mentor training - GOV.UK",
+      "Upload provider response - Auditing - Claims - Claim funding for mentor training - GOV.UK",
     )
-    expect(page).to have_h1("Are you sure you want to upload the provider's response?")
-    have_element(:span, text: "Auditing", class: "govuk-caption-l")
-    expect(page).to have_element(:p, text: "There are 2 claims included in this upload.", class: "govuk-body")
+    expect(page).to have_h1("Upload provider response")
+    expect(page).to have_element(:span, text: "Auditing", class: "govuk-caption-l")
+    expect(page).to have_element(:p, text: "Confirm these are the provider details you want to upload.", class: "govuk-body")
+    expect(page).to have_h2("example_provider_response_upload.csv")
+    expect(page).to have_table_row(
+      "1" => "2",
+      "claim_reference" => "11111111",
+      "mentor_full_name" => "John Smith",
+      "claim_accepted" => "yes",
+      "rejection_reason" => "Some reason",
+    )
+    expect(page).to have_table_row(
+      "1" => "3",
+      "claim_reference" => "11111111",
+      "mentor_full_name" => "Jane Doe",
+      "claim_accepted" => "no",
+      "rejection_reason" => "Another reason",
+    )
+    expect(page).to have_table_row(
+      "1" => "4",
+      "claim_reference" => "22222222",
+      "mentor_full_name" => "Joe Bloggs",
+      "claim_accepted" => "yes",
+      "rejection_reason" => "Yet another reason",
+    )
   end
 
   def when_i_click_on_cancel
@@ -172,7 +194,7 @@ RSpec.describe "Support user uploads provider responses for claims with the stat
   alias_method :and_i_click_on_back, :when_i_click_on_back
 
   def when_i_click_upload_responses
-    click_on "Upload responses"
+    click_on "Confirm upload"
   end
 
   def then_i_see_the_upload_has_been_successful

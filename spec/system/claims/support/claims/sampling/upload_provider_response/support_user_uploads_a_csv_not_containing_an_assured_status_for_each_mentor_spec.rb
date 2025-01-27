@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support user uploads a CSV not containing an assured status for each mentor",
+RSpec.describe "Support user uploads a CSV not containing a claim accepted input for each mentor",
                service: :claims,
                type: :system do
   scenario do
@@ -17,7 +17,7 @@ RSpec.describe "Support user uploads a CSV not containing an assured status for 
     when_i_upload_a_file_not_containing_an_assured_status_for_each_mentor
     and_i_click_on_upload_csv_file
     then_i_see_the_errors_page
-    and_i_see_the_csv_contained_claims_without_an_assured_status_for_each_mentor
+    and_i_see_the_csv_contained_claims_without_a_claim_accepted_input_for_each_mentor
   end
 
   private
@@ -115,18 +115,15 @@ RSpec.describe "Support user uploads a CSV not containing an assured status for 
 
   def then_i_see_the_errors_page
     expect(page).to have_title(
-      "There is a problem with the CSV file - Auditing - Claims - Claim funding for mentor training - GOV.UK",
+      "Upload provider response - Auditing - Claims - Claim funding for mentor training - GOV.UK",
     )
-    expect(page).to have_h1("There is a problem with the CSV file")
+    expect(page).to have_h1("Upload provider response")
   end
 
-  def and_i_see_the_csv_contained_claims_without_an_assured_status_for_each_mentor
-    expect(page).to have_h2("The following claims are missing a claim assured status:-")
-    expect(page).to have_element(:dl, text: "22222222", class: "govuk-summary-list")
-    expect(page).to have_link(text: "View (opens in new tab)", href: "/support/claims/#{@sampling_in_progress_claim_2.id}")
-    expect(page).to have_warning_text(
-      "You can only upload the accredited provider's CSV once they have completed all rows." \
-        " Email the provider and ask them to complete the CSV with the missing information.",
-    )
+  def and_i_see_the_csv_contained_claims_without_a_claim_accepted_input_for_each_mentor
+    expect(page).to have_h1("Upload provider response")
+    expect(page).to have_element(:div, text: "You need to fix 1 error related to specific rows", class: "govuk-error-summary")
+    expect(page).to have_element(:td, text: "Not a valid input", class: "govuk-table__cell")
+    expect(page).to have_element(:p, text: "Only showing rows with errors", class: "govuk-!-text-align-centre")
   end
 end

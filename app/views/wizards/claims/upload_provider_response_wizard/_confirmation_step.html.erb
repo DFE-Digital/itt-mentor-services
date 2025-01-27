@@ -26,12 +26,14 @@
 
             <% table.with_body do |body| %>
               <% current_step.csv.each_with_index do |csv_row, index| %>
-                <% body.with_row do |row| %>
-                  <% row.with_cell text: index + 2 %>
+                <% if csv_row["claim_reference"].present? %>
+                  <% body.with_row do |row| %>
+                    <% row.with_cell text: index + 2 %>
                     <% current_step.csv_headers.each do |header| %>
                       <%= row.with_cell text: csv_row[header] %>
                     <% end %>
                   <% end %>
+                <% end %>
               <% end %>
             <% end %>
           <% end %>
