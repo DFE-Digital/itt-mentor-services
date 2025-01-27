@@ -88,8 +88,9 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
   end
 
   def grouped_csv_rows
-    @grouped_csv_rows ||= csv
-      .group_by { |row| row["claim_reference"] }
+    @grouped_csv_rows ||= csv.group_by do |row|
+      row["claim_reference"]
+    end
   end
 
   def csv

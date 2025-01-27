@@ -182,6 +182,28 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadStep, type: :model do
       end
     end
 
+    context "when the csv_content contains a mentor not associated with the claims" do
+      let(:csv_content) do
+        "claim_reference,mentor_full_name,claim_accepted,rejection_reason\r\n" \
+        "11111111,Random Bob,yes,Some reason"
+      end
+      let(:attributes) { { csv_content: } }
+
+      let(:sampling_in_progress_claim) do
+        create(:claim, :submitted, status: :sampling_in_progress, reference: 11_111_111)
+      end
+      let(:mentor_john_smith) { create(:claims_mentor, first_name: "John", last_name: "Smith") }
+
+      before do
+        create(:mentor_training, mentor: mentor_john_smith, claim: sampling_in_progress_claim)
+      end
+
+      it "returns false and assigns the csv row to the 'invalid_mentor_full_name_rows' attribute" do
+        expect(csv_inputs_valid).to be(false)
+        expect(step.invalid_mentor_full_name_rows).to contain_exactly(0)
+      end
+    end
+
     context "when the csv_content does not contain a claim accepted input for each mentor" do
       let(:csv_content) do
         "claim_reference,mentor_full_name,claim_accepted,rejection_reason\r\n" \
