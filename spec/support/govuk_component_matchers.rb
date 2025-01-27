@@ -50,7 +50,7 @@ module GovukComponentMatchers
 
         # ...all of the expected header & value pairs?
         expected_row.all? do |expected_header, expected_value|
-          td = row.find("td.govuk-table__cell", text: expected_value)
+          td = row.find("td.govuk-table__cell", exact_text: expected_value)
           td_index = td.find_xpath("./preceding-sibling::td").count
           thead.find("th.govuk-table__header:nth-of-type(#{td_index + 1})", text: expected_header)
           true

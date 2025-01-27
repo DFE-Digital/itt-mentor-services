@@ -126,18 +126,14 @@ RSpec.describe "Support user uploads a CSV not containing all the mentors associ
 
   def then_i_see_the_errors_page
     expect(page).to have_title(
-      "There is a problem with the CSV file - Auditing - Claims - Claim funding for mentor training - GOV.UK",
+      "Upload provider response - Auditing - Claims - Claim funding for mentor training - GOV.UK",
     )
-    expect(page).to have_h1("There is a problem with the CSV file")
+    expect(page).to have_h1("Upload provider response")
   end
 
   def and_i_see_the_csv_was_missing_mentors_associated_with_a_claim
-    expect(page).to have_h2("The following claims are missing mentors from the uploaded CSV:-")
-    expect(page).to have_element(:dl, text: "11111111", class: "govuk-summary-list")
-    expect(page).to have_link(text: "View (opens in new tab)", href: "/support/claims/#{@sampling_in_progress_claim_1.id}")
-    expect(page).to have_warning_text(
-      "You can only upload the accredited provider's CSV once they have completed all rows." \
-        " Email the provider and ask them to complete the CSV with the missing information.",
-    )
+    expect(page).to have_h1("Upload provider response")
+    expect(page).to have_element(:div, text: "Mentors are missing from the claim with the reference ‘11111111’", class: "govuk-error-summary")
+    expect(page).to have_element(:p, text: "Only showing rows with errors", class: "govuk-!-text-align-centre")
   end
 end
