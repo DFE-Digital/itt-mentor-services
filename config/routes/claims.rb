@@ -157,7 +157,11 @@ scope module: :claims, as: :claims, constraints: {
         end
       end
 
-      resources :claim_activities, path: "activity", only: %i[index show]
+      resources :claim_activities, path: "activity", only: %i[index show] do
+        member do
+          get :resend_email
+        end
+      end
     end
 
     resources :claims, only: %i[index show] do

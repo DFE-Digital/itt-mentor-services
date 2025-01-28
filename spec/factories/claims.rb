@@ -73,5 +73,9 @@ FactoryBot.define do
       payment_information_requested
       status { :payment_information_sent }
     end
+
+    trait :audit_requested do
+      status { :sampling_in_progress }
+    end
   end
 end
