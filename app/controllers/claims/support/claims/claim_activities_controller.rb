@@ -6,12 +6,20 @@ class Claims::Support::Claims::ClaimActivitiesController < Claims::Support::Appl
   end
 
   def show
-    @claim_activity = Claims::ClaimActivity.find(params[:id])
-
-    if @claim_activity.sampling_uploaded?
-      @pagy, @provider_samplings = pagy(@claim_activity.record.provider_samplings.order_by_provider_name)
+    if claim_activity.sampling_uploaded?
+      @pagy, @provider_samplings = pagy(claim_activity.record.provider_samplings.order_by_provider_name)
     end
 
-    authorize [:claims, @claim_activity]
+    authorize [:claims, claim_activity]
+  end
+
+  def resend_email
+    raise
+  end
+
+  private
+
+  def claim_activity
+    @claim_activity ||= Claims::ClaimActivity.find(params[:id])
   end
 end
