@@ -11,14 +11,18 @@ module Claims
     def define_steps
       if paid_claims.present?
         add_step(UploadStep)
-        add_step(ConfirmationStep)
+        if csv_inputs_valid?
+          add_step(ConfirmationStep)
+        else
+          add_step(UploadErrorsStep)
+        end
       else
         add_step(NoClaimsStep)
       end
     end
 
     def upload_data
-      raise "Invalid wizard state" unless valid?
+      raise "Invalid wizard state" unless valid? && csv_inputs_valid?
 
       Claims::Sampling::CreateAndDeliverJob.perform_later(current_user_id: current_user.id, claim_ids: uploaded_claim_ids, csv_data:)
     end
@@ -31,6 +35,10 @@ module Claims
       return [] if steps[:upload].blank?
 
       steps.fetch(:upload).claim_ids
+    end
+
+    def csv_inputs_valid?
+      @csv_inputs_valid ||= steps.fetch(:upload).csv_inputs_valid?
     end
 
     private
