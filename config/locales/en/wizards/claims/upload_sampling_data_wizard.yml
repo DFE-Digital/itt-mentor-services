@@ -26,10 +26,24 @@ en:
             Each accredited provider will receive an email instructing them to assure their partner schools' claim.
           upload_data: Upload data
         upload_errors_step:
-          title: TEST Validation errors
-          page_title: TEST Validation errors
+          page_title: Upload claims to be audited - Auditing - Claims
+          title: Upload claims to be audited
           caption: Auditing
-          you_cannot_upload: TEST Validation errors
+          error_summary:
+            title: There is a problem
+            errors_to_fix:
+                one: You need to fix %{count} error related to specific rows
+                other: You need to fix %{count} errors related to specific rows
+          csv_table:
+            headers:
+              claim_reference: claim_reference
+              sampling_reason: sampling_reason
+            errors:
+              invalid_claim_reference: Not a valid claim reference
+              invalid_input: Not a valid input
+              reason_needed: Reason needed
+          only_showing_rows_with_errors: Only showing rows with errors
+          upload_your_file_again: Upload your file again
         no_claims_step:
           title: You cannot upload any claims to be audited
           page_title: You cannot upload any claims to be audited - Auditing - Claims
