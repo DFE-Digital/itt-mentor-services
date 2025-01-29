@@ -46,6 +46,14 @@
               <%= csv_row["claim_reference"] %>
             </p>
           <% end %>
+          <% row.with_cell do %>
+              <p>
+                <% if current_step.missing_sampling_reason_rows.include?(csv_row_index) %>
+                  <strong class="error-text"><%= t(".csv_table.errors.reason_needed") %></strong><br>
+                <% end %>
+                <%= csv_row["sampling_reason"] %>
+              </p>
+            <% end %>
         <% end %>
       <% end %>
     <% end %>
