@@ -1,18 +1,24 @@
 class Claims::UploadSamplingDataWizard::UploadErrorsStep < BaseStep
   delegate :invalid_claim_rows,
+           :missing_sampling_reason_rows,
            :file_name,
            :csv,
            to: :upload_step
 
   def row_indexes_with_errors
-    invalid_claim_rows.uniq.sort
+    combined_errors.uniq.sort
   end
 
   def error_count
-    invalid_claim_rows.count
+    combined_errors.count
   end
 
   private
+
+  def combined_errors
+    invalid_claim_rows +
+      missing_sampling_reason_rows
+  end
 
   def upload_step
     @upload_step ||= wizard.steps.fetch(:upload)

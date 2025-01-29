@@ -4,6 +4,7 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
   attribute :file_name
   attribute :claim_ids, default: []
   attribute :invalid_claim_rows, default: []
+  attribute :missing_sampling_reason_rows, default: []
 
   delegate :paid_claims, to: :wizard
 
@@ -31,7 +32,8 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
       validate_claim_reference(row, i)
     end
 
-    invalid_claim_rows.blank?
+    invalid_claim_rows.blank? &&
+      missing_sampling_reason_rows.blank?
   end
 
   def process_csv
@@ -68,11 +70,18 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
 
   def reset_input_attributes
     self.invalid_claim_rows = []
+    self.missing_sampling_reason_rows = []
   end
 
   def validate_claim_reference(row, row_number)
     return if paid_claims.find_by(reference: row["claim_reference"]).present?
 
     invalid_claim_rows << row_number
+  end
+
+  def validate_sampling_reason(row, row_number)
+    return if row["sampling_reason"].present?
+
+    missing_sampling_reason_rows << row_number
   end
 end
