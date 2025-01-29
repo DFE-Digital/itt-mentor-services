@@ -2,12 +2,12 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
   attribute :csv_upload
   attribute :csv_content
   attribute :claim_ids, default: []
+  attribute :invalid_claim_rows, default: []
 
   delegate :paid_claims, to: :wizard
 
   validates :csv_upload, presence: true, if: -> { csv_content.blank? }
   validate :validate_csv_file, if: -> { csv_upload.present? }
-  validate :csv_contains_valid_claims
 
   def initialize(wizard:, attributes:)
     super(wizard:, attributes:)
@@ -19,10 +19,18 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
     errors.add(:csv_upload, :invalid) unless csv_format
   end
 
-  def csv_contains_valid_claims
-    return unless claim_ids.count.zero? || csv.length != claim_ids.count
+  def csv_inputs_valid?
+    return true if csv_content.blank?
 
-    errors.add(:csv_upload, :invalid_data)
+    reset_input_attributes
+
+    csv.each_with_index do |row, i|
+      next if row["claim_reference"].blank?
+
+      validate_claim_reference(row, i)
+    end
+
+    invalid_claim_rows.blank?
   end
 
   def process_csv
@@ -43,11 +51,11 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
     self.csv_upload = nil
   end
 
-  private
-
   def csv
     @csv ||= CSV.parse(csv_content, headers: true)
   end
+
+  private
 
   def csv_format
     csv_upload.content_type == "text/csv"
@@ -63,5 +71,15 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
 
   def reset_claim_ids
     self.claim_ids = []
+  end
+
+  def reset_input_attributes
+    self.invalid_claim_rows = []
+  end
+
+  def validate_claim_reference(row, row_number)
+    return if paid_claims.find_by(reference: row["claim_reference"]).present?
+
+    invalid_claim_rows << row_number
   end
 end

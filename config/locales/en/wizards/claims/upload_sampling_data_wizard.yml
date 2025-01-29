@@ -19,12 +19,17 @@ en:
           page_title: Are you sure you want to upload the auditing data? - Auditing - Claims
           title: Are you sure you want to upload the auditing data?
           caption: Auditing
-          claims_count: 
+          claims_count:
             one: There is %{count} claim included in this upload.
             other: There are %{count} claims included in this upload.
-          providers_will_be_emailed: 
+          providers_will_be_emailed:
             Each accredited provider will receive an email instructing them to assure their partner schools' claim.
           upload_data: Upload data
+        upload_errors_step:
+          title: TEST Validation errors
+          page_title: TEST Validation errors
+          caption: Auditing
+          you_cannot_upload: TEST Validation errors
         no_claims_step:
           title: You cannot upload any claims to be audited
           page_title: You cannot upload any claims to be audited - Auditing - Claims
