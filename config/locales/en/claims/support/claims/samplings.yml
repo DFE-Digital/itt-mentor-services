@@ -33,6 +33,10 @@ en:
             cancel: Cancel
           update:
             success_heading: Claim updated
+          upload_data:
+            update:
+              heading: Sampling data uploaded
+              body: It may take a moment for the uploaded claims to update
           confirm_provider_rejected:
             page_title: Are you sure you want to confirm the provider has rejected the claim? - Auditing - Claim %{reference}
             caption: Auditing - Claim %{reference}
@@ -48,7 +52,7 @@ en:
             caption: Auditing - Claim %{reference}
             title: Are you sure you want to reject the claim?
             cancel: Cancel
-            mark_as_claim_not_approved: | 
+            mark_as_claim_not_approved: |
               This will mark the claim as 'Claim not approved' and move it into the clawbacks queue.
             reject_claim: Reject claim
           reject:
