@@ -12,6 +12,19 @@ class Claims::PaymentMailer < Claims::ApplicationMailer
                  )
   end
 
+  def resend_payment_created_notification(payment)
+    @payment = payment
+
+    notify_email to: esfa_email_addresses,
+                 from: support_email,
+                 subject: t(".subject"),
+                 body: t(
+                   ".body",
+                   download_page_url: claims_payments_claims_url(token:),
+                   support_email:,
+                 )
+  end
+
   private
 
   def esfa_email_addresses

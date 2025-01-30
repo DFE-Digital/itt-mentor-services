@@ -13,13 +13,32 @@ class Claims::Support::Claims::ClaimActivitiesController < Claims::Support::Appl
     authorize [:claims, claim_activity]
   end
 
-  def resend_email
-    raise
+  def resend_payer_email
+    case claim_activity.action
+    when "payment_request_delivered"
+      Claims::Payment::ResendEmail.call(payment: claim_activity.record)
+    when "clawback_request_delivered"
+      Claims::Clawback::ResendEmail.call(clawback: claim_activity.record)
+    end
+
+    authorize [:claims, claim_activity]
+    redirect_to claims_support_claims_claim_activity_path(claim_activity), flash: { success: true, heading: t(".success") }
+  end
+
+  def resend_provider_email
+    Claims::Sampling::ResendEmails.call(provider_sampling:)
+
+    authorize [:claims, claim_activity]
+    redirect_to claims_support_claims_claim_activity_path(claim_activity), flash: { success: true, heading: t(".success", provider_name: provider_sampling.provider_name) }
   end
 
   private
 
   def claim_activity
     @claim_activity ||= Claims::ClaimActivity.find(params[:id])
+  end
+
+  def provider_sampling
+    @provider_sampling ||= claim_activity.record.provider_samplings.find(params[:provider_sampling_id])
   end
 end

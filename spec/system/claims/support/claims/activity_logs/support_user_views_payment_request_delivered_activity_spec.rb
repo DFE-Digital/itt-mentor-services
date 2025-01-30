@@ -15,6 +15,9 @@ RSpec.describe "Support user views payment request delivered activity spec", ser
     when_i_click_on_view_details
     then_i_see_the_activity_details
 
+    when_i_click_on_resend_email_to_payer
+    then_i_see_the_email_sent_success_message
+
     when_i_click_on_download_csv
     then_i_receive_a_csv_file
   end
@@ -75,7 +78,7 @@ RSpec.describe "Support user views payment request delivered activity spec", ser
     expect(primary_navigation).to have_current_item("Claims")
     expect(page).to have_h1("Claims sent to payer for payment")
     expect(page).to have_link("12345678", href: claims_support_claim_path(@best_practice_network_claim))
-    expect(page).to have_link("Resend email to payer", href: resend_email_claims_support_claims_claim_activity_path(@activity_log))
+    expect(page).to have_link("Resend email to payer", href: resend_payer_email_claims_support_claims_claim_activity_path(@activity_log))
     expect(page).to have_h2("Providers")
     expect(page).to have_h3("Best Practice Network")
     expect(page).to have_table_row({
@@ -90,6 +93,14 @@ RSpec.describe "Support user views payment request delivered activity spec", ser
       "Number of mentors" => "0",
       "Claim amount" => "£#{@niot_claim.amount}",
     })
+  end
+
+  def when_i_click_on_resend_email_to_payer
+    click_on("Resend email to payer")
+  end
+
+  def then_i_see_the_email_sent_success_message
+    expect(page).to have_success_banner("An email has been sent to the payer")
   end
 
   def when_i_click_on_download_csv

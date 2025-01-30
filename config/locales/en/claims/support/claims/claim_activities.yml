@@ -36,3 +36,7 @@ en:
             claim_amount: Claim amount
           payment_response_activity:
             download_csv: Download CSV
+          resend_payer_email:
+            success: An email has been sent to the payer
+          resend_provider_email:
+            success: An email has been sent to %{provider_name}

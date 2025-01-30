@@ -3,6 +3,10 @@ class Claims::PaymentMailerPreview < ActionMailer::Preview
     Claims::PaymentMailer.payment_created_notification(payment)
   end
 
+  def resend_payment_created_notification
+    Claims::PaymentMailer.resend_payment_created_notification(payment)
+  end
+
   private
 
   def payment
