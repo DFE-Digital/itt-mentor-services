@@ -15,9 +15,9 @@ RSpec.describe Claims::UploadESFAClawbackResponseWizard::UploadStep, type: :mode
       expect(step).to have_attributes(
         csv_upload: nil,
         csv_content: nil,
-        invalid_claim_references: [],
-        invalid_status_claim_references: [],
-        invalid_updated_status_claim_references: [],
+        file_name: nil,
+        invalid_claim_rows: [],
+        invalid_claim_status_rows: [],
       )
     }
   end
@@ -106,6 +106,28 @@ RSpec.describe Claims::UploadESFAClawbackResponseWizard::UploadStep, type: :mode
         end
       end
     end
+
+    describe "#validate_csv_headers" do
+      context "when csv_content is present" do
+        context "when the csv content is missing valid headers" do
+          let(:csv_content) do
+            "something_random\r\n" \
+            "blah"
+          end
+          let(:attributes) { { csv_content: } }
+
+          it "returns errors for missing headers" do
+            expect(step.valid?).to be(false)
+            expect(step.errors.messages[:csv_upload]).to include(
+              "Your file needs a column name called ‘claim_reference’ and ‘claim_status’.",
+            )
+            expect(step.errors.messages[:csv_upload]).to include(
+              "Right now it has columns called ‘something_random’.",
+            )
+          end
+        end
+      end
+    end
   end
 
   describe "#csv_inputs_valid?" do
@@ -126,9 +148,9 @@ RSpec.describe Claims::UploadESFAClawbackResponseWizard::UploadStep, type: :mode
 
       before { create(:claim, :submitted, status: :paid, reference: 22_222_222) }
 
-      it "returns false and assigns the reference to the 'invalid_claim_references' attribute" do
+      it "returns false and assigns the csv row to the 'invalid_claim_rows' attribute" do
         expect(csv_inputs_valid).to be(false)
-        expect(step.invalid_claim_references).to contain_exactly("11111111")
+        expect(step.invalid_claim_rows).to contain_exactly(0)
       end
     end
 
@@ -141,9 +163,9 @@ RSpec.describe Claims::UploadESFAClawbackResponseWizard::UploadStep, type: :mode
 
       before { create(:claim, :submitted, status: :paid, reference: 11_111_111) }
 
-      it "returns false and assigns the reference to the 'invalid_status_claim_references' attribute" do
+      it "returns false and assigns the csv row to the 'invalid_claim_rows' attribute" do
         expect(csv_inputs_valid).to be(false)
-        expect(step.invalid_status_claim_references).to contain_exactly("11111111")
+        expect(step.invalid_claim_rows).to contain_exactly(0)
       end
     end
 
@@ -156,9 +178,9 @@ RSpec.describe Claims::UploadESFAClawbackResponseWizard::UploadStep, type: :mode
 
       before { create(:claim, :submitted, status: :paid, reference: 11_111_111) }
 
-      it "returns false and assigns the reference to the 'invalid_updated_status_claim_references' attribute" do
+      it "returns false and assigns the reference to the 'invalid_claim_status_rows' attribute" do
         expect(csv_inputs_valid).to be(false)
-        expect(step.invalid_updated_status_claim_references).to contain_exactly("11111111")
+        expect(step.invalid_claim_status_rows).to contain_exactly(0)
       end
     end
 
@@ -234,6 +256,38 @@ RSpec.describe Claims::UploadESFAClawbackResponseWizard::UploadStep, type: :mode
         "22222222,clawback_complete\n" \
         ",\n",
       )
+    end
+  end
+
+  describe "#csv" do
+    subject(:csv) { step.csv }
+
+    let(:csv_content) do
+      "claim_reference,claim_status\r\n" \
+      "11111111,clawback_complete\r\n" \
+      "22222222,clawback_in_progress\r\n" \
+      ""
+    end
+    let(:attributes) { { csv_content: } }
+
+    it "converts the csv content into a CSV record" do
+      expect(csv).to be_a(CSV::Table)
+      expect(csv.headers).to match_array(
+        %w[claim_reference claim_status],
+      )
+      expect(csv.count).to eq(2)
+
+      expect(csv[0]).to be_a(CSV::Row)
+      expect(csv[0].to_h).to eq({
+        "claim_reference" => "11111111",
+        "claim_status" => "clawback_complete",
+      })
+
+      expect(csv[1]).to be_a(CSV::Row)
+      expect(csv[1].to_h).to eq({
+        "claim_reference" => "22222222",
+        "claim_status" => "clawback_in_progress",
+      })
     end
   end
 end

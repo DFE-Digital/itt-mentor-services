@@ -41,7 +41,7 @@
 
         <p class="govuk_body govuk-!-text-align-centre">
           <% if current_step.csv.count > 5 %>
-            <%= t(".only_showing_first_rows", row_count: current_step.csv.count) %>
+            <%= t(".only_showing_first_five_rows") %>
           <% else %>
             <%= t(".showing_all_rows") %>
           <% end %>

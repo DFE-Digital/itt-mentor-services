@@ -14,7 +14,8 @@ class Claims::Support::Claims::Samplings::UploadProviderResponseController < Cla
       @wizard.upload_provider_responses
       @wizard.reset_state
       redirect_to index_path, flash: {
-        heading: t(".success"),
+        heading: t(".heading"),
+        body: t(".body"),
       }
     end
   end

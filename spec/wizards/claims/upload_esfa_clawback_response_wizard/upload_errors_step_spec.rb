@@ -11,16 +11,18 @@ RSpec.describe Claims::UploadESFAClawbackResponseWizard::UploadErrorsStep, type:
   let(:mock_upload_step) do
     instance_double(Claims::UploadESFAClawbackResponseWizard::UploadStep).tap do |mock_upload_step|
       allow(mock_upload_step).to receive_messages(
-        invalid_claim_references:,
-        invalid_status_claim_references:,
-        invalid_updated_status_claim_references:,
+        csv_content:,
+        file_name:,
+        invalid_claim_rows:,
+        invalid_claim_status_rows:,
       )
     end
   end
   let(:attributes) { nil }
-  let(:invalid_claim_references) { nil }
-  let(:invalid_status_claim_references) { nil }
-  let(:invalid_updated_status_claim_references) { nil }
+  let(:csv_content) { nil }
+  let(:file_name) { nil }
+  let(:invalid_claim_rows) { [] }
+  let(:invalid_claim_status_rows) { [] }
   let(:claim_1) { create(:claim, :submitted, status: :clawback_in_progress, reference: 11_111_111) }
   let(:claim_2) { create(:claim, :submitted, status: :clawback_in_progress, reference: 22_222_222) }
   let(:claim_3) { create(:claim, :submitted, status: :clawback_in_progress, reference: 33_333_333) }
@@ -31,39 +33,32 @@ RSpec.describe Claims::UploadESFAClawbackResponseWizard::UploadErrorsStep, type:
     claim_3
   end
 
-  describe "#invalid_status_claims" do
-    subject(:invalid_status_claims) { step.invalid_status_claims }
+  describe "delegations" do
+    it { is_expected.to delegate_method(:invalid_claim_rows).to(:upload_step) }
+    it { is_expected.to delegate_method(:invalid_claim_status_rows).to(:upload_step) }
+    it { is_expected.to delegate_method(:file_name).to(:upload_step) }
+    it { is_expected.to delegate_method(:csv).to(:upload_step) }
+  end
 
-    context "when the upload step invalid_claim_references attribute is nil" do
-      it "returns an empty array" do
-        expect(invalid_status_claims).to eq([])
-      end
-    end
+  describe "#row_indexes_with_errors" do
+    subject(:row_indexes_with_errors) { step.row_indexes_with_errors }
 
-    context "when the upload step invalid_claim_references attribute contains a reference" do
-      let(:invalid_status_claim_references) { %w[11111111 22222222] }
+    let(:invalid_claim_rows) { [1] }
+    let(:invalid_claim_status_rows) { [1, 2, 3] }
 
-      it "returns a list of claims with the references in the invalid_claim_references attribute" do
-        expect(invalid_status_claims).to contain_exactly(claim_1, claim_2)
-      end
+    it "merges all the validation attributes containing row numbers together (removing duplicates)" do
+      expect(row_indexes_with_errors).to contain_exactly(1, 2, 3)
     end
   end
 
-  describe "#invalid_updated_status_claims" do
-    subject(:invalid_updated_status_claims) { step.invalid_updated_status_claims }
+  describe "#error_count" do
+    subject(:error_count) { step.error_count }
 
-    context "when the upload step invalid_updated_status_claim_references attribute is nil" do
-      it "returns an empty array" do
-        expect(invalid_updated_status_claims).to eq([])
-      end
-    end
+    let(:invalid_claim_rows) { [1] }
+    let(:invalid_claim_status_rows) { [1, 2, 3, 4] }
 
-    context "when the upload step invalid_updated_status_claim_references attribute contains a reference" do
-      let(:invalid_updated_status_claim_references) { %w[11111111 22222222] }
-
-      it "returns a list of claims with the references in theinvalid_updated_status_claim_references attribute" do
-        expect(invalid_updated_status_claims).to contain_exactly(claim_1, claim_2)
-      end
+    it "adds together the number of elements in validation attribute" do
+      expect(error_count).to eq(5)
     end
   end
 end

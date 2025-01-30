@@ -5,7 +5,7 @@ RSpec.describe Claims::UploadProviderResponseWizard::ConfirmationStep, type: :mo
 
   let(:mock_wizard) do
     instance_double(Claims::UploadProviderResponseWizard).tap do |mock_wizard|
-      allow(mock_wizard).to receive_messages(sampled_claims: Claims::Claim.sampling_in_progress, steps: { upload: mock_upload_step })
+      allow(mock_wizard).to receive_messages(steps: { upload: mock_upload_step })
     end
   end
   let(:mock_upload_step) do
@@ -18,7 +18,6 @@ RSpec.describe Claims::UploadProviderResponseWizard::ConfirmationStep, type: :mo
         missing_rejection_reason_rows:,
         file_name:,
         csv:,
-        grouped_csv_rows:,
       )
     end
   end
@@ -35,20 +34,10 @@ RSpec.describe Claims::UploadProviderResponseWizard::ConfirmationStep, type: :mo
     "11111111,John Smith,yes,Some reason\r\n" \
     "22222222,Jane Doe,no,Another reason"
   end
-  let(:grouped_csv_rows) do
-    csv.group_by { |row| row["claim_reference"] }
-  end
 
   describe "delegations" do
-    it { is_expected.to delegate_method(:grouped_csv_rows).to(:upload_step) }
     it { is_expected.to delegate_method(:csv).to(:upload_step) }
     it { is_expected.to delegate_method(:file_name).to(:upload_step) }
-  end
-
-  describe "#claims_count" do
-    it "returns the number of keys returned by the upload steps grouping of claims references" do
-      expect(step.claims_count).to eq(2)
-    end
   end
 
   describe "#csv_headers" do

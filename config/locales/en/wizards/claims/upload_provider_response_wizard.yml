@@ -30,7 +30,7 @@ en:
           caption: Auditing
           confirm_upload_details: Confirm these are the provider details you want to upload.
           confirm_upload: Confirm upload
-          only_showing_first_rows: Only showing the first %{row_count} rows
+          only_showing_first_five_rows: Only showing the first 5 rows
           showing_all_rows: Showing all rows
         no_claims_step:
           title: You cannot upload a provider response

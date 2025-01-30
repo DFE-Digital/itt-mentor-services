@@ -198,7 +198,10 @@ RSpec.describe "Support user uploads provider responses for claims with the stat
   end
 
   def then_i_see_the_upload_has_been_successful
-    expect(page).to have_success_banner("Provider response uploaded")
+    expect(page).to have_success_banner(
+      "Provider response uploaded",
+      "It may take a moment for the responses to load",
+    )
   end
 
   def then_i_can_see_claim_11111111_has_the_status_provider_not_approved

@@ -157,11 +157,21 @@ RSpec.describe "Support user uploads ESFA responses for claims with the status '
 
   def then_i_see_the_confirmation_page_for_uploading_esfa_responses
     expect(page).to have_title(
-      "Are you sure you want to upload the ESFA response? - Clawbacks - Claims - Claim funding for mentor training - GOV.UK",
+      "Confirm you want to upload the payer response - Clawbacks - Claims - Claim funding for mentor training - GOV.UK",
     )
-    expect(page).to have_h1("Are you sure you want to upload the ESFA response?")
+    expect(page).to have_h1("Confirm you want to upload the payer response")
     have_element(:span, text: "Clawbacks", class: "govuk-caption-l")
-    expect(page).to have_element(:p, text: "There are 2 claims included in this upload.", class: "govuk-body")
+    expect(page).to have_h2("example_esfa_clawback_response_upload.csv")
+    expect(page).to have_table_row(
+      "1" => "2",
+      "claim_reference" => "11111111",
+      "claim_status" => "clawback_complete",
+    )
+    expect(page).to have_table_row(
+      "1" => "3",
+      "claim_reference" => "22222222",
+      "claim_status" => "clawback_complete",
+    )
   end
 
   def when_i_click_on_cancel
@@ -175,11 +185,14 @@ RSpec.describe "Support user uploads ESFA responses for claims with the status '
   alias_method :and_i_click_on_back, :when_i_click_on_back
 
   def when_i_click_upload_responses
-    click_on "Upload responses"
+    click_on "Confirm upload"
   end
 
   def then_i_see_the_upload_has_been_successful
-    expect(page).to have_success_banner("ESFA response uploaded")
+    expect(page).to have_success_banner(
+      "Payer response uploaded",
+      "It may take a moment for the responses to load",
+    )
   end
 
   def and_i_can_not_see_claim_11111111

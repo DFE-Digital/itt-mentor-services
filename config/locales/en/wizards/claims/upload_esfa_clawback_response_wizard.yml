@@ -24,29 +24,32 @@ en:
               - claim_submission_date
               - claim_status
         confirmation_step:
-          page_title: Are you sure you want to upload the ESFA response? - Clawbacks - Claims
-          title: Are you sure you want to upload the ESFA response?
+          page_title: Confirm you want to upload the payer response - Clawbacks - Claims
+          title: Confirm you want to upload the payer response
           caption: Clawbacks
-          claims_count: 
-            one: There is %{count} claim included in this upload.
-            other: There are %{count} claims included in this upload.
-          upload_data: Upload responses
+          confirm_upload: Confirm upload
+          only_showing_first_five_rows: Only showing the first 5 rows
+          showing_all_rows: Showing all rows
         no_claims_step:
           title: You cannot upload a payer response
           page_title: You cannot upload a payer response - Clawbacks - Claims
           caption: Clawbacks
           you_cannot_upload: You cannot upload a payer response as there are no claims waiting for a response.
         upload_errors_step:
-          title: There is a problem with the CSV file
+          title: Upload payer response
           caption: Clawbacks
-          page_title: There is a problem with the CSV file - Clawbacks - Claims
-          status: Status
-          claim_reference: Claim reference
-          view: View (opens in new tab)
-          incorrect_claim_reference: There are no claims associated with the following references:-
-          incorrect_status: The following claims do not have the status 'Clawback in progress':-
-          invalid_updated_status: The following claims are being updated to an invalid status:-
-          upload_warning_html: |
-            You can only upload the ESFA's CSV once they have completed all rows.
-            <br><br>
-            Email the ESFA and ask them to complete the CSV with the missing information.
+          page_title: Upload payer response - Clawbacks - Claims
+          error_summary:
+            title: There is a problem
+            errors_to_fix:
+              one: You need to fix %{count} error related to specific rows
+              other: You need to fix %{count} errors related to specific rows
+          csv_table:
+            headers:
+              claim_reference: claim_reference
+              claim_status: claim_status
+            errors:
+              invalid_claim_reference: Not a valid claim reference
+              invalid_claim_status: Not a valid claim status
+          only_showing_rows_with_errors: Only showing rows with errors
+          upload_your_file_again: Upload your file again
