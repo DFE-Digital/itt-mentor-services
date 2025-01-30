@@ -78,7 +78,6 @@ RSpec.describe "Support user views sampling response uploaded activity spec", se
       "Claim amount" => "£#{@claim.amount}",
     })
     expect(page).to have_link("12345678", href: claims_support_claim_path(@claim))
-    expect(page).to have_link("Resend email to provider", href: resend_email_claims_support_claims_claim_activity_path(@activity_log, provider_id: @provider.id))
   end
 
   def when_i_click_on_download_csv

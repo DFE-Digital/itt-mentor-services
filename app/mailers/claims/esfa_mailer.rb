@@ -7,6 +7,14 @@ class Claims::ESFAMailer < Claims::ApplicationMailer
                  body: t(".body", url_for_csv: claims_clawback_claims_url(token:), support_email:, service_name:)
   end
 
+  def resend_claims_require_clawback(clawback)
+    @clawback = clawback
+
+    notify_email to: esfa_email_addresses,
+                 subject: t(".subject"),
+                 body: t(".body", url_for_csv: claims_clawback_claims_url(token:), support_email:, service_name:)
+  end
+
   private
 
   def esfa_email_addresses

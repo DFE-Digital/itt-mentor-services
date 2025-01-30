@@ -159,7 +159,8 @@ scope module: :claims, as: :claims, constraints: {
 
       resources :claim_activities, path: "activity", only: %i[index show] do
         member do
-          get :resend_email
+          get :resend_payer_email
+          get :resend_provider_email
         end
       end
     end
