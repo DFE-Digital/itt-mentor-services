@@ -1,0 +1,8 @@
+en:
+  claims:
+    support:
+      claims:
+        payments:
+          upload_payer_response:
+            edit:
+              cancel: Cancel
