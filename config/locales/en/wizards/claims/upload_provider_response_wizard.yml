@@ -14,7 +14,7 @@ en:
             Use this form to upload the CSV file sent by the provider.
 
             The CSV file must contain the following headers in the first row:
-            
+
               - claim_reference
               - school_urn
               - school_name
@@ -45,11 +45,11 @@ en:
           page_title: Upload provider response - Auditing - Claims
           error_summary:
             title: There is a problem
-            missing_mentors: 
+            missing_mentors:
               one: Mentors are missing from the claim with the reference %{references}
               other: Mentors are missing from claims with the reference %{references}
             errors_to_fix:
-              one: You need to fix %{count} error related to specific rows
+              one: You need to fix %{count} error related to a specific row
               other: You need to fix %{count} errors related to specific rows
           csv_table:
             headers:
