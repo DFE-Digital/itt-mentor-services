@@ -17,14 +17,11 @@ en:
             - sampling_reason
         confirmation_step:
           page_title: Are you sure you want to upload the auditing data? - Auditing - Claims
-          title: Are you sure you want to upload the auditing data?
+          title: Confirm you want to upload claims to be sampled
           caption: Auditing
-          claims_count:
-            one: There is %{count} claim included in this upload.
-            other: There are %{count} claims included in this upload.
-          providers_will_be_emailed:
-            Each accredited provider will receive an email instructing them to assure their partner schools' claim.
-          upload_data: Upload data
+          confirm_upload: Confirm upload
+          only_showing_first_rows: Only showing the first %{row_count} rows
+          showing_all_rows: Showing all rows
         upload_errors_step:
           page_title: Upload claims to be audited - Auditing - Claims
           title: Upload claims to be audited

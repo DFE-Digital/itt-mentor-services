@@ -14,7 +14,8 @@ class Claims::Support::Claims::Samplings::UploadDataController < Claims::Support
       @wizard.upload_data
       @wizard.reset_state
       redirect_to index_path, flash: {
-        heading: t(".success"),
+        heading: t(".heading"),
+        body: t(".body"),
       }
     end
   end
