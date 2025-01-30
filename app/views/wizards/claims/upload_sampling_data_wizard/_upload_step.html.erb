@@ -7,7 +7,7 @@
       <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
       <%= form_for(current_step, url: current_step_path, method: :put, multipart: true) do |f| %>
-        <%= f.govuk_error_summary %>
+        <%= f.govuk_error_summary(presenter: DetailedErrorSummaryPresenter) %>
         <%= f.govuk_file_field :csv_upload, label: { text: t(".upload_csv_file"), size: "s" } %>
 
         <%= govuk_details(summary_text: t(".csv_help")) do %>

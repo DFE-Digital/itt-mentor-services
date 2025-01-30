@@ -9,8 +9,8 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
   delegate :paid_claims, to: :wizard
 
   validates :csv_upload, presence: true, if: -> { csv_content.blank? }
-  validate :validate_csv_headers, if: -> { csv_content.present? }
   validate :validate_csv_file, if: -> { csv_upload.present? }
+  validate :validate_csv_headers, if: -> { csv_content.present? }
 
   REQUIRED_HEADERS = %w[claim_reference sampling_reason].freeze
 
