@@ -1,22 +1,24 @@
 class Claims::UploadESFAClawbackResponseWizard::UploadErrorsStep < BaseStep
-  delegate :invalid_claim_references,
-           :invalid_status_claim_references,
-           :invalid_updated_status_claim_references,
+  delegate :invalid_claim_rows,
+           :invalid_claim_status_rows,
+           :file_name,
+           :csv,
            to: :upload_step
 
-  def invalid_status_claims
-    return [] if invalid_status_claim_references.blank?
-
-    Claims::Claim.where(reference: invalid_status_claim_references)
+  def row_indexes_with_errors
+    combined_errors.uniq.sort
   end
 
-  def invalid_updated_status_claims
-    return [] if invalid_updated_status_claim_references.blank?
-
-    Claims::Claim.where(reference: invalid_updated_status_claim_references)
+  def error_count
+    combined_errors.count
   end
 
   private
+
+  def combined_errors
+    invalid_claim_rows +
+      invalid_claim_status_rows
+  end
 
   def upload_step
     @upload_step ||= wizard.steps.fetch(:upload)

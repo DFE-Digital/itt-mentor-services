@@ -1,15 +1,17 @@
 class Claims::UploadESFAClawbackResponseWizard::UploadStep < BaseStep
   attribute :csv_upload
   attribute :csv_content
+  attribute :file_name
   # input validation attributes
-  attribute :invalid_claim_references, default: []
-  attribute :invalid_status_claim_references, default: []
-  attribute :invalid_updated_status_claim_references, default: []
+  attribute :invalid_claim_rows, default: []
+  attribute :invalid_claim_status_rows, default: []
 
   validates :csv_upload, presence: true, if: -> { csv_content.blank? }
   validate :validate_csv_file, if: -> { csv_upload.present? }
+  validate :validate_csv_headers, if: -> { csv_content.present? }
 
   VALID_UPLOAD_STATUSES = %w[clawback_in_progress clawback_complete].freeze
+  REQUIRED_HEADERS = %w[claim_reference claim_status].freeze
 
   delegate :clawback_in_progress_claims, to: :wizard
 
@@ -28,6 +30,7 @@ class Claims::UploadESFAClawbackResponseWizard::UploadStep < BaseStep
     return if errors.present?
 
     assign_csv_content
+    self.file_name = csv_upload.original_filename
 
     self.csv_upload = nil
   end
@@ -36,11 +39,36 @@ class Claims::UploadESFAClawbackResponseWizard::UploadStep < BaseStep
     return true if csv_content.blank?
 
     reset_input_attributes
-    validate_csv_rows
+    csv.each_with_index do |row, i|
+      next if row["claim_reference"].blank?
 
-    invalid_claim_references &&
-      invalid_status_claim_references.blank? &&
-      invalid_updated_status_claim_references.blank?
+      validate_claim_reference(row, i)
+      validate_claim_status(row, i)
+    end
+
+    invalid_claim_rows.blank? &&
+      invalid_claim_status_rows.blank?
+  end
+
+  def validate_csv_headers
+    csv_headers = csv.headers
+    missing_columns = REQUIRED_HEADERS - csv_headers
+    return if missing_columns.empty?
+
+    errors.add(:csv_upload,
+               :invalid_headers,
+               missing_columns: missing_columns.map { |string|
+                 "‘#{string}’"
+               }.to_sentence)
+    errors.add(:csv_upload,
+               :uploaded_headers,
+               uploaded_headers: csv_headers.map { |string|
+                 "‘#{string}’"
+               }.to_sentence)
+  end
+
+  def csv
+    @csv ||= CSV.parse(read_csv, headers: true, skip_blanks: true)
   end
 
   private
@@ -58,39 +86,21 @@ class Claims::UploadESFAClawbackResponseWizard::UploadStep < BaseStep
   end
 
   def reset_input_attributes
-    self.invalid_claim_references = []
-    self.invalid_status_claim_references = []
-    self.invalid_updated_status_claim_references = []
+    self.invalid_claim_rows = []
+    self.invalid_claim_status_rows = []
   end
 
   ### CSV input valiations
 
-  def validate_csv_rows
-    rows = CSV.parse(read_csv, headers: true).reject { |row| row.all?(&:nil?) }
-    validate_claims(rows)
-    validate_updated_statuses(rows)
+  def validate_claim_reference(row, row_number)
+    return if clawback_in_progress_claims.find_by(reference: row["claim_reference"]).present?
+
+    invalid_claim_rows << row_number
   end
 
-  def validate_claims(rows)
-    claim_references = rows.pluck("claim_reference").compact.flatten
-    existing_claims = Claims::Claim.where(reference: claim_references)
-    existing_claims_references = existing_claims.pluck(:reference)
+  def validate_claim_status(row, row_number)
+    return if VALID_UPLOAD_STATUSES.include?(row["claim_status"])
 
-    invalid_references = claim_references - existing_claims_references
-    self.invalid_claim_references = invalid_references if invalid_references.present?
-
-    valid_status_references = clawback_in_progress_claims.where(reference: claim_references).pluck(:reference)
-    invalid_status_references = claim_references - valid_status_references
-    self.invalid_status_claim_references = invalid_status_references if invalid_status_references.present?
-  end
-
-  def validate_updated_statuses(rows)
-    invalid_rows = rows.reject do |row|
-      VALID_UPLOAD_STATUSES.include?(row["claim_status"]) ||
-        row["claim_reference"].blank?
-    end
-    return if invalid_rows.blank?
-
-    self.invalid_updated_status_claim_references = invalid_rows.pluck("claim_reference")
+    invalid_claim_status_rows << row_number
   end
 end

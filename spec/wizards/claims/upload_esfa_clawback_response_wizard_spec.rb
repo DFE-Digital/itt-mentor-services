@@ -121,38 +121,4 @@ RSpec.describe Claims::UploadESFAClawbackResponseWizard do
       expect(clawback_in_progress_claims).to contain_exactly(clawback_in_progress_claim)
     end
   end
-
-  describe "#claims_count" do
-    subject(:claims_count) { wizard.claims_count }
-
-    let(:clawback_in_progress_claim_1) do
-      create(:claim, :submitted, status: :clawback_in_progress, reference: 11_111_111)
-    end
-    let(:clawback_in_progress_claim_2) do
-      create(:claim, :submitted, status: :clawback_in_progress, reference: 22_222_222)
-    end
-    let(:state) do
-      {
-        "upload" => {
-          "csv_upload" => nil,
-          "csv_content" => csv_content,
-        },
-      }
-    end
-    let(:csv_content) do
-      "claim_reference,claim_status\r\n" \
-      "11111111,clawback_complete\r\n" \
-      "22222222,clawback_in_progress\r\n" \
-      ","
-    end
-
-    before do
-      clawback_in_progress_claim_1
-      clawback_in_progress_claim_2
-    end
-
-    it "returns the number of rows within the CSV" do
-      expect(claims_count).to eq(2)
-    end
-  end
 end

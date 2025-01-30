@@ -33,10 +33,6 @@ module Claims
       @clawback_in_progress_claims ||= Claims::Claim.clawback_in_progress
     end
 
-    def claims_count
-      csv_rows.count
-    end
-
     private
 
     attr_reader :current_user
@@ -52,8 +48,7 @@ module Claims
     end
 
     def csv_rows
-      csv = steps.fetch(:upload).csv_content
-      CSV.parse(csv, headers: true, skip_blanks: true).reject do |row|
+      steps.fetch(:upload).csv.reject do |row|
         row["claim_reference"].blank?
       end
     end

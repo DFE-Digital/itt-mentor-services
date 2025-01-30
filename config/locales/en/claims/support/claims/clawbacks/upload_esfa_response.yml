@@ -7,4 +7,5 @@ en:
             edit:
               cancel: Cancel
             update: 
-              success: ESFA response uploaded
+              heading: Payer response uploaded
+              body: It may take a moment for the responses to load

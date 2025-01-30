@@ -1,9 +1,5 @@
 class Claims::UploadProviderResponseWizard::ConfirmationStep < BaseStep
-  delegate :file_name, :csv, :grouped_csv_rows, to: :upload_step
-
-  def claims_count
-    grouped_csv_rows.keys.compact.count
-  end
+  delegate :file_name, :csv, to: :upload_step
 
   def csv_headers
     @csv_headers ||= csv.headers

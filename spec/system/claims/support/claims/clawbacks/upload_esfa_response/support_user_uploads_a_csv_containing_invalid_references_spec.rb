@@ -17,7 +17,7 @@ RSpec.describe "Support user uploads a CSV containing invalid references",
     when_i_upload_a_file_not_containing_an_assured_status_for_each_mentor
     and_i_click_on_upload_csv_file
     then_i_see_the_errors_page
-    and_i_see_the_csv_contained_claims_without_an_assured_status_for_each_mentor
+    and_i_see_the_csv_contained_claims_with_an_invalid_reference
   end
 
   private
@@ -118,17 +118,15 @@ RSpec.describe "Support user uploads a CSV containing invalid references",
 
   def then_i_see_the_errors_page
     expect(page).to have_title(
-      "There is a problem with the CSV file - Clawbacks - Claims - Claim funding for mentor training - GOV.UK",
+      "Upload payer response - Clawbacks - Claims - Claim funding for mentor training - GOV.UK",
     )
-    expect(page).to have_h1("There is a problem with the CSV file")
+    expect(page).to have_h1("Upload payer response")
   end
 
-  def and_i_see_the_csv_contained_claims_without_an_assured_status_for_each_mentor
-    expect(page).to have_h2("There are no claims associated with the following references:-")
-    expect(page).to have_element(:dl, text: "11111111", class: "govuk-summary-list")
-    expect(page).to have_warning_text(
-      "You can only upload the ESFA's CSV once they have completed all rows." \
-        " Email the ESFA and ask them to complete the CSV with the missing information.",
-    )
+  def and_i_see_the_csv_contained_claims_with_an_invalid_reference
+    expect(page).to have_h1("Upload payer response")
+    expect(page).to have_element(:div, text: "You need to fix 1 error related to specific rows", class: "govuk-error-summary")
+    expect(page).to have_element(:td, text: "Not a valid claim reference 11111111", class: "govuk-table__cell", count: 1)
+    expect(page).to have_element(:p, text: "Only showing rows with errors", class: "govuk-!-text-align-centre")
   end
 end

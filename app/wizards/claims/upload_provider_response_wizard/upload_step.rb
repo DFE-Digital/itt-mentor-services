@@ -61,7 +61,7 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
   end
 
   def validate_csv_headers
-    csv_headers = CSV.parse(read_csv, headers: true).headers
+    csv_headers = csv.headers
     missing_columns = REQUIRED_HEADERS - csv_headers
     return if missing_columns.empty?
 

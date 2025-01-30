@@ -7,4 +7,6 @@ en:
             edit:
               cancel: Cancel
             update: 
-              success: Provider response uploaded
+              heading: Provider response uploaded
+              body: It may take a moment for the responses to load
+
