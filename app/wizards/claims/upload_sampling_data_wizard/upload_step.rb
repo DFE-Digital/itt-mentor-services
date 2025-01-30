@@ -9,7 +9,10 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
   delegate :paid_claims, to: :wizard
 
   validates :csv_upload, presence: true, if: -> { csv_content.blank? }
+  validate :validate_csv_headers, if: -> { csv_content.present? }
   validate :validate_csv_file, if: -> { csv_upload.present? }
+
+  REQUIRED_HEADERS = %w[claim_reference sampling_reason].freeze
 
   def initialize(wizard:, attributes:)
     super(wizard:, attributes:)
@@ -19,6 +22,23 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
 
   def validate_csv_file
     errors.add(:csv_upload, :invalid) unless csv_format
+  end
+
+  def validate_csv_headers
+    csv_headers = CSV.parse(read_csv, headers: true).headers
+    missing_columns = REQUIRED_HEADERS - csv_headers
+    return if missing_columns.empty?
+
+    errors.add(:csv_upload,
+               :invalid_headers,
+               missing_columns: missing_columns.map { |string|
+                 "‘#{string}’"
+               }.to_sentence)
+    errors.add(:csv_upload,
+               :uploaded_headers,
+               uploaded_headers: csv_headers.map { |string|
+                 "‘#{string}’"
+               }.to_sentence)
   end
 
   def csv_inputs_valid?
@@ -61,7 +81,7 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
   end
 
   def read_csv
-    @read_csv ||= csv_upload.read
+    @read_csv ||= csv_content || csv_upload.read
   end
 
   def reset_claim_ids

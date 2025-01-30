@@ -4,8 +4,8 @@ en:
       upload_sampling_data_wizard:
         upload_step:
           page_title: Upload claims to be audited - Auditing - Claims
-          caption: Auditing
           title: Upload claims to be audited
+          caption: Auditing
           upload_csv_file: Upload CSV file
           csv_help: Help with the CSV file
           csv_help_details: |
@@ -14,7 +14,7 @@ en:
             The CSV file must contain the following headers in the first row:
 
             - claim_reference
-            - sample_reason
+            - sampling_reason
         confirmation_step:
           page_title: Are you sure you want to upload the auditing data? - Auditing - Claims
           title: Are you sure you want to upload the auditing data?
@@ -32,7 +32,7 @@ en:
           error_summary:
             title: There is a problem
             errors_to_fix:
-                one: You need to fix %{count} error related to specific rows
+                one: You need to fix %{count} error related to a specific row
                 other: You need to fix %{count} errors related to specific rows
           csv_table:
             headers:
