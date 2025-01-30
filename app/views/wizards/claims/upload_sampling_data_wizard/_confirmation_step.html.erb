@@ -8,13 +8,43 @@
       <%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
         <%= f.govuk_error_summary %>
 
-        <p class="govuk-body">
-          <%= t(".claims_count", count: current_step.uploaded_claim_ids.count) %>
+        <h2 class="govuk-heading-m"><%= current_step.file_name %></h2>
+
+        <div class="horizontal-scrollable">
+          <%= govuk_table do |table| %>
+            <% table.with_head do |head| %>
+              <% head.with_row do |row| %>
+                <% row.with_cell text: 1 %>
+                <% current_step.csv_headers.each do |header| %>
+                  <% row.with_cell text: header %>
+                <% end %>
+              <% end %>
+            <% end %>
+
+            <% table.with_body do |body| %>
+              <% current_step.csv.each_with_index do |csv_row, index| %>
+                <% if csv_row["claim_reference"].present? %>
+                  <% body.with_row do |row| %>
+                    <% row.with_cell text: index + 2 %>
+                    <% current_step.csv_headers.each do |header| %>
+                      <%= row.with_cell text: csv_row[header] %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+
+        <p class="govuk_body govuk-!-text-align-centre secondary-text">
+          <% if current_step.csv.count > 5 %>
+            <%= t(".only_showing_first_rows", row_count: current_step.csv.count) %>
+          <% else %>
+            <%= t(".showing_all_rows") %>
+          <% end %>
         </p>
 
-        <%= f.govuk_submit(t(".upload_data")) %>
+        <%= f.govuk_submit(t(".confirm_upload")) %>
       <% end %>
-
-      <%= govuk_warning_text(text: t(".providers_will_be_emailed")) %>
   </div>
 </div>

@@ -60,8 +60,16 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
     validate_csv_file
     return if errors.present?
 
+    reset_claim_ids
+
+    CSV.parse(read_csv, headers: true) do |row|
+      claim = paid_claims.find_by(reference: row["claim_reference"])
+      break if claim.blank?
+
+      claim_ids << claim.id
+    end
+
     assign_csv_content
-    self.file_name = csv_upload.original_filename
 
     self.csv_upload = nil
   end
