@@ -113,7 +113,13 @@ scope module: :claims, as: :claims, constraints: {
         end
       end
 
-      resources :payments, only: %i[index new create]
+      resources :payments, only: %i[index new create] do
+        collection do
+          get "payer_response/new", to: "payments/upload_payer_response#new", as: :new_upload_payer_response
+          get "payer_response/new/:state_key/:step", to: "payments/upload_payer_response#edit", as: :upload_payer_response
+          put "payer_response/new/:state_key/:step", to: "payments/upload_payer_response#update"
+        end
+      end
       resources :payment_responses, only: %i[new update] do
         post :check, on: :collection
       end

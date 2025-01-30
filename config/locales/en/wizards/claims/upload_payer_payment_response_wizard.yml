@@ -1,0 +1,10 @@
+en:
+  wizards:
+    claims:
+      upload_payer_payment_response_wizard:
+        no_claims_step:
+          title: You cannot upload a payer response
+          page_title: You cannot upload a payer response - Payments - Claims
+          caption: Payments
+          you_cannot_upload: You cannot upload a payer response as there are no claims waiting for a response.
+        upload_step:
