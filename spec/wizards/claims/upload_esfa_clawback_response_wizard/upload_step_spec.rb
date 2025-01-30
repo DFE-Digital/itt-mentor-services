@@ -119,7 +119,7 @@ RSpec.describe Claims::UploadESFAClawbackResponseWizard::UploadStep, type: :mode
           it "returns errors for missing headers" do
             expect(step.valid?).to be(false)
             expect(step.errors.messages[:csv_upload]).to include(
-              "Your file needs a column name called ‘claim_reference’ and ‘claim_status’.",
+              "Your file needs a column called ‘claim_reference’ and ‘claim_status’.",
             )
             expect(step.errors.messages[:csv_upload]).to include(
               "Right now it has columns called ‘something_random’.",

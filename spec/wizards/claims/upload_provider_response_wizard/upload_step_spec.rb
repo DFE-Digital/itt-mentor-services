@@ -108,7 +108,7 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadStep, type: :model do
           it "returns errors for missing headers" do
             expect(step.valid?).to be(false)
             expect(step.errors.messages[:csv_upload]).to include(
-              "Your file needs a column name called ‘claim_reference’, ‘mentor_full_name’, ‘claim_accepted’, and ‘rejection_reason’.",
+              "Your file needs a column called ‘claim_reference’, ‘mentor_full_name’, ‘claim_accepted’, and ‘rejection_reason’.",
             )
             expect(step.errors.messages[:csv_upload]).to include(
               "Right now it has columns called ‘something_random’.",
