@@ -18,6 +18,7 @@ class Claims::Support::Claims::ClaimActivitiesController < Claims::Support::Appl
   end
 
   def resend_payer_email
+    authorize [:claims, claim_activity]
     case claim_activity.action
     when "payment_request_delivered"
       Claims::Payment::ResendEmail.call(payment: claim_activity.record)
@@ -27,14 +28,13 @@ class Claims::Support::Claims::ClaimActivitiesController < Claims::Support::Appl
       raise "Unknown action: #{claim_activity.action}"
     end
 
-    authorize [:claims, claim_activity]
     redirect_to claims_support_claims_claim_activity_path(claim_activity), flash: { success: true, heading: t(".success") }
   end
 
   def resend_provider_email
+    authorize [:claims, claim_activity]
     Claims::Sampling::ResendEmails.call(provider_sampling:)
 
-    authorize [:claims, claim_activity]
     redirect_to claims_support_claims_claim_activity_path(claim_activity), flash: { success: true, heading: t(".success", provider_name: provider_sampling.provider_name) }
   end
 
