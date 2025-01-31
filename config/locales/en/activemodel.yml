@@ -240,3 +240,12 @@ en:
                 Your file needs a column called %{missing_columns}.
               uploaded_headers: 
                 Right now it has columns called %{uploaded_headers}.
+        claims/upload_payer_payment_response_wizard/upload_step:
+          attributes:
+            csv_upload:
+              blank: Select a CSV file to upload
+              invalid: The selected file must be a CSV
+              invalid_headers:
+                Your file needs a column called %{missing_columns}.
+              uploaded_headers: 
+                Right now it has columns called %{uploaded_headers}.

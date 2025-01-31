@@ -8,3 +8,50 @@ en:
           caption: Payments
           you_cannot_upload: You cannot upload a payer response as there are no claims waiting for a response.
         upload_step:
+          page_title: Upload payer response - Payments
+          title: Upload payer response
+          caption: Payments
+          upload_csv_file: Upload CSV file
+          csv_help: Help with the CSV file
+          csv_help_details: |
+            Use this form to upload the CSV file sent by the ESFA.
+
+            The CSV file must contain the following headers in the first row:
+
+              - claim_reference
+              - school_urn
+              - school_name
+              - school_local_authority
+              - claim_amount
+              - school_type_of_establishment
+              - school_group
+              - claim_submission_date
+              - claim_status
+              - claim_unpaid_reason
+        upload_errors_step:
+          title: Upload payer response
+          caption: Payments
+          page_title: Upload payer response - Payments - Claims
+          error_summary:
+            title: There is a problem
+            errors_to_fix:
+              one: You need to fix %{count} error related to specific rows
+              other: You need to fix %{count} errors related to specific rows
+          csv_table:
+            headers:
+              claim_reference: claim_reference
+              claim_status: claim_status
+              claim_unpaid_reason: claim_unpaid_reason
+            errors:
+              invalid_claim_reference: Enter a valid claim reference
+              invalid_claim_status: Enter a valid claim status
+              invalid_claim_unpaid_reason: Enter a reason
+          only_showing_rows_with_errors: Only showing rows with errors
+          upload_your_file_again: Upload your file again
+        confirmation_step:
+          page_title: Confirm you want to upload the payer response - Payments - Claims
+          title: Confirm you want to upload the payer response
+          caption: Payments
+          confirm_upload: Confirm upload
+          only_showing_first_five_rows: Only showing the first 5 rows
+          showing_all_rows: Showing all rows
