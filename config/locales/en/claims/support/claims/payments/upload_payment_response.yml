@@ -6,3 +6,6 @@ en:
           upload_payer_response:
             edit:
               cancel: Cancel
+            update:
+              heading: Payer response uploaded
+              body: It may take a moment for the responses to load
