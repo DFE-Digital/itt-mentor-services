@@ -18,8 +18,8 @@
     <%= render "payment_and_clawback_activities", claim_activity: @claim_activity %>
   <% when *Claims::ClaimActivity::MANUAL_ACTIONS %>
     <%= render "manual_activities", claim_activity: @claim_activity %>
-  <% when "payment_response_uploaded" %>
-    <%= render "payment_response_activity", claim_activity: @claim_activity %>
+  <% else %>
+    <%= render "base_response_activity", claim_activity: @claim_activity %>
   <% end %>
 
   <%= render PaginationComponent.new(pagy: @pagy) if @pagy %>

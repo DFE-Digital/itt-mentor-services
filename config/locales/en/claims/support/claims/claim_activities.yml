@@ -34,7 +34,7 @@ en:
             claim_reference: Claim reference
             number_of_mentors: Number of mentors
             claim_amount: Claim amount
-          payment_response_activity:
+          base_response_activity:
             download_csv: Download CSV
           resend_payer_email:
             success: An email has been sent to the payer

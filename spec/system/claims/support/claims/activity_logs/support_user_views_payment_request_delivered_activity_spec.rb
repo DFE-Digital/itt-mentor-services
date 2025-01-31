@@ -33,6 +33,8 @@ RSpec.describe "Support user views payment request delivered activity spec", ser
 
     @payment = build(:claims_payment, claims: [@best_practice_network_claim, @niot_claim])
     @activity_log = create(:claim_activity, :payment_request_delivered, user: @colin, record: @payment)
+
+    allow(Claims::Payment::ResendEmail).to receive(:call).and_call_original
   end
 
   def and_i_am_signed_in
@@ -100,6 +102,7 @@ RSpec.describe "Support user views payment request delivered activity spec", ser
   end
 
   def then_i_see_the_email_sent_success_message
+    expect(Claims::Payment::ResendEmail).to have_received(:call).once
     expect(page).to have_success_banner("An email has been sent to the payer")
   end
 
