@@ -100,7 +100,7 @@ RSpec.describe "Support user uploads sampling data", service: :claims, type: :sy
   end
 
   def when_i_upload_a_csv_containing_a_valid_sampling_data
-    attach_file "Upload CSV file", "spec/fixtures/claims/sampling/example_sampling_upload.csv"
+    attach_file nil, "spec/fixtures/claims/sampling/example_sampling_upload.csv"
   end
   alias_method :and_i_upload_a_csv_containing_a_valid_sampling_data,
                :when_i_upload_a_csv_containing_a_valid_sampling_data
@@ -110,13 +110,12 @@ RSpec.describe "Support user uploads sampling data", service: :claims, type: :sy
   end
 
   def then_i_see_the_confirmation_page_for_uploading_the_sampling_data
-    expect(page).to have_h1("Are you sure you want to upload the auditing data?")
+    expect(page).to have_h1("Confirm you want to upload claims to be audited")
     have_element(:span, text: "Auditing", class: "govuk-caption-l")
-    expect(page).to have_element(:p, text: "There is 1 claim included in this upload.", class: "govuk-body")
-    expect(page).to have_element(
-      :strong,
-      text: "WarningEach accredited provider will receive an email instructing them to assure their partner schools' claim.",
-      class: "govuk-warning-text__text",
+    expect(page).to have_table_row(
+      "1" => "2",
+      "claim_reference" => "11111111",
+      "sample_reason" => "Some Reason",
     )
   end
 
@@ -133,11 +132,10 @@ RSpec.describe "Support user uploads sampling data", service: :claims, type: :sy
   def then_i_see_the_upload_csv_page
     expect(page).to have_h1("Upload claims to be audited")
     have_element(:span, text: "Auditing", class: "govuk-caption-l")
-    expect(page).to have_element(:label, text: "Upload CSV file")
   end
 
   def when_i_click_upload_data
-    click_on "Upload data"
+    click_on "Confirm upload"
   end
 
   def then_i_see_the_upload_has_been_successful

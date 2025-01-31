@@ -12,11 +12,9 @@
         </h2>
         <div class="govuk-error-summary__body">
           <div class="govuk-list govuk-error-summary__list">
-            <% if current_step.error_count > 0 %>
               <p class="govuk-heading-s">
                 <%= t(".error_summary.errors_to_fix", count: current_step.error_count) %>
               </p>
-            <% end %>
           </div>
         </div>
       </div>
