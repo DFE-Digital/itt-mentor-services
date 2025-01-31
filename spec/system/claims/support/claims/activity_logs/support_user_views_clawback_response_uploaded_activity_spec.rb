@@ -62,7 +62,7 @@ RSpec.describe "Support user views clawback response uploaded activity spec", se
     expect(page).to have_h1("Claims")
     expect(secondary_navigation).to have_current_item("Activity log")
     expect(page).to have_h2("Activity log")
-    expect(page).to have_element("h3", class: "app-timeline__title", text: "Payer clawback response uploaded")
+    expect(page).to have_element("h3", class: "app-timeline__title", text: "Payer clawback response uploaded for 2 claims")
     expect(page).to have_link("View details", href: claims_support_claims_claim_activity_path(@activity_log))
   end
 
@@ -71,9 +71,9 @@ RSpec.describe "Support user views clawback response uploaded activity spec", se
   end
 
   def then_i_see_the_activity_details
-    expect(page).to have_title("Payer clawback response uploaded - Claim funding for mentor training - GOV.UK")
+    expect(page).to have_title("Payer clawback response uploaded for 2 claims - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Claims")
-    expect(page).to have_h1("Payer clawback response uploaded")
+    expect(page).to have_h1("Payer clawback response uploaded for 2 claims")
     expect(page).to have_link("12345678", href: claims_support_claim_path(@best_practice_network_claim))
     expect(page).to have_h2("Providers")
     expect(page).to have_h3("Best Practice Network")

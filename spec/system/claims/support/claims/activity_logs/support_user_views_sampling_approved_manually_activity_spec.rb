@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Support user views sampling approved manually activity spec", service: :claims, type: :system do
   scenario do
-    given_sampling_approved_manually_activity_exists
+    given_provider_approved_audit_activity_exists
     and_i_am_signed_in
     then_i_see_the_organisations_page
 
@@ -16,13 +16,13 @@ RSpec.describe "Support user views sampling approved manually activity spec", se
     then_i_see_the_activity_details
   end
 
-  def given_sampling_approved_manually_activity_exists
+  def given_provider_approved_audit_activity_exists
     @colin = build(:claims_support_user, :colin)
 
     @best_practice_network = build(:claims_provider, name: "Best Practice Network")
     @best_practice_network_claim = build(:claim, :payment_in_progress, submitted_at: 1.day.ago, reference: "12345678", provider: @best_practice_network)
 
-    @activity_log = create(:claim_activity, :sampling_approved_manually, user: @colin, record: @best_practice_network_claim)
+    @activity_log = create(:claim_activity, :provider_approved_audit, user: @colin, record: @best_practice_network_claim)
   end
 
   def and_i_am_signed_in
@@ -55,7 +55,7 @@ RSpec.describe "Support user views sampling approved manually activity spec", se
     expect(page).to have_h1("Claims")
     expect(secondary_navigation).to have_current_item("Activity log")
     expect(page).to have_h2("Activity log")
-    expect(page).to have_element("h3", class: "app-timeline__title", text: "Sampling approved manually")
+    expect(page).to have_element("h3", class: "app-timeline__title", text: "Provider #{@best_practice_network_claim.provider_name} approved audit for claim 12345678")
     expect(page).to have_link("View details", href: claims_support_claims_claim_activity_path(@activity_log))
   end
 
@@ -64,9 +64,9 @@ RSpec.describe "Support user views sampling approved manually activity spec", se
   end
 
   def then_i_see_the_activity_details
-    expect(page).to have_title("Sampling approved manually - Claim funding for mentor training - GOV.UK")
+    expect(page).to have_title("Provider #{@best_practice_network_claim.provider_name} approved audit for claim 12345678 - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Claims")
-    expect(page).to have_h1("Sampling approved manually")
+    expect(page).to have_h1("Provider #{@best_practice_network_claim.provider_name} approved audit for claim 12345678")
     expect(page).to have_link("12345678", href: claims_support_claim_path(@best_practice_network_claim))
     expect(page).to have_h2("Providers")
     expect(page).to have_h3("Best Practice Network")

@@ -209,7 +209,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
         expect(resend_sampling_checks_required_email.body.to_s.squish).to eq(<<~EMAIL.squish)
           #{provider.name},
 
-          ^ We are resending this email due to an internal issue. Please disregard any previous emails you may have received.
+          ^ We are resending this email as requested. Please disregard any previous emails you may have received.
 
           You are required by Department for Education (DfE) to complete quality assurance on funding claims associated with #{provider.name}.
 
@@ -296,7 +296,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
         expect(resend_sampling_checks_required_email.body.to_s.squish).to eq(<<~EMAIL.squish)
           #{provider.name},
 
-          ^ We are resending this email due to an internal issue. Please disregard any previous emails you may have received.
+          ^ We are resending this email as requested. Please disregard any previous emails you may have received.
 
           You are required by Department for Education (DfE) to complete quality assurance on funding claims associated with #{provider.name}.
 

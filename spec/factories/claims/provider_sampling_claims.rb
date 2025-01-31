@@ -20,7 +20,7 @@
 #
 FactoryBot.define do
   factory :claims_provider_sampling_claim, class: "Claims::ProviderSamplingClaim" do
-    association :claim, factory: :claims
-    association :provider_sampling, factory: :claims_provider_sampling
+    association :claim, factory: :claim
+    association :provider_sampling, factory: :provider_sampling
   end
 end

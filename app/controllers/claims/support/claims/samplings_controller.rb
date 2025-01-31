@@ -18,7 +18,7 @@ class Claims::Support::Claims::SamplingsController < Claims::Support::Applicatio
     @claim.status = :paid
     @claim.save!
 
-    Claims::ClaimActivity.create!(action: :sampling_approved_manually, user: current_user, record: @claim)
+    Claims::ClaimActivity.create!(action: :provider_approved_audit, user: current_user, record: @claim)
 
     redirect_to claims_support_claims_samplings_path, flash: {
       heading: t(".success_heading"),

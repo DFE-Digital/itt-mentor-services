@@ -3,6 +3,8 @@ class Claims::Support::Claims::ClaimActivitiesController < Claims::Support::Appl
     @pagy, @claim_activities = pagy(Claims::ClaimActivity.order(created_at: :desc))
 
     authorize [:claims, @claim_activities]
+
+    @claim_activities = @claim_activities.decorate
   end
 
   def show
@@ -11,6 +13,8 @@ class Claims::Support::Claims::ClaimActivitiesController < Claims::Support::Appl
     end
 
     authorize [:claims, claim_activity]
+
+    @claim_activity = claim_activity.decorate
   end
 
   def resend_payer_email
