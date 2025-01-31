@@ -47,6 +47,9 @@ en:
         sampling_response_uploaded:
           one: Provider audit response uploaded for 1 claim
           other: Provider audit response uploaded for %{count} claims
+        rejected_by_payer: Payer rejected payment for claim %{claim_reference}
+        paid_by_payer: Payer paid claim %{claim_reference}
+        information_sent_to_payer: Information sent to payer for claim 12345678
       claims/claim_activity/document:
         payment_request_delivered: Claims sent to payer
         payment_response_uploaded: Payer payment response

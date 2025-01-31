@@ -25,6 +25,12 @@ class Claims::ClaimActivityDecorator < Draper::Decorator
       I18n.t("#{translation_path}.approved_by_school", school_name: record.school_name, claim_reference: record.reference)
     when "clawback_requested"
       I18n.t("#{translation_path}.clawback_requested", claim_reference: record.reference)
+    when "rejected_by_payer"
+      I18n.t("#{translation_path}.rejected_by_payer", claim_reference: record.reference)
+    when "paid_by_payer"
+      I18n.t("#{translation_path}.paid_by_payer", claim_reference: record.reference)
+    when "information_sent_to_payer"
+      I18n.t("#{translation_path}.information_sent_to_payer", claim_reference: record.reference)
     end
   end
 

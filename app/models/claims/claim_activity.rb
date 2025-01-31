@@ -35,11 +35,14 @@ class Claims::ClaimActivity < ApplicationRecord
     rejected_by_school: "rejected_by_school",
     approved_by_school: "approved_by_school",
     clawback_requested: "clawback_requested",
+    rejected_by_payer: "rejected_by_payer",
+    paid_by_payer: "paid_by_payer",
+    information_sent_to_payer: "information_sent_to_payer",
   }, validate: true
 
   delegate :full_name, to: :user, prefix: true, allow_nil: true
 
   PAYMENT_AND_CLAWBACK_ACTIONS = %w[payment_request_delivered clawback_request_delivered clawback_response_uploaded].freeze
   SAMPLING_ACTIONS = %w[sampling_uploaded sampling_response_uploaded].freeze
-  MANUAL_ACTIONS = %w[provider_approved_audit rejected_by_provider rejected_by_school clawback_requested].freeze
+  MANUAL_ACTIONS = %w[provider_approved_audit rejected_by_provider rejected_by_school clawback_requested rejected_by_payer paid_by_payer information_sent_to_payer].freeze
 end

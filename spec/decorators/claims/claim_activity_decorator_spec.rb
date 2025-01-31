@@ -210,5 +210,32 @@ RSpec.describe Claims::ClaimActivityDecorator do
         expect(decorated_claim_activity.title).to eq("Clawback requested for claim 12345678")
       end
     end
+
+    context "when the claim activity action is rejected_by_payer" do
+      let(:claim_activity) { create(:claim_activity, :rejected_by_payer, record: build(:claim, reference: "12345678")) }
+      let(:decorated_claim_activity) { claim_activity.decorate }
+
+      it "returns the translation for rejected_by_payer" do
+        expect(decorated_claim_activity.title).to eq("Payer rejected payment for claim 12345678")
+      end
+    end
+
+    context "when the claim activity action is paid_by_payer" do
+      let(:claim_activity) { create(:claim_activity, :paid_by_payer, record: build(:claim, reference: "12345678")) }
+      let(:decorated_claim_activity) { claim_activity.decorate }
+
+      it "returns the translation for paid_by_payer" do
+        expect(decorated_claim_activity.title).to eq("Payer paid claim 12345678")
+      end
+    end
+
+    context "when the claim activity action is information_sent_to_payer" do
+      let(:claim_activity) { create(:claim_activity, :information_sent_to_payer, record: build(:claim, reference: "12345678")) }
+      let(:decorated_claim_activity) { claim_activity.decorate }
+
+      it "returns the translation for information_sent_to_payer" do
+        expect(decorated_claim_activity.title).to eq("Information sent to payer for claim 12345678")
+      end
+    end
   end
 end

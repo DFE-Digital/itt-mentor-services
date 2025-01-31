@@ -30,4 +30,8 @@ RSpec.describe Claims::ClaimActivity, type: :model do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:record) }
   end
+
+  describe "delegations" do
+    it { is_expected.to delegate_method(:full_name).to(:user).with_prefix(true).allow_nil }
+  end
 end
