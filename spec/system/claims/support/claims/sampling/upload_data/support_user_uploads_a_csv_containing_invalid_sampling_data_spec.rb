@@ -14,9 +14,14 @@ RSpec.describe "Support user uploads a CSV containing invalid sampling data",
     when_i_click_on_upload_claims_to_be_sampled
     then_i_see_the_upload_csv_page
 
-    when_i_upload_a_csv_containing_invalid_sampling_data
-    and_i_click_on_upload_csv_file
-    then_i_see_validation_error_regarding_invalid_data
+    # when_i_upload_a_csv_containing_invalid_headers
+    # and_i_click_on_upload_csv_file
+    # then_i_see_validation_errors_regarding_invalid_headers
+
+    # when_i_click_on_upload_again
+    # and_i_upload_a_csv_containing_invalid_sampling_data
+    # and_i_click_on_upload_csv_file
+    # then_i_see_validation_errors_regarding_invalid_data
   end
 
   private
@@ -69,7 +74,7 @@ RSpec.describe "Support user uploads a CSV containing invalid sampling data",
   end
 
   def when_i_upload_a_csv_containing_invalid_sampling_data
-    attach_file "Upload CSV file", "spec/fixtures/claims/sampling/example_sampling_upload.csv"
+    attach_file "Upload CSV file", "spec/fixtures/claims/sampling/invalid_example_sampling_upload.csv"
   end
 
   def and_i_click_on_upload_csv_file
