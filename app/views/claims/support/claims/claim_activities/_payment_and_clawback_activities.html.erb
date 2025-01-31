@@ -12,22 +12,23 @@
 <% claim_activity.record.claims.group_by(&:provider).each do |provider, provider_claims| %>
   <h3 class="govuk-heading-s"><%= provider.name %></h3>
 
-  <table class="govuk-table">
-    <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header"><%= t(".claim_reference") %></th>
-      <th scope="col" class="govuk-table__header"><%= t(".number_of_mentors") %></th>
-      <th scope="col" class="govuk-table__header"><%= t(".claim_amount") %></th>
-    </tr>
-    </thead>
-    <tbody class="govuk-table__body">
-    <% provider_claims.each do |claim| %>
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell"><%= govuk_link_to claim.reference, claims_support_claim_path(claim) %></td>
-        <td class="govuk-table__cell"><%= claim.mentors.count %></td>
-        <td class="govuk-table__cell"><%= humanized_money_with_symbol(claim.amount) %></td>
-      </tr>
+  <%= govuk_table do |table| %>
+    <% table.with_head do |head| %>
+      <% head.with_row do |row| %>
+        <% row.with_cell text: t(".claim_reference") %>
+        <% row.with_cell text: t(".number_of_mentors") %>
+        <% row.with_cell text: t(".claim_amount") %>
+      <% end %>
     <% end %>
-    </tbody>
-  </table>
+
+    <% table.with_body do |body| %>
+      <% provider_claims.each do |claim| %>
+        <% body.with_row do |row| %>
+          <% row.with_cell text: govuk_link_to(claim.reference, claims_support_claim_path(claim)) %>
+          <% row.with_cell text: claim.mentors.count %>
+          <% row.with_cell text: humanized_money_with_symbol(claim.amount) %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
 <% end %>
