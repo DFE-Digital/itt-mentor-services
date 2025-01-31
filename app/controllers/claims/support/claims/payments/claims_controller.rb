@@ -8,7 +8,10 @@ class Claims::Support::Claims::Payments::ClaimsController < Claims::Support::App
   def confirm_information_sent; end
 
   def information_sent
-    @claim.payment_information_sent!
+    @claim.transaction do
+      @claim.payment_information_sent!
+      Claims::ClaimActivity.create!(action: "information_sent_to_payer", user: current_user, record: @claim)
+    end
 
     redirect_to claims_support_claims_payments_claim_path(@claim), flash: { success: true, heading: t(".success") }
   end
@@ -16,7 +19,10 @@ class Claims::Support::Claims::Payments::ClaimsController < Claims::Support::App
   def confirm_paid; end
 
   def paid
-    @claim.paid!
+    @claim.transaction do
+      @claim.paid!
+      Claims::ClaimActivity.create!(action: "paid_by_payer", user: current_user, record: @claim)
+    end
 
     redirect_to claims_support_claims_payments_claim_path(@claim), flash: { success: true, heading: t(".success") }
   end
@@ -24,7 +30,10 @@ class Claims::Support::Claims::Payments::ClaimsController < Claims::Support::App
   def confirm_reject; end
 
   def reject
-    @claim.payment_not_approved!
+    @claim.transaction do
+      @claim.payment_not_approved!
+      Claims::ClaimActivity.create!(action: "rejected_by_payer", user: current_user, record: @claim)
+    end
 
     redirect_to claims_support_claims_payments_claim_path(@claim), flash: { success: true, heading: t(".success") }
   end
