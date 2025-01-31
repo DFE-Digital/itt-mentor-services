@@ -34,4 +34,33 @@ RSpec.describe Claims::ClaimActivity, type: :model do
   describe "delegations" do
     it { is_expected.to delegate_method(:full_name).to(:user).with_prefix(true).allow_nil }
   end
+
+  describe "#claims_by_provider" do
+    context "when the record responds to claims" do
+      let(:provider) { build(:claims_provider) }
+      let(:claim_1) { build(:claim, provider: provider) }
+      let(:claim_2) { build(:claim, provider: provider) }
+      let(:provider_sampling) { build(:provider_sampling, provider:) }
+      let(:claim_activity) { create(:claim_activity, action: :sampling_uploaded, record: provider_sampling) }
+
+      before do
+        create(:claims_provider_sampling_claim, claim: claim_1, provider_sampling: provider_sampling)
+        create(:claims_provider_sampling_claim, claim: claim_2, provider_sampling: provider_sampling)
+      end
+
+      it "returns the claims grouped by provider" do
+        expect(claim_activity.claims_by_provider).to eq({
+          provider => [claim_1, claim_2],
+        })
+      end
+    end
+
+    context "when the record does not respond to claims" do
+      it "returns an empty array" do
+        claim_activity = create(:claim_activity, action: :sampling_uploaded, record: create(:claim))
+
+        expect(claim_activity.claims_by_provider).to eq({})
+      end
+    end
+  end
 end
