@@ -48,10 +48,10 @@
           <% end %>
           <% row.with_cell do %>
               <p>
-                <% if current_step.missing_sampling_reason_rows.include?(csv_row_index) %>
+                <% if current_step.missing_sample_reason_rows.include?(csv_row_index) %>
                   <strong class="error-text"><%= t(".csv_table.errors.reason_needed") %></strong><br>
                 <% end %>
-                <%= csv_row["sampling_reason"] %>
+                <%= csv_row["sample_reason"] %>
               </p>
             <% end %>
         <% end %>
