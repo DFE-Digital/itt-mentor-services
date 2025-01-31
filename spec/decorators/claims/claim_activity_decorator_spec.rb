@@ -237,5 +237,14 @@ RSpec.describe Claims::ClaimActivityDecorator do
         expect(decorated_claim_activity.title).to eq("Information sent to payer for claim 12345678")
       end
     end
+
+    context "when the action is not recognised" do
+      let(:claim_activity) { build(:claim_activity, action: "not_a_real_action") }
+      let(:decorated_claim_activity) { claim_activity.decorate }
+
+      it "raises an error" do
+        expect { decorated_claim_activity.title }.to raise_error("Unknown action: not_a_real_action")
+      end
+    end
   end
 end

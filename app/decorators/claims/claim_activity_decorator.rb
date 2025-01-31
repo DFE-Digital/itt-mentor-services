@@ -31,6 +31,8 @@ class Claims::ClaimActivityDecorator < Draper::Decorator
       I18n.t("#{translation_path}.paid_by_payer", claim_reference: record.reference)
     when "information_sent_to_payer"
       I18n.t("#{translation_path}.information_sent_to_payer", claim_reference: record.reference)
+    else
+      raise "Unknown action: #{action}"
     end
   end
 
