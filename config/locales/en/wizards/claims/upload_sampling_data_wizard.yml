@@ -14,7 +14,7 @@ en:
             The CSV file must contain the following headers in the first row:
 
             - claim_reference
-            - sampling_reason
+            - sample_reason
         confirmation_step:
           page_title: Are you sure you want to upload the auditing data? - Auditing - Claims
           title: Confirm you want to upload claims to be sampled
@@ -34,7 +34,7 @@ en:
           csv_table:
             headers:
               claim_reference: claim_reference
-              sampling_reason: sampling_reason
+              sampling_reason: sample_reason
             errors:
               invalid_claim_reference: Not a valid claim reference
               invalid_input: Not a valid input

@@ -4,7 +4,7 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
   attribute :file_name
   attribute :claim_ids, default: []
   attribute :invalid_claim_rows, default: []
-  attribute :missing_sampling_reason_rows, default: []
+  attribute :missing_sample_reason_rows, default: []
 
   delegate :paid_claims, to: :wizard
 
@@ -12,7 +12,7 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
   validate :validate_csv_file, if: -> { csv_upload.present? }
   validate :validate_csv_headers, if: -> { csv_content.present? }
 
-  REQUIRED_HEADERS = %w[claim_reference sampling_reason].freeze
+  REQUIRED_HEADERS = %w[claim_reference sample_reason].freeze
 
   def initialize(wizard:, attributes:)
     super(wizard:, attributes:)
@@ -50,10 +50,11 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
       next if row["claim_reference"].blank?
 
       validate_claim_reference(row, i)
+      validate_sample_reason(row, i)
     end
 
     invalid_claim_rows.blank? &&
-      missing_sampling_reason_rows.blank?
+      missing_sample_reason_rows.blank?
   end
 
   def process_csv
@@ -98,7 +99,7 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
 
   def reset_input_attributes
     self.invalid_claim_rows = []
-    self.missing_sampling_reason_rows = []
+    self.missing_sample_reason_rows = []
   end
 
   def validate_claim_reference(row, row_number)
@@ -107,9 +108,9 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
     invalid_claim_rows << row_number
   end
 
-  def validate_sampling_reason(row, row_number)
-    return if row["sampling_reason"].present?
+  def validate_sample_reason(row, row_number)
+    return if row["sample_reason"].present?
 
-    missing_sampling_reason_rows << row_number
+    missing_sample_reason_rows << row_number
   end
 end
