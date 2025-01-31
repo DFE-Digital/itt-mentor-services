@@ -1,18 +1,18 @@
 class Claims::Support::Claims::ClaimActivitiesController < Claims::Support::ApplicationController
   def index
-    @pagy, @claim_activities = pagy(Claims::ClaimActivity.order(created_at: :desc))
+    claim_activities = Claims::ClaimActivity.order(created_at: :desc)
+    authorize [:claims, claim_activities]
 
-    authorize [:claims, @claim_activities]
-
+    @pagy, @claim_activities = pagy(claim_activities)
     @claim_activities = @claim_activities.decorate
   end
 
   def show
+    authorize [:claims, claim_activity]
+
     if claim_activity.sampling_uploaded?
       @pagy, @provider_samplings = pagy(claim_activity.record.provider_samplings.order_by_provider_name)
     end
-
-    authorize [:claims, claim_activity]
 
     @claim_activity = claim_activity.decorate
   end
@@ -23,6 +23,8 @@ class Claims::Support::Claims::ClaimActivitiesController < Claims::Support::Appl
       Claims::Payment::ResendEmail.call(payment: claim_activity.record)
     when "clawback_request_delivered"
       Claims::Clawback::ResendEmail.call(clawback: claim_activity.record)
+    else
+      raise "Unknown action: #{claim_activity.action}"
     end
 
     authorize [:claims, claim_activity]
