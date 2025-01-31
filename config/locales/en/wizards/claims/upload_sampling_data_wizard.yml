@@ -6,18 +6,13 @@ en:
           page_title: Upload claims to be audited - Auditing - Claims
           title: Upload claims to be audited
           caption: Auditing
+          upload_text: Upload the CSV file sent to you by DfE
+          file_must_contain: The file must contain the headers 'claim_reference' and 'sample_reason'
           upload_csv_file: Upload CSV file
-          csv_help: Help with the CSV file
-          csv_help_details: |
-            Use this form to upload the CSV file sent by the data and insights team.
-
-            The CSV file must contain the following headers in the first row:
-
-            - claim_reference
-            - sample_reason
+          already_been_claimed: Test
         confirmation_step:
           page_title: Are you sure you want to upload the auditing data? - Auditing - Claims
-          title: Confirm you want to upload claims to be sampled
+          title: Confirm you want to upload claims to be audited
           caption: Auditing
           confirm_upload: Confirm upload
           only_showing_first_rows: Only showing the first %{row_count} rows
@@ -36,9 +31,8 @@ en:
               claim_reference: claim_reference
               sampling_reason: sample_reason
             errors:
-              invalid_claim_reference: Not a valid claim reference
-              invalid_input: Not a valid input
-              reason_needed: Reason needed
+              invalid_claim_reference: Enter a valid claim reference
+              reason_needed: Enter a valid sample reason
           only_showing_rows_with_errors: Only showing rows with errors
           upload_your_file_again: Upload your file again
         no_claims_step:

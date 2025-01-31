@@ -35,7 +35,7 @@ en:
             success_heading: Claim updated
           upload_data:
             update:
-              heading: Sampling data uploaded
+              heading: Auditing data uploaded
               body: It may take a moment for the uploaded claims to update
           confirm_provider_rejected:
             page_title: Are you sure you want to confirm the provider has rejected the claim? - Auditing - Claim %{reference}

@@ -122,7 +122,7 @@ RSpec.describe "Support user uploads a CSV not containing a claim accepted input
 
   def and_i_see_the_csv_contained_claims_without_a_claim_accepted_input_for_each_mentor
     expect(page).to have_h1("Upload provider response")
-    expect(page).to have_element(:div, text: "You need to fix 1 error related to specific rows", class: "govuk-error-summary")
+    expect(page).to have_element(:div, text: "You need to fix 1 error related to a specific row", class: "govuk-error-summary")
     expect(page).to have_element(:td, text: "Enter a valid input", class: "govuk-table__cell")
     expect(page).to have_element(:p, text: "Only showing rows with errors", class: "govuk-!-text-align-centre")
   end

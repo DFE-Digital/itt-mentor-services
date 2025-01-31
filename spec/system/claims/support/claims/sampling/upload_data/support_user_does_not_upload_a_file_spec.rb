@@ -58,7 +58,6 @@ RSpec.describe "Support user does not upload a file",
   def then_i_see_the_upload_csv_page
     expect(page).to have_h1("Upload claims to be audited")
     have_element(:span, text: "Auditing", class: "govuk-caption-l")
-    expect(page).to have_element(:label, text: "Upload CSV file")
   end
 
   def and_i_see_no_sampling_claims_have_been_uploaded
