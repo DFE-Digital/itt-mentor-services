@@ -14,32 +14,16 @@ RSpec.describe "Support user uploads a CSV containing invalid sampling data",
     when_i_click_on_upload_claims_to_be_sampled
     then_i_see_the_upload_csv_page
 
-    # when_i_upload_a_csv_containing_invalid_headers
-    # and_i_click_on_upload_csv_file
-    # then_i_see_validation_errors_regarding_invalid_headers
-
-    # when_i_click_on_upload_again
-    # and_i_upload_a_csv_containing_invalid_sampling_data
-    # and_i_click_on_upload_csv_file
-    # then_i_see_validation_errors_regarding_invalid_data
+    when_i_upload_a_csv_containing_invalid_sampling_data
+    and_i_click_on_upload_csv_file
+    then_i_see_validation_errors_regarding_invalid_data
   end
 
   private
 
   def given_claims_exist
-    @current_academic_year = AcademicYear.for_date(Time.current) || create(:academic_year, :current)
-
-    current_claim_window = create(:claim_window, academic_year: @current_academic_year,
-                                                 starts_on: @current_academic_year.starts_on,
-                                                 ends_on: @current_academic_year.starts_on + 2.days)
-    @current_claim = create(:claim,
-                            :submitted,
-                            claim_window: current_claim_window,
-                            reference: 11_111_111)
-    @another_paid_claim = create(:claim,
-                                 :submitted,
-                                 status: :paid,
-                                 claim_window: current_claim_window)
+    @paid_claim_1 = create(:claim, :submitted, status: :paid, reference: 11_111_111)
+    @paid_claim_2 = create(:claim, :submitted, status: :paid, reference: 22_222_222)
   end
 
   def and_i_am_signed_in
@@ -74,20 +58,24 @@ RSpec.describe "Support user uploads a CSV containing invalid sampling data",
   end
 
   def when_i_upload_a_csv_containing_invalid_sampling_data
-    attach_file "Upload CSV file", "spec/fixtures/claims/sampling/invalid_example_sampling_upload.csv"
+    attach_file nil,
+                "spec/fixtures/claims/sampling/invalid_example_sampling_upload.csv"
   end
 
   def and_i_click_on_upload_csv_file
     click_on "Upload"
   end
 
-  def then_i_see_validation_error_regarding_invalid_data
-    expect(page).to have_validation_error("The selected CSV file contains invalid data")
-  end
-
   def then_i_see_the_upload_csv_page
     expect(page).to have_h1("Upload claims to be audited")
     have_element(:span, text: "Auditing", class: "govuk-caption-l")
-    expect(page).to have_element(:label, text: "Upload CSV file")
+  end
+
+  def then_i_see_validation_errors_regarding_invalid_data
+    expect(page).to have_h1("Upload claims to be audited")
+    expect(page).to have_element(:div, text: "You need to fix 2 errors related to specific rows", class: "govuk-error-summary")
+    expect(page).to have_element(:td, text: "Enter a valid claim reference", class: "govuk-table__cell")
+    expect(page).to have_element(:td, text: "Enter a valid sample reason", class: "govuk-table__cell")
+    expect(page).to have_element(:p, text: "Only showing rows with errors", class: "govuk-!-text-align-centre")
   end
 end

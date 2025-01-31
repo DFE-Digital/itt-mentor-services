@@ -120,7 +120,7 @@ RSpec.describe "Support user uploads a CSV containing claims not with the status
 
   def and_i_see_the_csv_contained_claims_not_with_the_status_sampling_in_progress
     expect(page).to have_h1("Upload provider response")
-    expect(page).to have_element(:div, text: "You need to fix 1 error related to specific rows", class: "govuk-error-summary")
+    expect(page).to have_element(:div, text: "You need to fix 1 error related to a specific row", class: "govuk-error-summary")
     expect(page).to have_element(:td, text: "Enter a valid claim reference 22222222", class: "govuk-table__cell")
     expect(page).to have_element(:p, text: "Only showing rows with errors", class: "govuk-!-text-align-centre")
   end

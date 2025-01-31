@@ -66,12 +66,11 @@ RSpec.describe "Support user uploads the wrong file type as sampling data", serv
   def then_i_see_the_upload_csv_page
     expect(page).to have_h1("Upload claims to be audited")
     have_element(:span, text: "Auditing", class: "govuk-caption-l")
-    expect(page).to have_element(:label, text: "Upload CSV file")
   end
 
   def when_i_upload_an_invalid_file_type
     tmp = Tempfile.new("invalid_upload.txt")
-    attach_file "Upload CSV file", tmp.path
+    attach_file nil, tmp.path
   end
 
   def and_i_click_on_upload_csv_file

@@ -61,7 +61,9 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
     validate_csv_file
     return if errors.present?
 
-    reset_claim_ids
+    reset_input_attributes
+
+    self.file_name = csv_upload.original_filename
 
     CSV.parse(read_csv, headers: true) do |row|
       claim = paid_claims.find_by(reference: row["claim_reference"])
@@ -91,10 +93,6 @@ class Claims::UploadSamplingDataWizard::UploadStep < BaseStep
 
   def read_csv
     @read_csv ||= csv_content || csv_upload.read
-  end
-
-  def reset_claim_ids
-    self.claim_ids = []
   end
 
   def reset_input_attributes

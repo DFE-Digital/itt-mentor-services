@@ -32,7 +32,6 @@ RSpec.describe Claims::UploadSamplingDataWizard::ConfirmationStep, type: :model 
   describe "delegations" do
     it { is_expected.to delegate_method(:csv).to(:upload_step) }
     it { is_expected.to delegate_method(:file_name).to(:upload_step) }
-    it { is_expected.to delegate_method(:uploaded_claim_ids).to(:wizard) }
   end
 
   describe "#csv_headers" do
