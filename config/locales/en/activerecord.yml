@@ -26,12 +26,27 @@ en:
         clawback_in_progress: Sent to payer for clawback
         clawback_complete: Clawback complete
       claims/claim_activity/action:
-        payment_request_delivered: Claims sent to payer for payment
+        approved_by_school: School %{school_name} approved audit for claim %{claim_reference}
+        clawback_requested: Clawback requested for claim %{claim_reference}
+        clawback_request_delivered:
+          one: 1 claim sent to payer for clawback
+          other: "%{count} claims sent to payer for clawback"
+        clawback_response_uploaded:
+          one: Payer clawback response uploaded for 1 claim
+          other: Payer clawback response uploaded for %{count} claims
+        payment_request_delivered:
+          one: 1 claim sent to payer for payment
+          other: "%{count} claims sent to payer for payment"
         payment_response_uploaded: Payer payment response uploaded
-        sampling_uploaded: Audit data uploaded
-        sampling_response_uploaded: Provider audit response uploaded
-        clawback_request_delivered: Claims sent to payer for clawback
-        clawback_response_uploaded: Payer clawback response uploaded
+        rejected_by_provider: Provider %{provider_name} rejected audit for claim %{claim_reference}
+        rejected_by_school: School %{school_name} rejected audit for claim %{claim_reference}
+        provider_approved_audit: Provider %{provider_name} approved audit for claim %{claim_reference}
+        sampling_uploaded:
+          one: Audit data uploaded for 1 claim
+          other: Audit data uploaded for %{count} claims
+        sampling_response_uploaded:
+          one: Provider audit response uploaded for 1 claim
+          other: Provider audit response uploaded for %{count} claims
       claims/claim_activity/document:
         payment_request_delivered: Claims sent to payer
         payment_response_uploaded: Payer payment response

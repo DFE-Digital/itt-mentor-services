@@ -55,7 +55,7 @@ RSpec.describe "Support user views rejected by school activity spec", service: :
     expect(page).to have_h1("Claims")
     expect(secondary_navigation).to have_current_item("Activity log")
     expect(page).to have_h2("Activity log")
-    expect(page).to have_element("h3", class: "app-timeline__title", text: "Rejected by school")
+    expect(page).to have_element("h3", class: "app-timeline__title", text: "School #{@best_practice_network_claim.school_name} rejected audit for claim 12345678")
     expect(page).to have_link("View details", href: claims_support_claims_claim_activity_path(@activity_log))
   end
 
@@ -64,9 +64,9 @@ RSpec.describe "Support user views rejected by school activity spec", service: :
   end
 
   def then_i_see_the_activity_details
-    expect(page).to have_title("Rejected by school - Claim funding for mentor training - GOV.UK")
+    expect(page).to have_title("School #{@best_practice_network_claim.school_name} rejected audit for claim 12345678 - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Claims")
-    expect(page).to have_h1("Rejected by school")
+    expect(page).to have_h1("School #{@best_practice_network_claim.school_name} rejected audit for claim 12345678")
     expect(page).to have_link("12345678", href: claims_support_claim_path(@best_practice_network_claim))
     expect(page).to have_h2("Providers")
     expect(page).to have_h3("Best Practice Network")

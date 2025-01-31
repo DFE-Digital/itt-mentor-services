@@ -61,7 +61,7 @@ RSpec.describe "Support user views sampling uploaded activity spec", service: :c
     expect(page).to have_h1("Claims")
     expect(secondary_navigation).to have_current_item("Activity log")
     expect(page).to have_h2("Activity log")
-    expect(page).to have_element("h3", class: "app-timeline__title", text: "Audit data uploaded")
+    expect(page).to have_element("h3", class: "app-timeline__title", text: "Audit data uploaded for 1 claim")
     expect(page).to have_link("View details", href: claims_support_claims_claim_activity_path(@activity_log))
   end
 
@@ -70,9 +70,9 @@ RSpec.describe "Support user views sampling uploaded activity spec", service: :c
   end
 
   def then_i_see_the_activity_details
-    expect(page).to have_title("Audit data uploaded - Claim funding for mentor training - GOV.UK")
+    expect(page).to have_title("Audit data uploaded for 1 claim - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Claims")
-    expect(page).to have_h1("Audit data uploaded")
+    expect(page).to have_h1("Audit data uploaded for 1 claim")
     expect(page).to have_h2("Providers")
     expect(page).to have_h3("Best Practice Network")
     expect(page).to have_table_row({

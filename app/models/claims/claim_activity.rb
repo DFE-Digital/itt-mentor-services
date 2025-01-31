@@ -30,9 +30,10 @@ class Claims::ClaimActivity < ApplicationRecord
     sampling_response_uploaded: "sampling_response_uploaded",
     clawback_request_delivered: "clawback_request_delivered",
     clawback_response_uploaded: "clawback_response_uploaded",
-    sampling_approved_manually: "sampling_approved_manually",
+    provider_approved_audit: "provider_approved_audit",
     rejected_by_provider: "rejected_by_provider",
     rejected_by_school: "rejected_by_school",
+    approved_by_school: "approved_by_school",
     clawback_requested: "clawback_requested",
   }, validate: true
 
@@ -40,5 +41,5 @@ class Claims::ClaimActivity < ApplicationRecord
 
   PAYMENT_AND_CLAWBACK_ACTIONS = %w[payment_request_delivered clawback_request_delivered clawback_response_uploaded].freeze
   SAMPLING_ACTIONS = %w[sampling_uploaded sampling_response_uploaded].freeze
-  MANUAL_ACTIONS = %w[sampling_approved_manually rejected_by_provider rejected_by_school clawback_requested].freeze
+  MANUAL_ACTIONS = %w[provider_approved_audit rejected_by_provider rejected_by_school clawback_requested].freeze
 end

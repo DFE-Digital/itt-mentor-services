@@ -8,4 +8,5 @@
 #
 class Claims::Sampling < ApplicationRecord
   has_many :provider_samplings
+  has_many :claims, through: :provider_samplings
 end

@@ -1,4 +1,4 @@
-<%= content_for :page_title, Claims::ClaimActivity.human_attribute_name("action.#{@claim_activity.action}") %>
+<%= content_for :page_title, @claim_activity.title %>
 <%= render "claims/support/primary_navigation", current: :claims %>
 
 <% content_for(:before_content) do %>
@@ -7,7 +7,7 @@
 
 <div class="govuk-width-container">
   <p class="govuk-caption-l"><%= t(".page_caption") %></p>
-  <h1 class="govuk-heading-l"><%= Claims::ClaimActivity.human_attribute_name("action.#{@claim_activity.action}") %></h1>
+  <h1 class="govuk-heading-l"><%= @claim_activity.title %></h1>
 
   <p class="govuk-body"><%= t(".byline", user: @claim_activity.user_full_name, time: l(@claim_activity.created_at, format: :date_at_time)) %></p>
 
