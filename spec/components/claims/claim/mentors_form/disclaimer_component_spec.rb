@@ -24,12 +24,12 @@ RSpec.describe Claims::Claim::MentorsForm::DisclaimerComponent, type: :component
       create(:mentor_training, claim: create(:claim, :submitted, school:), mentor: school.mentors.first, provider: claim.provider, hours_completed: 20)
     end
 
-    it "renders an inset text block with information about why a mentor is missing from the list" do
+    it "renders a details block with information about why a mentor is missing from the list" do
       render_inline described_class.new(mentors_form:)
 
-      expect(page).to have_css(".govuk-inset-text")
-      expect(page).to have_content "This list includes all mentors who can be included on a claim. If a mentor you have added is not showing in this list, that is because they have already had 20 hours of training claimed for with #{claim.provider.name}."
-      expect(page).to have_content "Contact ittmentor.funding@education.gov.uk if you think there is a problem."
+      expect(page).to have_css(".govuk-details")
+      expect(page).to have_content "If a mentor you have added is not showing in the list, they have already claimed 20 hours with #{claim.provider.name}."
+      expect(page).to have_content "If you think this is a mistake, contact ittmentor.funding@education.gov.uk."
     end
   end
 end
