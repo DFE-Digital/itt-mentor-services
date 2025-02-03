@@ -24,6 +24,7 @@ en:
     formats:
       month: "%B"
       long: "%-d %B %Y"
+      long_with_day: "%A %-d %B %Y"
       short: "%d/%m/%Y"
   time:
     formats:

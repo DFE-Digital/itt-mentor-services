@@ -47,9 +47,7 @@ en:
         index:
           heading: Claims
           add_claim: Add claim
-          guidance: Claims can only be made for the school year September 2023 to July 2024.
-          closing_date_disclaimer_title: Important
-          closing_date_disclaimer: You must submit a claim by <strong>%{time}</strong>.
+          guidance: You have until 11:59pm on %{end_date} to submit claims for the school year September %{start_year} to July %{end_year}.
           add_mentor_guidance_html: Before you can start a claim you will need to %{link_to}.
           add_a_mentor: add a mentor
           window_closed: Claims can no longer be submitted for school year September %{start_year} to July %{end_year}.
