@@ -8,7 +8,7 @@ class Claims::Claim::MentorsForm::DisclaimerComponent < ApplicationComponent
   end
 
   def call
-    govuk_inset_text do
+    govuk_details summary_text: t(".mentor_not_listed") do
       tag.p(sanitize(t(".disclaimer", provider_name:))) +
         tag.p(sanitize(t(".disclaimer_contact", email_link:)))
     end
