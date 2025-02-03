@@ -12,6 +12,7 @@ en:
           title: Upload payer response
           caption: Payments
           upload_csv_file: Upload CSV file
+          upload: Upload
           csv_help: Help with the CSV file
           csv_help_details: |
             Use this form to upload the CSV file sent by the ESFA.

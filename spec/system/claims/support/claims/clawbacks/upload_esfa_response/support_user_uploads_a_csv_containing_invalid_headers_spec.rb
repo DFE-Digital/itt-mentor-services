@@ -89,7 +89,7 @@ RSpec.describe "Support user uploads a CSV containing invalid headers",
   end
 
   def and_i_click_on_upload_csv_file
-    click_on "Upload CSV file"
+    click_on "Upload"
   end
 
   def when_i_upload_a_csv_containing_invalid_headers

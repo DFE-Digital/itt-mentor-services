@@ -145,7 +145,7 @@ RSpec.describe "Support user uploads ESFA responses for claims with the status '
   end
 
   def and_i_click_on_upload_csv_file
-    click_on "Upload CSV file"
+    click_on "Upload"
   end
 
   def when_i_upload_a_csv_containing_esfa_responses_for_all_claims_with_the_status_clawback_in_progress

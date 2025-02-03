@@ -105,7 +105,7 @@ RSpec.describe "Support user uploads a CSV not containing invalid references",
   end
 
   def and_i_click_on_upload_csv_file
-    click_on "Upload CSV file"
+    click_on "Upload"
   end
 
   def when_i_upload_a_file_not_containing_an_assured_status_for_each_mentor

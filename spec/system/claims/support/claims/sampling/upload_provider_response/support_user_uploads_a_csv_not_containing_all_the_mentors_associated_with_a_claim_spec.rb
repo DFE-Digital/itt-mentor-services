@@ -112,7 +112,7 @@ RSpec.describe "Support user uploads a CSV not containing all the mentors associ
   end
 
   def and_i_click_on_upload_csv_file
-    click_on "Upload CSV file"
+    click_on "Upload"
   end
 
   def then_i_see_validation_error_regarding_invalid_data

@@ -98,7 +98,7 @@ RSpec.describe "Support user uploads a CSV containing a mentor not associated wi
   end
 
   def and_i_click_on_upload_csv_file
-    click_on "Upload CSV file"
+    click_on "Upload"
   end
 
   def when_i_upload_a_csv_containing_a_mentor_not_associated_with_the_claims
@@ -116,7 +116,7 @@ RSpec.describe "Support user uploads a CSV containing a mentor not associated wi
   def and_i_see_the_csv_contained_claims_not_with_the_status_sampling_in_progress
     expect(page).to have_h1("Upload provider response")
     expect(page).to have_element(:div, text: "You need to fix 1 error related to specific rows", class: "govuk-error-summary")
-    expect(page).to have_element(:td, text: "Not a valid mentor name Jane Doe", class: "govuk-table__cell")
+    expect(page).to have_element(:td, text: "Enter a valid mentor name Jane Doe", class: "govuk-table__cell")
     expect(page).to have_element(:p, text: "Only showing rows with errors", class: "govuk-!-text-align-centre")
   end
 end

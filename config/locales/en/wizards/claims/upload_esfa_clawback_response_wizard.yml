@@ -7,6 +7,7 @@ en:
           title: Upload payer response
           caption: Clawbacks
           upload_csv_file: Upload CSV file
+          upload: Upload
           csv_help: Help with the CSV file
           csv_help_details: |
             Use this form to upload the CSV file sent by the ESFA.
@@ -49,7 +50,7 @@ en:
               claim_reference: claim_reference
               claim_status: claim_status
             errors:
-              invalid_claim_reference: Not a valid claim reference
-              invalid_claim_status: Not a valid claim status
+              invalid_claim_reference: Enter a valid claim reference
+              invalid_claim_status: Enter a valid claim status
           only_showing_rows_with_errors: Only showing rows with errors
           upload_your_file_again: Upload your file again

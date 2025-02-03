@@ -71,7 +71,7 @@ RSpec.describe "Support user uploads the wrong file type as ESFA responses",
   end
 
   def and_i_click_on_upload_csv_file
-    click_on "Upload CSV file"
+    click_on "Upload"
   end
 
   def then_i_see_validation_error_regarding_invalid_file_type
