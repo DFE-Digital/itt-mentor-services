@@ -43,6 +43,8 @@ RSpec.describe "View claims", service: :claims, type: :system do
     )
   end
 
+  let(:claim_window) { Claims::ClaimWindow.current }
+
   before do
     create(:claim, status: :internal_draft, school:)
     given_there_is_a_current_claim_window
@@ -102,7 +104,7 @@ RSpec.describe "View claims", service: :claims, type: :system do
   def i_can_see_the_claim_guidance
     within(first(".govuk-body")) do
       expect(page).to have_content(
-        "Claims can only be made for the school year September 2023 to July 2024.",
+        "You have until 11:59pm on #{I18n.l(claim_window.ends_on, format: :long_with_day)} to submit claims for the school year September #{claim_window.starts_on.year} to July #{claim_window.ends_on.year}.",
       )
     end
   end
