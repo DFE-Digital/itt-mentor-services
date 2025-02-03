@@ -109,7 +109,7 @@ class Claims::UploadPayerPaymentResponseWizard::UploadStep < BaseStep
   end
 
   def validate_claim_unpaid_reason(row, row_number)
-    return unless row["claim_status"].downcase == "unpaid" &&
+    return unless row["claim_status"].to_s.downcase == "unpaid" &&
       row["claim_unpaid_reason"].blank?
 
     invalid_claim_unpaid_reason_rows << row_number
