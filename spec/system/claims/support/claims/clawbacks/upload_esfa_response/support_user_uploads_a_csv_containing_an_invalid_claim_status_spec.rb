@@ -14,10 +14,10 @@ RSpec.describe "Support user uploads a CSV containing an invalid claim status",
     when_i_click_on_upload_esfa_response
     then_i_see_the_upload_csv_page
 
-    when_i_upload_a_file_not_containing_an_assured_status_for_each_mentor
+    when_i_upload_a_file_not_containing_an_invalid_claim_status
     and_i_click_on_upload_csv_file
     then_i_see_the_errors_page
-    and_i_see_the_csv_contained_claims_without_an_assured_status_for_each_mentor
+    and_i_see_the_csv_contained_claims_with_a_invalid_claim_status
   end
 
   private
@@ -111,7 +111,7 @@ RSpec.describe "Support user uploads a CSV containing an invalid claim status",
     click_on "Upload CSV file"
   end
 
-  def when_i_upload_a_file_not_containing_an_assured_status_for_each_mentor
+  def when_i_upload_a_file_not_containing_an_invalid_claim_status
     attach_file "Upload CSV file",
                 "spec/fixtures/claims/clawback/esfa_responses/invalid_esfa_clawback_response_upload_with_invalid_claim_status.csv"
   end
@@ -123,7 +123,7 @@ RSpec.describe "Support user uploads a CSV containing an invalid claim status",
     expect(page).to have_h1("Upload payer response")
   end
 
-  def and_i_see_the_csv_contained_claims_without_an_assured_status_for_each_mentor
+  def and_i_see_the_csv_contained_claims_with_a_invalid_claim_status
     expect(page).to have_h1("Upload payer response")
     expect(page).to have_element(:div, text: "You need to fix 1 error related to specific rows", class: "govuk-error-summary")
     expect(page).to have_element(:td, text: "Not a valid claim status paid", class: "govuk-table__cell", count: 1)

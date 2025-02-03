@@ -14,7 +14,7 @@ RSpec.describe "Support user uploads a CSV containing invalid references",
     when_i_click_on_upload_esfa_response
     then_i_see_the_upload_csv_page
 
-    when_i_upload_a_file_not_containing_an_assured_status_for_each_mentor
+    when_i_upload_a_file_containing_a_reference_not_associated_with_an_existing_claim
     and_i_click_on_upload_csv_file
     then_i_see_the_errors_page
     and_i_see_the_csv_contained_claims_with_an_invalid_reference
@@ -111,7 +111,7 @@ RSpec.describe "Support user uploads a CSV containing invalid references",
     click_on "Upload CSV file"
   end
 
-  def when_i_upload_a_file_not_containing_an_assured_status_for_each_mentor
+  def when_i_upload_a_file_containing_a_reference_not_associated_with_an_existing_claim
     attach_file "Upload CSV file",
                 "spec/fixtures/claims/clawback/esfa_responses/example_esfa_clawback_response_upload.csv"
   end

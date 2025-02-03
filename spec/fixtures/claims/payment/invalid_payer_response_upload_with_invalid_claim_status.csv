@@ -1,0 +1,3 @@
+claim_reference,claim_status,claim_unpaid_reason
+11111111,paid,
+22222222,clawback_complete,Some reason
