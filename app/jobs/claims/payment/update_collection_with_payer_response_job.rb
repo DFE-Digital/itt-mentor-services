@@ -5,6 +5,8 @@ class Claims::Payment::UpdateCollectionWithPayerResponseJob < ApplicationJob
     payment_in_progress_claims(claim_update_details.pluck(:id)).find_in_batches do |batch|
       batch.each do |claim|
         updated_details_for_claim = claim_update_details.find { |details| details[:id] == claim.id }
+        next unless %w[paid unpaid].include?(updated_details_for_claim.fetch(:status))
+
         Claims::Payment::UpdateClaimWithPayerResponseJob.perform_later(updated_details_for_claim)
       end
     end

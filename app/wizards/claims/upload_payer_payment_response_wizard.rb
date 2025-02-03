@@ -41,7 +41,7 @@ module Claims
         claim = payment_in_progress_claims.find_by!(reference: row["claim_reference"])
         {
           id: claim.id,
-          status: row["claim_status"],
+          status: row["claim_status"].downcase,
           unpaid_reason: row["claim_unpaid_reason"],
         }
       end
