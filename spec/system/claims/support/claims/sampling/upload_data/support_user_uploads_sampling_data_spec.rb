@@ -106,7 +106,7 @@ RSpec.describe "Support user uploads sampling data", service: :claims, type: :sy
                :when_i_upload_a_csv_containing_a_valid_sampling_data
 
   def and_i_click_on_upload_csv_file
-    click_on "Upload CSV file"
+    click_on "Upload"
   end
 
   def then_i_see_the_confirmation_page_for_uploading_the_sampling_data

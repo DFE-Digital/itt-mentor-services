@@ -142,7 +142,7 @@ RSpec.describe "Support user uploads provider responses for claims with the stat
   end
 
   def and_i_click_on_upload_csv_file
-    click_on "Upload CSV file"
+    click_on "Upload"
   end
 
   def when_i_upload_a_csv_containing_provider_responses_for_all_claims_with_the_status_sampling_in_progress

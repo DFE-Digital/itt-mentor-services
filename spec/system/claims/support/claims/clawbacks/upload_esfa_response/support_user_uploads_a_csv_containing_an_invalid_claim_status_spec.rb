@@ -108,7 +108,7 @@ RSpec.describe "Support user uploads a CSV containing an invalid claim status",
   end
 
   def and_i_click_on_upload_csv_file
-    click_on "Upload CSV file"
+    click_on "Upload"
   end
 
   def when_i_upload_a_file_not_containing_an_invalid_claim_status
@@ -126,7 +126,7 @@ RSpec.describe "Support user uploads a CSV containing an invalid claim status",
   def and_i_see_the_csv_contained_claims_with_a_invalid_claim_status
     expect(page).to have_h1("Upload payer response")
     expect(page).to have_element(:div, text: "You need to fix 1 error related to specific rows", class: "govuk-error-summary")
-    expect(page).to have_element(:td, text: "Not a valid claim status paid", class: "govuk-table__cell", count: 1)
+    expect(page).to have_element(:td, text: "Enter a valid claim status paid", class: "govuk-table__cell", count: 1)
     expect(page).to have_element(:p, text: "Only showing rows with errors", class: "govuk-!-text-align-centre")
   end
 end

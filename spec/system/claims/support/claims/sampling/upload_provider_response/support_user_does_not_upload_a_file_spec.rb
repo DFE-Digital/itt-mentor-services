@@ -73,7 +73,7 @@ RSpec.describe "Support user does not upload a file",
   end
 
   def when_i_click_on_upload_csv_file
-    click_on "Upload CSV file"
+    click_on "Upload"
   end
 
   def then_i_see_validation_error_regarding_invalid_data

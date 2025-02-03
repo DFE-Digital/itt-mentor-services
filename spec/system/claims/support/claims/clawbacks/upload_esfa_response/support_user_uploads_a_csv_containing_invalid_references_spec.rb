@@ -108,7 +108,7 @@ RSpec.describe "Support user uploads a CSV containing invalid references",
   end
 
   def and_i_click_on_upload_csv_file
-    click_on "Upload CSV file"
+    click_on "Upload"
   end
 
   def when_i_upload_a_file_containing_a_reference_not_associated_with_an_existing_claim
@@ -126,7 +126,7 @@ RSpec.describe "Support user uploads a CSV containing invalid references",
   def and_i_see_the_csv_contained_claims_with_an_invalid_reference
     expect(page).to have_h1("Upload payer response")
     expect(page).to have_element(:div, text: "You need to fix 1 error related to specific rows", class: "govuk-error-summary")
-    expect(page).to have_element(:td, text: "Not a valid claim reference 11111111", class: "govuk-table__cell", count: 1)
+    expect(page).to have_element(:td, text: "Enter a valid claim reference 11111111", class: "govuk-table__cell", count: 1)
     expect(page).to have_element(:p, text: "Only showing rows with errors", class: "govuk-!-text-align-centre")
   end
 end
