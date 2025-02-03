@@ -7,7 +7,6 @@ class Claims::PaymentResponse::GenerateCSVFile < ApplicationService
     school_name
     school_local_authority
     claim_amount
-    clawback_amount
     school_type_of_establishment
     school_group
     claim_submission_date
@@ -30,7 +29,6 @@ class Claims::PaymentResponse::GenerateCSVFile < ApplicationService
           row["school_name"],
           row["school_local_authority"],
           row["claim_amount"],
-          row["clawback_amount"],
           row["school_type_of_establishment"],
           row["school_group"],
           row["claim_submission_date"],
