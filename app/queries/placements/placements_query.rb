@@ -11,6 +11,7 @@ class Placements::PlacementsQuery < ApplicationQuery
     scope = academic_year_condition(scope)
     scope = term_condition(scope)
     scope = year_group_condition(scope)
+    scope = phase_condition(scope)
     order_condition(scope)
   end
 
@@ -57,6 +58,16 @@ class Placements::PlacementsQuery < ApplicationQuery
     scope.left_outer_joins(:terms)
          .where(terms: { id: filter_params[:term_ids] })
          .or(scope.where.missing(:terms))
+  end
+
+  def phase_condition(scope)
+    return scope if filter_params[:phases].blank?
+
+    if filter_params[:phases].include?("primary") && filter_params[:phases].include?("secondary")
+      scope.joins(:subject)
+    else
+      scope.joins(:subject).where(subjects: { subject_area: filter_params[:phases] })
+    end
   end
 
   def year_group_condition(scope)

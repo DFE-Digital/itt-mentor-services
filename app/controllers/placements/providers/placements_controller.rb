@@ -5,7 +5,7 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
   def index
     @current_academic_year = Placements::AcademicYear.current.decorate
     @next_academic_year = @current_academic_year.next.decorate
-    @subjects = Subject.order_by_name.select(:id, :name)
+    @subjects = filter_subjects_by_phase
     @establishment_groups = compact_school_attribute_values(:group)
     @schools = schools_scope.order_by_name.select(:id, :name)
     @year_groups ||= Placement.year_groups_as_options
@@ -14,6 +14,7 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
     @pagy, @placements = pagy(placements.merge(query))
     @placements = @placements.decorate
 
+    filter_schools_by_phase
     calculate_travel_time
   end
 
@@ -75,6 +76,7 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
       school_ids: [],
       subject_ids: [],
       term_ids: [],
+      phases: [],
       establishment_groups: [],
       year_groups: [],
     )
@@ -95,5 +97,23 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
   def compact_school_attribute_values(attribute)
     all_schools.where.not(attribute => nil)
                .distinct(attribute).order(attribute).pluck(attribute)
+  end
+
+  def filter_subjects_by_phase
+    if filter_form.primary_only?
+      Subject.primary
+    elsif filter_form.secondary_only?
+      Subject.secondary
+    else
+      Subject
+    end.order_by_name.select(:id, :name)
+  end
+
+  def filter_schools_by_phase
+    if filter_form.primary_only?
+      @schools = @schools.where.not(phase: "Secondary")
+    elsif filter_form.secondary_only?
+      @schools = @schools.where.not(phase: "Primary")
+    end
   end
 end
