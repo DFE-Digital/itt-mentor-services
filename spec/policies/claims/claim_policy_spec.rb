@@ -142,6 +142,8 @@ describe Claims::ClaimPolicy do
     end
 
     context "when the user has a payment information requested claim" do
+      let(:support_user) { create(:claims_support_user) }
+
       it "denies access" do
         expect(claim_policy).not_to permit(support_user, submitted_claim)
       end
