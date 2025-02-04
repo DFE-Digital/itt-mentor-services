@@ -36,7 +36,7 @@ en:
           change: Change
           original_number_of_hours_claimed: Original hours claimed
           rejecting_these_mentors_will_update_status: |
-            Rejecting these mentors will update the claim status to ‘claim not approved’ and move it to the clawback queue.
+            This will update the claim status to ‘rejected by school’ and move it to the clawback queue.
           hours:
             one: "%{count} hour"
             other: "%{count} hours"

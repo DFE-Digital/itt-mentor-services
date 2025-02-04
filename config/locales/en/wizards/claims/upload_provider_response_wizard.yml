@@ -57,7 +57,7 @@ en:
               claim_accepted: claim_accepted
               rejection_reason: rejection_reason
             errors:
-              invalid_claim_reference: Not a valid claim reference
+              invalid_claim_reference: Enter a valid claim reference
               invalid_mentor: Enter a valid mentor name
               invalid_input: Enter a valid input
               reason_needed: Enter a reason
