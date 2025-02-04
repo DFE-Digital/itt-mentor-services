@@ -9,7 +9,7 @@ class Claims::Claim::CalculateAmount < ApplicationService
     region = claim.school.region
     claims_funding_available_per_hour_pence = region.claims_funding_available_per_hour_pence
 
-    total_hours_completed = claim.mentor_trainings.sum(:hours_completed)
+    total_hours_completed = claim.mentor_trainings.filter_map(&:hours_completed).sum
 
     amount_in_pence = claims_funding_available_per_hour_pence * total_hours_completed
 

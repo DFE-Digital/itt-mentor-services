@@ -1,0 +1,114 @@
+<% content_for :page_title, title_with_error_prefix(
+  t(".page_title", contextual_text:),
+  error: current_step.errors.any?,
+) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= contextual_text %></span>
+      <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+
+      <%= govuk_summary_list do |summary_list| %>
+        <% unless current_user.support_user? %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: Claims::Claim.human_attribute_name(:school)) %>
+            <% row.with_value(text: @wizard.school.name) %>
+          <% end %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: Claims::ClaimWindow.human_attribute_name(:academic_year)) %>
+          <% row.with_value(text: @wizard.academic_year.name) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: Claims::Claim.human_attribute_name(:accredited_provider)) %>
+          <% row.with_value(text: @wizard.provider.name) %>
+          <% row.with_action(text: t("change"),
+                             href: step_path(:provider),
+                             visually_hidden_text: Claims::Claim.human_attribute_name(:accredited_provider),
+                             html_attributes: {
+                               class: "govuk-link--no-visited-state",
+                             }) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: Claims::Claim.human_attribute_name(:mentors)) %>
+          <% row.with_value do %>
+            <ul class="govuk-list">
+              <% @wizard.steps[:mentor].selected_mentors.each do |mentor| %>
+                <li><%= mentor.full_name %></li>
+              <% end %>
+            </ul>
+          <% end %>
+          <% row.with_action(text: t("change"),
+                             href: step_path(:mentor),
+                             visually_hidden_text: Claims::Claim.human_attribute_name(:mentors),
+                             html_attributes: {
+                               class: "govuk-link--no-visited-state",
+                             }) %>
+        <% end %>
+      <% end %>
+
+      <h2 class="govuk-heading-m"><%= t(".hours_of_training") %></h2>
+
+      <%= govuk_summary_list do |summary_list| %>
+        <% @wizard.steps[:mentor].selected_mentors.each do |mentor| %>
+          <% mentor_training = @wizard.steps[@wizard.step_name_for_mentor(mentor)] %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: mentor_training.mentor.full_name) %>
+            <% row.with_value(
+              text: pluralize(
+                mentor_training.hours_completed,
+                t(".hour"),
+              ),
+            ) %>
+            <% row.with_action(
+              text: t("change"),
+              href: step_path(@wizard.step_name_for_mentor(mentor)),
+              visually_hidden_text: "Hours of training for #{mentor.full_name}",
+              html_attributes: { class: "govuk-link--no-visited-state" },
+            ) %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <h2 class="govuk-heading-m"><%= t(".grant_funding") %></h2>
+
+      <%= govuk_summary_list(actions: false) do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".total_hours")) %>
+          <% row.with_value(text: pluralize(@wizard.total_hours, t(".hour"))) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".hourly_rate")) %>
+          <% row.with_value(text: humanized_money_with_symbol(@wizard.school.region.funding_available_per_hour)) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: Claims::Claim.human_attribute_name(:claim_amount)) %>
+          <% row.with_value(text: humanized_money_with_symbol(@wizard.claim.amount)) %>
+        <% end %>
+      <% end %>
+
+      <% if !current_user.support_user? %>
+        <p class="govuk-body"><%= t(".disclaimer") %></p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li><%= t(".claim_on_behalf_of_school") %></li>
+          <li><%= t(".read_and_accepted_grant_conditions") %></li>
+          <li><%= t(".accurate_information") %></li>
+          <li><%= t(".provide_evidence") %></li>
+        </ul>
+
+        <%= govuk_warning_text(text: t(".warning")) %>
+      <% end %>
+
+      <%= f.govuk_submit current_user.support_user? ? t(".save") : t(".submit") %>
+    </div>
+  </div>
+<% end %>

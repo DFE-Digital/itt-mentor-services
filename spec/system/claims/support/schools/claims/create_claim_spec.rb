@@ -15,7 +15,6 @@ RSpec.describe "Create claim", service: :claims, type: :system do
     create(
       :claims_support_user,
       :colin,
-      user_memberships: [create(:user_membership, organisation: school)],
     )
   end
   let!(:bpn) { create(:claims_provider, :best_practice_network) }
@@ -146,10 +145,10 @@ RSpec.describe "Create claim", service: :claims, type: :system do
     when_i_click("Change Accredited provider")
     when_i_choose_a_provider(bpn)
     when_i_click("Continue")
-    when_i_click("Change Mentors")
     then_i_should_see_the_message("There are no mentors you can include in a claim because they have already had 20 hours of training claimed for with Best Practice Network.")
     when_i_click("Change the accredited provider")
     when_i_choose_a_provider(niot)
+    when_i_click("Continue")
     when_i_click("Continue")
     when_i_click("Continue")
     then_i_should_land_on_the_check_page
@@ -247,9 +246,9 @@ RSpec.describe "Create claim", service: :claims, type: :system do
     end
   end
 
-  def then_i_expect_the_training_hours_for(hours, mentor)
+  def then_i_expect_the_training_hours_for(_hours, mentor)
     expect(page).to have_content("Hours of training for #{mentor.full_name}")
-    find("#claims-support-claim-mentor-training-form-hours-completed-#{hours}-field").checked?
+    find("#claims-add-claim-wizard-mentor-training-step-hours-to-claim-maximum-field").checked?
   end
 
   def then_i_am_redirectd_to_index_page(claim)

@@ -2,7 +2,7 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   include Claims::BelongsToSchool
 
   before_action :has_school_accepted_grant_conditions?
-  before_action :set_claim, only: %i[show check confirmation submit edit update rejected create_revision remove destroy]
+  before_action :set_claim, only: %i[show check confirmation submit edit update create_revision remove destroy]
   before_action :authorize_claim
   before_action :get_valid_revision, only: :check
 
@@ -10,16 +10,6 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
 
   def index
     @pagy, @claims = pagy(@school.claims.active.order_created_at_desc)
-  end
-
-  def new; end
-
-  def create
-    if claim_provider_form.save
-      redirect_to new_claims_school_claim_mentors_path(@school, claim_provider_form.claim)
-    else
-      render :new
-    end
   end
 
   def create_revision
@@ -103,7 +93,7 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   end
 
   def authorize_claim
-    authorize @claim || Claims::Claim
+    authorize @claim || Claims::Claim.new
   end
 
   def get_valid_revision
