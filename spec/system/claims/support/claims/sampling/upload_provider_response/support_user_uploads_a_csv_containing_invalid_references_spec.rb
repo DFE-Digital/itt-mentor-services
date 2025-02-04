@@ -123,7 +123,7 @@ RSpec.describe "Support user uploads a CSV not containing invalid references",
   def and_i_see_the_csv_contained_invalid_claim_references
     expect(page).to have_h1("Upload provider response")
     expect(page).to have_element(:div, text: "You need to fix 2 errors related to specific rows", class: "govuk-error-summary")
-    expect(page).to have_element(:td, text: "Not a valid claim reference 11111111", class: "govuk-table__cell", count: 2)
+    expect(page).to have_element(:td, text: "Enter a valid claim reference 11111111", class: "govuk-table__cell", count: 2)
     expect(page).to have_element(:p, text: "Only showing rows with errors", class: "govuk-!-text-align-centre")
   end
 end
