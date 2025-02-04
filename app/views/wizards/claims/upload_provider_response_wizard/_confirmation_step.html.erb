@@ -25,7 +25,7 @@
             <% end %>
 
             <% table.with_body do |body| %>
-              <% current_step.csv.each_with_index do |csv_row, index| %>
+              <% current_step.csv.first(5).each_with_index do |csv_row, index| %>
                 <% if csv_row["claim_reference"].present? %>
                   <% body.with_row do |row| %>
                     <% row.with_cell text: index + 2 %>
