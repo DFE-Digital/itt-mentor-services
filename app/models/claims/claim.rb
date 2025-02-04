@@ -145,6 +145,8 @@ class Claims::Claim < ApplicationRecord
   end
 
   def in_draft?
+    return true if status.nil?
+
     DRAFT_STATUSES.include?(status.to_sym)
   end
 
