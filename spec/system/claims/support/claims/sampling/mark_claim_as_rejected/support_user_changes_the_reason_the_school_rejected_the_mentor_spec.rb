@@ -127,7 +127,7 @@ RSpec.describe "Support user changes the reason the school rejected the mentor",
     expect(page).to have_h1("Check your answers")
     expect(page).to have_element(
       :div,
-      text: "Rejecting these mentors will update the claim status to ‘claim not approved’ and move it to the clawback queue.",
+      text: "This will update the claim status to ‘rejected by school’ and move it to the clawback queue.",
       class: "govuk-warning-text",
     )
   end
