@@ -119,7 +119,7 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
     self.missing_rejection_reason_rows = []
   end
 
-  ### CSV input valiations
+  ### CSV input validations
 
   def validate_claim_reference(row, row_number)
     return if sampled_claims.find_by(reference: row["claim_reference"]).present?
