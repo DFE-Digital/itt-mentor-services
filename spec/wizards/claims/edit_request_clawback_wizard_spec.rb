@@ -1,11 +1,12 @@
 require "rails_helper"
 
 RSpec.describe Claims::EditRequestClawbackWizard, type: :model do
-  subject(:wizard) { described_class.new(claim:, state:, params:, mentor_training_id:, current_step: nil) }
+  subject(:wizard) { described_class.new(claim:, current_user:, state:, params:, mentor_training_id:, current_step: nil) }
 
   let(:params_data) { {} }
   let(:params) { ActionController::Parameters.new(params_data) }
   let(:claim) { create(:claim, status: "clawback_requested") }
+  let(:current_user) { create(:claims_support_user) }
   let!(:mentor_training) { create(:mentor_training, claim:, not_assured: true, reason_not_assured: "reason", hours_completed: 20, hours_clawed_back: 6, reason_clawed_back: "Insufficient evidence") }
   let(:mentor_training_id) { mentor_training.id }
   let(:state) { {} }

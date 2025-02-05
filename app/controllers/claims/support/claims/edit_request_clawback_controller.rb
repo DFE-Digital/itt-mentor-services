@@ -31,7 +31,7 @@ class Claims::Support::Claims::EditRequestClawbackController < Claims::Applicati
   def set_wizard
     state = session[state_key] ||= {}
     current_step = params[:step]&.to_sym
-    @wizard = Claims::EditRequestClawbackWizard.new(claim: @claim, params:, state:, mentor_training_id:, current_step:)
+    @wizard = Claims::EditRequestClawbackWizard.new(claim: @claim, current_user:, params:, state:, mentor_training_id:, current_step:)
   end
 
   def step_path(step)
@@ -39,7 +39,7 @@ class Claims::Support::Claims::EditRequestClawbackController < Claims::Applicati
   end
 
   def mentor_training_id
-    params[:mentor_training_id]
+    params.fetch(:mentor_training_id)
   end
 
   def index_path
