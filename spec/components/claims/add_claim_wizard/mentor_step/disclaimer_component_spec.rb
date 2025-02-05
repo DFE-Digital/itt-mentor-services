@@ -26,7 +26,7 @@ RSpec.describe Claims::AddClaimWizard::MentorStep::DisclaimerComponent, type: :c
     let(:all_school_mentors_visible) { false }
 
     it "renders a details block with information about why a mentor is missing from the list" do
-      render_inline described_class.new(mentors_form:)
+      render_inline described_class.new(mentor_step:)
 
       expect(page).to have_css(".govuk-details")
       expect(page).to have_content "If a mentor you have added is not showing in the list, they have already claimed 20 hours with #{claim.provider.name}."

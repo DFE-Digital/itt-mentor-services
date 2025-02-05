@@ -25,7 +25,7 @@ class Claims::Support::Schools::Claims::EditClaimController < Claims::Support::A
         heading: t(".success"),
       }
     else
-      redirect_to rejected_claims_school_claims_path(@school)
+      redirect_to rejected_claims_support_school_claims_path(@school)
     end
   end
 
