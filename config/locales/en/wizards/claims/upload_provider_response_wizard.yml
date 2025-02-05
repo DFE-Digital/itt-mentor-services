@@ -30,7 +30,6 @@ en:
           page_title: Confirm you want to upload the provider response - Auditing - Claims
           title: Confirm you want to upload the provider response
           caption: Auditing
-          confirm_upload_details: Confirm these are the provider details you want to upload.
           confirm_upload: Confirm upload
           only_showing_first_five_rows: Only showing the first 5 rows
           showing_all_rows: Showing all rows
