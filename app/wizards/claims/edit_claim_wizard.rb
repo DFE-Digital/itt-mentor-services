@@ -72,10 +72,6 @@ module Claims
       steps.fetch(:provider).provider || claim.provider
     end
 
-    def claim_to_exclude
-      claim
-    end
-
     def mentors_with_claimable_hours
       @mentors_with_claimable_hours ||= Claims::MentorsWithRemainingClaimableHoursQuery.call(
         params: {
