@@ -265,4 +265,10 @@ RSpec.describe Claims::AddClaimWizard do
       expect(wizard.provider).to eq(provider)
     end
   end
+
+  describe "#claim_to_exclude" do
+    subject(:claim_to_exclude) { wizard.claim_to_exclude }
+
+    it { is_expected.to be_nil }
+  end
 end
