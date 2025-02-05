@@ -11,7 +11,9 @@
       <%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
         <%= f.govuk_error_summary %>
 
-        <h2 class="govuk-heading-m"><%= current_step.file_name %></h2>
+        <h2 class="govuk-heading-m">
+          <%= t(".preview_of_file", file_name: current_step.file_name) %>
+        </h2>
 
         <div class="horizontal-scrollable">
           <%= govuk_table do |table| %>
