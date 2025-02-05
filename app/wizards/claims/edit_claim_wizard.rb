@@ -51,7 +51,7 @@ module Claims
           mentor: mentor_training.mentor,
           provider: mentor_training.provider,
           academic_year: claim.claim_window.academic_year,
-          claim_to_exclude: claim,
+          claim_to_exclude:,
         ).remaining_hours
         is_custom_hours = max_hours != mentor_training.hours_completed
         hours_to_claim = if is_custom_hours
@@ -70,6 +70,10 @@ module Claims
 
     def provider
       steps.fetch(:provider).provider || claim.provider
+    end
+
+    def claim_to_exclude
+      claim
     end
 
     def mentors_with_claimable_hours

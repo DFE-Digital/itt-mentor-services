@@ -281,6 +281,12 @@ RSpec.describe Claims::EditClaimWizard do
     end
   end
 
+  describe "#claim_to_exclude" do
+    subject(:claim_to_exclude) { wizard.claim_to_exclude }
+
+    it { is_expected.to eq(claim) }
+  end
+
   describe "#mentors_with_claimable_hours" do
     subject(:mentors_with_claimable_hours) { wizard.mentors_with_claimable_hours }
 
