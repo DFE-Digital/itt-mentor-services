@@ -8,7 +8,9 @@
 
       <%= form_for(current_step, url: current_step_path, method: :put, multipart: true) do |f| %>
         <%= f.govuk_error_summary(presenter: DetailedErrorSummaryPresenter) %>
-        <%= f.govuk_file_field :csv_upload, label: { text: t(".upload_csv_file"), size: "s" } %>
+        <p class="govuk-body"><%= t(".upload_the_csv_file") %></p>
+
+        <%= f.govuk_file_field :csv_upload, label: { text: t(".upload_csv_file"), hidden: true } %>
 
         <%= govuk_details(summary_text: t(".csv_help")) do %>
           <%= render_markdown(t(".csv_help_details")) %>

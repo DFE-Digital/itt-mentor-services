@@ -14,6 +14,7 @@ en:
           upload_csv_file: Upload CSV file
           upload: Upload
           csv_help: Help with the CSV file
+          upload_the_csv_file: Upload the CSV file sent to you by the payer.
           csv_help_details: |
             Use this form to upload the CSV file sent by the ESFA.
 
@@ -56,3 +57,4 @@ en:
           confirm_upload: Confirm upload
           only_showing_first_five_rows: Only showing the first 5 rows
           showing_all_rows: Showing all rows
+          preview_of_file: Preview of %{file_name}
