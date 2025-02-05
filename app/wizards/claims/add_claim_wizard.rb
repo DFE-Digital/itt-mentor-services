@@ -44,10 +44,6 @@ module Claims
 
     delegate :amount, to: :claim
 
-    def claim_to_exclude
-      nil
-    end
-
     def create_claim
       if created_by.support_user?
         Claims::Claim::CreateDraft.call(claim:)
