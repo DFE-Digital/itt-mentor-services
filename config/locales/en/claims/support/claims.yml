@@ -6,6 +6,10 @@ en:
           edit:
             caption: Clawbacks - Claim %{reference}
             cancel: Cancel
+        edit_request_clawback:
+          edit:
+            caption: Clawbacks - Claim %{reference}
+            cancel: Cancel
         index:
           heading: Claims
           sub_heading: Claims (%{count})
@@ -36,9 +40,17 @@ en:
           mentor: Mentor
           submitted_by: Submitted by %{name} on %{date}.
         details:
+          original: Original hours claimed
+          clawed_back: Amount clawed back
+          reason_clawed_back: Reason for clawback
           hour: hour
           hourly_rate: Hourly rate
           total_hours: Total hours
           mentors: Mentors
           hours_of_training: Hours of training
           grant_funding: Grant funding
+          original_amount: Original claim amount
+          hours_clawed_back: Hours clawed back
+          clawback_amount: Clawback amount
+          adjusted_total: Adjusted grant funding total
+          change: Change
