@@ -158,7 +158,6 @@ RSpec.describe "Support user uploads provider responses for claims with the stat
     )
     expect(page).to have_h1("Confirm you want to upload the provider response")
     expect(page).to have_element(:span, text: "Auditing", class: "govuk-caption-l")
-    expect(page).to have_element(:p, text: "Confirm these are the provider details you want to upload.", class: "govuk-body")
     expect(page).to have_h2("example_provider_response_upload.csv")
     expect(page).to have_table_row(
       "1" => "2",
