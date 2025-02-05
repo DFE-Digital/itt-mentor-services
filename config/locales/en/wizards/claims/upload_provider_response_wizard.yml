@@ -27,8 +27,8 @@ en:
               - claim_accepted
               - rejection_reason
         confirmation_step:
-          page_title: Upload provider response - Auditing - Claims
-          title: Upload provider response
+          page_title: Confirm you want to upload the provider response - Auditing - Claims
+          title: Confirm you want to upload the provider response
           caption: Auditing
           confirm_upload_details: Confirm these are the provider details you want to upload.
           confirm_upload: Confirm upload
