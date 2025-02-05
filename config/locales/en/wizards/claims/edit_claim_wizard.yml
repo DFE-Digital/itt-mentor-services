@@ -1,0 +1,8 @@
+en:
+  wizards:
+    claims:
+      edit_claim_wizard:
+        declaration_step:
+          caption: Claim - %{reference}
+          page_title: Declaration
+          submit: Submit claim

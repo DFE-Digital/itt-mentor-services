@@ -10,6 +10,7 @@ RSpec.describe Claims::AddClaimWizard::MentorTrainingStep, type: :model do
         provider:,
         academic_year: claim_window.academic_year,
         steps: { mentor: mentor_step },
+        claim_to_exclude: nil,
       )
     end
   end

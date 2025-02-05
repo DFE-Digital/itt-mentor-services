@@ -3,10 +3,10 @@ en:
     support:
       schools:
         claims:
-          add_claim:
+          edit_claim:
             edit:
               caption: Add claim - %{school_name}
-              save: Save claim
+              save: Update claim
               cancel: Cancel
             update:
-              success: Claim added
+              success: Claim updated

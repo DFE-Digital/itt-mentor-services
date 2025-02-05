@@ -22,28 +22,6 @@ en:
           reject_reason: You cannot submit the claim because your mentors’ information has recently changed.
           view_claims: View claims
           guidance_html: If you have any questions, email %{support_email}
-        check:
-          page_title: Check your answers
-          caption: Add claim
-          caption_draft: Claim - %{reference}
-          warning: You will not be able to change any of the claim details once you have submitted it.
-          submit: Submit claim
-          declaration: Declaration
-          disclaimer: "By submitting this claim, I confirm that:"
-          claim_on_behalf_of_school: I am authorised to claim on behalf of the school
-          read_and_accepted_grant_conditions: I have read and accepted the grant terms and conditions
-          accurate_information: the information detailed above is accurate and the total I am claiming back has been used to support the cost of the mentor training
-          provide_evidence: I will provide evidence to support this claim if requested by the Department for Education
-          total_hours: Total hours
-          hourly_rate: Hourly rate
-          hour: hour
-          grant_funding: Grant funding
-          hours_of_training: Hours of training
-        form:
-          add_claim: Add claim
-          heading: Accredited provider
-        new:
-          page_title: Accredited provider - Add claim
         index:
           heading: Claims
           add_claim: Add claim
@@ -54,8 +32,6 @@ en:
           window_closed_guidance: "You can still %{link_to}. Final closing date for claims: <strong>%{time}</strong>."
           window_closed_guidance_link_text: add a mentor
           window_closed_support: Email %{link_to} if you have a query about your claims.
-        update:
-          claim_updated: Claim updated
         remove:
           page_title: Are you sure you want to remove this claim?
           caption: Claim - %{reference}
@@ -75,5 +51,3 @@ en:
           hour: hour
           submit: Submit claim
           submitted_by: Submitted by %{name} on %{date}.
-        edit:
-          page_title: Accredited provider - Add claim

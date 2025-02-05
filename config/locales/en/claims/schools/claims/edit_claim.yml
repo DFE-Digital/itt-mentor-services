@@ -2,7 +2,7 @@ en:
   claims:
     schools:
       claims:
-        add_claim:
+        edit_claim:
           edit:
             caption: Add claim
             save: Submit claim

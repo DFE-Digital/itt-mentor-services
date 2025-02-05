@@ -108,20 +108,6 @@ RSpec.describe "Create claim", service: :claims, type: :system do
     then_i_see_the_error("Enter whole numbers only")
   end
 
-  scenario "Anne creates a claim and tries to edit it" do
-    when_i_click("Add claim")
-    when_i_choose_a_provider(bpn)
-    when_i_click("Continue")
-    when_i_select_a_mentor(mentor1)
-    when_i_click("Continue")
-    when_i_add_training_hours("20 hours")
-    when_i_click("Continue")
-    when_i_click("Submit claim")
-    then_i_get_a_claim_reference_and_see_next_steps
-    given_i_visit_claim_check_page_after_submitting
-    then_i_am_redirected_to_root_path_with_alert
-  end
-
   scenario "School attempts to create a claim when their mentors have all been claimed for" do
     given_my_school_has_fully_claimed_for_all_mentors_for_provider(bpn)
     when_i_click("Add claim")

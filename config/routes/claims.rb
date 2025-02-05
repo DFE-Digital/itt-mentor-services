@@ -33,7 +33,7 @@ scope module: :claims, as: :claims, constraints: {
 
   resources :schools, only: %i[index show] do
     scope module: :schools do
-      resources :claims, except: %i[new create] do
+      resources :claims, except: %i[new create edit] do
         collection do
           get "new", to: "claims/add_claim#new", as: :new_add_claim
           get "new/:state_key/:step", to: "claims/add_claim#edit", as: :add_claim
@@ -55,10 +55,15 @@ scope module: :claims, as: :claims, constraints: {
 
         member do
           get :remove
-          get :check
           get :confirmation
-          get :create_revision
-          post :submit
+
+          get "edit", to: "claims/edit_claim#new", as: :new_edit_claim
+          get "edit/:state_key/:step", to: "claims/edit_claim#edit", as: :edit_claim
+          put "edit/:state_key/:step", to: "claims/edit_claim#update"
+        end
+
+        collection do
+          get :rejected
         end
       end
 
@@ -204,7 +209,7 @@ scope module: :claims, as: :claims, constraints: {
       end
 
       scope module: :schools do
-        resources :claims, except: %i[new create] do
+        resources :claims, except: %i[new create edit] do
           collection do
             get "new", to: "claims/add_claim#new", as: :new_add_claim
             get "new/:state_key/:step", to: "claims/add_claim#edit", as: :add_claim
@@ -212,22 +217,17 @@ scope module: :claims, as: :claims, constraints: {
             get :rejected
           end
 
-          resource :mentors, only: %i[new create edit update], module: :claims do
-            member do
-              get :create_revision
-            end
-          end
-          resources :mentor_trainings, only: %i[edit update], module: :claims do
-            member do
-              get :create_revision
-            end
-          end
-
           member do
             get :remove
-            get :check
-            post :draft
-            get :create_revision
+            get :confirmation
+
+            get "edit", to: "claims/edit_claim#new", as: :new_edit_claim
+            get "edit/:state_key/:step", to: "claims/edit_claim#edit", as: :edit_claim
+            put "edit/:state_key/:step", to: "claims/edit_claim#update"
+          end
+
+          collection do
+            get :rejected
           end
         end
 

@@ -48,7 +48,7 @@ RSpec.describe Claims::AddClaimWizard::MentorStep, type: :model do
       let(:claimable_mentors) { Claims::Mentor.where(id: mentor_1.id) }
 
       it "returns all selected mentors" do
-        expect(selected_mentors).to contain_exactly(mentor_1, mentor_2)
+        expect(selected_mentors).to contain_exactly(mentor_1)
       end
     end
   end

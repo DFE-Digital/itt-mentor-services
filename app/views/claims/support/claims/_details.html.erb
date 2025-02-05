@@ -15,7 +15,8 @@
       <% row.with_value(text: claim.provider.name) %>
       <% if policy(claim).edit? %>
         <% row.with_action(text: t("change"),
-                           href: create_revision_claims_support_school_claim_path(claim.school, claim),
+                           href: edit_attribute_path(:provider),
+                           visually_hidden_text: Claims::Claim.human_attribute_name(:accredited_provider),
                            html_attributes: {
                 class: "govuk-link--no-visited-state",
                 }) %>
@@ -39,7 +40,8 @@
     <% end %>
     <% if policy(claim).edit? %>
       <% row.with_action(text: t("change"),
-                         href: create_revision_claims_support_school_claim_mentors_path(claim.school, claim),
+                         href: edit_attribute_path(:mentor),
+                         visually_hidden_text: Claims::Claim.human_attribute_name(:mentors),
                          html_attributes: {
                   class: "govuk-link--no-visited-state",
                 }) %>
@@ -55,11 +57,8 @@
     <% row.with_value(text: pluralize(mentor_training.hours_completed, t(".hour"))) %>
     <% if policy(claim).edit? %>
       <% row.with_action(text: t("change"),
-                         href: create_revision_claims_support_school_claim_mentor_training_path(
-                           claim.school,
-                           claim,
-                           mentor_training.mentor_id,
-                         ),
+                         href: edit_attribute_path("mentor_training_#{mentor_training.mentor_id}".to_sym),
+                         visually_hidden_text: "Hours of training for #{mentor_training.mentor.full_name}",
                          html_attributes: {
                          class: "govuk-link--no-visited-state",
                         }) %>
