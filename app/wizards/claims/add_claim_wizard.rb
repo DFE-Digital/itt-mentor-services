@@ -8,13 +8,18 @@ module Claims
       super(state:, params:, current_step:)
     end
 
+    delegate :amount, to: :claim
+    delegate :name, to: :school, prefix: true
+    delegate :name, to: :provider, prefix: true
+    delegate :name, to: :academic_year, prefix: true
+
     def define_steps
       add_step(ProviderStep)
       if mentors_with_claimable_hours.any? || current_step == :check_your_answers
         add_step(MentorStep)
         # Loop over mentors
         steps.fetch(:mentor).selected_mentors.each do |mentor|
-          add_step(MentorTrainingStep, { mentor_id: mentor.id })
+          add_step(MentorTrainingStep, { mentor_id: mentor.id }, :mentor_id)
         end
         add_step(CheckYourAnswersStep)
       else
@@ -41,8 +46,6 @@ module Claims
         end,
       )
     end
-
-    delegate :amount, to: :claim
 
     def claim_to_exclude; end
 

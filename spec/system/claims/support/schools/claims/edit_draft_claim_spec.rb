@@ -49,7 +49,7 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
     when_i_click_on_claims
   end
 
-  scenario "A support user I can edit a draft claim" do
+  scenario "As a support user I can edit a draft claim" do
     when_i_visit_the_draft_claim_show_page
     then_i_edit_the_provider(
       current_provider: best_practice_network_provider,

@@ -95,21 +95,6 @@ RSpec.describe Claims::EditClaimWizard do
     end
   end
 
-  describe "#add_step" do
-    # this methods behaves just as it does in the BaseWizard,
-    # unless preset attributes are given.
-    context "when preset attribute 'mentor_id' is given" do
-      let(:mentor_id) { "abcd" }
-
-      it "adds a step, with the 'mentor_id' step name and attributes" do
-        wizard.add_step(Claims::AddClaimWizard::MentorTrainingStep, { mentor_id: })
-        expect(wizard.steps).to include(:mentor_training_abcd)
-        expect(wizard.steps[:mentor_training_abcd]).to be_a(Claims::AddClaimWizard::MentorTrainingStep)
-        expect(wizard.steps[:mentor_training_abcd]).to have_attributes(mentor_id:)
-      end
-    end
-  end
-
   describe "#total_hours" do
     let(:mentor_1) { create(:claims_mentor, schools: [school]) }
     let(:mentor_2) { create(:claims_mentor, schools: [school]) }
