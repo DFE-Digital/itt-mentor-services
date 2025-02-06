@@ -9,6 +9,12 @@ module Claims
       super(state:, params:, current_step:)
     end
 
+    delegate :academic_year, :claim_window, to: :claim
+    delegate :reference, to: :claim, prefix: true
+    delegate :name, to: :provider, prefix: true
+    delegate :name, to: :school, prefix: true
+    delegate :name, to: :academic_year, prefix: true
+
     def define_steps
       if current_step == :declaration
         add_step(DeclarationStep)
@@ -17,7 +23,7 @@ module Claims
         if mentors_with_claimable_hours.any? || current_step == :check_your_answers
           add_step(AddClaimWizard::MentorStep)
           selected_mentors.each do |mentor|
-            add_step(AddClaimWizard::MentorTrainingStep, { mentor_id: mentor.id })
+            add_step(AddClaimWizard::MentorTrainingStep, { mentor_id: mentor.id }, :mentor_id)
           end
           add_step(AddClaimWizard::CheckYourAnswersStep)
         else
@@ -28,10 +34,6 @@ module Claims
 
     def selected_mentors
       steps.fetch(:mentor).selected_mentors.presence || claim.mentors
-    end
-
-    def academic_year
-      claim.claim_window.academic_year
     end
 
     def update_claim
@@ -50,7 +52,7 @@ module Claims
         max_hours = Claims::TrainingAllowance.new(
           mentor: mentor_training.mentor,
           provider: mentor_training.provider,
-          academic_year: claim.claim_window.academic_year,
+          academic_year: academic_year,
           claim_to_exclude:,
         ).remaining_hours
         is_custom_hours = max_hours != mentor_training.hours_completed
@@ -69,7 +71,7 @@ module Claims
     end
 
     def provider
-      steps.fetch(:provider).provider || claim.provider
+      steps[:provider]&.provider || claim.provider
     end
 
     def claim_to_exclude
@@ -91,7 +93,7 @@ module Claims
         provider:,
         school:,
         created_by:,
-        claim_window: claim.claim_window,
+        claim_window:,
         mentor_trainings_attributes: mentor_training_steps.map do |mentor_training_step|
           {
             mentor_id: mentor_training_step.mentor_id,

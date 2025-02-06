@@ -25,10 +25,6 @@ RSpec.describe "Edit a claim", service: :claims, type: :system do
            claim_window:)
   end
 
-  before do
-    given_there_is_a_current_claim_window
-  end
-
   scenario "Anne edits the hours of a draft claim to the maximum number of hours" do
     given_a_mentor_training_for(hours_completed: 6)
     user_exists_in_dfe_sign_in(user: anne)
@@ -127,10 +123,6 @@ RSpec.describe "Edit a claim", service: :claims, type: :system do
   def given_i_sign_in
     visit sign_in_path
     click_on "Sign in using DfE Sign In"
-  end
-
-  def given_there_is_a_current_claim_window
-    claim_window
   end
 
   def and_i_click(button)

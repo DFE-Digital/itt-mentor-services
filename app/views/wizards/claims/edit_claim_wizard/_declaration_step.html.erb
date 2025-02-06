@@ -3,25 +3,25 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l"><%= t(".caption", reference: @wizard.claim.reference) %></span>
+      <span class="govuk-caption-l"><%= t(".caption", reference: @wizard.claim_reference) %></span>
       <h1 class="govuk-heading-l"><%= t(".page_title") %></h1>
 
       <%= govuk_summary_list do |summary_list| %>
         <% unless current_user.support_user? %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: Claims::Claim.human_attribute_name(:school)) %>
-            <% row.with_value(text: @wizard.school.name) %>
+            <% row.with_value(text: @wizard.school_name) %>
           <% end %>
         <% end %>
 
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: Claims::ClaimWindow.human_attribute_name(:academic_year)) %>
-          <% row.with_value(text: @wizard.academic_year.name) %>
+          <% row.with_value(text: @wizard.academic_year_name) %>
         <% end %>
 
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: Claims::Claim.human_attribute_name(:accredited_provider)) %>
-          <% row.with_value(text: @wizard.claim.provider.name) %>
+          <% row.with_value(text: @wizard.provider_name) %>
         <% end %>
 
         <% summary_list.with_row do |row| %>
@@ -41,7 +41,7 @@
       <%= govuk_summary_list do |summary_list| %>
         <% @wizard.claim.mentor_trainings.each do |mentor_training| %>
           <% summary_list.with_row do |row| %>
-            <% row.with_key(text: mentor_training.mentor.full_name) %>
+            <% row.with_key(text: mentor_training.mentor_full_name) %>
             <% row.with_value(
               text: pluralize(
                 mentor_training.hours_completed,
@@ -65,7 +65,7 @@
 
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t("wizards.claims.add_claim_wizard.check_your_answers_step.hourly_rate")) %>
-          <% row.with_value(text: humanized_money_with_symbol(@wizard.school.region.funding_available_per_hour)) %>
+          <% row.with_value(text: humanized_money_with_symbol(@wizard.school.region_funding_available_per_hour)) %>
         <% end %>
 
         <% summary_list.with_row do |row| %>
