@@ -88,7 +88,7 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
 
   scenario "Colin changes the training hours for a mentor on check page" do
     when_i_click_change_training_hours_for_mentor
-    then_i_expect_the_training_hours_to_be_selected("20")
+    then_i_expect_the_training_hours_to_be_selected(20)
     when_i_choose_other_amount
     when_i_click("Continue")
     then_i_see_the_error("Enter the number of hours")
@@ -100,7 +100,7 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
 
   scenario "Collin intends to change the training hours but clicks back link" do
     when_i_click_change_training_hours_for_mentor
-    then_i_expect_the_training_hours_to_be_selected("20")
+    then_i_expect_the_training_hours_to_be_selected(20)
     when_i_click("Back")
     then_i_see_the_list_of_mentors
   end
@@ -197,7 +197,7 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
   end
 
   def then_i_expect_the_training_hours_to_be_selected(hours)
-    if hours.to_i == 20
+    if hours == 20
       find("#claims-add-claim-wizard-mentor-training-step-hours-to-claim-maximum-field").checked?
     else
       find("#claims-add-claim-wizard-mentor-training-step-hours-to-claim-custom-field").checked?
@@ -215,7 +215,7 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
     within("dl.govuk-summary-list:nth(1)") do
       within(".govuk-summary-list__row:nth(1)") do
         expect(page).to have_content("Academic year")
-        expect(page).to have_content(@claim_window.academic_year.name)
+        expect(page).to have_content(@claim_window.academic_year_name)
       end
 
       within(".govuk-summary-list__row:nth(2)") do
