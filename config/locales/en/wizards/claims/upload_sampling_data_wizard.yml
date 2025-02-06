@@ -13,6 +13,7 @@ en:
         confirmation_step:
           page_title: Are you sure you want to upload the auditing data? - Auditing - Claims
           title: Confirm you want to upload claims to be audited
+          preview_file_name: Preview of %{file_name}
           caption: Auditing
           confirm_upload: Confirm upload
           only_showing_first_rows: Only showing the first %{row_count} rows
