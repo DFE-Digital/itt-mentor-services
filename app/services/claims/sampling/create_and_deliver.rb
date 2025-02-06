@@ -38,6 +38,6 @@ class Claims::Sampling::CreateAndDeliver < ApplicationService
   end
 
   def sampling_reason(claim)
-    csv_data.find { |csv_data| csv_data["claim_reference"] == claim.reference }["sample_reason"]
+    csv_data.find { |csv_data| csv_data[:id] == claim.id }[:sample_reason]
   end
 end

@@ -24,17 +24,23 @@ module Claims
     def upload_data
       raise "Invalid wizard state" unless valid? && csv_inputs_valid?
 
-      Claims::Sampling::CreateAndDeliverJob.perform_later(current_user_id: current_user.id, claim_ids: uploaded_claim_ids, csv_data:)
+      Claims::Sampling::CreateAndDeliverJob.perform_later(current_user_id: current_user.id, csv_data: claim_update_details)
     end
 
     def paid_claims
       Claims::Claim.paid
     end
 
-    def uploaded_claim_ids
+    def claim_update_details
       return [] if steps[:upload].blank?
 
-      steps.fetch(:upload).claim_ids
+      csv_rows.map do |row|
+        claim = paid_claims.find_by!(reference: row["claim_reference"])
+        {
+          id: claim.id,
+          sampling_reason: row["sample_reason"],
+        }
+      end
     end
 
     def csv_inputs_valid?
@@ -43,8 +49,10 @@ module Claims
 
     private
 
-    def csv_data
-      CSV.parse(steps.fetch(:upload).csv_content, headers: true).map(&:to_h)
+    def csv_rows
+      steps.fetch(:upload).csv.reject do |row|
+        row["claim_reference"].blank?
+      end
     end
   end
 end
