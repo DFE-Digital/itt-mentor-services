@@ -9,6 +9,7 @@ en:
           upload_text: Upload the CSV file sent to you by DfE
           file_must_contain: The file must contain the headers 'claim_reference' and 'sample_reason'
           upload_csv_file: Upload CSV file
+          upload: Upload
           already_been_claimed: Test
         confirmation_step:
           page_title: Are you sure you want to upload the auditing data? - Auditing - Claims

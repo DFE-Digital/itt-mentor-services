@@ -60,7 +60,7 @@ RSpec.describe "Support user uploads a CSV file with the wrong headers",
   end
 
   def when_i_upload_a_csv_file_not_containing_invalid_headers
-    attach_file nil,
+    attach_file "Upload CSV file",
                 "spec/fixtures/claims/sampling/invalid_headers_sampling_upload.csv"
   end
 

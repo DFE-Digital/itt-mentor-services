@@ -70,7 +70,7 @@ RSpec.describe "Support user uploads the wrong file type as sampling data", serv
 
   def when_i_upload_an_invalid_file_type
     tmp = Tempfile.new("invalid_upload.txt")
-    attach_file nil, tmp.path
+    attach_file "Upload CSV file", tmp.path
   end
 
   def and_i_click_on_upload_csv_file

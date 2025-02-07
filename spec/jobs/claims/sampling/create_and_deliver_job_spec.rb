@@ -2,8 +2,10 @@ require "rails_helper"
 
 RSpec.describe Claims::Sampling::CreateAndDeliverJob, type: :job do
   let(:current_user) { create(:claims_user) }
-  let(:claims) { create_list(:claim, 3) }
-  let(:csv_data) { [{ "claim_reference" => claims.first.reference, "sample_reason" => "ABCD" }] }
+  let(:csv_claims) { create_list(:claim, 3) }
+  let(:csv_data) { [{ id: csv_claims.first.id, sample_reason: "ABCD" }] }
+  let(:claim_ids) { csv_data.map { |claim| claim[:id] }.compact }
+  let(:claims) { Claims::Claim.where(id: claim_ids) }
 
   describe "#perform" do
     before do
@@ -11,13 +13,13 @@ RSpec.describe Claims::Sampling::CreateAndDeliverJob, type: :job do
     end
 
     it "calls the Claims::Sampling::CreateAndDeliver service" do
-      described_class.perform_now(current_user_id: current_user.id, claim_ids: claims.map(&:id), csv_data:)
+      described_class.perform_now(current_user_id: current_user.id, csv_data:)
       expect(Claims::Sampling::CreateAndDeliver).to have_received(:call).with(current_user:, claims:, csv_data:).once
     end
 
     it "enqueues the job in the default queue" do
       expect {
-        described_class.perform_later(current_user_id: current_user.id, claim_ids: claims.map(&:id), csv_data:)
+        described_class.perform_later(current_user_id: current_user.id, csv_data:)
       }.to have_enqueued_job(described_class).on_queue("default")
     end
   end
