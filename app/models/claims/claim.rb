@@ -61,8 +61,6 @@ class Claims::Claim < ApplicationRecord
 
   accepts_nested_attributes_for :mentor_trainings
 
-  accepts_nested_attributes_for :mentor_trainings
-
   validates :status, presence: true
   validates(
     :reference,
