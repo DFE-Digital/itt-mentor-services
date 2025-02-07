@@ -152,6 +152,14 @@ class Claims::Claim < ApplicationRecord
     DRAFT_STATUSES.include?(status.to_sym)
   end
 
+  def in_clawback?
+    %w[clawback_requested clawback_in_progress].include?(status)
+  end
+
+  def amount_after_clawback
+    amount - total_clawback_amount
+  end
+
   def total_hours_completed
     mentor_trainings.sum(&:hours_completed)
   end
