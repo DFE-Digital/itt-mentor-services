@@ -7,10 +7,10 @@ RSpec.describe Claims::EditClaimWizard do
   let(:params_data) { {} }
   let(:current_step) { nil }
   let(:params) { ActionController::Parameters.new(params_data) }
-  let(:school) { create(:claims_school) }
-  let(:created_by) { create(:claims_user, schools: [school]) }
-  let(:provider) { create(:claims_provider, :niot) }
-  let(:mentor_1) { create(:claims_mentor, schools: [school], first_name: "Alan", last_name: "Anderson") }
+  let(:school) { build(:claims_school) }
+  let(:created_by) { build(:claims_user, schools: [school]) }
+  let(:provider) { build(:claims_provider, :niot) }
+  let(:mentor_1) { build(:claims_mentor, schools: [school], first_name: "Alan", last_name: "Anderson") }
   let(:claim_window) { Claims::ClaimWindow.current || create(:claim_window, :current) }
   let!(:claim) do
     create(
@@ -95,6 +95,15 @@ RSpec.describe Claims::EditClaimWizard do
     end
   end
 
+  describe "delegations" do
+    it { is_expected.to delegate_method(:academic_year).to(:claim) }
+    it { is_expected.to delegate_method(:claim_window).to(:claim) }
+    it { is_expected.to delegate_method(:reference).to(:claim).with_prefix(true) }
+    it { is_expected.to delegate_method(:name).to(:school).with_prefix(true) }
+    it { is_expected.to delegate_method(:name).to(:provider).with_prefix(true) }
+    it { is_expected.to delegate_method(:name).to(:academic_year).with_prefix(true) }
+  end
+
   describe "#total_hours" do
     let(:mentor_1) { create(:claims_mentor, schools: [school]) }
     let(:mentor_2) { create(:claims_mentor, schools: [school]) }
@@ -151,14 +160,6 @@ RSpec.describe Claims::EditClaimWizard do
       it "return the mentors selected in the mentor step" do
         expect(selected_mentors).to contain_exactly(mentor_1, another_mentor)
       end
-    end
-  end
-
-  describe "#academic_year" do
-    subject(:academic_year) { wizard.academic_year }
-
-    it "returns the academic year of the claim" do
-      expect(academic_year).to eq(claim.academic_year)
     end
   end
 
