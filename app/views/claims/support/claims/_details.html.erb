@@ -1,3 +1,39 @@
+<h2 class="govuk-heading-m"><%= t(".support_details") %></h2>
+<%= govuk_summary_list(actions: claim.zendesk_url.present? || claim.support_user.present?) do |summary_list| %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".support_ticket")) %>
+    <% if claim.zendesk_url.present? %>
+      <% row.with_value(text: govuk_link_to(t(".zendesk_support_ticket"), claim.zendesk_url, new_tab: true)) %>
+    <% else %>
+      <% row.with_value(text: govuk_link_to(t(".add_zendesk_link"), new_support_details_claims_support_claim_path(step: :zendesk))) %>
+    <% end %>
+    <% if claim.zendesk_url.present? %>
+      <% row.with_action(
+        text: t("change"),
+        visually_hidden_text: t(".support_ticket"),
+        href: new_support_details_claims_support_claim_path(step: :zendesk),
+      ) %>
+    <% end %>
+  <% end %>
+
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".assigned_user")) %>
+    <% if claim.support_user.present? %>
+      <% row.with_value(text: claim.support_user.full_name) %>
+    <% else %>
+      <% row.with_value(text: govuk_link_to(t(".assign_support_user"), new_support_details_claims_support_claim_path(step: :support_user))) %>
+    <% end %>
+    <% if claim.support_user.present? %>
+      <% row.with_action(
+        text: t("change"),
+        visually_hidden_text: t(".assigned_user"),
+        href: new_support_details_claims_support_claim_path(step: :support_user),
+      ) %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<h2 class="govuk-heading-m"><%= t(".claim_details") %></h2>
 <%= govuk_summary_list(actions: policy(claim).edit?) do |summary_list| %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: Claims::Claim.human_attribute_name(:school)) %>

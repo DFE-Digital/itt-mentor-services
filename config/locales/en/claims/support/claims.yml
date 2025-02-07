@@ -42,3 +42,11 @@ en:
           mentors: Mentors
           hours_of_training: Hours of training
           grant_funding: Grant funding
+          claim_details: Claim details
+          support_details: Support details
+          support_ticket: Support ticket
+          assigned_user: Assigned user
+          zendesk_support_ticket: Zendesk ticket
+          add_zendesk_link: Add link to Zendesk ticket
+          assign_support_user: Assign a support agent
+          change: Change

@@ -12,6 +12,7 @@
 #  submitted_at           :datetime
 #  submitted_by_type      :string
 #  unpaid_reason          :text
+#  zendesk_url            :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  claim_window_id        :uuid
@@ -20,6 +21,7 @@
 #  provider_id            :uuid
 #  school_id              :uuid             not null
 #  submitted_by_id        :uuid
+#  support_user_id        :uuid
 #
 # Indexes
 #
@@ -30,6 +32,7 @@
 #  index_claims_on_reference             (reference)
 #  index_claims_on_school_id             (school_id)
 #  index_claims_on_submitted_by          (submitted_by_type,submitted_by_id)
+#  index_claims_on_support_user_id       (support_user_id)
 #
 # Foreign Keys
 #
@@ -46,6 +49,7 @@ class Claims::Claim < ApplicationRecord
   belongs_to :created_by, polymorphic: true
   belongs_to :submitted_by, polymorphic: true, optional: true
   belongs_to :previous_revision, class_name: "Claims::Claim", optional: true
+  belongs_to :support_user, class_name: "Claims::SupportUser", optional: true
 
   has_one :academic_year, through: :claim_window
 

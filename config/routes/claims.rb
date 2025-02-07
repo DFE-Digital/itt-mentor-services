@@ -173,6 +173,12 @@ scope module: :claims, as: :claims, constraints: {
 
     resources :claims, only: %i[index show] do
       get :download_csv, on: :collection
+
+      member do
+        get "support_details/new", to: "claims/support_details#new", as: :new_support_details
+        get "support_details/new/:state_key/:step", to: "claims/support_details#edit", as: :support_details
+        put "support_details/new/:state_key/:step", to: "claims/support_details#update"
+      end
     end
 
     resources :support_users, path: "support-users", only: %i[index show destroy] do
