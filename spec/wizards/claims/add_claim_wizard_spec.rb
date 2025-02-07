@@ -61,6 +61,13 @@ RSpec.describe Claims::AddClaimWizard do
     end
   end
 
+  describe "delegations" do
+    it { is_expected.to delegate_method(:amount).to(:claim) }
+    it { is_expected.to delegate_method(:name).to(:school).with_prefix(true) }
+    it { is_expected.to delegate_method(:name).to(:provider).with_prefix(true) }
+    it { is_expected.to delegate_method(:name).to(:academic_year).with_prefix(true) }
+  end
+
   describe "#academic_year" do
     before { claim_window }
 
