@@ -58,7 +58,7 @@ RSpec.describe "Support user uploads a CSV containing invalid sampling data",
   end
 
   def when_i_upload_a_csv_containing_invalid_sampling_data
-    attach_file nil,
+    attach_file "Upload CSV file",
                 "spec/fixtures/claims/sampling/invalid_example_sampling_upload.csv"
   end
 

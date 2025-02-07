@@ -5,7 +5,7 @@ describe Claims::Sampling::CreateAndDeliver do
 
   let(:current_user) { create(:claims_support_user) }
   let!(:claims) { [create(:claim, :paid)] }
-  let(:csv_data) { [{ "claim_reference" => claims.first.reference, "sample_reason" => "ABCD" }] }
+  let(:csv_data) { [{ id: claims.first.id, sample_reason: "ABCD" }] }
 
   describe "#call" do
     context "when there are submitted claims" do

@@ -100,7 +100,7 @@ RSpec.describe "Support user uploads sampling data", service: :claims, type: :sy
   end
 
   def when_i_upload_a_csv_containing_a_valid_sampling_data
-    attach_file nil, "spec/fixtures/claims/sampling/example_sampling_upload.csv"
+    attach_file "Upload CSV file", "spec/fixtures/claims/sampling/example_sampling_upload.csv"
   end
   alias_method :and_i_upload_a_csv_containing_a_valid_sampling_data,
                :when_i_upload_a_csv_containing_a_valid_sampling_data

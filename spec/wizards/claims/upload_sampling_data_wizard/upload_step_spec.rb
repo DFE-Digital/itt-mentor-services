@@ -16,7 +16,6 @@ RSpec.describe Claims::UploadSamplingDataWizard::UploadStep, type: :model do
       expect(step).to have_attributes(csv_upload: nil,
                                       csv_content: nil,
                                       file_name: nil,
-                                      claim_ids: [],
                                       invalid_claim_rows: [],
                                       missing_sample_reason_rows: [])
     }

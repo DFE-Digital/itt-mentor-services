@@ -36,18 +36,41 @@ RSpec.describe Claims::UploadSamplingDataWizard do
 
       it { is_expected.to eq(%i[upload confirmation]) }
     end
+
+    context "when the csv contains invalid inputs" do
+      let(:csv_content) do
+        "claim_reference,sample_reason\r\n" \
+        "22222,some_reason"
+      end
+      let(:state) do
+        {
+          "upload" => {
+            "csv_upload" => nil,
+            "csv_content" => csv_content,
+          },
+        }
+      end
+
+      before do
+        create(:claim, :submitted, status: :paid, reference: 11_111_111)
+      end
+
+      it { is_expected.to eq(%i[upload upload_errors]) }
+    end
   end
 
   describe "#upload_data" do
-    let(:claim_ids) { [current_year_paid_claim.id] }
     let(:state) do
       {
         "upload" => {
           "csv_upload" => nil,
-          "claim_ids" => claim_ids,
           "csv_content" => csv_content,
         },
       }
+    end
+
+    before do
+      create(:claim, :submitted, status: :paid, reference: 11_111_111)
     end
 
     context "when the steps are valid" do
@@ -95,27 +118,47 @@ RSpec.describe Claims::UploadSamplingDataWizard do
     end
   end
 
-  describe "#uploaded_claim_ids" do
-    subject(:paid_claims) { wizard.uploaded_claim_ids }
+  describe "#claim_update_details" do
+    subject(:claim_update_details) { wizard.claim_update_details }
 
     context "when the upload step is blank" do
       it "returns an empty array" do
-        expect(paid_claims).to eq([])
+        expect(claim_update_details).to eq([])
       end
     end
 
-    context "when the upload step is not present" do
-      let(:claim_ids) { [current_year_paid_claim.id] }
+    context "when the upload step is present" do
+      let!(:paid_claim_1) do
+        create(:claim, :submitted, status: :paid, reference: 11_111_111)
+      end
+      let!(:paid_claim_2) do
+        create(:claim, :submitted, status: :paid, reference: 22_222_222)
+      end
+      let(:csv_content) do
+        "claim_reference,sample_reason\r\n" \
+        "11111111,Some reason\r\n" \
+        "22222222,Another reason,"
+      end
       let(:state) do
         {
           "upload" => {
-            "claim_ids" => claim_ids,
+            "csv_upload" => nil,
+            "csv_content" => csv_content,
           },
         }
       end
 
-      it "returns the claim ids from the upload step" do
-        expect(paid_claims).to eq([current_year_paid_claim.id])
+      it "returns the claim_update_details from the upload step" do
+        expect(claim_update_details).to contain_exactly(
+          {
+            id: paid_claim_1.id,
+            sampling_reason: "Some reason",
+          },
+          {
+            id: paid_claim_2.id,
+            sampling_reason: "Another reason",
+          },
+        )
       end
     end
   end
