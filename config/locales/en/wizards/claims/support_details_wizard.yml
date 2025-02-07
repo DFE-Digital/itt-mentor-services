@@ -1,0 +1,17 @@
+en:
+  wizards:
+    claims:
+      support_details_wizard:
+        zendesk_step:
+          page_title: "Enter a URL for the associated Zendesk ticket - Claim %{reference}"
+          caption: Claim %{reference}
+          title: Enter a URL for the associated Zendesk ticket
+          continue: Continue
+        support_user_step:
+          page_title: "Assign a support agent - Claim %{reference}"
+          caption: Claim %{reference}
+          title: Assign a support agent
+          continue: Continue
+        success:
+          zendesk: Link to Zendesk ticket added
+          support_user: Support agent assigned

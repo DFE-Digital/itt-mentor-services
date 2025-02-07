@@ -21,6 +21,10 @@
 require "rails_helper"
 
 RSpec.describe Claims::SupportUser do
+  describe "associations" do
+    it { is_expected.to have_many(:claims) }
+  end
+
   context "with validations" do
     subject { build(:claims_support_user) }
 

@@ -249,3 +249,12 @@ en:
                 Your file needs a column called %{missing_columns}.
               uploaded_headers: 
                 Right now it has columns called %{uploaded_headers}.
+        claims/support_details_wizard/zendesk_step:
+          attributes:
+            zendesk_url: 
+              blank: Please enter a zendesk URL
+        claims/support_details_wizard/support_user_step:
+          attributes:
+            support_user_id: 
+              blank: Please select a support agent
+              inclusion: Please select a support agent

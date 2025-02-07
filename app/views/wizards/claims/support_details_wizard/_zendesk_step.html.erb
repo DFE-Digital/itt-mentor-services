@@ -1,0 +1,17 @@
+<% content_for(:page_title) { sanitize title_with_error_prefix(t(".page_title", reference: @claim.reference), error: current_step.errors.any?) } %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".caption", reference: @claim.reference) %></span>
+
+      <%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+        <%= f.govuk_error_summary %>
+
+        <%= f.govuk_text_field :zendesk_url, label: { text: t(".title"), size: "l", tag: "h1" } %>
+
+        <%= f.govuk_submit(t(".continue")) %>
+      <% end %>
+    </div>
+  </div>
+</div>

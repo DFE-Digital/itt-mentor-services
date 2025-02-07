@@ -20,4 +20,6 @@
 #
 class Claims::SupportUser < User
   include ActsAsSupportUser
+
+  has_many :claims
 end

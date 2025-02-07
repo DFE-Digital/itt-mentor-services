@@ -98,6 +98,8 @@ shared:
     - sampling_reason
     - payment_in_progress_at
     - unpaid_reason
+    - zendesk_url
+    - support_user_id
   :samplings:
     - id
     - created_at
