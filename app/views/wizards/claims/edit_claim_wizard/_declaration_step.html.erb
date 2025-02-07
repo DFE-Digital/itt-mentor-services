@@ -83,10 +83,7 @@
         <li><%= t("wizards.claims.add_claim_wizard.check_your_answers_step.provide_evidence") %></li>
       </ul>
 
-      <div class="govuk-warning-text">
-        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-        <strong class="govuk-warning-text__text"><%= t("wizards.claims.add_claim_wizard.check_your_answers_step.warning") %></strong>
-      </div>
+      <%= govuk_warning_text text: t("wizards.claims.add_claim_wizard.check_your_answers_step.warning") %>
 
       <%= f.govuk_submit t(".submit") %>
     </div>
