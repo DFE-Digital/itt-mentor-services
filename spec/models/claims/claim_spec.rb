@@ -421,6 +421,54 @@ RSpec.describe Claims::Claim, type: :model do
     end
   end
 
+  describe "#in_clawback?" do
+    context "when the claim has status clawback_requested" do
+      let(:claim) { create(:claim, status: :clawback_requested) }
+
+      it "returns true" do
+        expect(claim.in_clawback?).to be(true)
+      end
+    end
+
+    context "when the claim has status clawback_in_progress" do
+      let(:claim) { create(:claim, status: :clawback_in_progress) }
+
+      it "returns true" do
+        expect(claim.in_clawback?).to be(true)
+      end
+    end
+
+    context "when the claim has any other status" do
+      let(:claim) { create(:claim, status: :submitted) }
+
+      it "returns false" do
+        expect(claim.in_clawback?).to be(false)
+      end
+    end
+  end
+
+  describe "#amount_after_clawback" do
+    let(:claim) { create(:claim) }
+
+    before do
+      allow(claim).to receive_messages(amount: 1000, total_clawback_amount: 200)
+    end
+
+    it "returns the correct amount after clawback" do
+      expect(claim.amount_after_clawback).to eq(800)
+    end
+
+    context "when the total clawback amount is 0" do
+      before do
+        allow(claim).to receive(:total_clawback_amount).and_return(0)
+      end
+
+      it "returns the original amount" do
+        expect(claim.amount_after_clawback).to eq(1000)
+      end
+    end
+  end
+
   describe "#total_hours_completed" do
     let(:claim) { create(:claim) }
 
