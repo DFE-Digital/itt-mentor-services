@@ -1,0 +1,22 @@
+<%# locals: (claim:) %>
+
+<% if claim.unpaid_reason.present? %>
+  <%= govuk_inset_text do %>
+    <h2 class="govuk-heading-s"><%= t(".unpaid_reason_header") %></h2>
+    <p class="govuk-body"><%= claim.unpaid_reason %></p>
+  <% end %>
+<% end %>
+
+<% if claim.payment_information_requested? %>
+  <div class="govuk-button-group">
+    <%= govuk_button_link_to t(".buttons.information_sent"), confirm_information_sent_claims_support_claims_payments_claim_path(claim) %>
+    <%= govuk_button_link_to t(".buttons.reject"), confirm_reject_claims_support_claims_payments_claim_path(claim), secondary: true %>
+  </div>
+<% end %>
+
+<% if claim.payment_information_sent? %>
+  <div class="govuk-button-group">
+    <%= govuk_button_link_to t(".buttons.paid"), confirm_paid_claims_support_claims_payments_claim_path(claim) %>
+    <%= govuk_button_link_to t(".buttons.reject"), confirm_reject_claims_support_claims_payments_claim_path(claim), secondary: true %>
+  </div>
+<% end %>
