@@ -1,0 +1,27 @@
+<%# locals: (claim:) %>
+
+<% if claim.sampling_in_progress? && claim.sampling_reason? %>
+  <%= govuk_inset_text do %>
+    <h3 class="govuk-heading-s"><%= t(".reason") %></h3>
+    <p class="govuk-body"><%= claim.sampling_reason %></p>
+  <% end %>
+<% end %>
+
+<% if claim.sampling_provider_not_approved? && claim.mentor_trainings.not_assured.present? %>
+  <%= govuk_inset_text do %>
+    <h3 class="govuk-heading-s"><%= t(".provider_response") %></h3>
+    <p class="govuk-body"><%= claim_provider_response(claim) %></p>
+  <% end %>
+<% end %>
+
+<% if claim.sampling_in_progress? %>
+  <div class="govuk-button-group">
+    <%= govuk_button_link_to t(".buttons.approve"), confirm_approval_claims_support_claims_sampling_path(claim) %>
+    <%= govuk_button_link_to t(".buttons.confirm_provider_reject"), new_provider_rejected_claims_support_claims_sampling_path(claim), secondary: true %>
+  </div>
+<% elsif claim.sampling_provider_not_approved? %>
+  <div class="govuk-button-group">
+    <%= govuk_button_link_to t(".buttons.approve"), confirm_approval_claims_support_claims_sampling_path(claim) %>
+    <%= govuk_button_link_to t(".buttons.reject_claim"), new_rejected_claims_support_claims_sampling_path(claim), secondary: true %>
+  </div>
+<% end %>

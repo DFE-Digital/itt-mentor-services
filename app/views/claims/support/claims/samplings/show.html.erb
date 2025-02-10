@@ -9,39 +9,15 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <p class="govuk-caption-l"><%= t(".page_caption", reference: @claim.reference) %></p>
-        <h1 class="govuk-heading-l"><%= @claim.school.name %> <%= render Claim::StatusTagComponent.new(claim: @claim) %></h1>
+      <h1 class="govuk-heading-l"><%= @claim.school.name %> <%= render Claim::StatusTagComponent.new(claim: @claim) %></h1>
 
-        <% if @claim.sampling_in_progress? && @claim.sampling_reason? %>
-          <div class="govuk-inset-text">
-            <h3 class="govuk-heading-s"><%= t(".reason") %></h3>
-              <p class="govuk-body"><%= @claim.sampling_reason %></p>
-          </div>
-        <% end %>
+      <%= render "actions", claim: @claim %>
 
-        <% if @claim.sampling_provider_not_approved? && @claim.mentor_trainings.not_assured.present? %>
-          <div class="govuk-inset-text">
-            <h3 class="govuk-heading-s"><%= t(".provider_response") %></h3>
-              <p class="govuk-body"><%= claim_provider_response(@claim) %></p>
-          </div>
-        <% end %>
+      <% if @claim.submitted_by.present? %>
+        <p class="govuk-body"><%= t(".submitted_by", name: @claim.submitted_by.full_name, date: l(@claim.submitted_on, format: :long)) %></p>
+      <% end %>
 
-        <% if @claim.sampling_in_progress? %>
-          <div class="govuk-button-group">
-            <%= govuk_button_link_to t(".approve"), confirm_approval_claims_support_claims_sampling_path(@claim) %>
-            <%= govuk_button_link_to t(".confirm_provider_reject"), new_provider_rejected_claims_support_claims_sampling_path(@claim), secondary: true %>
-          </div>
-        <% elsif @claim.sampling_provider_not_approved? %>
-          <div class="govuk-button-group">
-            <%= govuk_button_link_to t(".approve"), confirm_approval_claims_support_claims_sampling_path(@claim) %>
-            <%= govuk_button_link_to t(".reject_claim"), new_rejected_claims_support_claims_sampling_path(@claim), secondary: true %>
-          </div>
-        <% end %>
-
-        <% if @claim.submitted_by.present? %>
-          <p class="govuk-body"><%= t(".submitted_by", name: @claim.submitted_by.full_name, date: l(@claim.submitted_on, format: :long)) %></p>
-        <% end %>
-
-        <%= render "claims/support/claims/details", claim: @claim %>
+      <%= render "claims/support/claims/details", claim: @claim %>
     </div>
   </div>
 </div>
