@@ -4,6 +4,12 @@ en:
       claims:
         payments:
           claims:
+            actions:
+              buttons:
+                information_sent: Confirm information sent
+                paid: Confirm claim paid
+                reject: Reject claim
+              unpaid_reason_header: Reason claim was not paid
             show:
               page_caption: Claim %{reference}
               page_title: "%{school_name} - Claim %{reference}"
@@ -12,11 +18,6 @@ en:
               mentor_with_index: Mentor %{index}
               mentor: Mentor
               submitted_by: Submitted by %{name} on %{date}.
-              unpaid_reason_header: Reason claim was not paid
-              buttons:
-                information_sent: Confirm information sent
-                paid: Confirm claim paid
-                reject: Reject claim
             confirm_information_sent:
               page_caption: Payments - Claim %{reference}
               page_title: Are you sure you want to update the claim?
