@@ -1,0 +1,5 @@
+<%# locals: (claim:) %>
+
+<% if claim.sampling_not_approved? %>
+  <%= govuk_button_link_to(t(".buttons.request_clawback"), new_request_clawback_claims_support_claims_clawbacks_path(claim)) %>
+<% end %>
