@@ -30,13 +30,8 @@ en:
             description:
               one: There is %{count} claim included in this submission.
               other: There are %{count} claims included in this submission.
-            details_html:
-              <p>Selecting ‘Send claims’ will:</p>
-              <ul class="govuk-list govuk-list--bullet">
-                <li>create a CSV containing a list of all claims marked as ‘Clawback requested’</li>
-                <li>send an email to the payer containing a link to the generated CSV - this link expires after 7 days</li>
-                <li>update the claim status from ‘Clawback requested’ to ‘Clawback in progress’</li>
-              </ul>
+            csv_details: By clicking 'send claims' all clawback requests will be sent to the payer. They will receive this via an email containing the link to a csv file.
+            status_details: The status of the claims will change from 'ready for clawback' to 'sent to payer for clawback'.
             warning: This action cannot be undone.
             submit: Send claims
             cancel: Cancel

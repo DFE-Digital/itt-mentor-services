@@ -14,7 +14,9 @@
 
       <p class="govuk-body"><%= t(".description", count: @clawback_requested_claims.count) %></p>
 
-      <div class="govuk-body"><%= t(".details_html") %></div>
+      <p class="govuk-body"><%= t(".csv_details") %></p>
+
+      <p class="govuk-body"><%= t(".status_details") %></p>
 
       <%= govuk_warning_text text: t(".warning") %>
 
