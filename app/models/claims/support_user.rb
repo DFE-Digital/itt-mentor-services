@@ -21,5 +21,5 @@
 class Claims::SupportUser < User
   include ActsAsSupportUser
 
-  has_many :claims
+  has_many :assigned_claims, class_name: "Claims::Claim"
 end

@@ -13,8 +13,6 @@ class Claims::Support::Claims::SupportDetailsController < Claims::Support::Appli
   def update
     if !@wizard.save_step
       render "edit"
-    elsif @wizard.next_step.present?
-      redirect_to step_path(@wizard.next_step)
     else
       @wizard.update_support_details
       @wizard.reset_state
@@ -28,7 +26,7 @@ class Claims::Support::Claims::SupportDetailsController < Claims::Support::Appli
 
   def set_wizard
     state = session[state_key] ||= {}
-    current_step = params[:step]&.to_sym
+    current_step = params.fetch(:step).to_sym
     @wizard = Claims::SupportDetailsWizard.new(params:, claim:, state:, current_step:)
   end
 

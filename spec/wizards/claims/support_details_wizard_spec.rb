@@ -32,28 +32,58 @@ RSpec.describe Claims::SupportDetailsWizard do
 
     context "when the step is zendesk" do
       let(:current_step) { :zendesk }
-      let(:state) do
-        {
-          "zendesk" => { "zendesk_url" => "example.zendesk.com" },
-        }
+
+      context "when the zendesk_url is present" do
+        let(:state) do
+          {
+            "zendesk" => { "zendesk_url" => "example.zendesk.com" },
+          }
+        end
+
+        it "updates the zendesk url of the claim" do
+          expect { update_support_details }.to change(claim, :zendesk_url).to("example.zendesk.com")
+        end
       end
 
-      it "updates the zendesk url of the claim" do
-        expect { update_support_details }.to change(claim, :zendesk_url).to("example.zendesk.com")
+      context "when the zendesk_url is blank" do
+        let(:state) do
+          {
+            "zendesk" => { "zendesk_url" => nil },
+          }
+        end
+
+        it "returns an error" do
+          expect { update_support_details }.to raise_error("Invalid wizard state")
+        end
       end
     end
 
     context "when the step is support_user" do
       let(:support_user) { create(:claims_support_user) }
       let(:current_step) { :support_user }
-      let(:state) do
-        {
-          "support_user" => { "support_user_id" => support_user.id },
-        }
+
+      context "when the support_user_id is present" do
+        let(:state) do
+          {
+            "support_user" => { "support_user_id" => support_user.id },
+          }
+        end
+
+        it "updates the zendesk url of the claim" do
+          expect { update_support_details }.to change(claim, :support_user).to(support_user)
+        end
       end
 
-      it "updates the zendesk url of the claim" do
-        expect { update_support_details }.to change(claim, :support_user).to(support_user)
+      context "when the support_user_id is blank" do
+        let(:state) do
+          {
+            "support_user" => { "support_user_id" => nil },
+          }
+        end
+
+        it "returns an error" do
+          expect { update_support_details }.to raise_error("Invalid wizard state")
+        end
       end
     end
   end
