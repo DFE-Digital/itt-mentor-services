@@ -14,9 +14,6 @@ RSpec.describe "Support user does not enter a reason why the school rejected the
     then_i_see_the_details_of_the_claim
 
     when_i_click_on_reject_claim
-    then_i_see_the_confirmation_page
-
-    when_i_click_on_continue
     then_i_see_the_rejection_reason_page_for_john_smith
 
     when_i_click_on_continue
@@ -106,32 +103,4 @@ RSpec.describe "Support user does not enter a reason why the school rejected the
     expect(page).to have_validation_error("Enter the response the school has given for rejecting this mentor.")
   end
 
-  def then_i_see_the_confirmation_page
-    expect(page).to have_title(
-      "Are you sure you want to reject the claim? - Reject - Claim #{@claim.reference} - Auditing - Claims - Claim funding for mentor training - GOV.UK",
-    )
-    expect(page).to have_element(
-      :span,
-      text: "Reject - Claim #{@claim.reference}",
-      class: "govuk-caption-l",
-    )
-    expect(page).to have_h1("Are you sure you want to reject the claim?")
-    expect(page).to have_element(:p, text: "To reject this claim, you must have:")
-    expect(page).to have_element(
-      :li,
-      text: "reviewed any evidence sent by the school and deemed it insufficient to prove the claim is legitimate",
-    )
-    expect(page).to have_element(
-      :li,
-      text: "received second approval from within the support team or policy team",
-    )
-    expect(page).to have_element(
-      :li,
-      text: "contacted the school to let them know their evidence has been rejected",
-    )
-    expect(page).to have_element(
-      :li,
-      text: "told the school which claims you are rejecting and how much will be clawed back",
-    )
-  end
 end

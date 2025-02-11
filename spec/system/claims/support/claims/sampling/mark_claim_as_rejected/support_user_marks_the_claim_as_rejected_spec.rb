@@ -12,9 +12,6 @@ RSpec.describe "Support user marks a claim as rejected", service: :claims, type:
     then_i_see_the_details_of_the_claim
 
     when_i_click_on_reject_claim
-    then_i_see_the_confirmation_page
-
-    when_i_click_on_continue
     then_i_see_the_rejection_reason_page_for_jane_doe
 
     when_i_enter_a_reason_why_the_school_rejected_jane_doe
@@ -31,13 +28,12 @@ RSpec.describe "Support user marks a claim as rejected", service: :claims, type:
     then_i_see_the_details_of_the_claim
 
     when_i_click_on_reject_claim
-    then_i_see_the_confirmation_page
+    then_i_see_the_rejection_reason_page_for_jane_doe
 
     when_i_click_on_cancel
     then_i_see_the_details_of_the_claim
 
     when_i_click_on_reject_claim
-    and_i_click_on_continue
     and_i_enter_a_reason_why_the_school_rejected_jane_doe
     and_i_click_on_continue
     and_i_enter_a_reason_why_the_school_rejected_john_smith
@@ -55,13 +51,9 @@ RSpec.describe "Support user marks a claim as rejected", service: :claims, type:
     and_the_reason_why_the_school_rejected_jane_doe_is_prefilled
 
     when_i_click_on_back
-    then_i_see_the_confirmation_page
-
-    when_i_click_on_back
     then_i_see_the_details_of_the_claim
 
     when_i_click_on_reject_claim
-    and_i_click_on_continue
     and_i_enter_a_reason_why_the_school_rejected_jane_doe
     and_i_click_on_continue
     and_i_enter_a_reason_why_the_school_rejected_john_smith
@@ -269,33 +261,4 @@ RSpec.describe "Support user marks a claim as rejected", service: :claims, type:
   end
   alias_method :and_i_enter_a_reason_why_the_school_rejected_jane_doe,
                :when_i_enter_a_reason_why_the_school_rejected_jane_doe
-
-  def then_i_see_the_confirmation_page
-    expect(page).to have_title(
-      "Are you sure you want to reject the claim? - Reject - Claim #{@claim.reference} - Auditing - Claims - Claim funding for mentor training - GOV.UK",
-    )
-    expect(page).to have_element(
-      :span,
-      text: "Reject - Claim #{@claim.reference}",
-      class: "govuk-caption-l",
-    )
-    expect(page).to have_h1("Are you sure you want to reject the claim?")
-    expect(page).to have_element(:p, text: "To reject this claim, you must have:")
-    expect(page).to have_element(
-      :li,
-      text: "reviewed any evidence sent by the school and deemed it insufficient to prove the claim is legitimate",
-    )
-    expect(page).to have_element(
-      :li,
-      text: "received second approval from within the support team or policy team",
-    )
-    expect(page).to have_element(
-      :li,
-      text: "contacted the school to let them know their evidence has been rejected",
-    )
-    expect(page).to have_element(
-      :li,
-      text: "told the school which claims you are rejecting and how much will be clawed back",
-    )
-  end
 end
