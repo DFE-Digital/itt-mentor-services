@@ -80,7 +80,7 @@ RSpec.describe "Submit a draft claim", service: :claims, type: :system do
     expect(page).to have_content("I have read and accepted the grant terms and conditions")
     expect(page).to have_content("the information detailed above is accurate and the total I am claiming back has been used to support the cost of the mentor training")
     expect(page).to have_content("I will provide evidence to support this claim if requested by the Department for Education")
-    expect(page).to have_content("You will not be able to change any of the claim details once you have submitted it.")
+    expect(page).to have_content("You will not be able to change any of the claim details once you have submitted the claim.")
   end
 
   def then_i_get_a_claim_reference(claim)

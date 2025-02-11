@@ -12,7 +12,7 @@ module Claims
     delegate :academic_year, :claim_window, to: :claim
     delegate :reference, to: :claim, prefix: true
     delegate :name, to: :provider, prefix: true
-    delegate :name, to: :school, prefix: true
+    delegate :name, :region_funding_available_per_hour, to: :school, prefix: true
     delegate :name, to: :academic_year, prefix: true
 
     def define_steps

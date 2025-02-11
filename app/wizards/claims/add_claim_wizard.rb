@@ -9,7 +9,7 @@ module Claims
     end
 
     delegate :amount, to: :claim
-    delegate :name, to: :school, prefix: true
+    delegate :name, :region_funding_available_per_hour, to: :school, prefix: true
     delegate :name, to: :provider, prefix: true
     delegate :name, to: :academic_year, prefix: true
 
