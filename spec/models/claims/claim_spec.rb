@@ -438,6 +438,14 @@ RSpec.describe Claims::Claim, type: :model do
       end
     end
 
+    context "when the claim has status clawback_complete" do
+      let(:claim) { create(:claim, status: :clawback_complete) }
+
+      it "returns true" do
+        expect(claim.in_clawback?).to be(true)
+      end
+    end
+
     context "when the claim has any other status" do
       let(:claim) { create(:claim, status: :submitted) }
 
