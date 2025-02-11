@@ -74,8 +74,13 @@ FactoryBot.define do
       status { :payment_information_sent }
     end
 
+    trait :payment_not_approved do
+      status { :payment_not_approved }
+    end
+
     trait :audit_requested do
       status { :sampling_in_progress }
+      sampling_reason { "Small claim" }
     end
   end
 end
