@@ -41,3 +41,13 @@ en:
             body_html:
               The status of these claims have been updated to ‘Payer payment review’.<br><br>
               You must wait for the payer to respond before you can take any further action on these claims.
+          action_calculator:
+            waiting_to_send_to_payer_html:
+              one: <strong>%{count}</strong> claim waiting to be sent to payer
+              other: <strong>%{count}</strong> claims waiting to be sent to payer
+            awaiting_response_from_payer_html:
+              one: <strong>%{count}</strong> claim awaiting a response from payer
+              other: <strong>%{count}</strong> claims awaiting a response from payer
+            require_more_information_html:
+              one: <strong>%{count}</strong> claim requires more information
+              other: <strong>%{count}</strong> claims require more information

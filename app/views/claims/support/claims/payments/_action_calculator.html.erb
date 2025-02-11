@@ -1,0 +1,12 @@
+<%# locals: (submitted_claims:, payment_in_progress_claims:, claims:) -%>
+<div id="action_calculator">
+  <% if submitted_claims.any? %>
+    <p class="govuk-body"><%= t(".waiting_to_send_to_payer_html", count: submitted_claims.count) %></p>
+  <% end %>
+  <% if payment_in_progress_claims.any? %>
+    <p class="govuk-body"><%= t(".awaiting_response_from_payer_html", count: payment_in_progress_claims.count) %></p>
+  <% end %>
+  <% if claims.count.positive? %>
+    <p class="govuk-body"><%= t(".require_more_information_html", count: claims.count) %></p>
+  <% end %>
+</div>
