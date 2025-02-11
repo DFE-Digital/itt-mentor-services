@@ -19,7 +19,7 @@ module Claims
 
       if steps[:zendesk].present?
         claim.zendesk_url = steps[:zendesk].zendesk_url
-      elsif steps[:support_user].present?
+      else
         claim.support_user_id = steps[:support_user].support_user_id
       end
 
@@ -29,18 +29,15 @@ module Claims
     def setup_state
       if steps[:zendesk].present?
         state["zendesk"] = { "zendesk_url" => claim.zendesk_url }
-
-      elsif steps[:support_user].present?
+      else
         state["support_user"] = { "support_user_id" => claim.support_user_id }
       end
     end
 
     def success_message
-      if steps[:zendesk].present?
-        I18n.t(".wizards.claims.support_details_wizard.success.zendesk")
-      elsif steps[:support_user].present?
-        I18n.t(".wizards.claims.support_details_wizard.success.support_user")
-      end
+      return I18n.t(".wizards.claims.support_details_wizard.success.zendesk") if steps[:zendesk].present?
+
+      I18n.t(".wizards.claims.support_details_wizard.success.support_user")
     end
   end
 end

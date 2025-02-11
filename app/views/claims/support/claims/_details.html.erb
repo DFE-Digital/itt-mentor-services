@@ -4,15 +4,13 @@
     <% row.with_key(text: t(".support_ticket")) %>
     <% if claim.zendesk_url.present? %>
       <% row.with_value(text: govuk_link_to(t(".zendesk_support_ticket"), claim.zendesk_url, new_tab: true)) %>
-    <% else %>
-      <% row.with_value(text: govuk_link_to(t(".add_zendesk_link"), new_support_details_claims_support_claim_path(step: :zendesk))) %>
-    <% end %>
-    <% if claim.zendesk_url.present? %>
       <% row.with_action(
         text: t("change"),
         visually_hidden_text: t(".support_ticket"),
         href: new_support_details_claims_support_claim_path(step: :zendesk),
       ) %>
+    <% else %>
+      <% row.with_value(text: govuk_link_to(t(".add_zendesk_link"), new_support_details_claims_support_claim_path(step: :zendesk))) %>
     <% end %>
   <% end %>
 
@@ -20,15 +18,13 @@
     <% row.with_key(text: t(".assigned_user")) %>
     <% if claim.support_user.present? %>
       <% row.with_value(text: claim.support_user.full_name) %>
-    <% else %>
-      <% row.with_value(text: govuk_link_to(t(".assign_support_user"), new_support_details_claims_support_claim_path(step: :support_user))) %>
-    <% end %>
-    <% if claim.support_user.present? %>
       <% row.with_action(
         text: t("change"),
         visually_hidden_text: t(".assigned_user"),
         href: new_support_details_claims_support_claim_path(step: :support_user),
       ) %>
+    <% else %>
+      <% row.with_value(text: govuk_link_to(t(".assign_support_user"), new_support_details_claims_support_claim_path(step: :support_user))) %>
     <% end %>
   <% end %>
 <% end %>

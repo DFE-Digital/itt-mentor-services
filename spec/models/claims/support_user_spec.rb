@@ -22,7 +22,7 @@ require "rails_helper"
 
 RSpec.describe Claims::SupportUser do
   describe "associations" do
-    it { is_expected.to have_many(:claims) }
+    it { is_expected.to have_many(:assigned_claims).class_name("Claims::Claim") }
   end
 
   context "with validations" do

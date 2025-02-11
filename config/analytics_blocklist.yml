@@ -43,6 +43,9 @@ shared:
     - record_id
     - blob_id
     - created_at
+  :claims:
+    - zendesk_url
+    - support_user_id
   :download_access_tokens:
     - id
     - email_address
