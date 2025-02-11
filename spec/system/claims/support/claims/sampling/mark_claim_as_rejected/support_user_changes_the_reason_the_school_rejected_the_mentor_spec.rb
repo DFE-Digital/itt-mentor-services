@@ -12,9 +12,6 @@ RSpec.describe "Support user changes the reason the school rejected the mentor",
     then_i_see_the_details_of_the_claim
 
     when_i_click_on_reject_claim
-    then_i_see_the_confirmation_page
-
-    when_i_click_on_continue
     then_i_see_the_rejection_reason_page_for_john_smith
 
     when_i_enter_a_reason_why_the_school_rejected_john_smith
@@ -198,35 +195,6 @@ RSpec.describe "Support user changes the reason the school rejected the mentor",
 
   def when_i_enter_a_reason_why_the_school_rejected_john_smith
     fill_in "Only include details related to John Smith", with: "School rejected John Smith"
-  end
-
-  def then_i_see_the_confirmation_page
-    expect(page).to have_title(
-      "Are you sure you want to reject the claim? - Reject - Claim #{@claim.reference} - Auditing - Claims - Claim funding for mentor training - GOV.UK",
-    )
-    expect(page).to have_element(
-      :span,
-      text: "Reject - Claim #{@claim.reference}",
-      class: "govuk-caption-l",
-    )
-    expect(page).to have_h1("Are you sure you want to reject the claim?")
-    expect(page).to have_element(:p, text: "To reject this claim, you must have:")
-    expect(page).to have_element(
-      :li,
-      text: "reviewed any evidence sent by the school and deemed it insufficient to prove the claim is legitimate",
-    )
-    expect(page).to have_element(
-      :li,
-      text: "received second approval from within the support team or policy team",
-    )
-    expect(page).to have_element(
-      :li,
-      text: "contacted the school to let them know their evidence has been rejected",
-    )
-    expect(page).to have_element(
-      :li,
-      text: "told the school which claims you are rejecting and how much will be clawed back",
-    )
   end
 
   def when_i_click_on_change_reason_for_rejection_for_john_smith

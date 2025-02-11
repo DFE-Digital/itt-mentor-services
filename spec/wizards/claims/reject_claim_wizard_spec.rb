@@ -29,13 +29,13 @@ RSpec.describe Claims::RejectClaimWizard do
     subject(:steps) { wizard.steps.keys }
 
     context "when no mentors have been selected" do
-      it { is_expected.to eq(%i[confirmation check_your_answers]) }
+      it { is_expected.to eq(%i[check_your_answers]) }
     end
 
     context "when the claim has mentor trainings which are assured" do
       before { create(:mentor_training, claim:, mentor: mentor_jane_doe) }
 
-      it { is_expected.to eq(%i[confirmation check_your_answers]) }
+      it { is_expected.to eq(%i[check_your_answers]) }
     end
 
     context "when the claim has not assured mentor trainings" do
@@ -46,7 +46,6 @@ RSpec.describe Claims::RejectClaimWizard do
 
       it do
         expect(steps).to contain_exactly(
-          :confirmation,
           "school_response_#{mentor_training_1.id}".to_sym,
           "school_response_#{mentor_training_2.id}".to_sym,
           :check_your_answers,

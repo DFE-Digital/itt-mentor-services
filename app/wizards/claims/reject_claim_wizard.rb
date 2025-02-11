@@ -9,7 +9,6 @@ module Claims
     end
 
     def define_steps
-      add_step(ConfirmationStep)
       not_assured_mentor_trainings.each do |mentor_training|
         add_step(SchoolResponseStep,
                  { mentor_training_id: mentor_training.id },
