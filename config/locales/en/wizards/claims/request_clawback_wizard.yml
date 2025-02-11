@@ -6,13 +6,14 @@ en:
           page_title: Clawback details for %{mentor_name} - %{school_name} - Claim %{reference}
           title: Clawback details for %{mentor_name}
           hours: Number of hours to clawback
-          hours_hint: Enter whole numbers up to a maximum of %{hours_completed} hours
+          hours_hint: "%{mentor_name} original claim was for %{hours_completed} hours"
           reason: Notes on your decision
           reason_hint: Only include details related to %{mentor_name}
           continue: Continue
           description: Personal details
-          comments_from_provider: Comments from the provider
-          comments_from_school: Comments from the school
+          comments_from_provider: Provider comments - %{provider_name}
+          comments_from_school: School comments - %{school_name}
+          why_the_claim_was_rejected: Why the claim was rejected
         check_your_answers_step:
           page_title: Check your answers - %{school_name} - Claim %{reference}
           title: Check your answers

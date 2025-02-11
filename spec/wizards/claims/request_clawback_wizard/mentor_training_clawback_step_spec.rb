@@ -52,6 +52,7 @@ RSpec.describe Claims::RequestClawbackWizard::MentorTrainingClawbackStep, type: 
 
   describe "delegations" do
     it { is_expected.to delegate_method(:mentor_trainings).to(:wizard) }
+    it { is_expected.to delegate_method(:claim).to(:wizard) }
     it { is_expected.to delegate_method(:mentor).to(:mentor_training) }
     it { is_expected.to delegate_method(:reason_rejected).to(:mentor_training) }
     it { is_expected.to delegate_method(:reason_not_assured).to(:mentor_training) }
@@ -65,6 +66,38 @@ RSpec.describe Claims::RequestClawbackWizard::MentorTrainingClawbackStep, type: 
 
     it "returns the mentor training with the given ID" do
       expect(step.mentor_training).to eq(mentor_trainings.first)
+    end
+  end
+
+  describe "mentor_full_name_possessive" do
+    subject(:mentor_full_name_possessive) { step.mentor_full_name_possessive }
+
+    let(:mentor_training) do
+      create(
+        :mentor_training,
+        claim:,
+        hours_completed: 3,
+        not_assured: true,
+        reason_not_assured: "reason",
+        mentor:,
+      )
+    end
+    let(:attributes) { { mentor_training_id: mentor_training.id, number_of_hours: nil, reason_for_clawback: nil } }
+
+    context "when the mentor's full name ends with a 's'" do
+      let(:mentor) { create(:claims_mentor, first_name: "James", last_name: "Chess") }
+
+      it "add a ' suffix to the mentor's full name" do
+        expect(mentor_full_name_possessive).to eq("James Chess'")
+      end
+    end
+
+    context "when the mentor's full name does not ens with a 's'" do
+      let(:mentor) { create(:claims_mentor, first_name: "James", last_name: "Chest") }
+
+      it "add a ' suffix to the mentor's full name" do
+        expect(mentor_full_name_possessive).to eq("James Chest's")
+      end
     end
   end
 end

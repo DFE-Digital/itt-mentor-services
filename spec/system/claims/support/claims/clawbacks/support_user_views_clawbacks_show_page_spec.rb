@@ -43,7 +43,7 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
                                          status: :clawback_in_progress,
                                          reference: 33_333_333)
 
-    @mentor = create(:claims_mentor)
+    @mentor = create(:claims_mentor, first_name: "James", last_name: "Chess")
 
     create(:mentor_training,
            hours_completed: 15,
@@ -139,7 +139,7 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
     expect(page).to have_element(:span, text: "Clawbacks - Claim 22222222", class: "govuk-caption-l")
     expect(page).to have_h1("Clawback details")
     expect(page).to have_element(:label, text: "Number of hours to clawback", class: "govuk-label")
-    expect(page).to have_element(:div, text: "Enter whole numbers up to a maximum of 15 hours", class: "govuk-hint")
+    expect(page).to have_element(:div, text: "James Chess' original claim was for 15 hours", class: "govuk-hint")
     expect(page).to have_element(:label, text: "Notes on your decision", class: "govuk-label")
     expect(page).to have_element(:div, text: "Only include details related to #{@mentor.full_name}", class: "govuk-hint")
     expect(page).to have_button("Continue")
