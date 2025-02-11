@@ -10,7 +10,7 @@
 
       <% @wizard.selected_mentor_trainings.each_with_index do |mentor_training, index| %>
         <h2 class="govuk-heading-m">
-          <%= t(".provider_rejection_details", index: index + 1) %>
+          <%= t(".provider_rejection_details", mentor_name: mentor_training.mentor_full_name) %>
         </h2>
 
         <%= govuk_summary_list(html_attributes: { id: "provider_rejection_details_#{index + 1}" }) do |summary_list| %>

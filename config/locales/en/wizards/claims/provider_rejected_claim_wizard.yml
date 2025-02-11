@@ -24,7 +24,7 @@ en:
           title: Check your answers
           caption: Provider rejection - Claim %{reference}
           reason_for_rejection: Reason for rejection
-          provider_rejection_details: Provider's rejection details %{index}
+          provider_rejection_details: Provider's rejection details for %{mentor_name}
           confirm: Confirm and reject claim
           change: Change
           original_number_of_hours_claimed: Original number of hours claimed

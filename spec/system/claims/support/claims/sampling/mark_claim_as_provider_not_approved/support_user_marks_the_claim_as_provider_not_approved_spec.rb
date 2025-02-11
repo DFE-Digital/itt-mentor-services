@@ -213,6 +213,8 @@ RSpec.describe "Support user marks a claim as provider not approved", service: :
       class: "govuk-caption-l",
     )
     expect(page).to have_h1("Check your answers")
+    expect(page).to have_h2("Provider's rejection details for John Smith")
+    expect(page).to have_h2("Provider's rejection details for Jane Doe")
     expect(page).to have_element(
       :div,
       text: "Rejecting these mentors will update the claim status to ‘rejected by provider’.",
