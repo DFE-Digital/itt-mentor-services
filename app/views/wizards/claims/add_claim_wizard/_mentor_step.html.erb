@@ -9,7 +9,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l"><%= contextual_text %></span>
-      <h1 class="govuk-heading-l"><%= t(".heading", provider_name: @wizard.provider.name) %></h1>
+      <h1 class="govuk-heading-l"><%= t(".heading", provider_name: @wizard.provider_name) %></h1>
 
       <%= render Claims::AddClaimWizard::MentorStep::DisclaimerComponent.new(mentor_step: current_step) %>
 
