@@ -109,9 +109,9 @@ RSpec.describe "Support user changes the reason the provider rejected the mentor
 
   def then_i_see_the_mentor_selection_page
     expect(page).to have_title(
-      "Select a mentor - Rejected by provider - Claim #{@claim.reference} - Auditing - Claims - Claim funding for mentor training - GOV.UK",
+      "Select a mentor - Provider rejection - Claim #{@claim.reference} - Auditing - Claims - Claim funding for mentor training - GOV.UK",
     )
-    expect(page).to have_element(:span, text: "Rejected by provider - Claim #{@claim.reference}", class: "govuk-caption-l")
+    expect(page).to have_element(:span, text: "Provider rejection - Claim #{@claim.reference}", class: "govuk-caption-l")
     expect(page).to have_h1("Rejection details from the provider")
     expect(page).to have_element(:legend, text: "Which mentors are being rejected?")
     expect(page).to have_element(:div, text: "Include mentors which need partial or whole clawback.", class: "govuk-hint")
@@ -127,11 +127,11 @@ RSpec.describe "Support user changes the reason the provider rejected the mentor
 
   def then_i_see_the_rejection_reason_page_for_john_smith
     expect(page).to have_title(
-      "What reason has the provider given for rejecting John Smith? - Rejected by provider - Claim #{@claim.reference} - Auditing - Claims - Claim funding for mentor training - GOV.UK",
+      "What reason has the provider given for rejecting John Smith? - Provider rejection - Claim #{@claim.reference} - Auditing - Claims - Claim funding for mentor training - GOV.UK",
     )
     expect(page).to have_element(
       :span,
-      text: "Rejected by provider - Claim #{@claim.reference}",
+      text: "Provider rejection - Claim #{@claim.reference}",
       class: "govuk-caption-l",
     )
     expect(page).to have_h1("What reason has the provider given for rejecting John Smith?")
@@ -149,11 +149,11 @@ RSpec.describe "Support user changes the reason the provider rejected the mentor
 
   def then_i_see_the_check_your_answers_page
     expect(page).to have_title(
-      "Check your answers - Rejected by provider - Claim #{@claim.reference} - Auditing - Claims - Claim funding for mentor training - GOV.UK",
+      "Check your answers - Provider rejection - Claim #{@claim.reference} - Auditing - Claims - Claim funding for mentor training - GOV.UK",
     )
     expect(page).to have_element(
       :span,
-      text: "Rejected by provider - Claim #{@claim.reference}",
+      text: "Provider rejection - Claim #{@claim.reference}",
       class: "govuk-caption-l",
     )
     expect(page).to have_h1("Check your answers")
