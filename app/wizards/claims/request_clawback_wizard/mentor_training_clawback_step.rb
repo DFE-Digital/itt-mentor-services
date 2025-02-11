@@ -7,11 +7,20 @@ class Claims::RequestClawbackWizard::MentorTrainingClawbackStep < BaseStep
   validates :number_of_hours, presence: true, numericality: { only_integer: true, less_than_or_equal_to: proc { |step| step.mentor_training.hours_completed }, greater_than: 0 }
   validates :reason_for_clawback, presence: true
 
-  delegate :mentor_trainings, to: :wizard
+  delegate :mentor_trainings, :claim, to: :wizard
   delegate :mentor, :reason_rejected, :reason_not_assured, to: :mentor_training
   delegate :full_name, to: :mentor, prefix: true
 
   def mentor_training
     mentor_trainings.find(mentor_training_id)
+  end
+
+  def mentor_full_name_possessive
+    suffix = if mentor_full_name.end_with?("s")
+               "'"
+             else
+               "'s"
+             end
+    "#{mentor_full_name}#{suffix}"
   end
 end

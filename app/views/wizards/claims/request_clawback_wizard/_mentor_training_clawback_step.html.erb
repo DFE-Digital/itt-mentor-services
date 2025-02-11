@@ -6,13 +6,11 @@
       <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-l"><%= t(".title", mentor_name: current_step.mentor_full_name) %></h1>
 
-        <%= govuk_inset_text do %>
-          <p class="govuk-heading-s"><%= t(".comments_from_provider") %></p>
+        <%= govuk_details(summary_text: t(".why_the_claim_was_rejected")) do %>
+          <p class="govuk-heading-s"><%= t(".comments_from_provider", provider_name: current_step.claim.provider_name) %></p>
           <p class="govuk-body"><%= sanitize(current_step.reason_not_assured) %></p>
-        <% end %>
 
-        <%= govuk_inset_text do %>
-          <p class="govuk-heading-s"><%= t(".comments_from_school") %></p>
+          <p class="govuk-heading-s"><%= t(".comments_from_school", school_name: current_step.claim.school_name) %></p>
           <p class="govuk-body"><%= sanitize(current_step.reason_rejected) %></p>
         <% end %>
 
@@ -20,7 +18,11 @@
           <%= f.govuk_text_field :number_of_hours,
                                   width: 2,
                                   label: { text: t(".hours"), size: "s" },
-                                  hint: { text: t(".hours_hint", hours_completed: current_step.mentor_training.hours_completed) } %>
+                                  hint: {
+                                    text: t(".hours_hint",
+                                    mentor_name: current_step.mentor_full_name_possessive,
+                                    hours_completed: current_step.mentor_training.hours_completed),
+                                  } %>
         </div>
 
         <div class="govuk-form-group">

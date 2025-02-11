@@ -99,7 +99,7 @@ RSpec.describe "Support user edits a clawback request on a claim", service: :cla
     expect(page).to have_element(:span, text: "Clawbacks - Claim 11111111", class: "govuk-caption-l")
     expect(page).to have_h1("Clawback details")
     expect(page).to have_element(:label, text: "Number of hours to clawback", class: "govuk-label")
-    expect(page).to have_element(:div, text: "Enter whole numbers up to a maximum of #{@john_doe_training.hours_completed} hours", class: "govuk-hint")
+    expect(page).to have_element(:div, text: "John Doe's original claim was for #{@john_doe_training.hours_completed} hours", class: "govuk-hint")
     expect(page).to have_element(:label, text: "Notes on your decision", class: "govuk-label")
     expect(page).to have_element(:div, text: "Only include details related to #{@john_doe.full_name}", class: "govuk-hint")
     expect(page).to have_button("Continue")
