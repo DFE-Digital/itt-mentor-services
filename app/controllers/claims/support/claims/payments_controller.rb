@@ -3,14 +3,14 @@ class Claims::Support::Claims::PaymentsController < Claims::Support::Application
 
   before_action :authorize_claims
 
-  helper_method :filter_form
+  helper_method :filter_form, :submitted_claims, :payment_in_progress_claims
 
   def index
     @pagy, @claims = pagy(filtered_claims)
   end
 
   def new
-    @submitted_claims = Claims::Claim.submitted
+    submitted_claims
 
     unless policy(Claims::Payment).create?
       render "new_not_permitted"
@@ -61,5 +61,13 @@ class Claims::Support::Claims::PaymentsController < Claims::Support::Application
 
   def authorize_claims
     authorize [:payments, filtered_claims]
+  end
+
+  def submitted_claims
+    @submitted_claims ||= Claims::Claim.submitted
+  end
+
+  def payment_in_progress_claims
+    @payment_in_progress_claims ||= Claims::Claim.payment_in_progress
   end
 end
