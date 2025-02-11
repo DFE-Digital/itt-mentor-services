@@ -153,7 +153,7 @@ class Claims::Claim < ApplicationRecord
   end
 
   def in_clawback?
-    %w[clawback_requested clawback_in_progress].include?(status)
+    %w[clawback_requested clawback_in_progress clawback_complete].include?(status)
   end
 
   def amount_after_clawback
