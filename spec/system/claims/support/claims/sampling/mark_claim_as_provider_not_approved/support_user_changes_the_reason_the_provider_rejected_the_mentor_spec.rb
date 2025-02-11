@@ -157,6 +157,7 @@ RSpec.describe "Support user changes the reason the provider rejected the mentor
       class: "govuk-caption-l",
     )
     expect(page).to have_h1("Check your answers")
+    expect(page).to have_h2("Provider's rejection details for John Smith")
     expect(page).to have_element(
       :div,
       text: "Rejecting these mentors will update the claim status to ‘rejected by provider’.",
