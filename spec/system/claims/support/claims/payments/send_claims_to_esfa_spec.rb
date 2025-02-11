@@ -74,6 +74,11 @@ RSpec.describe "Send claims to payer", service: :claims, type: :system do
   end
 
   def and_claims_have_been_sent_to_esfa
+    expect(page).to have_success_banner(
+      "Claims sent to payer",
+      "The status of these claims have been updated to ‘Payer payment review’. "\
+      "You must wait for the payer to respond before you can take any further action on these claims.",
+    )
     expect(Claims::Claim.submitted.count).to eq(0)
     expect(Claims::Claim.payment_in_progress.count).to eq(3)
   end
