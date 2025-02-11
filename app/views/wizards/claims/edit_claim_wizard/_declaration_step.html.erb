@@ -28,7 +28,7 @@
           <% row.with_key(text: Claims::Claim.human_attribute_name(:mentors)) %>
           <% row.with_value do %>
             <ul class="govuk-list">
-              <% @wizard.claim.mentors.each do |mentor| %>
+              <% current_step.mentors.each do |mentor| %>
                 <li><%= mentor.full_name %></li>
               <% end %>
             </ul>
@@ -39,7 +39,7 @@
       <h2 class="govuk-heading-m"><%= t("wizards.claims.add_claim_wizard.check_your_answers_step.hours_of_training") %></h2>
 
       <%= govuk_summary_list do |summary_list| %>
-        <% @wizard.claim.mentor_trainings.each do |mentor_training| %>
+        <% current_step.mentor_trainings.each do |mentor_training| %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: mentor_training.mentor_full_name) %>
             <% row.with_value(
@@ -58,19 +58,19 @@
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t("wizards.claims.add_claim_wizard.check_your_answers_step.total_hours")) %>
           <% row.with_value(
-            text: pluralize(@wizard.claim.mentor_trainings.sum(:hours_completed),
+            text: pluralize(current_step.total_hours_completed,
             t("wizards.claims.add_claim_wizard.check_your_answers_step.hour")),
           ) %>
         <% end %>
 
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t("wizards.claims.add_claim_wizard.check_your_answers_step.hourly_rate")) %>
-          <% row.with_value(text: humanized_money_with_symbol(@wizard.school.region_funding_available_per_hour)) %>
+          <% row.with_value(text: humanized_money_with_symbol(@wizard.school_region_funding_available_per_hour)) %>
         <% end %>
 
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: Claims::Claim.human_attribute_name(:claim_amount)) %>
-          <% row.with_value(text: humanized_money_with_symbol(@wizard.claim.amount)) %>
+          <% row.with_value(text: humanized_money_with_symbol(current_step.amount)) %>
         <% end %>
       <% end %>
 

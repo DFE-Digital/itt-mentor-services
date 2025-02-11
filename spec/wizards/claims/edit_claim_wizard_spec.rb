@@ -100,6 +100,7 @@ RSpec.describe Claims::EditClaimWizard do
     it { is_expected.to delegate_method(:claim_window).to(:claim) }
     it { is_expected.to delegate_method(:reference).to(:claim).with_prefix(true) }
     it { is_expected.to delegate_method(:name).to(:school).with_prefix(true) }
+    it { is_expected.to delegate_method(:region_funding_available_per_hour).to(:school).with_prefix(true) }
     it { is_expected.to delegate_method(:name).to(:provider).with_prefix(true) }
     it { is_expected.to delegate_method(:name).to(:academic_year).with_prefix(true) }
   end
