@@ -56,19 +56,8 @@ RSpec.describe "Support user sends claims to payer", service: :claims, type: :sy
     expect(page).to have_element(:p, text: "Clawbacks", class: "govuk-caption-l")
     expect(page).to have_h1("Send claims to payer")
     expect(page).to have_element(:p, text: "There is 1 claim included in this submission.", class: "govuk-body")
-    expect(page).to have_element(:div, text: "Selecting ‘Send claims’ will:", class: "govuk-body")
-    expect(page).to have_element(
-      :li,
-      text: "create a CSV containing a list of all claims marked as ‘Clawback requested’",
-    )
-    expect(page).to have_element(
-      :li,
-      text: "send an email to the payer containing a link to the generated CSV - this link expires after 7 days",
-    )
-    expect(page).to have_element(
-      :li,
-      text: "update the claim status from ‘Clawback requested’ to ‘Clawback in progress’",
-    )
+    expect(page).to have_element(:p, text: "By clicking 'send claims' all clawback requests will be sent to the payer. They will receive this via an email containing the link to a csv file.", class: "govuk-body")
+    expect(page).to have_element(:p, text: "The status of the claims will change from 'ready for clawback' to 'sent to payer for clawback'.", class: "govuk-body")
     expect(page).to have_warning_text("This action cannot be undone.")
   end
 
