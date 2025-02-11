@@ -72,9 +72,9 @@ RSpec.describe "Support user does not select any mentors rejected by the provide
 
   def then_i_see_the_mentor_selection_page
     expect(page).to have_title(
-      "Select a mentor - Rejected by provider - Claim #{@claim.reference} - Auditing - Claims - Claim funding for mentor training - GOV.UK",
+      "Select a mentor - Provider rejection - Claim #{@claim.reference} - Auditing - Claims - Claim funding for mentor training - GOV.UK",
     )
-    expect(page).to have_element(:span, text: "Rejected by provider - Claim #{@claim.reference}", class: "govuk-caption-l")
+    expect(page).to have_element(:span, text: "Provider rejection - Claim #{@claim.reference}", class: "govuk-caption-l")
     expect(page).to have_h1("Rejection details from the provider")
     expect(page).to have_element(:legend, text: "Which mentors are being rejected?")
     expect(page).to have_element(:div, text: "Include mentors which need partial or whole clawback.", class: "govuk-hint")
