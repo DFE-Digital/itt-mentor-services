@@ -36,3 +36,8 @@ en:
             page_title: There are no claims to send for payment
             description: You cannot send any claims to the payer because there are no claims pending payment.
             cancel: Cancel
+          create:
+            heading: Claims sent to payer
+            body_html:
+              The status of these claims have been updated to ‘Payer payment review’.<br><br>
+              You must wait for the payer to respond before you can take any further action on these claims.

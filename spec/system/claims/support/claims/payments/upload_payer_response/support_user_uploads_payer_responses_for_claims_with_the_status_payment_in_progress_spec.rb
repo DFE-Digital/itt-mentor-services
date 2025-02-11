@@ -134,7 +134,8 @@ RSpec.describe "Support user uploads a CSV containing invalid references",
   def then_i_see_the_upload_has_been_successful
     expect(page).to have_success_banner(
       "Payer response uploaded",
-      "It may take a moment for the responses to load",
+      "The status of these claims have been updated to ‘paid’ or ‘payer needs information’. "\
+      "It may take a moment for responses to load. Refresh the page to see newly uploaded information.",
     )
   end
 

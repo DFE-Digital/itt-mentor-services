@@ -15,7 +15,7 @@ class Claims::Support::Claims::Payments::UploadPayerResponseController < Claims:
       @wizard.reset_state
       redirect_to index_path, flash: {
         heading: t(".heading"),
-        body: t(".body"),
+        body: t(".body_html"),
       }
     end
   end

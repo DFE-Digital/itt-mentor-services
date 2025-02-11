@@ -1,0 +1,13 @@
+en:
+  claims:
+    support:
+      claims:
+        payments:
+          upload_payer_response:
+            edit:
+              cancel: Cancel
+            update:
+              heading: Payer response uploaded
+              body_html: 
+                The status of these claims have been updated to ‘paid’ or ‘payer needs information’.<br><br>
+                It may take a moment for responses to load. Refresh the page to see newly uploaded information.
