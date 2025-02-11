@@ -61,22 +61,22 @@
     <% end %>
   <% end %>
 
-    <% summary_list.with_row do |row| %>
-      <% row.with_key(text: t(".mentors")) %>
-      <% row.with_value do %>
-        <ul class="govuk-list">
-          <% claim.mentors.each do |mentor| %>
-            <li><%= mentor.full_name %></li>
-          <% end %>
-        </ul>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".mentors")) %>
+    <% row.with_value do %>
+      <ul class="govuk-list">
+        <% claim.mentors.each do |mentor| %>
+          <li><%= mentor.full_name %></li>
+        <% end %>
+      </ul>
+    <% end %>
     <% if policy(claim).edit? %>
       <% row.with_action(text: t("change"),
                          href: edit_attribute_path(:mentor),
                          visually_hidden_text: Claims::Claim.human_attribute_name(:mentors),
                          html_attributes: {
-                  class: "govuk-link--no-visited-state",
-                }) %>
-                <% end %>
+                           class: "govuk-link--no-visited-state",
+                         }) %>
     <% end %>
   <% end %>
 <% end %>
@@ -137,8 +137,7 @@
                              visually_hidden_text: "Hours of training for #{mentor_training.mentor.full_name}",
                              html_attributes: {
                               class: "govuk-link--no-visited-state",
-                             }
-                            ) %>
+                             }) %>
           <% end %>
         <% end %>
       <% end %>
