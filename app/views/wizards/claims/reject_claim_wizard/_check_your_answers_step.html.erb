@@ -8,6 +8,8 @@
       <span class="govuk-caption-l"><%= t(".caption", reference: current_step.claim.reference) %></span>
       <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
+      <p><%= t(".information") %></p>
+
       <% @wizard.not_assured_mentor_trainings.each_with_index do |mentor_training| %>
         <h2 class="govuk-heading-m">
           <%= t(".school_rejection_details", mentor_name: mentor_training.mentor_full_name) %>

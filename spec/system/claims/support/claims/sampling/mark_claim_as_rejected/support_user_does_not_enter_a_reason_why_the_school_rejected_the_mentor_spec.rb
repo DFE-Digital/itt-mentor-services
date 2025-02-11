@@ -81,11 +81,11 @@ RSpec.describe "Support user does not enter a reason why the school rejected the
 
   def then_i_see_the_rejection_reason_page_for_john_smith
     expect(page).to have_title(
-      "What is the schools response to the claim about John Smith? - Reject - Claim #{@claim.reference} - Auditing - Claims - Claim funding for mentor training - GOV.UK",
+      "What is the schools response to the claim about John Smith? - School rejection - Claim #{@claim.reference} - Auditing - Claims - Claim funding for mentor training - GOV.UK",
     )
     expect(page).to have_element(
       :span,
-      text: "Reject - Claim #{@claim.reference}",
+      text: "School rejection - Claim #{@claim.reference}",
       class: "govuk-caption-l",
     )
     expect(page).to have_h1("What is the schools response to the claim about John Smith?")
@@ -102,5 +102,4 @@ RSpec.describe "Support user does not enter a reason why the school rejected the
   def then_i_see_a_validation_error_for_entering_a_reason_with_john_smith_was_rejected_by_the_provider
     expect(page).to have_validation_error("Enter the response the school has given for rejecting this mentor.")
   end
-
 end
