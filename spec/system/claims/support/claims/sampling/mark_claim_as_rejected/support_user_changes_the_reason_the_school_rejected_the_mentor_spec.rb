@@ -114,11 +114,11 @@ RSpec.describe "Support user changes the reason the school rejected the mentor",
 
   def then_i_see_the_check_your_answers_page
     expect(page).to have_title(
-      "Check your answers - Reject - Claim #{@claim.reference} - Auditing - Claims - Claim funding for mentor training - GOV.UK",
+      "Check your answers - School rejection - Claim #{@claim.reference} - Auditing - Claims - Claim funding for mentor training - GOV.UK",
     )
     expect(page).to have_element(
       :span,
-      text: "Reject - Claim #{@claim.reference}",
+      text: "School rejection - Claim #{@claim.reference}",
       class: "govuk-caption-l",
     )
     expect(page).to have_h1("Check your answers")
@@ -155,11 +155,11 @@ RSpec.describe "Support user changes the reason the school rejected the mentor",
 
   def then_i_see_the_rejection_reason_page_for_jane_doe
     expect(page).to have_title(
-      "What is the schools response to the claim about Jane Doe? - Reject - Claim #{@claim.reference} - Auditing - Claims - Claim funding for mentor training - GOV.UK",
+      "What is the schools response to the claim about Jane Doe? - School rejection - Claim #{@claim.reference} - Auditing - Claims - Claim funding for mentor training - GOV.UK",
     )
     expect(page).to have_element(
       :span,
-      text: "Reject - Claim #{@claim.reference}",
+      text: "School rejection - Claim #{@claim.reference}",
       class: "govuk-caption-l",
     )
     expect(page).to have_h1("What is the schools response to the claim about Jane Doe?")
@@ -175,11 +175,11 @@ RSpec.describe "Support user changes the reason the school rejected the mentor",
 
   def then_i_see_the_rejection_reason_page_for_john_smith
     expect(page).to have_title(
-      "What is the schools response to the claim about John Smith? - Reject - Claim #{@claim.reference} - Auditing - Claims - Claim funding for mentor training - GOV.UK",
+      "What is the schools response to the claim about John Smith? - School rejection - Claim #{@claim.reference} - Auditing - Claims - Claim funding for mentor training - GOV.UK",
     )
     expect(page).to have_element(
       :span,
-      text: "Reject - Claim #{@claim.reference}",
+      text: "School rejection - Claim #{@claim.reference}",
       class: "govuk-caption-l",
     )
     expect(page).to have_h1("What is the schools response to the claim about John Smith?")
