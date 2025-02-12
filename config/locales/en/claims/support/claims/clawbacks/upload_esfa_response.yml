@@ -8,4 +8,4 @@ en:
               cancel: Cancel
             update: 
               heading: Payer response uploaded
-              body: It may take a moment for the responses to load
+              body: It may take a moment for the responses to load. Refresh the page to see newly uploaded information.

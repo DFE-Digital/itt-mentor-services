@@ -199,7 +199,7 @@ RSpec.describe "Support user uploads provider responses for claims with the stat
   def then_i_see_the_upload_has_been_successful
     expect(page).to have_success_banner(
       "Provider response uploaded",
-      "It may take a moment for the responses to load",
+      "It may take a moment for the responses to load. Refresh the page to see newly uploaded information.",
     )
   end
 

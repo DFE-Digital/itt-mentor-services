@@ -191,7 +191,7 @@ RSpec.describe "Support user uploads ESFA responses for claims with the status '
   def then_i_see_the_upload_has_been_successful
     expect(page).to have_success_banner(
       "Payer response uploaded",
-      "It may take a moment for the responses to load",
+      "It may take a moment for the responses to load. Refresh the page to see newly uploaded information.",
     )
   end
 
