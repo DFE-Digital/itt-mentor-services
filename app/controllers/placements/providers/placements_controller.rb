@@ -14,7 +14,6 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
     @pagy, @placements = pagy(placements.merge(query))
     @placements = @placements.decorate
 
-    filter_schools_by_phase
     calculate_travel_time
   end
 
@@ -30,10 +29,18 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
   end
 
   def schools_scope
-    if filter_params[:only_partner_schools].present?
-      @provider.partner_schools
+    schools = if filter_params[:only_partner_schools].present?
+                @provider.partner_schools
+              else
+                Placements::School.all
+              end
+
+    if filter_form.primary_only?
+      schools.where.not(phase: "Secondary")
+    elsif filter_form.secondary_only?
+      schools.where.not(phase: "Primary")
     else
-      Placements::School.all
+      schools
     end
   end
 
@@ -107,13 +114,5 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
     else
       Subject
     end.order_by_name.select(:id, :name)
-  end
-
-  def filter_schools_by_phase
-    if filter_form.primary_only?
-      @schools = @schools.where.not(phase: "Secondary")
-    elsif filter_form.secondary_only?
-      @schools = @schools.where.not(phase: "Primary")
-    end
   end
 end
