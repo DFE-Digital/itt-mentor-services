@@ -6,7 +6,9 @@ en:
           page_title: Clawback details for %{mentor_name} - %{school_name} - Claim %{reference}
           title: Clawback details for %{mentor_name}
           hours: Number of hours to clawback
-          hours_hint: "%{mentor_name} original claim was for %{hours_completed} hours"
+          hours_hint: 
+            one: "%{mentor_name} original claim was for %{count} hour"
+            other: "%{mentor_name} original claim was for %{count} hours"
           reason: Notes on your decision
           reason_hint: Only include details related to %{mentor_name}
           continue: Continue

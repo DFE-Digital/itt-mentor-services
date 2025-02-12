@@ -30,4 +30,13 @@ class Mentor < ApplicationRecord
   def full_name
     "#{first_name} #{last_name}".strip
   end
+
+  def full_name_possessive
+    suffix = if full_name.end_with?("s")
+               "'"
+             else
+               "'s"
+             end
+    "#{full_name}#{suffix}"
+  end
 end
