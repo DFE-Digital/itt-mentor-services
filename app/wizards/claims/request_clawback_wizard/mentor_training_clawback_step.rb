@@ -9,18 +9,9 @@ class Claims::RequestClawbackWizard::MentorTrainingClawbackStep < BaseStep
 
   delegate :mentor_trainings, :claim, to: :wizard
   delegate :mentor, :reason_rejected, :reason_not_assured, to: :mentor_training
-  delegate :full_name, to: :mentor, prefix: true
+  delegate :full_name, :full_name_possessive, to: :mentor, prefix: true
 
   def mentor_training
     mentor_trainings.find(mentor_training_id)
-  end
-
-  def mentor_full_name_possessive
-    suffix = if mentor_full_name.end_with?("s")
-               "'"
-             else
-               "'s"
-             end
-    "#{mentor_full_name}#{suffix}"
   end
 end

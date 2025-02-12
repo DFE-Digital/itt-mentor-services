@@ -70,4 +70,24 @@ RSpec.describe Mentor, type: :model do
       expect(mentor.full_name).to eq("Jane Doe")
     end
   end
+
+  describe "#full_name_possessive" do
+    subject(:full_name_possessive) { mentor.full_name_possessive }
+
+    context "when the mentor's full name ends with a 's'" do
+      let(:mentor) { build(:mentor, first_name: "James", last_name: "Chess") }
+
+      it "add a ' suffix to the mentor's full name" do
+        expect(full_name_possessive).to eq("James Chess'")
+      end
+    end
+
+    context "when the mentor's full name does not ens with a 's'" do
+      let(:mentor) { create(:mentor, first_name: "James", last_name: "Chest") }
+
+      it "add a ' suffix to the mentor's full name" do
+        expect(full_name_possessive).to eq("James Chest's")
+      end
+    end
+  end
 end
