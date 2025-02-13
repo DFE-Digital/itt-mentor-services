@@ -11,6 +11,8 @@
       <p class="govuk-caption-l"><%= t(".page_caption", reference: @claim.reference) %></p>
       <h1 class="govuk-heading-l"><%= @claim.school_name %> <%= render Claim::StatusTagComponent.new(claim: @claim) %></h1>
 
+      <%= render Claims::Support::Claim::ResponsesComponent.new(claim: @claim) %>
+      
       <%= render Claims::Support::Claim::ActionsComponent.new(claim: @claim) %>
 
       <% if @claim.submitted_by_id? %>

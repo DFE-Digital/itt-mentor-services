@@ -1,0 +1,12 @@
+en:
+  components:
+    claims:
+      support:
+        claim:
+          responses_component:
+            provider_response: Provider response
+            reason: Reason claim is being audited
+            unpaid_reason_header: Reason claim was not paid
+            comments_from_provider: Provider comments - %{provider_name}
+            comments_from_school: School comments - %{school_name}
+            why_the_claim_was_rejected: Why the claim was rejected

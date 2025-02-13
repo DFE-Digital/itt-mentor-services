@@ -148,4 +148,8 @@ class Claims::Claim < ApplicationRecord
   def total_hours_completed
     mentor_trainings.sum(&:hours_completed)
   end
+
+  def payment_actionable?
+    PAYMENT_ACTIONABLE_STATUSES.include?(status)
+  end
 end
