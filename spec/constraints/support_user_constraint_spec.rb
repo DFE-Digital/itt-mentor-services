@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe SupportUserConstraint do
-  let!(:claims_support_user) { create(:claims_support_user) }
-  let!(:claims_user) { create(:claims_user) }
-  let!(:placements_support_user) { create(:placements_support_user) }
-  let!(:placements_user) { create(:placements_user) }
+  let(:claims_support_user) { create(:claims_support_user) }
+  let(:claims_user) { create(:claims_user) }
+  let(:placements_support_user) { create(:placements_support_user) }
+  let(:placements_user) { create(:placements_user) }
   let(:request) { Struct.new(:session).new({}) }
 
   describe ".matches?" do
