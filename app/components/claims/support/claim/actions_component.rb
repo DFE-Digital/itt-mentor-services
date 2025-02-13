@@ -6,4 +6,14 @@ class Claims::Support::Claim::ActionsComponent < ApplicationComponent
 
     @claim = claim
   end
+
+  def render?
+    %w[
+      payment_information_requested
+      payment_information_sent
+      sampling_in_progress
+      sampling_provider_not_approved
+      sampling_not_approved
+    ].include?(claim.status)
+  end
 end

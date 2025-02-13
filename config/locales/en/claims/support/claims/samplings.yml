@@ -12,13 +12,6 @@ en:
             no_claims: There are no claims waiting to be processed.
             upload_claims: Upload claims to be audited
             upload_provider_response: Upload provider response
-          actions:
-            buttons:
-              approve: Approve claim
-              reject_claim: Reject claim
-              confirm_provider_reject: Confirm provider rejected claim
-            provider_response: Provider response
-            reason: Reason claim is being audited
           show:
             page_caption: Auditing - Claim %{reference}
             page_title: "%{school_name} - Auditing - Claim %{reference}"

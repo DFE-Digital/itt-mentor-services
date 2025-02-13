@@ -165,6 +165,28 @@ RSpec.describe Claims::MentorTraining, type: :model do
         )
       end
     end
+
+    describe "#not_assured" do
+      let(:assured_mentor_training) { create(:mentor_training) }
+      let(:not_assured_mentor_training) do
+        create(:mentor_training, not_assured: true, reason_not_assured: "Reason")
+      end
+
+      it "returns a list of not assured claims" do
+        expect(described_class.not_assured).to contain_exactly(not_assured_mentor_training)
+      end
+    end
+
+    describe "#rejected" do
+      let(:not_rejected_mentor_training) { create(:mentor_training) }
+      let(:rejected_mentor_training) do
+        create(:mentor_training, rejected: true, reason_rejected: "Reason")
+      end
+
+      it "returns a list of rejected claims" do
+        expect(described_class.rejected).to contain_exactly(rejected_mentor_training)
+      end
+    end
   end
 
   describe "#set_training_type" do

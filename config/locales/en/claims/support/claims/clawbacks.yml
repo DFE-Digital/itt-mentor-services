@@ -12,9 +12,6 @@ en:
             no_claims: There are no claims waiting to be processed.
             send_claims_to_esfa: Send claims to payer
             upload_esfa_response: Upload payer response
-          actions:
-            buttons:
-              request_clawback: Request clawback
           show:
             page_caption: Clawbacks - Claim %{reference}
             page_title: "Clawbacks - %{school_name} - Claim %{reference}"

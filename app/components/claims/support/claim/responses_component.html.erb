@@ -1,20 +1,20 @@
 <% if claim.payment_actionable? && claim.unpaid_reason.present? %>
-  <%= govuk_inset_text do %>
-    <h2 class="govuk-heading-s"><%= t(".unpaid_reason_header") %></h2>
+  <%= govuk_inset_text(classes: "claim-responses") do %>
+    <h3 class="govuk-heading-s"><%= t(".unpaid_reason_header") %></h2>
     <p class="govuk-body"><%= claim.unpaid_reason %></p>
   <% end %>
 <% elsif claim.sampling_in_progress? && claim.sampling_reason.present? %>
-  <%= govuk_inset_text do %>
+  <%= govuk_inset_text(classes: "claim-responses") do %>
     <h3 class="govuk-heading-s"><%= t(".reason") %></h3>
     <p class="govuk-body"><%= claim.sampling_reason %></p>
   <% end %>
 <% elsif claim.sampling_provider_not_approved? %>
-  <%= govuk_inset_text do %>
+  <%= govuk_inset_text(classes: "claim-responses") do %>
     <h3 class="govuk-heading-s"><%= t(".provider_response") %></h3>
     <p class="govuk-body"><%= provider_response %></p>
   <% end %>
 <% elsif claim.sampling_not_approved? || claim.in_clawback? %>
-  <%= govuk_details(summary_text: t(".why_the_claim_was_rejected")) do %>
+  <%= govuk_details(summary_text: t(".why_the_claim_was_rejected"), classes: "claim-responses") do %>
     <p class="govuk-heading-s"><%= t(".comments_from_provider", provider_name: claim.provider_name) %></p>
     <p class="govuk-body"><%= provider_response %></p>
 

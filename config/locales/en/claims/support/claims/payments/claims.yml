@@ -4,12 +4,6 @@ en:
       claims:
         payments:
           claims:
-            actions:
-              buttons:
-                information_sent: Confirm information sent
-                paid: Confirm claim paid
-                reject: Reject claim
-              unpaid_reason_header: Reason claim was not paid
             show:
               page_caption: Claim %{reference}
               page_title: "%{school_name} - Claim %{reference}"
