@@ -44,14 +44,6 @@ class Claims::MentorTraining < ApplicationRecord
 
   validates :hours_completed,
             allow_nil: true,
-            # TODO: Remove this 'unless' condition once claim revisions have been removed.
-            # The 'internal draft' state that powers revisions is confusing, but in this case we need to
-            # skip this validation rule so that Claims::Claim::CreateRevision can successfully duplicate
-            # the claim and its mentor training records without breaching the remaining training allowance.
-            # The validity of mentor training records is still checked before claims can be submitted, so this
-            # doesn't open up a loophole. It's just a quirk due to the way claim revisions are modelled.
-            # https://trello.com/c/4riw52nH/230-replace-claim-revisions-with-the-wizard-pattern
-            unless: -> { claim&.internal_draft? },
             numericality: {
               greater_than: 0,
               less_than_or_equal_to: :max_hours,

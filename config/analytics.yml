@@ -93,7 +93,6 @@ shared:
     - submitted_by_type
     - submitted_by_id
     - reviewed
-    - previous_revision_id
     - claim_window_id
     - sampling_reason
     - payment_in_progress_at

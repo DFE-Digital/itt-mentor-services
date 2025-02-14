@@ -17,7 +17,6 @@
 #  updated_at             :datetime         not null
 #  claim_window_id        :uuid
 #  created_by_id          :uuid
-#  previous_revision_id   :uuid
 #  provider_id            :uuid
 #  school_id              :uuid             not null
 #  submitted_by_id        :uuid
@@ -25,14 +24,13 @@
 #
 # Indexes
 #
-#  index_claims_on_claim_window_id       (claim_window_id)
-#  index_claims_on_created_by            (created_by_type,created_by_id)
-#  index_claims_on_previous_revision_id  (previous_revision_id)
-#  index_claims_on_provider_id           (provider_id)
-#  index_claims_on_reference             (reference)
-#  index_claims_on_school_id             (school_id)
-#  index_claims_on_submitted_by          (submitted_by_type,submitted_by_id)
-#  index_claims_on_support_user_id       (support_user_id)
+#  index_claims_on_claim_window_id  (claim_window_id)
+#  index_claims_on_created_by       (created_by_type,created_by_id)
+#  index_claims_on_provider_id      (provider_id)
+#  index_claims_on_reference        (reference)
+#  index_claims_on_school_id        (school_id)
+#  index_claims_on_submitted_by     (submitted_by_type,submitted_by_id)
+#  index_claims_on_support_user_id  (support_user_id)
 #
 # Foreign Keys
 #
@@ -48,7 +46,6 @@ RSpec.describe Claims::Claim, type: :model do
     it { is_expected.to belong_to(:created_by) }
     it { is_expected.to belong_to(:claim_window) }
     it { is_expected.to belong_to(:support_user).class_name("Claims::SupportUser").optional }
-    it { is_expected.to belong_to(:previous_revision).class_name("Claims::Claim").optional }
     it { is_expected.to belong_to(:submitted_by).optional }
     it { is_expected.to have_many(:mentor_trainings).dependent(:destroy) }
     it { is_expected.to have_many(:mentors).through(:mentor_trainings) }
@@ -225,48 +222,6 @@ RSpec.describe Claims::Claim, type: :model do
       create(:mentor_training, hours_completed: nil, claim:)
 
       expect(claim.ready_to_be_checked?).to be(false)
-    end
-  end
-
-  describe "#get_valid_revision" do
-    it "gets the last valid revision" do
-      claim = create(:claim, :draft)
-      invalid_revision = create(
-        :claim,
-        :draft,
-        previous_revision: claim,
-      )
-      claim.update!(previous_revision: invalid_revision)
-      create(:mentor_training, claim: invalid_revision, hours_completed: nil)
-      create(:mentor_training, claim:, hours_completed: 20)
-
-      expect(claim.get_valid_revision).to eq(claim)
-    end
-  end
-
-  describe "#was_draft?" do
-    it "returns true if any previous revision was draft" do
-      draft_revision = create(:claim, :draft)
-      revision = create(
-        :claim,
-        :internal_draft,
-        previous_revision: draft_revision,
-      )
-      claim = create(:claim, :submitted, previous_revision: revision)
-
-      expect(claim.was_draft?).to be(true)
-    end
-
-    it "returns false if no previous revision was draft" do
-      second_revision = create(:claim, :internal_draft)
-      revision = create(
-        :claim,
-        :internal_draft,
-        previous_revision: second_revision,
-      )
-      claim = create(:claim, :submitted, previous_revision: revision)
-
-      expect(claim.was_draft?).to be(false)
     end
   end
 
