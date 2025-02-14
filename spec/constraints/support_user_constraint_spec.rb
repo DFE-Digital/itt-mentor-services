@@ -42,7 +42,7 @@ RSpec.describe SupportUserConstraint do
       end
 
       context "when the user is a claims user" do
-        it "returns true" do
+        it "returns false" do
           allow(HostingEnvironment).to receive(:current_service).and_return(:claims)
           allow(DfESignInUser).to receive(:load_from_session).and_return(
             DfESignInUser.new(
@@ -58,7 +58,7 @@ RSpec.describe SupportUserConstraint do
       end
 
       context "when the user is a placements user" do
-        it "returns true" do
+        it "returns nil" do
           allow(HostingEnvironment).to receive(:current_service).and_return(:claims)
           allow(DfESignInUser).to receive(:load_from_session).and_return(
             DfESignInUser.new(
@@ -76,7 +76,7 @@ RSpec.describe SupportUserConstraint do
 
     context "when the current service is placements" do
       context "when the user is a placements support user" do
-        it "returns nil" do
+        it "returns true" do
           allow(HostingEnvironment).to receive(:current_service).and_return(:placements)
           allow(DfESignInUser).to receive(:load_from_session).and_return(
             DfESignInUser.new(
@@ -92,7 +92,7 @@ RSpec.describe SupportUserConstraint do
       end
 
       context "when the user is a claims support user" do
-        it "returns true" do
+        it "returns nil" do
           allow(HostingEnvironment).to receive(:current_service).and_return(:placements)
           allow(DfESignInUser).to receive(:load_from_session).and_return(
             DfESignInUser.new(
@@ -108,7 +108,7 @@ RSpec.describe SupportUserConstraint do
       end
 
       context "when the user is a placements user" do
-        it "returns true" do
+        it "returns false" do
           allow(HostingEnvironment).to receive(:current_service).and_return(:placements)
           allow(DfESignInUser).to receive(:load_from_session).and_return(
             DfESignInUser.new(
@@ -124,7 +124,7 @@ RSpec.describe SupportUserConstraint do
       end
 
       context "when the user is a claims user" do
-        it "returns true" do
+        it "returns nil" do
           allow(HostingEnvironment).to receive(:current_service).and_return(:placements)
           allow(DfESignInUser).to receive(:load_from_session).and_return(
             DfESignInUser.new(
