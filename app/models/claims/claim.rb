@@ -17,7 +17,6 @@
 #  updated_at             :datetime         not null
 #  claim_window_id        :uuid
 #  created_by_id          :uuid
-#  previous_revision_id   :uuid
 #  provider_id            :uuid
 #  school_id              :uuid             not null
 #  submitted_by_id        :uuid
@@ -25,14 +24,13 @@
 #
 # Indexes
 #
-#  index_claims_on_claim_window_id       (claim_window_id)
-#  index_claims_on_created_by            (created_by_type,created_by_id)
-#  index_claims_on_previous_revision_id  (previous_revision_id)
-#  index_claims_on_provider_id           (provider_id)
-#  index_claims_on_reference             (reference)
-#  index_claims_on_school_id             (school_id)
-#  index_claims_on_submitted_by          (submitted_by_type,submitted_by_id)
-#  index_claims_on_support_user_id       (support_user_id)
+#  index_claims_on_claim_window_id  (claim_window_id)
+#  index_claims_on_created_by       (created_by_type,created_by_id)
+#  index_claims_on_provider_id      (provider_id)
+#  index_claims_on_reference        (reference)
+#  index_claims_on_school_id        (school_id)
+#  index_claims_on_submitted_by     (submitted_by_type,submitted_by_id)
+#  index_claims_on_support_user_id  (support_user_id)
 #
 # Foreign Keys
 #
@@ -48,7 +46,6 @@ class Claims::Claim < ApplicationRecord
   belongs_to :claim_window
   belongs_to :created_by, polymorphic: true
   belongs_to :submitted_by, polymorphic: true, optional: true
-  belongs_to :previous_revision, class_name: "Claims::Claim", optional: true
   belongs_to :support_user, class_name: "Claims::SupportUser", optional: true
 
   has_one :academic_year, through: :claim_window
@@ -66,7 +63,6 @@ class Claims::Claim < ApplicationRecord
     :reference,
     uniqueness: { case_sensitive: false },
     allow_nil: true,
-    unless: :has_revision?,
   )
 
   ACTIVE_STATUSES = %i[draft submitted].freeze
@@ -131,19 +127,6 @@ class Claims::Claim < ApplicationRecord
     mentors.present? && mentor_trainings.without_hours.blank?
   end
 
-  def get_valid_revision
-    Claims::Claim::RemoveEmptyMentorTrainingHours.call(claim: self)
-
-    mentor_trainings.present? ? self : previous_revision
-  end
-
-  def was_draft?
-    claim_record = self
-    claim_record = claim_record.previous_revision while claim_record.present? && !claim_record.draft?
-
-    claim_record.nil? ? false : claim_record.draft?
-  end
-
   def total_clawback_amount
     mentor_trainings.not_assured.sum { |mt| mt.hours_clawed_back * school.region_funding_available_per_hour }
   end
@@ -164,12 +147,5 @@ class Claims::Claim < ApplicationRecord
 
   def total_hours_completed
     mentor_trainings.sum(&:hours_completed)
-  end
-
-  private
-
-  def has_revision?
-    previous_revision_id.present? ||
-      id.present? && Claims::Claim.find_by(previous_revision_id: id).present?
   end
 end

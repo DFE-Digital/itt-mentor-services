@@ -43,7 +43,6 @@ erDiagram
     string submitted_by_type
     uuid submitted_by_id
     bool reviewed
-    uuid previous_revision_id FK
     uuid claim_window_id FK
   }
 

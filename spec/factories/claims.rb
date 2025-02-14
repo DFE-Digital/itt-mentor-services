@@ -17,7 +17,6 @@
 #  updated_at             :datetime         not null
 #  claim_window_id        :uuid
 #  created_by_id          :uuid
-#  previous_revision_id   :uuid
 #  provider_id            :uuid
 #  school_id              :uuid             not null
 #  submitted_by_id        :uuid
@@ -25,14 +24,13 @@
 #
 # Indexes
 #
-#  index_claims_on_claim_window_id       (claim_window_id)
-#  index_claims_on_created_by            (created_by_type,created_by_id)
-#  index_claims_on_previous_revision_id  (previous_revision_id)
-#  index_claims_on_provider_id           (provider_id)
-#  index_claims_on_reference             (reference)
-#  index_claims_on_school_id             (school_id)
-#  index_claims_on_submitted_by          (submitted_by_type,submitted_by_id)
-#  index_claims_on_support_user_id       (support_user_id)
+#  index_claims_on_claim_window_id  (claim_window_id)
+#  index_claims_on_created_by       (created_by_type,created_by_id)
+#  index_claims_on_provider_id      (provider_id)
+#  index_claims_on_reference        (reference)
+#  index_claims_on_school_id        (school_id)
+#  index_claims_on_submitted_by     (submitted_by_type,submitted_by_id)
+#  index_claims_on_support_user_id  (support_user_id)
 #
 # Foreign Keys
 #
