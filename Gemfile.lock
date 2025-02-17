@@ -11,7 +11,7 @@ GIT
 
 GIT
   remote: https://github.com/citizensadvice/capybara_accessible_selectors
-  revision: 03fcecf8927df7be964399e528ea85a8b71908fa
+  revision: b80ec48b92f18b22110b16283e039d0a09fdef7f
   branch: main
   specs:
     capybara_accessible_selectors (0.11.0)
@@ -434,7 +434,7 @@ GEM
       activesupport (>= 3.0.0)
     raabro (1.4.0)
     racc (1.8.1)
-    rack (3.1.9)
+    rack (3.1.10)
     rack-oauth2 (2.2.1)
       activesupport
       attr_required
