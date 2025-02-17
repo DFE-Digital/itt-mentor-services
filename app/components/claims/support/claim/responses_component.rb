@@ -7,8 +7,11 @@ class Claims::Support::Claim::ResponsesComponent < ApplicationComponent
     @claim = claim
   end
 
+  def provider_response_exists?
+    mentor_trainings.not_assured.pluck(:reason_not_assured).present?
+  end
+
   def provider_response
-    not_assured_mentor_trainings = mentor_trainings.not_assured
     return "" if not_assured_mentor_trainings.blank?
 
     content_tag(:ul, class: "govuk-list") do
@@ -23,8 +26,11 @@ class Claims::Support::Claim::ResponsesComponent < ApplicationComponent
     end
   end
 
+  def school_response_exists?
+    rejected_mentor_trainings.pluck(:reason_rejected).present?
+  end
+
   def school_response
-    rejected_mentor_trainings = mentor_trainings.rejected
     return "" if rejected_mentor_trainings.blank?
 
     content_tag(:ul, class: "govuk-list") do
@@ -43,5 +49,13 @@ class Claims::Support::Claim::ResponsesComponent < ApplicationComponent
 
   def mentor_trainings
     @mentor_trainings ||= claim.mentor_trainings
+  end
+
+  def not_assured_mentor_trainings
+    @not_assured_mentor_trainings ||= mentor_trainings.not_assured
+  end
+
+  def rejected_mentor_trainings
+    @rejected_mentor_trainings || mentor_trainings.rejected
   end
 end
