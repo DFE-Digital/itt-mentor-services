@@ -121,7 +121,6 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
         build(:mentor_training,
               :rejected,
               mentor: mentor_1,
-              not_assured: true,
               reason_not_assured: "Incorrect number of hours",
               reason_rejected: "Claimed too many hours")
       end
@@ -130,7 +129,6 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
         build(:mentor_training,
               :rejected,
               mentor: mentor_2,
-              not_assured: true,
               reason_not_assured: "Invalid mentor",
               reason_rejected: "No longer working at this school")
       end
@@ -175,7 +173,6 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
         build(:mentor_training,
               :rejected,
               mentor: mentor_1,
-              not_assured: true,
               reason_not_assured: "Incorrect number of hours",
               reason_rejected: "Claimed too many hours")
       end
@@ -184,7 +181,6 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
         build(:mentor_training,
               :rejected,
               mentor: mentor_2,
-              not_assured: true,
               reason_not_assured: "Invalid mentor",
               reason_rejected: "No longer working at this school")
       end
@@ -229,7 +225,6 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
         build(:mentor_training,
               :rejected,
               mentor: mentor_1,
-              not_assured: true,
               reason_not_assured: "Incorrect number of hours",
               reason_rejected: "Claimed too many hours")
       end
@@ -238,7 +233,6 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
         build(:mentor_training,
               :rejected,
               mentor: mentor_2,
-              not_assured: true,
               reason_not_assured: "Invalid mentor",
               reason_rejected: "No longer working at this school")
       end
@@ -283,7 +277,6 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
         build(:mentor_training,
               :rejected,
               mentor: mentor_1,
-              not_assured: true,
               reason_not_assured: "Incorrect number of hours",
               reason_rejected: "Claimed too many hours")
       end
@@ -292,7 +285,6 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
         build(:mentor_training,
               :rejected,
               mentor: mentor_2,
-              not_assured: true,
               reason_not_assured: "Invalid mentor",
               reason_rejected: "No longer working at this school")
       end
@@ -335,9 +327,6 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
   describe "#provider_response_exists?" do
     subject(:provider_response_exists) { described_class.new(claim:).provider_response_exists? }
 
-    let(:mentor_training) do
-      build(:mentor_training, :not_assured)
-    end
     let(:claim) do
       create(:claim,
              :audit_requested,
@@ -369,9 +358,6 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
   describe "#school_response_exists?" do
     subject(:school_response_exists) { described_class.new(claim:).school_response_exists? }
 
-    let(:mentor_training) do
-      build(:mentor_training, :rejected)
-    end
     let(:claim) do
       create(:claim,
              :audit_requested,
@@ -396,6 +382,98 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
 
       it "returns false" do
         expect(school_response_exists).to be(false)
+      end
+    end
+  end
+
+  describe "#provider_response" do
+    subject(:provider_response) { described_class.new(claim:).provider_response }
+
+    let(:claim) do
+      create(:claim,
+             :audit_requested,
+             status: :sampling_provider_not_approved,
+             mentor_trainings:)
+    end
+    let(:mentor_1) { build(:claims_mentor, first_name: "Joe", last_name: "Bloggs") }
+    let(:mentor_2) { build(:claims_mentor, first_name: "Sarah", last_name: "Doe") }
+
+    context "when the mentor trainings associated with a claim have a reason not assured" do
+      let(:mentor_training_1) do
+        build(:mentor_training,
+              :not_assured,
+              mentor: mentor_1,
+              reason_not_assured: "Incorrect number of hours")
+      end
+      let(:mentor_training_2) do
+        build(:mentor_training,
+              :not_assured,
+              mentor: mentor_2,
+              reason_not_assured: "Invalid mentor")
+      end
+      let(:mentor_trainings) { [mentor_training_1, mentor_training_2] }
+
+      it "returns true" do
+        expect(provider_response).to eq(
+          "<ul class=\"govuk-list\"><li>Joe Bloggs: Incorrect number of hours</li><li>Sarah Doe: Invalid mentor</li></ul>",
+        )
+      end
+    end
+
+    context "when the mentor trainings associated with a claim do not have a reason not assured" do
+      let(:mentor_trainings) do
+        build_list(:mentor_training, 2)
+      end
+
+      it "returns false" do
+        expect(provider_response).to eq("")
+      end
+    end
+  end
+
+  describe "#school_response" do
+    subject(:school_response) { described_class.new(claim:).school_response }
+
+    let(:claim) do
+      create(:claim,
+             :audit_requested,
+             status: :sampling_not_approved,
+             mentor_trainings:)
+    end
+    let(:mentor_1) { build(:claims_mentor, first_name: "Joe", last_name: "Bloggs") }
+    let(:mentor_2) { build(:claims_mentor, first_name: "Sarah", last_name: "Doe") }
+
+    context "when the mentor trainings associated with a claim have a reason rejected" do
+      let(:mentor_training_1) do
+        build(:mentor_training,
+              :rejected,
+              mentor: mentor_1,
+              not_assured: true,
+              reason_rejected: "Incorrect number of hours")
+      end
+      let(:mentor_training_2) do
+        build(:mentor_training,
+              :rejected,
+              mentor: mentor_2,
+              not_assured: true,
+              reason_rejected: "Invalid mentor")
+      end
+      let(:mentor_trainings) { [mentor_training_1, mentor_training_2] }
+
+      it "returns true" do
+        expect(school_response).to eq(
+          "<ul class=\"govuk-list\"><li>Joe Bloggs: Incorrect number of hours</li><li>Sarah Doe: Invalid mentor</li></ul>",
+        )
+      end
+    end
+
+    context "when the mentor trainings associated with a claim do not have a reason rejected" do
+      let(:mentor_trainings) do
+        build_list(:mentor_training, 2)
+      end
+
+      it "returns false" do
+        expect(school_response).to eq("")
       end
     end
   end
