@@ -66,6 +66,7 @@ RSpec.describe "Support user views the details of a provider user", service: :pl
     expect(page).to have_h1("Users")
     expect(page).to have_element(:span, text: "Best Practice Network")
     expect(page).to have_current_path(placements_provider_users_path(@bpn_provider))
+    expect(page).to have_link("Add user")
   end
 
   def and_i_see_user_joe_bloggs
@@ -94,6 +95,8 @@ RSpec.describe "Support user views the details of a provider user", service: :pl
   end
 
   def then_i_see_the_user_details_for_joe_bloggs
+    expect(page).to have_title("Joe Bloggs - Manage school placements - GOV.UK")
+    expect(page).to have_h1("Joe Bloggs")
     expect(page).to have_summary_list_row(
       "First name", "Joe"
     )
@@ -103,5 +106,6 @@ RSpec.describe "Support user views the details of a provider user", service: :pl
     expect(page).to have_summary_list_row(
       "Email address", @user_joe_bloggs.email
     )
+    expect(page).to have_link("Delete user")
   end
 end
