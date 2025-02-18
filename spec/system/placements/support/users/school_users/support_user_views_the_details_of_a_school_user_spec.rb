@@ -66,6 +66,7 @@ RSpec.describe "Support user views the details of a school user", service: :plac
     expect(page).to have_h1("Users")
     expect(page).to have_element(:span, text: "Ashford School")
     expect(page).to have_current_path(placements_school_users_path(@ashford_school))
+    expect(page).to have_link("Add user")
   end
 
   def and_i_see_user_joe_bloggs
@@ -94,6 +95,9 @@ RSpec.describe "Support user views the details of a school user", service: :plac
   end
 
   def then_i_see_the_user_details_for_joe_bloggs
+    expect(page).to have_title("Joe Bloggs - Manage school placements - GOV.UK")
+    expect(page).to have_h1("Joe Bloggs")
+    expect(page).to have_current_path(placements_school_user_path(@ashford_school, @user_joe_bloggs))
     expect(page).to have_summary_list_row(
       "First name", "Joe"
     )
@@ -103,5 +107,6 @@ RSpec.describe "Support user views the details of a school user", service: :plac
     expect(page).to have_summary_list_row(
       "Email address", @user_joe_bloggs.email
     )
+    expect(page).to have_link("Delete user")
   end
 end
