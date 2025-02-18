@@ -10,6 +10,6 @@ class Claims::PaymentMailerPreview < ActionMailer::Preview
   private
 
   def payment
-    Claims::Payment.order(created_at: :desc).first_or_initialize(id: SecureRandom.uuid)
+    FactoryBot.build_stubbed(:claims_payment, csv_file: nil)
   end
 end
