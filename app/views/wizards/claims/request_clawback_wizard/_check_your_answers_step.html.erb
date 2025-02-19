@@ -7,6 +7,24 @@
 
       <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
+      <p class="govuk-body"><%= t(".information_shared_with_school", school_name: @claim.school_name) %></p>
+
+      <h2 class="govuk-heading-m"><%= t(".original_claim") %></h2>
+      <%= govuk_summary_list(html_attributes: { id: "claim-totals" }) do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".number_of_hours")) %>
+          <% row.with_value(text: @claim.total_hours_completed) %>
+        <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".rate")) %>
+          <% row.with_value(text: humanized_money_with_symbol(@claim.school_region_funding_available_per_hour)) %>
+        <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".amount")) %>
+          <% row.with_value(text: humanized_money_with_symbol(@claim.amount)) %>
+        <% end %>
+      <% end %>
+
       <h2 class="govuk-heading-m"><%= t(".total_title") %></h2>
       <%= govuk_summary_list(html_attributes: { id: "clawback-totals" }) do |summary_list| %>
         <% summary_list.with_row do |row| %>
@@ -52,8 +70,6 @@
           <% end %>
         <% end %>
       <% end %>
-
-      <%= govuk_warning_text(text: t(".warning")) %>
 
       <%= f.govuk_submit t(".submit") %>
     <% end %>

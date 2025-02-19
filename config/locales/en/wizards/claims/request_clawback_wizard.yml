@@ -22,9 +22,11 @@ en:
           total_title: Total clawback
           mentor_training_title: Clawback request for %{mentor_name}
           rate: Hourly rate
-          number_of_hours: Number of hours
+          number_of_hours: Hours
           clawback_amount: Clawback amount
           reason: Notes on your decision
           submit: Request clawback
-          warning: We will show clawback details to the school.
           change: Change
+          original_claim: Original claim
+          amount: Amount
+          information_shared_with_school: This information will be shared with %{school_name}.
