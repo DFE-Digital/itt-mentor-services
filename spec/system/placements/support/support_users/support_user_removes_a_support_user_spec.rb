@@ -25,8 +25,8 @@ RSpec.describe "Support users removes a support user",
     when_i_click_on_remove_support_user
     then_i_see_the_support_users_index_page
     and_i_see_the_user_was_successfully_deleted
-    and_i_do_not_see_user_sarah_doe
-    and_i_see_user_joe_bloggs
+    and_i_do_not_see_support_user_sarah_doe
+    and_i_see_support_user_joe_bloggs
   end
 
   private
@@ -105,9 +105,9 @@ RSpec.describe "Support users removes a support user",
 
   def then_i_see_the_are_you_sure_page
     expect(page).to have_title(
-      "Are you sure you want to delete this support user? - Sarah Doe - Manage school placements - GOV.UK",
+      "Are you sure you want to remove this support user? - Sarah Doe - Manage school placements - GOV.UK",
     )
-    expect(page).to have_h1("Are you sure you want to delete this support user?")
+    expect(page).to have_h1("Are you sure you want to remove this support user?")
     expect(page).to have_element(:span, text: "Sarah Doe", class: "govuk-caption-l")
     expect(page).to have_warning_text(
       "The support user will be sent an email to tell them you removed them from Manage school placements.",
@@ -120,10 +120,10 @@ RSpec.describe "Support users removes a support user",
   end
 
   def and_i_see_the_user_was_successfully_deleted
-    expect(page).to have_success_banner("Support user deleted")
+    expect(page).to have_success_banner("Support user removed")
   end
 
-  def and_i_do_not_see_user_sarah_doe
+  def and_i_do_not_see_support_user_sarah_doe
     expect(page).not_to have_table_row({
       "Name" => "Sarah Doe",
       "Email address" => "sarah_doe@education.gov.uk",
