@@ -22,14 +22,27 @@ class Claims::UserMailerPreview < ActionMailer::Preview
   private
 
   def user
-    FactoryBot.build_stubbed(:claims_user)
+    Claims::User.new(
+      id: SecureRandom.uuid,
+      first_name: "Joe",
+      last_name: "Bloggs",
+      email: "joe_bloggs@example.com",
+    )
   end
 
   def claim
-    FactoryBot.build_stubbed(:claim)
+    Claims::Claim.new(id: SecureRandom.uuid, school:)
   end
 
   def school
-    FactoryBot.build_stubbed(:school)
+    Claims::School.new(id: SecureRandom.uuid, name: "Test School", region:)
+  end
+
+  def region
+    Region.new(
+      name: "Test Region",
+      claims_funding_available_per_hour_pence: 5360,
+      claims_funding_available_per_hour_currency: "GBP",
+    )
   end
 end

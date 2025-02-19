@@ -10,6 +10,11 @@ class Placements::SupportUserMailerPreview < ActionMailer::Preview
   private
 
   def support_user
-    FactoryBot.build_stubbed(:placements_support_user)
+    Placements::SupportUser.new(
+      id: SecureRandom.uuid,
+      first_name: "Joe",
+      last_name: "Bloggs",
+      email: "example@education.gov.uk",
+    )
   end
 end

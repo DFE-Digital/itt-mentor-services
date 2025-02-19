@@ -10,6 +10,11 @@ class Claims::SupportUserMailerPreview < ActionMailer::Preview
   private
 
   def support_user
-    FactoryBot.build_stubbed(:claims_support_user)
+    Claims::SupportUser.new(
+      id: SecureRandom.uuid,
+      first_name: "Joe",
+      last_name: "Bloggs",
+      email: "example@education.gov.uk",
+    )
   end
 end

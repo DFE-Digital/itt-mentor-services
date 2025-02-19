@@ -10,6 +10,6 @@ class Claims::ESFAMailerPreview < ActionMailer::Preview
   private
 
   def clawback
-    FactoryBot.build_stubbed(:clawback, csv_file: nil)
+    Claims::Clawback.new
   end
 end
