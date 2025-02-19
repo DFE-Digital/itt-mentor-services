@@ -10,6 +10,6 @@ class Claims::PaymentMailerPreview < ActionMailer::Preview
   private
 
   def payment
-    FactoryBot.build_stubbed(:claims_payment, csv_file: nil)
+    Claims::Payment.new
   end
 end

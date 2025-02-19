@@ -12,10 +12,14 @@ class Claims::ProviderMailerPreview < ActionMailer::Preview
   private
 
   def provider_sampling
-    @provider_sampling ||= FactoryBot.build_stubbed(:provider_sampling, csv_file: nil, sampling: nil)
+    @provider_sampling ||= Claims::ProviderSampling.new(id: stubbed_id, provider:)
   end
 
   def provider
-    FactoryBot.build_stubbed(:claims_provider)
+    Claims::Provider.new(id: stubbed_id, name: "Test Provider")
+  end
+
+  def stubbed_id
+    SecureRandom.uuid
   end
 end

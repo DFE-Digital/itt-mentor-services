@@ -26,18 +26,31 @@ class Placements::ProviderUserMailerPreview < ActionMailer::Preview
   private
 
   def user
-    FactoryBot.build_stubbed(:placements_user)
+    Placements::User.new(
+      id: stubbed_id,
+      first_name: "Joe",
+      last_name: "Bloggs",
+      email: "joe_bloggs@example.com",
+    )
   end
 
   def school
-    FactoryBot.build_stubbed(:placements_school)
+    Placements::School.new(id: stubbed_id, name: "Test School")
   end
 
   def provider
-    FactoryBot.build_stubbed(:placements_provider)
+    Placements::Provider.new(id: stubbed_id, name: "Test Provider")
   end
 
   def placement
-    FactoryBot.build_stubbed(:placement, school:, provider:)
+    Placement.new(id: stubbed_id, school:, provider:, subject:)
+  end
+
+  def subject
+    Subject.new(id: stubbed_id, name: "English")
+  end
+
+  def stubbed_id
+    SecureRandom.uuid
   end
 end
