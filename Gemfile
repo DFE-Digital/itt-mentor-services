@@ -119,11 +119,6 @@ gem "ostruct", "~> 0.6.1"
 # Azure Storage adapter for Active Storage
 gem "azure-blob"
 
-# TODO: Move these gems back to group :test, :development
-# Moved here temporarily to resolve an issue with mailer previews
-gem "factory_bot_rails"
-gem "faker"
-
 group :development do
   gem "annotate", require: false
   gem "prettier_print", require: false
@@ -174,6 +169,8 @@ group :test, :development do
   gem "debug", platforms: %i[mri mingw x64_mingw]
   gem "dotenv-rails"
   gem "erb_lint", require: false
+  gem "factory_bot_rails"
+  gem "faker"
   gem "parallel_tests"
   gem "pry"
   gem "pry-byebug"
