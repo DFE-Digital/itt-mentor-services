@@ -1,32 +1,85 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Support Users / Support user views a support user", service: :placements, type: :system do
-  let!(:support_user) { create(:placements_support_user) }
+RSpec.describe "Support user views a support user", service: :placements, type: :system do
+  scenario do
+    given_that_support_users_exist
+    and_i_am_signed_in
+    when_i_click_on_support_users_in_the_header_navigation
+    then_i_see_the_support_users_index_page
+    and_i_see_support_user_sarah_doe
+    and_i_see_support_user_joe_bloggs
 
-  scenario "View a support user" do
-    given_i_am_signed_in_as_a_placements_support_user
-    and_i_visit_the_support_users_page
-    and_i_click_on_a_support_user(support_user)
-    i_see_the_details_of_the_support_user(support_user)
+    when_i_click_on_sarah_doe
+    then_i_see_the_support_user_details_for_sarah_doe
   end
 
   private
 
-  def and_i_visit_the_support_users_page
-    within(".govuk-header__navigation-list") do
+  def given_that_support_users_exist
+    @support_user_sarah = create(
+      :placements_support_user,
+      first_name: "Sarah",
+      last_name: "Doe",
+      email: "sarah_doe@education.gov.uk",
+    )
+    @support_user_joe = create(
+      :placements_support_user,
+      first_name: "Joe",
+      last_name: "Bloggs",
+      email: "joe_bloggs@education.gov.uk",
+    )
+  end
+
+  def and_i_am_signed_in
+    sign_in_placements_support_user
+  end
+
+  def when_i_click_on_support_users_in_the_header_navigation
+    within("#navigation") do
       click_on "Support users"
     end
   end
 
-  def and_i_click_on_a_support_user(support_user)
-    click_on support_user.full_name
+  def then_i_see_the_support_users_index_page
+    expect(page).to have_title("Support users - Manage school placements - GOV.UK")
+    expect(page).to have_h1("Support users")
+    expect(page).to have_current_path(placements_support_support_users_path)
+    expect(page).to have_link("Add support user")
   end
 
-  def i_see_the_details_of_the_support_user(support_user)
-    expect(page).to have_selector("h1", text: support_user.full_name)
+  def and_i_see_support_user_sarah_doe
+    expect(page).to have_table_row({
+      "Name" => "Sarah Doe",
+      "Email address" => "sarah_doe@education.gov.uk",
+    })
+  end
 
-    expect(page).to have_content support_user.first_name
-    expect(page).to have_content support_user.last_name
-    expect(page).to have_content support_user.email
+  def and_i_see_support_user_joe_bloggs
+    expect(page).to have_table_row({
+      "Name" => "Joe Bloggs",
+      "Email address" => "joe_bloggs@education.gov.uk",
+    })
+  end
+
+  def when_i_click_on_sarah_doe
+    click_on "Sarah Doe"
+  end
+
+  def then_i_see_the_support_user_details_for_sarah_doe
+    expect(page).to have_title("Sarah Doe - Manage school placements - GOV.UK")
+    expect(page).to have_current_path(
+      placements_support_support_user_path(@support_user_sarah),
+    )
+    expect(page).to have_h1("Sarah Doe")
+    expect(page).to have_summary_list_row(
+      "First name", "Sarah"
+    )
+    expect(page).to have_summary_list_row(
+      "Last name", "Doe"
+    )
+    expect(page).to have_summary_list_row(
+      "Email address", "sarah_doe@education.gov.uk"
+    )
+    expect(page).to have_link("Remove support user")
   end
 end
