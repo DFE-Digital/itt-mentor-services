@@ -49,6 +49,6 @@ class Claims::ClaimActivity < ApplicationRecord
   def claims_by_provider
     return {} unless record.respond_to?(:claims)
 
-    record.claims.group_by(&:provider)
+    record.claims.order(:reference).group_by(&:provider)
   end
 end
