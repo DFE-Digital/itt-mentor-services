@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Support Users / Support users removes a support user",
+RSpec.describe "Support users removes a support user",
                service: :placements, type: :system do
   include ActiveJob::TestHelper
 
@@ -8,70 +8,125 @@ RSpec.describe "Placements / Support Users / Support users removes a support use
     perform_enqueued_jobs { example.run }
   end
 
-  let!(:support_user) { create(:placements_support_user, :colin) }
-  let!(:support_user_to_be_removed) { create(:placements_support_user) }
+  scenario do
+    given_that_support_users_exist
+    and_i_am_signed_in
+    when_i_click_on_support_users_in_the_header_navigation
+    then_i_see_the_support_users_index_page
+    and_i_see_support_user_sarah_doe
+    and_i_see_support_user_joe_bloggs
 
-  scenario "Remove a support user" do
-    given_i_am_signed_in_as_a_placements_support_user
-    and_i_visit_the_support_users_page
-    and_i_click_on_a_support_user(support_user_to_be_removed)
-    and_i_click_on_remove
-    then_i_see_the_support_user_removal_confirmation(support_user_to_be_removed)
-    when_i_click_on_remove
-    then_i_see_the_support_user_has_been_removed(support_user_to_be_removed)
-    then_an_email_is_sent(support_user_to_be_removed.email)
-  end
+    when_i_click_on_sarah_doe
+    then_i_see_the_support_user_details_for_sarah_doe
 
-  scenario "A support user can not remove themselves as a support user" do
-    given_i_sign_in_as(support_user)
-    and_i_visit_the_support_users_page
-    and_i_click_on_a_support_user(support_user)
-    then_i_can_not_see_a_remove_link
+    when_i_click_on_delete_support_user
+    then_i_see_the_are_you_sure_page
+
+    when_i_click_on_remove_support_user
+    then_i_see_the_support_users_index_page
+    and_i_see_the_user_was_successfully_deleted
+    and_i_do_not_see_user_sarah_doe
+    and_i_see_user_joe_bloggs
   end
 
   private
 
-  def when_i_sign_in_as_a_support_user(support_user)
-    user_exists_in_dfe_sign_in(user: support_user)
-    visit placements_root_path
-    click_on "Start now"
-    click_on "Sign in using DfE Sign In"
+  def given_that_support_users_exist
+    @support_user_sarah = create(
+      :placements_support_user,
+      first_name: "Sarah",
+      last_name: "Doe",
+      email: "sarah_doe@education.gov.uk",
+    )
+    @support_user_joe = create(
+      :placements_support_user,
+      first_name: "Joe",
+      last_name: "Bloggs",
+      email: "joe_bloggs@education.gov.uk",
+    )
   end
 
-  def and_i_visit_the_support_users_page
-    within(".govuk-header__navigation-list") do
+  def and_i_am_signed_in
+    sign_in_placements_support_user
+  end
+
+  def when_i_click_on_support_users_in_the_header_navigation
+    within("#navigation") do
       click_on "Support users"
     end
   end
 
-  def and_i_click_on_a_support_user(support_user)
-    click_on support_user.full_name
+  def then_i_see_the_support_users_index_page
+    expect(page).to have_title("Support users - Manage school placements - GOV.UK")
+    expect(page).to have_h1("Support users")
+    expect(page).to have_current_path(placements_support_support_users_path)
+    expect(page).to have_link("Add support user")
   end
 
-  def when_i_click_on_remove
+  def and_i_see_support_user_sarah_doe
+    expect(page).to have_table_row({
+      "Name" => "Sarah Doe",
+      "Email address" => "sarah_doe@education.gov.uk",
+    })
+  end
+
+  def and_i_see_support_user_joe_bloggs
+    expect(page).to have_table_row({
+      "Name" => "Joe Bloggs",
+      "Email address" => "joe_bloggs@education.gov.uk",
+    })
+  end
+
+  def when_i_click_on_sarah_doe
+    click_on "Sarah Doe"
+  end
+
+  def then_i_see_the_support_user_details_for_sarah_doe
+    expect(page).to have_title("Sarah Doe - Manage school placements - GOV.UK")
+    expect(page).to have_current_path(
+      placements_support_support_user_path(@support_user_sarah),
+    )
+    expect(page).to have_h1("Sarah Doe")
+    expect(page).to have_summary_list_row(
+      "First name", "Sarah"
+    )
+    expect(page).to have_summary_list_row(
+      "Last name", "Doe"
+    )
+    expect(page).to have_summary_list_row(
+      "Email address", "sarah_doe@education.gov.uk"
+    )
+    expect(page).to have_link("Remove support user")
+  end
+
+  def when_i_click_on_delete_support_user
     click_on "Remove support user"
   end
-  alias_method :and_i_click_on_remove, :when_i_click_on_remove
 
-  def then_i_see_the_support_user_removal_confirmation(support_user)
-    expect(page).to have_content support_user.full_name
-    expect(page).to have_content "Are you sure you want to remove this support user?"
+  def then_i_see_the_are_you_sure_page
+    expect(page).to have_title(
+      "Are you sure you want to delete this support user? - Sarah Doe - Manage school placements - GOV.UK",
+    )
+    expect(page).to have_h1("Are you sure you want to delete this support user?")
+    expect(page).to have_element(:span, text: "Sarah Doe", class: "govuk-caption-l")
+    expect(page).to have_warning_text(
+      "The support user will be sent an email to tell them you removed them from Manage school placements.",
+    )
+    expect(page).to have_button("Remove support user")
   end
 
-  def then_i_see_the_support_user_has_been_removed(support_user)
-    expect(page).not_to have_content support_user.full_name
-    expect(page).to have_content "Support user removed"
+  def when_i_click_on_remove_support_user
+    click_on "Remove support user"
   end
 
-  def then_an_email_is_sent(email)
-    email = ActionMailer::Base.deliveries.find do |delivery|
-      delivery.to.include?(email) && delivery.subject == "You have been removed from Manage school placements"
-    end
-
-    expect(email).not_to be_nil
+  def and_i_see_the_user_was_successfully_deleted
+    expect(page).to have_success_banner("Support user deleted")
   end
 
-  def then_i_can_not_see_a_remove_link
-    expect(page).not_to have_content("Remove user")
+  def and_i_do_not_see_user_sarah_doe
+    expect(page).not_to have_table_row({
+      "Name" => "Sarah Doe",
+      "Email address" => "sarah_doe@education.gov.uk",
+    })
   end
 end
