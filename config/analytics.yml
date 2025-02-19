@@ -189,6 +189,14 @@ shared:
     - county
     - postcode
     - accredited
+  :trainees:
+    - id
+    - candidate_id
+    - itt_course_code
+    - training_provider_code
+    - study_mode
+    - created_at
+    - updated_at
   :placements:
     - id
     - school_id
