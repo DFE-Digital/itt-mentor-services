@@ -83,7 +83,7 @@ describe Claims::Clawback::GenerateCSVFile do
            hours_clawed_back: 5,
            reason_clawed_back: "Invalid claim")
   end
-  let(:claims) { Claims::Claim.where(id: [claim_1.id, claim_2.id]) }
+  let(:claims) { Claims::Claim.where(id: [claim_1.id, claim_2.id]).order(:reference) }
 
   before do
     claim_1_jane_doe_mentor_training
