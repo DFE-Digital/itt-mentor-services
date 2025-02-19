@@ -38,8 +38,8 @@ RSpec.describe Claims::ClaimActivity, type: :model do
   describe "#claims_by_provider" do
     context "when the record responds to claims" do
       let(:provider) { build(:claims_provider) }
-      let(:claim_1) { build(:claim, provider: provider) }
-      let(:claim_2) { build(:claim, provider: provider) }
+      let(:claim_1) { build(:claim, provider: provider, reference: 11_111_111) }
+      let(:claim_2) { build(:claim, provider: provider, reference: 22_222_222) }
       let(:provider_sampling) { build(:provider_sampling, provider:) }
       let(:claim_activity) { create(:claim_activity, action: :sampling_uploaded, record: provider_sampling) }
 
