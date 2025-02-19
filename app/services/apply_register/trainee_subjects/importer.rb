@@ -1,5 +1,5 @@
 module ApplyRegister
-  module Degrees
+  module TraineeSubjects
     class Importer < ApplicationService
       def call
         @records = []
@@ -36,8 +36,6 @@ module ApplyRegister
       end
 
       def course_by_code; end
-
-      def other_degree_subjects; end
     end
   end
 end
