@@ -85,6 +85,7 @@ RSpec.describe Claims::Claim, type: :model do
     it { is_expected.to delegate_method(:name).to(:provider).with_prefix }
     it { is_expected.to delegate_method(:users).to(:school).with_prefix }
     it { is_expected.to delegate_method(:urn).to(:school).with_prefix }
+    it { is_expected.to delegate_method(:region_funding_available_per_hour).to(:school).with_prefix }
     it { is_expected.to delegate_method(:postcode).to(:school).with_prefix }
     it { is_expected.to delegate_method(:full_name).to(:submitted_by).with_prefix.allow_nil }
     it { is_expected.to delegate_method(:name).to(:academic_year).with_prefix.allow_nil }
