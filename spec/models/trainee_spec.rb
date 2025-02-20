@@ -10,7 +10,7 @@
 #  updated_at             :datetime         not null
 #  candidate_id           :string
 #
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Trainee, type: :model do
   pending "add some examples to (or delete) #{__FILE__}"

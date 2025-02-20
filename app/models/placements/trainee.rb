@@ -10,5 +10,5 @@
 #  updated_at             :datetime         not null
 #  candidate_id           :string
 #
-class Trainee < ApplicationRecord
+class Placements::Trainee < ApplicationRecord
 end

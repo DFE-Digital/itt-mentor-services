@@ -197,6 +197,12 @@ shared:
     - study_mode
     - created_at
     - updated_at
+  :courses:
+    - id
+    - code
+    - subject_codes
+    - created_at
+    - updated_at
   :placements:
     - id
     - school_id

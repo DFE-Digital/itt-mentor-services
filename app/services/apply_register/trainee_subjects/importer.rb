@@ -4,10 +4,10 @@ module ApplyRegister
       def call
         @records = []
 
-        fetch_application_attributes(year: "2025")
+        fetch_application_attributes(year: "2023")
 
         @records.each do |record|
-          Trainee.find_or_create_by(candidate_id: record[:candidate_id]) do |trainee|
+          Placements::Trainee.find_or_create_by(candidate_id: record[:candidate_id]) do |trainee|
             trainee.itt_course_code = record[:itt_course_code]
             trainee.study_mode = record[:study_mode]
             trainee.training_provider_code = record[:training_provider_code]
@@ -34,8 +34,6 @@ module ApplyRegister
       def provider_by_code(code)
         ::Provider.find_by(code:)
       end
-
-      def course_by_code; end
     end
   end
 end

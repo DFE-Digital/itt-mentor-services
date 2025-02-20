@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_19_155243) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_20_092911) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -146,6 +146,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_19_155243) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "downloaded_at"
+  end
+
+  create_table "courses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "subject_codes"
   end
 
   create_table "download_access_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
