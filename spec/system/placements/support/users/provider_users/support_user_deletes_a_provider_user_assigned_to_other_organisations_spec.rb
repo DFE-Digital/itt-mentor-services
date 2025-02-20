@@ -40,15 +40,15 @@ RSpec.describe "Support user deletes a provider user assigned to other organisat
   private
 
   def given_that_provider_users_exist
-    @bpn_provider = create(
+    @bpn_provider = build(
       :placements_provider,
       :best_practice_network,
     )
-    @niot_provider = create(
+    @niot_provider = build(
       :placements_provider,
       :niot,
     )
-    @ashford_school = create(
+    @ashford_school = build(
       :placements_school,
       name: "Ashford School",
     )

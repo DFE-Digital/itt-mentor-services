@@ -26,7 +26,7 @@ RSpec.describe "Support user deletes a provider user", service: :placements, typ
   private
 
   def given_that_provider_users_exist
-    @bpn_provider = create(
+    @bpn_provider = build(
       :placements_provider,
       :best_practice_network,
     )

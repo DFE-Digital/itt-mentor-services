@@ -40,15 +40,15 @@ RSpec.describe "Support user deletes a school user assigned to other organisatio
   private
 
   def given_that_school_users_exist
-    @ashford_school = create(
+    @ashford_school = build(
       :placements_school,
       name: "Ashford School",
     )
-    @guildford_school = create(
+    @guildford_school = build(
       :placements_school,
       name: "Royal Grammar School Guildford",
     )
-    @bpn_provider = create(
+    @bpn_provider = build(
       :placements_provider,
       :best_practice_network,
     )

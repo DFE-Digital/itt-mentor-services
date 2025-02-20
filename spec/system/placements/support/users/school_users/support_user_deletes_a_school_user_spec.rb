@@ -26,7 +26,7 @@ RSpec.describe "Support user deletes a school user", service: :placements, type:
   private
 
   def given_that_school_users_exist
-    @ashford_school = create(
+    @ashford_school = build(
       :placements_school,
       name: "Ashford School",
     )
