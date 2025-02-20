@@ -230,3 +230,5 @@ Claims::School.all.find_each do |school|
     reference += 1
   end
 end
+
+# Recording
