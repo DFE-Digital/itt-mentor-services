@@ -64,9 +64,11 @@ class Claims::UserMailer < Claims::ApplicationMailer
                  subject: t(".subject"),
                  body: t(".body",
                          user_name: user.first_name,
-                         reference: claim.reference,
+                         claim_reference: claim.reference,
+                         clawback_amount: claim.total_clawback_amount.format(symbol: true, decimal_mark: ".", no_cents: false),
                          link_to_claim:,
                          support_email:,
-                         service_name:)
+                         service_name:,
+                         service_url: claims_root_url)
   end
 end

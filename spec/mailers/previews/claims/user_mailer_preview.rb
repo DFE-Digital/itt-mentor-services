@@ -31,7 +31,7 @@ class Claims::UserMailerPreview < ActionMailer::Preview
   end
 
   def claim
-    Claims::Claim.new(id: SecureRandom.uuid, school:)
+    PreviewClaim.new(id: SecureRandom.uuid, school:, reference: 123_456_789)
   end
 
   def school
@@ -44,5 +44,11 @@ class Claims::UserMailerPreview < ActionMailer::Preview
       claims_funding_available_per_hour_pence: 5360,
       claims_funding_available_per_hour_currency: "GBP",
     )
+  end
+
+  class PreviewClaim < Claims::Claim
+    def total_clawback_amount
+      Money.new(38_910, "GBP")
+    end
   end
 end

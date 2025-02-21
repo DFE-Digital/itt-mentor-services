@@ -6,7 +6,9 @@ RSpec.describe Claims::RequestClawbackWizard do
   let(:state) { {} }
   let(:params_data) { {} }
   let(:params) { ActionController::Parameters.new(params_data) }
-  let(:claim) { create(:claim, status: "sampling_in_progress") }
+  let(:school) { build(:claims_school) }
+  let(:user) { create(:claims_user, schools: [school]) }
+  let(:claim) { create(:claim, status: "sampling_in_progress", school:) }
   let(:current_user) { create(:claims_support_user) }
   let!(:mentor_training) { create(:mentor_training, claim:, not_assured: true, reason_not_assured: "reason", hours_completed: 20) }
 
@@ -53,6 +55,7 @@ RSpec.describe Claims::RequestClawbackWizard do
     let(:esfa_responses) { [{ id: mentor_training.id, number_of_hours: 5, reason_for_clawback: "Some reason" }] }
 
     before do
+      user
       allow(Claims::Claim::Clawback::ClawbackRequested).to receive(:call)
     end
 
@@ -73,6 +76,7 @@ RSpec.describe Claims::RequestClawbackWizard do
 
       it "creates a claim activity record" do
         expect { wizard.submit_esfa_responses }.to change(Claims::ClaimActivity, :count).by(1)
+          .and enqueue_mail(Claims::UserMailer, :claim_requires_clawback)
         expect(Claims::ClaimActivity.last.action).to eq("clawback_requested")
         expect(Claims::ClaimActivity.last.user).to eq(current_user)
         expect(Claims::ClaimActivity.last.record).to eq(claim)
