@@ -218,27 +218,42 @@ RSpec.describe Claims::UserMailer, type: :mailer do
     subject(:clawback_email) { described_class.claim_requires_clawback(claim, user) }
 
     let(:user) { create(:claims_user) }
-    let(:school) { create(:claims_school, region: regions(:inner_london)) }
-    let(:claim) { create(:claim, reference: "123", school:) }
+    let(:school) { build(:claims_school, region: regions(:inner_london)) }
+    let(:claim) { build(:claim, reference: "123", school:) }
+    let(:mentor_trainings) do
+      create_list(:mentor_training,
+                  2,
+                  :rejected,
+                  claim:,
+                  hours_completed: 5,
+                  hours_clawed_back: 2)
+    end
+
+    before { mentor_trainings }
 
     it "sends the clawback email" do
-      create(:mentor_training, claim:, hours_completed: 10)
-
       expect(clawback_email.to).to contain_exactly(user.email)
-      expect(clawback_email.subject).to eq("ITT mentor claim requires a clawback")
-      expect(clawback_email.body.to_s.strip).to eq(<<~EMAIL.strip)
+      expect(clawback_email.subject).to eq("Your funding for mentor training will be taken back")
+      expect(clawback_email.body.to_s.squish).to eq(<<~EMAIL.squish)
         Dear #{user.first_name},
 
-        We have amended your claim to reflect the amount being clawed back by the payer. They will contact you to discuss how they will claim this money from you.
+        A claim you made was audited and there was insufficient proof from you that some or all of the claim was valid. Your funding for mentor training will be taken from you and returned to the Department for Education.
 
-        The affected claim reference is: #{claim.reference}
+        Retrieving this funding is known as clawback.
 
-        You can view the updated claim on Claim funding for mentor training:
+        Amount being clawed back: £214.40
+        Claim reference: 123
 
-        http://claims.localhost/schools/#{school.id}/claims/#{claim.id}
+        # What happens next
+        The funds will automatically be taken from you.
 
-        # Give feedback or report a problem
-        If you have any questions or feedback, please contact the team at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk).
+        For academies, any recovery will be offset in your next available monthly payment. For maintained schools, any recovery will be offset in your local authority’s next available monthly payment and they will recover funding from you via their usual processes.
+
+        Sign in to your account on Claim funding for mentor training to see more details:
+        http://claims.localhost/
+
+        # Contact us
+        If you need any help, contact the team at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk). It may take up to 5 days to receive a response.
 
         Regards
         Claim funding for mentor training team

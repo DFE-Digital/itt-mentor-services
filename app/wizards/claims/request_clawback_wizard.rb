@@ -43,6 +43,9 @@ module Claims
         claim:,
         esfa_responses: esfa_responses_for_mentor_trainings,
       )
+      claim.school_users.each do |user|
+        Claims::UserMailer.claim_requires_clawback(claim, user).deliver_later
+      end
 
       Claims::ClaimActivity.create!(action: :clawback_requested, user: current_user, record: claim)
     end
