@@ -5,6 +5,7 @@ module PublishTeacherTraining
         @records = []
 
         fetch_course_attributes(year: "2023")
+        # add year to actual model for validation?
 
         @records.each do |record|
           Placements::Course.find_or_create_by(code: record[:code]) do |course|
@@ -15,7 +16,8 @@ module PublishTeacherTraining
 
       private
 
-      def fetch_course_attributes(year:, link: nil)
+      # named param to add when paginating - link: nil
+      def fetch_course_attributes(year:)
         courses = ::PublishTeacherTraining::Course::Api.call(year:)
         courses.fetch("data").each do |course|
           course_attributes = course["attributes"]

@@ -35,6 +35,7 @@
 class Placements::Provider < Provider
   default_scope { placements_service }
 
+  has_many :trainees, class_name: "Placements::Trainee"
   has_many :users, through: :user_memberships
   has_many :partnerships, dependent: :destroy
   has_many :partner_schools,

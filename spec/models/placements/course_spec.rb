@@ -8,9 +8,8 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #
-FactoryBot.define do
-  factory :course do
-    code { "MyString" }
-    subject_codes { "MyString" }
-  end
+require "rails_helper"
+
+RSpec.describe Course, type: :model do
+  pending "add some examples to (or delete) #{__FILE__}"
 end

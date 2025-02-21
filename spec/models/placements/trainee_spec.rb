@@ -9,9 +9,14 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  candidate_id           :string
+#  provider_id            :uuid
+#
+# Indexes
+#
+#  index_trainees_on_provider_id  (provider_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (provider_id => providers.id)
 #
 require "rails_helper"
-
-RSpec.describe Trainee, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
-end

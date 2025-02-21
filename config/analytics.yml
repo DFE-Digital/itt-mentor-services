@@ -197,6 +197,7 @@ shared:
     - study_mode
     - created_at
     - updated_at
+    - provider_id
   :courses:
     - id
     - code

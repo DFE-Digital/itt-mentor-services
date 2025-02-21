@@ -5,6 +5,7 @@ module ApplyRegister
         @records = []
 
         fetch_application_attributes(year: "2023")
+        # add year to actual model for validation?
 
         @records.each do |record|
           Placements::Trainee.find_or_create_by(candidate_id: record[:candidate_id]) do |trainee|
@@ -29,10 +30,6 @@ module ApplyRegister
             study_mode: application_attributes["course"]["study_mode"],
           }
         end
-      end
-
-      def provider_by_code(code)
-        ::Provider.find_by(code:)
       end
     end
   end
