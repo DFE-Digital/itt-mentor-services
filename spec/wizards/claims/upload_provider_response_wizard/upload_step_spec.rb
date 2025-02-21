@@ -248,6 +248,27 @@ RSpec.describe Claims::UploadProviderResponseWizard::UploadStep, type: :model do
       end
     end
 
+    context "when the csv_content is in the wrong case" do
+      let(:csv_content) do
+        "claim_reference,mentor_full_name,claim_accepted,rejection_reason\r\n" \
+          "11111111,John Smith,Yes,"
+      end
+      let(:attributes) { { csv_content: } }
+
+      let(:sampling_in_progress_claim) do
+        create(:claim, :submitted, status: :sampling_in_progress, reference: 11_111_111)
+      end
+      let(:mentor_john_smith) { create(:claims_mentor, first_name: "John", last_name: "Smith") }
+
+      before do
+        create(:mentor_training, mentor: mentor_john_smith, claim: sampling_in_progress_claim)
+      end
+
+      it "returns true" do
+        expect(csv_inputs_valid).to be(true)
+      end
+    end
+
     context "when the csv_content contains valid claim references and all necessary attributes" do
       let(:csv_content) do
         "claim_reference,mentor_full_name,claim_accepted,rejection_reason\r\n" \
