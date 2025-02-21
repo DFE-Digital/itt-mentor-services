@@ -33,5 +33,6 @@ module PublishTeacherTraining
         # end
       end
     end
+    # In a job, importer courses first then grab trainees.
   end
 end

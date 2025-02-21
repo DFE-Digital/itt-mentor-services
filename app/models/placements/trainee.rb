@@ -20,4 +20,6 @@
 #  fk_rails_...  (provider_id => providers.id)
 #
 class Placements::Trainee < ApplicationRecord
+  # course_id (uuid) instead of course_code (string)
+  # fk with course
 end
