@@ -4,5 +4,6 @@ en:
       settings:
         index:
           heading: Settings
-          background_jobs: Background Jobs
+          background_jobs: Background jobs
+          feature_flags: Feature flags
           emails: Emails

@@ -48,6 +48,18 @@ shared:
     - created_at
     - updated_at
     - downloaded_at
+  :flipper_gates:
+    - id
+    - feature_key
+    - key
+    - value
+    - created_at
+    - updated_at
+  :flipper_features:
+    - id
+    - key
+    - created_at
+    - updated_at
   :good_job_settings:
     - id
     - created_at

@@ -52,7 +52,6 @@ gem "bootsnap", require: false
 
 gem "csv"
 
-
 # Markdown
 gem "govuk_markdown"
 gem "redcarpet", "~> 3.6"
@@ -182,3 +181,9 @@ group :development, :production do
   # Semantic logger
   gem "rails_semantic_logger"
 end
+
+gem "flipper", "~> 1.3"
+
+gem "flipper-active_record", "~> 1.3"
+
+gem "flipper-ui", "~> 1.3"
