@@ -52,7 +52,6 @@ gem "bootsnap", require: false
 
 gem "csv"
 
-gem "flipflop"
 
 # Markdown
 gem "govuk_markdown"
