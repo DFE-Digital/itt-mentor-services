@@ -32,4 +32,7 @@ Rails.application.routes.draw do
   # GoodJob admin interface – only accessible to support users
   mount GoodJob::Engine => "/good_job", constraints: SupportUserConstraint.new
   get "/good_job", to: redirect("/support")
+
+  # Flipper admin interface – only accessible to support users
+  mount Flipper::UI.app(Flipper) => "/flipper", constraints: SupportUserConstraint.new
 end
