@@ -1,6 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "ESFA user downloads clawback CSV with valid token", service: :claims, type: :system do
+  before { Timecop.freeze }
+  after { Timecop.return }
+
   scenario do
     given_one_of_my_claims_have_been_clawed_back
     and_the_token_is_valid
