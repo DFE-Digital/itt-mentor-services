@@ -2,14 +2,14 @@
 
 ## General principles
 
-- We use the gem [Flipflop](https://github.com/voormedia/flipflop) to manage feature flags
+- We use the gem [Flipper](https://github.com/flippercloud/flipper) to manage feature flags, note that we do not use Flipper cloud.
 - Developers are responsible for changing / maintaining feature flags using rake tasks
 
 ## How to
 
 ### Create a feature flag
 
-- Add the feature to `features.rb` There is a basic example in the comments of that doc. See [Flipflop](https://github.com/voormedia/flipflop) docs for more detail.
+- Create a migration to create your feature flag in the database, you can use `Flipper.add(:feature_name)` to do this.
 - The feature will be turned off by default.
 - Start using it in your code
 - Use Rake tasks (see below) to enable / disable feature flags.
@@ -19,25 +19,34 @@
 Anywhere in the codebase, you can check to see if a feature is enabled.
 For example, to check if a feature called `test_feature` is enabled you could use:
 
-`Flipflop.test_feature?` or `Flipflop.enabled?(:test_feature)`
+`Flipper.enabled?(:test_feature)`
+
+#### Enable a feature flag for specific actors
+
+Sometimes we will need to roll out a feature to a selection of our users, but not all of them. We can target specific actors like so:
+
+```ruby
+user = User.first
+Flipper.enable(:test_feature, user)
+```
+
+Note that this does not _need_ to be a user record, for example you may wish to enable a feature for anyone in a certain school. To check if the feature is enabled for an actor you can use:
+
+```ruby
+user = User.first
+school = Placements::School.first(users: [user])
+Flipper.enable(:test_feature, school)
+
+Flipper.enabled?(:test_feature, user.school)
+```
 
 ### Remove a feature flag
 
 Once a feature flag has been turned on globally and everyone is happy that it should be a permanent feature the developer should:
 
 - Remove all uses from the codebase
-- Clear the feature flag from Active Record using the `flipflop:clear` rake task below in all environments.
-- Delete the feature flag from `features.rb`
-
-### Rake tasks
-
-| Command                                                                                                    | Description                                                                                                                                   |
-| ---------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `rake flipflop:features`                                                                                   | Shows features table                                                                                                                          |
-| `rake "flipflop:turn_on[feature,strategy]"`<br/> eg `rake "flipflop:turn_on[test_feature,active_record]"`  | Enables a feature with the specified strategy<br/>Creates a record in the database if it does not exist already.<br/>Sets `enabled` to true   |
-| `rake "flipflop:turn_on[feature,strategy]"`<br/> eg `rake "flipflop:turn_off[test_feature,active_record]"` | Disables a feature with the specified strategy<br/>Creates a record in the database if it does not exist already.<br/>Sets `enabled` to false |
-| `rake "flipflop:clear[feature,strategy]"`<br/> eg `rake "flipflop:clear[test_feature,active_record]"`      | Clears a feature with the specified strategy<br/>Removes record from the database if it exists.                                               |
+- Clear the feature flag from Active Record using the `Flipper.remove(:feature_name)` rake task below in all environments (or create a migration).
 
 ## Last reviewed
 
-12-12-2023
+24-02-2025
