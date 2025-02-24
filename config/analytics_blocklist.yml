@@ -1,11 +1,5 @@
 ---
 shared:
-  :flipflop_features:
-    - id
-    - key
-    - enabled
-    - created_at
-    - updated_at
   :audits:
     - id
     - auditable_id
