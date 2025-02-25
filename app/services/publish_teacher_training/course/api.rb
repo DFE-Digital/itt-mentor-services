@@ -20,7 +20,7 @@ module PublishTeacherTraining
       end
 
       def all_courses_url
-        "#{ENV["PUBLISH_BASE_URL"]}/api/public/v1/recruitment_cycles/#{@year}/courses"
+        "#{ENV["PUBLISH_BASE_URL"]}/api/public/v1/recruitment_cycles/#{@year}/courses?include=provider"
       end
     end
   end

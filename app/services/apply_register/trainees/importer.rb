@@ -13,6 +13,7 @@ module ApplyRegister
 
         @records.each do |record|
           Placements::Trainee.find_or_create_by(candidate_id: record[:candidate_id]) do |trainee|
+            trainee.itt_course_uuid = record[:itt_course_uuid]
             trainee.itt_course_code = record[:itt_course_code]
             trainee.study_mode = record[:study_mode]
             trainee.training_provider_code = record[:training_provider_code]
@@ -26,6 +27,7 @@ module ApplyRegister
         applications = ::ApplyRegister::Api.call(year:, changed_since:)
         applications.fetch("data").each do |application_details|
           application_attributes = application_details["attributes"]
+          binding.pry
           @invalid_records << "Application status for candidate #{application_attributes["candidate"]["id"]} is invalid: #{application_attributes["status"]}" if invalid?(application_attributes)
           next if invalid?(application_attributes)
 
@@ -38,7 +40,6 @@ module ApplyRegister
             study_mode: application_attributes["course"]["study_mode"],
           }
         end
-        binding.pry
       end
 
       def invalid?(application_attributes)

@@ -9,6 +9,7 @@
 #  uuid          :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  provider_id   :string
 #
 class Placements::Course < ApplicationRecord
 end
