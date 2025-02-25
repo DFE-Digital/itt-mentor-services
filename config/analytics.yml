@@ -189,6 +189,10 @@ shared:
     - county
     - postcode
     - accredited
+  :provider_courses:
+    - id
+    - created_at
+    - updated_at
   :trainees:
     - id
     - candidate_id
@@ -206,6 +210,11 @@ shared:
     - code
     - subject_codes
     - provider_id
+    - created_at
+    - updated_at
+  :placement_courses:
+    - id
+    - placement_id
     - created_at
     - updated_at
   :placement_location_providers:

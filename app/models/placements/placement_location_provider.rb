@@ -16,4 +16,16 @@
 class Placements::PlacementLocationProvider < ApplicationRecord
   belongs_to :placement
   belongs_to :provider, class_name: "Placements::Provider"
+
+  def self.populate_placement_location_providers
+    Placement.all.find_each do |placement|
+      matching_providers = Provider.where(town: placement.school.town)
+
+      matching_providers.each do |provider|
+        unless Placements::PlacementLocationProvider.exists?(placement_id: placement.id, provider_id: provider.id)
+          Placements::PlacementLocationProvider.create!(placement_id: placement.id, provider_id: provider.id)
+        end
+      end
+    end
+  end
 end

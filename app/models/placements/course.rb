@@ -12,4 +12,8 @@
 #  provider_id   :string
 #
 class Placements::Course < ApplicationRecord
+  has_many :trainees
+  has_many :subjects
+
+  belongs_to :provider
 end

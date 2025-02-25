@@ -21,6 +21,6 @@
 #  fk_rails_...  (provider_id => providers.id)
 #
 class Placements::Trainee < ApplicationRecord
-  # course_id (uuid) instead of course_code (string)
-  # fk with course
+  belongs_to :course
+  belongs_to :provider
 end

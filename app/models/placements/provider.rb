@@ -45,4 +45,7 @@ class Placements::Provider < Provider
 
   has_many :placement_location_providers
   has_many :radius_placements, through: :placement_location_providers, source: :placement
+
+  has_many :provider_courses
+  has_many :matched_courses, through: :provider_courses, class_name: "Placements::ProviderCourses", source: :course
 end
