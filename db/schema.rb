@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_20_120215) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_25_104039) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -153,6 +153,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_20_120215) do
     t.string "subject_codes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "uuid"
+    t.string "name"
   end
 
   create_table "download_access_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -572,6 +574,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_20_120215) do
     t.datetime "updated_at", null: false
     t.string "study_mode"
     t.uuid "provider_id"
+    t.string "itt_course_uuid"
     t.index ["provider_id"], name: "index_trainees_on_provider_id"
   end
 

@@ -193,13 +193,16 @@ shared:
     - id
     - candidate_id
     - itt_course_code
+    - itt_course_uuid
     - training_provider_code
     - study_mode
     - created_at
     - updated_at
     - provider_id
   :courses:
+    - uuid
     - id
+    - name
     - code
     - subject_codes
     - created_at

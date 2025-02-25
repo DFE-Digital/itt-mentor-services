@@ -4,6 +4,7 @@
 #
 #  id                     :uuid             not null, primary key
 #  itt_course_code        :string
+#  itt_course_uuid        :string
 #  study_mode             :string
 #  training_provider_code :string
 #  created_at             :datetime         not null
