@@ -11,6 +11,7 @@
 #
 class Placements::AcademicYear < AcademicYear
   has_many :placements
+  has_many :hosting_interests
 
   def self.current
     for_date(Date.current)

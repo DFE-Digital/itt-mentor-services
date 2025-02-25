@@ -155,3 +155,11 @@ shared:
     - data
     - created_at
     - updated_at
+  :hosting_interests:
+    - id
+    - academic_year_id
+    - school_id
+    - appetite
+    - reasons_not_hosting
+    - created_at
+    - updated_at

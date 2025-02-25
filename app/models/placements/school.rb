@@ -81,6 +81,7 @@ class Placements::School < School
   has_many :partner_providers,
            through: :partnerships,
            source: :provider
+  has_many :hosting_interests
 
   delegate :email_address, to: :school_contact, prefix: true, allow_nil: true
 end

@@ -1,0 +1,22 @@
+<% content_for :page_title, title_with_error_prefix(
+  t(".title"),
+  error: current_step.errors.any?,
+) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+
+      <p class="govuk-body"><%= t(".did_you_know_html") %></p>
+
+      <h2 class="govuk-heading-m"><%= t(".training_providers") %></h2>
+
+      <p class="govuk-body"><%= t(".local_providers") %></p>
+
+      <%# TODO: Add local providers here after Geocoding added %>
+
+      <%= f.govuk_submit t(".continue") %>
+    </div>
+  </div>
+<% end %>

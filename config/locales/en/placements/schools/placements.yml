@@ -41,6 +41,11 @@ en:
           edit:
             cancel: Cancel
             placement_details: Placement details
+        add_multiple_placements:
+          edit:
+            cancel: Cancel
+          update:
+            success: Thank you for providing your responses
         edit_placement:
           update:
             success: 

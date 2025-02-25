@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_24_092828) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_24_102221) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "appetite", ["actively_looking", "interested", "not_open", "already_organised"]
   create_enum "claim_status", ["internal_draft", "draft", "submitted", "payment_in_progress", "payment_information_requested", "payment_information_sent", "paid", "payment_not_approved", "sampling_in_progress", "sampling_provider_not_approved", "sampling_not_approved", "clawback_requested", "clawback_in_progress", "clawback_complete"]
   create_enum "mentor_training_type", ["refresher", "initial"]
   create_enum "placement_status", ["draft", "published"]
@@ -261,6 +262,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_24_092828) do
     t.index ["priority", "scheduled_at"], name: "index_good_jobs_on_priority_scheduled_at_unfinished_unlocked", where: "((finished_at IS NULL) AND (locked_by_id IS NULL))"
     t.index ["queue_name", "scheduled_at"], name: "index_good_jobs_on_queue_name_and_scheduled_at", where: "(finished_at IS NULL)"
     t.index ["scheduled_at"], name: "index_good_jobs_on_scheduled_at", where: "(finished_at IS NULL)"
+  end
+
+  create_table "hosting_interests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "academic_year_id", null: false
+    t.uuid "school_id", null: false
+    t.enum "appetite", enum_type: "appetite"
+    t.jsonb "reasons_not_hosting"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["academic_year_id"], name: "index_hosting_interests_on_academic_year_id"
+    t.index ["school_id", "academic_year_id"], name: "index_hosting_interests_on_school_id_and_academic_year_id", unique: true
+    t.index ["school_id"], name: "index_hosting_interests_on_school_id"
   end
 
   create_table "mentor_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -598,6 +611,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_24_092828) do
   add_foreign_key "claims", "schools"
   add_foreign_key "clawback_claims", "claims"
   add_foreign_key "clawback_claims", "clawbacks"
+  add_foreign_key "hosting_interests", "academic_years"
+  add_foreign_key "hosting_interests", "schools"
   add_foreign_key "mentor_memberships", "mentors"
   add_foreign_key "mentor_memberships", "schools"
   add_foreign_key "mentor_trainings", "claims"

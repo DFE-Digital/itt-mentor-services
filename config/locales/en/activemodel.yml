@@ -283,3 +283,13 @@ en:
             support_user_id: 
               blank: Please select a support agent
               inclusion: Please select a support agent
+        placements/multi_placement_wizard/appetite_step:
+          attributes:
+            appetite: 
+              blank: Please select your appetite to host ITT for the coming academic year
+              inclusion: Please select your appetite to host ITT for the coming academic year
+        placements/multi_placement_wizard/reason_not_hosting_step:
+          attributes:
+            reasons_not_hosting: 
+              blank: Please select a reason for not taking part in ITT
+
