@@ -27,7 +27,6 @@ module ApplyRegister
         applications = ::ApplyRegister::Api.call(year:, changed_since:)
         applications.fetch("data").each do |application_details|
           application_attributes = application_details["attributes"]
-          binding.pry
           @invalid_records << "Application status for candidate #{application_attributes["candidate"]["id"]} is invalid: #{application_attributes["status"]}" if invalid?(application_attributes)
           next if invalid?(application_attributes)
 

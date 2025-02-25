@@ -1,6 +1,8 @@
 class AddUuidAndNameToCourses < ActiveRecord::Migration[7.2]
   def change
-    add_column :courses, :uuid, :string
-    add_column :courses, :name, :string
+    change_table :courses, bulk: true do |t|
+      t.string :uuid
+      t.string :name
+    end
   end
 end
