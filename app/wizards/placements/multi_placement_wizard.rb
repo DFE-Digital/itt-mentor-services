@@ -40,6 +40,21 @@ module Placements
       @upcoming_academic_year ||= AcademicYear.current.next
     end
 
+    def setup_state
+      unless hosting_interest.new_record?
+        state["appetite"] = { "appetite" => hosting_interest.appetite }
+        state["reason_not_hosting"] = { "reasons_not_hosting" => hosting_interest.reasons_not_hosting }
+      end
+
+      if school_contact.present?
+        state["school_contact"] = {
+          "first_name" => school_contact.first_name,
+          "last_name" => school_contact.last_name,
+          "email_address" => school_contact.email_address,
+        }
+      end
+    end
+
     private
 
     def wizard_school_contact

@@ -7,6 +7,11 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
 
   attr_reader :school
 
+  def new
+    @wizard.setup_state
+    redirect_to step_path(@wizard.first_step)
+  end
+
   def update
     if !@wizard.save_step
       render "edit"
@@ -30,7 +35,7 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
   end
 
   def authorize_placement
-    authorize school.placements.build, :add_placement_journey?
+    authorize school.placements.build, :bulk_add_placements?
   end
 
   def step_path(step)
