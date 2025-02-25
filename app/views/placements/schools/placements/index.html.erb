@@ -6,21 +6,30 @@
       <h1 class="govuk-heading-l"><%= t(".placements") %></h1>
 
       <% if @school.school_contact.present? %>
-        <%= govuk_button_link_to(t(".add_placement"), new_add_placement_placements_school_placements_path) %>
+        <div class="govuk-button-group">
+          <%= govuk_button_link_to(t(".add_placement"), new_add_placement_placements_school_placements_path) %>
+          <% if Flipper.enabled?(:bulk_add_placements, @school) %>
+            <%= govuk_button_link_to(t(".bulk_add_placements"), new_add_multiple_placements_placements_school_placements_path) %>
+          <% end %>
+        </div>
 
       <% else %>
         <%= govuk_inset_text(
-              text: embedded_link_text(
-                t(
-                  ".you_must_add_itt_placement_contact",
-                  link_to: govuk_link_to(
-                    t(".add_itt_placement_contact"),
-                    new_add_school_contact_placements_school_school_contacts_path,
-                    no_visited_state: true,
-                  ),
-                ),
+          text: embedded_link_text(
+            t(
+              ".you_must_add_itt_placement_contact",
+              link_to: govuk_link_to(
+                t(".add_itt_placement_contact"),
+                new_add_school_contact_placements_school_school_contacts_path,
+                no_visited_state: true,
               ),
-            ) %>
+            ),
+          ),
+        ) %>
+
+        <% if Flipper.enabled?(:bulk_add_placements, @school) %>
+            <%= govuk_button_link_to(t(".bulk_add_placements"), new_add_multiple_placements_placements_school_placements_path) %>
+          <% end %>
       <% end %>
 
       <%= render SecondaryNavigationComponent.new do |component| %>

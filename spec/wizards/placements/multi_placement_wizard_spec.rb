@@ -31,6 +31,40 @@ RSpec.describe Placements::MultiPlacementWizard do
     before { school }
 
     context "when the attributes passed are valid" do
+      context "when the appetite is 'actively_looking'" do
+        let(:state) do
+          {
+            "appetite" => { "appetite" => "actively_looking" },
+            "school_contact" => {
+              "first_name" => "Joe",
+              "last_name" => "Bloggs",
+              "email_address" => "joe_bloggs@example.com",
+            },
+          }
+        end
+
+        context "when school has no hosting interest for the next academic year" do
+          context "when school has no school contact assigned" do
+            let(:school) { create(:placements_school, with_school_contact: false) }
+
+            it "creates hosting interest for the next academic year, assigns the appetite,
+              reasons not hosting and creates a school contact" do
+              expect { update_school_placements }.to change(Placements::HostingInterest, :count).by(1)
+                .and change(Placements::SchoolContact, :count).by(1)
+              school.reload
+
+              hosting_interest = school.hosting_interests.last
+              expect(hosting_interest.appetite).to eq("actively_looking")
+
+              school_contact = school.school_contact
+              expect(school_contact.first_name).to eq("Joe")
+              expect(school_contact.last_name).to eq("Bloggs")
+              expect(school_contact.email_address).to eq("joe_bloggs@example.com")
+            end
+          end
+        end
+      end
+
       context "when the appetite is 'not_open'" do
         let(:state) do
           {
@@ -158,6 +192,63 @@ RSpec.describe Placements::MultiPlacementWizard do
 
     it "returns the next academic year" do
       expect(upcoming_academic_year).to eq(next_academic_year)
+    end
+  end
+
+  describe "#setup_state" do
+    subject(:setup_state) { wizard.setup_state }
+
+    context "when the school has no school contact or hosting interest for the next year" do
+      let(:school) { create(:placements_school, with_school_contact: false) }
+
+      it "returns nil" do
+        expect(setup_state).to be_nil
+      end
+    end
+
+    context "when the school has a school contact" do
+      let(:school_contact) { school.school_contact }
+
+      it "returns a hash containing the school contacts attributes" do
+        setup_state
+        expect(state).to eq(
+          {
+            "school_contact" => {
+              "first_name" => school_contact.first_name,
+              "last_name" => school_contact.last_name,
+              "email_address" => school_contact.email_address,
+            },
+          },
+        )
+      end
+    end
+
+    context "when the school has a hosting interest for the next academic year" do
+      let(:school) { create(:placements_school, with_school_contact: false) }
+      let(:hosting_interest) do
+        create(:hosting_interest,
+               school:,
+               academic_year: Placements::AcademicYear.current.next,
+               appetite: "actively_looking",
+               reasons_not_hosting: [
+                 "Not enough trained mentors",
+                 "Number of pupils with SEND needs",
+               ])
+      end
+
+      before { hosting_interest }
+
+      it "returns a hash containing the attributes for the schools hosting interest" do
+        setup_state
+        expect(state).to eq(
+          {
+            "appetite" => { "appetite" => "actively_looking" },
+            "reason_not_hosting" => { "reasons_not_hosting" => [
+              "Not enough trained mentors", "Number of pupils with SEND needs"
+            ] },
+          },
+        )
+      end
     end
   end
 end
