@@ -208,6 +208,12 @@ shared:
     - provider_id
     - created_at
     - updated_at
+  :placement_location_providers:
+    - id
+    - placement_id
+    - provider_id
+    - created_at
+    - updated_at
   :placements:
     - id
     - school_id

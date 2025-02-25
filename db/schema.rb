@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_25_134911) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_25_152751) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -367,6 +367,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_25_134911) do
     t.datetime "updated_at", null: false
     t.index ["placement_id"], name: "index_placement_additional_subjects_on_placement_id"
     t.index ["subject_id"], name: "index_placement_additional_subjects_on_subject_id"
+  end
+
+  create_table "placement_location_providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "placement_id"
+    t.uuid "provider_id"
+    t.index ["placement_id"], name: "index_placement_location_providers_on_placement_id"
+    t.index ["provider_id"], name: "index_placement_location_providers_on_provider_id"
   end
 
   create_table "placement_mentor_joins", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

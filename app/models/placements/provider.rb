@@ -42,4 +42,7 @@ class Placements::Provider < Provider
            through: :partnerships,
            source: :school
   has_many :placements
+
+  has_many :placement_location_providers
+  has_many :radius_placements, through: :placement_location_providers, source: :placement
 end

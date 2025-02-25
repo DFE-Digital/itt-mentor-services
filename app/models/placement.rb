@@ -35,6 +35,9 @@ class Placement < ApplicationRecord
   has_many :placement_windows, class_name: "Placements::PlacementWindow", dependent: :destroy
   has_many :terms, class_name: "Placements::Term", through: :placement_windows
 
+  has_many :placement_location_providers
+  has_many :radius_providers, through: :placement_location_providers, class_name: "Placements::Provider", source: :provider
+
   belongs_to :academic_year, class_name: "Placements::AcademicYear"
   belongs_to :school, class_name: "Placements::School"
   belongs_to :provider, class_name: "::Provider", optional: true
