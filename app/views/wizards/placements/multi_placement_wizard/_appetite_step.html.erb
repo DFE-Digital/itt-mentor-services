@@ -1,0 +1,21 @@
+<% content_for :page_title, title_with_error_prefix(
+  t(".title", academic_year_name: @wizard.upcoming_academic_year.name),
+  error: current_step.errors.any?,
+) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= f.govuk_collection_radio_buttons(
+        :appetite,
+        current_step.appetite_options,
+        :value, :name, :description,
+        legend: { size: "l", text: t(".title", academic_year_name: @wizard.upcoming_academic_year.name), tag: "h1" }
+      ) %>
+
+      <%= f.govuk_submit t(".continue") %>
+    </div>
+  </div>
+<% end %>
