@@ -45,6 +45,29 @@ RSpec.describe Placements::PlacementPolicy do
     end
   end
 
+  permissions :bulk_add_placements? do
+    let(:school) { create(:placements_school) }
+    let(:placement) { build(:placement) }
+
+    before { Flipper.add(:bulk_add_placements) }
+
+    context "when the feature flag bulk_add_placements is disabled" do
+      before { Flipper.disable(:bulk_add_placements) }
+
+      it "denies access" do
+        expect(placement_policy).not_to permit(current_user, placement)
+      end
+    end
+
+    context "when the feature flag bulk_add_placements is enabled" do
+      before { Flipper.enable(:bulk_add_placements) }
+
+      it "denies access" do
+        expect(placement_policy).to permit(current_user, placement)
+      end
+    end
+  end
+
   describe "scope" do
     let(:scope) { Placement.all }
 

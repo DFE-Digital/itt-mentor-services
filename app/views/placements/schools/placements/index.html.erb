@@ -27,7 +27,7 @@
           ),
         ) %>
 
-        <% if Flipper.enabled?(:bulk_add_placements, @school) %>
+        <% if policy(Placement.new).bulk_add_placements? %>
             <%= govuk_button_link_to(t(".bulk_add_placements"), new_add_multiple_placements_placements_school_placements_path) %>
           <% end %>
       <% end %>
