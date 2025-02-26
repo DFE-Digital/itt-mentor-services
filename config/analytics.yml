@@ -189,37 +189,23 @@ shared:
     - county
     - postcode
     - accredited
-  :provider_courses:
-    - id
-    - created_at
-    - updated_at
   :trainees:
     - id
     - candidate_id
     - itt_course_code
     - itt_course_uuid
-    - training_provider_code
+    - training_provider
     - study_mode
     - created_at
     - updated_at
     - provider_id
+    - course_id
   :courses:
     - uuid
     - id
     - name
     - code
     - subject_codes
-    - provider_id
-    - created_at
-    - updated_at
-  :placement_courses:
-    - id
-    - placement_id
-    - created_at
-    - updated_at
-  :placement_location_providers:
-    - id
-    - placement_id
     - provider_id
     - created_at
     - updated_at

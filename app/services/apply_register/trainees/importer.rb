@@ -12,11 +12,18 @@ module ApplyRegister
         end
 
         @records.each do |record|
-          Placements::Trainee.find_or_create_by(candidate_id: record[:candidate_id]) do |trainee|
-            trainee.itt_course_uuid = record[:itt_course_uuid]
-            trainee.itt_course_code = record[:itt_course_code]
-            trainee.study_mode = record[:study_mode]
-            trainee.training_provider_code = record[:training_provider_code]
+          course = Placements::Course.find_by(code: record[:itt_course_code])
+
+          if course.present?
+            Placements::Trainee.find_or_create_by!(candidate_id: record[:candidate_id]) do |trainee|
+              trainee.itt_course_code = record[:itt_course_code]
+              trainee.itt_course_uuid = record[:itt_course_uuid]
+              trainee.study_mode = record[:study_mode]
+              trainee.course_id = course.id
+            end
+            Rails.logger.info "Candidate #{record[:candidate_id]} created successfully: provider code #{record[:training_provider_code]} and course code #{record[:itt_course_code]} found!"
+          else
+            Rails.logger.info "Candidate #{record[:candidate_id]} invalid: course code #{record[:itt_course_code]} not found"
           end
         end
       end

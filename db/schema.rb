@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_25_165948) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_26_160658) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -369,22 +369,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_25_165948) do
     t.index ["subject_id"], name: "index_placement_additional_subjects_on_subject_id"
   end
 
-  create_table "placement_courses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "placement_id"
-    t.index ["placement_id"], name: "index_placement_courses_on_placement_id"
-  end
-
-  create_table "placement_location_providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "placement_id"
-    t.uuid "provider_id"
-    t.index ["placement_id"], name: "index_placement_location_providers_on_placement_id"
-    t.index ["provider_id"], name: "index_placement_location_providers_on_provider_id"
-  end
-
   create_table "placement_mentor_joins", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "mentor_id", null: false
     t.uuid "placement_id", null: false
@@ -416,11 +400,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_25_165948) do
     t.index ["school_id"], name: "index_placements_on_school_id"
     t.index ["subject_id"], name: "index_placements_on_subject_id"
     t.index ["year_group"], name: "index_placements_on_year_group"
-  end
-
-  create_table "provider_courses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "provider_email_addresses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -591,12 +570,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_25_165948) do
   create_table "trainees", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "candidate_id"
     t.string "itt_course_code"
-    t.string "training_provider_code"
+    t.string "training_provider"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "study_mode"
     t.uuid "provider_id"
     t.string "itt_course_uuid"
+    t.uuid "course_id"
+    t.index ["course_id"], name: "index_trainees_on_course_id"
     t.index ["provider_id"], name: "index_trainees_on_provider_id"
   end
 
@@ -672,6 +653,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_25_165948) do
   add_foreign_key "schools", "trusts"
   add_foreign_key "schools", "users", column: "claims_grant_conditions_accepted_by_id"
   add_foreign_key "subjects", "subjects", column: "parent_subject_id"
+  add_foreign_key "trainees", "courses", validate: false
   add_foreign_key "trainees", "providers", validate: false
   add_foreign_key "user_memberships", "users"
 end

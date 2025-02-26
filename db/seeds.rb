@@ -230,3 +230,17 @@ Claims::School.all.find_each do |school|
     reference += 1
   end
 end
+
+# Match trainee to placement spike - temporary extension of placement trait to selected providers
+
+provider_codes = [
+  "179", "13R", "C59", "1OV", "1EL", "3B6", "1GX", "W53", "1TZ", "5A1"
+]
+
+provider_codes.each do |code|
+  provider = Provider.find_or_initialize_by(code: code)
+  provider.placements_service = true
+  provider.save!
+
+  Rails.logger.info("Provider with code #{code} has placements_service set to true!")
+end
