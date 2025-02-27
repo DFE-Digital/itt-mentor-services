@@ -61,5 +61,24 @@ RSpec.describe ProviderDecorator do
         ).to be_nil
       end
     end
+
+    context "when given a 'div' wrapper tag" do
+      it "returns the formatted address wrapped in a 'div' tag" do
+        provider = create(:provider,
+                          address1: "A School",
+                          address2: "The School Road",
+                          address3: "Somewhere",
+                          town: "London",
+                          city: "City of London",
+                          county: "London",
+                          postcode: "LN12 1LN")
+
+        expect(
+          provider.decorate.formatted_address(wrapper_tag: "div"),
+        ).to eq(
+          "<div>A School\n<br />The School Road\n<br />Somewhere\n<br />London\n<br />City of London\n<br />London\n<br />LN12 1LN</div>",
+        )
+      end
+    end
   end
 end

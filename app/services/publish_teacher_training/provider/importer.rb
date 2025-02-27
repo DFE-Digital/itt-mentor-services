@@ -52,6 +52,8 @@ module PublishTeacherTraining
             county: provider_attributes["county"],
             postcode: provider_attributes["postcode"],
             accredited: provider_attributes["accredited_body"],
+            latitude: provider_attributes["latitude"],
+            longitude: provider_attributes["longitude"],
           }
 
           next if provider_attributes["email"].blank?

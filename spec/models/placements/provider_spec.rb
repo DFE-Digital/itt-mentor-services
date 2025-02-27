@@ -10,6 +10,8 @@
 #  city               :string
 #  code               :string           not null
 #  county             :string
+#  latitude           :float
+#  longitude          :float
 #  name               :string           default(""), not null
 #  placements_service :boolean          default(FALSE)
 #  postcode           :string
@@ -25,6 +27,8 @@
 # Indexes
 #
 #  index_providers_on_code                (code) UNIQUE
+#  index_providers_on_latitude            (latitude)
+#  index_providers_on_longitude           (longitude)
 #  index_providers_on_name_trigram        (name) USING gin
 #  index_providers_on_placements_service  (placements_service)
 #  index_providers_on_postcode_trigram    (postcode) USING gin

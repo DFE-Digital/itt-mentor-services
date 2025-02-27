@@ -142,6 +142,8 @@ shared:
     - trn
   :providers:
     - telephone
+    - longitude
+    - latitude
   :provider_email_addresses:
     - id
     - email_address

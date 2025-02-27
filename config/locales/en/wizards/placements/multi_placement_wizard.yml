@@ -35,6 +35,7 @@ en:
             There are a number of organisations who could help you to make teacher training work.
           training_providers: Training providers
           local_providers: These training providers are local to you and could help.
+          find_providers: Find providers near me
         school_contact_step:
           title: Who is your contact for ITT?
           continue: Continue

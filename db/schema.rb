@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_25_141558) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_26_133003) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -454,7 +454,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_25_141558) do
     t.string "county"
     t.string "postcode"
     t.boolean "accredited", default: false
+    t.float "longitude"
+    t.float "latitude"
     t.index ["code"], name: "index_providers_on_code", unique: true
+    t.index ["latitude"], name: "index_providers_on_latitude"
+    t.index ["longitude"], name: "index_providers_on_longitude"
     t.index ["name"], name: "index_providers_on_name_trigram", opclass: :gin_trgm_ops, using: :gin
     t.index ["placements_service"], name: "index_providers_on_placements_service"
     t.index ["postcode"], name: "index_providers_on_postcode_trigram", opclass: :gin_trgm_ops, using: :gin

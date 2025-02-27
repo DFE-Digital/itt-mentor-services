@@ -12,9 +12,21 @@
 
       <h2 class="govuk-heading-m"><%= t(".training_providers") %></h2>
 
-      <p class="govuk-body"><%= t(".local_providers") %></p>
+      <% if current_step.local_providers.present? %>
 
-      <%# TODO: Add local providers here after Geocoding added %>
+        <p class="govuk-body"><%= t(".local_providers") %></p>
+
+        <% current_step.local_providers.each do |provider| %>
+          <p class="govuk-body">
+            <strong><%= provider.name %></strong><br>
+            <%= provider.formatted_address(wrapper_tag: "span") %>
+          </p>
+        <% end %>
+      <% end %>
+
+      <div>
+        <%= govuk_button_link_to(t(".find_providers"), "#", secondary: true, new_tab: true) %>
+      </div>
 
       <%= f.govuk_submit t(".continue") %>
     </div>
