@@ -10,6 +10,8 @@
 #  city               :string
 #  code               :string           not null
 #  county             :string
+#  latitude           :float
+#  longitude          :float
 #  name               :string           default(""), not null
 #  placements_service :boolean          default(FALSE)
 #  postcode           :string
@@ -25,6 +27,8 @@
 # Indexes
 #
 #  index_providers_on_code                (code) UNIQUE
+#  index_providers_on_latitude            (latitude)
+#  index_providers_on_longitude           (longitude)
 #  index_providers_on_name_trigram        (name) USING gin
 #  index_providers_on_placements_service  (placements_service)
 #  index_providers_on_postcode_trigram    (postcode) USING gin
@@ -93,6 +97,92 @@ RSpec.describe Provider, type: :model do
         provider_3 = create(:provider, name: "Brighton Provider")
 
         expect(described_class.order_by_name).to eq([provider_2, provider_3, provider_1])
+      end
+    end
+  end
+
+  describe ".order_by_ids" do
+    let!(:provider_1) { create(:provider) }
+    let!(:provider_2) { create(:provider) }
+    let!(:provider_3) { create(:provider) }
+
+    it "returns the providers ordered by a given list of provider ids" do
+      expect(
+        described_class.order_by_ids(
+          [provider_2.id, provider_3.id, provider_1.id],
+        ),
+      ).to eq(
+        [provider_2, provider_3, provider_1],
+      )
+
+      expect(
+        described_class.order_by_ids(
+          [provider_3.id, provider_2.id, provider_1.id],
+        ),
+      ).to eq(
+        [provider_3, provider_2, provider_1],
+      )
+    end
+  end
+
+  describe "geocoder" do
+    describe "#near" do
+      let!(:uxbridge_provider) do
+        create(:provider, name: "Uxbridge Provider", latitude: 51.5449509, longitude: -0.4816672)
+      end
+      let!(:brixton_provider) do
+        create(:provider, name: "Brixton Provider", latitude: 51.4626818, longitude: -0.1147325)
+      end
+      let(:york_provider) do
+        create(:provider, name: "York School", latitude: 53.9590555, longitude: -1.0815361)
+      end
+      let(:london_coordinates) { [51.4893335, -0.14405508452768728] }
+
+      before do
+        york_provider
+      end
+
+      it "returns the schools near the search for area" do
+        expect(
+          described_class.near(london_coordinates, 20),
+        ).to contain_exactly(uxbridge_provider, brixton_provider)
+      end
+    end
+  end
+
+  describe "#address" do
+    context "when all address attributes are present" do
+      let!(:uxbridge_provider) do
+        create(:provider,
+               name: "Uxbridge Provider",
+               address1: "Uxbridge Provider",
+               address2: "Uxbridge",
+               address3: "Greater London",
+               city: "London",
+               county: "London",
+               postcode: "UB8 1SB")
+      end
+
+      it "returns the full address of the school" do
+        expect(uxbridge_provider.address).to eq(
+          "Uxbridge Provider, Uxbridge, Greater London, London, London, UB8 1SB, United Kingdom",
+        )
+      end
+    end
+
+    context "when not all address attributes are present" do
+      let!(:uxbridge_provider) do
+        create(:provider,
+               name: "Uxbridge Provider",
+               address1: "Uxbridge Provider",
+               city: "London",
+               postcode: "UB8 1SB")
+      end
+
+      it "concatenate the present address attributes" do
+        expect(uxbridge_provider.address).to eq(
+          "Uxbridge Provider, London, UB8 1SB, United Kingdom",
+        )
       end
     end
   end

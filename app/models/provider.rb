@@ -10,6 +10,8 @@
 #  city               :string
 #  code               :string           not null
 #  county             :string
+#  latitude           :float
+#  longitude          :float
 #  name               :string           default(""), not null
 #  placements_service :boolean          default(FALSE)
 #  postcode           :string
@@ -25,6 +27,8 @@
 # Indexes
 #
 #  index_providers_on_code                (code) UNIQUE
+#  index_providers_on_latitude            (latitude)
+#  index_providers_on_longitude           (longitude)
 #  index_providers_on_name_trigram        (name) USING gin
 #  index_providers_on_placements_service  (placements_service)
 #  index_providers_on_postcode_trigram    (postcode) USING gin
@@ -34,6 +38,14 @@
 #
 class Provider < ApplicationRecord
   include PgSearch::Model
+  extend Geocoder::Model::ActiveRecord
+
+  ADDRESS_FIELDS = %w[address1 address2 address3 city county postcode].freeze
+
+  # Provider latitudes/longitudes are populated by the PublishTeacherTraining import (see PublishTeacherTraining::Provider::Importer).
+  # This is only here to make sure geocoder is initialised on the model. While the address could be
+  # used _as a fallback_ for geocoding, you should never normally need to call #geocode on a provider.
+  geocoded_by :address
 
   alias_attribute :organisation_type, :provider_type
 
@@ -62,11 +74,27 @@ class Provider < ApplicationRecord
 
   accepts_nested_attributes_for :provider_email_addresses, allow_destroy: true
 
+  def self.order_by_ids(ids)
+    t = arel_table
+    condition = Arel::Nodes::Case.new(t[:id])
+    ids.each_with_index do |id, index|
+      condition.when(id).then(index)
+    end
+    order(condition)
+  end
+
   def primary_email_address
     provider_email_addresses.primary.last.email_address
   end
 
   def email_addresses
     provider_email_addresses.pluck(:email_address).uniq
+  end
+
+  def address
+    [
+      *attributes.slice(*ADDRESS_FIELDS).values,
+      "United Kingdom",
+    ].compact.join(", ")
   end
 end

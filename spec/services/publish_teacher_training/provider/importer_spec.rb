@@ -18,6 +18,8 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
           name: "Provider 1",
           code: "Prov1",
           provider_type: :scitt,
+          latitude: 51.0644359,
+          longitude: -0.351266,
         ),
       ).to be_present
       expect(
@@ -25,6 +27,8 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
           name: "Provider 2",
           code: "Prov2",
           provider_type: :university,
+          latitude: 51.6139603,
+          longitude: -0.0927213,
         ),
       ).to be_present
       expect(
@@ -32,6 +36,8 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
           name: "Provider 3",
           code: "Prov3",
           provider_type: :lead_school,
+          latitude: 53.68806439999999,
+          longitude: -1.853286,
         ),
       ).to be_present
     end
@@ -53,6 +59,8 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
         name: "Provider 1",
         code: "Prov1",
         provider_type: :scitt,
+        latitude: 51.0644359,
+        longitude: -0.351266,
       )
       expect(new_provider).to be_present
       expect(
@@ -113,6 +121,8 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
               "code" => "Prov1",
               "provider_type" => "scitt",
               "email" => "provider_1@example.com",
+              "latitude" => 51.0644359,
+              "longitude" => -0.351266,
             },
           },
           {
@@ -122,6 +132,8 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
               "code" => "Prov2",
               "provider_type" => "university",
               "email" => nil,
+              "latitude" => 51.6139603,
+              "longitude" => -0.0927213,
             },
           },
           {
@@ -131,6 +143,8 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
               "code" => "Prov3",
               "provider_type" => "lead_school",
               "email" => "provider_3@example.com",
+              "latitude" => 53.68806439999999,
+              "longitude" => -1.853286,
             },
           },
         ],
@@ -153,6 +167,8 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
               "code" => "Prov1",
               "provider_type" => "scitt",
               "email" => "provider_1@example.com",
+              "latitude" => 51.0644359,
+              "longitude" => -0.351266,
             },
           },
           {
@@ -173,6 +189,8 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
               "county" => existing_provider.county,
               "postcode" => existing_provider.postcode,
               "accredited_body" => existing_provider.accredited,
+              "latitude" => existing_provider.latitude,
+              "longitude" => existing_provider.longitude,
             },
           },
           {
@@ -182,6 +200,8 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
               "code" => changeable_provider.code,
               "provider_type" => changeable_provider.provider_type,
               "email" => "changed_provider@example.com",
+              "latitude" => changeable_provider.latitude,
+              "longitude" => changeable_provider.longitude,
             },
           },
         ],
