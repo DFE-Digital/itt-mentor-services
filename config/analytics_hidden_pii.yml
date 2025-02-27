@@ -3,6 +3,7 @@ shared:
   mentors:
     - first_name
     - last_name
+    - trn
   users:
     - first_name
     - last_name
