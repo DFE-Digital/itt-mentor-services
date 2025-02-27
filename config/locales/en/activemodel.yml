@@ -292,4 +292,7 @@ en:
           attributes:
             reasons_not_hosting: 
               blank: Please select a reason for not taking part in ITT
-
+        placements/multi_placement_wizard/list_placements_step:
+          attributes:
+            list_placements:
+              blank: Please select an option

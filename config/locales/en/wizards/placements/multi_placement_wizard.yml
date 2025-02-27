@@ -18,6 +18,12 @@ en:
             already_organised:
               name: Placements already organised with providers
               description: We'll show any providers who search for you that you're at capacity
+        list_placements_step:
+          title: Would you like to list some placements to be seen by providers?
+          continue: Continue
+          options:
+            agree: Yes
+            disagree: No
         reason_not_hosting_step:
           title: What are your reasons for not taking part in ITT this year?
           continue: Continue

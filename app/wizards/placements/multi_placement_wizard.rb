@@ -15,6 +15,9 @@ module Placements
       if appetite == "not_open"
         add_step(ReasonNotHostingStep)
         add_step(HelpStep)
+      elsif appetite == "interested"
+        add_step(HelpStep)
+        add_step(ListPlacementsStep)
       end
       add_step(SchoolContactStep)
     end
