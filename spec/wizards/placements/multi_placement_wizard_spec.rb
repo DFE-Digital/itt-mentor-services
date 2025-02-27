@@ -23,6 +23,16 @@ RSpec.describe Placements::MultiPlacementWizard do
 
       it { is_expected.to eq %i[appetite reason_not_hosting help school_contact] }
     end
+
+    context "when an appetite is set to 'interested' during the appetite step" do
+      let(:state) do
+        {
+          "appetite" => { "appetite" => "interested" },
+        }
+      end
+
+      it { is_expected.to eq %i[appetite help list_placements school_contact] }
+    end
   end
 
   describe "#update_school_placements" do
