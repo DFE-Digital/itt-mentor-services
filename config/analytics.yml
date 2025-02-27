@@ -69,6 +69,7 @@ shared:
   :mentors:
     - first_name
     - last_name
+    - trn
     - id
     - created_at
     - updated_at
