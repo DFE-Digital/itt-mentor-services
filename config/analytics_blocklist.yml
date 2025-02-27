@@ -138,8 +138,6 @@ shared:
     - last_name
   :users:
     - email
-  :mentors:
-    - trn
   :providers:
     - telephone
     - longitude
