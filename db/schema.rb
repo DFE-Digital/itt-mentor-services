@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_26_160658) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_27_120444) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -156,6 +156,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_26_160658) do
     t.string "uuid"
     t.string "name"
     t.string "provider_id"
+    t.uuid "subject_id"
+    t.index ["subject_id"], name: "index_courses_on_subject_id"
   end
 
   create_table "download_access_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -577,6 +579,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_26_160658) do
     t.uuid "provider_id"
     t.string "itt_course_uuid"
     t.uuid "course_id"
+    t.string "degree_subject"
     t.index ["course_id"], name: "index_trainees_on_course_id"
     t.index ["provider_id"], name: "index_trainees_on_provider_id"
   end
@@ -622,6 +625,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_26_160658) do
   add_foreign_key "claims", "schools"
   add_foreign_key "clawback_claims", "claims"
   add_foreign_key "clawback_claims", "clawbacks"
+  add_foreign_key "courses", "subjects", validate: false
   add_foreign_key "mentor_memberships", "mentors"
   add_foreign_key "mentor_memberships", "schools"
   add_foreign_key "mentor_trainings", "claims"

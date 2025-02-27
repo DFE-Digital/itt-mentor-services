@@ -10,6 +10,15 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  provider_id   :string
+#  subject_id    :uuid
+#
+# Indexes
+#
+#  index_courses_on_subject_id  (subject_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (subject_id => subjects.id)
 #
 require "rails_helper"
 

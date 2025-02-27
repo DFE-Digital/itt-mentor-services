@@ -24,6 +24,8 @@ class Subject < ApplicationRecord
   has_many :child_subjects, class_name: "Subject", foreign_key: :parent_subject_id, dependent: :destroy
   has_many :placements, dependent: :restrict_with_exception
 
+  has_many :courses
+
   enum :subject_area,
        { primary: "primary", secondary: "secondary" },
        validate: true

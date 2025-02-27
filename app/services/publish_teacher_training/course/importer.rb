@@ -7,11 +7,18 @@ module PublishTeacherTraining
         fetch_course_attributes(year: "2023")
 
         @records.each do |record|
-          Placements::Course.find_or_create_by(code: record[:code]) do |course|
-            course.uuid = record[:uuid]
-            course.name = record[:name]
-            course.subject_codes = record[:subject_codes]
-            course.provider_id = record[:provider_id]
+          subject = ::Subject.find_by(code: record[:subject_codes])
+
+          if subject.present?
+            Placements::Course.find_or_create_by!(code: record[:code]) do |course|
+              course.uuid = record[:uuid]
+              course.name = record[:name]
+              course.subject_codes = record[:subject_codes]
+              course.provider_id = record[:provider_id]
+              course.subject_id = subject.id
+            end
+          else
+            Rails.logger.info "Subject #{record[:subject_codes]} not found"
           end
         end
       end

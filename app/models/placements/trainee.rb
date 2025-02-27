@@ -3,6 +3,7 @@
 # Table name: trainees
 #
 #  id                :uuid             not null, primary key
+#  degree_subject    :string
 #  itt_course_code   :string
 #  itt_course_uuid   :string
 #  study_mode        :string
@@ -24,5 +25,4 @@
 #  fk_rails_...  (provider_id => providers.id)
 #
 class Placements::Trainee < ApplicationRecord
-  belongs_to :course
 end

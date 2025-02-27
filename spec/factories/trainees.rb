@@ -3,6 +3,7 @@
 # Table name: trainees
 #
 #  id                :uuid             not null, primary key
+#  degree_subject    :string
 #  itt_course_code   :string
 #  itt_course_uuid   :string
 #  study_mode        :string

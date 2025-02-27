@@ -233,8 +233,8 @@ end
 
 # Match trainee to placement spike - temporary extension of placement trait to selected providers
 
-provider_codes = [
-  "179", "13R", "C59", "1OV", "1EL", "3B6", "1GX", "W53", "1TZ", "5A1"
+provider_codes = %w[
+  179 13R C59 1OV 1EL 3B6 1GX W53 1TZ 5A1
 ]
 
 provider_codes.each do |code|

@@ -5,25 +5,19 @@ module ApplyRegister
         @records = []
         @invalid_records = []
 
-        fetch_application_attributes(year: "2023")
+        fetch_application_attributes(year: "2024")
 
         if @invalid_records.any?
           Rails.logger.info "Invalid candidates - #{@invalid_records.inspect}"
         end
 
         @records.each do |record|
-          course = Placements::Course.find_by(code: record[:itt_course_code])
+          Placements::Trainee.find_or_create_by!(candidate_id: record[:candidate_id]) do |trainee|
+            most_recent_degree = record[:degree_subject].max_by { |degree| degree["award_year"].to_i }
 
-          if course.present?
-            Placements::Trainee.find_or_create_by!(candidate_id: record[:candidate_id]) do |trainee|
-              trainee.itt_course_code = record[:itt_course_code]
-              trainee.itt_course_uuid = record[:itt_course_uuid]
-              trainee.study_mode = record[:study_mode]
-              trainee.course_id = course.id
-            end
-            Rails.logger.info "Candidate #{record[:candidate_id]} created successfully: provider code #{record[:training_provider_code]} and course code #{record[:itt_course_code]} found!"
-          else
-            Rails.logger.info "Candidate #{record[:candidate_id]} invalid: course code #{record[:itt_course_code]} not found"
+            trainee.itt_course_code = record[:itt_course_code]
+            trainee.degree_subject = most_recent_degree["subject"] if most_recent_degree
+            trainee.study_mode = record[:study_mode]
           end
         end
       end
@@ -40,8 +34,7 @@ module ApplyRegister
           @records << {
             status: application_attributes["status"],
             candidate_id: application_attributes["candidate"]["id"],
-            itt_course_code: application_attributes["course"]["course_code"],
-            itt_course_uuid: application_attributes["course"]["course_uuid"],
+            degree_subject: application_attributes["qualifications"]["degrees"],
             training_provider_code: application_attributes["course"]["training_provider_code"],
             study_mode: application_attributes["course"]["study_mode"],
           }

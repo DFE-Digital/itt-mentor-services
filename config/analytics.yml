@@ -191,6 +191,7 @@ shared:
     - accredited
   :trainees:
     - id
+    - degree_subject
     - candidate_id
     - itt_course_code
     - itt_course_uuid
@@ -209,6 +210,7 @@ shared:
     - provider_id
     - created_at
     - updated_at
+    - subject_id
   :placements:
     - id
     - school_id
