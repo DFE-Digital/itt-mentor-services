@@ -296,3 +296,22 @@ en:
           attributes:
             list_placements:
               blank: Please select an option
+        placements/multi_placement_wizard/phase_step:
+          attributes:
+            phases: 
+              blank: Please select which phase you are looking to host placements at
+              inclusion: Please select which phase you are looking to host placements at
+        placements/multi_placement_wizard/subjects_known_step:
+          attributes:
+            subjects_known: 
+              blank: Please select if you know which subjects you would like to host
+        placements/multi_placement_wizard/primary_subject_selection_step:
+          attributes:
+            subject_ids: 
+              blank: Please select a primary subject
+              inclusion: Please select a primary subject
+        placements/multi_placement_wizard/secondary_subject_selection_step:
+          attributes:
+            subject_ids: 
+              blank: Please select a secondary subject
+              inclusion: Please select a secondary subject
