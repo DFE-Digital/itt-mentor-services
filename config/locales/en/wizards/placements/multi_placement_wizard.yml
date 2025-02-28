@@ -21,9 +21,6 @@ en:
         list_placements_step:
           title: Would you like to list some placements to be seen by providers?
           continue: Continue
-          options:
-            agree: Yes
-            disagree: No
         reason_not_hosting_step:
           title: What are your reasons for not taking part in ITT this year?
           continue: Continue
