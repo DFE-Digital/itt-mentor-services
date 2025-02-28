@@ -12,7 +12,9 @@ module Placements
     def define_steps
       # Define the wizard steps here
       add_step(AppetiteStep)
-      if appetite == "not_open"
+      if appetite == "actively_looking"
+        actively_looking_steps
+      elsif appetite == "not_open"
         add_step(ReasonNotHostingStep)
         add_step(HelpStep)
       elsif appetite == "interested"
@@ -58,10 +60,38 @@ module Placements
       end
     end
 
+    def selected_primary_subject_ids
+      steps.fetch(:primary_subject_selection).subject_ids
+    end
+
     private
+
+    def actively_looking_steps
+      add_step(PhaseStep)
+      add_step(SubjectsKnownStep)
+      return unless subjects_known?
+
+      if phases.include?(::Placements::School::PRIMARY_PHASE)
+        add_step(PrimarySubjectSelectionStep)
+        add_step(PrimaryPlacementQuantityStep)
+      end
+
+      if phases.include?(::Placements::School::SECONDARY_PHASE)
+        add_step(SecondarySubjectSelectionStep)
+      end
+    end
+
+    def phases
+      @phases = steps.fetch(:phase).phases
+    end
 
     def wizard_school_contact
       @wizard_school_contact = steps[:school_contact].school_contact
+    end
+
+    def subjects_known?
+      subjects_known_step = steps.fetch(:subjects_known)
+      subjects_known_step.subjects_known == subjects_known_step.class::YES
     end
 
     def appetite

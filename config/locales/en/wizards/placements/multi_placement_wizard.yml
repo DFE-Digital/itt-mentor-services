@@ -42,3 +42,21 @@ en:
         school_contact_step:
           title: Who is your contact for ITT?
           continue: Continue
+        phase_step:
+          title: What phase are you looking to host placements at?
+          continue: Continue
+        subjects_known_step:
+          title: Do you know which subjects you would like to host?
+          continue: Continue
+        primary_subject_selection_step:
+          title: Select primary subjects
+          caption: Placement details
+          continue: Continue
+        secondary_subject_selection_step:
+          title: Select secondary subjects
+          caption: Placement details
+          continue: Continue
+        primary_placement_quantity_step:
+          title: Enter the number of placements
+          caption: Placement details
+          continue: Continue
