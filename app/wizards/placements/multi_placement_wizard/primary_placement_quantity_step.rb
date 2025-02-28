@@ -1,9 +1,11 @@
-class Placements::MultiPlacementWizard::PrimaryPlacementQuantityStep < BaseStep
-  attribute :subject_quantities, default: {}
+class Placements::MultiPlacementWizard::PrimaryPlacementQuantityStep < Placements::MultiPlacementWizard::PlacementQuantityStep
+  delegate :selected_primary_subjects, to: :wizard
 
-  delegate :selected_primary_subject_ids, to: :wizard
+  Subject.primary.order_by_name.find_each do |subject|
+    attribute subject.name_as_attribute
+  end
 
   def subjects
-    Subject.where(id: selected_primary_subject_ids)
+    selected_primary_subjects
   end
 end

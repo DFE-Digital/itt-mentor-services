@@ -315,3 +315,8 @@ en:
             subject_ids: 
               blank: Please select a secondary subject
               inclusion: Please select a secondary subject
+        placements/multi_placement_wizard/secondary_child_subject_placement_selection_step:
+          attributes:
+            child_subject_ids: 
+              blank: Please select a subject
+              inclusion: Please select a subject

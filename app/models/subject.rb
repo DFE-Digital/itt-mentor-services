@@ -36,4 +36,8 @@ class Subject < ApplicationRecord
   def has_child_subjects?
     child_subjects.exists?
   end
+
+  def name_as_attribute
+    name.parameterize(separator: "_").to_sym
+  end
 end
