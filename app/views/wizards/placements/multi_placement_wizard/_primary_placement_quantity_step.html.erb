@@ -1,0 +1,26 @@
+<% content_for :page_title, title_with_error_prefix(
+  t(".title"),
+  error: current_step.errors.any?,
+) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".caption") %></span>
+      <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+      <% current_step.subjects.each do |subject| %>
+        <%= f.govuk_number_field(
+          "subject_quantities[#{subject.id}]",
+          multiple: true,
+          class: "govuk-input--width-2",
+          min: 1,
+          label: { text: subject.name, class: "govuk-!-font-weight-bold" },
+        ) %>
+      <% end %>
+
+      <%= f.govuk_submit t(".continue") %>
+    </div>
+  </div>
+<% end %>

@@ -230,3 +230,8 @@ Claims::School.all.find_each do |school|
     reference += 1
   end
 end
+
+# Feature flags
+
+Flipper.add(:bulk_add_placements)
+Flipper.enable(:bulk_add_placements)
