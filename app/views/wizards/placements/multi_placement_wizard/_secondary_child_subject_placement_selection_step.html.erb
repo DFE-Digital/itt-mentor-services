@@ -1,0 +1,26 @@
+<% content_for :page_title, title_with_error_prefix(
+  t(".title", subject_name: current_step.subject.name),
+  error: current_step.errors.any?,
+) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".caption") %></span>
+      <h1 class="govuk-heading-l"><%= t(".title", subject_name: current_step.subject.name) %></h1>
+      <%= f.govuk_collection_check_boxes(
+        :child_subject_ids,
+        current_step.child_subjects,
+        :id, :name,
+        legend: {
+          size: "m",
+          text: t(".placement_number", placement_number: current_step.selection_number.ordinalize), 
+          tag: "h2" }
+      ) %>
+
+      <%= f.govuk_submit t(".continue") %>
+    </div>
+  </div>
+<% end %>
