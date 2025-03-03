@@ -16,8 +16,9 @@
         :id, :name,
         legend: {
           size: "m",
-          text: t(".placement_number", placement_number: current_step.selection_number.ordinalize), 
-          tag: "h2" }
+          text: t(".placement_number", placement_number: current_step.selection_number.ordinalize),
+          tag: "h2",
+}
       ) %>
 
       <%= f.govuk_submit t(".continue") %>
