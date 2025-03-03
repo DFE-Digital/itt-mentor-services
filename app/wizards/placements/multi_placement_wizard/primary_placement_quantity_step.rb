@@ -1,8 +1,13 @@
 class Placements::MultiPlacementWizard::PrimaryPlacementQuantityStep < Placements::MultiPlacementWizard::PlacementQuantityStep
   delegate :selected_primary_subjects, to: :wizard
 
-  Subject.primary.order_by_name.find_each do |subject|
-    attribute subject.name_as_attribute
+  def initialize(wizard:, attributes:)
+    define_subject_attributes(
+      selected_subjects: wizard.selected_primary_subjects,
+      attributes: attributes.presence || wizard.state["primary_placement_quantity"],
+    )
+
+    super(wizard:, attributes:)
   end
 
   def subjects

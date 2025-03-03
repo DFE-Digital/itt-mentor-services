@@ -36,7 +36,7 @@ class BaseWizard
 
   def save_step
     if step.valid?
-      state[current_step.to_s] = step.attributes
+      state[current_step.to_s] = step.attributes.presence || step.try(:assigned_variables)
       true
     else
       false
