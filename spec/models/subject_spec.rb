@@ -55,4 +55,14 @@ RSpec.describe Subject, type: :model do
       end
     end
   end
+
+  describe "#name_as_attribute" do
+    subject(:name_as_attribute) { a_subject.name_as_attribute }
+
+    let(:a_subject) { create(:subject, name: "Modern Foreign Languages") }
+
+    it "returns the name of the subject as an attribute" do
+      expect(name_as_attribute).to eq(:modern_foreign_languages)
+    end
+  end
 end
