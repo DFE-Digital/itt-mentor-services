@@ -1,7 +1,7 @@
 class Placements::MultiPlacementWizard::SubjectSelectionStep < BaseStep
   attribute :subject_ids, default: []
 
-  validates :subject_ids, presence: true, inclusion: { in: ->(step) { step.subjects_for_selection.ids } }
+  validates :subject_ids, presence: true
 
   def subjects_for_selection
     {

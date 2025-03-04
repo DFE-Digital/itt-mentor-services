@@ -4,7 +4,10 @@ class Placements::MultiPlacementWizard::SecondaryChildSubjectPlacementSelectionS
   attribute :selection_number
   attribute :child_subject_ids, default: []
 
-  validates :child_subject_ids, presence: true, inclusion: { in: ->(step) { step.child_subjects.ids } }
+  validates :parent_subject_id, presence: true
+  validates :selection_id, presence: true
+  validates :selection_number, presence: true
+  validates :child_subject_ids, presence: true
 
   delegate :child_subjects, to: :subject
 
