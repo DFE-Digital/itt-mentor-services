@@ -4,7 +4,7 @@ class Placements::MultiPlacementWizard::SecondaryPlacementQuantityStep < Placeme
   def initialize(wizard:, attributes:)
     define_subject_attributes(
       selected_subjects: wizard.selected_secondary_subjects,
-      attributes: attributes.presence || wizard.state["secondary_placement_quantity"],
+      attributes: attributes,
     )
 
     super(wizard:, attributes:)

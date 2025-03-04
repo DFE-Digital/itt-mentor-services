@@ -12,16 +12,6 @@ class Placements::MultiPlacementWizard::PlacementQuantityStep < BaseStep
     end
   end
 
-  def define_subject_attributes(selected_subjects:, attributes:)
-    selected_subjects.each do |subject|
-      singleton_class.class_eval { attr_accessor subject.name_as_attribute }
-      instance_variable_set(
-        "@#{subject.name_as_attribute}",
-        attributes.blank? ? nil : attributes[subject.name_as_attribute.to_s],
-      )
-    end
-  end
-
   def assigned_variables
     subjects.map { |attribute|
       { attribute.name_as_attribute.to_s => instance_variable_get("@#{attribute.name_as_attribute}") }
@@ -30,5 +20,17 @@ class Placements::MultiPlacementWizard::PlacementQuantityStep < BaseStep
 
   def subjects
     Subject.none
+  end
+
+  private
+
+  def define_subject_attributes(selected_subjects:, attributes:)
+    selected_subjects.each do |subject|
+      singleton_class.class_eval { attr_accessor subject.name_as_attribute }
+      instance_variable_set(
+        "@#{subject.name_as_attribute}",
+        attributes.blank? ? nil : attributes[subject.name_as_attribute.to_s],
+      )
+    end
   end
 end
