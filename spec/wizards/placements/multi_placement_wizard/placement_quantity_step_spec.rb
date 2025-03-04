@@ -25,4 +25,12 @@ RSpec.describe Placements::MultiPlacementWizard::PlacementQuantityStep, type: :m
       expect(subjects).to eq([])
     end
   end
+
+  describe "#assigned_variables" do
+    subject(:assigned_variables) { step.assigned_variables }
+
+    it "returns an empty hash" do
+      expect(assigned_variables).to eq({})
+    end
+  end
 end

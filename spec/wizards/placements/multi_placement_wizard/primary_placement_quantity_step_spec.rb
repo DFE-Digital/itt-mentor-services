@@ -7,14 +7,14 @@ RSpec.describe Placements::MultiPlacementWizard::PrimaryPlacementQuantityStep, t
     instance_double(Placements::MultiPlacementWizard).tap do |mock_wizard|
       allow(mock_wizard).to receive_messages(
         school:,
-        selected_primary_subjects: primary_subjects,
+        selected_primary_subjects:,
         state:,
       )
     end
   end
 
   let(:attributes) { nil }
-  let(:primary_subjects) { Subject.none }
+  let(:selected_primary_subjects) { Subject.none }
   let!(:school) { create(:placements_school) }
   let(:state) { {} }
 
@@ -25,12 +25,23 @@ RSpec.describe Placements::MultiPlacementWizard::PrimaryPlacementQuantityStep, t
   end
 
   describe "variables" do
-    before { create(:subject, :secondary, name: "Science") }
+    let(:primary_subject) { create(:subject, :primary, name: "Primary") }
+    let(:primary_with_english) { create(:subject, :primary, name: "Primary with english") }
+    let(:primary_with_science) { create(:subject, :primary, name: "Primary with science") }
+    let(:secondary_subject) { create(:subject, :secondary, name: "Science") }
 
-    context "when there are no primary subjects" do
+    before do
+      primary_subject
+      primary_with_english
+      primary_with_science
+      secondary_subject
+    end
+
+    context "when there are no selected primary subjects" do
       it "returns no variables related to any subjects" do
         expect { step.primary }.to raise_error(NoMethodError)
         expect { step.primary_with_english }.to raise_error(NoMethodError)
+        expect { step.primary_with_science }.to raise_error(NoMethodError)
         expect { step.science }.to raise_error(NoMethodError)
       end
     end
@@ -38,20 +49,41 @@ RSpec.describe Placements::MultiPlacementWizard::PrimaryPlacementQuantityStep, t
     context "when there are primary subejects" do
       let(:primary_subject) { create(:subject, :primary, name: "Primary") }
       let(:primary_with_english) { create(:subject, :primary, name: "Primary with english") }
+      let(:primary_with_science) { create(:subject, :primary, name: "Primary with science") }
       let(:secondary_subject) { create(:subject, :secondary, name: "Science") }
-      let(:primary_subjects) { Subject.primary }
+
+      let(:selected_primary_subjects) { Subject.where(id: [primary_subject.id, primary_with_english.id]) }
 
       before do
         primary_subject
         primary_with_english
+        primary_with_science
         secondary_subject
       end
 
       it "creates a variable method per primary subject" do
         expect(step.primary).to be_nil
         expect(step.primary_with_english).to be_nil
+        expect { step.primary_with_science }.to raise_error(NoMethodError)
         expect { step.science }.to raise_error(NoMethodError)
       end
+    end
+  end
+
+  describe "#subjects" do
+    let!(:primary_subject) { create(:subject, :primary, name: "Primary") }
+    let!(:primary_with_english) { create(:subject, :primary, name: "Primary with english") }
+    let(:primary_with_science) { create(:subject, :primary, name: "Primary with science") }
+    let(:secondary_subject) { create(:subject, :secondary, name: "Science") }
+    let(:selected_primary_subjects) { Subject.where(id: [primary_subject.id, primary_with_english.id]) }
+
+    before do
+      primary_with_science
+      secondary_subject
+    end
+
+    it "returns the selected primary subjects" do
+      expect(step.subjects).to contain_exactly(primary_subject, primary_with_english)
     end
   end
 end
