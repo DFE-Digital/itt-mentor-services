@@ -20,8 +20,6 @@ RSpec.describe "School user selects no and completes the interested journey",
 
     when_i_select_no
     and_i_click_on_continue
-
-    when_i_click_on_continue
     then_i_see_the_school_contact_form
 
     when_i_fill_in_the_school_contact_details

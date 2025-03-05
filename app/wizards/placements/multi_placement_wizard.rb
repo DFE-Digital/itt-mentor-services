@@ -21,6 +21,9 @@ module Placements
       when "interested"
         add_step(HelpStep)
         add_step(ListPlacementsStep)
+        if list_placements?
+          actively_looking_steps
+        end
       end
       add_step(SchoolContactStep)
     end
@@ -184,6 +187,11 @@ module Placements
 
     def reasons_not_hosting
       @reasons_not_hosting ||= steps.fetch(:reason_not_hosting).reasons_not_hosting
+    end
+
+    def list_placements?
+      list_placements_step = steps.fetch(:list_placements)
+      list_placements_step.list_placements == list_placements_step.class::YES
     end
 
     def hosting_interest

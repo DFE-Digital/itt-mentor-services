@@ -18,10 +18,8 @@ RSpec.describe "School user does not enter any school contact details",
     when_i_click_on_continue
     then_i_see_the_are_you_interested_in_listing_placements_form
 
-    when_i_select_yes
+    when_i_select_no
     and_i_click_on_continue
-
-    when_i_click_on_continue
     then_i_see_the_school_contact_form
 
     when_i_click_on_continue
@@ -109,8 +107,8 @@ RSpec.describe "School user does not enter any school contact details",
     )
   end
 
-  def when_i_select_yes
-    choose "Yes"
+  def when_i_select_no
+    choose "No"
   end
 
   def then_i_see_the_school_contact_form
