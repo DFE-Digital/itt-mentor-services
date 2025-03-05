@@ -12,12 +12,13 @@ module Placements
     def define_steps
       # Define the wizard steps here
       add_step(AppetiteStep)
-      if appetite == "actively_looking"
+      case appetite
+      when "actively_looking"
         actively_looking_steps
-      elsif appetite == "not_open"
+      when "not_open"
         add_step(ReasonNotHostingStep)
         add_step(HelpStep)
-      elsif appetite == "interested"
+      when "interested"
         add_step(HelpStep)
         add_step(ListPlacementsStep)
       end
