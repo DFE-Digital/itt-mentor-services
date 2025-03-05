@@ -138,6 +138,136 @@ RSpec.describe Placements::MultiPlacementWizard do
       end
 
       it { is_expected.to eq %i[appetite help list_placements school_contact] }
+
+      context "when list_placement is set to 'No' during the list_placement step" do
+        let(:state) do
+          {
+            "appetite" => { "appetite" => "interested" },
+            "list_placements" => { "list_placements" => "No" },
+          }
+        end
+
+        it { is_expected.to eq %i[appetite help list_placements school_contact] }
+      end
+
+      context "when list_placement is set to 'Yes' during the list_placement step" do
+        let(:state) do
+          {
+            "appetite" => { "appetite" => "interested" },
+            "list_placements" => { "list_placements" => "Yes" },
+          }
+        end
+
+        it { is_expected.to eq %i[appetite help list_placements phase subjects_known school_contact] }
+
+        context "when the subjects_know is set to 'Yes' during the subjects_known step" do
+          context "when the phase is set to 'Primary' during the phase step" do
+            let(:state) do
+              {
+                "appetite" => { "appetite" => "interested" },
+                "list_placements" => { "list_placements" => "Yes" },
+                "phase" => { "phases" => %w[Primary] },
+                "subjects_known" => { "subjects_known" => "Yes" },
+              }
+            end
+
+            it {
+              expect(steps).to eq(
+                %i[appetite
+                   help
+                   list_placements
+                   phase
+                   subjects_known
+                   primary_subject_selection
+                   primary_placement_quantity
+                   school_contact],
+              )
+            }
+          end
+
+          context "when the phase is set to 'Secondary' during the phase step" do
+            let(:state) do
+              {
+                "appetite" => { "appetite" => "interested" },
+                "list_placements" => { "list_placements" => "Yes" },
+                "phase" => { "phases" => %w[Secondary] },
+                "subjects_known" => { "subjects_known" => "Yes" },
+              }
+            end
+
+            it {
+              expect(steps).to eq(
+                %i[appetite
+                   help
+                   list_placements
+                   phase
+                   subjects_known
+                   secondary_subject_selection
+                   secondary_placement_quantity
+                   school_contact],
+              )
+            }
+
+            context "when the subject selected has child subjects" do
+              let(:modern_languages) { create(:subject, :secondary, name: "Modern Languages") }
+              let(:french) { create(:subject, :secondary, name: "French", parent_subject: modern_languages) }
+              let(:state) do
+                {
+                  "appetite" => { "appetite" => "interested" },
+                  "list_placements" => { "list_placements" => "Yes" },
+                  "phase" => { "phases" => %w[Secondary] },
+                  "subjects_known" => { "subjects_known" => "Yes" },
+                  "secondary_subject_selection" => { "subject_ids" => [modern_languages.id] },
+                  "secondary_placement_quantity" => { "modern_languages" => "2" },
+                }
+              end
+
+              before { french }
+
+              it {
+                expect(steps).to eq(
+                  %i[appetite
+                     help
+                     list_placements
+                     phase
+                     subjects_known
+                     secondary_subject_selection
+                     secondary_placement_quantity
+                     secondary_child_subject_placement_selection_modern_languages_1
+                     secondary_child_subject_placement_selection_modern_languages_2
+                     school_contact],
+                )
+              }
+            end
+          end
+
+          context "when the phase is set to 'Primary' and 'Secondary' during the phase step" do
+            let(:state) do
+              {
+                "appetite" => { "appetite" => "interested" },
+                "list_placements" => { "list_placements" => "Yes" },
+                "phase" => { "phases" => %w[Primary Secondary] },
+                "subjects_known" => { "subjects_known" => "Yes" },
+              }
+            end
+
+            it {
+              expect(steps).to eq(
+                %i[appetite
+                   help
+                   list_placements
+                   phase
+                   subjects_known
+                   primary_subject_selection
+                   primary_placement_quantity
+                   secondary_subject_selection
+                   secondary_placement_quantity
+                   school_contact],
+              )
+            }
+          end
+        end
+      end
     end
   end
 
