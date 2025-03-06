@@ -39,6 +39,9 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
 
     when_i_fill_in_the_school_contact_details
     and_i_click_on_continue
+    then_i_see_the_check_your_answers_page
+
+    when_i_click_save_and_continue
     then_i_see_my_responses_with_successfully_updated
     and_the_schools_contact_has_been_updated
     and_the_schools_hosting_interest_for_the_next_year_is_updated
@@ -268,5 +271,31 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
     expect(page).to have_field("Test Provider 123", type: :checkbox)
     expect(page).to have_field("Test Provider 456", type: :checkbox)
     expect(page).to have_field("Test Provider 789", type: :checkbox)
+  end
+
+  def when_i_click_save_and_continue
+    click_on "Save and continue"
+  end
+
+  def then_i_see_the_check_your_answers_page
+    expect(page).to have_title(
+      "Check your answers - Manage school placements - GOV.UK",
+    )
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_h1("Check your answers")
+
+    expect(page).to have_h2("Education phase")
+    expect(page).to have_summary_list_row("Phase", "Secondary")
+
+    expect(page).to have_h2("Placements")
+    expect(page).to have_summary_list_row("English", "1")
+    expect(page).to have_summary_list_row("Mathematics", "4")
+
+    expect(page).not_to have_h2("Providers")
+
+    expect(page).to have_h2("ITT contact")
+    expect(page).to have_summary_list_row("First name", "Joe")
+    expect(page).to have_summary_list_row("Last name", "Bloggs")
+    expect(page).to have_summary_list_row("Email address", "joe_bloggs@example.com")
   end
 end

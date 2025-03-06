@@ -29,6 +29,13 @@ RSpec.describe "School user successfully completes the actively looking journey 
     when_i_click_on_continue
     then_i_see_the_school_contact_form
 
+    when_i_fill_in_the_school_contact_details
+    and_i_click_on_continue
+    then_i_see_the_check_your_answers_page
+
+    when_i_click_on_back
+    then_i_see_the_school_contact_form_prefilled_with_my_inputs
+
     when_i_click_on_back
     then_i_see_the_provider_select_form
 
@@ -65,6 +72,9 @@ RSpec.describe "School user successfully completes the actively looking journey 
 
     when_i_fill_in_the_school_contact_details
     and_i_click_on_continue
+    then_i_see_the_check_your_answers_page
+
+    when_i_click_save_and_continue
     then_i_see_my_responses_with_successfully_updated
     and_the_schools_contact_has_been_updated
     and_the_schools_hosting_interest_for_the_next_year_is_updated
@@ -244,5 +254,44 @@ RSpec.describe "School user successfully completes the actively looking journey 
     expect(page).to have_field("Test Provider 123", type: :checkbox)
     expect(page).to have_field("Test Provider 456", type: :checkbox)
     expect(page).to have_field("Test Provider 789", type: :checkbox)
+  end
+
+  def when_i_click_save_and_continue
+    click_on "Save and continue"
+  end
+
+  def then_i_see_the_check_your_answers_page
+    expect(page).to have_title(
+      "Check your answers - Manage school placements - GOV.UK",
+    )
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_h1("Check your answers")
+
+    expect(page).to have_h2("Education phase")
+    expect(page).to have_summary_list_row("Phase", "Primary and Secondary")
+
+    expect(page).not_to have_h2("Primary placements")
+
+    expect(page).not_to have_h2("Secondary placements")
+
+    expect(page).not_to have_h2("Providers")
+
+    expect(page).to have_h2("ITT contact")
+    expect(page).to have_summary_list_row("First name", "Joe")
+    expect(page).to have_summary_list_row("Last name", "Bloggs")
+    expect(page).to have_summary_list_row("Email address", "joe_bloggs@example.com")
+  end
+
+  def then_i_see_the_school_contact_form_prefilled_with_my_inputs
+    expect(page).to have_title(
+      "Who is your contact for ITT? - Manage school placements - GOV.UK",
+    )
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_h1("Who is your contact for ITT?")
+
+    @school_contact = @school.school_contact
+    expect(page).to have_field("First name", with: "Joe")
+    expect(page).to have_field("Last name", with: "Bloggs")
+    expect(page).to have_field("Email address", with: "joe_bloggs@example.com")
   end
 end
