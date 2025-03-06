@@ -113,15 +113,14 @@ module Placements
       return if steps[:provider].blank?
 
       provider_step = steps.fetch(:provider)
-      if provider_step.provider_ids.include?(provider_step.class::SELECT_ALL)
-        provider_step.providers.each do |provider|
-          school.partnerships.create!(provider:)
-        end
-      else
-        provider_step.provider_ids.each do |provider_id|
-          provider = ::Provider.find(provider_id)
-          school.partnerships.create!(provider:)
-        end
+      providers = if provider_step.provider_ids.include?(provider_step.class::SELECT_ALL)
+                    provider_step.providers
+                  else
+                    ::Provider.where(id: provider_step.provider_ids)
+                  end
+
+      providers.each do |provider|
+        school.partnerships.create!(provider:)
       end
     end
 
