@@ -3,18 +3,18 @@ en:
     placements:
       multi_placement_wizard:
         appetite_step:
-          title: What is your appetite for ITT the coming academic year (%{academic_year_name})?
+          title: Will you host placements this academic year (%{academic_year_name})?
           continue: Continue
           options:
             actively_looking:
-              name: Actively looking to host placements
-              description: You'll have to the option to specify what you'd like to host in the next step
+              name: Yes - Let providers know what I'm willing to host
+              description: You know the subjects you want to host and may know which providers you want to work with
             interested:
-              name: Interested in hosting placements
-              description: Providers will be able to contact you and discuss
+              name: Yes - Let providers know I am open to placements
+              description: You haven't yet decided on your placements. You want to hear from providers to discuss potential opportunities
             not_open: 
-              name: Not open to hosting placements
-              description: Providers will not be able to contact you using this service this academic year
+              name: No - Let providers know I am not hosting and do not want to be contacted
+              description: You do not want to hear from providers this academic year
             already_organised:
               name: Placements already organised with providers
               description: We'll show any providers who search for you that you're at capacity

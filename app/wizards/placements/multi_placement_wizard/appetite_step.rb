@@ -19,7 +19,9 @@ class Placements::MultiPlacementWizard::AppetiteStep < BaseStep
   end
 
   def placement_appetites
-    @placement_appetites ||= Placements::HostingInterest.appetites.keys
+    appetites = Placements::HostingInterest.appetites.keys
+    appetites.delete("already_organised") # Removed for concept testing
+    @placement_appetites ||= appetites
   end
 
   private
