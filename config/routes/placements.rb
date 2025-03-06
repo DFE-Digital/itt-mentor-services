@@ -82,6 +82,8 @@ scope module: :placements,
           get "multiple", to: "placements/add_multiple_placements#new", as: :new_add_multiple_placements
           get "multiple/:state_key/:step", to: "placements/add_multiple_placements#edit", as: :add_multiple_placements
           put "multiple/:state_key/:step", to: "placements/add_multiple_placements#update"
+
+          get "whats_next", to: "placements/add_multiple_placements#whats_next", as: :whats_next
         end
       end
 
