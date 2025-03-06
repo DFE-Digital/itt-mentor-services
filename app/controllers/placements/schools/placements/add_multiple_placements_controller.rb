@@ -21,7 +21,8 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
       @wizard.update_school_placements
       @wizard.reset_state
       redirect_to index_path, flash: {
-        heading: t(".success"),
+        heading: t(".heading"),
+        body: t(".body_html"),
       }
     end
   end
