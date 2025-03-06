@@ -224,7 +224,10 @@ RSpec.describe "School user successfully completes the actively looking journey 
   end
 
   def then_i_see_my_responses_with_successfully_updated
-    expect(page).to have_success_banner("Thank you for providing your responses")
+    expect(page).to have_success_banner(
+      "Placement information uploaded",
+      "Providers can see your placement preferences and may contact you to discuss them. You can add details to your placements such as expected date and provider.",
+    )
   end
 
   def and_the_schools_contact_has_been_updated

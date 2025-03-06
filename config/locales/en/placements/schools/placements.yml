@@ -45,7 +45,10 @@ en:
           edit:
             cancel: Cancel
           update:
-            success: Thank you for providing your responses
+            heading: Placement information uploaded
+            body_html: 
+              Providers can see your placement preferences and may contact you to discuss them.<br><br>
+              You can add details to your placements such as expected date and provider.
         edit_placement:
           update:
             success: 
