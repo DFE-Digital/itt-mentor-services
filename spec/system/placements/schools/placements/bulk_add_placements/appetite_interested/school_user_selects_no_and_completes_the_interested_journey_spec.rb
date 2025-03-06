@@ -118,10 +118,16 @@ RSpec.describe "School user selects no and completes the interested journey",
 
   def then_i_see_the_school_contact_form
     expect(page).to have_title(
-      "Who is your contact for ITT? - Manage school placements - GOV.UK",
+      "Who should providers contact? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Who is your contact for ITT?")
+    expect(page).to have_h1("Who should providers contact?")
+    expect(page).to have_element(
+      :p,
+      text: "Choose the person best placed to organise ITT placements at your school. "\
+        "This information will be shown on your profile.",
+      class: "govuk-body",
+    )
 
     expect(page).to have_field("First name")
     expect(page).to have_field("Last name")

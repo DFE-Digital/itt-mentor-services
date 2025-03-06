@@ -40,7 +40,8 @@ en:
           local_providers: These training providers are local to you and could help.
           find_providers: Find providers near me
         school_contact_step:
-          title: Who is your contact for ITT?
+          title: Who should providers contact?
+          description: Choose the person best placed to organise ITT placements at your school. This information will be shown on your profile.
           continue: Continue
         phase_step:
           title: What phase are you looking to host placements at?
