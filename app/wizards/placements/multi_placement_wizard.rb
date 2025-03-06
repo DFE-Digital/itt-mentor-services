@@ -41,6 +41,8 @@ module Placements
 
         create_placements
 
+        create_partnerships
+
         wizard_school_contact.first_name = steps[:school_contact].first_name
         wizard_school_contact.last_name = steps[:school_contact].last_name
         wizard_school_contact.email_address = steps[:school_contact].email_address
@@ -107,6 +109,22 @@ module Placements
       end
     end
 
+    def create_partnerships
+      return if steps[:provider].blank?
+
+      provider_step = steps.fetch(:provider)
+      if provider_step.provider_ids.include?(provider_step.class::SELECT_ALL)
+        provider_step.providers.each do |provider|
+          school.partnerships.create!(provider:)
+        end
+      else
+        provider_step.provider_ids.each do |provider_id|
+          provider = ::Provider.find(provider_id)
+          school.partnerships.create!(provider:)
+        end
+      end
+    end
+
     def selected_primary_subject_ids
       return [] if steps[:primary_subject_selection].blank?
 
@@ -122,15 +140,17 @@ module Placements
     def actively_looking_steps
       add_step(PhaseStep)
       add_step(SubjectsKnownStep)
-      return unless subjects_known?
+      if subjects_known?
+        if phases.include?(::Placements::School::PRIMARY_PHASE)
+          primary_subject_steps
+        end
 
-      if phases.include?(::Placements::School::PRIMARY_PHASE)
-        primary_subject_steps
+        if phases.include?(::Placements::School::SECONDARY_PHASE)
+          secondary_subject_steps
+        end
       end
 
-      if phases.include?(::Placements::School::SECONDARY_PHASE)
-        secondary_subject_steps
-      end
+      add_step(ProviderStep)
     end
 
     def primary_subject_steps

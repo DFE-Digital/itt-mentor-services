@@ -6,6 +6,7 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
   scenario do
     given_the_bulk_add_placements_flag_is_enabled
     and_subjects_exist
+    and_test_providers_exist
     and_academic_years_exist
     and_i_am_signed_in
     when_i_am_on_the_placements_index_page
@@ -41,7 +42,13 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
 
     when_i_fill_in_the_number_of_secondary_placements_i_require
     and_i_click_on_continue
+    then_i_see_the_provider_select_form
+
+    when_i_click_on_continue
     then_i_see_the_school_contact_form
+
+    when_i_click_on_back
+    then_i_see_the_provider_select_form
 
     when_i_click_on_back
     then_i_see_the_secondary_subject_placement_quantity_form
@@ -105,6 +112,9 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
 
     when_i_fill_in_the_number_of_secondary_placements_i_require
     and_i_click_on_continue
+    then_i_see_the_provider_select_form
+
+    when_i_click_on_continue
     then_i_see_the_school_contact_form
 
     when_i_fill_in_the_school_contact_details
@@ -142,6 +152,12 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
     @current_academic_year_name = current_academic_year.name
     @next_academic_year = current_academic_year.next
     @next_academic_year_name = @next_academic_year.name
+  end
+
+  def and_test_providers_exist
+    @provider_1 = create(:provider, name: "Test Provider 123")
+    @provider_2 = create(:provider, name: "Test Provider 456")
+    @provider_3 = create(:provider, name: "Test Provider 789")
   end
 
   def and_i_am_signed_in
@@ -388,5 +404,21 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
       match: :prefer_exact,
       count: 4,
     )
+  end
+
+  def then_i_see_the_provider_select_form
+    expect(page).to have_title(
+      "Select the providers you currently work with - Manage school placements - GOV.UK",
+    )
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_element(
+      :h1,
+      text: "Select the providers you currently work with",
+      class: "govuk-fieldset__heading",
+    )
+    expect(page).to have_field("Select all", type: :checkbox)
+    expect(page).to have_field("Test Provider 123", type: :checkbox)
+    expect(page).to have_field("Test Provider 456", type: :checkbox)
+    expect(page).to have_field("Test Provider 789", type: :checkbox)
   end
 end

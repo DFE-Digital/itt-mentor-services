@@ -1,0 +1,23 @@
+<% content_for :page_title, title_with_error_prefix(
+  t(".title"),
+  error: current_step.errors.any?,
+) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= f.govuk_check_boxes_fieldset :provider_ids, legend: { text: t(".title"), size: "l", tag: "h1" } do %>
+        <%= f.govuk_check_box :provider_ids, current_step.class::SELECT_ALL, exclusive: true, label: { text: t(".#{current_step.class::SELECT_ALL}") }, link_errors: true %>
+        <%= f.govuk_check_box_divider %>
+
+        <% current_step.providers.each do |provider| %>
+          <%= f.govuk_check_box :provider_ids, provider.id, label: { text: provider.name } %>
+        <% end %>
+      <% end %>
+
+      <%= f.govuk_submit t(".continue") %>
+    </div>
+  </div>
+<% end %>

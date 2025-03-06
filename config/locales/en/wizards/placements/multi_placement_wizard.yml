@@ -69,3 +69,7 @@ en:
           caption: Placement details
           continue: Continue
           placement_number: "%{placement_number} placement"
+        provider_step:
+          title: Select the providers you currently work with
+          continue: Continue
+          select_all: Select all
