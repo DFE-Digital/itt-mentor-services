@@ -73,3 +73,17 @@ en:
           title: Select the providers you currently work with
           continue: Continue
           select_all: Select all
+        check_your_answers_step:
+          title: Check your answers
+          continue: Save and continue
+          education_phase: Education phase
+          phase: Phase
+          change: Change
+          placements: Placements
+          subject: Subject
+          number_of_placements: Number of placements
+          primary_placements: Primary placements
+          secondary_placements: Secondary placements
+          itt_contact: ITT contact
+          providers: Providers
+          provider_name: Provider name

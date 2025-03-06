@@ -26,6 +26,9 @@ module Placements
         end
       end
       add_step(SchoolContactStep)
+      if appetite == "actively_looking" || appetite == "interested" && list_placements?
+        add_step(CheckYourAnswersStep)
+      end
     end
 
     def update_school_placements
@@ -86,6 +89,17 @@ module Placements
       end.try(subject.name_as_attribute).to_i
     end
 
+    def selected_providers
+      return Provider.none if steps[:provider].blank?
+
+      provider_step = steps.fetch(:provider)
+      if provider_step.provider_ids.include?(provider_step.class::SELECT_ALL)
+        provider_step.providers
+      else
+        ::Provider.where(id: provider_step.provider_ids)
+      end
+    end
+
     private
 
     def create_placements
@@ -110,16 +124,7 @@ module Placements
     end
 
     def create_partnerships
-      return if steps[:provider].blank?
-
-      provider_step = steps.fetch(:provider)
-      providers = if provider_step.provider_ids.include?(provider_step.class::SELECT_ALL)
-                    provider_step.providers
-                  else
-                    ::Provider.where(id: provider_step.provider_ids)
-                  end
-
-      providers.each do |provider|
+      selected_providers.each do |provider|
         school.partnerships.create!(provider:)
       end
     end
