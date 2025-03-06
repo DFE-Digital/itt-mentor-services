@@ -21,7 +21,7 @@ RSpec.describe Placements::MultiPlacementWizard do
         }
       end
 
-      it { is_expected.to eq %i[appetite phase subjects_known provider school_contact] }
+      it { is_expected.to eq %i[appetite phase subjects_known provider school_contact check_your_answers] }
 
       context "when the subjects_know is set to 'Yes' during the subjects_known step" do
         context "when the phase is set to 'Primary' during the phase step" do
@@ -41,7 +41,8 @@ RSpec.describe Placements::MultiPlacementWizard do
                  primary_subject_selection
                  primary_placement_quantity
                  provider
-                 school_contact],
+                 school_contact
+                 check_your_answers],
             )
           }
         end
@@ -63,7 +64,8 @@ RSpec.describe Placements::MultiPlacementWizard do
                  secondary_subject_selection
                  secondary_placement_quantity
                  provider
-                 school_contact],
+                 school_contact
+                 check_your_answers],
             )
           }
 
@@ -92,7 +94,8 @@ RSpec.describe Placements::MultiPlacementWizard do
                    secondary_child_subject_placement_selection_modern_languages_1
                    secondary_child_subject_placement_selection_modern_languages_2
                    provider
-                   school_contact],
+                   school_contact
+                   check_your_answers],
               )
             }
           end
@@ -117,7 +120,8 @@ RSpec.describe Placements::MultiPlacementWizard do
                  secondary_subject_selection
                  secondary_placement_quantity
                  provider
-                 school_contact],
+                 school_contact
+                 check_your_answers],
             )
           }
         end
@@ -162,7 +166,7 @@ RSpec.describe Placements::MultiPlacementWizard do
           }
         end
 
-        it { is_expected.to eq %i[appetite help list_placements phase subjects_known provider school_contact] }
+        it { is_expected.to eq %i[appetite help list_placements phase subjects_known provider school_contact check_your_answers] }
 
         context "when the subjects_know is set to 'Yes' during the subjects_known step" do
           context "when the phase is set to 'Primary' during the phase step" do
@@ -185,7 +189,8 @@ RSpec.describe Placements::MultiPlacementWizard do
                    primary_subject_selection
                    primary_placement_quantity
                    provider
-                   school_contact],
+                   school_contact
+                   check_your_answers],
               )
             }
           end
@@ -210,7 +215,8 @@ RSpec.describe Placements::MultiPlacementWizard do
                    secondary_subject_selection
                    secondary_placement_quantity
                    provider
-                   school_contact],
+                   school_contact
+                   check_your_answers],
               )
             }
 
@@ -242,7 +248,8 @@ RSpec.describe Placements::MultiPlacementWizard do
                      secondary_child_subject_placement_selection_modern_languages_1
                      secondary_child_subject_placement_selection_modern_languages_2
                      provider
-                     school_contact],
+                     school_contact
+                     check_your_answers],
                 )
               }
             end
@@ -270,7 +277,8 @@ RSpec.describe Placements::MultiPlacementWizard do
                    secondary_subject_selection
                    secondary_placement_quantity
                    provider
-                   school_contact],
+                   school_contact
+                   check_your_answers],
               )
             }
           end
@@ -851,6 +859,65 @@ RSpec.describe Placements::MultiPlacementWizard do
 
       it "returns a list of selected secondary subjects" do
         expect(selected_secondary_subjects).to contain_exactly(english, mathematics)
+      end
+    end
+  end
+
+  describe "#selected_providers" do
+    subject(:selected_providers) { wizard.selected_providers }
+
+    let(:test_provider_1) { create(:provider, name: "Test Provider 123") }
+    let(:test_provider_2) { create(:provider, name: "Test Provider 456") }
+    let(:test_provider_3) { create(:provider, name: "Test Provider 789") }
+
+    context "when no provider_ids have been selected in the provider step" do
+      it "returns an empty list" do
+        expect(selected_providers).to eq([])
+      end
+    end
+
+    context "when 'select_all' has been selected in the provider step" do
+      let(:state) do
+        {
+          "appetite" => { "appetite" => "actively_looking" },
+          "provider" => { "provider_ids" => %w[select_all] },
+        }
+      end
+
+      before do
+        test_provider_1
+        test_provider_2
+        test_provider_3
+      end
+
+      it "returns all test providers" do
+        expect(selected_providers).to contain_exactly(
+          test_provider_1,
+          test_provider_2,
+          test_provider_3,
+        )
+      end
+    end
+
+    context "when specific provider ids have been selected in the provider step" do
+      let(:state) do
+        {
+          "appetite" => { "appetite" => "actively_looking" },
+          "provider" => { "provider_ids" => [test_provider_1.id, test_provider_3.id] },
+        }
+      end
+
+      before do
+        test_provider_1
+        test_provider_2
+        test_provider_3
+      end
+
+      it "returns all test providers" do
+        expect(selected_providers).to contain_exactly(
+          test_provider_1,
+          test_provider_3,
+        )
       end
     end
   end
