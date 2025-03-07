@@ -1,5 +1,6 @@
 class Placements::MultiPlacementWizard::ReasonNotHostingStep < BaseStep
   attribute :reasons_not_hosting, default: []
+  attribute :reason_details
 
   validates :reasons_not_hosting, presence: true
 
