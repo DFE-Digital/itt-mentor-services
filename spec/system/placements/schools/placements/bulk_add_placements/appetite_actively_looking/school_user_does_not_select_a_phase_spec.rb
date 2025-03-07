@@ -92,12 +92,12 @@ RSpec.describe "School user does not select a phases",
 
   def then_i_see_the_phase_form
     expect(page).to have_title(
-      "What phase are you looking to host placements at? - Manage school placements - GOV.UK",
+      "What phase of education will your placements be? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "What phase are you looking to host placements at?",
+      text: "What phase of education will your placements be?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Primary", type: :checkbox)
