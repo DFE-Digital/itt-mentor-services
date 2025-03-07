@@ -48,32 +48,36 @@ en:
           description: Choose the person best placed to organise ITT placements at your school. This information will be shown on your profile.
           continue: Continue
         phase_step:
-          title: What phase are you looking to host placements at?
+          title: What phase of education will your placements be?
           continue: Continue
         subjects_known_step:
           title: Do you know which subjects you would like to host?
           continue: Continue
         primary_subject_selection_step:
-          title: Select primary subjects
+          title: Select primary school subjects
           caption: Placement details
           continue: Continue
         secondary_subject_selection_step:
-          title: Select secondary subjects
+          title: Select secondary school subjects
           caption: Placement details
           continue: Continue
         primary_placement_quantity_step:
-          title: Enter the number of placements
+          title: "Primary subjects: Enter the number of placements you would be willing to host"
+          enter_approximate: Enter an approximate number if you are unsure
           caption: Placement details
           continue: Continue
         secondary_placement_quantity_step:
-          title: Enter the number of placements
+          title: "Secondary subjects: Enter the number of placements you would be willing to host"
+          enter_approximate: Enter an approximate number if you are unsure
+          change_to_specify: You will have a chance to specify the languages later
           caption: Placement details
           continue: Continue
         secondary_child_subject_placement_selection_step:
-          title: Select subjects for %{subject_name} placements
+          title: You selected %{placement_quantity} %{subject_name} placements
+          select_languages_taught: Select the languages taught on each of these placements
           caption: Placement details
           continue: Continue
-          placement_number: "%{placement_number} placement"
+          placement_number: "Placement %{placement_number} of %{step_count}"
         provider_step:
           title: Select the providers you currently work with
           continue: Continue
