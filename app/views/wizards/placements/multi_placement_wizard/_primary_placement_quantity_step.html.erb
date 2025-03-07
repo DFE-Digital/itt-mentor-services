@@ -10,6 +10,8 @@
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l"><%= t(".caption") %></span>
       <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+      <p class="govuk-body secondary-text"><%= t(".enter_approximate") %></p>
+
       <% current_step.subjects.each do |subject| %>
         <%= f.govuk_number_field(
           subject.name_as_attribute,
