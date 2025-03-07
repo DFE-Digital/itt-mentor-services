@@ -1,0 +1,131 @@
+<li class="app-search-results__item">
+  <h2 class="govuk-heading-m">
+    <%#= govuk_link_to(placements_provider_placement_path(provider, placement), no_visited_state: true) do %>
+      <%= school.name %>
+    <%# end %>
+  </h2>
+
+  <div class="app-result-detail">
+    <%= render School::InterestTagComponent.new(school:) %>
+  </div>
+
+  <dl class="app-result-detail">
+    <!-- School details -->
+    <div>
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-2"><%= t(".school_details") %></h3>
+      <div class="app-result-detail__row">
+        <dt class="app-result-detail__key">
+          <%= t(".phase") %>
+        </dt>
+        <dd class="app-result-detail__value">
+          <%= school.phase %>
+        </dd>
+      </div>
+      <div class="app-result-detail__row">
+        <dt class="app-result-detail__key">
+          <%= t(".age_range") %>
+        </dt>
+        <dd class="app-result-detail__value">
+          <%= school.age_range %>
+        </dd>
+      </div>
+      <div class="app-result-detail__row">
+        <dt class="app-result-detail__key">
+          <%= t(".establishment_group") %>
+        </dt>
+        <dd class="app-result-detail__value">
+          <%= school.group %>
+        </dd>
+      </div>
+    </div>
+    <!-- End school details -->
+
+    <!-- Placement information -->
+    <div class="govuk-!-margin-top-2">
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-2"><%= t(".placement_information") %></h3>
+      <div class="app-result-detail__row">
+        <dt class="app-result-detail__key">
+          <%= t(".trained_mentors") %>
+        </dt>
+        <dd class="app-result-detail__value">
+          Unknown <!-- TODO: Add trained mentors to school -->
+        </dd>
+      </div>
+      <div class="app-result-detail__row">
+        <dt class="app-result-detail__key">
+          <%= t(".available_placements") %>
+        </dt>
+        <dd class="app-result-detail__value">
+          <%= available_placements %>
+        </dd>
+      </div>
+      <div class="app-result-detail__row">
+        <dt class="app-result-detail__key">
+          <%= t(".also_hosting") %>
+        </dt>
+        <dd class="app-result-detail__value">
+          <%= also_hosting_placements %>
+        </dd>
+      </div>
+      <div class="app-result-detail__row">
+        <dt class="app-result-detail__key">
+          <%= t(".placement_status") %>
+        </dt>
+        <dd class="app-result-detail__value">
+          <%= placement_status %>
+        </dd>
+      </div>
+      <div class="app-result-detail__row">
+        <dt class="app-result-detail__key">
+          <%= t(".placement_contact") %>
+        </dt>
+        <dd class="app-result-detail__value">
+          <%= "#{school.school_contact.first_name} #{school.school_contact.last_name}" %>
+          <br>
+          <%= school.school_contact.email_address %>
+        </dd>
+      </div>
+    </div>
+    <!-- End placement information -->
+
+    <!-- Getting there -->
+    <% if location_coordinates.present? %>
+      <div class="govuk-!-margin-top-2">
+        <h3 class="govuk-heading-s govuk-!-margin-bottom-2"><%= t(".getting_there") %></h3>
+        <div class="app-result-detail__row">
+          <dt class="app-result-detail__key">
+            <%= t(".address") %>
+          </dt>
+          <dd class="app-result-detail__value">
+            <%= school.formatted_address %>
+          </dd>
+        </div>
+        <div class="app-result-detail__row">
+          <dt class="app-result-detail__key">
+            <%= t(".distance") %>
+          </dt>
+          <dd class="app-result-detail__value">
+            <%= distance_from_location %>
+          </dd>
+        </div>
+        <div class="app-result-detail__row">
+          <dt class="app-result-detail__key">
+            <%= t(".travel_time") %>
+          </dt>
+          <dd class="app-result-detail__value">
+            <%= t(".travel_time_information",
+                  transit_time: @school.formatted_duration("transit"),
+                  drive_time: @school.formatted_duration("drive"),
+                  walk_time: @school.formatted_duration("walk")) %>
+          </dd>
+        </div>
+      </div>
+    <% end %>
+    <!-- End getting there -->
+  </dl>
+  <div>
+    <% if not_open? %>
+      <%= govuk_warning_text text: t(".warning") %>
+    <% end %>
+  </div>
+</li>

@@ -1,0 +1,35 @@
+en:
+  components:
+    school:
+      summary_component:
+        phase: Phase
+        academic_year: Academic year
+        terms: Expected date
+        age_range: Age range
+        establishment_group: Establishment group
+        gender: Gender
+        religious_character: Religious character
+        urban_or_rural: Urban or rural
+        ofsted_rating: Ofsted rating
+        distance: "Distance"
+        distance_in_miles: "%{distance} miles"
+        travel_time: Travel time
+        public_transport: Public transport
+        driving: Driving
+        walking: Walking
+        minutes: minutes
+        warning: This school does not wish to be contacted this academic year.
+        school_details: School details
+        placement_information: Placement information
+        trained_mentors: Trained mentors
+        available_placements: Available placements
+        also_hosting: Also hosting
+        placement_status: Placement status
+        placements_hosted: Offered placements in %{academic_year_name}
+        placements_never_hosted: This school has not previously hosted placements
+        placement_contact: Placement contact
+        address: Address
+        distance: Distance
+        travel_time: Travel time
+        travel_time_information: "%{transit_time} by public transport, %{drive_time} drive, %{walk_time} walk"
+        getting_there: Getting there

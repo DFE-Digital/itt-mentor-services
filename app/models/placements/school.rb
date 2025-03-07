@@ -76,6 +76,7 @@ class Placements::School < School
   has_many :mentor_memberships
   has_many :mentors, through: :mentor_memberships
   has_many :placements
+  has_many :academic_years, through: :placements
 
   has_many :partnerships, dependent: :destroy
   has_many :partner_providers,
@@ -84,4 +85,17 @@ class Placements::School < School
   has_many :hosting_interests
 
   delegate :email_address, to: :school_contact, prefix: true, allow_nil: true
+  delegate :appetite, to: :current_hosting_interest, prefix: true, allow_nil: true
+
+  def current_hosting_interest
+    hosting_interests.for_academic_year(Placements::AcademicYear.current).first
+  end
+
+  def available_placement_subjects
+    ::Subject.where(id: placements.where(provider: nil).select(:subject_id)).distinct
+  end
+
+  def unavailable_placement_subjects
+    ::Subject.where(id: placements.where.not(provider: nil).select(:subject_id)).distinct
+  end
 end

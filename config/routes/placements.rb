@@ -137,6 +137,8 @@ scope module: :placements,
       end
 
       resources :placements, only: %i[index show]
+      resources :find, only: %i[index]
+      resources :overview, only: %i[index]
     end
   end
 end

@@ -1,0 +1,86 @@
+class Placements::Providers::FindController < Placements::ApplicationController
+  before_action :set_provider
+  helper_method :filter_form, :location_coordinates
+
+  def index
+    @subjects = Subject.all
+    query = Placements::SchoolsQuery.call(params: query_params)
+    @pagy, @schools = pagy(all_schools.joins(placements: :academic_year).merge(query).distinct)
+    calculate_travel_time
+  end
+
+  def show
+    @placement = placements.find(params.require(:id)).decorate
+    @school = @placement.school
+  end
+
+  private
+
+  def schools_scope
+    if filter_form.primary_only?
+      all_schools.where.not(phase: "Secondary")
+    elsif filter_form.secondary_only?
+      all_schools.where.not(phase: "Primary")
+    else
+      all_schools
+    end
+  end
+
+  def calculate_travel_time
+    return if search_location.blank?
+
+    Placements::TravelTime.call(
+      origin_address: search_location,
+      destinations: @schools.uniq, # travel times are attributes on decorated schools
+    )
+  end
+
+  def filter_form
+    @filter_form ||= Placements::Schools::FilterForm.new(@provider, filter_params)
+  end
+
+  def search_location
+    @search_location ||= params[:search_location] ||
+      params.dig(:filters, :search_location)
+  end
+
+  def location_coordinates
+    return if search_location.blank?
+
+    @location_coordinates ||= begin
+      location = Geocoder::Search.call(
+        search_location,
+      )
+      # latitude and longitude
+      location.coordinates
+    end
+  end
+
+  def filter_params
+    params.fetch(:filters, {}).permit(
+      :search_location,
+      :search_by_name,
+      subject_ids: [],
+      phases: [],
+      itt_statuses: [],
+      last_offered_placements: [],
+    )
+  end
+
+  def query_params
+    {
+      filters: filter_form.query_params,
+      location_coordinates:,
+      current_provider: @provider,
+    }
+  end
+
+  def all_schools
+    @all_schools ||= Placements::School.all
+  end
+
+  def compact_school_attribute_values(attribute)
+    all_schools.where.not(attribute => nil)
+               .distinct(attribute).order(attribute).pluck(attribute)
+  end
+end
