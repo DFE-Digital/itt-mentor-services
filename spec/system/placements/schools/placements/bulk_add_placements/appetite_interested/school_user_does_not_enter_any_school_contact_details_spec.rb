@@ -13,13 +13,6 @@ RSpec.describe "School user does not enter any school contact details",
 
     when_i_select_interested_in_hosting_placements
     and_i_click_on_continue
-    then_i_see_the_help_available_to_you_page
-
-    when_i_click_on_continue
-    then_i_see_the_are_you_interested_in_listing_placements_form
-
-    when_i_select_no
-    and_i_click_on_continue
     then_i_see_the_school_contact_form
 
     when_i_click_on_continue
