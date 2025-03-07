@@ -8,7 +8,14 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".caption") %></span>
       <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+
+      <p class="govuk-body"><%= t(".this_means_providers_can_see_your_school") %></p>
+
+      <p class="govuk-body"><%= t(".you_have_not_added_any_placements") %></p>
+
+      <%= f.govuk_submit t(".continue") %>
     </div>
   </div>
 <% end %>

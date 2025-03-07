@@ -17,18 +17,15 @@ module Placements
         actively_looking_steps
       when "not_open"
         add_step(ReasonNotHostingStep)
-      when "interested"
-        add_step(HelpStep)
-        add_step(ListPlacementsStep)
-        if list_placements?
-          actively_looking_steps
-        end
       end
       add_step(SchoolContactStep)
-      if appetite == "actively_looking" || appetite == "interested" && list_placements?
+      case appetite
+      when "actively_looking"
         add_step(CheckYourAnswersStep)
-      elsif appetite == "not_open"
+      when "not_open"
         add_step(AreYouSureStep)
+      when "interested"
+        add_step(ConfirmStep)
       end
     end
 
