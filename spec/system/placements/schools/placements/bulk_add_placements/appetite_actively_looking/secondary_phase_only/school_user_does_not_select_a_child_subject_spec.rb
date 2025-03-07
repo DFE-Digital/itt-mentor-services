@@ -18,10 +18,6 @@ RSpec.describe "School user does not select a child subjects",
 
     when_i_select_secondary
     and_i_click_on_continue
-    then_i_see_the_subjects_known_form
-
-    when_i_select_yes
-    and_i_click_on_continue
     then_i_see_the_secondary_subject_selection_form
 
     when_i_select_modern_languages
@@ -108,12 +104,12 @@ RSpec.describe "School user does not select a child subjects",
 
   def then_i_see_the_phase_form
     expect(page).to have_title(
-      "What phase are you looking to host placements at? - Manage school placements - GOV.UK",
+      "What phase of education will your placements be? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "What phase are you looking to host placements at?",
+      text: "What phase of education will your placements be?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Primary", type: :checkbox)
@@ -144,12 +140,12 @@ RSpec.describe "School user does not select a child subjects",
 
   def then_i_see_the_secondary_subject_selection_form
     expect(page).to have_title(
-      "Select secondary subjects - Manage school placements - GOV.UK",
+      "Select secondary school subjects - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "Select secondary subjects",
+      text: "Select secondary school subjects",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
@@ -165,10 +161,10 @@ RSpec.describe "School user does not select a child subjects",
 
   def then_i_see_the_secondary_subject_placement_quantity_form
     expect(page).to have_title(
-      "Enter the number of placements - Manage school placements - GOV.UK",
+      "Secondary subjects: Enter the number of placements you would be willing to host - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Enter the number of placements", class: "govuk-heading-l")
+    expect(page).to have_h1("Secondary subjects: Enter the number of placements you would be willing to host", class: "govuk-heading-l")
     expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
     expect(page).to have_field("Modern languages", type: :number)
   end
@@ -179,12 +175,16 @@ RSpec.describe "School user does not select a child subjects",
 
   def then_i_see_the_subject_selection_for_modern_languages_form
     expect(page).to have_title(
-      "Select subjects for Modern languages placements - Manage school placements - GOV.UK",
+      "You selected 1 Modern languages placements - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1(
-      "Select subjects for Modern languages placements",
+      "You selected 1 Modern languages placements",
       class: "govuk-heading-l",
+    )
+    expect(page).to have_h2(
+      "Select the languages taught on each of these placements",
+      class: "govuk-heading-m",
     )
     expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
     expect(page).to have_field("French", type: :checkbox)
