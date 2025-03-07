@@ -1,0 +1,51 @@
+en:
+  placements:
+    academic_year:
+      current_academic_year: This year (%{academic_year})
+      next_academic_year: Next year (%{academic_year})
+      previous_academic_year: Previous year (%{academic_year})
+    providers:
+      find:
+        index:
+          schools_found:
+            zero: No schools
+            one: 1 school
+            other: "%{count} schools"
+          find_placements: Find schools and placements
+          no_results: There are no placements that match your selection. Try searching again, or removing one or more filters.
+          enter_a_location: Enter a location
+          results_sorted_alpha: Results sorted alphabetically
+          results_sorted_distance: Results sorted by distance from %{search_location}
+        filter:
+          google_attribution: Powered by Google
+          location_search_prompt: Enter a town, city or postcode
+          partner_schools: Schools I work with
+          terms: Expected date
+          phase: Phase
+          primary: Primary
+          secondary: Secondary
+          only_show_partner_schools: Only show placements from schools I work with
+          school: School
+          search_location: Location
+          search_by_location: Search by location
+          subject: Subject
+          school_phase: School phase
+          establishment_group: Establishment group
+          gender: Gender
+          religious_character: Religious character
+          ofsted_rating: Ofsted rating
+          placements_to_show_title: Placements to show
+          placements_to_show:
+            available_placements: Available placements
+            assigned_to_me: Assigned to me
+            all_placements: All placements
+          year_group: Primary year group
+          academic_year:
+            label: Academic year
+          search_by_name: Search by school name
+          search_by_name_prompt: Enter a school name or URN
+          itt_status: ITT status
+          last_offered_placements: Last offered placements
+        show:
+          page_title: "%{subject_name} - Placements - %{school_name}"
+          placement: "Placement - %{school_name}"

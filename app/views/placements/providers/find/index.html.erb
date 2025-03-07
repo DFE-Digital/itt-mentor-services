@@ -1,0 +1,36 @@
+<% content_for(:page_title) { t(".find_placements") } %>
+<%= render "placements/providers/primary_navigation", provider: @provider, current_navigation: :placements %>
+
+<div class="govuk-width-container" data-controller="filter">
+  <h1 class="govuk-heading-l">
+    <%= t(".find_placements") %>
+  </h1>
+  <div>
+    <button class="govuk-button govuk-button--secondary show-filter-button" type="button" data-action="click->filter#open">
+      <%= t("show_filter") %>
+    </button>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+      <%= render partial: "filter", locals: { search_location: @search_location } %>
+    </div>
+
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m">
+          <%= t(".schools_found", count: @pagy.count) %>
+        </h2>
+
+      <% if @schools.any? %>
+        <p class="govuk-hint"><%= @search_location.blank? ? t(".results_sorted_alpha") : t(".results_sorted_distance", search_location: @search_location) %></p>
+        <ul class="app-search-results">
+          <%= render(School::SummaryComponent.with_collection(@schools, provider: @provider, location_coordinates:)) %>
+        </ul>
+        <%= render PaginationComponent.new(pagy: @pagy) %>
+      <% else %>
+        <p>
+          <%= t(".no_results") %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>

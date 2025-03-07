@@ -3,6 +3,8 @@ en:
     providers:
       primary_navigation:
         placements: Placements
+        find: Find
+        overview: Overview
         schools: Schools
         users: Users
         organisation_details: Organisation details
