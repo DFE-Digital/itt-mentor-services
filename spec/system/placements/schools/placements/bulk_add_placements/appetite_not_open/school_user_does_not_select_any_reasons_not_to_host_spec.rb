@@ -90,9 +90,13 @@ RSpec.describe "School user does not select any reasons not to host",
       text: "What are your reasons for not taking part in ITT this year?",
       class: "govuk-fieldset__legend",
     )
+    expect(page).to have_field("Concerns about trainee quality", type: :checkbox)
+    expect(page).to have_field("Don't get offered trainees", type: :checkbox)
+    expect(page).to have_field("Don't know how to get involved", type: :checkbox)
     expect(page).to have_field("Not enough trained mentors", type: :checkbox)
     expect(page).to have_field("Number of pupils with SEND needs", type: :checkbox)
     expect(page).to have_field("Working to improve our OFSTED rating", type: :checkbox)
+    expect(page).to have_field("Other", type: :checkbox)
   end
 
   def then_i_see_a_validation_error_for_selection_a_reason_not_to_host
