@@ -9,9 +9,9 @@
     <div class="govuk-grid-column-two-thirds">
       <% if @appetite == "not_open" %>
 
-        <p class="govuk-body"><%= t(".not_open.we_set_your_profile")%></p>
+        <p class="govuk-body"><%= t(".not_open.we_set_your_profile") %></p>
 
-        <p class="govuk-body"><%= t(".not_open.your_contact_details_will_not_be_shown")%></p>
+        <p class="govuk-body"><%= t(".not_open.your_contact_details_will_not_be_shown") %></p>
 
         <h2 class="govuk-heading-m"><%= t(".what_happens_next") %></h2>
 
@@ -31,12 +31,14 @@
             t(".not_open.teaching_school_hub"),
             "https://www.gov.uk/guidance/teaching-school-hubs",
             new_tab: true,
-            no_visited_state: true) %>
+            no_visited_state: true,
+          ) %>
           <%= tag.li govuk_link_to(
             t(".not_open.itt_provider"),
             placements_school_partner_providers_path(@school),
             new_tab: true,
-            no_visited_state: true) %>
+            no_visited_state: true,
+          ) %>
         <% end %>
       <% elsif @appetite == "interested" %>
         <h1 class="govuk-heading-l"><%= t(".what_happens_next") %></h1>
