@@ -21,110 +21,100 @@ RSpec.describe Placements::MultiPlacementWizard do
         }
       end
 
-      it { is_expected.to eq %i[appetite phase subjects_known provider school_contact check_your_answers] }
+      it { is_expected.to eq %i[appetite phase provider school_contact check_your_answers] }
 
-      context "when the subjects_know is set to 'Yes' during the subjects_known step" do
-        context "when the phase is set to 'Primary' during the phase step" do
-          let(:state) do
-            {
-              "appetite" => { "appetite" => "actively_looking" },
-              "phase" => { "phases" => %w[Primary] },
-              "subjects_known" => { "subjects_known" => "Yes" },
-            }
-          end
-
-          it {
-            expect(steps).to eq(
-              %i[appetite
-                 phase
-                 subjects_known
-                 primary_subject_selection
-                 primary_placement_quantity
-                 provider
-                 school_contact
-                 check_your_answers],
-            )
+      context "when the phase is set to 'Primary' during the phase step" do
+        let(:state) do
+          {
+            "appetite" => { "appetite" => "actively_looking" },
+            "phase" => { "phases" => %w[Primary] },
           }
         end
 
-        context "when the phase is set to 'Secondary' during the phase step" do
+        it {
+          expect(steps).to eq(
+            %i[appetite
+               phase
+               primary_subject_selection
+               primary_placement_quantity
+               provider
+               school_contact
+               check_your_answers],
+          )
+        }
+      end
+
+      context "when the phase is set to 'Secondary' during the phase step" do
+        let(:state) do
+          {
+            "appetite" => { "appetite" => "actively_looking" },
+            "phase" => { "phases" => %w[Secondary] },
+          }
+        end
+
+        it {
+          expect(steps).to eq(
+            %i[appetite
+               phase
+               secondary_subject_selection
+               secondary_placement_quantity
+               provider
+               school_contact
+               check_your_answers],
+          )
+        }
+
+        context "when the subject selected has child subjects" do
+          let(:modern_languages) { create(:subject, :secondary, name: "Modern Languages") }
+          let(:french) { create(:subject, :secondary, name: "French", parent_subject: modern_languages) }
           let(:state) do
             {
               "appetite" => { "appetite" => "actively_looking" },
               "phase" => { "phases" => %w[Secondary] },
-              "subjects_known" => { "subjects_known" => "Yes" },
+              "secondary_subject_selection" => { "subject_ids" => [modern_languages.id] },
+              "secondary_placement_quantity" => { "modern_languages" => "2" },
             }
           end
+
+          before { french }
 
           it {
             expect(steps).to eq(
               %i[appetite
                  phase
-                 subjects_known
                  secondary_subject_selection
                  secondary_placement_quantity
-                 provider
-                 school_contact
-                 check_your_answers],
-            )
-          }
-
-          context "when the subject selected has child subjects" do
-            let(:modern_languages) { create(:subject, :secondary, name: "Modern Languages") }
-            let(:french) { create(:subject, :secondary, name: "French", parent_subject: modern_languages) }
-            let(:state) do
-              {
-                "appetite" => { "appetite" => "actively_looking" },
-                "phase" => { "phases" => %w[Secondary] },
-                "subjects_known" => { "subjects_known" => "Yes" },
-                "secondary_subject_selection" => { "subject_ids" => [modern_languages.id] },
-                "secondary_placement_quantity" => { "modern_languages" => "2" },
-              }
-            end
-
-            before { french }
-
-            it {
-              expect(steps).to eq(
-                %i[appetite
-                   phase
-                   subjects_known
-                   secondary_subject_selection
-                   secondary_placement_quantity
-                   secondary_child_subject_placement_selection_modern_languages_1
-                   secondary_child_subject_placement_selection_modern_languages_2
-                   provider
-                   school_contact
-                   check_your_answers],
-              )
-            }
-          end
-        end
-
-        context "when the phase is set to 'Primary' and 'Secondary' during the phase step" do
-          let(:state) do
-            {
-              "appetite" => { "appetite" => "actively_looking" },
-              "phase" => { "phases" => %w[Primary Secondary] },
-              "subjects_known" => { "subjects_known" => "Yes" },
-            }
-          end
-
-          it {
-            expect(steps).to eq(
-              %i[appetite
-                 phase
-                 subjects_known
-                 primary_subject_selection
-                 primary_placement_quantity
-                 secondary_subject_selection
-                 secondary_placement_quantity
+                 secondary_child_subject_placement_selection_modern_languages_1
+                 secondary_child_subject_placement_selection_modern_languages_2
                  provider
                  school_contact
                  check_your_answers],
             )
           }
         end
+      end
+
+      context "when the phase is set to 'Primary' and 'Secondary' during the phase step" do
+        let(:state) do
+          {
+            "appetite" => { "appetite" => "actively_looking" },
+            "phase" => { "phases" => %w[Primary Secondary] },
+          }
+        end
+
+        it {
+          expect(steps).to eq(
+            %i[appetite
+               phase
+               primary_subject_selection
+               primary_placement_quantity
+               secondary_subject_selection
+               secondary_placement_quantity
+               provider
+               school_contact
+               check_your_answers],
+          )
+        }
       end
     end
 
@@ -135,7 +125,7 @@ RSpec.describe Placements::MultiPlacementWizard do
         }
       end
 
-      it { is_expected.to eq %i[appetite reason_not_hosting help school_contact] }
+      it { is_expected.to eq %i[appetite reason_not_hosting school_contact are_you_sure] }
     end
 
     context "when an appetite is set to 'interested' during the appetite step" do
@@ -145,145 +135,7 @@ RSpec.describe Placements::MultiPlacementWizard do
         }
       end
 
-      it { is_expected.to eq %i[appetite help list_placements school_contact] }
-
-      context "when list_placement is set to 'No' during the list_placement step" do
-        let(:state) do
-          {
-            "appetite" => { "appetite" => "interested" },
-            "list_placements" => { "list_placements" => "No" },
-          }
-        end
-
-        it { is_expected.to eq %i[appetite help list_placements school_contact] }
-      end
-
-      context "when list_placement is set to 'Yes' during the list_placement step" do
-        let(:state) do
-          {
-            "appetite" => { "appetite" => "interested" },
-            "list_placements" => { "list_placements" => "Yes" },
-          }
-        end
-
-        it { is_expected.to eq %i[appetite help list_placements phase subjects_known provider school_contact check_your_answers] }
-
-        context "when the subjects_know is set to 'Yes' during the subjects_known step" do
-          context "when the phase is set to 'Primary' during the phase step" do
-            let(:state) do
-              {
-                "appetite" => { "appetite" => "interested" },
-                "list_placements" => { "list_placements" => "Yes" },
-                "phase" => { "phases" => %w[Primary] },
-                "subjects_known" => { "subjects_known" => "Yes" },
-              }
-            end
-
-            it {
-              expect(steps).to eq(
-                %i[appetite
-                   help
-                   list_placements
-                   phase
-                   subjects_known
-                   primary_subject_selection
-                   primary_placement_quantity
-                   provider
-                   school_contact
-                   check_your_answers],
-              )
-            }
-          end
-
-          context "when the phase is set to 'Secondary' during the phase step" do
-            let(:state) do
-              {
-                "appetite" => { "appetite" => "interested" },
-                "list_placements" => { "list_placements" => "Yes" },
-                "phase" => { "phases" => %w[Secondary] },
-                "subjects_known" => { "subjects_known" => "Yes" },
-              }
-            end
-
-            it {
-              expect(steps).to eq(
-                %i[appetite
-                   help
-                   list_placements
-                   phase
-                   subjects_known
-                   secondary_subject_selection
-                   secondary_placement_quantity
-                   provider
-                   school_contact
-                   check_your_answers],
-              )
-            }
-
-            context "when the subject selected has child subjects" do
-              let(:modern_languages) { create(:subject, :secondary, name: "Modern Languages") }
-              let(:french) { create(:subject, :secondary, name: "French", parent_subject: modern_languages) }
-              let(:state) do
-                {
-                  "appetite" => { "appetite" => "interested" },
-                  "list_placements" => { "list_placements" => "Yes" },
-                  "phase" => { "phases" => %w[Secondary] },
-                  "subjects_known" => { "subjects_known" => "Yes" },
-                  "secondary_subject_selection" => { "subject_ids" => [modern_languages.id] },
-                  "secondary_placement_quantity" => { "modern_languages" => "2" },
-                }
-              end
-
-              before { french }
-
-              it {
-                expect(steps).to eq(
-                  %i[appetite
-                     help
-                     list_placements
-                     phase
-                     subjects_known
-                     secondary_subject_selection
-                     secondary_placement_quantity
-                     secondary_child_subject_placement_selection_modern_languages_1
-                     secondary_child_subject_placement_selection_modern_languages_2
-                     provider
-                     school_contact
-                     check_your_answers],
-                )
-              }
-            end
-          end
-
-          context "when the phase is set to 'Primary' and 'Secondary' during the phase step" do
-            let(:state) do
-              {
-                "appetite" => { "appetite" => "interested" },
-                "list_placements" => { "list_placements" => "Yes" },
-                "phase" => { "phases" => %w[Primary Secondary] },
-                "subjects_known" => { "subjects_known" => "Yes" },
-              }
-            end
-
-            it {
-              expect(steps).to eq(
-                %i[appetite
-                   help
-                   list_placements
-                   phase
-                   subjects_known
-                   primary_subject_selection
-                   primary_placement_quantity
-                   secondary_subject_selection
-                   secondary_placement_quantity
-                   provider
-                   school_contact
-                   check_your_answers],
-              )
-            }
-          end
-        end
-      end
+      it { is_expected.to eq %i[appetite school_contact confirm] }
     end
   end
 
@@ -294,12 +146,15 @@ RSpec.describe Placements::MultiPlacementWizard do
 
     context "when the attributes passed are valid" do
       context "when the appetite is 'actively_looking'" do
-        context "when the subjects known is 'No'" do
+        context "when the phase selected is 'Primary'" do
+          let(:primary_with_english) { create(:subject, :primary, name: "Primary with english") }
+          let(:primary_with_science) { create(:subject, :primary, name: "Primary with science") }
           let(:state) do
             {
               "appetite" => { "appetite" => "actively_looking" },
               "phase" => { "phases" => %w[Primary] },
-              "subjects_known" => { "subjects_known" => "No" },
+              "primary_subject_selection" => { "subject_ids" => [primary_with_english.id, primary_with_science.id] },
+              "primary_placement_quantity" => { "primary_with_english" => "1", "primary_with_science" => "2" },
               "school_contact" => {
                 "first_name" => "Joe",
                 "last_name" => "Bloggs",
@@ -308,39 +163,75 @@ RSpec.describe Placements::MultiPlacementWizard do
             }
           end
 
-          context "when school is actively looking to host placements for the next academic year" do
-            context "when school has no school contact assigned" do
-              let(:school) { create(:placements_school, with_school_contact: false) }
+          it "creates hosting interest for the next academic year, assigns the appetite,
+            creates a school contact and creates a placement for each selected subject and it's quantity" do
+            expect { update_school_placements }.to change(Placements::HostingInterest, :count).by(1)
+              .and change(Placement, :count).by(3)
+            school.reload
 
-              it "creates hosting interest for the next academic year, assigns the appetite,
-                and creates a school contact" do
-                expect { update_school_placements }.to change(Placements::HostingInterest, :count).by(1)
-                  .and change(Placements::SchoolContact, :count).by(1)
-                school.reload
+            hosting_interest = school.hosting_interests.last
+            expect(hosting_interest.appetite).to eq("actively_looking")
 
-                hosting_interest = school.hosting_interests.last
-                expect(hosting_interest.appetite).to eq("actively_looking")
+            expect(school.placements.where(subject_id: primary_with_english.id).count).to eq(1)
+            expect(school.placements.where(subject_id: primary_with_science.id).count).to eq(2)
 
-                school_contact = school.school_contact
-                expect(school_contact.first_name).to eq("Joe")
-                expect(school_contact.last_name).to eq("Bloggs")
-                expect(school_contact.email_address).to eq("joe_bloggs@example.com")
-              end
-            end
+            school_contact = school.school_contact
+            expect(school_contact.first_name).to eq("Joe")
+            expect(school_contact.last_name).to eq("Bloggs")
+            expect(school_contact.email_address).to eq("joe_bloggs@example.com")
           end
         end
 
-        context "when the subjects known is 'Yes'" do
-          context "when the phase selected is 'Primary'" do
-            let(:primary_with_english) { create(:subject, :primary, name: "Primary with english") }
-            let(:primary_with_science) { create(:subject, :primary, name: "Primary with science") }
+        context "when the phase selected is 'Secondary'" do
+          let(:english) { create(:subject, :secondary, name: "English") }
+          let(:mathematics) { create(:subject, :secondary, name: "Mathematics") }
+          let(:state) do
+            {
+              "appetite" => { "appetite" => "actively_looking" },
+              "phase" => { "phases" => %w[Secondary] },
+              "secondary_subject_selection" => { "subject_ids" => [english.id, mathematics.id] },
+              "secondary_placement_quantity" => { "english" => "2", "mathematics" => "3" },
+              "school_contact" => {
+                "first_name" => "Joe",
+                "last_name" => "Bloggs",
+                "email_address" => "joe_bloggs@example.com",
+              },
+            }
+          end
+
+          it "creates hosting interest for the next academic year, assigns the appetite,
+            creates a school contact and creates a placement for each selected subject and it's quantity" do
+            expect { update_school_placements }.to change(Placements::HostingInterest, :count).by(1)
+              .and change(Placement, :count).by(5)
+            school.reload
+
+            hosting_interest = school.hosting_interests.last
+            expect(hosting_interest.appetite).to eq("actively_looking")
+
+            expect(school.placements.where(subject_id: english.id).count).to eq(2)
+            expect(school.placements.where(subject_id: mathematics.id).count).to eq(3)
+
+            school_contact = school.school_contact
+            expect(school_contact.first_name).to eq("Joe")
+            expect(school_contact.last_name).to eq("Bloggs")
+            expect(school_contact.email_address).to eq("joe_bloggs@example.com")
+          end
+
+          context "when a selected subject has child subjects" do
+            let(:statistics) { create(:subject, :secondary, name: "Statistics", parent_subject: mathematics) }
+            let(:mechanics) { create(:subject, :secondary, name: "Mechanics", parent_subject: mathematics) }
             let(:state) do
               {
                 "appetite" => { "appetite" => "actively_looking" },
-                "phase" => { "phases" => %w[Primary] },
-                "subjects_known" => { "subjects_known" => "Yes" },
-                "primary_subject_selection" => { "subject_ids" => [primary_with_english.id, primary_with_science.id] },
-                "primary_placement_quantity" => { "primary_with_english" => "1", "primary_with_science" => "2" },
+                "phase" => { "phases" => %w[Secondary] },
+                "secondary_subject_selection" => { "subject_ids" => [english.id, mathematics.id] },
+                "secondary_placement_quantity" => { "mathematics" => "2", "english" => "1" },
+                "secondary_child_subject_placement_selection_mathematics_1" => {
+                  "child_subject_ids" => [statistics.id, mechanics.id],
+                },
+                "secondary_child_subject_placement_selection_mathematics_2" => {
+                  "child_subject_ids" => [statistics.id],
+                },
                 "school_contact" => {
                   "first_name" => "Joe",
                   "last_name" => "Bloggs",
@@ -350,7 +241,8 @@ RSpec.describe Placements::MultiPlacementWizard do
             end
 
             it "creates hosting interest for the next academic year, assigns the appetite,
-              creates a school contact and creates a placement for each selected subject and it's quantity" do
+              creates a school contact and creates a placement for each selected subject and it's quantity,
+              plus assigning the selected child subjects" do
               expect { update_school_placements }.to change(Placements::HostingInterest, :count).by(1)
                 .and change(Placement, :count).by(3)
               school.reload
@@ -358,8 +250,13 @@ RSpec.describe Placements::MultiPlacementWizard do
               hosting_interest = school.hosting_interests.last
               expect(hosting_interest.appetite).to eq("actively_looking")
 
-              expect(school.placements.where(subject_id: primary_with_english.id).count).to eq(1)
-              expect(school.placements.where(subject_id: primary_with_science.id).count).to eq(2)
+              expect(school.placements.where(subject_id: english.id).count).to eq(1)
+
+              mathematics_placements = school.placements.where(subject_id: mathematics.id)
+              expect(mathematics_placements.count).to eq(2)
+              expect(
+                mathematics_placements.map { |placement| placement.additional_subjects.pluck(:name) },
+              ).to contain_exactly(%w[Statistics], %w[Statistics Mechanics])
 
               school_contact = school.school_contact
               expect(school_contact.first_name).to eq("Joe")
@@ -367,107 +264,59 @@ RSpec.describe Placements::MultiPlacementWizard do
               expect(school_contact.email_address).to eq("joe_bloggs@example.com")
             end
           end
+        end
 
-          context "when the phase selected is 'Secondary'" do
-            let(:english) { create(:subject, :secondary, name: "English") }
-            let(:mathematics) { create(:subject, :secondary, name: "Mathematics") }
-            let(:state) do
-              {
-                "appetite" => { "appetite" => "actively_looking" },
-                "phase" => { "phases" => %w[Secondary] },
-                "subjects_known" => { "subjects_known" => "Yes" },
-                "secondary_subject_selection" => { "subject_ids" => [english.id, mathematics.id] },
-                "secondary_placement_quantity" => { "english" => "2", "mathematics" => "3" },
-                "school_contact" => {
-                  "first_name" => "Joe",
-                  "last_name" => "Bloggs",
-                  "email_address" => "joe_bloggs@example.com",
-                },
-              }
-            end
-
-            it "creates hosting interest for the next academic year, assigns the appetite,
-              creates a school contact and creates a placement for each selected subject and it's quantity" do
-              expect { update_school_placements }.to change(Placements::HostingInterest, :count).by(1)
-                .and change(Placement, :count).by(5)
-              school.reload
-
-              hosting_interest = school.hosting_interests.last
-              expect(hosting_interest.appetite).to eq("actively_looking")
-
-              expect(school.placements.where(subject_id: english.id).count).to eq(2)
-              expect(school.placements.where(subject_id: mathematics.id).count).to eq(3)
-
-              school_contact = school.school_contact
-              expect(school_contact.first_name).to eq("Joe")
-              expect(school_contact.last_name).to eq("Bloggs")
-              expect(school_contact.email_address).to eq("joe_bloggs@example.com")
-            end
-
-            context "when a selected subject has child subjects" do
-              let(:statistics) { create(:subject, :secondary, name: "Statistics", parent_subject: mathematics) }
-              let(:mechanics) { create(:subject, :secondary, name: "Mechanics", parent_subject: mathematics) }
-              let(:state) do
-                {
-                  "appetite" => { "appetite" => "actively_looking" },
-                  "phase" => { "phases" => %w[Secondary] },
-                  "subjects_known" => { "subjects_known" => "Yes" },
-                  "secondary_subject_selection" => { "subject_ids" => [english.id, mathematics.id] },
-                  "secondary_placement_quantity" => { "mathematics" => "2", "english" => "1" },
-                  "secondary_child_subject_placement_selection_mathematics_1" => {
-                    "child_subject_ids" => [statistics.id, mechanics.id],
-                  },
-                  "secondary_child_subject_placement_selection_mathematics_2" => {
-                    "child_subject_ids" => [statistics.id],
-                  },
-                  "school_contact" => {
-                    "first_name" => "Joe",
-                    "last_name" => "Bloggs",
-                    "email_address" => "joe_bloggs@example.com",
-                  },
-                }
-              end
-
-              it "creates hosting interest for the next academic year, assigns the appetite,
-                creates a school contact and creates a placement for each selected subject and it's quantity,
-                plus assigning the selected child subjects" do
-                expect { update_school_placements }.to change(Placements::HostingInterest, :count).by(1)
-                  .and change(Placement, :count).by(3)
-                school.reload
-
-                hosting_interest = school.hosting_interests.last
-                expect(hosting_interest.appetite).to eq("actively_looking")
-
-                expect(school.placements.where(subject_id: english.id).count).to eq(1)
-
-                mathematics_placements = school.placements.where(subject_id: mathematics.id)
-                expect(mathematics_placements.count).to eq(2)
-                expect(
-                  mathematics_placements.map { |placement| placement.additional_subjects.pluck(:name) },
-                ).to contain_exactly(%w[Statistics], %w[Statistics Mechanics])
-
-                school_contact = school.school_contact
-                expect(school_contact.first_name).to eq("Joe")
-                expect(school_contact.last_name).to eq("Bloggs")
-                expect(school_contact.email_address).to eq("joe_bloggs@example.com")
-              end
-            end
+        context "when the phase selected is 'Primary' and 'Secondary'" do
+          let(:primary_with_english) { create(:subject, :primary, name: "Primary with english") }
+          let(:primary_with_science) { create(:subject, :primary, name: "Primary with science") }
+          let(:english) { create(:subject, :secondary, name: "English") }
+          let(:mathematics) { create(:subject, :secondary, name: "Mathematics") }
+          let(:state) do
+            {
+              "appetite" => { "appetite" => "actively_looking" },
+              "phase" => { "phases" => %w[Primary Secondary] },
+              "primary_subject_selection" => { "subject_ids" => [primary_with_english.id, primary_with_science.id] },
+              "primary_placement_quantity" => { "primary_with_english" => "1", "primary_with_science" => "2" },
+              "secondary_subject_selection" => { "subject_ids" => [english.id, mathematics.id] },
+              "secondary_placement_quantity" => { "english" => "2", "mathematics" => "3" },
+              "school_contact" => {
+                "first_name" => "Joe",
+                "last_name" => "Bloggs",
+                "email_address" => "joe_bloggs@example.com",
+              },
+            }
           end
 
-          context "when the phase selected is 'Primary' and 'Secondary'" do
-            let(:primary_with_english) { create(:subject, :primary, name: "Primary with english") }
-            let(:primary_with_science) { create(:subject, :primary, name: "Primary with science") }
-            let(:english) { create(:subject, :secondary, name: "English") }
-            let(:mathematics) { create(:subject, :secondary, name: "Mathematics") }
+          it "creates hosting interest for the next academic year, assigns the appetite,
+            creates a school contact and creates a placement for each selected subject and it's quantity" do
+            expect { update_school_placements }.to change(Placements::HostingInterest, :count).by(1)
+              .and change(Placement, :count).by(8)
+            school.reload
+
+            hosting_interest = school.hosting_interests.last
+            expect(hosting_interest.appetite).to eq("actively_looking")
+
+            expect(school.placements.where(subject_id: primary_with_english.id).count).to eq(1)
+            expect(school.placements.where(subject_id: primary_with_science.id).count).to eq(2)
+            expect(school.placements.where(subject_id: english.id).count).to eq(2)
+            expect(school.placements.where(subject_id: mathematics.id).count).to eq(3)
+
+            school_contact = school.school_contact
+            expect(school_contact.first_name).to eq("Joe")
+            expect(school_contact.last_name).to eq("Bloggs")
+            expect(school_contact.email_address).to eq("joe_bloggs@example.com")
+          end
+
+          context "when provider_ids is set to 'select_all'" do
             let(:state) do
               {
                 "appetite" => { "appetite" => "actively_looking" },
                 "phase" => { "phases" => %w[Primary Secondary] },
-                "subjects_known" => { "subjects_known" => "Yes" },
-                "primary_subject_selection" => { "subject_ids" => [primary_with_english.id, primary_with_science.id] },
-                "primary_placement_quantity" => { "primary_with_english" => "1", "primary_with_science" => "2" },
-                "secondary_subject_selection" => { "subject_ids" => [english.id, mathematics.id] },
-                "secondary_placement_quantity" => { "english" => "2", "mathematics" => "3" },
+                "primary_subject_selection" => { "subject_ids" => [primary_with_english.id] },
+                "primary_placement_quantity" => { "primary_with_english" => "1" },
+                "secondary_subject_selection" => { "subject_ids" => [english.id] },
+                "secondary_placement_quantity" => { "english" => "1" },
+                "provider" => { "provider_ids" => %w[select_all] },
                 "school_contact" => {
                   "first_name" => "Joe",
                   "last_name" => "Bloggs",
@@ -475,134 +324,93 @@ RSpec.describe Placements::MultiPlacementWizard do
                 },
               }
             end
+            let(:test_provider_1) { create(:provider, name: "Test Provider 123") }
+            let(:test_provider_2) { create(:provider, name: "Test Provider 456") }
+            let(:test_provider_3) { create(:provider, name: "Test Provider 789") }
+
+            before do
+              test_provider_1
+              test_provider_2
+              test_provider_3
+            end
 
             it "creates hosting interest for the next academic year, assigns the appetite,
-              creates a school contact and creates a placement for each selected subject and it's quantity" do
+              creates a school contact and creates a placement for each selected subject and it's quantity
+              and create partnerships with all test providers" do
               expect { update_school_placements }.to change(Placements::HostingInterest, :count).by(1)
-                .and change(Placement, :count).by(8)
+                .and change(Placement, :count).by(2)
+                .and change(Placements::Partnership, :count).by(3)
               school.reload
 
               hosting_interest = school.hosting_interests.last
               expect(hosting_interest.appetite).to eq("actively_looking")
 
               expect(school.placements.where(subject_id: primary_with_english.id).count).to eq(1)
-              expect(school.placements.where(subject_id: primary_with_science.id).count).to eq(2)
-              expect(school.placements.where(subject_id: english.id).count).to eq(2)
-              expect(school.placements.where(subject_id: mathematics.id).count).to eq(3)
+              expect(school.placements.where(subject_id: english.id).count).to eq(1)
+
+              expect(school.partner_providers).to contain_exactly(
+                test_provider_1,
+                test_provider_2,
+                test_provider_3,
+              )
 
               school_contact = school.school_contact
               expect(school_contact.first_name).to eq("Joe")
               expect(school_contact.last_name).to eq("Bloggs")
               expect(school_contact.email_address).to eq("joe_bloggs@example.com")
             end
+          end
 
-            context "when provider_ids is set to 'select_all'" do
-              let(:state) do
-                {
-                  "appetite" => { "appetite" => "actively_looking" },
-                  "phase" => { "phases" => %w[Primary Secondary] },
-                  "subjects_known" => { "subjects_known" => "Yes" },
-                  "primary_subject_selection" => { "subject_ids" => [primary_with_english.id] },
-                  "primary_placement_quantity" => { "primary_with_english" => "1" },
-                  "secondary_subject_selection" => { "subject_ids" => [english.id] },
-                  "secondary_placement_quantity" => { "english" => "1" },
-                  "provider" => { "provider_ids" => %w[select_all] },
-                  "school_contact" => {
-                    "first_name" => "Joe",
-                    "last_name" => "Bloggs",
-                    "email_address" => "joe_bloggs@example.com",
-                  },
-                }
-              end
-              let(:test_provider_1) { create(:provider, name: "Test Provider 123") }
-              let(:test_provider_2) { create(:provider, name: "Test Provider 456") }
-              let(:test_provider_3) { create(:provider, name: "Test Provider 789") }
+          context "when provider_ids is contains specific provider ids" do
+            let(:state) do
+              {
+                "appetite" => { "appetite" => "actively_looking" },
+                "phase" => { "phases" => %w[Primary Secondary] },
+                "primary_subject_selection" => { "subject_ids" => [primary_with_english.id] },
+                "primary_placement_quantity" => { "primary_with_english" => "1" },
+                "secondary_subject_selection" => { "subject_ids" => [english.id] },
+                "secondary_placement_quantity" => { "english" => "1" },
+                "provider" => { "provider_ids" => [test_provider_1.id, test_provider_3.id] },
+                "school_contact" => {
+                  "first_name" => "Joe",
+                  "last_name" => "Bloggs",
+                  "email_address" => "joe_bloggs@example.com",
+                },
+              }
+            end
+            let(:test_provider_1) { create(:provider, name: "Test Provider 123") }
+            let(:test_provider_2) { create(:provider, name: "Test Provider 456") }
+            let(:test_provider_3) { create(:provider, name: "Test Provider 789") }
 
-              before do
-                test_provider_1
-                test_provider_2
-                test_provider_3
-              end
-
-              it "creates hosting interest for the next academic year, assigns the appetite,
-                creates a school contact and creates a placement for each selected subject and it's quantity
-                and create partnerships with all test providers" do
-                expect { update_school_placements }.to change(Placements::HostingInterest, :count).by(1)
-                  .and change(Placement, :count).by(2)
-                  .and change(Placements::Partnership, :count).by(3)
-                school.reload
-
-                hosting_interest = school.hosting_interests.last
-                expect(hosting_interest.appetite).to eq("actively_looking")
-
-                expect(school.placements.where(subject_id: primary_with_english.id).count).to eq(1)
-                expect(school.placements.where(subject_id: english.id).count).to eq(1)
-
-                expect(school.partner_providers).to contain_exactly(
-                  test_provider_1,
-                  test_provider_2,
-                  test_provider_3,
-                )
-
-                school_contact = school.school_contact
-                expect(school_contact.first_name).to eq("Joe")
-                expect(school_contact.last_name).to eq("Bloggs")
-                expect(school_contact.email_address).to eq("joe_bloggs@example.com")
-              end
+            before do
+              test_provider_1
+              test_provider_2
+              test_provider_3
             end
 
-            context "when provider_ids is contains specific provider ids" do
-              let(:state) do
-                {
-                  "appetite" => { "appetite" => "actively_looking" },
-                  "phase" => { "phases" => %w[Primary Secondary] },
-                  "subjects_known" => { "subjects_known" => "Yes" },
-                  "primary_subject_selection" => { "subject_ids" => [primary_with_english.id] },
-                  "primary_placement_quantity" => { "primary_with_english" => "1" },
-                  "secondary_subject_selection" => { "subject_ids" => [english.id] },
-                  "secondary_placement_quantity" => { "english" => "1" },
-                  "provider" => { "provider_ids" => [test_provider_1.id, test_provider_3.id] },
-                  "school_contact" => {
-                    "first_name" => "Joe",
-                    "last_name" => "Bloggs",
-                    "email_address" => "joe_bloggs@example.com",
-                  },
-                }
-              end
-              let(:test_provider_1) { create(:provider, name: "Test Provider 123") }
-              let(:test_provider_2) { create(:provider, name: "Test Provider 456") }
-              let(:test_provider_3) { create(:provider, name: "Test Provider 789") }
+            it "creates hosting interest for the next academic year, assigns the appetite,
+              creates a school contact and creates a placement for each selected subject and it's quantity
+              and create partnerships for the selected test providers" do
+              expect { update_school_placements }.to change(Placements::HostingInterest, :count).by(1)
+                .and change(Placement, :count).by(2)
+                .and change(Placements::Partnership, :count).by(2)
+              school.reload
 
-              before do
-                test_provider_1
-                test_provider_2
-                test_provider_3
-              end
+              hosting_interest = school.hosting_interests.last
+              expect(hosting_interest.appetite).to eq("actively_looking")
 
-              it "creates hosting interest for the next academic year, assigns the appetite,
-                creates a school contact and creates a placement for each selected subject and it's quantity
-                and create partnerships for the selected test providers" do
-                expect { update_school_placements }.to change(Placements::HostingInterest, :count).by(1)
-                  .and change(Placement, :count).by(2)
-                  .and change(Placements::Partnership, :count).by(2)
-                school.reload
+              expect(school.placements.where(subject_id: primary_with_english.id).count).to eq(1)
+              expect(school.placements.where(subject_id: english.id).count).to eq(1)
 
-                hosting_interest = school.hosting_interests.last
-                expect(hosting_interest.appetite).to eq("actively_looking")
+              expect(school.partner_providers).to contain_exactly(
+                test_provider_1,
+                test_provider_3,
+              )
 
-                expect(school.placements.where(subject_id: primary_with_english.id).count).to eq(1)
-                expect(school.placements.where(subject_id: english.id).count).to eq(1)
-
-                expect(school.partner_providers).to contain_exactly(
-                  test_provider_1,
-                  test_provider_3,
-                )
-
-                school_contact = school.school_contact
-                expect(school_contact.first_name).to eq("Joe")
-                expect(school_contact.last_name).to eq("Bloggs")
-                expect(school_contact.email_address).to eq("joe_bloggs@example.com")
-              end
+              school_contact = school.school_contact
+              expect(school_contact.first_name).to eq("Joe")
+              expect(school_contact.last_name).to eq("Bloggs")
+              expect(school_contact.email_address).to eq("joe_bloggs@example.com")
             end
           end
         end
