@@ -100,5 +100,11 @@ en:
           we_will_ask_again: We will ask you again in 12 months whether you would like to host placements. 
           continue: Continue
         confirm_step:
-          title: Confirm you’re interested in hosting 
+          title: Confirm you’re interested in hosting
+          caption: Expression of interest
+          this_means_providers_can_see_your_school: 
+            This means providers can see that your school is thinking about hosting placements. 
+            Providers will reach out via email with more information. 
+          you_have_not_added_any_placements:
+            You haven’t added any placement information so providers cannot see any of your preferences.
           continue: Continue
