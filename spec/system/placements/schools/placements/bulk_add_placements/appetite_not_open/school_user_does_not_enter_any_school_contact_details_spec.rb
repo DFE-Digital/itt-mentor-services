@@ -18,9 +18,6 @@ RSpec.describe "School user does not enter any school contact details",
     when_i_select_not_enough_trained_mentors
     and_i_select_number_of_pupils_with_send_needs
     and_i_click_on_continue
-    then_i_see_the_help_available_to_you_page
-
-    when_i_click_on_continue
     then_i_see_the_school_contact_form
 
     when_i_click_on_continue
@@ -97,9 +94,13 @@ RSpec.describe "School user does not enter any school contact details",
       text: "What are your reasons for not taking part in ITT this year?",
       class: "govuk-fieldset__legend",
     )
+    expect(page).to have_field("Concerns about trainee quality", type: :checkbox)
+    expect(page).to have_field("Don't get offered trainees", type: :checkbox)
+    expect(page).to have_field("Don't know how to get involved", type: :checkbox)
     expect(page).to have_field("Not enough trained mentors", type: :checkbox)
     expect(page).to have_field("Number of pupils with SEND needs", type: :checkbox)
     expect(page).to have_field("Working to improve our OFSTED rating", type: :checkbox)
+    expect(page).to have_field("Other", type: :checkbox)
   end
 
   def when_i_select_not_enough_trained_mentors

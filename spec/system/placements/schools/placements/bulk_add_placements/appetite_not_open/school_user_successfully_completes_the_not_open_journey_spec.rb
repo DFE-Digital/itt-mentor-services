@@ -18,13 +18,14 @@ RSpec.describe "School user successfully completes the not open journey",
     when_i_select_not_enough_trained_mentors
     and_i_select_number_of_pupils_with_send_needs
     and_i_click_on_continue
-    then_i_see_the_help_available_to_you_page
-
-    when_i_click_on_continue
     then_i_see_the_school_contact_form
 
+    when_i_fill_in_the_school_contact_details
+    and_i_click_on_continue
+    then_i_see_the_are_you_sure_page
+
     when_i_click_on_back
-    then_i_see_the_help_available_to_you_page
+    then_i_see_the_school_contact_form_prefilled_with_my_inputs
 
     when_i_click_on_back
     then_i_see_the_reasons_for_not_hosting_form
@@ -51,13 +52,13 @@ RSpec.describe "School user successfully completes the not open journey",
     when_i_select_not_enough_trained_mentors
     and_i_select_number_of_pupils_with_send_needs
     and_i_click_on_continue
-    then_i_see_the_help_available_to_you_page
-
-    when_i_click_on_continue
     then_i_see_the_school_contact_form
 
     when_i_fill_in_the_school_contact_details
     and_i_click_on_continue
+    then_i_see_the_are_you_sure_page
+
+    when_i_click_on_continue
     then_i_see_my_responses_with_successfully_updated
     and_the_schools_contact_has_been_updated
     and_the_schools_hosting_interest_for_the_next_year_is_updated
@@ -174,6 +175,25 @@ RSpec.describe "School user successfully completes the not open journey",
     expect(page).to have_field("Email address", with: @school_contact.email_address)
   end
 
+  def then_i_see_the_school_contact_form_prefilled_with_my_inputs
+    expect(page).to have_title(
+      "Who should providers contact? - Manage school placements - GOV.UK",
+    )
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_h1("Who should providers contact?")
+    expect(page).to have_element(
+      :p,
+      text: "Choose the person best placed to organise ITT placements at your school. "\
+        "This information will be shown on your profile.",
+      class: "govuk-body",
+    )
+
+    @school_contact = @school.school_contact
+    expect(page).to have_field("First name", with: "Joe")
+    expect(page).to have_field("Last name", with: "Bloggs")
+    expect(page).to have_field("Email address", with: "joe_bloggs@example.com")
+  end
+
   def when_i_click_on_back
     click_on "Back"
   end
@@ -190,8 +210,8 @@ RSpec.describe "School user successfully completes the not open journey",
 
   def then_i_see_my_responses_with_successfully_updated
     expect(page).to have_success_banner(
-      "Placement information uploaded",
-      "Providers can see your placement preferences and may contact you to discuss them. You can add details to your placements such as expected date and provider.",
+      "Your profile has been updated",
+      "You can change your profile in settings if your circumstances change.",
     )
   end
 
@@ -208,6 +228,18 @@ RSpec.describe "School user successfully completes the not open journey",
     expect(hosting_interest.reasons_not_hosting).to contain_exactly(
       "Not enough trained mentors",
       "Number of pupils with SEND needs",
+    )
+  end
+
+  def then_i_see_the_are_you_sure_page
+    expect(page).to have_title(
+      "Are you sure you do not want to be contacted about placements? - Manage school placements - GOV.UK",
+    )
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_h1("Are you sure you do not want to be contacted about placements?")
+    expect(page).to have_element(
+      :span,
+      text: "Not interested in hosting this year",
     )
   end
 end
