@@ -13,7 +13,7 @@ RSpec.describe Placements::MultiPlacementWizard::ReasonNotHostingStep, type: :mo
   let!(:school) { create(:placements_school) }
 
   describe "attributes" do
-    it { is_expected.to have_attributes(reasons_not_hosting: []) }
+    it { is_expected.to have_attributes(reasons_not_hosting: [], reason_details: nil) }
   end
 
   describe "validations" do
@@ -24,9 +24,22 @@ RSpec.describe Placements::MultiPlacementWizard::ReasonNotHostingStep, type: :mo
     subject(:reason_options) { step.reason_options }
 
     it "returns struct objects for each reason not to host ITT" do
-      not_enough_trained_mentors = reason_options[0]
-      number_of_pupils_with_send_needs = reason_options[1]
-      working_to_improve_our_ofsted_rating = reason_options[2]
+      concerns_about_trainee_quality = reason_options[0]
+      do_not_get_offered_trainees = reason_options[1]
+      do_not_know_how_to_get_involved = reason_options[2]
+      not_enough_trained_mentors = reason_options[3]
+      number_of_pupils_with_send_needs = reason_options[4]
+      working_to_improve_our_ofsted_rating = reason_options[5]
+      other = reason_options[6]
+
+      expect(concerns_about_trainee_quality.name).to eq("Concerns about trainee quality")
+      expect(concerns_about_trainee_quality.value).to eq("Concerns about trainee quality")
+
+      expect(do_not_get_offered_trainees.name).to eq("Don't get offered trainees")
+      expect(do_not_get_offered_trainees.value).to eq("Don't get offered trainees")
+
+      expect(do_not_know_how_to_get_involved.name).to eq("Don't know how to get involved")
+      expect(do_not_know_how_to_get_involved.value).to eq("Don't know how to get involved")
 
       expect(not_enough_trained_mentors.name).to eq("Not enough trained mentors")
       expect(not_enough_trained_mentors.value).to eq("Not enough trained mentors")
@@ -36,6 +49,9 @@ RSpec.describe Placements::MultiPlacementWizard::ReasonNotHostingStep, type: :mo
 
       expect(working_to_improve_our_ofsted_rating.name).to eq("Working to improve our OFSTED rating")
       expect(working_to_improve_our_ofsted_rating.value).to eq("Working to improve our OFSTED rating")
+
+      expect(other.name).to eq("Other")
+      expect(other.value).to eq("Other")
     end
   end
 

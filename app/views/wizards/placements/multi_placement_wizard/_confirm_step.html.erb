@@ -10,16 +10,10 @@
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l"><%= t(".caption") %></span>
       <h1 class="govuk-heading-l"><%= t(".title") %></h1>
-      <p class="govuk-body secondary-text"><%= t(".enter_approximate") %></p>
 
-      <% current_step.subjects.each do |subject| %>
-        <%= f.govuk_number_field(
-          subject.name_as_attribute,
-          class: "govuk-input--width-2",
-          min: 1,
-          label: { text: subject.name, class: "govuk-!-font-weight-bold" },
-        ) %>
-      <% end %>
+      <p class="govuk-body"><%= t(".this_means_providers_can_see_your_school") %></p>
+
+      <p class="govuk-body"><%= t(".you_have_not_added_any_placements") %></p>
 
       <%= f.govuk_submit t(".continue") %>
     </div>

@@ -17,17 +17,15 @@ module Placements
         actively_looking_steps
       when "not_open"
         add_step(ReasonNotHostingStep)
-        add_step(HelpStep)
-      when "interested"
-        add_step(HelpStep)
-        add_step(ListPlacementsStep)
-        if list_placements?
-          actively_looking_steps
-        end
       end
       add_step(SchoolContactStep)
-      if appetite == "actively_looking" || appetite == "interested" && list_placements?
+      case appetite
+      when "actively_looking"
         add_step(CheckYourAnswersStep)
+      when "not_open"
+        add_step(AreYouSureStep)
+      when "interested"
+        add_step(ConfirmStep)
       end
     end
 
@@ -100,6 +98,12 @@ module Placements
       end
     end
 
+    def child_subject_placement_step_count
+      steps.values.select { |step|
+        step.is_a?(::Placements::MultiPlacementWizard::SecondaryChildSubjectPlacementSelectionStep)
+      }.count
+    end
+
     private
 
     def create_placements
@@ -125,7 +129,7 @@ module Placements
 
     def create_partnerships
       selected_providers.each do |provider|
-        school.partnerships.create!(provider:)
+        ::Placements::Partnership.find_or_create_by!(school:, provider:)
       end
     end
 
@@ -143,15 +147,12 @@ module Placements
 
     def actively_looking_steps
       add_step(PhaseStep)
-      add_step(SubjectsKnownStep)
-      if subjects_known?
-        if phases.include?(::Placements::School::PRIMARY_PHASE)
-          primary_subject_steps
-        end
+      if phases.include?(::Placements::School::PRIMARY_PHASE)
+        primary_subject_steps
+      end
 
-        if phases.include?(::Placements::School::SECONDARY_PHASE)
-          secondary_subject_steps
-        end
+      if phases.include?(::Placements::School::SECONDARY_PHASE)
+        secondary_subject_steps
       end
 
       add_step(ProviderStep)
