@@ -81,7 +81,7 @@ en:
                 You can also <a href=%{placements_url}>add placement information</a> to help providers know what help you need.
               search_for_providers_html:
                 Alternatively you can search for providers using our <a href=%{providers_url}>provider directory</a>.
-              additional_help: Addtional help from your school teaching hub.
+              additional_help: Addtional help from your school teaching hub
               find_your_local_school_hub: 
                 Find your local %{href} to get advice on offering an ITT placement.
               teaching_school_hub: teaching school hub
