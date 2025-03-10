@@ -280,6 +280,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_17_094215) do
     t.jsonb "reasons_not_hosting"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "other_reason_not_hosting"
     t.index ["academic_year_id"], name: "index_hosting_interests_on_academic_year_id"
     t.index ["school_id", "academic_year_id"], name: "index_hosting_interests_on_school_id_and_academic_year_id", unique: true
     t.index ["school_id"], name: "index_hosting_interests_on_school_id"

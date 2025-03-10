@@ -2,13 +2,14 @@
 #
 # Table name: hosting_interests
 #
-#  id                  :uuid             not null, primary key
-#  appetite            :enum
-#  reasons_not_hosting :jsonb
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  academic_year_id    :uuid             not null
-#  school_id           :uuid             not null
+#  id                       :uuid             not null, primary key
+#  appetite                 :enum
+#  other_reason_not_hosting :text
+#  reasons_not_hosting      :jsonb
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  academic_year_id         :uuid             not null
+#  school_id                :uuid             not null
 #
 # Indexes
 #

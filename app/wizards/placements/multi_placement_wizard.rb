@@ -36,6 +36,10 @@ module Placements
         hosting_interest.appetite = appetite
         if steps[:reason_not_hosting].present?
           hosting_interest.reasons_not_hosting = reasons_not_hosting
+          other_reason_not_hosting = steps
+            .fetch(:reason_not_hosting)
+            .other_reason_not_hosting
+          hosting_interest.other_reason_not_hosting = (other_reason_not_hosting.presence)
         end
 
         hosting_interest.save!
