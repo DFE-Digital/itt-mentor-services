@@ -2,6 +2,8 @@ class School::SummaryComponent < ApplicationComponent
   with_collection_parameter :school
   attr_reader :school, :provider, :location_coordinates
 
+  delegate :school_contact, to: :school, prefix: false, allow_nil: true
+
   def initialize(school:, provider:, location_coordinates: nil, classes: [], html_attributes: {})
     super(classes:, html_attributes:)
 

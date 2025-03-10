@@ -2,7 +2,7 @@ class Placements::SchoolsQuery < ApplicationQuery
   MAX_LOCATION_DISTANCE = 50
 
   def call
-    scope = Placements::School.joins(:hosting_interests, :academic_years, :placements, :mentors)
+    scope = Placements::School.left_outer_joins(:hosting_interests, :academic_years, :placements, :mentors)
 
     scope = search_by_name_condition(scope)
     scope = subject_condition(scope)

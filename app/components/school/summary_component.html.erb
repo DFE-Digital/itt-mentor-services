@@ -80,9 +80,9 @@
           <%= t(".placement_contact") %>
         </dt>
         <dd class="app-result-detail__value">
-          <%= "#{school.school_contact.first_name} #{school.school_contact.last_name}" %>
+          <%= "#{school_contact&.first_name} #{school_contact&.last_name}" %>
           <br>
-          <%= school.school_contact.email_address %>
+          <%= school_contact&.email_address %>
         </dd>
       </div>
     </div>

@@ -71,6 +71,7 @@ shared:
     - last_name
     - trn
     - id
+    - trained
     - created_at
     - updated_at
   :mentor_memberships:

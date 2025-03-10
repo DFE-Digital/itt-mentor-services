@@ -5,7 +5,7 @@ class Placements::Providers::FindController < Placements::ApplicationController
   def index
     @subjects = Subject.all
     query = Placements::SchoolsQuery.call(params: query_params)
-    @pagy, @schools = pagy(all_schools.joins(placements: :academic_year).merge(query).distinct)
+    @pagy, @schools = pagy(all_schools.merge(query).distinct)
     calculate_travel_time
   end
 
