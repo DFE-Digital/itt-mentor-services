@@ -292,6 +292,8 @@ en:
           attributes:
             reasons_not_hosting: 
               blank: Please select a reason for not taking part in ITT
+            other_reason_not_hosting:
+              blank: Please enter a reason
         placements/multi_placement_wizard/list_placements_step:
           attributes:
             list_placements:

@@ -12,7 +12,7 @@
         <% current_step.reason_options.each_with_index do |reason_option, i| %>
           <%= f.govuk_check_box :reasons_not_hosting, reason_option.value, label: { text: reason_option.name }, link_errors: i.zero? do %>
             <% if reason_option.name == t(".options.other") %>
-              <%= f.govuk_text_field :reason_details, label: { text: t(".tell_us") } %>
+              <%= f.govuk_text_field :other_reason_not_hosting, label: { text: t(".tell_us") } %>
             <% end %>
           <% end %>
         <% end %>
