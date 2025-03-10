@@ -46,6 +46,7 @@ en:
           search_by_name_prompt: Enter a school name or URN
           itt_status: ITT status
           last_offered_placements: Last offered placements
+          not_offered_placements_label: No recent placements
         show:
           page_title: "%{subject_name} - Placements - %{school_name}"
           placement: "Placement - %{school_name}"

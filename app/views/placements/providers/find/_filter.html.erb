@@ -99,21 +99,35 @@
             </ul>
           <% end %>
 
-          <% if filter_form.last_offered_placements.present? %>
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".itt_status") %></h3>
+          <% if filter_form.last_offered_placements_academic_year_ids.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".last_offered_placements") %></h3>
             <ul class="app-filter-tags">
-              <% filter_form.last_offered_placements.each do |offered| %>
+              <% if filter_form.last_offered_placements_academic_year_ids.include?("never_offered") %>
                 <li>
                   <%= govuk_link_to(
-                        offered,
+                        t(".not_offered_placements_label"),
                         filter_form.index_path_without_filter(
-                          filter: "last_offered_placements",
-                          value: offered, # TODO: This returns an ID.
+                          filter: "last_offered_placements_academic_year_ids",
+                          value: "never_offered",
                           ),
                         class: "app-filter__tag",
                         no_visited_state: true,
                         ) %>
                 </li>
+              <% else %>
+                <% filter_form.last_offered_placements_academic_years.each do |academic_year_offered| %>
+                  <li>
+                    <%= govuk_link_to(
+                          academic_year_offered.name,
+                          filter_form.index_path_without_filter(
+                            filter: "last_offered_placements_academic_year_ids",
+                            value: academic_year_offered.id,
+                            ),
+                          class: "app-filter__tag",
+                          no_visited_state: true,
+                          ) %>
+                  </li>
+                <% end %>
               <% end %>
             </ul>
           <% end %>
@@ -207,7 +221,7 @@
               multiple: true,
               ) do %>
               <% filter_form.last_offered_placement_options.each do |name, value| %>
-                <%= form.govuk_check_box :last_offered_placements, value, label: { text: name } %>
+                <%= form.govuk_check_box :last_offered_placements_academic_year_ids, value, label: { text: name } %>
               <% end %>
             <% end %>
           </div>

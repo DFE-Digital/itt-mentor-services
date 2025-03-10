@@ -16,16 +16,6 @@ class Placements::Providers::FindController < Placements::ApplicationController
 
   private
 
-  def schools_scope
-    if filter_form.primary_only?
-      all_schools.where.not(phase: "Secondary")
-    elsif filter_form.secondary_only?
-      all_schools.where.not(phase: "Primary")
-    else
-      all_schools
-    end
-  end
-
   def calculate_travel_time
     return if search_location.blank?
 
@@ -51,7 +41,6 @@ class Placements::Providers::FindController < Placements::ApplicationController
       location = Geocoder::Search.call(
         search_location,
       )
-      # latitude and longitude
       location.coordinates
     end
   end
@@ -63,7 +52,7 @@ class Placements::Providers::FindController < Placements::ApplicationController
       subject_ids: [],
       phases: [],
       itt_statuses: [],
-      last_offered_placements: [],
+      last_offered_placements_academic_year_ids: [],
     )
   end
 

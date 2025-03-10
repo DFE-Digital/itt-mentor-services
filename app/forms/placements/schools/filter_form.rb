@@ -6,7 +6,7 @@ class Placements::Schools::FilterForm < ApplicationForm
   attribute :search_by_name, default: nil
   attribute :phases, default: []
   attribute :itt_statuses, default: []
-  attribute :last_offered_placements, default: []
+  attribute :last_offered_placements_academic_year_ids, default: []
   attribute :trained_mentors, default: []
 
   def initialize(provider, params = {})
@@ -49,7 +49,7 @@ class Placements::Schools::FilterForm < ApplicationForm
       search_by_name:,
       phases:,
       itt_statuses:,
-      last_offered_placements:,
+      last_offered_placements_academic_year_ids:,
       trained_mentors:,
     }
   end
@@ -58,10 +58,14 @@ class Placements::Schools::FilterForm < ApplicationForm
     @subjects ||= Subject.where(id: subject_ids).order_by_name
   end
 
+  def last_offered_placements_academic_years
+    Placements::AcademicYear.where(id: last_offered_placements_academic_year_ids)
+  end
+
   def last_offered_placement_options
     Placements::AcademicYear.where(id: Placement.distinct.pluck(:academic_year_id))
       .where("ends_on <= ?", Placements::AcademicYear.current.starts_on)
-      .order_by_date.pluck(:name, :id).unshift(["No recent placements", "never_offered"])
+      .order_by_date.pluck(:name, :id) << ["No recent placements", "never_offered"]
   end
 
   private

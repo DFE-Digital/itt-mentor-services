@@ -2,7 +2,7 @@ class Placements::SchoolsQuery < ApplicationQuery
   MAX_LOCATION_DISTANCE = 50
 
   def call
-    scope = Placements::School.joins(:hosting_interests, :placements)
+    scope = Placements::School.joins(:hosting_interests, :placements, :academic_years)
 
     scope = search_by_name_condition(scope)
     scope = subject_condition(scope)
@@ -41,11 +41,13 @@ class Placements::SchoolsQuery < ApplicationQuery
   end
 
   def last_offered_placements_condition(scope)
-    return scope if filter_params[:last_offered_placements].blank?
+    return scope if filter_params[:last_offered_placements_academic_year_ids].blank?
 
-    # return if filter_params[:last_offered_placements].include?("never_offered") TODO: Query to return schools that have no previously hosted
-
-    scope.where(placements: { academic_year: filter_params[:last_offered_placements] })
+    if filter_params[:last_offered_placements_academic_year_ids].include?("never_offered")
+      scope.where.not(academic_years: { starts_on: ..Placements::AcademicYear.current.starts_on })
+    else
+      scope.where(academic_years: filter_params[:last_offered_placements_academic_year_ids])
+    end
   end
 
   def filter_params
