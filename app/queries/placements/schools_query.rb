@@ -2,13 +2,14 @@ class Placements::SchoolsQuery < ApplicationQuery
   MAX_LOCATION_DISTANCE = 50
 
   def call
-    scope = Placements::School.joins(:hosting_interests, :placements, :academic_years)
+    scope = Placements::School.joins(:hosting_interests, :academic_years, :placements, :mentors)
 
     scope = search_by_name_condition(scope)
     scope = subject_condition(scope)
     scope = itt_statuses_condition(scope)
     scope = phase_condition(scope)
     scope = last_offered_placements_condition(scope)
+    scope = trained_mentors_condition(scope)
     order_condition(scope)
   end
 
@@ -25,7 +26,7 @@ class Placements::SchoolsQuery < ApplicationQuery
     return scope if filter_params[:subject_ids].blank?
 
     scope.where(placements: { subject_id: filter_params[:subject_ids] })
-    # .or(scope.where(placements: { additional_subjects: { id: filter_params[:subject_ids] } })) TODO: Why broken?
+    # .or(scope.where(placements: { additional_subjects: { id: filter_params[:subject_ids] } })) TODO: Investigate why joins doesn't work for additional subjects
   end
 
   def itt_statuses_condition(scope)
@@ -48,6 +49,12 @@ class Placements::SchoolsQuery < ApplicationQuery
     else
       scope.where(academic_years: filter_params[:last_offered_placements_academic_year_ids])
     end
+  end
+
+  def trained_mentors_condition(scope)
+    return scope if filter_params[:trained_mentors].blank?
+
+    scope.where(mentors: { trained: filter_params[:trained_mentors] })
   end
 
   def filter_params

@@ -53,6 +53,7 @@ class Placements::Providers::FindController < Placements::ApplicationController
       phases: [],
       itt_statuses: [],
       last_offered_placements_academic_year_ids: [],
+      trained_mentors: [],
     )
   end
 

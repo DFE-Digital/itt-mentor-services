@@ -5,6 +5,7 @@
 #  id         :uuid             not null, primary key
 #  first_name :string           not null
 #  last_name  :string           not null
+#  trained    :boolean
 #  trn        :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

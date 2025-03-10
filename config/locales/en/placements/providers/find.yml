@@ -47,6 +47,9 @@ en:
           itt_status: ITT status
           last_offered_placements: Last offered placements
           not_offered_placements_label: No recent placements
+          trained_mentors: Trained mentors
+          trained_mentors_true_label: "Yes"
+          trained_mentors_false_label: "No"
         show:
           page_title: "%{subject_name} - Placements - %{school_name}"
           placement: "Placement - %{school_name}"
