@@ -13,11 +13,20 @@ RSpec.describe Placements::MultiPlacementWizard::ReasonNotHostingStep, type: :mo
   let!(:school) { create(:placements_school) }
 
   describe "attributes" do
-    it { is_expected.to have_attributes(reasons_not_hosting: [], reason_details: nil) }
+    it { is_expected.to have_attributes(reasons_not_hosting: [], other_reason_not_hosting: nil) }
   end
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:reasons_not_hosting) }
+    it { is_expected.not_to validate_presence_of(:other_reason_not_hosting) }
+
+    context "when the 'reasons_not_hosting' is 'Other'" do
+      context "when" do
+        let(:attributes) { { reasons_not_hosting: %w[Other], other_reason_not_hosting: nil } }
+
+        it { is_expected.to validate_presence_of(:other_reason_not_hosting) }
+      end
+    end
   end
 
   describe "#reason_options" do
