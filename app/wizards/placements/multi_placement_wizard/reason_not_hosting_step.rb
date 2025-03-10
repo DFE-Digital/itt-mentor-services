@@ -1,8 +1,11 @@
 class Placements::MultiPlacementWizard::ReasonNotHostingStep < BaseStep
   attribute :reasons_not_hosting, default: []
-  attribute :reason_details
+  attribute :other_reason_not_hosting
 
   validates :reasons_not_hosting, presence: true
+  validates :other_reason_not_hosting, presence: true, if: lambda {
+    reasons_not_hosting.include?(I18n.t("#{locale_path}.options.other"))
+  }
 
   def reason_options
     options = Struct.new(:name, :value)
