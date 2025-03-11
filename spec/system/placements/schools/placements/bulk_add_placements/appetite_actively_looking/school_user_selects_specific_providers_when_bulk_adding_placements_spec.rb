@@ -53,9 +53,7 @@ RSpec.describe "School user selects specfic providers when bulk adding placement
     then_i_see_my_responses_with_successfully_updated
     and_the_schools_contact_has_been_updated
     and_the_schools_hosting_interest_for_the_next_year_is_updated
-
-    when_i_click_on_the_academic_year_tab
-    then_i_see_placements_i_created_for_the_subject_primary
+    and_i_see_placements_i_created_for_the_subject_primary
     and_i_see_placements_i_created_for_the_subject_handwriting
     and_i_see_placements_i_created_for_the_subject_english
     and_i_see_placements_i_created_for_the_subject_mathematics
@@ -314,7 +312,7 @@ RSpec.describe "School user selects specfic providers when bulk adding placement
     click_on "Next year (#{@next_academic_year.name})"
   end
 
-  def then_i_see_placements_i_created_for_the_subject_primary
+  def and_i_see_placements_i_created_for_the_subject_primary
     expect(page).to have_link(
       "Primary",
       class: "govuk-link govuk-link--no-visited-state",

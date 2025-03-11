@@ -41,9 +41,7 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
     then_i_see_my_responses_with_successfully_updated
     and_the_schools_contact_has_been_updated
     and_the_schools_hosting_interest_for_the_next_year_is_updated
-
-    when_i_click_on_the_academic_year_tab
-    then_i_see_placements_i_created_for_the_subject_english
+    and_i_see_placements_i_created_for_the_subject_english
     and_i_see_placements_i_created_for_the_subject_mathematics
   end
 
@@ -243,7 +241,7 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
     click_on "Next year (#{@next_academic_year.name})"
   end
 
-  def then_i_see_placements_i_created_for_the_subject_english
+  def and_i_see_placements_i_created_for_the_subject_english
     expect(page).to have_link(
       "English",
       class: "govuk-link govuk-link--no-visited-state",

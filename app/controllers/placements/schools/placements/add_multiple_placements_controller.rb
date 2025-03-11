@@ -7,6 +7,17 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
 
   attr_reader :school
 
+  # This only lives here as part of the concept testing
+  def concept_index
+    @pagy, placements = pagy(
+      school
+        .placements
+        .includes(:subject, :mentors, :additional_subjects, :provider)
+        .order("subjects.name"),
+    )
+    @placements = placements.decorate
+  end
+
   def new
     @wizard.setup_state
     redirect_to step_path(@wizard.first_step)
@@ -55,7 +66,7 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
 
   def success_path
     if appetite == "actively_looking"
-      index_path
+      concept_index_placements_school_placements_path(@school)
     else
       whats_next_placements_school_placements_path(@school)
     end

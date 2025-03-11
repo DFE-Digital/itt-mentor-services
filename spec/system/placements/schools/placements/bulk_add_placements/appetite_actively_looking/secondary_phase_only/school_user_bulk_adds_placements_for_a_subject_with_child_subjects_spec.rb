@@ -51,9 +51,7 @@ RSpec.describe "School user bulk adds placements for a subject with child subjec
     then_i_see_my_responses_with_successfully_updated
     and_the_schools_contact_has_been_updated
     and_the_schools_hosting_interest_for_the_next_year_is_updated
-
-    when_i_click_on_the_academic_year_tab
-    then_i_see_placements_i_created_for_the_subject_french
+    and_i_see_placements_i_created_for_the_subject_french
     and_i_see_placements_i_created_for_the_subject_french_and_russian
   end
 
@@ -291,7 +289,7 @@ RSpec.describe "School user bulk adds placements for a subject with child subjec
     click_on "Next year (#{@next_academic_year.name})"
   end
 
-  def then_i_see_placements_i_created_for_the_subject_french
+  def and_i_see_placements_i_created_for_the_subject_french
     expect(page).to have_link(
       "French",
       class: "govuk-link govuk-link--no-visited-state",
