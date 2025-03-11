@@ -17,7 +17,7 @@ en:
           preview_file_name: Preview of %{file_name}
           caption: Auditing
           confirm_upload: Confirm upload
-          only_showing_first_rows: Only showing the first %{row_count} rows
+          only_showing_first_five_rows: Only showing the first 5 rows
           showing_all_rows: Showing all rows
         upload_errors_step:
           page_title: Upload claims to be audited - Auditing - Claims
