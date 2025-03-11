@@ -10,7 +10,7 @@
       <% if @school.school_contact.present? %>
         <div class="govuk-button-group">
           <%= govuk_button_link_to(t(".add_placement"), new_add_placement_placements_school_placements_path) %>
-          <%= govuk_button_link_to(t(".bulk_add_placements"), new_add_multiple_placements_placements_school_placements_path) %>
+          <%= govuk_button_link_to(t(".bulk_add_placements"), new_add_multiple_placements_placements_school_placements_path, secondary: true) %>
         </div>
       <% else %>
         <%= govuk_inset_text(
@@ -55,6 +55,7 @@
                 ) %>
                 <% row.with_cell(
                   text: placement.terms.present? ? placement.term_names : t(".date_not_added"),
+                  html_attributes: { class: ("secondary-text" if placement.terms.blank?) },
                 ) %>
                 <% row.with_cell(
                   text: placement.provider.present? ? placement.provider_name : t(".provider_not_assigned"),
