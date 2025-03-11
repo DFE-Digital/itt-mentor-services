@@ -84,6 +84,7 @@ scope module: :placements,
           put "multiple/:state_key/:step", to: "placements/add_multiple_placements#update"
 
           get "whats_next", to: "placements/add_multiple_placements#whats_next", as: :whats_next
+          get "concept_index", to: "placements/add_multiple_placements#concept_index", as: :concept_index
         end
       end
 
