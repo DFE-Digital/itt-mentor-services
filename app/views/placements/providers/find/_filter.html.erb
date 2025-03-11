@@ -270,12 +270,9 @@
               },
               small: true,
             ) do %>
-              <%= form.govuk_check_box :trained_mentors,
-                                       true,
-                                       label: { text: t(".trained_mentors_true_label") } %>
-              <%= form.govuk_check_box :trained_mentors,
-                                       false,
-                                       label: { text: t(".trained_mentors_false_label") } %>
+              <% filter_form.trained_mentor_options.each do |value, label| %>
+                <%= form.govuk_check_box :trained_mentors, value.to_s, label: { text: label } %>
+              <% end %>
             <% end %>
           <% end %>
         </div>

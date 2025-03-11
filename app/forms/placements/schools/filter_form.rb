@@ -68,6 +68,13 @@ class Placements::Schools::FilterForm < ApplicationForm
       .order_by_date.pluck(:name, :id) << ["No recent placements", "never_offered"]
   end
 
+  def trained_mentor_options
+    [
+      [true, I18n.t("placements.providers.find.filter.trained_mentors_true_label")],
+      [false, I18n.t("placements.providers.find.filter.trained_mentors_false_label")],
+    ]
+  end
+
   private
 
   SINGULAR_ATTRIBUTES = %w[search_location search_by_name].freeze
