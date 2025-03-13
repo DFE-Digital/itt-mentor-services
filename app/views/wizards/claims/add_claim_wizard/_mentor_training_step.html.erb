@@ -8,7 +8,7 @@
 
    <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <span class="govuk-caption-l"><%= contextual_text %> - <%= @wizard.steps[:provider].provider.name %></span>
+        <span class="govuk-caption-l"><%= contextual_text %> - <%= @wizard.provider_name %></span>
         <h1 class="govuk-heading-l"><%= t(".hours_of_training_for_mentor", mentor: current_step.mentor_full_name) %> </h1>
 
          <%= render Claims::AddClaimWizard::MentorTrainingStep::DisclaimerComponent.new(mentor_training_step: current_step) %>

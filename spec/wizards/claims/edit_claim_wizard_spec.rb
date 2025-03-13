@@ -56,6 +56,19 @@ RSpec.describe Claims::EditClaimWizard do
       it { is_expected.to eq [:declaration] }
     end
 
+    context "when the provider 'id' is set in the provider options step" do
+      let(:state) do
+        {
+          "provider" => { "id" => provider.name },
+          "provider_options" => { "id" => provider.id, "search_param" => provider.name },
+          "mentor" => { "mentor_ids" => [mentor_1.id] },
+          "mentor_training_#{mentor_1.id}" => { mentor_id: mentor_1.id, hours_to_claim: "custom", custom_hours: 6 },
+        }
+      end
+
+      it { is_expected.to eq [:provider, :provider_options, :mentor, "mentor_training_#{mentor_1.id}".to_sym, :check_your_answers] }
+    end
+
     context "when there are no mentors with claimable hours for the given provider" do
       let(:another_provider) { create(:claims_provider, :best_practice_network) }
       let(:another_claim) do
@@ -262,7 +275,22 @@ RSpec.describe Claims::EditClaimWizard do
         }
       end
 
-      it "returns the provider assigned to the claim" do
+      it "returns the provider assigned to the provider step" do
+        expect(wizard.provider).to eq(another_provider)
+      end
+    end
+
+    context "when the provider is set in the provider options step" do
+      let(:another_provider) { create(:claims_provider, :niot) }
+
+      let(:state) do
+        {
+          "provider" => { "id" => another_provider.name },
+          "provider_options" => { "id" => another_provider.id, "search_param" => another_provider.name },
+        }
+      end
+
+      it "returns the provider assigned to the provider options step" do
         expect(wizard.provider).to eq(another_provider)
       end
     end

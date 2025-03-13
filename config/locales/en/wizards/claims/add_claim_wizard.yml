@@ -4,8 +4,10 @@ en:
       add_claim_wizard:
         provider_step:
           continue: Continue
-          page_title: Accredited provider - %{contextual_text}
-          title: Accredited provider
+          page_title: Enter an accredited provider name, UKPRN, URN or postcode - %{contextual_text}
+          title: Enter an accredited provider name, UKPRN, URN or postcode
+        provider_options_step:
+          title: "%{provider_count} results found for ‘%{search_param}’ - %{contextual_text}"
         mentor_step:
           page_title: Mentors for %{provider_name} - %{contextual_text}
           continue: Continue

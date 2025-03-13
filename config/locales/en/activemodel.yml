@@ -138,7 +138,7 @@ en:
         claims/add_claim_wizard/provider_step:
           attributes:
             id:
-              blank: Select a provider
+              blank: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode
         claims/add_claim_wizard/mentor_step:
           attributes:
             mentor_ids:
@@ -320,3 +320,7 @@ en:
             child_subject_ids: 
               blank: Please select a subject
               inclusion: Please select a subject
+        claims/add_claim_wizard/provider_options_step:
+          attributes:
+            id:
+              blank: Select a provider
