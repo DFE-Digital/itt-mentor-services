@@ -8,7 +8,7 @@ Pending
 
 ## Context
 
-Schools are able to claim for mentor funding through the claims service, a school who has not claimed before will be able to claim 20 hours of funding, if a school has claimed funding in the previous academic year then they will be able to claim 6 hours of funding. It is also possible that a school who took on mentors in a previous academic year has not done so in the current academic year, in this case they will not be able to claim further funding.
+Schools are able to claim for mentor funding through the claims service. A school who has not claimed before will be able to claim 20 hours of funding per mentor per accredited provider. If a school has claimed funding in the previous academic year for a specific mentor then they will only be able to claim 6 hours of funding for that mentor, for the same accredited provider. It is also possible that a school who took on mentors in a previous academic year has not done so in the current academic year, and in this case they will not be able to claim further funding.
 
 We hold data about schools from other services within the BaT service line that can be provided as a CSV from the data and insights team. We want to utilise this data to ensure that only schools that are eligible to claim are able to do so.
 
