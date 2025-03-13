@@ -31,7 +31,7 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
     )
   end
 
-  let!(:draft_mentor_training) do
+  let(:draft_mentor_training) do
     create(
       :mentor_training,
       claim: draft_claim,
@@ -43,6 +43,7 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
   end
 
   before do
+    draft_mentor_training
     user_exists_in_dfe_sign_in(user: colin)
     given_i_sign_in
     when_i_select_a_school
