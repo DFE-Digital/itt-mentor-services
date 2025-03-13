@@ -26,11 +26,32 @@ RSpec.describe Claims::AddClaimWizard do
       it { is_expected.to eq %i[provider no_mentors] }
     end
 
+    context "when the 'id' set in the provider step is a provider name" do
+      let(:state) do
+        {
+          "provider" => { "id" => provider.name },
+        }
+      end
+
+      it { is_expected.to eq %i[provider provider_options no_mentors] }
+    end
+
     context "when the school has mentors" do
       let!(:mentor_1) { create(:claims_mentor, schools: [school], first_name: "Alan", last_name: "Anderson") }
 
       context "with claimable hours" do
         it { is_expected.to eq %i[provider mentor check_your_answers] }
+
+        context "when the provider is set in the provider options step" do
+          let(:state) do
+            {
+              "provider" => { "id" => provider.name },
+              "provider_options" => { "id" => provider.id, "search_param" => provider.name },
+            }
+          end
+
+          it { is_expected.to eq %i[provider provider_options mentor check_your_answers] }
+        end
       end
 
       context "when mentors have been selected" do
@@ -248,14 +269,29 @@ RSpec.describe Claims::AddClaimWizard do
   end
 
   describe "#provider" do
-    let(:state) do
-      {
-        "provider" => { "id" => provider.id },
-      }
+    context "when the provider 'id' is set in the provider step" do
+      let(:state) do
+        {
+          "provider" => { "id" => provider.id },
+        }
+      end
+
+      it "returns the provider given by the provider step" do
+        expect(wizard.provider).to eq(provider)
+      end
     end
 
-    it "returns the provider given by the provider step" do
-      expect(wizard.provider).to eq(provider)
+    context "when the provider 'id' is set in the provider options step" do
+      let(:state) do
+        {
+          "provider" => { "id" => provider.name },
+          "provider_options" => { "id" => provider.id, "search_param" => provider.name },
+        }
+      end
+
+      it "returns the provider given by the provider step" do
+        expect(wizard.provider).to eq(provider)
+      end
     end
   end
 

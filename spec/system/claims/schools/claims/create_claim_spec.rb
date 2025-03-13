@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Create claim", service: :claims, type: :system do
+RSpec.describe "Create claim", :js, service: :claims, type: :system do
   let!(:claim_window) { create(:claim_window, :current) }
   let(:mentor1) { build(:claims_mentor, first_name: "Anne") }
   let(:mentor2) { build(:claims_mentor, first_name: "Joe") }
@@ -23,8 +23,10 @@ RSpec.describe "Create claim", service: :claims, type: :system do
 
   scenario "Anne creates a claim" do
     when_i_click("Add claim")
-    then_i_should_see_providers_ordered_by_name
-    when_i_choose_a_provider(bpn)
+    and_i_enter_a_provider_named_best_practice_network
+    then_i_see_a_dropdown_item_for_best_practice_network
+
+    when_i_click_the_dropdown_item_for_best_practice_network
     when_i_click("Continue")
     when_i_select_all_mentors
     when_i_click("Continue")
@@ -46,7 +48,10 @@ RSpec.describe "Create claim", service: :claims, type: :system do
 
   scenario "Anne attempts to create a claim but backs off before the check page" do
     when_i_click("Add claim")
-    when_i_choose_a_provider(bpn)
+    and_i_enter_a_provider_named_best_practice_network
+    then_i_see_a_dropdown_item_for_best_practice_network
+
+    when_i_click_the_dropdown_item_for_best_practice_network
     when_i_click("Continue")
     when_i_select_all_mentors
     when_i_click("Continue")
@@ -66,7 +71,10 @@ RSpec.describe "Create claim", service: :claims, type: :system do
 
   scenario "Anne creates a claim with mentor training hours over the maximum limit per provider" do
     when_i_click("Add claim")
-    when_i_choose_a_provider(bpn)
+    and_i_enter_a_provider_named_best_practice_network
+    then_i_see_a_dropdown_item_for_best_practice_network
+
+    when_i_click_the_dropdown_item_for_best_practice_network
     when_i_click("Continue")
     when_i_select_all_mentors
     when_i_click("Continue")
@@ -85,8 +93,14 @@ RSpec.describe "Create claim", service: :claims, type: :system do
   scenario "Anne does not fill the form correctly" do
     when_i_click("Add claim")
     when_i_click("Continue")
-    then_i_see_the_error("Select a provider")
-    when_i_choose_a_provider(bpn)
+    then_i_see_the_error(
+      "Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode",
+    )
+
+    and_i_enter_a_provider_named_best_practice_network
+    then_i_see_a_dropdown_item_for_best_practice_network
+
+    when_i_click_the_dropdown_item_for_best_practice_network
     when_i_click("Continue")
     when_i_click("Continue")
     then_i_see_the_error("Select a mentor")
@@ -111,7 +125,10 @@ RSpec.describe "Create claim", service: :claims, type: :system do
   scenario "School attempts to create a claim when their mentors have all been claimed for" do
     given_my_school_has_fully_claimed_for_all_mentors_for_provider(bpn)
     when_i_click("Add claim")
-    when_i_choose_a_provider(bpn)
+    and_i_enter_a_provider_named_best_practice_network
+    then_i_see_a_dropdown_item_for_best_practice_network
+
+    when_i_click_the_dropdown_item_for_best_practice_network
     when_i_click("Continue")
     then_i_should_see_the_message("There are no mentors you can include in a claim because they have already had 20 hours of training claimed for with Best Practice Network.")
   end
@@ -119,7 +136,10 @@ RSpec.describe "Create claim", service: :claims, type: :system do
   scenario "School attempts to create a claim then changes the provider to an invalid one" do
     given_my_school_has_fully_claimed_for_all_mentors_for_provider(bpn)
     when_i_click("Add claim")
-    when_i_choose_a_provider(niot)
+    when_i_enter_a_provider_named_niot
+    then_i_see_a_dropdown_item_for_niot
+
+    when_i_click_the_dropdown_item_for_niot
     when_i_click("Continue")
     when_i_select_a_mentor(mentor1)
     when_i_click("Continue")
@@ -127,11 +147,17 @@ RSpec.describe "Create claim", service: :claims, type: :system do
     when_i_add_training_hours("20 hours")
     when_i_click("Continue")
     when_i_click("Change Accredited provider")
-    when_i_choose_a_provider(bpn)
+    and_i_enter_a_provider_named_best_practice_network
+    then_i_see_a_dropdown_item_for_best_practice_network
+
+    when_i_click_the_dropdown_item_for_best_practice_network
     when_i_click("Continue")
     then_i_should_see_the_message("There are no mentors you can include in a claim because they have already had 20 hours of training claimed for with Best Practice Network.")
     when_i_click("Change the accredited provider")
-    when_i_choose_a_provider(niot)
+    when_i_enter_a_provider_named_niot
+    then_i_see_a_dropdown_item_for_niot
+
+    when_i_click_the_dropdown_item_for_niot
     when_i_click("Continue")
     when_i_click("Continue")
     when_i_click("Continue")
@@ -149,7 +175,10 @@ RSpec.describe "Create claim", service: :claims, type: :system do
 
     scenario "Anne creates a claim" do
       when_i_click("Add claim")
-      when_i_choose_a_provider(bpn)
+      and_i_enter_a_provider_named_best_practice_network
+      then_i_see_a_dropdown_item_for_best_practice_network
+
+      when_i_click_the_dropdown_item_for_best_practice_network
       when_i_click("Continue")
       when_i_select_a_mentor(mentor1)
       when_i_click("Continue")
@@ -164,7 +193,10 @@ RSpec.describe "Create claim", service: :claims, type: :system do
 
     scenario "Anne creates a claim with more than the remaining hours" do
       when_i_click("Add claim")
-      when_i_choose_a_provider(bpn)
+      and_i_enter_a_provider_named_best_practice_network
+      then_i_see_a_dropdown_item_for_best_practice_network
+
+      when_i_click_the_dropdown_item_for_best_practice_network
       when_i_click("Continue")
       when_i_select_a_mentor(mentor1)
       when_i_click("Continue")
@@ -232,54 +264,25 @@ RSpec.describe "Create claim", service: :claims, type: :system do
   end
 
   def then_i_check_my_answers
-    expect(page).to have_content("Check your answers")
-    expect(page).to have_content("Hours of training")
-    expect(page).to have_content("Grant funding")
+    expect(page).to have_h1("Check your answers", class: "govuk-heading-l")
 
-    within("dl.govuk-summary-list:nth(1)") do
-      within(".govuk-summary-list__row:nth(2)") do
-        expect(page).to have_content("Academic year")
-        expect(page).to have_content(claim_window.academic_year_name)
-      end
+    expect(page).to have_summary_list_row("Academic year", claim_window.academic_year_name)
+    expect(page).to have_summary_list_row("Accredited provider", bpn.name)
+    expect(page).to have_summary_list_row(
+      "Mentors",
+      "#{mentor1.full_name}\n#{mentor2.full_name}",
+    )
 
-      within(".govuk-summary-list__row:nth(3)") do
-        expect(page).to have_content("Accredited provider")
-        expect(page).to have_content(bpn.name)
-      end
+    expect(page).to have_h2("Hours of training", class: "govuk-heading-m")
 
-      within(".govuk-summary-list__row:nth(4)") do
-        expect(page).to have_content("Mentors")
-        expect(page).to have_content(mentor1.full_name)
-        expect(page).to have_content(mentor2.full_name)
-      end
-    end
+    expect(page).to have_summary_list_row(mentor1.full_name, "20 hours")
+    expect(page).to have_summary_list_row(mentor2.full_name, "12 hours")
 
-    within("dl.govuk-summary-list:nth(2)") do
-      within(".govuk-summary-list__row:nth(1)") do
-        expect(page).to have_content(mentor1.full_name)
-        expect(page).to have_content("20 hours")
-      end
+    expect(page).to have_h2("Grant funding", class: "govuk-heading-m")
 
-      within(".govuk-summary-list__row:nth(2)") do
-        expect(page).to have_content(mentor2.full_name)
-        expect(page).to have_content("12 hours")
-      end
-    end
-
-    within("dl.govuk-summary-list:nth(3)") do
-      within(".govuk-summary-list__row:nth(1)") do
-        expect(page).to have_content("Total hours32 hours")
-      end
-
-      within(".govuk-summary-list__row:nth(2)") do
-        expect(page).to have_content("Hourly rate£53.60")
-      end
-
-      within(".govuk-summary-list__row:nth(3)") do
-        expect(page).to have_content("Claim amount")
-        expect(page).to have_content("£1,715.20")
-      end
-    end
+    expect(page).to have_summary_list_row("Total hours", "32 hours")
+    expect(page).to have_summary_list_row("Hourly rate", "£53.60")
+    expect(page).to have_summary_list_row("Claim amount", "£1,715.20")
   end
 
   def then_i_get_a_claim_reference_and_see_next_steps
@@ -297,17 +300,11 @@ RSpec.describe "Create claim", service: :claims, type: :system do
 
   def then_i_expect_the_training_hours_for(_hours, mentor)
     expect(page).to have_content("Hours of training for #{mentor.full_name}")
-    find("#claims-add-claim-wizard-mentor-training-step-hours-to-claim-maximum-field").checked?
+    find("#claims-add-claim-wizard-mentor-training-step-hours-to-claim-maximum-field", visible: :all).checked?
   end
 
   def then_i_see_the_error(message)
-    within(".govuk-error-summary") do
-      expect(page).to have_content message
-    end
-
-    within(".govuk-form-group--error") do
-      expect(page).to have_content message
-    end
+    expect(page).to have_validation_error(message)
   end
 
   def given_i_visit_claim_check_page_after_submitting
@@ -362,5 +359,35 @@ RSpec.describe "Create claim", service: :claims, type: :system do
   def and_the_total_claimable_hours_are_for_refresher_training
     expect(page).to have_content("6 hours")
     expect(page).to have_content("The remaining amount of hours for standard training")
+  end
+
+  def and_i_enter_a_provider_named_best_practice_network
+    fill_in "Enter an accredited provider", with: "Best Practice Network"
+  end
+
+  def then_i_see_a_dropdown_item_for_best_practice_network
+    expect(page).to have_css(".autocomplete__option", text: "Best Practice Network", wait: 10)
+  end
+
+  def when_i_click_the_dropdown_item_for_best_practice_network
+    page.find(".autocomplete__option", text: "Best Practice Network").click
+  end
+
+  def when_i_enter_a_provider_named_niot
+    fill_in "Enter an accredited provider", with: niot.name
+  end
+
+  def then_i_see_a_dropdown_item_for_niot
+    expect(page).to have_css(".autocomplete__option", text: niot.name, wait: 10)
+  end
+
+  def when_i_click_the_dropdown_item_for_niot
+    page.find(".autocomplete__option", text: niot.name).click
+  end
+
+  def then_i_expect_the_provider_to_be_prefilled_with_best_practice_network
+    expect(page.find("#claims-add-claim-wizard-provider-step-id-field").value).to eq(
+      "Best Practice Network",
+    )
   end
 end

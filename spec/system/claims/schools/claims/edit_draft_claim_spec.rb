@@ -70,7 +70,7 @@ RSpec.describe "Edit a claim", service: :claims, type: :system do
     then_i_see_a_validation_error_for_selecting_a_mentor
   end
 
-  scenario "Anne submits the draft claim which is invalid" do
+  scenario "Anne submits the draft claim which is invalid", :js do
     given_a_mentor_training_for(hours_completed: 20)
     user_exists_in_dfe_sign_in(user: anne)
     given_i_sign_in
@@ -78,7 +78,10 @@ RSpec.describe "Edit a claim", service: :claims, type: :system do
     then_i_can_then_see_the_draft_claim_details(20)
 
     and_i_click("Change Accredited provider")
-    and_i_select_provider_niot
+    when_i_enter_a_provider_named_niot
+    then_i_see_a_dropdown_item_for_niot
+
+    when_i_click_the_dropdown_item_for_niot
     and_i_click("Continue") # To mentors step
     and_i_click("Continue") # To mentor training step
     and_i_click("Continue") # To check your answers
@@ -105,19 +108,26 @@ RSpec.describe "Edit a claim", service: :claims, type: :system do
   end
 
   def then_i_can_then_see_the_draft_claim_details(number_of_hours)
-    expect(page).to have_content("Claim - #{draft_claim.reference}")
-    expect(page).to have_content("SchoolA School")
+    expect(page).to have_h1("Claim - #{draft_claim.reference}", class: "govuk-heading-l")
+    expect(page).to have_summary_list_row("School", "A School")
     expect(page).to have_content("Draft")
     expect(page).not_to have_content("Submitted by")
-    expect(page).to have_content("Accredited providerBest Practice Network")
-    expect(page).to have_content("Mentors\nBarry Garlow")
-    expect(page).to have_content("Hours of training")
-    expect(page).to have_content("Barry Garlow#{number_of_hours} hours")
-    expect(page).to have_content("Total hours#{number_of_hours} hours")
-    expect(page).to have_content("Hourly rate£53.60")
+    expect(page).to have_summary_list_row("Accredited provider", "Best Practice Network")
+
+    expect(page).to have_summary_list_row("Mentors", "Barry Garlow")
+
+    expect(page).to have_h2("Hours of training", class: "govuk-heading-m")
+    expect(page).to have_summary_list_row("Barry Garlow", "#{number_of_hours} hours")
+
+    expect(page).to have_h2("Grant funding", class: "govuk-heading-m")
+    expect(page).to have_summary_list_row("Total hours", "#{number_of_hours} hours")
+    expect(page).to have_summary_list_row("Hourly rate", "£53.60")
+
     amount = Money.new(number_of_hours * school.region.claims_funding_available_per_hour_pence, "GBP")
-    expect(page).to have_content("Claim amount#{amount.format(symbol: true, decimal_mark: ".", no_cents: true)}")
-    expect(page).to have_content("Change", count: 3)
+    expect(page).to have_summary_list_row(
+      "Claim amount",
+      amount.format(symbol: true, decimal_mark: ".", no_cents: true),
+    )
   end
 
   def given_i_sign_in
@@ -157,16 +167,24 @@ RSpec.describe "Edit a claim", service: :claims, type: :system do
   end
 
   def then_i_see_the_check_your_answers_page(provider:, mentor:, hours_completed:)
-    expect(page).to have_content("SchoolA School")
+    expect(page).to have_summary_list_row("School", "A School")
     expect(page).not_to have_content("Submitted by")
-    expect(page).to have_content("Accredited provider#{provider.name}")
-    expect(page).to have_content("Mentors\n#{mentor.full_name}")
-    expect(page).to have_content("Hours of training")
-    expect(page).to have_content("Barry Garlow#{hours_completed} hours")
-    expect(page).to have_content("Total hours#{hours_completed} hours")
-    expect(page).to have_content("Hourly rate£53.60")
+
+    expect(page).to have_summary_list_row("Accredited provider", provider.name)
+    expect(page).to have_summary_list_row("Mentors", mentor.full_name)
+
+    expect(page).to have_h2("Hours of training", class: "govuk-heading-m")
+    expect(page).to have_summary_list_row("Barry Garlow", "#{hours_completed} hours")
+
+    expect(page).to have_h2("Grant funding", class: "govuk-heading-m")
+    expect(page).to have_summary_list_row("Total hours", "#{hours_completed} hours")
+    expect(page).to have_summary_list_row("Hourly rate", "£53.60")
+
     amount = Money.new(hours_completed * school.region.claims_funding_available_per_hour_pence, "GBP")
-    expect(page).to have_content("Claim amount#{amount.format(symbol: true, decimal_mark: ".", no_cents: true)}")
+    expect(page).to have_summary_list_row(
+      "Claim amount",
+      amount.format(symbol: true, decimal_mark: ".", no_cents: true),
+    )
   end
 
   def when_i_click_to_change_mentors
@@ -208,5 +226,17 @@ RSpec.describe "Edit a claim", service: :claims, type: :system do
   def then_i_see_i_can_not_sumbit_the_claim
     expect(page).to have_h1("You cannot submit the claim")
     expect(page).to have_content("You cannot submit the claim because your mentors’ information has recently changed.")
+  end
+
+  def when_i_enter_a_provider_named_niot
+    fill_in "Enter an accredited provider", with: another_provider.name
+  end
+
+  def then_i_see_a_dropdown_item_for_niot
+    expect(page).to have_css(".autocomplete__option", text: another_provider.name, wait: 10)
+  end
+
+  def when_i_click_the_dropdown_item_for_niot
+    page.find(".autocomplete__option", text: another_provider.name).click
   end
 end

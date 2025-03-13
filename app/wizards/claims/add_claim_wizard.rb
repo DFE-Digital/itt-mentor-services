@@ -15,6 +15,7 @@ module Claims
 
     def define_steps
       add_step(ProviderStep)
+      add_step(ProviderOptionsStep) if steps.fetch(:provider).provider.blank?
       if mentors_with_claimable_hours.any? || current_step == :check_your_answers
         add_step(MentorStep)
         # Loop over mentors
@@ -58,7 +59,7 @@ module Claims
     end
 
     def provider
-      steps.fetch(:provider).provider
+      steps[:provider_options]&.provider || steps.fetch(:provider).provider
     end
 
     def mentors_with_claimable_hours
