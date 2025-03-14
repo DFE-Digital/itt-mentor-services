@@ -4,8 +4,11 @@ en:
       add_claim_wizard:
         provider_step:
           continue: Continue
-          page_title: Enter an accredited provider name, UKPRN, URN or postcode - %{contextual_text}
-          title: Enter an accredited provider name, UKPRN, URN or postcode
+          page_title: Enter the accredited provider for this claime - %{contextual_text}
+          title: Enter the accredited provider for this claim
+          hint_html:
+            You must make a separate claim for each accredited provider you work with.<br><br>
+            Enter a provider name, United Kingdon provider number (UKPRN), unique reference number (URN) or postcode
         provider_options_step:
           title: "%{provider_count} results found for ‘%{search_param}’ - %{contextual_text}"
         mentor_step:

@@ -362,7 +362,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
   end
 
   def and_i_enter_a_provider_named_best_practice_network
-    fill_in "Enter an accredited provider", with: "Best Practice Network"
+    fill_in "Enter the accredited provider", with: "Best Practice Network"
   end
 
   def then_i_see_a_dropdown_item_for_best_practice_network
@@ -374,7 +374,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
   end
 
   def when_i_enter_a_provider_named_niot
-    fill_in "Enter an accredited provider", with: niot.name
+    fill_in "Enter the accredited provider", with: niot.name
   end
 
   def then_i_see_a_dropdown_item_for_niot
