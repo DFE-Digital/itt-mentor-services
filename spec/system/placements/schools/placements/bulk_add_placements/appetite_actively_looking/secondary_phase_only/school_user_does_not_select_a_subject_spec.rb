@@ -18,10 +18,6 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
 
     when_i_select_secondary
     and_i_click_on_continue
-    then_i_see_the_subjects_known_form
-
-    when_i_select_yes
-    and_i_click_on_continue
     then_i_see_the_secondary_subject_selection_form
 
     when_i_click_on_continue
@@ -96,12 +92,12 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
 
   def then_i_see_the_phase_form
     expect(page).to have_title(
-      "What phase are you looking to host placements at? - Manage school placements - GOV.UK",
+      "What phase of education will your placements be? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "What phase are you looking to host placements at?",
+      text: "What phase of education will your placements be?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Primary", type: :checkbox)
@@ -132,12 +128,12 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
 
   def then_i_see_the_secondary_subject_selection_form
     expect(page).to have_title(
-      "Select secondary subjects - Manage school placements - GOV.UK",
+      "Select secondary school subjects - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "Select secondary subjects",
+      text: "Select secondary school subjects",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")

@@ -1,28 +1,23 @@
 require "rails_helper"
 
-RSpec.describe "School user bulk adds placements for primary and secondary phases",
+RSpec.describe "School user does not select any reasons not to host",
                service: :placements,
                type: :system do
   scenario do
     given_the_bulk_add_placements_flag_is_enabled
-    and_subjects_exist
     and_academic_years_exist
     and_i_am_signed_in
     when_i_am_on_the_placements_index_page
     and_i_click_on_bulk_add_placements
     then_i_see_the_appetite_form
 
-    when_i_select_actively_looking_to_host_placements
+    when_i_select_not_open_to_hosting_placements
     and_i_click_on_continue
-    then_i_see_the_phase_form
+    then_i_see_the_reasons_for_not_hosting_form
 
-    when_i_select_primary
-    and_i_select_secondary
+    when_i_select_other
     and_i_click_on_continue
-    then_i_see_the_subjects_known_form
-
-    when_i_click_on_continue
-    then_i_see_a_validation_error_for_selecting_if_the_subjects_are_known
+    then_i_see_a_validation_error_not_entering_an_other_reason
   end
 
   private
@@ -30,16 +25,6 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
   def given_the_bulk_add_placements_flag_is_enabled
     Flipper.add(:bulk_add_placements)
     Flipper.enable(:bulk_add_placements)
-  end
-
-  def and_subjects_exist
-    @primary = create(:subject, :primary, name: "Primary")
-    @phonics = create(:subject, :primary, name: "Phonics")
-    @handwriting = create(:subject, :primary, name: "Handwriting")
-
-    @english = create(:subject, :secondary, name: "English")
-    @mathematics = create(:subject, :secondary, name: "Mathematics")
-    @science = create(:subject, :secondary, name: "Science")
   end
 
   def and_academic_years_exist
@@ -59,6 +44,7 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
     expect(secondary_navigation).to have_current_item("This year (#{@current_academic_year_name}")
+    expect(page).to have_link("Add placement")
     expect(page).to have_link("Bulk add placements")
   end
   alias_method :then_i_am_on_the_placements_index_page,
@@ -85,8 +71,8 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
     expect(page).to have_field("No - Let providers know I am not hosting and do not want to be contacted", type: :radio)
   end
 
-  def when_i_select_actively_looking_to_host_placements
-    choose "Yes - Let providers know what I'm willing to host"
+  def when_i_select_not_open_to_hosting_placements
+    choose "No - Let providers know I am not hosting and do not want to be contacted"
   end
 
   def when_i_click_on_continue
@@ -95,45 +81,32 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
   alias_method :and_i_click_on_continue,
                :when_i_click_on_continue
 
-  def then_i_see_the_phase_form
+  def then_i_see_the_reasons_for_not_hosting_form
     expect(page).to have_title(
-      "What phase are you looking to host placements at? - Manage school placements - GOV.UK",
+      "What are your reasons for not taking part in ITT this year? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "What phase are you looking to host placements at?",
+      text: "What are your reasons for not taking part in ITT this year?",
       class: "govuk-fieldset__legend",
     )
-    expect(page).to have_field("Primary", type: :checkbox)
-    expect(page).to have_field("Secondary", type: :checkbox)
+    expect(page).to have_field("Concerns about trainee quality", type: :checkbox)
+    expect(page).to have_field("Don't get offered trainees", type: :checkbox)
+    expect(page).to have_field("Don't know how to get involved", type: :checkbox)
+    expect(page).to have_field("Not enough trained mentors", type: :checkbox)
+    expect(page).to have_field("Number of pupils with SEND needs", type: :checkbox)
+    expect(page).to have_field("Working to improve our OFSTED rating", type: :checkbox)
+    expect(page).to have_field("Other", type: :checkbox)
   end
 
-  def when_i_select_primary
-    check "Primary"
+  def when_i_select_other
+    check "Other"
   end
 
-  def and_i_select_secondary
-    check "Secondary"
-  end
-
-  def then_i_see_the_subjects_known_form
-    expect(page).to have_title(
-      "Do you know which subjects you would like to host? - Manage school placements - GOV.UK",
-    )
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_element(
-      :legend,
-      text: "Do you know which subjects you would like to host?",
-      class: "govuk-fieldset__legend",
-    )
-    expect(page).to have_field("Yes", type: :radio)
-    expect(page).to have_field("No", type: :radio)
-  end
-
-  def then_i_see_a_validation_error_for_selecting_if_the_subjects_are_known
+  def then_i_see_a_validation_error_not_entering_an_other_reason
     expect(page).to have_validation_error(
-      "Please select if you know which subjects you would like to host",
+      "Please enter a reason",
     )
   end
 end

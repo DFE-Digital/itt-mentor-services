@@ -1,7 +1,11 @@
 class Placements::MultiPlacementWizard::ReasonNotHostingStep < BaseStep
   attribute :reasons_not_hosting, default: []
+  attribute :other_reason_not_hosting
 
   validates :reasons_not_hosting, presence: true
+  validates :other_reason_not_hosting, presence: true, if: lambda {
+    reasons_not_hosting.include?(I18n.t("#{locale_path}.options.other"))
+  }
 
   def reason_options
     options = Struct.new(:name, :value)
@@ -24,9 +28,13 @@ class Placements::MultiPlacementWizard::ReasonNotHostingStep < BaseStep
 
   def reasons
     [
+      I18n.t("#{locale_path}.options.concerns_about_trainee_quality"),
+      I18n.t("#{locale_path}.options.do_not_get_offered_trainees"),
+      I18n.t("#{locale_path}.options.do_not_know_how_to_get_involved"),
       I18n.t("#{locale_path}.options.not_enough_trained_mentors"),
       I18n.t("#{locale_path}.options.number_of_pupils_with_send_needs"),
       I18n.t("#{locale_path}.options.working_to_improve_our_ofsted_rating"),
+      I18n.t("#{locale_path}.options.other"),
     ]
   end
 

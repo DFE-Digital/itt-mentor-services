@@ -7,6 +7,17 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
 
   attr_reader :school
 
+  # This only lives here as part of the concept testing
+  def concept_index
+    @pagy, placements = pagy(
+      school
+        .placements
+        .includes(:subject, :mentors, :additional_subjects, :provider)
+        .order("subjects.name"),
+    )
+    @placements = placements.decorate
+  end
+
   def new
     @wizard.setup_state
     redirect_to step_path(@wizard.first_step)
@@ -20,11 +31,17 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
     else
       @wizard.update_school_placements
       @wizard.reset_state
-      redirect_to index_path, flash: {
-        heading: t(".heading"),
-        body: t(".body_html"),
+      school.reload
+
+      redirect_to success_path, flash: {
+        heading: t(".heading.#{appetite}"),
+        body: t(".body.#{appetite}_html"),
       }
     end
+  end
+
+  def whats_next
+    appetite
   end
 
   private
@@ -45,5 +62,25 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
 
   def index_path
     placements_school_placements_path(@school)
+  end
+
+  def success_path
+    if appetite == "actively_looking"
+      concept_index_placements_school_placements_path(@school)
+    else
+      whats_next_placements_school_placements_path(@school)
+    end
+  end
+
+  def appetite
+    @appetite ||= next_academic_year_hosting_interest.appetite
+  end
+
+  def next_academic_year_hosting_interest
+    @next_academic_year_hosting_interest ||= school
+      .reload
+      .hosting_interests
+      .for_academic_year(Placements::AcademicYear.current.next)
+      .last
   end
 end
