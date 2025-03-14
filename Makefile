@@ -18,7 +18,7 @@ dv_review: dev-cluster
 	$(if ${PR_NUMBER},,$(error Missing PR_NUMBER))
 	$(if ${CLUSTER},,$(error Missing CLUSTER))
 	$(eval export TF_VAR_cluster=${CLUSTER})
-	$(eval ENVIRONMENT=${PR_NUMBER})
+	$(eval ENVIRONMENT=pr-${PR_NUMBER})
 	$(eval include global_config/dv_review.sh)
 
 pt_review: platform-test-cluster
