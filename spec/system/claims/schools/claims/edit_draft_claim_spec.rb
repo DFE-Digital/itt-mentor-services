@@ -229,7 +229,7 @@ RSpec.describe "Edit a claim", service: :claims, type: :system do
   end
 
   def when_i_enter_a_provider_named_niot
-    fill_in "Enter an accredited provider", with: another_provider.name
+    fill_in "Enter the accredited provider", with: another_provider.name
   end
 
   def then_i_see_a_dropdown_item_for_niot

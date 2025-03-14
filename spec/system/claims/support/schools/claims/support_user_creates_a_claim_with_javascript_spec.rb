@@ -85,7 +85,7 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
   def then_i_see_the_enter_a_provider_step
     expect(page).to have_element(
       :label,
-      text: "Enter an accredited provider name, UKPRN, URN or postcode",
+      text: "Enter the accredited provider for this claim",
       class: "govuk-label govuk-label--l",
     )
     expect(page).to have_element(
@@ -97,7 +97,7 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
   end
 
   def when_i_enter_the_provider_name
-    fill_in "Enter an accredited provider", with: "Best Practice Network"
+    fill_in "Enter the accredited provider for this claim", with: "Best Practice Network"
   end
 
   def and_i_click_on_continue
