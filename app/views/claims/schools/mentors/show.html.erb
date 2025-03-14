@@ -10,6 +10,7 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l"><%= @mentor.full_name %></h1>
 
+      <h2 class="govuk-heading-m"><%= t(".details") %></h2>
       <%= govuk_summary_list(actions: false) do |summary_list| %>
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: Mentor.human_attribute_name(:first_name)) %>
