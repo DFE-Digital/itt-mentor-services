@@ -57,7 +57,7 @@
           <% row.with_key(text: t(".mentors")) %>
           <% row.with_value do %>
             <ul class="govuk-list">
-              <% @claim.mentors.each do |mentor| %>
+              <% @claim.mentors.order_by_full_name.each do |mentor| %>
                 <li><%= mentor.full_name %></li>
               <% end %>
             </ul>

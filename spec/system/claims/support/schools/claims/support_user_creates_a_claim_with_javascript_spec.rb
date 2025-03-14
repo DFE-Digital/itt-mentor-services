@@ -53,6 +53,7 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
 
     @school = create(
       :claims_school,
+      name: "London School",
       mentors: [@mentor_1, @mentor_2, @mentor_3],
       region: regions(:inner_london),
     )
@@ -68,7 +69,7 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
   end
 
   def when_i_click_on_the_school
-    click_on @school.name
+    click_on "London School"
   end
 
   def and_i_navigate_to_claims
@@ -212,7 +213,6 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
     expect(page).to have_success_banner("Claim added")
 
     claim = Claims::Claim.draft.order(:submitted_at).last
-
     expect(page).to have_table_row({
       "Claim reference" => claim.reference,
       "Accredited provider" => "Best Practice Network",
