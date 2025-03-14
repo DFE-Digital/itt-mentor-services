@@ -14,6 +14,7 @@ en:
           add_mentor: Add mentor
           page_title: Mentors
         show:
+          details: Details
           page_title: "%{mentor_name} - Mentors"
           caption: "Mentors"
           remove_mentor: Remove mentor

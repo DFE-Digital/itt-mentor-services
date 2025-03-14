@@ -41,6 +41,7 @@ en:
         destroy:
           success: Claim has been removed
         show:
+          details: Details
           mentors: Mentors
           remove_claim: Remove claim
           page_title: Claim - %{reference}

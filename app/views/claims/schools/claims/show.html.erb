@@ -22,6 +22,7 @@
         <p class="govuk-body"><%= t(".submitted_by", name: @claim.submitted_by.full_name, date: l(@claim.submitted_on, format: :long)) %></p>
       <% end %>
 
+      <h2 class="govuk-heading-m"><%= t(".details") %></h2>
       <%= govuk_summary_list(actions: policy(@claim).edit?) do |summary_list| %>
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: Claims::Claim.human_attribute_name(:school)) %>
