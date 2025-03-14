@@ -60,6 +60,7 @@ en:
           whats_next:
             return_to_placements: Return to placements list
             what_happens_next: What happens next?
+            teaching_school_hub_url: https://www.gov.uk/guidance/teaching-school-hubs
             not_open:
               we_set_your_profile: We’ve set your profile to ‘not looking to host placements this year’.
               your_contact_details_will_not_be_shown: Your contact details will not be shown to providers looking to place ITT trainees.
