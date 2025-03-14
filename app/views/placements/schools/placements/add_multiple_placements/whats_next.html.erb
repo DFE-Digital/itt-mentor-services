@@ -29,7 +29,7 @@
         <%= govuk_list type: :bullet do %>
           <%= tag.li govuk_link_to(
             t(".not_open.teaching_school_hub"),
-            "https://www.gov.uk/guidance/teaching-school-hubs",
+            t(".teaching_school_hub_url"),
             new_tab: true,
             no_visited_state: true,
           ) %>
@@ -56,7 +56,7 @@
             t(".interested.find_your_local_school_hub",
             href: govuk_link_to(
               t(".interested.teaching_school_hub"),
-              "https://www.gov.uk/guidance/teaching-school-hubs",
+              t(".teaching_school_hub_url"),
               new_tab: true,
               no_visited_state: true,
             )),
