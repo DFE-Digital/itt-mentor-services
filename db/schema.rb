@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_26_133003) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_10_225031) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_26_133003) do
   create_enum "placement_status", ["draft", "published"]
   create_enum "placement_year_group", ["nursery", "reception", "year_1", "year_2", "year_3", "year_4", "year_5", "year_6"]
   create_enum "provider_type", ["scitt", "lead_school", "university"]
+  create_enum "sen_provision_type", ["Autistic Spectrum Disorder", "Hearing Impairment", "Moderate Learning Difficulty", "Multi-Sensory Impairment", "Other Difficulty/Disability", "Physical Disability", "Profound and Multiple Learning Difficulty", "Social", " Emotional and Mental Health", "Speech", " Language and Communication", "Severe Learning Difficulty", "Specific Learning Difficulty", "Visual Impairment"]
   create_enum "service", ["claims", "placements"]
   create_enum "subject_area", ["primary", "secondary"]
 
@@ -314,6 +315,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_26_133003) do
     t.string "trn", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "trained"
     t.index ["trn"], name: "index_mentors_on_trn", unique: true
   end
 
@@ -549,6 +551,21 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_26_133003) do
     t.index ["urn"], name: "index_schools_on_urn_trigram", opclass: :gin_trgm_ops, using: :gin
   end
 
+  create_table "sen_provision_schools", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "school_id", null: false
+    t.uuid "sen_provision_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["school_id"], name: "index_sen_provision_schools_on_school_id"
+    t.index ["sen_provision_id"], name: "index_sen_provision_schools_on_sen_provision_id"
+  end
+
+  create_table "sen_provisions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.enum "provision_type", null: false, enum_type: "sen_provision_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"
@@ -647,6 +664,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_26_133003) do
   add_foreign_key "schools", "regions"
   add_foreign_key "schools", "trusts"
   add_foreign_key "schools", "users", column: "claims_grant_conditions_accepted_by_id"
+  add_foreign_key "sen_provision_schools", "schools"
+  add_foreign_key "sen_provision_schools", "sen_provisions"
   add_foreign_key "subjects", "subjects", column: "parent_subject_id"
   add_foreign_key "user_memberships", "users"
 end

@@ -1,0 +1,8 @@
+en:
+  components:
+    school:
+      interest_tag_component:
+        actively_looking: Looking to host placements
+        not_open: Not open to hosting placements
+        interested: Interested in hosting placements
+        already_organised: Already organised placements
