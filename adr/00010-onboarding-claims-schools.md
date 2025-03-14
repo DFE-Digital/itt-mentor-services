@@ -4,7 +4,7 @@ Date: 2024-07-10
 
 ## Status
 
-Pending
+Accepted
 
 ## Context
 
