@@ -113,25 +113,26 @@ RSpec.describe Claims::UserMailer, type: :mailer do
         create(:mentor_training, claim:, hours_completed: 10)
 
         expect(claim_confirmation_email.to).to contain_exactly(user.email)
-        expect(claim_confirmation_email.subject).to eq("Thank you for submitting your claim for mentor training")
-        expect(claim_confirmation_email.body.to_s.strip).to eq(<<~EMAIL.strip)
+        expect(claim_confirmation_email.subject).to eq("Claim submitted for mentor training funding")
+        expect(claim_confirmation_email.body.to_s.squish).to eq(<<~EMAIL.squish)
           Dear #{user.first_name},
 
-          You have successfully submitted a claim for mentor training for #{claim.school_name}.
+          You have submitted a claim for mentor training funding on behalf of #{claim.school_name}.
 
-          Your claim reference is #{claim.reference}.
+          * Claim reference: #{claim.reference}
+          * Claim amount: #{claim.amount.format(symbol: true, decimal_mark: ".", no_cents: false)}
+          * Number of mentors: #{claim.mentors.count}
+          * Training provider: #{claim.provider_name}
 
-          You can view your claim on Claim funding for mentor training:
+          See your claims on the claim funding for mentor training website:
 
           http://claims.localhost/schools/#{school.id}/claims/#{claim.id}
 
-          # Give feedback or report a problem
+          # Contact us
 
-          If you have any questions or feedback, please contact the team at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk).
+          If you need any help or have any feedback, contact the team at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk). It may take up to 5 days to receive a response.
 
-          Regards
-
-          Claim funding for mentor training team
+          from Claim funding for mentor training at Department for Education
         EMAIL
       end
 
@@ -141,7 +142,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
         end
 
         it "does not prepend the hosting environment to the subject" do
-          expect(claim_confirmation_email.subject).to eq("Thank you for submitting your claim for mentor training")
+          expect(claim_confirmation_email.subject).to eq("Claim submitted for mentor training funding")
         end
       end
 
@@ -151,7 +152,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
         end
 
         it "prepends the hosting environment to the subject" do
-          expect(claim_confirmation_email.subject).to eq("[STAGING] Thank you for submitting your claim for mentor training")
+          expect(claim_confirmation_email.subject).to eq("[STAGING] Claim submitted for mentor training funding")
         end
       end
     end
