@@ -26,6 +26,8 @@ class Claims::ClaimWindow < ApplicationRecord
 
   belongs_to :academic_year
 
+  has_many :eligibilities, dependent: :destroy
+
   validates :starts_on, presence: true
   validates :ends_on, presence: true, comparison: { greater_than_or_equal_to: :starts_on }
 

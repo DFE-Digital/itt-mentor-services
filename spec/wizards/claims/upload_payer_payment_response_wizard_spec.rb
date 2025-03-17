@@ -74,7 +74,7 @@ RSpec.describe Claims::UploadPayerPaymentResponseWizard do
     end
 
     context "when a step is invalid" do
-      context "when the a step is valid" do
+      context "when the a step is invalid" do
         let(:csv_content) { nil }
 
         it "returns an invalid wizard error" do

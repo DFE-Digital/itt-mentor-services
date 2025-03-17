@@ -76,6 +76,7 @@ class Claims::School < School
   has_many :claims
   has_many :mentor_memberships
   has_many :mentors, through: :mentor_memberships
+  has_many :eligibilities, dependent: :destroy
 
   belongs_to :claims_grant_conditions_accepted_by, class_name: "User", optional: true
 
