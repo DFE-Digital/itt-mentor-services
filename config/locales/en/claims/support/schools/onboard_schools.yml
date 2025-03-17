@@ -1,0 +1,9 @@
+en:
+  claims:
+    support:
+      schools:
+        onboard_schools:
+          edit:
+            cancel: Cancel
+          update:
+            success: Schools onboarded

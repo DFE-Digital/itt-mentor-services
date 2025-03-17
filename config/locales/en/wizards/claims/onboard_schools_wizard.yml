@@ -1,0 +1,45 @@
+en:
+  wizards:
+    claims:
+      onboard_multiple_schools_wizard:
+        upload_step:
+          page_title: Upload schools - Onboarding - Schools
+          title: Upload schools
+          caption: Onboarding
+          upload_csv_file: Upload CSV file
+          upload: Upload
+          csv_help: Help with the CSV file
+          upload_the_csv_file: Upload the CSV file of schools.
+          csv_help_details: |
+            Use this form to upload the CSV file sent of schools you want to onboard for the current claim window.
+
+            The CSV file must contain the following headers in the first row:
+
+              - name
+              - urn
+        confirmation_step:
+          page_title: Confirm you want to upload the schools - Onboarding -Schools
+          title: Confirm you want to upload the schools
+          caption: Onboarding
+          confirm_upload: Confirm upload
+          only_showing_first_five_rows: Only showing the first 5 rows
+          showing_all_rows: Showing all rows
+          preview_of_file: Preview of %{file_name}
+        upload_errors_step:
+          title: Upload schools
+          caption: Onboarding
+          page_title: Upload schools - Onboarding - Schools
+          error_summary:
+            title: There is a problem
+            errors_to_fix:
+              one: You need to fix %{count} error related to specific rows
+              other: You need to fix %{count} errors related to specific rows
+          csv_table:
+            headers:
+              name: name
+              urn: urn
+            errors:
+              invalid_name: Enter a valid name
+              invalid_urn: Enter a valid urn
+          only_showing_rows_with_errors: Only showing rows with errors
+          upload_your_file_again: Upload your file again

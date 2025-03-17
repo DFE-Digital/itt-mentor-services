@@ -13,6 +13,13 @@ module Claims
 
     def onboard_school
       school.update!(claims_service: true)
+      claim_window = Claims::ClaimWindow.current
+      return if claim_window.blank?
+
+      school
+        .becomes(Claims::School)
+        .eligibilities
+        .create!(claim_window:)
     end
   end
 end
