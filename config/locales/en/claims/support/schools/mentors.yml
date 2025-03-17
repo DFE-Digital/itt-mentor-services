@@ -17,7 +17,7 @@ en:
                 trn: Teacher reference number (TRN)
           add_mentor:
             edit:
-              caption: Add mentor - %{school_name}
+              caption: Mentor details - %{school_name}
               cancel: Cancel
             update:
               success_heading: Mentor added

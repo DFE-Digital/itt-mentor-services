@@ -5,18 +5,20 @@ en:
         mentor_step:
           page_title: Enter a teacher reference number (TRN) - %{contextual_text}
           trn: Teacher reference number (TRN)
-          trn_hint: It’s a 7 digit number. For example, 1234567
+          trn_hint: A TRN is a 7 digit number that uniquely identifies people in the education sector in England.
           continue: Continue
           date_of_birth_hint: For example, 31 3 1980
           find_teacher: Find teacher
-          help_with_the_trn: If you do not have the teacher reference number (TRN)
+          help_with_the_trn: Help with the TRN
           guidance_html: If your mentor does not have a TRN, share the %{guidance_link} to find a lost TRN, or apply for one.
           guidance_link_text: teacher reference number (TRN) guidance
         check_your_answers_step:
-          page_title: Check your answers - %{contextual_text}
-          save_mentor: Save mentor
+          page_title: Confirm mentor details - %{contextual_text}
+          save_mentor: Confirm and add mentor
+          once_added: Once added, you will be able to add %{mentor_name} to a claim
           change: Change
-          check_your_answers: Check your answers
+          heading: Confirm mentor details
+          details: Details
           trn: Teacher reference number (TRN)
           date_of_birth: Date of birth
           privacy_link: privacy notice

@@ -84,7 +84,7 @@ RSpec.describe "Claims school user adds mentors to schools", service: :claims, t
       then_i_see_form_with_dob("12", "11", "1986")
       when_i_click_on("Continue")
       then_i_see_check_page_for(new_mentor)
-      when_i_click_on("Save mentor")
+      when_i_click_on("Confirm and add mentor")
       then_mentor_is_added(claims_mentor.full_name)
     end
   end
@@ -127,7 +127,7 @@ RSpec.describe "Claims school user adds mentors to schools", service: :claims, t
       then_i_see_form_with_dob("14", "9", "1987")
       when_i_click_on("Continue")
       then_i_see_check_page_for(another_claims_mentor)
-      when_i_click_on("Save mentor")
+      when_i_click_on("Confirm and add mentor")
       then_mentor_is_added(another_claims_mentor.full_name)
     end
   end
@@ -186,7 +186,7 @@ RSpec.describe "Claims school user adds mentors to schools", service: :claims, t
       when_i_enter_date_of_birth(12, 11, 1986)
       and_i_click_on("Continue")
       then_i_see_check_page_for(new_mentor)
-      when_i_click_on("Save mentor")
+      when_i_click_on("Confirm and add mentor")
       then_mentor_is_added(new_mentor.full_name)
     end
   end
@@ -220,14 +220,14 @@ RSpec.describe "Claims school user adds mentors to schools", service: :claims, t
   def when_i_click_on_help_text
     find(
       "span",
-      text: "If you do not have the teacher reference number (TRN)",
+      text: "Help with the TRN",
     ).click
   end
 
   def then_i_see_check_page_for(mentor)
     expect_organisations_to_be_selected_in_primary_navigation
-    expect(page).to have_content "Add mentor"
-    expect(page).to have_content "Check your answers"
+    expect(page).to have_content "Mentor details"
+    expect(page).to have_content "Confirm mentor details"
     name_row = page.all(".govuk-summary-list__row")[0]
     within(name_row) do
       expect(page).to have_content "First name"
