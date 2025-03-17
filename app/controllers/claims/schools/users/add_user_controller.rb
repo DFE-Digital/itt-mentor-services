@@ -17,6 +17,7 @@ class Claims::Schools::Users::AddUserController < Claims::ApplicationController
       @wizard.reset_state
       redirect_to index_path, flash: {
         heading: t(".success"),
+        body: t(".success_body", user_name: user.first_name, school_name: @school.name),
       }
     end
   end

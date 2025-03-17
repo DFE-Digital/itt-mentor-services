@@ -16,7 +16,7 @@ RSpec.describe "Invite a user to a school", service: :claims, type: :system do
     when_i_click("Add user")
     fill_in_user_details
     check_user_details
-    when_i_click("Save user")
+    when_i_click("Confirm and add user")
     verify_user_added
   end
 
@@ -34,7 +34,7 @@ RSpec.describe "Invite a user to a school", service: :claims, type: :system do
     when_i_click("Add user")
     fill_in_user_details
     check_user_details
-    when_i_click("Save user")
+    when_i_click("Confirm and add user")
     and_user_is_added
     when_i_click("Add user")
     fill_in_user_details
@@ -47,14 +47,14 @@ RSpec.describe "Invite a user to a school", service: :claims, type: :system do
     when_i_click("Add user")
     fill_in_user_details
     check_user_details
-    when_i_click("Save user")
+    when_i_click("Confirm and add user")
     verify_user_added
 
     visit_another_claims_support_school_users_page
     when_i_click("Add user")
     fill_in_user_details
     check_user_details
-    when_i_click("Save user")
+    when_i_click("Confirm and add user")
     verify_user_added_to_another_school
   end
 
@@ -68,7 +68,7 @@ RSpec.describe "Invite a user to a school", service: :claims, type: :system do
     check_form_is_populated
     edit_first_name
     check_user_details_updated
-    when_i_click("Save user")
+    when_i_click("Confirm and add user")
     verify_edited_user_added
   end
 

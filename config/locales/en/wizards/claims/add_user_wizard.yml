@@ -5,11 +5,12 @@ en:
         user_step:
           page_title: Invite a new user - %{caption}
           continue: Continue
-          description: Personal details
+          description: User details
         check_your_answers_step:
           page_title: Check your answers - %{caption}
-          title: Check your answers
-          submit: Save user
+          title: Confirm user details
+          submit: Confirm and add user
           warning: "%{user_name} will be sent an email to tell them you’ve added them to %{school_name}."
           change: Change
-
+          description: Once added, %{user_name} will be able to view and create claims on behalf of your school.
+          details: Details
