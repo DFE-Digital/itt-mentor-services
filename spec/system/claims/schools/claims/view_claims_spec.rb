@@ -104,7 +104,7 @@ RSpec.describe "View claims", service: :claims, type: :system do
   def i_can_see_the_claim_guidance
     within(first(".govuk-body")) do
       expect(page).to have_content(
-        "You have until 11:59pm on #{I18n.l(claim_window.ends_on, format: :long_with_day)} to submit claims for the school year September #{claim_window.starts_on.year} to July #{claim_window.ends_on.year}.",
+        "You have until 11:59pm on #{I18n.l(claim_window.ends_on, format: :long_with_day)} to submit claims for the academic year September #{claim_window.starts_on.year} to July #{claim_window.ends_on.year}.",
       )
     end
   end
@@ -114,7 +114,7 @@ RSpec.describe "View claims", service: :claims, type: :system do
   end
 
   def i_see_a_list_of_the_schools_claims
-    expect(page).to have_content("Claim reference")
+    expect(page).to have_content("Reference")
     expect(page).to have_content("Accredited provider")
     expect(page).to have_content("Mentors")
     expect(page).to have_content("Date submitted")
