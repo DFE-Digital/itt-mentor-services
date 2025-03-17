@@ -31,11 +31,15 @@ class Claims::UserMailerPreview < ActionMailer::Preview
   end
 
   def claim
-    PreviewClaim.new(id: SecureRandom.uuid, school:, reference: 123_456_789)
+    PreviewClaim.new(id: SecureRandom.uuid, school:, provider:, reference: 123_456_789)
   end
 
   def school
     Claims::School.new(id: SecureRandom.uuid, name: "Test School", region:)
+  end
+
+  def provider
+    Claims::Provider.new(id: SecureRandom.uuid, name: "Test Provider")
   end
 
   def region
