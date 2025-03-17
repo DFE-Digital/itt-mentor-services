@@ -4,7 +4,8 @@ en:
       users:
         add_user:
           edit:
-            caption: Add user
+            caption: User details
             cancel: Cancel
           update:
             success: User added
+            success_body: "%{user_name} is now able to view and create claims on behalf of %{school_name}"
