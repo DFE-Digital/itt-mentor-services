@@ -5,7 +5,9 @@
     <div class="govuk-grid-column-two-thirds">
       <%= form_with(model: current_step, url: current_step_path, method: :put) do |f| %>
         <span class="govuk-caption-l">  <%= contextual_text %></span>
-        <h1 class="govuk-heading-l"><%= t(".check_your_answers") %></h1>
+        <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
+        <p class="govuk-body"><%= t(".once_added", mentor_name: wizard.steps[:mentor].mentor.first_name) %></p>
+        <h2 class="govuk-heading-m"><%= t(".details") %></h2>
         <%= govuk_summary_list do |summary_list| %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: Mentor.human_attribute_name("first_name")) %>
