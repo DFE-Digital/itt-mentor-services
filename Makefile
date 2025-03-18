@@ -11,7 +11,7 @@ help:
 .PHONY: review
 review: test-cluster
 	$(if ${PR_NUMBER},,$(error Missing PR_NUMBER))
-	$(eval ENVIRONMENT=${PR_NUMBER})
+	$(eval ENVIRONMENT=pr-${PR_NUMBER})
 	$(eval include global_config/review.sh)
 
 dv_review: dev-cluster
@@ -23,7 +23,7 @@ dv_review: dev-cluster
 
 pt_review: platform-test-cluster
 	$(if ${PR_NUMBER},,$(error Missing PR_NUMBER))
-	$(eval ENVIRONMENT=${PR_NUMBER})
+	$(eval ENVIRONMENT=pr-${PR_NUMBER})
 	$(eval include global_config/pt_review.sh)
 
 .PHONY: qa
