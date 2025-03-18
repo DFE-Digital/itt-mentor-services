@@ -62,5 +62,5 @@ jobs:
       with:
         header: aks
         message: |
-                Review app  track and pay deployed to <https://track-and-pay-${{ env.PR_NUMBER }}.test.teacherservices.cloud> was deleted
-                Review app  school placements deployed to <https://manage-school-placements-${{ env.PR_NUMBER }}.test.teacherservices.cloud> was deleted
+                Review app  track and pay deployed to <https://track-and-pay-pr-${{ env.PR_NUMBER }}.test.teacherservices.cloud> was deleted
+                Review app  school placements deployed to <https://manage-school-placements-pr-${{ env.PR_NUMBER }}.test.teacherservices.cloud> was deleted
