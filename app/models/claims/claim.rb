@@ -98,11 +98,11 @@ class Claims::Claim < ApplicationRecord
        },
        validate: true
 
-  delegate :name, to: :provider, prefix: true, allow_nil: true
+  delegate :name, :primary_email_address, to: :provider, prefix: true, allow_nil: true
   delegate :urn, :postcode, :region_funding_available_per_hour, to: :school, prefix: true, allow_nil: true
   delegate :name, :users, to: :school, prefix: true
   delegate :full_name, to: :submitted_by, prefix: true, allow_nil: true
-  delegate :name, to: :academic_year, prefix: true, allow_nil: true
+  delegate :name, :ends_on, to: :academic_year, prefix: true, allow_nil: true
 
   def valid_mentor_training_hours?
     mentor_trainings.all? do |mentor_training|
