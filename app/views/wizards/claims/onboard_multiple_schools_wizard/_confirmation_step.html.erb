@@ -6,7 +6,10 @@
       <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
       <p class="govuk-body">
-        <%= t(".schools_listed_will_be_able_to_claim", claim_window_name: current_step.claim_window_name) %>
+        <%= t(
+          ".schools_listed_will_be_able_to_claim",
+          claim_window_name: current_step.claim_window.decorate.name,
+        ) %>
       </p>
 
       <%= form_for(current_step, url: current_step_path, method: :put) do |f| %>

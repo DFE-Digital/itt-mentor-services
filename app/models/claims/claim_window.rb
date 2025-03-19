@@ -39,8 +39,6 @@ class Claims::ClaimWindow < ApplicationRecord
   delegate :past?, to: :ends_on
   delegate :future?, to: :starts_on
 
-  scope :eligible_schools, -> { eligibilities.where(claim_window:).present? }
-
   def current?
     (starts_on..ends_on).cover?(Date.current)
   end
