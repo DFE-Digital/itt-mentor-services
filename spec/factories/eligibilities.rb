@@ -19,7 +19,7 @@
 #  fk_rails_...  (school_id => schools.id)
 #
 FactoryBot.define do
-  factory :eligibility do
+  factory :eligibility, class: Claims::Eligibility do
     claim_window { Claims::ClaimWindow.current || create(:claim_window, :current) }
     association :school, factory: :claims_school
   end

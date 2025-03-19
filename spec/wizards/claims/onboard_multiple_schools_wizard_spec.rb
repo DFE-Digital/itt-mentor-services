@@ -96,4 +96,25 @@ RSpec.describe Claims::OnboardMultipleSchoolsWizard, type: :model do
       end
     end
   end
+
+  describe "#claim_window" do
+    subject(:claim_window) { wizard.claim_window }
+
+    let(:current_claim_window) { create(:claim_window, :current) }
+    let(:upcoming_claim_window) { create(:claim_window, :upcoming) }
+    let(:state) do
+      {
+        "claim_window" => { "claim_window_id" => current_claim_window.id },
+      }
+    end
+
+    before do
+      current_claim_window
+      upcoming_claim_window
+    end
+
+    it "returns the claim window for the id set in the claim window step" do
+      expect(claim_window).to eq(current_claim_window)
+    end
+  end
 end

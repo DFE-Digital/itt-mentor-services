@@ -7,7 +7,7 @@ class Claims::OnboardMultipleSchoolsWizard::ConfirmationStep < BaseStep
   end
 
   def claim_window_name
-    "#{I18n.l(claim_window.starts_on, format: :long)} to #{I18n.l(claim_window.ends_on, format: :long)}"
+    claim_window.decorate.name
   end
 
   private
