@@ -6,10 +6,6 @@ class Claims::OnboardMultipleSchoolsWizard::ConfirmationStep < BaseStep
     @csv_headers ||= csv.headers
   end
 
-  def claim_window_name
-    claim_window.decorate.name
-  end
-
   private
 
   def upload_step
