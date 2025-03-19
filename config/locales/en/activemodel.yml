@@ -338,3 +338,8 @@ en:
             claim_window_id:
               blank: Please select a claim window
               inclusion: Please select a claim window
+        claims/add_school_wizard/claim_window_step:
+          attributes:
+            claim_window_id:
+              blank: Please select a claim window
+              inclusion: Please select a claim window
