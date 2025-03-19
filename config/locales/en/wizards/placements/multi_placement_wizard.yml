@@ -26,9 +26,14 @@ en:
           continue: Continue
           hint: "Select all that apply"
           options:
+            concerns_about_trainee_quality: Concerns about trainee quality
+            do_not_get_offered_trainees: Don't get offered trainees
+            do_not_know_how_to_get_involved: Don't know how to get involved
             not_enough_trained_mentors: Not enough trained mentors
             number_of_pupils_with_send_needs: Number of pupils with SEND needs
             working_to_improve_our_ofsted_rating: Working to improve our OFSTED rating
+            other: Other
+          tell_us: Tell us your reason
         help_step:
           title: Help available to you
           continue: Continue
@@ -44,32 +49,36 @@ en:
           description: Choose the person best placed to organise ITT placements at your school. This information will be shown on your profile.
           continue: Continue
         phase_step:
-          title: What phase are you looking to host placements at?
+          title: What phase of education will your placements be?
           continue: Continue
         subjects_known_step:
           title: Do you know which subjects you would like to host?
           continue: Continue
         primary_subject_selection_step:
-          title: Select primary subjects
+          title: Select primary school subjects
           caption: Placement details
           continue: Continue
         secondary_subject_selection_step:
-          title: Select secondary subjects
+          title: Select secondary school subjects
           caption: Placement details
           continue: Continue
         primary_placement_quantity_step:
-          title: Enter the number of placements
+          title: "Primary subjects: Enter the number of placements you would be willing to host"
+          enter_approximate: Enter an approximate number if you are unsure
           caption: Placement details
           continue: Continue
         secondary_placement_quantity_step:
-          title: Enter the number of placements
+          title: "Secondary subjects: Enter the number of placements you would be willing to host"
+          enter_approximate: Enter an approximate number if you are unsure
+          change_to_specify: You will have a chance to specify the languages later
           caption: Placement details
           continue: Continue
         secondary_child_subject_placement_selection_step:
-          title: Select subjects for %{subject_name} placements
+          title: You selected %{placement_quantity} %{subject_name} placements
+          select_languages_taught: Select the languages taught on each of these placements
           caption: Placement details
           continue: Continue
-          placement_number: "%{placement_number} placement"
+          placement_number: "Placement %{placement_number} of %{step_count}"
         provider_step:
           title: Select the providers you currently work with
           continue: Continue
@@ -88,3 +97,19 @@ en:
           itt_contact: ITT contact
           providers: Providers
           provider_name: Provider name
+        are_you_sure_step:
+          title: Are you sure you do not want to be contacted about placements?
+          caption: Not interested in hosting this year
+          this_will_help_providers: This will help providers know not to contact your school. You can change this at any time.
+          your_school_will_show_as: Your school will show as ‘not looking to host this year’. 
+          we_will_ask_again: We will ask you again in 12 months whether you would like to host placements. 
+          continue: Continue
+        confirm_step:
+          title: Confirm you’re interested in hosting
+          caption: Expression of interest
+          this_means_providers_can_see_your_school: 
+            This means providers can see that your school is thinking about hosting placements. 
+            Providers will reach out via email with more information. 
+          you_have_not_added_any_placements:
+            You haven’t added any placement information so providers cannot see any of your preferences.
+          continue: Continue

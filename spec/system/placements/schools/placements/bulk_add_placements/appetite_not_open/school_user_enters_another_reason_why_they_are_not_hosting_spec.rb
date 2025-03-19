@@ -1,11 +1,10 @@
 require "rails_helper"
 
-RSpec.describe "School user views their local providers",
+RSpec.describe "School user enters another reason why they are not hosting",
                service: :placements,
                type: :system do
   scenario do
     given_the_bulk_add_placements_flag_is_enabled
-    and_providers_exist
     and_academic_years_exist
     and_i_am_signed_in
     when_i_am_on_the_placements_index_page
@@ -16,11 +15,19 @@ RSpec.describe "School user views their local providers",
     and_i_click_on_continue
     then_i_see_the_reasons_for_not_hosting_form
 
-    when_i_select_not_enough_trained_mentors
-    and_i_select_number_of_pupils_with_send_needs
+    when_i_select_other
+    and_i_enter_another_reason
     and_i_click_on_continue
-    then_i_see_the_help_available_to_you_page
-    and_i_see_the_local_providers
+    then_i_see_the_school_contact_form
+
+    when_i_fill_in_the_school_contact_details
+    and_i_click_on_continue
+    then_i_see_the_are_you_sure_page
+
+    when_i_click_on_continue
+    then_i_see_my_responses_with_successfully_updated
+    and_the_schools_contact_has_been_updated
+    and_the_schools_hosting_interest_for_the_next_year_is_updated
   end
 
   private
@@ -28,27 +35,6 @@ RSpec.describe "School user views their local providers",
   def given_the_bulk_add_placements_flag_is_enabled
     Flipper.add(:bulk_add_placements)
     Flipper.enable(:bulk_add_placements)
-  end
-
-  def and_providers_exist
-    @provider_1 = create(:provider,
-                         name: "London Provider",
-                         address1: "London Provider",
-                         address2: "The Provider Road",
-                         address3: "Somewhere",
-                         town: "London",
-                         city: "City of London",
-                         county: "London",
-                         postcode: "LN12 1LN")
-    @provider_2 = create(:provider, name: "Brixton Provider",
-                                    address1: "Brixton Provider",
-                                    address2: "Brixton Road",
-                                    town: "London",
-                                    postcode: "LN13 3BX")
-
-    allow(Provider).to receive(:near).and_return(
-      Provider.where(id: [@provider_1.id, @provider_2.id]),
-    )
   end
 
   def and_academic_years_exist
@@ -120,8 +106,8 @@ RSpec.describe "School user views their local providers",
     expect(page).to have_field("Working to improve our OFSTED rating", type: :checkbox)
   end
 
-  def when_i_select_not_enough_trained_mentors
-    check "Not enough trained mentors"
+  def when_i_select_other
+    check "Other"
   end
 
   def and_i_select_number_of_pupils_with_send_needs
@@ -136,17 +122,92 @@ RSpec.describe "School user views their local providers",
     expect(page).to have_h1("Help available to you")
   end
 
-  def and_i_see_the_local_providers
+  def then_i_see_the_school_contact_form
+    expect(page).to have_title(
+      "Who should providers contact? - Manage school placements - GOV.UK",
+    )
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_h1("Who should providers contact?")
     expect(page).to have_element(
       :p,
-      text: "London Provider London Provider The Provider Road Somewhere " \
-            "London City of London London LN12 1LN",
+      text: "Choose the person best placed to organise ITT placements at your school. "\
+        "This information will be shown on your profile.",
+      class: "govuk-body",
     )
 
+    @school_contact = @school.school_contact
+    expect(page).to have_field("First name", with: @school_contact.first_name)
+    expect(page).to have_field("Last name", with: @school_contact.last_name)
+    expect(page).to have_field("Email address", with: @school_contact.email_address)
+  end
+
+  def then_i_see_the_school_contact_form_prefilled_with_my_inputs
+    expect(page).to have_title(
+      "Who should providers contact? - Manage school placements - GOV.UK",
+    )
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_h1("Who should providers contact?")
     expect(page).to have_element(
       :p,
-      text: "Brixton Provider Brixton Provider Brixton Road London " \
-      "LN13 3BX",
+      text: "Choose the person best placed to organise ITT placements at your school. "\
+        "This information will be shown on your profile.",
+      class: "govuk-body",
     )
+
+    @school_contact = @school.school_contact
+    expect(page).to have_field("First name", with: "Joe")
+    expect(page).to have_field("Last name", with: "Bloggs")
+    expect(page).to have_field("Email address", with: "joe_bloggs@example.com")
+  end
+
+  def when_i_click_on_back
+    click_on "Back"
+  end
+
+  def when_i_click_on_cancel
+    click_on "Cancel"
+  end
+
+  def when_i_fill_in_the_school_contact_details
+    fill_in "First name", with: "Joe"
+    fill_in "Last name", with: "Bloggs"
+    fill_in "Email address", with: "joe_bloggs@example.com"
+  end
+
+  def then_i_see_my_responses_with_successfully_updated
+    expect(page).to have_success_banner(
+      "Your profile has been updated",
+      "You can change your profile in settings if your circumstances change.",
+    )
+  end
+
+  def and_the_schools_contact_has_been_updated
+    @school_contact.reload
+    expect(@school_contact.first_name).to eq("Joe")
+    expect(@school_contact.last_name).to eq("Bloggs")
+    expect(@school_contact.email_address).to eq("joe_bloggs@example.com")
+  end
+
+  def and_the_schools_hosting_interest_for_the_next_year_is_updated
+    hosting_interest = @school.hosting_interests.for_academic_year(@next_academic_year).last
+    expect(hosting_interest.appetite).to eq("not_open")
+    expect(hosting_interest.reasons_not_hosting).to contain_exactly("Other")
+    expect(hosting_interest.other_reason_not_hosting).to eq("Some other reason")
+  end
+
+  def then_i_see_the_are_you_sure_page
+    expect(page).to have_title(
+      "Are you sure you do not want to be contacted about placements? - Manage school placements - GOV.UK",
+    )
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_h1("Are you sure you do not want to be contacted about placements?")
+    expect(page).to have_element(
+      :span,
+      text: "Not interested in hosting this year",
+    )
+  end
+
+  def and_i_enter_another_reason
+    fill_in "Tell us your reason", with: "Some other reason"
   end
 end

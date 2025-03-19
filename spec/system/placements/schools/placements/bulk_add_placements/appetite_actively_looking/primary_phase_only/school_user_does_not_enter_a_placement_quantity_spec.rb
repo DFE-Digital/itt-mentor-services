@@ -18,10 +18,6 @@ RSpec.describe "School user does not enter a placement quantity",
 
     when_i_select_primary
     and_i_click_on_continue
-    then_i_see_the_subjects_known_form
-
-    when_i_select_yes
-    and_i_click_on_continue
     then_i_see_the_primary_subject_selection_form
 
     when_i_select_primary
@@ -100,12 +96,12 @@ RSpec.describe "School user does not enter a placement quantity",
 
   def then_i_see_the_phase_form
     expect(page).to have_title(
-      "What phase are you looking to host placements at? - Manage school placements - GOV.UK",
+      "What phase of education will your placements be? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "What phase are you looking to host placements at?",
+      text: "What phase of education will your placements be?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Primary", type: :checkbox)
@@ -136,12 +132,12 @@ RSpec.describe "School user does not enter a placement quantity",
 
   def then_i_see_the_primary_subject_selection_form
     expect(page).to have_title(
-      "Select primary subjects - Manage school placements - GOV.UK",
+      "Select primary school subjects - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "Select primary subjects",
+      text: "Select primary school subjects",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
@@ -152,10 +148,10 @@ RSpec.describe "School user does not enter a placement quantity",
 
   def then_i_see_the_primary_subject_placement_quantity_form
     expect(page).to have_title(
-      "Enter the number of placements - Manage school placements - GOV.UK",
+      "Primary subjects: Enter the number of placements you would be willing to host - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Enter the number of placements", class: "govuk-heading-l")
+    expect(page).to have_h1("Primary subjects: Enter the number of placements you would be willing to host", class: "govuk-heading-l")
     expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
     expect(page).to have_field("Primary", type: :number)
   end

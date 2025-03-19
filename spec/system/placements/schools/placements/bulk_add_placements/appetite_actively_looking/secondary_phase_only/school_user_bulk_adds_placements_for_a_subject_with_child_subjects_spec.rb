@@ -19,10 +19,6 @@ RSpec.describe "School user bulk adds placements for a subject with child subjec
 
     when_i_select_secondary
     and_i_click_on_continue
-    then_i_see_the_subjects_known_form
-
-    when_i_select_yes
-    and_i_click_on_continue
     then_i_see_the_secondary_subject_selection_form
 
     when_i_select_modern_languages
@@ -55,9 +51,7 @@ RSpec.describe "School user bulk adds placements for a subject with child subjec
     then_i_see_my_responses_with_successfully_updated
     and_the_schools_contact_has_been_updated
     and_the_schools_hosting_interest_for_the_next_year_is_updated
-
-    when_i_click_on_the_academic_year_tab
-    then_i_see_placements_i_created_for_the_subject_french
+    and_i_see_placements_i_created_for_the_subject_french
     and_i_see_placements_i_created_for_the_subject_french_and_russian
   end
 
@@ -139,12 +133,12 @@ RSpec.describe "School user bulk adds placements for a subject with child subjec
 
   def then_i_see_the_phase_form
     expect(page).to have_title(
-      "What phase are you looking to host placements at? - Manage school placements - GOV.UK",
+      "What phase of education will your placements be? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "What phase are you looking to host placements at?",
+      text: "What phase of education will your placements be?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Primary", type: :checkbox)
@@ -175,12 +169,12 @@ RSpec.describe "School user bulk adds placements for a subject with child subjec
 
   def then_i_see_the_secondary_subject_selection_form
     expect(page).to have_title(
-      "Select secondary subjects - Manage school placements - GOV.UK",
+      "Select secondary school subjects - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "Select secondary subjects",
+      text: "Select secondary school subjects",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
@@ -196,10 +190,10 @@ RSpec.describe "School user bulk adds placements for a subject with child subjec
 
   def then_i_see_the_secondary_subject_placement_quantity_form
     expect(page).to have_title(
-      "Enter the number of placements - Manage school placements - GOV.UK",
+      "Secondary subjects: Enter the number of placements you would be willing to host - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Enter the number of placements", class: "govuk-heading-l")
+    expect(page).to have_h1("Secondary subjects: Enter the number of placements you would be willing to host", class: "govuk-heading-l")
     expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
     expect(page).to have_field("Modern languages", type: :number)
   end
@@ -210,12 +204,16 @@ RSpec.describe "School user bulk adds placements for a subject with child subjec
 
   def then_i_see_the_subject_selection_for_modern_languages_form
     expect(page).to have_title(
-      "Select subjects for Modern languages placements - Manage school placements - GOV.UK",
+      "You selected 2 Modern languages placements - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1(
-      "Select subjects for Modern languages placements",
+      "You selected 2 Modern languages placements",
       class: "govuk-heading-l",
+    )
+    expect(page).to have_h2(
+      "Select the languages taught on each of these placements",
+      class: "govuk-heading-m",
     )
     expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
     expect(page).to have_field("French", type: :checkbox)
@@ -236,11 +234,11 @@ RSpec.describe "School user bulk adds placements for a subject with child subjec
   end
 
   def and_i_see_the_form_is_for_the_first_placement
-    expect(page).to have_element(:h2, text: "1st placement", class: "govuk-fieldset__heading")
+    expect(page).to have_element(:h2, text: "Placement 1 of 2", class: "govuk-fieldset__heading")
   end
 
   def and_i_see_the_form_is_for_the_second_placement
-    expect(page).to have_element(:h2, text: "2nd placement", class: "govuk-fieldset__heading")
+    expect(page).to have_element(:h2, text: "Placement 2 of 2", class: "govuk-fieldset__heading")
   end
 
   def then_i_see_the_school_contact_form
@@ -291,7 +289,7 @@ RSpec.describe "School user bulk adds placements for a subject with child subjec
     click_on "Next year (#{@next_academic_year.name})"
   end
 
-  def then_i_see_placements_i_created_for_the_subject_french
+  def and_i_see_placements_i_created_for_the_subject_french
     expect(page).to have_link(
       "French",
       class: "govuk-link govuk-link--no-visited-state",

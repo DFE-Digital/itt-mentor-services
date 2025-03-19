@@ -19,10 +19,6 @@ RSpec.describe "School user bulk adds placements for the primary phases",
 
     when_i_select_primary
     and_i_click_on_continue
-    then_i_see_the_subjects_known_form
-
-    when_i_select_yes
-    and_i_click_on_continue
     then_i_see_the_primary_subject_selection_form
 
     when_i_select_primary
@@ -45,9 +41,7 @@ RSpec.describe "School user bulk adds placements for the primary phases",
     then_i_see_my_responses_with_successfully_updated
     and_the_schools_contact_has_been_updated
     and_the_schools_hosting_interest_for_the_next_year_is_updated
-
-    when_i_click_on_the_academic_year_tab
-    then_i_see_placements_i_created_for_the_subject_primary
+    and_i_see_placements_i_created_for_the_subject_primary
     and_i_see_placements_i_created_for_the_subject_handwriting
   end
 
@@ -125,12 +119,12 @@ RSpec.describe "School user bulk adds placements for the primary phases",
 
   def then_i_see_the_phase_form
     expect(page).to have_title(
-      "What phase are you looking to host placements at? - Manage school placements - GOV.UK",
+      "What phase of education will your placements be? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "What phase are you looking to host placements at?",
+      text: "What phase of education will your placements be?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Primary", type: :checkbox)
@@ -165,12 +159,12 @@ RSpec.describe "School user bulk adds placements for the primary phases",
 
   def then_i_see_the_primary_subject_selection_form
     expect(page).to have_title(
-      "Select primary subjects - Manage school placements - GOV.UK",
+      "Select primary school subjects - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "Select primary subjects",
+      text: "Select primary school subjects",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
@@ -185,10 +179,10 @@ RSpec.describe "School user bulk adds placements for the primary phases",
 
   def then_i_see_the_primary_subject_placement_quantity_form
     expect(page).to have_title(
-      "Enter the number of placements - Manage school placements - GOV.UK",
+      "Primary subjects: Enter the number of placements you would be willing to host - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Enter the number of placements", class: "govuk-heading-l")
+    expect(page).to have_h1("Primary subjects: Enter the number of placements you would be willing to host", class: "govuk-heading-l")
     expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
     expect(page).to have_field("Primary", type: :number)
     expect(page).to have_field("Handwriting", type: :number)
@@ -247,7 +241,7 @@ RSpec.describe "School user bulk adds placements for the primary phases",
     click_on "Next year (#{@next_academic_year.name})"
   end
 
-  def then_i_see_placements_i_created_for_the_subject_primary
+  def and_i_see_placements_i_created_for_the_subject_primary
     expect(page).to have_link(
       "Primary",
       class: "govuk-link govuk-link--no-visited-state",
