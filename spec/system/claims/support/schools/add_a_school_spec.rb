@@ -2,9 +2,13 @@ require "rails_helper"
 
 RSpec.describe "Support User adds a School", service: :claims, type: :system do
   let(:school) { create(:school, name: "School 1") }
+  let(:current_claim_window) { create(:claim_window, :current).decorate }
+  let(:upcoming_claim_window) { create(:claim_window, :upcoming).decorate }
 
   before do
     school
+    upcoming_claim_window
+    current_claim_window
     given_i_sign_in_as_colin
   end
 
@@ -12,6 +16,10 @@ RSpec.describe "Support User adds a School", service: :claims, type: :system do
 
   scenario "Colin adds a new School", :js do
     when_i_visit_the_add_school_page
+    then_i_see_the_claim_window_page
+
+    when_i_select_the_current_claim_window
+    and_click_on_continue
     and_i_enter_a_school_named("School 1")
     then_i_see_a_dropdown_item_for("School 1")
     when_i_click_the_dropdown_item_for("School 1")
@@ -27,6 +35,10 @@ RSpec.describe "Support User adds a School", service: :claims, type: :system do
   scenario "Colin adds a school which already exists", :js do
     given_a_school_already_exists_for_claims
     when_i_visit_the_add_school_page
+    then_i_see_the_claim_window_page
+
+    when_i_select_the_current_claim_window
+    and_click_on_continue
     and_i_enter_a_school_named("Claims School")
     then_i_see_a_dropdown_item_for("Claims School")
     when_i_click_the_dropdown_item_for("Claims School")
@@ -36,12 +48,20 @@ RSpec.describe "Support User adds a School", service: :claims, type: :system do
 
   scenario "Colin submits the search form without selecting a school", :js do
     when_i_visit_the_add_school_page
+    then_i_see_the_claim_window_page
+
+    when_i_select_the_current_claim_window
+    and_click_on_continue
     and_i_click_continue
     then_i_see_an_error("Enter a school name, unique reference number (URN) or postcode")
   end
 
   scenario "Colin reconsiders onboarding a school", :js do
     when_i_visit_the_add_school_page
+    then_i_see_the_claim_window_page
+
+    when_i_select_the_current_claim_window
+    and_click_on_continue
     and_i_enter_a_school_named("School 1")
     then_i_see_a_dropdown_item_for("School 1")
     when_i_click_the_dropdown_item_for("School 1")
@@ -56,7 +76,7 @@ RSpec.describe "Support User adds a School", service: :claims, type: :system do
   private
 
   def i_then_click_change_school_link
-    click_on "Change"
+    click_on "Change Organisation name"
     expect(page).to have_content("Enter a school name, URN or postcode")
     click_on "Continue"
   end
@@ -99,8 +119,8 @@ RSpec.describe "Support User adds a School", service: :claims, type: :system do
   def then_i_see_the_check_details_page_for_school(school_name)
     expect(page).to have_css(".govuk-caption-l", text: "Add organisation")
     expect(page).to have_content("Check your answers")
-    org_name_row = page.all(".govuk-summary-list__row")[0]
-    expect(org_name_row).to have_content(school_name)
+    expect(page).to have_summary_list_row("Claim window", current_claim_window.name)
+    expect(page).to have_summary_list_row("Organisation name", school_name)
   end
 
   def when_i_click_save_organisation
@@ -140,5 +160,22 @@ RSpec.describe "Support User adds a School", service: :claims, type: :system do
     within(".autocomplete__wrapper") do
       expect(page.find("#claims-add-school-wizard-school-step-id-field").value).to eq(school_name)
     end
+  end
+
+  def then_i_see_the_claim_window_page
+    expect(page).to have_title("Select a claim window - Add organisation")
+    expect(page).to have_element(:span, text: "Add organisation", class: "govuk-caption-l")
+    expect(page).to have_element(:h1, text: "Select a claim window", class: "govuk-fieldset__heading")
+
+    expect(page).to have_field(current_claim_window.name, type: :radio, visible: :all)
+    expect(page).to have_field(upcoming_claim_window.name, type: :radio, visible: :all)
+  end
+
+  def when_i_select_the_current_claim_window
+    choose current_claim_window.name
+  end
+
+  def and_click_on_continue
+    click_on "Continue"
   end
 end
