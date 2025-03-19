@@ -18,7 +18,7 @@ class Claims::AddClaimWizard::MentorTrainingStep < BaseStep
     if: :custom_hours_selected?,
   )
 
-  delegate :full_name, to: :mentor, prefix: true
+  delegate :full_name, :trn, to: :mentor, prefix: true
   delegate :name, to: :provider, prefix: true
   delegate :provider, :claim, :claim_to_exclude, to: :wizard
 
@@ -49,6 +49,16 @@ class Claims::AddClaimWizard::MentorTrainingStep < BaseStep
 
   def hours_completed
     (hours_to_claim == "maximum" ? max_hours : custom_hours).to_i
+  end
+
+  def hours_of_training_hint
+    remaining_hours = training_allowance.remaining_hours
+
+    if training_allowance.training_type == :initial
+      I18n.t("wizards.claims.add_claim_wizard.mentor_training_step.initial_hours_of_training_hint", mentor_full_name:, mentor_trn:, remaining_hours:)
+    else
+      I18n.t("wizards.claims.add_claim_wizard.mentor_training_step.refresher_hours_of_training_hint", mentor_full_name:, mentor_trn:, remaining_hours:)
+    end
   end
 
   private
