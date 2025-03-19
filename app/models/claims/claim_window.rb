@@ -27,6 +27,7 @@ class Claims::ClaimWindow < ApplicationRecord
   belongs_to :academic_year
 
   has_many :eligibilities, dependent: :destroy
+  has_many :eligible_schools, through: :eligibilities, source: :school
 
   validates :starts_on, presence: true
   validates :ends_on, presence: true, comparison: { greater_than_or_equal_to: :starts_on }
@@ -37,6 +38,8 @@ class Claims::ClaimWindow < ApplicationRecord
   delegate :name, to: :academic_year, prefix: true
   delegate :past?, to: :ends_on
   delegate :future?, to: :starts_on
+
+  scope :eligible_schools, -> { eligibilities.where(claim_window:).present? }
 
   def current?
     (starts_on..ends_on).cover?(Date.current)
@@ -52,6 +55,10 @@ class Claims::ClaimWindow < ApplicationRecord
 
   def self.previous
     where(ends_on: ..Date.current).order(ends_on: :desc).first
+  end
+
+  def self.next
+    where(starts_on: Date.current..).order(starts_on: :asc).first
   end
 
   private

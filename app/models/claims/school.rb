@@ -82,6 +82,8 @@ class Claims::School < School
 
   delegate :funding_available_per_hour, to: :region, prefix: true, allow_nil: true
 
+  scope :eligible_for_claim_window, ->(claim_window) { eligibilities.where(claim_window:).present? }
+
   def grant_conditions_accepted?
     claims_grant_conditions_accepted_at?
   end

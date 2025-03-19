@@ -1,18 +1,32 @@
 module Claims
   class OnboardMultipleSchoolsWizard < BaseWizard
     def define_steps
-      add_step(UploadStep)
-      if csv_inputs_valid?
-        add_step(ConfirmationStep)
+      if claim_windows_exist?
+        add_step(ClaimWindowStep)
+        add_step(UploadStep)
+        if csv_inputs_valid?
+          add_step(ConfirmationStep)
+        else
+          add_step(UploadErrorsStep)
+        end
       else
-        add_step(UploadErrorsStep)
+        add_step(NoClaimWindowStep)
       end
     end
 
     def onboard_schools
       raise "Invalid wizard state" unless valid? && csv_inputs_valid?
 
-      Claims::School::OnboardSchoolsJob.perform_later(school_ids:)
+      Claims::School::OnboardSchoolsJob.perform_later(
+        school_ids:,
+        claim_window_id: claim_window.id,
+      )
+    end
+
+    def claim_window
+      @claim_window = Claims::ClaimWindow.find(
+        steps.fetch(:claim_window).claim_window_id,
+      )
     end
 
     private
@@ -29,6 +43,11 @@ module Claims
       steps.fetch(:upload).csv.reject do |row|
         row["urn"].blank?
       end
+    end
+
+    def claim_windows_exist?
+      Claims::ClaimWindow.current.present? ||
+        Claims::ClaimWindow.next.present?
     end
   end
 end

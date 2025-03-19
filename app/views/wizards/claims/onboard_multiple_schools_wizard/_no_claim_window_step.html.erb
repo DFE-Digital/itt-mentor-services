@@ -1,0 +1,24 @@
+<% content_for :page_title, title_with_error_prefix(
+  t(".page_title"),
+  error: true,
+) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l"><%= t(".caption") %></span>
+    <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+
+    <p class="govuk-body">
+      <%= t(".description") %>
+    </p>
+
+    <p class="govuk-body">
+      <%= embedded_link_text(
+        t(".add_a_claim_window",
+          link: govuk_link_to(
+            t(".link_to_claim_windows"), claims_support_claim_windows_path, new_tab: true, no_visited_state: true
+          )),
+      ) %>
+    </p>
+  </div>
+</div>

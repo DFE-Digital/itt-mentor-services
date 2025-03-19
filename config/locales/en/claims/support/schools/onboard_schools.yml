@@ -6,4 +6,7 @@ en:
           edit:
             cancel: Cancel
           update:
-            success: Schools onboarded
+            success: School onboarding CSV uploaded
+            body: | 
+              It may take a moment for the onboarded schools to load. 
+              Refresh the page to see newly uploaded information.

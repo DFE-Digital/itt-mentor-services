@@ -333,3 +333,8 @@ en:
                 Your file needs a column called %{missing_columns}.
               uploaded_headers:
                 Right now it has columns called %{uploaded_headers}.
+        claims/onboard_multiple_schools_wizard/claim_window_step:
+          attributes:
+            claim_window_id:
+              blank: Please select a claim window
+              inclusion: Please select a claim window

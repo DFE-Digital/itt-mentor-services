@@ -10,34 +10,46 @@ RSpec.describe Claims::OnboardMultipleSchoolsWizard, type: :model do
   describe "#steps" do
     subject { wizard.steps.keys }
 
-    context "when the csv contains is valid" do
-      it { is_expected.to eq(%i[upload confirmation]) }
+    context "when there are no current or upcoming claim windows" do
+      it { is_expected.to eq(%i[no_claim_window]) }
     end
 
-    context "when the csv contains invalid inputs" do
-      let(:csv_content) do
-        "name,urn\r\n" \
-        "A school,"
-      end
-      let(:state) do
-        {
-          "upload" => {
-            "csv_upload" => nil,
-            "csv_content" => csv_content,
-          },
-        }
+    context "when there a current or upcoming claim windows" do
+      let(:current_claim_window) { create(:claim_window, :current) }
+
+      before { current_claim_window }
+
+      context "when the csv contains is valid" do
+        it { is_expected.to eq(%i[claim_window upload confirmation]) }
       end
 
-      it { is_expected.to eq(%i[upload upload_errors]) }
+      context "when the csv contains invalid inputs" do
+        let(:csv_content) do
+          "name,urn\r\n" \
+          "A school,"
+        end
+        let(:state) do
+          {
+            "upload" => {
+              "csv_upload" => nil,
+              "csv_content" => csv_content,
+            },
+          }
+        end
+
+        it { is_expected.to eq(%i[claim_window upload upload_errors]) }
+      end
     end
   end
 
   describe "#onboard_schools" do
     subject(:onboard_schools) { wizard.onboard_schools }
 
+    let(:claim_window) { create(:claim_window, :current) }
     let(:school) { create(:school, name: "London School", urn: 111_111) }
     let(:state) do
       {
+        "claim_window" => { "claim_window_id" => claim_window.id },
         "upload" => {
           "csv_upload" => nil,
           "csv_content" => csv_content,
@@ -45,7 +57,10 @@ RSpec.describe Claims::OnboardMultipleSchoolsWizard, type: :model do
       }
     end
 
-    before { school }
+    before do
+      school
+      claim_window
+    end
 
     context "when the steps are valid" do
       let(:csv_content) do
