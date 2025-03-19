@@ -1,0 +1,53 @@
+<% content_for(:page_title) { t(".page_title", school_name: @school.name) } %>
+<%= render "placements/providers/primary_navigation", provider: @provider, current_navigation: :find %>
+
+<div class="govuk-width-container" data-controller="filter">
+  <h1 class="govuk-heading-l">
+    <%= @school.name %>
+  </h1>
+  <%= render School::InterestTagComponent.new(school: @school) %>
+  <div class="govuk-!-margin-bottom-2"></div>
+  <%= render SecondaryNavigationComponent.new do |component| %>
+    <% component.with_navigation_item t(".placements"), placements_placements_provider_find_path %>
+    <% component.with_navigation_item t(".placement_information"), placement_information_placements_provider_find_path %>
+    <% component.with_navigation_item t(".school_details"), school_details_placements_provider_find_path %>
+  <% end %>
+
+  <h2 class="govuk-heading-m">
+    <%= t(".placement_contact") %>
+  </h2>
+
+  <%= govuk_summary_list(actions: false) do |summary_list| %>
+    <% summary_list.with_row do |row| %>
+      <% row.with_key(text: t(".name")) %>
+      <% row.with_value(text: "#{@school.school_contact_first_name} #{@school.school_contact_last_name}") %>
+    <% end %>
+    <% summary_list.with_row do |row| %>
+      <% row.with_key(text: t(".email")) %>
+      <% row.with_value(text: @school.school_contact_email_address) %>
+    <% end %>
+  <% end %>
+
+  <h2 class="govuk-heading-m">
+    <%= t(".mentors") %>
+  </h2>
+
+  <%= govuk_summary_list(actions: false) do |summary_list| %>
+    <% summary_list.with_row do |row| %>
+      <% row.with_key(text: t(".trained_mentors")) %>
+      <% row.with_value(text: "Unknown") %>
+    <% end %>
+  <% end %>
+
+  <h2 class="govuk-heading-m">
+    <%= t(".placements_hosted_in_previous_years") %>
+  </h2>
+
+  <%= govuk_summary_list(actions: false) do |summary_list| %>
+    <% summary_list.with_row do |row| %>
+      <% row.with_key(text: "2023-2024") %>
+      <% row.with_value(text: "Offered placements in:") %>
+    <% end %>
+  <% end %>
+
+</div>

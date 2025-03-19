@@ -17,12 +17,12 @@ class School::SummaryComponent < ApplicationComponent
     I18n.t("components.placement.summary_component.distance_in_miles", distance:)
   end
 
-  def available_placements
-    school.available_placement_subjects.pluck(:name).join(", ")
+  def available_placements_count
+    school.available_placement_subjects.count
   end
 
-  def also_hosting_placements
-    school.unavailable_placement_subjects.pluck(:name).join(", ")
+  def unavailable_placements_count
+    school.unavailable_placement_subjects.count
   end
 
   def placement_status
@@ -35,13 +35,27 @@ class School::SummaryComponent < ApplicationComponent
   end
 
   private
+  
+  def latest_academic_year
+    @latest_academic_year ||= Placements::AcademicYear.where(id: school.placements.pluck(:academic_year_id),
+                                                             ends_on: ..current_academic_year_start)
+                                                     .order_by_date.first
+  end
 
   def latest_academic_year_name
-    current_academic_year_start = Placements::AcademicYear.current.starts_on
+    latest_academic_year&.name
+  end
 
-    Placements::AcademicYear.where(id: school.placements.pluck(:academic_year_id),
-                                   ends_on: ..current_academic_year_start)
-                            .order_by_date.pick(:name)
+  def latest_academic_year_placements_count
+    school.placements.where(academic_year: latest_academic_year).count
+  end
+
+  def latest_academic_year_placements_names
+    school.placements.where(academic_year: latest_academic_year).pluck(:name).join(", ")
+  end
+
+  def current_academic_year_start
+    @current_academic_year ||= Placements::AcademicYear.current.starts_on
   end
 
   def not_open?

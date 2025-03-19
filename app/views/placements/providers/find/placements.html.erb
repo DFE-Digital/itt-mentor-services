@@ -1,0 +1,63 @@
+<% content_for(:page_title) { t(".page_title", school_name: @school.name) } %>
+<%= render "placements/providers/primary_navigation", provider: @provider, current_navigation: :find %>
+
+<div class="govuk-width-container" data-controller="filter">
+  <h1 class="govuk-heading-l">
+    <%= @school.name %>
+  </h1>
+  <%= render School::InterestTagComponent.new(school: @school) %>
+  <div class="govuk-!-margin-bottom-2"></div>
+  <%= render SecondaryNavigationComponent.new do |component| %>
+    <% component.with_navigation_item t(".placements"), placements_placements_provider_find_path %>
+    <% component.with_navigation_item t(".placement_information"), placement_information_placements_provider_find_path %>
+    <% component.with_navigation_item t(".school_details"), school_details_placements_provider_find_path %>
+  <% end %>
+
+  <p class="govuk-body">
+    <%= t(".description") %>
+  </p>
+
+  <h2 class="govuk-heading-m">
+    <%= t(".unfilled_placements", count: @unfilled_subjects.count) %>
+  </h2>
+
+  <%= govuk_table do |table| %>
+    <% table.with_head do |head| %>
+      <% head.with_row do |row| %>
+        <% row.with_cell text: t(".table.headers.subject") %>
+        <% row.with_cell text: t(".table.headers.expected_date") %>
+      <% end %>
+    <% end %>
+
+    <% @unfilled_subjects.each do |subject| %>
+      <% table.with_body do |body| %>
+        <% body.with_row do |row| %>
+          <% row.with_cell text: subject.name %>
+          <% row.with_cell text: "Date not added" %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <h2 class="govuk-heading-m">
+    <%= t(".filled_placements", count: @filled_subjects.count) %>
+  </h2>
+
+  <%= govuk_table do |table| %>
+    <% table.with_head do |head| %>
+      <% head.with_row do |row| %>
+        <% row.with_cell text: t(".table.headers.subject") %>
+        <% row.with_cell text: t(".table.headers.expected_date") %>
+      <% end %>
+    <% end %>
+
+    <% @filled_subjects.each do |subject| %>
+      <% table.with_body do |body| %>
+        <% body.with_row do |row| %>
+          <% row.with_cell text: subject.name %>
+          <% row.with_cell text: "Date not added" %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

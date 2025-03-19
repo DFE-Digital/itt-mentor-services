@@ -22,14 +22,27 @@ en:
         school_details: School details
         placement_information: Placement information
         trained_mentors: Trained mentors
-        available_placements: Available placements
-        also_hosting: Also hosting
-        placement_status: Placement status
-        placements_hosted: Offered placements in %{academic_year_name}
-        placements_never_hosted: This school has not previously hosted placements
-        placement_contact: Placement contact
+        available_placements: Unfilled placements
+        available_placements_count:
+          one: "%{count} unfilled placement"
+          other: "%{count} unfilled placements"
+        unavailable_placements: Hosting subjects
+        unavailable_placements_count:
+          one: "%{count} filled placement"
+          other: "%{count} filled placements"
+        last_offered: Last offered
+        last_offered_count:
+            zero: "This school has not previously hosted placements"
+            one: "%{count} subjects in %{academic_year_name}"
+            other: "%{count} subject in %{academic_year_name}"
+        placement_contact: Contact
         address: Address
         distance: Distance
         travel_time: Travel time
         travel_time_information: "%{transit_time} by public transport, %{drive_time} drive, %{walk_time} walk"
         getting_there: Getting there
+        placement_subjects: Placement subjects
+        unknown: Unknown
+        not_open_to_hosting: Not open to hosting placements
+        placement_status: Placement status
+        offered_placements: Offered placements in %{academic_year_name} (%{subjects})

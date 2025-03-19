@@ -51,5 +51,39 @@ en:
           trained_mentors_true_label: "Yes"
           trained_mentors_false_label: "No"
         show:
-          page_title: "%{subject_name} - Placements - %{school_name}"
-          placement: "Placement - %{school_name}"
+          page_title: "%{school_name} - Find"
+          placements: Placements
+          placement_information: Placement information
+          school_details: School details
+        placements:
+          page_title: "%{school_name} - Find"
+          placements: Placements
+          placement_information: Placement information
+          school_details: School details
+          description: This school has specified which placements they would like to host in the 2025-2026 academic year.
+          unfilled_placements:
+            one: "%{count} unfilled placement"
+            other: "%{count} unfilled placements"
+          filled_placements:
+            one: "%{count} filled placement"
+            other: "%{count} filled placements"
+          table:
+            headers:
+              subject: Subject
+              expected_date: Expected date
+        placement_information:
+          page_title: "%{school_name} - Find"
+          placements: Placements
+          placement_information: Placement information
+          school_details: School details
+          placement_contact: Placement contact
+          name: Name
+          email: Email
+          mentors: Mentors
+          trained_mentors: Trained mentors
+          placements_hosted_in_previous_years: Placements hosted in previous years
+        school_details:
+          page_title: "%{school_name} - Find"
+          placements: Placements
+          placement_information: Placement information
+          school_details: School details

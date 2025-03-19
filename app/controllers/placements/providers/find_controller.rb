@@ -10,8 +10,21 @@ class Placements::Providers::FindController < Placements::ApplicationController
   end
 
   def show
-    @placement = placements.find(params.require(:id)).decorate
-    @school = @placement.school
+    @school = Placements::School.find(params[:id])
+  end
+
+  def placements
+    @school = Placements::School.find(params[:id])
+    @unfilled_subjects = Subject.where(id: @school.placements.where(academic_year_id: Placements::AcademicYear.current.id, provider_id: nil).pluck(:subject_id))
+    @filled_subjects = Subject.where(id: @school.placements.where(academic_year_id: Placements::AcademicYear.current.id).where.not(provider_id: nil).pluck(:subject_id))
+  end
+
+  def placement_information
+    @school = Placements::School.find(params[:id])
+  end
+
+  def school_details
+    @school = Placements::School.find(params[:id])
   end
 
   private

@@ -1,8 +1,8 @@
 <li class="app-search-results__item">
   <h2 class="govuk-heading-m">
-    <%#= govuk_link_to(placements_provider_placement_path(provider, placement), no_visited_state: true) do %>
+    <%= govuk_link_to(placements_placements_provider_find_path(provider, school), no_visited_state: true) do %>
       <%= school.name %>
-    <%# end %>
+    <% end %>
   </h2>
 
   <div class="app-result-detail">
@@ -43,48 +43,71 @@
     <!-- Placement information -->
     <div class="govuk-!-margin-top-2">
       <h3 class="govuk-heading-s govuk-!-margin-bottom-2"><%= t(".placement_information") %></h3>
-      <div class="app-result-detail__row">
-        <dt class="app-result-detail__key">
-          <%= t(".trained_mentors") %>
-        </dt>
-        <dd class="app-result-detail__value">
-          Unknown <!-- TODO: Add trained mentors to school -->
-        </dd>
-      </div>
-      <div class="app-result-detail__row">
-        <dt class="app-result-detail__key">
-          <%= t(".available_placements") %>
-        </dt>
-        <dd class="app-result-detail__value">
-          <%= available_placements %>
-        </dd>
-      </div>
-      <div class="app-result-detail__row">
-        <dt class="app-result-detail__key">
-          <%= t(".also_hosting") %>
-        </dt>
-        <dd class="app-result-detail__value">
-          <%= also_hosting_placements %>
-        </dd>
-      </div>
-      <div class="app-result-detail__row">
-        <dt class="app-result-detail__key">
-          <%= t(".placement_status") %>
-        </dt>
-        <dd class="app-result-detail__value">
-          <%= placement_status %>
-        </dd>
-      </div>
-      <div class="app-result-detail__row">
-        <dt class="app-result-detail__key">
-          <%= t(".placement_contact") %>
-        </dt>
-        <dd class="app-result-detail__value">
-          <%= "#{school_contact&.first_name} #{school_contact&.last_name}" %>
-          <br>
-          <%= school_contact&.email_address %>
-        </dd>
-      </div>
+      <% if not_open? %>
+        <div class="app-result-detail__row">
+          <dt class="app-result-detail__key">
+            <%= t(".placement_subjects") %>
+          </dt>
+          <dd class="app-result-detail__value">
+            <%= t(".not_open_to_hosting") %>
+          </dd>
+        </div>
+        <div class="app-result-detail__row">
+          <dt class="app-result-detail__key">
+            <%= t(".placement_status") %>
+          </dt>
+          <dd class="app-result-detail__value">
+            <% if latest_academic_year.present? %>
+              <%= t(".offered_placements", academic_year_name: latest_academic_year_name, subjects: latest_academic_year_placements_names) %>
+            <% else %>
+              <%= t(".unknown") %>
+            <% end %>
+          </dd>
+        </div>
+      <% else %>
+        <div class="app-result-detail__row">
+          <dt class="app-result-detail__key">
+            <%= t(".trained_mentors") %>
+          </dt>
+          <dd class="app-result-detail__value">
+            Unknown <!-- TODO: Add trained mentors to school -->
+          </dd>
+        </div>
+        <div class="app-result-detail__row">
+          <dt class="app-result-detail__key">
+            <%= t(".available_placements") %>
+          </dt>
+          <dd class="app-result-detail__value">
+            <%= govuk_link_to t(".available_placements_count", count: available_placements_count), "#", no_visited_state: true %>
+          </dd>
+        </div>
+        <div class="app-result-detail__row">
+          <dt class="app-result-detail__key">
+            <%= t(".unavailable_placements") %>
+          </dt>
+          <dd class="app-result-detail__value">
+            <%= t(".unavailable_placements_count", count: unavailable_placements_count) %>
+          </dd>
+        </div>
+        <div class="app-result-detail__row">
+          <dt class="app-result-detail__key">
+            <%= t(".last_offered") %>
+          </dt>
+          <dd class="app-result-detail__value">
+            <%= t(".last_offered_count", count: latest_academic_year_placements_count, academic_year_name: latest_academic_year_name) %>
+          </dd>
+        </div>
+        <div class="app-result-detail__row">
+          <dt class="app-result-detail__key">
+            <%= t(".placement_contact") %>
+          </dt>
+          <dd class="app-result-detail__value">
+            <%= "#{school_contact&.first_name} #{school_contact&.last_name}" %>
+            <br>
+            <%= school_contact&.email_address %>
+          </dd>
+        </div>
+      <% end %>
     </div>
     <!-- End placement information -->
 
