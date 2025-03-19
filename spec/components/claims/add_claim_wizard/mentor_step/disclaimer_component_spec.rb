@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Claims::AddClaimWizard::MentorStep::DisclaimerComponent, type: :component do
   let(:provider) { create(:claims_provider) }
-  let(:claim) { build(:claim, provider:) }
+  let(:claim) { create(:claim, provider:) }
   let(:mentor_step) do
     instance_double(Claims::AddClaimWizard::MentorStep).tap do |mentor_step|
       allow(mentor_step).to receive_messages(
