@@ -5,8 +5,8 @@ en:
         claims:
           add_claim:
             edit:
-              caption: Add claim - %{school_name}
-              save: Save claim
+              caption: Claim details - %{school_name}
+              save: Accept and submit
               cancel: Cancel
             update:
               success: Claim added

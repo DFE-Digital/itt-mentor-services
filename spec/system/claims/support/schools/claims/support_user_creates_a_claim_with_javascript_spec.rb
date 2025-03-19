@@ -90,7 +90,7 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
     )
     expect(page).to have_element(
       :span,
-      text: "Add claim",
+      text: "Claim details",
       class: "govuk-caption-l",
     )
     expect(page).to have_button("Continue")
@@ -107,7 +107,7 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
                :and_i_click_on_continue
 
   def then_i_see_the_provider_options_step
-    expect(page).to have_element(:span, text: "Add claim", class: "govuk-caption-l")
+    expect(page).to have_element(:span, text: "Claim details", class: "govuk-caption-l")
     expect(page).to have_element(
       :h1,
       text: "1 results found for 'Best Practice Network'",
@@ -131,8 +131,8 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
   end
 
   def then_i_see_the_mentor_selection_step
-    expect(page).to have_element(:span, text: "Add claim", class: "govuk-caption-l")
-    expect(page).to have_h1("Mentors for Best Practice Network", class: "govuk-heading-l")
+    expect(page).to have_element(:span, text: "Claim details", class: "govuk-caption-l")
+    expect(page).to have_element(:h1, text: "Select mentors that trained with Best Practice Network", class: "govuk-fieldset__heading")
 
     expect(page).to have_field("Joe Bloggs", type: :checkbox)
     expect(page).to have_field("John Smith", type: :checkbox)
@@ -150,10 +150,10 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
   def then_i_see_the_mentor_training_hours_step_for_joe_bloggs
     expect(page).to have_element(
       :span,
-      text: "Add claim - #{@school.name} - Best Practice Network",
+      text: "Claim details - #{@school.name} - Best Practice Network",
       class: "govuk-caption-l",
     )
-    expect(page).to have_h1("Hours of training for Joe Bloggs", class: "govuk-heading-l")
+    expect(page).to have_element(:h1, text: "How many hours of training did Joe Bloggs complete?", class: "govuk-fieldset__heading")
 
     expect(page).to have_field("20 hours", type: :radio)
     expect(page).to have_field("Another amount", type: :radio)
@@ -166,10 +166,10 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
   def then_i_see_the_mentor_training_hours_step_for_sarah_doe
     expect(page).to have_element(
       :span,
-      text: "Add claim - #{@school.name} - Best Practice Network",
+      text: "Claim details - #{@school.name} - Best Practice Network",
       class: "govuk-caption-l",
     )
-    expect(page).to have_h1("Hours of training for Sarah Doe", class: "govuk-heading-l")
+    expect(page).to have_element(:h1, text: "How many hours of training did Sarah Doe complete?", class: "govuk-fieldset__heading")
 
     expect(page).to have_field("20 hours", type: :radio)
     expect(page).to have_field("Another amount", type: :radio)
@@ -184,10 +184,10 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
   end
 
   def then_i_see_the_check_your_answers_page
-    expect(page).to have_h1("Check your answers", class: "govuk-heading-l")
+    expect(page).to have_h1("Check your answers before submitting your claim", class: "govuk-heading-l")
 
     expect(page).to have_summary_list_row("Academic year", @academic_year.name)
-    expect(page).to have_summary_list_row("Accredited provider", "Best Practice Network")
+    expect(page).to have_summary_list_row("Provider", "Best Practice Network")
     expect(page).to have_summary_list_row(
       "Mentors",
       "Joe Bloggs Sarah Doe",
@@ -206,7 +206,7 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
   end
 
   def when_i_click_on_save_claim
-    click_on "Save claim"
+    click_on "Accept and submit"
   end
 
   def then_i_see_the_claim_has_been_successfully_created

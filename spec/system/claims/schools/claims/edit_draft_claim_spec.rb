@@ -36,7 +36,7 @@ RSpec.describe "Edit a claim", service: :claims, type: :system do
     when_i_choose_hours("20 hours")
     and_i_click("Continue")
     then_i_see_the_check_your_answers_page(provider:, mentor:, hours_completed: 20)
-    and_i_click("Submit claim")
+    and_i_click("Accept and submit")
     then_i_see_the_claim_submitted_message
   end
 
@@ -51,7 +51,7 @@ RSpec.describe "Edit a claim", service: :claims, type: :system do
     when_i_choose_custom_hours(hours: 6)
     and_i_click("Continue")
     then_i_see_the_check_your_answers_page(provider:, mentor:, hours_completed: 6)
-    and_i_click("Submit claim")
+    and_i_click("Accept and submit")
     then_i_see_the_claim_submitted_message
   end
 
@@ -88,7 +88,7 @@ RSpec.describe "Edit a claim", service: :claims, type: :system do
     then_i_see_the_check_your_answers_page(provider: another_provider, mentor:, hours_completed: 20)
 
     when_another_claim_has_been_submitted_for_provider_niot
-    and_i_click("Submit claim")
+    and_i_click("Accept and submit")
     then_i_see_i_can_not_sumbit_the_claim
   end
 
@@ -170,7 +170,7 @@ RSpec.describe "Edit a claim", service: :claims, type: :system do
     expect(page).to have_summary_list_row("School", "A School")
     expect(page).not_to have_content("Submitted by")
 
-    expect(page).to have_summary_list_row("Accredited provider", provider.name)
+    expect(page).to have_summary_list_row("Provider", provider.name)
     expect(page).to have_summary_list_row("Mentors", mentor.full_name)
 
     expect(page).to have_h2("Hours of training", class: "govuk-heading-m")

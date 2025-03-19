@@ -5,4 +5,4 @@ en:
         declaration_step:
           caption: Claim - %{reference}
           page_title: Declaration
-          submit: Submit claim
+          submit: Accept and submit

@@ -52,7 +52,7 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
     when_i_click("Continue") # Mentors 1 step
     when_i_click("Continue") # Mentors 2 step
     then_i_check_my_answers(niot, [mentor1, mentor2], [20, 12])
-    when_i_click("Submit claim")
+    when_i_click("Accept and submit")
     then_i_get_a_claim_reference
   end
 
@@ -70,7 +70,7 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
       [mentor2],
       [12],
     )
-    when_i_click("Submit claim")
+    when_i_click("Accept and submit")
     then_i_get_a_claim_reference
   end
 
@@ -140,7 +140,7 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
   end
 
   def when_i_click_change_provider
-    click_link("Change Accredited provider")
+    click_link("Change Provider")
   end
 
   def when_i_click_change_mentors
@@ -201,7 +201,7 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
   end
 
   def then_i_expect_the_training_hours_for(hours, mentor)
-    expect(page).to have_content("Hours of training for #{mentor.full_name}")
+    expect(page).to have_content("How many hours of training did #{mentor.full_name} complete?")
     then_i_expect_the_training_hours_to_be_selected(hours)
   end
 
@@ -209,7 +209,7 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
     expect(page).to have_h1("Check your answers", class: "govuk-heading-l")
 
     expect(page).to have_summary_list_row("Academic year", @claim_window.academic_year_name)
-    expect(page).to have_summary_list_row("Accredited provider", provider.name)
+    expect(page).to have_summary_list_row("Provider", provider.name)
 
     expect(page).to have_h2("Hours of training", class: "govuk-heading-m")
 
@@ -258,7 +258,7 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
   end
 
   def then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor)
-    expect(page).to have_content("Hours of training for #{mentor.full_name}")
+    expect(page).to have_content("How many hours of training did #{mentor.full_name} complete?")
   end
 
   def and_i_enter_a_provider_named_best_practice_network
