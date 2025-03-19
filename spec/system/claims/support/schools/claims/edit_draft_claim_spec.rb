@@ -238,9 +238,9 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
   end
 
   def then_i_see_the_check_your_answers_page(provider:, hours_completed:)
-    expect(page).to have_h1("Check your answers", class: "govuk-heading-l")
+    expect(page).to have_h1("Check your answers before submitting your claim", class: "govuk-heading-l")
 
-    expect(page).to have_summary_list_row("Accredited provider", provider.name)
+    expect(page).to have_summary_list_row("Provider", provider.name)
 
     expect(page).to have_summary_list_row("Mentors", "Barry Garlow")
 
