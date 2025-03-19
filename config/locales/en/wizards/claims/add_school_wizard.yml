@@ -20,3 +20,24 @@ en:
           urn: Unique reference number (URN)
           ukprn: UK provider reference number (UKPRN)
           website: Website
+          claim_window: Claim window
+        claim_window_step:
+          page_title: Select a claim window - Add organisation
+          caption: Add organisation
+          title: Select a claim window
+          continue: Continue
+          hint: Select the current or upcoming claim window
+          claim_window_not_listed: The claim window I need is not listed
+          create_an_additional_claim_window:
+            If you cannot see the dates you need you can %{link}.
+          link_to_claim_windows:
+            create an additional claim window
+        no_claim_window_step: 
+          page_title: No claim windows - Add organisation
+          caption: Add organisation
+          title: No claim windows
+          description: | 
+            The are currently no claim windows available to allow schools be eligible to claim funding for mentor training.
+          add_a_claim_window: |
+            To onboard a school you will need to %{link}.
+          link_to_claim_windows: create a claim window
