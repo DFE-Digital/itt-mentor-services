@@ -10,28 +10,40 @@ RSpec.describe Claims::AddSchoolWizard do
   describe "#steps" do
     subject { wizard.steps.keys }
 
-    context "when an school was selected during the school step" do
-      let!(:school) { create(:school) }
-      let(:state) do
-        {
-          "school" => { "id" => school.id, "name" => school.name },
-        }
-      end
-
-      it { is_expected.to eq %i[school check_your_answers] }
+    context "when there are no current or upcoming claim windows" do
+      it { is_expected.to eq(%i[no_claim_window]) }
     end
 
-    context "when an school was not selected during the school step" do
-      it { is_expected.to eq %i[school school_options check_your_answers] }
+    context "when there a current or upcoming claim windows" do
+      let(:current_claim_window) { create(:claim_window, :current) }
+
+      before { current_claim_window }
+
+      context "when an school was selected during the school step" do
+        let!(:school) { create(:school) }
+        let(:state) do
+          {
+            "school" => { "id" => school.id, "name" => school.name },
+          }
+        end
+
+        it { is_expected.to eq %i[claim_window school check_your_answers] }
+      end
+
+      context "when an school was not selected during the school step" do
+        it { is_expected.to eq %i[claim_window school school_options check_your_answers] }
+      end
     end
   end
 
   describe "#school" do
     subject { wizard.school }
 
+    let(:current_claim_window) { create(:claim_window, :current) }
     let!(:school) { create(:school) }
     let(:state) do
       {
+        "claim_window" => { "claim_window_id" => current_claim_window.id },
         "school" => { "id" => school.id, "name" => school.name },
       }
     end
@@ -40,18 +52,23 @@ RSpec.describe Claims::AddSchoolWizard do
   end
 
   describe "#onboard_school" do
+    let(:current_claim_window) { create(:claim_window, :current) }
     let!(:school) { create(:school) }
     let(:state) do
       {
+        "claim_window" => { "claim_window_id" => current_claim_window.id },
         "school" => { "id" => school.id, "name" => school.name },
       }
     end
 
     it "onboards the school into the claims service" do
       expect(school.claims_service).to be(false)
-      wizard.onboard_school
+      expect { wizard.onboard_school }.to change(Claims::School, :count).by(1)
+        .and change(Claims::Eligibility, :count).by(1)
+
       school.reload
       expect(school.claims_service).to be(true)
+      expect(current_claim_window.eligible_schools.ids).to contain_exactly(school.id)
     end
   end
 end

@@ -1,7 +1,13 @@
 require "rails_helper"
 
 RSpec.describe "Support User adds a School without JavaScript", service: :claims, type: :system do
+  let(:current_claim_window) { create(:claim_window, :current).decorate }
+  let(:upcoming_claim_window) { create(:claim_window, :upcoming).decorate }
+
   before do
+    upcoming_claim_window
+    current_claim_window
+
     create(:school, name: "Manchester 1")
     create(:school, name: "Manchester 2")
     create(:school, name: "London")
@@ -11,6 +17,10 @@ RSpec.describe "Support User adds a School without JavaScript", service: :claims
 
   scenario "Colin adds a new School" do
     when_i_visit_the_add_school_page
+    then_i_see_the_claim_window_page
+
+    when_i_select_the_current_claim_window
+    and_click_on_continue
     and_i_enter_a_school_named("Manch")
     and_i_click_continue
     then_i_see_list_of_schools
@@ -25,6 +35,10 @@ RSpec.describe "Support User adds a School without JavaScript", service: :claims
   scenario "Colin adds a school which already exists" do
     given_a_school_already_exists_for_claims
     when_i_visit_the_add_school_page
+    then_i_see_the_claim_window_page
+
+    when_i_select_the_current_claim_window
+    and_click_on_continue
     and_i_enter_a_school_named("Manch")
     and_i_click_continue
     then_i_see_list_of_schools
@@ -35,12 +49,20 @@ RSpec.describe "Support User adds a School without JavaScript", service: :claims
 
   scenario "Colin submits the search form without selecting a school" do
     when_i_visit_the_add_school_page
+    then_i_see_the_claim_window_page
+
+    when_i_select_the_current_claim_window
+    and_click_on_continue
     and_i_click_continue
     then_i_see_an_error("Enter a school name, unique reference number (URN) or postcode")
   end
 
   scenario "Colin submits the options form without selecting a school" do
     when_i_visit_the_add_school_page
+    then_i_see_the_claim_window_page
+
+    when_i_select_the_current_claim_window
+    and_click_on_continue
     and_i_enter_a_school_named("Manch")
     and_i_click_continue
     then_i_see_list_of_schools
@@ -50,6 +72,10 @@ RSpec.describe "Support User adds a School without JavaScript", service: :claims
 
   scenario "Colin reconsiders onboarding a school" do
     when_i_visit_the_add_school_page
+    then_i_see_the_claim_window_page
+
+    when_i_select_the_current_claim_window
+    and_click_on_continue
     and_i_enter_a_school_named("Manch")
     and_i_click_continue
     then_i_see_list_of_schools
@@ -109,8 +135,8 @@ RSpec.describe "Support User adds a School without JavaScript", service: :claims
   def then_i_see_the_check_details_page_for_school(school_name)
     expect(page).to have_content("Manchester 1")
     expect(page).to have_content("Check your answers")
-    org_name_row = page.all(".govuk-summary-list__row")[0]
-    expect(org_name_row).to have_content(school_name)
+    expect(page).to have_summary_list_row("Claim window", current_claim_window.name)
+    expect(page).to have_summary_list_row("Organisation name", school_name)
   end
 
   def when_i_click_save_organisation
@@ -149,5 +175,22 @@ RSpec.describe "Support User adds a School without JavaScript", service: :claims
 
   def and_the_option_for_school_has_been_pre_selected(school_name)
     expect(page).to have_checked_field(school_name)
+  end
+
+  def then_i_see_the_claim_window_page
+    expect(page).to have_title("Select a claim window - Add organisation")
+    expect(page).to have_element(:span, text: "Add organisation", class: "govuk-caption-l")
+    expect(page).to have_element(:h1, text: "Select a claim window", class: "govuk-fieldset__heading")
+
+    expect(page).to have_field(current_claim_window.name, type: :radio, visible: :all)
+    expect(page).to have_field(upcoming_claim_window.name, type: :radio, visible: :all)
+  end
+
+  def when_i_select_the_current_claim_window
+    choose current_claim_window.name
+  end
+
+  def and_click_on_continue
+    click_on "Continue"
   end
 end
