@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support user onboards multiple schools for the current claim window", service: :claims, type: :system do
+RSpec.describe "Support user onboards multiple schools when only a upcoming claim window exists", service: :claims, type: :system do
   include ActiveJob::TestHelper
 
   around do |example|
@@ -8,7 +8,7 @@ RSpec.describe "Support user onboards multiple schools for the current claim win
   end
 
   scenario do
-    given_claim_windows_exist
+    given_a_upcoming_claim_window_exists
     and_schools_exist
     and_i_am_signed_in
     when_i_navigate_to_onboard_multiple_schools
@@ -35,8 +35,7 @@ RSpec.describe "Support user onboards multiple schools for the current claim win
 
   private
 
-  def given_claim_windows_exist
-    @current_claim_window = create(:claim_window, :current).decorate
+  def given_a_upcoming_claim_window_exists
     @upcoming_claim_window = create(:claim_window, :upcoming).decorate
   end
 
@@ -114,8 +113,9 @@ RSpec.describe "Support user onboards multiple schools for the current claim win
     expect(page).to have_element(:span, text: "Onboarding", class: "govuk-caption-l")
     expect(page).to have_element(:h1, text: "Select a claim window", class: "govuk-fieldset__heading")
 
-    expect(page).to have_field(@current_claim_window.name, type: :radio)
     expect(page).to have_field(@upcoming_claim_window.name, type: :radio)
+
+    expect(page).not_to have_element(:div, text: "Current", class: "govuk-radios__hint")
   end
 
   def when_i_select_the_upcoming_claim_window
