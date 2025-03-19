@@ -16,6 +16,7 @@ class Claims::Support::Schools::OnboardSchoolsController < Claims::Support::Appl
       @wizard.reset_state
       redirect_to claims_support_schools_path, flash: {
         heading: t(".success"),
+        body: t(".body"),
       }
     end
   end

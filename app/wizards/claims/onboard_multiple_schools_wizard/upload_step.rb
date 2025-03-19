@@ -38,6 +38,9 @@ class Claims::OnboardMultipleSchoolsWizard::UploadStep < BaseStep
 
     reset_input_attributes
     csv.each_with_index do |row, i|
+      next if row["name"].blank? &&
+        row["urn"].blank?
+
       validate_name(row, i)
       validate_urn(row, i)
     end

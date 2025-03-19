@@ -21,7 +21,6 @@ en:
           date_of_birth: Date of birth
           privacy_link: privacy notice
           disclaimer_html: I confirm that %{mentor_name} has been informed that the Department for Education will store their information in line with the %{privacy_link} and have provided them with a copy of this notice for reference.
-        no_results:
         no_results_step:
           page_title: No results found for ‘%{trn}’ - %{contextual_text}
           change_your_search: Change your search
