@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Support user does upload a file with wrong headers", service: :claims, type: :system do
   scenario do
-    given_a_current_claim_windows_exist
+    given_claim_windows_exist
     and_schools_exist
     and_i_am_signed_in
     when_i_navigate_to_onboard_multiple_schools
@@ -19,7 +19,7 @@ RSpec.describe "Support user does upload a file with wrong headers", service: :c
 
   private
 
-  def given_a_current_claim_windows_exist
+  def given_claim_windows_exist
     @current_claim_window = create(:claim_window, :current).decorate
     @upcoming_claim_window = create(:claim_window, :upcoming).decorate
   end
