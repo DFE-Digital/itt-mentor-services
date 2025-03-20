@@ -1,0 +1,12 @@
+en:
+  claims:
+    support:
+      schools:
+        upload_users:
+          edit:
+            cancel: Cancel
+          update:
+            success: Users CSV uploaded
+            body: |
+              It may take a moment for the users to load. 
+              Refresh the page to see newly uploaded information.
