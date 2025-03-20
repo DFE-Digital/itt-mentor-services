@@ -46,7 +46,14 @@
   <%= govuk_summary_list(actions: false) do |summary_list| %>
     <% summary_list.with_row do |row| %>
       <% row.with_key(text: "2023-2024") %>
-      <% row.with_value(text: "Offered placements in:") %>
+      <% row.with_value do %>
+        <p><%= t(".offered_placements_in") %></p>
+        <ul class="govuk-list">
+          <% @subjects_last_offered.each do |name| %>
+            <li><%= name %></li>
+          <% end %>
+        </ul>
+      <% end %>
     <% end %>
   <% end %>
 

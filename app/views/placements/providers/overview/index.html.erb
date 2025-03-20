@@ -2,7 +2,23 @@
 <%= render "placements/providers/primary_navigation", provider: @provider, current_navigation: :placements %>
 
 <div class="govuk-width-container">
-  <h1 class="govuk-heading-l">
-    <%= t(".title") %>
-  </h1>
+  <div class="govuk-grid-row govuk-!-margin-bottom-7">
+    <div class="govuk-grid-column-one-third">
+      <a href="#" class="headline-card">
+        <h2 class="headline-figure">30 <span class="headline-label">successful candidates</span></h2>
+      </a>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      <a href="#" class="headline-card">
+        <h2 class="headline-figure">12 <span class="headline-label">placements agreed</span></h2>
+      </a>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      <a href="#" class="headline-card">
+        <h2 class="headline-figure">48 <span class="headline-label">placements needed</span></h2>
+      </a>
+    </div>
+  </div>
 </div>

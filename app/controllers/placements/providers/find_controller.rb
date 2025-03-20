@@ -21,10 +21,14 @@ class Placements::Providers::FindController < Placements::ApplicationController
 
   def placement_information
     @school = Placements::School.find(params[:id])
+    latest_academic_year = Placements::AcademicYear.where(id: @school.placements.pluck(:academic_year_id),
+                                                             ends_on: ..Placements::AcademicYear.current.starts_on)
+                                                      .order_by_date.first
+    @subjects_last_offered = Subject.where(id: @school.placements.where(academic_year: latest_academic_year).pluck(:subject_id)).pluck(:name)
   end
 
   def school_details
-    @school = Placements::School.find(params[:id])
+    @school = Placements::School.find(params[:id]).decorate
   end
 
   private

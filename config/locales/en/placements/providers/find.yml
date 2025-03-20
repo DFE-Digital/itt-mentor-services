@@ -82,8 +82,37 @@ en:
           mentors: Mentors
           trained_mentors: Trained mentors
           placements_hosted_in_previous_years: Placements hosted in previous years
+          offered_placements_in: "Offered placements in:"
         school_details:
           page_title: "%{school_name} - Find"
           placements: Placements
           placement_information: Placement information
           school_details: School details
+          phase: Phase
+          age_range: Age range
+          ukprn: UK provider reference number (UKPRN)
+          urn: Unique reference number (URN)
+          general_contact_details: General contact details
+          telephone: Telephone number
+          website: Website
+          address: Address
+          additional_details: Additional details
+          school_type: School type
+          gender: Gender
+          religious_character: Religious character
+          admissions_policy: Admissions policy
+          urban_or_rural: Urban or rural
+          school_capacity: School capacity
+          total_boys: Total boys
+          total_girls: Total girls
+          percentage_fsm: Percentage free school meals
+          send_details: Special educational needs and disabilities (SEND)
+          special_classes: Special classes
+          sen_provision: SEN provision
+          ofsted: OFSTED
+          ofsted_report: Ofsted report
+          details_summary: Why the rating is not displayed
+          details_body: From September 2024, Ofsted no longer makes an overall effectiveness judgement in inspections of state-funded schools.
+          report: Report
+          last_inspection: Last inspection date
+          unknown: Unknown

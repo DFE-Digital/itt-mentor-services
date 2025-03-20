@@ -78,7 +78,7 @@
             <%= t(".available_placements") %>
           </dt>
           <dd class="app-result-detail__value">
-            <%= govuk_link_to t(".available_placements_count", count: available_placements_count), "#", no_visited_state: true %>
+            <%= govuk_link_to t(".available_placements_count", count: available_placements_count), placements_placements_provider_find_path(provider, school), no_visited_state: true %>
           </dd>
         </div>
         <div class="app-result-detail__row">
@@ -112,7 +112,7 @@
     <!-- End placement information -->
 
     <!-- Getting there -->
-    <% if location_coordinates.present? %>
+    <% if location_coordinates.present? && !not_open? %>
       <div class="govuk-!-margin-top-2">
         <h3 class="govuk-heading-s govuk-!-margin-bottom-2"><%= t(".getting_there") %></h3>
         <div class="app-result-detail__row">
