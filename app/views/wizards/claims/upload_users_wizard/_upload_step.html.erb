@@ -1,0 +1,24 @@
+<% content_for(:page_title) { sanitize title_with_error_prefix(t(".page_title", contextual_text:), error: current_step.errors.any?) } %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= contextual_text %></span>
+      <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+
+      <%= form_for(current_step, url: current_step_path, method: :put, multipart: true) do |f| %>
+        <%= f.govuk_error_summary(presenter: DetailedErrorSummaryPresenter) %>
+
+        <p class="govuk-body"><%= t(".upload_the_csv_file") %></p>
+
+        <%= f.govuk_file_field :csv_upload, label: { text: t(".upload_csv_file"), hidden: true } %>
+
+        <%= govuk_details(summary_text: t(".csv_help")) do %>
+          <%= render_markdown(t(".csv_help_details")) %>
+        <% end %>
+
+        <%= f.govuk_submit(t(".upload")) %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -262,6 +262,10 @@ scope module: :claims, as: :claims, constraints: {
             get "new", to: "users/add_user#new", as: :new_add_user
             get "new/:state_key/:step", to: "users/add_user#edit", as: :add_user
             put "new/:state_key/:step", to: "users/add_user#update"
+
+            get "upload", to: "users/upload_users#new", as: :new_upload_users
+            get "upload/:state_key/:step", to: "users/upload_users#edit", as: :upload_users
+            put "upload/:state_key/:step", to: "users/upload_users#update"
           end
         end
       end

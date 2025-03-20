@@ -1,0 +1,64 @@
+<% content_for(:page_title) { sanitize title_with_error_prefix(t(".page_title", contextual_text:), error: true) } %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l"><%= contextual_text %></span>
+    <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">
+          <%= t(".error_summary.title") %>
+        </h2>
+        <div class="govuk-error-summary__body">
+          <div class="govuk-list govuk-error-summary__list">
+              <p class="govuk-heading-s">
+                <%= t(".error_summary.errors_to_fix", count: current_step.error_count) %>
+              </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="govuk-heading-m"><%= current_step.file_name %></h2>
+
+    <%= govuk_table do |table| %>
+      <% table.with_head do |head| %>
+        <% head.with_row do |row| %>
+          <% row.with_cell text: 1 %>
+          <% row.with_cell text: t(".csv_table.headers.first_name") %>
+          <% row.with_cell text: t(".csv_table.headers.last_name") %>
+          <% row.with_cell text: t(".csv_table.headers.email") %>
+        <% end %>
+      <% end %>
+
+    <% table.with_body do |body| %>
+      <% current_step.row_indexes_with_errors.each do |csv_row_index| %>
+        <% csv_row = current_step.csv[csv_row_index] %>
+        <% body.with_row do |row| %>
+          <% row.with_cell(text: csv_row_index + 2) %>
+          <% row.with_cell(text: csv_row["first_name"]) %>
+          <% row.with_cell(text: csv_row["last_name"]) %>
+          <% row.with_cell do %>
+            <p>
+              <% if current_step.invalid_email_rows.include?(csv_row_index) %>
+                <strong class="error-text"><%= t(".csv_table.errors.invalid_email") %></strong><br>
+              <% elsif current_step.in_use_email_rows.include?(csv_row_index) %>
+                <strong class="error-text"><%= t(".csv_table.errors.in_use_email") %></strong><br>
+              <% end %>
+              <%= csv_row["email"] %>
+            </p>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <p class="govuk_body govuk-!-text-align-centre secondary-text">
+    <%= t(".only_showing_rows_with_errors") %>
+  </p>
+
+  <%= govuk_button_link_to t(".upload_your_file_again"), step_path(:upload) %>
+
+  </div>
+</div>

@@ -1,0 +1,42 @@
+en:
+  wizards:
+    claims:
+      upload_users_wizard:
+        upload_step:
+          page_title: Upload users - %{contextual_text} - Claims
+          title: Upload users
+          upload_csv_file: Upload CSV file
+          upload: Upload
+          csv_help: Help with the CSV file
+          upload_the_csv_file: Upload the CSV file sent to you by the school.
+          csv_help_details: |
+            Use this form to upload the CSV file sent by the school.
+
+            The CSV file must contain the following headers in the first row:
+
+              - email
+        confirmation_step:
+          page_title: Are you sure you want to upload the users? - %{contextual_text} - Claims
+          title: Confirm you want to upload users
+          preview_file_name: Preview of %{file_name}
+          confirm_upload: Confirm upload
+          only_showing_first_five_rows: Only showing the first 5 rows
+          showing_all_rows: Showing all rows
+        upload_errors_step:
+          page_title: Upload users - %{contextual_text} - Claims
+          title: Upload users
+          error_summary:
+            title: There is a problem
+            errors_to_fix:
+                one: You need to fix %{count} error related to a specific row
+                other: You need to fix %{count} errors related to specific rows
+          csv_table:
+            headers:
+              first_name: first_name
+              last_name: last_name
+              email: email
+            errors:
+              invalid_email: Enter a valid email address
+              in_use_email: Email address already in use
+          only_showing_rows_with_errors: Only showing rows with errors
+          upload_your_file_again: Upload your file again
