@@ -6,7 +6,10 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l"><%= t(".heading", records: @pagy.count) %></h1>
 
-      <%= govuk_button_link_to(t(".add_organisation"), new_add_school_claims_support_schools_path, method: :get) %>
+      <div class="govuk-button-group">
+        <%= govuk_button_link_to(t(".add_organisation"), new_add_school_claims_support_schools_path, method: :get) %>
+        <%= govuk_button_link_to(t(".upload_users"), new_upload_users_claims_support_schools_path, method: :get, secondary: true) %>
+      </div>
 
       <%= render partial: "shared/search_form", locals: {
         url: claims_support_schools_path,

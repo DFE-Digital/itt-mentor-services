@@ -1,6 +1,6 @@
 class Claims::UploadUsersWizard::UploadErrorsStep < BaseStep
   delegate :invalid_email_rows,
-           :in_use_email_rows,
+           :invalid_school_urn_rows,
            :file_name,
            :csv,
            to: :upload_step
@@ -17,7 +17,7 @@ class Claims::UploadUsersWizard::UploadErrorsStep < BaseStep
 
   def combined_errors
     invalid_email_rows +
-      in_use_email_rows
+      invalid_school_urn_rows
   end
 
   def upload_step

@@ -3,11 +3,14 @@ class Claims::User::CreateAndDeliverJob < ApplicationJob
 
   def perform(school_id:, user_details:)
     school = Claims::School.find(school_id)
-    user = school.users.create!(
-      first_name: user_details[:first_name],
-      last_name: user_details[:last_name],
-      email: user_details[:email],
-    )
+    return if school.users.find_by(email: user_details[:email])
+
+    user = Claims::User.find_or_create_by!(email: user_details[:email]) do |u|
+      u.first_name = user_details[:first_name]
+      u.last_name = user_details[:last_name]
+    end
+
+    user.user_memberships.create!(organisation: school)
 
     User::Invite.call(user:, organisation: school)
   end

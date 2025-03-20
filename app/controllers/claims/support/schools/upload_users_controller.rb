@@ -1,6 +1,5 @@
-class Claims::Support::Schools::Users::UploadUsersController < Claims::Support::ApplicationController
+class Claims::Support::Schools::UploadUsersController < Claims::Support::ApplicationController
   include WizardController
-  include Claims::BelongsToSchool
 
   before_action :has_school_accepted_grant_conditions?
   before_action :set_wizard
@@ -28,7 +27,7 @@ class Claims::Support::Schools::Users::UploadUsersController < Claims::Support::
   def set_wizard
     state = session[state_key] ||= {}
     current_step = params[:step]&.to_sym
-    @wizard = Claims::UploadUsersWizard.new(school: @school, params:, state:, current_step:)
+    @wizard = Claims::UploadUsersWizard.new(params:, state:, current_step:)
   end
 
   def authorize_user
@@ -36,10 +35,10 @@ class Claims::Support::Schools::Users::UploadUsersController < Claims::Support::
   end
 
   def step_path(step)
-    upload_users_claims_support_school_users_path(state_key:, step:)
+    upload_users_claims_support_schools_path(state_key:, step:)
   end
 
   def index_path
-    claims_support_school_users_path(@school)
+    claims_support_schools_path
   end
 end

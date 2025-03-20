@@ -3,7 +3,8 @@ en:
     claims:
       upload_users_wizard:
         upload_step:
-          page_title: Upload users - %{contextual_text} - Claims
+          page_title: Upload users - Upload users - Claims
+          caption: Upload users
           title: Upload users
           upload_csv_file: Upload CSV file
           upload: Upload
@@ -15,15 +16,18 @@ en:
             The CSV file must contain the following headers in the first row:
 
               - email
+              - school_urn
         confirmation_step:
-          page_title: Are you sure you want to upload the users? - %{contextual_text} - Claims
+          page_title: Are you sure you want to upload the users? - Upload users - Claims
+          caption: Upload users
           title: Confirm you want to upload users
           preview_file_name: Preview of %{file_name}
           confirm_upload: Confirm upload
           only_showing_first_five_rows: Only showing the first 5 rows
           showing_all_rows: Showing all rows
         upload_errors_step:
-          page_title: Upload users - %{contextual_text} - Claims
+          page_title: Upload users - Upload users - Claims
+          caption: Upload users
           title: Upload users
           error_summary:
             title: There is a problem
@@ -32,11 +36,13 @@ en:
                 other: You need to fix %{count} errors related to specific rows
           csv_table:
             headers:
+              school_name: school_name
+              school_urn: school_urn
               first_name: first_name
               last_name: last_name
               email: email
             errors:
               invalid_email: Enter a valid email address
-              in_use_email: Email address already in use
+              invalid_school: Enter a valid onboarded school urn
           only_showing_rows_with_errors: Only showing rows with errors
           upload_your_file_again: Upload your file again
