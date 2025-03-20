@@ -3,13 +3,13 @@ class Claims::UploadUsersWizard::UploadStep < BaseStep
   attribute :csv_content
   attribute :file_name
   attribute :invalid_email_rows, default: []
-  attribute :in_use_email_rows, default: []
+  attribute :invalid_school_urn_rows, default: []
 
   validates :csv_upload, presence: true, if: -> { csv_content.blank? }
   validate :validate_csv_file, if: -> { csv_upload.present? }
   validate :validate_csv_headers, if: -> { csv_content.present? }
 
-  REQUIRED_HEADERS = %w[email].freeze
+  REQUIRED_HEADERS = %w[email school_urn].freeze
 
   def initialize(wizard:, attributes:)
     super(wizard:, attributes:)
@@ -47,10 +47,11 @@ class Claims::UploadUsersWizard::UploadStep < BaseStep
       next if row.all? { |_k, v| v.blank? }
 
       validate_email(row, i)
+      validate_school_urn(row, i)
     end
 
     invalid_email_rows.blank? &&
-      in_use_email_rows.blank?
+      invalid_school_urn_rows.blank?
   end
 
   def process_csv
@@ -83,14 +84,18 @@ class Claims::UploadUsersWizard::UploadStep < BaseStep
 
   def reset_input_attributes
     self.invalid_email_rows = []
-    self.in_use_email_rows = []
+    self.invalid_school_urn_rows = []
   end
 
   def validate_email(row, row_number)
-    if URI::MailTo::EMAIL_REGEXP.match(row["email"]).nil?
-      invalid_email_rows << row_number
-    elsif Claims::User.find_by(email: row["email"]).present?
-      in_use_email_rows << row_number
-    end
+    return unless URI::MailTo::EMAIL_REGEXP.match(row["email"]).nil?
+
+    invalid_email_rows << row_number
+  end
+
+  def validate_school_urn(row, row_number)
+    return if Claims::School.find_by(urn: row["school_urn"])
+
+    invalid_school_urn_rows << row_number
   end
 end

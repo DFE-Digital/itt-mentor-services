@@ -19,6 +19,7 @@ en:
         index:
           heading: Organisations (%{records})
           add_organisation: Add organisation
+          upload_users: Upload users
           search_label: Search by organisation name or postcode
         new:
           caption: Add organisation

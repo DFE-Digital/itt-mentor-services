@@ -220,6 +220,10 @@ scope module: :claims, as: :claims, constraints: {
         get "onboard", to: "schools/onboard_schools#new", as: :new_onboard_schools
         get "onboard/:state_key/:step", to: "schools/onboard_schools#edit", as: :onboard_schools
         put "onboard/:state_key/:step", to: "schools/onboard_schools#update"
+
+        get "upload_users", to: "schools/upload_users#new", as: :new_upload_users
+        get "upload_users/:state_key/:step", to: "schools/upload_users#edit", as: :upload_users
+        put "upload_users/:state_key/:step", to: "schools/upload_users#update"
       end
 
       scope module: :schools do
@@ -262,10 +266,6 @@ scope module: :claims, as: :claims, constraints: {
             get "new", to: "users/add_user#new", as: :new_add_user
             get "new/:state_key/:step", to: "users/add_user#edit", as: :add_user
             put "new/:state_key/:step", to: "users/add_user#update"
-
-            get "upload", to: "users/upload_users#new", as: :new_upload_users
-            get "upload/:state_key/:step", to: "users/upload_users#edit", as: :upload_users
-            put "upload/:state_key/:step", to: "users/upload_users#update"
           end
         end
       end
