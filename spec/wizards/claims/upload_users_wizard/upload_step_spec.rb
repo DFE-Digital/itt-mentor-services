@@ -139,7 +139,8 @@ RSpec.describe Claims::UploadUsersWizard::UploadStep, type: :model do
     context "when the csv_content contains valid email, school urn, and all necessary valid attributes" do
       let(:csv_content) do
         "school_name,school_urn,first_name,last_name,email\r\n" \
-        "London School,111111,John,Smith,john_smith@example.com"
+        "London School,111111,John,Smith,john_smith@example.com\r\n" \
+        ",,,,"
       end
       let(:attributes) { { csv_content: } }
 
