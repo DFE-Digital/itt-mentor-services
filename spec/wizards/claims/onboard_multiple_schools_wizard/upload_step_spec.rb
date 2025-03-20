@@ -134,7 +134,7 @@ RSpec.describe Claims::OnboardMultipleSchoolsWizard::UploadStep, type: :model do
       end
     end
 
-    context "when the csv_content contains valid claim references and all necessary valid attributes" do
+    context "when the csv_content contains valid urn and all necessary valid attributes" do
       let(:csv_content) do
         "name,urn\r\n" \
         "London School,111111\r\n"
