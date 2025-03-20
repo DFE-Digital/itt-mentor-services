@@ -63,7 +63,7 @@ en:
           caption: Onboarding
           title: No claim windows
           description: | 
-            The are currently no claim windows available to allow schools be eligible to claim funding for mentor training.
+            There are currently no claim windows available to allow schools to be eligible to claim funding for mentor training.
           add_a_claim_window: |
             To onboard a school you will need to %{link}.
           link_to_claim_windows: create a claim window
