@@ -5,6 +5,7 @@ en:
         users:
           index:
             add_user: Add user
+            upload_users: Upload users
             heading: Users
             attributes:
               users:
