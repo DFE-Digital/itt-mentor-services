@@ -38,7 +38,7 @@ RSpec.describe "Support user can not onboard schools when there are no claim win
     expect(page).to have_h1("No claim windows", class: "govuk-heading-l")
     expect(page).to have_element(
       :p,
-      text: "The are currently no claim windows available to allow schools be eligible to claim funding for mentor training.",
+      text: "There are currently no claim windows available to allow schools to be eligible to claim funding for mentor training.",
       class: "govuk-body",
     )
     expect(page).to have_element(
