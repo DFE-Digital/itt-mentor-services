@@ -49,7 +49,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
     when_i_choose_other_amount_and_input_hours(12)
     when_i_click("Continue")
     then_i_check_my_answers
-    when_i_click("Save claim")
+    when_i_click("Accept and submit")
     then_i_am_redirectd_to_index_page(Claims::Claim.draft.first)
   end
 
@@ -97,7 +97,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
     when_i_click("Continue")
     then_i_check_my_answers
     when_another_claim_with_same_mentors_has_been_created([mentor1, mentor2])
-    when_i_click("Save claim")
+    when_i_click("Accept and submit")
     then_i_get_the_reject_page
   end
 
@@ -163,7 +163,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
     then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor1)
     when_i_add_training_hours("20 hours")
     when_i_click("Continue")
-    when_i_click("Change Accredited provider")
+    when_i_click("Change Provider")
     and_i_enter_a_provider_named_best_practice_network
     then_i_see_a_dropdown_item_for_best_practice_network
 
@@ -222,7 +222,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
   end
 
   def then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor)
-    expect(page).to have_content("Hours of training for #{mentor.full_name}")
+    expect(page).to have_content("How many hours of training did #{mentor.full_name} complete?")
   end
 
   def when_i_add_training_hours(radio_button)
@@ -242,7 +242,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
     expect(page).to have_h1("Check your answers", class: "govuk-heading-l")
 
     expect(page).to have_summary_list_row("Academic year", claim_window.academic_year_name)
-    expect(page).to have_summary_list_row("Accredited provider", bpn.name)
+    expect(page).to have_summary_list_row("Provider", bpn.name)
     expect(page).to have_summary_list_row(
       "Mentors",
       "#{mentor1.full_name}\n#{mentor2.full_name}",
@@ -261,7 +261,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
   end
 
   def then_i_expect_the_training_hours_for(_hours, mentor)
-    expect(page).to have_content("Hours of training for #{mentor.full_name}")
+    expect(page).to have_content("How many hours of training did #{mentor.full_name} complete?")
     find("#claims-add-claim-wizard-mentor-training-step-hours-to-claim-maximum-field", visible: :all).checked?
   end
 
@@ -293,7 +293,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
   end
 
   def then_i_should_land_on_the_check_page
-    expect(page).to have_content "Check your answers"
+    expect(page).to have_content "Check your answers before submitting your claim"
   end
 
   def then_i_expect_the_mentors_to_be_checked(mentors)

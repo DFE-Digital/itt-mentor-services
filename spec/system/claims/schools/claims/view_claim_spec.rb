@@ -71,7 +71,7 @@ RSpec.describe "View a claim", service: :claims, type: :system do
     when_i_visit_the_claim_show_page(draft_claim)
     then_i_can_then_see_the_draft_claim_details
     then_i_can_see_submit_link
-    when_i_click("Submit claim")
+    when_i_click("Accept and submit")
     then_i_can_see_submit_button
     then_i_can_then_see_the_draft_claim_details_without_change_buttons
   end
@@ -139,15 +139,15 @@ RSpec.describe "View a claim", service: :claims, type: :system do
   end
 
   def then_i_cant_see_submit_link
-    expect(page).not_to have_link("Submit claim")
+    expect(page).not_to have_link("Accept and submit")
   end
 
   def then_i_can_see_submit_link
-    expect(page).to have_link("Submit claim")
+    expect(page).to have_link("Accept and submit")
   end
 
   def then_i_can_see_submit_button
-    expect(page).to have_button("Submit claim")
+    expect(page).to have_button("Accept and submit")
   end
 
   def when_i_click(button)

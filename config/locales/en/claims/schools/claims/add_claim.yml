@@ -4,6 +4,6 @@ en:
       claims:
         add_claim:
           edit:
-            caption: Add claim
-            save: Submit claim
+            caption: Claim details
+            save: Accept and submit
             cancel: Cancel

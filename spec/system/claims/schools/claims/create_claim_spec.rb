@@ -42,7 +42,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
     when_i_choose_other_amount_and_input_hours(12)
     when_i_click("Continue")
     then_i_check_my_answers
-    when_i_click("Submit claim")
+    when_i_click("Accept and submit")
     then_i_get_a_claim_reference_and_see_next_steps
   end
 
@@ -86,7 +86,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
     when_i_click("Continue")
     then_i_check_my_answers
     when_another_claim_with_same_mentors_has_been_created([mentor1, mentor2])
-    when_i_click("Submit claim")
+    when_i_click("Accept and submit")
     then_i_get_the_reject_page
   end
 
@@ -146,7 +146,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
     then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor1)
     when_i_add_training_hours("20 hours")
     when_i_click("Continue")
-    when_i_click("Change Accredited provider")
+    when_i_click("Change Provider")
     and_i_enter_a_provider_named_best_practice_network
     then_i_see_a_dropdown_item_for_best_practice_network
 
@@ -187,7 +187,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
       when_i_add_training_hours("6 hours")
       when_i_click("Continue")
       then_i_should_land_on_the_check_page
-      when_i_click("Submit claim")
+      when_i_click("Accept and submit")
       then_i_get_a_claim_reference_and_see_next_steps
     end
 
@@ -243,7 +243,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
   end
 
   def then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor)
-    expect(page).to have_content("Hours of training for #{mentor.full_name}")
+    expect(page).to have_content("How many hours of training did #{mentor.full_name} complete?")
   end
 
   def when_i_add_training_hours(radio_button)
@@ -267,7 +267,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
     expect(page).to have_h1("Check your answers", class: "govuk-heading-l")
 
     expect(page).to have_summary_list_row("Academic year", claim_window.academic_year_name)
-    expect(page).to have_summary_list_row("Accredited provider", bpn.name)
+    expect(page).to have_summary_list_row("Provider", bpn.name)
     expect(page).to have_summary_list_row(
       "Mentors",
       "#{mentor1.full_name}\n#{mentor2.full_name}",
@@ -292,14 +292,17 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
       expect(page).to have_content("Claim submitted\nYour reference number\n#{claim.reference}")
     end
 
-    expect(page).to have_content("We have emailed you a copy of your claim.")
-    expect(page).to have_content("This claim will be shared with #{claim.provider_name}.")
-    expect(page).to have_content("We will check your claim before processing payment. If we need to contact you for further information, we will use the email you used to access this service.")
-    expect(page).to have_content("We will process this claim at the end of September 2024 and all payments will be paid from December 2024.")
+    expect(page).to have_content("We have sent a copy of your claim to best_practice_network@example.com")
+    expect(page).to have_content("You will automatically receive your payment from September #{Claims::ClaimWindow.current.academic_year.ends_on.year}.")
+    expect(page).to have_content("Academies and independent schools will receive the payment directly. Maintained schools payments are made to their local authority.")
+    expect(page).to have_content("If we need further information to process your claim we will email you.")
+    expect(page).to have_content("We may check your claim")
+    expect(page).to have_content("After payment we may check your claim to ensure it is accurate.")
+    expect(page).to have_content("Best Practice Network will contact you if your claim undergoes a check.")
   end
 
   def then_i_expect_the_training_hours_for(_hours, mentor)
-    expect(page).to have_content("Hours of training for #{mentor.full_name}")
+    expect(page).to have_content("How many hours of training did #{mentor.full_name} complete?")
     find("#claims-add-claim-wizard-mentor-training-step-hours-to-claim-maximum-field", visible: :all).checked?
   end
 

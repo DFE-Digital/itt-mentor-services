@@ -137,4 +137,24 @@ RSpec.describe Claims::AddClaimWizard::MentorTrainingStep, type: :model do
       end
     end
   end
+
+  describe "#hours_of_training_hint" do
+    subject(:hours_of_training_hint) { step.hours_of_training_hint }
+
+    let(:attributes) { { mentor_id: mentor.id } }
+
+    context "when the training type is initial" do
+      it "returns the hint message for initial training" do
+        expect(hours_of_training_hint).to include("#{mentor.first_name} #{mentor.last_name} (TRN #{mentor.trn}) is eligible for 20 hours of training.")
+      end
+    end
+
+    context "when the training type is refresher" do
+      before { allow(step.training_allowance).to receive(:training_type).and_return(:refresher) }
+
+      it "returns the hint message for refresher training" do
+        expect(hours_of_training_hint).to include("#{mentor.first_name} #{mentor.last_name} (TRN #{mentor.trn}) is eligible for 6 hours of refresher training as they have previously claimed up 20 hours of mentor training.")
+      end
+    end
+  end
 end

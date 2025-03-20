@@ -69,7 +69,7 @@ RSpec.describe "Submit a draft claim", service: :claims, type: :system do
   end
 
   def when_i_click_submit_button
-    click_on "Submit claim"
+    click_on "Accept and submit"
   end
 
   def then_i_see_a_check_page_with_a_declaration

@@ -9,7 +9,13 @@ class Claims::AddClaimWizard::MentorStep::DisclaimerComponent < ApplicationCompo
 
   def call
     govuk_details summary_text: t(".mentor_not_listed") do
-      tag.p(sanitize(t(".disclaimer", provider_name:))) +
+      tag.p(sanitize(t(".disclaimer_foreword",
+                       mentors_link: govuk_link_to(
+                         t(".add_mentors"),
+                         claims_school_mentors_path(mentor_step.claim.school),
+                         no_visited_state: true,
+                       )))) +
+        tag.p(sanitize(t(".disclaimer", provider_name:))) +
         tag.p(sanitize(t(".disclaimer_contact", email_link:)))
     end
   end

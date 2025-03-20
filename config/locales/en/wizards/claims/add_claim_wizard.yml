@@ -4,22 +4,22 @@ en:
       add_claim_wizard:
         provider_step:
           continue: Continue
-          page_title: Enter the accredited provider for this claime - %{contextual_text}
+          page_title: Enter the accredited provider for this claim - %{contextual_text}
           title: Enter the accredited provider for this claim
           hint_html:
             You must make a separate claim for each accredited provider you work with.<br><br>
-            Enter a provider name, United Kingdon provider number (UKPRN), unique reference number (URN) or postcode
+            Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode
         provider_options_step:
           title: "%{provider_count} results found for ‘%{search_param}’ - %{contextual_text}"
         mentor_step:
-          page_title: Mentors for %{provider_name} - %{contextual_text}
+          page_title: Select mentors that trained with %{provider_name} - %{contextual_text}
           continue: Continue
           label: Mentor
-          heading: Mentors for %{provider_name}
-          select_all_that_apply: Select all that apply
+          heading: Select mentors that trained with %{provider_name}
+          select_all_that_apply: Select all teachers that completed training to be initial teacher training (ITT) mentors.
         mentor_training_step:
-          page_title: Hours of training for %{mentor} - %{contextual_text} - %{provider_name}
-          hours_of_training_for_mentor: Hours of training for %{mentor}
+          page_title: How many hours of training did %{mentor} complete? - %{contextual_text} - %{provider_name}
+          hours_of_training_for_mentor: How many hours of training did %{mentor} complete?
           hours_of_training: Hours of training
           hours:
             one: "%{count} hour"
@@ -28,26 +28,31 @@ en:
             full: The full amount of hours for standard training
             remaining: The remaining amount of hours for standard training
           other_amount: Another amount
-          custom_hours_completed_hint:
-            one: Enter whole numbers up to a maximum of %{count} hour
-            other: Enter whole numbers up to a maximum of %{count} hours
+          custom_hours_completed_hint: Enter a whole number up to %{count}
           number_of_hours: Number of hours
+          warning: You can only claim for the time spent becoming an initial teacher training (ITT) mentor. This funding is not available for training early career framework (ECF) mentors.
+          initial_hours_of_training_hint: "%{mentor_full_name} (TRN %{mentor_trn}) is eligible for %{remaining_hours} hours of training."
+          refresher_hours_of_training_hint: "%{mentor_full_name} (TRN %{mentor_trn}) is eligible for %{remaining_hours} hours of refresher training as they have previously claimed up 20 hours of mentor training."
         check_your_answers_step:
-          page_title: Check your answers - %{contextual_text}
-          title: Check your answers
+          page_title: Check your answers before submitting your claim - %{contextual_text}
+          title: Check your answers before submitting your claim
+          details: Details
           warning: You will not be able to change any of the claim details once you have submitted the claim.
-          submit: Submit claim
+          submit: Accept and submit
           declaration: Declaration
           disclaimer: "By submitting this claim, I confirm that:"
+          only_itt_mentors: I have only included hours for initial teacher training (ITT) mentors. I have not included hours for early career framework (ECF) mentors
           claim_on_behalf_of_school: I am authorised to claim on behalf of the school
-          read_and_accepted_grant_conditions: I have read and accepted the grant terms and conditions
+          read_and_accepted_grant_conditions_html: I have read and accepted the %{link}
           accurate_information: the information detailed above is accurate and the total I am claiming back has been used to support the cost of the mentor training
           provide_evidence: I will provide evidence to support this claim if requested by the Department for Education
+          grant_terms_and_conditions: grant terms and conditions
           total_hours: Total hours
           hourly_rate: Hourly rate
           hour: hour
           grant_funding: Grant funding
           hours_of_training: Hours of training
+          submit_your_claim: Now submit your claim
           save: Save claim
         no_mentors_step:
           page_title: No mentors for %{provider_name} - %{contextual_text}

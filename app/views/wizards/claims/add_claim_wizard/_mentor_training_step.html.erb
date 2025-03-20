@@ -9,16 +9,14 @@
    <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <span class="govuk-caption-l"><%= contextual_text %> - <%= @wizard.provider_name %></span>
-        <h1 class="govuk-heading-l"><%= t(".hours_of_training_for_mentor", mentor: current_step.mentor_full_name) %> </h1>
-
-         <%= render Claims::AddClaimWizard::MentorTrainingStep::DisclaimerComponent.new(mentor_training_step: current_step) %>
-
          <%= f.govuk_radio_buttons_fieldset(
           :hours_to_claim,
           legend: {
-            size: "m",
-            text: t(".hours_of_training"),
+            size: "l",
+            text: t(".hours_of_training_for_mentor", mentor: current_step.mentor_full_name),
+            tag: "h1",
           },
+          hint: { text: current_step.hours_of_training_hint },
         ) do %>
           <%= f.govuk_radio_button :hours_to_claim, "maximum", label: { text: t(".hours", count: current_step.max_hours) }, hint: { text: t(".hours_hint.#{current_step.max_hours == 20 ? "full" : "remaining"}", count: current_step.max_hours) } %>
 
@@ -36,7 +34,9 @@
           <% end %>
         <% end %>
 
+        <%= govuk_warning_text(text: t(".warning")) %>
+
         <%= f.govuk_submit t("continue") %>
       </div>
-    </div>
+   </div>
 <% end %>

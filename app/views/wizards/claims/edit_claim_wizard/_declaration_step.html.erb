@@ -77,8 +77,15 @@
       <p class="govuk-body"><%= t("wizards.claims.add_claim_wizard.check_your_answers_step.disclaimer") %></p>
 
       <ul class="govuk-list govuk-list--bullet">
+        <li><%= t("wizards.claims.add_claim_wizard.check_your_answers_step.only_itt_mentors") %></li>
         <li><%= t("wizards.claims.add_claim_wizard.check_your_answers_step.claim_on_behalf_of_school") %></li>
-        <li><%= t("wizards.claims.add_claim_wizard.check_your_answers_step.read_and_accepted_grant_conditions") %></li>
+        <li><%= t("wizards.claims.add_claim_wizard.check_your_answers_step.read_and_accepted_grant_conditions_html",
+                  link: govuk_link_to(
+                    t("wizards.claims.add_claim_wizard.check_your_answers_step.grant_terms_and_conditions"),
+                    claims_school_grant_conditions_path,
+                    no_visited_state: true,
+                    new_tab: true,
+                  )) %></li>
         <li><%= t("wizards.claims.add_claim_wizard.check_your_answers_step.accurate_information") %></li>
         <li><%= t("wizards.claims.add_claim_wizard.check_your_answers_step.provide_evidence") %></li>
       </ul>

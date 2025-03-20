@@ -11,6 +11,7 @@
       <span class="govuk-caption-l"><%= contextual_text %></span>
       <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
+      <h2 class="govuk-heading-m"><%= t(".details") %></h2>
       <%= govuk_summary_list do |summary_list| %>
         <% unless current_user.support_user? %>
           <% summary_list.with_row do |row| %>
@@ -25,11 +26,11 @@
         <% end %>
 
         <% summary_list.with_row do |row| %>
-          <% row.with_key(text: Claims::Claim.human_attribute_name(:accredited_provider)) %>
+          <% row.with_key(text: Claims::Claim.human_attribute_name(:provider)) %>
           <% row.with_value(text: @wizard.provider_name) %>
           <% row.with_action(text: t("change"),
                              href: step_path(:provider),
-                             visually_hidden_text: Claims::Claim.human_attribute_name(:accredited_provider),
+                             visually_hidden_text: Claims::Claim.human_attribute_name(:provider),
                              html_attributes: {
                                class: "govuk-link--no-visited-state",
                              }) %>
@@ -95,12 +96,21 @@
         <% end %>
       <% end %>
 
+      <h2 class="govuk-heading-m"><%= t(".submit_your_claim") %></h2>
+
       <% if !current_user.support_user? %>
         <p class="govuk-body"><%= t(".disclaimer") %></p>
 
         <ul class="govuk-list govuk-list--bullet">
+          <li><%= t(".only_itt_mentors") %></li>
           <li><%= t(".claim_on_behalf_of_school") %></li>
-          <li><%= t(".read_and_accepted_grant_conditions") %></li>
+          <li><%= t(".read_and_accepted_grant_conditions_html",
+                    link: govuk_link_to(
+                      t(".grant_terms_and_conditions"),
+                      claims_school_grant_conditions_path,
+                      no_visited_state: true,
+                      new_tab: true,
+                    )) %></li>
           <li><%= t(".accurate_information") %></li>
           <li><%= t(".provide_evidence") %></li>
         </ul>
