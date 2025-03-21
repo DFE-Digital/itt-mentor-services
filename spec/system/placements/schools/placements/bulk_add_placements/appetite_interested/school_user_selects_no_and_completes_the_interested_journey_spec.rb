@@ -68,22 +68,21 @@ RSpec.describe "School user selects no and completes the interested journey",
 
   def then_i_see_the_appetite_form
     expect(page).to have_title(
-      "What is your appetite for ITT the coming academic year (#{@next_academic_year_name})? - Manage school placements - GOV.UK",
+      "Will you host placements this academic year (#{@next_academic_year_name})? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "What is your appetite for ITT the coming academic year (#{@next_academic_year_name})?",
+      text: "Will you host placements this academic year (#{@next_academic_year_name})?",
       class: "govuk-fieldset__legend",
     )
-    expect(page).to have_field("Actively looking to host placements", type: :radio)
-    expect(page).to have_field("Interested in hosting placements", type: :radio)
-    expect(page).to have_field("Not open to hosting placements", type: :radio)
-    expect(page).to have_field("Placements already organised with providers", type: :radio)
+    expect(page).to have_field("Yes - Let providers know what I'm willing to host", type: :radio)
+    expect(page).to have_field("Yes - Let providers know I am open to placements", type: :radio)
+    expect(page).to have_field("No - Let providers know I am not hosting and do not want to be contacted", type: :radio)
   end
 
   def when_i_select_interested_in_hosting_placements
-    choose "Interested in hosting placements"
+    choose "Yes - Let providers know I am open to placements"
   end
 
   def when_i_click_on_continue
@@ -119,10 +118,16 @@ RSpec.describe "School user selects no and completes the interested journey",
 
   def then_i_see_the_school_contact_form
     expect(page).to have_title(
-      "Who is your contact for ITT? - Manage school placements - GOV.UK",
+      "Who should providers contact? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Who is your contact for ITT?")
+    expect(page).to have_h1("Who should providers contact?")
+    expect(page).to have_element(
+      :p,
+      text: "Choose the person best placed to organise ITT placements at your school. "\
+        "This information will be shown on your profile.",
+      class: "govuk-body",
+    )
 
     expect(page).to have_field("First name")
     expect(page).to have_field("Last name")
@@ -136,7 +141,10 @@ RSpec.describe "School user selects no and completes the interested journey",
   end
 
   def then_i_see_my_responses_with_successfully_updated
-    expect(page).to have_success_banner("Thank you for providing your responses")
+    expect(page).to have_success_banner(
+      "Placement information uploaded",
+      "Providers can see your placement preferences and may contact you to discuss them. You can add details to your placements such as expected date and provider.",
+    )
   end
 
   def and_the_schools_contact_has_been_updated

@@ -216,6 +216,10 @@ scope module: :claims, as: :claims, constraints: {
         get "new", to: "schools/add_school#new", as: :new_add_school
         get "new/:state_key/:step", to: "schools/add_school#edit", as: :add_school
         put "new/:state_key/:step", to: "schools/add_school#update"
+
+        get "onboard", to: "schools/onboard_schools#new", as: :new_onboard_schools
+        get "onboard/:state_key/:step", to: "schools/onboard_schools#edit", as: :onboard_schools
+        put "onboard/:state_key/:step", to: "schools/onboard_schools#update"
       end
 
       scope module: :schools do

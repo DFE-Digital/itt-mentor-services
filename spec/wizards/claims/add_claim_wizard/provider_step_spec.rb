@@ -5,43 +5,31 @@ RSpec.describe Claims::AddClaimWizard::ProviderStep, type: :model do
 
   let(:attributes) { nil }
   let!(:niot_provider) { create(:claims_provider, :niot) }
-  let!(:bpn_provider) { create(:claims_provider, :best_practice_network) }
 
   let(:mock_wizard) do
     instance_double(Claims::AddClaimWizard)
   end
 
   describe "attributes" do
-    it { is_expected.to have_attributes(id: nil) }
+    it { is_expected.to have_attributes(id: nil, name: nil) }
   end
 
   describe "validations" do
-    it { is_expected.to validate_inclusion_of(:id).in_array([niot_provider.id, bpn_provider.id]) }
-  end
-
-  describe "#providers_for_selection" do
-    subject(:providers_for_selection) { step.providers_for_selection }
-
-    before { create(:claims_provider) }
-
-    it "returns only the providers scoped in the private beta" do
-      private_beta_providers = Claims::Provider.where(id: [bpn_provider.id, niot_provider.id])
-      expect(providers_for_selection).to match_array(private_beta_providers.select(:id, :name))
-    end
+    it { is_expected.to validate_presence_of(:id) }
   end
 
   describe "#provider" do
     subject { step.provider }
 
     context "when id is set" do
-      context "when the provider is a private beta provider" do
+      context "when the provider is present" do
         let(:attributes) { { id: niot_provider.id } }
 
         it { is_expected.to eq(niot_provider) }
       end
 
-      context "when the provider is not a private beta provider" do
-        let(:attributes) { { id: create(:claims_provider).id } }
+      context "when the provider is not a valid provider id" do
+        let(:attributes) { { id: "123" } }
 
         it { is_expected.to be_nil }
       end
@@ -52,5 +40,23 @@ RSpec.describe Claims::AddClaimWizard::ProviderStep, type: :model do
 
       it { is_expected.to be_nil }
     end
+  end
+
+  describe "#autocomplete_path_value" do
+    subject { step.autocomplete_path_value }
+
+    it { is_expected.to eq("/api/provider_suggestions") }
+  end
+
+  describe "#autocomplete_return_attributes_value" do
+    subject { step.autocomplete_return_attributes_value }
+
+    it { is_expected.to contain_exactly("code") }
+  end
+
+  describe "#scope" do
+    subject { step.scope }
+
+    it { is_expected.to eq("claims_add_claim_wizard_provider_step") }
   end
 end

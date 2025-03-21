@@ -21,7 +21,7 @@ RSpec.describe Placements::MultiPlacementWizard do
         }
       end
 
-      it { is_expected.to eq %i[appetite phase subjects_known school_contact] }
+      it { is_expected.to eq %i[appetite phase subjects_known provider school_contact check_your_answers] }
 
       context "when the subjects_know is set to 'Yes' during the subjects_known step" do
         context "when the phase is set to 'Primary' during the phase step" do
@@ -40,7 +40,9 @@ RSpec.describe Placements::MultiPlacementWizard do
                  subjects_known
                  primary_subject_selection
                  primary_placement_quantity
-                 school_contact],
+                 provider
+                 school_contact
+                 check_your_answers],
             )
           }
         end
@@ -61,7 +63,9 @@ RSpec.describe Placements::MultiPlacementWizard do
                  subjects_known
                  secondary_subject_selection
                  secondary_placement_quantity
-                 school_contact],
+                 provider
+                 school_contact
+                 check_your_answers],
             )
           }
 
@@ -89,7 +93,9 @@ RSpec.describe Placements::MultiPlacementWizard do
                    secondary_placement_quantity
                    secondary_child_subject_placement_selection_modern_languages_1
                    secondary_child_subject_placement_selection_modern_languages_2
-                   school_contact],
+                   provider
+                   school_contact
+                   check_your_answers],
               )
             }
           end
@@ -113,7 +119,9 @@ RSpec.describe Placements::MultiPlacementWizard do
                  primary_placement_quantity
                  secondary_subject_selection
                  secondary_placement_quantity
-                 school_contact],
+                 provider
+                 school_contact
+                 check_your_answers],
             )
           }
         end
@@ -158,7 +166,7 @@ RSpec.describe Placements::MultiPlacementWizard do
           }
         end
 
-        it { is_expected.to eq %i[appetite help list_placements phase subjects_known school_contact] }
+        it { is_expected.to eq %i[appetite help list_placements phase subjects_known provider school_contact check_your_answers] }
 
         context "when the subjects_know is set to 'Yes' during the subjects_known step" do
           context "when the phase is set to 'Primary' during the phase step" do
@@ -180,7 +188,9 @@ RSpec.describe Placements::MultiPlacementWizard do
                    subjects_known
                    primary_subject_selection
                    primary_placement_quantity
-                   school_contact],
+                   provider
+                   school_contact
+                   check_your_answers],
               )
             }
           end
@@ -204,7 +214,9 @@ RSpec.describe Placements::MultiPlacementWizard do
                    subjects_known
                    secondary_subject_selection
                    secondary_placement_quantity
-                   school_contact],
+                   provider
+                   school_contact
+                   check_your_answers],
               )
             }
 
@@ -235,7 +247,9 @@ RSpec.describe Placements::MultiPlacementWizard do
                      secondary_placement_quantity
                      secondary_child_subject_placement_selection_modern_languages_1
                      secondary_child_subject_placement_selection_modern_languages_2
-                     school_contact],
+                     provider
+                     school_contact
+                     check_your_answers],
                 )
               }
             end
@@ -262,7 +276,9 @@ RSpec.describe Placements::MultiPlacementWizard do
                    primary_placement_quantity
                    secondary_subject_selection
                    secondary_placement_quantity
-                   school_contact],
+                   provider
+                   school_contact
+                   check_your_answers],
               )
             }
           end
@@ -478,6 +494,115 @@ RSpec.describe Placements::MultiPlacementWizard do
               expect(school_contact.first_name).to eq("Joe")
               expect(school_contact.last_name).to eq("Bloggs")
               expect(school_contact.email_address).to eq("joe_bloggs@example.com")
+            end
+
+            context "when provider_ids is set to 'select_all'" do
+              let(:state) do
+                {
+                  "appetite" => { "appetite" => "actively_looking" },
+                  "phase" => { "phases" => %w[Primary Secondary] },
+                  "subjects_known" => { "subjects_known" => "Yes" },
+                  "primary_subject_selection" => { "subject_ids" => [primary_with_english.id] },
+                  "primary_placement_quantity" => { "primary_with_english" => "1" },
+                  "secondary_subject_selection" => { "subject_ids" => [english.id] },
+                  "secondary_placement_quantity" => { "english" => "1" },
+                  "provider" => { "provider_ids" => %w[select_all] },
+                  "school_contact" => {
+                    "first_name" => "Joe",
+                    "last_name" => "Bloggs",
+                    "email_address" => "joe_bloggs@example.com",
+                  },
+                }
+              end
+              let(:test_provider_1) { create(:provider, name: "Test Provider 123") }
+              let(:test_provider_2) { create(:provider, name: "Test Provider 456") }
+              let(:test_provider_3) { create(:provider, name: "Test Provider 789") }
+
+              before do
+                test_provider_1
+                test_provider_2
+                test_provider_3
+              end
+
+              it "creates hosting interest for the next academic year, assigns the appetite,
+                creates a school contact and creates a placement for each selected subject and it's quantity
+                and create partnerships with all test providers" do
+                expect { update_school_placements }.to change(Placements::HostingInterest, :count).by(1)
+                  .and change(Placement, :count).by(2)
+                  .and change(Placements::Partnership, :count).by(3)
+                school.reload
+
+                hosting_interest = school.hosting_interests.last
+                expect(hosting_interest.appetite).to eq("actively_looking")
+
+                expect(school.placements.where(subject_id: primary_with_english.id).count).to eq(1)
+                expect(school.placements.where(subject_id: english.id).count).to eq(1)
+
+                expect(school.partner_providers).to contain_exactly(
+                  test_provider_1,
+                  test_provider_2,
+                  test_provider_3,
+                )
+
+                school_contact = school.school_contact
+                expect(school_contact.first_name).to eq("Joe")
+                expect(school_contact.last_name).to eq("Bloggs")
+                expect(school_contact.email_address).to eq("joe_bloggs@example.com")
+              end
+            end
+
+            context "when provider_ids is contains specific provider ids" do
+              let(:state) do
+                {
+                  "appetite" => { "appetite" => "actively_looking" },
+                  "phase" => { "phases" => %w[Primary Secondary] },
+                  "subjects_known" => { "subjects_known" => "Yes" },
+                  "primary_subject_selection" => { "subject_ids" => [primary_with_english.id] },
+                  "primary_placement_quantity" => { "primary_with_english" => "1" },
+                  "secondary_subject_selection" => { "subject_ids" => [english.id] },
+                  "secondary_placement_quantity" => { "english" => "1" },
+                  "provider" => { "provider_ids" => [test_provider_1.id, test_provider_3.id] },
+                  "school_contact" => {
+                    "first_name" => "Joe",
+                    "last_name" => "Bloggs",
+                    "email_address" => "joe_bloggs@example.com",
+                  },
+                }
+              end
+              let(:test_provider_1) { create(:provider, name: "Test Provider 123") }
+              let(:test_provider_2) { create(:provider, name: "Test Provider 456") }
+              let(:test_provider_3) { create(:provider, name: "Test Provider 789") }
+
+              before do
+                test_provider_1
+                test_provider_2
+                test_provider_3
+              end
+
+              it "creates hosting interest for the next academic year, assigns the appetite,
+                creates a school contact and creates a placement for each selected subject and it's quantity
+                and create partnerships for the selected test providers" do
+                expect { update_school_placements }.to change(Placements::HostingInterest, :count).by(1)
+                  .and change(Placement, :count).by(2)
+                  .and change(Placements::Partnership, :count).by(2)
+                school.reload
+
+                hosting_interest = school.hosting_interests.last
+                expect(hosting_interest.appetite).to eq("actively_looking")
+
+                expect(school.placements.where(subject_id: primary_with_english.id).count).to eq(1)
+                expect(school.placements.where(subject_id: english.id).count).to eq(1)
+
+                expect(school.partner_providers).to contain_exactly(
+                  test_provider_1,
+                  test_provider_3,
+                )
+
+                school_contact = school.school_contact
+                expect(school_contact.first_name).to eq("Joe")
+                expect(school_contact.last_name).to eq("Bloggs")
+                expect(school_contact.email_address).to eq("joe_bloggs@example.com")
+              end
             end
           end
         end
@@ -734,6 +859,65 @@ RSpec.describe Placements::MultiPlacementWizard do
 
       it "returns a list of selected secondary subjects" do
         expect(selected_secondary_subjects).to contain_exactly(english, mathematics)
+      end
+    end
+  end
+
+  describe "#selected_providers" do
+    subject(:selected_providers) { wizard.selected_providers }
+
+    let(:test_provider_1) { create(:provider, name: "Test Provider 123") }
+    let(:test_provider_2) { create(:provider, name: "Test Provider 456") }
+    let(:test_provider_3) { create(:provider, name: "Test Provider 789") }
+
+    context "when no provider_ids have been selected in the provider step" do
+      it "returns an empty list" do
+        expect(selected_providers).to eq([])
+      end
+    end
+
+    context "when 'select_all' has been selected in the provider step" do
+      let(:state) do
+        {
+          "appetite" => { "appetite" => "actively_looking" },
+          "provider" => { "provider_ids" => %w[select_all] },
+        }
+      end
+
+      before do
+        test_provider_1
+        test_provider_2
+        test_provider_3
+      end
+
+      it "returns all test providers" do
+        expect(selected_providers).to contain_exactly(
+          test_provider_1,
+          test_provider_2,
+          test_provider_3,
+        )
+      end
+    end
+
+    context "when specific provider ids have been selected in the provider step" do
+      let(:state) do
+        {
+          "appetite" => { "appetite" => "actively_looking" },
+          "provider" => { "provider_ids" => [test_provider_1.id, test_provider_3.id] },
+        }
+      end
+
+      before do
+        test_provider_1
+        test_provider_2
+        test_provider_3
+      end
+
+      it "returns all test providers" do
+        expect(selected_providers).to contain_exactly(
+          test_provider_1,
+          test_provider_3,
+        )
       end
     end
   end

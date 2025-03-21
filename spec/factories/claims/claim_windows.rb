@@ -32,5 +32,11 @@ FactoryBot.define do
       ends_on { starts_on + 2.months }
       academic_year { AcademicYear.for_date(starts_on) }
     end
+
+    trait :upcoming do
+      starts_on { 2.months.from_now }
+      ends_on { 4.months.from_now }
+      academic_year { AcademicYear.for_date(starts_on) }
+    end
   end
 end

@@ -28,6 +28,9 @@ RSpec.describe Claims::ClaimWindow, type: :model do
 
   describe "associations" do
     it { is_expected.to belong_to(:academic_year) }
+
+    it { is_expected.to have_many(:eligibilities).dependent(:destroy) }
+    it { is_expected.to have_many(:eligible_schools).through(:eligibilities) }
   end
 
   describe "validations" do
@@ -119,6 +122,18 @@ RSpec.describe Claims::ClaimWindow, type: :model do
       _next_window = create(:claim_window, starts_on: Date.parse("28 July 2024"), ends_on: Date.parse("7 August 2024"), academic_year:)
 
       expect(described_class.previous).to eq(previous_window)
+    end
+  end
+
+  describe ".next" do
+    it "returns the next upcoming claim window", freeze: "17 July 2024" do
+      _old_window = create(:claim_window, starts_on: Date.parse("7 June 2024"), ends_on: Date.parse("1 July 2024"), academic_year:)
+      _previous_window = create(:claim_window, starts_on: Date.parse("7 July 2024"), ends_on: Date.parse("15 July 2024"), academic_year:)
+      _current_window = create(:claim_window, starts_on: Date.parse("16 July 2024"), ends_on: Date.parse("27 July 2024"), academic_year:)
+      next_window = create(:claim_window, starts_on: Date.parse("28 July 2024"), ends_on: Date.parse("7 August 2024"), academic_year:)
+      _another_next_window = create(:claim_window, starts_on: Date.parse("8 August 2024"), ends_on: Date.parse("31 October 2024"), academic_year:)
+
+      expect(described_class.next).to eq(next_window)
     end
   end
 end

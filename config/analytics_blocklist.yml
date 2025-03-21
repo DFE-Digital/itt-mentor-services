@@ -163,3 +163,9 @@ shared:
     - reasons_not_hosting
     - created_at
     - updated_at
+  :eligibilities:
+    - id
+    - claim_window_id
+    - school_id
+    - created_at
+    - updated_at

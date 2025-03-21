@@ -1,0 +1,12 @@
+en:
+  claims:
+    support:
+      schools:
+        onboard_schools:
+          edit:
+            cancel: Cancel
+          update:
+            success: School onboarding CSV uploaded
+            body: | 
+              It may take a moment for the onboarded schools to load. 
+              Refresh the page to see newly uploaded information.

@@ -26,6 +26,9 @@ class Claims::ClaimWindow < ApplicationRecord
 
   belongs_to :academic_year
 
+  has_many :eligibilities, dependent: :destroy
+  has_many :eligible_schools, through: :eligibilities, source: :school
+
   validates :starts_on, presence: true
   validates :ends_on, presence: true, comparison: { greater_than_or_equal_to: :starts_on }
 
@@ -50,6 +53,10 @@ class Claims::ClaimWindow < ApplicationRecord
 
   def self.previous
     where(ends_on: ..Date.current).order(ends_on: :desc).first
+  end
+
+  def self.next
+    where(starts_on: Date.current..).order(starts_on: :asc).first
   end
 
   private

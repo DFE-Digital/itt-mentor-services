@@ -4,16 +4,18 @@ en:
       mentors:
         add_mentor:
           edit:
-            caption: Add mentor
+            caption: Mentor details
             cancel: Cancel
           update:
             success_heading: Mentor added
+            success_body: You are now able to add %{mentor_name} to a claim
         index:
           heading: Mentors
           trn: Teacher reference number (TRN)
           add_mentor: Add mentor
           page_title: Mentors
         show:
+          details: Details
           page_title: "%{mentor_name} - Mentors"
           caption: "Mentors"
           remove_mentor: Remove mentor

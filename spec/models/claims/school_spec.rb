@@ -75,6 +75,8 @@ RSpec.describe Claims::School do
     it { is_expected.to have_many(:mentor_memberships) }
     it { is_expected.to have_many(:mentors).through(:mentor_memberships) }
     it { is_expected.to belong_to(:claims_grant_conditions_accepted_by).class_name("User").optional }
+    it { is_expected.to have_many(:eligibilities).dependent(:destroy) }
+    it { is_expected.to have_many(:eligible_claim_windows).through(:eligibilities) }
 
     describe "#users" do
       it { is_expected.to have_many(:users).through(:user_memberships) }
@@ -90,26 +92,26 @@ RSpec.describe Claims::School do
         expect(claims_school.users).to all(be_a(Claims::User))
       end
     end
-
-    describe "#grant_conditions_accepted?" do
-      it "returns true if the grant conditions have been accepted" do
-        claims_user = create(:claims_user)
-        claims_school = create(:claims_school, claims_grant_conditions_accepted_at: Time.zone.now, claims_grant_conditions_accepted_by_id: claims_user.id)
-
-        expect(claims_school.grant_conditions_accepted?).to be(true)
-      end
-
-      it "returns false if the grant conditions have NOT been accepted" do
-        create(:claims_user)
-        claims_school = create(:claims_school, claims_grant_conditions_accepted_at: nil, claims_grant_conditions_accepted_by_id: nil)
-
-        expect(claims_school.grant_conditions_accepted?).to be(false)
-      end
-    end
   end
 
   describe "delegations" do
     it { is_expected.to delegate_method(:funding_available_per_hour).to(:region).with_prefix(true) }
+  end
+
+  describe "#grant_conditions_accepted?" do
+    it "returns true if the grant conditions have been accepted" do
+      claims_user = create(:claims_user)
+      claims_school = create(:claims_school, claims_grant_conditions_accepted_at: Time.zone.now, claims_grant_conditions_accepted_by_id: claims_user.id)
+
+      expect(claims_school.grant_conditions_accepted?).to be(true)
+    end
+
+    it "returns false if the grant conditions have NOT been accepted" do
+      create(:claims_user)
+      claims_school = create(:claims_school, claims_grant_conditions_accepted_at: nil, claims_grant_conditions_accepted_by_id: nil)
+
+      expect(claims_school.grant_conditions_accepted?).to be(false)
+    end
   end
 
   describe "default scope" do
@@ -120,6 +122,24 @@ RSpec.describe Claims::School do
       school = described_class.find(school_with_claims.id)
       expect(described_class.all).to contain_exactly(school)
       expect(described_class.all).not_to include(school_without_claims)
+    end
+  end
+
+  describe "#eligible_for_claim_window" do
+    let(:current_claim_window) { create(:claim_window, :current) }
+    let(:historic_claim_window) { create(:claim_window, :historic) }
+    let(:school) { create(:claims_school) }
+
+    before { create(:eligibility, school:, claim_window: current_claim_window) }
+
+    it "returns true when it is assciated with a claim window" do
+      expect(
+        school.eligible_for_claim_window(current_claim_window),
+      ).to be(true)
+
+      expect(
+        school.eligible_for_claim_window(historic_claim_window),
+      ).to be(false)
     end
   end
 end

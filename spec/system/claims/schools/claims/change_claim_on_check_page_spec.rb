@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Change claim on check page", service: :claims, type: :system do
+RSpec.describe "Change claim on check page", :js, service: :claims, type: :system do
   let!(:school) { create(:claims_school, mentors: [mentor1, mentor2, mentor3], region: regions(:inner_london)) }
   let!(:anne) do
     create(
@@ -22,7 +22,10 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
     given_i_sign_in
 
     when_i_click("Add claim")
-    when_i_choose_a_provider(bpn)
+    and_i_enter_a_provider_named_best_practice_network
+    then_i_see_a_dropdown_item_for_best_practice_network
+
+    when_i_click_the_dropdown_item_for_best_practice_network
     when_i_click("Continue")
     when_i_select_a_mentor(mentor1)
     when_i_select_a_mentor(mentor2)
@@ -38,9 +41,12 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
 
   scenario "Anne changes the provider on claim on check page and doesn't need to add the mentor hours again" do
     when_i_click_change_provider
-    then_i_expect_the_provider_to_be_checked(bpn)
-    when_i_change_the_provider
-    then_i_expect_the_provider_to_be_checked(niot)
+    then_i_expect_the_provider_to_be_prefilled_with_best_practice_network
+
+    when_i_enter_a_provider_named_niot
+    then_i_see_a_dropdown_item_for_niot
+
+    when_i_click_the_dropdown_item_for_niot
     when_i_click("Continue")
     when_i_click("Continue") # Mentors step
     when_i_click("Continue") # Mentors 1 step
@@ -134,27 +140,15 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
   end
 
   def when_i_click_change_provider
-    within("dl.govuk-summary-list:nth(1)") do
-      within(".govuk-summary-list__row:nth(3)") do
-        click_link("Change")
-      end
-    end
+    click_link("Change Accredited provider")
   end
 
   def when_i_click_change_mentors
-    within("dl.govuk-summary-list:nth(1)") do
-      within(".govuk-summary-list__row:nth(4)") do
-        click_link("Change")
-      end
-    end
+    click_link("Change Mentors")
   end
 
   def when_i_click_change_training_hours_for_mentor
-    within("dl.govuk-summary-list:nth(2)") do
-      within(".govuk-summary-list__row:nth(1)") do
-        click_link("Change")
-      end
-    end
+    click_link("Change Hours of training for #{mentor1.full_name}")
   end
 
   def when_i_choose_other_amount
@@ -200,9 +194,9 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
 
   def then_i_expect_the_training_hours_to_be_selected(hours)
     if hours.to_i == 20
-      find("#claims-add-claim-wizard-mentor-training-step-hours-to-claim-maximum-field").checked?
+      find("#claims-add-claim-wizard-mentor-training-step-hours-to-claim-maximum-field", visible: :all).checked?
     else
-      find("#claims-add-claim-wizard-mentor-training-step-hours-to-claim-custom-field").checked?
+      find("#claims-add-claim-wizard-mentor-training-step-hours-to-claim-custom-field", visible: :all).checked?
     end
   end
 
@@ -212,51 +206,26 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
   end
 
   def then_i_check_my_answers(provider, mentors, mentor_hours)
-    expect(page).to have_content("Check your answers")
-    expect(page).to have_content("Hours of training")
-    expect(page).to have_content("Grant funding")
+    expect(page).to have_h1("Check your answers", class: "govuk-heading-l")
 
-    within("dl.govuk-summary-list:nth(1)") do
-      within(".govuk-summary-list__row:nth(2)") do
-        expect(page).to have_content("Academic year")
-        expect(page).to have_content(@claim_window.academic_year_name)
-      end
+    expect(page).to have_summary_list_row("Academic year", @claim_window.academic_year_name)
+    expect(page).to have_summary_list_row("Accredited provider", provider.name)
 
-      within(".govuk-summary-list__row:nth(3)") do
-        expect(page).to have_content("Accredited provider")
-        expect(page).to have_content(provider.name)
-      end
+    expect(page).to have_h2("Hours of training", class: "govuk-heading-m")
 
-      within(".govuk-summary-list__row:nth(4)") do
-        expect(page).to have_content("Mentors")
-        mentors.each do |mentor|
-          expect(page).to have_content(mentor.full_name)
-        end
-      end
+    mentors.each_with_index do |mentor, index|
+      expect(page).to have_summary_list_row(mentor.full_name, mentor_hours[index])
     end
 
-    within("dl.govuk-summary-list:nth(2)") do
-      mentors.each_with_index do |mentor, index|
-        expect(page).to have_content(mentor.full_name)
-        expect(page).to have_content(mentor_hours[index])
-      end
-    end
+    expect(page).to have_h2("Grant funding", class: "govuk-heading-m")
 
-    within("dl.govuk-summary-list:nth(3)") do
-      within(".govuk-summary-list__row:nth(1)") do
-        expect(page).to have_content("Total hours#{mentor_hours.sum} hours")
-      end
-
-      within(".govuk-summary-list__row:nth(2)") do
-        expect(page).to have_content("Hourly rate£53.60")
-      end
-
-      amount = Money.new(mentor_hours.sum * school.region.claims_funding_available_per_hour_pence, "GBP")
-      within(".govuk-summary-list__row:nth(3)") do
-        expect(page).to have_content("Claim amount")
-        expect(page).to have_content(amount.format(symbol: true, decimal_mark: ".", no_cents: true))
-      end
-    end
+    expect(page).to have_summary_list_row("Total hours", "#{mentor_hours.sum} hours")
+    expect(page).to have_summary_list_row("Hourly rate", "£53.60")
+    amount = Money.new(mentor_hours.sum * school.region.claims_funding_available_per_hour_pence, "GBP")
+    expect(page).to have_summary_list_row(
+      "Claim amount",
+      amount.format(symbol: true, decimal_mark: ".", no_cents: true),
+    )
   end
 
   def then_i_cant_see_the_mentor(mentor)
@@ -290,5 +259,35 @@ RSpec.describe "Change claim on check page", service: :claims, type: :system do
 
   def then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor)
     expect(page).to have_content("Hours of training for #{mentor.full_name}")
+  end
+
+  def and_i_enter_a_provider_named_best_practice_network
+    fill_in "Enter the accredited provider", with: "Best Practice Network"
+  end
+
+  def then_i_see_a_dropdown_item_for_best_practice_network
+    expect(page).to have_css(".autocomplete__option", text: "Best Practice Network", wait: 10)
+  end
+
+  def when_i_click_the_dropdown_item_for_best_practice_network
+    page.find(".autocomplete__option", text: "Best Practice Network").click
+  end
+
+  def then_i_expect_the_provider_to_be_prefilled_with_best_practice_network
+    expect(page.find("#claims-add-claim-wizard-provider-step-id-field").value).to eq(
+      "Best Practice Network",
+    )
+  end
+
+  def when_i_enter_a_provider_named_niot
+    fill_in "Enter the accredited provider", with: niot.name
+  end
+
+  def then_i_see_a_dropdown_item_for_niot
+    expect(page).to have_css(".autocomplete__option", text: niot.name, wait: 10)
+  end
+
+  def when_i_click_the_dropdown_item_for_niot
+    page.find(".autocomplete__option", text: niot.name).click
   end
 end

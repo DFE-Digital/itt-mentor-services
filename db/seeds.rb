@@ -313,6 +313,11 @@ if london_schools.exists?
   end
 end
 
+# Test providers for UR
+Provider.create!(name: "Test Provider 123", code: "TEST 123")
+Provider.create!(name: "Test Provider 456", code: "TEST 456")
+Provider.create!(name: "Test Provider 789", code: "TEST 789")
+
 # Feature flags
 
 Flipper.add(:bulk_add_placements)

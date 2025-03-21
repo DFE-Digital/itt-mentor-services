@@ -17,6 +17,7 @@ class Claims::Schools::Mentors::AddMentorController < Claims::ApplicationControl
       @wizard.reset_state
       redirect_to index_path, flash: {
         heading: t(".success_heading"),
+        body: t(".success_body", mentor_name: @wizard.steps[:mentor].mentor.first_name),
       }
     end
   end

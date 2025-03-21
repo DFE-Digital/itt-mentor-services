@@ -7,6 +7,7 @@ en:
           add_user: Add user
           no_users: There are no users for %{school_name}.
         show:
+          details: Details
           remove_user: Remove user
         remove:
           page_title: Are you sure you want to remove this user? - %{user_name}

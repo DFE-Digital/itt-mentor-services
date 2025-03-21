@@ -1,13 +1,11 @@
-class Claims::AddClaimWizard::ProviderStep < BaseStep
-  attribute :id
+class Claims::AddClaimWizard::ProviderStep < Claims::AddClaimWizard::ProviderSelectionStep
+  attribute :name
 
-  validates :id, presence: true, inclusion: { in: ->(step) { step.providers_for_selection.ids } }
-
-  def providers_for_selection
-    Claims::Provider.private_beta_providers.order_by_name.select(:id, :name)
+  def autocomplete_path_value
+    "/api/provider_suggestions"
   end
 
-  def provider
-    @provider ||= Claims::Provider.private_beta_providers.find_by(id:)
+  def autocomplete_return_attributes_value
+    %w[code]
   end
 end

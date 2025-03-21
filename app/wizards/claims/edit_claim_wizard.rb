@@ -20,6 +20,7 @@ module Claims
         add_step(DeclarationStep)
       else
         add_step(AddClaimWizard::ProviderStep)
+        add_step(AddClaimWizard::ProviderOptionsStep) if steps.fetch(:provider).provider.blank?
         if mentors_with_claimable_hours.any? || current_step == :check_your_answers
           add_step(AddClaimWizard::MentorStep)
           selected_mentors.each do |mentor|
@@ -71,7 +72,9 @@ module Claims
     end
 
     def provider
-      steps[:provider]&.provider || claim.provider
+      steps[:provider_options]&.provider ||
+        steps[:provider]&.provider ||
+        claim.provider
     end
 
     def claim_to_exclude

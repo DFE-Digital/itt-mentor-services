@@ -31,7 +31,7 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
     )
   end
 
-  let!(:draft_mentor_training) do
+  let(:draft_mentor_training) do
     create(
       :mentor_training,
       claim: draft_claim,
@@ -43,17 +43,17 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
   end
 
   before do
+    draft_mentor_training
     user_exists_in_dfe_sign_in(user: colin)
     given_i_sign_in
     when_i_select_a_school
     when_i_click_on_claims
   end
 
-  scenario "As a support user I can edit a draft claim" do
+  scenario "As a support user I can edit a draft claim", :js do
     when_i_visit_the_draft_claim_show_page
     then_i_edit_the_provider(
       current_provider: best_practice_network_provider,
-      new_provider: niot_provider,
     )
     then_i_edit_the_mentors
     then_i_edit_the_hours_of_training
@@ -76,16 +76,18 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
     then_i_see_a_validation_error_for_selecting_a_mentor
   end
 
-  scenario "Anne submits the draft claim which is invalid" do
+  scenario "Anne submits the draft claim which is invalid", :js do
     when_i_visit_the_draft_claim_show_page
     when_i_click("Change Accredited provider")
-    and_i_select_provider_niot
+    when_i_enter_a_provider_named_niot
+    then_i_see_a_dropdown_item_for_niot
+
+    when_i_click_the_dropdown_item_for_niot
     when_i_click("Continue") # To mentors step
     when_i_click("Continue") # To mentor training step
     when_i_click("Continue") # To check your answers
     then_i_see_the_check_your_answers_page(
       provider: niot_provider,
-      mentor: claims_mentor,
       hours_completed: 6,
     )
 
@@ -118,19 +120,38 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
     click_on("Continue")
   end
 
-  def then_i_edit_the_provider(current_provider:, new_provider:)
+  def then_i_edit_the_provider(current_provider:)
     expect(page).to have_content(current_provider.name)
-    first("a", text: "Change").click
-    page.choose(new_provider.name)
+    click_on "Change Accredited provider"
+    when_i_enter_a_provider_named_niot
+    then_i_see_a_dropdown_item_for_niot
+    when_i_click_the_dropdown_item_for_niot
     click_on("Continue")
   end
 
   def when_i_visit_the_draft_claim_show_page
     click_on draft_claim.reference
 
-    expect(page).to have_content("Best Practice Network")
-    expect(page).to have_content("Barry Garlow")
-    expect(page).to have_content("Barry Garlow#{draft_mentor_training.hours_completed} hours")
+    expect(page).to have_h1("Claim - #{draft_claim.reference}", class: "govuk-heading-l")
+    expect(page).to have_summary_list_row("School", "A School")
+    expect(page).to have_content("Draft")
+    expect(page).not_to have_content("Submitted by")
+    expect(page).to have_summary_list_row("Accredited provider", "Best Practice Network")
+
+    expect(page).to have_summary_list_row("Mentors", "Barry Garlow")
+
+    expect(page).to have_h2("Hours of training", class: "govuk-heading-m")
+    expect(page).to have_summary_list_row("Barry Garlow", "6 hours")
+
+    expect(page).to have_h2("Grant funding", class: "govuk-heading-m")
+    expect(page).to have_summary_list_row("Total hours", "6 hours")
+    expect(page).to have_summary_list_row("Hourly rate", "£53.60")
+
+    amount = Money.new(6 * school.region.claims_funding_available_per_hour_pence, "GBP")
+    expect(page).to have_summary_list_row(
+      "Claim amount",
+      amount.format(symbol: true, decimal_mark: ".", no_cents: true),
+    )
   end
 
   def then_i_cant_edit_the_submitted_claim
@@ -216,16 +237,36 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
     expect(page).to have_content("You cannot submit the claim because your mentors’ information has recently changed.")
   end
 
-  def then_i_see_the_check_your_answers_page(provider:, mentor:, hours_completed:)
-    expect(page).to have_content("A School")
-    expect(page).not_to have_content("Submitted by")
-    expect(page).to have_content("Accredited provider#{provider.name}")
-    expect(page).to have_content("Mentors\n#{mentor.full_name}")
-    expect(page).to have_content("Hours of training")
-    expect(page).to have_content("Barry Garlow#{hours_completed} hours")
-    expect(page).to have_content("Total hours#{hours_completed} hours")
-    expect(page).to have_content("Hourly rate£53.60")
+  def then_i_see_the_check_your_answers_page(provider:, hours_completed:)
+    expect(page).to have_h1("Check your answers", class: "govuk-heading-l")
+
+    expect(page).to have_summary_list_row("Accredited provider", provider.name)
+
+    expect(page).to have_summary_list_row("Mentors", "Barry Garlow")
+
+    expect(page).to have_h2("Hours of training", class: "govuk-heading-m")
+    expect(page).to have_summary_list_row("Barry Garlow", "#{hours_completed} hours")
+
+    expect(page).to have_h2("Grant funding", class: "govuk-heading-m")
+    expect(page).to have_summary_list_row("Total hours", "#{hours_completed} hours")
+    expect(page).to have_summary_list_row("Hourly rate", "£53.60")
+
     amount = Money.new(hours_completed * school.region.claims_funding_available_per_hour_pence, "GBP")
-    expect(page).to have_content("Claim amount#{amount.format(symbol: true, decimal_mark: ".", no_cents: true)}")
+    expect(page).to have_summary_list_row(
+      "Claim amount",
+      amount.format(symbol: true, decimal_mark: ".", no_cents: true),
+    )
+  end
+
+  def when_i_enter_a_provider_named_niot
+    fill_in "Enter the accredited provider", with: niot_provider.name
+  end
+
+  def then_i_see_a_dropdown_item_for_niot
+    expect(page).to have_css(".autocomplete__option", text: niot_provider.name, wait: 10)
+  end
+
+  def when_i_click_the_dropdown_item_for_niot
+    page.find(".autocomplete__option", text: niot_provider.name).click
   end
 end

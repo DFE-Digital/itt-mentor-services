@@ -3,21 +3,20 @@
   error: current_step.errors.any?,
 ) %>
 
-<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
-  <%= f.govuk_error_summary %>
-
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l"><%= contextual_text %></span>
-
-      <%= f.govuk_collection_radio_buttons(
-        :id,
-        current_step.providers_for_selection,
-        :id, :name,
-        legend: { size: "l", text: t(".title"), tag: "h1" }
-      ) %>
-
-      <%= f.govuk_submit t(".continue") %>
-    </div>
-  </div>
-<% end %>
+<%= render AutocompleteSelectFormComponent.new(
+  model: current_step,
+  scope: current_step.scope,
+  url: current_step_path,
+  method: :put,
+  data: {
+    autocomplete_path_value: current_step.autocomplete_path_value,
+    autocomplete_return_attributes_value: current_step.autocomplete_return_attributes_value,
+  },
+  input: {
+    value: current_step.provider&.name,
+    label: t(".title"),
+    caption: contextual_text,
+    hint: t(".hint_html"),
+    previous_search: current_step.id,
+  },
+) %>

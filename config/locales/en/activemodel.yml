@@ -138,7 +138,7 @@ en:
         claims/add_claim_wizard/provider_step:
           attributes:
             id:
-              blank: Select a provider
+              blank: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode
         claims/add_claim_wizard/mentor_step:
           attributes:
             mentor_ids:
@@ -320,3 +320,26 @@ en:
             child_subject_ids: 
               blank: Please select a subject
               inclusion: Please select a subject
+        claims/add_claim_wizard/provider_options_step:
+          attributes:
+            id:
+              blank: Select a provider
+        claims/onboard_multiple_schools_wizard/upload_step:
+          attributes:
+            csv_upload:
+              blank: Select a CSV file to upload
+              invalid: The selected file must be a CSV
+              invalid_headers:
+                Your file needs a column called %{missing_columns}.
+              uploaded_headers:
+                Right now it has columns called %{uploaded_headers}.
+        claims/onboard_multiple_schools_wizard/claim_window_step:
+          attributes:
+            claim_window_id:
+              blank: Please select a claim window
+              inclusion: Please select a claim window
+        claims/add_school_wizard/claim_window_step:
+          attributes:
+            claim_window_id:
+              blank: Please select a claim window
+              inclusion: Please select a claim window

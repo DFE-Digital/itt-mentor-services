@@ -64,22 +64,21 @@ RSpec.describe "School user does not enter any school contact details",
 
   def then_i_see_the_appetite_form
     expect(page).to have_title(
-      "What is your appetite for ITT the coming academic year (#{@next_academic_year_name})? - Manage school placements - GOV.UK",
+      "Will you host placements this academic year (#{@next_academic_year_name})? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "What is your appetite for ITT the coming academic year (#{@next_academic_year_name})?",
+      text: "Will you host placements this academic year (#{@next_academic_year_name})?",
       class: "govuk-fieldset__legend",
     )
-    expect(page).to have_field("Actively looking to host placements", type: :radio)
-    expect(page).to have_field("Interested in hosting placements", type: :radio)
-    expect(page).to have_field("Not open to hosting placements", type: :radio)
-    expect(page).to have_field("Placements already organised with providers", type: :radio)
+    expect(page).to have_field("Yes - Let providers know what I'm willing to host", type: :radio)
+    expect(page).to have_field("Yes - Let providers know I am open to placements", type: :radio)
+    expect(page).to have_field("No - Let providers know I am not hosting and do not want to be contacted", type: :radio)
   end
 
   def when_i_select_not_open_to_hosting_placements
-    choose "Not open to hosting placements"
+    choose "No - Let providers know I am not hosting and do not want to be contacted"
   end
 
   def when_i_click_on_continue
@@ -121,10 +120,16 @@ RSpec.describe "School user does not enter any school contact details",
 
   def then_i_see_the_school_contact_form
     expect(page).to have_title(
-      "Who is your contact for ITT? - Manage school placements - GOV.UK",
+      "Who should providers contact? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Who is your contact for ITT?")
+    expect(page).to have_h1("Who should providers contact?")
+    expect(page).to have_element(
+      :p,
+      text: "Choose the person best placed to organise ITT placements at your school. "\
+        "This information will be shown on your profile.",
+      class: "govuk-body",
+    )
 
     @school_contact = @school.school_contact
     expect(page).to have_field("First name")

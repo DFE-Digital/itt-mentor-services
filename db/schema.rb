@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_10_225031) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_17_094215) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -157,6 +157,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_10_225031) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["activity_record_type", "activity_record_id"], name: "index_download_access_tokens_on_activity_record"
+  end
+
+  create_table "eligibilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "claim_window_id", null: false
+    t.uuid "school_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["claim_window_id"], name: "index_eligibilities_on_claim_window_id"
+    t.index ["school_id"], name: "index_eligibilities_on_school_id"
   end
 
   create_table "flipper_features", force: :cascade do |t|
@@ -616,6 +625,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_10_225031) do
   add_foreign_key "claims", "schools"
   add_foreign_key "clawback_claims", "claims"
   add_foreign_key "clawback_claims", "clawbacks"
+  add_foreign_key "eligibilities", "claim_windows"
+  add_foreign_key "eligibilities", "schools"
   add_foreign_key "hosting_interests", "academic_years"
   add_foreign_key "hosting_interests", "schools"
   add_foreign_key "mentor_memberships", "mentors"

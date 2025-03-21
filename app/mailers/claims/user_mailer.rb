@@ -36,6 +36,8 @@ class Claims::UserMailer < Claims::ApplicationMailer
                    organisation_name: claim.school_name,
                    reference: claim.reference,
                    amount: claim.amount.format(symbol: true, decimal_mark: ".", no_cents: false),
+                   mentor_count: claim.mentors.count,
+                   provider_name: claim.provider_name,
                    support_email:,
                    link_to_claim:,
                  )

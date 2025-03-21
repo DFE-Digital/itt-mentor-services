@@ -26,6 +26,9 @@ module Placements
         end
       end
       add_step(SchoolContactStep)
+      if appetite == "actively_looking" || appetite == "interested" && list_placements?
+        add_step(CheckYourAnswersStep)
+      end
     end
 
     def update_school_placements
@@ -40,6 +43,8 @@ module Placements
         hosting_interest.save!
 
         create_placements
+
+        create_partnerships
 
         wizard_school_contact.first_name = steps[:school_contact].first_name
         wizard_school_contact.last_name = steps[:school_contact].last_name
@@ -84,6 +89,17 @@ module Placements
       end.try(subject.name_as_attribute).to_i
     end
 
+    def selected_providers
+      return Provider.none if steps[:provider].blank?
+
+      provider_step = steps.fetch(:provider)
+      if provider_step.provider_ids.include?(provider_step.class::SELECT_ALL)
+        provider_step.providers
+      else
+        ::Provider.where(id: provider_step.provider_ids)
+      end
+    end
+
     private
 
     def create_placements
@@ -107,6 +123,12 @@ module Placements
       end
     end
 
+    def create_partnerships
+      selected_providers.each do |provider|
+        school.partnerships.create!(provider:)
+      end
+    end
+
     def selected_primary_subject_ids
       return [] if steps[:primary_subject_selection].blank?
 
@@ -122,15 +144,17 @@ module Placements
     def actively_looking_steps
       add_step(PhaseStep)
       add_step(SubjectsKnownStep)
-      return unless subjects_known?
+      if subjects_known?
+        if phases.include?(::Placements::School::PRIMARY_PHASE)
+          primary_subject_steps
+        end
 
-      if phases.include?(::Placements::School::PRIMARY_PHASE)
-        primary_subject_steps
+        if phases.include?(::Placements::School::SECONDARY_PHASE)
+          secondary_subject_steps
+        end
       end
 
-      if phases.include?(::Placements::School::SECONDARY_PHASE)
-        secondary_subject_steps
-      end
+      add_step(ProviderStep)
     end
 
     def primary_subject_steps

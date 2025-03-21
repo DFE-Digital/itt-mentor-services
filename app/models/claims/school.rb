@@ -76,6 +76,8 @@ class Claims::School < School
   has_many :claims
   has_many :mentor_memberships
   has_many :mentors, through: :mentor_memberships
+  has_many :eligibilities, dependent: :destroy
+  has_many :eligible_claim_windows, through: :eligibilities, source: :claim_window
 
   belongs_to :claims_grant_conditions_accepted_by, class_name: "User", optional: true
 
@@ -83,5 +85,9 @@ class Claims::School < School
 
   def grant_conditions_accepted?
     claims_grant_conditions_accepted_at?
+  end
+
+  def eligible_for_claim_window(claim_window)
+    eligible_claim_windows.include?(claim_window)
   end
 end

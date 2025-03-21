@@ -15,7 +15,7 @@ RSpec.describe "Invite and view a users details", service: :claims, type: :syste
     then_i_see_a_list_of_users_ordered_by_full_name
     when_i_click("Add user")
     fill_in_user_details
-    when_i_click("Save user")
+    when_i_click("Confirm and add user")
     show_user_details
   end
 
