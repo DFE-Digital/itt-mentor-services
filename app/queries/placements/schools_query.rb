@@ -74,7 +74,7 @@ class Placements::SchoolsQuery < ApplicationQuery
     return scope if filter_params[:last_offered_placements_academic_year_ids].blank?
 
     if filter_params[:last_offered_placements_academic_year_ids].include?("never_offered")
-      scope.where.not(academic_years: { starts_on: ..Placements::AcademicYear.current.starts_on })
+      scope.where.missing(:academic_years)
     else
       scope.where(academic_years: filter_params[:last_offered_placements_academic_year_ids])
     end
