@@ -1,0 +1,8 @@
+en:
+  components:
+    school:
+      interest_tag_component:
+        unfilled_placements: Has unfilled placements
+        not_open: Not hosting
+        open: Open to hosting
+        filled_placements: Already organised placements
