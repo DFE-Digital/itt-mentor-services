@@ -59,6 +59,8 @@ gem "redcarpet", "~> 3.6"
 # GoodJob backend for Active Job
 gem "good_job", "~> 4.9"
 
+gem "faker"
+
 # Store user sessions in the database
 gem "activerecord-session_store"
 
@@ -168,7 +170,6 @@ group :test, :development do
   gem "dotenv-rails"
   gem "erb_lint", require: false
   gem "factory_bot_rails"
-  gem "faker"
   gem "parallel_tests"
   gem "pry"
   gem "pry-byebug"
