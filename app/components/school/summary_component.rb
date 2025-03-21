@@ -18,11 +18,11 @@ class School::SummaryComponent < ApplicationComponent
   end
 
   def available_placements_count
-    school.available_placement_subjects.count
+    school.available_placements.count
   end
 
   def unavailable_placements_count
-    school.unavailable_placement_subjects.count
+    school.unavailable_placements.count
   end
 
   def placement_status
@@ -52,6 +52,10 @@ class School::SummaryComponent < ApplicationComponent
 
   def latest_academic_year_placements_names
     school.placements.joins(:subject).where(academic_year: latest_academic_year).pluck("subject.name").join(", ")
+  end
+
+  def previous_academic_year_placements_count
+    school.placements.where(academic_year: Placements::AcademicYear.current.previous).count
   end
 
   def current_academic_year_start

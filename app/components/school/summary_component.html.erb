@@ -4,13 +4,15 @@
     <% filled_subjects = Subject.where(id: @school.placements.where(academic_year_id: Placements::AcademicYear.current.id).where.not(provider_id: nil).pluck(:subject_id)) %>
     <% open_to_hosting = school.current_hosting_interest&.appetite == "actively_looking" %>
 
-    <% if (unfilled_subjects.exists? || filled_subjects.exists?) && open_to_hosting %>
+    <% if !open_to_hosting %>
+      <%= "#{school.name}, #{school.town}" %>
+    <% elsif (unfilled_subjects.exists? || filled_subjects.exists?) && open_to_hosting %>
       <%= govuk_link_to(placements_placements_provider_find_path(provider, school), no_visited_state: true) do %>
-        <%= school.name %>
+        <%= "#{school.name}, #{school.town}" %>
       <% end %>
     <% else %>
       <%= govuk_link_to(placement_information_placements_provider_find_path(provider, school), no_visited_state: true) do %>
-        <%= school.name %>
+        <%= "#{school.name}, #{school.town}" %>
       <% end %>
     <% end %>
   </h2>
@@ -67,11 +69,7 @@
             <%= t(".placement_status") %>
           </dt>
           <dd class="app-result-detail__value">
-            <% if latest_academic_year.present? %>
-              <%= t(".offered_placements", academic_year_name: latest_academic_year_name, subjects: latest_academic_year_placements_names) %>
-            <% else %>
-              <%= t(".unknown") %>
-            <% end %>
+            <%= t(".last_offered_count", count: previous_academic_year_placements_count, academic_year_name: Placements::AcademicYear.current.previous.name) %>
           </dd>
         </div>
       <% else %>
@@ -80,11 +78,11 @@
             <%= t(".trained_mentors") %>
           </dt>
           <dd class="app-result-detail__value">
-            <% school.has_trained_mentors?  ? "Yes" : "No" %>
+            <%= school.has_trained_mentors? ? "Yes" : "No" %>
           </dd>
         </div>
-        <% unless school.current_hosting_interest_appetite == "actively_looking" && (school.unavailable_placement_subjects.empty? && school.available_placement_subjects.empty?) %>
-          <% unless school.current_hosting_interest_appetite == "actively_looking" && (school.unavailable_placement_subjects.exists? && school.available_placement_subjects.empty?) %>
+        <% unless school.current_hosting_interest_appetite == "actively_looking" && (school.unavailable_placements.empty? && school.available_placements.empty?) %>
+          <% unless school.current_hosting_interest_appetite == "actively_looking" && (school.unavailable_placements.exists? && school.available_placements.empty?) %>
             <div class="app-result-detail__row">
               <dt class="app-result-detail__key">
                 <%= t(".available_placements") %>
@@ -102,15 +100,15 @@
               <%= t(".unavailable_placements_count", count: unavailable_placements_count) %>
             </dd>
           </div>
-          <div class="app-result-detail__row">
-            <dt class="app-result-detail__key">
-              <%= t(".last_offered") %>
-            </dt>
-            <dd class="app-result-detail__value">
-              <%= t(".last_offered_count", count: latest_academic_year_placements_count, academic_year_name: latest_academic_year_name) %>
-            </dd>
-          </div>
         <% end %>
+        <div class="app-result-detail__row">
+          <dt class="app-result-detail__key">
+            <%= t(".last_offered") %>
+          </dt>
+          <dd class="app-result-detail__value">
+            <%= t(".last_offered_count", count: previous_academic_year_placements_count, academic_year_name: Placements::AcademicYear.current.previous.name) %>
+          </dd>
+        </div>
         <div class="app-result-detail__row">
           <dt class="app-result-detail__key">
             <%= t(".placement_contact") %>

@@ -91,12 +91,24 @@ class Placements::School < School
     hosting_interests.for_academic_year(Placements::AcademicYear.current).first
   end
 
+  def available_placements
+    placements.where(provider: nil, academic_year: Placements::AcademicYear.current)
+  end
+
+  def unavailable_placements
+    placements.where(academic_year: Placements::AcademicYear.current).where.not(provider: nil)
+  end
+
   def available_placement_subjects
     ::Subject.where(id: placements.where(provider: nil, academic_year: Placements::AcademicYear.current).select(:subject_id)).distinct
   end
 
   def unavailable_placement_subjects
     ::Subject.where(id: placements.where.not(provider: nil, academic_year: Placements::AcademicYear.current).select(:subject_id)).distinct
+  end
+
+  def previous_subjects
+    ::Subject.where(id: placements.joins(:academic_year).where(provider: nil, academic_year: { ends_on: ..Placements::AcademicYear.current.starts_on }).select(:subject_id)).distinct
   end
 
   def has_trained_mentors?

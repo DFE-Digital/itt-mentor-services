@@ -232,25 +232,33 @@ Claims::School.all.find_each do |school|
 end
 
 # Onboard schools
-all_schools = School.where("postcode LIKE ?", "SE%").where(placements_service: false, phase: %w[Primary Secondary])
+london_schools = School.where("postcode LIKE ?", "SE%").where(placements_service: false, phase: %w[Primary Secondary])
+london_providers = Provider.where(city: "London", placements_service: false)
 
-if all_schools.exists?
-  all_schools.update_all(placements_service: true)
+if london_providers.exists?
+  london_providers.update_all(placements_service: true)
+end
+
+if london_schools.exists?
+  london_schools.update_all(placements_service: true)
   target_school = Placements::School.find_by(name: "Deptford Green School")
   target_school.hosting_interests.create!(appetite: "actively_looking", academic_year: Placements::AcademicYear.current)
   target_school.mentors.create!(first_name: "John", last_name: "Doe", trn: Random.new.rand(1_000_000..9_999_999), trained: true)
   Placements::SchoolContact.create!(
     school: target_school,
-    first_name: "Jane", last_name: "Doe", email_address: "jane.doe@deptford-green.com"
+    first_name: "Jane", last_name: "Doe", email_address: "jane.doe@deptford-green.sch.uk"
   )
-  _target_placement = target_school.placements.create!(subject: Subject.find_by(name: "English"), academic_year: Placements::AcademicYear.current)
+  _target_placement = target_school.placements.create!(subject: Subject.find_by(name: "English"), academic_year: Placements::AcademicYear.current, terms: [Placements::Term.find_by(name: "Autumn term")])
 
+  terms = [[Placements::Term.all.sample], []].sample
   schools = Placements::School.where("postcode LIKE ?", "SE%").where.not(id: target_school.id)
   schools.each do |school|
     first_name = Faker::Name.first_name
     last_name = Faker::Name.last_name
     hosting_appetite = %w[actively_looking not_open].sample
     create_placements = [true, false].sample
+    create_previous_placements = [true, false].sample
+    create_filled_placements = [true, false].sample
     trained = if hosting_appetite == "actively_looking" && create_placements
                 true
               elsif hosting_appetite == "actively_looking"
@@ -266,7 +274,7 @@ if all_schools.exists?
         school:,
         first_name: first_name,
         last_name: last_name,
-        email_address: Faker::Internet.email(name: "#{first_name} #{last_name}", domain: "#{school.name.parameterize(separator: "-")}.co.uk"),
+        email_address: Faker::Internet.email(name: "#{first_name} #{last_name}", domain: "#{school.name.parameterize(separator: "-")}.sch.uk"),
       )
     end
 
@@ -274,20 +282,36 @@ if all_schools.exists?
 
     mentor = school.mentors.create!(first_name:, last_name:, trained:, trn: Random.new.rand(1_000_000..9_999_999))
 
-    next unless create_placements
-
     subjects = Subject.where(subject_area: school.phase.downcase)
 
+    if create_placements
+      rand(1..5).times do
+        academic_year = Placements::AcademicYear.current
+        subject = subjects.sample
+
+        school.placements.create!(mentors: [mentor], subject:, academic_year:, terms: terms)
+      end
+    end
+
+    if create_filled_placements
+      rand(1..5).times do
+        academic_year = Placements::AcademicYear.current
+        subject = subjects.sample
+
+        school.placements.create!(mentors: [mentor], subject:, academic_year:, terms: terms, provider: Placements::Provider.all.sample)
+      end
+    end
+
+    next unless create_previous_placements
+
     rand(1..5).times do
-      academic_year = [Placements::AcademicYear.current, Placements::AcademicYear.current.previous].sample
+      academic_year = Placements::AcademicYear.current.previous
       subject = subjects.sample
 
-      school.placements.create!(mentors: [mentor], subject:, academic_year:)
+      school.placements.create!(mentors: [mentor], subject:, academic_year:, terms: terms)
     end
   end
 end
-
-
 
 # Feature flags
 

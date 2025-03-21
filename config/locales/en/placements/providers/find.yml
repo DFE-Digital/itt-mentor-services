@@ -60,7 +60,7 @@ en:
           placements: Placements
           placement_information: Placement information
           school_details: School details
-          description: This school has specified which placements they would like to host in the 2025-2026 academic year.
+          description: This school has specified which placements they would like to host in the 2024-2025 academic year.
           unfilled_placements:
             one: "%{count} unfilled placement"
             other: "%{count} unfilled placements"

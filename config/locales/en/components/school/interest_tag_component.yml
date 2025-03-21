@@ -2,8 +2,7 @@ en:
   components:
     school:
       interest_tag_component:
-        actively_looking: Has Unfilled Placements
-        not_open: Not Hosting
-        interested: Open to Hosting
-        open: Open to hosting
+        actively_looking: Has unfilled placements
+        not_open: Not hosting
+        interested: Open to hosting
         already_organised: Already organised placements

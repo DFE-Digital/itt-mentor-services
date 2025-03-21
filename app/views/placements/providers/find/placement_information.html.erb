@@ -51,11 +51,11 @@
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: "2023-2024") %>
             <% row.with_value do %>
-              <% if @subjects_last_offered.any? %>
+              <% if @placements_last_offered.any? %>
                 <p class="govuk-body"><%= t(".offered_placements_in") %></p>
                 <ul class="govuk-list">
-                  <% @subjects_last_offered.each do |name| %>
-                    <li><%= name %></li>
+                  <% @placements_last_offered.each do |placement| %>
+                    <li><%= placement.title %></li>
                   <% end %>
                 </ul>
               <% else %>

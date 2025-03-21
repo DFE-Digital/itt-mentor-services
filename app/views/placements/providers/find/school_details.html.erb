@@ -58,7 +58,7 @@
           <% row.with_key(text: t(".website")) %>
           <% row.with_value do %>
             <% if @school.website.present? %>
-              <% govuk_link_to @school.website, @school.website, new_tab: true %>
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="https://www.adamsrill.lewisham.sch.uk"><%= @school.website %> (opens in new tab)</a>
             <% else %>
               <%= t(".unknown") %>
             <% end %>

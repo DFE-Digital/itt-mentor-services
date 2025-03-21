@@ -26,9 +26,9 @@ class School::InterestTagComponent < ApplicationComponent
   private_constant :INTEREST_COLOURS, :INTEREST_TEXT
 
   def calculated_status
-    if school.current_hosting_interest_appetite == "actively_looking" && (school.unavailable_placement_subjects.exists? && school.available_placement_subjects.empty?)
+    if school.current_hosting_interest_appetite == "actively_looking" && (school.unavailable_placements.exists? && school.available_placements.empty?)
       "filled_placements"
-    elsif school.current_hosting_interest_appetite == "actively_looking" && school.available_placement_subjects.exists?
+    elsif school.current_hosting_interest_appetite == "actively_looking" && school.available_placements.exists?
       "unfilled_placements"
     elsif school.current_hosting_interest_appetite == "actively_looking"
       "open"
