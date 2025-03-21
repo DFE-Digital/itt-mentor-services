@@ -32,11 +32,21 @@ class Placements::SchoolsQuery < ApplicationQuery
   def itt_statuses_condition(scope)
     hosting_interests = filter_params[:itt_statuses]
     return scope if hosting_interests.blank?
+    #
+    # open_scope = scope.where(hosting_interests: { appetite: "actively_looking" }).excluding(scope.where(placements: { academic_year_id: Placements::AcademicYear.current.id }))
+    # not_open_scope = scope.where(hosting_interests: { appetite: "not_open" })
+    # unfilled_scope = scope.where(hosting_interests: { appetite: "actively_looking" }, placements: { academic_year_id: Placements::AcademicYear.current.id, provider: nil })
+    # filled_scope = scope.where(hosting_interests: { appetite: "actively_looking" }, placements: { academic_year_id: Placements::AcademicYear.current.id }).excluding(scope.where(placements: { provider: nil }))
+    #
+    # hosting_interests.include?("open")
+    # hosting_interests.include?("not_open")
+    # hosting_interests.include?("unfilled_placements")
+    # hosting_interests.include?("filled_placements")
 
     conditions = []
 
     if hosting_interests.include?("open")
-      conditions << scope.where(hosting_interests: { appetite: "actively_looking" }).where.not(placements: { academic_year_id: Placements::AcademicYear.current.id })
+      conditions << scope.where(hosting_interests: { appetite: "actively_looking" }).excluding(scope.where(placements: { academic_year_id: Placements::AcademicYear.current.id }))
     end
 
     if hosting_interests.include?("not_open")
@@ -48,7 +58,7 @@ class Placements::SchoolsQuery < ApplicationQuery
     end
 
     if hosting_interests.include?("filled_placements")
-      conditions << scope.where(hosting_interests: { appetite: "actively_looking" }, placements: { academic_year_id: Placements::AcademicYear.current.id }).where.not(placements: { provider: nil })
+      conditions << scope.where(hosting_interests: { appetite: "actively_looking" }, placements: { academic_year_id: Placements::AcademicYear.current.id }).excluding(scope.where(placements: { provider: nil }))
     end
 
     conditions.reduce(scope.none) { |combined_scope, condition| combined_scope.or(condition) }
