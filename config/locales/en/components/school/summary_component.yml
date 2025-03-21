@@ -33,8 +33,8 @@ en:
         last_offered: Last offered
         last_offered_count:
             zero: "This school has not previously hosted placements"
-            one: "%{count} subjects in %{academic_year_name}"
-            other: "%{count} subject in %{academic_year_name}"
+            one: "%{count} subject in %{academic_year_name}"
+            other: "%{count} subjects in %{academic_year_name}"
         placement_contact: Contact
         address: Address
         distance: Distance

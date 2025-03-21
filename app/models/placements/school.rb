@@ -92,10 +92,14 @@ class Placements::School < School
   end
 
   def available_placement_subjects
-    ::Subject.where(id: placements.where(provider: nil).select(:subject_id)).distinct
+    ::Subject.where(id: placements.where(provider: nil, academic_year: Placements::AcademicYear.current).select(:subject_id)).distinct
   end
 
   def unavailable_placement_subjects
-    ::Subject.where(id: placements.where.not(provider: nil).select(:subject_id)).distinct
+    ::Subject.where(id: placements.where.not(provider: nil, academic_year: Placements::AcademicYear.current).select(:subject_id)).distinct
+  end
+
+  def has_trained_mentors?
+    mentors.pluck(:trained).any? { |trained| trained == true }
   end
 end

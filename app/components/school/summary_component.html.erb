@@ -1,7 +1,17 @@
 <li class="app-search-results__item">
   <h2 class="govuk-heading-m">
-    <%= govuk_link_to(placements_placements_provider_find_path(provider, school), no_visited_state: true) do %>
-      <%= school.name %>
+    <% unfilled_subjects = Subject.where(id: @school.placements.where(academic_year_id: Placements::AcademicYear.current.id, provider_id: nil).pluck(:subject_id)) %>
+    <% filled_subjects = Subject.where(id: @school.placements.where(academic_year_id: Placements::AcademicYear.current.id).where.not(provider_id: nil).pluck(:subject_id)) %>
+    <% open_to_hosting = school.current_hosting_interest&.appetite == "actively_looking" %>
+
+    <% if (unfilled_subjects.exists? || filled_subjects.exists?) && open_to_hosting %>
+      <%= govuk_link_to(placements_placements_provider_find_path(provider, school), no_visited_state: true) do %>
+        <%= school.name %>
+      <% end %>
+    <% else %>
+      <%= govuk_link_to(placement_information_placements_provider_find_path(provider, school), no_visited_state: true) do %>
+        <%= school.name %>
+      <% end %>
     <% end %>
   </h2>
 
@@ -70,33 +80,37 @@
             <%= t(".trained_mentors") %>
           </dt>
           <dd class="app-result-detail__value">
-            Unknown <!-- TODO: Add trained mentors to school -->
+            <% school.has_trained_mentors?  ? "Yes" : "No" %>
           </dd>
         </div>
-        <div class="app-result-detail__row">
-          <dt class="app-result-detail__key">
-            <%= t(".available_placements") %>
-          </dt>
-          <dd class="app-result-detail__value">
-            <%= govuk_link_to t(".available_placements_count", count: available_placements_count), placements_placements_provider_find_path(provider, school), no_visited_state: true %>
-          </dd>
-        </div>
-        <div class="app-result-detail__row">
-          <dt class="app-result-detail__key">
-            <%= t(".unavailable_placements") %>
-          </dt>
-          <dd class="app-result-detail__value">
-            <%= t(".unavailable_placements_count", count: unavailable_placements_count) %>
-          </dd>
-        </div>
-        <div class="app-result-detail__row">
-          <dt class="app-result-detail__key">
-            <%= t(".last_offered") %>
-          </dt>
-          <dd class="app-result-detail__value">
-            <%= t(".last_offered_count", count: latest_academic_year_placements_count, academic_year_name: latest_academic_year_name) %>
-          </dd>
-        </div>
+        <% unless school.current_hosting_interest_appetite == "actively_looking" && (school.unavailable_placement_subjects.empty? && school.available_placement_subjects.empty?) %>
+          <% unless school.current_hosting_interest_appetite == "actively_looking" && (school.unavailable_placement_subjects.exists? && school.available_placement_subjects.empty?) %>
+            <div class="app-result-detail__row">
+              <dt class="app-result-detail__key">
+                <%= t(".available_placements") %>
+              </dt>
+              <dd class="app-result-detail__value">
+                <%= govuk_link_to t(".available_placements_count", count: available_placements_count), placements_placements_provider_find_path(provider, school), no_visited_state: true %>
+              </dd>
+            </div>
+          <% end %>
+          <div class="app-result-detail__row">
+            <dt class="app-result-detail__key">
+              <%= t(".unavailable_placements") %>
+            </dt>
+            <dd class="app-result-detail__value">
+              <%= t(".unavailable_placements_count", count: unavailable_placements_count) %>
+            </dd>
+          </div>
+          <div class="app-result-detail__row">
+            <dt class="app-result-detail__key">
+              <%= t(".last_offered") %>
+            </dt>
+            <dd class="app-result-detail__value">
+              <%= t(".last_offered_count", count: latest_academic_year_placements_count, academic_year_name: latest_academic_year_name) %>
+            </dd>
+          </div>
+        <% end %>
         <div class="app-result-detail__row">
           <dt class="app-result-detail__key">
             <%= t(".placement_contact") %>

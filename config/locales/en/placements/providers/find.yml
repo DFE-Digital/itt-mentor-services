@@ -11,7 +11,7 @@ en:
             zero: No schools
             one: 1 school
             other: "%{count} schools"
-          find_placements: Find schools and placements
+          find_placements: Find schools hosting placements
           no_results: There are no placements that match your selection. Try searching again, or removing one or more filters.
           enter_a_location: Enter a location
           results_sorted_alpha: Results sorted alphabetically
@@ -83,6 +83,7 @@ en:
           trained_mentors: Trained mentors
           placements_hosted_in_previous_years: Placements hosted in previous years
           offered_placements_in: "Offered placements in:"
+          unknown: Unknown
         school_details:
           page_title: "%{school_name} - Find"
           placements: Placements

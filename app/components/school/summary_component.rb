@@ -51,7 +51,7 @@ class School::SummaryComponent < ApplicationComponent
   end
 
   def latest_academic_year_placements_names
-    school.placements.where(academic_year: latest_academic_year).pluck(:name).join(", ")
+    school.placements.joins(:subject).where(academic_year: latest_academic_year).pluck("subject.name").join(", ")
   end
 
   def current_academic_year_start

@@ -1,148 +1,155 @@
 <% content_for(:page_title) { t(".page_title", school_name: @school.name) } %>
 <%= render "placements/providers/primary_navigation", provider: @provider, current_navigation: :find %>
 
-<div class="govuk-width-container" data-controller="filter">
-  <h1 class="govuk-heading-l">
-    <%= @school.name %>
-  </h1>
-  <%= render School::InterestTagComponent.new(school: @school) %>
-  <div class="govuk-!-margin-bottom-2"></div>
-  <%= render SecondaryNavigationComponent.new do |component| %>
-    <% component.with_navigation_item t(".placements"), placements_placements_provider_find_path %>
-    <% component.with_navigation_item t(".placement_information"), placement_information_placements_provider_find_path %>
-    <% component.with_navigation_item t(".school_details"), school_details_placements_provider_find_path %>
-  <% end %>
-
-  <h2 class="govuk-heading-m">
-    <%= t(".school_details") %>
-  </h2>
-
-  <%= govuk_summary_list(actions: false) do |summary_list| %>
-    <% summary_list.with_row do |row| %>
-      <% row.with_key(text: t(".phase")) %>
-      <% row.with_value(text: @school.phase) %>
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      <%= @school.name %>
+    </h1>
+    <%= render School::InterestTagComponent.new(school: @school) %>
+    <div class="govuk-!-margin-bottom-2"></div>
+    <%= render SecondaryNavigationComponent.new do |component| %>
+      <% if (@unfilled_subjects.any? || @filled_subjects.any?) && @school.current_hosting_interest.appetite == "actively_looking" %>
+        <% component.with_navigation_item t(".placements"), placements_placements_provider_find_path %>
+      <% end %>
+      <% component.with_navigation_item t(".placement_information"), placement_information_placements_provider_find_path %>
+      <% component.with_navigation_item t(".school_details"), school_details_placements_provider_find_path %>
     <% end %>
 
-    <% summary_list.with_row do |row| %>
-      <% row.with_key(text: t(".age_range")) %>
-      <% row.with_value(text: @school.age_range) %>
-    <% end %>
 
-    <% summary_list.with_row do |row| %>
-      <% row.with_key(text: t(".ukprn")) %>
-      <% row.with_value(text: @school.ukprn || t(".unknown")) %>
-    <% end %>
+      <h2 class="govuk-heading-m">
+        <%= t(".school_details") %>
+      </h2>
 
-    <% summary_list.with_row do |row| %>
-      <% row.with_key(text: t(".urn")) %>
-      <% row.with_value(text: @school.urn) %>
-    <% end %>
-  <% end %>
+      <%= govuk_summary_list(actions: false) do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".phase")) %>
+          <% row.with_value(text: @school.phase) %>
+        <% end %>
 
-  <h2 class="govuk-heading-m">
-    <%= t(".general_contact_details") %>
-  </h2>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".age_range")) %>
+          <% row.with_value(text: @school.age_range) %>
+        <% end %>
 
-  <%= govuk_summary_list(actions: false) do |summary_list| %>
-    <% summary_list.with_row do |row| %>
-      <% row.with_key(text: t(".telephone") || t(".unknown")) %>
-      <% row.with_value(text: @school.telephone) %>
-    <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".ukprn")) %>
+          <% row.with_value(text: @school.ukprn || t(".unknown")) %>
+        <% end %>
 
-    <% summary_list.with_row do |row| %>
-      <% row.with_key(text: t(".website")) %>
-      <% row.with_value(text: @school.website || t(".unknown")) %>
-    <% end %>
-
-    <% summary_list.with_row do |row| %>
-      <% row.with_key(text: t(".address")) %>
-      <% row.with_value(text: @school.ukprn || t(".unknown")) %>
-    <% end %>
-  <% end %>
-
-  <h2 class="govuk-heading-m">
-    <%= t(".additional_details") %>
-  </h2>
-
-  <%= govuk_summary_list(actions: false) do |summary_list| %>
-    <% summary_list.with_row do |row| %>
-      <% row.with_key(text: t(".school_type")) %>
-      <% row.with_value(text: @school.type_of_establishment) %>
-    <% end %>
-
-    <% summary_list.with_row do |row| %>
-      <% row.with_key(text: t(".gender")) %>
-      <% row.with_value(text: @school.gender) %>
-    <% end %>
-
-    <% summary_list.with_row do |row| %>
-      <% row.with_key(text: t(".religious_character")) %>
-      <% row.with_value(text: @school.religious_character || t(".unknown")) %>
-    <% end %>
-
-    <% summary_list.with_row do |row| %>
-      <% row.with_key(text: t(".admissions_policy")) %>
-      <% row.with_value(text: @school.admissions_policy || t(".unknown")) %>
-    <% end %>
-
-    <% summary_list.with_row do |row| %>
-      <% row.with_key(text: t(".urban_or_rural")) %>
-      <% row.with_value(text: @school.urban_or_rural || t(".unknown")) %>
-    <% end %>
-
-    <% summary_list.with_row do |row| %>
-      <% row.with_key(text: t(".school_capacity")) %>
-      <% row.with_value(text: @school.school_capacity || t(".unknown")) %>
-    <% end %>
-
-    <% summary_list.with_row do |row| %>
-      <% row.with_key(text: t(".total_boys")) %>
-      <% row.with_value(text: @school.total_boys || t(".unknown")) %>
-    <% end %>
-
-    <% summary_list.with_row do |row| %>
-      <% row.with_key(text: t(".total_girls")) %>
-      <% row.with_value(text: @school.total_girls || t(".unknown")) %>
-    <% end %>
-
-    <% summary_list.with_row do |row| %>
-      <% row.with_key(text: t(".percentage_fsm")) %>
-      <% row.with_value(text: "#{@school.percentage_free_school_meals}%") %>
-    <% end %>
-  <% end %>
-
-  <h2 class="govuk-heading-m">
-    <%= t(".send_details") %>
-  </h2>
-
-  <%= govuk_summary_list(actions: false) do |summary_list| %>
-    <% summary_list.with_row do |row| %>
-      <% row.with_key(text: t(".special_classes")) %>
-      <% row.with_value(text: @school.special_classes || t(".unknown")) %>
-    <% end %>
-    <% summary_list.with_row do |row| %>
-      <% row.with_key(text: t(".sen_provision")) %>
-      <% row.with_value(text: @school.send_provision || t(".unknown")) %>
-    <% end %>
-  <% end %>
-
-  <h2 class="govuk-heading-m">
-    <%= t(".ofsted") %>
-  </h2>
-
-  <%= govuk_summary_list(actions: false) do |summary_list| %>
-    <% summary_list.with_row do |row| %>
-      <% row.with_key(text: t(".report")) %>
-      <% row.with_value do %>
-        <%= govuk_link_to t(".ofsted_report"), "#", no_visited_state: true, new_tab: true  %>
-        <%= govuk_details summary_text: t(".details_summary") do %>
-          <p class="govuk-body"><%= t(".details_body") %></p>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".urn")) %>
+          <% row.with_value(text: @school.urn) %>
         <% end %>
       <% end %>
-    <% end %>
-    <% summary_list.with_row do |row| %>
-      <% row.with_key(text: t(".last_inspection")) %>
-      <% row.with_value(text: @school.last_inspection_date || t(".unknown")) %>
-    <% end %>
-  <% end %>
+
+      <h2 class="govuk-heading-m">
+        <%= t(".general_contact_details") %>
+      </h2>
+
+      <%= govuk_summary_list(actions: false) do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".telephone") || t(".unknown")) %>
+          <% row.with_value(text: @school.telephone) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".website")) %>
+          <% row.with_value(text: @school.website || t(".unknown")) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".address")) %>
+          <% row.with_value(text: @school.ukprn || t(".unknown")) %>
+        <% end %>
+      <% end %>
+
+      <h2 class="govuk-heading-m">
+        <%= t(".additional_details") %>
+      </h2>
+
+      <%= govuk_summary_list(actions: false) do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".school_type")) %>
+          <% row.with_value(text: @school.type_of_establishment) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".gender")) %>
+          <% row.with_value(text: @school.gender) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".religious_character")) %>
+          <% row.with_value(text: @school.religious_character || t(".unknown")) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".admissions_policy")) %>
+          <% row.with_value(text: @school.admissions_policy || t(".unknown")) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".urban_or_rural")) %>
+          <% row.with_value(text: @school.urban_or_rural || t(".unknown")) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".school_capacity")) %>
+          <% row.with_value(text: @school.school_capacity || t(".unknown")) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".total_boys")) %>
+          <% row.with_value(text: @school.total_boys || t(".unknown")) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".total_girls")) %>
+          <% row.with_value(text: @school.total_girls || t(".unknown")) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".percentage_fsm")) %>
+          <% row.with_value(text: "#{@school.percentage_free_school_meals}%") %>
+        <% end %>
+      <% end %>
+
+      <h2 class="govuk-heading-m">
+        <%= t(".send_details") %>
+      </h2>
+
+      <%= govuk_summary_list(actions: false) do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".special_classes")) %>
+          <% row.with_value(text: @school.special_classes || t(".unknown")) %>
+        <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".sen_provision")) %>
+          <% row.with_value(text: @school.send_provision || t(".unknown")) %>
+        <% end %>
+      <% end %>
+
+      <h2 class="govuk-heading-m">
+        <%= t(".ofsted") %>
+      </h2>
+
+      <%= govuk_summary_list(actions: false) do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".report")) %>
+          <% row.with_value do %>
+            <%= govuk_link_to t(".ofsted_report"), "#", no_visited_state: true, new_tab: true  %>
+            <%= govuk_details summary_text: t(".details_summary") do %>
+              <p class="govuk-body"><%= t(".details_body") %></p>
+            <% end %>
+          <% end %>
+        <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".last_inspection")) %>
+          <% row.with_value(text: @school.last_inspection_date || t(".unknown")) %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
 </div>

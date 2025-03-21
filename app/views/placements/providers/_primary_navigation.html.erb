@@ -1,8 +1,17 @@
 <%# locals: (current_navigation: nil, provider:) -%>
 
 <%= content_for(:header_content) do %>
-  <%= render Placements::OrganisationSwitcherComponent.new(user: current_user, organisation: provider) %>
+  <% if Flipper.enabled?(:provider_find_a_school) %>
+    <%=  render ContentHeaderComponent.new(
+    title: @provider.name,
+    actions: [tag.span("Academic year 2024-2025", class: "govuk-body")],
+    ) %>
+  <% else %>
+    <%= render Placements::OrganisationSwitcherComponent.new(user: current_user, organisation: provider) %>
+  <% end %>
 <% end %>
+
+
 
 <%= content_for(:primary_navigation_content) do %>
   <%= render PrimaryNavigationComponent.new do |component| %>

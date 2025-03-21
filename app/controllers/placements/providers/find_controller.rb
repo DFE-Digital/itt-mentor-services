@@ -15,7 +15,8 @@ class Placements::Providers::FindController < Placements::ApplicationController
 
   def placements
     @school = Placements::School.find(params[:id])
-    @unfilled_subjects = Subject.where(id: @school.placements.where(academic_year_id: Placements::AcademicYear.current.id, provider_id: nil).pluck(:subject_id))
+    @unfilled_placements = @school.placements.where(academic_year_id: Placements::AcademicYear.current.id, provider_id: nil)
+    @unfilled_subjects = Subject.where(id: @unfilled_placements.pluck(:subject_id))
     @filled_subjects = Subject.where(id: @school.placements.where(academic_year_id: Placements::AcademicYear.current.id).where.not(provider_id: nil).pluck(:subject_id))
   end
 
@@ -25,10 +26,16 @@ class Placements::Providers::FindController < Placements::ApplicationController
                                                              ends_on: ..Placements::AcademicYear.current.starts_on)
                                                       .order_by_date.first
     @subjects_last_offered = Subject.where(id: @school.placements.where(academic_year: latest_academic_year).pluck(:subject_id)).pluck(:name)
+    @unfilled_placements = @school.placements.where(academic_year_id: Placements::AcademicYear.current.id, provider_id: nil)
+    @unfilled_subjects = Subject.where(id: @unfilled_placements.pluck(:subject_id))
+    @filled_subjects = Subject.where(id: @school.placements.where(academic_year_id: Placements::AcademicYear.current.id).where.not(provider_id: nil).pluck(:subject_id))
   end
 
   def school_details
     @school = Placements::School.find(params[:id]).decorate
+    @unfilled_placements = @school.placements.where(academic_year_id: Placements::AcademicYear.current.id, provider_id: nil)
+    @unfilled_subjects = Subject.where(id: @unfilled_placements.pluck(:subject_id))
+    @filled_subjects = Subject.where(id: @school.placements.where(academic_year_id: Placements::AcademicYear.current.id).where.not(provider_id: nil).pluck(:subject_id))
   end
 
   private
