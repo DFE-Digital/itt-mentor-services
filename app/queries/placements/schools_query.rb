@@ -6,10 +6,10 @@ class Placements::SchoolsQuery < ApplicationQuery
 
     scope = search_by_name_condition(scope)
     scope = subject_condition(scope)
-    scope = itt_statuses_condition(scope)
     scope = phase_condition(scope)
     scope = last_offered_placements_condition(scope)
     scope = trained_mentors_condition(scope)
+    scope = itt_statuses_condition(scope)
     order_condition(scope)
   end
 
@@ -30,9 +30,28 @@ class Placements::SchoolsQuery < ApplicationQuery
   end
 
   def itt_statuses_condition(scope)
-    return scope if filter_params[:itt_statuses].blank?
+    hosting_interests = filter_params[:itt_statuses]
+    return scope if hosting_interests.blank?
 
-    scope.where(hosting_interests: { appetite: filter_params[:itt_statuses] })
+    conditions = []
+
+    if hosting_interests.include?("open")
+      conditions << scope.where(hosting_interests: { appetite: "actively_looking" }).where.not(placements: { academic_year_id: Placements::AcademicYear.current.id })
+    end
+
+    if hosting_interests.include?("not_open")
+      conditions << scope.where(hosting_interests: { appetite: "not_open" })
+    end
+
+    if hosting_interests.include?("unfilled_placements")
+      conditions << scope.where(hosting_interests: { appetite: "actively_looking" }, placements: { academic_year_id: Placements::AcademicYear.current.id, provider: nil })
+    end
+
+    if hosting_interests.include?("filled_placements")
+      conditions << scope.where(hosting_interests: { appetite: "actively_looking" }, placements: { academic_year_id: Placements::AcademicYear.current.id }).where.not(placements: { provider: nil })
+    end
+
+    conditions.reduce(scope.none) { |combined_scope, condition| combined_scope.or(condition) }
   end
 
   def phase_condition(scope)

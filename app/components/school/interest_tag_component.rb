@@ -17,9 +17,9 @@ class School::InterestTagComponent < ApplicationComponent
   }.freeze
 
   INTEREST_TEXT = {
-    "open" => I18n.t("components.school.interest_tag_component.interested"),
-    "unfilled_placements" => I18n.t("components.school.interest_tag_component.actively_looking"),
-    "filled_placements" => I18n.t("components.school.interest_tag_component.already_organised"),
+    "open" => I18n.t("components.school.interest_tag_component.open"),
+    "unfilled_placements" => I18n.t("components.school.interest_tag_component.unfilled_placements"),
+    "filled_placements" => I18n.t("components.school.interest_tag_component.filled_placements"),
     "not_open" => I18n.t("components.school.interest_tag_component.not_open"),
   }.freeze
 

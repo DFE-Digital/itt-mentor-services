@@ -225,7 +225,7 @@
               small: true,
               multiple: true,
             ) do %>
-              <% Placements::HostingInterest.appetites.keys.each do |appetite| %>
+              <% %w[open not_open filled_placements unfilled_placements].each do |appetite| %>
                 <%= form.govuk_check_box :itt_statuses, appetite, label: { text: t("components.school.interest_tag_component.#{appetite}") } %>
               <% end %>
             <% end %>
