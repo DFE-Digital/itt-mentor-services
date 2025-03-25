@@ -135,7 +135,8 @@ class Claims::UploadProviderResponseWizard::UploadStep < BaseStep
   end
 
   def validate_claim_accepted(row, row_number)
-    return if VALID_ASSURED_STATUS.include?(row["claim_accepted"]&.downcase)
+    value = row["claim_accepted"]&.strip&.downcase
+    return if VALID_ASSURED_STATUS.include?(value)
 
     invalid_claim_accepted_rows << row_number
   end
