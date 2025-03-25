@@ -1,0 +1,5 @@
+claim_reference,mentor_full_name,claim_accepted,rejection_reason
+11111111,John Smith,yes,Some reason
+11111111,Jane Doe,No,Another reason
+22222222,Joe Bloggs,Yes ,Yet another reason
+,,,,
