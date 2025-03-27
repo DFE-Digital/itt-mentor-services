@@ -42,6 +42,18 @@ RSpec.describe Claims::User::CreateCollectionJob, type: :job do
           described_class.perform_now(user_details:)
         }.to have_enqueued_job(Claims::User::CreateAndDeliverJob).twice
       end
+
+      context "when a user already exists" do
+        before do
+          create(:claims_user, schools: [school], email: "joe_bloggs@example.com")
+        end
+
+        it "does not enqueue a Claims::User::CreateAndDeliverJob" do
+          expect {
+            described_class.perform_now(user_details:)
+          }.to have_enqueued_job(Claims::User::CreateAndDeliverJob).once
+        end
+      end
     end
   end
 end
