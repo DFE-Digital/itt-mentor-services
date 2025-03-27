@@ -44,7 +44,6 @@ class Claims::UploadUsersWizard::UploadStep < BaseStep
     reset_input_attributes
 
     csv.each_with_index do |row, i|
-      binding.pry
       next if row.all? { |_k, v| v.blank? }
 
       validate_email(row, i)
