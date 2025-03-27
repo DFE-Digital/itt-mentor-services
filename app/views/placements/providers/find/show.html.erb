@@ -1,0 +1,15 @@
+<% content_for(:page_title) { t(".page_title", school_name: @school.name) } %>
+<%= render "placements/providers/primary_navigation", provider: @provider, current_navigation: :find %>
+
+<div class="govuk-width-container" data-controller="filter">
+  <h1 class="govuk-heading-l">
+    <%= @school.name %>
+  </h1>
+  <%= render School::InterestTagComponent.new(school: @school) %>
+  <div class="govuk-!-margin-bottom-2"></div>
+  <%= render SecondaryNavigationComponent.new do |component| %>
+    <% component.with_navigation_item t(".placements"), placements_placements_provider_find_path %>
+    <% component.with_navigation_item t(".placement_information"), placement_information_placements_provider_find_path %>
+    <% component.with_navigation_item t(".school_details"), school_details_placements_provider_find_path %>
+  <% end %>
+</div>

@@ -323,6 +323,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_17_094215) do
     t.string "trn", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "trained"
     t.index ["trn"], name: "index_mentors_on_trn", unique: true
   end
 
