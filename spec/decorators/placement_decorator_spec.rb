@@ -19,7 +19,7 @@ RSpec.describe PlacementDecorator do
 
     context "when the placement has one mentor" do
       it "returns a list of mentor names" do
-        placement = build(:placement, mentors: [
+        placement = create(:placement, mentors: [
           build(:placements_mentor, first_name: "John", last_name: "Doe"),
         ])
 
@@ -31,7 +31,7 @@ RSpec.describe PlacementDecorator do
 
     context "when the placement has multiple mentors" do
       it "returns a list of mentor names in alphabetical order" do
-        placement = build(:placement, mentors: [
+        placement = create(:placement, mentors: [
           build(:placements_mentor, first_name: "John", last_name: "Doe"),
           build(:placements_mentor, first_name: "Jane", last_name: "Doe"),
         ])

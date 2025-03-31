@@ -7,7 +7,7 @@ class PlacementDecorator < Draper::Decorator
 
   def mentor_names
     if mentors.any?
-      mentors.map(&:full_name).sort.to_sentence
+      mentors.order_by_full_name.map(&:full_name).sort.to_sentence
     else
       I18n.t("placements.schools.placements.not_yet_known")
     end

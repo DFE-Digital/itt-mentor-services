@@ -57,7 +57,7 @@
     <% row.with_value do %>
       <% if placement.mentors.any? %>
         <ul class="govuk-list">
-          <% placement.mentors.each do |mentor| %>
+          <% placement.mentors.order_by_full_name.each do |mentor| %>
             <li><%= mentor.full_name %></li>
           <% end %>
         </ul>
