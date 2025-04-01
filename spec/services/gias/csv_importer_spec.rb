@@ -10,7 +10,7 @@ RSpec.describe Gias::CSVImporter do
   end
 
   it "creates new schools" do
-    expect { gias_importer }.to change(School, :count).from(0).to(5)
+    expect { gias_importer }.to change(School, :count).from(0).to(6)
   end
 
   it "updates existing schools" do
@@ -102,6 +102,66 @@ RSpec.describe Gias::CSVImporter do
         expect(school).not_to be_geocoded
         expect(school.latitude).to be_nil
         expect(school.longitude).to be_nil
+      end
+    end
+  end
+
+  describe "associating schools with sen provisions" do
+    context "when SEN provisions do not exist" do
+      it "creates a SEN provision per SEN attribute in the GIAS data" do
+        expect { gias_importer }.to change(SENProvision, :count).from(0).to(13)
+          .and change(SchoolSENProvision, :count).from(0).to(13)
+        school = School.find_by(urn: 142)
+        expect(school.sen_provisions.pluck(:name)).to contain_exactly(
+          "ASD - Autistic Spectrum Disorder",
+          "HI - Hearing Impairment",
+          "MLD - Moderate Learning Difficulty",
+          "MSI - Multi-Sensory Impairment",
+          "Not Applicable",
+          "OTH - Other Difficulty/Disability",
+          "PD - Physical Disability",
+          "PMLD - Profound and Multiple Learning Difficulty",
+          "SEMH - Social, Emotional and Mental Health",
+          "SLCN - Speech, language and Communication",
+          "SLD - Severe Learning Difficulty",
+          "SpLD - Specific Learning Difficulty",
+          "VI - Visual Impairment",
+        )
+      end
+    end
+
+    context "when SEN provisions already exist" do
+      before do
+        create(:sen_provision, name: "ASD - Autistic Spectrum Disorder")
+        create(:sen_provision, name: "HI - Hearing Impairment")
+        create(:sen_provision, name: "MLD - Moderate Learning Difficulty")
+        create(:sen_provision, name: "MSI - Multi-Sensory Impairment")
+        create(:sen_provision, name: "Not Applicable")
+        create(:sen_provision, name: "OTH - Other Difficulty/Disability")
+        create(:sen_provision, name: "PD - Physical Disability")
+        create(:sen_provision, name: "PMLD - Profound and Multiple Learning Difficulty")
+        create(:sen_provision, name: "SEMH - Social, Emotional and Mental Health")
+        create(:sen_provision, name: "SLCN - Speech, language and Communication")
+        create(:sen_provision, name: "SLD - Severe Learning Difficulty")
+        create(:sen_provision, name: "SpLD - Specific Learning Difficulty")
+        create(:sen_provision, name: "VI - Visual Impairment")
+      end
+
+      it "does not create any additional SEN provisions" do
+        expect { gias_importer }.not_to change(SENProvision, :count)
+      end
+
+      context "when a school is already associated with SEN provisions" do
+        let(:school) { build(:school, urn: 142, name: "SenSchool") }
+
+        before do
+          school.sen_provisions = SENProvision.all
+          school.save!
+        end
+
+        it "does not create any additional joins between schools and SEN provisions" do
+          expect { gias_importer }.not_to change(SchoolSENProvision, :count)
+        end
       end
     end
   end

@@ -15,7 +15,9 @@ module Gias
     def call
       school_records = []
       trust_records = []
+      sen_provision_records = []
       trust_associations = Hash.new { |h, k| h[k] = [] }
+      sen_provision_associations = Hash.new { |h, k| h[k] = [] }
 
       CSV.foreach(csv_path, headers: true) do |school|
         school_records << {
@@ -63,14 +65,69 @@ module Gias
 
           trust_associations[school["Trusts (code)"]] << school["URN"]
         end
+
+        if school["SEN1 (name)"].present?
+          sen_provision_records << { name: school["SEN1 (name)"] }
+          sen_provision_associations[school["SEN1 (name)"]] << school["URN"]
+        end
+        if school["SEN2 (name)"].present?
+          sen_provision_records << { name: school["SEN2 (name)"] }
+          sen_provision_associations[school["SEN2 (name)"]] << school["URN"]
+        end
+        if school["SEN3 (name)"].present?
+          sen_provision_records << { name: school["SEN3 (name)"] }
+          sen_provision_associations[school["SEN3 (name)"]] << school["URN"]
+        end
+        if school["SEN4 (name)"].present?
+          sen_provision_records << { name: school["SEN4 (name)"] }
+          sen_provision_associations[school["SEN4 (name)"]] << school["URN"]
+        end
+        if school["SEN5 (name)"].present?
+          sen_provision_records << { name: school["SEN5 (name)"] }
+          sen_provision_associations[school["SEN5 (name)"]] << school["URN"]
+        end
+        if school["SEN6 (name)"].present?
+          sen_provision_records << { name: school["SEN6 (name)"] }
+          sen_provision_associations[school["SEN6 (name)"]] << school["URN"]
+        end
+        if school["SEN7 (name)"].present?
+          sen_provision_records << { name: school["SEN7 (name)"] }
+          sen_provision_associations[school["SEN7 (name)"]] << school["URN"]
+        end
+        if school["SEN8 (name)"].present?
+          sen_provision_records << { name: school["SEN8 (name)"] }
+          sen_provision_associations[school["SEN8 (name)"]] << school["URN"]
+        end
+        if school["SEN9 (name)"].present?
+          sen_provision_records << { name: school["SEN9 (name)"] }
+          sen_provision_associations[school["SEN9 (name)"]] << school["URN"]
+        end
+        if school["SEN10 (name)"].present?
+          sen_provision_records << { name: school["SEN10 (name)"] }
+          sen_provision_associations[school["SEN10 (name)"]] << school["URN"]
+        end
+        if school["SEN11 (name)"].present?
+          sen_provision_records << { name: school["SEN11 (name)"] }
+          sen_provision_associations[school["SEN11 (name)"]] << school["URN"]
+        end
+        if school["SEN12 (name)"].present?
+          sen_provision_records << { name: school["SEN12 (name)"] }
+          sen_provision_associations[school["SEN12 (name)"]] << school["URN"]
+        end
+        if school["SEN13 (name)"].present?
+          sen_provision_records << { name: school["SEN13 (name)"] }
+          sen_provision_associations[school["SEN13 (name)"]] << school["URN"]
+        end
       end
 
       Rails.logger.silence do
         School.upsert_all(school_records, unique_by: :urn)
         Trust.upsert_all(trust_records.uniq, unique_by: :uid)
+        SENProvision.upsert_all(sen_provision_records.uniq, unique_by: :name)
 
         associate_schools_to_regions
         associate_schools_to_trusts(trust_associations)
+        associate_schools_to_sen_provisions(sen_provision_associations)
       end
 
       Rails.logger.info "GIAS Data Imported!"
@@ -104,6 +161,16 @@ module Gias
       trust_data.each do |uid, urns|
         trust = Trust.find_by!(uid:)
         School.where(urn: urns).update_all(trust_id: trust.id)
+      end
+    end
+
+    def associate_schools_to_sen_provisions(sen_provision_data)
+      Rails.logger.debug "Associating schools to SEN provisions... "
+
+      sen_provision_data.each do |sen_provision_name, urns|
+        sen_provision = SENProvision.find_by(name: sen_provision_name)
+        sen_provision.schools = School.where(urn: urns)
+        sen_provision.save!
       end
     end
   end
