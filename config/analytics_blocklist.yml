@@ -170,3 +170,14 @@ shared:
     - school_id
     - created_at
     - updated_at
+  :sen_provisions:
+    - id
+    - name
+    - created_at
+    - updated_at
+  :school_sen_provisions:
+    - id
+    - school_id
+    - sen_provision_id
+    - created_at
+    - updated_at

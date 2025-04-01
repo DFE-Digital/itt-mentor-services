@@ -87,6 +87,9 @@ class School < ApplicationRecord
   has_many :mentor_memberships
   has_many :mentors, through: :mentor_memberships
 
+  has_many :school_sen_provisions
+  has_many :sen_provisions, through: :school_sen_provisions
+
   normalizes :email_address, with: ->(value) { value.strip.downcase }
 
   validates :urn, presence: true

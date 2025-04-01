@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_17_094215) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_01_100217) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -502,6 +502,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_17_094215) do
     t.index ["school_id"], name: "index_school_contacts_on_school_id"
   end
 
+  create_table "school_sen_provisions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "school_id", null: false
+    t.uuid "sen_provision_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["school_id"], name: "index_school_sen_provisions_on_school_id"
+    t.index ["sen_provision_id"], name: "index_school_sen_provisions_on_sen_provision_id"
+  end
+
   create_table "schools", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "urn", null: false
     t.boolean "placements_service", default: false
@@ -557,6 +566,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_17_094215) do
     t.index ["trust_id"], name: "index_schools_on_trust_id"
     t.index ["urn"], name: "index_schools_on_urn", unique: true
     t.index ["urn"], name: "index_schools_on_urn_trigram", opclass: :gin_trgm_ops, using: :gin
+  end
+
+  create_table "sen_provisions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_sen_provisions_on_name", unique: true
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -656,6 +672,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_17_094215) do
   add_foreign_key "provider_samplings", "providers"
   add_foreign_key "provider_samplings", "samplings"
   add_foreign_key "school_contacts", "schools"
+  add_foreign_key "school_sen_provisions", "schools"
+  add_foreign_key "school_sen_provisions", "sen_provisions"
   add_foreign_key "schools", "regions"
   add_foreign_key "schools", "trusts"
   add_foreign_key "schools", "users", column: "claims_grant_conditions_accepted_by_id"
