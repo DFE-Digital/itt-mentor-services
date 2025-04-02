@@ -59,7 +59,7 @@ en:
                 This means providers can see that you’re looking to host placements.
           whats_next:
             return_to_placements: Return to placements list
-            what_happens_next: What happens next?
+            what_happens_next: What happens next
             teaching_school_hub_url: https://www.gov.uk/guidance/teaching-school-hubs
             not_open:
               we_set_your_profile: We’ve set your profile to ‘not hosting’.

@@ -79,16 +79,16 @@ en:
             "yes":
               hint: You know the subjects you want to host and may know which providers you want to work with.
             "no":
-              hint: You haven't yet decided. You want to hear from providers to discuss potential opportunites.
+              hint: You haven't yet decided. You want to hear from providers to discuss potential opportunities.
           continue: Continue
         primary_subject_selection_step:
           title: Select primary school subjects
-          hint: Subjects are taken from the DfE database of courses. If the subject you would like to host is not here, choose the closest option.
+          hint: Subjects are taken from the Department for Education database of courses. If the subject you would like to host is not here, choose the closest option.
           caption: Placement details
           continue: Continue
         secondary_subject_selection_step:
           title: Select secondary school subjects
-          hint: Subjects are taken from the DfE database of courses. If the subject you would like to host is not here, choose the closest option.
+          hint: Subjects are taken from the Department for Education database of courses. If the subject you would like to host is not here, choose the closest option.
           caption: Placement details
           continue: Continue
         primary_placement_quantity_step:

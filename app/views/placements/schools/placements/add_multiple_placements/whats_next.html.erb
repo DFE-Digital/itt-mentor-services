@@ -35,7 +35,7 @@
           ) %>
         </p>
       <% elsif @appetite == "interested" %>
-        <h1 class="govuk-heading-l"><%= t(".what_happens_next") %></h1>
+        <h2 class="govuk-heading-m"><%= t(".what_happens_next") %></h1>
 
         <p class="govuk-body"><%= t(".interested.providers_who_are_looking") %></p>
 
@@ -43,7 +43,7 @@
 
         <p class="govuk-body"><%= t(".interested.search_for_providers_html", providers_url: placements_school_partner_providers_url(@school)) %></p>
 
-        <h1 class="govuk-heading-l"><%= t(".interested.additional_help") %></h1>
+        <h2 class="govuk-heading-m"><%= t(".interested.additional_help") %></h1>
 
         <p class="govuk-body">
           <%= embedded_link_text(
