@@ -3,17 +3,18 @@ en:
     placements:
       multi_placement_wizard:
         appetite_step:
-          title: Will you host placements this academic year (%{academic_year_name})?
+          title: Are you planning to host ITT placements this academic year?
+          hint: Your placements do not have to be confirmed or organised yet.
           continue: Continue
           options:
             actively_looking:
-              name: Yes - Let providers know what I'm willing to host
+              name: "Yes"
               description: You know the subjects you want to host and may know which providers you want to work with
             interested:
-              name: Yes - Let providers know I am open to placements
+              name: I'm not sure yet
               description: You haven't yet decided on your placements. You want to hear from providers to discuss potential opportunities
             not_open: 
-              name: No - Let providers know I am not hosting and do not want to be contacted
+              name: "No"
               description: You do not want to hear from providers this academic year
             already_organised:
               name: Placements already organised with providers
@@ -22,16 +23,17 @@ en:
           title: Would you like to list some placements to be seen by providers?
           continue: Continue
         reason_not_hosting_step:
-          title: What are your reasons for not taking part in ITT this year?
+          title: Tell us why you aren't able to host this year
+          hint: Your answers will help Department for Education better understand how to improve managing ITT.
           continue: Continue
-          hint: "Select all that apply"
           options:
             concerns_about_trainee_quality: Concerns about trainee quality
-            do_not_get_offered_trainees: Don't get offered trainees
-            do_not_know_how_to_get_involved: Don't know how to get involved
-            not_enough_trained_mentors: Not enough trained mentors
-            number_of_pupils_with_send_needs: Number of pupils with SEND needs
+            do_not_get_offered_trainees: Not offered appropriate trainees
+            do_not_know_how_to_get_involved: Unsure how to get involved
+            not_enough_trained_mentors: No mentors available due to capacity
+            number_of_pupils_with_send_needs: High number of pupils with SEND needs
             working_to_improve_our_ofsted_rating: Working to improve our OFSTED rating
+            low_capacity_to_support_trainees: Low capacity to support trainees due to staff changes
             other: Other
           tell_us: Tell us your reason
         help_step:
@@ -45,21 +47,48 @@ en:
           local_providers: These training providers are local to you and could help.
           find_providers: Find providers near me
         school_contact_step:
-          title: Who should providers contact?
-          description: Choose the person best placed to organise ITT placements at your school. This information will be shown on your profile.
+          caption: Expression of interest
+          actively_looking:
+            title: Who should providers contact?
+            description_html: Choose the person best placed to organise ITT placements at your school.
+          interested:
+            title: You want to hear from providers to discuss potential opportunities
+            sub_title: Who should providers contact?
+            description_html: |
+              Choose the person best placed to organise ITT placements at your school. This information will be shown on your profile.
+              <br><br>
+              Once you have heard from local providers you can choose ones that best suit your schools needs.
+          not_open:
+            title: Who is the preferred contact for next year?
+            description_html: |
+              We will ask in the next academic year about placements.
+              The contact may be you, or someone at your school who coordinates ITT.
           continue: Continue
         phase_step:
           title: What phase of education will your placements be?
+          hint: If you have placements in a SEND setting select the phase most relevant to your school. You can discuss with a provider later.
+          options:
+            primary:
+              hint: 3 to 11 years
+            secondary:
+              hint: 11 to 19 years
           continue: Continue
         subjects_known_step:
           title: Do you know which subjects you would like to host?
+          options:
+            "yes":
+              hint: You know the subjects you want to host and may know which providers you want to work with.
+            "no":
+              hint: You haven't yet decided. You want to hear from providers to discuss potential opportunites.
           continue: Continue
         primary_subject_selection_step:
           title: Select primary school subjects
+          hint: Subjects are taken from the DfE database of courses. If the subject you would like to host is not here, choose the closest option.
           caption: Placement details
           continue: Continue
         secondary_subject_selection_step:
           title: Select secondary school subjects
+          hint: Subjects are taken from the DfE database of courses. If the subject you would like to host is not here, choose the closest option.
           caption: Placement details
           continue: Continue
         primary_placement_quantity_step:
@@ -98,18 +127,27 @@ en:
           providers: Providers
           provider_name: Provider name
         are_you_sure_step:
-          title: Are you sure you do not want to be contacted about placements?
+          title: Confirm and let providers know you are not hosting
           caption: Not interested in hosting this year
           this_will_help_providers: This will help providers know not to contact your school. You can change this at any time.
-          your_school_will_show_as: Your school will show as ‘not looking to host this year’. 
+          your_school_will_show_as: Your school will show to providers as ‘not hosting’. You can change this later. 
           we_will_ask_again: We will ask you again in 12 months whether you would like to host placements. 
+          your_reason_will_be_shared: Your reason for not hosting be shared with the Department for Education for reporting purposes.
+          details: Details
+          reason_for_not_hosting: Reason for not hosting
+          itt_contact: ITT contact
+          change: Change
           continue: Continue
         confirm_step:
-          title: Confirm you’re interested in hosting
-          caption: Expression of interest
+          title: Confirm and let providers know you are interested in hosting ITT trainees
+          caption: Open to hosting
           this_means_providers_can_see_your_school: 
             This means providers can see that your school is thinking about hosting placements. 
             Providers will reach out via email with more information. 
           you_have_not_added_any_placements:
             You haven’t added any placement information so providers cannot see any of your preferences.
+          your_school_will_show_as:
+            Your school will show to providers as ‘interested’. This means you might be able to host placements for trainee teachers and are interested in hearing from providers.
+          itt_contact: ITT contact
+          change: Change
           continue: Continue

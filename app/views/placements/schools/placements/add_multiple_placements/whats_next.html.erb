@@ -15,31 +15,25 @@
 
         <h2 class="govuk-heading-m"><%= t(".what_happens_next") %></h2>
 
-        <p class="govuk-body"><%= t(".not_open.we_will_ask_you_again_html", school_url: placements_school_url(@school)) %></p>
+        <p class="govuk-body"><%= t(".not_open.we_will_ask_you_again", school_url: placements_school_url(@school)) %></p>
 
-        <p class="govuk-body"><%= t(".not_open.if_you_would_like_to_host_placements") %></p>
+        <p class="govuk-body"><%= t(".not_open.if_you_would_like_to_host_placements_html") %></p>
 
         <h2 class="govuk-heading-m"><%= t(".not_open.further_help_with_itt") %></h2>
 
-        <p class="govuk-body"><%= t(".not_open.your_hub_or_provider") %></p>
+        <p class="govuk-body"><%= t(".not_open.finding_local_providers_html") %></p>
 
-        <p class="govuk-body"><%= t(".not_open.always_keen") %></p>
-
-        <%= tag.p t(".not_open.find_your_nearest") %>
-        <%= govuk_list type: :bullet do %>
-          <%= tag.li govuk_link_to(
-            t(".not_open.teaching_school_hub"),
-            t(".teaching_school_hub_url"),
-            new_tab: true,
-            no_visited_state: true,
+        <p class="govuk-body">
+          <%= embedded_link_text(
+            t(".not_open.find_your_local_school_hub",
+            href: govuk_link_to(
+              t(".not_open.teaching_school_hub"),
+              t(".teaching_school_hub_url"),
+              new_tab: true,
+              no_visited_state: true,
+            )),
           ) %>
-          <%= tag.li govuk_link_to(
-            t(".not_open.itt_provider"),
-            placements_school_partner_providers_path(@school),
-            new_tab: true,
-            no_visited_state: true,
-          ) %>
-        <% end %>
+        </p>
       <% elsif @appetite == "interested" %>
         <h1 class="govuk-heading-l"><%= t(".what_happens_next") %></h1>
 

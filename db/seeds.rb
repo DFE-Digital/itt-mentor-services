@@ -231,10 +231,9 @@ Claims::School.all.find_each do |school|
   end
 end
 
-# Test providers for UR
-Provider.create!(name: "Test Provider 123", code: "TEST 123")
-Provider.create!(name: "Test Provider 456", code: "TEST 456")
-Provider.create!(name: "Test Provider 789", code: "TEST 789")
+# UR test subject for Primary with SEND
+
+Subject.create!(name: "Primary with SEND specialism", subject_area: :primary, code: "zz")
 
 # Feature flags
 

@@ -11,9 +11,6 @@ class Placements::MultiPlacementWizard::AppetiteStep < BaseStep
         name: I18n.t(
           "#{locale_path}.options.#{key}.name",
         ),
-        description: I18n.t(
-          "#{locale_path}.options.#{key}.description",
-        ),
       )
     end
   end

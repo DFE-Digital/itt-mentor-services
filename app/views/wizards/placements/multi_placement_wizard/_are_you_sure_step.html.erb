@@ -11,9 +11,61 @@
       <span class="govuk-caption-l"><%= t(".caption") %></span>
       <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
-      <p class="govuk-body"><%= t(".this_will_help_providers") %></p>
       <p class="govuk-body"><%= t(".your_school_will_show_as") %></p>
-      <p class="govuk-body"><%= t(".we_will_ask_again") %></p>
+      <p class="govuk-body"><%= t(".your_reason_will_be_shared") %></p>
+
+      <h2 class="govuk-heading-m"><%= t(".details") %></h2>
+
+      <%= govuk_summary_list do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".reason_for_not_hosting")) %>
+          <% row.with_value(text: wizard.steps[:reason_not_hosting].reasons_not_hosting) %>
+          <% row.with_value do %>
+            <ul class="govuk-list">
+              <% wizard.steps[:reason_not_hosting].reasons_not_hosting.each do |reason| %>
+                <% if reason == "Other" %>
+                  <li>Other: <%= wizard.steps[:reason_not_hosting].other_reason_not_hosting %> </li>
+                <% else %>
+                  <li><%= reason %></li>
+                <% end %>
+              <% end %>
+            </ul>
+          <% end %>
+          <% row.with_action(text: t(".change"),
+                             href: step_path(:reason_not_hosting),
+                             visually_hidden_text: t(".reason_for_not_hosting"),
+                             classes: ["govuk-link--no-visited-state"]) %>
+        <% end %>
+      <% end %>
+
+      <h2 class="govuk-heading-m"><%= t(".itt_contact") %></h2>
+
+      <%= govuk_summary_list(html_attributes: { id: "school_contact" }) do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: User.human_attribute_name(:first_name)) %>
+          <% row.with_value(text: current_step.school_contact_first_name) %>
+          <% row.with_action(text: t(".change"),
+                             href: step_path(:school_contact),
+                             visually_hidden_text: User.human_attribute_name(:first_name),
+                             classes: ["govuk-link--no-visited-state"]) %>
+        <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: User.human_attribute_name(:last_name)) %>
+          <% row.with_value(text: current_step.school_contact_last_name) %>
+          <% row.with_action(text: t(".change"),
+                             href: step_path(:school_contact),
+                             visually_hidden_text: User.human_attribute_name(:last_name),
+                             classes: ["govuk-link--no-visited-state"]) %>
+        <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: User.human_attribute_name(:email_address)) %>
+          <% row.with_value(text: current_step.school_contact_email_address) %>
+          <% row.with_action(text: t(".change"),
+                             href: step_path(:school_contact),
+                             visually_hidden_text: User.human_attribute_name(:email_address),
+                             classes: ["govuk-link--no-visited-state"]) %>
+        <% end %>
+      <% end %>
 
       <%= f.govuk_submit t(".continue") %>
     </div>
