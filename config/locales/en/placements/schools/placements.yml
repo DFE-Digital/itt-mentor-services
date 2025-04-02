@@ -114,6 +114,7 @@ en:
             success: 
               mentors: Mentor updated
               provider: Provider updated
+              provider_options: Provider updated
               year_group: Year group updated
               terms: Expected date updated
           edit:

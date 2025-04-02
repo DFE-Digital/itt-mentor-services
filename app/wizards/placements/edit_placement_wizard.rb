@@ -10,7 +10,8 @@ module Placements
 
     def define_steps
       # Define the wizard steps here
-      add_step(ProviderStep) if current_step == :provider
+      add_step(ProviderStep) if %i[provider provider_options].include?(current_step)
+      add_step(ProviderOptionsStep) if steps[:provider].present? && steps.fetch(:provider).provider.blank?
       add_step(AddPlacementWizard::YearGroupStep) if current_step == :year_group
       add_step(AddPlacementWizard::MentorsStep) if current_step == :mentors
       add_step(AddPlacementWizard::TermsStep) if current_step == :terms
@@ -20,7 +21,8 @@ module Placements
       raise "Invalid wizard state" unless valid?
 
       if steps[:provider].present?
-        placement.provider = steps[:provider].provider
+        placement.provider = steps[:provider_options]&.provider ||
+          steps[:provider].provider
       end
 
       if steps[:year_group].present?

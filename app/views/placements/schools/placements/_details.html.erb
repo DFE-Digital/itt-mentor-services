@@ -88,16 +88,10 @@
     <% row.with_value do %>
       <% if placement.provider.present? %>
         <%= placement.provider_name %>
-      <% elsif school.partner_providers.any? %>
+      <% else %>
         <%= govuk_link_to(
           t(".assign_a_provider"),
           edit_attribute_path(:provider),
-          no_visited_state: true,
-        ) %>
-      <% else %>
-        <%= govuk_link_to(
-          t(".add_a_partner_provider"),
-          add_provider_path,
           no_visited_state: true,
         ) %>
       <% end %>

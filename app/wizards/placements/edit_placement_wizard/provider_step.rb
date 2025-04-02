@@ -1,17 +1,19 @@
-class Placements::EditPlacementWizard::ProviderStep < BaseStep
-  attribute :provider_id
-
-  validates :provider_id, inclusion: { in: ->(step) { step.providers_for_selection.ids } }, if: -> { provider_id != NOT_KNOWN }
-
+class Placements::EditPlacementWizard::ProviderStep < Placements::EditPlacementWizard::ProviderSelectionStep
   delegate :school, to: :wizard
 
-  NOT_KNOWN = "not_known".freeze
+  attribute :name
 
-  def providers_for_selection
-    school.partner_providers
+  def id_presence
+    return if provider_id.present?
+
+    errors.add(:provider_id, :provider_blank)
   end
 
-  def provider
-    @provider ||= school.partner_providers.find(provider_id) if provider_id.present? && provider_id != NOT_KNOWN
+  def autocomplete_path_value
+    "/api/provider_suggestions"
+  end
+
+  def autocomplete_return_attributes_value
+    %w[code]
   end
 end
