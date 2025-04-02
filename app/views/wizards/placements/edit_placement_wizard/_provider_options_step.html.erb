@@ -1,0 +1,17 @@
+<% content_for :page_title, title_with_error_prefix(
+  t(".title", contextual_text:, organisation_count: current_step.providers.count, search_param: current_step.search_param),
+  error: current_step.errors.any?,
+) %>
+
+<%= render OptionsFormComponent.new(
+  model: current_step,
+  scope: current_step.scope,
+  url: current_step_path,
+  search_param: current_step.search_param,
+  records: current_step.providers,
+  records_klass: :provider,
+  title: contextual_text,
+  back_link: back_link_path,
+  input_field_name: :provider_id,
+  method: :put,
+) %>

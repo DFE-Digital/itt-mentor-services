@@ -18,6 +18,8 @@ class Placements::Schools::Placements::EditPlacementController < Placements::App
   def update
     if !@wizard.save_step
       render "edit"
+    elsif @wizard.next_step.present?
+      redirect_to step_path(@wizard.next_step)
     else
       @wizard.update_placement
       notify_provider(@wizard.placement) if @wizard.placement.saved_change_to_provider_id?
