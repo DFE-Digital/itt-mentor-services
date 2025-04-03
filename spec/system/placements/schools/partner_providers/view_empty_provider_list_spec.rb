@@ -3,7 +3,8 @@ require "rails_helper"
 RSpec.describe "User without partnerships views the provider index",
                service: :placements, type: :system do
   scenario do
-    given_i_am_signed_in
+    given_the_school_partner_providers_flag_is_enabled
+    and_i_am_signed_in
 
     when_i_click_on_providers_in_the_navigation_menu
     then_i_see_the_providers_index_page
@@ -12,9 +13,14 @@ RSpec.describe "User without partnerships views the provider index",
 
   private
 
-  def given_i_am_signed_in
+  def and_i_am_signed_in
     @school = create(:placements_school)
     given_i_am_signed_in_as_a_placements_user(organisations: [@school])
+  end
+
+  def given_the_school_partner_providers_flag_is_enabled
+    Flipper.add(:school_partner_providers)
+    Flipper.enable(:school_partner_providers)
   end
 
   def when_i_click_on_providers_in_the_navigation_menu

@@ -93,8 +93,11 @@ en:
         placements/edit_placement_wizard/provider_step:
           attributes:
             provider_id:
-              blank: Select a provider or not yet known
-              inclusion: Select a provider or not yet known
+              provider_blank: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode
+        placements/edit_placement_wizard/provider_options_step:
+          attributes:
+            provider_id:
+              blank: Select a provider
         placements/add_support_user_wizard/support_user_step:
           attributes:
             first_name:

@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe "School user adds providers to their list of providers using multiple tabs", :js, service: :placements, type: :system do
   scenario do
     given_providers_exist
+    and_the_school_partner_providers_flag_is_enabled
     and_i_am_signed_in
 
     when_i_use_two_tabs_to_add_providers
@@ -63,6 +64,11 @@ RSpec.describe "School user adds providers to their list of providers using mult
                                      telephone: "9999 999 9999",
                                      website: "http://www.shelbyville.ac.uk",
                                      address1: "1 Sycamore Avenue")
+  end
+
+  def and_the_school_partner_providers_flag_is_enabled
+    Flipper.add(:school_partner_providers)
+    Flipper.enable(:school_partner_providers)
   end
 
   def and_i_am_signed_in

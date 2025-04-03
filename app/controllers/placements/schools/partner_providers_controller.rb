@@ -1,4 +1,5 @@
 class Placements::Schools::PartnerProvidersController < Placements::PartnershipsController
+  before_action :authorize_school
   def index
     @pagy, @partner_providers = pagy(partner_providers.order_by_name)
   end
@@ -39,5 +40,9 @@ class Placements::Schools::PartnerProvidersController < Placements::Partnerships
 
   def redirect_to_index_path
     redirect_to placements_school_partner_providers_path(@school)
+  end
+
+  def authorize_school
+    authorize @school, :index?, policy_class: Placements::Partnership::ProviderPolicy
   end
 end

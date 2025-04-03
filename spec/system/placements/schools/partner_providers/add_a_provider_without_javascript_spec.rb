@@ -10,6 +10,7 @@ RSpec.describe "School user adds a provider to their list of providers",
 
   scenario do
     given_providers_exist
+    and_the_school_partner_providers_flag_is_enabled
     and_i_am_signed_in
 
     when_i_am_on_the_providers_index_page
@@ -114,6 +115,11 @@ RSpec.describe "School user adds a provider to their list of providers",
     # Pre-existing partnership between school and Shelbyville University
     @school = create(:school, :placements)
     create(:placements_partnership, school: @school, provider: @shelbyville_university)
+  end
+
+  def and_the_school_partner_providers_flag_is_enabled
+    Flipper.add(:school_partner_providers)
+    Flipper.enable(:school_partner_providers)
   end
 
   def and_i_am_signed_in
