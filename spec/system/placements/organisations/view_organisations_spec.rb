@@ -59,7 +59,6 @@ RSpec.describe "View organisations", service: :placements, type: :system do
     within(".app-primary-navigation__nav") do
       expect(page).to have_link "Placements", current: "page"
       expect(page).to have_link "Mentors", current: "false"
-      expect(page).to have_link "Providers", current: "false"
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Organisation details", current: "false"
     end

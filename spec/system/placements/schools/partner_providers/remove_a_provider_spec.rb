@@ -10,6 +10,7 @@ RSpec.describe "User removes a provider from providers list",
 
   scenario do
     given_providers_exist
+    and_the_school_partner_providers_flag_is_enabled
     and_i_am_signed_in
 
     when_i_click_on_providers_in_the_navigation_menu
@@ -67,6 +68,11 @@ RSpec.describe "User removes a provider from providers list",
     @springfield_partnership = create(:placements_partnership, school: @school, provider: @springfield_university)
     @ogdenville_partnership = create(:placements_partnership, school: @school, provider: @ogdenville_university)
     @shelbyville_partnership = create(:placements_partnership, school: @school, provider: @shelbyville_university)
+  end
+
+  def and_the_school_partner_providers_flag_is_enabled
+    Flipper.add(:school_partner_providers)
+    Flipper.enable(:school_partner_providers)
   end
 
   def and_i_am_signed_in
