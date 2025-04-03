@@ -1,5 +1,5 @@
 <% content_for :page_title, title_with_error_prefix(
-  t(".#{current_step.appetite}.title"),
+  current_step.title,
   error: current_step.errors.any?,
 ) %>
 
@@ -9,11 +9,15 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l"><%= t(".caption") %></span>
-      <h1 class="govuk-heading-l"><%= t(".#{current_step.appetite}.title") %></h1>
-      <% if current_step.appetite == "interested" %>
-        <h2 class="govuk-heading-m"><%= t(".#{current_step.appetite}.sub_title") %></h2>
+      <h1 class="govuk-heading-l"><%= current_step.title %></h1>
+      <% if current_step.appetite == "not_open" %>
+        <p class="govuk-body secondary-text"><%= t(".not_open.description_html") %></p>
+      <% elsif current_step.subjects_known? %>
+        <p class="govuk-body secondary-text"><%= t(".subjects_known.description_html") %></p>
+      <% else %>
+        <h2 class="govuk-heading-m"><%= t(".subjects_not_known.sub_title") %></h2>
+        <p class="govuk-body secondary-text"><%= t(".subjects_not_known.description_html") %></p>
       <% end %>
-      <p class="govuk-body secondary-text"><%= t(".#{current_step.appetite}.description_html") %></p>
 
       <div class="govuk-form-group">
         <%= f.govuk_text_field :first_name,

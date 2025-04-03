@@ -28,7 +28,13 @@ module Placements
       raise "Invalid wizard state" unless valid?
 
       ApplicationRecord.transaction do
-        hosting_interest.appetite = appetite
+        hosting_interest.appetite = if appetite == "not_open"
+                                      "not_open"
+                                    elsif subjects_known?
+                                      "actively_looking"
+                                    else
+                                      "interested"
+                                    end
         if steps[:reason_not_hosting].present?
           hosting_interest.reasons_not_hosting = reasons_not_hosting
           other_reason_not_hosting = steps
@@ -105,6 +111,11 @@ module Placements
 
     def appetite
       @appetite ||= steps.fetch(:appetite).appetite
+    end
+
+    def subjects_known?
+      subjects_known_step = steps.fetch(:subjects_known)
+      subjects_known_step.subjects_known == subjects_known_step.class::YES
     end
 
     private
@@ -214,11 +225,6 @@ module Placements
 
     def wizard_school_contact
       @wizard_school_contact = steps[:school_contact].school_contact
-    end
-
-    def subjects_known?
-      subjects_known_step = steps.fetch(:subjects_known)
-      subjects_known_step.subjects_known == subjects_known_step.class::YES
     end
 
     def reasons_not_hosting

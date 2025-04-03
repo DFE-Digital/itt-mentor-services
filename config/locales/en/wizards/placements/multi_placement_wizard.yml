@@ -48,10 +48,10 @@ en:
           find_providers: Find providers near me
         school_contact_step:
           caption: Expression of interest
-          actively_looking:
+          subjects_known:
             title: Who should providers contact?
             description_html: Choose the person best placed to organise ITT placements at your school.
-          interested:
+          subjects_not_known:
             title: You want to hear from providers to discuss potential opportunities
             sub_title: Who should providers contact?
             description_html: |
@@ -137,7 +137,7 @@ en:
           reason_for_not_hosting: Reason for not hosting
           itt_contact: ITT contact
           change: Change
-          continue: Continue
+          continue: Confirm
         confirm_step:
           title: Confirm and let providers know you are interested in hosting ITT trainees
           caption: Open to hosting
@@ -150,4 +150,4 @@ en:
             Your school will show to providers as ‘interested’. This means you might be able to host placements for trainee teachers and are interested in hearing from providers.
           itt_contact: ITT contact
           change: Change
-          continue: Continue
+          continue: Confirm
