@@ -18,6 +18,9 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   let!(:provider_user) { create(:placements_user, providers: [provider]) }
 
   before do
+    Flipper.add(:school_partner_providers)
+    Flipper.enable(:school_partner_providers)
+
     partnership
     another_partnership
     given_i_am_signed_in_as_a_placements_support_user

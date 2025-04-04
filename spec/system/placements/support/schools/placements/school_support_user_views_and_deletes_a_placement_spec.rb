@@ -107,7 +107,7 @@ RSpec.describe "School support user views and deletes a placement", service: :pl
     expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term")
     expect(page).to have_summary_list_row("Mentor", "Add a mentor")
-    expect(page).to have_summary_list_row("Provider", "Add a partner provider")
+    expect(page).to have_summary_list_row("Provider", "Assign a provider")
     expect(page).to have_element(:div, text: "You can preview this placement as it appears to providers.", class: "govuk-inset-text")
     expect(page).to have_link("Delete placement", href: "/schools/#{@springfield_elementary_school.id}/placements/#{@placement.id}/remove")
   end

@@ -5,6 +5,7 @@ RSpec.describe "Support user views an empty partner providers index page",
                type: :system do
   scenario do
     given_a_school_exists
+    and_the_school_partner_providers_flag_is_enabled
     and_i_am_signed_in
 
     when_i_am_on_the_organisations_index_page
@@ -34,6 +35,11 @@ RSpec.describe "Support user views an empty partner providers index page",
       percentage_free_school_meals: 15,
       rating: "Outstanding",
     )
+  end
+
+  def and_the_school_partner_providers_flag_is_enabled
+    Flipper.add(:school_partner_providers)
+    Flipper.enable(:school_partner_providers)
   end
 
   def and_i_am_signed_in

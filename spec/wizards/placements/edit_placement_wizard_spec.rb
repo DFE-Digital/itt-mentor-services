@@ -17,7 +17,22 @@ RSpec.describe Placements::EditPlacementWizard do
     context "with the provider step" do
       let(:current_step) { :provider }
 
-      it { is_expected.to eq %i[provider] }
+      context "when provider is set in the provider step" do
+        let(:provider) { create(:provider) }
+        let(:state) do
+          {
+            "provider" => {
+              "provider_id" => provider.id,
+            },
+          }
+        end
+
+        it { is_expected.to eq %i[provider] }
+      end
+
+      context "when provider id is not set in the provider step" do
+        it { is_expected.to eq %i[provider provider_options] }
+      end
     end
 
     context "with the mentors step" do
@@ -96,18 +111,6 @@ RSpec.describe Placements::EditPlacementWizard do
 
           it "updates the placement" do
             expect(placement.provider).to eq selected_provider
-          end
-        end
-
-        context "with an unknown provider" do
-          let(:state) do
-            {
-              "provider" => { "provider_id" => Placements::EditPlacementWizard::ProviderStep::NOT_KNOWN },
-            }
-          end
-
-          it "updates the placement" do
-            expect(placement.provider).to be_nil
           end
         end
       end

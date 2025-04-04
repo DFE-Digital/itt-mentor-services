@@ -7,6 +7,9 @@ RSpec.describe "Placements / Support / Schools / Partner providers / View a part
   let(:partnership) { create(:placements_partnership, school:, provider:) }
 
   before do
+    Flipper.add(:school_partner_providers)
+    Flipper.enable(:school_partner_providers)
+
     partnership
     given_i_am_signed_in_as_a_placements_support_user
   end

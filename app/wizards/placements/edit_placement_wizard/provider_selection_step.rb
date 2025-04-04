@@ -1,7 +1,7 @@
 class Placements::EditPlacementWizard::ProviderSelectionStep < BaseStep
   attribute :provider_id
 
-  validate :id_presence
+  validates :provider_id, presence: true
 
   def provider_name
     @provider_name ||= provider&.name
