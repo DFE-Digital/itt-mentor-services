@@ -1,5 +1,7 @@
 <% content_for :page_title, title_with_error_prefix(
-  t(".title", contextual_text:, organisation_count: current_step.providers.count, search_param: current_step.search_param),
+  sanitize(
+    t(".title", contextual_text:, organisation_count: current_step.providers.count, search_param: current_step.search_param),
+  ),
   error: current_step.errors.any?,
 ) %>
 

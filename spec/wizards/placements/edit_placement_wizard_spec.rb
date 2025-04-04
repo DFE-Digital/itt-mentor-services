@@ -115,6 +115,23 @@ RSpec.describe Placements::EditPlacementWizard do
         end
       end
 
+      context "when the step is provider options" do
+        let(:current_step) { :provider_options }
+
+        context "with an existing provider" do
+          let(:state) do
+            {
+              "provider" => { "provider_id" => selected_provider.name },
+              "provider_options" => { "provider_id" => selected_provider.id },
+            }
+          end
+
+          it "updates the placement" do
+            expect(placement.provider).to eq selected_provider
+          end
+        end
+      end
+
       context "when the step is year_group" do
         let(:current_step) { :year_group }
         let(:state) do

@@ -3,9 +3,7 @@ class Placements::EditPlacementWizard::ProviderSelectionStep < BaseStep
 
   validates :provider_id, presence: true
 
-  def provider_name
-    @provider_name ||= provider&.name
-  end
+  delegate :name, to: :provider, prefix: true, allow_nil: true
 
   def provider
     @provider ||= Provider.find_by(id: provider_id)
