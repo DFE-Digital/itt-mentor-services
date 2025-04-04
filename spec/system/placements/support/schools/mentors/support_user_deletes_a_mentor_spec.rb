@@ -100,7 +100,6 @@ RSpec.describe "Placements / Support / Schools / Mentor / Support User deletes a
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Mentors", current: "page"
       expect(page).to have_link "Placements", current: "false"
-      expect(page).to have_link "Providers", current: "false"
     end
   end
 

@@ -13,6 +13,9 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
   end
 
   before do
+    Flipper.add(:school_partner_providers)
+    Flipper.enable(:school_partner_providers)
+
     given_i_am_signed_in_as_a_placements_support_user
   end
 

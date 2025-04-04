@@ -93,7 +93,7 @@ en:
         placements/edit_placement_wizard/provider_step:
           attributes:
             provider_id:
-              provider_blank: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode
+              blank: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode
         placements/edit_placement_wizard/provider_options_step:
           attributes:
             provider_id:
