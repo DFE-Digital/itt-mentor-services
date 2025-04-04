@@ -3,12 +3,6 @@ class Placements::EditPlacementWizard::ProviderStep < Placements::EditPlacementW
 
   attribute :name
 
-  def id_presence
-    return if provider_id.present?
-
-    errors.add(:provider_id, :provider_blank)
-  end
-
   def autocomplete_path_value
     "/api/provider_suggestions"
   end

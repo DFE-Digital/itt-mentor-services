@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Primary school user edits a placement", service: :placements, type: :system do
+RSpec.describe "Primary school user edits a placement", :js, service: :placements, type: :system do
   scenario do
     given_that_placements_exist
     and_i_am_signed_in
@@ -69,25 +69,24 @@ RSpec.describe "Primary school user edits a placement", service: :placements, ty
 
     when_i_click_on_assign_a_provider
     then_i_see_the_select_a_provider_page
-    and_i_see_the_providers
-
-    when_i_click_on_my_provider_is_not_listed
-    then_i_see_the_provider_not_listed_details_text
 
     when_i_click_on_the_cancel_link
     then_i_see_the_placement_details_page_with_jane_doe
 
     when_i_click_on_assign_a_provider
-    and_i_select_aes_sedai_trust
+    and_i_enter_aes_sedai_trust
+    then_i_see_a_dropdown_item_for_aes_sedai_trust
+
+    when_i_click_on_the_aes_sedai_trust_dropdown_item
     and_i_click_on_continue
     then_i_see_the_placement_details_page_with_aes_sedai_trust
     and_i_see_a_provider_updated_success_message
 
     when_i_click_on_change_provider
-    then_i_see_the_select_a_provider_page
-    and_i_see_the_providers
+    and_i_enter_ashaman_trust
+    then_i_see_a_dropdown_item_for_ashaman_trust
 
-    when_i_select_the_ashaman_trust
+    when_i_click_on_the_ashaman_trust_dropdown_item
     and_i_click_on_continue
     then_i_see_the_placement_details_page_with_the_ashaman_trust
     and_i_see_a_provider_updated_success_message
@@ -200,21 +199,21 @@ RSpec.describe "Primary school user edits a placement", service: :placements, ty
   end
 
   def and_i_see_the_primary_year_groups
-    expect(page).to have_field("Nursery", type: :radio)
+    expect(page).to have_field("Nursery", type: :radio, visible: :all)
     expect(page).to have_element(:div, text: "3 to 4 years", class: "govuk-hint govuk-radios__hint")
-    expect(page).to have_field("Reception", type: :radio)
+    expect(page).to have_field("Reception", type: :radio, visible: :all)
     expect(page).to have_element(:div, text: "4 to 5 years", class: "govuk-hint govuk-radios__hint")
-    expect(page).to have_field("Year 1", type: :radio)
+    expect(page).to have_field("Year 1", type: :radio, visible: :all)
     expect(page).to have_element(:div, text: "5 to 6 years", class: "govuk-hint govuk-radios__hint")
-    expect(page).to have_field("Year 2", type: :radio)
+    expect(page).to have_field("Year 2", type: :radio, visible: :all)
     expect(page).to have_element(:div, text: "6 to 7 years", class: "govuk-hint govuk-radios__hint")
-    expect(page).to have_field("Year 3", type: :radio)
+    expect(page).to have_field("Year 3", type: :radio, visible: :all)
     expect(page).to have_element(:div, text: "7 to 8 years", class: "govuk-hint govuk-radios__hint")
-    expect(page).to have_field("Year 4", type: :radio)
+    expect(page).to have_field("Year 4", type: :radio, visible: :all)
     expect(page).to have_element(:div, text: "8 to 9 years", class: "govuk-hint govuk-radios__hint")
-    expect(page).to have_field("Year 5", type: :radio)
+    expect(page).to have_field("Year 5", type: :radio, visible: :all)
     expect(page).to have_element(:div, text: "9 to 10 years", class: "govuk-hint govuk-radios__hint")
-    expect(page).to have_field("Year 6", type: :radio)
+    expect(page).to have_field("Year 6", type: :radio, visible: :all)
     expect(page).to have_element(:div, text: "10 to 11 years", class: "govuk-hint govuk-radios__hint")
   end
 
@@ -265,10 +264,10 @@ RSpec.describe "Primary school user edits a placement", service: :placements, ty
   end
 
   def and_i_see_the_term_dates
-    expect(page).to have_field("Autumn term", type: :checkbox)
-    expect(page).to have_field("Spring term", type: :checkbox)
-    expect(page).to have_field("Summer term", type: :checkbox)
-    expect(page).to have_field("Any time in the academic year", type: :checkbox)
+    expect(page).to have_field("Autumn term", type: :checkbox, visible: :all)
+    expect(page).to have_field("Spring term", type: :checkbox, visible: :all)
+    expect(page).to have_field("Summer term", type: :checkbox, visible: :all)
+    expect(page).to have_field("Any time in the academic year", type: :checkbox, visible: :all)
   end
 
   def and_i_select_summer_term
@@ -318,9 +317,9 @@ RSpec.describe "Primary school user edits a placement", service: :placements, ty
   end
 
   def and_i_see_my_mentors
-    expect(page).to have_field("John Smith", type: :checkbox)
-    expect(page).to have_field("Jane Doe", type: :checkbox)
-    expect(page).to have_field("Not yet known", type: :checkbox)
+    expect(page).to have_field("John Smith", type: :checkbox, visible: :all)
+    expect(page).to have_field("Jane Doe", type: :checkbox, visible: :all)
+    expect(page).to have_field("Not yet known", type: :checkbox, visible: :all)
   end
 
   def and_i_select_john_smith
@@ -375,29 +374,33 @@ RSpec.describe "Primary school user edits a placement", service: :placements, ty
     expect(page).to have_title("Select a provider - Placement details - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
-    expect(page).to have_element(:legend, text: "Select a provider", class: "govuk-fieldset__legend")
-    expect(page).to have_element(:span, text: "My provider is not listed", class: "govuk-details__summary-text")
+    expect(page).to have_element(:label, text: "Select a provider", class: "govuk-label--l")
+    expect(page).to have_button("Continue")
     expect(page).to have_link("Cancel", href: "/schools/#{@springfield_elementary_school.id}/placements/#{@placement.id}")
   end
 
-  def and_i_see_the_providers
-    expect(page).to have_field("Aes Sedai Trust", type: :radio)
-    expect(page).to have_field("Asha'man Trust", type: :radio)
-    expect(page).to have_field("Not yet known", type: :radio)
+  def and_i_enter_aes_sedai_trust
+    fill_in "Select a provider", with: "Aes Sedai Trust"
   end
 
-  def when_i_click_on_my_provider_is_not_listed
-    # click_on does not work for this element
-    find("span.govuk-details__summary-text", text: "My provider is not listed").click
+  def then_i_see_a_dropdown_item_for_aes_sedai_trust
+    expect(page).to have_css(".autocomplete__option", text: "Aes Sedai Trust", wait: 10)
   end
 
-  def then_i_see_the_provider_not_listed_details_text
-    expect(page).to have_element(:div, text: "You must add providers to your school's profile before they can be assigned to a specific placement.", class: "govuk-details__text")
-    expect(page).to have_link("add providers to your school's profile", href: "/schools/#{@springfield_elementary_school.id}/partner_providers")
+  def when_i_click_on_the_aes_sedai_trust_dropdown_item
+    page.find(".autocomplete__option", text: "Aes Sedai Trust").click
   end
 
-  def and_i_select_aes_sedai_trust
-    choose "Aes Sedai Trust"
+  def and_i_enter_ashaman_trust
+    fill_in "Select a provider", with: "Asha'man Trust"
+  end
+
+  def then_i_see_a_dropdown_item_for_ashaman_trust
+    expect(page).to have_css(".autocomplete__option", text: "Asha'man Trust", wait: 10)
+  end
+
+  def when_i_click_on_the_ashaman_trust_dropdown_item
+    page.find(".autocomplete__option", text: "Asha'man Trust").click
   end
 
   def then_i_see_the_placement_details_page_with_aes_sedai_trust
@@ -445,7 +448,7 @@ RSpec.describe "Primary school user edits a placement", service: :placements, ty
   def then_i_see_the_preview_placement_page
     expect(page).to have_title("Primary with english (Year 2) - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Placement - Springfield Elementary Primary with english (Year 2)")
+    expect(page).to have_h1("Placement - Springfield Elementary\nPrimary with english (Year 2)")
     expect(page).to have_important_banner("This is a preview of how your placement appears to teacher training providers.")
     expect(page).to have_h2("Placement dates")
     expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
@@ -455,7 +458,7 @@ RSpec.describe "Primary school user edits a placement", service: :placements, ty
     expect(page).to have_summary_list_row("Last name", "Coordinator")
     expect(page).to have_summary_list_row("Email address", "placement_coordinator@example.school")
     expect(page).to have_h2("Location")
-    expect(page).to have_summary_list_row("Address", "Westgate Street Hackney E8 3RL")
+    expect(page).to have_summary_list_row("Address", "Westgate Street\nHackney\nE8 3RL")
     expect(page).to have_h2("Additional details")
     expect(page).to have_summary_list_row("Establishment group", "Local authority maintained schools")
     expect(page).to have_summary_list_row("School phase", "Primary")

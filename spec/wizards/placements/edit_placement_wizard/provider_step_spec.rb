@@ -24,14 +24,8 @@ RSpec.describe Placements::EditPlacementWizard::ProviderStep, type: :model do
     context "when the provider_id is not 'on'" do
       let(:provider_id) { partner_provider.id }
 
-      it { is_expected.to validate_inclusion_of(:provider_id).in_array(school.partner_providers.ids) }
+      it { is_expected.to validate_presence_of(:provider_id) }
     end
-  end
-
-  describe "#providers_for_selection" do
-    subject { step.providers_for_selection }
-
-    it { is_expected.to match_array(school.partner_providers) }
   end
 
   describe "#provider" do
