@@ -8,7 +8,9 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= f.govuk_check_boxes_fieldset :reasons_not_hosting, legend: { size: "l", text: t(".title"), tag: "h1" } do %>
+      <%= f.govuk_check_boxes_fieldset :reasons_not_hosting,
+        legend: { size: "l", text: t(".title"), tag: "h1" },
+        hint: { text: t(".hint") } do %>
         <% current_step.reason_options.each_with_index do |reason_option, i| %>
           <%= f.govuk_check_box :reasons_not_hosting, reason_option.value, label: { text: reason_option.name }, link_errors: i.zero? do %>
             <% if reason_option.name == t(".options.other") %>
