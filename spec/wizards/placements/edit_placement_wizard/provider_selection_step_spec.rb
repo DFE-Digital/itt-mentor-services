@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Placements::EditPlacementWizard::ProviderStep, type: :model do
+RSpec.describe Placements::EditPlacementWizard::ProviderSelectionStep, type: :model do
   subject(:step) { described_class.new(wizard: mock_wizard, attributes:) }
 
   let(:mock_wizard) do
@@ -17,7 +17,7 @@ RSpec.describe Placements::EditPlacementWizard::ProviderStep, type: :model do
   let(:lead_school_provider) { create(:placements_provider, :lead_school) }
 
   describe "attributes" do
-    it { is_expected.to have_attributes(provider_id: nil, name: nil) }
+    it { is_expected.to have_attributes(provider_id: nil) }
   end
 
   describe "validations" do
@@ -30,7 +30,6 @@ RSpec.describe Placements::EditPlacementWizard::ProviderStep, type: :model do
 
   describe "delegations" do
     it { is_expected.to delegate_method(:name).to(:provider).with_prefix }
-    it { is_expected.to delegate_method(:school).to(:wizard) }
   end
 
   describe "#provider" do
@@ -49,21 +48,9 @@ RSpec.describe Placements::EditPlacementWizard::ProviderStep, type: :model do
     end
   end
 
-  describe "#autocomplete_path_value" do
-    subject(:autocomplete_path_value) { step.autocomplete_path_value }
-
-    it { is_expected.to eq("/api/provider_suggestions") }
-  end
-
-  describe "#autocomplete_return_attributes_value" do
-    subject(:autocomplete_return_attributes_value) { step.autocomplete_return_attributes_value }
-
-    it { is_expected.to contain_exactly("code") }
-  end
-
   describe "#scope" do
     subject(:scope) { step.scope }
 
-    it { is_expected.to eq("placements_#{mock_wizard.class.name.demodulize.underscore}_provider_step") }
+    it { is_expected.to eq("placements_#{mock_wizard.class.name.demodulize.underscore}_provider_selection_step") }
   end
 end

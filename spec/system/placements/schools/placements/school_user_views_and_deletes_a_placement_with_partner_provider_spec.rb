@@ -13,20 +13,6 @@ RSpec.describe "School user views and deletes a placement with a partner provide
 
     when_i_click_on_the_delete_placement_link
     then_i_see_the_you_cannot_delete_this_placement_page
-
-    when_i_click_on_the_back_link
-    and_i_click_on_change_provider
-    then_i_see_the_select_a_provider_page
-
-    when_i_select_not_yet_known
-    and_i_click_on_continue
-    then_i_see_the_placement_details_page_without_a_provider
-
-    when_i_click_on_the_delete_placement_link
-    and_i_click_on_the_delete_placement_button
-    then_i_see_the_placements_index_page
-    and_i_see_a_success_message
-    and_my_placement_has_been_deleted
   end
 
   private

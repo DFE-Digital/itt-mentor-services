@@ -1,6 +1,8 @@
 require "rails_helper"
 
-RSpec.describe "Primary school user edits a placement", :js, service: :placements, type: :system do
+RSpec.describe "Primary school user edits a placement with javascript disabled",
+               service: :placements,
+               type: :system do
   scenario do
     given_that_placements_exist
     and_i_am_signed_in
@@ -75,18 +77,26 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
 
     when_i_click_on_assign_a_provider
     and_i_enter_aes_sedai_trust
-    then_i_see_a_dropdown_item_for_aes_sedai_trust
+    and_i_click_on_continue
+    then_i_see_the_provider_options_page_for_aes_sedai_trust_search
 
-    when_i_click_on_the_aes_sedai_trust_dropdown_item
+    when_i_click_on_the_back_link
+    then_i_see_the_select_a_provider_page
+
+    when_i_click_on_continue
+    then_i_see_the_provider_options_page_for_aes_sedai_trust_search
+
+    when_i_select_the_aes_sedai_trust
     and_i_click_on_continue
     then_i_see_the_placement_details_page_with_aes_sedai_trust
     and_i_see_a_provider_updated_success_message
 
     when_i_click_on_change_provider
     and_i_enter_ashaman_trust
-    then_i_see_a_dropdown_item_for_ashaman_trust
+    and_i_click_on_continue
+    then_i_see_the_provider_options_page_for_ashaman_trust_search
 
-    when_i_click_on_the_ashaman_trust_dropdown_item
+    when_i_select_the_ashaman_trust
     and_i_click_on_continue
     then_i_see_the_placement_details_page_with_the_ashaman_trust
     and_i_see_a_provider_updated_success_message
@@ -102,7 +112,7 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
 
   def given_that_placements_exist
     @aes_sedai_provider = build(:placements_provider, name: "Aes Sedai Trust")
-    @ashaman_provider = build(:placements_provider, name: "Asha'man Trust")
+    @ashaman_provider = build(:placements_provider, name: "Ashaman Trust")
 
     @springfield_elementary_school = build(
       :placements_school,
@@ -232,6 +242,8 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
   def and_i_click_on_continue
     click_on "Continue"
   end
+  alias_method :when_i_click_on_continue,
+               :and_i_click_on_continue
 
   def then_i_see_the_placement_details_page_with_my_updated_year_group
     expect(page).to have_title("Primary with english (Year 2) - Manage school placements - GOV.UK")
@@ -383,24 +395,8 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
     fill_in "Select a provider", with: "Aes Sedai Trust"
   end
 
-  def then_i_see_a_dropdown_item_for_aes_sedai_trust
-    expect(page).to have_css(".autocomplete__option", text: "Aes Sedai Trust", wait: 10)
-  end
-
-  def when_i_click_on_the_aes_sedai_trust_dropdown_item
-    page.find(".autocomplete__option", text: "Aes Sedai Trust").click
-  end
-
   def and_i_enter_ashaman_trust
-    fill_in "Select a provider", with: "Asha'man Trust"
-  end
-
-  def then_i_see_a_dropdown_item_for_ashaman_trust
-    expect(page).to have_css(".autocomplete__option", text: "Asha'man Trust", wait: 10)
-  end
-
-  def when_i_click_on_the_ashaman_trust_dropdown_item
-    page.find(".autocomplete__option", text: "Asha'man Trust").click
+    fill_in "Select a provider", with: "Ashaman Trust"
   end
 
   def then_i_see_the_placement_details_page_with_aes_sedai_trust
@@ -424,8 +420,12 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
     click_on("Change Provider")
   end
 
+  def when_i_select_the_aes_sedai_trust
+    choose("Aes Sedai Trust")
+  end
+
   def when_i_select_the_ashaman_trust
-    choose("Asha'man Trust")
+    choose("Ashaman Trust")
   end
 
   def then_i_see_the_placement_details_page_with_the_ashaman_trust
@@ -437,7 +437,7 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
     expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term, Summer term")
     expect(page).to have_summary_list_row("Mentor", "Jane Doe")
-    expect(page).to have_summary_list_row("Provider", "Asha'man Trust")
+    expect(page).to have_summary_list_row("Provider", "Ashaman Trust")
     expect(page).to have_element(:div, text: "You can preview this placement as it appears to providers.", class: "govuk-inset-text")
   end
 
@@ -448,7 +448,7 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
   def then_i_see_the_preview_placement_page
     expect(page).to have_title("Primary with english (Year 2) - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Placement - Springfield Elementary\nPrimary with english (Year 2)")
+    expect(page).to have_h1("Placement - Springfield Elementary Primary with english (Year 2)")
     expect(page).to have_important_banner("This is a preview of how your placement appears to teacher training providers.")
     expect(page).to have_h2("Placement dates")
     expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
@@ -458,7 +458,7 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
     expect(page).to have_summary_list_row("Last name", "Coordinator")
     expect(page).to have_summary_list_row("Email address", "placement_coordinator@example.school")
     expect(page).to have_h2("Location")
-    expect(page).to have_summary_list_row("Address", "Westgate Street\nHackney\nE8 3RL")
+    expect(page).to have_summary_list_row("Address", "Westgate Street Hackney E8 3RL")
     expect(page).to have_h2("Additional details")
     expect(page).to have_summary_list_row("Establishment group", "Local authority maintained schools")
     expect(page).to have_summary_list_row("School phase", "Primary")
@@ -469,5 +469,23 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
     expect(page).to have_summary_list_row("Admissions policy", "Not applicable")
     expect(page).to have_summary_list_row("Percentage free school meals", "15%")
     expect(page).to have_summary_list_row("Ofsted rating", "Outstanding")
+  end
+
+  def then_i_see_the_provider_options_page_for_aes_sedai_trust_search
+    expect(page).to have_title(
+      "1 results found for ‘Aes Sedai Trust’ - Placement details - Manage school placements - GOV.UK",
+    )
+    expect(page).to have_element(:h1, text: "1 results found for 'Aes Sedai Trust'")
+    expect(page).to have_field("Aes Sedai Trust")
+    expect(page).to have_button("Continue")
+  end
+
+  def then_i_see_the_provider_options_page_for_ashaman_trust_search
+    expect(page).to have_title(
+      "1 results found for ‘Ashaman Trust’ - Placement details - Manage school placements - GOV.UK",
+    )
+    expect(page).to have_element(:h1, text: "1 results found for 'Ashaman Trust'")
+    expect(page).to have_field("Ashaman Trust")
+    expect(page).to have_button("Continue")
   end
 end
