@@ -30,7 +30,7 @@ class Subject < ApplicationRecord
 
   validates :subject_area, :name, presence: true
 
-  scope :order_by_name, -> { order(:name) }
+  scope :order_by_name, -> { order("LOWER(name)") }
   scope :parent_subjects, -> { where(parent_subject_id: nil).order_by_name }
 
   def has_child_subjects?

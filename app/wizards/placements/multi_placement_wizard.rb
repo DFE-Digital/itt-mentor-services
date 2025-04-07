@@ -12,20 +12,15 @@ module Placements
     def define_steps
       # Define the wizard steps here
       add_step(AppetiteStep)
-      case appetite
-      when "actively_looking"
-        actively_looking_steps
-      when "not_open"
-        add_step(ReasonNotHostingStep)
-      end
-      add_step(SchoolContactStep)
-      case appetite
-      when "actively_looking"
-        add_step(CheckYourAnswersStep)
-      when "not_open"
-        add_step(AreYouSureStep)
-      when "interested"
-        add_step(ConfirmStep)
+      if appetite == "not_open"
+        not_open_steps
+      else
+        add_step(SubjectsKnownStep)
+        if subjects_known?
+          actively_looking_steps
+        else
+          interested_steps
+        end
       end
     end
 
@@ -33,7 +28,13 @@ module Placements
       raise "Invalid wizard state" unless valid?
 
       ApplicationRecord.transaction do
-        hosting_interest.appetite = appetite
+        hosting_interest.appetite = if appetite == "not_open"
+                                      "not_open"
+                                    elsif subjects_known?
+                                      "actively_looking"
+                                    else
+                                      "interested"
+                                    end
         if steps[:reason_not_hosting].present?
           hosting_interest.reasons_not_hosting = reasons_not_hosting
           other_reason_not_hosting = steps
@@ -46,7 +47,7 @@ module Placements
 
         create_placements
 
-        create_partnerships
+        # create_partnerships
 
         wizard_school_contact.first_name = steps[:school_contact].first_name
         wizard_school_contact.last_name = steps[:school_contact].last_name
@@ -108,6 +109,15 @@ module Placements
       }.count
     end
 
+    def appetite
+      @appetite ||= steps.fetch(:appetite).appetite
+    end
+
+    def subjects_known?
+      subjects_known_step = steps.fetch(:subjects_known)
+      subjects_known_step.subjects_known == subjects_known_step.class::YES
+    end
+
     private
 
     def create_placements
@@ -159,7 +169,19 @@ module Placements
         secondary_subject_steps
       end
 
-      add_step(ProviderStep)
+      add_step(SchoolContactStep)
+      add_step(CheckYourAnswersStep)
+    end
+
+    def not_open_steps
+      add_step(ReasonNotHostingStep)
+      add_step(SchoolContactStep)
+      add_step(AreYouSureStep)
+    end
+
+    def interested_steps
+      add_step(SchoolContactStep)
+      add_step(ConfirmStep)
     end
 
     def primary_subject_steps
@@ -203,15 +225,6 @@ module Placements
 
     def wizard_school_contact
       @wizard_school_contact = steps[:school_contact].school_contact
-    end
-
-    def subjects_known?
-      subjects_known_step = steps.fetch(:subjects_known)
-      subjects_known_step.subjects_known == subjects_known_step.class::YES
-    end
-
-    def appetite
-      @appetite ||= steps.fetch(:appetite).appetite
     end
 
     def reasons_not_hosting

@@ -11,7 +11,7 @@
       <%= f.govuk_collection_radio_buttons(
         :subjects_known,
         current_step.responses_for_selection,
-        :name, :name,
+        :name, :name, :hint,
         legend: { size: "l", text: t(".title"), tag: "h1" }
       ) %>
 

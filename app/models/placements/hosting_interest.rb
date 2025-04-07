@@ -31,8 +31,8 @@ class Placements::HostingInterest < ApplicationRecord
   enum :appetite,
        {
          actively_looking: "actively_looking",
-         interested: "interested",
          not_open: "not_open",
+         interested: "interested",
          already_organised: "already_organised",
        },
        validate: true
