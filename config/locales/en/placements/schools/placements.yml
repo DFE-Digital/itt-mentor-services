@@ -112,6 +112,8 @@ en:
               one: "%{count} placement"
               other: "%{count} placements"
             add_and_edit_placements: Add and edit placements to let providers know your preferences
+            if_you_know_providers: |
+              If you know the providers you want to work with, assign them to your placements. This will prevent other providers getting in contact with you about them. 
         edit_placement:
           update:
             success: 
