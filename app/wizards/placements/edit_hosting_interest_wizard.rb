@@ -1,25 +1,43 @@
 module Placements
-  class EditHostingInterestWizard < BaseWizard
-    attr_reader :school
+  class EditHostingInterestWizard < MultiPlacementWizard
+    attr_reader :school, :hosting_interest
 
-    def initialize(school:, params:, state:, current_step: nil)
-      @school = school
-      super(state:, params:, current_step:)
+    def initialize(hosting_interest:, school:, params:, state:, current_step: nil)
+      @hosting_interest = hosting_interest
+      super(school:, state:, params:, current_step:)
     end
 
-    def define_steps
-      # Define the wizard steps here
-      add_step(AppetiteStep)
-      if appetite == "not_open"
-        not_open_steps
-      else
-        add_step(SubjectsKnownStep)
-        if subjects_known?
-          actively_looking_steps
-        else
-          interested_steps
+    def update_hosting_interest
+      raise "Invalid wizard state" unless valid?
+
+      ApplicationRecord.transaction do
+        hosting_interest.appetite = if appetite == "not_open"
+                                      "not_open"
+                                    elsif subjects_known?
+                                      "actively_looking"
+                                    else
+                                      "interested"
+                                    end
+        if steps[:reason_not_hosting].present?
+          hosting_interest.reasons_not_hosting = reasons_not_hosting
+          other_reason_not_hosting = steps
+            .fetch(:reason_not_hosting)
+            .other_reason_not_hosting
+          hosting_interest.other_reason_not_hosting = (other_reason_not_hosting.presence)
         end
+
+        hosting_interest.save!
+
+        create_placements
       end
+    end
+
+    def setup_state
+      state["appetite"] = { "appetite" => hosting_interest.appetite }
+      state["reason_not_hosting"] = {
+        "reasons_not_hosting" => hosting_interest.reasons_not_hosting,
+        "other_reason_not_hosting" => hosting_interest.other_reason_not_hosting,
+      }
     end
 
     private
@@ -30,7 +48,6 @@ module Placements
     end
 
     def interested_steps
-      add_step(MultiPlacementWizard::SchoolContactStep)
       add_step(MultiPlacementWizard::ConfirmStep)
     end
 

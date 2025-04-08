@@ -41,6 +41,11 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
   end
 
   def whats_next
+    @current_navigation = if request.referer.match("hosting_interests\/[a-zA-Z0-9-]*\/edit")
+                            :organisation_details
+                          else
+                            :placements
+                          end
     appetite
   end
 

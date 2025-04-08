@@ -65,6 +65,14 @@ scope module: :placements,
         end
       end
 
+      resources :hosting_interests do
+        member do
+          get "edit", to: "hosting_interests/edit_hosting_interest#new", as: :new_edit_hosting_interest
+          get "edit/:state_key/:step", to: "hosting_interests/edit_hosting_interest#edit", as: :edit_hosting_interest
+          put "edit/:state_key/:step", to: "hosting_interests/edit_hosting_interest#update"
+        end
+      end
+
       resources :placements, only: %i[index show destroy] do
         member do
           get :remove

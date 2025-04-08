@@ -1,4 +1,6 @@
 <%# locals: (school:, school_contact:, changeable: true) -%>
+<h2 class="govuk-heading-m"><%= t(".placement_contact") %></h2>
+
 <% if school_contact.present? %>
   <%= govuk_summary_list(html_attributes: { id: "school-contact-details" }) do |summary_list| %>
     <% summary_list.with_row do |row| %>
