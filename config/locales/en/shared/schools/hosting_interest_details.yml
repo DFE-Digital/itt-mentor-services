@@ -1,0 +1,9 @@
+en:
+  shared:
+    schools:
+      hosting_interest_details:
+        hosting_status: Hosting status
+        this_status_indicates: |
+          This status indicates to providers whether you intend to host placements.
+        status: Status
+        change: Change

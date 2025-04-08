@@ -61,6 +61,11 @@ en:
         window: Claim window
         starts_on: Window opens
         ends_on: Window closes
+      placements/hosting_interest:
+        appetite:
+          not_open: Not open
+          interested: Interested
+          actively_looking: Open to hosting
 
     errors:
       models:

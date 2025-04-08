@@ -1,0 +1,14 @@
+<h2 class="govuk-heading-m"><%= t(".hosting_status") %></h2>
+
+<p class="govuk-body"><%= t(".this_status_indicates") %></p>
+
+<%= govuk_summary_list(html_attributes: { id: "hosting_interest" }) do |summary_list| %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".status")) %>
+    <% row.with_value(text: hosting_interest.status) %>
+    <% row.with_action(text: t(".change"),
+                       href: new_edit_hosting_interest_placements_school_hosting_interest_path(school, hosting_interest),
+                       visually_hidden_text: t(".hosting_status"),
+                       classes: ["govuk-link--no-visited-state"]) %>
+  <% end %>
+<% end %>

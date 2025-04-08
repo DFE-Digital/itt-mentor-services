@@ -84,4 +84,10 @@ class Placements::School < School
   has_many :hosting_interests
 
   delegate :email_address, to: :school_contact, prefix: true, allow_nil: true
+
+  def upcoming_hosting_interest
+    hosting_interests.for_academic_year(
+      Placements::AcademicYear.current.next,
+    ).last
+  end
 end
