@@ -76,6 +76,7 @@ class Placements::School < School
   has_many :mentor_memberships
   has_many :mentors, through: :mentor_memberships
   has_many :placements
+  has_many :academic_years, through: :placements
 
   has_many :partnerships, dependent: :destroy
   has_many :partner_providers,
@@ -83,5 +84,34 @@ class Placements::School < School
            source: :provider
   has_many :hosting_interests
 
-  delegate :email_address, to: :school_contact, prefix: true, allow_nil: true
+  delegate :first_name, :last_name, :email_address, to: :school_contact, prefix: true, allow_nil: true
+  delegate :appetite, to: :current_hosting_interest, prefix: true, allow_nil: true
+
+  def current_hosting_interest
+    hosting_interests.for_academic_year(Placements::AcademicYear.current).first
+  end
+
+  def available_placements
+    placements.where(provider: nil, academic_year: Placements::AcademicYear.current)
+  end
+
+  def unavailable_placements
+    placements.where(academic_year: Placements::AcademicYear.current).where.not(provider: nil)
+  end
+
+  def available_placement_subjects
+    ::Subject.where(id: placements.where(provider: nil, academic_year: Placements::AcademicYear.current).select(:subject_id)).distinct
+  end
+
+  def unavailable_placement_subjects
+    ::Subject.where(id: placements.where.not(provider: nil, academic_year: Placements::AcademicYear.current).select(:subject_id)).distinct
+  end
+
+  def previous_subjects
+    ::Subject.where(id: placements.joins(:academic_year).where(provider: nil, academic_year: { ends_on: ..Placements::AcademicYear.current.starts_on }).select(:subject_id)).distinct
+  end
+
+  def has_trained_mentors?
+    mentors.pluck(:trained).any? { |trained| trained == true }
+  end
 end
