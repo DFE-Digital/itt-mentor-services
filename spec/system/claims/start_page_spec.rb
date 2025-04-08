@@ -131,6 +131,10 @@ RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :sy
   end
 
   def then_i_see_a_link_to_all_service_updates
+    expect(page).to have_link(
+      "Initial teacher training reform funding guidance - GOV.UK",
+      href: "https://www.gov.uk/government/publications/initial-teacher-training-reform-funding-guidance",
+    )
     expect(page).to have_link("Service Update", href: "/service-updates#service-update")
     expect(page).to have_link("View all news and updates", href: "/service-updates")
   end
