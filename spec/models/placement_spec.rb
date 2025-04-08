@@ -73,6 +73,60 @@ RSpec.describe Placement, type: :model do
         )
       end
     end
+
+    describe "#available_placements" do
+      it "returns placements that are available for a given school" do
+        school = create(:placements_school)
+        placement_1 = create(:placement, school:, provider: nil)
+        _placement_2 = create(:placement, school:, provider: create(:provider))
+        placement_3 = create(:placement, school:, provider: nil)
+
+        expect(described_class.available_placements(school)).to contain_exactly(
+          placement_1,
+          placement_3,
+        )
+      end
+
+      it "returns placements that are available for a given school in the current academic year" do
+        school = create(:placements_school)
+        current_academic_year = Placements::AcademicYear.current
+        placement_1 = create(:placement, school:, provider: nil, academic_year: current_academic_year)
+        _placement_2 = create(:placement, school:, provider: nil, academic_year: current_academic_year.previous)
+        placement_3 = create(:placement, school:, provider: nil, academic_year: current_academic_year)
+
+        expect(described_class.available_placements(school)).to contain_exactly(
+          placement_1,
+          placement_3,
+        )
+      end
+    end
+
+    describe "#unavailable_placements" do
+      it "returns placements that are unavailable for a given school" do
+        school = create(:placements_school)
+        placement_1 = create(:placement, school:, provider: create(:provider))
+        _placement_2 = create(:placement, school:, provider: nil)
+        placement_3 = create(:placement, school:, provider: create(:provider))
+
+        expect(described_class.unavailable_placements(school)).to contain_exactly(
+          placement_1,
+          placement_3,
+        )
+      end
+
+      it "returns placements that are unavailable for a given school in the current academic year" do
+        school = create(:placements_school)
+        current_academic_year = Placements::AcademicYear.current
+        placement_1 = create(:placement, school:, provider: create(:provider), academic_year: current_academic_year)
+        _placement_2 = create(:placement, school:, provider: create(:provider), academic_year: current_academic_year.previous)
+        placement_3 = create(:placement, school:, provider: create(:provider), academic_year: current_academic_year)
+
+        expect(described_class.unavailable_placements(school)).to contain_exactly(
+          placement_1,
+          placement_3,
+        )
+      end
+    end
   end
 
   describe "order_by_school_ids" do

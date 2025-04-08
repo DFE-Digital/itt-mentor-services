@@ -60,6 +60,8 @@ class Placement < ApplicationRecord
   delegate :has_child_subjects?, to: :subject, allow_nil: true, prefix: true
 
   scope :order_by_subject_school_name, -> { includes(:subject, :school).order("subjects.name", "schools.name") }
+  scope :available_placements, ->(school) { where(school:, provider: nil, academic_year: Placements::AcademicYear.current) }
+  scope :unavailable_placements, ->(school) { where(school:, academic_year: Placements::AcademicYear.current).where.not(provider: nil) }
 
   # This method is used to order placement, after the schools have been ordered by distance.
   # As distance is not an attribute of school, and is given to us by the Geocoder gem.
