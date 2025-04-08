@@ -1,0 +1,3 @@
+<% if render_interest_tag? %>
+  <%= render GovukComponent::TagComponent.new(text: interest_text, colour: interest_colour) %>
+<% end %>
