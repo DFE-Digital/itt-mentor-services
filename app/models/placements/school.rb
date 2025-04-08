@@ -84,4 +84,17 @@ class Placements::School < School
   has_many :hosting_interests
 
   delegate :email_address, to: :school_contact, prefix: true, allow_nil: true
+  delegate :appetite, to: :current_hosting_interest, prefix: true, allow_nil: true
+
+  def current_hosting_interest
+    hosting_interests.find_by(academic_year: Placements::AcademicYear.current)
+  end
+
+  def available_placements
+    Placement.available_placements(self)
+  end
+
+  def unavailable_placements
+    Placement.unavailable_placements(self)
+  end
 end

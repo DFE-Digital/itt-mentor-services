@@ -126,5 +126,57 @@ RSpec.describe Placements::School do
 
   describe "delegations" do
     it { is_expected.to delegate_method(:email_address).to(:school_contact).with_prefix(true).allow_nil }
+    it { is_expected.to delegate_method(:appetite).to(:current_hosting_interest).with_prefix(true).allow_nil }
+  end
+
+  describe "#current_hosting_interest" do
+    let(:academic_year) { Placements::AcademicYear.current }
+    let(:school) { create(:placements_school, hosting_interests:) }
+
+    context "when there is a current hosting interest" do
+      let(:hosting_interests) { [build(:hosting_interest, academic_year:)] }
+
+      it "returns the current hosting interest for the school" do
+        expect(school.current_hosting_interest).to eq(hosting_interests.first)
+      end
+    end
+
+    context "when there is no current hosting interest" do
+      let(:hosting_interests) { [] }
+
+      it "returns nil" do
+        expect(school.current_hosting_interest).to be_nil
+      end
+    end
+
+    context "when there are multiple hosting interests" do
+      let(:current_hosting_interest) { build(:hosting_interest) }
+      let(:previous_hosting_interest) { build(:hosting_interest, academic_year: academic_year.previous) }
+      let(:hosting_interests) { [current_hosting_interest, previous_hosting_interest] }
+
+      it "returns the current hosting interest for the school" do
+        expect(school.current_hosting_interest).to eq(current_hosting_interest)
+      end
+    end
+  end
+
+  describe "#available_placements" do
+    let!(:school) { create(:placements_school, placements: [available_placement, unavailable_placement]) }
+    let(:available_placement) { build(:placement) }
+    let(:unavailable_placement) { build(:placement, provider: create(:provider)) }
+
+    it "returns the available placements for the school" do
+      expect(school.available_placements).to contain_exactly(available_placement)
+    end
+  end
+
+  describe "#unavailable_placements" do
+    let!(:school) { create(:placements_school, placements: [available_placement, unavailable_placement]) }
+    let(:available_placement) { build(:placement) }
+    let(:unavailable_placement) { build(:placement, provider: create(:provider)) }
+
+    it "returns the unavailable placements for the school" do
+      expect(school.unavailable_placements).to contain_exactly(unavailable_placement)
+    end
   end
 end
