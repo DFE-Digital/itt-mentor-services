@@ -100,6 +100,6 @@ RSpec.describe "Support user views a placement with a mentor assigned", service:
     expect(page).to have_link("Change Expected date")
     expect(page).to have_summary_list_row("Mentor", "Jane Doe John Smith")
     expect(page).to have_link("Change Mentor")
-    expect(page).to have_summary_list_row("Provider", "Add a partner provider")
+    expect(page).to have_summary_list_row("Provider", "Assign a provider")
   end
 end
