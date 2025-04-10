@@ -40,10 +40,6 @@ The Department for Education is committed to making its websites accessible, in 
 
 This website is partially compliant with the WCAG (Web Content Accessibility Guidelines) version 2.2 AA standard, due to the following non-compliances (and/or) the following exemptions.
 
-### Non-accessible content
-
-The content is non-accessible for the following reason(s):
-
 #### Non-compliance with the accessibility regulations
 
 Unsupported aria attributes. It is important to ensure that an element’s role supports its ARIA attributes. This does not meet <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/text-equiv-all.html" target="_blank" rel="noopener">WCAG version 2.2 AA - 1.1.1 Non-text Content (opens in a new tab)</a>.
