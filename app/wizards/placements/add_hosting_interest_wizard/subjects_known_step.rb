@@ -1,4 +1,4 @@
-class Placements::MultiPlacementWizard::SubjectsKnownStep < BaseStep
+class Placements::AddHostingInterestWizard::SubjectsKnownStep < BaseStep
   attribute :subjects_known
 
   YES = "Yes".freeze

@@ -65,6 +65,16 @@ scope module: :placements,
         end
       end
 
+      resources :hosting_interests do
+        collection do
+          get "new", to: "hosting_interests/add_hosting_interest#new", as: :new_add_hosting_interest
+          get "new/:state_key/:step", to: "hosting_interests/add_hosting_interest#edit", as: :add_hosting_interest
+          put "new/:state_key/:step", to: "hosting_interests/add_hosting_interest#update"
+
+          get "whats_next", to: "hosting_interests/add_hosting_interest#whats_next", as: :whats_next
+        end
+      end
+
       resources :placements, only: %i[index show destroy] do
         member do
           get :remove

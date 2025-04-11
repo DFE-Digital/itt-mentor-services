@@ -1,4 +1,4 @@
-class Placements::MultiPlacementWizard::HelpStep < BaseStep
+class Placements::AddHostingInterestWizard::HelpStep < BaseStep
   delegate :school, to: :wizard
 
   def local_providers

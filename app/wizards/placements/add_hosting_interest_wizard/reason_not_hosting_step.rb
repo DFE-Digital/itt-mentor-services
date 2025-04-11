@@ -1,4 +1,4 @@
-class Placements::MultiPlacementWizard::ReasonNotHostingStep < BaseStep
+class Placements::AddHostingInterestWizard::ReasonNotHostingStep < BaseStep
   attribute :reasons_not_hosting, default: []
   attribute :other_reason_not_hosting
 

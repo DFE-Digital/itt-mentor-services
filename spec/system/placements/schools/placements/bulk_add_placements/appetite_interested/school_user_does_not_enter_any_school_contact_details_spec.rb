@@ -7,8 +7,10 @@ RSpec.describe "School user does not enter any school contact details",
     given_the_bulk_add_placements_flag_is_enabled
     and_academic_years_exist
     and_i_am_signed_in
-    when_i_am_on_the_placements_index_page
-    and_i_click_on_bulk_add_placements
+
+    # when_i_am_on_the_placements_index_page
+    # and_i_click_on_bulk_add_placements
+    when_i_visit_the_add_hosting_interest_page
     then_i_see_the_appetite_form
 
     when_i_select_interested_in_hosting_placements
@@ -53,6 +55,10 @@ RSpec.describe "School user does not enter any school contact details",
   end
   alias_method :and_i_click_on_bulk_add_placements,
                :when_i_click_on_bulk_add_placements
+
+  def when_i_visit_the_add_hosting_interest_page
+    visit new_add_hosting_interest_placements_school_hosting_interests_path(@school)
+  end
 
   def then_i_see_the_appetite_form
     expect(page).to have_title(
