@@ -1,0 +1,74 @@
+en:
+  wizards:
+    placements:
+      add_hosting_interest_wizard:
+        appetite_step:
+          title: Will you host placements this academic year (%{academic_year_name})?
+          continue: Continue
+          options:
+            actively_looking:
+              name: Yes - Let providers know what I'm willing to host
+              description: You know the subjects you want to host and may know which providers you want to work with
+            interested:
+              name: Yes - Let providers know I am open to placements
+              description: You haven't yet decided on your placements. You want to hear from providers to discuss potential opportunities
+            not_open: 
+              name: No - Let providers know I am not hosting and do not want to be contacted
+              description: You do not want to hear from providers this academic year
+            already_organised:
+              name: Placements already organised with providers
+              description: We'll show any providers who search for you that you're at capacity
+        list_placements_step:
+          title: Would you like to list some placements to be seen by providers?
+          continue: Continue
+        reason_not_hosting_step:
+          title: What are your reasons for not taking part in ITT this year?
+          continue: Continue
+          hint: "Select all that apply"
+          options:
+            concerns_about_trainee_quality: Concerns about trainee quality
+            do_not_get_offered_trainees: Don't get offered trainees
+            do_not_know_how_to_get_involved: Don't know how to get involved
+            not_enough_trained_mentors: Not enough trained mentors
+            number_of_pupils_with_send_needs: Number of pupils with SEND needs
+            working_to_improve_our_ofsted_rating: Working to improve our OFSTED rating
+            other: Other
+          tell_us: Tell us your reason
+        help_step:
+          title: Help available to you
+          continue: Continue
+          did_you_know_html: |
+            Did you know that training providers are able to help specifically with making placements work in SEND environments?
+            <br><br>
+            There are a number of organisations who could help you to make teacher training work.
+          training_providers: Training providers
+          local_providers: These training providers are local to you and could help.
+          find_providers: Find providers near me
+        school_contact_step:
+          title: Who should providers contact?
+          description: Choose the person best placed to organise ITT placements at your school. This information will be shown on your profile.
+          continue: Continue
+        subjects_known_step:
+          title: Do you know which subjects you would like to host?
+          continue: Continue
+        check_your_answers_step:
+          title: Check your answers
+          continue: Save and continue
+          change: Change
+          itt_contact: ITT contact
+        are_you_sure_step:
+          title: Are you sure you do not want to be contacted about placements?
+          caption: Not interested in hosting this year
+          this_will_help_providers: This will help providers know not to contact your school. You can change this at any time.
+          your_school_will_show_as: Your school will show as ‘not looking to host this year’. 
+          we_will_ask_again: We will ask you again in 12 months whether you would like to host placements. 
+          continue: Continue
+        confirm_step:
+          title: Confirm you’re interested in hosting
+          caption: Expression of interest
+          this_means_providers_can_see_your_school: 
+            This means providers can see that your school is thinking about hosting placements. 
+            Providers will reach out via email with more information. 
+          you_have_not_added_any_placements:
+            You haven’t added any placement information so providers cannot see any of your preferences.
+          continue: Continue

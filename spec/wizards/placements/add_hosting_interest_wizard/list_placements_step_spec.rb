@@ -1,10 +1,10 @@
 require "rails_helper"
 
-RSpec.describe Placements::MultiPlacementWizard::ListPlacementsStep, type: :model do
+RSpec.describe Placements::AddHostingInterestWizard::ListPlacementsStep, type: :model do
   subject(:step) { described_class.new(wizard: mock_wizard, attributes:) }
 
   let(:mock_wizard) do
-    instance_double(Placements::MultiPlacementWizard).tap do |mock_wizard|
+    instance_double(Placements::AddHostingInterestWizard).tap do |mock_wizard|
       allow(mock_wizard).to receive(:school).and_return(school)
     end
   end
@@ -19,7 +19,7 @@ RSpec.describe Placements::MultiPlacementWizard::ListPlacementsStep, type: :mode
   describe "validations" do
     it {
       expect(step).to validate_inclusion_of(:list_placements).in_array(
-        Placements::MultiPlacementWizard::ListPlacementsStep::LIST_PLACEMENTS,
+        Placements::AddHostingInterestWizard::ListPlacementsStep::LIST_PLACEMENTS,
       )
     }
   end

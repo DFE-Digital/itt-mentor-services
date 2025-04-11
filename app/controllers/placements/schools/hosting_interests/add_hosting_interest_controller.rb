@@ -1,4 +1,4 @@
-class Placements::Schools::Placements::AddMultiplePlacementsController < Placements::ApplicationController
+class Placements::Schools::HostingInterests::AddHostingInterestController < Placements::ApplicationController
   include WizardController
 
   before_action :set_school
@@ -6,17 +6,6 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
   before_action :authorize_placement
 
   attr_reader :school
-
-  # This only lives here as part of the concept testing
-  def concept_index
-    @pagy, placements = pagy(
-      school
-        .placements
-        .includes(:subject, :mentors, :additional_subjects, :provider)
-        .order("subjects.name"),
-    )
-    @placements = placements.decorate
-  end
 
   def update
     if !@wizard.save_step
@@ -44,7 +33,7 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
   def set_wizard
     state = session[state_key] ||= {}
     current_step = params[:step]&.to_sym
-    @wizard = Placements::MultiPlacementWizard.new(school:, params:, state:, current_step:)
+    @wizard = Placements::AddHostingInterestWizard.new(school:, params:, state:, current_step:)
   end
 
   def authorize_placement
@@ -52,7 +41,7 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
   end
 
   def step_path(step)
-    add_multiple_placements_placements_school_placements_path(state_key:, step:)
+    add_hosting_interest_placements_school_hosting_interests_path(state_key:, step:)
   end
 
   def index_path
@@ -63,7 +52,7 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
     if appetite == "actively_looking"
       concept_index_placements_school_placements_path(@school)
     else
-      whats_next_placements_school_placements_path(@school)
+      whats_next_placements_school_hosting_interests_path(@school)
     end
   end
 

@@ -8,8 +8,10 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
     and_subjects_exist
     and_academic_years_exist
     and_i_am_signed_in
-    when_i_am_on_the_placements_index_page
-    and_i_click_on_bulk_add_placements
+
+    # when_i_am_on_the_placements_index_page
+    # and_i_click_on_bulk_add_placements
+    when_i_visit_the_add_hosting_interest_page
     then_i_see_the_appetite_form
 
     when_i_select_actively_looking_to_host_placements
@@ -64,6 +66,10 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
   end
   alias_method :and_i_click_on_bulk_add_placements,
                :when_i_click_on_bulk_add_placements
+
+  def when_i_visit_the_add_hosting_interest_page
+    visit new_add_hosting_interest_placements_school_hosting_interests_path(@school)
+  end
 
   def then_i_see_the_appetite_form
     expect(page).to have_title(

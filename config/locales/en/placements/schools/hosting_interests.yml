@@ -1,0 +1,51 @@
+en:
+  placements:
+    schools:
+      hosting_interests:
+        add_hosting_interest:
+          edit:
+            cancel: Cancel
+          update:
+            heading: 
+              actively_looking: Placement information uploaded
+              not_open: Your profile has been updated
+              interested: Your status has been updated to ‘interesed in hosting placements’
+            body:
+              actively_looking_html:
+                Providers can see your placement preferences and may contact you to discuss them.<br><br>
+                You can add details to your placements such as expected date and provider.
+              not_open_html: 
+                You can change your profile in <a href="">settings</a> if your circumstances change.
+              interested_html:
+                This means providers can see that you’re looking to host placements.
+          whats_next:
+            return_to_placements: Return to placements list
+            what_happens_next: What happens next?
+            teaching_school_hub_url: https://www.gov.uk/guidance/teaching-school-hubs
+            not_open:
+              we_set_your_profile: We’ve set your profile to ‘not looking to host placements this year’.
+              your_contact_details_will_not_be_shown: Your contact details will not be shown to providers looking to place ITT trainees.
+              we_will_ask_you_again_html: 
+                We will ask you again in 12 months whether you would like to host placements. 
+                Make sure your profile has <a href=%{school_url}>up to date contact details of your ITT coordinator.</a>
+              if_you_would_like_to_host_placements:
+                If you would like to host placements this year, update your profile to let providers know you’re interested.
+              further_help_with_itt: Further help with ITT
+              your_hub_or_provider: Your teaching school hub or local provider can answer any questions about ITT.
+              always_keen: They are always keen to hear from potential host schools, and can help you in a way that meets the individual needs of your school.
+              find_your_nearest: "Find your nearest:"
+              teaching_school_hub: teaching school hub
+              itt_provider: ITT provider
+            interested:
+              providers_who_are_looking:
+                Providers who are looking for new schools to work with may get in touch.
+              add_placements_information_html:
+                You can also <a href=%{placements_url}>add placement information</a> to help providers know what help you need.
+              search_for_providers_html:
+                Alternatively you can search for providers using our <a href=%{providers_url}>provider directory</a>.
+              additional_help: Addtional help from your school teaching hub
+              find_your_local_school_hub: 
+                Find your local %{href} to get advice on offering an ITT placement.
+              teaching_school_hub: teaching school hub
+              accredited_provider_help:
+                They’ll also be able to help you find a local accredited ITT provider to work with.
