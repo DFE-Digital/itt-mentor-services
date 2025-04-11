@@ -19,11 +19,11 @@ RSpec.describe Claims::UserMailer, type: :mailer do
 
         If you have a DfE Sign-in account, you can use it to sign in:
 
-        [http://claims.localhost/sign-in](http://claims.localhost/sign-in)
+        [http://claims.localhost/sign-in?utm_campaign=school&utm_medium=notification&utm_source=email](http://claims.localhost/sign-in?utm_campaign=school&utm_medium=notification&utm_source=email)
 
         If you need to create a DfE Sign-in account, you can do this after clicking "Sign in using DfE Sign-in"
 
-        After creating a DfE Sign-in account, you will need to return to this email and [sign in to access the service](http://claims.localhost/sign-in).
+        After creating a DfE Sign-in account, you will need to return to this email and [sign in to access the service](http://claims.localhost/sign-in?utm_campaign=school&utm_medium=notification&utm_source=email).
 
         # Give feedback or report a problem
 
@@ -126,7 +126,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
 
           See your claims on the claim funding for mentor training website:
 
-          http://claims.localhost/schools/#{school.id}/claims/#{claim.id}
+          http://claims.localhost/schools/#{school.id}/claims/#{claim.id}?utm_campaign=school&utm_medium=notification&utm_source=email
 
           # Contact us
 
@@ -181,7 +181,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
 
           You can view the claim, edit and submit it on Claim funding for mentor training:
 
-          http://claims.localhost/schools/#{school.id}/claims/#{claim.id}
+          http://claims.localhost/schools/#{school.id}/claims/#{claim.id}?utm_campaign=school&utm_medium=notification&utm_source=email
 
           # Give feedback or report a problem
 
@@ -251,7 +251,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
         For academies, any recovery will be offset in your next available monthly payment. For maintained schools, any recovery will be offset in your local authority’s next available monthly payment and they will recover funding from you via their usual processes.
 
         Sign in to your account on Claim funding for mentor training to see more details:
-        http://claims.localhost/
+        http://claims.localhost/?utm_campaign=school&utm_medium=notification&utm_source=email
 
         # Contact us
         If you need any help, contact the team at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk). It may take up to 5 days to receive a response.
