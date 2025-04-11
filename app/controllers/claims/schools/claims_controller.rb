@@ -38,7 +38,7 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   end
 
   def authorize_claim
-    authorize @claim || Claims::Claim.new
+    authorize @claim || Claims::Claim.new(school: @school)
   end
 
   def edit_attribute_path(attribute)

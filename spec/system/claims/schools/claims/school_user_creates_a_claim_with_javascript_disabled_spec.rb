@@ -53,6 +53,7 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
       :claims_school,
       mentors: [@mentor_1, @mentor_2, @mentor_3],
       region: regions(:inner_london),
+      eligible_claim_windows: [@claim_window],
     )
   end
 

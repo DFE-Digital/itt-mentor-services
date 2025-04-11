@@ -6,7 +6,7 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
-      <% if policy(Claims::Claim).create? %>
+      <% if policy(Claims::Claim.new(school: @school)).create? %>
         <% if @school.mentors.any? %>
           <%= govuk_warning_text do %>
             <p class="govuk-body"><%= t(".guidance", end_date: l(Claims::ClaimWindow.current.ends_on, format: :long_with_day), start_year: Claims::ClaimWindow.current.starts_on.year, end_year: Claims::ClaimWindow.current.ends_on.year) %></p>
@@ -15,6 +15,10 @@
           <%= govuk_button_link_to(t(".add_claim"), new_add_claim_claims_school_claims_path) %>
         <% else %>
           <%= govuk_inset_text text: t(".add_mentor_guidance_html", link_to: govuk_link_to(t(".add_a_mentor"), claims_school_mentors_path(@school))) %>
+        <% end %>
+      <% elsif !@school.eligible_for_claim_window?(Claims::ClaimWindow.current) %>
+        <%= govuk_warning_text do %>
+          <p class="govuk-body"><%= t(".not_eligible_html", support_email: mail_to(t("claims.support_email"), t("claims.support_email_html"), class: "govuk-link")) %>
         <% end %>
       <% else %>
         <%= govuk_inset_text do %>
@@ -66,7 +70,7 @@
     </p>
   <% end %>
 
-  <% unless policy(Claims::Claim).create? %>
+  <% unless policy(Claims::Claim.new(school: @school)).create? %>
     <p class="govuk-body"><%= sanitize t(".window_closed_support", link_to: govuk_mail_to(t("claims.support_email"))) %></p>
   <% end %>
 </div>
