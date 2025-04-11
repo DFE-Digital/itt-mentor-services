@@ -16,6 +16,7 @@ en:
             closing_date_disclaimer_title: Important
             closing_date_disclaimer: You must submit a claim by 11:59pm on Friday 19 July 2024
             add_mentor_guidance_html: You need to %{link_to} before creating a claim.</p>
+            not_eligible_html: You are not eligible to claim funding for mentor training as our records show you have not hosted placements for trainee teachers this academic year. Email %{support_email} if you have any queries.
             add_a_mentor: add a mentor
             window_closed: Claims can no longer be submitted for school year September %{start_year} to July %{end_year}.
             window_closed_guidance: You can still %{link_to}.

@@ -29,7 +29,7 @@ RSpec.describe "Submit a draft claim", service: :claims, type: :system do
   scenario "Anne visits the show page of a draft claim" do
     user_exists_in_dfe_sign_in(user: anne)
     given_i_sign_in
-    given_there_is_a_current_claim_window
+    given_the_school_is_eligible_to_claim
 
     when_i_visit_the_claim_show_page(draft_claim)
     then_i_can_then_see_the_draft_claim_details
@@ -64,8 +64,8 @@ RSpec.describe "Submit a draft claim", service: :claims, type: :system do
     click_on "Sign in using DfE Sign In"
   end
 
-  def given_there_is_a_current_claim_window
-    Claims::ClaimWindow::Build.call(claim_window_params: { starts_on: 2.days.ago, ends_on: 2.days.from_now }).save!(validate: false)
+  def given_the_school_is_eligible_to_claim
+    school.eligible_claim_windows << Claims::ClaimWindow.current || create(:claim_window, :current)
   end
 
   def when_i_click_submit_button

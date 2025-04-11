@@ -4,8 +4,10 @@ describe Claims::ClaimPolicy do
   subject(:claim_policy) { described_class }
 
   let(:user) { build(:claims_user) }
-  let(:internal_draft_claim) { build(:claim) }
-  let(:draft_claim) { build(:claim, :draft) }
+  let(:school) { build(:claims_school, eligible_claim_windows: [current_claim_window]) }
+
+  let(:internal_draft_claim) { build(:claim, school:) }
+  let(:draft_claim) { build(:claim, :draft, school:) }
   let(:submitted_claim) { create(:claim, :submitted) }
 
   let(:payment_in_progress_claim) { create(:claim, :submitted, status: :payment_in_progress) }
@@ -26,8 +28,11 @@ describe Claims::ClaimPolicy do
   let(:clawback_in_progress_claim) { create(:claim, :submitted, status: :clawback_in_progress) }
   let(:clawback_complete_claim) { create(:claim, :submitted, status: :clawback_complete) }
 
+  let(:claim_window) { Claims::ClaimWindow::Build.call(claim_window_params: { starts_on: 2.days.ago, ends_on: 2.days.from_now }) }
+  let(:current_claim_window) { Claims::ClaimWindow.current }
+
   before do
-    Claims::ClaimWindow::Build.call(claim_window_params: { starts_on: 2.days.ago, ends_on: 2.days.from_now }).save!(validate: false)
+    claim_window.save!(validate: false)
   end
 
   permissions :edit? do
@@ -114,6 +119,14 @@ describe Claims::ClaimPolicy do
         expect(claim_policy).not_to permit(user, clawback_complete_claim)
       end
     end
+
+    context "when the claim's school is not eligible for the claim window" do
+      let(:school) { build(:claims_school) }
+
+      it "denies access" do
+        expect(claim_policy).not_to permit(user, internal_draft_claim)
+      end
+    end
   end
 
   permissions :update?, :rejected?, :submit? do
@@ -153,7 +166,7 @@ describe Claims::ClaimPolicy do
   permissions :rejected? do
     context "when user has an new claim (unsaved)" do
       it "grants access" do
-        expect(claim_policy).to permit(user, Claims::Claim.new)
+        expect(claim_policy).to permit(user, Claims::Claim.new(school:))
       end
     end
 

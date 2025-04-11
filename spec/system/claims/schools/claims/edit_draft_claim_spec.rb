@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Edit a claim", service: :claims, type: :system do
   let!(:claim_window) { create(:claim_window, :current) }
-  let(:school) { create(:claims_school, name: "A School", region: regions(:inner_london)) }
+  let(:school) { create(:claims_school, name: "A School", region: regions(:inner_london), eligible_claim_windows: [claim_window]) }
 
   let(:anne) do
     create(

@@ -47,7 +47,7 @@ RSpec.describe "View claims", service: :claims, type: :system do
 
   before do
     create(:claim, status: :internal_draft, school:)
-    given_there_is_a_current_claim_window
+    given_the_school_is_eligible_to_claim
   end
 
   scenario "Anne visits the claims index page with no mentors" do
@@ -68,21 +68,22 @@ RSpec.describe "View claims", service: :claims, type: :system do
   scenario "Anne visits the claims index page with internal draft claims" do
     user_exists_in_dfe_sign_in(user: anne)
     given_i_sign_in
-    vist_claims_index_page
+    visit_claims_index_page
     i_do_not_see_any_internal_draft_claims
   end
 
   private
 
-  def given_there_is_a_current_claim_window
-    Claims::ClaimWindow::Build.call(claim_window_params: { starts_on: 2.days.ago, ends_on: 2.days.from_now }).save!(validate: false)
+  def given_the_school_is_eligible_to_claim
+    school.eligible_claim_windows << claim_window
+    school_with_mentors.eligible_claim_windows << claim_window
   end
 
   def i_do_not_see_any_internal_draft_claims
     expect(page).to have_content("There are no claims for #{school.name}")
   end
 
-  def vist_claims_index_page
+  def visit_claims_index_page
     click_on "Claims"
   end
 

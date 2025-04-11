@@ -19,6 +19,7 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
   before do
     user_exists_in_dfe_sign_in(user: anne)
     given_there_is_a_current_claim_window
+    and_the_school_is_eligible_to_claim
     given_i_sign_in
 
     when_i_click("Add claim")
@@ -133,6 +134,10 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
 
   def given_there_is_a_current_claim_window
     @claim_window = create(:claim_window, :current)
+  end
+
+  def and_the_school_is_eligible_to_claim
+    school.eligible_claim_windows << @claim_window
   end
 
   def given_i_visit_claim_check_page
