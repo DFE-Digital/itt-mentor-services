@@ -125,7 +125,7 @@ RSpec.describe Claims::School do
     end
   end
 
-  describe "#eligible_for_claim_window" do
+  describe "#eligible_for_claim_window?" do
     let(:current_claim_window) { create(:claim_window, :current) }
     let(:historic_claim_window) { create(:claim_window, :historic) }
     let(:school) { create(:claims_school) }
@@ -134,11 +134,11 @@ RSpec.describe Claims::School do
 
     it "returns true when it is assciated with a claim window" do
       expect(
-        school.eligible_for_claim_window(current_claim_window),
+        school.eligible_for_claim_window?(current_claim_window),
       ).to be(true)
 
       expect(
-        school.eligible_for_claim_window(historic_claim_window),
+        school.eligible_for_claim_window?(historic_claim_window),
       ).to be(false)
     end
   end
