@@ -4,7 +4,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
   let!(:claim_window) { create(:claim_window, :current) }
   let(:mentor1) { build(:claims_mentor, first_name: "Anne") }
   let(:mentor2) { build(:claims_mentor, first_name: "Joe") }
-  let!(:school) { create(:claims_school, mentors: [mentor1, mentor2], region: regions(:inner_london)) }
+  let(:school) { create(:claims_school, mentors: [mentor1, mentor2], region: regions(:inner_london), eligible_claim_windows: [claim_window]) }
   let!(:anne) do
     create(
       :claims_user,
@@ -16,7 +16,6 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
   let!(:niot) { create(:claims_provider, :niot) }
 
   before do
-    given_there_is_a_current_claim_window
     user_exists_in_dfe_sign_in(user: anne)
     given_i_sign_in
   end
@@ -165,8 +164,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
   end
 
   context "when a claim has been created for the mentor in the previous year" do
-    let(:claim_window) { Claims::ClaimWindow.previous }
-    let(:claim) { build(:claim, :submitted, claim_window:, provider: bpn) }
+    let(:claim) { build(:claim, :submitted, claim_window: build(:claim_window, :historic), provider: bpn) }
     let(:mentor_training) { create(:mentor_training, mentor: mentor1, provider: bpn, claim:, hours_completed: 20) }
 
     before do
@@ -208,15 +206,21 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
     end
   end
 
+  context "when the school is ineligible to claim" do
+    let(:school) { create(:claims_school, mentors: [mentor1, mentor2], region: regions(:inner_london)) }
+
+    scenario "Anne creates a claim" do
+      given_i_am_on_the_claims_index_page
+      then_i_cannot_see_the_add_claim_button
+      and_i_can_see_the_ineligible_to_claim_message
+    end
+  end
+
   private
 
   def given_i_sign_in
     visit sign_in_path
     click_on "Sign in using DfE Sign In"
-  end
-
-  def given_there_is_a_current_claim_window
-    Claims::ClaimWindow::Build.call(claim_window_params: { starts_on: 2.days.ago, ends_on: 2.days.from_now }).save!(validate: false)
   end
 
   def given_my_school_has_fully_claimed_for_all_mentors_for_provider(provider)
@@ -392,5 +396,19 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
     expect(page.find("#claims-add-claim-wizard-provider-step-id-field").value).to eq(
       "Best Practice Network",
     )
+  end
+
+  def given_i_am_on_the_claims_index_page
+    expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
+    expect(page).to have_h1("Claims")
+    expect(primary_navigation).to have_current_item("Claims")
+  end
+
+  def then_i_cannot_see_the_add_claim_button
+    expect(page).not_to have_link("Add claim")
+  end
+
+  def and_i_can_see_the_ineligible_to_claim_message
+    expect(page).to have_warning_text("You are not eligible to claim funding for mentor training as our records show you have not hosted placements for trainee teachers this academic year. Email ittmentor.funding@education.gov.uk if you have any queries.")
   end
 end

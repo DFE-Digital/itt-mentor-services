@@ -46,8 +46,6 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
   end
 
   def school_eligible_to_claim?
-    return false if record.school.blank?
-
     record.school.eligible_for_claim_window?(Claims::ClaimWindow.current)
   end
 end

@@ -34,6 +34,7 @@ en:
           guidance: You have until 11:59pm on %{end_date} to submit claims for the academic year September %{start_year} to July %{end_year}.
           add_mentor_guidance_html: Before you can start a claim you will need to %{link_to}.
           add_a_mentor: add a mentor
+          not_eligible_html: You are not eligible to claim funding for mentor training as our records show you have not hosted placements for trainee teachers this academic year. Email %{support_email} if you have any queries.
           window_closed: Claims can no longer be submitted for school year September %{start_year} to July %{end_year}.
           window_closed_guidance: "You can still %{link_to}. Final closing date for claims: <strong>%{time}</strong>."
           window_closed_guidance_link_text: add a mentor

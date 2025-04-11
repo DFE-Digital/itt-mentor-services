@@ -33,7 +33,7 @@ class Claims::Schools::Claims::AddClaimController < Claims::ApplicationControlle
   end
 
   def authorize_claim
-    authorize Claims::Claim, :create?
+    authorize Claims::Claim.new(school: @school), :create?
   end
 
   def step_path(step)
