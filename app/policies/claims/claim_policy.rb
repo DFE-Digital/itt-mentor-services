@@ -1,10 +1,10 @@
 class Claims::ClaimPolicy < Claims::ApplicationPolicy
   def create?
-    current_claim_window?
+    current_claim_window? && school_eligible_to_claim?
   end
 
   def edit?
-    claim_claim_window_current? && record.in_draft?
+    claim_claim_window_current? && record.in_draft? && school_eligible_to_claim?
   end
 
   def update?
@@ -16,7 +16,7 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
   end
 
   def submit?
-    current_claim_window? && record.in_draft?
+    current_claim_window? && record.in_draft? && school_eligible_to_claim?
   end
 
   def rejected?
@@ -43,5 +43,11 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
 
   def claim_claim_window_current?
     record.claim_window.current?
+  end
+
+  def school_eligible_to_claim?
+    return false if record.school.blank?
+
+    record.school.eligible_for_claim_window?(Claims::ClaimWindow.current)
   end
 end

@@ -87,7 +87,7 @@ class Claims::School < School
     claims_grant_conditions_accepted_at?
   end
 
-  def eligible_for_claim_window(claim_window)
+  def eligible_for_claim_window?(claim_window)
     eligible_claim_windows.include?(claim_window)
   end
 end
