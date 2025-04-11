@@ -9,7 +9,7 @@ class Claims::UserMailer < Claims::ApplicationMailer
                    service_name:,
                    heading: t(".heading"),
                    support_email:,
-                   sign_in_url:,
+                   sign_in_url: sign_in_url(utm_source: "email", utm_medium: "notification", utm_campaign: "school"),
                  )
   end
 
@@ -26,7 +26,7 @@ class Claims::UserMailer < Claims::ApplicationMailer
   end
 
   def claim_submitted_notification(user, claim)
-    link_to_claim = claims_school_claim_url(id: claim.id, school_id: claim.school.id)
+    link_to_claim = claims_school_claim_url(id: claim.id, school_id: claim.school.id, utm_source: "email", utm_medium: "notification", utm_campaign: "school")
 
     notify_email to: user.email,
                  subject: t(".subject"),
@@ -44,7 +44,7 @@ class Claims::UserMailer < Claims::ApplicationMailer
   end
 
   def claim_created_support_notification(claim, user)
-    link_to_claim = claims_school_claim_url(id: claim.id, school_id: claim.school.id)
+    link_to_claim = claims_school_claim_url(id: claim.id, school_id: claim.school.id, utm_source: "email", utm_medium: "notification", utm_campaign: "school")
 
     notify_email to: user.email,
                  subject: t(".subject"),
@@ -60,7 +60,7 @@ class Claims::UserMailer < Claims::ApplicationMailer
   end
 
   def claim_requires_clawback(claim, user)
-    link_to_claim = claims_school_claim_url(id: claim.id, school_id: claim.school.id)
+    link_to_claim = claims_school_claim_url(id: claim.id, school_id: claim.school.id, utm_source: "email", utm_medium: "notification", utm_campaign: "school")
 
     notify_email to: user.email,
                  subject: t(".subject"),
@@ -71,6 +71,6 @@ class Claims::UserMailer < Claims::ApplicationMailer
                          link_to_claim:,
                          support_email:,
                          service_name:,
-                         service_url: claims_root_url)
+                         service_url: claims_root_url(utm_source: "email", utm_medium: "notification", utm_campaign: "school"))
   end
 end

@@ -17,7 +17,7 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
 
         This service allows you to view placements published by schools. Schools can also assign you to placements they want you to place a trainee on.
 
-        [Sign in to Manage school placements](http://placements.localhost/sign-in)
+        [Sign in to Manage school placements](http://placements.localhost/sign-in?utm_campaign=provider&utm_medium=notification&utm_source=email)
 
         If you do not have DfE Sign-in, create an account. You can then return to this email to access the service.
 
@@ -115,7 +115,7 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
         Contact the school on [#{source_organisation.school_contact_email_address}](mailto:#{source_organisation.school_contact_email_address}) if you have any questions.
 
         ## Your account
-        [Sign in to Manage school placements](http://placements.localhost/sign-in)
+        [Sign in to Manage school placements](http://placements.localhost/sign-in?utm_campaign=provider&utm_medium=notification&utm_source=email)
 
         Manage school placements service
       EMAIL
@@ -148,7 +148,7 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
           If you think this is a mistake, contact them on [#{source_organisation.school_contact_email_address}](mailto:#{source_organisation.school_contact_email_address}).
 
           ## Your account
-          [Sign in to Manage school placements](http://placements.localhost/sign-in)
+          [Sign in to Manage school placements](http://placements.localhost/sign-in?utm_campaign=provider&utm_medium=notification&utm_source=email)
 
           Manage school placements service
         EMAIL
@@ -173,12 +173,12 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
           ## What happens next?
           You will remain assigned to current placements for this academic year unless the school removes you. This placement is:
 
-          - [#{placement.decorate.title}](http://placements.localhost/providers/#{partner_organisation.id}/placements/#{placement.id})
+          - [#{placement.decorate.title}](http://placements.localhost/providers/#{partner_organisation.id}/placements/#{placement.id}?utm_campaign=provider&utm_medium=notification&utm_source=email)
 
           We recommend you speak to the school to check whether they expect you to fill this placement. Contact them on [#{source_organisation.school_contact_email_address}](mailto:#{source_organisation.school_contact_email_address}).
 
           ## Your account
-          [Sign in to Manage school placements](http://placements.localhost/sign-in)
+          [Sign in to Manage school placements](http://placements.localhost/sign-in?utm_campaign=provider&utm_medium=notification&utm_source=email)
 
           Manage school placements service
         EMAIL
@@ -205,13 +205,13 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
           ## What happens next?
           You will remain assigned to current placements for this academic year unless the school removes you. These placements are:
 
-          - [#{placement_one.decorate.title}](http://placements.localhost/providers/#{partner_organisation.id}/placements/#{placement_one.id})
-          - [#{placement_two.decorate.title}](http://placements.localhost/providers/#{partner_organisation.id}/placements/#{placement_two.id})
+          - [#{placement_one.decorate.title}](http://placements.localhost/providers/#{partner_organisation.id}/placements/#{placement_one.id}?utm_campaign=provider&utm_medium=notification&utm_source=email)
+          - [#{placement_two.decorate.title}](http://placements.localhost/providers/#{partner_organisation.id}/placements/#{placement_two.id}?utm_campaign=provider&utm_medium=notification&utm_source=email)
 
           We recommend you speak to the school to check whether they expect you to fill these placements. Contact them on [#{source_organisation.school_contact_email_address}](mailto:#{source_organisation.school_contact_email_address}).
 
           ## Your account
-          [Sign in to Manage school placements](http://placements.localhost/sign-in)
+          [Sign in to Manage school placements](http://placements.localhost/sign-in?utm_campaign=provider&utm_medium=notification&utm_source=email)
 
           Manage school placements service
         EMAIL
@@ -243,7 +243,7 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
 
         #{school.name} has assigned #{provider.name} to the following placement:
 
-        - [#{placement.decorate.title}](http://placements.localhost/providers/#{provider.id}/placements/#{placement.id})
+        - [#{placement.decorate.title}](http://placements.localhost/providers/#{provider.id}/placements/#{placement.id}?utm_campaign=provider&utm_medium=notification&utm_source=email)
 
         ## What happens next?
         You should now arrange for one of your trainees to fulfil this placement.
@@ -251,7 +251,7 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
         Contact the school at [#{school.school_contact_email_address}](mailto:#{school.school_contact_email_address}).
 
         ## Your account
-        [Sign in to Manage school placements](http://placements.localhost/sign-in)
+        [Sign in to Manage school placements](http://placements.localhost/sign-in?utm_campaign=provider&utm_medium=notification&utm_source=email)
 
         Manage school placements service
       EMAIL
@@ -282,7 +282,7 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
 
         #{school.name} has removed #{provider.name} from the following placement:
 
-        - [#{placement.decorate.title}](http://placements.localhost/providers/#{provider.id}/placements/#{placement.id})
+        - [#{placement.decorate.title}](http://placements.localhost/providers/#{provider.id}/placements/#{placement.id}?utm_campaign=provider&utm_medium=notification&utm_source=email)
 
         You can no longer allocate a trainee onto this placement.
 
@@ -290,7 +290,7 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
         If you think this is a mistake, contact the school on [#{school.school_contact_email_address}](mailto:#{school.school_contact_email_address}).
 
         ## Your account
-        [Sign in to Manage school placements](http://placements.localhost/sign-in)
+        [Sign in to Manage school placements](http://placements.localhost/sign-in?utm_campaign=provider&utm_medium=notification&utm_source=email)
 
         Manage school placements service
       EMAIL

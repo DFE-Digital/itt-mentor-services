@@ -17,7 +17,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
 
         This service allows you to publish and manage placements at your school. You can assign your preferred providers to fulfil your placements with suitable trainees.
 
-        [Sign in to Manage school placements](http://placements.localhost/sign-in)
+        [Sign in to Manage school placements](http://placements.localhost/sign-in?utm_campaign=school&utm_medium=notification&utm_source=email)
 
         If you do not have DfE Sign-in, create an account. You can then return to this email to access the service.
 
@@ -112,7 +112,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
         Contact the provider on [#{source_organisation.email_addresses.first}](mailto:#{source_organisation.email_addresses.first}) if you have any questions.
 
         ## Your account
-        [Sign in to Manage school placements](http://placements.localhost/sign-in)
+        [Sign in to Manage school placements](http://placements.localhost/sign-in?utm_campaign=school&utm_medium=notification&utm_source=email)
 
         Manage school placements service
       EMAIL
@@ -146,7 +146,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
           If you think this is a mistake, contact them on [#{source_organisation.email_addresses.first}](mailto:#{source_organisation.email_addresses.first}).
 
           ## Your account
-          [Sign in to Manage school placements](http://placements.localhost/sign-in)
+          [Sign in to Manage school placements](http://placements.localhost/sign-in?utm_campaign=school&utm_medium=notification&utm_source=email)
 
           Manage school placements service
         EMAIL
@@ -169,12 +169,12 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
           ## What happens next?
           They will remain assigned to current placements unless you remove them. These placements are:
 
-          - [#{placement.decorate.title}](http://placements.localhost/schools/#{partner_organisation.id}/placements/#{placement.id})
+          - [#{placement.decorate.title}](http://placements.localhost/schools/#{partner_organisation.id}/placements/#{placement.id}?utm_campaign=school&utm_medium=notification&utm_source=email)
 
           We recommend you speak to the provider to avoid confusion about placing trainees at your school. Contact them on [#{source_organisation.email_addresses.first}](mailto:#{source_organisation.email_addresses.first}).
 
           ## Your account
-          [Sign in to Manage school placements](http://placements.localhost/sign-in)
+          [Sign in to Manage school placements](http://placements.localhost/sign-in?utm_campaign=school&utm_medium=notification&utm_source=email)
 
           Manage school placements service
         EMAIL

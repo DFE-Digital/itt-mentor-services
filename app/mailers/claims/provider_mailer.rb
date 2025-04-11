@@ -8,8 +8,8 @@ class Claims::ProviderMailer < Claims::ApplicationMailer
                  body: t(
                    ".body",
                    provider_name: @provider_sampling.provider_name,
-                   download_csv_url: claims_sampling_claims_url(token:),
-                   support_email:, service_name:, completion_date:, service_url: claims_root_url
+                   download_csv_url: claims_sampling_claims_url(token:, utm_source: "email", utm_medium: "notification", utm_campaign: "provider"),
+                   support_email:, service_name:, completion_date:, service_url: claims_root_url(utm_source: "email", utm_medium: "notification", utm_campaign: "provider")
                  )
   end
 
@@ -22,8 +22,8 @@ class Claims::ProviderMailer < Claims::ApplicationMailer
                  body: t(
                    ".body",
                    provider_name: @provider_sampling.provider_name,
-                   download_csv_url: claims_sampling_claims_url(token:),
-                   support_email:, service_name:, completion_date:, service_url: claims_root_url
+                   download_csv_url: claims_sampling_claims_url(token:, utm_source: "email", utm_medium: "notification", utm_campaign: "provider"),
+                   support_email:, service_name:, completion_date:, service_url: claims_root_url(utm_source: "email", utm_medium: "notification", utm_campaign: "provider")
                  )
   end
 

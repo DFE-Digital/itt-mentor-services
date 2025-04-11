@@ -51,7 +51,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           Visit the GOV.UK claim funding for mentor training website to download the file:
 
-          [http://claims.localhost/sampling/claims?token=token](http://claims.localhost/sampling/claims?token=token)
+          [http://claims.localhost/sampling/claims?token=token&utm_campaign=provider&utm_medium=notification&utm_source=email](http://claims.localhost/sampling/claims?token=token&utm_campaign=provider&utm_medium=notification&utm_source=email)
 
           This link will expire in 7 days due to data security. To request a new link, reply to this email.
 
@@ -95,7 +95,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           If you need any help with completing the quality assurance, contact the team at [#{support_email}](mailto:#{support_email})
 
-          Learn more about [funding for mentor training on GOV.UK](http://claims.localhost/)
+          Learn more about [funding for mentor training on GOV.UK](http://claims.localhost/?utm_campaign=provider&utm_medium=notification&utm_source=email)
 
 
           Claim funding for mentor training team
@@ -136,7 +136,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           Visit the GOV.UK claim funding for mentor training website to download the file:
 
-          [http://claims.localhost/sampling/claims?token=token](http://claims.localhost/sampling/claims?token=token)
+          [http://claims.localhost/sampling/claims?token=token&utm_campaign=provider&utm_medium=notification&utm_source=email](http://claims.localhost/sampling/claims?token=token&utm_campaign=provider&utm_medium=notification&utm_source=email)
 
           This link will expire in 7 days due to data security. To request a new link, reply to this email.
 
@@ -180,7 +180,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           If you need any help with completing the quality assurance, contact the team at [#{support_email}](mailto:#{support_email})
 
-          Learn more about [funding for mentor training on GOV.UK](http://claims.localhost/)
+          Learn more about [funding for mentor training on GOV.UK](http://claims.localhost/?utm_campaign=provider&utm_medium=notification&utm_source=email)
 
 
           Claim funding for mentor training team
@@ -227,7 +227,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           Visit the GOV.UK claim funding for mentor training website to download the file:
 
-          [http://claims.localhost/sampling/claims?token=token](http://claims.localhost/sampling/claims?token=token)
+          [http://claims.localhost/sampling/claims?token=token&utm_campaign=provider&utm_medium=notification&utm_source=email](http://claims.localhost/sampling/claims?token=token&utm_campaign=provider&utm_medium=notification&utm_source=email)
 
           This link will expire in 7 days due to data security. To request a new link, reply to this email.
 
@@ -271,7 +271,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           If you need any help with completing the quality assurance, contact the team at [#{support_email}](mailto:#{support_email})
 
-          Learn more about [funding for mentor training on GOV.UK](http://claims.localhost/)
+          Learn more about [funding for mentor training on GOV.UK](http://claims.localhost/?utm_campaign=provider&utm_medium=notification&utm_source=email)
 
 
           Claim funding for mentor training team
@@ -314,7 +314,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           Visit the GOV.UK claim funding for mentor training website to download the file:
 
-          [http://claims.localhost/sampling/claims?token=token](http://claims.localhost/sampling/claims?token=token)
+          [http://claims.localhost/sampling/claims?token=token&utm_campaign=provider&utm_medium=notification&utm_source=email](http://claims.localhost/sampling/claims?token=token&utm_campaign=provider&utm_medium=notification&utm_source=email)
 
           This link will expire in 7 days due to data security. To request a new link, reply to this email.
 
@@ -358,7 +358,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           If you need any help with completing the quality assurance, contact the team at [#{support_email}](mailto:#{support_email})
 
-          Learn more about [funding for mentor training on GOV.UK](http://claims.localhost/)
+          Learn more about [funding for mentor training on GOV.UK](http://claims.localhost/?utm_campaign=provider&utm_medium=notification&utm_source=email)
 
 
           Claim funding for mentor training team
