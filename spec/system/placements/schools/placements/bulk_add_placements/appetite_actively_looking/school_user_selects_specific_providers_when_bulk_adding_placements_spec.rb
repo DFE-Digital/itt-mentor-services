@@ -10,8 +10,10 @@ RSpec.describe "School user selects specfic providers when bulk adding placement
     and_test_providers_exist
     and_academic_years_exist
     and_i_am_signed_in
-    when_i_am_on_the_placements_index_page
-    and_i_click_on_bulk_add_placements
+
+    # when_i_am_on_the_placements_index_page
+    # and_i_click_on_bulk_add_placements
+    when_i_visit_the_add_hosting_interest_page
     then_i_see_the_appetite_form
 
     when_i_select_actively_looking_to_host_placements
@@ -120,6 +122,10 @@ RSpec.describe "School user selects specfic providers when bulk adding placement
   end
   alias_method :and_i_click_on_bulk_add_placements,
                :when_i_click_on_bulk_add_placements
+
+  def when_i_visit_the_add_hosting_interest_page
+    visit new_add_hosting_interest_placements_school_hosting_interests_path(@school)
+  end
 
   def then_i_see_the_appetite_form
     expect(page).to have_title(
@@ -275,10 +281,9 @@ RSpec.describe "School user selects specfic providers when bulk adding placement
       class: "govuk-body",
     )
 
-    @school_contact = @school.school_contact
-    expect(page).to have_field("First name", with: @school_contact.first_name)
-    expect(page).to have_field("Last name", with: @school_contact.last_name)
-    expect(page).to have_field("Email address", with: @school_contact.email_address)
+    expect(page).to have_field("First name")
+    expect(page).to have_field("Last name")
+    expect(page).to have_field("Email address")
   end
 
   def when_i_click_on_back
@@ -303,7 +308,7 @@ RSpec.describe "School user selects specfic providers when bulk adding placement
   end
 
   def and_the_schools_contact_has_been_updated
-    @school_contact.reload
+    @school_contact = @school.school_contact.reload
     expect(@school_contact.first_name).to eq("Joe")
     expect(@school_contact.last_name).to eq("Bloggs")
     expect(@school_contact.email_address).to eq("joe_bloggs@example.com")

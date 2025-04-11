@@ -1,0 +1,16 @@
+en:
+  shared:
+    wizards:
+      placements:
+        multiple_placements_wizard:
+          check_your_answers:
+            education_phase: Education phase
+            phase: Phase
+            placements: Placements
+            subject: Subject
+            number_of_placements: Number of placements
+            primary_placements: Primary placements
+            secondary_placements: Secondary placements
+            providers: Providers
+            provider_name: Provider name
+            change: Change

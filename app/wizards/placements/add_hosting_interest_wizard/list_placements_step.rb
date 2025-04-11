@@ -1,4 +1,4 @@
-class Placements::MultiPlacementWizard::ListPlacementsStep < BaseStep
+class Placements::AddHostingInterestWizard::ListPlacementsStep < BaseStep
   attribute :list_placements
 
   YES = "Yes".freeze

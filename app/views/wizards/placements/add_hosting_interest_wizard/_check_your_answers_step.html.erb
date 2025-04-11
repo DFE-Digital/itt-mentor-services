@@ -1,0 +1,49 @@
+<% content_for :page_title, title_with_error_prefix(
+  t(".title"),
+  error: current_step.errors.any?,
+) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+
+      <%= render "shared/wizards/placements/multiple_placements_wizard/check_your_answers",
+        current_step:,
+        wizard: @wizard %>
+
+      <h2 class="govuk-heading-m"><%= t(".itt_contact") %></h2>
+
+      <%= govuk_summary_list(html_attributes: { id: "school_contact" }) do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: User.human_attribute_name(:first_name)) %>
+          <% row.with_value(text: current_step.school_contact_first_name) %>
+          <% row.with_action(text: t(".change"),
+                             href: step_path(:school_contact),
+                             visually_hidden_text: User.human_attribute_name(:first_name),
+                             classes: ["govuk-link--no-visited-state"]) %>
+        <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: User.human_attribute_name(:last_name)) %>
+          <% row.with_value(text: current_step.school_contact_last_name) %>
+          <% row.with_action(text: t(".change"),
+                             href: step_path(:school_contact),
+                             visually_hidden_text: User.human_attribute_name(:last_name),
+                             classes: ["govuk-link--no-visited-state"]) %>
+        <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: User.human_attribute_name(:email_address)) %>
+          <% row.with_value(text: current_step.school_contact_email_address) %>
+          <% row.with_action(text: t(".change"),
+                             href: step_path(:school_contact),
+                             visually_hidden_text: User.human_attribute_name(:email_address),
+                             classes: ["govuk-link--no-visited-state"]) %>
+        <% end %>
+      <% end %>
+
+      <%= f.govuk_submit t(".continue") %>
+    </div>
+  </div>
+<% end %>

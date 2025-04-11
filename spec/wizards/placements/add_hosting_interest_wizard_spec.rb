@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Placements::MultiPlacementWizard do
+RSpec.describe Placements::AddHostingInterestWizard do
   subject(:wizard) { described_class.new(state:, params:, school:, current_step:) }
 
   let(:school) { create(:placements_school) }

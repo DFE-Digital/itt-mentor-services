@@ -1,4 +1,4 @@
-class Placements::MultiPlacementWizard::AppetiteStep < BaseStep
+class Placements::AddHostingInterestWizard::AppetiteStep < BaseStep
   attribute :appetite
 
   validates :appetite, presence: true, inclusion: { in: ->(step) { step.placement_appetites } }
