@@ -1,4 +1,10 @@
 class Placements::ProviderUserMailer < Placements::UserMailer
+  def user_membership_created_notification(user, organisation)
+    @campaign_type = "provider"
+
+    super
+  end
+
   def partnership_created_notification(user, source_organisation, partner_organisation)
     @user_name = user.first_name
     @school_name = source_organisation.name
