@@ -5,7 +5,8 @@ RSpec.describe "Support user does not select a claim window", service: :claims, 
     given_claim_windows_exist
     and_schools_exist
     and_i_am_signed_in
-    when_i_navigate_to_onboard_multiple_schools
+    when_i_navigate_to_the_settings_index_page
+    and_i_navigate_to_onboard_multiple_schools
     then_i_see_the_claim_window_page
 
     when_click_on_continue
@@ -29,14 +30,14 @@ RSpec.describe "Support user does not select a claim window", service: :claims, 
     sign_in_claims_support_user
   end
 
-  def when_i_navigate_to_the_organisations_index_page
+  def when_i_navigate_to_the_settings_index_page
     within(primary_navigation) do
-      click_on "Organisations"
+      click_on "Settings"
     end
   end
 
-  def when_i_navigate_to_onboard_multiple_schools
-    visit new_onboard_schools_claims_support_schools_path
+  def and_i_navigate_to_onboard_multiple_schools
+    click_on "Onboard schools"
   end
 
   def then_i_see_the_claim_window_page
