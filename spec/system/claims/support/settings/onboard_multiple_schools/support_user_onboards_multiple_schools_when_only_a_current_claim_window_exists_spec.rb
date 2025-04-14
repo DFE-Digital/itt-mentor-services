@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support user onboards multiple schools for the current claim window", service: :claims, type: :system do
+RSpec.describe "Support user onboards multiple schools when only a current claim window exists", service: :claims, type: :system do
   include ActiveJob::TestHelper
 
   around do |example|
@@ -8,13 +8,14 @@ RSpec.describe "Support user onboards multiple schools for the current claim win
   end
 
   scenario do
-    given_claim_windows_exist
+    given_a_current_claim_window_exists
     and_schools_exist
     and_i_am_signed_in
-    when_i_navigate_to_onboard_multiple_schools
+    when_i_navigate_to_the_settings_index_page
+    and_i_navigate_to_onboard_multiple_schools
     then_i_see_the_claim_window_page
 
-    when_i_select_the_upcoming_claim_window
+    when_i_select_the_current_claim_window
     and_click_on_continue
     then_i_see_the_upload_page
 
@@ -35,9 +36,8 @@ RSpec.describe "Support user onboards multiple schools for the current claim win
 
   private
 
-  def given_claim_windows_exist
+  def given_a_current_claim_window_exists
     @current_claim_window = create(:claim_window, :current).decorate
-    @upcoming_claim_window = create(:claim_window, :upcoming).decorate
   end
 
   def and_schools_exist
@@ -50,14 +50,14 @@ RSpec.describe "Support user onboards multiple schools for the current claim win
     sign_in_claims_support_user
   end
 
-  def when_i_navigate_to_the_organisations_index_page
+  def when_i_navigate_to_the_settings_index_page
     within(primary_navigation) do
-      click_on "Organisations"
+      click_on "Settings"
     end
   end
 
-  def when_i_navigate_to_onboard_multiple_schools
-    visit new_onboard_schools_claims_support_schools_path
+  def and_i_navigate_to_onboard_multiple_schools
+    click_on "Onboard schools"
   end
 
   def then_i_see_the_upload_page
@@ -115,11 +115,12 @@ RSpec.describe "Support user onboards multiple schools for the current claim win
     expect(page).to have_element(:h1, text: "Select a claim window", class: "govuk-fieldset__heading")
 
     expect(page).to have_field(@current_claim_window.name, type: :radio)
-    expect(page).to have_field(@upcoming_claim_window.name, type: :radio)
+
+    expect(page).not_to have_element(:div, text: "Upcoming", class: "govuk-radios__hint")
   end
 
-  def when_i_select_the_upcoming_claim_window
-    choose @upcoming_claim_window.name
+  def when_i_select_the_current_claim_window
+    choose @current_claim_window.name
   end
 
   def and_click_on_continue
