@@ -8,8 +8,6 @@ RSpec.describe "School user successfully completes the not open journey",
     and_academic_years_exist
     and_i_am_signed_in
 
-    # when_i_am_on_the_placements_index_page
-    # and_i_click_on_bulk_add_placements
     when_i_visit_the_add_hosting_interest_page
     then_i_see_the_appetite_form
 
