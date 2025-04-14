@@ -1,21 +1,17 @@
 require "rails_helper"
 
-RSpec.describe "School user does not select a child subjects",
+RSpec.describe "School user adds their hosting interest and bulk adds placements for a subject with child subjects",
                service: :placements,
                type: :system do
   scenario do
     given_the_bulk_add_placements_flag_is_enabled
     and_subjects_exist
     and_academic_years_exist
+    and_test_providers_exist
     and_i_am_signed_in
 
-    # when_i_am_on_the_placements_index_page
-    # and_i_click_on_bulk_add_placements
-    when_i_visit_the_add_hosting_interest_page
-    then_i_see_the_appetite_form
-
-    when_i_select_actively_looking_to_host_placements
-    and_i_click_on_continue
+    when_i_am_on_the_placements_index_page
+    and_i_click_on_bulk_add_placements
     then_i_see_the_phase_form
 
     when_i_select_secondary
@@ -29,9 +25,25 @@ RSpec.describe "School user does not select a child subjects",
     when_i_fill_in_the_number_of_secondary_placements_i_require
     and_i_click_on_continue
     then_i_see_the_subject_selection_for_modern_languages_form
+    and_i_see_the_form_is_for_the_first_placement
+
+    when_i_select_french
+    and_i_click_on_continue
+    then_i_see_the_subject_selection_for_modern_languages_form
+    and_i_see_the_form_is_for_the_second_placement
+
+    when_i_select_spanish
+    and_i_select_russian
+    and_i_click_on_continue
+    then_i_see_the_provider_select_form
 
     when_i_click_on_continue
-    then_i_see_a_validation_error_for_selecting_a_subject
+    then_i_see_the_check_your_answers_page
+
+    when_i_click_save_and_continue
+    then_i_see_my_responses_with_successfully_updated
+    and_i_see_placements_i_created_for_the_subject_french
+    and_i_see_placements_i_created_for_the_subject_french_and_russian
   end
 
   private
@@ -58,6 +70,12 @@ RSpec.describe "School user does not select a child subjects",
     @next_academic_year_name = @next_academic_year.name
   end
 
+  def and_test_providers_exist
+    @provider_1 = create(:provider, name: "Test Provider 123")
+    @provider_2 = create(:provider, name: "Test Provider 456")
+    @provider_3 = create(:provider, name: "Test Provider 789")
+  end
+
   def and_i_am_signed_in
     @school = create(:placements_school)
     sign_in_placements_user(organisations: [@school])
@@ -78,29 +96,6 @@ RSpec.describe "School user does not select a child subjects",
   end
   alias_method :and_i_click_on_bulk_add_placements,
                :when_i_click_on_bulk_add_placements
-
-  def when_i_visit_the_add_hosting_interest_page
-    visit new_add_hosting_interest_placements_school_hosting_interests_path(@school)
-  end
-
-  def then_i_see_the_appetite_form
-    expect(page).to have_title(
-      "Will you host placements this academic year (#{@next_academic_year_name})? - Manage school placements - GOV.UK",
-    )
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_element(
-      :legend,
-      text: "Will you host placements this academic year (#{@next_academic_year_name})?",
-      class: "govuk-fieldset__legend",
-    )
-    expect(page).to have_field("Yes - Let providers know what I'm willing to host", type: :radio)
-    expect(page).to have_field("Yes - Let providers know I am open to placements", type: :radio)
-    expect(page).to have_field("No - Let providers know I am not hosting and do not want to be contacted", type: :radio)
-  end
-
-  def when_i_select_actively_looking_to_host_placements
-    choose "Yes - Let providers know what I'm willing to host"
-  end
 
   def when_i_click_on_continue
     click_on "Continue"
@@ -124,24 +119,6 @@ RSpec.describe "School user does not select a child subjects",
 
   def when_i_select_secondary
     check "Secondary"
-  end
-
-  def then_i_see_the_subjects_known_form
-    expect(page).to have_title(
-      "Do you know which subjects you would like to host? - Manage school placements - GOV.UK",
-    )
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_element(
-      :legend,
-      text: "Do you know which subjects you would like to host?",
-      class: "govuk-fieldset__legend",
-    )
-    expect(page).to have_field("Yes", type: :radio)
-    expect(page).to have_field("No", type: :radio)
-  end
-
-  def when_i_select_yes
-    choose "Yes"
   end
 
   def then_i_see_the_secondary_subject_selection_form
@@ -176,16 +153,16 @@ RSpec.describe "School user does not select a child subjects",
   end
 
   def when_i_fill_in_the_number_of_secondary_placements_i_require
-    fill_in "Modern languages", with: 1
+    fill_in "Modern languages", with: 2
   end
 
   def then_i_see_the_subject_selection_for_modern_languages_form
     expect(page).to have_title(
-      "You selected 1 Modern languages placements - Manage school placements - GOV.UK",
+      "You selected 2 Modern languages placements - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1(
-      "You selected 1 Modern languages placements",
+      "You selected 2 Modern languages placements",
       class: "govuk-heading-l",
     )
     expect(page).to have_h2(
@@ -198,9 +175,84 @@ RSpec.describe "School user does not select a child subjects",
     expect(page).to have_field("Russian", type: :checkbox)
   end
 
-  def then_i_see_a_validation_error_for_selecting_a_subject
-    expect(page).to have_validation_error(
-      "Please select a subject",
+  def when_i_select_french
+    check "French"
+  end
+
+  def when_i_select_spanish
+    check "Spanish"
+  end
+
+  def and_i_select_russian
+    check "Russian"
+  end
+
+  def and_i_see_the_form_is_for_the_first_placement
+    expect(page).to have_element(:h2, text: "Placement 1 of 2", class: "govuk-fieldset__heading")
+  end
+
+  def and_i_see_the_form_is_for_the_second_placement
+    expect(page).to have_element(:h2, text: "Placement 2 of 2", class: "govuk-fieldset__heading")
+  end
+
+  def then_i_see_my_responses_with_successfully_updated
+    expect(page).to have_success_banner(
+      "Placements added",
+      "Providers can see your placements and may contact you to discuss them. You can add details to your placements such as expected date and provider.",
     )
+  end
+
+  def and_i_see_placements_i_created_for_the_subject_french
+    expect(page).to have_link(
+      "French",
+      class: "govuk-link govuk-link--no-visited-state",
+      match: :prefer_exact,
+      count: 1,
+    )
+  end
+
+  def and_i_see_placements_i_created_for_the_subject_french_and_russian
+    expect(page).to have_link(
+      "Russian and Spanish",
+      class: "govuk-link govuk-link--no-visited-state",
+      match: :prefer_exact,
+      count: 1,
+    )
+  end
+
+  def then_i_see_the_provider_select_form
+    expect(page).to have_title(
+      "Select the providers you currently work with - Manage school placements - GOV.UK",
+    )
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_element(
+      :h1,
+      text: "Select the providers you currently work with",
+      class: "govuk-fieldset__heading",
+    )
+    expect(page).to have_field("Select all", type: :checkbox)
+    expect(page).to have_field("Test Provider 123", type: :checkbox)
+    expect(page).to have_field("Test Provider 456", type: :checkbox)
+    expect(page).to have_field("Test Provider 789", type: :checkbox)
+  end
+
+  def when_i_click_save_and_continue
+    click_on "Save and continue"
+  end
+
+  def then_i_see_the_check_your_answers_page
+    expect(page).to have_title(
+      "Check your answers - Manage school placements - GOV.UK",
+    )
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_h1("Check your answers")
+
+    expect(page).to have_h2("Education phase")
+    expect(page).to have_summary_list_row("Phase", "Secondary")
+
+    expect(page).to have_h2("Placements")
+    expect(page).to have_summary_list_row("Modern languages", "2")
+
+    expect(page).not_to have_h2("Providers")
   end
 end

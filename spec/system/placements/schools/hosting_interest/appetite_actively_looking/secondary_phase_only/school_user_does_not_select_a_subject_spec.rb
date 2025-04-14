@@ -9,8 +9,6 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
     and_academic_years_exist
     and_i_am_signed_in
 
-    # when_i_am_on_the_placements_index_page
-    # and_i_click_on_bulk_add_placements
     when_i_visit_the_add_hosting_interest_page
     then_i_see_the_appetite_form
 
@@ -22,13 +20,8 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
     and_i_click_on_continue
     then_i_see_the_secondary_subject_selection_form
 
-    when_i_select_english
-    and_i_click_on_continue
-    then_i_see_the_secondary_subject_placement_quantity_form
-
-    when_i_fill_in_the_number_of_english_placements_with_zero
-    and_i_click_on_continue
-    then_i_see_a_validation_error_for_entering_a_zero_quantity
+    when_i_click_on_continue
+    then_i_see_a_validation_error_for_selecting_a_subject
   end
 
   private
@@ -153,27 +146,9 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
     expect(page).to have_field("Science", type: :checkbox)
   end
 
-  def when_i_select_english
-    check "English"
-  end
-
-  def then_i_see_the_secondary_subject_placement_quantity_form
-    expect(page).to have_title(
-      "Secondary subjects: Enter the number of placements you would be willing to host - Manage school placements - GOV.UK",
-    )
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Secondary subjects: Enter the number of placements you would be willing to host", class: "govuk-heading-l")
-    expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
-    expect(page).to have_field("English", type: :number)
-  end
-
-  def when_i_fill_in_the_number_of_english_placements_with_zero
-    fill_in "English", with: 0
-  end
-
-  def then_i_see_a_validation_error_for_entering_a_zero_quantity
+  def then_i_see_a_validation_error_for_selecting_a_subject
     expect(page).to have_validation_error(
-      "English must be greater than 0",
+      "Please select a secondary subject",
     )
   end
 end

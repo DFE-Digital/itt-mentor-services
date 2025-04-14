@@ -205,22 +205,12 @@ module Placements
       @wizard_school_contact = steps[:school_contact].school_contact
     end
 
-    def subjects_known?
-      subjects_known_step = steps.fetch(:subjects_known)
-      subjects_known_step.subjects_known == subjects_known_step.class::YES
-    end
-
     def appetite
       @appetite ||= steps.fetch(:appetite).appetite
     end
 
     def reasons_not_hosting
       @reasons_not_hosting ||= steps.fetch(:reason_not_hosting).reasons_not_hosting
-    end
-
-    def list_placements?
-      list_placements_step = steps.fetch(:list_placements)
-      list_placements_step.list_placements == list_placements_step.class::YES
     end
 
     def hosting_interest

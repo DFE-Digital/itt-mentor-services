@@ -10,13 +10,8 @@ RSpec.describe "School user bulk adds placements for the primary phases",
     and_academic_years_exist
     and_i_am_signed_in
 
-    # when_i_am_on_the_placements_index_page
-    # and_i_click_on_bulk_add_placements
-    when_i_visit_the_add_hosting_interest_page
-    then_i_see_the_appetite_form
-
-    when_i_select_actively_looking_to_host_placements
-    and_i_click_on_continue
+    when_i_am_on_the_placements_index_page
+    and_i_click_on_bulk_add_placements
     then_i_see_the_phase_form
 
     when_i_select_primary
@@ -33,16 +28,10 @@ RSpec.describe "School user bulk adds placements for the primary phases",
     then_i_see_the_provider_select_form
 
     when_i_click_on_continue
-    then_i_see_the_school_contact_form
-
-    when_i_fill_in_the_school_contact_details
-    and_i_click_on_continue
     then_i_see_the_check_your_answers_page
 
     when_i_click_save_and_continue
     then_i_see_my_responses_with_successfully_updated
-    and_the_schools_contact_has_been_updated
-    and_the_schools_hosting_interest_for_the_next_year_is_updated
     and_i_see_placements_i_created_for_the_subject_primary
     and_i_see_placements_i_created_for_the_subject_handwriting
   end
@@ -94,29 +83,6 @@ RSpec.describe "School user bulk adds placements for the primary phases",
   alias_method :and_i_click_on_bulk_add_placements,
                :when_i_click_on_bulk_add_placements
 
-  def when_i_visit_the_add_hosting_interest_page
-    visit new_add_hosting_interest_placements_school_hosting_interests_path(@school)
-  end
-
-  def then_i_see_the_appetite_form
-    expect(page).to have_title(
-      "Will you host placements this academic year (#{@next_academic_year_name})? - Manage school placements - GOV.UK",
-    )
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_element(
-      :legend,
-      text: "Will you host placements this academic year (#{@next_academic_year_name})?",
-      class: "govuk-fieldset__legend",
-    )
-    expect(page).to have_field("Yes - Let providers know what I'm willing to host", type: :radio)
-    expect(page).to have_field("Yes - Let providers know I am open to placements", type: :radio)
-    expect(page).to have_field("No - Let providers know I am not hosting and do not want to be contacted", type: :radio)
-  end
-
-  def when_i_select_actively_looking_to_host_placements
-    choose "Yes - Let providers know what I'm willing to host"
-  end
-
   def when_i_click_on_continue
     click_on "Continue"
   end
@@ -143,24 +109,6 @@ RSpec.describe "School user bulk adds placements for the primary phases",
 
   def and_i_select_secondary
     check "Secondary"
-  end
-
-  def then_i_see_the_subjects_known_form
-    expect(page).to have_title(
-      "Do you know which subjects you would like to host? - Manage school placements - GOV.UK",
-    )
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_element(
-      :legend,
-      text: "Do you know which subjects you would like to host?",
-      class: "govuk-fieldset__legend",
-    )
-    expect(page).to have_field("Yes", type: :radio)
-    expect(page).to have_field("No", type: :radio)
-  end
-
-  def when_i_select_yes
-    choose "Yes"
   end
 
   def then_i_see_the_primary_subject_selection_form
@@ -199,51 +147,11 @@ RSpec.describe "School user bulk adds placements for the primary phases",
     fill_in "Handwriting", with: 3
   end
 
-  def then_i_see_the_school_contact_form
-    expect(page).to have_title(
-      "Who should providers contact? - Manage school placements - GOV.UK",
-    )
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Who should providers contact?")
-    expect(page).to have_element(
-      :p,
-      text: "Choose the person best placed to organise ITT placements at your school. "\
-        "This information will be shown on your profile.",
-      class: "govuk-body",
-    )
-
-    expect(page).to have_field("First name")
-    expect(page).to have_field("Last name")
-    expect(page).to have_field("Email address")
-  end
-
-  def when_i_fill_in_the_school_contact_details
-    fill_in "First name", with: "Joe"
-    fill_in "Last name", with: "Bloggs"
-    fill_in "Email address", with: "joe_bloggs@example.com"
-  end
-
   def then_i_see_my_responses_with_successfully_updated
     expect(page).to have_success_banner(
-      "Placement information uploaded",
-      "Providers can see your placement preferences and may contact you to discuss them. You can add details to your placements such as expected date and provider.",
+      "Placements added",
+      "Providers can see your placements and may contact you to discuss them. You can add details to your placements such as expected date and provider.",
     )
-  end
-
-  def and_the_schools_contact_has_been_updated
-    @school_contact = @school.school_contact.reload
-    expect(@school_contact.first_name).to eq("Joe")
-    expect(@school_contact.last_name).to eq("Bloggs")
-    expect(@school_contact.email_address).to eq("joe_bloggs@example.com")
-  end
-
-  def and_the_schools_hosting_interest_for_the_next_year_is_updated
-    hosting_interest = @school.hosting_interests.for_academic_year(@next_academic_year).last
-    expect(hosting_interest.appetite).to eq("actively_looking")
-  end
-
-  def when_i_click_on_the_academic_year_tab
-    click_on "Next year (#{@next_academic_year.name})"
   end
 
   def and_i_see_placements_i_created_for_the_subject_primary
@@ -299,10 +207,5 @@ RSpec.describe "School user bulk adds placements for the primary phases",
     expect(page).to have_summary_list_row("Handwriting", "3")
 
     expect(page).not_to have_h2("Providers")
-
-    expect(page).to have_h2("ITT contact")
-    expect(page).to have_summary_list_row("First name", "Joe")
-    expect(page).to have_summary_list_row("Last name", "Bloggs")
-    expect(page).to have_summary_list_row("Email address", "joe_bloggs@example.com")
   end
 end

@@ -45,18 +45,10 @@ en:
           edit:
             cancel: Cancel
           update:
-            heading: 
-              actively_looking: Placement information uploaded
-              not_open: Your profile has been updated
-              interested: Your status has been updated to ‘interesed in hosting placements’
-            body:
-              actively_looking_html: 
-                Providers can see your placement preferences and may contact you to discuss them.<br><br>
-                You can add details to your placements such as expected date and provider.
-              not_open_html: 
-                You can change your profile in <a href="">settings</a> if your circumstances change.
-              interested_html:
-                This means providers can see that you’re looking to host placements.
+            heading: Placements added
+            body_html:
+              Providers can see your placements and may contact you to discuss them.<br><br>
+              You can add details to your placements such as expected date and provider.
           concept_index:
             page_title: Placements
             placements: Placements
