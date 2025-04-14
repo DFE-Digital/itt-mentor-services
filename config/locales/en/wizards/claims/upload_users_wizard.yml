@@ -3,8 +3,8 @@ en:
     claims:
       upload_users_wizard:
         upload_step:
-          page_title: Upload users - Upload users - Claims
-          caption: Upload users
+          page_title: Upload users - Onboard users - Claims
+          caption: Onboard users
           title: Upload users
           upload_csv_file: Upload CSV file
           upload: Upload
@@ -18,16 +18,16 @@ en:
               - email
               - school_urn
         confirmation_step:
-          page_title: Are you sure you want to upload the users? - Upload users - Claims
-          caption: Upload users
+          page_title: Are you sure you want to upload the users? - Onboard users - Claims
+          caption: Onboard users
           title: Confirm you want to upload users
           preview_file_name: Preview of %{file_name}
           confirm_upload: Confirm upload
           only_showing_first_five_rows: Only showing the first 5 rows
           showing_all_rows: Showing all rows
         upload_errors_step:
-          page_title: Upload users - Upload users - Claims
-          caption: Upload users
+          page_title: Upload users - Onboard users - Claims
+          caption: Onboard users
           title: Upload users
           error_summary:
             title: There is a problem

@@ -1,10 +1,11 @@
 require "rails_helper"
 
-RSpec.describe "Support user onboards users", :js, service: :claims, type: :system do
+RSpec.describe "Support user onboards users", service: :claims, type: :system do
   scenario do
     given_schools_exist
     and_i_am_signed_in
-    when_i_navigate_to_onboard_multiple_users
+    when_i_navigate_to_the_settings_index_page
+    and_i_navigate_to_onboard_multiple_users
     then_i_see_the_upload_page
 
     when_i_upload_a_valid_file
@@ -26,19 +27,19 @@ RSpec.describe "Support user onboards users", :js, service: :claims, type: :syst
     sign_in_claims_support_user
   end
 
-  def when_i_navigate_to_the_organisations_index_page
+  def when_i_navigate_to_the_settings_index_page
     within(primary_navigation) do
-      click_on "Organisations"
+      click_on "Settings"
     end
   end
 
-  def when_i_navigate_to_onboard_multiple_users
-    click_on "Upload users"
+  def and_i_navigate_to_onboard_multiple_users
+    click_on "Onboard users"
   end
 
   def then_i_see_the_upload_page
-    expect(page).to have_title("Upload users - Upload users")
-    expect(page).to have_element(:span, text: "Upload users", class: "govuk-caption-l")
+    expect(page).to have_title("Upload users - Onboard users")
+    expect(page).to have_element(:span, text: "Onboard users", class: "govuk-caption-l")
     expect(page).to have_h1("Upload users", class: "govuk-heading-l")
     expect(page).to have_button("Upload")
   end
@@ -52,8 +53,8 @@ RSpec.describe "Support user onboards users", :js, service: :claims, type: :syst
   end
 
   def then_i_see_the_confirm_users_you_want_to_upload_page
-    expect(page).to have_title("Are you sure you want to upload the users? - Upload users")
-    expect(page).to have_element(:span, text: "Upload users", class: "govuk-caption-l")
+    expect(page).to have_title("Are you sure you want to upload the users? - Onboard users")
+    expect(page).to have_element(:span, text: "Onboard users", class: "govuk-caption-l")
     expect(page).to have_h1("Confirm you want to upload users", class: "govuk-heading-l")
     expect(page).to have_h2(:p, text: "Preview of upload_users.csv", class: "govuk-body")
     expect(page).to have_table_row(
