@@ -1,18 +1,15 @@
 require "rails_helper"
 
-RSpec.describe "School user selects all providers when bulk adding placements",
+RSpec.describe "School user adds their hosting interest and bulk adds placements for the primary phases",
                service: :placements,
                type: :system do
   scenario do
     given_the_bulk_add_placements_flag_is_enabled
-    and_the_school_partner_providers_flag_is_enabled
     and_subjects_exist
     and_test_providers_exist
     and_academic_years_exist
     and_i_am_signed_in
 
-    # when_i_am_on_the_placements_index_page
-    # and_i_click_on_bulk_add_placements
     when_i_visit_the_add_hosting_interest_page
     then_i_see_the_appetite_form
 
@@ -21,30 +18,19 @@ RSpec.describe "School user selects all providers when bulk adding placements",
     then_i_see_the_phase_form
 
     when_i_select_primary
-    and_i_select_secondary
     and_i_click_on_continue
     then_i_see_the_primary_subject_selection_form
 
     when_i_select_primary
-    and_i_select_primary_with_science
+    and_i_select_handwriting
     and_i_click_on_continue
     then_i_see_the_primary_subject_placement_quantity_form
 
     when_i_fill_in_the_number_of_primary_placements_i_require
     and_i_click_on_continue
-    then_i_see_the_secondary_subject_selection_form
-
-    when_i_select_english
-    and_i_select_mathematics
-    and_i_click_on_continue
-    then_i_see_the_secondary_subject_placement_quantity_form
-
-    when_i_fill_in_the_number_of_secondary_placements_i_require
-    and_i_click_on_continue
     then_i_see_the_provider_select_form
 
-    when_i_click_select_all
-    and_i_click_on_continue
+    when_i_click_on_continue
     then_i_see_the_school_contact_form
 
     when_i_fill_in_the_school_contact_details
@@ -57,13 +43,6 @@ RSpec.describe "School user selects all providers when bulk adding placements",
     and_the_schools_hosting_interest_for_the_next_year_is_updated
     and_i_see_placements_i_created_for_the_subject_primary
     and_i_see_placements_i_created_for_the_subject_handwriting
-    and_i_see_placements_i_created_for_the_subject_english
-    and_i_see_placements_i_created_for_the_subject_mathematics
-
-    when_i_click_on_the_providers_navigation
-    then_i_see_test_provider_123
-    and_i_see_test_provider_456
-    and_i_see_test_provider_789
   end
 
   private
@@ -73,19 +52,10 @@ RSpec.describe "School user selects all providers when bulk adding placements",
     Flipper.enable(:bulk_add_placements)
   end
 
-  def and_the_school_partner_providers_flag_is_enabled
-    Flipper.add(:school_partner_providers)
-    Flipper.enable(:school_partner_providers)
-  end
-
   def and_subjects_exist
     @primary = create(:subject, :primary, name: "Primary")
     @phonics = create(:subject, :primary, name: "Phonics")
     @handwriting = create(:subject, :primary, name: "Handwriting")
-
-    @english = create(:subject, :secondary, name: "English")
-    @mathematics = create(:subject, :secondary, name: "Mathematics")
-    @science = create(:subject, :secondary, name: "Science")
   end
 
   def and_academic_years_exist
@@ -207,7 +177,7 @@ RSpec.describe "School user selects all providers when bulk adding placements",
     expect(page).to have_field("Handwriting", type: :checkbox)
   end
 
-  def and_i_select_primary_with_science
+  def and_i_select_handwriting
     check "Handwriting"
   end
 
@@ -227,46 +197,6 @@ RSpec.describe "School user selects all providers when bulk adding placements",
     fill_in "Handwriting", with: 3
   end
 
-  def then_i_see_the_secondary_subject_selection_form
-    expect(page).to have_title(
-      "Select secondary school subjects - Manage school placements - GOV.UK",
-    )
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_element(
-      :legend,
-      text: "Select secondary school subjects",
-      class: "govuk-fieldset__legend",
-    )
-    expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
-    expect(page).to have_field("English", type: :checkbox)
-    expect(page).to have_field("Mathematics", type: :checkbox)
-    expect(page).to have_field("Science", type: :checkbox)
-  end
-
-  def when_i_select_english
-    check "English"
-  end
-
-  def and_i_select_mathematics
-    check "Mathematics"
-  end
-
-  def then_i_see_the_secondary_subject_placement_quantity_form
-    expect(page).to have_title(
-      "Secondary subjects: Enter the number of placements you would be willing to host - Manage school placements - GOV.UK",
-    )
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Secondary subjects: Enter the number of placements you would be willing to host", class: "govuk-heading-l")
-    expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
-    expect(page).to have_field("English", type: :number)
-    expect(page).to have_field("Mathematics", type: :number)
-  end
-
-  def when_i_fill_in_the_number_of_secondary_placements_i_require
-    fill_in "English", with: 1
-    fill_in "Mathematics", with: 4
-  end
-
   def then_i_see_the_school_contact_form
     expect(page).to have_title(
       "Who should providers contact? - Manage school placements - GOV.UK",
@@ -283,14 +213,6 @@ RSpec.describe "School user selects all providers when bulk adding placements",
     expect(page).to have_field("First name")
     expect(page).to have_field("Last name")
     expect(page).to have_field("Email address")
-  end
-
-  def when_i_click_on_back
-    click_on "Back"
-  end
-
-  def when_i_click_on_cancel
-    click_on "Cancel"
   end
 
   def when_i_fill_in_the_school_contact_details
@@ -340,24 +262,6 @@ RSpec.describe "School user selects all providers when bulk adding placements",
     )
   end
 
-  def and_i_see_placements_i_created_for_the_subject_english
-    expect(page).to have_link(
-      "English",
-      class: "govuk-link govuk-link--no-visited-state",
-      match: :prefer_exact,
-      count: 1,
-    )
-  end
-
-  def and_i_see_placements_i_created_for_the_subject_mathematics
-    expect(page).to have_link(
-      "Mathematics",
-      class: "govuk-link govuk-link--no-visited-state",
-      match: :prefer_exact,
-      count: 4,
-    )
-  end
-
   def then_i_see_the_provider_select_form
     expect(page).to have_title(
       "Select the providers you currently work with - Manage school placements - GOV.UK",
@@ -374,28 +278,6 @@ RSpec.describe "School user selects all providers when bulk adding placements",
     expect(page).to have_field("Test Provider 789", type: :checkbox)
   end
 
-  def when_i_click_select_all
-    check "Select all"
-  end
-
-  def when_i_click_on_the_providers_navigation
-    within(primary_navigation) do
-      click_on "Providers"
-    end
-  end
-
-  def then_i_see_test_provider_123
-    expect(page).to have_link("Test Provider 123")
-  end
-
-  def and_i_see_test_provider_456
-    expect(page).to have_link("Test Provider 456")
-  end
-
-  def and_i_see_test_provider_789
-    expect(page).to have_link("Test Provider 789")
-  end
-
   def when_i_click_save_and_continue
     click_on "Save and continue"
   end
@@ -408,32 +290,13 @@ RSpec.describe "School user selects all providers when bulk adding placements",
     expect(page).to have_h1("Check your answers")
 
     expect(page).to have_h2("Education phase")
-    expect(page).to have_summary_list_row("Phase", "Primary and Secondary")
+    expect(page).to have_summary_list_row("Phase", "Primary")
 
-    expect(page).to have_h2("Primary placements")
+    expect(page).to have_h2("Placements")
     expect(page).to have_summary_list_row("Primary", "2")
     expect(page).to have_summary_list_row("Handwriting", "3")
 
-    expect(page).to have_h2("Secondary placements")
-    expect(page).to have_summary_list_row("English", "1")
-    expect(page).to have_summary_list_row("Mathematics", "4")
-
-    expect(page).to have_h2("Providers")
-    expect(page).to have_element(
-      :dt,
-      text: "Test Provider 123",
-      class: "govuk-summary-list__key",
-    )
-    expect(page).to have_element(
-      :dt,
-      text: "Test Provider 456",
-      class: "govuk-summary-list__key",
-    )
-    expect(page).to have_element(
-      :dt,
-      text: "Test Provider 789",
-      class: "govuk-summary-list__key",
-    )
+    expect(page).not_to have_h2("Providers")
 
     expect(page).to have_h2("ITT contact")
     expect(page).to have_summary_list_row("First name", "Joe")

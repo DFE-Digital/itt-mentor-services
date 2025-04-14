@@ -28,9 +28,9 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
       @wizard.reset_state
       school.reload
 
-      redirect_to success_path, flash: {
-        heading: t(".heading.#{appetite}"),
-        body: t(".body.#{appetite}_html"),
+      redirect_to concept_index_placements_school_placements_path(@school), flash: {
+        heading: t(".heading"),
+        body: t(".body_html"),
       }
     end
   end
@@ -57,25 +57,5 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
 
   def index_path
     placements_school_placements_path(@school)
-  end
-
-  def success_path
-    if appetite == "actively_looking"
-      concept_index_placements_school_placements_path(@school)
-    else
-      whats_next_placements_school_placements_path(@school)
-    end
-  end
-
-  def appetite
-    @appetite ||= next_academic_year_hosting_interest.appetite
-  end
-
-  def next_academic_year_hosting_interest
-    @next_academic_year_hosting_interest ||= school
-      .reload
-      .hosting_interests
-      .for_academic_year(Placements::AcademicYear.current.next)
-      .last
   end
 end

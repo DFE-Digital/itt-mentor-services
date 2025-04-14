@@ -1,16 +1,15 @@
 require "rails_helper"
 
-RSpec.describe "School user bulk adds placements for the secondary phase",
+RSpec.describe "School user adds their hosting interest and bulk adds placements for the secondary phase",
                service: :placements,
                type: :system do
   scenario do
     given_the_bulk_add_placements_flag_is_enabled
     and_subjects_exist
+    and_test_providers_exist
     and_academic_years_exist
     and_i_am_signed_in
 
-    # when_i_am_on_the_placements_index_page
-    # and_i_click_on_bulk_add_placements
     when_i_visit_the_add_hosting_interest_page
     then_i_see_the_appetite_form
 
@@ -23,12 +22,27 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
     then_i_see_the_secondary_subject_selection_form
 
     when_i_select_english
+    and_i_select_mathematics
     and_i_click_on_continue
     then_i_see_the_secondary_subject_placement_quantity_form
 
-    when_i_fill_in_the_number_of_english_placements_with_a_float
+    when_i_fill_in_the_number_of_secondary_placements_i_require
     and_i_click_on_continue
-    then_i_see_a_validation_error_for_not_entering_a_whole_number_quantity
+    then_i_see_the_provider_select_form
+
+    when_i_click_on_continue
+    then_i_see_the_school_contact_form
+
+    when_i_fill_in_the_school_contact_details
+    and_i_click_on_continue
+    then_i_see_the_check_your_answers_page
+
+    when_i_click_save_and_continue
+    then_i_see_my_responses_with_successfully_updated
+    and_the_schools_contact_has_been_updated
+    and_the_schools_hosting_interest_for_the_next_year_is_updated
+    and_i_see_placements_i_created_for_the_subject_english
+    and_i_see_placements_i_created_for_the_subject_mathematics
   end
 
   private
@@ -51,6 +65,12 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
     @next_academic_year_name = @next_academic_year.name
   end
 
+  def and_test_providers_exist
+    @provider_1 = create(:provider, name: "Test Provider 123")
+    @provider_2 = create(:provider, name: "Test Provider 456")
+    @provider_3 = create(:provider, name: "Test Provider 789")
+  end
+
   def and_i_am_signed_in
     @school = create(:placements_school)
     sign_in_placements_user(organisations: [@school])
@@ -71,10 +91,6 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
   end
   alias_method :and_i_click_on_bulk_add_placements,
                :when_i_click_on_bulk_add_placements
-
-  def when_i_visit_the_add_hosting_interest_page
-    visit new_add_hosting_interest_placements_school_hosting_interests_path(@school)
-  end
 
   def then_i_see_the_appetite_form
     expect(page).to have_title(
@@ -100,6 +116,10 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
   end
   alias_method :and_i_click_on_continue,
                :when_i_click_on_continue
+
+  def when_i_visit_the_add_hosting_interest_page
+    visit new_add_hosting_interest_placements_school_hosting_interests_path(@school)
+  end
 
   def then_i_see_the_phase_form
     expect(page).to have_title(
@@ -157,6 +177,10 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
     check "English"
   end
 
+  def and_i_select_mathematics
+    check "Mathematics"
+  end
+
   def then_i_see_the_secondary_subject_placement_quantity_form
     expect(page).to have_title(
       "Secondary subjects: Enter the number of placements you would be willing to host - Manage school placements - GOV.UK",
@@ -165,15 +189,118 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
     expect(page).to have_h1("Secondary subjects: Enter the number of placements you would be willing to host", class: "govuk-heading-l")
     expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
     expect(page).to have_field("English", type: :number)
+    expect(page).to have_field("Mathematics", type: :number)
   end
 
-  def when_i_fill_in_the_number_of_english_placements_with_a_float
-    fill_in "English", with: 2.3
+  def when_i_fill_in_the_number_of_secondary_placements_i_require
+    fill_in "English", with: 1
+    fill_in "Mathematics", with: 4
   end
 
-  def then_i_see_a_validation_error_for_not_entering_a_whole_number_quantity
-    expect(page).to have_validation_error(
-      "English must be a whole number",
+  def then_i_see_the_school_contact_form
+    expect(page).to have_title(
+      "Who should providers contact? - Manage school placements - GOV.UK",
     )
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_h1("Who should providers contact?")
+    expect(page).to have_element(
+      :p,
+      text: "Choose the person best placed to organise ITT placements at your school. "\
+        "This information will be shown on your profile.",
+      class: "govuk-body",
+    )
+
+    expect(page).to have_field("First name")
+    expect(page).to have_field("Last name")
+    expect(page).to have_field("Email address")
+  end
+
+  def when_i_fill_in_the_school_contact_details
+    fill_in "First name", with: "Joe"
+    fill_in "Last name", with: "Bloggs"
+    fill_in "Email address", with: "joe_bloggs@example.com"
+  end
+
+  def then_i_see_my_responses_with_successfully_updated
+    expect(page).to have_success_banner(
+      "Placement information uploaded",
+      "Providers can see your placement preferences and may contact you to discuss them. You can add details to your placements such as expected date and provider.",
+    )
+  end
+
+  def and_the_schools_contact_has_been_updated
+    @school_contact = @school.school_contact.reload
+    expect(@school_contact.first_name).to eq("Joe")
+    expect(@school_contact.last_name).to eq("Bloggs")
+    expect(@school_contact.email_address).to eq("joe_bloggs@example.com")
+  end
+
+  def and_the_schools_hosting_interest_for_the_next_year_is_updated
+    hosting_interest = @school.hosting_interests.for_academic_year(@next_academic_year).last
+    expect(hosting_interest.appetite).to eq("actively_looking")
+  end
+
+  def when_i_click_on_the_academic_year_tab
+    click_on "Next year (#{@next_academic_year.name})"
+  end
+
+  def and_i_see_placements_i_created_for_the_subject_english
+    expect(page).to have_link(
+      "English",
+      class: "govuk-link govuk-link--no-visited-state",
+      match: :prefer_exact,
+      count: 1,
+    )
+  end
+
+  def and_i_see_placements_i_created_for_the_subject_mathematics
+    expect(page).to have_link(
+      "Mathematics",
+      class: "govuk-link govuk-link--no-visited-state",
+      match: :prefer_exact,
+      count: 4,
+    )
+  end
+
+  def then_i_see_the_provider_select_form
+    expect(page).to have_title(
+      "Select the providers you currently work with - Manage school placements - GOV.UK",
+    )
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_element(
+      :h1,
+      text: "Select the providers you currently work with",
+      class: "govuk-fieldset__heading",
+    )
+    expect(page).to have_field("Select all", type: :checkbox)
+    expect(page).to have_field("Test Provider 123", type: :checkbox)
+    expect(page).to have_field("Test Provider 456", type: :checkbox)
+    expect(page).to have_field("Test Provider 789", type: :checkbox)
+  end
+
+  def when_i_click_save_and_continue
+    click_on "Save and continue"
+  end
+
+  def then_i_see_the_check_your_answers_page
+    expect(page).to have_title(
+      "Check your answers - Manage school placements - GOV.UK",
+    )
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_h1("Check your answers")
+
+    expect(page).to have_h2("Education phase")
+    expect(page).to have_summary_list_row("Phase", "Secondary")
+
+    expect(page).to have_h2("Placements")
+    expect(page).to have_summary_list_row("English", "1")
+    expect(page).to have_summary_list_row("Mathematics", "4")
+
+    expect(page).not_to have_h2("Providers")
+
+    expect(page).to have_h2("ITT contact")
+    expect(page).to have_summary_list_row("First name", "Joe")
+    expect(page).to have_summary_list_row("Last name", "Bloggs")
+    expect(page).to have_summary_list_row("Email address", "joe_bloggs@example.com")
   end
 end
