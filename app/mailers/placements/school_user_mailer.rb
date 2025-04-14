@@ -1,4 +1,10 @@
 class Placements::SchoolUserMailer < Placements::UserMailer
+  def user_membership_created_notification(user, organisation)
+    @campaign_type = "school"
+
+    super
+  end
+
   def user_membership_destroyed_notification(user, organisation)
     @itt_contact_email = organisation.school_contact_email_address
 
