@@ -4,7 +4,8 @@ RSpec.describe "Support user does not upload a file", service: :claims, type: :s
   scenario do
     given_schools_exist
     and_i_am_signed_in
-    when_i_navigate_to_onboard_multiple_users
+    when_i_navigate_to_the_settings_index_page
+    and_i_navigate_to_onboard_multiple_users
     then_i_see_the_upload_page
 
     when_i_click_on_upload
@@ -23,19 +24,19 @@ RSpec.describe "Support user does not upload a file", service: :claims, type: :s
     sign_in_claims_support_user
   end
 
-  def when_i_navigate_to_the_organisations_index_page
+  def when_i_navigate_to_the_settings_index_page
     within(primary_navigation) do
-      click_on "Organisations"
+      click_on "Settings"
     end
   end
 
-  def when_i_navigate_to_onboard_multiple_users
-    click_on "Upload users"
+  def and_i_navigate_to_onboard_multiple_users
+    click_on "Onboard users"
   end
 
   def then_i_see_the_upload_page
-    expect(page).to have_title("Upload users - Upload users")
-    expect(page).to have_element(:span, text: "Upload users", class: "govuk-caption-l")
+    expect(page).to have_title("Upload users - Onboard users")
+    expect(page).to have_element(:span, text: "Onboard users", class: "govuk-caption-l")
     expect(page).to have_h1("Upload users", class: "govuk-heading-l")
     expect(page).to have_button("Upload")
   end
@@ -45,8 +46,8 @@ RSpec.describe "Support user does not upload a file", service: :claims, type: :s
   end
 
   def then_i_see_the_errors_page
-    expect(page).to have_title("Error: Upload users - Upload users - Claims - Claim funding for mentor training - GOV.UK")
-    expect(page).to have_element(:span, text: "Upload users", class: "govuk-caption-l")
+    expect(page).to have_title("Error: Upload users - Onboard users - Claims - Claim funding for mentor training - GOV.UK")
+    expect(page).to have_element(:span, text: "Onboard users", class: "govuk-caption-l")
     expect(page).to have_h1("Upload users", class: "govuk-heading-l")
     expect(page).to have_validation_error("Select a CSV file to upload")
   end
