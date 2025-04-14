@@ -1,15 +1,15 @@
 require "rails_helper"
 
-RSpec.describe Claims::UploadUsersWizard::ConfirmationStep, type: :model do
+RSpec.describe Claims::OnboardUsersWizard::ConfirmationStep, type: :model do
   subject(:step) { described_class.new(wizard: mock_wizard, attributes:) }
 
   let(:mock_wizard) do
-    instance_double(Claims::UploadUsersWizard).tap do |mock_wizard|
+    instance_double(Claims::OnboardUsersWizard).tap do |mock_wizard|
       allow(mock_wizard).to receive_messages(steps: { upload: mock_upload_step })
     end
   end
   let(:mock_upload_step) do
-    instance_double(Claims::UploadUsersWizard::UploadStep).tap do |mock_upload_step|
+    instance_double(Claims::OnboardUsersWizard::UploadStep).tap do |mock_upload_step|
       allow(mock_upload_step).to receive_messages(
         invalid_email_rows:,
         invalid_school_urn_rows:,

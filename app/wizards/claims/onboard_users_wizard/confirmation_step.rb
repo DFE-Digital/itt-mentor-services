@@ -1,4 +1,4 @@
-class Claims::UploadUsersWizard::ConfirmationStep < BaseStep
+class Claims::OnboardUsersWizard::ConfirmationStep < BaseStep
   delegate :file_name, :csv, to: :upload_step
 
   def csv_headers

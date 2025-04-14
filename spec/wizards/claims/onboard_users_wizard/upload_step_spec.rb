@@ -1,10 +1,10 @@
 require "rails_helper"
 
-RSpec.describe Claims::UploadUsersWizard::UploadStep, type: :model do
+RSpec.describe Claims::OnboardUsersWizard::UploadStep, type: :model do
   subject(:step) { described_class.new(wizard: mock_wizard, attributes:) }
 
   let(:mock_wizard) do
-    instance_double(Claims::UploadUsersWizard)
+    instance_double(Claims::OnboardUsersWizard)
   end
   let(:attributes) { nil }
 

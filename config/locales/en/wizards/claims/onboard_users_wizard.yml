@@ -1,7 +1,7 @@
 en:
   wizards:
     claims:
-      upload_users_wizard:
+      onboard_users_wizard:
         upload_step:
           page_title: Upload users - Onboard users - Claims
           caption: Onboard users

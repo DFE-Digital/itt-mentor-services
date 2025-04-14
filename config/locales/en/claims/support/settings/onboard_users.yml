@@ -1,8 +1,8 @@
 en:
   claims:
     support:
-      schools:
-        upload_users:
+      settings:
+        onboard_users:
           edit:
             cancel: Cancel
           update:

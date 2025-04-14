@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Claims::UploadUsersWizard do
+RSpec.describe Claims::OnboardUsersWizard do
   subject(:wizard) { described_class.new(state:, params:, current_step: nil) }
 
   let(:state) { {} }

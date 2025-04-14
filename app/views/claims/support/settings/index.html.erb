@@ -11,7 +11,7 @@
         # Uncomment the following line and add a translation to add a link to the feature flags page
         # govuk_link_to(t(".feature_flags"), "/flipper", no_visited_state: true, new_tab: true),
         govuk_link_to(t(".claim_windows"), claims_support_claim_windows_path, no_visited_state: true),
-        govuk_link_to(t(".onboard_users"), new_upload_users_claims_support_schools_path, no_visited_state: true),
+        govuk_link_to(t(".onboard_users"), new_onboard_users_claims_support_schools_path, no_visited_state: true),
         govuk_link_to(t(".onboard_schools"), new_onboard_schools_claims_support_schools_path, no_visited_state: true),
         govuk_link_to(t(".emails"), claims_support_mailers_path, no_visited_state: true),
         (govuk_link_to(t(".reset_database"), reset_claims_support_database_path, no_visited_state: true) unless HostingEnvironment.env.production?),
