@@ -217,13 +217,13 @@ scope module: :claims, as: :claims, constraints: {
         get "new/:state_key/:step", to: "schools/add_school#edit", as: :add_school
         put "new/:state_key/:step", to: "schools/add_school#update"
 
-        get "onboard", to: "schools/onboard_schools#new", as: :new_onboard_schools
-        get "onboard/:state_key/:step", to: "schools/onboard_schools#edit", as: :onboard_schools
-        put "onboard/:state_key/:step", to: "schools/onboard_schools#update"
+        get "onboard", to: "settings/onboard_schools#new", as: :new_onboard_schools
+        get "onboard/:state_key/:step", to: "settings/onboard_schools#edit", as: :onboard_schools
+        put "onboard/:state_key/:step", to: "settings/onboard_schools#update"
 
-        get "upload_users", to: "schools/upload_users#new", as: :new_upload_users
-        get "upload_users/:state_key/:step", to: "schools/upload_users#edit", as: :upload_users
-        put "upload_users/:state_key/:step", to: "schools/upload_users#update"
+        get "onboard_users", to: "settings/onboard_users#new", as: :new_onboard_users
+        get "onboard_users/:state_key/:step", to: "settings/onboard_users#edit", as: :onboard_users
+        put "onboard_users/:state_key/:step", to: "settings/onboard_users#update"
       end
 
       scope module: :schools do

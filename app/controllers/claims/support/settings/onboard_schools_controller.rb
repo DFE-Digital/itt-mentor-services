@@ -1,4 +1,4 @@
-class Claims::Support::Schools::OnboardSchoolsController < Claims::Support::ApplicationController
+class Claims::Support::Settings::OnboardSchoolsController < Claims::Support::ApplicationController
   include WizardController
 
   before_action :authorize_school
@@ -38,6 +38,6 @@ class Claims::Support::Schools::OnboardSchoolsController < Claims::Support::Appl
   end
 
   def index_path
-    claims_support_schools_path
+    claims_support_settings_path
   end
 end

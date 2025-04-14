@@ -1,4 +1,4 @@
-class Claims::UploadUsersWizard::UploadStep < BaseStep
+class Claims::OnboardUsersWizard::UploadStep < BaseStep
   attribute :csv_upload
   attribute :csv_content
   attribute :file_name

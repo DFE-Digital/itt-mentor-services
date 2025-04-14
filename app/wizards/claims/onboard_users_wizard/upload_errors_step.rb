@@ -1,4 +1,4 @@
-class Claims::UploadUsersWizard::UploadErrorsStep < BaseStep
+class Claims::OnboardUsersWizard::UploadErrorsStep < BaseStep
   delegate :invalid_email_rows,
            :invalid_school_urn_rows,
            :file_name,

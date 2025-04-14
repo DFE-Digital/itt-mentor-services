@@ -1,5 +1,5 @@
 module Claims
-  class UploadUsersWizard < ClaimBaseWizard
+  class OnboardUsersWizard < ClaimBaseWizard
     def define_steps
       add_step(UploadStep)
       if csv_inputs_valid?
