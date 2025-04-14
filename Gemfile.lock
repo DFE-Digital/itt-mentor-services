@@ -409,7 +409,7 @@ GEM
     parallel (1.26.3)
     parallel_tests (5.1.0)
       parallel
-    parser (3.3.7.2)
+    parser (3.3.8.0)
       ast (~> 2.4.1)
       racc
     pg (1.5.9)
@@ -594,7 +594,7 @@ GEM
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.4.1)
-    rugged (1.7.2)
+    rugged (1.9.0)
     sanitize (7.0.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.16.8)
@@ -660,11 +660,12 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
-    undercover (0.6.3)
+    undercover (0.6.4)
+      base64
       bigdecimal
       imagen (>= 0.2.0)
       rainbow (>= 2.1, < 4.0)
-      rugged (>= 0.27, < 1.8)
+      rugged (>= 0.27, < 1.10)
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
@@ -782,7 +783,7 @@ DEPENDENCIES
   syntax_tree-rbs
   timecop
   tzinfo-data
-  undercover (~> 0.6.3)
+  undercover (~> 0.6.4)
   view_component
   web-console
   webmock
