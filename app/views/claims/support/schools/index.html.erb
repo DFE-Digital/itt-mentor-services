@@ -8,7 +8,6 @@
 
       <div class="govuk-button-group">
         <%= govuk_button_link_to(t(".add_organisation"), new_add_school_claims_support_schools_path, method: :get) %>
-        <%= govuk_button_link_to(t(".upload_users"), new_upload_users_claims_support_schools_path, method: :get, secondary: true) %>
       </div>
 
       <%= render partial: "shared/search_form", locals: {
