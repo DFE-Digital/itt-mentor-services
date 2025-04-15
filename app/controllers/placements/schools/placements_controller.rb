@@ -47,7 +47,7 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
   end
 
   def academic_year_scope
-    params[:year] == "next" ? current_academic_year.next : current_academic_year
+    current_user.selected_academic_year
   end
 
   def set_placement

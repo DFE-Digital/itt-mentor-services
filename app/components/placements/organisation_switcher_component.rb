@@ -6,27 +6,20 @@ class Placements::OrganisationSwitcherComponent < ApplicationComponent
     @organisation = organisation
   end
 
-  def call
-    render ContentHeaderComponent.new(
-      title: organisation.name,
-      actions: [govuk_link_to(
-        t(".change_organisation"),
-        change_organisation_link,
-        no_visited_state: true,
-      )],
-    )
-  end
-
-  def render?
-    user.support_user? || user.organisation_count > 1
+  def title
+    organisation.name
   end
 
   def change_organisation_link
     if user.support_user?
       placements_support_organisations_path
-    else
+    elsif user.organisation_count > 1
       placements_organisations_path
     end
+  end
+
+  def academic_year
+    user.selected_academic_year
   end
 
   private

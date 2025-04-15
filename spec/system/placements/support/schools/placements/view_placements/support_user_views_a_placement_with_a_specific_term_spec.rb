@@ -46,12 +46,16 @@ RSpec.describe "Support user views a placement with a specific term", service: :
 
     @provider = create(:placements_provider, :best_practice_network)
 
+    @next_academic_year = Placements::AcademicYear.current.next
+    @next_academic_year_name = @next_academic_year.name
+
     @placement = create(
       :placement,
       school: @springfield_elementary_school,
       subject: @primary_english_subject,
       year_group: :year_1,
       terms: [@autumn_term],
+      academic_year: @next_academic_year,
       provider: @provider,
     )
   end
@@ -71,16 +75,15 @@ RSpec.describe "Support user views a placement with a specific term", service: :
 
   def then_i_see_the_placements_index_page
     expect(page).to have_title("Placements - Manage school placements - GOV.UK")
-    expect(page).to have_element(:span, text: "Springfield Elementary", class: "govuk-heading-s govuk-heading-s govuk-!-margin-bottom-0")
+    expect(page).to have_element(:span, text: "Springfield Elementary", class: "govuk-heading-s govuk-!-margin-bottom-0")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
-    expect(secondary_navigation).to have_current_item("This year (#{@current_academic_year_name}")
   end
 
   def and_i_see_the_placement_for_primary_with_english
     expect(page).to have_table_row({
       "Subject" => "Primary with english (Year 1)",
-      "Mentor" => "Not yet known",
+      "Mentor" => "Mentor not assigned",
       "Expected date" => "Autumn term",
       "Provider" => "Best Practice Network",
     })
@@ -97,7 +100,7 @@ RSpec.describe "Support user views a placement with a specific term", service: :
     expect(page).to have_link("Change Year group")
     expect(page).to have_summary_list_row(
       "Academic year",
-      "This year (#{Placements::AcademicYear.current.name})",
+      "Next year (#{@next_academic_year_name})",
     )
     expect(page).to have_summary_list_row("Expected date", "Autumn term")
     expect(page).to have_link("Change Expected date")

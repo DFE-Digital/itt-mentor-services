@@ -50,7 +50,7 @@ class Placements::Schools::HostingInterests::AddHostingInterestController < Plac
 
   def success_path
     if appetite == "actively_looking"
-      concept_index_placements_school_placements_path(@school)
+      placements_school_placements_path(@school)
     else
       whats_next_placements_school_hosting_interests_path(@school)
     end

@@ -1,0 +1,21 @@
+<%= content_for :page_title, t(".academic_years") %>
+
+<div class="govuk-width-container">
+  <%= form_with(model: current_user, url: placements_academic_years_path, method: :put, scope: :placements_user) do |f| %>
+    <%= f.govuk_error_summary %>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <%= f.govuk_collection_radio_buttons(
+          :selected_academic_year_id,
+          @academic_year_options,
+          :id, :name,
+          legend: { size: "l", text: t(".academic_years"), tag: "h1" },
+          hint: { text: t(".hint") }
+        ) %>
+
+        <%= f.govuk_submit t(".save_and_continue") %>
+      </div>
+    </div>
+  <% end %>
+</div>

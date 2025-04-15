@@ -144,9 +144,7 @@ RSpec.describe "All-through school user adds a placement", service: :placements,
     when_i_click_on_publish_placement
     then_i_see_the_placements_index_page
     and_i_see_a_success_message
-
-    when_i_click_on_next_year
-    then_i_see_my_placement
+    and_i_see_my_placement
   end
 
   def given_that_placements_exist
@@ -193,7 +191,6 @@ RSpec.describe "All-through school user adds a placement", service: :placements,
     expect(page).to have_title("Placements - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
-    expect(secondary_navigation).to have_current_item("This year (#{@current_academic_year_name}")
   end
 
   alias_method :then_i_see_the_placements_index_page, :when_i_am_on_the_placements_index_page
@@ -593,12 +590,12 @@ RSpec.describe "All-through school user adds a placement", service: :placements,
     click_on "Next year (#{@next_academic_year_name})"
   end
 
-  def then_i_see_my_placement
+  def and_i_see_my_placement
     expect(page).to have_table_row({
       "Subject" => "Mathematics",
       "Mentor" => "Jane Doe",
       "Expected date" => "Summer term",
-      "Provider" => "Not yet known",
+      "Provider" => "Provider not assigned",
     })
   end
 end

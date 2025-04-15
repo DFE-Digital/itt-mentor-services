@@ -2,25 +2,29 @@
 #
 # Table name: users
 #
-#  id                :uuid             not null, primary key
-#  dfe_sign_in_uid   :string
-#  discarded_at      :datetime
-#  email             :string           not null
-#  first_name        :string           not null
-#  last_name         :string           not null
-#  last_signed_in_at :datetime
-#  type              :string
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
+#  id                        :uuid             not null, primary key
+#  dfe_sign_in_uid           :string
+#  discarded_at              :datetime
+#  email                     :string           not null
+#  first_name                :string           not null
+#  last_name                 :string           not null
+#  last_signed_in_at         :datetime
+#  type                      :string
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  selected_academic_year_id :uuid
 #
 # Indexes
 #
+#  index_users_on_selected_academic_year_id        (selected_academic_year_id)
 #  index_users_on_type_and_discarded_at_and_email  (type,discarded_at,email)
 #  index_users_on_type_and_email                   (type,email) UNIQUE
 #
 require "rails_helper"
 
 RSpec.describe Placements::SupportUser do
+  it_behaves_like "an academic year assignable object"
+
   context "with validations" do
     subject { build(:placements_support_user) }
 

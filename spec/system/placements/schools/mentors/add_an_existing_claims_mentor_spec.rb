@@ -113,7 +113,7 @@ RSpec.describe "School user adds an existing claims mentor", service: :placement
   end
 
   def when_i_click_on_change
-    first(:link, "Change").click
+    click_on "Change Teacher reference number (TRN)"
   end
 
   def then_i_see_the_find_mentor_form_with_the_trn_and_date_of_birth_prefilled_for_edna_krabappel

@@ -121,12 +121,14 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
     @mentor_john_smith = create(:placements_mentor, first_name: "John", last_name: "Smith", schools: [@hogwarts_school])
     @mentor_jane_doe = create(:placements_mentor, first_name: "Jane", last_name: "Doe", schools: [@hogwarts_school])
 
-    @current_academic_year_name = Placements::AcademicYear.current.name
+    @next_academic_year = Placements::AcademicYear.current.next
+    @next_academic_year_name = @next_academic_year.name
 
     @placement = create(
       :placement,
       school: @hogwarts_school,
       subject: @secondary_english_subject,
+      academic_year: @next_academic_year,
       terms: [@autumn_term],
     )
   end
@@ -146,17 +148,16 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
 
   def then_i_see_the_placements_index_page
     expect(page).to have_title("Placements - Manage school placements - GOV.UK")
-    expect(page).to have_element(:span, text: "Hogwarts", class: "govuk-heading-s govuk-heading-s govuk-!-margin-bottom-0")
+    expect(page).to have_element(:span, text: "Hogwarts", class: "govuk-heading-s govuk-!-margin-bottom-0")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
-    expect(secondary_navigation).to have_current_item("This year (#{@current_academic_year_name}")
   end
 
   def and_i_see_my_placement
     expect(page).to have_element(:td, text: "English", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Not yet known", class: "govuk-table__cell")
+    expect(page).to have_element(:td, text: "Mentor not assigned", class: "govuk-table__cell")
     expect(page).to have_element(:td, text: "Autumn term", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Not yet known", class: "govuk-table__cell")
+    expect(page).to have_element(:td, text: "Provider not assigned", class: "govuk-table__cell")
   end
 
   def when_i_click_on_my_placement
@@ -168,7 +169,7 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_tag("Available", "turquoise")
     expect(page).to have_summary_list_row("Subject", "English")
-    expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
+    expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term")
     expect(page).to have_summary_list_row("Mentor", "Select a mentor")
     expect(page).to have_summary_list_row("Provider", "Assign a provider")
@@ -222,7 +223,7 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_tag("Available", "turquoise")
     expect(page).to have_summary_list_row("Subject", "English")
-    expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
+    expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term, Summer term")
     expect(page).to have_summary_list_row("Mentor", "Select a mentor")
     expect(page).to have_summary_list_row("Provider", "Assign a provider")
@@ -273,7 +274,7 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_tag("Available", "turquoise")
     expect(page).to have_summary_list_row("Subject", "English")
-    expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
+    expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term, Summer term")
     expect(page).to have_summary_list_row("Mentor", "John Smith")
     expect(page).to have_summary_list_row("Provider", "Assign a provider")
@@ -299,7 +300,7 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
   def then_i_see_the_placement_details_page_with_jane_doe
     expect(page).to have_tag("Available", "turquoise")
     expect(page).to have_summary_list_row("Subject", "English")
-    expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
+    expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term, Summer term")
     expect(page).to have_summary_list_row("Mentor", "Jane Doe")
     expect(page).to have_summary_list_row("Provider", "Assign a provider")
@@ -368,7 +369,7 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_tag("Unavailable", "orange")
     expect(page).to have_summary_list_row("Subject", "English")
-    expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
+    expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term, Summer term")
     expect(page).to have_summary_list_row("Mentor", "Jane Doe")
     expect(page).to have_summary_list_row("Provider", "Aes Sedai Trust")
@@ -392,7 +393,7 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_tag("Unavailable", "orange")
     expect(page).to have_summary_list_row("Subject", "English")
-    expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
+    expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term, Summer term")
     expect(page).to have_summary_list_row("Mentor", "Jane Doe")
     expect(page).to have_summary_list_row("Provider", "Asha'man Trust")
@@ -409,7 +410,7 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
     expect(page).to have_h1("Placement - Hogwarts\nEnglish")
     expect(page).to have_important_banner("This is a preview of how your placement appears to teacher training providers.")
     expect(page).to have_h2("Placement dates")
-    expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
+    expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term, Summer term")
     expect(page).to have_h2("Placement contact")
     expect(page).to have_summary_list_row("First name", "Placement")

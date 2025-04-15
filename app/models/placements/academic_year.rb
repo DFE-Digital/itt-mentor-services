@@ -12,6 +12,7 @@
 class Placements::AcademicYear < AcademicYear
   has_many :placements
   has_many :hosting_interests
+  has_many :users, foreign_key: :selected_academic_year_id
 
   def self.current
     for_date(Date.current)

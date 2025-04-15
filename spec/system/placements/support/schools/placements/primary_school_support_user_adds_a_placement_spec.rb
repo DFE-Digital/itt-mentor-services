@@ -132,9 +132,7 @@ RSpec.describe "Primary school user adds a placement", service: :placements, typ
     when_i_click_on_publish_placement
     then_i_see_the_placements_index_page
     and_i_see_a_success_message
-
-    when_i_click_on_next_year
-    then_i_see_my_placement
+    and_i_see_my_placement
   end
 
   def given_that_placements_exist
@@ -555,14 +553,10 @@ RSpec.describe "Primary school user adds a placement", service: :placements, typ
     expect(page).to have_success_banner("Placement added")
   end
 
-  def when_i_click_on_next_year
-    click_on "Next year (#{@next_academic_year_name})"
-  end
-
-  def then_i_see_my_placement
+  def and_i_see_my_placement
     expect(page).to have_element(:td, text: "Primary with mathematics (Year 2)", class: "govuk-table__cell")
     expect(page).to have_element(:td, text: "Jane Doe", class: "govuk-table__cell")
     expect(page).to have_element(:td, text: "Summer term", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Not yet known", class: "govuk-table__cell")
+    expect(page).to have_element(:td, text: "Provider not assigned", class: "govuk-table__cell")
   end
 end

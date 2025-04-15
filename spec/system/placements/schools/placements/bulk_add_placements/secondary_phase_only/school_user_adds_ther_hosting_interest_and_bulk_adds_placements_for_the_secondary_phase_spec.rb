@@ -11,7 +11,7 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
     and_i_am_signed_in
 
     when_i_am_on_the_placements_index_page
-    and_i_click_on_bulk_add_placements
+    and_i_click_on_add_multiple_placements
     then_i_see_the_phase_form
 
     when_i_select_secondary
@@ -71,17 +71,16 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
     expect(page).to have_title("Placements - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
-    expect(secondary_navigation).to have_current_item("This year (#{@current_academic_year_name}")
-    expect(page).to have_link("Bulk add placements")
+    expect(page).to have_link("Add multiple placements")
   end
   alias_method :then_i_am_on_the_placements_index_page,
                :when_i_am_on_the_placements_index_page
 
-  def when_i_click_on_bulk_add_placements
-    click_on "Bulk add placements"
+  def when_i_click_on_add_multiple_placements
+    click_on "Add multiple placements"
   end
-  alias_method :and_i_click_on_bulk_add_placements,
-               :when_i_click_on_bulk_add_placements
+  alias_method :and_i_click_on_add_multiple_placements,
+               :when_i_click_on_add_multiple_placements
 
   def when_i_click_on_continue
     click_on "Continue"

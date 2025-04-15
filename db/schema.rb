@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_03_132738) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_15_084558) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -629,6 +629,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_03_132738) do
     t.string "dfe_sign_in_uid"
     t.datetime "last_signed_in_at"
     t.datetime "discarded_at"
+    t.uuid "selected_academic_year_id"
+    t.index ["selected_academic_year_id"], name: "index_users_on_selected_academic_year_id"
     t.index ["type", "discarded_at", "email"], name: "index_users_on_type_and_discarded_at_and_email"
     t.index ["type", "email"], name: "index_users_on_type_and_email", unique: true
   end

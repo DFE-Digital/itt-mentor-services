@@ -2,19 +2,21 @@
 #
 # Table name: users
 #
-#  id                :uuid             not null, primary key
-#  dfe_sign_in_uid   :string
-#  discarded_at      :datetime
-#  email             :string           not null
-#  first_name        :string           not null
-#  last_name         :string           not null
-#  last_signed_in_at :datetime
-#  type              :string
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
+#  id                        :uuid             not null, primary key
+#  dfe_sign_in_uid           :string
+#  discarded_at              :datetime
+#  email                     :string           not null
+#  first_name                :string           not null
+#  last_name                 :string           not null
+#  last_signed_in_at         :datetime
+#  type                      :string
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  selected_academic_year_id :uuid
 #
 # Indexes
 #
+#  index_users_on_selected_academic_year_id        (selected_academic_year_id)
 #  index_users_on_type_and_discarded_at_and_email  (type,discarded_at,email)
 #  index_users_on_type_and_email                   (type,email) UNIQUE
 #
@@ -58,16 +60,24 @@ FactoryBot.define do
     trait :discarded do
       discarded_at { Time.current }
     end
+
+    trait :next_academic_year do
+      selected_academic_year { Placements::AcademicYear.current.next }
+    end
   end
 
   factory :claims_user, class: "Claims::User", parent: :user
   factory :support_user, traits: [:support], parent: :user
 
-  factory :placements_user, class: "Placements::User", parent: :user
+  factory :placements_user,
+          class: "Placements::User",
+          parent: :user,
+          traits: [:next_academic_year]
 
   factory :placements_support_user,
           class: "Placements::SupportUser",
-          parent: :support_user
+          parent: :support_user,
+          traits: [:next_academic_year]
 
   factory :claims_support_user,
           class: "Claims::SupportUser",

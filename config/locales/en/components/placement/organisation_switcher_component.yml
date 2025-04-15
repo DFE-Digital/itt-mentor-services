@@ -3,3 +3,5 @@ en:
     placements:
       organisation_switcher_component:
         change_organisation: Change organisation
+        organisation: organisation
+        academic_year: academic year

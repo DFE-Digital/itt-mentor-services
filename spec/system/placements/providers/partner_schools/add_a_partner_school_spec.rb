@@ -70,7 +70,7 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
     when_i_click_the_dropdown_item_for("School 1")
     and_i_click_on("Continue")
     then_i_see_the_check_details_page_for_school("School 1")
-    when_i_click_on("Change")
+    when_i_click_on("Change Name")
     then_i_see_the_search_input_pre_filled_with("School 1")
     and_i_click_on("Continue")
     then_i_see_the_check_details_page_for_school("School 1")

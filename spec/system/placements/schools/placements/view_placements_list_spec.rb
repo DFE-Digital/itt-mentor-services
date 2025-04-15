@@ -20,38 +20,46 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
     scenario "where placement has multiple mentors" do
       given_a_placement_exists_with_multiple_mentors
       given_i_am_signed_in_as_a_placements_user(organisations: [school])
-      then_i_see_mentor_names("Bart Simpson and Lisa Simpson")
-      and_i_see_subject_names("Biology")
+      then_i_see_placement_details({
+        "Expected date" => "Date not added",
+        "Mentor" => "Bart Simpson and Lisa Simpson",
+        "Subject" => "Biology",
+        "Provider" => "Provider not assigned",
+      })
     end
 
-    scenario "where placement has no mentors attached" do
+    scenario "where placement has no assigned terms, mentors or providers" do
       given_a_placement_exists
       given_i_am_signed_in_as_a_placements_user(organisations: [school])
-      then_i_see_mentor_names("Not yet known")
+      then_i_see_placement_details({
+        "Expected date" => "Date not added",
+        "Mentor" => "Mentor not assigned",
+        "Subject" => "Biology",
+        "Provider" => "Provider not assigned",
+      })
     end
 
     scenario "when the placement has a provider" do
       given_a_placement_exists_with_a_provider
       given_i_am_signed_in_as_a_placements_user(organisations: [school])
-      then_i_see_the_provider_name("Springfield University")
-    end
-
-    scenario "when the placement does not have a provider" do
-      given_a_placement_exists
-      given_i_am_signed_in_as_a_placements_user(organisations: [school])
-      then_i_see_the_provider_name("Not yet known")
-    end
-
-    scenario "when the placement has no terms" do
-      given_a_placement_exists
-      given_i_am_signed_in_as_a_placements_user(organisations: [school])
-      then_i_see_term_name("Any time in the academic year")
+      then_i_see_placement_details({
+        "Expected date" => "Date not added",
+        "Mentor" => "Mentor not assigned",
+        "Subject" => "Biology",
+        "Provider" => "Springfield University",
+      })
     end
 
     scenario "when the placement has terms" do
       given_a_placement_exists(with_term: true)
       given_i_am_signed_in_as_a_placements_user(organisations: [school])
       then_i_see_term_name("Autumn term")
+      then_i_see_placement_details({
+        "Expected date" => "Autumn term",
+        "Mentor" => "Mentor not assigned",
+        "Subject" => "Biology",
+        "Provider" => "Provider not assigned",
+      })
     end
 
     context "when using the academic year navigation" do
@@ -65,29 +73,16 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
 
       scenario "when I view placements for the current academic year" do
         given_i_am_signed_in_as_a_placements_user(organisations: [school])
+        and_i_have_selected_to_view_the_current_academic_year
+        and_i_navigate_to_placements
         then_i_see_placement(current_academic_year_placement)
         and_i_do_not_see_placement(next_academic_year_placement)
       end
 
       scenario "when I view placements for the next academic year" do
         given_i_am_signed_in_as_a_placements_user(organisations: [school])
-        when_i_click_on("Next year (#{next_academic_year.name})")
         then_i_see_placement(next_academic_year_placement)
         and_i_do_not_see_placement(current_academic_year_placement)
-      end
-
-      scenario "I can switch between academic years" do
-        given_i_am_signed_in_as_a_placements_user(organisations: [school])
-        then_i_see_placement(current_academic_year_placement)
-        and_i_do_not_see_placement(next_academic_year_placement)
-
-        when_i_click_on("Next year (#{next_academic_year.name})")
-        then_i_see_placement(next_academic_year_placement)
-        and_i_do_not_see_placement(current_academic_year_placement)
-
-        when_i_click_on("This year (#{current_academic_year.name})")
-        then_i_see_placement(current_academic_year_placement)
-        and_i_do_not_see_placement(next_academic_year_placement)
       end
     end
   end
@@ -95,7 +90,22 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
   private
 
   def given_a_placement_exists(with_term: false)
-    with_term ? create(:placement, school:, terms: [create(:placements_term, :autumn)]) : create(:placement, school:)
+    if with_term
+      create(
+        :placement,
+        school:,
+        terms: [create(:placements_term, :autumn)],
+        subject: create(:subject, name: "Biology"),
+        academic_year: next_academic_year,
+      )
+    else
+      create(
+        :placement,
+        school:,
+        academic_year: next_academic_year,
+        subject: create(:subject, name: "Biology"),
+      )
+    end
   end
 
   def then_i_see_placement(placement)
@@ -156,7 +166,13 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
 
   def given_a_placement_exists_with_a_provider
     provider = build(:placements_provider, name: "Springfield University")
-    create(:placement, school:, provider:, subject: create(:subject, name: "Biology"))
+    create(
+      :placement,
+      school:,
+      provider:,
+      subject: create(:subject, name: "Biology"),
+      academic_year: next_academic_year,
+    )
   end
 
   def given_a_placement_exists_with_multiple_mentors
@@ -164,11 +180,17 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
     mentor_bart = create(:placements_mentor, first_name: "Bart", last_name: "Simpson")
     mentors = [mentor_lisa, mentor_bart]
 
-    create(:placement, school:, mentors:, subject: create(:subject, name: "Biology"))
+    create(
+      :placement,
+      school:,
+      mentors:,
+      subject: create(:subject, name: "Biology"),
+      academic_year: next_academic_year,
+    )
   end
 
   def given_placement_exists_for_another_school
-    create(:placement, school: another_school)
+    create(:placement, school: another_school, academic_year: next_academic_year)
   end
 
   def expect_to_see_table_headings
@@ -181,5 +203,25 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
 
   def when_i_click_on(link_text)
     click_on link_text
+  end
+
+  def then_i_see_placement_details(placement_details)
+    expect(page).to have_table_row(placement_details)
+  end
+
+  def next_academic_year
+    Placements::AcademicYear.current.next
+  end
+
+  def and_i_have_selected_to_view_the_current_academic_year
+    @current_user.update!(
+      selected_academic_year: Placements::AcademicYear.current,
+    )
+  end
+
+  def and_i_navigate_to_placements
+    within(primary_navigation) do
+      click_on "Placements"
+    end
   end
 end

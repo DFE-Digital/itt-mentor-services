@@ -49,27 +49,6 @@ en:
             body_html:
               Providers can see your placements and may contact you to discuss them.<br><br>
               You can add details to your placements such as expected date and provider.
-          concept_index:
-            page_title: Placements
-            placements: Placements
-            this_year: This year (%{academic_year_name})
-            next_year: Next year (%{academic_year_name})
-            add_placement: Add placement
-            bulk_add_placements: Add multiple placements
-            you_must_add_itt_placement_contact: |
-              Before you add a placement, you must %{link_to} so that the teacher training providers can contact you.
-            add_itt_placement_contact: add a placement contact
-            subject: Subject
-            mentor: Mentor
-            expected_date: Expected date
-            provider: Provider
-            mentor_not_assigned: Mentor not assigned
-            date_not_added: Date not added
-            provider_not_assigned: Provider not assigned
-            placement_count: 
-              one: "%{count} placement"
-              other: "%{count} placements"
-            add_and_edit_placements: Add and edit placements to let providers know your preferences
         edit_placement:
           update:
             success: 
@@ -108,15 +87,26 @@ en:
         available: Available
         unavailable: Unavailable
         index:
-          page_title: Placements
-          placements: Placements
-          this_year: This year (%{academic_year_name})
-          next_year: Next year (%{academic_year_name})
-          add_placement: Add placement
-          bulk_add_placements: Bulk add placements
-          you_must_add_itt_placement_contact: |
-            Before you add a placement, you must %{link_to} so that the teacher training providers can contact you.
-          add_itt_placement_contact: add a placement contact
+            page_title: Placements
+            placements: Placements
+            this_year: This year (%{academic_year_name})
+            next_year: Next year (%{academic_year_name})
+            add_placement: Add placement
+            bulk_add_placements: Add multiple placements
+            you_must_add_itt_placement_contact: |
+              Before you add a placement, you must %{link_to} so that the teacher training providers can contact you.
+            add_itt_placement_contact: add a placement contact
+            subject: Subject
+            mentor: Mentor
+            expected_date: Expected date
+            provider: Provider
+            mentor_not_assigned: Mentor not assigned
+            date_not_added: Date not added
+            provider_not_assigned: Provider not assigned
+            placement_count: 
+              one: "%{count} placement"
+              other: "%{count} placements"
+            add_and_edit_placements: Add and edit placements to let providers know your preferences
         show:
           any_time: Any time in the academic year
           delete_placement: Delete placement

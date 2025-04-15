@@ -1,0 +1,33 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="content-header">
+      <div class="content-header-title">
+        <span class="govuk-heading-s govuk-!-margin-bottom-0">
+          <%= title %>
+          <% if change_organisation_link.present? %>
+            <span class="govuk-body">
+              (<%= govuk_link_to(
+                t("change"), 
+                change_organisation_link,
+                no_visited_state: true,
+                visually_hidden_suffix: t(".organisation"),
+              ) %>)
+            </span>
+          <% end %>
+        </span>
+      </div>
+
+      <div class="content-header-actions">
+        <span class="govuk-body-s govuk-!-margin-bottom-0">
+          <%= "Academic year #{academic_year.name}" %>
+          (<%= govuk_link_to(
+            t("change"),
+            edit_placements_academic_years_path,
+            no_visited_state: true,
+            visually_hidden_suffix: t(".academic_year"),
+          ) %>)
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
