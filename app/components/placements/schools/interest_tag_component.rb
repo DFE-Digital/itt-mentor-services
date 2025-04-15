@@ -34,14 +34,13 @@ class Placements::Schools::InterestTagComponent < ApplicationComponent
   end
 
   def calculated_status
-    case
-    when actively_looking? && only_has_unavailable_placements?
+    if actively_looking? && only_has_unavailable_placements?
       "filled_placements"
-    when actively_looking? && has_available_placements?
+    elsif actively_looking? && has_available_placements?
       "unfilled_placements"
-    when actively_looking?
+    elsif actively_looking?
       "open"
-    when not_looking?
+    elsif not_looking?
       "not_open"
     end
   end
