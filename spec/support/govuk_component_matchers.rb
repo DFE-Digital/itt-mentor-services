@@ -106,6 +106,15 @@ module GovukComponentMatchers
     end
   end
 
+  matcher :have_caption do |text|
+    match do |page|
+      page.find("span[class^='govuk-caption-']", text:)
+      true
+    rescue Capybara::ElementNotFound
+      false
+    end
+  end
+
   matcher :have_warning_text do |text|
     match do |page|
       page.within(".govuk-warning-text") do
