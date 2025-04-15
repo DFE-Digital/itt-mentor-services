@@ -146,7 +146,7 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
   def then_i_see_the_enter_an_organisation_page
     expect(page).to have_title("Enter a school name, URN or postcode - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Organisations")
-    expect(page).to have_caption("Add organisation")
+    expect(page).to have_span_caption("Add organisation")
     expect(page).to have_element(:label, text: "Enter a school name, URN or postcode", class: "govuk-label govuk-label--l")
   end
 
@@ -172,7 +172,7 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
   def then_i_see_the_enter_the_organisation_name_page
     expect(page).to have_title("Enter the organisation name - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Organisations")
-    expect(page).to have_caption("Add organisation")
+    expect(page).to have_span_caption("Add organisation")
     expect(page).to have_element(:label, text: "Enter the organisation name", class: "govuk-label govuk-label--l")
     expect(page).to have_link("Back")
   end
@@ -193,7 +193,7 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
   def then_i_see_the_vendor_number_page
     expect(page).to have_title("Enter the organisation&#39;s vendor number - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Organisations")
-    expect(page).to have_caption("Add organisation")
+    expect(page).to have_span_caption("Add organisation")
     expect(page).to have_element(:label, text: "Enter the organisation's vendor number", class: "govuk-label govuk-label--l")
     expect(page).to have_link("Back")
   end
@@ -223,7 +223,7 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
   def then_i_see_the_claim_window_page
     expect(page).to have_title("Select a claim window - Add organisation - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Organisations")
-    expect(page).to have_caption("Add organisation")
+    expect(page).to have_span_caption("Add organisation")
     expect(page).to have_element(:h1, text: "Select a claim window", class: "govuk-fieldset__heading")
     expect(page).to have_link("Back")
   end
@@ -252,7 +252,7 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
   def then_i_see_the_region_page
     expect(page).to have_title("Enter the organisation&#39;s region - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Organisations")
-    expect(page).to have_caption("Add organisation")
+    expect(page).to have_span_caption("Add organisation")
     expect(page).to have_element(:h1, text: "Enter the organisation's region", class: "govuk-fieldset__heading")
     expect(page).to have_element(:div, text: "The region is required to calculate the claim amount", class: "govuk-hint")
     expect(page).to have_link("Back")
@@ -269,7 +269,7 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
   def then_i_see_the_address_page
     expect(page).to have_title("Enter the organisation&#39;s address - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Organisations")
-    expect(page).to have_caption("Add organisation")
+    expect(page).to have_span_caption("Add organisation")
     expect(page).to have_h1("Enter the organisation's address")
     expect(page).to have_link("Back")
   end
@@ -301,7 +301,7 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
   def then_i_see_the_contact_details_page
     expect(page).to have_title("Enter the organisation&#39;s contact details - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Organisations")
-    expect(page).to have_caption("Add organisation")
+    expect(page).to have_span_caption("Add organisation")
     expect(page).to have_h1("Enter the organisation's contact details")
     expect(page).to have_link("Back")
   end
@@ -325,7 +325,7 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
   def then_i_see_the_check_your_answers_page
     expect(page).to have_title("Check your answers - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Organisations")
-    expect(page).to have_caption("Add organisation")
+    expect(page).to have_span_caption("Add organisation")
     expect(page).to have_h1("Check your answers")
 
     expect(page).to have_summary_list_row("Organisation name", "Test Organisation")

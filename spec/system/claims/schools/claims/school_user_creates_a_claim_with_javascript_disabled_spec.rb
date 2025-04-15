@@ -241,8 +241,7 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
       text: "Best Practice Network will contact you if your claim undergoes a check.",
       class: "govuk-body",
     )
-    expect(page).to have_element(
-      :a,
+    expect(page).to have_link(
       text: "What do you think of this service? Takes 30 seconds (opens in a new tab)",
       class: "govuk-link",
     )

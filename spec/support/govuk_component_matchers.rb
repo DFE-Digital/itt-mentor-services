@@ -106,7 +106,7 @@ module GovukComponentMatchers
     end
   end
 
-  matcher :have_caption do |text|
+  matcher :have_span_caption do |text|
     match do |page|
       page.find("span[class^='govuk-caption-']", text:)
       true
