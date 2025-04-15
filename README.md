@@ -112,6 +112,8 @@ Name your key in a sensible and identifiable way, e.g. `[YOUR-NAME] Local Test K
 
 Create your key and then add it to `.env.test` and `.env.development` where it says `GOVUK_NOTIFY_API_KEY=`.
 
+You will also need to create a `.env` file in the same directory as `.env.test` and `.env.development`. The contents of the new `.env` file should be a copy of `.env.example`.
+
 ### Running the app
 
 To run the application locally:
