@@ -76,6 +76,7 @@ class Placements::School < School
   has_many :mentor_memberships
   has_many :mentors, through: :mentor_memberships
   has_many :placements
+  has_many :academic_years, through: :placements
 
   has_many :partnerships, dependent: :destroy
   has_many :partner_providers,
