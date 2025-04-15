@@ -76,6 +76,7 @@ RSpec.describe Placements::School do
     it { is_expected.to have_many(:mentor_memberships) }
     it { is_expected.to have_many(:mentors).through(:mentor_memberships) }
     it { is_expected.to have_many(:placements) }
+    it { is_expected.to have_many(:academic_years).through(:placements) }
 
     describe "#users" do
       it { is_expected.to have_many(:users).through(:user_memberships) }
