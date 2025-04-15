@@ -37,7 +37,6 @@ RSpec.describe Placements::Schools::InterestTagComponent, type: :component do
       it "renders the correct tag" do
         expect(page).to have_css(".govuk-tag--green")
       end
-
     end
 
     context "when the school only has unavailable placements" do
