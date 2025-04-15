@@ -1,0 +1,154 @@
+<li class="app-search-results__item">
+  <h2 class="govuk-heading-m">
+    <% if !open_to_hosting? %>
+      <%= "#{school.name}, #{school.town}" %>
+    <% elsif (unfilled_subjects.exists? || filled_subjects.exists?) && open_to_hosting? %>
+      <%= govuk_link_to(placements_placements_provider_find_path(provider, school), no_visited_state: true) do %>
+        <%= "#{school.name}, #{school.town}" %>
+      <% end %>
+    <% else %>
+      <%= govuk_link_to(placement_information_placements_provider_find_path(provider, school), no_visited_state: true) do %>
+        <%= "#{school.name}, #{school.town}" %>
+      <% end %>
+    <% end %>
+  </h2>
+
+  <div class="app-result-detail">
+    <%= render Placements::Schools::InterestTagComponent.new(school:) %>
+  </div>
+
+  <dl class="app-result-detail">
+    <!-- School details -->
+    <div>
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-2"><%= t(".school_details") %></h3>
+      <div class="app-result-detail__row">
+        <dt class="app-result-detail__key">
+          <%= t(".phase") %>
+        </dt>
+        <dd class="app-result-detail__value">
+          <%= school.phase %>
+        </dd>
+      </div>
+      <div class="app-result-detail__row">
+        <dt class="app-result-detail__key">
+          <%= t(".age_range") %>
+        </dt>
+        <dd class="app-result-detail__value">
+          <%= school.age_range %>
+        </dd>
+      </div>
+      <div class="app-result-detail__row">
+        <dt class="app-result-detail__key">
+          <%= t(".establishment_group") %>
+        </dt>
+        <dd class="app-result-detail__value">
+          <%= school.group %>
+        </dd>
+      </div>
+    </div>
+    <!-- End school details -->
+
+    <!-- Placement information -->
+    <div class="govuk-!-margin-top-2">
+      <h3 class="govuk-heading-s govuk-!-margin-bottom-2"><%= t(".placement_information") %></h3>
+      <% if not_open_to_hosting? %>
+        <div class="app-result-detail__row">
+          <dt class="app-result-detail__key">
+            <%= t(".placement_subjects") %>
+          </dt>
+          <dd class="app-result-detail__value">
+            <%= t(".not_open_to_hosting") %>
+          </dd>
+        </div>
+        <div class="app-result-detail__row">
+          <dt class="app-result-detail__key">
+            <%= t(".placement_status") %>
+          </dt>
+          <dd class="app-result-detail__value">
+            <%= t(".last_offered_count", count: previous_academic_year_placements_count, academic_year_name: Placements::AcademicYear.current.previous.name) %>
+          </dd>
+        </div>
+      <% else %>
+        <% unless school.current_hosting_interest_appetite == "actively_looking" && (school.unavailable_placements.empty? && school.available_placements.empty?) %>
+          <% unless school.current_hosting_interest_appetite == "actively_looking" && (school.unavailable_placements.exists? && school.available_placements.empty?) %>
+            <div class="app-result-detail__row">
+              <dt class="app-result-detail__key">
+                <%= t(".available_placements") %>
+              </dt>
+              <dd class="app-result-detail__value">
+                <%= govuk_link_to t(".available_placements_count", count: available_placements_count), placements_placements_provider_find_path(provider, school), no_visited_state: true %>
+              </dd>
+            </div>
+          <% end %>
+          <div class="app-result-detail__row">
+            <dt class="app-result-detail__key">
+              <%= t(".unavailable_placements") %>
+            </dt>
+            <dd class="app-result-detail__value">
+              <%= t(".unavailable_placements_count", count: unavailable_placements_count) %>
+            </dd>
+          </div>
+        <% end %>
+        <div class="app-result-detail__row">
+          <dt class="app-result-detail__key">
+            <%= t(".last_offered") %>
+          </dt>
+          <dd class="app-result-detail__value">
+            <%= t(".last_offered_count", count: previous_academic_year_placements_count, academic_year_name: Placements::AcademicYear.current.previous.name) %>
+          </dd>
+        </div>
+        <div class="app-result-detail__row">
+          <dt class="app-result-detail__key">
+            <%= t(".placement_contact") %>
+          </dt>
+          <dd class="app-result-detail__value">
+            <%= "#{school_contact_first_name} #{school_contact_last_name}" %>
+            <br>
+            <%= school_contact_email_address %>
+          </dd>
+        </div>
+      <% end %>
+    </div>
+    <!-- End placement information -->
+
+    <!-- Getting there -->
+    <% if location_coordinates.present? && !not_open_to_hosting? %>
+      <div class="govuk-!-margin-top-2">
+        <h3 class="govuk-heading-s govuk-!-margin-bottom-2"><%= t(".getting_there") %></h3>
+        <div class="app-result-detail__row">
+          <dt class="app-result-detail__key">
+            <%= t(".address") %>
+          </dt>
+          <dd class="app-result-detail__value">
+            <%= school.formatted_address %>
+          </dd>
+        </div>
+        <div class="app-result-detail__row">
+          <dt class="app-result-detail__key">
+            <%= t(".distance") %>
+          </dt>
+          <dd class="app-result-detail__value">
+            <%= distance_from_location %>
+          </dd>
+        </div>
+        <div class="app-result-detail__row">
+          <dt class="app-result-detail__key">
+            <%= t(".travel_time") %>
+          </dt>
+          <dd class="app-result-detail__value">
+            <%= t(".travel_time_information",
+                  transit_time: @school.formatted_duration("transit"),
+                  drive_time: @school.formatted_duration("drive"),
+                  walk_time: @school.formatted_duration("walk")) %>
+          </dd>
+        </div>
+      </div>
+    <% end %>
+    <!-- End getting there -->
+  </dl>
+  <div>
+    <% if not_open_to_hosting? %>
+      <%= govuk_warning_text text: t(".warning") %>
+    <% end %>
+  </div>
+</li>
