@@ -140,6 +140,14 @@ scope module: :placements,
       end
 
       resources :placements, only: %i[index show]
+
+      resources :find, only: %i[index show] do
+        member do
+          get "placements", to: "find#placements"
+          get "placement_information", to: "find#placement_information"
+          get "school_details", to: "find#school_details"
+        end
+      end
     end
   end
 end
