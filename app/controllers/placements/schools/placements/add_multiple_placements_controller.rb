@@ -7,17 +7,6 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
 
   attr_reader :school
 
-  # This only lives here as part of the concept testing
-  def concept_index
-    @pagy, placements = pagy(
-      school
-        .placements
-        .includes(:subject, :mentors, :additional_subjects, :provider)
-        .order("subjects.name"),
-    )
-    @placements = placements.decorate
-  end
-
   def update
     if !@wizard.save_step
       render "edit"
@@ -28,7 +17,7 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
       @wizard.reset_state
       school.reload
 
-      redirect_to concept_index_placements_school_placements_path(@school), flash: {
+      redirect_to placements_school_placements_path(@school), flash: {
         heading: t(".heading"),
         body: t(".body_html"),
       }

@@ -1,0 +1,12 @@
+en:
+  placements:
+    academic_years:
+      edit:
+        academic_years: Academic years
+        hint:
+          Select the academic year for the placements you want to manage.
+        save_and_continue: Save and continue
+      update:
+        heading: Acadmic year changed
+        body_html: 
+          You are now viewing placement information for the academic year %{selected_academic_year_name}.

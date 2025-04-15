@@ -44,11 +44,15 @@ RSpec.describe "Support user views a placement with a mentor assigned", service:
     @mentor_john_smith = create(:placements_mentor, first_name: "John", last_name: "Smith", schools: [@springfield_elementary_school])
     @mentor_jane_doe = create(:placements_mentor, first_name: "Jane", last_name: "Doe", schools: [@springfield_elementary_school])
 
+    @next_academic_year = Placements::AcademicYear.current.next
+    @next_academic_year_name = @next_academic_year.name
+
     @placement = create(
       :placement,
       school: @springfield_elementary_school,
       subject: @primary_english_subject,
       year_group: :year_1,
+      academic_year: @next_academic_year,
       mentors: [@mentor_john_smith, @mentor_jane_doe],
     )
   end
@@ -68,18 +72,17 @@ RSpec.describe "Support user views a placement with a mentor assigned", service:
 
   def then_i_see_the_placements_index_page
     expect(page).to have_title("Placements - Manage school placements - GOV.UK")
-    expect(page).to have_element(:span, text: "Springfield Elementary", class: "govuk-heading-s govuk-heading-s govuk-!-margin-bottom-0")
+    expect(page).to have_element(:span, text: "Springfield Elementary", class: "govuk-heading-s govuk-!-margin-bottom-0")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
-    expect(secondary_navigation).to have_current_item("This year (#{@current_academic_year_name}")
   end
 
   def and_i_see_the_placement_for_primary_with_english
     expect(page).to have_table_row({
       "Subject" => "Primary with english (Year 1)",
       "Mentor" => "Jane Doe and John Smith",
-      "Expected date" => "Any time in the academic year",
-      "Provider" => "Not yet known",
+      "Expected date" => "Date not added",
+      "Provider" => "Provider not assigned",
     })
   end
 
@@ -94,7 +97,7 @@ RSpec.describe "Support user views a placement with a mentor assigned", service:
     expect(page).to have_link("Change Year group")
     expect(page).to have_summary_list_row(
       "Academic year",
-      "This year (#{Placements::AcademicYear.current.name})",
+      "Next year (#{@next_academic_year_name})",
     )
     expect(page).to have_summary_list_row("Expected date", "Any time in the academic year")
     expect(page).to have_link("Change Expected date")

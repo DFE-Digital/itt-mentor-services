@@ -308,6 +308,6 @@ RSpec.describe "School user adds a provider to their list of providers",
   end
 
   def when_i_click_on_change
-    click_on "Change"
+    click_on "Change Name"
   end
 end

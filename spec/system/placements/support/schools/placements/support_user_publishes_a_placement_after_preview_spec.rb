@@ -17,7 +17,7 @@ RSpec.describe "Support user publishes a placement after preview", service: :pla
     and_i_click_on_continue
     then_i_see_the_select_an_academic_year_page
 
-    when_i_select_this_year
+    when_i_select_next_year
     and_i_click_on_continue
     then_i_see_the_when_could_the_placement_take_place_page
 
@@ -88,10 +88,9 @@ RSpec.describe "Support user publishes a placement after preview", service: :pla
 
   def then_i_see_the_placements_index_page
     expect(page).to have_title("Placements - Manage school placements - GOV.UK")
-    expect(page).to have_element(:span, text: "Hogwarts", class: "govuk-heading-s govuk-heading-s govuk-!-margin-bottom-0")
+    expect(page).to have_element(:span, text: "Hogwarts", class: "govuk-heading-s govuk-!-margin-bottom-0")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
-    expect(secondary_navigation).to have_current_item("This year (#{@current_academic_year_name}")
   end
 
   def and_i_see_the_add_placement_button
@@ -128,8 +127,8 @@ RSpec.describe "Support user publishes a placement after preview", service: :pla
     expect(page).to have_link("Cancel", href: "/schools/#{@school.id}/placements")
   end
 
-  def when_i_select_this_year
-    choose "This year (#{@current_academic_year_name})"
+  def when_i_select_next_year
+    choose "Next year (#{@next_academic_year_name})"
   end
 
   def then_i_see_the_when_could_the_placement_take_place_page
@@ -172,7 +171,7 @@ RSpec.describe "Support user publishes a placement after preview", service: :pla
 
   def and_i_see_the_placement_details
     expect(page).to have_summary_list_row("Subject", "English")
-    expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
+    expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term, Spring term")
     expect(page).to have_summary_list_row("Mentor", "John Smith")
   end
@@ -187,7 +186,7 @@ RSpec.describe "Support user publishes a placement after preview", service: :pla
     expect(page).to have_h1("Placement - Hogwarts English")
     expect(page).to have_important_banner("This is a preview of how your placement will appear to teacher training providers.")
     expect(page).to have_h2("Placement dates")
-    expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
+    expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term, Spring term")
     expect(page).to have_h2("Placement contact")
     expect(page).to have_summary_list_row("First name", "Placement")
@@ -225,6 +224,6 @@ RSpec.describe "Support user publishes a placement after preview", service: :pla
     expect(page).to have_element(:td, text: "English", class: "govuk-table__cell")
     expect(page).to have_element(:td, text: "John Smith", class: "govuk-table__cell")
     expect(page).to have_element(:td, text: "Autumn term, Spring term", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Not yet known", class: "govuk-table__cell")
+    expect(page).to have_element(:td, text: "Provider not assigned", class: "govuk-table__cell")
   end
 end

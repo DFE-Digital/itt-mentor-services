@@ -53,10 +53,9 @@ RSpec.describe "Support user views an empty placements index page", service: :pl
 
   def then_i_see_the_placements_index_page
     expect(page).to have_title("Placements - Manage school placements - GOV.UK")
-    expect(page).to have_element(:span, text: "Springfield Elementary", class: "govuk-heading-s govuk-heading-s govuk-!-margin-bottom-0")
+    expect(page).to have_element(:span, text: "Springfield Elementary", class: "govuk-heading-s govuk-!-margin-bottom-0")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
-    expect(secondary_navigation).to have_current_item("This year (#{@current_academic_year_name}")
   end
 
   def and_i_see_there_are_no_placements

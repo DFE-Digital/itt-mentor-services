@@ -43,6 +43,14 @@ scope module: :placements,
   end
 
   resources :organisations, only: %i[index show]
+
+  resources :academic_years do
+    collection do
+      get :edit
+      put :update
+    end
+  end
+
   resources :schools, only: %i[show] do
     scope module: :schools do
       resources :users, only: %i[index show destroy] do

@@ -113,9 +113,7 @@ RSpec.describe "Secondary school user adds a placement", service: :placements, t
     when_i_click_on_publish_placement
     then_i_see_the_placements_index_page
     and_i_see_a_success_message
-
-    when_i_click_on_next_year
-    then_i_see_my_placement
+    and_i_see_my_placement
   end
 
   def given_that_placements_exist
@@ -169,10 +167,9 @@ RSpec.describe "Secondary school user adds a placement", service: :placements, t
 
   def then_i_see_the_placements_index_page
     expect(page).to have_title("Placements - Manage school placements - GOV.UK")
-    expect(page).to have_element(:span, text: "Hogwarts", class: "govuk-heading-s govuk-heading-s govuk-!-margin-bottom-0")
+    expect(page).to have_element(:span, text: "Hogwarts", class: "govuk-heading-s govuk-!-margin-bottom-0")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
-    expect(secondary_navigation).to have_current_item("This year (#{@current_academic_year_name}")
   end
 
   def and_i_see_the_add_placement_button
@@ -468,14 +465,10 @@ RSpec.describe "Secondary school user adds a placement", service: :placements, t
     expect(page).to have_success_banner("Placement added")
   end
 
-  def when_i_click_on_next_year
-    click_on "Next year (#{@next_academic_year_name})"
-  end
-
-  def then_i_see_my_placement
+  def and_i_see_my_placement
     expect(page).to have_element(:td, text: "Mathematics", class: "govuk-table__cell")
     expect(page).to have_element(:td, text: "Jane Doe", class: "govuk-table__cell")
     expect(page).to have_element(:td, text: "Summer term", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Not yet known", class: "govuk-table__cell")
+    expect(page).to have_element(:td, text: "Provider not assigned", class: "govuk-table__cell")
   end
 end

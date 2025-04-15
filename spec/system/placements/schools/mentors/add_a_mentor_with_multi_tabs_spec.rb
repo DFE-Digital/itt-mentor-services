@@ -170,7 +170,7 @@ RSpec.describe "School user uses multilple tabs to add mentors", :js, service: :
 
   def when_i_click_on_change_in_the_first_tab
     within_window @windows.first do
-      first(:link, "Change").click
+      click_on "Change Teacher reference number (TRN)"
     end
   end
 

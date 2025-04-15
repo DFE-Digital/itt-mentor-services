@@ -51,13 +51,15 @@ RSpec.describe "School user views and deletes a placement", service: :placements
     @spring_term = create(:placements_term, name: "Spring term")
     @summer_term = create(:placements_term, name: "Summer term")
 
-    @current_academic_year_name = Placements::AcademicYear.current.name
+    @next_academic_year = Placements::AcademicYear.current.next
+    @next_academic_year_name = @next_academic_year.name
 
     @placement = create(
       :placement,
       school: @springfield_elementary_school,
       subject: @primary_english_subject,
       year_group: :year_1,
+      academic_year: @next_academic_year,
       terms: [@autumn_term],
     )
   end
@@ -71,16 +73,15 @@ RSpec.describe "School user views and deletes a placement", service: :placements
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
     expect(page).to have_element(:a, text: "Add placement", class: "govuk-button")
-    expect(secondary_navigation).to have_current_item("This year (#{@current_academic_year_name})")
   end
 
   alias_method :then_i_see_the_placements_index_page, :when_i_am_on_the_placements_index_page
 
   def then_i_see_my_placement
     expect(page).to have_element(:td, text: "Primary with english (Year 1)", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Not yet known", class: "govuk-table__cell")
+    expect(page).to have_element(:td, text: "Mentor not assigned", class: "govuk-table__cell")
     expect(page).to have_element(:td, text: "Autumn term", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Not yet known", class: "govuk-table__cell")
+    expect(page).to have_element(:td, text: "Provider not assigned", class: "govuk-table__cell")
   end
 
   def when_i_click_on_my_placement
@@ -93,7 +94,7 @@ RSpec.describe "School user views and deletes a placement", service: :placements
     expect(page).to have_tag("Available", "turquoise")
     expect(page).to have_summary_list_row("Subject", "Primary")
     expect(page).to have_summary_list_row("Year group", "Year 1")
-    expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
+    expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term")
     expect(page).to have_summary_list_row("Mentor", "Add a mentor")
     expect(page).to have_summary_list_row("Provider", "Assign a provider")
@@ -127,7 +128,6 @@ RSpec.describe "School user views and deletes a placement", service: :placements
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
     expect(page).to have_element(:a, text: "Add placement", class: "govuk-button")
-    expect(secondary_navigation).to have_current_item("This year (#{@current_academic_year_name})")
   end
 
   def and_i_see_a_success_message

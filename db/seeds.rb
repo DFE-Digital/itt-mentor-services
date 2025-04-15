@@ -67,7 +67,10 @@ CLAIMS_PERSONAS.each do |persona_attributes|
   User.find_or_create_by!(**persona_attributes)
 end
 
+next_academic_year = Placements::AcademicYear.current.next
+
 PLACEMENTS_PERSONAS.each do |persona_attributes|
+  persona_attributes[:selected_academic_year_id] = next_academic_year.id
   User.find_or_create_by!(**persona_attributes)
 end
 
