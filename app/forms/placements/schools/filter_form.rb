@@ -66,6 +66,22 @@ class Placements::Schools::FilterForm < ApplicationForm
                             .order_by_date.pluck(:name, :id) << ["No recent placements", "never_offered"]
   end
 
+  def primary_selected?
+    phases.include?("Primary")
+  end
+
+  def secondary_selected?
+    phases.include?("Secondary")
+  end
+
+  def primary_only?
+    primary_selected? && !secondary_selected?
+  end
+
+  def secondary_only?
+    !primary_selected? && secondary_selected?
+  end
+
   private
 
   SINGULAR_ATTRIBUTES = %w[search_location search_by_name].freeze
