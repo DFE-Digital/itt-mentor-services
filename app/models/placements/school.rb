@@ -84,7 +84,7 @@ class Placements::School < School
            source: :provider
   has_many :hosting_interests
 
-  delegate :email_address, to: :school_contact, prefix: true, allow_nil: true
+  delegate :email_address, :full_name, to: :school_contact, prefix: true, allow_nil: true
   delegate :appetite, to: :current_hosting_interest, prefix: true, allow_nil: true
 
   def current_hosting_interest
