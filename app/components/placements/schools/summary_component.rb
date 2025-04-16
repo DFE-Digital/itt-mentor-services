@@ -3,7 +3,7 @@ class Placements::Schools::SummaryComponent < ApplicationComponent
   attr_reader :school, :provider, :location_coordinates
 
   delegate :school_contact, :current_hosting_interest_appetite, to: :school, allow_nil: true
-  delegate :first_name, :last_name, :email_address, to: :school_contact, prefix: true, allow_nil: true
+  delegate :full_name, :email_address, to: :school_contact, prefix: true, allow_nil: true
   delegate :available_placements, :unavailable_placements, to: :school, prefix: true, allow_nil: true
 
   def initialize(school:, provider:, location_coordinates: nil, classes: [], html_attributes: {})
