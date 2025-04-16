@@ -7,10 +7,10 @@ class Placements::AcademicYearsController < Placements::ApplicationController
   def update
     current_user.update!(selected_academic_year:)
     success_path = if current_user.support_user?
-                      support_root_path
-                    else
-                      organisations_path
-                    end
+                     support_root_path
+                   else
+                     organisations_path
+                   end
 
     redirect_to success_path, flash: {
       heading: t(".heading"),
