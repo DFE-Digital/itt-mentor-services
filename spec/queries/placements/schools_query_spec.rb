@@ -94,6 +94,19 @@ describe Placements::SchoolsQuery do
         expect(query.call).to include(query_school)
         expect(query.call).not_to include(non_query_school)
       end
+
+      context "when searching for no recent placements and recent placements" do
+        let(:params) { { filters: { last_offered_placements_academic_year_ids: [academic_year.id, "never_offered"] } } }
+
+        before do
+          placement.update(academic_year:)
+        end
+
+        it "returns the filtered schools" do
+          expect(query.call).to include(query_school)
+          expect(query.call).to include(non_query_school)
+        end
+      end
     end
 
     context "when filtering by hosting interest statuses" do
