@@ -2,6 +2,7 @@ en:
   placements:
     providers:
       primary_navigation:
+        find: Find
         placements: Placements
         schools: Schools
         users: Users
