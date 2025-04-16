@@ -127,6 +127,7 @@ RSpec.describe Placements::School do
 
   describe "delegations" do
     it { is_expected.to delegate_method(:email_address).to(:school_contact).with_prefix(true).allow_nil }
+    it { is_expected.to delegate_method(:full_name).to(:school_contact).with_prefix(true).allow_nil }
     it { is_expected.to delegate_method(:appetite).to(:current_hosting_interest).with_prefix(true).allow_nil }
   end
 
