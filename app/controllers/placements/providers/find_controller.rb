@@ -1,5 +1,7 @@
 class Placements::Providers::FindController < Placements::ApplicationController
   before_action :set_provider
+  before_action :school, only: %i[placements placement_information school_details]
+  before_action :load_placements_and_subjects, only: %i[placements placement_information school_details]
   helper_method :filter_form, :location_coordinates
 
   def index
@@ -9,35 +11,25 @@ class Placements::Providers::FindController < Placements::ApplicationController
     calculate_travel_time
   end
 
-  def show
-    @school = find_school
-  end
-
-  def placements
-    @school = find_school
-    @unfilled_placements = unfilled_placements(@school).decorate
-    @filled_placements = filled_placements(@school).decorate
-  end
+  def placements; end
 
   def placement_information
-    @school = find_school
-    @placements_last_offered = @school.placements.where(academic_year: Placements::AcademicYear.current.previous).decorate
-    @unfilled_placements = unfilled_placements(@school)
-    @unfilled_subjects = subjects_for_placements(@unfilled_placements)
-    @filled_subjects = subjects_for_placements(filled_placements(@school))
+    @placements_last_offered = placements_last_offered
   end
 
-  def school_details
-    @school = find_school.decorate
-    @unfilled_placements = unfilled_placements(@school)
-    @unfilled_subjects = subjects_for_placements(@unfilled_placements)
-    @filled_subjects = subjects_for_placements(filled_placements(@school))
-  end
+  def school_details; end
 
   private
 
-  def find_school
-    Placements::School.find(params[:id])
+  def school
+    @school ||= Placements::School.find(params[:id]).decorate
+  end
+
+  def load_placements_and_subjects
+    @filled_placements = filled_placements(@school).decorate
+    @unfilled_placements = unfilled_placements(@school).decorate
+    @filled_subjects = subjects_for_placements(@filled_placements)
+    @unfilled_subjects = subjects_for_placements(@unfilled_placements)
   end
 
   def calculate_travel_time
@@ -60,11 +52,16 @@ class Placements::Providers::FindController < Placements::ApplicationController
   end
 
   def unfilled_placements(school)
-    school.placements.where(academic_year_id: Placements::AcademicYear.current.id, provider_id: nil).distinct
+    school.placements
+          .where(academic_year_id: Placements::AcademicYear.current.id, provider_id: nil)
+          .distinct
   end
 
   def filled_placements(school)
-    school.placements.where(academic_year_id: Placements::AcademicYear.current.id).where.not(provider_id: nil).distinct
+    school.placements
+          .where(academic_year_id: Placements::AcademicYear.current.id)
+          .where.not(provider_id: nil)
+          .distinct
   end
 
   def subjects_for_placements(placements)
@@ -100,12 +97,21 @@ class Placements::Providers::FindController < Placements::ApplicationController
   end
 
   def filter_subjects_by_phase
-    if filter_form.primary_only?
-      Subject.primary
-    elsif filter_form.secondary_only?
-      Subject.secondary
-    else
-      Subject
-    end.order_by_name.select(:id, :name)
+    scope = if filter_form.primary_only?
+              Subject.primary
+            elsif filter_form.secondary_only?
+              Subject.secondary
+            else
+              Subject
+            end
+    scope.order_by_name.select(:id, :name)
+  end
+
+  def placements_last_offered
+    @school.placements
+           .where(academic_year: Placements::AcademicYear.current.previous)
+           .decorate
+           .includes(:academic_year)
+           .group_by(&:academic_year)
   end
 end
