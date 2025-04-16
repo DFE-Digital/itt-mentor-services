@@ -277,4 +277,84 @@ describe Placements::Schools::FilterForm, type: :model do
       end
     end
   end
+
+  describe "#primary_selected?" do
+    subject(:filter_form) { described_class.new(provider, params) }
+
+    context "when primary is selected" do
+      let(:params) { { phases: %w[Primary] } }
+
+      it "returns true" do
+        expect(filter_form.primary_selected?).to be(true)
+      end
+    end
+
+    context "when primary is not selected" do
+      let(:params) { { phases: %w[Secondary] } }
+
+      it "returns false" do
+        expect(filter_form.primary_selected?).to be(false)
+      end
+    end
+  end
+
+  describe "#secondary_selected?" do
+    subject(:filter_form) { described_class.new(provider, params) }
+
+    context "when secondary is selected" do
+      let(:params) { { phases: %w[Secondary] } }
+
+      it "returns true" do
+        expect(filter_form.secondary_selected?).to be(true)
+      end
+    end
+
+    context "when secondary is not selected" do
+      let(:params) { { phases: %w[Primary] } }
+
+      it "returns false" do
+        expect(filter_form.secondary_selected?).to be(false)
+      end
+    end
+  end
+
+  describe "#primary_only?" do
+    subject(:filter_form) { described_class.new(provider, params) }
+
+    context "when only primary is selected" do
+      let(:params) { { phases: %w[Primary] } }
+
+      it "returns true" do
+        expect(filter_form.primary_only?).to be(true)
+      end
+    end
+
+    context "when secondary is also selected" do
+      let(:params) { { phases: %w[Primary Secondary] } }
+
+      it "returns false" do
+        expect(filter_form.primary_only?).to be(false)
+      end
+    end
+  end
+
+  describe "#secondary_only?" do
+    subject(:filter_form) { described_class.new(provider, params) }
+
+    context "when only secondary is selected" do
+      let(:params) { { phases: %w[Secondary] } }
+
+      it "returns true" do
+        expect(filter_form.secondary_only?).to be(true)
+      end
+    end
+
+    context "when primary is also selected" do
+      let(:params) { { phases: %w[Primary Secondary] } }
+
+      it "returns false" do
+        expect(filter_form.secondary_only?).to be(false)
+      end
+    end
+  end
 end
