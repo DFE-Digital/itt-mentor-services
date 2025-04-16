@@ -8,8 +8,6 @@ module AcademicYearAssignable
   end
 
   def assign_default_academic_year
-    return if selected_academic_year.present?
-
     self.selected_academic_year = Placements::AcademicYear.current.next
   end
 end
