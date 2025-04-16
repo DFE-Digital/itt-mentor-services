@@ -1,0 +1,154 @@
+require "rails_helper"
+
+RSpec.describe "Provider user filters schools by ITT status", service: :placements, type: :system do
+  scenario do
+    given_that_schools_exist
+    and_i_am_signed_in
+
+    when_i_navigate_to_the_find_schools_page
+    then_i_see_the_find_schools_page
+    and_i_see_all_schools
+    and_i_see_the_itt_status_filter
+
+    when_i_select_open_to_hosting_from_the_itt_status_filter
+    and_i_click_on_apply_filters
+    then_i_see_the_open_to_hosting_school
+    and_i_do_not_see_the_not_open_to_hosting_school
+    and_i_see_that_the_open_to_hosting_itt_status_checkbox_is_selected
+    and_i_see_the_open_to_hosting_filter_tag
+
+    when_i_select_not_hosting_from_the_itt_status_filter
+    and_i_click_on_apply_filters
+    then_i_see_all_schools
+    and_i_see_that_the_open_to_hosting_and_not_hosting_itt_status_checkboxes_are_selected
+    and_i_see_that_the_open_to_hosting_and_not_hosting_filter_tags
+
+    when_i_click_on_the_not_hosting_itt_status_tag
+    then_i_see_the_open_to_hosting_school
+    and_i_do_not_see_the_not_open_to_hosting_school
+    and_i_do_not_see_the_not_opening_itt_status_checkbox_selected
+    and_i_do_not_see_the_not_open_filter_tag
+
+    when_i_click_on_the_open_to_hosting_itt_status_tag
+    then_i_see_all_schools
+    and_i_do_not_see_any_selected_itt_status_checkboxes
+    and_i_do_not_see_any_itt_status_filter_tags
+  end
+
+  private
+
+  def given_that_schools_exist
+    @provider = build(:placements_provider, name: "Aes Sedai Trust")
+
+    @open_hosting_interest = build(:hosting_interest, appetite: "actively_looking", academic_year: Placements::AcademicYear.current)
+    @not_open_hosting_interest = build(:hosting_interest, appetite: "not_open", academic_year: Placements::AcademicYear.current)
+
+    @open_to_hosting_school = create(:placements_school, phase: "Primary", name: "Springfield Elementary", hosting_interests: [@open_hosting_interest])
+    @not_hosting_school = create(:placements_school, phase: "Secondary", name: "Shelbyville High School", hosting_interests: [@not_open_hosting_interest])
+  end
+
+  def and_i_am_signed_in
+    sign_in_placements_user(organisations: [@provider])
+  end
+
+  def when_i_navigate_to_the_find_schools_page
+    within ".app-primary-navigation__nav" do
+      click_on "Find"
+    end
+  end
+
+  def then_i_see_the_find_schools_page
+    expect(page).to have_title("Find schools hosting placements - Manage school placements - GOV.UK")
+    expect(primary_navigation).to have_current_item("Find")
+    expect(page).to have_h1("Find schools hosting placements")
+    expect(page).to have_h2("Filter")
+  end
+
+  def and_i_see_all_schools
+    expect(page).to have_h2("Springfield Elementary")
+    expect(page).to have_h2("Shelbyville High School")
+  end
+
+  def and_i_see_the_itt_status_filter
+    expect(page).to have_element(:legend, text: "ITT status", class: "govuk-fieldset__legend")
+    expect(page).to have_unchecked_field("Open to hosting")
+    expect(page).to have_unchecked_field("Not hosting")
+    expect(page).to have_unchecked_field("Already organised placements")
+    expect(page).to have_unchecked_field("Has unfilled placements")
+  end
+
+  def when_i_select_open_to_hosting_from_the_itt_status_filter
+    check "Open to hosting"
+  end
+
+  def and_i_click_on_apply_filters
+    click_on "Apply filters"
+  end
+
+  def then_i_see_the_open_to_hosting_school
+    expect(page).to have_h2("Springfield Elementary")
+  end
+
+  def and_i_do_not_see_the_not_open_to_hosting_school
+    expect(page).not_to have_h2("Shelbyville High School")
+  end
+
+  def and_i_see_that_the_open_to_hosting_itt_status_checkbox_is_selected
+    expect(page).to have_checked_field("Open to hosting")
+  end
+
+  def and_i_see_the_open_to_hosting_filter_tag
+    expect(page).to have_filter_tag("Open to hosting")
+  end
+
+  def when_i_select_not_hosting_from_the_itt_status_filter
+    check "Not hosting"
+  end
+
+  def and_i_see_that_the_open_to_hosting_and_not_hosting_itt_status_checkboxes_are_selected
+    expect(page).to have_checked_field("Open to hosting")
+    expect(page).to have_checked_field("Not hosting")
+  end
+
+  def and_i_see_that_the_open_to_hosting_and_not_hosting_filter_tags
+    expect(page).to have_filter_tag("Open to hosting")
+    expect(page).to have_filter_tag("Not hosting")
+  end
+
+  def when_i_click_on_the_not_hosting_itt_status_tag
+    within ".app-filter-tags" do
+      click_on "Not hosting"
+    end
+  end
+
+  def and_i_do_not_see_the_not_opening_itt_status_checkbox_selected
+    expect(page).to have_checked_field("Open to hosting")
+    expect(page).to have_unchecked_field("Not hosting")
+  end
+
+  def and_i_do_not_see_the_not_open_filter_tag
+    expect(page).not_to have_filter_tag("Not hosting")
+  end
+
+  def when_i_click_on_the_open_to_hosting_itt_status_tag
+    within ".app-filter-tags" do
+      click_on "Open to hosting"
+    end
+  end
+
+  def then_i_see_all_schools
+    expect(page).to have_h2("Springfield Elementary")
+    expect(page).to have_h2("Shelbyville High School")
+  end
+
+  def and_i_do_not_see_any_selected_itt_status_checkboxes
+    expect(page).to have_unchecked_field("Open to hosting")
+    expect(page).to have_unchecked_field("Not hosting")
+  end
+
+  def and_i_do_not_see_any_itt_status_filter_tags
+    expect(page).not_to have_h3("ITT status")
+    expect(page).not_to have_filter_tag("Open to hosting")
+    expect(page).not_to have_filter_tag("Not hosting")
+  end
+end
