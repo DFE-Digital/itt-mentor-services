@@ -8,7 +8,7 @@ RSpec.describe "Provider user views a school which is not onboarded", service: :
     when_i_navigate_to_the_find_schools_page
     then_i_see_the_find_schools_page
     and_i_see_all_schools
-    and_i_cannot_see_a_link_to_view_the_not_hosting_school_details
+    and_i_cannot_see_a_link_to_view_the_school_that_is_not_onboarded
   end
 
   private
@@ -39,7 +39,7 @@ RSpec.describe "Provider user views a school which is not onboarded", service: :
     expect(page).to have_content("Shelbyville High School")
   end
 
-  def and_i_cannot_see_a_link_to_view_the_school_that_is_not_onboarded_details
+  def and_i_cannot_see_a_link_to_view_the_school_that_is_not_onboarded
     expect(page).not_to have_link("Shelbyville High School", href: placements_placements_provider_find_path(@provider, @not_onboarded_school))
     expect(page).not_to have_link("Shelbyville High School", href: placement_information_placements_provider_find_path(@provider, @not_onboarded_school))
   end
