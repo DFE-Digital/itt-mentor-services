@@ -50,11 +50,6 @@ en:
           trained_mentors: Trained mentors
           trained_mentors_true_label: "Yes"
           trained_mentors_false_label: "No"
-        show:
-          page_title: "%{school_name} - Find"
-          placements: Placements
-          placement_information: Placement information
-          school_details: School details
         placements:
           page_title: "%{school_name} - Find"
           placements: Placements
@@ -71,6 +66,11 @@ en:
             headers:
               subject: Subject
               expected_date: Expected date
+        details_navigation:
+          page_title: "%{school_name} - Find"
+          placements: Placements
+          placement_information: Placement information
+          school_details: School details
         placement_information:
           page_title: "%{school_name} - Find"
           placements: Placements
@@ -83,7 +83,7 @@ en:
           trained_mentors: Trained mentors
           placements_hosted_in_previous_years: Placements hosted in previous years
           offered_placements_in: "Offered placements in:"
-          unknown: Unknown
+          unknown: This school has not previously offered placements
         school_details:
           page_title: "%{school_name} - Find"
           placements: Placements

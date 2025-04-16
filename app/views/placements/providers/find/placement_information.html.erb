@@ -1,0 +1,49 @@
+<% content_for(:page_title) { t(".page_title", school_name: @school.name) } %>
+<%= render "placements/providers/primary_navigation", provider: @provider, current_navigation: :find %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= render "placements/providers/find/details_navigation", school: @school, provider: @provider, unfilled_subjects: @unfilled_subjects, filled_subjects: @filled_subjects %>
+
+      <h2 class="govuk-heading-m">
+        <%= t(".placement_contact") %>
+      </h2>
+
+      <%= govuk_summary_list(actions: false) do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".name")) %>
+          <% row.with_value(text: @school.school_contact_full_name.to_s) %>
+        <% end %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".email")) %>
+          <% row.with_value(text: @school.school_contact_email_address) %>
+        <% end %>
+      <% end %>
+
+      <h2 class="govuk-heading-m">
+        <%= t(".placements_hosted_in_previous_years") %>
+      </h2>
+
+      <% if @placements_last_offered.any? %>
+        <%= govuk_summary_list(actions: false) do |summary_list| %>
+          <% @placements_last_offered.each do |academic_year, placements| %>
+            <% summary_list.with_row do |row| %>
+              <% row.with_key(text: academic_year.name) %>
+              <% row.with_value do %>
+                  <p class="govuk-body"><%= t(".offered_placements_in") %></p>
+                  <ul class="govuk-list">
+                    <% placements.each do |placement| %>
+                      <li><%= placement.title %></li>
+                    <% end %>
+                  </ul>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <p class="govuk-body"><%= t(".unknown") %></p>
+      <% end %>
+    </div>
+  </div>
+</div>
