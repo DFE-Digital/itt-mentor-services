@@ -1,0 +1,64 @@
+<% content_for(:page_title) { t(".page_title", school_name: @school.name) } %>
+<%= render "placements/providers/primary_navigation", provider: @provider, current_navigation: :find %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= render "placements/providers/find/details_navigation", school: @school, provider: @provider, unfilled_subjects: @unfilled_subjects, filled_subjects: @filled_subjects %>
+
+      <p class="govuk-body">
+        <%= t(".description") %>
+      </p>
+
+      <% if @unfilled_placements.present? %>
+        <h2 class="govuk-heading-m">
+          <%= t(".unfilled_placements", count: @unfilled_placements.count) %>
+        </h2>
+
+        <%= govuk_table do |table| %>
+          <% table.with_head do |head| %>
+            <% head.with_row do |row| %>
+              <% row.with_cell text: t(".table.headers.subject") %>
+              <% row.with_cell text: t(".table.headers.expected_date") %>
+            <% end %>
+          <% end %>
+
+          <% @unfilled_placements.each do |placement| %>
+            <% table.with_body do |body| %>
+              <% body.with_row do |row| %>
+                <% row.with_cell do %>
+                  <%= govuk_link_to placement.title, placements_provider_placement_path(@provider, placement) %>
+                <% end %>
+                <% row.with_cell text: placement.term_names %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <% if @filled_placements.present? %>
+        <h2 class="govuk-heading-m">
+          <%= t(".filled_placements", count: @filled_placements.count) %>
+        </h2>
+
+        <%= govuk_table do |table| %>
+          <% table.with_head do |head| %>
+            <% head.with_row do |row| %>
+              <% row.with_cell text: t(".table.headers.subject") %>
+              <% row.with_cell text: t(".table.headers.expected_date") %>
+            <% end %>
+          <% end %>
+
+          <% @filled_placements.each do |placement| %>
+            <% table.with_body do |body| %>
+              <% body.with_row do |row| %>
+                <% row.with_cell text: placement.title %>
+                <% row.with_cell text: placement.term_names %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
