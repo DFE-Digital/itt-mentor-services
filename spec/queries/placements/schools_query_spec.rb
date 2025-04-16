@@ -23,7 +23,7 @@ describe Placements::SchoolsQuery do
   let(:non_query_school) do
     create(:placements_school, name: "York Secondary School", latitude: 29.732613, longitude: 105.448063)
   end
-  let(:academic_year) { create(:placements_academic_year) }
+  let(:academic_year) { Placements::AcademicYear.current }
   let(:placement) { create(:placement, school: query_school, academic_year:) }
 
   before do
@@ -114,7 +114,7 @@ describe Placements::SchoolsQuery do
         let(:params) { { filters: { itt_statuses: %w[open] } } }
 
         before do
-          query_school.hosting_interests.create!(appetite: "actively_looking", academic_year: Placements::AcademicYear.current)
+          query_school.hosting_interests.create!(appetite: "actively_looking", academic_year:)
         end
 
         it "returns the filtered schools" do
@@ -127,7 +127,7 @@ describe Placements::SchoolsQuery do
         let(:params) { { filters: { itt_statuses: %w[not_open] } } }
 
         before do
-          query_school.hosting_interests.create!(appetite: "not_open", academic_year: Placements::AcademicYear.current)
+          query_school.hosting_interests.create!(appetite: "not_open", academic_year:)
         end
 
         it "returns the filtered schools" do
@@ -140,7 +140,7 @@ describe Placements::SchoolsQuery do
         let(:params) { { filters: { itt_statuses: %w[unfilled_placements] } } }
 
         before do
-          query_school.hosting_interests.create!(appetite: "actively_looking", academic_year: Placements::AcademicYear.current)
+          query_school.hosting_interests.create!(appetite: "actively_looking", academic_year:)
           create(:placement, school: query_school, academic_year:, provider: nil)
         end
 
@@ -154,7 +154,7 @@ describe Placements::SchoolsQuery do
         let(:params) { { filters: { itt_statuses: %w[filled_placements] } } }
 
         before do
-          query_school.hosting_interests.create!(appetite: "actively_looking", academic_year: Placements::AcademicYear.current)
+          query_school.hosting_interests.create!(appetite: "actively_looking", academic_year:)
           create(:placement, school: query_school, academic_year:, provider: create(:provider))
         end
 
@@ -168,8 +168,8 @@ describe Placements::SchoolsQuery do
         let(:params) { { filters: { itt_statuses: %w[open not_open] } } }
 
         before do
-          query_school.hosting_interests.create!(appetite: "actively_looking", academic_year: Placements::AcademicYear.current)
-          non_query_school.hosting_interests.create!(appetite: "not_open", academic_year: Placements::AcademicYear.current)
+          query_school.hosting_interests.create!(appetite: "actively_looking", academic_year:)
+          non_query_school.hosting_interests.create!(appetite: "not_open", academic_year:)
         end
 
         it "returns the filtered schools" do
