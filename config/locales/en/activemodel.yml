@@ -357,3 +357,29 @@ en:
                 Your file needs a column called %{missing_columns}.
               uploaded_headers:
                 Right now it has columns called %{uploaded_headers}.
+        claims/add_organisation_wizard/name_step:
+          attributes:
+            name:
+              blank: Please enter the name of the organisation
+        claims/add_organisation_wizard/vendor_number_step:
+          attributes:
+            vendor_number:
+              blank: Please enter a vendor number for the organisation
+        claims/add_organisation_wizard/region_step:
+          attributes:
+            region_id:
+              blank: Please select a region for the organisation
+        claims/add_organisation_wizard/address_step:
+          attributes:
+            address1:
+              blank: Please enter the first line of the address for the organisation
+            town:
+              blank: Please enter the town or city for the organisation
+            postcode:
+              blank: Please enter the postcode for the organisation
+        claims/add_organisation_wizard/contact_details_step:
+          attributes:
+            telephone:
+              blank: Please enter a telephone number for the organisation
+            website:
+              blank: Please enter a website address for the organisation
