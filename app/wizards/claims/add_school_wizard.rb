@@ -2,9 +2,9 @@ module Claims
   class AddSchoolWizard < BaseWizard
     def define_steps
       if claim_windows_exist?
-        add_step(ClaimWindowStep)
         add_step(SchoolStep)
         add_step(SchoolOptionsStep) if steps.fetch(:school).school.blank?
+        add_step(ClaimWindowStep)
         add_step(CheckYourAnswersStep)
       else
         add_step(NoClaimWindowStep)

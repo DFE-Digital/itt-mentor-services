@@ -1,0 +1,25 @@
+<%= content_for :page_title, sanitize(t(".title")) %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= form_with(model: current_step, url: current_step_path, method: :put) do |f| %>
+        <%= f.govuk_text_field :vendor_number,
+                               class: "govuk-input--width-20",
+                               label: { text: t(".title"), size: "l", tag: "h1" },
+                               caption: { text: t(".caption"), size: "l" } %>
+
+        <%= f.govuk_submit t(".continue") %>
+
+        <%= govuk_details(summary_text: t(".no_vendor_number")) do %>
+          <p class="govuk-body"><%= t(".vendor_number_information_html", link: govuk_link_to(
+            t(".link_text"),
+            external_link("www.gov.uk/guidance/provide-information-about-your-banking-and-payments-to-dfe"),
+            new_tab: true,
+          )) %></p>
+          <p class="govuk-body"><%= t(".once_provided") %></p>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -206,6 +206,14 @@ scope module: :claims, as: :claims, constraints: {
       end
     end
 
+    resources :organisations do
+      collection do
+        get "new", to: "organisations/add_organisation#new", as: :new_add_organisation
+        get "new/:state_key/:step", to: "organisations/add_organisation#edit", as: :add_organisation
+        put "new/:state_key/:step", to: "organisations/add_organisation#update"
+      end
+    end
+
     resources :schools, only: %i[index show] do
       member do
         put :remove_grant_conditions_acceptance, path: "remove-grant-conditions-acceptance"

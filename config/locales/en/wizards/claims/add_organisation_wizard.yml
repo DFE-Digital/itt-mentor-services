@@ -1,0 +1,50 @@
+en:
+  wizards:
+    claims:
+      add_organisation_wizard:
+        name_step:
+          caption: Add organisation
+          title: Enter the organisation name
+          continue: Continue
+        vendor_number_step:
+          caption: Add organisation
+          title: Enter the organisation's vendor number
+          continue: Continue
+          no_vendor_number: The organisation has not provided a vendor number
+          link_text: providing information about their banking and payments to DfE
+          vendor_number_information_html: | 
+            The organisation can get a vendor number by %{link}.
+            Receiving a vendor number may take up to 6 weeks.
+          once_provided: Once they have provided you with a vendor number, you will be able to manually add them.
+        address_step:
+          caption: Add organisation
+          title: Enter the organisation's address
+          address1: Address line 1
+          address2: Address line 2 (optional)
+          town: Town or city
+          postcode: Postcode
+          continue: Continue
+        region_step:
+          caption: Add organisation
+          title: Enter the organisation's region
+          hint: The region is required to calculate the claim amount
+          continue: Continue
+        contact_details_step:
+          caption: Add organisation
+          title: Enter the organisation's contact details
+          telephone: Telephone number
+          website: Website address
+          continue: Continue
+        check_your_answers_step:
+          caption: Add organisation
+          title: Check your answers
+          name: Organisation name
+          claim_window: Claim window
+          vendor_number: Vendor number
+          address: Address
+          region: Region
+          contact_details: Contact details
+          telephone: Telephone number
+          website: Website address
+          change: Change
+          save_organisation: Save organisation
