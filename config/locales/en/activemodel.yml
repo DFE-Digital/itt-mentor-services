@@ -348,7 +348,7 @@ en:
             claim_window_id:
               blank: Please select a claim window
               inclusion: Please select a claim window
-        claims/upload_users_wizard/upload_step:
+        claims/onboard_users_wizard/upload_step:
           attributes:
             csv_upload:
               blank: Select a CSV file to upload
