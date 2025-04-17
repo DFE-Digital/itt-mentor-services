@@ -37,12 +37,6 @@ class Placements::SchoolContact < ApplicationRecord
   end
 
   def full_name
-    if first_name.present? && last_name.present?
-      "#{first_name} #{last_name}"
-    elsif first_name.present?
-      first_name
-    elsif last_name.present?
-      last_name
-    end
+    "#{first_name} #{last_name}".strip
   end
 end

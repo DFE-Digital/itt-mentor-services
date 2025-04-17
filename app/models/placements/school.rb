@@ -87,15 +87,15 @@ class Placements::School < School
   delegate :email_address, :full_name, to: :school_contact, prefix: true, allow_nil: true
   delegate :appetite, to: :current_hosting_interest, prefix: true, allow_nil: true
 
-  def current_hosting_interest
-    hosting_interests.find_by(academic_year: Placements::AcademicYear.current)
+  def current_hosting_interest(academic_year: Placements::AcademicYear.current)
+    hosting_interests.find_by(academic_year:)
   end
 
-  def available_placements
-    Placement.available_placements(self)
+  def available_placements(academic_year: Placements::AcademicYear.current)
+    placements.available_placements_for_academic_year(academic_year)
   end
 
-  def unavailable_placements
-    Placement.unavailable_placements(self)
+  def unavailable_placements(academic_year: Placements::AcademicYear.current)
+    placements.unavailable_placements_for_academic_year(academic_year)
   end
 end

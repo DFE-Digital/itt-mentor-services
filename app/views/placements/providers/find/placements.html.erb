@@ -7,7 +7,7 @@
       <%= render "placements/providers/find/details_navigation", school: @school, provider: @provider, unfilled_subjects: @unfilled_subjects, filled_subjects: @filled_subjects %>
 
       <p class="govuk-body">
-        <%= t(".description") %>
+        <%= t(".description", academic_year_name: Placements::AcademicYear.current.name) %>
       </p>
 
       <% if @unfilled_placements.present? %>
