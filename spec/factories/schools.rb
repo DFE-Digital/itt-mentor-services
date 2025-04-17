@@ -40,6 +40,7 @@
 #  ukprn                                  :string
 #  urban_or_rural                         :string
 #  urn                                    :string           not null
+#  vendor_number                          :string
 #  website                                :string
 #  created_at                             :datetime         not null
 #  updated_at                             :datetime         not null

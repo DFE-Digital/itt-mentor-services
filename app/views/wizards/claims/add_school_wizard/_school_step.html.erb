@@ -16,3 +16,26 @@
     previous_search: current_step.id,
   },
 ) %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= govuk_details(summary_text: t(".organisation_not_listed")) do %>
+        <%= govuk_list type: :number do %>
+          <li>
+            <%= t(".ask_organisation_html", link: govuk_link_to(
+              t(".ask_link"),
+              external_link("www.gov.uk/guidance/provide-information-about-your-banking-and-payments-to-dfe"),
+              new_tab: true,
+            )) %>
+          </li>
+          <li><%= t(".wait_for_organisation") %></li>
+          <li>
+            <%= t(".return_html", link: govuk_link_to(t(".manually_add"),
+              new_add_organisation_claims_support_organisations_path, no_visited_state: true)) %>
+          </li>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

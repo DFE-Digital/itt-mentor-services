@@ -5,7 +5,19 @@ en:
         school_step:
           caption: Add organisation
           continue: Continue
-          title: Enter a school name, URN or postcode
+          title: Enter an organisation
+          description: Use a name, unique reference number (URN) or postcode to find an organisation.
+          organisation_not_listed: The organisation is not listed
+          organisation_not_listed_description: If the organisation is not listed on the service you must
+          ask_organisation_html: |
+            Ask the organisation to %{link}. This will give them a vendor number, 
+            it may take up to 6 weeks for them to receive it.
+          ask_link: provide information about your banking and payments to DfE
+          wait_for_organisation: Wait for the organisation to send you their vendor number.
+          return_html: | 
+            Return to this page to %{link}. You will need the vendor number, organisation name, 
+            address, phone number and website url.
+          manually_add: manually add them to the service
         school_options_step:
           title: "%{organisation_count} results found for ‘%{search_param}’ - Add organisation"
         check_your_answers_step:

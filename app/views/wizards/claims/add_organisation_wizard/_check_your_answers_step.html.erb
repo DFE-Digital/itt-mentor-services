@@ -1,0 +1,101 @@
+<%= content_for :page_title, sanitize(t(".title")) %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= form_with(model: current_step, url: current_step_path, method: :put) do |f| %>
+          <span class="govuk-caption-l"><%= t(".caption") %></span>
+          <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+
+        <%= govuk_summary_list do |summary_list| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".name")) %>
+            <% row.with_value(text: wizard.organisation.name) %>
+            <% row.with_action(text: t(".change"),
+                               href: step_path(:name),
+                               html_attributes: {
+                                 class: "govuk-link--no-visited-state",
+                               },
+                               visually_hidden_text: t(".name")) %>
+          <% end %>
+
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".vendor_number")) %>
+            <% row.with_value(text: wizard.organisation.vendor_number) %>
+            <% row.with_action(text: t(".change"),
+                               href: step_path(:vendor_number),
+                               html_attributes: {
+                                 class: "govuk-link--no-visited-state",
+                               },
+                               visually_hidden_text: t(".vendor_number")) %>
+          <% end %>
+
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".claim_window")) %>
+            <% row.with_value(text: wizard.claim_window.decorate.name) %>
+            <% row.with_action(text: t(".change"),
+                               href: step_path(:claim_window),
+                               html_attributes: {
+                                 class: "govuk-link--no-visited-state",
+                               },
+                               visually_hidden_text: t(".claim_window")) %>
+          <% end %>
+
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".region")) %>
+            <% row.with_value(text: wizard.organisation.region_name) %>
+            <% row.with_action(text: t(".change"),
+                               href: step_path(:address),
+                               html_attributes: {
+                                 class: "govuk-link--no-visited-state",
+                               },
+                               visually_hidden_text: t(".region")) %>
+          <% end %>
+        <% end %>
+
+        <h2 class="govuk-heading-m govuk-!-margin-top-7">
+          <%= t(".contact_details") %>
+        </h2>
+
+        <%= govuk_summary_list do |summary_list| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".address")) %>
+            <% row.with_value(text: wizard.organisation.formatted_address) %>
+            <% row.with_action(text: t(".change"),
+                               href: step_path(:address),
+                               html_attributes: {
+                                 class: "govuk-link--no-visited-state",
+                               },
+                               visually_hidden_text: t(".address")) %>
+          <% end %>
+
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".telephone")) %>
+            <% row.with_value(text: wizard.organisation.telephone) %>
+            <% row.with_action(text: t(".change"),
+                               href: step_path(:contact_details),
+                               html_attributes: {
+                                 class: "govuk-link--no-visited-state",
+                               },
+                               visually_hidden_text: t(".telephone")) %>
+          <% end %>
+
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".website")) %>
+            <% row.with_value do %>
+              <%= govuk_link_to(wizard.organisation.website, external_link(wizard.organisation.website), target: "_blank", rel: "noopener noreferrer") %>
+            <% end %>
+            <% row.with_action(text: t(".change"),
+                               href: step_path(:contact_details),
+                               html_attributes: {
+                                 class: "govuk-link--no-visited-state",
+                               },
+                               visually_hidden_text: t(".website")) %>
+          <% end %>
+        <% end %>
+
+        <%= f.govuk_submit t(".save_organisation") %>
+      <% end %>
+    </div>
+  </div>
+</div>
