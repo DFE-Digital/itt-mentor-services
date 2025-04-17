@@ -8,7 +8,6 @@ class Placements::SchoolsQuery < ApplicationQuery
     scope = subject_condition(scope)
     scope = phase_condition(scope)
     scope = last_offered_placements_condition(scope)
-    scope = trained_mentors_condition(scope)
     scope = itt_statuses_condition(scope)
     order_condition(scope)
   end
@@ -77,12 +76,6 @@ class Placements::SchoolsQuery < ApplicationQuery
     else
       scope.where(academic_years: filter_params[:last_offered_placements_academic_year_ids])
     end
-  end
-
-  def trained_mentors_condition(scope)
-    return scope if filter_params[:trained_mentors].blank?
-
-    scope.where(mentors: { trained: filter_params[:trained_mentors] })
   end
 
   def filter_params

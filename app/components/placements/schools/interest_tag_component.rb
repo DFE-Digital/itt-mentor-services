@@ -4,6 +4,7 @@ class Placements::Schools::InterestTagComponent < ApplicationComponent
     "unfilled_placements" => "green",
     "filled_placements" => "blue",
     "not_open" => "red",
+    "not_participating" => "grey",
   }.freeze
 
   INTEREST_TEXT = {
@@ -11,6 +12,7 @@ class Placements::Schools::InterestTagComponent < ApplicationComponent
     "unfilled_placements" => I18n.t("components.placements.schools.interest_tag_component.unfilled_placements"),
     "filled_placements" => I18n.t("components.placements.schools.interest_tag_component.filled_placements"),
     "not_open" => I18n.t("components.placements.schools.interest_tag_component.not_open"),
+    "not_participating" => I18n.t("components.placements.schools.interest_tag_component.not_participating"),
   }.freeze
 
   private_constant :INTEREST_COLOURS, :INTEREST_TEXT
@@ -42,11 +44,9 @@ class Placements::Schools::InterestTagComponent < ApplicationComponent
       "open"
     elsif not_looking?
       "not_open"
+    else
+      "not_participating"
     end
-  end
-
-  def render_interest_tag?
-    school.current_hosting_interest_appetite.present?
   end
 
   def actively_looking?
