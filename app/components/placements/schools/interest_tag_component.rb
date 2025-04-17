@@ -23,6 +23,10 @@ class Placements::Schools::InterestTagComponent < ApplicationComponent
     @school = school
   end
 
+  def call
+    render GovukComponent::TagComponent.new(text: interest_text, colour: interest_colour)
+  end
+
   private
 
   attr_reader :school
