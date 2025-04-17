@@ -27,13 +27,6 @@ class Placements::Schools::SummaryComponent < ApplicationComponent
     @unavailable_placements_count ||= school_unavailable_placements.count
   end
 
-  def placement_status
-    I18n.t(
-      "components.school.summary_component.#{latest_academic_year_name ? "placements_hosted" : "placements_never_hosted"}",
-      academic_year_name: latest_academic_year_name,
-    )
-  end
-
   def unfilled_subjects
     @unfilled_subjects ||= Subject.where(id: unfilled_subject_ids)
   end
@@ -52,24 +45,8 @@ class Placements::Schools::SummaryComponent < ApplicationComponent
 
   private
 
-  def latest_academic_year
-    @latest_academic_year ||= academic_years_for_school.order_by_date.first
-  end
-
-  def latest_academic_year_name
-    latest_academic_year&.name
-  end
-
   def previous_academic_year_placements_count
     @previous_academic_year_placements_count ||= school.placements.where(academic_year: Placements::AcademicYear.current.previous).count
-  end
-
-  def academic_years_for_school
-    Placements::AcademicYear.where(id: school.placements.pluck(:academic_year_id), ends_on: ..current_academic_year_start)
-  end
-
-  def current_academic_year_start
-    @current_academic_year_start ||= Placements::AcademicYear.current.starts_on
   end
 
   def unfilled_subject_ids
