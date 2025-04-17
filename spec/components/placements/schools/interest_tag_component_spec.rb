@@ -80,8 +80,12 @@ RSpec.describe Placements::Schools::InterestTagComponent, type: :component do
   context "when the school has not specified a hosting interest" do
     let(:school) { create(:placements_school) }
 
-    it "does not render the tag" do
-      expect(page).not_to have_css(".govuk-tag")
+    it "renders the correct text" do
+      expect(page).to have_content "Not participating"
+    end
+
+    it "renders the correct tag" do
+      expect(page).to have_css(".govuk-tag--grey")
     end
   end
 end
