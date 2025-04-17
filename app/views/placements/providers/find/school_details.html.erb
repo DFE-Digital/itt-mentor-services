@@ -38,8 +38,8 @@
 
       <%= govuk_summary_list(actions: false) do |summary_list| %>
         <% summary_list.with_row do |row| %>
-          <% row.with_key(text: t(".telephone") || t(".unknown")) %>
-          <% row.with_value(text: @school.telephone) %>
+          <% row.with_key(text: t(".telephone")) %>
+          <% row.with_value(text: @school.telephone) || t(".unknown") %>
         <% end %>
 
         <% summary_list.with_row do |row| %>

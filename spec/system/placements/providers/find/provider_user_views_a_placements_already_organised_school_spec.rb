@@ -86,7 +86,7 @@ RSpec.describe "Provider user views a school which is not onboarded", service: :
     expect(page).to have_h1("Shelbyville High School")
     expect(page).to have_tag("Already organised placements", "blue")
     expect(secondary_navigation).to have_current_item("Placements")
-    expect(page).to have_element(:p, text: "This school has specified which placements they would like to host in the 2024-2025 academic year.", class: "govuk-body")
+    expect(page).to have_element(:p, text: "This school has specified which placements they would like to host in the 2024 to 2025 academic year.", class: "govuk-body")
     expect(page).to have_h2("1 filled placement")
     expect(page).to have_table_row({
       "Subject" => "Primary (Year 1)",

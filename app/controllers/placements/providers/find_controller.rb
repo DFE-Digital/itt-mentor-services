@@ -1,6 +1,5 @@
 class Placements::Providers::FindController < Placements::ApplicationController
   before_action :set_provider
-  before_action :school, only: %i[placements placement_information school_details]
   before_action :load_placements_and_subjects, only: %i[placements placement_information school_details]
   helper_method :filter_form, :location_coordinates
 
@@ -26,8 +25,8 @@ class Placements::Providers::FindController < Placements::ApplicationController
   end
 
   def load_placements_and_subjects
-    @filled_placements = filled_placements(@school).decorate
-    @unfilled_placements = unfilled_placements(@school).decorate
+    @filled_placements = filled_placements(school).decorate
+    @unfilled_placements = unfilled_placements(school).decorate
     @filled_subjects = subjects_for_placements(@filled_placements)
     @unfilled_subjects = subjects_for_placements(@unfilled_placements)
   end
@@ -108,7 +107,7 @@ class Placements::Providers::FindController < Placements::ApplicationController
   end
 
   def placements_last_offered
-    @school.placements
+    school.placements
            .where(academic_year: Placements::AcademicYear.current.previous)
            .decorate
            .includes(:academic_year)

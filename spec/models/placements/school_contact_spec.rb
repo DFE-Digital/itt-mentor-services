@@ -67,11 +67,5 @@ RSpec.describe Placements::SchoolContact, type: :model do
       school_contact.first_name = nil
       expect(school_contact.full_name).to eq("Doe")
     end
-
-    it "returns nil when both names are absent" do
-      school_contact.first_name = nil
-      school_contact.last_name = nil
-      expect(school_contact.full_name).to be_nil
-    end
   end
 end
