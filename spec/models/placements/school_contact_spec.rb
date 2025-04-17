@@ -50,4 +50,22 @@ RSpec.describe Placements::SchoolContact, type: :model do
       end
     end
   end
+
+  describe "#full_name" do
+    let(:school_contact) { build(:school_contact, first_name: "John", last_name: "Doe") }
+
+    it "returns the full name when both first and last names are present" do
+      expect(school_contact.full_name).to eq("John Doe")
+    end
+
+    it "returns the first name when only the first name is present" do
+      school_contact.last_name = nil
+      expect(school_contact.full_name).to eq("John")
+    end
+
+    it "returns the last name when only the last name is present" do
+      school_contact.first_name = nil
+      expect(school_contact.full_name).to eq("Doe")
+    end
+  end
 end

@@ -1,0 +1,20 @@
+<%# locals: (school:, provider:, unfilled_subjects:, filled_subjects: -%>
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: placements_provider_find_index_path(provider)) %>
+<% end %>
+
+<h1 class="govuk-heading-l">
+  <%= school.name %>
+</h1>
+
+<%= render Placements::Schools::InterestTagComponent.new(school:) %>
+
+<div class="govuk-!-margin-bottom-2"></div>
+
+<%= render SecondaryNavigationComponent.new do |component| %>
+  <% if (unfilled_subjects.any? || filled_subjects.any?) && school.current_hosting_interest.appetite == "actively_looking" %>
+    <% component.with_navigation_item t(".placements"), placements_placements_provider_find_path %>
+  <% end %>
+  <% component.with_navigation_item t(".placement_information"), placement_information_placements_provider_find_path %>
+  <% component.with_navigation_item t(".school_details"), school_details_placements_provider_find_path %>
+<% end %>

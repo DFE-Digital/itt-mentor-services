@@ -1,0 +1,247 @@
+<div class="app-filter-layout display-none-on-mobile " data-filter-target="filter">
+  <div class="app-filter-layout__filter">
+    <div class="app-filter__header">
+      <div class="app-filter__header-title">
+        <h2 class="govuk-heading-m"><%= t("filter") %></h2>
+      </div>
+      <div class="app-filter__header-action">
+        <button class="app-filter__close" type="button" data-action="click->filter#close">
+          <%= t("close") %>
+        </button>
+      </div>
+    </div>
+    <div class="app-filter-layout__content">
+      <% if filter_form.filters_selected? %>
+        <div class="app-filter-layout__selected">
+          <div class="app-filter__selected-heading">
+            <div class="app-filter__heading-title">
+              <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><%= t("selected_filters") %></h2>
+              <p class="govuk-body">
+                <%= govuk_link_to(
+                      t("clear_filters"),
+                      filter_form.clear_filters_path,
+                      no_visited_state: true,
+                    ) %>
+              </p>
+            </div>
+          </div>
+
+          <% if @search_location.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".search_location") %></h3>
+            <ul class="app-filter-tags">
+              <li>
+                <%= govuk_link_to(
+                      @search_location,
+                      filter_form.index_path_without_filter(
+                        filter: "search_location",
+                        value: @search_location,
+                      ),
+                      class: "app-filter__tag",
+                      no_visited_state: true,
+                    ) %>
+              </li>
+            </ul>
+          <% end %>
+
+          <% if filter_form.search_by_name.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".search_by_name") %></h3>
+            <ul class="app-filter-tags">
+              <li>
+                <%= govuk_link_to(
+                      filter_form.search_by_name,
+                      filter_form.index_path_without_filter(
+                        filter: "search_by_name",
+                        value: filter_form.search_by_name,
+                      ),
+                      class: "app-filter__tag",
+                      no_visited_state: true,
+                    ) %>
+              </li>
+            </ul>
+          <% end %>
+
+          <% if filter_form.phases.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".phase") %></h3>
+            <ul class="app-filter-tags">
+              <% filter_form.phases.each do |phase| %>
+                <li>
+                  <%= govuk_link_to(
+                        phase,
+                        filter_form.index_path_without_filter(
+                          filter: "phases",
+                          value: phase,
+                        ),
+                        class: "app-filter__tag",
+                        no_visited_state: true,
+                      ) %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+
+          <% if filter_form.itt_statuses.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".itt_status") %></h3>
+            <ul class="app-filter-tags">
+              <% filter_form.itt_statuses.each do |status| %>
+                <li>
+                  <%= govuk_link_to(
+                        t("components.placements.schools.interest_tag_component.#{status}"),
+                        filter_form.index_path_without_filter(
+                          filter: "itt_statuses",
+                          value: status,
+                        ),
+                        class: "app-filter__tag",
+                        no_visited_state: true,
+                      ) %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+
+          <% if filter_form.last_offered_placements_academic_year_ids.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".last_offered_placements") %></h3>
+            <ul class="app-filter-tags">
+              <% if filter_form.last_offered_placements_academic_year_ids.include?("never_offered") %>
+                <li>
+                  <%= govuk_link_to(
+                        t(".not_offered_placements_label"),
+                        filter_form.index_path_without_filter(
+                          filter: "last_offered_placements_academic_year_ids",
+                          value: "never_offered",
+                        ),
+                        class: "app-filter__tag",
+                        no_visited_state: true,
+                      ) %>
+                </li>
+              <% end %>
+              <% filter_form.last_offered_placements_academic_years.each do |academic_year_offered| %>
+                <li>
+                  <%= govuk_link_to(
+                        academic_year_offered.name,
+                        filter_form.index_path_without_filter(
+                          filter: "last_offered_placements_academic_year_ids",
+                          value: academic_year_offered.id,
+                        ),
+                        class: "app-filter__tag",
+                        no_visited_state: true,
+                      ) %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+
+          <% if filter_form.subject_ids.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".subject") %></h3>
+            <ul class="app-filter-tags">
+              <% filter_form.subjects.each do |subject| %>
+                <li>
+                  <%= govuk_link_to(
+                        subject.name,
+                        filter_form.index_path_without_filter(
+                          filter: "subject_ids",
+                          value: subject.id,
+                        ),
+                        class: "app-filter__tag",
+                        no_visited_state: true,
+                      ) %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+      <% end %>
+
+      <div class="app-filter__options">
+        <%= form_with(
+              model: filter_form,
+              scope: :filters,
+              url: placements_provider_find_index_path(@provider),
+              method: "get",
+            ) do |form| %>
+          <%= form.govuk_submit t("apply_filters") %>
+
+          <div class="app-filter__option">
+            <h1 class="govuk-label-wrapper">
+              <label class="govuk-label govuk-label--s"><%= t(".search_by_location") %></label>
+            </h1>
+
+            <div class="app-filter__option">
+              <div class="govuk-form-group">
+                <%= form.govuk_text_field :search_location, type: :search, value: search_location, label: { hidden: true }, caption: { text: t(".location_search_prompt") } %>
+                <p class="govuk-body-s secondary-text"><%= t(".google_attribution") %></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="app-filter__option">
+            <h1 class="govuk-label-wrapper">
+              <label class="govuk-label govuk-label--s"><%= t(".search_by_name") %></label>
+            </h1>
+
+            <div class="app-filter__option">
+              <div class="govuk-form-group">
+                <%= form.govuk_text_field :search_by_name, type: :search, label: { hidden: true }, caption: { text: t(".search_by_name_prompt") } %>
+              </div>
+            </div>
+          </div>
+
+          <div class="app-filter__option">
+            <%= form.govuk_check_boxes_fieldset(
+              :phases,
+              legend: { text: t(".phase"), size: "s" },
+              small: true,
+              multiple: true,
+            ) do %>
+              <% School.distinct.pluck(:phase).each do |phase| %>
+                <%= form.govuk_check_box :phases, phase, label: { text: phase } %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <div class="app-filter__option">
+            <%= form.govuk_check_boxes_fieldset(
+              :itt_statuses,
+              legend: { text: t(".itt_status"), size: "s" },
+              small: true,
+              multiple: true,
+            ) do %>
+              <% %w[open not_open filled_placements unfilled_placements].each do |appetite| %>
+                <%= form.govuk_check_box :itt_statuses, appetite, label: { text: t("components.placements.schools.interest_tag_component.#{appetite}") } %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <div class="app-filter__option">
+            <%= form.govuk_check_boxes_fieldset(
+              :itt_statuses,
+              legend: { text: t(".last_offered_placements"), size: "s" },
+              small: true,
+              multiple: true,
+            ) do %>
+              <% filter_form.last_offered_placement_options.each do |name, value| %>
+                <%= form.govuk_check_box :last_offered_placements_academic_year_ids, value, label: { text: name } %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <div class="app-filter__option" data-controller="filter-search">
+            <%= form.govuk_check_boxes_fieldset(
+              :subject_ids,
+              legend: {
+                text: t(".subject"),
+                size: "s",
+              },
+              small: true,
+            ) do %>
+              <% @subjects.each do |subject| %>
+                <%= form.govuk_check_box :subject_ids,
+                                         subject.id,
+                                         label: { text: subject.name } %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

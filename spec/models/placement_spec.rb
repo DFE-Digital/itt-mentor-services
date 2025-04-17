@@ -73,6 +73,35 @@ RSpec.describe Placement, type: :model do
         )
       end
     end
+
+    describe "#available_placements_for_academic_year" do
+      it "returns placements that are available for a given academic year" do
+        school = create(:placements_school)
+        academic_year = Placements::AcademicYear.current
+        placement_1 = create(:placement, school:, provider: nil, academic_year:)
+        _placement_2 = create(:placement, school:, provider: nil, academic_year: academic_year.previous)
+        placement_3 = create(:placement, school:, provider: nil, academic_year:)
+
+        expect(described_class.available_placements_for_academic_year(academic_year)).to contain_exactly(
+          placement_1,
+          placement_3,
+        )
+      end
+    end
+
+    describe "#unavailable_placements_for_academic_year" do
+      it "returns placements that are unavailable for a given academic year" do
+        school = create(:placements_school)
+        academic_year = Placements::AcademicYear.current
+        placement_1 = create(:placement, school:, provider: create(:provider), academic_year:)
+        _placement_2 = create(:placement, school:, provider: nil, academic_year: academic_year.previous)
+        _placement_3 = create(:placement, school:, provider: nil, academic_year:)
+
+        expect(described_class.unavailable_placements_for_academic_year(academic_year)).to contain_exactly(
+          placement_1,
+        )
+      end
+    end
   end
 
   describe "order_by_school_ids" do

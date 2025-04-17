@@ -35,4 +35,8 @@ class Placements::SchoolContact < ApplicationRecord
             "activerecord.errors.models.placements/school_contact.can_not_be_destroyed",
           )
   end
+
+  def full_name
+    "#{first_name} #{last_name}".strip
+  end
 end
