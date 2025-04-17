@@ -555,6 +555,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_22_121713) do
     t.string "local_authority_code"
     t.datetime "claims_grant_conditions_accepted_at"
     t.uuid "claims_grant_conditions_accepted_by_id"
+    t.string "vendor_number"
     t.index ["claims_grant_conditions_accepted_by_id"], name: "index_schools_on_claims_grant_conditions_accepted_by_id"
     t.index ["claims_service"], name: "index_schools_on_claims_service"
     t.index ["latitude"], name: "index_schools_on_latitude"
