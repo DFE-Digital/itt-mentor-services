@@ -93,8 +93,10 @@ class School < ApplicationRecord
 
   normalizes :email_address, with: ->(value) { value.strip.downcase }
 
-  validates :urn, presence: true
+  validates_with UniqueIdentifierValidator
   validates :urn, uniqueness: { case_sensitive: false }
+  validates :vendor_number, uniqueness: { case_sensitive: false }
+
   validates :name, presence: true
   validates :email_address, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_nil: true
 
@@ -113,6 +115,8 @@ class School < ApplicationRecord
   pg_search_scope :search_name_postcode,
                   against: %i[name postcode],
                   using: { trigram: { word_similarity: true } }
+
+  delegate :name, to: :region, prefix: true, allow_nil: true
 
   PRIMARY_PHASE = "Primary".freeze
   SECONDARY_PHASE = "Secondary".freeze
