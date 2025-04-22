@@ -10,12 +10,23 @@
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l"><%= contextual_text %></span>
 
-      <%= f.govuk_collection_radio_buttons(
+      <%= f.govuk_radio_buttons_fieldset(
         :year_group,
-        current_step.year_groups_for_selection,
-        :value, :name, :description,
-        legend: { size: "l", text: t(".select_a_year_group"), tag: "h1" }
-      ) %>
+        legend: { size: "l", text: t(".select_a_year_group"), tag: "h1" },
+      ) do %>
+        <% current_step.year_groups_for_selection.each_with_index do |year_group, i| %>
+          <%= f.govuk_radio_button :year_group,
+            year_group.value,
+            label: { text: year_group.name, size: "s" },
+            hint: { text: year_group.description },
+            link_errors: i.zero? %>
+        <% end %>
+        <%= f.govuk_radio_divider %>
+        <%= f.govuk_radio_button :year_group,
+            current_step.mixed_year_group_option.value,
+            label: { text: current_step.mixed_year_group_option.name, size: "s" },
+            hint: { text: current_step.mixed_year_group_option.description } %>
+      <% end %>
 
       <%= f.govuk_submit t(".continue") %>
     </div>
