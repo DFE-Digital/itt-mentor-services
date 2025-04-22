@@ -2,6 +2,9 @@ en:
   placements:
     schools:
       hosting_interests:
+        edit_hosting_interest:
+          edit:
+            cancel: Cancel
         add_hosting_interest:
           edit:
             cancel: Cancel
@@ -20,6 +23,7 @@ en:
                 This means providers can see that you’re looking to host placements.
           whats_next:
             return_to_placements: Return to placements list
+            return_to_organisation_details: Return to organisation details
             what_happens_next: What happens next?
             teaching_school_hub_url: https://www.gov.uk/guidance/teaching-school-hubs
             not_open:

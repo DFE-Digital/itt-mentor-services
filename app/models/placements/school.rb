@@ -98,4 +98,10 @@ class Placements::School < School
   def unavailable_placements(academic_year: Placements::AcademicYear.current)
     placements.unavailable_placements_for_academic_year(academic_year)
   end
+
+  def upcoming_hosting_interest
+    hosting_interests.for_academic_year(
+      Placements::AcademicYear.current.next,
+    ).last
+  end
 end
