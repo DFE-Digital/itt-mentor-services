@@ -20,6 +20,8 @@ module Gias
       sen_provision_associations = Hash.new { |h, k| h[k] = [] }
 
       CSV.foreach(csv_path, headers: true) do |school|
+        next if school["URN"].blank?
+
         school_records << {
           urn: school["URN"],
           name: school["EstablishmentName"],

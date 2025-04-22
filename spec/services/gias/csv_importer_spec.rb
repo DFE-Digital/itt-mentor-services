@@ -80,6 +80,14 @@ RSpec.describe Gias::CSVImporter do
     end
   end
 
+  context "when URN is not present" do
+    let(:csv_path) { "spec/fixtures/gias/import_with_trusts_and_regions_without_urn.csv" }
+
+    it "does not create a school" do
+      expect { gias_importer }.not_to change(School, :count)
+    end
+  end
+
   describe "geocoding schools" do
     subject(:school) { School.find_by!(urn:) }
 

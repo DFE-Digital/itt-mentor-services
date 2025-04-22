@@ -1,0 +1,7 @@
+URN,EstablishmentName,Town,Postcode,EstablishmentStatus (code),TypeOfEstablishment (code),DistrictAdministrative (code),TrustSchoolFlag (code),Trusts (code),Trusts (name),Latitude,Longitude,SEN1 (name),SEN2 (name),SEN3 (name),SEN4 (name),SEN5 (name),SEN6 (name),SEN7 (name),SEN8 (name),SEN9 (name),SEN10 (name),SEN11 (name),SEN12 (name),SEN13 (name)
+,InnerLondonSchool,InnerLondonTown,Postcode,1,7,E09000007,,,,51.5139702631,-0.0775045667,,,,,,,,,,,,,
+,OuterLondonSchool,OuterLondonTown,Postcode,1,7,E09000004,,,,,,,,,,,,,,,,,,
+,FringeSchool,FringeTown,Postcode,1,7,E06000039,,,,,,,,,,,,,,,,,,
+,RestOfEnglandSchool,RestOfEnglandTown,Postcode,1,7,E09000099,,,,,,,,,,,,,,,,,,
+,TrustSchool,TrustTown,Postcode,1,7,E09000007,1,12345,Department for Education Trust,,,,,,,,,,,,,,,
+,SenSchool,SenTown,Postcode,1,7,E09000017,,,,,,ASD - Autistic Spectrum Disorder,HI - Hearing Impairment,MLD - Moderate Learning Difficulty,MSI - Multi-Sensory Impairment,Not Applicable,OTH - Other Difficulty/Disability,PD - Physical Disability,PMLD - Profound and Multiple Learning Difficulty,"SEMH - Social, Emotional and Mental Health","SLCN - Speech, language and Communication",SLD - Severe Learning Difficulty,SpLD - Specific Learning Difficulty,VI - Visual Impairment
