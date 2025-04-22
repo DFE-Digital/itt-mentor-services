@@ -52,6 +52,7 @@ class Placement < ApplicationRecord
     year_4: "year_4",
     year_5: "year_5",
     year_6: "year_6",
+    mixed_year_groups: "mixed_year_groups",
   }, validate: { allow_nil: true }
 
   validates :school, presence: true
