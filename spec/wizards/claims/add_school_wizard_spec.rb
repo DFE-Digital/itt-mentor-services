@@ -27,11 +27,11 @@ RSpec.describe Claims::AddSchoolWizard do
           }
         end
 
-        it { is_expected.to eq %i[claim_window school check_your_answers] }
+        it { is_expected.to eq %i[school claim_window check_your_answers] }
       end
 
       context "when an school was not selected during the school step" do
-        it { is_expected.to eq %i[claim_window school school_options check_your_answers] }
+        it { is_expected.to eq %i[school school_options claim_window check_your_answers] }
       end
     end
   end
