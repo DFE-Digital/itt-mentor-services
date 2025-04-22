@@ -24,10 +24,6 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
     end
   end
 
-  def whats_next
-    appetite
-  end
-
   private
 
   def set_wizard

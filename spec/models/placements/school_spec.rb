@@ -181,4 +181,43 @@ RSpec.describe Placements::School do
       expect(school.unavailable_placements).to contain_exactly(unavailable_placement)
     end
   end
+
+  describe "#upcoming_hosting_interest" do
+    subject(:upcoming_hosting_interest) { school.upcoming_hosting_interest }
+
+    let(:school) { create(:placements_school) }
+    let(:current_academic_year) { Placements::AcademicYear.current }
+    let(:next_academic_year) { current_academic_year.next }
+    let(:previous_academic_year) { current_academic_year.previous }
+    let(:current_hosting_interest) do
+      create(
+        :hosting_interest,
+        school:,
+        academic_year: current_academic_year,
+      )
+    end
+    let!(:next_hosting_interest) do
+      create(
+        :hosting_interest,
+        school:,
+        academic_year: next_academic_year,
+      )
+    end
+    let(:previous_hosting_interest) do
+      create(
+        :hosting_interest,
+        school:,
+        academic_year: previous_academic_year,
+      )
+    end
+
+    before do
+      current_hosting_interest
+      previous_hosting_interest
+    end
+
+    it "returns the hosting interest for the next year" do
+      expect(upcoming_hosting_interest).to eq(next_hosting_interest)
+    end
+  end
 end
