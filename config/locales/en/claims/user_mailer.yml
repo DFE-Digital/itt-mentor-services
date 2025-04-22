@@ -6,17 +6,26 @@ en:
         body: |
           Dear %{user_name},
   
-          You have been invited to join the %{service_name} service for %{organisation_name}.
+          You have been invited to join the %{service_name} service for %{organisation_name} because you are a [DfE-sign approver](%{sign_in_approver_url}) for your organisation.
+
+          If you are not the right person in your organisation to submit funding claims for general mentor training, please:
+
+          - access the service using DfE sign-in and add an appropriate colleague in the Users section
+          - forward this email to the appropriate colleague after adding them as a user
+
+          # Sign in to submit claims
   
-          # %{heading}
-  
-          If you have a DfE Sign-in account, you can use it to sign in:
+          Sign in using DfE sign-in:
   
           [%{sign_in_url}](%{sign_in_url})
   
-          If you need to create a DfE Sign-in account, you can do this after clicking "Sign in using DfE Sign-in"
+          If your colleague needs to create a DfE Sign-in account, they can do this after clicking "Sign in using DfE Sign-in"
   
-          After creating a DfE Sign-in account, you will need to return to this email and [sign in to access the service](%{sign_in_url}).
+          After creating a DfE Sign-in account, they will need to return to this email and [sign in to access the service](%{sign_in_url})
+
+          # Prior to submitting claims
+
+          We recommend confirming with your accredited provider the number of hours you are claiming, as they may be asked to provide evidence to support this claim.
   
           # Give feedback or report a problem
   
@@ -25,7 +34,6 @@ en:
           Regards
   
           %{service_name} team
-        heading: Sign in to submit claims
       user_membership_destroyed_notification:
         subject: You have been removed from %{service_name}
         body: |

@@ -7,9 +7,9 @@ class Claims::UserMailer < Claims::ApplicationMailer
                    user_name: user.first_name,
                    organisation_name: organisation.name,
                    service_name:,
-                   heading: t(".heading"),
                    support_email:,
                    sign_in_url: sign_in_url(utm_source: "email", utm_medium: "notification", utm_campaign: "school"),
+                   sign_in_approver_url: "https://edd-help.signin.education.gov.uk/contact/create-account#:~:text=An%20approver%20is%20someone%20at%20your%20organisation%20responsible,person%2C%20such%20as%20an%20administrator%2C%20manager%2C%20or%20headteacher",
                  )
   end
 
