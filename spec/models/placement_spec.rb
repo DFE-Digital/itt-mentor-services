@@ -117,6 +117,7 @@ RSpec.describe Placement, type: :model do
           OpenStruct.new(value: "year_4", name: "Year 4", description: "8 to 9 years"),
           OpenStruct.new(value: "year_5", name: "Year 5", description: "9 to 10 years"),
           OpenStruct.new(value: "year_6", name: "Year 6", description: "10 to 11 years"),
+          OpenStruct.new(value: "mixed_year_groups", name: "Mixed year groups", description: ""),
         ],
       )
     end

@@ -84,6 +84,8 @@ en:
           year_5_description: 9 to 10 years
           year_6: Year 6
           year_6_description: 10 to 11 years
+          mixed_year_groups: Mixed year groups
+          mixed_year_groups_description: ""
         available: Available
         unavailable: Unavailable
         index:

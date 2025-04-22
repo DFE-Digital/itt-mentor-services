@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_15_084558) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_22_121713) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -21,7 +21,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_15_084558) do
   create_enum "claim_status", ["internal_draft", "draft", "submitted", "payment_in_progress", "payment_information_requested", "payment_information_sent", "paid", "payment_not_approved", "sampling_in_progress", "sampling_provider_not_approved", "sampling_not_approved", "clawback_requested", "clawback_in_progress", "clawback_complete"]
   create_enum "mentor_training_type", ["refresher", "initial"]
   create_enum "placement_status", ["draft", "published"]
-  create_enum "placement_year_group", ["nursery", "reception", "year_1", "year_2", "year_3", "year_4", "year_5", "year_6"]
+  create_enum "placement_year_group", ["nursery", "reception", "year_1", "year_2", "year_3", "year_4", "year_5", "year_6", "mixed_year_groups"]
   create_enum "provider_type", ["scitt", "lead_school", "university"]
   create_enum "service", ["claims", "placements"]
   create_enum "subject_area", ["primary", "secondary"]
