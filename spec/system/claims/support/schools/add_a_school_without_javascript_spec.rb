@@ -17,15 +17,15 @@ RSpec.describe "Support User adds a School without JavaScript", service: :claims
 
   scenario "Colin adds a new School" do
     when_i_visit_the_add_school_page
-    then_i_see_the_claim_window_page
-
-    when_i_select_the_current_claim_window
-    and_click_on_continue
     and_i_enter_a_school_named("Manch")
     and_i_click_continue
     then_i_see_list_of_schools
     then_i_choose("Manchester 1")
     and_i_click_continue
+    then_i_see_the_claim_window_page
+
+    when_i_select_the_current_claim_window
+    and_click_on_continue
     then_i_see_the_check_details_page_for_school("Manchester 1")
     when_i_click_save_organisation
     then_i_return_to_support_organisations_index
@@ -35,10 +35,6 @@ RSpec.describe "Support User adds a School without JavaScript", service: :claims
   scenario "Colin adds a school which already exists" do
     given_a_school_already_exists_for_claims
     when_i_visit_the_add_school_page
-    then_i_see_the_claim_window_page
-
-    when_i_select_the_current_claim_window
-    and_click_on_continue
     and_i_enter_a_school_named("Manch")
     and_i_click_continue
     then_i_see_list_of_schools
@@ -49,20 +45,12 @@ RSpec.describe "Support User adds a School without JavaScript", service: :claims
 
   scenario "Colin submits the search form without selecting a school" do
     when_i_visit_the_add_school_page
-    then_i_see_the_claim_window_page
-
-    when_i_select_the_current_claim_window
-    and_click_on_continue
     and_i_click_continue
     then_i_see_an_error("Enter a school name, unique reference number (URN) or postcode")
   end
 
   scenario "Colin submits the options form without selecting a school" do
     when_i_visit_the_add_school_page
-    then_i_see_the_claim_window_page
-
-    when_i_select_the_current_claim_window
-    and_click_on_continue
     and_i_enter_a_school_named("Manch")
     and_i_click_continue
     then_i_see_list_of_schools
@@ -72,23 +60,25 @@ RSpec.describe "Support User adds a School without JavaScript", service: :claims
 
   scenario "Colin reconsiders onboarding a school" do
     when_i_visit_the_add_school_page
-    then_i_see_the_claim_window_page
-
-    when_i_select_the_current_claim_window
-    and_click_on_continue
     and_i_enter_a_school_named("Manch")
     and_i_click_continue
     then_i_see_list_of_schools
     then_i_choose("Manchester 1")
     and_i_click_continue
+    then_i_see_the_claim_window_page
+
+    when_i_select_the_current_claim_window
+    and_click_on_continue
     then_i_see_the_check_details_page_for_school("Manchester 1")
     when_i_click_back
+    and_i_click_back
     and_the_option_for_school_has_been_pre_selected("Manchester 1")
     when_i_click_back
     then_i_see_the_search_input_pre_filled_with("Manch")
     and_i_click_continue
     then_i_see_list_of_schools
     then_i_choose("Manchester 1")
+    and_i_click_continue
     and_i_click_continue
     then_i_see_the_check_details_page_for_school("Manchester 1")
   end
@@ -121,6 +111,7 @@ RSpec.describe "Support User adds a School without JavaScript", service: :claims
   def when_i_click_back
     click_on "Back"
   end
+  alias_method :and_i_click_back, :when_i_click_back
 
   def then_i_see_list_of_schools
     expect(page).to have_content("Manchester 1")

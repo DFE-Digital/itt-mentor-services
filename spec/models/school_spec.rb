@@ -116,8 +116,9 @@ RSpec.describe School, type: :model do
   context "with validations" do
     subject { create(:school) }
 
-    it { is_expected.to validate_presence_of(:urn) }
     it { is_expected.to validate_uniqueness_of(:urn).case_insensitive }
+    it { is_expected.to validate_uniqueness_of(:vendor_number).case_insensitive }
+
     it { is_expected.to validate_presence_of(:name) }
   end
 

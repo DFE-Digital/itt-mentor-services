@@ -16,16 +16,17 @@ RSpec.describe "Support User adds a School", service: :claims, type: :system do
 
   scenario "Colin adds a new School", :js do
     when_i_visit_the_add_school_page
-    then_i_see_the_claim_window_page
-
-    when_i_select_the_current_claim_window
-    and_click_on_continue
     and_i_enter_a_school_named("School 1")
     then_i_see_a_dropdown_item_for("School 1")
     when_i_click_the_dropdown_item_for("School 1")
     and_i_click_continue
+    then_i_see_the_claim_window_page
+
+    when_i_select_the_current_claim_window
+    and_click_on_continue
     then_i_see_the_check_details_page_for_school("School 1")
     i_then_click_change_school_link
+    and_i_click_continue
     when_i_click_save_organisation
     then_i_return_to_support_organisations_index
     and_a_school_is_listed(school_name: "School 1")
@@ -35,10 +36,6 @@ RSpec.describe "Support User adds a School", service: :claims, type: :system do
   scenario "Colin adds a school which already exists", :js do
     given_a_school_already_exists_for_claims
     when_i_visit_the_add_school_page
-    then_i_see_the_claim_window_page
-
-    when_i_select_the_current_claim_window
-    and_click_on_continue
     and_i_enter_a_school_named("Claims School")
     then_i_see_a_dropdown_item_for("Claims School")
     when_i_click_the_dropdown_item_for("Claims School")
@@ -48,27 +45,25 @@ RSpec.describe "Support User adds a School", service: :claims, type: :system do
 
   scenario "Colin submits the search form without selecting a school", :js do
     when_i_visit_the_add_school_page
-    then_i_see_the_claim_window_page
-
-    when_i_select_the_current_claim_window
-    and_click_on_continue
     and_i_click_continue
     then_i_see_an_error("Enter a school name, unique reference number (URN) or postcode")
   end
 
   scenario "Colin reconsiders onboarding a school", :js do
     when_i_visit_the_add_school_page
-    then_i_see_the_claim_window_page
-
-    when_i_select_the_current_claim_window
-    and_click_on_continue
     and_i_enter_a_school_named("School 1")
     then_i_see_a_dropdown_item_for("School 1")
     when_i_click_the_dropdown_item_for("School 1")
     and_i_click_continue
+    then_i_see_the_claim_window_page
+
+    when_i_select_the_current_claim_window
+    and_click_on_continue
     then_i_see_the_check_details_page_for_school("School 1")
     when_i_click_back
+    and_i_click_back
     then_i_see_the_search_input_pre_filled_with("School 1")
+    and_i_click_continue
     and_i_click_continue
     then_i_see_the_check_details_page_for_school("School 1")
   end
@@ -115,6 +110,7 @@ RSpec.describe "Support User adds a School", service: :claims, type: :system do
   def when_i_click_back
     click_on "Back"
   end
+  alias_method :and_i_click_back, :when_i_click_back
 
   def then_i_see_the_check_details_page_for_school(school_name)
     expect(page).to have_css(".govuk-caption-l", text: "Add organisation")
