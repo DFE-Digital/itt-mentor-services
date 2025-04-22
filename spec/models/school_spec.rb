@@ -39,7 +39,7 @@
 #  type_of_establishment                  :string
 #  ukprn                                  :string
 #  urban_or_rural                         :string
-#  urn                                    :string           not null
+#  urn                                    :string
 #  vendor_number                          :string
 #  website                                :string
 #  created_at                             :datetime         not null
