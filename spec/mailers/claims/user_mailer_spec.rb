@@ -4,26 +4,35 @@ RSpec.describe Claims::UserMailer, type: :mailer do
   describe "#user_membership_created_notification" do
     subject(:invite_email) { described_class.user_membership_created_notification(user, organisation) }
 
-    let(:user) { create(:claims_user) }
-    let(:organisation) { create(:claims_school) }
+    let(:user) { create(:claims_user, first_name: "Joe") }
+    let(:organisation) { create(:claims_school, name: "Shelbyville Elementary") }
 
     it "sends the invitation" do
       expect(invite_email.to).to contain_exactly(user.email)
       expect(invite_email.subject).to eq("Invitation to join Claim funding for mentor training")
       expect(invite_email.body).to have_content <<~EMAIL
-        Dear #{user.first_name},
+        Dear Joe,
 
-        You have been invited to join the Claim funding for mentor training service for #{organisation.name}.
+        You have been invited to join the Claim funding for mentor training service for Shelbyville Elementary because you are a [DfE-sign approver](https://edd-help.signin.education.gov.uk/contact/create-account#:~:text=An%20approver%20is%20someone%20at%20your%20organisation%20responsible,person%2C%20such%20as%20an%20administrator%2C%20manager%2C%20or%20headteacher) for your organisation.
+
+        If you are not the right person in your organisation to submit funding claims for general mentor training, please:
+
+        - access the service using DfE sign-in and add an appropriate colleague in the Users section
+        - forward this email to the appropriate colleague after adding them as a user
 
         # Sign in to submit claims
 
-        If you have a DfE Sign-in account, you can use it to sign in:
+        Sign in using DfE sign-in:
 
         [http://claims.localhost/sign-in?utm_campaign=school&utm_medium=notification&utm_source=email](http://claims.localhost/sign-in?utm_campaign=school&utm_medium=notification&utm_source=email)
 
-        If you need to create a DfE Sign-in account, you can do this after clicking "Sign in using DfE Sign-in"
+        If your colleague needs to create a DfE Sign-in account, they can do this after clicking "Sign in using DfE Sign-in"
 
-        After creating a DfE Sign-in account, you will need to return to this email and [sign in to access the service](http://claims.localhost/sign-in?utm_campaign=school&utm_medium=notification&utm_source=email).
+        After creating a DfE Sign-in account, they will need to return to this email and [sign in to access the service](http://claims.localhost/sign-in?utm_campaign=school&utm_medium=notification&utm_source=email)
+
+        # Prior to submitting claims
+
+        We recommend confirming with your accredited provider the number of hours you are claiming, as they may be asked to provide evidence to support this claim.
 
         # Give feedback or report a problem
 
