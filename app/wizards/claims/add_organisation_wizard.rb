@@ -1,13 +1,17 @@
 module Claims
   class AddOrganisationWizard < BaseWizard
     def define_steps
-      add_step(NameStep)
-      add_step(VendorNumberStep)
-      add_step(AddSchoolWizard::ClaimWindowStep)
-      add_step(RegionStep)
-      add_step(AddressStep)
-      add_step(ContactDetailsStep)
-      add_step(CheckYourAnswersStep)
+      if claim_windows_exist?
+        add_step(NameStep)
+        add_step(VendorNumberStep)
+        add_step(AddSchoolWizard::ClaimWindowStep)
+        add_step(RegionStep)
+        add_step(AddressStep)
+        add_step(ContactDetailsStep)
+        add_step(CheckYourAnswersStep)
+      else
+        add_step(AddSchoolWizard::NoClaimWindowStep)
+      end
     end
 
     def organisation
@@ -33,6 +37,13 @@ module Claims
       @claim_window ||= Claims::ClaimWindow.find(
         steps.fetch(:claim_window).claim_window_id,
       )
+    end
+
+    private
+
+    def claim_windows_exist?
+      Claims::ClaimWindow.current.present? ||
+        Claims::ClaimWindow.next.present?
     end
   end
 end
