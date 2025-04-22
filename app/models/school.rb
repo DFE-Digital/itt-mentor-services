@@ -93,8 +93,11 @@ class School < ApplicationRecord
 
   normalizes :email_address, with: ->(value) { value.strip.downcase }
 
-  validates :urn, presence: true
-  validates :urn, uniqueness: { case_sensitive: false }
+  validates_with UniqueIdentifierValidator
+
+  validates :urn, uniqueness: { case_sensitive: false }, if: -> { urn.present? }
+  validates :vendor_number, uniqueness: { case_sensitive: false }, if: -> { vendor_number.present? }
+
   validates :name, presence: true
   validates :email_address, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_nil: true
 

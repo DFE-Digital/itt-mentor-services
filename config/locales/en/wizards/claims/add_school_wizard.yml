@@ -5,7 +5,7 @@ en:
         school_step:
           caption: Add organisation
           continue: Continue
-          title: Enter an organisation
+          title: Enter a school name, URN or postcode
           description: Use a name, unique reference number (URN) or postcode to find an organisation.
           organisation_not_listed: The organisation is not listed
           organisation_not_listed_description: If the organisation is not listed on the service you must

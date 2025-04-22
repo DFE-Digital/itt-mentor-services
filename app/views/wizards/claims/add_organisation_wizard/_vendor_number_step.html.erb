@@ -1,9 +1,14 @@
-<%= content_for :page_title, sanitize(t(".title")) %>
+<% content_for :page_title, title_with_error_prefix(
+  t(".title"),
+  error: current_step.errors.any?,
+) %>
 
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= form_with(model: current_step, url: current_step_path, method: :put) do |f| %>
+        <%= f.govuk_error_summary %>
+
         <%= f.govuk_text_field :vendor_number,
                                class: "govuk-input--width-20",
                                label: { text: t(".title"), size: "l", tag: "h1" },

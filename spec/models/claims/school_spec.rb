@@ -97,6 +97,7 @@ RSpec.describe Claims::School do
 
   describe "delegations" do
     it { is_expected.to delegate_method(:funding_available_per_hour).to(:region).with_prefix(true) }
+    it { is_expected.to delegate_method(:name).to(:region).with_prefix(true) }
   end
 
   describe "#grant_conditions_accepted?" do
