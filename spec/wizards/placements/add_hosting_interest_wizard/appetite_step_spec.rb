@@ -36,28 +36,22 @@ RSpec.describe Placements::AddHostingInterestWizard::AppetiteStep, type: :model 
       # already_organised = appetite_options[3] # Remove for concept testing
 
       expect(actively_looking.value).to eq("actively_looking")
-      expect(actively_looking.name).to eq("Yes - Let providers know what I'm willing to host")
+      expect(actively_looking.name).to eq("Yes - I can offer placements")
       expect(actively_looking.description).to eq(
-        "You know the subjects you want to host and may know which providers you want to work with",
+        "Record the placements you can offer. You can edit your placements any time.",
       )
 
       expect(interested.value).to eq("interested")
-      expect(interested.name).to eq("Yes - Let providers know I am open to placements")
+      expect(interested.name).to eq("Maybe - I’m not sure yet")
       expect(interested.description).to eq(
-        "You haven't yet decided on your placements. You want to hear from providers to discuss potential opportunities",
+        "Providers can contact you to discuss potential placements.",
       )
 
       expect(not_open.value).to eq("not_open")
-      expect(not_open.name).to eq("No - Let providers know I am not hosting and do not want to be contacted")
+      expect(not_open.name).to eq("No - I can’t offer placements")
       expect(not_open.description).to eq(
-        "You do not want to hear from providers this academic year",
+        "Tell us why your school cannot offer placements. Your contact details will not be shown to providers.",
       )
-
-      # expect(already_organised.value).to eq("already_organised")
-      # expect(already_organised.name).to eq("Placements already organised with providers")
-      # expect(already_organised.description).to eq(
-      #   "We'll show any providers who search for you that you're at capacity",
-      # )
     end
   end
 

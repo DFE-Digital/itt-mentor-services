@@ -3,18 +3,19 @@ en:
     placements:
       add_hosting_interest_wizard:
         appetite_step:
-          title: Will you host placements this academic year (%{academic_year_name})?
+          title: 
+            Can your school offer placements for trainee teachers in this academic year (%{academic_year_name})?
           continue: Continue
           options:
             actively_looking:
-              name: Yes - Let providers know what I'm willing to host
-              description: You know the subjects you want to host and may know which providers you want to work with
+              name: Yes - I can offer placements
+              description: Record the placements you can offer. You can edit your placements any time.
             interested:
-              name: Yes - Let providers know I am open to placements
-              description: You haven't yet decided on your placements. You want to hear from providers to discuss potential opportunities
+              name: Maybe - I’m not sure yet
+              description: Providers can contact you to discuss potential placements.
             not_open: 
-              name: No - Let providers know I am not hosting and do not want to be contacted
-              description: You do not want to hear from providers this academic year
+              name: No - I can’t offer placements
+              description: Tell us why your school cannot offer placements. Your contact details will not be shown to providers.
             already_organised:
               name: Placements already organised with providers
               description: We'll show any providers who search for you that you're at capacity

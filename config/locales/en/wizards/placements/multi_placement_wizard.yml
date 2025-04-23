@@ -2,22 +2,6 @@ en:
   wizards:
     placements:
       multi_placement_wizard:
-        appetite_step:
-          title: Will you host placements this academic year (%{academic_year_name})?
-          continue: Continue
-          options:
-            actively_looking:
-              name: Yes - Let providers know what I'm willing to host
-              description: You know the subjects you want to host and may know which providers you want to work with
-            interested:
-              name: Yes - Let providers know I am open to placements
-              description: You haven't yet decided on your placements. You want to hear from providers to discuss potential opportunities
-            not_open: 
-              name: No - Let providers know I am not hosting and do not want to be contacted
-              description: You do not want to hear from providers this academic year
-            already_organised:
-              name: Placements already organised with providers
-              description: We'll show any providers who search for you that you're at capacity
         list_placements_step:
           title: Would you like to list some placements to be seen by providers?
           continue: Continue
