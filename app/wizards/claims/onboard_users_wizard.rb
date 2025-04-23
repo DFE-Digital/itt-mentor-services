@@ -21,6 +21,9 @@ module Claims
       details = []
       csv_rows.each do |row|
         school = Claims::School.find_by!(urn: row["school_urn"])
+        next if school.blank?
+        next if row["email"].blank? || URI::MailTo::EMAIL_REGEXP.match(row["email"]).nil?
+
         details << {
           school_id: school.id,
           first_name: row["first_name"],

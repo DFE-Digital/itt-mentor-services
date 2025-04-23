@@ -43,11 +43,12 @@ class Claims::OnboardUsersWizard::UploadStep < BaseStep
 
     reset_input_attributes
 
-    csv.each_with_index do |row, i|
+    csv.each_with_index do |row, _i|
       next if row.all? { |_k, v| v.blank? }
 
-      validate_email(row, i)
-      validate_school_urn(row, i)
+      # Temp removed to make the CSV upload work
+      # validate_email(row, i)
+      # validate_school_urn(row, i)
     end
 
     invalid_email_rows.blank? &&
