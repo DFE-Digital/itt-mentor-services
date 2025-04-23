@@ -4,8 +4,7 @@ RSpec.describe "School user does not enter a placement quantity",
                service: :placements,
                type: :system do
   scenario do
-    given_the_bulk_add_placements_flag_is_enabled
-    and_subjects_exist
+    given_subjects_exist
     and_academic_years_exist
     and_a_school_exists_with_a_hosting_interest
     and_i_am_signed_in
@@ -35,12 +34,7 @@ RSpec.describe "School user does not enter a placement quantity",
 
   private
 
-  def given_the_bulk_add_placements_flag_is_enabled
-    Flipper.add(:bulk_add_placements)
-    Flipper.enable(:bulk_add_placements)
-  end
-
-  def and_subjects_exist
+  def given_subjects_exist
     @primary = create(:subject, :primary, name: "Primary")
     @phonics = create(:subject, :primary, name: "Phonics")
     @handwriting = create(:subject, :primary, name: "Handwriting")

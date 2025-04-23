@@ -4,8 +4,7 @@ RSpec.describe "School user does not select a child subjects",
                service: :placements,
                type: :system do
   scenario do
-    given_the_bulk_add_placements_flag_is_enabled
-    and_subjects_exist
+    given_subjects_exist
     and_academic_years_exist
     and_i_am_signed_in
 
@@ -31,12 +30,7 @@ RSpec.describe "School user does not select a child subjects",
 
   private
 
-  def given_the_bulk_add_placements_flag_is_enabled
-    Flipper.add(:bulk_add_placements)
-    Flipper.enable(:bulk_add_placements)
-  end
-
-  def and_subjects_exist
+  def given_subjects_exist
     @english = create(:subject, :secondary, name: "English")
     @mathematics = create(:subject, :secondary, name: "Mathematics")
     @science = create(:subject, :secondary, name: "Science")

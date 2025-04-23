@@ -3,7 +3,6 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
 
   before_action :set_school
   before_action :set_wizard
-  before_action :authorize_placement
 
   attr_reader :school
 
@@ -30,10 +29,6 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
     state = session[state_key] ||= {}
     current_step = params[:step]&.to_sym
     @wizard = Placements::MultiPlacementWizard.new(school:, params:, state:, current_step:)
-  end
-
-  def authorize_placement
-    authorize school.placements.build, :bulk_add_placements?
   end
 
   def step_path(step)

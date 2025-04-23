@@ -15,10 +15,6 @@ class Placements::PlacementPolicy < ApplicationPolicy
     record.provider.blank?
   end
 
-  def bulk_add_placements?
-    Flipper.enabled?(:bulk_add_placements, record.school)
-  end
-
   # Actions in Placements::Schools::PlacementsController
   alias_method :edit_provider?, :new?
   alias_method :edit_mentors?, :new?
