@@ -7,6 +7,7 @@
 #  address2                               :string
 #  address3                               :string
 #  admissions_policy                      :string
+#  approximate_placement_details          :jsonb
 #  claims_grant_conditions_accepted_at    :datetime
 #  claims_service                         :boolean          default(FALSE)
 #  district_admin_code                    :string

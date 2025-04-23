@@ -15,17 +15,14 @@ module Placements
       case appetite
       when "actively_looking"
         actively_looking_steps
-      when "not_open"
-        add_step(ReasonNotHostingStep)
-      end
-      add_step(SchoolContactStep)
-      case appetite
-      when "actively_looking"
+        add_step(SchoolContactStep)
         add_step(CheckYourAnswersStep)
       when "not_open"
+        add_step(ReasonNotHostingStep)
+        add_step(SchoolContactStep)
         add_step(AreYouSureStep)
-      when "interested"
-        add_step(ConfirmStep)
+      else
+        interested_steps
       end
     end
 
@@ -162,6 +159,11 @@ module Placements
       end
 
       add_step(MultiPlacementWizard::ProviderStep)
+    end
+
+    def interested_steps
+      add_step(SchoolContactStep)
+      add_step(ConfirmStep)
     end
 
     def primary_subject_steps
