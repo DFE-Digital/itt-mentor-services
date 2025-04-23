@@ -71,7 +71,6 @@ RSpec.describe "Placements / Providers / Partner schools / Views a partner schoo
     nav = page.find(".app-primary-navigation__nav")
 
     within(nav) do
-      expect(page).to have_link "Placements", current: "false"
       expect(page).to have_link "Schools", current: "page"
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Organisation details", current: "false"

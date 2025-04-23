@@ -4,4 +4,8 @@ class Placements::Provider::PlacementPolicy < ApplicationPolicy
       scope
     end
   end
+
+  def index?
+    Flipper.enabled?(:show_provider_placements)
+  end
 end

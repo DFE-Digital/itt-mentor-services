@@ -3,7 +3,9 @@ require "rails_helper"
 RSpec.describe "Provider user filters placements by placements to show", service: :placements, type: :system do
   scenario do
     given_that_placements_exist
+    given_the_show_provider_placements_feature_flag_is_enabled
     and_i_am_signed_in
+    and_i_navigate_to_the_placements_index
 
     when_i_am_on_the_placements_index_page
     then_i_see_the_available_placement
@@ -37,6 +39,17 @@ RSpec.describe "Provider user filters placements by placements to show", service
     @primary_science_subject = build(:subject, name: "Primary with science", subject_area: "primary")
     _assigned_placement = create(:placement, school: @primary_school, subject: @primary_science_subject,
                                              provider: @provider)
+  end
+
+  def given_the_show_provider_placements_feature_flag_is_enabled
+    Flipper.add(:show_provider_placements)
+    Flipper.enable(:show_provider_placements)
+  end
+
+  def and_i_navigate_to_the_placements_index
+    within primary_navigation do
+      click_on "Placements"
+    end
   end
 
   def and_i_am_signed_in

@@ -3,6 +3,7 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
   helper_method :filter_form, :location_coordinates
 
   def index
+    authorize @provider, :index?, policy_class: Placements::Provider::PlacementPolicy
     @current_academic_year = Placements::AcademicYear.current.decorate
     @next_academic_year = @current_academic_year.next.decorate
     @subjects = filter_subjects_by_phase

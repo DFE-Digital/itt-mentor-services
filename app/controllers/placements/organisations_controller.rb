@@ -32,7 +32,7 @@ class Placements::OrganisationsController < Placements::ApplicationController
     if organisation.is_a?(School)
       placements_school_placements_path(organisation)
     else # Provider
-      placements_provider_placements_path(organisation)
+      placements_provider_find_index_path(organisation)
     end
   end
 end

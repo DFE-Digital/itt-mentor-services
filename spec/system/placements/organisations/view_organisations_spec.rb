@@ -20,7 +20,7 @@ RSpec.describe "View organisations", service: :placements, type: :system do
     when_i_click_on_change_organisation
     i_am_redirected_to_organisation_index
     when_i_click_on_provider_name
-    then_i_see_the_placements_search_page(multi_org_provider)
+    then_i_see_the_find_schools_page(multi_org_provider)
     when_i_click_on_change_organisation
     i_am_redirected_to_organisation_index
   end
@@ -32,7 +32,7 @@ RSpec.describe "View organisations", service: :placements, type: :system do
 
   scenario "I sign in as user Anne with one provider" do
     given_i_am_signed_in_as_a_placements_user(organisations: [one_provider])
-    then_i_see_the_one_provider
+    then_i_see_the_find_schools_page(one_provider)
   end
 
   scenario "I cannot view a school unless it is a placements school" do
@@ -77,14 +77,17 @@ RSpec.describe "View organisations", service: :placements, type: :system do
     click_on "Provider 1"
   end
 
-  def then_i_see_the_placements_search_page(provider)
-    expect(page).to have_current_path placements_provider_placements_path(provider), ignore_query: true
+  def then_i_see_the_find_schools_page(provider)
+    expect(page).to have_current_path placements_provider_find_index_path(provider), ignore_query: true
     within(".app-primary-navigation__nav") do
-      expect(page).to have_link "Placements", current: "page"
+      expect(page).to have_link "Find", current: "page"
       expect(page).to have_link "Schools", current: "false"
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Organisation details", current: "false"
     end
+    expect(page).to have_title("Find schools hosting placements - Manage school placements - GOV.UK")
+    expect(page).to have_h1("Find schools hosting placements")
+    expect(page).to have_h2("Filter")
   end
 
   def then_i_see_the_one_school

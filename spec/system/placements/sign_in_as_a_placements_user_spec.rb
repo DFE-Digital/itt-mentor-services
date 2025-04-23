@@ -23,7 +23,7 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
     scenario "I sign in as a provider user and see the placements list page" do
       given_i_am_signed_in_as_a_placements_user(organisations: [organisation])
       then_i_dont_get_redirected_to_support_organisations
-      then_i_can_see_the_placements_page
+      then_i_can_see_the_find_schools_page
     end
   end
 
@@ -184,7 +184,7 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
           then_i_am_redirected_to_the_provider_users_page(organisation)
           when_i_visit_the placements_root_path
           and_i_click_on "Start now"
-          then_i_can_see_the_placements_page
+          then_i_can_see_the_find_schools_page
         end
       end
 
@@ -316,8 +316,8 @@ RSpec.describe "Sign In as a Placements User", service: :placements, type: :syst
     expect(page).to have_current_path(placements_school_placements_path(organisation))
   end
 
-  def then_i_can_see_the_placements_page
-    expect(page).to have_current_path(placements_provider_placements_path(organisation))
+  def then_i_can_see_the_find_schools_page
+    expect(page).to have_current_path(placements_provider_find_index_path(organisation))
   end
 
   def and_i_see_an_empty_organsations_page

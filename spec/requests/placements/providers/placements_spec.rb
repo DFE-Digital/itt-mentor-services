@@ -11,6 +11,8 @@ RSpec.describe "Placements", service: :placements, type: :request do
   describe "GET /placements" do
     context "when an organisation is present" do
       before do
+        Flipper.add(:show_provider_placements)
+        Flipper.enable(:show_provider_placements)
         get placements_provider_placements_path(provider)
       end
 

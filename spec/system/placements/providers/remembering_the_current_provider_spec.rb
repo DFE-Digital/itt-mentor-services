@@ -9,13 +9,13 @@ RSpec.describe "Remembering the current provider", service: :placements, type: :
 
     when_i_click_on "The Chalkboard Champions"
     then_my_current_provider_is "The Chalkboard Champions"
-    when_i_click_on "Placements"
+    when_i_click_on "Find"
     then_my_current_provider_is "The Chalkboard Champions"
 
     when_i_click_on "Change organisation"
     and_i_click_on "Ctrl + Alt + Teach"
     then_my_current_provider_is "Ctrl + Alt + Teach"
-    when_i_click_on "Placements"
+    when_i_click_on "Find"
     then_my_current_provider_is "Ctrl + Alt + Teach"
   end
 

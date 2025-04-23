@@ -3,7 +3,9 @@ require "rails_helper"
 RSpec.describe "Provider user filters placements with multiple filters", service: :placements, type: :system do
   scenario do
     given_that_placements_exist
+    given_the_show_provider_placements_feature_flag_is_enabled
     and_i_am_signed_in
+    and_i_navigate_to_the_placements_index
 
     when_i_am_on_the_placements_index_page
     then_i_see_all_placements
@@ -38,6 +40,17 @@ RSpec.describe "Provider user filters placements with multiple filters", service
 
   def and_i_am_signed_in
     sign_in_placements_user(organisations: [@provider])
+  end
+
+  def given_the_show_provider_placements_feature_flag_is_enabled
+    Flipper.add(:show_provider_placements)
+    Flipper.enable(:show_provider_placements)
+  end
+
+  def and_i_navigate_to_the_placements_index
+    within primary_navigation do
+      click_on "Placements"
+    end
   end
 
   def when_i_am_on_the_placements_index_page

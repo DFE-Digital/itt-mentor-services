@@ -3,7 +3,9 @@ require "rails_helper"
 RSpec.describe "Provider user filters placements by phase", service: :placements, type: :system do
   scenario do
     given_that_placements_exist
+    given_the_show_provider_placements_feature_flag_is_enabled
     and_i_am_signed_in
+    and_i_navigate_to_the_placements_index
 
     when_i_am_on_the_placements_index_page
     then_i_see_all_placements
@@ -57,6 +59,17 @@ RSpec.describe "Provider user filters placements by phase", service: :placements
     @secondary_subject = build(:subject, name: "Music", subject_area: "secondary")
     @shelbyville_secondary_placement = create(:placement, school: @secondary_school, subject: @secondary_subject)
     @ogdenville_secondary_placement = create(:placement, school: @all_through_school, subject: @secondary_subject)
+  end
+
+  def given_the_show_provider_placements_feature_flag_is_enabled
+    Flipper.add(:show_provider_placements)
+    Flipper.enable(:show_provider_placements)
+  end
+
+  def and_i_navigate_to_the_placements_index
+    within primary_navigation do
+      click_on "Placements"
+    end
   end
 
   def and_i_am_signed_in

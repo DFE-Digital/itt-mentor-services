@@ -3,7 +3,9 @@ require "rails_helper"
 RSpec.describe "Provider user filters placements by academic year", service: :placements, type: :system do
   scenario do
     given_that_placements_exist
+    given_the_show_provider_placements_feature_flag_is_enabled
     and_i_am_signed_in
+    and_i_navigate_to_the_placements_index
 
     when_i_am_on_the_placements_index_page
     then_i_see_the_placement_for_the_current_academic_year
@@ -40,6 +42,17 @@ RSpec.describe "Provider user filters placements by academic year", service: :pl
 
   def and_i_am_signed_in
     sign_in_placements_user(organisations: [@provider])
+  end
+
+  def given_the_show_provider_placements_feature_flag_is_enabled
+    Flipper.add(:show_provider_placements)
+    Flipper.enable(:show_provider_placements)
+  end
+
+  def and_i_navigate_to_the_placements_index
+    within ".app-primary-navigation__nav" do
+      click_on "Placements"
+    end
   end
 
   def when_i_am_on_the_placements_index_page

@@ -33,7 +33,10 @@ RSpec.describe "Placements / Providers / Placements / View a placement",
     create(:placement, subject: placement_subject, school:, additional_subjects:, academic_year:, terms:)
   end
 
-  before { given_i_am_signed_in_as_a_placements_user(organisations: [provider]) }
+  before do
+    given_i_am_signed_in_as_a_placements_user(organisations: [provider])
+    given_the_show_provider_placements_feature_flag_is_enabled
+  end
 
   context "when the placement has a subject without child subjects" do
     let(:placement_subject) { subject_1 }
@@ -68,6 +71,11 @@ RSpec.describe "Placements / Providers / Placements / View a placement",
   end
 
   private
+
+  def given_the_show_provider_placements_feature_flag_is_enabled
+    Flipper.add(:show_provider_placements)
+    Flipper.enable(:show_provider_placements)
+  end
 
   def when_i_visit_the_placement_show_page
     visit placements_provider_placement_path(provider, placement)
