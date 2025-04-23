@@ -62,15 +62,33 @@ RSpec.describe Claims::OnboardUsersWizard do
       end
     end
 
-    context "when a step is invalid" do
+    context "when a email is invalid" do
       let(:csv_content) do
         "school_name,school_urn,first_name,last_name,email\r\n" \
         "London School,111111,John,Smith,invalid_email"
       end
 
       it "returns an invalid wizard error" do
-        pending "Validation temp removed"
-        expect { upload_users }.to raise_error("Invalid wizard state")
+        # expect { upload_users }.to raise_error("Invalid wizard state")
+
+        expect { upload_users }.not_to have_enqueued_job(
+          Claims::User::CreateCollectionJob,
+        )
+      end
+    end
+
+    context "when a school urn is invalid" do
+      let(:csv_content) do
+        "school_name,school_urn,first_name,last_name,email\r\n" \
+        "London School,222222,John,Smith,john_smith@example.com"
+      end
+
+      it "returns an invalid wizard error" do
+        # expect { upload_users }.to raise_error("Invalid wizard state")
+
+        expect { upload_users }.not_to have_enqueued_job(
+          Claims::User::CreateCollectionJob,
+        )
       end
     end
   end
