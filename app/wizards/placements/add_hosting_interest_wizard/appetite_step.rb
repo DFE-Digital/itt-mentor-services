@@ -27,6 +27,6 @@ class Placements::AddHostingInterestWizard::AppetiteStep < BaseStep
   private
 
   def locale_path
-    ".wizards.placements.multi_placement_wizard.appetite_step"
+    ".wizards.placements.add_hosting_interest_wizard.appetite_step"
   end
 end

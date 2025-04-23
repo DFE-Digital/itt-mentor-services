@@ -94,21 +94,21 @@ RSpec.describe "School user does not select a subject",
 
   def then_i_see_the_appetite_form
     expect(page).to have_title(
-      "Will you host placements this academic year (#{@next_academic_year_name})? - Manage school placements - GOV.UK",
+      "Can your school offer placements for trainee teachers in this academic year (#{@next_academic_year_name})? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Organisation details")
     expect(page).to have_element(
       :legend,
-      text: "Will you host placements this academic year (#{@next_academic_year_name})?",
+      text: "Can your school offer placements for trainee teachers in this academic year (#{@next_academic_year_name})?",
       class: "govuk-fieldset__legend",
     )
-    expect(page).to have_field("Yes - Let providers know what I'm willing to host", type: :radio)
-    expect(page).to have_field("Yes - Let providers know I am open to placements", type: :radio)
-    expect(page).to have_field("No - Let providers know I am not hosting and do not want to be contacted", type: :radio)
+    expect(page).to have_field("Yes - I can offer placements", type: :radio)
+    expect(page).to have_field("Maybe - I’m not sure yet", type: :radio)
+    expect(page).to have_field("No - I can’t offer placements", type: :radio)
   end
 
   def when_i_select_actively_looking_to_host_placements
-    choose "Yes - Let providers know what I'm willing to host"
+    choose "Yes - I can offer placements"
   end
 
   def when_i_click_on_continue
