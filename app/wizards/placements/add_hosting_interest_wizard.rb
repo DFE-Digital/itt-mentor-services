@@ -48,6 +48,8 @@ module Placements
 
         create_partnerships
 
+        school.update!(expression_of_interest_completed: true)
+
         wizard_school_contact.first_name = steps[:school_contact].first_name
         wizard_school_contact.last_name = steps[:school_contact].last_name
         wizard_school_contact.email_address = steps[:school_contact].email_address

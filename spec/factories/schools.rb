@@ -12,6 +12,7 @@
 #  district_admin_code                    :string
 #  district_admin_name                    :string
 #  email_address                          :string
+#  expression_of_interest_completed       :boolean          default(FALSE)
 #  gender                                 :string
 #  group                                  :string
 #  last_inspection_date                   :date
@@ -83,6 +84,7 @@ FactoryBot.define do
 
     trait :placements do
       placements_service { true }
+      expression_of_interest_completed { true }
     end
 
     trait :primary do
