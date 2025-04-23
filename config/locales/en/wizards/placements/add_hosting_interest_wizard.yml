@@ -73,3 +73,6 @@ en:
           you_have_not_added_any_placements:
             You haven’t added any placement information so providers cannot see any of your preferences.
           continue: Continue
+        phase_step:
+          unknown: I don’t know
+          unknown_description: A phase of education will not be recorded
