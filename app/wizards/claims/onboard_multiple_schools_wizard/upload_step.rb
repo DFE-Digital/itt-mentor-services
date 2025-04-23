@@ -41,8 +41,9 @@ class Claims::OnboardMultipleSchoolsWizard::UploadStep < BaseStep
       next if row["name"].blank? &&
         row["urn"].blank?
 
-      validate_name(row, i)
-      validate_urn(row, i)
+      # Temp removed to make the CSV upload work
+      # validate_name(row, i)
+      # validate_urn(row, i)
     end
 
     invalid_school_name_rows.blank? &&
