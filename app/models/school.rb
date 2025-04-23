@@ -12,6 +12,7 @@
 #  district_admin_code                    :string
 #  district_admin_name                    :string
 #  email_address                          :string
+#  expression_of_interest_completed       :boolean          default(FALSE)
 #  gender                                 :string
 #  group                                  :string
 #  last_inspection_date                   :date
