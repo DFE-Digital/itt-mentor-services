@@ -3,7 +3,7 @@ HOSTING_ENV: qa
 SKYLIGHT_ENV: qa
 
 # Primary hostname for the Funding Mentors service
-CLAIMS_HOST: qa.claim-funding-for-mentor-training.education.gov.uk
+CLAIMS_HOST: qa.claim-funding-for-itt-mentor-training.service.gov.uk
 # Additional hostnames that may be used – e.g. the CDN origin (comma separated)
 CLAIMS_HOSTS: qa.claim-funding-for-mentor-training.education.gov.uk,qa.claim-funding-for-itt-mentor-training.service.gov.uk,track-and-pay-qa.test.teacherservices.cloud
 

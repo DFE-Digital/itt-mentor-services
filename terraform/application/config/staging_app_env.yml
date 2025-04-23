@@ -3,7 +3,7 @@ HOSTING_ENV: staging
 SKYLIGHT_ENV: staging
 
 # Primary hostname for the Funding Mentors service
-CLAIMS_HOST: staging.claim-funding-for-mentor-training.education.gov.uk
+CLAIMS_HOST: staging.claim-funding-for-itt-mentor-training.service.gov.uk
 # Additional hostnames that may be used – e.g. the CDN origin (comma separated)
 CLAIMS_HOSTS: staging.claim-funding-for-mentor-training.education.gov.uk,staging.claim-funding-for-itt-mentor-training.service.gov.uk,track-and-pay-staging.test.teacherservices.cloud,track-and-pay-temp.test.teacherservices.cloud
 

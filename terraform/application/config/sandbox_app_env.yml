@@ -2,7 +2,7 @@
 HOSTING_ENV: sandbox
 
 # Primary hostname for the Funding Mentors service
-CLAIMS_HOST: sandbox.claim-funding-for-mentor-training.education.gov.uk
+CLAIMS_HOST: sandbox.claim-funding-for-itt-mentor-training.service.gov.uk
 # Additional hostnames that may be used – e.g. the CDN origin (comma separated)
 CLAIMS_HOSTS: sandbox.claim-funding-for-mentor-training.education.gov.uk,sandbox.claim-funding-for-itt-mentor-training.service.gov.uk,track-and-pay-sandbox.teacherservices.cloud
 
