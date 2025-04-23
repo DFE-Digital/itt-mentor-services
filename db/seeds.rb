@@ -238,7 +238,4 @@ Provider.create!(name: "Test Provider 789", code: "TEST 789")
 
 # Feature flags
 
-Flipper.add(:bulk_add_placements)
-Flipper.enable(:bulk_add_placements)
-
 Flipper.add(:school_partner_providers)

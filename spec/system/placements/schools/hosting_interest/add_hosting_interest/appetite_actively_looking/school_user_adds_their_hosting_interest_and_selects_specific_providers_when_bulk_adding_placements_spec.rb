@@ -4,8 +4,7 @@ RSpec.describe "School user adds their hosting interest and selects specfic prov
                service: :placements,
                type: :system do
   scenario do
-    given_the_bulk_add_placements_flag_is_enabled
-    and_the_school_partner_providers_flag_is_enabled
+    given_the_school_partner_providers_flag_is_enabled
     and_subjects_exist
     and_test_providers_exist
     and_academic_years_exist
@@ -67,12 +66,7 @@ RSpec.describe "School user adds their hosting interest and selects specfic prov
 
   private
 
-  def given_the_bulk_add_placements_flag_is_enabled
-    Flipper.add(:bulk_add_placements)
-    Flipper.enable(:bulk_add_placements)
-  end
-
-  def and_the_school_partner_providers_flag_is_enabled
+  def given_the_school_partner_providers_flag_is_enabled
     Flipper.add(:school_partner_providers)
     Flipper.enable(:school_partner_providers)
   end

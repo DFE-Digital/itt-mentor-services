@@ -4,8 +4,7 @@ RSpec.describe "School user does not enter any school contact details",
                service: :placements,
                type: :system do
   scenario do
-    given_the_bulk_add_placements_flag_is_enabled
-    and_academic_years_exist
+    given_academic_years_exist
     and_i_am_signed_in
 
     when_i_visit_the_add_hosting_interest_page
@@ -26,12 +25,7 @@ RSpec.describe "School user does not enter any school contact details",
 
   private
 
-  def given_the_bulk_add_placements_flag_is_enabled
-    Flipper.add(:bulk_add_placements)
-    Flipper.enable(:bulk_add_placements)
-  end
-
-  def and_academic_years_exist
+  def given_academic_years_exist
     current_academic_year = Placements::AcademicYear.current
     @current_academic_year_name = current_academic_year.name
     @next_academic_year = current_academic_year.next
