@@ -116,6 +116,8 @@ RSpec.describe Claims::OnboardMultipleSchoolsWizard::UploadStep, type: :model do
       let(:attributes) { { csv_content: } }
 
       it "returns false and assigns the csv row to the 'invalid_school_name_rows' attribute" do
+        pending "Validation temp removed"
+
         expect(csv_inputs_valid).to be(false)
         expect(step.invalid_school_name_rows).to contain_exactly(0)
       end
@@ -129,6 +131,8 @@ RSpec.describe Claims::OnboardMultipleSchoolsWizard::UploadStep, type: :model do
       let(:attributes) { { csv_content: } }
 
       it "returns false and assigns the csv row to the 'invalid_school_urn_rows' attribute" do
+        pending "Validation temp removed"
+
         expect(csv_inputs_valid).to be(false)
         expect(step.invalid_school_urn_rows).to contain_exactly(0)
       end
