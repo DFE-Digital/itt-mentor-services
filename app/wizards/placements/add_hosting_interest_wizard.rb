@@ -162,6 +162,7 @@ module Placements
     end
 
     def interested_steps
+      add_step(Interested::PhaseStep)
       add_step(SchoolContactStep)
       add_step(ConfirmStep)
     end

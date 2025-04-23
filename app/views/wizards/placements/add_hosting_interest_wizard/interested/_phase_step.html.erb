@@ -1,0 +1,31 @@
+<% content_for :page_title, title_with_error_prefix(
+  t("wizards.placements.multi_placement_wizard.phase_step.title"),
+  error: current_step.errors.any?,
+) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= f.govuk_collection_check_boxes(
+        :phases,
+        current_step.phases_for_selection,
+        :name, :name, :description,
+        legend: { size: "l", text: t("wizards.placements.multi_placement_wizard.phase_step.title"), tag: "h1" }
+      ) %>
+
+      <%= f.govuk_check_boxes_fieldset(:phases, legend: { size: "l", text: t("wizards.placements.multi_placement_wizard.phase_step.title"), tag: "h1" }) do %>
+        <% current_step.phases_for_selection.each_with_index do |phase, i| %>
+          <%= f.govuk_check_box :phases, phase.name,
+            label: { text: phase.name },
+            hint: { text: phase.description },
+            link_errors: i.zero? %>
+        <% end %>
+        <%= f.govuk_check_box_divider %>
+      <% end %>
+
+      <%= f.govuk_submit t("wizards.placements.multi_placement_wizard.phase_step.continue") %>
+    </div>
+  </div>
+<% end %>
