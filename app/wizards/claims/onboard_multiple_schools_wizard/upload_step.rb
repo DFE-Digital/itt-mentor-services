@@ -37,7 +37,7 @@ class Claims::OnboardMultipleSchoolsWizard::UploadStep < BaseStep
     return true if csv_content.blank?
 
     reset_input_attributes
-    csv.each_with_index do |row, i|
+    csv.each_with_index do |row, _i|
       next if row["name"].blank? &&
         row["urn"].blank?
 
