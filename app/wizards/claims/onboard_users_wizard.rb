@@ -12,30 +12,32 @@ module Claims
     def upload_users
       raise "Invalid wizard state" unless valid? && csv_inputs_valid?
 
+      return if user_details.blank?
+
       Claims::User::CreateCollectionJob.perform_later(user_details:)
     end
 
     private
 
-    # :nocov:
     def user_details
-      details = []
-      csv_rows.each do |row|
-        school = Claims::School.find_by!(urn: row["school_urn"])
-        # Temp add next calls to make the CSV upload work
-        next if school.blank?
-        next if row["email"].blank? || URI::MailTo::EMAIL_REGEXP.match(row["email"]).nil?
+      @user_details ||= begin
+        details = []
+        csv_rows.each do |row|
+          school = Claims::School.find_by(urn: row["school_urn"])
+          # Temp add next calls to make the CSV upload work
+          next if school.blank?
+          next if row["email"].blank? || URI::MailTo::EMAIL_REGEXP.match(row["email"]).nil?
 
-        details << {
-          school_id: school.id,
-          first_name: row["first_name"],
-          last_name: row["last_name"],
-          email: row["email"],
-        }
+          details << {
+            school_id: school.id,
+            first_name: row["first_name"],
+            last_name: row["last_name"],
+            email: row["email"],
+          }
+        end
+        details
       end
-      details
     end
-    # :nocov:
 
     def csv_inputs_valid?
       @csv_inputs_valid ||= steps.fetch(:upload).csv_inputs_valid?
