@@ -30,7 +30,11 @@ class Placements::OrganisationsController < Placements::ApplicationController
 
   def landing_page_path(organisation)
     if organisation.is_a?(School)
-      placements_school_placements_path(organisation)
+      if organisation.expression_of_interest_completed?
+        placements_school_placements_path(organisation)
+      else
+        new_add_hosting_interest_placements_school_hosting_interests_path(organisation)
+      end
     else # Provider
       placements_provider_placements_path(organisation)
     end

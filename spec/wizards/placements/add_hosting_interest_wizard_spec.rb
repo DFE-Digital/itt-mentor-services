@@ -175,6 +175,8 @@ RSpec.describe Placements::AddHostingInterestWizard do
             expect(school.placements.where(subject_id: primary_with_english.id).count).to eq(1)
             expect(school.placements.where(subject_id: primary_with_science.id).count).to eq(2)
 
+            expect(school.expression_of_interest_completed?).to be(true)
+
             school_contact = school.school_contact
             expect(school_contact.first_name).to eq("Joe")
             expect(school_contact.last_name).to eq("Bloggs")
@@ -210,6 +212,8 @@ RSpec.describe Placements::AddHostingInterestWizard do
 
             expect(school.placements.where(subject_id: english.id).count).to eq(2)
             expect(school.placements.where(subject_id: mathematics.id).count).to eq(3)
+
+            expect(school.expression_of_interest_completed?).to be(true)
 
             school_contact = school.school_contact
             expect(school_contact.first_name).to eq("Joe")
@@ -258,6 +262,8 @@ RSpec.describe Placements::AddHostingInterestWizard do
                 mathematics_placements.map { |placement| placement.additional_subjects.pluck(:name) },
               ).to contain_exactly(%w[Statistics], %w[Statistics Mechanics])
 
+              expect(school.expression_of_interest_completed?).to be(true)
+
               school_contact = school.school_contact
               expect(school_contact.first_name).to eq("Joe")
               expect(school_contact.last_name).to eq("Bloggs")
@@ -300,6 +306,8 @@ RSpec.describe Placements::AddHostingInterestWizard do
             expect(school.placements.where(subject_id: primary_with_science.id).count).to eq(2)
             expect(school.placements.where(subject_id: english.id).count).to eq(2)
             expect(school.placements.where(subject_id: mathematics.id).count).to eq(3)
+
+            expect(school.expression_of_interest_completed?).to be(true)
 
             school_contact = school.school_contact
             expect(school_contact.first_name).to eq("Joe")
@@ -354,6 +362,8 @@ RSpec.describe Placements::AddHostingInterestWizard do
                 test_provider_3,
               )
 
+              expect(school.expression_of_interest_completed?).to be(true)
+
               school_contact = school.school_contact
               expect(school_contact.first_name).to eq("Joe")
               expect(school_contact.last_name).to eq("Bloggs")
@@ -406,6 +416,8 @@ RSpec.describe Placements::AddHostingInterestWizard do
                 test_provider_1,
                 test_provider_3,
               )
+
+              expect(school.expression_of_interest_completed?).to be(true)
 
               school_contact = school.school_contact
               expect(school_contact.first_name).to eq("Joe")
@@ -474,6 +486,8 @@ RSpec.describe Placements::AddHostingInterestWizard do
                 "Working to improve our OFSTED rating",
               )
 
+              expect(school.expression_of_interest_completed?).to be(true)
+
               school_contact = school.school_contact
               expect(school_contact.first_name).to eq("Joe")
               expect(school_contact.last_name).to eq("Bloggs")
@@ -499,6 +513,8 @@ RSpec.describe Placements::AddHostingInterestWizard do
               "Number of pupils with SEND needs",
               "Working to improve our OFSTED rating",
             )
+
+            expect(school.expression_of_interest_completed?).to be(true)
 
             school_contact = school.school_contact
             expect(school_contact.first_name).to eq("Joe")
