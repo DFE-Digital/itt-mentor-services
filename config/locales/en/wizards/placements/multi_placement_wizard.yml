@@ -34,6 +34,11 @@ en:
           continue: Continue
         phase_step:
           title: What phase of education will your placements be?
+          options:
+            primary_description: 3 to 11 years
+            secondary_description: 11 to 19 years
+            send: Special educational needs and disabilities (SEND) specific
+            send_description: You will be able to select year groups
           continue: Continue
         subjects_known_step:
           title: Do you know which subjects you would like to host?
