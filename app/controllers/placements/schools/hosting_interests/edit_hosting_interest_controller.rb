@@ -24,7 +24,7 @@ class Placements::Schools::HostingInterests::EditHostingInterestController < Pla
       school.reload
 
       flash_locales_path = "placements.schools.hosting_interests.add_hosting_interest.update"
-      redirect_to success_path, flash: {
+      redirect_to whats_next_placements_school_hosting_interests_path(@school), flash: {
         heading: t("#{flash_locales_path}.heading.#{appetite}"),
         body: t("#{flash_locales_path}.body.#{appetite}_html"),
       }
@@ -55,14 +55,6 @@ class Placements::Schools::HostingInterests::EditHostingInterestController < Pla
 
   def index_path
     placements_school_placements_path(@school)
-  end
-
-  def success_path
-    if appetite == "actively_looking"
-      placements_school_placements_path(@school)
-    else
-      whats_next_placements_school_hosting_interests_path(@school)
-    end
   end
 
   def appetite

@@ -1,0 +1,23 @@
+<% content_for :page_title, title_with_error_prefix(
+  t(".title"),
+  error: current_step.errors.any?,
+) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".caption") %></span>
+
+      <%= f.govuk_collection_radio_buttons(
+            :quantity_known,
+            current_step.options_for_selection,
+            :name, :name,
+            legend: { size: "l", text: t(".title"), tag: "h1" }
+          ) %>
+
+      <%= f.govuk_submit t(".continue") %>
+    </div>
+  </div>
+<% end %>

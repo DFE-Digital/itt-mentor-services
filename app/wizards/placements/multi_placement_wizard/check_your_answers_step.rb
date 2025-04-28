@@ -1,10 +1,6 @@
 class Placements::MultiPlacementWizard::CheckYourAnswersStep < BaseStep
   delegate :phases, to: :phase_step
-  delegate :selected_primary_subjects, :selected_secondary_subjects, :selected_providers, to: :wizard
-
-  def primary_and_secondary_phases?
-    @primary_and_secondary_phases ||= phase_step.class::VALID_PHASES.sort == phases.sort
-  end
+  delegate :year_groups, :selected_secondary_subjects, :selected_providers, to: :wizard
 
   private
 

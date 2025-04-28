@@ -20,8 +20,6 @@ module Placements
         secondary_subject_steps
       end
 
-      add_step(ProviderStep)
-
       add_step(CheckYourAnswersStep)
     end
 
@@ -30,8 +28,6 @@ module Placements
 
       ApplicationRecord.transaction do
         create_placements
-
-        create_partnerships
       end
     end
 
@@ -55,15 +51,10 @@ module Placements
       end.try(subject.name_as_attribute).to_i
     end
 
-    def selected_providers
-      return Provider.none if steps[:provider].blank?
+    def placement_quantity_for_year_group(year_group)
+      return 0 if steps[:year_group_placement_quantity].blank?
 
-      provider_step = steps.fetch(:provider)
-      if provider_step.provider_ids.include?(provider_step.class::SELECT_ALL)
-        provider_step.providers
-      else
-        ::Provider.where(id: provider_step.provider_ids)
-      end
+      steps.fetch(:year_group_placement_quantity).try(year_group.to_sym).to_i
     end
 
     def child_subject_placement_step_count
@@ -72,12 +63,23 @@ module Placements
       }.count
     end
 
+    def year_groups
+      return [] if steps[:year_group_selection].blank?
+
+      @year_groups ||= steps.fetch(:year_group_selection).year_groups
+    end
+
     private
 
     def create_placements
-      selected_primary_subjects.each do |subject|
-        placement_quantity_for_subject(subject).times do
-          Placement.create!(school:, subject:, academic_year: upcoming_academic_year)
+      year_groups.each do |year_group|
+        placement_quantity_for_year_group(year_group).times do
+          Placement.create!(
+            school:,
+            subject: Subject.find_by(name: "Primary"),
+            year_group:,
+            academic_year: upcoming_academic_year,
+          )
         end
       end
 
@@ -114,22 +116,20 @@ module Placements
     end
 
     def actively_looking_steps
-      add_step(PhaseStep)
+      add_step(MultiPlacementWizard::PhaseStep)
       if phases.include?(::Placements::School::PRIMARY_PHASE)
-        primary_subject_steps
+        year_group_steps
       end
 
       if phases.include?(::Placements::School::SECONDARY_PHASE)
         secondary_subject_steps
       end
-
-      add_step(ProviderStep)
+      add_step(CheckYourAnswersStep)
     end
 
-    def primary_subject_steps
-      add_step(PrimarySubjectSelectionStep)
-      add_step(PrimaryPlacementQuantityStep)
-      # No primary subject have child subjects
+    def year_group_steps
+      add_step(MultiPlacementWizard::YearGroupSelectionStep)
+      add_step(MultiPlacementWizard::YearGroupPlacementQuantityStep)
     end
 
     def secondary_subject_steps

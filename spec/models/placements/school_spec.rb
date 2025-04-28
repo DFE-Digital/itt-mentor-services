@@ -7,7 +7,6 @@
 #  address2                               :string
 #  address3                               :string
 #  admissions_policy                      :string
-#  approximate_placement_details          :jsonb
 #  claims_grant_conditions_accepted_at    :datetime
 #  claims_service                         :boolean          default(FALSE)
 #  district_admin_code                    :string
@@ -28,7 +27,11 @@
 #  phase                                  :string
 #  placements_service                     :boolean          default(FALSE)
 #  postcode                               :string
+<<<<<<< HEAD
 #  previously_offered_placements          :boolean          default(FALSE)
+=======
+#  potential_placement_details            :jsonb
+>>>>>>> a3e2f632 (Flow changes for green and amber path)
 #  rating                                 :string
 #  religious_character                    :string
 #  school_capacity                        :integer

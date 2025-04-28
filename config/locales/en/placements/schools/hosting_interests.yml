@@ -41,15 +41,43 @@ en:
               teaching_school_hub: teaching school hub
               itt_provider: ITT provider
             interested:
-              providers_who_are_looking:
-                Providers who are looking for new schools to work with may get in touch.
-              add_placements_information_html:
-                You can also <a href=%{placements_url}>add placement information</a> to help providers know what help you need.
-              search_for_providers_html:
-                Alternatively you can search for providers using our <a href=%{providers_url}>provider directory</a>.
-              additional_help: Addtional help from your school teaching hub
-              find_your_local_school_hub: 
-                Find your local %{href} to get advice on offering an ITT placement.
-              teaching_school_hub: teaching school hub
-              accredited_provider_help:
-                They’ll also be able to help you find a local accredited ITT provider to work with.
+              panel_title: Approximate information added
+              panel_text: Providers can see that you may offer placements
+              what_happens_next: What happens next?
+              providers_can_contact_you:
+                Providers who are looking for schools to work with can contact you on %{mailto}.
+              once_you_know_which_placements:
+                Once you know which placements you can offer, you can %{link} to help providers know what trainees you need.
+              add_placements: add placements
+              potential_placement_information: Potential placement information
+              potential_primary_placements: Potential primary placements
+              potential_secondary_placements: Potential secondary placements
+            primary_placements_list:
+              year_group: Year group
+              number_of_placements: Number of placements
+              unknown: I don’t know
+              not_entered: Not entered
+            secondary_placements_list:
+              subject: Subject
+              number_of_placements: Number of placements
+              unknown: I don’t know
+              not_entered: Not entered
+            actively_looking:
+              panel_title: Placement information added
+              panel_text: Providers can see that you have placements available
+              what_happens_next: What happens next?
+              providers_can_contact_you:
+                Providers will be able to contact you on %{mailto} about your placement offers.
+                After these discussions you can then decide whether to assign a provider to your placements.
+              your_placements_offers: Your placements offers
+              primary_placements: Primary placements
+              secondary_placements: Secondary placements
+              manage_your_placements: Manage your placements
+              you_can_edit_placements: You can %{link} at any time.
+              edit_your_placements: edit your placements
+              editing_them: "Editing them allows you to:"
+              editing_options:
+                - assign a provider
+                - add an expected date
+                - change or remove any information
+                - assign a mentor - only your school will be able to see mentor information

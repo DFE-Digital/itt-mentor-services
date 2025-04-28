@@ -5,12 +5,28 @@ en:
         multiple_placements_wizard:
           check_your_answers:
             education_phase: Education phase
-            phase: Phase
             placements: Placements
-            subject: Subject
+            year_group: Year group
             number_of_placements: Number of placements
             primary_placements: Primary placements
+            potential_primary_placements: Potential primary placements
             secondary_placements: Secondary placements
-            providers: Providers
-            provider_name: Provider name
+            potential_secondary_placements: Potential secondary placements
+            not_entered: Not entered
             change: Change
+            education_phase_list:
+              phase: Phase
+              unknown: I don’t know
+            primary_placements_list:
+              year_group: Year group
+              number_of_placements: Number of placements
+              primary_placements: Primary placements
+              not_entered: Not entered
+              unknown: I don’t know
+            secondary_placements_list:
+              secondary_placements: Secondary placements
+              number_of_placements: Number of placements
+              subject: Subject
+              not_entered: Not entered
+              unknown: I don’t know
+

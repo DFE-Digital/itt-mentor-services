@@ -1,0 +1,2 @@
+class Placements::AddHostingInterestWizard::Interested::SecondaryChildSubjectPlacementSelectionStep < Placements::MultiPlacementWizard::SecondaryChildSubjectPlacementSelectionStep
+end

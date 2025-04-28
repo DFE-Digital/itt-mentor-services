@@ -306,10 +306,19 @@ en:
             phases: 
               blank: Please select which phase you are looking to host placements at
               inclusion: Please select which phase you are looking to host placements at
+        placements/multi_placement_wizard/year_group_selection_step:
+          attributes:
+            year_groups: 
+              blank: Please select which year groups you are looking to host placements at
+              inclusion: Please select which year groups you are looking to host placements at
         placements/add_hosting_interest_wizard/subjects_known_step:
           attributes:
             subjects_known: 
               blank: Please select if you know which subjects you would like to host
+        placements/add_hosting_interest_wizard/interested/placement_quantity_known_step:
+          attributes:
+            quantity_known: 
+              blank: Please select if you know number of placements you would be willing to host
         placements/multi_placement_wizard/primary_subject_selection_step:
           attributes:
             subject_ids: 
