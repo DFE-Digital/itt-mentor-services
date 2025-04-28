@@ -31,6 +31,7 @@ en:
           unavailable_placements_count:
             one: "%{count} filled placement"
             other: "%{count} filled placements"
+          historically_offered_placements: This school has previously hosted placements
           last_offered: Last offered
           last_offered_count:
             zero: "This school has not previously hosted placements"

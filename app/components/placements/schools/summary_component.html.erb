@@ -67,7 +67,11 @@
             <%= t(".placement_status") %>
           </dt>
           <dd class="app-result-detail__value">
-            <%= t(".last_offered_count", count: previous_academic_year_placements_count, academic_year_name: academic_year.previous.name) %>
+            <% if previous_academic_year_placements_count.zero? && school.previously_offered_placements? %>
+              <%= t(".historically_offered_placements") %>
+            <% else %>
+              <%= t(".last_offered_count", count: previous_academic_year_placements_count, academic_year_name: academic_year.previous.name) %>
+            <% end %>
           </dd>
         </div>
       <% else %>
