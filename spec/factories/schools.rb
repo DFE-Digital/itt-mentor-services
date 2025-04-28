@@ -26,6 +26,7 @@
 #  phase                                  :string
 #  placements_service                     :boolean          default(FALSE)
 #  postcode                               :string
+#  previously_offered_placements          :boolean          default(FALSE)
 #  rating                                 :string
 #  religious_character                    :string
 #  school_capacity                        :integer

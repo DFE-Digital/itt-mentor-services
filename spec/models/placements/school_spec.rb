@@ -26,6 +26,7 @@
 #  phase                                  :string
 #  placements_service                     :boolean          default(FALSE)
 #  postcode                               :string
+#  previously_offered_placements          :boolean          default(FALSE)
 #  rating                                 :string
 #  religious_character                    :string
 #  school_capacity                        :integer
@@ -129,7 +130,6 @@ RSpec.describe Placements::School do
   describe "delegations" do
     it { is_expected.to delegate_method(:email_address).to(:school_contact).with_prefix(true).allow_nil }
     it { is_expected.to delegate_method(:full_name).to(:school_contact).with_prefix(true).allow_nil }
-    it { is_expected.to delegate_method(:appetite).to(:current_hosting_interest).with_prefix(true).allow_nil }
   end
 
   describe "#current_hosting_interest" do
@@ -140,7 +140,7 @@ RSpec.describe Placements::School do
       let(:hosting_interests) { [build(:hosting_interest, academic_year:)] }
 
       it "returns the current hosting interest for the school" do
-        expect(school.current_hosting_interest).to eq(hosting_interests.first)
+        expect(school.current_hosting_interest(academic_year:)).to eq(hosting_interests.first)
       end
     end
 
@@ -148,7 +148,7 @@ RSpec.describe Placements::School do
       let(:hosting_interests) { [] }
 
       it "returns nil" do
-        expect(school.current_hosting_interest).to be_nil
+        expect(school.current_hosting_interest(academic_year:)).to be_nil
       end
     end
 
@@ -158,67 +158,30 @@ RSpec.describe Placements::School do
       let(:hosting_interests) { [current_hosting_interest, previous_hosting_interest] }
 
       it "returns the current hosting interest for the school" do
-        expect(school.current_hosting_interest).to eq(current_hosting_interest)
+        expect(school.current_hosting_interest(academic_year:)).to eq(current_hosting_interest)
       end
     end
   end
 
   describe "#available_placements" do
+    let(:academic_year) { Placements::AcademicYear.current }
     let!(:school) { create(:placements_school, placements: [available_placement, unavailable_placement]) }
     let(:available_placement) { build(:placement) }
     let(:unavailable_placement) { build(:placement, provider: create(:provider)) }
 
     it "returns the available placements for the school" do
-      expect(school.available_placements).to contain_exactly(available_placement)
+      expect(school.available_placements(academic_year:)).to contain_exactly(available_placement)
     end
   end
 
   describe "#unavailable_placements" do
+    let(:academic_year) { Placements::AcademicYear.current }
     let!(:school) { create(:placements_school, placements: [available_placement, unavailable_placement]) }
     let(:available_placement) { build(:placement) }
     let(:unavailable_placement) { build(:placement, provider: create(:provider)) }
 
     it "returns the unavailable placements for the school" do
-      expect(school.unavailable_placements).to contain_exactly(unavailable_placement)
-    end
-  end
-
-  describe "#upcoming_hosting_interest" do
-    subject(:upcoming_hosting_interest) { school.upcoming_hosting_interest }
-
-    let(:school) { create(:placements_school) }
-    let(:current_academic_year) { Placements::AcademicYear.current }
-    let(:next_academic_year) { current_academic_year.next }
-    let(:previous_academic_year) { current_academic_year.previous }
-    let(:current_hosting_interest) do
-      create(
-        :hosting_interest,
-        school:,
-        academic_year: current_academic_year,
-      )
-    end
-    let!(:next_hosting_interest) do
-      create(
-        :hosting_interest,
-        school:,
-        academic_year: next_academic_year,
-      )
-    end
-    let(:previous_hosting_interest) do
-      create(
-        :hosting_interest,
-        school:,
-        academic_year: previous_academic_year,
-      )
-    end
-
-    before do
-      current_hosting_interest
-      previous_hosting_interest
-    end
-
-    it "returns the hosting interest for the next year" do
-      expect(upcoming_hosting_interest).to eq(next_hosting_interest)
+      expect(school.unavailable_placements(academic_year:)).to contain_exactly(unavailable_placement)
     end
   end
 end
