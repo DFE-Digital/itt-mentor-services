@@ -1,11 +1,12 @@
 class Placements::Providers::FindController < Placements::ApplicationController
   before_action :set_provider
+  before_action :selected_academic_year
   before_action :load_placements_and_subjects, only: %i[placements placement_information school_details]
   helper_method :filter_form, :location_coordinates
 
   def index
     @subjects = filter_subjects_by_phase
-    query = Placements::SchoolsQuery.call(params: query_params)
+    query = Placements::SchoolsQuery.call(academic_year: selected_academic_year, params: query_params)
     @pagy, @schools = pagy(all_schools.merge(query).distinct)
     calculate_travel_time
   end
@@ -21,7 +22,7 @@ class Placements::Providers::FindController < Placements::ApplicationController
   private
 
   def school
-    @school ||= Placements::School.find(params[:id]).decorate
+    @school ||= School.find(params[:id]).decorate
   end
 
   def load_placements_and_subjects
@@ -52,13 +53,13 @@ class Placements::Providers::FindController < Placements::ApplicationController
 
   def unfilled_placements(school)
     school.placements
-          .where(academic_year_id: Placements::AcademicYear.current.id, provider_id: nil)
+          .where(academic_year_id: selected_academic_year.id, provider_id: nil)
           .distinct
   end
 
   def filled_placements(school)
     school.placements
-          .where(academic_year_id: Placements::AcademicYear.current.id)
+          .where(academic_year_id: selected_academic_year.id)
           .where.not(provider_id: nil)
           .distinct
   end
@@ -92,7 +93,7 @@ class Placements::Providers::FindController < Placements::ApplicationController
   end
 
   def all_schools
-    @all_schools ||= Placements::School.all
+    @all_schools ||= School.all
   end
 
   def filter_subjects_by_phase
@@ -108,9 +109,13 @@ class Placements::Providers::FindController < Placements::ApplicationController
 
   def placements_last_offered
     school.placements
-           .where(academic_year: Placements::AcademicYear.current.previous)
+           .where(academic_year: selected_academic_year.previous)
            .decorate
            .includes(:academic_year)
            .group_by(&:academic_year)
+  end
+
+  def selected_academic_year
+    @selected_academic_year ||= current_user.selected_academic_year
   end
 end

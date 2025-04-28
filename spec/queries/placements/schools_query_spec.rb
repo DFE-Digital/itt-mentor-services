@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe Placements::SchoolsQuery do
-  subject(:query) { described_class.new(params:) }
+  subject(:query) { described_class.new(academic_year:, params:) }
 
   let(:params) { {} }
   let(:query_school) do
@@ -114,7 +114,7 @@ describe Placements::SchoolsQuery do
         let(:params) { { filters: { itt_statuses: %w[open] } } }
 
         before do
-          query_school.hosting_interests.create!(appetite: "actively_looking", academic_year:)
+          query_school.hosting_interests.create!(appetite: "interested", academic_year:)
         end
 
         it "returns the filtered schools" do
@@ -168,7 +168,7 @@ describe Placements::SchoolsQuery do
         let(:params) { { filters: { itt_statuses: %w[open not_open] } } }
 
         before do
-          query_school.hosting_interests.create!(appetite: "actively_looking", academic_year:)
+          query_school.hosting_interests.create!(appetite: "interested", academic_year:)
           non_query_school.hosting_interests.create!(appetite: "not_open", academic_year:)
         end
 

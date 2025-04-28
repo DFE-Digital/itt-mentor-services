@@ -92,6 +92,12 @@ class School < ApplicationRecord
   has_many :school_sen_provisions
   has_many :sen_provisions, through: :school_sen_provisions
 
+  has_many :hosting_interests, class_name: "Placements::HostingInterest"
+  has_many :placements
+  has_many :academic_years, through: :placements
+
+  has_one :school_contact, dependent: :destroy, class_name: "Placements::SchoolContact"
+
   normalizes :email_address, with: ->(value) { value.strip.downcase }
 
   validates_with UniqueIdentifierValidator
@@ -117,6 +123,8 @@ class School < ApplicationRecord
   pg_search_scope :search_name_postcode,
                   against: %i[name postcode],
                   using: { trigram: { word_similarity: true } }
+
+  delegate :email_address, :full_name, to: :school_contact, prefix: true, allow_nil: true
 
   PRIMARY_PHASE = "Primary".freeze
   SECONDARY_PHASE = "Secondary".freeze
@@ -144,5 +152,17 @@ class School < ApplicationRecord
     return [] if email_address.nil?
 
     [email_address]
+  end
+
+  def current_hosting_interest(academic_year:)
+    hosting_interests.find_by(academic_year:)
+  end
+
+  def available_placements(academic_year:)
+    placements.available_placements_for_academic_year(academic_year)
+  end
+
+  def unavailable_placements(academic_year:)
+    placements.unavailable_placements_for_academic_year(academic_year)
   end
 end

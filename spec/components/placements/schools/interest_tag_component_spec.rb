@@ -2,9 +2,10 @@ require "rails_helper"
 
 RSpec.describe Placements::Schools::InterestTagComponent, type: :component do
   subject(:component) do
-    described_class.new(school:)
+    described_class.new(school:, academic_year:)
   end
 
+  let(:academic_year) { Placements::AcademicYear.current }
   let(:school) { create(:placements_school, hosting_interests:, placements:) }
 
   before do
@@ -12,14 +13,14 @@ RSpec.describe Placements::Schools::InterestTagComponent, type: :component do
     render_inline(component)
   end
 
-  context "when the school is open to hosting" do
+  context "when the school is actively looking" do
     let(:hosting_interests) { [build(:hosting_interest, appetite: "actively_looking")] }
 
     context "when the school has available placements" do
       let(:placements) { [build(:placement)] }
 
       it "renders the correct text" do
-        expect(page).to have_content "Has unfilled placements"
+        expect(page).to have_content "Placements available"
       end
 
       it "renders the correct tag" do
@@ -31,7 +32,7 @@ RSpec.describe Placements::Schools::InterestTagComponent, type: :component do
       let(:placements) { [build(:placement), build(:placement, provider: build(:provider))] }
 
       it "renders the correct text" do
-        expect(page).to have_content "Has unfilled placements"
+        expect(page).to have_content "Placements available"
       end
 
       it "renders the correct tag" do
@@ -43,7 +44,7 @@ RSpec.describe Placements::Schools::InterestTagComponent, type: :component do
       let(:placements) { [build(:placement, provider: build(:provider))] }
 
       it "renders the correct text" do
-        expect(page).to have_content "Already organised placements"
+        expect(page).to have_content "No placements available"
       end
 
       it "renders the correct tag" do
@@ -55,12 +56,25 @@ RSpec.describe Placements::Schools::InterestTagComponent, type: :component do
       let(:placements) { [] }
 
       it "renders the correct text" do
-        expect(page).to have_content "Open to hosting"
+        expect(page).to have_content "Placement availability unknown"
       end
 
       it "renders the correct tag" do
-        expect(page).to have_css(".govuk-tag--yellow")
+        expect(page).to have_css(".govuk-tag--grey")
       end
+    end
+  end
+
+  context "when the school is interested in hosting" do
+    let(:hosting_interests) { [build(:hosting_interest, appetite: "interested")] }
+    let(:placements) { [] }
+
+    it "renders the correct text" do
+      expect(page).to have_content "May offer placements"
+    end
+
+    it "renders the correct tag" do
+      expect(page).to have_css(".govuk-tag--yellow")
     end
   end
 
@@ -69,7 +83,7 @@ RSpec.describe Placements::Schools::InterestTagComponent, type: :component do
     let(:placements) { [] }
 
     it "renders the correct text" do
-      expect(page).to have_content "Not hosting"
+      expect(page).to have_content "Not offering placements"
     end
 
     it "renders the correct tag" do
@@ -81,7 +95,7 @@ RSpec.describe Placements::Schools::InterestTagComponent, type: :component do
     let(:school) { create(:placements_school) }
 
     it "renders the correct text" do
-      expect(page).to have_content "Not participating"
+      expect(page).to have_content "Placement availability unknown"
     end
 
     it "renders the correct tag" do

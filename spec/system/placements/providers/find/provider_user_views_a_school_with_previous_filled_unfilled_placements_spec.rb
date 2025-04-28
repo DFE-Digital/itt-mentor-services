@@ -22,13 +22,14 @@ RSpec.describe "Provider user views a school with previous, filled and unfilled 
   private
 
   def given_that_schools_exist
-    @previous_academic_year = Placements::AcademicYear.current.previous
+    @previous_academic_year = Placements::AcademicYear.current
+    academic_year = @previous_academic_year.next
     @provider = build(:placements_provider, name: "Aes Sedai Trust")
-    available_placement = build(:placement, terms: [build(:placements_term, :spring)], subject: build(:subject, name: "Primary (Year 1)"))
-    unavailable_placement = build(:placement, provider: @provider, terms: [build(:placements_term, :autumn)], subject: build(:subject, name: "Primary (Year 2)"))
+    available_placement = build(:placement, terms: [build(:placements_term, :spring)], subject: build(:subject, name: "Primary (Year 1)"), academic_year:)
+    unavailable_placement = build(:placement, provider: @provider, terms: [build(:placements_term, :autumn)], subject: build(:subject, name: "Primary (Year 2)"), academic_year:)
     previous_placement = build(:placement, subject: build(:subject, name: "Primary (Year 3)"),
                                            academic_year: @previous_academic_year)
-    hosting_interests = build_list(:hosting_interest, 1, appetite: "actively_looking")
+    hosting_interests = build_list(:hosting_interest, 1, appetite: "actively_looking", academic_year:)
     @already_hosting_school = create(
       :placements_school,
       phase: "Secondary",
@@ -87,7 +88,7 @@ RSpec.describe "Provider user views a school with previous, filled and unfilled 
     expect(page).to have_title("Shelbyville High School - Find - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Find")
     expect(page).to have_h1("Shelbyville High School")
-    expect(page).to have_tag("Has unfilled placements", "green")
+    expect(page).to have_tag("Placements available", "green")
     expect(secondary_navigation).to have_current_item("Placements")
     expect(page).to have_element(:p, text: "This school has specified which placements they would like to host in the 2024 to 2025 academic year.", class: "govuk-body")
     expect(page).to have_h2("1 unfilled placement")
@@ -114,7 +115,7 @@ RSpec.describe "Provider user views a school with previous, filled and unfilled 
     expect(page).to have_title("Shelbyville High School - Find - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Find")
     expect(page).to have_h1("Shelbyville High School")
-    expect(page).to have_tag("Has unfilled placements", "green")
+    expect(page).to have_tag("Placements available", "green")
     expect(secondary_navigation).to have_current_item("Placement information")
     expect(page).to have_h2("Placement contact")
     expect(page).to have_summary_list_row("Name", "Placement Coordinator")
@@ -132,7 +133,7 @@ RSpec.describe "Provider user views a school with previous, filled and unfilled 
     expect(page).to have_title("Shelbyville High School - Find - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Find")
     expect(page).to have_h1("Shelbyville High School")
-    expect(page).to have_tag("Has unfilled placements", "green")
+    expect(page).to have_tag("Placements available", "green")
     expect(secondary_navigation).to have_current_item("School details")
 
     expect(page).to have_h2("School details")

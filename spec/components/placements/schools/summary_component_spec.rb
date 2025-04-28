@@ -2,13 +2,14 @@ require "rails_helper"
 
 RSpec.describe Placements::Schools::SummaryComponent, type: :component do
   subject(:component) do
-    described_class.new(school:, provider:)
+    described_class.new(school:, provider:, academic_year:)
   end
 
   let(:provider) { create(:placements_provider) }
   let(:hosting_interests) { [] }
   let(:placements) { [] }
   let(:school_contact) { build(:school_contact) }
+  let(:academic_year) { Placements::AcademicYear.current }
   let(:school) do
     create(:placements_school,
            hosting_interests:,
@@ -32,11 +33,11 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
   end
 
   context "when the school is open to hosting" do
-    let(:hosting_interests) { build_list(:hosting_interest, 1, appetite: "actively_looking") }
-
     context "when the school does not have any placements" do
+      let(:hosting_interests) { build_list(:hosting_interest, 1, appetite: "interested") }
+
       it "displays the school's hosting interest" do
-        expect(page).to have_content("Open to hosting")
+        expect(page).to have_content("May offer placements")
       end
 
       it "displays a link to the school's details page" do
@@ -68,7 +69,7 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
 
       context "when location coordinates have been provided" do
         subject(:component) do
-          described_class.new(school:, provider:, location_coordinates: "41.40338, 2.17403")
+          described_class.new(school:, provider:, academic_year:, location_coordinates: "41.40338, 2.17403")
         end
 
         it "displays the getting there section", :aggregate_failures do
@@ -88,10 +89,12 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
     end
 
     context "when the school has unfilled placements" do
+      let(:hosting_interests) { build_list(:hosting_interest, 1, appetite: "actively_looking") }
+
       let(:placements) { build_list(:placement, 1) }
 
       it "displays the school's hosting interest" do
-        expect(page).to have_content("Has unfilled placements")
+        expect(page).to have_content("Placements available")
       end
 
       it "displays a link to the school's details page" do
@@ -127,7 +130,7 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
 
       context "when location coordinates have been provided" do
         subject(:component) do
-          described_class.new(school:, provider:, location_coordinates: "41.40338, 2.17403")
+          described_class.new(school:, provider:, academic_year:, location_coordinates: "41.40338, 2.17403")
         end
 
         it "displays the getting there section", :aggregate_failures do
@@ -147,10 +150,11 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
     end
 
     context "when the school has unfilled and filled placements" do
+      let(:hosting_interests) { build_list(:hosting_interest, 1, appetite: "actively_looking") }
       let(:placements) { [build(:placement, provider:), build(:placement)] }
 
       it "displays the school's hosting interest" do
-        expect(page).to have_content("Has unfilled placements")
+        expect(page).to have_content("Placements available")
       end
 
       it "displays a link to the school's details page" do
@@ -186,7 +190,7 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
 
       context "when location coordinates have been provided" do
         subject(:component) do
-          described_class.new(school:, provider:, location_coordinates: "41.40338, 2.17403")
+          described_class.new(school:, provider:, academic_year:, location_coordinates: "41.40338, 2.17403")
         end
 
         it "displays the getting there section", :aggregate_failures do
@@ -206,10 +210,11 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
     end
 
     context "when the school only has filled placements" do
+      let(:hosting_interests) { build_list(:hosting_interest, 1, appetite: "actively_looking") }
       let(:placements) { build_list(:placement, 1, provider:) }
 
       it "displays the school's hosting interest" do
-        expect(page).to have_content("Already organised placements")
+        expect(page).to have_content("No placements available")
       end
 
       it "displays a link to the school's details page" do
@@ -243,7 +248,7 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
 
       context "when location coordinates have been provided" do
         subject(:component) do
-          described_class.new(school:, provider:, location_coordinates: "41.40338, 2.17403")
+          described_class.new(school:, provider:, academic_year:, location_coordinates: "41.40338, 2.17403")
         end
 
         it "displays the getting there section", :aggregate_failures do
@@ -263,11 +268,12 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
     end
 
     context "when the school has previously hosted placements" do
+      let(:hosting_interests) { build_list(:hosting_interest, 1, appetite: "interested") }
       let(:previous_academic_year) { Placements::AcademicYear.current.previous }
       let(:placements) { build_list(:placement, 1, academic_year: previous_academic_year, provider:) }
 
       it "displays the school's hosting interest" do
-        expect(page).to have_content("Open to hosting")
+        expect(page).to have_content("May offer placements")
       end
 
       it "displays a link to the school's details page" do
@@ -299,7 +305,7 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
 
       context "when location coordinates have been provided" do
         subject(:component) do
-          described_class.new(school:, provider:, location_coordinates: "41.40338, 2.17403")
+          described_class.new(school:, provider:, academic_year:, location_coordinates: "41.40338, 2.17403")
         end
 
         it "displays the getting there section", :aggregate_failures do
@@ -323,7 +329,7 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
     let(:hosting_interests) { build_list(:hosting_interest, 1, appetite: "not_open") }
 
     it "displays the school's hosting interest" do
-      expect(page).to have_content("Not hosting")
+      expect(page).to have_content("Not offering placements")
     end
 
     it "displays the school's name" do
@@ -343,8 +349,8 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
     it "displays placement information", :aggregate_failures do
       expect(page).to have_content("Placement information")
       expect(page).to have_content("Placement subjects")
-      expect(page).to have_content("Not open to hosting placements")
-      expect(page).to have_content("Placement status")
+      expect(page).to have_content("Not offering placements")
+      expect(page).to have_content("Previous placements")
       expect(page).to have_content("This school has not previously hosted placements")
     end
 
@@ -354,7 +360,7 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
 
     context "when location coordinates have been provided" do
       subject(:component) do
-        described_class.new(school:, provider:, location_coordinates: "41.40338, 2.17403")
+        described_class.new(school:, provider:, academic_year:, location_coordinates: "41.40338, 2.17403")
       end
 
       it "does not display the getting there section" do
@@ -386,24 +392,28 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
     end
 
     it "displays placement information", :aggregate_failures do
-      expect(page).to have_content("Placement information")
-      expect(page).to have_content("Placement subjects")
-      expect(page).to have_content("Not open to hosting placements")
-      expect(page).to have_content("Placement status")
+      expect(page).to have_content("Placement availability unknown")
+      expect(page).to have_content("Previous placements")
       expect(page).to have_content("This school has not previously hosted placements")
-    end
-
-    it "displays a message indicating the school doesn't want to be contacted" do
-      expect(page).to have_content("This school does not wish to be contacted this academic year.")
     end
 
     context "when location coordinates have been provided" do
       subject(:component) do
-        described_class.new(school:, provider:, location_coordinates: "41.40338, 2.17403")
+        described_class.new(school:, provider:, academic_year:, location_coordinates: "41.40338, 2.17403")
       end
 
-      it "does not display the getting there section" do
-        expect(page).not_to have_content("Getting there")
+      it "displays the getting there section", :aggregate_failures do
+        expect(page).to have_content("Getting there")
+        expect(page).to have_content("Address")
+        expect(page).to have_content("Magical Lane")
+        expect(page).to have_content("London")
+        expect(page).to have_content("SW1A 1AA")
+        expect(page).to have_content("Distance")
+        expect(page).to have_content("42 miles")
+        expect(page).to have_content("Travel time")
+        expect(page).to have_content("30 minutes by public transport")
+        expect(page).to have_content("15 minutes drive")
+        expect(page).to have_content("45 minutes walk")
       end
     end
   end

@@ -20,8 +20,9 @@ RSpec.describe "Provider user views a school which is open to hosting", service:
   private
 
   def given_that_schools_exist
+    academic_year = Placements::AcademicYear.current.next
     @provider = build(:placements_provider, name: "Aes Sedai Trust")
-    hosting_interests = build_list(:hosting_interest, 1, appetite: "actively_looking")
+    hosting_interests = build_list(:hosting_interest, 1, appetite: "interested", academic_year:)
     @already_hosting_school = create(
       :placements_school,
       phase: "Secondary",
@@ -83,7 +84,7 @@ RSpec.describe "Provider user views a school which is open to hosting", service:
     expect(page).to have_title("Shelbyville High School - Find - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Find")
     expect(page).to have_h1("Shelbyville High School")
-    expect(page).to have_tag("Open to hosting", "yellow")
+    expect(page).to have_tag("May offer placements", "yellow")
     expect(secondary_navigation).to have_current_item("Placement information")
     expect(page).to have_h2("Placement contact")
     expect(page).to have_summary_list_row("Name", "Placement Coordinator")
@@ -100,7 +101,7 @@ RSpec.describe "Provider user views a school which is open to hosting", service:
     expect(page).to have_title("Shelbyville High School - Find - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Find")
     expect(page).to have_h1("Shelbyville High School")
-    expect(page).to have_tag("Open to hosting", "yellow")
+    expect(page).to have_tag("May offer placements", "yellow")
     expect(secondary_navigation).to have_current_item("School details")
 
     expect(page).to have_h2("School details")

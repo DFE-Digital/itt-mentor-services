@@ -17,10 +17,11 @@ class Placements::Schools::InterestTagComponent < ApplicationComponent
 
   private_constant :INTEREST_COLOURS, :INTEREST_TEXT
 
-  def initialize(school:, classes: [], html_attributes: {})
+  def initialize(school:, academic_year:, classes: [], html_attributes: {})
     super(classes:, html_attributes:)
 
     @school = school
+    @academic_year = academic_year
   end
 
   def call
@@ -29,7 +30,7 @@ class Placements::Schools::InterestTagComponent < ApplicationComponent
 
   private
 
-  attr_reader :school
+  attr_reader :school, :academic_year
 
   def interest_colour
     INTEREST_COLOURS[calculated_status]
@@ -44,7 +45,7 @@ class Placements::Schools::InterestTagComponent < ApplicationComponent
       "filled_placements"
     elsif actively_looking? && has_available_placements?
       "unfilled_placements"
-    elsif actively_looking?
+    elsif open?
       "open"
     elsif not_looking?
       "not_open"
@@ -54,18 +55,22 @@ class Placements::Schools::InterestTagComponent < ApplicationComponent
   end
 
   def actively_looking?
-    school.current_hosting_interest_appetite == "actively_looking"
+    school.current_hosting_interest(academic_year:)&.appetite == "actively_looking"
+  end
+
+  def open?
+    school.current_hosting_interest(academic_year:)&.appetite == "interested"
   end
 
   def not_looking?
-    school.current_hosting_interest_appetite == "not_open"
+    school.current_hosting_interest(academic_year:)&.appetite == "not_open"
   end
 
   def only_has_unavailable_placements?
-    @only_has_unavailable_placements ||= school.unavailable_placements.exists? && school.available_placements.empty?
+    @only_has_unavailable_placements ||= school.unavailable_placements(academic_year:).exists? && school.available_placements(academic_year:).empty?
   end
 
   def has_available_placements?
-    @has_available_placements ||= school.available_placements.exists?
+    @has_available_placements ||= school.available_placements(academic_year:).exists?
   end
 end

@@ -7,8 +7,8 @@
       <h1 class="govuk-heading-l"><%= @school.name %></h1>
     </div>
     <div class="govuk-grid-column-two-thirds">
-      <% if @school.upcoming_hosting_interest.present? %>
-        <%= render "shared/schools/hosting_interest_details", school: @school, hosting_interest: @school.upcoming_hosting_interest.decorate %>
+      <% if @school.current_hosting_interest(academic_year: @selected_academic_year).present? %>
+        <%= render "shared/schools/hosting_interest_details", school: @school, hosting_interest: @school.current_hosting_interest(academic_year: @selected_academic_year).decorate %>
       <% end %>
 
       <% if @school.school_contact.present? %>
