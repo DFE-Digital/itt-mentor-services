@@ -11,11 +11,17 @@ en:
             zero: No placements
             one: 1 placement
             other: "%{count} placements"
-          find_placements: Find placements
+          my_placements: My placements
+          my_placements_description: Placements assigned to you by schools.
           no_results: There are no placements that match your selection. Try searching again, or removing one or more filters.
           enter_a_location: Enter a location
           results_sorted_alpha: Results sorted alphabetically
           results_sorted_distance: Results sorted by distance from %{search_location}
+          table:
+            headers:
+              subject: Subject
+              term: Expected date
+              school: School
         filter:
           google_attribution: Powered by Google
           location_search_prompt: Enter a town, city or postcode

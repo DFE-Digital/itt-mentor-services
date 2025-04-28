@@ -1,10 +1,13 @@
-<% content_for(:page_title) { t(".find_placements") } %>
+<% content_for(:page_title) { t(".my_placements") } %>
 <%= render "placements/providers/primary_navigation", provider: @provider, current_navigation: :placements %>
 
 <div class="govuk-width-container" data-controller="filter">
   <h1 class="govuk-heading-l">
-    <%= t(".find_placements") %>
+    <%= t(".my_placements") %>
   </h1>
+  <p class="govuk-body">
+    <%= t(".my_placements_description") %>
+  </p>
   <div>
     <button class="govuk-button govuk-button--secondary show-filter-button" type="button" data-action="click->filter#open">
       <%= t("show_filter") %>
@@ -16,16 +19,32 @@
     </div>
 
     <div class="govuk-grid-column-two-thirds">
-        <h2 class="govuk-heading-m">
-          <%= t(".placements_found", count: @pagy.count) %>
-        </h2>
+      <h2 class="govuk-heading-m">
+        <%= t(".placements_found", count: @pagy.count) %>
+      </h2>
 
       <% if @placements.any? %>
-        <p class="govuk-hint"><%= @search_location.blank? ? t(".results_sorted_alpha") : t(".results_sorted_distance", search_location: @search_location) %></p>
-        <ul class="app-search-results">
-          <%= render(Placement::SummaryComponent.with_collection(@placements, provider: @provider, location_coordinates:)) %>
-        </ul>
-        <%= render PaginationComponent.new(pagy: @pagy) %>
+        <p class="govuk-hint"><%= t(".results_sorted_alpha") %></p>
+
+        <%= govuk_table do |table| %>
+          <% table.with_head do |head| %>
+            <% head.with_row do |row| %>
+              <% row.with_cell text: t(".table.headers.subject") %>
+              <% row.with_cell text: t(".table.headers.term") %>
+              <% row.with_cell text: t(".table.headers.school") %>
+            <% end %>
+          <% end %>
+
+          <% table.with_body do |body| %>
+            <% @placements.each do |placement| %>
+              <% body.with_row do |row| %>
+                <% row.with_cell text: govuk_link_to(placement.title, placements_provider_placement_path(@provider, placement), no_visited_state: true) %>
+                <% row.with_cell text: placement.term_names %>
+                <% row.with_cell text: placement.school.name %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
       <% else %>
         <p>
           <%= t(".no_results") %>

@@ -3,13 +3,8 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
   helper_method :filter_form, :location_coordinates
 
   def index
-    @current_academic_year = Placements::AcademicYear.current.decorate
-    @next_academic_year = @current_academic_year.next.decorate
     @subjects = filter_subjects_by_phase
-    @establishment_groups = compact_school_attribute_values(:group)
     @schools = schools_scope.order_by_name.select(:id, :name)
-    @year_groups ||= Placement.year_groups_as_options
-    @terms = Placements::Term.order_by_term.select(:id, :name)
     query = Placements::PlacementsQuery.call(params: query_params)
     @pagy, @placements = pagy(placements.merge(query))
     @placements = @placements.decorate
@@ -25,7 +20,7 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
   private
 
   def placements
-    policy_scope([:provider, Placement.all])
+    policy_scope([:provider, Placement.where(provider: @provider, academic_year: current_user.selected_academic_year)])
   end
 
   def schools_scope

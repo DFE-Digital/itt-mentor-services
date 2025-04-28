@@ -80,7 +80,8 @@ RSpec.describe "View organisations", service: :placements, type: :system do
   def then_i_see_the_placements_search_page(provider)
     expect(page).to have_current_path placements_provider_placements_path(provider), ignore_query: true
     within(".app-primary-navigation__nav") do
-      expect(page).to have_link "Placements", current: "page"
+      expect(page).to have_link "Find", current: "false"
+      expect(page).to have_link "My placements", current: "page"
       expect(page).to have_link "Schools", current: "false"
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Organisation details", current: "false"

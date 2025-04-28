@@ -53,7 +53,8 @@ RSpec.describe "Placements / Providers / Partner schools / View a list of partne
     nav = page.find(".app-primary-navigation__nav")
 
     within(nav) do
-      expect(page).to have_link "Placements", current: "false"
+      expect(page).to have_link "Find", current: "false"
+      expect(page).to have_link "My placements", current: "false"
       expect(page).to have_link "Schools", current: "page"
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Organisation details", current: "false"

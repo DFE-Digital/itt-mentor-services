@@ -27,10 +27,10 @@ RSpec.describe "Placements / Providers / Placements / View a placement",
   end
   let!(:subject_1) { create(:subject, name: "Biology") }
   let(:additional_subjects) { [] }
-  let(:academic_year) { Placements::AcademicYear.current.decorate }
+  let(:academic_year) { Placements::AcademicYear.current.next.decorate }
   let(:terms) { [create(:placements_term, :summer)] }
   let!(:placement) do
-    create(:placement, subject: placement_subject, school:, additional_subjects:, academic_year:, terms:)
+    create(:placement, subject: placement_subject, school:, additional_subjects:, academic_year:, terms:, provider:)
   end
 
   before { given_i_am_signed_in_as_a_placements_user(organisations: [provider]) }
@@ -79,7 +79,8 @@ RSpec.describe "Placements / Providers / Placements / View a placement",
     nav = page.find(".app-primary-navigation__nav")
 
     within(nav) do
-      expect(page).to have_link "Placements", current: "page"
+      expect(page).to have_link "Find", current: "false"
+      expect(page).to have_link "My placements", current: "page"
       expect(page).to have_link "Schools", current: "false"
       expect(page).to have_link "Users", current: "false"
       expect(page).to have_link "Organisation details", current: "false"

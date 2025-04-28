@@ -3,7 +3,7 @@ en:
     providers:
       primary_navigation:
         find: Find
-        placements: Placements
+        placements: My placements
         schools: Schools
         users: Users
         organisation_details: Organisation details
