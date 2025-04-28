@@ -9,20 +9,16 @@ module Placements
 
     def define_steps
       # Define the wizard steps here
-      add_step(AddHostingInterestWizard::AppetiteStep)
+      add_step(AppetiteStep)
       case appetite
       when "actively_looking"
         actively_looking_steps
       when "not_open"
-        add_step(AddHostingInterestWizard::ReasonNotHostingStep)
-      end
-      case appetite
-      when "actively_looking"
-        add_step(MultiPlacementWizard::CheckYourAnswersStep)
-      when "not_open"
-        add_step(AddHostingInterestWizard::AreYouSureStep)
-      when "interested"
-        add_step(AddHostingInterestWizard::ConfirmStep)
+        add_step(ReasonNotHostingStep)
+        add_step(SchoolContactStep)
+        add_step(AreYouSureStep)
+      else
+        interested_steps
       end
     end
 
@@ -41,9 +37,11 @@ module Placements
 
         hosting_interest.save!
 
-        create_placements
-
-        create_partnerships
+        if appetite == "interested"
+          save_potential_placements_information
+        else
+          create_placements
+        end
       end
     end
 
@@ -60,14 +58,25 @@ module Placements
     def actively_looking_steps
       add_step(MultiPlacementWizard::PhaseStep)
       if phases.include?(::Placements::School::PRIMARY_PHASE)
-        primary_subject_steps
+        year_group_steps
       end
 
       if phases.include?(::Placements::School::SECONDARY_PHASE)
         secondary_subject_steps
       end
+      add_step(CheckYourAnswersStep)
+    end
 
-      add_step(MultiPlacementWizard::ProviderStep)
+    def interested_steps
+      add_step(Interested::PhaseStep)
+      if phases.include?(::Placements::School::PRIMARY_PHASE)
+        year_group_steps
+      end
+      if phases.include?(::Placements::School::SECONDARY_PHASE)
+        secondary_subject_steps
+      end
+      add_step(Interested::NoteToProvidersStep)
+      add_step(ConfirmStep)
     end
   end
 end

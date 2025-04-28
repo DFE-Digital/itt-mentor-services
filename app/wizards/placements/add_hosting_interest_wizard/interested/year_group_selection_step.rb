@@ -1,4 +1,4 @@
-class Placements::AddHostingInterestWizard::Interested::PhaseStep < Placements::MultiPlacementWizard::PhaseStep
+class Placements::AddHostingInterestWizard::Interested::YearGroupSelectionStep < Placements::MultiPlacementWizard::YearGroupSelectionStep
   def unknown_option
     @unknown_option ||=
       OpenStruct.new(
@@ -15,6 +15,6 @@ class Placements::AddHostingInterestWizard::Interested::PhaseStep < Placements::
   private
 
   def unknown_option_locale_path
-    ".wizards.placements.add_hosting_interest_wizard.interested.phase_step.options"
+    ".wizards.placements.add_hosting_interest_wizard.interested.year_group_selection_step.options"
   end
 end

@@ -12,11 +12,14 @@ class Placements::Schools::HostingInterests::AddHostingInterestController < Plac
     elsif @wizard.next_step.present?
       redirect_to step_path(@wizard.next_step)
     else
-      @wizard.update_school_placements
-      @wizard.reset_state
+      @wizard.update_hosting_interest
       school.reload
+      if appetite == "actively_looking"
+        session["whats_next"] = @wizard.placements_information
+      end
+      @wizard.reset_state
 
-      redirect_to success_path, flash: {
+      redirect_to whats_next_placements_school_hosting_interests_path(@school), flash: {
         heading: t(".heading.#{appetite}"),
         body: t(".body.#{appetite}_html"),
       }
@@ -24,12 +27,13 @@ class Placements::Schools::HostingInterests::AddHostingInterestController < Plac
   end
 
   def whats_next
-    @current_navigation = if request.referer.match("hosting_interests\/[a-zA-Z0-9-]*\/edit")
-                            :organisation_details
-                          else
-                            :placements
-                          end
-    appetite
+    return if appetite == "not_open"
+
+    @placement_details = if appetite == "actively_looking"
+                           session["whats_next"]
+                         else
+                           @school.potential_placement_details
+                         end
   end
 
   private
@@ -46,14 +50,6 @@ class Placements::Schools::HostingInterests::AddHostingInterestController < Plac
 
   def index_path
     placements_school_placements_path(@school)
-  end
-
-  def success_path
-    if appetite == "actively_looking"
-      placements_school_placements_path(@school)
-    else
-      whats_next_placements_school_hosting_interests_path(@school)
-    end
   end
 
   def appetite

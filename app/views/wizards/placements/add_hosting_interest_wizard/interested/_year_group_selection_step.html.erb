@@ -1,0 +1,38 @@
+<% content_for :page_title, title_with_error_prefix(
+  t(".title"),
+  error: current_step.errors.any?,
+) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".caption") %></span>
+
+      <%= f.govuk_check_boxes_fieldset(
+        :year_groups,
+        legend: { size: "l", text: t(".title"), tag: "h1" },
+        hint: { text: t(".hint") },
+      ) do %>
+        <% current_step.year_groups_for_selection.each_with_index do |year_group, i| %>
+          <%= f.govuk_check_box :year_groups, year_group.value,
+            label: { text: year_group.name },
+            hint: { text: year_group.description },
+            link_errors: i.zero? %>
+        <% end %>
+        <%= f.govuk_check_box_divider %>
+        <%= f.govuk_check_box :year_groups, current_step.mixed_year_group_option.value,
+            label: { text: current_step.mixed_year_group_option.name },
+            hint: { text: current_step.mixed_year_group_option.description } %>
+        <%= f.govuk_check_box_divider %>
+        <%= f.govuk_check_box :year_groups, current_step.unknown_option.value,
+            label: { text: current_step.unknown_option.name },
+            hint: { text: current_step.unknown_option.description },
+            exclusive: true %>
+      <% end %>
+
+      <%= f.govuk_submit t(".continue") %>
+    </div>
+  </div>
+<% end %>

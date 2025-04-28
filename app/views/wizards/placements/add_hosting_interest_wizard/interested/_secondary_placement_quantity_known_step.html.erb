@@ -8,11 +8,14 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+      <span class="govuk-caption-l"><%= t(".caption") %></span>
 
-      <%= render "shared/wizards/placements/multiple_placements_wizard/check_your_answers",
-        current_step:,
-        wizard: @wizard %>
+      <%= f.govuk_collection_radio_buttons(
+            :quantity_known,
+            current_step.options_for_selection,
+            :name, :name,
+            legend: { size: "l", text: t(".title"), tag: "h1" }
+          ) %>
 
       <%= f.govuk_submit t(".continue") %>
     </div>

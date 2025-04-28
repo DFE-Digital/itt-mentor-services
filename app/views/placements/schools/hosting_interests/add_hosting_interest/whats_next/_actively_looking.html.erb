@@ -1,0 +1,62 @@
+<%= govuk_panel(
+  title_text: t(".panel_title"),
+  text: t(".panel_text"),
+) %>
+
+<h1 class="govuk-heading-l govuk-!-margin-top-6"><%= t(".what_happens_next") %></h1>
+
+<p class="govuk-body">
+  <%= embedded_link_text(
+    t(".providers_can_contact_you",
+      mailto: mail_to(
+        @school.school_contact_email_address,
+      )),
+  ) %>
+</p>
+
+<h2 class="govuk-heading-m">
+  <%= t(".manage_your_placements") %>
+</h2>
+
+<p class="govuk-body">
+  <%= embedded_link_text(
+    t(".you_can_edit_placements",
+      link: govuk_link_to(
+        t(".edit_your_placements"),
+        placements_school_placements_path(@school),
+      )),
+  ) %>
+</p>
+
+<p class="govuk-body"><%= t(".editing_them") %></p>
+
+<%= govuk_list type: :bullet do %>
+  <% t(".editing_options").each do |header| %>
+    <li><%= header %></li>
+  <% end %>
+<% end %>
+
+<% if placement_details.dig("year_group_selection", "year_groups").present? ||
+  placement_details.dig("secondary_subject_selection", "subject_ids").present? %>
+  <h2 class="govuk-heading-m">
+    <%= t(".your_placements_offers") %>
+  </h2>
+
+  <% if placement_details.dig("year_group_selection", "year_groups").present? %>
+    <h2 class="govuk-heading-m">
+      <%= t(".primary_placements") %>
+    </h2>
+
+    <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/primary_placements_list",
+      placement_details: placement_details %>
+  <% end %>
+
+  <% if placement_details.dig("secondary_subject_selection", "subject_ids").present? %>
+    <h2 class="govuk-heading-m">
+      <%= t(".secondary_placements") %>
+    </h2>
+
+    <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/secondary_placements_list",
+      placement_details: placement_details %>
+  <% end %>
+<% end %>

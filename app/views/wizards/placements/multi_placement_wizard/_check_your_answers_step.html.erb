@@ -1,0 +1,21 @@
+<% content_for :page_title, title_with_error_prefix(
+  t(".title"),
+  error: current_step.errors.any?,
+) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+
+      <%= render "shared/wizards/placements/multiple_placements_wizard/check_your_answers",
+        current_step:,
+        wizard: @wizard,
+        potential: false %>
+
+      <%= f.govuk_submit t(".continue") %>
+    </div>
+  </div>
+<% end %>

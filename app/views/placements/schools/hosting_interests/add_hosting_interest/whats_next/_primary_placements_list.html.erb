@@ -1,0 +1,25 @@
+<%# locals: { placement_details: nil } -%>
+<%= govuk_summary_list(html_attributes: { id: "primary_placements" }, actions: false) do |summary_list| %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".year_group")) %>
+    <% row.with_value do %>
+      <strong><%= t(".number_of_placements") %></strong>
+    <% end %>
+  <% end %>
+
+  <% placement_details.dig("year_group_selection", "year_groups").each do |year_group| %>
+    <% if year_group == Placements::AddHostingInterestWizard::UNKNOWN_OPTION %>
+      <% summary_list.with_row do |row| %>
+        <% row.with_key(text: t(".unknown")) %>
+        <% row.with_value(text: t(".not_entered")) %>
+      <% end %>
+    <% else %>
+      <% summary_list.with_row do |row| %>
+        <% row.with_key(text: t("placements.schools.placements.year_groups.#{year_group}")) %>
+        <% row.with_value do %>
+          <%= placement_details.dig("year_group_placement_quantity", year_group).to_i %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -4,6 +4,8 @@ module Placements
 
     delegate :school_contact, to: :school
 
+    UNKNOWN_OPTION = "unknown".freeze
+
     def initialize(school:, params:, state:, current_step: nil)
       @school = school
       super(state:, params:, current_step:)
@@ -15,8 +17,6 @@ module Placements
       case appetite
       when "actively_looking"
         actively_looking_steps
-        add_step(SchoolContactStep)
-        add_step(CheckYourAnswersStep)
       when "not_open"
         add_step(ReasonNotHostingStep)
         add_step(SchoolContactStep)
@@ -26,7 +26,7 @@ module Placements
       end
     end
 
-    def update_school_placements
+    def update_hosting_interest
       raise "Invalid wizard state" unless valid?
 
       ApplicationRecord.transaction do
@@ -41,9 +41,11 @@ module Placements
 
         hosting_interest.save!
 
-        create_placements
-
-        create_partnerships
+        if appetite == "interested"
+          save_potential_placements_information
+        else
+          create_placements
+        end
 
         school.update!(expression_of_interest_completed: true)
 
@@ -59,46 +61,27 @@ module Placements
       @upcoming_academic_year ||= AcademicYear.current.next
     end
 
-    def setup_state
-      unless hosting_interest.new_record?
-        state["appetite"] = { "appetite" => hosting_interest.appetite }
-        state["reason_not_hosting"] = { "reasons_not_hosting" => hosting_interest.reasons_not_hosting }
-      end
-
-      if school_contact.present?
-        state["school_contact"] = {
-          "first_name" => school_contact.first_name,
-          "last_name" => school_contact.last_name,
-          "email_address" => school_contact.email_address,
-        }
-      end
-    end
-
-    def selected_primary_subjects
-      Subject.primary.where(id: selected_primary_subject_ids).order_by_name
-    end
-
     def selected_secondary_subjects
+      return [UNKNOWN_OPTION] if selected_secondary_subject_ids.include?(UNKNOWN_OPTION)
+
       Subject.secondary.where(id: selected_secondary_subject_ids).order_by_name
     end
 
     def placement_quantity_for_subject(subject)
-      if subject.primary?
-        steps.fetch(:primary_placement_quantity)
-      else
-        steps.fetch(:secondary_placement_quantity)
-      end.try(subject.name_as_attribute).to_i
+      subject_step = if subject.primary?
+                       steps[:primary_placement_quantity]
+                     else
+                       steps[:secondary_placement_quantity]
+                     end
+      return 0 if subject_step.blank?
+
+      subject_step.try(subject.name_as_attribute).to_i
     end
 
-    def selected_providers
-      return Provider.none if steps[:provider].blank?
+    def placement_quantity_for_year_group(year_group)
+      return 0 if steps[:year_group_placement_quantity].blank?
 
-      provider_step = steps.fetch(:provider)
-      if provider_step.provider_ids.include?(provider_step.class::SELECT_ALL)
-        provider_step.providers
-      else
-        ::Provider.where(id: provider_step.provider_ids)
-      end
+      steps.fetch(:year_group_placement_quantity).try(year_group.to_sym).to_i
     end
 
     def child_subject_placement_step_count
@@ -107,12 +90,29 @@ module Placements
       }.count
     end
 
+    def year_groups
+      return [] if steps[:year_group_selection].blank?
+
+      @year_groups ||= steps.fetch(:year_group_selection).year_groups
+    end
+
+    def placements_information
+      primary_placement_information.merge(
+        secondary_placement_information,
+      )
+    end
+
     private
 
     def create_placements
-      selected_primary_subjects.each do |subject|
-        placement_quantity_for_subject(subject).times do
-          Placement.create!(school:, subject:, academic_year: upcoming_academic_year)
+      year_groups.each do |year_group|
+        placement_quantity_for_year_group(year_group).times do
+          Placement.create!(
+            school:,
+            subject: Subject.find_by(name: "Primary"),
+            year_group:,
+            academic_year: upcoming_academic_year,
+          )
         end
       end
 
@@ -127,12 +127,6 @@ module Placements
           end
           placement.save!
         end
-      end
-    end
-
-    def create_partnerships
-      selected_providers.each do |provider|
-        ::Placements::Partnership.find_or_create_by!(school:, provider:)
       end
     end
 
@@ -151,20 +145,42 @@ module Placements
     def actively_looking_steps
       add_step(MultiPlacementWizard::PhaseStep)
       if phases.include?(::Placements::School::PRIMARY_PHASE)
-        primary_subject_steps
+        year_group_steps
       end
 
       if phases.include?(::Placements::School::SECONDARY_PHASE)
         secondary_subject_steps
       end
-
-      add_step(MultiPlacementWizard::ProviderStep)
+      add_step(SchoolContactStep)
+      add_step(CheckYourAnswersStep)
     end
 
     def interested_steps
       add_step(Interested::PhaseStep)
+      if phases.include?(::Placements::School::PRIMARY_PHASE)
+        year_group_steps
+      end
+      if phases.include?(::Placements::School::SECONDARY_PHASE)
+        secondary_subject_steps
+      end
+      add_step(Interested::NoteToProvidersStep)
       add_step(SchoolContactStep)
       add_step(ConfirmStep)
+    end
+
+    def year_group_steps
+      if appetite == "interested"
+        add_step(Interested::YearGroupSelectionStep)
+        return if value_unknown(year_groups)
+
+        add_step(Interested::YearGroupPlacementQuantityKnownStep)
+        return unless steps.fetch(:year_group_placement_quantity_known).is_quantity_known?
+
+        add_step(Interested::YearGroupPlacementQuantityStep)
+      else
+        add_step(MultiPlacementWizard::YearGroupSelectionStep)
+        add_step(MultiPlacementWizard::YearGroupPlacementQuantityStep)
+      end
     end
 
     def primary_subject_steps
@@ -174,8 +190,22 @@ module Placements
     end
 
     def secondary_subject_steps
-      add_step(MultiPlacementWizard::SecondarySubjectSelectionStep)
-      add_step(MultiPlacementWizard::SecondaryPlacementQuantityStep)
+      if appetite == "interested"
+        add_step(Interested::SecondarySubjectSelectionStep)
+        return if value_unknown(selected_secondary_subject_ids)
+
+        add_step(Interested::SecondaryPlacementQuantityKnownStep)
+        return unless steps.fetch(:secondary_placement_quantity_known).is_quantity_known?
+
+        add_step(Interested::SecondaryPlacementQuantityStep)
+      else
+        add_step(MultiPlacementWizard::SecondarySubjectSelectionStep)
+        add_step(MultiPlacementWizard::SecondaryPlacementQuantityStep)
+      end
+      child_subject_steps
+    end
+
+    def child_subject_steps
       if selected_secondary_subjects.any?(&:has_child_subjects?)
         selected_secondary_subjects.each do |subject|
           next unless subject.has_child_subjects?
@@ -223,6 +253,77 @@ module Placements
         upcoming_interest = school.hosting_interests.for_academic_year(upcoming_academic_year).last
         upcoming_interest.presence || school.hosting_interests.build(academic_year: upcoming_academic_year)
       end
+    end
+
+    def value_unknown(value)
+      if value.is_a?(Array)
+        value.include?(UNKNOWN_OPTION)
+      else
+        value == UNKNOWN_OPTION
+      end
+    end
+
+    def primary_placement_information
+      return {} if steps[:year_group_selection].blank?
+
+      primary_placement_details = {}
+      primary_placement_details["year_group_selection"] = {
+        "year_groups" => steps.fetch(:year_group_selection).year_groups,
+      }
+      if steps[:year_group_placement_quantity].present?
+        primary_placement_details["year_group_placement_quantity"] = {}
+        year_groups.each do |year_group|
+          primary_placement_details["year_group_placement_quantity"][year_group] = placement_quantity_for_year_group(year_group)
+        end
+      end
+      primary_placement_details
+    end
+
+    def secondary_placement_information
+      return {} if steps[:secondary_subject_selection].blank?
+
+      secondary_placement_details = {}
+      secondary_placement_details["secondary_subject_selection"] = {
+        "subject_ids" => steps.fetch(:secondary_subject_selection).subject_ids,
+      }
+      if steps[:secondary_placement_quantity].present?
+        secondary_placement_details["secondary_placement_quantity"] = {}
+        selected_secondary_subjects.each do |subject|
+          secondary_placement_details["secondary_placement_quantity"][subject.name_as_attribute.to_s] = placement_quantity_for_subject(subject)
+          next unless subject.has_child_subjects?
+
+          secondary_placement_details["secondary_child_subject_placement_selection"] ||= {}
+          secondary_placement_details["secondary_child_subject_placement_selection"][subject.name_as_attribute.to_s] = {}
+          placement_quantity_for_subject(subject).times do |i|
+            selection_number = i + 1
+            step_name = step_name_for_child_subjects(subject:, selection_number:)
+            child_subject_step = steps.fetch(step_name)
+            secondary_placement_details["secondary_child_subject_placement_selection"][subject.name_as_attribute.to_s][selection_number.to_s] = {
+              parent_subject_id: child_subject_step.parent_subject_id,
+              selection_id: child_subject_step.selection_id,
+              selection_number: child_subject_step.selection_number,
+              child_subject_ids: child_subject_step.child_subject_ids,
+            }
+          end
+        end
+      end
+      secondary_placement_details
+    end
+
+    def save_potential_placements_information
+      potential_placement_details = {}
+      potential_placement_details[:phase] = {
+        phases: steps.fetch(:phase).phases,
+      }
+
+      potential_placement_details = potential_placement_details
+        .merge(placements_information)
+
+      potential_placement_details[:note_to_providers] = {
+        note: steps.fetch(:note_to_providers).note,
+      }
+
+      @school.update!(potential_placement_details:)
     end
   end
 end

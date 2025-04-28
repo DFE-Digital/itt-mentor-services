@@ -65,14 +65,72 @@ en:
           we_will_ask_again: We will ask you again in 12 months whether you would like to host placements. 
           continue: Continue
         confirm_step:
-          title: Confirm you’re interested in hosting
-          caption: Expression of interest
-          this_means_providers_can_see_your_school: 
-            This means providers can see that your school is thinking about hosting placements. 
-            Providers will reach out via email with more information. 
-          you_have_not_added_any_placements:
-            You haven’t added any placement information so providers cannot see any of your preferences.
-          continue: Continue
-        phase_step:
-          unknown: I don’t know
-          unknown_description: A phase of education will not be recorded
+          title: Confirm and share your approximate information with providers
+          caption: Potential placement details
+          providers_see_you_can_offer_placements:
+            Providers will be able to see that you may be able to offer placements for trainee teachers.
+          providers_can_see_approximate_info:
+            They will be able to see your approximate information and will be able to use your email to contact you.
+          your_information: Your information
+          additional_information: Additional information
+          message_to_providers: Message to providers
+          confirm: Confirm
+          change: Change
+        interested:
+          phase_step:
+            title: Do you know what phase of education your placements will be?
+            continue: Continue
+            options:
+              unknown: I don’t know
+              unknown_description: A phase of education will not be recorded
+          year_group_selection_step:
+            title: Do you know what primary school year groups you would be willing to host placements in?
+            hint: You will be able to enter the number of placements on the next screen
+            caption: Primary placement details
+            continue: Continue
+            options:
+              unknown: I don’t know
+              unknown_description: A school year will not be recorded
+          placement_quantity_known_step:
+            options:
+              "yes": "Yes"
+              "no": "No"
+          year_group_placement_quantity_known_step:
+            title: 
+              Do you know the number of primary placements you would be willing to host in each year group?
+            caption: Primary placement details
+            continue: Continue
+          year_group_placement_quantity_step:
+            title: How many primary placements you would be willing to host in each year group?
+            caption: Primary placement details
+            enter_approximate: Enter an approximate number if you are unsure
+            continue: Continue
+          note_to_providers_step:
+            title: 
+              Is there anything about your school you would like providers to know? (optional)
+            caption: Expression of interest
+            continue: Continue
+          secondary_subject_selection_step:
+            title: Do you know the secondary school subjects you could have placements in?
+            caption: Placement details
+            hint: 
+              Subjects are taken from the DfE database of courses. If the subject you would like to host is not here, choose the closest option
+            continue: Continue
+            options:
+              unknown: I don’t know
+          secondary_placement_quantity_known_step:
+            title: Do you know the number of secondary placements you would be willing to host?
+            caption: Placement details
+            continue: Continue
+          secondary_placement_quantity_step:
+            title: How many secondary placements you would be willing to host in each subject?
+            caption: Placement details
+            enter_approximate: Enter an approximate number if you are unsure
+            change_to_specify: You will have a chance to specify the languages later
+            continue: Continue
+          secondary_child_subject_placement_selection_step:
+            title: You selected %{placement_quantity} %{subject_name} placements
+            select_languages_taught: Select the languages taught on each of these placements
+            caption: Placement details
+            continue: Continue
+            placement_number: "Placement %{placement_number} of %{step_count}"

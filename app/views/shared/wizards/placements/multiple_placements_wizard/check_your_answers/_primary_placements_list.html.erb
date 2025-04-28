@@ -1,0 +1,28 @@
+<%# locals: { wizard:, current_step: } -%>
+<%= govuk_summary_list(html_attributes: { id: "primary_placements" }) do |summary_list| %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".year_group")) %>
+    <% row.with_value do %>
+      <strong><%= t(".number_of_placements") %></strong>
+    <% end %>
+    <% row.with_action(text: t("change"),
+                       href: step_path(:year_group_selection),
+                       visually_hidden_text: t(".primary_placements"),
+                       classes: ["govuk-link--no-visited-state"]) %>
+  <% end %>
+
+  <% current_step.year_groups.each do |year_group| %>
+    <% if year_group == Placements::AddHostingInterestWizard::UNKNOWN_OPTION %>
+      <% summary_list.with_row do |row| %>
+        <% row.with_key(text: t(".unknown")) %>
+        <% row.with_value(text: t(".not_entered")) %>
+      <% end %>
+    <% else %>
+      <% summary_list.with_row do |row| %>
+        <% row.with_key(text: t("placements.schools.placements.year_groups.#{year_group}")) %>
+        <% placement_quantity = wizard.placement_quantity_for_year_group(year_group) %>
+        <% row.with_value(text: placement_quantity.zero? ? t(".not_entered") : placement_quantity) %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -33,7 +33,7 @@ en:
           description: Choose the person best placed to organise ITT placements at your school. This information will be shown on your profile.
           continue: Continue
         phase_step:
-          title: What phase of education will your placements be?
+          title: What phase of education can your placements be?
           options:
             primary_description: 3 to 11 years
             secondary_description: 11 to 19 years
@@ -102,3 +102,13 @@ en:
           you_have_not_added_any_placements:
             You haven’t added any placement information so providers cannot see any of your preferences.
           continue: Continue
+        year_group_selection_step:
+          title: Select primary school year groups you can offer
+          caption: Primary placement details
+          hint: You will be able to enter the number of placements on the next screen
+          continue: Continue
+        year_group_placement_quantity_step:
+            title: How many primary placements you would be willing to host in each year group?
+            caption: Primary placement details
+            enter_approximate: Enter an approximate number if you are unsure
+            continue: Continue

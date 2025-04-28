@@ -13,10 +13,10 @@ class Placements::MultiPlacementWizard::PhaseStep < BaseStep
         name: Placements::School::SECONDARY_PHASE,
         description: I18n.t("#{locale_path}.options.#{Placements::School::SECONDARY_PHASE.downcase}_description"),
       ),
-      OpenStruct.new(
-        name: I18n.t("#{locale_path}.options.send"),
-        description: I18n.t("#{locale_path}.options.send_description"),
-      ),
+      # OpenStruct.new(
+      #   name: I18n.t("#{locale_path}.options.send"),
+      #   description: I18n.t("#{locale_path}.options.send_description"),
+      # ),
     ]
   end
 
