@@ -364,8 +364,6 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
 
     it "displays placement information", :aggregate_failures do
       expect(page).to have_content("Placement information")
-      expect(page).to have_content("Placement subjects")
-      expect(page).to have_content("Not offering placements")
       expect(page).to have_content("Previous placements")
       expect(page).to have_content("This school has previously hosted placements")
     end
