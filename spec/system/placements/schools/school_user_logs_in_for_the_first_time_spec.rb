@@ -25,9 +25,9 @@ RSpec.describe "School user logs in for the first time", service: :placements, t
   end
 
   def then_i_see_the_appetite_page
-    expect(page).to have_title("Will you host placements this academic year (#{@academic_year.name})? - Manage school placements - GOV.UK")
+    expect(page).to have_title("Can your school offer placements for trainee teachers in this academic year (#{@academic_year.name})? - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_element(:h1, text: "Will you host placements this academic year (#{@academic_year.name})?", class: "govuk-fieldset__heading")
+    expect(page).to have_element(:h1, text: "Can your school offer placements for trainee teachers in this academic year (#{@academic_year.name})?", class: "govuk-fieldset__heading")
   end
 
   def when_i_click_on_the_users_tab
