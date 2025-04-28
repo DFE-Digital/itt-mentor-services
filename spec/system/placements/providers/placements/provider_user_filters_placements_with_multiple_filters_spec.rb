@@ -11,8 +11,8 @@ RSpec.describe "Provider user filters placements with multiple filters", service
 
     when_i_check_multiple_filters
     and_i_click_on_apply_filters
-    then_i_see_the_primary_with_maths_placement
-    and_i_do_not_see_the_primary_with_english_placement
+    then_i_see_the_english_placement
+    and_i_do_not_see_the_primary_with_maths_placement
     and_i_see_my_selected_filters
 
     when_i_click_on_clear_filters
@@ -25,15 +25,16 @@ RSpec.describe "Provider user filters placements with multiple filters", service
   def given_that_placements_exist
     @provider = build(:placements_provider, name: "Aes Sedai Trust")
     @primary_school = build(:placements_school, phase: "Primary", name: "Springfield Elementary")
+    @secondary_school = build(:placements_school, phase: "Secondary", name: "Hogwarts")
     @autumn_term = build(:placements_term, :autumn)
 
     @primary_maths_subject = build(:subject, name: "Primary with mathematics", subject_area: "primary")
     _primary_maths_placement = create(:placement, school: @primary_school, subject: @primary_maths_subject,
-                                                  terms: [@autumn_term])
+                                                  terms: [@autumn_term], provider: @provider, academic_year: Placements::AcademicYear.current.next)
 
-    @primary_english_subject = build(:subject, name: "Primary with english", subject_area: "primary")
-    _primary_english_placement = create(:placement, school: @primary_school, subject: @primary_english_subject,
-                                                    terms: [@autumn_term])
+    @secondary_english_subject = build(:subject, name: "English", subject_area: "secondary")
+    _secondary_english_placement = create(:placement, school: @secondary_school, subject: @secondary_english_subject,
+                                                      terms: [@autumn_term], provider: @provider, academic_year: Placements::AcademicYear.current.next)
   end
 
   def and_i_am_signed_in
@@ -41,50 +42,62 @@ RSpec.describe "Provider user filters placements with multiple filters", service
   end
 
   def when_i_am_on_the_placements_index_page
-    expect(page).to have_title("Find placements - Manage school placements - GOV.UK")
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Find placements")
+    expect(page).to have_title("My placements - Manage school placements - GOV.UK")
+    expect(primary_navigation).to have_current_item("My placements")
+    expect(page).to have_h1("My placements")
     expect(page).to have_h2("Filter")
   end
 
   def then_i_see_all_placements
-    expect(page).to have_h2("Primary with mathematics – Springfield Elementary")
-    expect(page).to have_h2("Primary with english – Springfield Elementary")
+    expect(page).to have_table_row({
+      "Subject" => "Primary with mathematics",
+      "Expected date" => "Autumn term",
+      "School" => "Springfield Elementary",
+    })
+
+    expect(page).to have_table_row({
+      "Subject" => "English",
+      "Expected date" => "Autumn term",
+      "School" => "Hogwarts",
+    })
   end
 
   def and_i_see_all_filters
-    expect(page).to have_element(:label, text: "Search by location", class: "govuk-label govuk-label--s")
-    expect(page).to have_element(:legend, text: "Placements to show", class: "govuk-fieldset__legend")
-    expect(page).to have_element(:legend, text: "Academic year", class: "govuk-fieldset__legend")
-    expect(page).to have_element(:legend, text: "Expected date", class: "govuk-fieldset__legend")
+    expect(page).to have_element(:legend, text: "Phase", class: "govuk-fieldset__legend")
     expect(page).to have_element(:legend, text: "Subject", class: "govuk-fieldset__legend")
-    expect(page).to have_element(:legend, text: "Primary year group", class: "govuk-fieldset__legend")
-    expect(page).to have_element(:legend, text: "Schools I work with", class: "govuk-fieldset__legend", match: :prefer_exact)
     expect(page).to have_element(:legend, text: "School", class: "govuk-fieldset__legend", match: :prefer_exact)
   end
 
   def when_i_check_multiple_filters
-    check "Autumn term"
-    check "Primary with mathematics"
+    check "Hogwarts"
+    check "English"
   end
 
   def and_i_click_on_apply_filters
     click_on "Apply filters"
   end
 
-  def then_i_see_the_primary_with_maths_placement
-    expect(page).to have_h2("Primary with mathematics – Springfield Elementary")
+  def then_i_see_the_english_placement
+    expect(page).to have_table_row({
+      "Subject" => "English",
+      "Expected date" => "Autumn term",
+      "School" => "Hogwarts",
+    })
   end
 
-  def and_i_do_not_see_the_primary_with_english_placement
-    expect(page).not_to have_h2("Primary with english – Springfield Elementary")
+  def and_i_do_not_see_the_primary_with_maths_placement
+    expect(page).not_to have_table_row({
+      "Subject" => "Primary with mathematics",
+      "Expected date" => "Autumn term",
+      "School" => "Springfield Elementary",
+    })
   end
 
   def and_i_see_my_selected_filters
-    expect(page).to have_filter_tag("Autumn term")
-    expect(page).to have_checked_field("Autumn term")
-    expect(page).to have_filter_tag("Primary with mathematics")
-    expect(page).to have_checked_field("Primary with mathematics")
+    expect(page).to have_filter_tag("Hogwarts")
+    expect(page).to have_checked_field("Hogwarts")
+    expect(page).to have_filter_tag("English")
+    expect(page).to have_checked_field("English")
   end
 
   def when_i_click_on_clear_filters
@@ -92,9 +105,9 @@ RSpec.describe "Provider user filters placements with multiple filters", service
   end
 
   def and_i_do_not_see_any_selected_filters
-    expect(page).not_to have_filter_tag("Autumn term")
-    expect(page).not_to have_checked_field("Autumn term")
-    expect(page).not_to have_filter_tag("Primary with mathematics")
-    expect(page).not_to have_checked_field("Primary with mathematics")
+    expect(page).not_to have_filter_tag("Hogwarts")
+    expect(page).not_to have_checked_field("Hogwarts")
+    expect(page).not_to have_filter_tag("English")
+    expect(page).not_to have_checked_field("English")
   end
 end

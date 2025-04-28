@@ -136,7 +136,8 @@ RSpec.describe "Placements support user removes a user from an organisation", se
 
   def users_is_selected_in_providers_primary_nav
     within(".app-primary-navigation__nav") do
-      expect(page).to have_link "Placements", current: "false"
+      expect(page).to have_link "Find", current: "false"
+      expect(page).to have_link "My placements", current: "false"
       expect(page).to have_link "Users", current: "page"
       expect(page).to have_link "Organisation details", current: "false"
     end

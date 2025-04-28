@@ -33,15 +33,16 @@ RSpec.describe "Provider user filters placements by school", service: :placement
   private
 
   def given_that_placements_exist
+    academic_year = Placements::AcademicYear.current.next
     @provider = build(:placements_provider, name: "Aes Sedai Trust")
 
     @primary_school = build(:placements_school, phase: "Primary", name: "Springfield Elementary")
     @primary_maths_subject = build(:subject, name: "Primary with mathematics", subject_area: "primary")
-    _primary_placement = create(:placement, school: @primary_school, subject: @primary_maths_subject)
+    _primary_placement = create(:placement, school: @primary_school, subject: @primary_maths_subject, provider: @provider, academic_year:)
 
     @secondary_school = build(:placements_school, phase: "Secondary", name: "Hogwarts")
     @secondary_english_subject = build(:subject, name: "English", subject_area: "secondary")
-    _secondary_placement = create(:placement, school: @secondary_school, subject: @secondary_english_subject)
+    _secondary_placement = create(:placement, school: @secondary_school, subject: @secondary_english_subject, provider: @provider, academic_year:)
   end
 
   def and_i_am_signed_in
@@ -49,15 +50,24 @@ RSpec.describe "Provider user filters placements by school", service: :placement
   end
 
   def when_i_am_on_the_placements_index_page
-    expect(page).to have_title("Find placements - Manage school placements - GOV.UK")
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Find placements")
+    expect(page).to have_title("My placements - Manage school placements - GOV.UK")
+    expect(primary_navigation).to have_current_item("My placements")
+    expect(page).to have_h1("My placements")
     expect(page).to have_h2("Filter")
   end
 
   def then_i_see_all_placements
-    expect(page).to have_h2("Primary with mathematics – Springfield Elementary")
-    expect(page).to have_h2("English – Hogwarts")
+    expect(page).to have_table_row({
+      "Subject" => "Primary with mathematics",
+      "Expected date" => "Any time in the academic year",
+      "School" => "Springfield Elementary",
+    })
+
+    expect(page).to have_table_row({
+      "Subject" => "English",
+      "Expected date" => "Any time in the academic year",
+      "School" => "Hogwarts",
+    })
   end
 
   def and_i_see_the_school_filter
@@ -75,11 +85,19 @@ RSpec.describe "Provider user filters placements by school", service: :placement
   end
 
   def then_i_see_the_springfield_elementary_placement
-    expect(page).to have_h2("Primary with mathematics – Springfield Elementary")
+    expect(page).to have_table_row({
+      "Subject" => "Primary with mathematics",
+      "Expected date" => "Any time in the academic year",
+      "School" => "Springfield Elementary",
+    })
   end
 
   def and_i_do_not_see_the_hogwarts_placement
-    expect(page).not_to have_h2("English – Hogwarts")
+    expect(page).not_to have_table_row({
+      "Subject" => "English",
+      "Expected date" => "Any time in the academic year",
+      "School" => "Hogwarts",
+    })
   end
 
   def and_i_see_the_spring_field_elementary_selected_school_filter
@@ -107,11 +125,19 @@ RSpec.describe "Provider user filters placements by school", service: :placement
   end
 
   def then_i_see_the_hogwarts_placement
-    expect(page).to have_h2("English – Hogwarts")
+    expect(page).to have_table_row({
+      "Subject" => "English",
+      "Expected date" => "Any time in the academic year",
+      "School" => "Hogwarts",
+    })
   end
 
   def and_i_do_not_see_the_springfield_elementary_placement
-    expect(page).not_to have_h2("Primary with mathematics – Springfield Elementary")
+    expect(page).not_to have_table_row({
+      "Subject" => "Primary with mathematics",
+      "Expected date" => "Any time in the academic year",
+      "School" => "Springfield Elementary",
+    })
   end
 
   def and_i_do_not_see_the_springfield_elementary_selected_school_filter

@@ -29,9 +29,9 @@ RSpec.describe "Provider user searchers for a school filter option", :js, servic
   end
 
   def when_i_am_on_the_placements_index_page
-    expect(page).to have_title("Find placements - Manage school placements - GOV.UK")
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Find placements")
+    expect(page).to have_title("My placements - Manage school placements - GOV.UK")
+    expect(primary_navigation).to have_current_item("My placements")
+    expect(page).to have_h1("My placements")
     expect(page).to have_h2("Filter")
   end
 

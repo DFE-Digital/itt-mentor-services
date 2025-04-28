@@ -26,33 +26,16 @@
             </div>
           </div>
 
-          <% if @search_location.present? %>
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".search_location") %></h3>
+          <% if filter_form.school_ids.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".school") %></h3>
             <ul class="app-filter-tags">
+              <% filter_form.schools.each do |school| %>
                 <li>
                   <%= govuk_link_to(
-                        @search_location,
+                        school.name,
                         filter_form.index_path_without_filter(
-                          filter: "search_location",
-                          value: @search_location,
-                        ),
-                        class: "app-filter__tag",
-                        no_visited_state: true,
-                      ) %>
-                </li>
-            </ul>
-          <% end %>
-
-          <% if filter_form.terms.present? %>
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".terms") %></h3>
-            <ul class="app-filter-tags">
-              <% filter_form.terms.each do |term| %>
-                <li>
-                  <%= govuk_link_to(
-                        term.name,
-                        filter_form.index_path_without_filter(
-                          filter: "term_ids",
-                          value: term.id,
+                          filter: "school_ids",
+                          value: school.id,
                         ),
                         class: "app-filter__tag",
                         no_visited_state: true,
@@ -113,61 +96,6 @@
               <% end %>
             </ul>
           <% end %>
-
-          <% if filter_form.year_groups.present? %>
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".year_group") %></h3>
-            <ul class="app-filter-tags">
-              <% filter_form.year_groups.each do |year_group| %>
-                <li>
-                  <%= govuk_link_to(
-                        t("placements.schools.placements.year_groups.#{year_group}"),
-                        filter_form.index_path_without_filter(
-                          filter: "year_groups",
-                          value: year_group,
-                        ),
-                        class: "app-filter__tag",
-                        no_visited_state: true,
-                      ) %>
-                </li>
-              <% end %>
-            </ul>
-          <% end %>
-
-          <% if filter_form.only_partner_schools.present? %>
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".partner_schools") %></h3>
-            <ul class="app-filter-tags">
-              <li>
-                <%= govuk_link_to(
-                      t(".partner_schools"),
-                      filter_form.index_path_without_filter(
-                        filter: "only_partner_schools",
-                        value: true,
-                      ),
-                      class: "app-filter__tag",
-                      no_visited_state: true,
-                    ) %>
-              </li>
-            </ul>
-          <% end %>
-
-          <% if filter_form.school_ids.present? %>
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".school") %></h3>
-            <ul class="app-filter-tags">
-              <% filter_form.schools.each do |school| %>
-                <li>
-                  <%= govuk_link_to(
-                    school.name,
-                    filter_form.index_path_without_filter(
-                      filter: "school_ids",
-                      value: school.id,
-                    ),
-                    class: "app-filter__tag",
-                    no_visited_state: true,
-                  ) %>
-                </li>
-              <% end %>
-            </ul>
-          <% end %>
         </div>
       <% end %>
 
@@ -180,75 +108,20 @@
         ) do |form| %>
           <%= form.govuk_submit t("apply_filters") %>
 
-          <div class="app-filter__option">
-            <h1 class="govuk-label-wrapper">
-              <label class="govuk-label govuk-label--s"><%= t(".search_by_location") %></label>
-            </h1>
-
-          <div class="app-filter__option">
-            <div class="govuk-form-group">
-              <%= form.govuk_text_field :search_location, type: :search, value: search_location, label: { hidden: true }, caption: { text: t(".location_search_prompt") } %>
-            <p class="govuk-body-s secondary-text"><%= t(".google_attribution") %></p>
-            </div>
-          </div>
-      </div>
-
-          <div class="app-filter__option">
-            <%= form.govuk_radio_buttons_fieldset(
-              :placements_to_show,
-              legend: { text: t(".placements_to_show_title"), size: "s" },
-              small: true,
-              multiple: false,
-            ) do %>
-              <%= form.govuk_radio_button :placements_to_show,
-                :available_placements,
-                label: { text: t(".placements_to_show.available_placements") },
-                checked: filter_form.placements_to_show == "available_placements",
-                multiple: false %>
-              <%= form.govuk_radio_button :placements_to_show,
-                :assigned_to_me,
-                label: { text: t(".placements_to_show.assigned_to_me") },
-                checked: filter_form.placements_to_show == "assigned_to_me",
-                multiple: false %>
-              <%= form.govuk_radio_button :placements_to_show,
-                :all_placements,
-                label: { text: t(".placements_to_show.all_placements") },
-                checked: filter_form.placements_to_show == "all_placements",
-                multiple: false %>
-            <% end %>
-          </div>
-
-        <div class="app-filter__option">
-            <%= form.govuk_radio_buttons_fieldset(
-              :academic_year_id,
-              legend: { text: t(".academic_year.label"), size: "s" },
-              small: true,
-              multiple: false,
-            ) do %>
-              <%= form.govuk_radio_button :academic_year_id,
-                @current_academic_year.id,
-                label: { text: @current_academic_year.display_name },
-                checked: filter_form.academic_year_id == @current_academic_year.id,
-                multiple: false %>
-              <%= form.govuk_radio_button :academic_year_id,
-                @next_academic_year.id,
-                label: { text: @next_academic_year.display_name },
-                checked: filter_form.academic_year_id == @next_academic_year.id,
-                multiple: false %>
-            <% end %>
-          </div>
-
-          <div class="app-filter__option">
+          <div class="app-filter__option" data-controller="filter-search">
             <%= form.govuk_check_boxes_fieldset(
-              :term_ids,
-              legend: { text: t(".terms"), size: "s" },
-              multiple: false,
+              :school_ids,
+              legend: {
+                text: t(".school"),
+                size: "s",
+              },
               small: true,
             ) do %>
-              <% @terms.each do |term| %>
-                <%= form.govuk_check_box :term_ids,
-                                         term.id,
-                                         label: { text: term.name } %>
+
+              <% @schools.each do |school| %>
+                <%= form.govuk_check_box :school_ids,
+                                         school.id,
+                                         label: { text: school.name } %>
               <% end %>
             <% end %>
           </div>
@@ -282,57 +155,6 @@
                 <%= form.govuk_check_box :subject_ids,
                                          subject.id,
                                          label: { text: subject.name } %>
-              <% end %>
-            <% end %>
-          </div>
-
-          <% if filter_form.primary_selected? || filter_form.phases.blank? %>
-          <div class="app-filter__option">
-            <%= form.govuk_check_boxes_fieldset(
-              :year_groups,
-              legend: { text: t(".year_group"), size: "s" },
-              small: true,
-            ) do %>
-              <% @year_groups.each do |year_group| %>
-                <%= form.govuk_check_box :year_groups,
-                                         year_group.value,
-                                         label: { text: year_group.name } %>
-              <% end %>
-            <% end %>
-          </div>
-          <% end %>
-
-          <div class="app-filter__option">
-            <%= form.govuk_check_boxes_fieldset(
-              :only_partner_schools,
-              legend: { text: t(".partner_schools"), size: "s" },
-              multiple: false,
-              small: true,
-            ) do %>
-
-              <%= form.govuk_check_box :only_partner_schools,
-                                       true,
-                                       label: { text: t(".only_show_partner_schools") },
-                                       multiple: false,
-                                       checked: filter_form.only_partner_schools == true %>
-
-            <% end %>
-          </div>
-
-          <div class="app-filter__option" data-controller="filter-search">
-            <%= form.govuk_check_boxes_fieldset(
-              :school_ids,
-              legend: {
-                text: t(".school"),
-                size: "s",
-              },
-              small: true,
-            ) do %>
-
-              <% @schools.each do |school| %>
-                <%= form.govuk_check_box :school_ids,
-                  school.id,
-                  label: { text: school.name } %>
               <% end %>
             <% end %>
           </div>
