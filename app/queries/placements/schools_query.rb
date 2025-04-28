@@ -1,8 +1,13 @@
 class Placements::SchoolsQuery < ApplicationQuery
   MAX_LOCATION_DISTANCE = 50
 
+  def initialize(academic_year:, params: {})
+    @academic_year = academic_year
+    super(params:)
+  end
+
   def call
-    scope = Placements::School.left_outer_joins(:hosting_interests, :academic_years, :placements, :mentors)
+    scope = School.left_outer_joins(:hosting_interests, :academic_years, :placements, :mentors)
 
     scope = search_by_name_condition(scope)
     scope = subject_condition(scope)
@@ -13,6 +18,8 @@ class Placements::SchoolsQuery < ApplicationQuery
   end
 
   private
+
+  attr_reader :academic_year
 
   def search_by_name_condition(scope)
     return scope if filter_params[:search_by_name].blank?
@@ -39,7 +46,7 @@ class Placements::SchoolsQuery < ApplicationQuery
     conditions = []
 
     if hosting_interests.include?("open")
-      conditions << scope.where(hosting_interests: { appetite: "actively_looking" }).excluding(scope.where(placements: { academic_year_id: Placements::AcademicYear.current.id }))
+      conditions << scope.where(hosting_interests: { appetite: "interested" })
     end
 
     if hosting_interests.include?("not_open")
@@ -47,11 +54,11 @@ class Placements::SchoolsQuery < ApplicationQuery
     end
 
     if hosting_interests.include?("unfilled_placements")
-      conditions << scope.where(hosting_interests: { appetite: "actively_looking" }, placements: { academic_year_id: Placements::AcademicYear.current.id, provider: nil })
+      conditions << scope.where(hosting_interests: { appetite: "actively_looking" }, placements: { academic_year_id: academic_year.id, provider: nil })
     end
 
     if hosting_interests.include?("filled_placements")
-      conditions << scope.where(hosting_interests: { appetite: "actively_looking" }, placements: { academic_year_id: Placements::AcademicYear.current.id }).excluding(scope.where(placements: { provider: nil }))
+      conditions << scope.where(hosting_interests: { appetite: "actively_looking" }, placements: { academic_year_id: academic_year.id }).excluding(scope.where(placements: { provider: nil }))
     end
 
     conditions.reduce(scope.none) { |combined_scope, condition| combined_scope.or(condition) }

@@ -3,8 +3,8 @@ en:
     placements:
       schools:
         interest_tag_component:
-          unfilled_placements: Has unfilled placements
-          not_open: Not hosting
-          open: Open to hosting
-          filled_placements: Already organised placements
-          not_participating: Not participating
+          unfilled_placements: Placements available
+          not_open: Not offering placements
+          open: May offer placements
+          filled_placements: No placements available
+          not_participating: Placement availability unknown

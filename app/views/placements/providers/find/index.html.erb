@@ -23,7 +23,7 @@
       <% if @schools.any? %>
         <p class="govuk-hint"><%= @search_location.blank? ? t(".results_sorted_alpha") : t(".results_sorted_distance", search_location: @search_location) %></p>
         <ul class="app-search-results">
-          <%= render(Placements::Schools::SummaryComponent.with_collection(@schools, provider: @provider, location_coordinates:)) %>
+          <%= render(Placements::Schools::SummaryComponent.with_collection(@schools, provider: @provider, academic_year: @selected_academic_year, location_coordinates:)) %>
         </ul>
         <%= render PaginationComponent.new(pagy: @pagy) %>
       <% else %>

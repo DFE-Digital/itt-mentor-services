@@ -43,5 +43,5 @@ en:
           placement_subjects: Placement subjects
           unknown: Unknown
           not_open_to_hosting: Not open to hosting placements
-          placement_status: Placement status
+          placement_status: Previous placements
           offered_placements: Offered placements in %{academic_year_name} (%{subjects})

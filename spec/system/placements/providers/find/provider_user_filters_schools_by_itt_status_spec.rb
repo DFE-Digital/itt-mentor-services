@@ -40,7 +40,7 @@ RSpec.describe "Provider user filters schools by ITT status", service: :placemen
   def given_that_schools_exist
     @provider = build(:placements_provider, name: "Aes Sedai Trust")
 
-    @open_hosting_interest = build(:hosting_interest, appetite: "actively_looking", academic_year: Placements::AcademicYear.current)
+    @open_hosting_interest = build(:hosting_interest, appetite: "interested", academic_year: Placements::AcademicYear.current)
     @not_open_hosting_interest = build(:hosting_interest, appetite: "not_open", academic_year: Placements::AcademicYear.current)
 
     @open_to_hosting_school = create(:placements_school, phase: "Primary", name: "Springfield Elementary", hosting_interests: [@open_hosting_interest])
@@ -71,14 +71,14 @@ RSpec.describe "Provider user filters schools by ITT status", service: :placemen
 
   def and_i_see_the_itt_status_filter
     expect(page).to have_element(:legend, text: "ITT status", class: "govuk-fieldset__legend")
-    expect(page).to have_unchecked_field("Open to hosting")
-    expect(page).to have_unchecked_field("Not hosting")
-    expect(page).to have_unchecked_field("Already organised placements")
-    expect(page).to have_unchecked_field("Has unfilled placements")
+    expect(page).to have_unchecked_field("May offer placements")
+    expect(page).to have_unchecked_field("Not offering placements")
+    expect(page).to have_unchecked_field("No placements available")
+    expect(page).to have_unchecked_field("Placements available")
   end
 
   def when_i_select_open_to_hosting_from_the_itt_status_filter
-    check "Open to hosting"
+    check "May offer placements"
   end
 
   def and_i_click_on_apply_filters
@@ -94,45 +94,45 @@ RSpec.describe "Provider user filters schools by ITT status", service: :placemen
   end
 
   def and_i_see_that_the_open_to_hosting_itt_status_checkbox_is_selected
-    expect(page).to have_checked_field("Open to hosting")
+    expect(page).to have_checked_field("May offer placements")
   end
 
   def and_i_see_the_open_to_hosting_filter_tag
-    expect(page).to have_filter_tag("Open to hosting")
+    expect(page).to have_filter_tag("May offer placements")
   end
 
   def when_i_select_not_hosting_from_the_itt_status_filter
-    check "Not hosting"
+    check "Not offering placements"
   end
 
   def and_i_see_that_the_open_to_hosting_and_not_hosting_itt_status_checkboxes_are_selected
-    expect(page).to have_checked_field("Open to hosting")
-    expect(page).to have_checked_field("Not hosting")
+    expect(page).to have_checked_field("May offer placements")
+    expect(page).to have_checked_field("Not offering placements")
   end
 
   def and_i_see_that_the_open_to_hosting_and_not_hosting_filter_tags
-    expect(page).to have_filter_tag("Open to hosting")
-    expect(page).to have_filter_tag("Not hosting")
+    expect(page).to have_filter_tag("May offer placements")
+    expect(page).to have_filter_tag("Not offering placements")
   end
 
   def when_i_click_on_the_not_hosting_itt_status_tag
     within ".app-filter-tags" do
-      click_on "Not hosting"
+      click_on "Not offering placements"
     end
   end
 
   def and_i_do_not_see_the_not_opening_itt_status_checkbox_selected
-    expect(page).to have_checked_field("Open to hosting")
-    expect(page).to have_unchecked_field("Not hosting")
+    expect(page).to have_checked_field("May offer placements")
+    expect(page).to have_unchecked_field("Not offering placements")
   end
 
   def and_i_do_not_see_the_not_open_filter_tag
-    expect(page).not_to have_filter_tag("Not hosting")
+    expect(page).not_to have_filter_tag("Not offering placements")
   end
 
   def when_i_click_on_the_open_to_hosting_itt_status_tag
     within ".app-filter-tags" do
-      click_on "Open to hosting"
+      click_on "May offer placements"
     end
   end
 
@@ -142,13 +142,13 @@ RSpec.describe "Provider user filters schools by ITT status", service: :placemen
   end
 
   def and_i_do_not_see_any_selected_itt_status_checkboxes
-    expect(page).to have_unchecked_field("Open to hosting")
-    expect(page).to have_unchecked_field("Not hosting")
+    expect(page).to have_unchecked_field("May offer placements")
+    expect(page).to have_unchecked_field("Not offering placements")
   end
 
   def and_i_do_not_see_any_itt_status_filter_tags
     expect(page).not_to have_h3("ITT status")
-    expect(page).not_to have_filter_tag("Open to hosting")
-    expect(page).not_to have_filter_tag("Not hosting")
+    expect(page).not_to have_filter_tag("May offer placements")
+    expect(page).not_to have_filter_tag("Not offering placements")
   end
 end
