@@ -131,6 +131,7 @@ shared:
     - transit_travel_duration
     - walk_travel_duration
     - drive_travel_duration
+    - previously_offered_placements
   :school_contacts:
     - name
     - email_address
