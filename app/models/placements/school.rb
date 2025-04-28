@@ -26,6 +26,7 @@
 #  phase                                  :string
 #  placements_service                     :boolean          default(FALSE)
 #  postcode                               :string
+#  previously_offered_placements          :boolean          default(FALSE)
 #  rating                                 :string
 #  religious_character                    :string
 #  school_capacity                        :integer
@@ -71,38 +72,12 @@
 class Placements::School < School
   default_scope { placements_service }
 
-  has_one :school_contact, dependent: :destroy
-
   has_many :users, through: :user_memberships
   has_many :mentor_memberships
   has_many :mentors, through: :mentor_memberships
-  has_many :placements
-  has_many :academic_years, through: :placements
 
   has_many :partnerships, dependent: :destroy
   has_many :partner_providers,
            through: :partnerships,
            source: :provider
-  has_many :hosting_interests
-
-  delegate :email_address, :full_name, to: :school_contact, prefix: true, allow_nil: true
-  delegate :appetite, to: :current_hosting_interest, prefix: true, allow_nil: true
-
-  def current_hosting_interest(academic_year: Placements::AcademicYear.current)
-    hosting_interests.find_by(academic_year:)
-  end
-
-  def available_placements(academic_year: Placements::AcademicYear.current)
-    placements.available_placements_for_academic_year(academic_year)
-  end
-
-  def unavailable_placements(academic_year: Placements::AcademicYear.current)
-    placements.unavailable_placements_for_academic_year(academic_year)
-  end
-
-  def upcoming_hosting_interest
-    hosting_interests.for_academic_year(
-      Placements::AcademicYear.current.next,
-    ).last
-  end
 end
