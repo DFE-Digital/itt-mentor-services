@@ -14,6 +14,7 @@ en:
           my_placements: My placements
           my_placements_description: Placements assigned to you by schools.
           no_results: There are no placements that match your selection. Try searching again, or removing one or more filters.
+          no_placements_assigned: There are currently no placements assigned to you. When schools assign you to placements they will display here.
           enter_a_location: Enter a location
           results_sorted_alpha: Results sorted alphabetically
           results_sorted_distance: Results sorted by distance from %{search_location}

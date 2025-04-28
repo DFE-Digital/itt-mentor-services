@@ -3,6 +3,7 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
   helper_method :filter_form, :location_coordinates
 
   def index
+    @has_placements_assigned = placements.exists?
     @subjects = filter_subjects_by_phase
     @schools = schools_scope.order_by_name.select(:id, :name)
     query = Placements::PlacementsQuery.call(params: query_params)

@@ -23,31 +23,37 @@
         <%= t(".placements_found", count: @pagy.count) %>
       </h2>
 
-      <% if @placements.any? %>
-        <p class="govuk-hint"><%= t(".results_sorted_alpha") %></p>
+      <% if @has_placements_assigned %>
+        <% if @placements.any? %>
+          <p class="govuk-hint"><%= t(".results_sorted_alpha") %></p>
 
-        <%= govuk_table do |table| %>
-          <% table.with_head do |head| %>
-            <% head.with_row do |row| %>
-              <% row.with_cell text: t(".table.headers.subject") %>
-              <% row.with_cell text: t(".table.headers.term") %>
-              <% row.with_cell text: t(".table.headers.school") %>
+          <%= govuk_table do |table| %>
+            <% table.with_head do |head| %>
+              <% head.with_row do |row| %>
+                <% row.with_cell text: t(".table.headers.subject") %>
+                <% row.with_cell text: t(".table.headers.term") %>
+                <% row.with_cell text: t(".table.headers.school") %>
+              <% end %>
             <% end %>
-          <% end %>
 
-          <% table.with_body do |body| %>
-            <% @placements.each do |placement| %>
-              <% body.with_row do |row| %>
-                <% row.with_cell text: govuk_link_to(placement.title, placements_provider_placement_path(@provider, placement), no_visited_state: true) %>
-                <% row.with_cell text: placement.term_names %>
-                <% row.with_cell text: placement.school.name %>
+            <% table.with_body do |body| %>
+              <% @placements.each do |placement| %>
+                <% body.with_row do |row| %>
+                  <% row.with_cell text: govuk_link_to(placement.title, placements_provider_placement_path(@provider, placement), no_visited_state: true) %>
+                  <% row.with_cell text: placement.term_names %>
+                  <% row.with_cell text: placement.school.name %>
+                <% end %>
               <% end %>
             <% end %>
           <% end %>
+        <% else %>
+          <p>
+            <%= t(".no_results") %>
+          </p>
         <% end %>
       <% else %>
         <p>
-          <%= t(".no_results") %>
+          <%= t(".no_placements_assigned") %>
         </p>
       <% end %>
     </div>
