@@ -325,6 +325,52 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
     end
   end
 
+  context "when the school has historically hosted placements" do
+    let(:school) do
+      create(:placements_school,
+             hosting_interests:,
+             placements:,
+             school_contact:,
+             phase: "All-through",
+             name: "Hogwarts",
+             group: "Local authority maintained schools",
+             minimum_age: 5,
+             maximum_age: 11,
+             longitude: -3.0581722753,
+             latitude: 52.8409318812,
+             address1: "Magical Lane",
+             postcode: "SW1A 1AA",
+             town: "London",
+             previously_offered_placements: true)
+    end
+
+    it "displays the school's hosting interest" do
+      expect(page).to have_content("Placement availability unknown")
+    end
+
+    it "displays the school's name" do
+      expect(page).to have_content("Hogwarts")
+    end
+
+    it "displays the school's details", :aggregate_failures do
+      expect(page).to have_content("School details")
+      expect(page).to have_content("Phase")
+      expect(page).to have_content("All-through")
+      expect(page).to have_content("Age range")
+      expect(page).to have_content("5 to 11")
+      expect(page).to have_content("Establishment group")
+      expect(page).to have_content("Local authority maintained schools")
+    end
+
+    it "displays placement information", :aggregate_failures do
+      expect(page).to have_content("Placement information")
+      expect(page).to have_content("Placement subjects")
+      expect(page).to have_content("Not offering placements")
+      expect(page).to have_content("Previous placements")
+      expect(page).to have_content("This school has previously hosted placements")
+    end
+  end
+
   context "when the school is not open to hosting" do
     let(:hosting_interests) { build_list(:hosting_interest, 1, appetite: "not_open") }
 
