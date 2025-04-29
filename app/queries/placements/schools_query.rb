@@ -25,7 +25,7 @@ class Placements::SchoolsQuery < ApplicationQuery
   def schools_i_work_with_condition(scope)
     return scope if filter_params[:schools_i_work_with_ids].blank?
 
-    scope.where({ id: filter_params[:schools_i_work_with_ids] })
+    scope.where(id: filter_params[:schools_i_work_with_ids])
   end
 
   def search_by_name_condition(scope)
