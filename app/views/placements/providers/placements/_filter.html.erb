@@ -117,11 +117,14 @@
               },
               small: true,
             ) do %>
-
-              <% @schools.each do |school| %>
-                <%= form.govuk_check_box :school_ids,
-                                         school.id,
-                                         label: { text: school.name } %>
+              <% if @schools.exists? %>
+                <% @schools.each do |school| %>
+                  <%= form.govuk_check_box :school_ids,
+                                           school.id,
+                                           label: { text: school.name } %>
+                <% end %>
+              <% else %>
+                <p class="govuk-hint"><%= t(".no_schools") %></p>
               <% end %>
             <% end %>
           </div>

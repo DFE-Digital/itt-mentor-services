@@ -36,7 +36,7 @@ class Placements::OrganisationsController < Placements::ApplicationController
         new_add_hosting_interest_placements_school_hosting_interests_path(organisation)
       end
     else # Provider
-      placements_provider_placements_path(organisation)
+      placements_provider_find_index_path(organisation)
     end
   end
 end

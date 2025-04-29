@@ -132,7 +132,7 @@ RSpec.describe "Provider user views a school which is open to hosting", service:
     expect(page).to have_summary_list_row("SEN provision", "Resourced provision")
 
     expect(page).to have_h2("OFSTED")
-    expect(page).to have_summary_list_row("Report", "Ofsted report (opens in new tab)")
+    expect(page).to have_summary_list_row("Rating", "Why the rating is not displayed")
     expect(page).to have_summary_list_row("Last inspection date", "Unknown")
   end
 end

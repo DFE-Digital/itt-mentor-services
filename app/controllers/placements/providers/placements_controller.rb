@@ -14,7 +14,7 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
   end
 
   def show
-    @placement = placements.find(params.require(:id)).decorate
+    @placement = Placement.where(academic_year: current_user.selected_academic_year).find(params.require(:id)).decorate
     @school = @placement.school
   end
 
@@ -25,11 +25,7 @@ class Placements::Providers::PlacementsController < Placements::ApplicationContr
   end
 
   def schools_scope
-    schools = if filter_params[:only_partner_schools].present?
-                @provider.partner_schools
-              else
-                Placements::School.all
-              end
+    schools = Placements::School.where(id: @provider.placements.select(:school_id))
 
     if filter_form.primary_only?
       schools.where.not(phase: "Secondary")

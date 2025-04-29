@@ -5,8 +5,9 @@ RSpec.describe "Provider user searchers for a subject filter option", :js, servi
     given_that_subject_filter_options_exist
     and_i_am_signed_in
 
-    when_i_am_on_the_placements_index_page
-    then_i_see_the_subject_filter
+    when_i_navigate_to_the_placements_index_page
+    then_i_am_on_the_placements_index_page
+    and_i_see_the_subject_filter
 
     when_i_search_for_primary_with_english_in_the_subject_filter
     then_i_see_primary_with_english_in_the_subject_filter
@@ -28,14 +29,20 @@ RSpec.describe "Provider user searchers for a subject filter option", :js, servi
     sign_in_placements_user(organisations: [@provider])
   end
 
-  def when_i_am_on_the_placements_index_page
+  def when_i_navigate_to_the_placements_index_page
+    within ".app-primary-navigation__nav" do
+      click_on "My placements"
+    end
+  end
+
+  def then_i_am_on_the_placements_index_page
     expect(page).to have_title("My placements - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("My placements")
     expect(page).to have_h1("My placements")
     expect(page).to have_h2("Filter")
   end
 
-  def then_i_see_the_subject_filter
+  def and_i_see_the_subject_filter
     expect(page).to have_element(:legend, text: "Subject", class: "govuk-fieldset__legend")
     expect(page).to have_element(:label, text: "Primary with english")
     expect(page).to have_element(:label, text: "Primary with mathematics")
