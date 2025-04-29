@@ -12,14 +12,14 @@ module Placements
     def define_steps
       # Define the wizard steps here
       add_step(PhaseStep)
+      add_step(MultiPlacementWizard::PhaseStep)
       if phases.include?(::Placements::School::PRIMARY_PHASE)
-        primary_subject_steps
+        year_group_steps
       end
 
       if phases.include?(::Placements::School::SECONDARY_PHASE)
         secondary_subject_steps
       end
-
       add_step(CheckYourAnswersStep)
     end
 
@@ -113,18 +113,6 @@ module Placements
       return [] if steps[:secondary_subject_selection].blank?
 
       steps.fetch(:secondary_subject_selection).subject_ids
-    end
-
-    def actively_looking_steps
-      add_step(MultiPlacementWizard::PhaseStep)
-      if phases.include?(::Placements::School::PRIMARY_PHASE)
-        year_group_steps
-      end
-
-      if phases.include?(::Placements::School::SECONDARY_PHASE)
-        secondary_subject_steps
-      end
-      add_step(CheckYourAnswersStep)
     end
 
     def year_group_steps

@@ -27,6 +27,12 @@ class Placements::Schools::HostingInterests::AddHostingInterestController < Plac
   end
 
   def whats_next
+    @current_navigation = if request.referer.match("hosting_interests\/[a-zA-Z0-9-]*\/edit")
+                            :organisation_details
+                          else
+                            :placements
+                          end
+
     return if appetite == "not_open"
 
     @placement_details = if appetite == "actively_looking"

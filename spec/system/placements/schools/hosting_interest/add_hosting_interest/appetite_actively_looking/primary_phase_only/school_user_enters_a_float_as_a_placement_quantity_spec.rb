@@ -17,13 +17,13 @@ RSpec.describe "School user enters a float as a placement quantity",
 
     when_i_select_primary
     and_i_click_on_continue
-    then_i_see_the_primary_subject_selection_form
+    then_i_see_the_primary_year_group_selection_form
 
-    when_i_select_primary
+    when_i_select_year_1
     and_i_click_on_continue
-    then_i_see_the_primary_subject_placement_quantity_form
+    then_i_see_the_primary_placement_quantity_form
 
-    when_i_fill_in_the_number_of_primary_placements_with_a_float
+    when_i_fill_in_the_number_of_year_1_placements_with_a_float
     and_i_click_on_continue
     then_i_see_a_validation_error_for_not_entering_a_whole_number_quantity
   end
@@ -32,8 +32,6 @@ RSpec.describe "School user enters a float as a placement quantity",
 
   def given_subjects_exist
     @primary = create(:subject, :primary, name: "Primary")
-    @phonics = create(:subject, :primary, name: "Phonics")
-    @handwriting = create(:subject, :primary, name: "Handwriting")
   end
 
   def and_academic_years_exist
@@ -48,25 +46,9 @@ RSpec.describe "School user enters a float as a placement quantity",
     sign_in_placements_user(organisations: [@school])
   end
 
-  def when_i_am_on_the_placements_index_page
-    expect(page).to have_title("Placements - Manage school placements - GOV.UK")
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Placements")
-    expect(secondary_navigation).to have_current_item("This year (#{@current_academic_year_name}")
-    expect(page).to have_link("Bulk add placements")
-  end
-  alias_method :then_i_am_on_the_placements_index_page,
-               :when_i_am_on_the_placements_index_page
-
   def when_i_visit_the_add_hosting_interest_page
     visit new_add_hosting_interest_placements_school_hosting_interests_path(@school)
   end
-
-  def when_i_click_on_bulk_add_placements
-    click_on "Bulk add placements"
-  end
-  alias_method :and_i_click_on_bulk_add_placements,
-               :when_i_click_on_bulk_add_placements
 
   def then_i_see_the_appetite_form
     expect(page).to have_title(
@@ -95,12 +77,12 @@ RSpec.describe "School user enters a float as a placement quantity",
 
   def then_i_see_the_phase_form
     expect(page).to have_title(
-      "What phase of education will your placements be? - Manage school placements - GOV.UK",
+      "What phase of education can your placements be? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "What phase of education will your placements be?",
+      text: "What phase of education can your placements be?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Primary", type: :checkbox)
@@ -111,57 +93,49 @@ RSpec.describe "School user enters a float as a placement quantity",
     check "Primary"
   end
 
-  def then_i_see_the_subjects_known_form
+  def then_i_see_the_primary_year_group_selection_form
     expect(page).to have_title(
-      "Do you know which subjects you would like to host? - Manage school placements - GOV.UK",
+      "Select primary school year groups you can offer - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "Do you know which subjects you would like to host?",
+      text: "Select primary school year groups you can offer",
       class: "govuk-fieldset__legend",
     )
-    expect(page).to have_field("Yes", type: :radio)
-    expect(page).to have_field("No", type: :radio)
+    expect(page).to have_element(:span, text: "Primary placement details", class: "govuk-caption-l")
+    expect(page).to have_field("Nursery", type: :checkbox)
+    expect(page).to have_field("Reception", type: :checkbox)
+    expect(page).to have_field("Year 1", type: :checkbox)
+    expect(page).to have_field("Year 2", type: :checkbox)
+    expect(page).to have_field("Year 3", type: :checkbox)
+    expect(page).to have_field("Year 4", type: :checkbox)
+    expect(page).to have_field("Year 5", type: :checkbox)
+    expect(page).to have_field("Year 6", type: :checkbox)
+    expect(page).to have_field("Mixed year groups", type: :checkbox)
   end
 
-  def when_i_select_yes
-    choose "Yes"
+  def when_i_select_year_1
+    check "Year 1"
   end
 
-  def then_i_see_the_primary_subject_selection_form
+  def then_i_see_the_primary_placement_quantity_form
     expect(page).to have_title(
-      "Select primary school subjects - Manage school placements - GOV.UK",
+      "How many primary placements you would be willing to host in each year group? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_element(
-      :legend,
-      text: "Select primary school subjects",
-      class: "govuk-fieldset__legend",
-    )
-    expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
-    expect(page).to have_field("Primary", type: :checkbox)
-    expect(page).to have_field("Phonics", type: :checkbox)
-    expect(page).to have_field("Handwriting", type: :checkbox)
+    expect(page).to have_h1("How many primary placements you would be willing to host in each year group?", class: "govuk-heading-l")
+    expect(page).to have_element(:span, text: "Primary placement details", class: "govuk-caption-l")
+    expect(page).to have_field("Year 1", type: :number)
   end
 
-  def then_i_see_the_primary_subject_placement_quantity_form
-    expect(page).to have_title(
-      "Primary subjects: Enter the number of placements you would be willing to host - Manage school placements - GOV.UK",
-    )
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Primary subjects: Enter the number of placements you would be willing to host", class: "govuk-heading-l")
-    expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
-    expect(page).to have_field("Primary", type: :number)
-  end
-
-  def when_i_fill_in_the_number_of_primary_placements_with_a_float
-    fill_in "Primary", with: 2.3
+  def when_i_fill_in_the_number_of_year_1_placements_with_a_float
+    fill_in "Year 1", with: 2.3
   end
 
   def then_i_see_a_validation_error_for_not_entering_a_whole_number_quantity
     expect(page).to have_validation_error(
-      "Primary must be a whole number",
+      "Year 1 must be a whole number",
     )
   end
 end

@@ -20,8 +20,11 @@ class Placements::Schools::HostingInterests::EditHostingInterestController < Pla
       redirect_to step_path(@wizard.next_step)
     else
       @wizard.update_hosting_interest
-      @wizard.reset_state
       school.reload
+      if appetite == "actively_looking"
+        session["whats_next"] = @wizard.placements_information
+      end
+      @wizard.reset_state
 
       flash_locales_path = "placements.schools.hosting_interests.add_hosting_interest.update"
       redirect_to whats_next_placements_school_hosting_interests_path(@school), flash: {

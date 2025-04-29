@@ -5,7 +5,6 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
                type: :system do
   scenario do
     given_subjects_exist
-    and_test_providers_exist
     and_academic_years_exist
     and_i_am_signed_in
 
@@ -16,12 +15,11 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
     when_i_select_primary
     and_i_select_secondary
     and_i_click_on_continue
-    then_i_see_the_primary_subject_selection_form
+    then_i_see_the_primary_year_group_selection_form
 
-    when_i_select_primary
-    and_i_select_primary_with_science
+    when_i_select_year_1
     and_i_click_on_continue
-    then_i_see_the_primary_subject_placement_quantity_form
+    then_i_see_the_primary_placement_quantity_form
 
     when_i_fill_in_the_number_of_primary_placements_i_require
     and_i_click_on_continue
@@ -34,13 +32,7 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
 
     when_i_fill_in_the_number_of_secondary_placements_i_require
     and_i_click_on_continue
-    then_i_see_the_provider_select_form
-
-    when_i_click_on_continue
     then_i_see_the_check_your_answers_page
-
-    when_i_click_on_back
-    then_i_see_the_provider_select_form
 
     when_i_click_on_back
     then_i_see_the_secondary_subject_placement_quantity_form
@@ -49,10 +41,10 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
     then_i_see_the_secondary_subject_selection_form
 
     when_i_click_on_back
-    then_i_see_the_primary_subject_placement_quantity_form
+    then_i_see_the_primary_placement_quantity_form
 
     when_i_click_on_back
-    then_i_see_the_primary_subject_selection_form
+    then_i_see_the_primary_year_group_selection_form
 
     when_i_click_on_back
     then_i_see_the_phase_form
@@ -60,12 +52,11 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
     when_i_select_primary
     and_i_select_secondary
     and_i_click_on_continue
-    then_i_see_the_primary_subject_selection_form
+    then_i_see_the_primary_year_group_selection_form
 
-    when_i_select_primary
-    and_i_select_primary_with_science
+    when_i_select_year_1
     and_i_click_on_continue
-    then_i_see_the_primary_subject_placement_quantity_form
+    then_i_see_the_primary_placement_quantity_form
 
     when_i_fill_in_the_number_of_primary_placements_i_require
     and_i_click_on_continue
@@ -78,25 +69,19 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
 
     when_i_fill_in_the_number_of_secondary_placements_i_require
     and_i_click_on_continue
-    then_i_see_the_provider_select_form
-
-    when_i_click_on_continue
     then_i_see_the_check_your_answers_page
 
     when_i_click_save_and_continue
-    then_i_see_my_responses_with_successfully_updated
-    and_i_see_placements_i_created_for_the_subject_primary
-    and_i_see_placements_i_created_for_the_subject_handwriting
-    and_i_see_placements_i_created_for_the_subject_english
-    and_i_see_placements_i_created_for_the_subject_mathematics
+    then_i_see_my_responses_were_successfully_updated
+    and_i_see_2_primary_placements_for_year_1
+    and_i_see_1_secondary_placement_for_english
+    and_i_see_4_secondary_placements_for_mathematics
   end
 
   private
 
   def given_subjects_exist
     @primary = create(:subject, :primary, name: "Primary")
-    @phonics = create(:subject, :primary, name: "Phonics")
-    @handwriting = create(:subject, :primary, name: "Handwriting")
 
     @english = create(:subject, :secondary, name: "English")
     @mathematics = create(:subject, :secondary, name: "Mathematics")
@@ -108,12 +93,6 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
     @current_academic_year_name = current_academic_year.name
     @next_academic_year = current_academic_year.next
     @next_academic_year_name = @next_academic_year.name
-  end
-
-  def and_test_providers_exist
-    @provider_1 = create(:provider, name: "Test Provider 123")
-    @provider_2 = create(:provider, name: "Test Provider 456")
-    @provider_3 = create(:provider, name: "Test Provider 789")
   end
 
   def and_i_am_signed_in
@@ -144,12 +123,12 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
 
   def then_i_see_the_phase_form
     expect(page).to have_title(
-      "What phase of education will your placements be? - Manage school placements - GOV.UK",
+      "What phase of education can your placements be? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "What phase of education will your placements be?",
+      text: "What phase of education can your placements be?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Primary", type: :checkbox)
@@ -164,40 +143,44 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
     check "Secondary"
   end
 
-  def then_i_see_the_primary_subject_selection_form
+  def then_i_see_the_primary_year_group_selection_form
     expect(page).to have_title(
-      "Select primary school subjects - Manage school placements - GOV.UK",
+      "Select primary school year groups you can offer - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "Select primary school subjects",
+      text: "Select primary school year groups you can offer",
       class: "govuk-fieldset__legend",
     )
-    expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
-    expect(page).to have_field("Primary", type: :checkbox)
-    expect(page).to have_field("Phonics", type: :checkbox)
-    expect(page).to have_field("Handwriting", type: :checkbox)
+    expect(page).to have_element(:span, text: "Primary placement details", class: "govuk-caption-l")
+    expect(page).to have_field("Nursery", type: :checkbox)
+    expect(page).to have_field("Reception", type: :checkbox)
+    expect(page).to have_field("Year 1", type: :checkbox)
+    expect(page).to have_field("Year 2", type: :checkbox)
+    expect(page).to have_field("Year 3", type: :checkbox)
+    expect(page).to have_field("Year 4", type: :checkbox)
+    expect(page).to have_field("Year 5", type: :checkbox)
+    expect(page).to have_field("Year 6", type: :checkbox)
+    expect(page).to have_field("Mixed year groups", type: :checkbox)
   end
 
-  def and_i_select_primary_with_science
-    check "Handwriting"
+  def when_i_select_year_1
+    check "Year 1"
   end
 
-  def then_i_see_the_primary_subject_placement_quantity_form
+  def then_i_see_the_primary_placement_quantity_form
     expect(page).to have_title(
-      "Primary subjects: Enter the number of placements you would be willing to host - Manage school placements - GOV.UK",
+      "How many primary placements you would be willing to host in each year group? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Primary subjects: Enter the number of placements you would be willing to host", class: "govuk-heading-l")
-    expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
-    expect(page).to have_field("Primary", type: :number)
-    expect(page).to have_field("Handwriting", type: :number)
+    expect(page).to have_h1("How many primary placements you would be willing to host in each year group?", class: "govuk-heading-l")
+    expect(page).to have_element(:span, text: "Primary placement details", class: "govuk-caption-l")
+    expect(page).to have_field("Year 1", type: :number)
   end
 
   def when_i_fill_in_the_number_of_primary_placements_i_require
-    fill_in "Primary", with: 2
-    fill_in "Handwriting", with: 3
+    fill_in "Year 1", with: 2
   end
 
   def then_i_see_the_secondary_subject_selection_form
@@ -248,7 +231,7 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
     click_on "Cancel"
   end
 
-  def then_i_see_my_responses_with_successfully_updated
+  def then_i_see_my_responses_were_successfully_updated
     expect(page).to have_success_banner(
       "Placements added",
       "Providers can see your placements and may contact you to discuss them. You can add details to your placements such as expected date and provider.",
@@ -264,47 +247,16 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
     )
   end
 
-  def and_i_see_placements_i_created_for_the_subject_handwriting
-    expect(page).to have_link(
-      "Handwriting",
-      class: "govuk-link govuk-link--no-visited-state",
-      match: :prefer_exact,
-      count: 3,
-    )
+  def and_i_see_2_primary_placements_for_year_1
+    expect(page).to have_link("Primary (Year 1)", count: 2)
   end
 
-  def and_i_see_placements_i_created_for_the_subject_english
-    expect(page).to have_link(
-      "English",
-      class: "govuk-link govuk-link--no-visited-state",
-      match: :prefer_exact,
-      count: 1,
-    )
+  def and_i_see_1_secondary_placement_for_english
+    expect(page).to have_link("English")
   end
 
-  def and_i_see_placements_i_created_for_the_subject_mathematics
-    expect(page).to have_link(
-      "Mathematics",
-      class: "govuk-link govuk-link--no-visited-state",
-      match: :prefer_exact,
-      count: 4,
-    )
-  end
-
-  def then_i_see_the_provider_select_form
-    expect(page).to have_title(
-      "Select the providers you currently work with - Manage school placements - GOV.UK",
-    )
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_element(
-      :h1,
-      text: "Select the providers you currently work with",
-      class: "govuk-fieldset__heading",
-    )
-    expect(page).to have_field("Select all", type: :checkbox)
-    expect(page).to have_field("Test Provider 123", type: :checkbox)
-    expect(page).to have_field("Test Provider 456", type: :checkbox)
-    expect(page).to have_field("Test Provider 789", type: :checkbox)
+  def and_i_see_4_secondary_placements_for_mathematics
+    expect(page).to have_link("Mathematics", count: 4)
   end
 
   def when_i_click_save_and_continue
@@ -322,13 +274,10 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
     expect(page).to have_summary_list_row("Phase", "Primary and Secondary")
 
     expect(page).to have_h2("Primary placements")
-    expect(page).to have_summary_list_row("Primary", "2")
-    expect(page).to have_summary_list_row("Handwriting", "3")
+    expect(page).to have_summary_list_row("Year 1", "2")
 
     expect(page).to have_h2("Secondary placements")
     expect(page).to have_summary_list_row("English", "1")
     expect(page).to have_summary_list_row("Mathematics", "4")
-
-    expect(page).not_to have_h2("Providers")
   end
 end

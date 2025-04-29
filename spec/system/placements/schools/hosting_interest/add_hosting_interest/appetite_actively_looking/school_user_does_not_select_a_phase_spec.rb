@@ -23,8 +23,6 @@ RSpec.describe "School user does not select a phases",
 
   def given_subjects_exist
     @primary = create(:subject, :primary, name: "Primary")
-    @phonics = create(:subject, :primary, name: "Phonics")
-    @handwriting = create(:subject, :primary, name: "Handwriting")
 
     @english = create(:subject, :secondary, name: "English")
     @mathematics = create(:subject, :secondary, name: "Mathematics")
@@ -42,22 +40,6 @@ RSpec.describe "School user does not select a phases",
     @school = create(:placements_school)
     sign_in_placements_user(organisations: [@school])
   end
-
-  def when_i_am_on_the_placements_index_page
-    expect(page).to have_title("Placements - Manage school placements - GOV.UK")
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Placements")
-    expect(secondary_navigation).to have_current_item("This year (#{@current_academic_year_name}")
-    expect(page).to have_link("Bulk add placements")
-  end
-  alias_method :then_i_am_on_the_placements_index_page,
-               :when_i_am_on_the_placements_index_page
-
-  def when_i_click_on_bulk_add_placements
-    click_on "Bulk add placements"
-  end
-  alias_method :and_i_click_on_bulk_add_placements,
-               :when_i_click_on_bulk_add_placements
 
   def when_i_visit_the_add_hosting_interest_page
     visit new_add_hosting_interest_placements_school_hosting_interests_path(@school)
@@ -90,12 +72,12 @@ RSpec.describe "School user does not select a phases",
 
   def then_i_see_the_phase_form
     expect(page).to have_title(
-      "What phase of education will your placements be? - Manage school placements - GOV.UK",
+      "What phase of education can your placements be? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "What phase of education will your placements be?",
+      text: "What phase of education can your placements be?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Primary", type: :checkbox)

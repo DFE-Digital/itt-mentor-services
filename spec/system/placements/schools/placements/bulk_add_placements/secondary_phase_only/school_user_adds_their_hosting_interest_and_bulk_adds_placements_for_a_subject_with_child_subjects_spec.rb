@@ -6,7 +6,6 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
   scenario do
     given_subjects_exist
     and_academic_years_exist
-    and_test_providers_exist
     and_i_am_signed_in
 
     when_i_am_on_the_placements_index_page
@@ -34,15 +33,12 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
     when_i_select_spanish
     and_i_select_russian
     and_i_click_on_continue
-    then_i_see_the_provider_select_form
-
-    when_i_click_on_continue
     then_i_see_the_check_your_answers_page
 
     when_i_click_save_and_continue
-    then_i_see_my_responses_with_successfully_updated
-    and_i_see_placements_i_created_for_the_subject_french
-    and_i_see_placements_i_created_for_the_subject_french_and_russian
+    then_i_see_my_responses_were_successfully_updated
+    and_i_see_1_secondary_placement_for_modern_languages_french
+    and_i_see_1_secondary_placement_for_modern_languages_french_and_russian
   end
 
   private
@@ -98,12 +94,12 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
 
   def then_i_see_the_phase_form
     expect(page).to have_title(
-      "What phase of education will your placements be? - Manage school placements - GOV.UK",
+      "What phase of education can your placements be? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "What phase of education will your placements be?",
+      text: "What phase of education can your placements be?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Primary", type: :checkbox)
@@ -188,14 +184,14 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
     expect(page).to have_element(:h2, text: "Placement 2 of 2", class: "govuk-fieldset__heading")
   end
 
-  def then_i_see_my_responses_with_successfully_updated
+  def then_i_see_my_responses_were_successfully_updated
     expect(page).to have_success_banner(
       "Placements added",
       "Providers can see your placements and may contact you to discuss them. You can add details to your placements such as expected date and provider.",
     )
   end
 
-  def and_i_see_placements_i_created_for_the_subject_french
+  def and_i_see_1_secondary_placement_for_modern_languages_french
     expect(page).to have_link(
       "French",
       class: "govuk-link govuk-link--no-visited-state",
@@ -204,29 +200,13 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
     )
   end
 
-  def and_i_see_placements_i_created_for_the_subject_french_and_russian
+  def and_i_see_1_secondary_placement_for_modern_languages_french_and_russian
     expect(page).to have_link(
       "Russian and Spanish",
       class: "govuk-link govuk-link--no-visited-state",
       match: :prefer_exact,
       count: 1,
     )
-  end
-
-  def then_i_see_the_provider_select_form
-    expect(page).to have_title(
-      "Select the providers you currently work with - Manage school placements - GOV.UK",
-    )
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_element(
-      :h1,
-      text: "Select the providers you currently work with",
-      class: "govuk-fieldset__heading",
-    )
-    expect(page).to have_field("Select all", type: :checkbox)
-    expect(page).to have_field("Test Provider 123", type: :checkbox)
-    expect(page).to have_field("Test Provider 456", type: :checkbox)
-    expect(page).to have_field("Test Provider 789", type: :checkbox)
   end
 
   def when_i_click_save_and_continue
@@ -243,9 +223,7 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
     expect(page).to have_h2("Education phase")
     expect(page).to have_summary_list_row("Phase", "Secondary")
 
-    expect(page).to have_h2("Placements")
+    expect(page).to have_h2("Secondary placements")
     expect(page).to have_summary_list_row("Modern languages", "2")
-
-    expect(page).not_to have_h2("Providers")
   end
 end
