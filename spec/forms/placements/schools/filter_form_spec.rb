@@ -9,6 +9,14 @@ describe Placements::Schools::FilterForm, type: :model do
   describe "#filters_selected?" do
     subject(:filter_form) { described_class.new(provider, params).filters_selected? }
 
+    context "when given schools I work with id params" do
+      let(:params) { { schools_i_work_with_ids: %w[school_id] } }
+
+      it "returns true" do
+        expect(filter_form).to be(true)
+      end
+    end
+
     context "when given subject id params" do
       let(:params) { { subject_ids: %w[subject_id] } }
 
@@ -96,6 +104,28 @@ describe Placements::Schools::FilterForm, type: :model do
 
   describe "index_path_without_filter" do
     subject(:filter_form) { described_class.new(provider, params) }
+
+    context "when removing schools I work with id params" do
+      let(:params) do
+        { schools_i_work_with_ids: %w[school_id_1 school_id_2] }
+      end
+
+      it "returns the find index page path without the given schools I work with id param" do
+        expect(
+          filter_form.index_path_without_filter(
+            filter: "schools_i_work_with_ids",
+            value: "school_id_1",
+          ),
+        ).to eq(
+          placements_provider_find_index_path(
+            provider,
+            filters: {
+              schools_i_work_with_ids: %w[school_id_2],
+            },
+          ),
+        )
+      end
+    end
 
     context "when removing subject id params" do
       let(:params) do
@@ -224,6 +254,7 @@ describe Placements::Schools::FilterForm, type: :model do
     it "returns the expected result" do
       expect(described_class.new(provider).query_params).to eq(
         {
+          schools_i_work_with_ids: [],
           subject_ids: [],
           search_location: nil,
           search_by_name: nil,
@@ -232,6 +263,16 @@ describe Placements::Schools::FilterForm, type: :model do
           last_offered_placements_academic_year_ids: [],
         },
       )
+    end
+  end
+
+  describe "#schools_i_work_with" do
+    it "returns the schools I work with associated with the schools_i_work_with_ids params given" do
+      schools = create_list(:placements_school, 2, partner_providers: [provider])
+
+      expect(
+        described_class.new(provider, schools_i_work_with_ids: schools.pluck(:id)).schools_i_work_with,
+      ).to match_array(School.where(id: schools.pluck(:id)))
     end
   end
 

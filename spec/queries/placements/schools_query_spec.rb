@@ -4,6 +4,7 @@ describe Placements::SchoolsQuery do
   subject(:query) { described_class.new(academic_year:, params:) }
 
   let(:params) { {} }
+  let(:provider) { create(:placements_provider) }
   let(:query_school) do
     create(
       :placements_school,
@@ -18,6 +19,7 @@ describe Placements::SchoolsQuery do
       rating: "Good",
       latitude: 51.648438,
       longitude: 14.350231,
+      partner_providers: [provider],
     )
   end
   let(:non_query_school) do
@@ -35,6 +37,15 @@ describe Placements::SchoolsQuery do
     it "returns all schools" do
       expect(query.call).to include(query_school)
       expect(query.call).to include(non_query_school)
+    end
+
+    context "when filtering by schools I work with" do
+      let(:params) { { filters: { schools_i_work_with_ids: [query_school.id] } } }
+
+      it "returns the filtered schools" do
+        expect(query.call).to include(query_school)
+        expect(query.call).not_to include(non_query_school)
+      end
     end
 
     context "when filtering by name" do

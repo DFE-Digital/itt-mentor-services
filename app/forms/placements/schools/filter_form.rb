@@ -1,6 +1,7 @@
 class Placements::Schools::FilterForm < ApplicationForm
   include ActiveModel::Attributes
 
+  attribute :schools_i_work_with_ids, default: []
   attribute :subject_ids, default: []
   attribute :search_location, default: nil
   attribute :search_by_name, default: nil
@@ -43,6 +44,7 @@ class Placements::Schools::FilterForm < ApplicationForm
 
   def query_params
     {
+      schools_i_work_with_ids:,
       subject_ids:,
       search_location:,
       search_by_name:,
@@ -54,6 +56,10 @@ class Placements::Schools::FilterForm < ApplicationForm
 
   def subjects
     @subjects ||= Subject.where(id: subject_ids).order_by_name
+  end
+
+  def schools_i_work_with
+    @schools_i_work_with ||= @provider.partner_schools.where(id: schools_i_work_with_ids).order_by_name
   end
 
   def last_offered_placements_academic_years

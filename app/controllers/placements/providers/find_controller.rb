@@ -6,6 +6,7 @@ class Placements::Providers::FindController < Placements::ApplicationController
 
   def index
     @subjects = filter_subjects_by_phase
+    @schools_i_work_with = @provider.partner_schools.order_by_name
     query = Placements::SchoolsQuery.call(academic_year: selected_academic_year, params: query_params)
     @pagy, @schools = pagy(all_schools.merge(query).distinct)
     calculate_travel_time
@@ -76,6 +77,7 @@ class Placements::Providers::FindController < Placements::ApplicationController
     params.fetch(:filters, {}).permit(
       :search_location,
       :search_by_name,
+      schools_i_work_with_ids: [],
       subject_ids: [],
       phases: [],
       itt_statuses: [],
