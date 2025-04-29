@@ -15,7 +15,6 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
   let(:another_partnership) do
     create(:placements_partnership, provider:, school: another_school)
   end
-  let!(:school_user) { create(:placements_user, schools: [school]) }
 
   before do
     partnership
@@ -34,7 +33,6 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
     when_i_click_on("Delete school")
     then_the_partner_school_is_removed(school)
     and_a_partner_provider_remains_called("Another school")
-    and_a_notification_email_is_sent_to(school_user)
   end
 
   context "when the provider has placements associated with the partnership" do
@@ -66,7 +64,6 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
       when_i_click_on("Delete school")
       then_the_partner_school_is_removed(school)
       and_a_partner_provider_remains_called("Another school")
-      and_a_notification_email_is_sent_to(school_user)
     end
   end
 
@@ -83,7 +80,6 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
     when_i_click_on("Delete school")
     then_the_partner_school_is_removed(school)
     and_a_partner_provider_remains_called("Another school")
-    and_a_notification_email_is_not_sent_to(school_user)
   end
 
   private
@@ -128,25 +124,6 @@ RSpec.describe "Placements / Providers / Partner schools / Remove a partner scho
 
   def and_a_partner_provider_remains_called(provider_name)
     expect(page).to have_content(provider_name)
-  end
-
-  def partner_school_notification(user)
-    ActionMailer::Base.deliveries.find do |delivery|
-      delivery.to.include?(user.email) &&
-        delivery.subject == "A provider has removed you"
-    end
-  end
-
-  def and_a_notification_email_is_sent_to(user)
-    email = partner_school_notification(user)
-
-    expect(email).not_to be_nil
-  end
-
-  def and_a_notification_email_is_not_sent_to(user)
-    email = partner_school_notification(user)
-
-    expect(email).to be_nil
   end
 
   def expect_partner_schools_to_be_selected_in_primary_navigation

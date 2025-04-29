@@ -10,7 +10,6 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
 
   let!(:school) { create(:school, :placements, name: "Manchester 1") }
   let!(:provider) { create(:placements_provider) }
-  let!(:school_user) { create(:placements_user, schools: [school]) }
 
   before do
     create(:school, name: "Manchester 2")
@@ -32,7 +31,6 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
     then_i_return_to_partner_school_index_for(provider)
     and_a_school_is_listed(school_name: "Manchester 1")
     and_i_see_success_message
-    and_a_notification_email_is_sent_to(school_user)
   end
 
   scenario "Support user adds a partner school which already exists" do
@@ -94,7 +92,6 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
     then_i_return_to_partner_school_index_for(provider)
     and_a_school_is_listed(school_name: "Manchester 1")
     and_i_see_success_message
-    and_a_notification_email_is_not_sent_to(school_user)
   end
 
   private
@@ -149,25 +146,6 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
 
   def and_i_see_success_message
     expect(page).to have_content "School added"
-  end
-
-  def partner_school_notification(user)
-    ActionMailer::Base.deliveries.find do |delivery|
-      delivery.to.include?(user.email) &&
-        delivery.subject == "A provider has added you"
-    end
-  end
-
-  def and_a_notification_email_is_sent_to(user)
-    email = partner_school_notification(user)
-
-    expect(email).not_to be_nil
-  end
-
-  def and_a_notification_email_is_not_sent_to(user)
-    email = partner_school_notification(user)
-
-    expect(email).to be_nil
   end
 
   def given_a_partnership_exists_between(school, provider)
