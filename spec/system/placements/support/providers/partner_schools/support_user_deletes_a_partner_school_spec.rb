@@ -11,7 +11,6 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
   let(:another_partnership) do
     create(:placements_partnership, provider:, school: another_school)
   end
-  let!(:school_user) { create(:placements_user, schools: [school]) }
 
   around do |example|
     perform_enqueued_jobs { example.run }
@@ -34,7 +33,6 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
     when_i_click_on("Delete school")
     then_the_partner_school_is_deleted(school)
     and_a_partner_provider_remains_called("Another school")
-    and_a_notification_email_is_sent_to(school_user)
   end
 
   context "when the provider has placements associated with the partnership" do
@@ -65,7 +63,6 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
       when_i_click_on("Delete school")
       then_the_partner_school_is_deleted(school)
       and_a_partner_provider_remains_called("Another school")
-      and_a_notification_email_is_sent_to(school_user)
     end
   end
 
@@ -81,7 +78,6 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
     when_i_click_on("Delete school")
     then_the_partner_school_is_deleted(school)
     and_a_partner_provider_remains_called("Another school")
-    and_a_notification_email_is_not_sent_to(school_user)
   end
 
   private
@@ -145,18 +141,6 @@ RSpec.describe "Placements / Support / Providers / Partner schools / Support use
       delivery.to.include?(user.email) &&
         delivery.subject == "A provider has removed you"
     end
-  end
-
-  def and_a_notification_email_is_sent_to(user)
-    email = partner_school_notification(user)
-
-    expect(email).not_to be_nil
-  end
-
-  def and_a_notification_email_is_not_sent_to(user)
-    email = partner_school_notification(user)
-
-    expect(email).to be_nil
   end
 
   def given_the_school_is_not_onboarded_on_placements_service(school)

@@ -10,7 +10,6 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
 
   let!(:school) { create(:school, :placements, name: "School 1") }
   let(:provider) { create(:placements_provider, name: "Provider") }
-  let!(:school_user) { create(:placements_user, schools: [school]) }
 
   before do
     given_i_am_signed_in_as_a_placements_user(organisations: [provider])
@@ -28,7 +27,6 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
     then_i_return_to_partner_school_index
     and_a_school_is_listed(school_name: "School 1")
     and_i_see_success_message
-    and_a_notification_email_is_sent_to(school_user)
   end
 
   scenario "User adds a partner school which already exists", :js do
@@ -89,7 +87,6 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
     then_i_return_to_partner_school_index
     and_a_school_is_listed(school_name: "School 1")
     and_i_see_success_message
-    and_a_notification_email_is_not_sent_to(school_user)
   end
 
   describe "when I use multiple tabs to add partner schools", :js do
@@ -199,25 +196,6 @@ RSpec.describe "Placements / Providers / Partner schools / Add a partner school"
     within(".autocomplete__wrapper") do
       find_field "Add a school", with: school_name
     end
-  end
-
-  def partner_school_notification(user)
-    ActionMailer::Base.deliveries.find do |delivery|
-      delivery.to.include?(user.email) &&
-        delivery.subject == "A provider has added you"
-    end
-  end
-
-  def and_a_notification_email_is_sent_to(user)
-    email = partner_school_notification(user)
-
-    expect(email).not_to be_nil
-  end
-
-  def and_a_notification_email_is_not_sent_to(user)
-    email = partner_school_notification(user)
-
-    expect(email).to be_nil
   end
 
   def expect_partner_schools_to_be_selected_in_primary_navigation

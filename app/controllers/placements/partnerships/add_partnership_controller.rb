@@ -11,10 +11,12 @@ class Placements::Partnerships::AddPartnershipController < Placements::Applicati
       redirect_to step_path(@wizard.next_step)
     else
       @wizard.create_partnership
-      Placements::Partnerships::Notify::Create.call(
-        source_organisation: @wizard.organisation,
-        partner_organisation: @wizard.partner_organisation,
-      )
+      if @wizard.organisation.is_a?(Placements::School)
+        Placements::Partnerships::Notify::Create.call(
+          source_organisation: @wizard.organisation,
+          partner_organisation: @wizard.partner_organisation,
+        )
+      end
       @wizard.reset_state
       redirect_to index_path, flash: {
         heading: t(".success_heading"),

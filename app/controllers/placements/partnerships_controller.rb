@@ -11,10 +11,13 @@ class Placements::PartnershipsController < Placements::ApplicationController
     authorize @partnership
 
     @partnership.destroy!
-    Placements::Partnerships::Notify::Remove.call(
-      source_organisation:,
-      partner_organisation:,
-    )
+
+    if source_organisation.is_a?(Placements::School)
+      Placements::Partnerships::Notify::Remove.call(
+        source_organisation:,
+        partner_organisation:,
+      )
+    end
 
     redirect_to_index_path
   end
