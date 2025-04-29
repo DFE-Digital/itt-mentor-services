@@ -30,6 +30,8 @@ en:
           search_by_location: Search by location
           subject: Subject
           schools_i_work_with: Schools I work with
+          no_schools_i_work_with_html: Record schools you work with on the %{link} so that they display here.
+          schools_page: schools page
           school_phase: School phase
           establishment_group: Establishment group
           gender: Gender

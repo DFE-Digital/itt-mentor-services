@@ -198,13 +198,13 @@
             </h1>
 
             <div class="app-filter__option">
-              <div class="govuk-form-group">
+              <div class="govuk-form-group govuk-!-margin-bottom-2">
                 <%= form.govuk_text_field :search_by_name, type: :search, label: { hidden: true }, caption: { text: t(".search_by_name_prompt") } %>
               </div>
             </div>
           </div>
 
-          <div class="app-filter__option" data-controller="filter-search">
+          <div class="app-filter__option">
             <%= form.govuk_check_boxes_fieldset(
               :schools_i_work_with_ids,
               legend: {
@@ -213,10 +213,14 @@
               },
               small: true,
             ) do %>
-              <% @schools_i_work_with.each do |school| %>
-                <%= form.govuk_check_box :schools_i_work_with_ids,
-                                         school.id,
-                                         label: { text: school.name } %>
+              <% if @schools_i_work_with.exists? %>
+                <% @schools_i_work_with.each do |school| %>
+                  <%= form.govuk_check_box :schools_i_work_with_ids,
+                                           school.id,
+                                           label: { text: school.name } %>
+                <% end %>
+              <% else %>
+                <p class="govuk-hint"><%= t(".no_schools_i_work_with_html", link: govuk_link_to(t(".schools_page"), placements_provider_partner_schools_path(@provider))) %></p>
               <% end %>
             <% end %>
           </div>
