@@ -136,7 +136,6 @@
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t(".report")) %>
           <% row.with_value do %>
-            <%= govuk_link_to t(".ofsted_report"), "#", no_visited_state: true, new_tab: true %>
             <%= govuk_details summary_text: t(".details_summary") do %>
               <p class="govuk-body"><%= t(".details_body") %></p>
             <% end %>

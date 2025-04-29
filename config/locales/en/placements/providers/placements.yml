@@ -36,6 +36,7 @@ en:
           search_location: Location
           search_by_location: Search by location
           subject: Subject
+          no_schools: When schools assign you to placements they will display here.
           school_phase: School phase
           establishment_group: Establishment group
           gender: Gender
