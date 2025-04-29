@@ -23,10 +23,10 @@ RSpec.describe "Provider user views a placements already organised school", serv
   private
 
   def given_that_schools_exist
-    academic_year = Placements::AcademicYear.current.next
+    @academic_year = Placements::AcademicYear.current.next
     @provider = build(:placements_provider, name: "Aes Sedai Trust")
-    placements = build_list(:placement, 1, provider: @provider, terms: [build(:placements_term, :spring)], subject: build(:subject, name: "Primary (Year 1)"), academic_year:)
-    hosting_interests = build_list(:hosting_interest, 1, appetite: "actively_looking", academic_year:)
+    placements = build_list(:placement, 1, provider: @provider, terms: [build(:placements_term, :spring)], subject: build(:subject, name: "Primary (Year 1)"), academic_year: @academic_year)
+    hosting_interests = build_list(:hosting_interest, 1, appetite: "actively_looking", academic_year: @academic_year)
     @already_hosting_school = create(
       :placements_school,
       phase: "Secondary",
@@ -87,7 +87,7 @@ RSpec.describe "Provider user views a placements already organised school", serv
     expect(page).to have_h1("Shelbyville High School")
     expect(page).to have_tag("No placements available", "blue")
     expect(secondary_navigation).to have_current_item("Placements")
-    expect(page).to have_element(:p, text: "This school has specified which placements they would like to host in the 2024 to 2025 academic year.", class: "govuk-body")
+    expect(page).to have_element(:p, text: "This school has specified which placements they would like to host in the #{@academic_year.name} academic year.", class: "govuk-body")
     expect(page).to have_h2("1 filled placement")
     expect(page).to have_table_row({
       "Subject" => "Primary (Year 1)",
