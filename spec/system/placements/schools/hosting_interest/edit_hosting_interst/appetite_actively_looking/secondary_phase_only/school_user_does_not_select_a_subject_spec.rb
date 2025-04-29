@@ -113,12 +113,12 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
 
   def then_i_see_the_phase_form
     expect(page).to have_title(
-      "What phase of education will your placements be? - Manage school placements - GOV.UK",
+      "What phase of education can your placements be? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Organisation details")
     expect(page).to have_element(
       :legend,
-      text: "What phase of education will your placements be?",
+      text: "What phase of education can your placements be?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Primary", type: :checkbox)
@@ -127,24 +127,6 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
 
   def when_i_select_secondary
     check "Secondary"
-  end
-
-  def then_i_see_the_subjects_known_form
-    expect(page).to have_title(
-      "Do you know which subjects you would like to host? - Manage school placements - GOV.UK",
-    )
-    expect(primary_navigation).to have_current_item("Organisation details")
-    expect(page).to have_element(
-      :legend,
-      text: "Do you know which subjects you would like to host?",
-      class: "govuk-fieldset__legend",
-    )
-    expect(page).to have_field("Yes", type: :radio)
-    expect(page).to have_field("No", type: :radio)
-  end
-
-  def when_i_select_yes
-    choose "Yes"
   end
 
   def then_i_see_the_secondary_subject_selection_form

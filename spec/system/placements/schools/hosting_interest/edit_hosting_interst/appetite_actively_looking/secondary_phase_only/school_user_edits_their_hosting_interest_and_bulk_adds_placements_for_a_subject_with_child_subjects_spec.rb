@@ -42,16 +42,18 @@ RSpec.describe "School user edits their hosting interest and bulk adds placement
     when_i_select_spanish
     and_i_select_russian
     and_i_click_on_continue
-    then_i_see_the_provider_select_form
-
-    when_i_click_on_continue
     then_i_see_the_check_your_answers_page
 
     when_i_click_save_and_continue
     then_i_see_my_responses_with_successfully_updated
+    and_i_see_the_whats_next_page
+    and_i_see_2_secondary_placements_for_modern_languages_have_been_created
+
+    when_i_click_on_edit_your_placements
+    then_i_am_on_the_placements_index_page
     and_the_schools_hosting_interest_for_the_next_year_is_updated
-    and_i_see_placements_i_created_for_the_subject_french
-    and_i_see_placements_i_created_for_the_subject_french_and_russian
+    and_i_see_1_secondary_placement_for_modern_languages_french
+    and_i_see_1_secondary_placement_for_modern_languages_french_and_russian
   end
 
   private
@@ -153,12 +155,12 @@ RSpec.describe "School user edits their hosting interest and bulk adds placement
 
   def then_i_see_the_phase_form
     expect(page).to have_title(
-      "What phase of education will your placements be? - Manage school placements - GOV.UK",
+      "What phase of education can your placements be? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Organisation details")
     expect(page).to have_element(
       :legend,
-      text: "What phase of education will your placements be?",
+      text: "What phase of education can your placements be?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Primary", type: :checkbox)
@@ -167,24 +169,6 @@ RSpec.describe "School user edits their hosting interest and bulk adds placement
 
   def when_i_select_secondary
     check "Secondary"
-  end
-
-  def then_i_see_the_subjects_known_form
-    expect(page).to have_title(
-      "Do you know which subjects you would like to host? - Manage school placements - GOV.UK",
-    )
-    expect(primary_navigation).to have_current_item("Organisation details")
-    expect(page).to have_element(
-      :legend,
-      text: "Do you know which subjects you would like to host?",
-      class: "govuk-fieldset__legend",
-    )
-    expect(page).to have_field("Yes", type: :radio)
-    expect(page).to have_field("No", type: :radio)
-  end
-
-  def when_i_select_yes
-    choose "Yes"
   end
 
   def then_i_see_the_secondary_subject_selection_form
@@ -308,7 +292,7 @@ RSpec.describe "School user edits their hosting interest and bulk adds placement
     click_on "Next year (#{@next_academic_year.name})"
   end
 
-  def and_i_see_placements_i_created_for_the_subject_french
+  def and_i_see_1_secondary_placement_for_modern_languages_french
     expect(page).to have_link(
       "French",
       class: "govuk-link govuk-link--no-visited-state",
@@ -317,29 +301,13 @@ RSpec.describe "School user edits their hosting interest and bulk adds placement
     )
   end
 
-  def and_i_see_placements_i_created_for_the_subject_french_and_russian
+  def and_i_see_1_secondary_placement_for_modern_languages_french_and_russian
     expect(page).to have_link(
       "Russian and Spanish",
       class: "govuk-link govuk-link--no-visited-state",
       match: :prefer_exact,
       count: 1,
     )
-  end
-
-  def then_i_see_the_provider_select_form
-    expect(page).to have_title(
-      "Select the providers you currently work with - Manage school placements - GOV.UK",
-    )
-    expect(primary_navigation).to have_current_item("Organisation details")
-    expect(page).to have_element(
-      :h1,
-      text: "Select the providers you currently work with",
-      class: "govuk-fieldset__heading",
-    )
-    expect(page).to have_field("Select all", type: :checkbox)
-    expect(page).to have_field("Test Provider 123", type: :checkbox)
-    expect(page).to have_field("Test Provider 456", type: :checkbox)
-    expect(page).to have_field("Test Provider 789", type: :checkbox)
   end
 
   def when_i_click_save_and_continue
@@ -356,9 +324,45 @@ RSpec.describe "School user edits their hosting interest and bulk adds placement
     expect(page).to have_h2("Education phase")
     expect(page).to have_summary_list_row("Phase", "Secondary")
 
-    expect(page).to have_h2("Placements")
+    expect(page).to have_h2("Secondary placements")
     expect(page).to have_summary_list_row("Modern languages", "2")
-
-    expect(page).not_to have_h2("Providers")
   end
+
+  def and_i_see_the_whats_next_page
+    expect(page).to have_title(
+      "What happens next? - Manage school placements - GOV.UK",
+    )
+    expect(primary_navigation).to have_current_item("Organisation details")
+    expect(page).to have_panel(
+      "Placement information added",
+      "Providers can see that you have placements available",
+    )
+    expect(page).to have_h1("What happens next?", class: "govuk-heading-l")
+    expect(page).to have_element(
+      :p,
+      text: "Providers will be able to contact you on #{@school.school_contact_email_address} about your placement offers. After these discussions you can then decide whether to assign a provider to your placements.",
+      class: "govuk-body",
+    )
+    expect(page).to have_h2("Manage your placements", class: "govuk-heading-m")
+    expect(page).to have_h2("Your placements offer", class: "govuk-heading-m")
+    expect(page).not_to have_h2("Primary placements", class: "govuk-heading-m")
+    expect(page).to have_h2("Secondary placements", class: "govuk-heading-m")
+  end
+
+  def and_i_see_2_secondary_placements_for_modern_languages_have_been_created
+    expect(page).to have_summary_list_row("Modern languages", "2")
+  end
+
+  def when_i_click_on_edit_your_placements
+    click_on "edit your placements"
+  end
+
+  def when_i_am_on_the_placements_index_page
+    expect(page).to have_title("Placements - Manage school placements - GOV.UK")
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_h1("Placements")
+    expect(page).to have_link("Add multiple placements")
+  end
+  alias_method :then_i_am_on_the_placements_index_page,
+               :when_i_am_on_the_placements_index_page
 end

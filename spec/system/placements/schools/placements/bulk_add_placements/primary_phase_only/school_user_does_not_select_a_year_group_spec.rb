@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "School user does not select a subject",
+RSpec.describe "School user does not select a year group",
                service: :placements,
                type: :system do
   scenario do
@@ -14,18 +14,16 @@ RSpec.describe "School user does not select a subject",
 
     when_i_select_primary
     and_i_click_on_continue
-    then_i_see_the_primary_subject_selection_form
+    then_i_see_the_primary_year_group_selection_form
 
     when_i_click_on_continue
-    then_i_see_a_validation_error_for_selecting_a_subject
+    then_i_see_a_validation_error_for_selecting_a_year_group
   end
 
   private
 
   def given_subjects_exist
     @primary = create(:subject, :primary, name: "Primary")
-    @phonics = create(:subject, :primary, name: "Phonics")
-    @handwriting = create(:subject, :primary, name: "Handwriting")
   end
 
   def and_academic_years_exist
@@ -63,12 +61,12 @@ RSpec.describe "School user does not select a subject",
 
   def then_i_see_the_phase_form
     expect(page).to have_title(
-      "What phase of education will your placements be? - Manage school placements - GOV.UK",
+      "What phase of education can your placements be? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "What phase of education will your placements be?",
+      text: "What phase of education can your placements be?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Primary", type: :checkbox)
@@ -79,25 +77,31 @@ RSpec.describe "School user does not select a subject",
     check "Primary"
   end
 
-  def then_i_see_the_primary_subject_selection_form
+  def then_i_see_the_primary_year_group_selection_form
     expect(page).to have_title(
-      "Select primary school subjects - Manage school placements - GOV.UK",
+      "Select primary school year groups you can offer - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "Select primary school subjects",
+      text: "Select primary school year groups you can offer",
       class: "govuk-fieldset__legend",
     )
-    expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
-    expect(page).to have_field("Primary", type: :checkbox)
-    expect(page).to have_field("Phonics", type: :checkbox)
-    expect(page).to have_field("Handwriting", type: :checkbox)
+    expect(page).to have_element(:span, text: "Primary placement details", class: "govuk-caption-l")
+    expect(page).to have_field("Nursery", type: :checkbox)
+    expect(page).to have_field("Reception", type: :checkbox)
+    expect(page).to have_field("Year 1", type: :checkbox)
+    expect(page).to have_field("Year 2", type: :checkbox)
+    expect(page).to have_field("Year 3", type: :checkbox)
+    expect(page).to have_field("Year 4", type: :checkbox)
+    expect(page).to have_field("Year 5", type: :checkbox)
+    expect(page).to have_field("Year 6", type: :checkbox)
+    expect(page).to have_field("Mixed year groups", type: :checkbox)
   end
 
-  def then_i_see_a_validation_error_for_selecting_a_subject
+  def then_i_see_a_validation_error_for_selecting_a_year_group
     expect(page).to have_validation_error(
-      "Please select a primary subject",
+      "Please select which year groups you are looking to host placements at",
     )
   end
 end

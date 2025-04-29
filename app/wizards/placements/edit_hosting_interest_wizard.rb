@@ -15,7 +15,6 @@ module Placements
         actively_looking_steps
       when "not_open"
         add_step(ReasonNotHostingStep)
-        add_step(SchoolContactStep)
         add_step(AreYouSureStep)
       else
         interested_steps

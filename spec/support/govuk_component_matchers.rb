@@ -216,4 +216,16 @@ module GovukComponentMatchers
       end
     end
   end
+
+  matcher :have_panel do |panel_title, panel_body = nil|
+    match do |page|
+      page.within(".govuk-panel") do
+        page.find(".govuk-panel__title", text: panel_title)
+        page.find(".govuk-panel__body", text: panel_body) if panel_body.present?
+      end
+      true
+    rescue Capybara::ElementNotFound
+      false
+    end
+  end
 end

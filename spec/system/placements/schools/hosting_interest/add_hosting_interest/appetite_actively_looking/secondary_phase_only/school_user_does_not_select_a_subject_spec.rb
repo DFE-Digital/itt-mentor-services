@@ -43,22 +43,6 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
     sign_in_placements_user(organisations: [@school])
   end
 
-  def when_i_am_on_the_placements_index_page
-    expect(page).to have_title("Placements - Manage school placements - GOV.UK")
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Placements")
-    expect(secondary_navigation).to have_current_item("This year (#{@current_academic_year_name}")
-    expect(page).to have_link("Bulk add placements")
-  end
-  alias_method :then_i_am_on_the_placements_index_page,
-               :when_i_am_on_the_placements_index_page
-
-  def when_i_click_on_bulk_add_placements
-    click_on "Bulk add placements"
-  end
-  alias_method :and_i_click_on_bulk_add_placements,
-               :when_i_click_on_bulk_add_placements
-
   def when_i_visit_the_add_hosting_interest_page
     visit new_add_hosting_interest_placements_school_hosting_interests_path(@school)
   end
@@ -90,12 +74,12 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
 
   def then_i_see_the_phase_form
     expect(page).to have_title(
-      "What phase of education will your placements be? - Manage school placements - GOV.UK",
+      "What phase of education can your placements be? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "What phase of education will your placements be?",
+      text: "What phase of education can your placements be?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Primary", type: :checkbox)
@@ -104,24 +88,6 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
 
   def when_i_select_secondary
     check "Secondary"
-  end
-
-  def then_i_see_the_subjects_known_form
-    expect(page).to have_title(
-      "Do you know which subjects you would like to host? - Manage school placements - GOV.UK",
-    )
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_element(
-      :legend,
-      text: "Do you know which subjects you would like to host?",
-      class: "govuk-fieldset__legend",
-    )
-    expect(page).to have_field("Yes", type: :radio)
-    expect(page).to have_field("No", type: :radio)
-  end
-
-  def when_i_select_yes
-    choose "Yes"
   end
 
   def then_i_see_the_secondary_subject_selection_form
