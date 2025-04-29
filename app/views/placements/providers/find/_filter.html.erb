@@ -60,6 +60,25 @@
             </ul>
           <% end %>
 
+          <% if filter_form.schools_i_work_with_ids.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".schools_i_work_with") %></h3>
+            <ul class="app-filter-tags">
+              <% filter_form.schools_i_work_with.each do |school| %>
+                <li>
+                  <%= govuk_link_to(
+                        school.name,
+                        filter_form.index_path_without_filter(
+                          filter: "schools_i_work_with_ids",
+                          value: school.id,
+                        ),
+                        class: "app-filter__tag",
+                        no_visited_state: true,
+                      ) %>
+                 </li>
+                <% end %>
+              </ul>
+            <% end %>
+
           <% if filter_form.phases.present? %>
             <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".phase") %></h3>
             <ul class="app-filter-tags">
@@ -183,6 +202,23 @@
                 <%= form.govuk_text_field :search_by_name, type: :search, label: { hidden: true }, caption: { text: t(".search_by_name_prompt") } %>
               </div>
             </div>
+          </div>
+
+          <div class="app-filter__option" data-controller="filter-search">
+            <%= form.govuk_check_boxes_fieldset(
+              :schools_i_work_with_ids,
+              legend: {
+                text: t(".schools_i_work_with"),
+                size: "s",
+              },
+              small: true,
+            ) do %>
+              <% @schools_i_work_with.each do |school| %>
+                <%= form.govuk_check_box :schools_i_work_with_ids,
+                                         school.id,
+                                         label: { text: school.name } %>
+              <% end %>
+            <% end %>
           </div>
 
           <div class="app-filter__option">

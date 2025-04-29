@@ -10,6 +10,7 @@ class Placements::SchoolsQuery < ApplicationQuery
     scope = School.left_outer_joins(:hosting_interests, :academic_years, :placements, :mentors)
 
     scope = search_by_name_condition(scope)
+    scope = schools_i_work_with_condition(scope)
     scope = subject_condition(scope)
     scope = phase_condition(scope)
     scope = last_offered_placements_condition(scope)
@@ -20,6 +21,12 @@ class Placements::SchoolsQuery < ApplicationQuery
   private
 
   attr_reader :academic_year
+
+  def schools_i_work_with_condition(scope)
+    return scope if filter_params[:schools_i_work_with_ids].blank?
+
+    scope.where({ id: filter_params[:schools_i_work_with_ids] })
+  end
 
   def search_by_name_condition(scope)
     return scope if filter_params[:search_by_name].blank?
