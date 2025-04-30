@@ -40,37 +40,11 @@ RSpec.describe Placements::AddHostingInterestWizard::CheckYourAnswersStep, type:
 
   describe "delegations" do
     it { is_expected.to delegate_method(:phases).to(:phase_step) }
-    it { is_expected.to delegate_method(:selected_primary_subjects).to(:wizard) }
+    it { is_expected.to delegate_method(:year_groups).to(:wizard) }
     it { is_expected.to delegate_method(:selected_secondary_subjects).to(:wizard) }
     it { is_expected.to delegate_method(:selected_providers).to(:wizard) }
     it { is_expected.to delegate_method(:first_name).to(:school_contact_step).with_prefix(:school_contact) }
     it { is_expected.to delegate_method(:last_name).to(:school_contact_step).with_prefix(:school_contact) }
     it { is_expected.to delegate_method(:email_address).to(:school_contact_step).with_prefix(:school_contact) }
-  end
-
-  describe "#primary_and_secondary_phases?" do
-    subject(:primary_and_secondary_phases) { step.primary_and_secondary_phases? }
-
-    context "when both Primary and Secondary phases are selected" do
-      it "returns true" do
-        expect(primary_and_secondary_phases).to be(true)
-      end
-    end
-
-    context "when only the Primary phase is selected" do
-      let(:selected_phases) { %w[Primary] }
-
-      it "returns false" do
-        expect(primary_and_secondary_phases).to be(false)
-      end
-    end
-
-    context "when only the Secondary phase is selected" do
-      let(:selected_phases) { %w[Secondary] }
-
-      it "returns false" do
-        expect(primary_and_secondary_phases).to be(false)
-      end
-    end
   end
 end

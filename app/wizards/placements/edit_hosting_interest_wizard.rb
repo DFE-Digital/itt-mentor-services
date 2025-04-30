@@ -16,7 +16,7 @@ module Placements
       when "not_open"
         add_step(ReasonNotHostingStep)
         add_step(AreYouSureStep)
-      else
+      when "interested"
         interested_steps
       end
     end
