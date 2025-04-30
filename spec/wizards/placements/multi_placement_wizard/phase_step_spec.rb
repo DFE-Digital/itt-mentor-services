@@ -26,8 +26,8 @@ RSpec.describe Placements::MultiPlacementWizard::PhaseStep, type: :model do
     it "returns open struct objects for the primary and secondary phase" do
       expect(phases_for_selection).to eq(
         [
-          OpenStruct.new(name: "Primary"),
-          OpenStruct.new(name: "Secondary"),
+          OpenStruct.new(name: "Primary", description: "3 to 11 years"),
+          OpenStruct.new(name: "Secondary", description: "11 to 19 years"),
         ],
       )
     end

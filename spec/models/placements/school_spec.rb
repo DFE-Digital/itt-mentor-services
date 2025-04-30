@@ -27,11 +27,8 @@
 #  phase                                  :string
 #  placements_service                     :boolean          default(FALSE)
 #  postcode                               :string
-<<<<<<< HEAD
 #  previously_offered_placements          :boolean          default(FALSE)
-=======
 #  potential_placement_details            :jsonb
->>>>>>> a3e2f632 (Flow changes for green and amber path)
 #  rating                                 :string
 #  religious_character                    :string
 #  school_capacity                        :integer

@@ -21,7 +21,7 @@ module Placements
         add_step(ReasonNotHostingStep)
         add_step(SchoolContactStep)
         add_step(AreYouSureStep)
-      else
+      when "interested"
         interested_steps
       end
     end

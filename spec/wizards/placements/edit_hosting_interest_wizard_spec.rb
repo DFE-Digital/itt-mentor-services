@@ -37,7 +37,7 @@ RSpec.describe Placements::EditHostingInterestWizard do
         }
       end
 
-      it { is_expected.to eq %i[appetite phase provider check_your_answers] }
+      it { is_expected.to eq %i[appetite phase check_your_answers] }
 
       context "when the phase is set to 'Primary' during the phase step" do
         let(:state) do
@@ -51,9 +51,8 @@ RSpec.describe Placements::EditHostingInterestWizard do
           expect(steps).to eq(
             %i[appetite
                phase
-               primary_subject_selection
-               primary_placement_quantity
-               provider
+               year_group_selection
+               year_group_placement_quantity
                check_your_answers],
           )
         }
@@ -73,7 +72,6 @@ RSpec.describe Placements::EditHostingInterestWizard do
                phase
                secondary_subject_selection
                secondary_placement_quantity
-               provider
                check_your_answers],
           )
         }
@@ -100,7 +98,6 @@ RSpec.describe Placements::EditHostingInterestWizard do
                  secondary_placement_quantity
                  secondary_child_subject_placement_selection_modern_languages_1
                  secondary_child_subject_placement_selection_modern_languages_2
-                 provider
                  check_your_answers],
             )
           }
@@ -119,11 +116,10 @@ RSpec.describe Placements::EditHostingInterestWizard do
           expect(steps).to eq(
             %i[appetite
                phase
-               primary_subject_selection
-               primary_placement_quantity
+               year_group_selection
+               year_group_placement_quantity
                secondary_subject_selection
                secondary_placement_quantity
-               provider
                check_your_answers],
           )
         }
@@ -147,7 +143,7 @@ RSpec.describe Placements::EditHostingInterestWizard do
         }
       end
 
-      it { is_expected.to eq %i[appetite confirm] }
+      it { is_expected.to eq %i[appetite phase note_to_providers confirm] }
     end
   end
 
@@ -159,28 +155,30 @@ RSpec.describe Placements::EditHostingInterestWizard do
     context "when the attributes passed are valid" do
       context "when the appetite is 'actively_looking'" do
         context "when the phase selected is 'Primary'" do
-          let(:primary_with_english) { create(:subject, :primary, name: "Primary with english") }
-          let(:primary_with_science) { create(:subject, :primary, name: "Primary with science") }
+          let!(:primary) { create(:subject, :primary, name: "Primary") }
           let(:state) do
             {
               "appetite" => { "appetite" => "actively_looking" },
               "phase" => { "phases" => %w[Primary] },
-              "primary_subject_selection" => { "subject_ids" => [primary_with_english.id, primary_with_science.id] },
-              "primary_placement_quantity" => { "primary_with_english" => "1", "primary_with_science" => "2" },
+              "year_group_selection" => { "year_groups" => %w[reception year_3 mixed_year_groups] },
+              "year_group_placement_quantity" => { "reception" => "1", "year_3" => "2", "mixed_year_groups" => "3" },
             }
           end
 
           it "creates hosting interest for the next academic year, assigns the appetite,
             and creates a placement for each selected subject and it's quantity" do
             expect { update_hosting_interest }.to change(Placements::HostingInterest, :count).by(1)
-              .and change(Placement, :count).by(3)
+              .and change(Placement, :count).by(6)
             school.reload
 
             hosting_interest = school.hosting_interests.last
             expect(hosting_interest.appetite).to eq("actively_looking")
 
-            expect(school.placements.where(subject_id: primary_with_english.id).count).to eq(1)
-            expect(school.placements.where(subject_id: primary_with_science.id).count).to eq(2)
+            primary_placements = school.placements.where(subject_id: primary.id)
+            expect(primary_placements.count).to eq(6)
+            expect(primary_placements.where(year_group: "reception").count).to eq(1)
+            expect(primary_placements.where(year_group: "year_3").count).to eq(2)
+            expect(primary_placements.where(year_group: "mixed_year_groups").count).to eq(3)
           end
         end
 
@@ -249,16 +247,15 @@ RSpec.describe Placements::EditHostingInterestWizard do
         end
 
         context "when the phase selected is 'Primary' and 'Secondary'" do
-          let(:primary_with_english) { create(:subject, :primary, name: "Primary with english") }
-          let(:primary_with_science) { create(:subject, :primary, name: "Primary with science") }
+          let!(:primary) { create(:subject, :primary, name: "Primary") }
           let(:english) { create(:subject, :secondary, name: "English") }
           let(:mathematics) { create(:subject, :secondary, name: "Mathematics") }
           let(:state) do
             {
               "appetite" => { "appetite" => "actively_looking" },
               "phase" => { "phases" => %w[Primary Secondary] },
-              "primary_subject_selection" => { "subject_ids" => [primary_with_english.id, primary_with_science.id] },
-              "primary_placement_quantity" => { "primary_with_english" => "1", "primary_with_science" => "2" },
+              "year_group_selection" => { "year_groups" => %w[reception year_3 mixed_year_groups] },
+              "year_group_placement_quantity" => { "reception" => "1", "year_3" => "2", "mixed_year_groups" => "3" },
               "secondary_subject_selection" => { "subject_ids" => [english.id, mathematics.id] },
               "secondary_placement_quantity" => { "english" => "2", "mathematics" => "3" },
             }
@@ -267,103 +264,20 @@ RSpec.describe Placements::EditHostingInterestWizard do
           it "creates hosting interest for the next academic year, assigns the appetite,
             creates a school contact and creates a placement for each selected subject and it's quantity" do
             expect { update_hosting_interest }.to change(Placements::HostingInterest, :count).by(1)
-              .and change(Placement, :count).by(8)
+              .and change(Placement, :count).by(11)
             school.reload
 
             hosting_interest = school.hosting_interests.last
             expect(hosting_interest.appetite).to eq("actively_looking")
 
-            expect(school.placements.where(subject_id: primary_with_english.id).count).to eq(1)
-            expect(school.placements.where(subject_id: primary_with_science.id).count).to eq(2)
+            primary_placements = school.placements.where(subject_id: primary.id)
+            expect(primary_placements.count).to eq(6)
+            expect(primary_placements.where(year_group: "reception").count).to eq(1)
+            expect(primary_placements.where(year_group: "year_3").count).to eq(2)
+            expect(primary_placements.where(year_group: "mixed_year_groups").count).to eq(3)
+
             expect(school.placements.where(subject_id: english.id).count).to eq(2)
             expect(school.placements.where(subject_id: mathematics.id).count).to eq(3)
-          end
-
-          context "when provider_ids is set to 'select_all'" do
-            let(:state) do
-              {
-                "appetite" => { "appetite" => "actively_looking" },
-                "phase" => { "phases" => %w[Primary Secondary] },
-                "primary_subject_selection" => { "subject_ids" => [primary_with_english.id] },
-                "primary_placement_quantity" => { "primary_with_english" => "1" },
-                "secondary_subject_selection" => { "subject_ids" => [english.id] },
-                "secondary_placement_quantity" => { "english" => "1" },
-                "provider" => { "provider_ids" => %w[select_all] },
-              }
-            end
-            let(:test_provider_1) { create(:provider, name: "Test Provider 123") }
-            let(:test_provider_2) { create(:provider, name: "Test Provider 456") }
-            let(:test_provider_3) { create(:provider, name: "Test Provider 789") }
-
-            before do
-              test_provider_1
-              test_provider_2
-              test_provider_3
-            end
-
-            it "creates hosting interest for the next academic year, assigns the appetite,
-              and creates a placement for each selected subject and it's quantity
-              and create partnerships with all test providers" do
-              expect { update_hosting_interest }.to change(Placements::HostingInterest, :count).by(1)
-                .and change(Placement, :count).by(2)
-                .and change(Placements::Partnership, :count).by(3)
-              school.reload
-
-              hosting_interest = school.hosting_interests.last
-              expect(hosting_interest.appetite).to eq("actively_looking")
-
-              expect(school.placements.where(subject_id: primary_with_english.id).count).to eq(1)
-              expect(school.placements.where(subject_id: english.id).count).to eq(1)
-
-              expect(school.partner_providers).to contain_exactly(
-                test_provider_1,
-                test_provider_2,
-                test_provider_3,
-              )
-            end
-          end
-
-          context "when provider_ids is contains specific provider ids" do
-            let(:state) do
-              {
-                "appetite" => { "appetite" => "actively_looking" },
-                "phase" => { "phases" => %w[Primary Secondary] },
-                "primary_subject_selection" => { "subject_ids" => [primary_with_english.id] },
-                "primary_placement_quantity" => { "primary_with_english" => "1" },
-                "secondary_subject_selection" => { "subject_ids" => [english.id] },
-                "secondary_placement_quantity" => { "english" => "1" },
-                "provider" => { "provider_ids" => [test_provider_1.id, test_provider_3.id] },
-              }
-            end
-            let(:test_provider_1) { create(:provider, name: "Test Provider 123") }
-            let(:test_provider_2) { create(:provider, name: "Test Provider 456") }
-            let(:test_provider_3) { create(:provider, name: "Test Provider 789") }
-
-            before do
-              test_provider_1
-              test_provider_2
-              test_provider_3
-            end
-
-            it "creates hosting interest for the next academic year, assigns the appetite,
-              and creates a placement for each selected subject and it's quantity
-              and create partnerships for the selected test providers" do
-              expect { update_hosting_interest }.to change(Placements::HostingInterest, :count).by(1)
-                .and change(Placement, :count).by(2)
-                .and change(Placements::Partnership, :count).by(2)
-              school.reload
-
-              hosting_interest = school.hosting_interests.last
-              expect(hosting_interest.appetite).to eq("actively_looking")
-
-              expect(school.placements.where(subject_id: primary_with_english.id).count).to eq(1)
-              expect(school.placements.where(subject_id: english.id).count).to eq(1)
-
-              expect(school.partner_providers).to contain_exactly(
-                test_provider_1,
-                test_provider_3,
-              )
-            end
           end
         end
       end
