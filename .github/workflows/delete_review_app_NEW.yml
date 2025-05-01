@@ -3,7 +3,6 @@ name: NEW Delete Review App NEW
 on:
   pull_request:
     types: [closed]
-    branches: [my_branch]
   workflow_dispatch:
     inputs:
       pr_number:
