@@ -11,6 +11,13 @@ RSpec.describe "School user does not enter any school contact details",
 
     when_i_select_interested_in_hosting_placements
     and_i_click_on_continue
+    then_i_see_the_phase_known_page
+
+    when_i_select_i_dont_know
+    and_i_click_on_continue
+    then_i_see_the_provider_note_page
+
+    when_i_click_on_continue
     then_i_see_the_school_contact_form
 
     when_i_click_on_continue
@@ -30,22 +37,6 @@ RSpec.describe "School user does not enter any school contact details",
     @school = create(:placements_school, with_school_contact: false)
     sign_in_placements_user(organisations: [@school])
   end
-
-  def when_i_am_on_the_placements_index_page
-    expect(page).to have_title("Placements - Manage school placements - GOV.UK")
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Placements")
-    expect(secondary_navigation).to have_current_item("This year (#{@current_academic_year_name}")
-    expect(page).to have_link("Bulk add placements")
-  end
-  alias_method :then_i_am_on_the_placements_index_page,
-               :when_i_am_on_the_placements_index_page
-
-  def when_i_click_on_bulk_add_placements
-    click_on "Bulk add placements"
-  end
-  alias_method :and_i_click_on_bulk_add_placements,
-               :when_i_click_on_bulk_add_placements
 
   def when_i_visit_the_add_hosting_interest_page
     visit new_add_hosting_interest_placements_school_hosting_interests_path(@school)
@@ -73,31 +64,27 @@ RSpec.describe "School user does not enter any school contact details",
   def when_i_click_on_continue
     click_on "Continue"
   end
+
   alias_method :and_i_click_on_continue,
                :when_i_click_on_continue
 
-  def then_i_see_the_help_available_to_you_page
+  def then_i_see_the_confirmation_page
     expect(page).to have_title(
-      "Help available to you - Manage school placements - GOV.UK",
+      "Confirm and share your approximate information with providers - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Help available to you")
-  end
-
-  def then_i_see_the_are_you_interested_in_listing_placements_form
-    expect(page).to have_title(
-      "Would you like to list some placements to be seen by providers? - Manage school placements - GOV.UK",
-    )
-    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_h1("Confirm and share your approximate information with providers", class: "govuk-heading-l")
+    expect(page).to have_element(:span, text: "Potential placement details", class: "govuk-caption-l")
     expect(page).to have_element(
-      :h1,
-      text: "Would you like to list some placements to be seen by providers?",
-      class: "govuk-fieldset__heading",
+      :p,
+      text: "Providers will be able to see that you may be able to offer placements for trainee teachers.",
+      class: "govuk-body",
     )
-  end
-
-  def when_i_select_no
-    choose "No"
+    expect(page).to have_element(
+      :p,
+      text: "They will be able to see your approximate information and will be able to use your email to contact you.",
+      class: "govuk-body",
+    )
   end
 
   def then_i_see_the_school_contact_form
@@ -113,7 +100,6 @@ RSpec.describe "School user does not enter any school contact details",
       class: "govuk-body",
     )
 
-    @school_contact = @school.school_contact
     expect(page).to have_field("First name")
     expect(page).to have_field("Last name")
     expect(page).to have_field("Email address")
@@ -122,6 +108,39 @@ RSpec.describe "School user does not enter any school contact details",
   def then_i_see_a_validation_error_for_entering_a_school_contact_email_address
     expect(page).to have_validation_error(
       "Enter an email address",
+    )
+  end
+
+  def then_i_see_the_phase_known_page
+    expect(page).to have_title(
+      "Do you know what phase of education your placements will be? - Manage school placements - GOV.UK",
+    )
+    expect(page).to have_element(
+      :legend,
+      text: "Do you know what phase of education your placements will be?",
+      class: "govuk-fieldset__legend",
+    )
+    expect(page).to have_field("Primary", type: :checkbox)
+    expect(page).to have_field("Secondary", type: :checkbox)
+    expect(page).to have_field("I don’t know", type: :checkbox)
+  end
+
+  def when_i_select_i_dont_know
+    check "I don’t know"
+  end
+
+  def then_i_see_the_provider_note_page
+    expect(page).to have_title(
+      "Is there anything about your school you would like providers to know? (optional) - Manage school placements - GOV.UK",
+    )
+    expect(page).to have_element(
+      :label,
+      text: "Is there anything about your school you would like providers to know? (optional)",
+    )
+    expect(page).to have_element(
+      :span,
+      text: "Expression of interest",
+      class: "govuk-caption-l",
     )
   end
 end
