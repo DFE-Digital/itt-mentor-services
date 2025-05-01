@@ -2,10 +2,9 @@ name: Delete review app on AKS
 
 on:
   pull_request:
+    types: [closed]
     branches:
-    - main
-    types:
-    - closed
+      - 2323-use-delete-review-app-github-action
   workflow_dispatch:
     inputs:
       pr_number:
@@ -13,54 +12,46 @@ on:
         required: true
         type: string
 
-
 jobs:
   delete-review-app:
     name: Delete Review App ${{ github.event.pull_request.number }}
     concurrency: deploy_review_${{ github.event.pull_request.number }}
-    runs-on: ubuntu-latest
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name == 'workflow_dispatch' }}
     environment: review
+    if: contains(github.event.pull_request.labels.*.name, 'deploy') ||  ${{ github.event_name }} == 'workflow_dispatch'
+    runs-on: ubuntu-latest
     permissions:
-      pull-requests: write
-      id-token: write
-
+      contents: "read"
+      id-token: "write"
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: set PR_NUMBER
+        id: config
+        run: |
+          if [ ${{ github.event_name }} == 'workflow_dispatch' ]; then
+            PR_NUMBER=${{ github.event.inputs.pr_number }}
+          else
+            PR_NUMBER=${{ github.event.pull_request.number }}
+          fi
+          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+          echo "ENVIRONMENT=pr-${PR_NUMBER})" >> $GITHUB_ENV
 
-    - name: set PR_NUMBER
-      id: config
-      run: |
-        if [ ${{ github.event_name }} == 'workflow_dispatch' ]; then
-          PR_NUMBER=${{ github.event.inputs.pr_number }}
-        else
-          PR_NUMBER=${{ github.event.pull_request.number }}
-        fi
-        echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+      - name: Set environment variables
+        shell: bash
+        run: |
+          source global_config/review.sh
+          echo "AZURE_RESOURCE_PREFIX=${AZURE_RESOURCE_PREFIX}" >> $GITHUB_ENV
+          echo "CONFIG_SHORT=${CONFIG_SHORT}" >> $GITHUB_ENV
 
-    - uses: hashicorp/setup-terraform@v3
-      with:
-        terraform_version: 1.6.4
-        terraform_wrapper: false
-
-    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
-      with:
-        azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-
-    - name: Terraform Destroy
-      run: |
-        make ci review terraform-destroy
-      env:
-        PR_NUMBER: ${{ env.PR_NUMBER }}
-
-    - name: Post Pull Request Comment
-      if: ${{ github.event_name == 'pull_request' }}
-      uses: marocchino/sticky-pull-request-comment@v2
-      with:
-        header: aks
-        message: |
-                Review app  track and pay deployed to <https://track-and-pay-pr-${{ env.PR_NUMBER }}.test.teacherservices.cloud> was deleted
-                Review app  school placements deployed to <https://manage-school-placements-pr-${{ env.PR_NUMBER }}.test.teacherservices.cloud> was deleted
+      - name: Delete Review App
+        id: delete-review-app
+        uses: DFE-Digital/github-actions/delete-review-app@master
+        with:
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          container-name: terraform-state
+          gcp-wip: ${{ vars.GCP_WIP }}
+          gcp-project-id: ${{ vars.GCP_PROJECT_ID }}
+          pr-number: ${{ env.PR_NUMBER }}
+          resource-group-name: "${{ env.AZURE_RESOURCE_PREFIX }}-#SERVICE_SHORT#-${{ env.CONFIG_SHORT }}-rg"
+          storage-account-name: "${{ env.AZURE_RESOURCE_PREFIX }}#SERVICE_SHORT#${{ env.CONFIG_SHORT }}tfsa"
+          tf-state-file: "${{ env.ENVIRONMENT }}_kubernetes.tfstate"
