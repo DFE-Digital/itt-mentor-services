@@ -3,7 +3,7 @@ name: Delete review app on AKS
 on:
   pull_request:
     branches:
-    - main
+    - 2323-use-delete-review-app-github-action
     types:
     - closed
   workflow_dispatch:
@@ -39,28 +39,24 @@ jobs:
         fi
         echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
 
-    - uses: hashicorp/setup-terraform@v3
-      with:
-        terraform_version: 1.6.4
-        terraform_wrapper: false
+    - name: Set environment variables
+      shell: bash
+      run: |
+        source global_config/review.sh
+        echo "AZURE_RESOURCE_PREFIX=${AZURE_RESOURCE_PREFIX}" >> $GITHUB_ENV
+        echo "CONFIG_SHORT=${CONFIG_SHORT}" >> $GITHUB_ENV
 
-    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
+    - name: Delete Review App
+      id: delete-review-app
+      uses: DFE-Digital/github-actions/delete-review-app@master
       with:
         azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
         azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-
-    - name: Terraform Destroy
-      run: |
-        make ci review terraform-destroy
-      env:
-        PR_NUMBER: ${{ env.PR_NUMBER }}
-
-    - name: Post Pull Request Comment
-      if: ${{ github.event_name == 'pull_request' }}
-      uses: marocchino/sticky-pull-request-comment@v2
-      with:
-        header: aks
-        message: |
-                Review app  track and pay deployed to <https://track-and-pay-pr-${{ env.PR_NUMBER }}.test.teacherservices.cloud> was deleted
-                Review app  school placements deployed to <https://manage-school-placements-pr-${{ env.PR_NUMBER }}.test.teacherservices.cloud> was deleted
+        container-name: terraform-state
+        gcp-wip: ${{ vars.GCP_WIP }}
+        gcp-project-id: ${{ vars.GCP_PROJECT_ID }}
+        pr-number: ${{ env.PR_NUMBER }}
+        resource-group-name: "${{ env.AZURE_RESOURCE_PREFIX }}-#SERVICE_SHORT#-${{ env.CONFIG_SHORT }}-rg"
+        storage-account-name: "${{ env.AZURE_RESOURCE_PREFIX }}#SERVICE_SHORT#${{ env.CONFIG_SHORT }}tfsa"
+        tf-state-file: "${{ env.ENVIRONMENT }}_kubernetes.tfstate"
