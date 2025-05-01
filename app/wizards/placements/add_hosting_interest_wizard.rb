@@ -68,14 +68,9 @@ module Placements
     end
 
     def placement_quantity_for_subject(subject)
-      subject_step = if subject.primary?
-                       steps[:primary_placement_quantity]
-                     else
-                       steps[:secondary_placement_quantity]
-                     end
-      return 0 if subject_step.blank?
+      return 0 if steps[:secondary_placement_quantity].blank?
 
-      subject_step.try(subject.name_as_attribute).to_i
+      steps.fetch(:secondary_placement_quantity).try(subject.name_as_attribute).to_i
     end
 
     def placement_quantity_for_year_group(year_group)
@@ -256,11 +251,7 @@ module Placements
     end
 
     def value_unknown(value)
-      if value.is_a?(Array)
-        value.include?(UNKNOWN_OPTION)
-      else
-        value == UNKNOWN_OPTION
-      end
+      value.include?(UNKNOWN_OPTION)
     end
 
     def primary_placement_information

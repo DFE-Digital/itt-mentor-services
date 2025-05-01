@@ -52,8 +52,6 @@ module Placements
     end
 
     def placement_quantity_for_year_group(year_group)
-      return 0 if steps[:year_group_placement_quantity].blank?
-
       steps.fetch(:year_group_placement_quantity).try(year_group.to_sym).to_i
     end
 
