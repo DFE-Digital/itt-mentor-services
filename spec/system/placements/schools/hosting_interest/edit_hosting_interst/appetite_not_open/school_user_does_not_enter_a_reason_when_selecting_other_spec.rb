@@ -103,19 +103,25 @@ RSpec.describe "School user does not select any reasons not to host",
 
   def then_i_see_the_reasons_for_not_hosting_form
     expect(page).to have_title(
-      "What are your reasons for not taking part in ITT this year? - Manage school placements - GOV.UK",
+      "Tell us why you aren’t able to host this year - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Organisation details")
     expect(page).to have_element(
+      :span,
+      text: "Not offering placements this year",
+      class: "govuk-caption-l",
+    )
+    expect(page).to have_element(
       :legend,
-      text: "What are your reasons for not taking part in ITT this year?",
+      text: "Tell us why you aren’t able to host this year",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Concerns about trainee quality", type: :checkbox)
-    expect(page).to have_field("Don't get offered trainees", type: :checkbox)
-    expect(page).to have_field("Don't know how to get involved", type: :checkbox)
-    expect(page).to have_field("Not enough trained mentors", type: :checkbox)
-    expect(page).to have_field("Number of pupils with SEND needs", type: :checkbox)
+    expect(page).to have_field("High number of pupils with SEND needs", type: :checkbox)
+    expect(page).to have_field("Low capacity to support trainees due to staff changes", type: :checkbox)
+    expect(page).to have_field("No mentors available due to capacity", type: :checkbox)
+    expect(page).to have_field("Not offered appropriate trainees", type: :checkbox)
+    expect(page).to have_field("Unsure how to get involved", type: :checkbox)
     expect(page).to have_field("Working to improve our OFSTED rating", type: :checkbox)
     expect(page).to have_field("Other", type: :checkbox)
   end

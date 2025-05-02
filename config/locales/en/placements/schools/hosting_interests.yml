@@ -27,19 +27,14 @@ en:
             what_happens_next: What happens next?
             teaching_school_hub_url: https://www.gov.uk/guidance/teaching-school-hubs
             not_open:
-              we_set_your_profile: We’ve set your profile to ‘not looking to host placements this year’.
-              your_contact_details_will_not_be_shown: Your contact details will not be shown to providers looking to place ITT trainees.
-              we_will_ask_you_again_html: 
-                We will ask you again in 12 months whether you would like to host placements. 
-                Make sure your profile has <a href=%{school_url}>up to date contact details of your ITT coordinator.</a>
+              panel_title_html: Confirmed.</br>You are not offering placements
+              panel_text: Your contact details will not be shown to providers
+              what_happens_next: What happens next?
+              we_will_ask_you_again: 
+                We will ask you again in the spring term of the next year to check whether you would like to offer placements.
               if_you_would_like_to_host_placements:
-                If you would like to host placements this year, update your profile to let providers know you’re interested.
-              further_help_with_itt: Further help with ITT
-              your_hub_or_provider: Your teaching school hub or local provider can answer any questions about ITT.
-              always_keen: They are always keen to hear from potential host schools, and can help you in a way that meets the individual needs of your school.
-              find_your_nearest: "Find your nearest:"
-              teaching_school_hub: teaching school hub
-              itt_provider: ITT provider
+                If you would like to host placements this year, %{link} to let providers know you’re interested.
+              update_your_placement_preferences: update your placement preferences
             interested:
               panel_title: Approximate information added
               panel_text: Providers can see that you may offer placements

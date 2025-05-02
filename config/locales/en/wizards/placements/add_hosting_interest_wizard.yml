@@ -23,16 +23,19 @@ en:
           title: Would you like to list some placements to be seen by providers?
           continue: Continue
         reason_not_hosting_step:
-          title: What are your reasons for not taking part in ITT this year?
+          caption: Not offering placements this year
+          title: Tell us why you aren’t able to host this year
+          hint: 
+            Your answers will help Department for Education better understand how to improve managing ITT.
           continue: Continue
-          hint: "Select all that apply"
           options:
             concerns_about_trainee_quality: Concerns about trainee quality
-            do_not_get_offered_trainees: Don't get offered trainees
-            do_not_know_how_to_get_involved: Don't know how to get involved
-            not_enough_trained_mentors: Not enough trained mentors
-            number_of_pupils_with_send_needs: Number of pupils with SEND needs
+            do_not_get_offered_trainees: Not offered appropriate trainees
+            do_not_know_how_to_get_involved: Unsure how to get involved
+            not_enough_trained_mentors: No mentors available due to capacity
+            number_of_pupils_with_send_needs: High number of pupils with SEND needs
             working_to_improve_our_ofsted_rating: Working to improve our OFSTED rating
+            low_capacity_to_support_trainees: Low capacity to support trainees due to staff changes
             other: Other
           tell_us: Tell us your reason
         help_step:
@@ -58,12 +61,18 @@ en:
           change: Change
           itt_contact: ITT contact
         are_you_sure_step:
-          title: Are you sure you do not want to be contacted about placements?
-          caption: Not interested in hosting this year
-          this_will_help_providers: This will help providers know not to contact your school. You can change this at any time.
-          your_school_will_show_as: Your school will show as ‘not looking to host this year’. 
-          we_will_ask_again: We will ask you again in 12 months whether you would like to host placements. 
+          title: Confirm and let providers know you are not offering placements
+          caption: Not offering placements this year
+          your_contact_details: Your contact details and reason will not be shared with providers.
+          we_will_ask_you_again: 
+            We will ask you again in the spring term of the next year to check whether you would like to offer placements.
+          your_reason:
+            Your reason for not offering placements be shared with the Department for Education for reporting purposes.
+          reason_for_not_offering: Reason for not offering
+          details: Details
+          itt_contact: ITT contact
           continue: Continue
+          change: Change
         confirm_step:
           title: Confirm and share your approximate information with providers
           caption: Potential placement details
@@ -134,3 +143,9 @@ en:
             caption: Potential secondary placement details
             continue: Continue
             placement_number: "Placement %{placement_number} of %{step_count}"
+        not_open:
+          school_contact_step:
+            caption: Not offering placements this year
+            title: Who is the preferred contact for next year?
+            description: We will ask in the next academic year about placements. The contact may be you, or someone at your school who coordinates ITT.
+            continue: Continue

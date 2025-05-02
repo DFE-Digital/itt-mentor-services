@@ -1,0 +1,22 @@
+<%= govuk_panel(
+  title_text: t(".panel_title_html"),
+  text: t(".panel_text"),
+) %>
+
+<h1 class="govuk-heading-l govuk-!-margin-top-6">
+  <%= t(".what_happens_next") %>
+</h1>
+
+<p class="govuk-body">
+  <%= t(".we_will_ask_you_again") %>
+</p>
+
+<p class="govuk-body">
+  <%= embedded_link_text(
+    t(".if_you_would_like_to_host_placements",
+      link: govuk_link_to(
+        t(".update_your_placement_preferences"),
+        placements_school_path(@school),
+      )),
+  ) %>
+</p>
