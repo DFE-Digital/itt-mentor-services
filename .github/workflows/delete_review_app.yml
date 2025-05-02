@@ -54,6 +54,8 @@ jobs:
         azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         container-name: terraform-state
+        resource-group-name: s189t01-ittms-rv-rg
+        storage-account-name: s189t01ittmsrvtfsa
         gcp-wip: ${{ vars.GCP_WIP }}
         gcp-project-id: ${{ vars.GCP_PROJECT_ID }}
         pr-number: ${{ env.PR_NUMBER }}
