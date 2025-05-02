@@ -45,6 +45,7 @@ jobs:
         source global_config/review.sh
         echo "AZURE_RESOURCE_PREFIX=${AZURE_RESOURCE_PREFIX}" >> $GITHUB_ENV
         echo "CONFIG_SHORT=${CONFIG_SHORT}" >> $GITHUB_ENV
+        echo "SERVICE_SHORT=${CONFIG_SHORT}" >> $GITHUB_ENV
 
     - name: Delete Review App
       id: delete-review-app
@@ -54,8 +55,6 @@ jobs:
         azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         container-name: terraform-state
-        resource-group-name: s189t01-ittms-rv-rg
-        storage-account-name: s189t01ittmsrvtfsa
         gcp-wip: ${{ vars.GCP_WIP }}
         gcp-project-id: ${{ vars.GCP_PROJECT_ID }}
         pr-number: ${{ env.PR_NUMBER }}
