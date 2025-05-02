@@ -8,6 +8,7 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".caption") %></span>
       <%= f.govuk_collection_check_boxes(
         :phases,
         current_step.phases_for_selection,

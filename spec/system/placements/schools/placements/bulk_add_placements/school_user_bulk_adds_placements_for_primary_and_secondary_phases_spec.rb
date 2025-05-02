@@ -123,12 +123,12 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
 
   def then_i_see_the_phase_form
     expect(page).to have_title(
-      "What phase of education can your placements be? - Manage school placements - GOV.UK",
+      "What education phase can your placements be? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "What phase of education can your placements be?",
+      text: "What education phase can your placements be?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Primary", type: :checkbox)
@@ -171,10 +171,10 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
 
   def then_i_see_the_primary_placement_quantity_form
     expect(page).to have_title(
-      "How many primary placements you would be willing to host in each year group? - Manage school placements - GOV.UK",
+      "Enter the number of primary school placements you can offer - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("How many primary placements you would be willing to host in each year group?", class: "govuk-heading-l")
+    expect(page).to have_h1("Enter the number of primary school placements you can offer", class: "govuk-heading-l")
     expect(page).to have_element(:span, text: "Primary placement details", class: "govuk-caption-l")
     expect(page).to have_field("Year 1", type: :number)
   end
@@ -185,15 +185,15 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
 
   def then_i_see_the_secondary_subject_selection_form
     expect(page).to have_title(
-      "Select secondary school subjects - Manage school placements - GOV.UK",
+      "Select secondary school subjects you can offer - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "Select secondary school subjects",
+      text: "Select secondary school subjects you can offer",
       class: "govuk-fieldset__legend",
     )
-    expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
+    expect(page).to have_element(:span, text: "Secondary placement details", class: "govuk-caption-l")
     expect(page).to have_field("English", type: :checkbox)
     expect(page).to have_field("Mathematics", type: :checkbox)
     expect(page).to have_field("Science", type: :checkbox)
@@ -209,11 +209,11 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
 
   def then_i_see_the_secondary_subject_placement_quantity_form
     expect(page).to have_title(
-      "Secondary subjects: Enter the number of placements you would be willing to host - Manage school placements - GOV.UK",
+      "Enter the number of secondary school placements you can offer - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Secondary subjects: Enter the number of placements you would be willing to host", class: "govuk-heading-l")
-    expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
+    expect(page).to have_h1("Enter the number of secondary school placements you can offer", class: "govuk-heading-l")
+    expect(page).to have_element(:span, text: "Secondary placement details", class: "govuk-caption-l")
     expect(page).to have_field("English", type: :number)
     expect(page).to have_field("Mathematics", type: :number)
   end

@@ -139,7 +139,7 @@ RSpec.describe "School user does not enter any school contact details",
     )
     expect(page).to have_element(
       :span,
-      text: "Expression of interest",
+      text: "Potential placement details",
       class: "govuk-caption-l",
     )
   end
