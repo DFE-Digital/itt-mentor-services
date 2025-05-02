@@ -3,6 +3,7 @@ en:
     placements:
       add_hosting_interest_wizard:
         appetite_step:
+          caption: Placement preferences
           title: 
             Can your school offer placements for trainee teachers in this academic year (%{academic_year_name})?
           continue: Continue
@@ -49,6 +50,7 @@ en:
           local_providers: These training providers are local to you and could help.
           find_providers: Find providers near me
         school_contact_step:
+          caption: Contact details
           title: Who should providers contact?
           description: Choose the person best placed to organise ITT placements at your school. This information will be shown on your profile.
           continue: Continue
@@ -56,6 +58,7 @@ en:
           title: Do you know which subjects you would like to host?
           continue: Continue
         check_your_answers_step:
+          caption: Placement details
           title: Check your answers
           continue: Save and continue
           change: Change
@@ -74,7 +77,7 @@ en:
           continue: Continue
           change: Change
         confirm_step:
-          title: Confirm and share your approximate information with providers
+          title: Confirm and share what you may be able to offer
           caption: Potential placement details
           providers_see_you_can_offer_placements:
             Providers will be able to see that you may be able to offer placements for trainee teachers.
@@ -88,6 +91,7 @@ en:
         interested:
           phase_step:
             title: Do you know what phase of education your placements will be?
+            caption: Potential placement offer details
             continue: Continue
             options:
               unknown: I don’t know
@@ -117,7 +121,7 @@ en:
           note_to_providers_step:
             title: 
               Is there anything about your school you would like providers to know? (optional)
-            caption: Expression of interest
+            caption: Potential placement details
             continue: Continue
           secondary_subject_selection_step:
             title: Do you know the secondary school subjects you could have placements in?

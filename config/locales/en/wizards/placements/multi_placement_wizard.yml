@@ -33,7 +33,8 @@ en:
           description: Choose the person best placed to organise ITT placements at your school. This information will be shown on your profile.
           continue: Continue
         phase_step:
-          title: What phase of education can your placements be?
+          caption: Placement details
+          title: What education phase can your placements be?
           options:
             primary_description: 3 to 11 years
             secondary_description: 11 to 19 years
@@ -48,8 +49,9 @@ en:
           caption: Placement details
           continue: Continue
         secondary_subject_selection_step:
-          title: Select secondary school subjects
-          caption: Placement details
+          title: Select secondary school subjects you can offer
+          caption: Secondary placement details
+          hint: Subjects are taken from the DfE database of courses. If the subject you would like to host is not here, choose the closest option
           continue: Continue
         primary_placement_quantity_step:
           title: "Primary subjects: Enter the number of placements you would be willing to host"
@@ -57,15 +59,15 @@ en:
           caption: Placement details
           continue: Continue
         secondary_placement_quantity_step:
-          title: "Secondary subjects: Enter the number of placements you would be willing to host"
+          title: Enter the number of secondary school placements you can offer
           enter_approximate: Enter an approximate number if you are unsure
           change_to_specify: You will have a chance to specify the languages later
-          caption: Placement details
+          caption: Secondary placement details
           continue: Continue
         secondary_child_subject_placement_selection_step:
           title: You selected %{placement_quantity} %{subject_name} placements
           select_languages_taught: Select the languages taught on each of these placements
-          caption: Placement details
+          caption: Secondary placement details
           continue: Continue
           placement_number: "Placement %{placement_number} of %{step_count}"
         provider_step:
@@ -108,7 +110,7 @@ en:
           hint: You will be able to enter the number of placements on the next screen
           continue: Continue
         year_group_placement_quantity_step:
-            title: How many primary placements you would be willing to host in each year group?
+            title: Enter the number of primary school placements you can offer
             caption: Primary placement details
             enter_approximate: Enter an approximate number if you are unsure
             continue: Continue

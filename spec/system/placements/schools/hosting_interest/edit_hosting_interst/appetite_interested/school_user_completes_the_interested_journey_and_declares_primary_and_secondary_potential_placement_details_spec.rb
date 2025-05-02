@@ -155,10 +155,10 @@ RSpec.describe "School user completes the interested journey without declaring p
 
   def then_i_see_the_confirmation_page
     expect(page).to have_title(
-      "Confirm and share your approximate information with providers - Manage school placements - GOV.UK",
+      "Confirm and share what you may be able to offer - Manage school placements - GOV.UK",
     )
     expect(page).to have_current_item("Organisation details")
-    expect(page).to have_h1("Confirm and share your approximate information with providers", class: "govuk-heading-l")
+    expect(page).to have_h1("Confirm and share what you may be able to offer", class: "govuk-heading-l")
     expect(page).to have_element(:span, text: "Potential placement details", class: "govuk-caption-l")
     expect(page).to have_element(
       :p,
@@ -234,7 +234,7 @@ RSpec.describe "School user completes the interested journey without declaring p
     )
     expect(page).to have_element(
       :span,
-      text: "Expression of interest",
+      text: "Potential placement details",
       class: "govuk-caption-l",
     )
   end

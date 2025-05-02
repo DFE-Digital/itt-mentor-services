@@ -65,12 +65,12 @@ RSpec.describe "School user does not enter a placement quantity",
 
   def then_i_see_the_phase_form
     expect(page).to have_title(
-      "What phase of education can your placements be? - Manage school placements - GOV.UK",
+      "What education phase can your placements be? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "What phase of education can your placements be?",
+      text: "What education phase can your placements be?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Primary", type: :checkbox)
@@ -109,10 +109,10 @@ RSpec.describe "School user does not enter a placement quantity",
 
   def then_i_see_the_primary_placement_quantity_form
     expect(page).to have_title(
-      "How many primary placements you would be willing to host in each year group? - Manage school placements - GOV.UK",
+      "Enter the number of primary school placements you can offer - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("How many primary placements you would be willing to host in each year group?", class: "govuk-heading-l")
+    expect(page).to have_h1("Enter the number of primary school placements you can offer", class: "govuk-heading-l")
     expect(page).to have_element(:span, text: "Primary placement details", class: "govuk-caption-l")
     expect(page).to have_field("Year 1", type: :number)
   end
