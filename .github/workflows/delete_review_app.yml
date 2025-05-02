@@ -57,6 +57,6 @@ jobs:
         gcp-wip: ${{ vars.GCP_WIP }}
         gcp-project-id: ${{ vars.GCP_PROJECT_ID }}
         pr-number: ${{ env.PR_NUMBER }}
-        resource-group-name: "${{ env.AZURE_RESOURCE_PREFIX }}-ittms-${{ env.CONFIG_SHORT }}-rg"
+        resource-group-name: "${{ env.AZURE_RESOURCE_PREFIX }}${{ env.SERVICE_SHORT }}${{ env.CONFIG_SHORT }}-rg"
         storage-account-name: "${{ env.AZURE_RESOURCE_PREFIX }}${{ env.SERVICE_SHORT }}${{ env.CONFIG_SHORT }}tfsa"
         tf-state-file: "${{ env.ENVIRONMENT }}_kubernetes.tfstate"
