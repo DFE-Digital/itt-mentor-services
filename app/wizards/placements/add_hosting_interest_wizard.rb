@@ -18,9 +18,7 @@ module Placements
       when "actively_looking"
         actively_looking_steps
       when "not_open"
-        add_step(ReasonNotHostingStep)
-        add_step(SchoolContactStep)
-        add_step(AreYouSureStep)
+        not_open_steps
       when "interested"
         interested_steps
       end
@@ -161,6 +159,12 @@ module Placements
       add_step(Interested::NoteToProvidersStep)
       add_step(SchoolContactStep)
       add_step(ConfirmStep)
+    end
+
+    def not_open_steps
+      add_step(ReasonNotHostingStep)
+      add_step(NotOpen::SchoolContactStep)
+      add_step(AreYouSureStep)
     end
 
     def year_group_steps

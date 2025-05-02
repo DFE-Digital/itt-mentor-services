@@ -23,9 +23,11 @@ RSpec.describe "School user enters another reason why they are not hosting",
     and_i_enter_another_reason
     and_i_click_on_continue
     then_i_see_the_are_you_sure_page
+    and_i_see_the_reason_not_hosting_i_entered
 
     when_i_click_on_continue
     then_i_see_my_responses_with_successfully_updated
+    and_i_see_the_whats_next_page
     and_the_schools_hosting_interest_for_the_next_year_is_updated
   end
 
@@ -108,45 +110,48 @@ RSpec.describe "School user enters another reason why they are not hosting",
 
   def then_i_see_the_reasons_for_not_hosting_form
     expect(page).to have_title(
-      "What are your reasons for not taking part in ITT this year? - Manage school placements - GOV.UK",
+      "Tell us why you aren’t able to host this year - Manage school placements - GOV.UK",
     )
-    expect(primary_navigation).to have_current_item("Organisation details")
+    expect(page).to have_current_item("Organisation details")
+    expect(page).to have_element(
+      :span,
+      text: "Not offering placements this year",
+      class: "govuk-caption-l",
+    )
     expect(page).to have_element(
       :legend,
-      text: "What are your reasons for not taking part in ITT this year?",
+      text: "Tell us why you aren’t able to host this year",
       class: "govuk-fieldset__legend",
     )
-    expect(page).to have_field("Not enough trained mentors", type: :checkbox)
-    expect(page).to have_field("Number of pupils with SEND needs", type: :checkbox)
+    expect(page).to have_field("Concerns about trainee quality", type: :checkbox)
+    expect(page).to have_field("High number of pupils with SEND needs", type: :checkbox)
+    expect(page).to have_field("Low capacity to support trainees due to staff changes", type: :checkbox)
+    expect(page).to have_field("No mentors available due to capacity", type: :checkbox)
+    expect(page).to have_field("Not offered appropriate trainees", type: :checkbox)
+    expect(page).to have_field("Unsure how to get involved", type: :checkbox)
     expect(page).to have_field("Working to improve our OFSTED rating", type: :checkbox)
+    expect(page).to have_field("Other", type: :checkbox)
   end
 
   def when_i_select_other
     check "Other"
   end
 
-  def and_i_select_number_of_pupils_with_send_needs
-    check "Number of pupils with SEND needs"
-  end
-
-  def then_i_see_the_help_available_to_you_page
-    expect(page).to have_title(
-      "Help available to you - Manage school placements - GOV.UK",
-    )
-    expect(primary_navigation).to have_current_item("Organisation details")
-    expect(page).to have_h1("Help available to you")
-  end
-
   def then_i_see_the_school_contact_form
     expect(page).to have_title(
-      "Who should providers contact? - Manage school placements - GOV.UK",
+      "Who is the preferred contact for next year? - Manage school placements - GOV.UK",
     )
-    expect(primary_navigation).to have_current_item("Organisation details")
-    expect(page).to have_h1("Who should providers contact?")
+    expect(page).to have_current_item("Organisation details")
+    expect(page).to have_element(
+      :span,
+      text: "Not offering placements this year",
+      class: "govuk-caption-l",
+    )
+    expect(page).to have_h1("Who is the preferred contact for next year?")
     expect(page).to have_element(
       :p,
-      text: "Choose the person best placed to organise ITT placements at your school. "\
-        "This information will be shown on your profile.",
+      text: "We will ask in the next academic year about placements. " \
+        "The contact may be you, or someone at your school who coordinates ITT.",
       class: "govuk-body",
     )
 
@@ -157,18 +162,22 @@ RSpec.describe "School user enters another reason why they are not hosting",
 
   def then_i_see_the_school_contact_form_prefilled_with_my_inputs
     expect(page).to have_title(
-      "Who should providers contact? - Manage school placements - GOV.UK",
+      "Who is the preferred contact for next year? - Manage school placements - GOV.UK",
     )
-    expect(primary_navigation).to have_current_item("Organisation details")
-    expect(page).to have_h1("Who should providers contact?")
+    expect(page).to have_current_item("Organisation details")
+    expect(page).to have_element(
+      :span,
+      text: "Not offering placements this year",
+      class: "govuk-caption-l",
+    )
+    expect(page).to have_h1("Who is the preferred contact for next year?")
     expect(page).to have_element(
       :p,
-      text: "Choose the person best placed to organise ITT placements at your school. "\
-        "This information will be shown on your profile.",
+      text: "We will ask in the next academic year about placements. " \
+        "The contact may be you, or someone at your school who coordinates ITT.",
       class: "govuk-body",
     )
 
-    @school_contact = @school.school_contact
     expect(page).to have_field("First name", with: "Joe")
     expect(page).to have_field("Last name", with: "Bloggs")
     expect(page).to have_field("Email address", with: "joe_bloggs@example.com")
@@ -195,13 +204,6 @@ RSpec.describe "School user enters another reason why they are not hosting",
     )
   end
 
-  def and_the_schools_contact_has_been_updated
-    @school_contact = @school.school_contact.reload
-    expect(@school_contact.first_name).to eq("Joe")
-    expect(@school_contact.last_name).to eq("Bloggs")
-    expect(@school_contact.email_address).to eq("joe_bloggs@example.com")
-  end
-
   def and_the_schools_hosting_interest_for_the_next_year_is_updated
     hosting_interest = @school.hosting_interests.for_academic_year(@next_academic_year).last
     expect(hosting_interest.appetite).to eq("not_open")
@@ -211,17 +213,59 @@ RSpec.describe "School user enters another reason why they are not hosting",
 
   def then_i_see_the_are_you_sure_page
     expect(page).to have_title(
-      "Are you sure you do not want to be contacted about placements? - Manage school placements - GOV.UK",
+      "Confirm and let providers know you are not offering placements - Manage school placements - GOV.UK",
     )
-    expect(primary_navigation).to have_current_item("Organisation details")
-    expect(page).to have_h1("Are you sure you do not want to be contacted about placements?")
+    expect(page).to have_current_item("Organisation details")
     expect(page).to have_element(
       :span,
-      text: "Not interested in hosting this year",
+      text: "Not offering placements this year",
+      class: "govuk-caption-l",
+    )
+    expect(page).to have_h1("Confirm and let providers know you are not offering placements")
+    expect(page).to have_element(
+      :p,
+      text: "Your contact details and reason will not be shared with providers.",
+      class: "govuk-body",
+    )
+    expect(page).to have_element(
+      :p,
+      text: "We will ask you again in the spring term of the next year to check whether you would like to offer placements.",
+      class: "govuk-body",
+    )
+    expect(page).to have_element(
+      :p,
+      text: "Your reason for not offering placements be shared with the Department for Education for reporting purposes.",
+      class: "govuk-body",
+    )
+  end
+
+  def and_i_see_the_reason_not_hosting_i_entered
+    expect(page).to have_summary_list_row(
+      "Reason for not offering",
+      "Other - Some other reason",
     )
   end
 
   def and_i_enter_another_reason
     fill_in "Tell us your reason", with: "Some other reason"
+  end
+
+  def and_i_see_the_whats_next_page
+    expect(page).to have_panel(
+      "Confirmed.You are not offering placements",
+      "Your contact details will not be shown to providers",
+    )
+    expect(page).to have_h1("What happens next?", class: "govuk-heading-l")
+    expect(page).to have_element(
+      :p,
+      text: "We will ask you again in the spring term of the next year to check whether you would like to offer placements.",
+      class: "govuk-body",
+    )
+    expect(page).to have_element(
+      :p,
+      text: "If you would like to host placements this year, update your placement preferences to let providers know you’re interested.",
+      class: "govuk-body",
+    )
+    expect(page).to have_link("update your placement preferences", href: placements_school_path(@school))
   end
 end

@@ -34,27 +34,39 @@ RSpec.describe Placements::AddHostingInterestWizard::ReasonNotHostingStep, type:
 
     it "returns struct objects for each reason not to host ITT" do
       concerns_about_trainee_quality = reason_options[0]
-      do_not_get_offered_trainees = reason_options[1]
-      do_not_know_how_to_get_involved = reason_options[2]
-      not_enough_trained_mentors = reason_options[3]
-      number_of_pupils_with_send_needs = reason_options[4]
-      working_to_improve_our_ofsted_rating = reason_options[5]
-      other = reason_options[6]
+      high_number_of_pupils_with_send_needs = reason_options[1]
+      low_capacity_to_support_trainees_due_to_staff_changes = reason_options[2]
+      no_mentors_available_due_to_capacity = reason_options[3]
+      not_offered_appropriate_trainees = reason_options[4]
+      unsure_how_to_get_involved = reason_options[5]
+      working_to_improve_our_ofsted_rating = reason_options[6]
+      other = reason_options[7]
 
       expect(concerns_about_trainee_quality.name).to eq("Concerns about trainee quality")
       expect(concerns_about_trainee_quality.value).to eq("Concerns about trainee quality")
 
-      expect(do_not_get_offered_trainees.name).to eq("Don't get offered trainees")
-      expect(do_not_get_offered_trainees.value).to eq("Don't get offered trainees")
+      expect(high_number_of_pupils_with_send_needs.name).to eq("High number of pupils with SEND needs")
+      expect(high_number_of_pupils_with_send_needs.value).to eq("High number of pupils with SEND needs")
 
-      expect(do_not_know_how_to_get_involved.name).to eq("Don't know how to get involved")
-      expect(do_not_know_how_to_get_involved.value).to eq("Don't know how to get involved")
+      expect(low_capacity_to_support_trainees_due_to_staff_changes.name).to eq(
+        "Low capacity to support trainees due to staff changes",
+      )
+      expect(low_capacity_to_support_trainees_due_to_staff_changes.value).to eq(
+        "Low capacity to support trainees due to staff changes",
+      )
 
-      expect(not_enough_trained_mentors.name).to eq("Not enough trained mentors")
-      expect(not_enough_trained_mentors.value).to eq("Not enough trained mentors")
+      expect(no_mentors_available_due_to_capacity.name).to eq(
+        "No mentors available due to capacity",
+      )
+      expect(no_mentors_available_due_to_capacity.value).to eq(
+        "No mentors available due to capacity",
+      )
 
-      expect(number_of_pupils_with_send_needs.name).to eq("Number of pupils with SEND needs")
-      expect(number_of_pupils_with_send_needs.value).to eq("Number of pupils with SEND needs")
+      expect(not_offered_appropriate_trainees.name).to eq("Not offered appropriate trainees")
+      expect(not_offered_appropriate_trainees.value).to eq("Not offered appropriate trainees")
+
+      expect(unsure_how_to_get_involved.name).to eq("Unsure how to get involved")
+      expect(unsure_how_to_get_involved.value).to eq("Unsure how to get involved")
 
       expect(working_to_improve_our_ofsted_rating.name).to eq("Working to improve our OFSTED rating")
       expect(working_to_improve_our_ofsted_rating.value).to eq("Working to improve our OFSTED rating")

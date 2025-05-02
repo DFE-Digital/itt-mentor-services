@@ -30,15 +30,18 @@ class Placements::AddHostingInterestWizard::ReasonNotHostingStep < BaseStep
     [
       I18n.t("#{locale_path}.options.concerns_about_trainee_quality"),
       I18n.t("#{locale_path}.options.do_not_get_offered_trainees"),
-      I18n.t("#{locale_path}.options.do_not_know_how_to_get_involved"),
       I18n.t("#{locale_path}.options.not_enough_trained_mentors"),
       I18n.t("#{locale_path}.options.number_of_pupils_with_send_needs"),
+      I18n.t("#{locale_path}.options.low_capacity_to_support_trainees"),
       I18n.t("#{locale_path}.options.working_to_improve_our_ofsted_rating"),
-      I18n.t("#{locale_path}.options.other"),
-    ]
+      I18n.t("#{locale_path}.options.do_not_know_how_to_get_involved"),
+    ].sort +
+      [
+        I18n.t("#{locale_path}.options.other"),
+      ]
   end
 
   def locale_path
-    ".wizards.placements.multi_placement_wizard.reason_not_hosting_step"
+    ".wizards.placements.add_hosting_interest_wizard.reason_not_hosting_step"
   end
 end
