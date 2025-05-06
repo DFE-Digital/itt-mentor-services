@@ -2,7 +2,7 @@ en:
   placements:
     school_user_mailer:
       user_membership_created_notification:
-        subject: Invitation to join %{service_name}
+        subject: "ACTION NEEDED: Sign-in to the %{service_name} service"
       user_membership_destroyed_notification:
         subject: You have been removed from %{service_name}
       partnership_created_notification:

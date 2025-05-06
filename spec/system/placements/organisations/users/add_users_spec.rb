@@ -29,7 +29,7 @@ RSpec.describe "Placements users invite other users to organisations", service: 
         and_user_is_selected_in_provider_primary_navigation
         when_i_click_confirm
         then_the_user_is_added
-        and_an_email_is_sent("firsty_lasty@email.co.uk", one_provider)
+        and_an_email_is_sent("firsty_lasty@email.co.uk", :provider)
         and_user_is_selected_in_provider_primary_navigation
       end
     end
@@ -52,7 +52,7 @@ RSpec.describe "Placements users invite other users to organisations", service: 
         and_user_is_selected_in_school_primary_navigation
         when_i_click_confirm
         then_the_user_is_added
-        and_an_email_is_sent("firsty_lasty@email.co.uk", one_school)
+        and_an_email_is_sent("firsty_lasty@email.co.uk", :school)
       end
     end
   end
@@ -68,7 +68,7 @@ RSpec.describe "Placements users invite other users to organisations", service: 
       when_i_change_organisation(another_school)
       and_i_try_to_add_the_user
       then_the_user_is_added_successfully(another_school)
-      and_an_email_is_sent(new_user.email, another_school)
+      and_an_email_is_sent(new_user.email, :school)
       when_i_change_organisation(one_provider)
       and_i_try_to_add_the_user
       then_the_user_is_added_successfully(one_provider)
@@ -269,14 +269,18 @@ RSpec.describe "Placements users invite other users to organisations", service: 
     expect(primary_navigation).to have_current_item("Users")
   end
 
-  def email_invite_notification(email, _organisation)
+  def email_invite_notification(email, organisation_type)
     ActionMailer::Base.deliveries.find do |delivery|
-      delivery.to.include?(email) && delivery.subject == "Invitation to join Manage school placements"
+      if organisation_type == :school
+        delivery.to.include?(email) && delivery.subject == "ACTION NEEDED: Sign-in to the Manage school placements service"
+      else
+        delivery.to.include?(email) && delivery.subject == "Invitation to join Manage school placements"
+      end
     end
   end
 
-  def and_an_email_is_sent(email, organisation)
-    invite_email = email_invite_notification(email, organisation)
+  def and_an_email_is_sent(email, organisation_type)
+    invite_email = email_invite_notification(email, organisation_type)
 
     expect(invite_email).not_to be_nil
   end

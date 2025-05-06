@@ -171,7 +171,7 @@ RSpec.describe "Support user adds a new user to a school", service: :placements,
   def and_susan_storm_is_sent_an_email
     email = ActionMailer::Base.deliveries.find do |delivery|
       delivery.to.include?("susan_storm@example.com") &&
-        delivery.subject == "Invitation to join Manage school placements"
+        delivery.subject == "ACTION NEEDED: Sign-in to the Manage school placements service"
     end
     expect(email).not_to be_nil
   end
