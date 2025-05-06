@@ -19,7 +19,11 @@
             <%= f.govuk_check_box :term_ids, term.id, label: { text: term.name }, link_errors: index.zero? %>
           <% end %>
           <%= f.govuk_check_box_divider %>
-          <%= f.govuk_check_box :term_ids, "any_term", label: { text: t(".any_term") }, checked: current_step.term_ids.include?("any_term"), exclusive: true %>
+          <%= f.govuk_check_box :term_ids,
+            "any_term",
+            label: { text: t(".any_term") },
+            checked: current_step.term_ids.include?("any_term") || current_step.term_ids.blank?,
+            exclusive: true %>
         <% end %>
 
         <%= f.govuk_submit t(".continue") %>

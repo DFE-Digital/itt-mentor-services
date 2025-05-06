@@ -69,20 +69,18 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
     then_i_see_the_placement_details_page_with_aes_sedai_trust
     and_i_see_a_provider_updated_success_message
 
-    when_i_click_on_change_provider
-    and_i_enter_ashaman_trust
-    then_i_see_a_dropdown_item_for_ashaman_trust
+    when_i_click_on_unassign_provider
+    then_i_see_the_confirmation_page
 
-    when_i_click_on_the_ashaman_trust_dropdown_item
-    and_i_click_on_continue
-    then_i_see_the_placement_details_page_with_the_ashaman_trust
-    and_i_see_a_provider_updated_success_message
+    when_i_click_on_unassign_provider
+    then_i_see_the_provider_was_successfully_unassigned
+    and_i_see_the_placement_details_page_with_jane_doe
 
     when_i_click_on_preview_this_placement
     then_i_see_the_preview_placement_page
 
     when_i_click_on_the_back_link
-    then_i_see_the_placement_details_page_with_the_ashaman_trust
+    then_i_see_the_placement_details_page_with_jane_doe
   end
 
   private
@@ -297,6 +295,8 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
     expect(page).to have_summary_list_row("Provider", "Assign a provider")
     expect(page).to have_element(:div, text: "You can preview this placement as it appears to providers.", class: "govuk-inset-text")
   end
+  alias_method :and_i_see_the_placement_details_page_with_jane_doe,
+               :then_i_see_the_placement_details_page_with_jane_doe
 
   def when_i_click_on_assign_a_provider
     click_on "Assign a provider"
@@ -371,8 +371,30 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
     expect(page).to have_success_banner("Provider updated")
   end
 
-  def when_i_click_on_change_provider
-    click_on("Change Provider")
+  def when_i_click_on_unassign_provider
+    click_on("Unassign provider")
+  end
+
+  def then_i_see_the_confirmation_page
+    expect(page).to have_title(
+      "Are you sure you want to unassign Aes Sedai Trust from this placement? - English - Manage school placements - GOV.UK",
+    )
+    expect(page).to have_element(
+      :span,
+      text: "English",
+      class: "govuk-caption-l",
+    )
+    expect(page).to have_h1(
+      "Are you sure you want to unassign Aes Sedai Trust from this placement?",
+    )
+    expect(page).to have_warning_text(
+      "An email will be sent to Aes Sedai Trust to let them know that they are no longer assigned to this placement.",
+    )
+    expect(page).to have_button("Unassign provider", class: "govuk-button--warning")
+  end
+
+  def then_i_see_the_provider_was_successfully_unassigned
+    expect(page).to have_success_banner("Provider unassigned")
   end
 
   def when_i_select_the_ashaman_trust

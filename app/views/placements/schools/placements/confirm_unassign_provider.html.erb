@@ -1,0 +1,26 @@
+<%= content_for :page_title, sanitize(t(".page_title", subject_names: @placement.title, provider_name: @placement.provider_name)) %>
+<%= render "placements/schools/primary_navigation", school: @school, current_navigation: :placements %>
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: placements_school_placement_path(@school, @placement)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <span class="govuk-caption-l"><%= @placement.title %></span>
+      <h1 class="govuk-heading-l"><%= t(".are_you_sure", provider_name: @placement.provider_name) %></h1>
+
+      <%= govuk_warning_text(text: t(".provider_will_be_sent_an_email", provider_name: @placement.provider_name)) %>
+
+      <%= govuk_button_to t(".unassign_provider"),
+        unassign_provider_placements_school_placement_path(@school, @placement),
+        warning: true,
+        method: :put %>
+
+      <p class="govuk-body">
+        <%= govuk_link_to(t(".cancel"), placements_school_placement_path(@school, @placement), no_visited_state: true) %>
+      </p>
+    </div>
+  </div>
+</div>

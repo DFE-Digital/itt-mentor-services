@@ -134,6 +134,7 @@ RSpec.describe "User publishes a placement after preview", service: :placements,
   end
 
   def when_i_select_autumn_term_and_spring_term
+    uncheck "Any time in the academic year"
     check "Autumn term"
     check "Spring term"
   end
