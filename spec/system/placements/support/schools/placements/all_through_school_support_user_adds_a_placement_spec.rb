@@ -52,7 +52,8 @@ RSpec.describe "All-through support school user adds a placement", service: :pla
     then_i_see_the_when_could_the_placement_take_place_page
     and_i_see_the_term_dates
 
-    when_i_click_on_continue
+    when_i_unselect_any_time_in_the_academic_year
+    and_i_click_on_continue
     then_i_see_a_validation_error_for_selecting_a_term
 
     when_i_select_autumn_term_and_spring_term
@@ -368,6 +369,7 @@ RSpec.describe "All-through support school user adds a placement", service: :pla
   end
 
   def when_i_select_autumn_term_and_spring_term
+    uncheck "Any time in the academic year"
     check "Autumn term"
     check "Spring term"
   end
@@ -602,5 +604,9 @@ RSpec.describe "All-through support school user adds a placement", service: :pla
     expect(page).to have_element(:td, text: "Jane Doe", class: "govuk-table__cell")
     expect(page).to have_element(:td, text: "Summer term", class: "govuk-table__cell")
     expect(page).to have_element(:td, text: "Provider not assigned", class: "govuk-table__cell")
+  end
+
+  def when_i_unselect_any_time_in_the_academic_year
+    uncheck "Any time in the academic year"
   end
 end

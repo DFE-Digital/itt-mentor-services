@@ -121,6 +121,7 @@ en:
           select_a_mentor: Select a mentor
           add_a_mentor: Add a mentor
           assign_a_provider: Assign a provider
+          unassign_provider: Unassign provider
           add_a_partner_provider: Add a partner provider
           not_yet_known: Not yet known
           change: Change
@@ -147,3 +148,12 @@ en:
           description: '%{provider_name} must be removed from the placement before you can delete it.'
         destroy:
           placement_deleted: Placement deleted
+        confirm_unassign_provider:
+          page_title: "Are you sure you want to unassign %{provider_name} from this placement? - %{subject_names}"
+          are_you_sure: Are you sure you want to unassign %{provider_name} from this placement?
+          unassign_provider: Unassign provider
+          cancel: Cancel
+          provider_will_be_sent_an_email:
+            An email will be sent to %{provider_name} to let them know that they are no longer assigned to this placement.
+        unassign_provider:
+          success: Provider unassigned

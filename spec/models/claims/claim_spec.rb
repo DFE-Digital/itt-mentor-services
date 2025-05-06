@@ -164,7 +164,10 @@ RSpec.describe Claims::Claim, type: :model do
 
     describe "#paid_for_current_academic_year" do
       let(:current_academic_year) do
-        AcademicYear.for_date(Date.current) || create(:academic_year, :current)
+        AcademicYear.for_date(Date.current)
+      end
+      let(:historic_academic_year) do
+        AcademicYear.for_date(Date.current - 1.year)
       end
       let(:current_claim_window) do
         create(:claim_window,
@@ -172,10 +175,16 @@ RSpec.describe Claims::Claim, type: :model do
                ends_on: current_academic_year.starts_on + 1.month,
                academic_year: current_academic_year)
       end
+      let(:historic_claim_window) do
+        create(:claim_window,
+               starts_on: historic_academic_year.starts_on + 1.day,
+               ends_on: historic_academic_year.starts_on + 1.month,
+               academic_year: historic_academic_year)
+      end
       let(:current_year_paid_claim) do
         create(:claim, :submitted, status: :paid, claim_window: current_claim_window)
       end
-      let(:another_paid_claim) { create(:claim, :submitted, status: :paid) }
+      let(:another_paid_claim) { create(:claim, :submitted, status: :paid, claim_window: historic_claim_window) }
       let(:current_year_draft_claim) { create(:claim, :draft, claim_window: current_claim_window) }
 
       before do

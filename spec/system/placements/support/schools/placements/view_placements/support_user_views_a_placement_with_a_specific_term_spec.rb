@@ -106,6 +106,6 @@ RSpec.describe "Support user views a placement with a specific term", service: :
     expect(page).to have_link("Change Expected date")
     expect(page).to have_summary_list_row("Mentor", "Select a mentor")
     expect(page).to have_summary_list_row("Provider", "Best Practice Network")
-    expect(page).to have_link("Change Provider")
+    expect(page).to have_link("Unassign provider")
   end
 end

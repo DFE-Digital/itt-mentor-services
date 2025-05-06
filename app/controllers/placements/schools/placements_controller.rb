@@ -1,7 +1,7 @@
 class Placements::Schools::PlacementsController < Placements::ApplicationController
   before_action :set_school
-  before_action :set_placement, only: %i[show remove destroy preview]
-  before_action :set_decorated_placement, only: %i[show remove preview]
+  before_action :set_placement, only: %i[show remove destroy preview unassign_provider confirm_unassign_provider]
+  before_action :set_decorated_placement, only: %i[show remove preview confirm_unassign_provider]
 
   helper_method :edit_attribute_path, :add_provider_path, :add_mentor_path
 
@@ -35,6 +35,21 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
   end
 
   def preview; end
+
+  def confirm_unassign_provider; end
+
+  def unassign_provider
+    provider = @placement.provider
+    @placement.update!(provider: nil)
+    Placements::Placements::NotifyProvider::Remove.call(
+      provider:,
+      placement: @placement,
+    )
+
+    redirect_to placements_school_placement_path(@school, @placement), flash: {
+      heading: t(".success"),
+    }
+  end
 
   private
 
