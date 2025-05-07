@@ -81,7 +81,7 @@ RSpec.describe "Support user views a placement with a mentor assigned", service:
     expect(page).to have_table_row({
       "Subject" => "Primary with english (Year 1)",
       "Mentor" => "Jane Doe and John Smith",
-      "Expected date" => "Date not added",
+      "Expected date" => "Any time in the academic year",
       "Provider" => "Provider not assigned",
     })
   end

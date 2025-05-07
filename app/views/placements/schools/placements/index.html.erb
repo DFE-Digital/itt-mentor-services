@@ -53,10 +53,7 @@
                   text: placement.mentors.present? ? placement.mentor_names : t(".mentor_not_assigned"),
                   html_attributes: { class: table_text_class(placement.mentor_names) },
                 ) %>
-                <% row.with_cell(
-                  text: placement.terms.present? ? placement.term_names : t(".date_not_added"),
-                  html_attributes: { class: (placement.terms.blank? ? "secondary-text" : "") },
-                ) %>
+                <% row.with_cell(text: placement.term_names) %>
                 <% row.with_cell(
                   text: placement.provider.present? ? placement.provider_name : t(".provider_not_assigned"),
                   html_attributes: { class: table_text_class(placement.provider_name) },
