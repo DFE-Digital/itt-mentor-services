@@ -1,0 +1,31 @@
+class Claims::Slack::DailyRoundupJob < ApplicationJob
+  queue_as :default
+
+  def perform
+    current_claim_window = Claims::ClaimWindow.current
+    todays_claims = claims_since(Time.current.yesterday.change(hour: 16))
+    new_schools = new_organisations(todays_claims, :school_id)
+    new_providers = new_organisations(todays_claims, :provider_id)
+    total_claims = Claims::Claim.where(claim_window: current_claim_window).count
+
+    Claims::ClaimSlackNotifier.daily_submitted_claims_notification(
+      claim_count: todays_claims.count,
+      school_count: new_schools.count,
+      provider_count: new_providers.count,
+      total_claims_count: total_claims,
+    )
+  end
+
+  private
+
+  def claims_since(timestamp)
+    Claims::Claim.where(created_at: timestamp..).includes(:school, :provider)
+  end
+
+  def new_organisations(claims, entity_column)
+    entity_ids = claims.select(entity_column)
+    Claims::School.where(id: entity_ids).where.not(
+      id: Claims::Claim.where("created_at < ?", Time.current.yesterday.change(hour: 16)).select(entity_column),
+    )
+  end
+end
