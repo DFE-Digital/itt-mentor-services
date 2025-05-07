@@ -21,7 +21,7 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
       given_a_placement_exists_with_multiple_mentors
       given_i_am_signed_in_as_a_placements_user(organisations: [school])
       then_i_see_placement_details({
-        "Expected date" => "Date not added",
+        "Expected date" => "Any time in the academic year",
         "Mentor" => "Bart Simpson and Lisa Simpson",
         "Subject" => "Biology",
         "Provider" => "Provider not assigned",
@@ -32,7 +32,7 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
       given_a_placement_exists
       given_i_am_signed_in_as_a_placements_user(organisations: [school])
       then_i_see_placement_details({
-        "Expected date" => "Date not added",
+        "Expected date" => "Any time in the academic year",
         "Mentor" => "Mentor not assigned",
         "Subject" => "Biology",
         "Provider" => "Provider not assigned",
@@ -43,7 +43,7 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
       given_a_placement_exists_with_a_provider
       given_i_am_signed_in_as_a_placements_user(organisations: [school])
       then_i_see_placement_details({
-        "Expected date" => "Date not added",
+        "Expected date" => "Any time in the academic year",
         "Mentor" => "Mentor not assigned",
         "Subject" => "Biology",
         "Provider" => "Springfield University",

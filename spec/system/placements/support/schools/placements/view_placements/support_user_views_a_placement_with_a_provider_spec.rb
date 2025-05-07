@@ -83,7 +83,7 @@ RSpec.describe "Support user views a placement with a provider", service: :place
     expect(page).to have_table_row({
       "Subject" => "Primary with english (Year 1)",
       "Mentor" => "Mentor not assigned",
-      "Expected date" => "Date not added",
+      "Expected date" => "Any time in the academic year",
       "Provider" => "Best Practice Network",
     })
   end
