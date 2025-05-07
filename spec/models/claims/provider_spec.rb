@@ -41,6 +41,7 @@ require "rails_helper"
 RSpec.describe Claims::Provider, type: :model do
   context "with associations" do
     it { is_expected.to have_many(:mentor_trainings) }
+    it { is_expected.to have_many(:claims).through(:mentor_trainings) }
   end
 
   describe "scopes" do
