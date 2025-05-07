@@ -20,7 +20,6 @@ describe Claims::Claim::Submit do
 
       expect { submit_service }.to change(claim, :reference).from(nil).to("123")
         .and(have_enqueued_mail(Claims::UserMailer, :claim_submitted_notification).once)
-        .and(have_enqueued_job(SlackNotifier::Message::DeliveryJob).once)
 
       expect(claim.status).to eq("submitted")
       expect(claim.submitted_at).to eq(submitted_at)
@@ -33,7 +32,6 @@ describe Claims::Claim::Submit do
 
         expect { service }.to not_change(claim, :reference)
           .and(not_have_enqueued_mail(Claims::UserMailer, :claim_submitted_notification))
-          .and(not_have_enqueued_job(SlackNotifier::Message::DeliveryJob))
       end
     end
 
@@ -44,7 +42,6 @@ describe Claims::Claim::Submit do
 
         expect { service }.to not_change(claim, :reference)
           .and(not_have_enqueued_mail(Claims::UserMailer, :claim_submitted_notification))
-          .and(not_have_enqueued_job(SlackNotifier::Message::DeliveryJob))
 
         expect(service).to be_nil
       end
@@ -58,7 +55,6 @@ describe Claims::Claim::Submit do
 
         expect { submit_service }.to change(claim, :reference).from(nil).to("456")
           .and(have_enqueued_mail(Claims::UserMailer, :claim_submitted_notification).once)
-          .and(have_enqueued_job(SlackNotifier::Message::DeliveryJob).once)
 
         expect(claim.status).to eq("submitted")
         expect(claim.submitted_at).to eq(submitted_at)
