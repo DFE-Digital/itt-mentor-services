@@ -35,8 +35,10 @@ class Placements::OrganisationsController < Placements::ApplicationController
       else
         new_add_hosting_interest_placements_school_hosting_interests_path(organisation)
       end
-    else # Provider
+    elsif !Flipper.enabled?(:provider_hide_find_placements, organisation) # Provider
       placements_provider_find_index_path(organisation)
+    else
+      placements_provider_placements_path(organisation)
     end
   end
 end
