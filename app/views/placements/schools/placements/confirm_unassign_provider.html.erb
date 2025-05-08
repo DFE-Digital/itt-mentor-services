@@ -11,7 +11,11 @@
       <span class="govuk-caption-l"><%= @placement.title %></span>
       <h1 class="govuk-heading-l"><%= t(".are_you_sure", provider_name: @placement.provider_name) %></h1>
 
-      <%= govuk_warning_text(text: t(".provider_will_be_sent_an_email", provider_name: @placement.provider_name)) %>
+      <p class="govuk-body"><%= t(".provider_will_be_sent_an_email") %></p>
+
+      <p class="govuk-body"><%= t(".it_is_your_responsibility") %></p>
+
+      <p class="govuk-body"><%= t(".assign_a_new_provider") %></p>
 
       <%= govuk_button_to t(".unassign_provider"),
         unassign_provider_placements_school_placement_path(@school, @placement),

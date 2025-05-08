@@ -35,7 +35,16 @@ class Placements::ProviderUserMailerPreview < ActionMailer::Preview
   end
 
   def school
-    Placements::School.new(id: stubbed_id, name: "Test School")
+    Placements::School.new(id: stubbed_id, name: "Test School", school_contact:)
+  end
+
+  def school_contact
+    Placements::SchoolContact.new(
+      id: stubbed_id,
+      first_name: "Joe",
+      last_name: "Bloggs",
+      email_address: "joe_bloggs@example.com",
+    )
   end
 
   def provider

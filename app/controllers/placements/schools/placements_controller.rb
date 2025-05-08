@@ -45,6 +45,11 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
       provider:,
       placement: @placement,
     )
+    Placements::Placements::NotifySchool::RemoveProvider.call(
+      school: @school,
+      provider: @provider,
+      placement: @placement,
+    )
 
     redirect_to placements_school_placement_path(@school, @placement), flash: {
       heading: t(".success"),

@@ -36,4 +36,18 @@ class Placements::SchoolUserMailer < Placements::UserMailer
 
     notify_email to: user.email, subject: t(".subject")
   end
+
+  def placement_provider_removed_notification(user, school, provider, placement)
+    @user_name = user.first_name
+    @school_name = school.name
+
+    @provider_email_address = provider.primary_email_address
+    @provider_name = provider.name
+    @placement_name = placement.decorate.title
+    @placement_url = placements_school_placement_url(school, placement, utm_source: "email", utm_medium: "notification", utm_campaign: "school")
+    @service_name = service_name
+    @sign_in_url = sign_in_url(utm_source: "email", utm_medium: "notification", utm_campaign: "school")
+
+    notify_email to: user.email, subject: t(".subject")
+  end
 end

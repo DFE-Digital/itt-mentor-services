@@ -187,4 +187,41 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
       end
     end
   end
+
+  describe "#placement_provider_removed_notification" do
+    subject(:placement_provider_removed_notification) do
+      described_class.placement_provider_removed_notification(
+        school_user, school, provider, placement
+      )
+    end
+
+    let(:school) { create(:placements_school, name: "School 1") }
+    let(:maths) { create(:subject, name: "Mathematics") }
+    let(:placement) { create(:placement, subject: maths, school:) }
+    let(:provider) { create(:provider, name: "Provider 1") }
+    let(:school_user) { create(:placements_user, schools: [school]) }
+    let(:provider_email) { provider.primary_email_address }
+
+    it "sends a provider removed notification email to the user of the school" do
+      expect(placement_provider_removed_notification.to).to contain_exactly(school_user.email)
+      expect(placement_provider_removed_notification.subject).to eq(
+        "You have removed a provider from a placement",
+      )
+      expect(placement_provider_removed_notification.body).to have_content <<~EMAIL
+        #{school_user.first_name},
+
+        You removed #{provider.name} from a placement.
+
+        [#{placement.decorate.title}](http://placements.localhost/schools/#{school.id}/placements/#{placement.id}?utm_campaign=school&utm_medium=notification&utm_source=email)
+
+        ## What happens next?
+        You must make sure the provider is aware that they should no longer place a trainee with you. Contact them on [#{provider_email}](mailto:#{provider_email}).
+
+        ## Your account
+        [Sign in to the Manage school placements service](http://placements.localhost/sign-in?utm_campaign=school&utm_medium=notification&utm_source=email)
+
+        Manage school placements service
+      EMAIL
+    end
+  end
 end

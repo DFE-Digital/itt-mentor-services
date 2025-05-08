@@ -272,7 +272,7 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
     let(:provider_user) { create(:placements_user, providers: [provider]) }
     let(:school_contact_email) { school.school_contact.email_address }
 
-    it "sends a provider assigned notification email to the user of the provider" do
+    it "sends a provider removed notification email to the user of the provider" do
       expect(placement_provider_removed_notification.to).to contain_exactly(provider_user.email)
       expect(placement_provider_removed_notification.subject).to eq(
         "A school has removed you from a placement",
@@ -280,17 +280,18 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
       expect(placement_provider_removed_notification.body).to have_content <<~EMAIL
         #{provider_user.first_name},
 
-        #{school.name} has removed #{provider.name} from the following placement:
+        #{school.name} has removed #{provider.name} from a placement.
 
-        - [#{placement.decorate.title}](http://placements.localhost/providers/#{provider.id}/placements/#{placement.id}?utm_campaign=provider&utm_medium=notification&utm_source=email)
-
-        You can no longer allocate a trainee onto this placement.
+        [#{placement.decorate.title}](http://placements.localhost/providers/#{provider.id}/placements/#{placement.id}?utm_campaign=provider&utm_medium=notification&utm_source=email)
 
         ## What happens next?
+        You should no longer arrange for a trainee to complete this placement.
+        If you are assigned to other placements with this school, you will remain assigned unless the school removes you from them.
+
         If you think this is a mistake, contact the school on [#{school.school_contact_email_address}](mailto:#{school.school_contact_email_address}).
 
         ## Your account
-        [Sign in to Manage school placements](http://placements.localhost/sign-in?utm_campaign=provider&utm_medium=notification&utm_source=email)
+        [Sign in to the Manage school placements service](http://placements.localhost/sign-in?utm_campaign=provider&utm_medium=notification&utm_source=email)
 
         Manage school placements service
       EMAIL

@@ -98,7 +98,7 @@
     <% end %>
     <% if placement.provider.present? %>
       <% row.with_action(
-        text: t(".unassign_provider"),
+        text: t(".remove"),
         href: confirm_unassign_provider_placements_school_placement_path(@school, @placement),
         visually_hidden_text: t(".attributes.placements.provider"),
       ) %>
