@@ -33,17 +33,13 @@ RSpec.describe Placements::AddHostingInterestWizard::ReasonNotHostingStep, type:
     subject(:reason_options) { step.reason_options }
 
     it "returns struct objects for each reason not to host ITT" do
-      concerns_about_trainee_quality = reason_options[0]
-      high_number_of_pupils_with_send_needs = reason_options[1]
-      low_capacity_to_support_trainees_due_to_staff_changes = reason_options[2]
-      no_mentors_available_due_to_capacity = reason_options[3]
-      not_offered_appropriate_trainees = reason_options[4]
-      unsure_how_to_get_involved = reason_options[5]
-      working_to_improve_our_ofsted_rating = reason_options[6]
-      other = reason_options[7]
-
-      expect(concerns_about_trainee_quality.name).to eq("Concerns about trainee quality")
-      expect(concerns_about_trainee_quality.value).to eq("Concerns about trainee quality")
+      high_number_of_pupils_with_send_needs = reason_options[0]
+      low_capacity_to_support_trainees_due_to_staff_changes = reason_options[1]
+      no_mentors_available_due_to_capacity = reason_options[2]
+      concerns_about_trainee_quality = reason_options[3]
+      unsure_how_to_get_involved = reason_options[4]
+      working_to_improve_our_ofsted_rating = reason_options[5]
+      other = reason_options[6]
 
       expect(high_number_of_pupils_with_send_needs.name).to eq("High number of pupils with SEND needs")
       expect(high_number_of_pupils_with_send_needs.value).to eq("High number of pupils with SEND needs")
@@ -62,8 +58,8 @@ RSpec.describe Placements::AddHostingInterestWizard::ReasonNotHostingStep, type:
         "No mentors available due to capacity",
       )
 
-      expect(not_offered_appropriate_trainees.name).to eq("Not offered appropriate trainees")
-      expect(not_offered_appropriate_trainees.value).to eq("Not offered appropriate trainees")
+      expect(concerns_about_trainee_quality.name).to eq("Trainees we were offered did not meet our expectations")
+      expect(concerns_about_trainee_quality.value).to eq("Trainees we were offered did not meet our expectations")
 
       expect(unsure_how_to_get_involved.name).to eq("Unsure how to get involved")
       expect(unsure_how_to_get_involved.value).to eq("Unsure how to get involved")

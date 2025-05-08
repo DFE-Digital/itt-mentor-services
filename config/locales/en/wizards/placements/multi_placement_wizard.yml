@@ -10,12 +10,12 @@ en:
           continue: Continue
           hint: "Select all that apply"
           options:
-            concerns_about_trainee_quality: Concerns about trainee quality
-            do_not_get_offered_trainees: Don't get offered trainees
-            do_not_know_how_to_get_involved: Don't know how to get involved
-            not_enough_trained_mentors: Not enough trained mentors
-            number_of_pupils_with_send_needs: Number of pupils with SEND needs
+            concerns_about_trainee_quality: Trainees we were offered did not meet our expectations
+            do_not_know_how_to_get_involved: Unsure how to get involved
+            not_enough_trained_mentors: No mentors available due to capacity
+            number_of_pupils_with_send_needs: High number of pupils with SEND needs
             working_to_improve_our_ofsted_rating: Working to improve our OFSTED rating
+            low_capacity_to_support_trainees: Low capacity to support trainees due to staff changes
             other: Other
           tell_us: Tell us your reason
         help_step:

@@ -27,11 +27,11 @@ en:
             what_happens_next: What happens next?
             teaching_school_hub_url: https://www.gov.uk/guidance/teaching-school-hubs
             not_open:
-              panel_title_html: Confirmed.</br>You are not offering placements
+              panel_title: You are not offering placements this year
               panel_text: Your contact details will not be shown to providers
               what_happens_next: What happens next?
-              we_will_ask_you_again: 
-                We will ask you again in the spring term of the next year to check whether you would like to offer placements.
+              we_will_ask_you_again:
+                We will ask in the next academic year whether you are able to offer placements for trainee teachers.
               if_you_would_like_to_host_placements:
                 If you would like to host placements this year, %{link} to let providers know you’re interested.
               update_your_placement_preferences: update your placement preferences
