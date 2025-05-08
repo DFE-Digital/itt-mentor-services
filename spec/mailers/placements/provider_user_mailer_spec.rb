@@ -286,6 +286,7 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
 
         ## What happens next?
         You should no longer arrange for a trainee to complete this placement.
+
         If you are assigned to other placements with this school, you will remain assigned unless the school removes you from them.
 
         If you think this is a mistake, contact the school on [#{school.school_contact_email_address}](mailto:#{school.school_contact_email_address}).
