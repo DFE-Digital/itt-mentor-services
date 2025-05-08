@@ -12,7 +12,7 @@ en:
             heading: 
               actively_looking: Placement information uploaded
               not_open: Your profile has been updated
-              interested: Your status has been updated to ‘interesed in hosting placements’
+              interested: Your status has been updated to ‘interested in hosting placements’
             body:
               actively_looking_html:
                 Providers can see your placement preferences and may contact you to discuss them.<br><br>
