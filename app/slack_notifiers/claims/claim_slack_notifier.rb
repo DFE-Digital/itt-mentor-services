@@ -1,5 +1,5 @@
 class Claims::ClaimSlackNotifier < Claims::ApplicationSlackNotifier
-  def daily_submitted_claims_notification(academic_year: AcademicYear.for_date(Date.current), claim_count: 0, school_count: 0, provider_count: 0, total_claims_count: 0)
+  def claim_submitted_notification(academic_year: AcademicYear.for_date(Date.current), claim_count: 0, school_count: 0, provider_count: 0, total_claims_count: 0)
     message(
       blocks: [
         {

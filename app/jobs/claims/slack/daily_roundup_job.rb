@@ -8,7 +8,7 @@ class Claims::Slack::DailyRoundupJob < ApplicationJob
     new_providers = new_organisations(todays_claims, :provider_id)
     total_claims = Claims::Claim.where(claim_window: current_claim_window).count
 
-    Claims::ClaimSlackNotifier.daily_submitted_claims_notification(
+    Claims::ClaimSlackNotifier.claim_submitted_notification(
       claim_count: todays_claims.count,
       school_count: new_schools.count,
       provider_count: new_providers.count,

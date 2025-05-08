@@ -5,7 +5,7 @@ RSpec.describe Claims::ClaimSlackNotifier do
 
   describe "#daily_submitted_claims_notification" do
     subject(:notification) do
-      described_class.daily_submitted_claims_notification(
+      described_class.claim_submitted_notification(
         academic_year:,
         claim_count:,
         school_count:,
