@@ -121,7 +121,7 @@ en:
           select_a_mentor: Select a mentor
           add_a_mentor: Add a mentor
           assign_a_provider: Assign a provider
-          unassign_provider: Unassign provider
+          remove: Remove
           add_a_partner_provider: Add a partner provider
           not_yet_known: Not yet known
           change: Change
@@ -149,11 +149,15 @@ en:
         destroy:
           placement_deleted: Placement deleted
         confirm_unassign_provider:
-          page_title: "Are you sure you want to unassign %{provider_name} from this placement? - %{subject_names}"
-          are_you_sure: Are you sure you want to unassign %{provider_name} from this placement?
-          unassign_provider: Unassign provider
+          page_title: "Are you sure you want to remove %{provider_name} from this placement? - %{subject_names}"
+          are_you_sure: Are you sure you want to remove %{provider_name} from this placement?
+          unassign_provider: Remove provider
           cancel: Cancel
           provider_will_be_sent_an_email:
-            An email will be sent to %{provider_name} to let them know that they are no longer assigned to this placement.
+            We will send an email to let them know they should no longer arrange for a trainee to undertake this placement.
+          it_is_your_responsibility:
+            It is your responsibility to contact the provider separately and tell them this placement is no longer available to them.
+          assign_a_new_provider:
+            You can assign a new provider once you have removed the current provider.
         unassign_provider:
-          success: Provider unassigned
+          success: Provider removed

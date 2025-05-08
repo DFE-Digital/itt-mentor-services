@@ -67,15 +67,7 @@ class Placements::Schools::Placements::EditPlacementController < Placements::App
   end
 
   def notify_provider(placement)
-    from_provider_id = @wizard.placement.saved_change_to_provider_id.first
     to_provider_id = @wizard.placement.saved_change_to_provider_id.last
-
-    if from_provider_id.present?
-      Placements::Placements::NotifyProvider::Remove.call(
-        provider: Provider.find(from_provider_id),
-        placement:,
-      )
-    end
 
     if to_provider_id.present?
       Placements::Placements::NotifyProvider::Assign.call(

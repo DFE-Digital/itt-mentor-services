@@ -15,6 +15,10 @@ class Placements::SchoolUserMailerPreview < ActionMailer::Preview
     Placements::SchoolUserMailer.partnership_destroyed_notification(user, provider, school)
   end
 
+  def placement_provider_removed_notification
+    Placements::SchoolUserMailer.placement_provider_removed_notification(user, school, provider, placement)
+  end
+
   private
 
   def user
@@ -32,6 +36,14 @@ class Placements::SchoolUserMailerPreview < ActionMailer::Preview
 
   def provider
     PreviewProvider.new(id: stubbed_id, name: "Test Provider")
+  end
+
+  def placement
+    Placement.new(id: stubbed_id, school:, provider:, subject:)
+  end
+
+  def subject
+    Subject.new(id: stubbed_id, name: "English")
   end
 
   def stubbed_id

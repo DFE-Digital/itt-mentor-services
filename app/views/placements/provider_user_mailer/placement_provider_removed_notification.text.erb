@@ -1,15 +1,16 @@
 <%= @user_name %>,
 
-<%= @school_name %> has removed <%= @provider_name %> from the following placement:
+<%= @school_name %> has removed <%= @provider_name %> from a placement.
 
-- [<%= @placement_name %>](<%= @placement_url %>)
-
-You can no longer allocate a trainee onto this placement.
+[<%= @placement_name %>](<%= @placement_url %>)
 
 ## What happens next?
+You should no longer arrange for a trainee to complete this placement.
+If you are assigned to other placements with this school, you will remain assigned unless the school removes you from them.
+
 If you think this is a mistake, contact the school on [<%= @itt_contact_email %>](mailto:<%= @itt_contact_email %>).
 
 ## Your account
-[Sign in to Manage school placements](<%= @sign_in_url %>)
+[Sign in to the Manage school placements service](<%= @sign_in_url %>)
 
 <%= @service_name %> service
