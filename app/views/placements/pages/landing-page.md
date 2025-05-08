@@ -1,11 +1,19 @@
-Use this service if you are involved in arranging school placements for trainees in England.
+Use this service if you are involved in arranging school placements for trainee teachers in England.
+
+This service is currently running as a pilot in Leeds and Essex.
 
 ### If you work in a school
+Record your preferences for offering placements for trainee teachers.
 
-Publish placement opportunities for trainee teachers.
-Your chosen teacher training providers can then contact you to arrange placements for their trainees.
+Depending on your situation, you can let teacher training providers know:
 
-### If you are a teacher training provider
+- about placements your school is offering for trainee teachers
+- approximate information about placements your school may be able to offer
+- your school is not offering placements and does not want to be contacted
 
-Find schools that are offering placements for trainee teachers.
-View opportunities from the schools you work with, as well as information about other schools.
+Teacher training providers will contact you if they can help place a suitable trainee teacher.
+
+### If you work for a teacher training provider
+Find schools that are offering placements for trainee teachers, as well as schools that are considering offering placements but require more information.
+
+View placement contact details for schools so you can email them if you are interested in working together.
