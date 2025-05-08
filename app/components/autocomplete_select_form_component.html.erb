@@ -29,6 +29,10 @@
         </div>
       <% end %>
 
+      <% if warning_text.present? %>
+        <%= govuk_warning_text text: warning_text %>
+      <% end %>
+
       <%= f.govuk_submit t(".continue") %>
     </div>
   </div>
