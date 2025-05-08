@@ -11,13 +11,13 @@ RSpec.describe Claims::Slack::DailyRoundupJob, type: :job do
       claims
       yesterday_claims
       allow(Claims::ClaimSlackNotifier).to receive(:new).and_return(slack_notifier)
-      allow(slack_notifier).to receive(:daily_submitted_claims_notification)
+      allow(slack_notifier).to receive(:claim_submitted_notification)
     end
 
     it "sends the daily claims notification" do
       described_class.perform_now
 
-      expect(slack_notifier).to have_received(:daily_submitted_claims_notification).with(
+      expect(slack_notifier).to have_received(:claim_submitted_notification).with(
         claim_count: 2,
         school_count: 2,
         provider_count: 0,
