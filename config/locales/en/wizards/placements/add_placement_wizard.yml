@@ -29,17 +29,9 @@ en:
           primary: Primary
           continue: Continue
         mentors_step:
-          title: Select a mentor - %{contextual_text}
-          select_a_mentor: Select a mentor
-          hint:
-            unpublished_html: |
-              Some placements may have more than one mentor. 
-              For example, if a mentor works part time.<br>
-              <br>
-              You can change who the mentor is after you have published the placement.
-            published: |
-              Some placements may have more than one mentor. 
-              For example, if a mentor works part time.
+          title: Select who will mentor the trainee - %{contextual_text}
+          select_a_mentor: Select who will mentor the trainee
+          hint: Only your school will be able to see the assigned mentor. Providers will not have access to this information.
           continue: Continue
           mentors: Mentors
           not_known: Not yet known
