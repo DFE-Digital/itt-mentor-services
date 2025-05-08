@@ -26,13 +26,12 @@ en:
           continue: Continue
         reason_not_hosting_step:
           caption: Not offering placements this year
-          title: Tell us why you aren’t able to host this year
-          hint: 
-            Your answers will help Department for Education better understand how to improve managing ITT.
+          title: Tell us why you are not able to offer placements for trainee teachers
+          hint:
+            Your answers will be shared with Department for Education to help understand teacher training and recruitment.
           continue: Continue
           options:
-            concerns_about_trainee_quality: Concerns about trainee quality
-            do_not_get_offered_trainees: Not offered appropriate trainees
+            concerns_about_trainee_quality: Trainees we were offered did not meet our expectations
             do_not_know_how_to_get_involved: Unsure how to get involved
             not_enough_trained_mentors: No mentors available due to capacity
             number_of_pupils_with_send_needs: High number of pupils with SEND needs
@@ -67,14 +66,13 @@ en:
         are_you_sure_step:
           title: Confirm and let providers know you are not offering placements
           caption: Not offering placements this year
-          your_contact_details: Your contact details and reason will not be shared with providers.
-          we_will_ask_you_again: 
-            We will ask you again in the spring term of the next year to check whether you would like to offer placements.
+          your_contact_details: No information will be shared with providers.
+          we_will_ask_you_again: We will ask in the next academic year whether you are able to offer placements for trainee teachers.
           your_reason:
-            Your reason for not offering placements be shared with the Department for Education for reporting purposes.
+            Your reason for not offering placements be shared with the Department for Education to help understand teacher training and recruitment.
           reason_for_not_offering: Reason for not offering
           details: Details
-          itt_contact: ITT contact
+          itt_contact: Contact details
           continue: Continue
           change: Change
         confirm_step:
@@ -165,5 +163,6 @@ en:
           school_contact_step:
             caption: Not offering placements this year
             title: Who is the preferred contact for next year?
-            description: We will ask in the next academic year about placements. The contact may be you, or someone at your school who coordinates ITT.
+            we_will_ask_next_year: We will ask in the next academic year whether you are able to offer placements for trainee teachers.
+            choose_the_best_person: Choose the person best placed to organise placements for trainee teachers at your school.
             continue: Continue
