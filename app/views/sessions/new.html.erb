@@ -13,7 +13,7 @@
 
       <% if current_service == :placements %>
         <h2 class="govuk-heading-m">How to get an account</h2>
-        <p class="govuk-body">This is a pilot service for schools and teacher training providers in Leeds.</p>
+        <p class="govuk-body">This is a pilot service for schools and teacher training providers in Leeds and Essex.</p>
         <p class="govuk-body">Ask a colleague in your organisation to add you if you do not have an account.</p>
         <p class="govuk-body">If your organisation has not been set up to use this service, email <%= mail_to(t("#{current_service}.support_email"), t("#{current_service}.support_email_html")) %>.</p>
       <% else %>
