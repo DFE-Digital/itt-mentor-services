@@ -29,7 +29,6 @@ class Placements::AddHostingInterestWizard::ReasonNotHostingStep < BaseStep
   def reasons
     [
       I18n.t("#{locale_path}.options.concerns_about_trainee_quality"),
-      I18n.t("#{locale_path}.options.do_not_get_offered_trainees"),
       I18n.t("#{locale_path}.options.not_enough_trained_mentors"),
       I18n.t("#{locale_path}.options.number_of_pupils_with_send_needs"),
       I18n.t("#{locale_path}.options.low_capacity_to_support_trainees"),

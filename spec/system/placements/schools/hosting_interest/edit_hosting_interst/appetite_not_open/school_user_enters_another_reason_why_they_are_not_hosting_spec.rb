@@ -110,7 +110,7 @@ RSpec.describe "School user enters another reason why they are not hosting",
 
   def then_i_see_the_reasons_for_not_hosting_form
     expect(page).to have_title(
-      "Tell us why you aren’t able to host this year - Manage school placements - GOV.UK",
+      "Tell us why you are not able to offer placements for trainee teachers - Manage school placements - GOV.UK",
     )
     expect(page).to have_current_item("Organisation details")
     expect(page).to have_element(
@@ -120,14 +120,14 @@ RSpec.describe "School user enters another reason why they are not hosting",
     )
     expect(page).to have_element(
       :legend,
-      text: "Tell us why you aren’t able to host this year",
+      text: "Tell us why you are not able to offer placements for trainee teachers",
       class: "govuk-fieldset__legend",
     )
-    expect(page).to have_field("Concerns about trainee quality", type: :checkbox)
+    expect(page).to have_element(:div, text: "Your answers will be shared with Department for Education to help understand teacher training and recruitment.", class: "govuk-hint")
+    expect(page).to have_field("Trainees we were offered did not meet our expectations", type: :checkbox)
     expect(page).to have_field("High number of pupils with SEND needs", type: :checkbox)
     expect(page).to have_field("Low capacity to support trainees due to staff changes", type: :checkbox)
     expect(page).to have_field("No mentors available due to capacity", type: :checkbox)
-    expect(page).to have_field("Not offered appropriate trainees", type: :checkbox)
     expect(page).to have_field("Unsure how to get involved", type: :checkbox)
     expect(page).to have_field("Working to improve our OFSTED rating", type: :checkbox)
     expect(page).to have_field("Other", type: :checkbox)
@@ -224,17 +224,17 @@ RSpec.describe "School user enters another reason why they are not hosting",
     expect(page).to have_h1("Confirm and let providers know you are not offering placements")
     expect(page).to have_element(
       :p,
-      text: "Your contact details and reason will not be shared with providers.",
+      text: "Your reason for not offering placements be shared with the Department for Education to help understand teacher training and recruitment.",
       class: "govuk-body",
     )
     expect(page).to have_element(
       :p,
-      text: "We will ask you again in the spring term of the next year to check whether you would like to offer placements.",
+      text: "No information will be shared with providers.",
       class: "govuk-body",
     )
     expect(page).to have_element(
       :p,
-      text: "Your reason for not offering placements be shared with the Department for Education for reporting purposes.",
+      text: "Your reason for not offering placements be shared with the Department for Education to help understand teacher training and recruitment.",
       class: "govuk-body",
     )
   end
@@ -252,13 +252,13 @@ RSpec.describe "School user enters another reason why they are not hosting",
 
   def and_i_see_the_whats_next_page
     expect(page).to have_panel(
-      "Confirmed.You are not offering placements",
+      "You are not offering placements this year",
       "Your contact details will not be shown to providers",
     )
     expect(page).to have_h1("What happens next?", class: "govuk-heading-l")
     expect(page).to have_element(
       :p,
-      text: "We will ask you again in the spring term of the next year to check whether you would like to offer placements.",
+      text: "We will ask in the next academic year whether you are able to offer placements for trainee teachers.",
       class: "govuk-body",
     )
     expect(page).to have_element(
