@@ -1,6 +1,8 @@
 <%# locals: { current_step:, wizard:, potential: false } -%>
 
-<h2 class="govuk-heading-m"><%= t(".education_phase") %></h2>
+<h2 class="govuk-heading-m">
+  <%= potential ? t(".potential_education_phase") : t(".education_phase") %>
+</h2>
 
 <%= render "shared/wizards/placements/multiple_placements_wizard/check_your_answers/education_phase_list",
  current_step: %>

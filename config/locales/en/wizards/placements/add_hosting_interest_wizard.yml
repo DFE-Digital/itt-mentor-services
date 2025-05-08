@@ -5,18 +5,19 @@ en:
         appetite_step:
           caption: Placement preferences
           title: 
-            Can your school offer placements for trainee teachers in this academic year (%{academic_year_name})?
+            Can your school offer placements for trainee teachers in the academic year %{academic_year_name}?
           continue: Continue
+          hint: You can change your answers any time after completing the questions.
           options:
             actively_looking:
               name: Yes - I can offer placements
-              description: Record the placements you can offer. You can edit your placements any time.
+              description: Share the placements you can offer
             interested:
               name: Maybe - I’m not sure yet
-              description: Providers can contact you to discuss potential placements.
+              description: Share what you can potentially offer
             not_open: 
               name: No - I can’t offer placements
-              description: Tell us why your school cannot offer placements. Your contact details will not be shown to providers.
+              description: Tell us why you cannot offer placements
             already_organised:
               name: Placements already organised with providers
               description: We'll show any providers who search for you that you're at capacity
@@ -52,7 +53,7 @@ en:
         school_contact_step:
           caption: Contact details
           title: Who should providers contact?
-          description: Choose the person best placed to organise ITT placements at your school. This information will be shown on your profile.
+          description: Choose the person best placed to organise placements for trainee teachers at your school
           continue: Continue
         subjects_known_step:
           title: Do you know which subjects you would like to host?
@@ -60,9 +61,9 @@ en:
         check_your_answers_step:
           caption: Placement details
           title: Check your answers
-          continue: Save and continue
+          continue: Publish placements
           change: Change
-          itt_contact: ITT contact
+          placement_contact: Placement contact
         are_you_sure_step:
           title: Confirm and let providers know you are not offering placements
           caption: Not offering placements this year
@@ -82,7 +83,7 @@ en:
           providers_see_you_can_offer_placements:
             Providers will be able to see that you may be able to offer placements for trainee teachers.
           providers_can_see_approximate_info:
-            They will be able to see your approximate information and will be able to use your email to contact you.
+            They will be able to see your potential placement details and will be able to use your email to contact you.
           your_information: Your information
           additional_information: Additional information
           message_to_providers: Message to providers
@@ -90,15 +91,16 @@ en:
           change: Change
         interested:
           phase_step:
-            title: Do you know what phase of education your placements will be?
+            title: What education phase could you offer placements in?
+            hint: Sharing information on what you may be able to offer helps providers know whether to contact you. It is not a commitment to take a trainee teacher.
             caption: Potential placement offer details
             continue: Continue
             options:
               unknown: I don’t know
               unknown_description: A phase of education will not be recorded
           year_group_selection_step:
-            title: Do you know what primary school year groups you would be willing to host placements in?
-            hint: You will be able to enter the number of placements on the next screen
+            title: What year groups could you offer placements in?
+            hint: Sharing information on what you may be able to offer helps providers know whether to contact you. It is not a commitment to take a trainee teacher.
             caption: Potential primary placement details
             continue: Continue
             options:
@@ -110,11 +112,15 @@ en:
               "no": "No"
           year_group_placement_quantity_known_step:
             title: 
-              Do you know the number of primary placements you would be willing to host in each year group?
+              Do you know how many placements could you offer for each primary school year group?
+            hint:
+              Sharing information on what you may be able to offer helps providers know whether to contact you. It is not a commitment to take a trainee teacher.
             caption: Potential primary placement details
             continue: Continue
           year_group_placement_quantity_step:
-            title: How many primary placements you would be willing to host in each year group?
+            title: How many placements could you offer for each year group?
+            hint:
+              Sharing information on what you may be able to offer helps providers know whether to contact you. It is not a commitment to take a trainee teacher.
             caption: Potential primary placement details
             enter_approximate: Enter an approximate number if you are unsure
             continue: Continue
@@ -124,29 +130,37 @@ en:
             caption: Potential placement details
             continue: Continue
           secondary_subject_selection_step:
-            title: Do you know the secondary school subjects you could have placements in?
+            title: What subjects could you offer placements in?
             caption: Potential secondary placement details
             hint: 
-              Subjects are taken from the DfE database of courses. If the subject you would like to host is not here, choose the closest option
+              Subjects are taken from the DfE database of courses. If the subject you would like to host is not here, choose the closest option.
+            sharing_info: 
+              Sharing information on what you may be able to offer helps providers know whether to contact you. It is not a commitment to take a trainee teacher.
+            stem_subjects: Science, technology, engineering and mathematics (STEM)
+            lit_lang_subjects: Languages and literature
+            art_humanities_social_subjects: Arts, humanities and social sciences
+            health_physical_education_subjects: Health and physical education
             continue: Continue
             options:
               unknown: I don’t know
           secondary_placement_quantity_known_step:
-            title: Do you know the number of secondary placements you would be willing to host?
+            title: Do you know how many secondary  school placements you may be willing to offer?
+            hint: Sharing information on what you may be able to offer helps providers know whether to contact you. It is not a commitment to take a trainee teacher.
             caption: Potential secondary placement details
             continue: Continue
           secondary_placement_quantity_step:
-            title: How many secondary placements you would be willing to host in each subject?
+            title: How many placements could you offer for each subject?
             caption: Potential secondary placement details
             enter_approximate: Enter an approximate number if you are unsure
             change_to_specify: You will have a chance to specify the languages later
             continue: Continue
           secondary_child_subject_placement_selection_step:
-            title: You selected %{placement_quantity} %{subject_name} placements
-            select_languages_taught: Select the languages taught on each of these placements
+            title: What languages are taught on your %{subject_name} placement offers?
             caption: Potential secondary placement details
             continue: Continue
             placement_number: "Placement %{placement_number} of %{step_count}"
+            options:
+              unknown: Not sure yet
         not_open:
           school_contact_step:
             caption: Not offering placements this year

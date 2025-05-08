@@ -5,6 +5,7 @@ en:
         multiple_placements_wizard:
           check_your_answers:
             education_phase: Education phase
+            potential_education_phase: Potential education phase
             placements: Placements
             year_group: Year group
             number_of_placements: Number of placements

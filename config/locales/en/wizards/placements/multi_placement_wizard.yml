@@ -49,9 +49,13 @@ en:
           caption: Placement details
           continue: Continue
         secondary_subject_selection_step:
-          title: Select secondary school subjects you can offer
+          title: What secondary school subjects can you offer placements in?
           caption: Secondary placement details
           hint: Subjects are taken from the DfE database of courses. If the subject you would like to host is not here, choose the closest option
+          stem_subjects: Science, technology, engineering and mathematics (STEM)
+          lit_lang_subjects: Languages and literature
+          art_humanities_social_subjects: Arts, humanities and social sciences
+          health_physical_education_subjects: Health and physical education
           continue: Continue
         primary_placement_quantity_step:
           title: "Primary subjects: Enter the number of placements you would be willing to host"
@@ -59,14 +63,13 @@ en:
           caption: Placement details
           continue: Continue
         secondary_placement_quantity_step:
-          title: Enter the number of secondary school placements you can offer
+          title: How many placements can you offer for each subject?
           enter_approximate: Enter an approximate number if you are unsure
           change_to_specify: You will have a chance to specify the languages later
           caption: Secondary placement details
           continue: Continue
         secondary_child_subject_placement_selection_step:
-          title: You selected %{placement_quantity} %{subject_name} placements
-          select_languages_taught: Select the languages taught on each of these placements
+          title: What languages are taught on your %{subject_name} placement offers?
           caption: Secondary placement details
           continue: Continue
           placement_number: "Placement %{placement_number} of %{step_count}"
@@ -105,7 +108,7 @@ en:
             You haven’t added any placement information so providers cannot see any of your preferences.
           continue: Continue
         year_group_selection_step:
-          title: Select primary school year groups you can offer
+          title: What primary school year groups can you offer placements in?
           caption: Primary placement details
           hint: You will be able to enter the number of placements on the next screen
           continue: Continue

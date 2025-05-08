@@ -211,7 +211,8 @@ module Placements
 
           placement_quantity_for_subject(subject).times do |i|
             index = i + 1
-            add_step(MultiPlacementWizard::SecondaryChildSubjectPlacementSelectionStep,
+            prefix = appetite == "interested" ? Interested : MultiPlacementWizard
+            add_step(prefix::SecondaryChildSubjectPlacementSelectionStep,
                      {
                        selection_id: "#{subject.name_as_attribute}_#{index}",
                        selection_number: index,

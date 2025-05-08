@@ -13,7 +13,8 @@
         :appetite,
         current_step.appetite_options,
         :value, :name, :description,
-        legend: { size: "l", text: t(".title", academic_year_name: @wizard.upcoming_academic_year.name), tag: "h1" }
+        legend: { size: "l", text: t(".title", academic_year_name: @wizard.upcoming_academic_year.name), tag: "h1" },
+        hint: { text: t(".hint") }
       ) %>
 
       <%= f.govuk_submit t(".continue") %>

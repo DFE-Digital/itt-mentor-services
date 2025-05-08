@@ -14,7 +14,8 @@
             :quantity_known,
             current_step.options_for_selection,
             :name, :name,
-            legend: { size: "l", text: t(".title"), tag: "h1" }
+            legend: { size: "l", text: t(".title"), tag: "h1" },
+            hint: { text: t(".hint") }
           ) %>
 
       <%= f.govuk_submit t(".continue") %>

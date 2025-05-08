@@ -10,7 +10,7 @@
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l"><%= t(".caption") %></span>
       <h1 class="govuk-heading-l"><%= t(".title") %></h1>
-      <p class="govuk-body secondary-text"><%= t(".enter_approximate") %></p>
+      <p class="govuk-body secondary-text"><%= t(".hint") %></p>
 
       <% current_step.year_groups.each do |year_group| %>
         <%= f.govuk_number_field(
