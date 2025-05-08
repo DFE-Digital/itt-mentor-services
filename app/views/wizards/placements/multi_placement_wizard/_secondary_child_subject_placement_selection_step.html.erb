@@ -13,13 +13,9 @@
       <span class="govuk-caption-l"><%= t(".caption") %></span>
       <h1 class="govuk-heading-l">
         <%= t(".title",
-          placement_quantity: @wizard.placement_quantity_for_subject(current_step.subject),
           subject_name: current_step.subject.name) %>
       </h1>
 
-      <h2 class="govuk-heading-m">
-        <%= t(".select_languages_taught") %>
-      </h2>
       <%= f.govuk_collection_check_boxes(
         :child_subject_ids,
         current_step.child_subjects,
@@ -30,7 +26,7 @@
             placement_number: current_step.selection_number,
             step_count: @wizard.child_subject_placement_step_count),
           tag: "h2",
-}
+        }
       ) %>
 
       <%= f.govuk_submit t(".continue") %>

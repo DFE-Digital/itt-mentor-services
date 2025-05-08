@@ -4,7 +4,7 @@ class Placements::MultiPlacementWizard::SubjectSelectionStep < BaseStep
   validates :subject_ids, presence: true
 
   def subjects_for_selection
-    {
+    @subjects_for_selection ||= {
       Placements::School::PRIMARY_PHASE => Subject.parent_subjects.primary,
       Placements::School::SECONDARY_PHASE => Subject.parent_subjects.secondary,
     }.fetch phase

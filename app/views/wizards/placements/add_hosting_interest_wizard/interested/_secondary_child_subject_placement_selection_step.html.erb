@@ -13,25 +13,30 @@
       <span class="govuk-caption-l"><%= t(".caption") %></span>
       <h1 class="govuk-heading-l">
         <%= t(".title",
-          placement_quantity: @wizard.placement_quantity_for_subject(current_step.subject),
           subject_name: current_step.subject.name) %>
       </h1>
 
-      <h2 class="govuk-heading-m">
-        <%= t(".select_languages_taught") %>
-      </h2>
-      <%= f.govuk_collection_check_boxes(
+      <%= f.govuk_check_boxes_fieldset(
         :child_subject_ids,
-        current_step.child_subjects,
-        :id, :name,
         legend: {
           size: "m",
           text: t(".placement_number",
             placement_number: current_step.selection_number,
             step_count: @wizard.child_subject_placement_step_count),
           tag: "h2",
-}
-      ) %>
+        }
+      ) do %>
+        <% current_step.child_subjects.each_with_index do |subject, i| %>
+          <%= f.govuk_check_box :child_subject_ids, subject.id,
+            label: { text: subject.name },
+            link_errors: i.zero? %>
+        <% end %>
+        <%= f.govuk_check_box_divider %>
+        <%= f.govuk_check_box :child_subject_ids, current_step.unknown_option.value,
+            label: { text: current_step.unknown_option.name },
+            hint: { text: current_step.unknown_option.description },
+            exclusive: true %>
+      <% end %>
 
       <%= f.govuk_submit t(".continue") %>
     </div>

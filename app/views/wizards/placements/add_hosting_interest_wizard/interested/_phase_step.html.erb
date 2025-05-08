@@ -9,7 +9,9 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l"><%= t(".caption") %></span>
-      <%= f.govuk_check_boxes_fieldset(:phases, legend: { size: "l", text: t(".title"), tag: "h1" }) do %>
+      <%= f.govuk_check_boxes_fieldset(:phases, 
+        legend: { size: "l", text: t(".title"), tag: "h1" },
+        hint: { text: t(".hint") }) do %>
         <% current_step.phases_for_selection.each_with_index do |phase, i| %>
           <%= f.govuk_check_box :phases, phase.name,
             label: { text: phase.name },

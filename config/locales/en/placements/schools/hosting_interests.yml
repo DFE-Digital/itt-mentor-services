@@ -36,17 +36,17 @@ en:
                 If you would like to host placements this year, %{link} to let providers know you’re interested.
               update_your_placement_preferences: update your placement preferences
             interested:
-              panel_title: Approximate information added
+              panel_title: Information added
               panel_text: Providers can see that you may offer placements
-              what_happens_next: What happens next?
+              what_happens_next: What happens next
               providers_can_contact_you:
                 Providers who are looking for schools to work with can contact you on %{mailto}.
               once_you_know_which_placements:
-                Once you know which placements you can offer, you can %{link} to help providers know what trainees you need.
-              add_placements: add placements
-              potential_placement_information: Potential placement information
-              potential_primary_placements: Potential primary placements
-              potential_secondary_placements: Potential secondary placements
+                Once you are sure which placements your school can offer, %{link}. Doing so will mean you will be able to assign providers to them.
+              add_placements: add your placements
+              potential_placement_information: Your potential placements
+              potential_primary_placements: Potential primary school placements
+              potential_secondary_placements: Potential secondary school placements
             primary_placements_list:
               year_group: Year group
               number_of_placements: Number of placements
@@ -68,11 +68,13 @@ en:
               primary_placements: Primary placements
               secondary_placements: Secondary placements
               manage_your_placements: Manage your placements
-              you_can_edit_placements: You can %{link} at any time.
-              edit_your_placements: edit your placements
-              editing_them: "Editing them allows you to:"
+              you_can_edit_placements: "%{link} to change or remove information."
+              edit_your_placements: Edit your placements
+              editing_them: "For each individual placement, you can:"
               editing_options:
-                - assign a provider
                 - add an expected date
-                - change or remove any information
+                - assign a provider
                 - assign a mentor - only your school will be able to see mentor information
+              assigning_a_provider_is_not_contractual:
+                Assigning a provider to a placement in this service is not a contractual agreement for a trainee to be placed in your school.
+                An agreement must be made between you and the provider outside this service. 

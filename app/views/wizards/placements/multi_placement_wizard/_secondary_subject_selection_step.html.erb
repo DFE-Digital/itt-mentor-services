@@ -9,13 +9,33 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l"><%= t(".caption") %></span>
-      <%= f.govuk_collection_check_boxes(
+      <%= f.govuk_check_boxes_fieldset(
         :subject_ids,
-        current_step.subjects_for_selection,
-        :id, :name,
         legend: { size: "l", text: t(".title"), tag: "h1" },
-        hint: { text: t(".hint") }
-      ) %>
+        hint: { text: t(".hint") },
+      ) do %>
+        <h2 class="govuk-heading-m"><%= t(".stem_subjects") %></h2>
+        <% current_step.stem_subjects.each_with_index do |subject, i| %>
+          <%= f.govuk_check_box :subject_ids, subject.id,
+            label: { text: subject.name },
+            link_errors: i.zero? %>
+        <% end %>
+        <h2 class="govuk-heading-m"><%= t(".lit_lang_subjects") %></h2>
+        <% current_step.lit_lang_subjects.each do |subject| %>
+          <%= f.govuk_check_box :subject_ids, subject.id,
+            label: { text: subject.name } %>
+        <% end %>
+        <h2 class="govuk-heading-m"><%= t(".art_humanities_social_subjects") %></h2>
+        <% current_step.art_humanities_social_subjects.each do |subject| %>
+          <%= f.govuk_check_box :subject_ids, subject.id,
+            label: { text: subject.name } %>
+        <% end %>
+        <h2 class="govuk-heading-m"><%= t(".health_physical_education_subjects") %></h2>
+        <% current_step.health_physical_education_subjects.each do |subject| %>
+          <%= f.govuk_check_box :subject_ids, subject.id,
+            label: { text: subject.name } %>
+        <% end %>
+      <% end %>
 
       <%= f.govuk_submit t(".continue") %>
     </div>

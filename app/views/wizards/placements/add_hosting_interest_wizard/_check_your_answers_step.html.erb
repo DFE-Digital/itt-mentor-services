@@ -17,7 +17,7 @@
         potential: false %>
 
       <% if @wizard.steps[:school_contact].present? %>
-        <h2 class="govuk-heading-m"><%= t(".itt_contact") %></h2>
+        <h2 class="govuk-heading-m"><%= t(".placement_contact") %></h2>
 
         <%= govuk_summary_list(html_attributes: { id: "school_contact" }) do |summary_list| %>
           <% summary_list.with_row do |row| %>

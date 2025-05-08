@@ -98,7 +98,7 @@ en:
             you_must_add_itt_placement_contact: |
               Before you add a placement, you must %{link_to} so that the teacher training providers can contact you.
             add_itt_placement_contact: add a placement contact
-            subject: Subject
+            placement: Placement
             mentor: Mentor
             expected_date: Expected date
             provider: Provider
