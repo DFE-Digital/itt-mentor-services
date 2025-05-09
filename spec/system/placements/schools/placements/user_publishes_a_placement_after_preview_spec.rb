@@ -140,11 +140,11 @@ RSpec.describe "User publishes a placement after preview", service: :placements,
   end
 
   def then_i_see_the_select_a_mentor_page
-    expect(page).to have_title("Select a mentor - Placement details - Manage school placements - GOV.UK")
+    expect(page).to have_title("Select who will mentor the trainee - Placement details - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
-    expect(page).to have_element(:legend, text: "Select a mentor", class: "govuk-fieldset__legend")
-    expect(page).to have_element(:div, text: "Some placements may have more than one mentor. For example, if a mentor works part time. You can change who the mentor is after you have published the placement.", class: "govuk-hint")
+    expect(page).to have_element(:legend, text: "Select who will mentor the trainee", class: "govuk-fieldset__legend")
+    expect(page).to have_element(:div, text: "Only your school will be able to see the assigned mentor. Providers will not have access to this information.", class: "govuk-hint")
     expect(page).to have_element(:span, text: "My mentor is not listed", class: "govuk-details__summary-text")
     expect(page).to have_link("Cancel", href: "/schools/#{@school.id}/placements")
   end
