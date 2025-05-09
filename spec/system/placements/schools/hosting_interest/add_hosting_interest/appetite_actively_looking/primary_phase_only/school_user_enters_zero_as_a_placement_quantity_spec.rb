@@ -95,7 +95,7 @@ RSpec.describe "School user enters zero as a placement quantity",
 
   def then_i_see_the_primary_year_group_selection_form
     expect(page).to have_title(
-      "hat primary school year groups can you offer placements in? - Manage school placements - GOV.UK",
+      "What primary school year groups can you offer placements in? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
