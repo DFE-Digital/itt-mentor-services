@@ -115,6 +115,15 @@ module GovukComponentMatchers
     end
   end
 
+  matcher :have_hint do |text|
+    match do |page|
+      page.find("div[class^='govuk-hint']", text:)
+      true
+    rescue Capybara::ElementNotFound
+      false
+    end
+  end
+
   matcher :have_warning_text do |text|
     match do |page|
       page.within(".govuk-warning-text") do
