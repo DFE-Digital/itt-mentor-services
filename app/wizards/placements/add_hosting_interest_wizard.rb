@@ -39,7 +39,7 @@ module Placements
 
         hosting_interest.save!
 
-        if appetite == "interested"
+        if appetite_interested?
           save_potential_placements_information
         else
           create_placements
@@ -168,7 +168,7 @@ module Placements
     end
 
     def year_group_steps
-      if appetite == "interested"
+      if appetite_interested?
         add_step(Interested::YearGroupSelectionStep)
         return if value_unknown(year_groups)
 
@@ -182,14 +182,8 @@ module Placements
       end
     end
 
-    def primary_subject_steps
-      add_step(MultiPlacementWizard::PrimarySubjectSelectionStep)
-      add_step(MultiPlacementWizard::PrimaryPlacementQuantityStep)
-      # No primary subject have child subjects
-    end
-
     def secondary_subject_steps
-      if appetite == "interested"
+      if appetite_interested?
         add_step(Interested::SecondarySubjectSelectionStep)
         return if value_unknown(selected_secondary_subject_ids)
 
@@ -211,8 +205,7 @@ module Placements
 
           placement_quantity_for_subject(subject).times do |i|
             index = i + 1
-            prefix = appetite == "interested" ? Interested : MultiPlacementWizard
-            add_step(prefix::SecondaryChildSubjectPlacementSelectionStep,
+            add_step(step_prefix::SecondaryChildSubjectPlacementSelectionStep,
                      {
                        selection_id: "#{subject.name_as_attribute}_#{index}",
                        selection_number: index,
@@ -320,6 +313,18 @@ module Placements
       }
 
       @school.update!(potential_placement_details:)
+    end
+
+    def appetite_interested?
+      @appetite_interested ||= appetite == "interested"
+    end
+
+    def step_prefix
+      @step_prefix ||= if appetite_interested?
+                         Interested
+                       else
+                         MultiPlacementWizard
+                       end
     end
   end
 end
