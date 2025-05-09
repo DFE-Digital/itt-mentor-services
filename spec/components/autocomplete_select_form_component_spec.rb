@@ -8,6 +8,7 @@ RSpec.describe AutocompleteSelectFormComponent, type: :component do
       url:,
       data:,
       input:,
+      warning_text:,
     )
   end
 
@@ -16,6 +17,7 @@ RSpec.describe AutocompleteSelectFormComponent, type: :component do
     let(:scope) { :form }
     let(:url) { "" }
     let(:input) { {} }
+    let(:warning_text) { nil }
 
     describe "data attribute validation" do
       context "when not given a autocomplete_path_value attribute" do
@@ -79,6 +81,7 @@ RSpec.describe AutocompleteSelectFormComponent, type: :component do
         previous_search: nil,
       }
     end
+    let(:warning_text) { nil }
 
     it "returns an autocomplete select form for onboarding schools" do
       render_inline(component)
@@ -92,6 +95,37 @@ RSpec.describe AutocompleteSelectFormComponent, type: :component do
       expect(page.find(".govuk-caption-l")).to have_content("Add organisation")
       expect(page).to have_field("school-id-field")
       page.find("div[data-input-name='school[name]']")
+    end
+  end
+
+  context "with warning text" do
+    let(:model) { instance_double(BaseStep, errors: {}) }
+    let(:scope) { :school }
+    let(:url) { "" }
+    let(:data) do
+      {
+        turbo: false,
+        controller: "autocomplete",
+        autocomplete_path_value: "/api/school_suggestions",
+        autocomplete_return_attributes_value: %w[town postcode],
+        input_name: "school[name]",
+      }
+    end
+    let(:input) do
+      {
+        field_name: :id,
+        value: nil,
+        label: "Enter a school name, URN or postcode",
+        caption: "Add organisation",
+        previous_search: nil,
+      }
+    end
+    let(:warning_text) { "This is a warning" }
+
+    it "displays the warning text" do
+      render_inline(component)
+
+      expect(page).to have_content(warning_text)
     end
   end
 end

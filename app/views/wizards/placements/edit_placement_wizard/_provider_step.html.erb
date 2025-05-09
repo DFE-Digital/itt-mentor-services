@@ -8,6 +8,7 @@
   scope: current_step.scope,
   url: current_step_path,
   method: :put,
+  warning_text: t(".not_contractual_agreement"),
   data: {
     autocomplete_path_value: current_step.autocomplete_path_value,
     autocomplete_return_attributes_value: current_step.autocomplete_return_attributes_value,
