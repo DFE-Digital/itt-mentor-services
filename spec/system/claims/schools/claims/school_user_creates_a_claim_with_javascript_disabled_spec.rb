@@ -6,6 +6,7 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
     and_a_school_exists
     and_providers_exist
     and_i_am_signed_in
+
     when_i_click_on_add_claim
     then_i_see_the_enter_a_provider_step
 
