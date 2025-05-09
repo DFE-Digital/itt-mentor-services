@@ -44,12 +44,12 @@ RSpec.describe "School user does not enter any school contact details",
 
   def then_i_see_the_appetite_form
     expect(page).to have_title(
-      "Can your school offer placements for trainee teachers in this academic year (#{@next_academic_year_name})? - Manage school placements - GOV.UK",
+      "Can your school offer placements for trainee teachers in the academic year #{@next_academic_year_name}? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "Can your school offer placements for trainee teachers in this academic year (#{@next_academic_year_name})?",
+      text: "Can your school offer placements for trainee teachers in the academic year #{@next_academic_year_name}?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Yes - I can offer placements", type: :radio)
@@ -82,7 +82,7 @@ RSpec.describe "School user does not enter any school contact details",
     )
     expect(page).to have_element(
       :p,
-      text: "They will be able to see your approximate information and will be able to use your email to contact you.",
+      text: "They will be able to see your potential placement details and will be able to use your email to contact you.",
       class: "govuk-body",
     )
   end
@@ -95,8 +95,7 @@ RSpec.describe "School user does not enter any school contact details",
     expect(page).to have_h1("Who should providers contact?")
     expect(page).to have_element(
       :p,
-      text: "Choose the person best placed to organise ITT placements at your school. "\
-        "This information will be shown on your profile.",
+      text: "Choose the person best placed to organise placements for trainee teachers at your school",
       class: "govuk-body",
     )
 
@@ -113,11 +112,11 @@ RSpec.describe "School user does not enter any school contact details",
 
   def then_i_see_the_phase_known_page
     expect(page).to have_title(
-      "Do you know what phase of education your placements will be? - Manage school placements - GOV.UK",
+      "What education phase could you offer placements in? - Manage school placements - GOV.UK",
     )
     expect(page).to have_element(
       :legend,
-      text: "Do you know what phase of education your placements will be?",
+      text: "What education phase could you offer placements in?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Primary", type: :checkbox)

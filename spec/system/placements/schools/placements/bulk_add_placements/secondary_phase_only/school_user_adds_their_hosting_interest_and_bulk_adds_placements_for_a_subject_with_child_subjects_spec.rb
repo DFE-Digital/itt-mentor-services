@@ -47,7 +47,7 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
     @english = create(:subject, :secondary, name: "English")
     @mathematics = create(:subject, :secondary, name: "Mathematics")
     @science = create(:subject, :secondary, name: "Science")
-    @modern_languages = create(:subject, :secondary, name: "Modern languages")
+    @modern_languages = create(:subject, :secondary, name: "Modern Languages")
     @french = create(:subject, :secondary, name: "French", parent_subject: @modern_languages)
     @spanish = create(:subject, :secondary, name: "Spanish", parent_subject: @modern_languages)
     @russian = create(:subject, :secondary, name: "Russian", parent_subject: @modern_languages)
@@ -112,51 +112,47 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
 
   def then_i_see_the_secondary_subject_selection_form
     expect(page).to have_title(
-      "Select secondary school subjects you can offer - Manage school placements - GOV.UK",
+      "What secondary school subjects can you offer placements in? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "Select secondary school subjects you can offer",
+      text: "What secondary school subjects can you offer placements in?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_element(:span, text: "Secondary placement details", class: "govuk-caption-l")
     expect(page).to have_field("English", type: :checkbox)
     expect(page).to have_field("Mathematics", type: :checkbox)
     expect(page).to have_field("Science", type: :checkbox)
-    expect(page).to have_field("Modern languages", type: :checkbox)
+    expect(page).to have_field("Modern Languages", type: :checkbox)
   end
 
   def when_i_select_modern_languages
-    check "Modern languages"
+    check "Modern Languages"
   end
 
   def then_i_see_the_secondary_subject_placement_quantity_form
     expect(page).to have_title(
-      "Enter the number of secondary school placements you can offer - Manage school placements - GOV.UK",
+      "How many placements can you offer for each subject? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Enter the number of secondary school placements you can offer", class: "govuk-heading-l")
+    expect(page).to have_h1("How many placements can you offer for each subject?", class: "govuk-heading-l")
     expect(page).to have_element(:span, text: "Secondary placement details", class: "govuk-caption-l")
-    expect(page).to have_field("Modern languages", type: :number)
+    expect(page).to have_field("Modern Languages", type: :number)
   end
 
   def when_i_fill_in_the_number_of_secondary_placements_i_require
-    fill_in "Modern languages", with: 2
+    fill_in "Modern Languages", with: 2
   end
 
   def then_i_see_the_subject_selection_for_modern_languages_form
     expect(page).to have_title(
-      "You selected 2 Modern languages placements - Manage school placements - GOV.UK",
+      "What languages are taught on your Modern Languages placement offers? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1(
-      "You selected 2 Modern languages placements",
+      "What languages are taught on your Modern Languages placement offers?",
       class: "govuk-heading-l",
-    )
-    expect(page).to have_h2(
-      "Select the languages taught on each of these placements",
-      class: "govuk-heading-m",
     )
     expect(page).to have_element(:span, text: "Secondary placement details", class: "govuk-caption-l")
     expect(page).to have_field("French", type: :checkbox)
@@ -224,6 +220,6 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
     expect(page).to have_summary_list_row("Phase", "Secondary")
 
     expect(page).to have_h2("Secondary placements")
-    expect(page).to have_summary_list_row("Modern languages", "2")
+    expect(page).to have_summary_list_row("Modern Languages", "2")
   end
 end

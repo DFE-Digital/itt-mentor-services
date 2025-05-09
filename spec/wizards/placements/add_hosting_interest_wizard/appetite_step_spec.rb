@@ -38,19 +38,19 @@ RSpec.describe Placements::AddHostingInterestWizard::AppetiteStep, type: :model 
       expect(actively_looking.value).to eq("actively_looking")
       expect(actively_looking.name).to eq("Yes - I can offer placements")
       expect(actively_looking.description).to eq(
-        "Record the placements you can offer. You can edit your placements any time.",
+        "Share the placements you can offer",
       )
 
       expect(interested.value).to eq("interested")
       expect(interested.name).to eq("Maybe - I’m not sure yet")
       expect(interested.description).to eq(
-        "Providers can contact you to discuss potential placements.",
+        "Share what you can potentially offer",
       )
 
       expect(not_open.value).to eq("not_open")
       expect(not_open.name).to eq("No - I can’t offer placements")
       expect(not_open.description).to eq(
-        "Tell us why your school cannot offer placements. Your contact details will not be shown to providers.",
+        "Tell us why you cannot offer placements",
       )
     end
   end

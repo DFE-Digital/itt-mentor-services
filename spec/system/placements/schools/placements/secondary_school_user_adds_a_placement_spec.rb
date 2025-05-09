@@ -459,7 +459,7 @@ RSpec.describe "Secondary school user adds a placement", service: :placements, t
 
   def and_i_see_my_placement
     expect(page).to have_table_row({
-      "Subject" => "Mathematics",
+      "Placement" => "Mathematics",
       "Mentor" => "Jane Doe",
       "Expected date" => "Summer term",
       "Provider" => "Provider not assigned",

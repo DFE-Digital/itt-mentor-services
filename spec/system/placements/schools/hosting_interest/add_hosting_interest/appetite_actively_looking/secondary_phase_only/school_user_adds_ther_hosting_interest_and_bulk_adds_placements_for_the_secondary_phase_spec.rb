@@ -32,7 +32,7 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
     and_i_click_on_continue
     then_i_see_the_check_your_answers_page
 
-    when_i_click_save_and_continue
+    when_i_click_on_publish_placements
     then_i_see_my_responses_were_successfully_updated
     and_i_see_the_whats_next_page
     and_i_see_1_secondary_placement_for_english_have_been_created
@@ -76,12 +76,12 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
 
   def then_i_see_the_appetite_form
     expect(page).to have_title(
-      "Can your school offer placements for trainee teachers in this academic year (#{@next_academic_year_name})? - Manage school placements - GOV.UK",
+      "Can your school offer placements for trainee teachers in the academic year #{@next_academic_year_name}? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "Can your school offer placements for trainee teachers in this academic year (#{@next_academic_year_name})?",
+      text: "Can your school offer placements for trainee teachers in the academic year #{@next_academic_year_name}?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Yes - I can offer placements", type: :radio)
@@ -123,12 +123,12 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
 
   def then_i_see_the_secondary_subject_selection_form
     expect(page).to have_title(
-      "Select secondary school subjects you can offer - Manage school placements - GOV.UK",
+      "What secondary school subjects can you offer placements in? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "Select secondary school subjects you can offer",
+      text: "What secondary school subjects can you offer placements in?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_element(:span, text: "Secondary placement details", class: "govuk-caption-l")
@@ -147,10 +147,10 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
 
   def then_i_see_the_secondary_subject_placement_quantity_form
     expect(page).to have_title(
-      "Enter the number of secondary school placements you can offer - Manage school placements - GOV.UK",
+      "How many placements can you offer for each subject? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Enter the number of secondary school placements you can offer", class: "govuk-heading-l")
+    expect(page).to have_h1("How many placements can you offer for each subject?", class: "govuk-heading-l")
     expect(page).to have_element(:span, text: "Secondary placement details", class: "govuk-caption-l")
     expect(page).to have_field("English", type: :number)
     expect(page).to have_field("Mathematics", type: :number)
@@ -169,8 +169,7 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
     expect(page).to have_h1("Who should providers contact?")
     expect(page).to have_element(
       :p,
-      text: "Choose the person best placed to organise ITT placements at your school. "\
-        "This information will be shown on your profile.",
+      text: "Choose the person best placed to organise placements for trainee teachers at your school",
       class: "govuk-body",
     )
 
@@ -222,8 +221,8 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
     )
   end
 
-  def when_i_click_save_and_continue
-    click_on "Save and continue"
+  def when_i_click_on_publish_placements
+    click_on "Publish placements"
   end
 
   def then_i_see_the_check_your_answers_page
@@ -240,7 +239,7 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
     expect(page).to have_summary_list_row("English", "1")
     expect(page).to have_summary_list_row("Mathematics", "4")
 
-    expect(page).to have_h2("ITT contact")
+    expect(page).to have_h2(" contact")
     expect(page).to have_summary_list_row("First name", "Joe")
     expect(page).to have_summary_list_row("Last name", "Bloggs")
     expect(page).to have_summary_list_row("Email address", "joe_bloggs@example.com")
@@ -276,6 +275,6 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
   end
 
   def when_i_click_on_edit_your_placements
-    click_on "edit your placements"
+    click_on "Edit your placements"
   end
 end
