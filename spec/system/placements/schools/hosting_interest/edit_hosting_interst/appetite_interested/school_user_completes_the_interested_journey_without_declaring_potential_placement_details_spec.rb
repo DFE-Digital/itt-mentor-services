@@ -140,7 +140,7 @@ RSpec.describe "School user completes the interested journey without declaring p
 
   def then_i_see_my_responses_with_successfully_updated
     expect(page).to have_success_banner(
-      "Your status has been updated to ‘interesed in hosting placements’",
+      "Your status has been updated to ‘interested in hosting placements’",
       "This means providers can see that you’re looking to host placements.",
     )
   end
