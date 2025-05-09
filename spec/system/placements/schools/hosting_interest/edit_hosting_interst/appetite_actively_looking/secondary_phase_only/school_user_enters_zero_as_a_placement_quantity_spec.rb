@@ -93,12 +93,12 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
 
   def then_i_see_the_appetite_form
     expect(page).to have_title(
-      "Can your school offer placements for trainee teachers in this academic year (#{@next_academic_year_name})? - Manage school placements - GOV.UK",
+      "Can your school offer placements for trainee teachers in the academic year #{@next_academic_year_name}? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Organisation details")
     expect(page).to have_element(
       :legend,
-      text: "Can your school offer placements for trainee teachers in this academic year (#{@next_academic_year_name})?",
+      text: "Can your school offer placements for trainee teachers in the academic year #{@next_academic_year_name}?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Yes - I can offer placements", type: :radio)
@@ -136,12 +136,12 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
 
   def then_i_see_the_secondary_subject_selection_form
     expect(page).to have_title(
-      "Select secondary school subjects you can offer - Manage school placements - GOV.UK",
+      "What secondary school subjects can you offer placements in? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Organisation details")
     expect(page).to have_element(
       :legend,
-      text: "Select secondary school subjects you can offer",
+      text: "What secondary school subjects can you offer placements in?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_element(:span, text: "Secondary placement details", class: "govuk-caption-l")
@@ -156,10 +156,10 @@ RSpec.describe "School user bulk adds placements for the secondary phase",
 
   def then_i_see_the_secondary_subject_placement_quantity_form
     expect(page).to have_title(
-      "Enter the number of secondary school placements you can offer - Manage school placements - GOV.UK",
+      "How many placements can you offer for each subject? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Organisation details")
-    expect(page).to have_h1("Enter the number of secondary school placements you can offer", class: "govuk-heading-l")
+    expect(page).to have_h1("How many placements can you offer for each subject?", class: "govuk-heading-l")
     expect(page).to have_element(:span, text: "Secondary placement details", class: "govuk-caption-l")
     expect(page).to have_field("English", type: :number)
   end

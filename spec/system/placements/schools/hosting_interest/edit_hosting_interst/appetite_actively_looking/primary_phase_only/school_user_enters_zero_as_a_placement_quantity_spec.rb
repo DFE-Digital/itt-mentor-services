@@ -93,12 +93,12 @@ RSpec.describe "School user enters zero as a placement quantity",
 
   def then_i_see_the_appetite_form
     expect(page).to have_title(
-      "Can your school offer placements for trainee teachers in this academic year (#{@next_academic_year_name})? - Manage school placements - GOV.UK",
+      "Can your school offer placements for trainee teachers in the academic year #{@next_academic_year_name}? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Organisation details")
     expect(page).to have_element(
       :legend,
-      text: "Can your school offer placements for trainee teachers in this academic year (#{@next_academic_year_name})?",
+      text: "Can your school offer placements for trainee teachers in the academic year #{@next_academic_year_name}?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Yes - I can offer placements", type: :radio)
@@ -136,12 +136,12 @@ RSpec.describe "School user enters zero as a placement quantity",
 
   def then_i_see_the_primary_year_group_selection_form
     expect(page).to have_title(
-      "Select primary school year groups you can offer - Manage school placements - GOV.UK",
+      "What primary school year groups can you offer placements in? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Organisation details")
     expect(page).to have_element(
       :legend,
-      text: "Select primary school year groups you can offer",
+      text: "What primary school year groups can you offer placements in?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_element(:span, text: "Primary placement details", class: "govuk-caption-l")

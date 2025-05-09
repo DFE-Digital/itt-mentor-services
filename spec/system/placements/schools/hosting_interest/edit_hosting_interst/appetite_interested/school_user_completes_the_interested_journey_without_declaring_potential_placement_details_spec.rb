@@ -89,12 +89,12 @@ RSpec.describe "School user completes the interested journey without declaring p
 
   def then_i_see_the_appetite_form
     expect(page).to have_title(
-      "Can your school offer placements for trainee teachers in this academic year (#{@next_academic_year_name})? - Manage school placements - GOV.UK",
+      "Can your school offer placements for trainee teachers in the academic year #{@next_academic_year_name}? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Organisation details")
     expect(page).to have_element(
       :legend,
-      text: "Can your school offer placements for trainee teachers in this academic year (#{@next_academic_year_name})?",
+      text: "Can your school offer placements for trainee teachers in the academic year #{@next_academic_year_name}?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Yes - I can offer placements", type: :radio)
@@ -127,7 +127,7 @@ RSpec.describe "School user completes the interested journey without declaring p
     )
     expect(page).to have_element(
       :p,
-      text: "They will be able to see your approximate information and will be able to use your email to contact you.",
+      text: "They will be able to see your potential placement details and will be able to use your email to contact you.",
       class: "govuk-body",
     )
   end
@@ -152,10 +152,10 @@ RSpec.describe "School user completes the interested journey without declaring p
 
   def and_i_see_the_whats_next_page
     expect(page).to have_panel(
-      "Approximate information added",
+      "Information added",
       "Providers can see that you may offer placements",
     )
-    expect(page).to have_h1("What happens next?", class: "govuk-heading-l")
+    expect(page).to have_h1("What happens next", class: "govuk-heading-l")
     expect(page).to have_element(
       :p,
       text: "Providers who are looking for schools to work with can contact you on #{@school.school_contact_email_address}.",
@@ -163,19 +163,19 @@ RSpec.describe "School user completes the interested journey without declaring p
     )
     expect(page).to have_element(
       :p,
-      text: "Once you know which placements you can offer, you can add placements to help providers know what trainees you need.",
+      text: "Once you are sure which placements your school can offer, add your placements. Doing so will mean you will be able to assign providers to them.",
       class: "govuk-body",
     )
-    expect(page).to have_link("add placements", href: placements_school_placements_path(@school))
+    expect(page).to have_link("add your placements", href: placements_school_placements_path(@school))
   end
 
   def then_i_see_the_phase_known_page
     expect(page).to have_title(
-      "Do you know what phase of education your placements will be? - Manage school placements - GOV.UK",
+      "What education phase could you offer placements in? - Manage school placements - GOV.UK",
     )
     expect(page).to have_element(
       :legend,
-      text: "Do you know what phase of education your placements will be?",
+      text: "What education phase could you offer placements in?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Primary", type: :checkbox)
@@ -203,7 +203,7 @@ RSpec.describe "School user completes the interested journey without declaring p
   end
 
   def and_i_see_the_education_phase_is_not_known
-    expect(page).to have_h2("Education phase", class: "govuk-heading-m")
+    expect(page).to have_h2("Potential education phase", class: "govuk-heading-m")
     expect(page).to have_summary_list_row("Phase", "I don’t know")
   end
 

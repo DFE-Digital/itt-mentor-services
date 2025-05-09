@@ -1,10 +1,11 @@
 require "rails_helper"
 
-RSpec.describe "School user completes the interested journey without declaring potential placement details",
+RSpec.describe "School user completes the interested journey without declaring child subjects",
                service: :placements,
                type: :system do
   scenario do
     given_academic_years_exist
+    and_subjects_exist
     and_i_am_signed_in
 
     when_i_visit_the_add_hosting_interest_page
@@ -14,19 +15,37 @@ RSpec.describe "School user completes the interested journey without declaring p
     and_i_click_on_continue
     then_i_see_the_phase_known_page
 
-    when_i_select_i_dont_know
+    when_i_select_secondary
+    and_i_click_on_continue
+    then_i_see_the_secondary_subject_selection_form
+
+    when_i_select_modern_languages
+    and_i_click_on_continue
+    then_i_see_the_secondary_placement_quantity_known_page
+
+    when_i_select_yes
+    and_i_click_on_continue
+    then_i_see_the_secondary_subject_placement_quantity_form
+
+    when_i_fill_in_the_number_of_secondary_placements_i_require
+    and_i_click_on_continue
+    then_i_see_the_subject_selection_for_modern_languages_form
+
+    when_i_select_not_sure_yet
     and_i_click_on_continue
     then_i_see_the_provider_note_page
 
-    when_i_click_on_continue
+    when_i_enter_a_note_to_the_provider
+    and_i_click_on_continue
     then_i_see_the_school_contact_form
 
     when_i_fill_in_the_school_contact_details
     and_i_click_on_continue
     then_i_see_the_confirmation_page
     and_i_see_the_entered_school_contact_details
-    and_i_see_the_education_phase_is_not_known
-    and_i_see_the_message_to_provider_is_empty
+    and_i_see_the_education_phases_i_selected
+    and_i_see_the_potential_secondary_placement_details_i_entered
+    and_i_see_the_message_to_provider_i_entered
 
     when_i_click_on_confirm
     then_i_see_my_responses_with_successfully_updated
@@ -43,6 +62,16 @@ RSpec.describe "School user completes the interested journey without declaring p
     @current_academic_year_name = current_academic_year.name
     @next_academic_year = current_academic_year.next
     @next_academic_year_name = @next_academic_year.name
+  end
+
+  def and_subjects_exist
+    @english = create(:subject, :secondary, name: "English")
+    @mathematics = create(:subject, :secondary, name: "Mathematics")
+    @science = create(:subject, :secondary, name: "Science")
+    @modern_languages = create(:subject, :secondary, name: "Modern Languages")
+    @french = create(:subject, :secondary, name: "French", parent_subject: @modern_languages)
+    @spanish = create(:subject, :secondary, name: "Spanish", parent_subject: @modern_languages)
+    @russian = create(:subject, :secondary, name: "Russian", parent_subject: @modern_languages)
   end
 
   def and_i_am_signed_in
@@ -174,10 +203,6 @@ RSpec.describe "School user completes the interested journey without declaring p
     expect(page).to have_field("I don’t know", type: :checkbox)
   end
 
-  def when_i_select_i_dont_know
-    check "I don’t know"
-  end
-
   def then_i_see_the_provider_note_page
     expect(page).to have_title(
       "Is there anything about your school you would like providers to know? (optional) - Manage school placements - GOV.UK",
@@ -193,6 +218,11 @@ RSpec.describe "School user completes the interested journey without declaring p
     )
   end
 
+  def when_i_enter_a_note_to_the_provider
+    fill_in "Is there anything about your school you would like providers to know? (optional)", with:
+      "We are open to hosting additional placements at the provider's request."
+  end
+
   def and_i_see_the_entered_school_contact_details
     expect(page).to have_h2("Your information", class: "govuk-heading-m")
     expect(page).to have_summary_list_row("First name", "Joe")
@@ -200,14 +230,17 @@ RSpec.describe "School user completes the interested journey without declaring p
     expect(page).to have_summary_list_row("Email address", "joe_bloggs@example.com")
   end
 
-  def and_i_see_the_education_phase_is_not_known
+  def and_i_see_the_education_phases_i_selected
     expect(page).to have_h2("Potential education phase", class: "govuk-heading-m")
-    expect(page).to have_summary_list_row("Phase", "I don’t know")
+    expect(page).to have_summary_list_row("Phase", "Secondary")
   end
 
-  def and_i_see_the_message_to_provider_is_empty
+  def and_i_see_the_message_to_provider_i_entered
     expect(page).to have_h2("Additional information", class: "govuk-heading-m")
-    expect(page).to have_summary_list_row("Message to providers", "")
+    expect(page).to have_summary_list_row(
+      "Message to providers",
+      "We are open to hosting additional placements at the provider's request.",
+    )
   end
 
   def when_i_click_on_confirm
@@ -216,9 +249,109 @@ RSpec.describe "School user completes the interested journey without declaring p
 
   def and_the_schools_potential_placement_details_have_been_updated
     potential_placement_details = @school.reload.potential_placement_details
-    expect(potential_placement_details["phase"]).to eq({ "phases" => %w[unknown] })
-    expect(potential_placement_details["note_to_providers"]).to eq(
-      { "note" => "" },
+
+    expect(potential_placement_details["phase"]).to eq({ "phases" => %w[Secondary] })
+    expect(
+      potential_placement_details.dig("secondary_subject_selection", "subject_ids").sort,
+    ).to eq(
+      [@modern_languages.id].sort,
     )
+    expect(potential_placement_details["secondary_placement_quantity"]).to eq(
+      { "modern_languages" => 1 },
+    )
+
+    modern_languages_child_subject_placement_selection = potential_placement_details["secondary_child_subject_placement_selection"]["modern_languages"]["1"]
+    expect(modern_languages_child_subject_placement_selection["selection_id"]).to eq("modern_languages_1")
+    expect(modern_languages_child_subject_placement_selection["selection_number"]).to eq(1)
+    expect(modern_languages_child_subject_placement_selection["child_subject_ids"]).to contain_exactly("unknown")
+    expect(modern_languages_child_subject_placement_selection["parent_subject_id"]).to eq(@modern_languages.id)
+
+    expect(potential_placement_details["note_to_providers"]).to eq(
+      { "note" => "We are open to hosting additional placements at the provider's request." },
+    )
+  end
+
+  def when_i_select_secondary
+    check "Secondary"
+  end
+
+  def when_i_select_yes
+    choose "Yes"
+  end
+
+  def then_i_see_the_secondary_subject_selection_form
+    expect(page).to have_title(
+      "What subjects could you offer placements in? - Manage school placements - GOV.UK",
+    )
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_element(
+      :legend,
+      text: "What subjects could you offer placements in?",
+      class: "govuk-fieldset__legend",
+    )
+    expect(page).to have_element(:span, text: "Potential secondary placement details", class: "govuk-caption-l")
+    expect(page).to have_field("English", type: :checkbox)
+    expect(page).to have_field("Mathematics", type: :checkbox)
+    expect(page).to have_field("Science", type: :checkbox)
+    expect(page).to have_field("Modern Languages", type: :checkbox)
+    expect(page).to have_field("I don’t know", type: :checkbox)
+  end
+
+  def when_i_select_modern_languages
+    check "Modern Languages"
+  end
+
+  def then_i_see_the_secondary_subject_placement_quantity_form
+    expect(page).to have_title(
+      "How many placements could you offer for each subject? - Manage school placements - GOV.UK",
+    )
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_h1("How many placements could you offer for each subject?", class: "govuk-heading-l")
+    expect(page).to have_element(:span, text: "Potential secondary placement details", class: "govuk-caption-l")
+    expect(page).to have_field("Modern Languages", type: :number)
+  end
+
+  def when_i_fill_in_the_number_of_secondary_placements_i_require
+    fill_in "Modern Languages", with: 1
+  end
+
+  def then_i_see_the_secondary_placement_quantity_known_page
+    expect(page).to have_title(
+      "Do you know how many secondary school placements you may be willing to offer? - Manage school placements - GOV.UK",
+    )
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_element(:span, text: "Potential secondary placement details", class: "govuk-caption-l")
+    expect(page).to have_element(
+      :legend,
+      text: "Do you know how many secondary school placements you may be willing to offer?",
+      class: "govuk-fieldset__legend",
+    )
+    expect(page).to have_field("Yes", type: :radio)
+    expect(page).to have_field("No", type: :radio)
+  end
+
+  def then_i_see_the_subject_selection_for_modern_languages_form
+    expect(page).to have_title(
+      "What languages are taught on your Modern Languages placement offers? - Manage school placements - GOV.UK",
+    )
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_h1(
+      "What languages are taught on your Modern Languages placement offers?",
+      class: "govuk-heading-l",
+    )
+    expect(page).to have_element(:span, text: "Potential secondary placement details", class: "govuk-caption-l")
+    expect(page).to have_field("French", type: :checkbox)
+    expect(page).to have_field("Spanish", type: :checkbox)
+    expect(page).to have_field("Russian", type: :checkbox)
+    expect(page).to have_field("Not sure yet", type: :checkbox)
+  end
+
+  def when_i_select_not_sure_yet
+    check "Not sure yet"
+  end
+
+  def and_i_see_the_potential_secondary_placement_details_i_entered
+    expect(page).to have_h2("Potential secondary placements", class: "govuk-heading-m")
+    expect(page).to have_summary_list_row("Modern Languages", "1")
   end
 end

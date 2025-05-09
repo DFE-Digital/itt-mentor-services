@@ -82,13 +82,13 @@ RSpec.describe "School user changes their selected academic year",
 
   def and_i_see_the_placements_for_the_next_academic_year
     expect(page).to have_table_row(
-      "Subject" => "Science",
+      "Placement" => "Science",
     )
   end
 
   def and_i_do_not_see_placements_for_this_academic_year
     expect(page).not_to have_table_row(
-      "Subject" => "English",
+      "Placement" => "English",
     )
   end
 
@@ -130,13 +130,13 @@ RSpec.describe "School user changes their selected academic year",
 
   def and_i_see_the_placements_for_this_academic_year
     expect(page).to have_table_row(
-      "Subject" => "English",
+      "Placement" => "English",
     )
   end
 
   def and_i_do_not_see_placements_for_the_next_academic_year
     expect(page).not_to have_table_row(
-      "Subject" => "Science",
+      "Placement" => "Science",
     )
   end
 end

@@ -94,12 +94,12 @@ RSpec.describe "School user completes the interested journey and declares primar
 
   def then_i_see_the_appetite_form
     expect(page).to have_title(
-      "Can your school offer placements for trainee teachers in this academic year (#{@next_academic_year_name})? - Manage school placements - GOV.UK",
+      "Can your school offer placements for trainee teachers in the academic year #{@next_academic_year_name}? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "Can your school offer placements for trainee teachers in this academic year (#{@next_academic_year_name})?",
+      text: "Can your school offer placements for trainee teachers in the academic year #{@next_academic_year_name}?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Yes - I can offer placements", type: :radio)
@@ -132,7 +132,7 @@ RSpec.describe "School user completes the interested journey and declares primar
     )
     expect(page).to have_element(
       :p,
-      text: "They will be able to see your approximate information and will be able to use your email to contact you.",
+      text: "They will be able to see your potential placement details and will be able to use your email to contact you.",
       class: "govuk-body",
     )
   end
@@ -145,8 +145,7 @@ RSpec.describe "School user completes the interested journey and declares primar
     expect(page).to have_h1("Who should providers contact?")
     expect(page).to have_element(
       :p,
-      text: "Choose the person best placed to organise ITT placements at your school. "\
-        "This information will be shown on your profile.",
+      text: "Choose the person best placed to organise placements for trainee teachers at your school",
       class: "govuk-body",
     )
 
@@ -182,10 +181,10 @@ RSpec.describe "School user completes the interested journey and declares primar
 
   def and_i_see_the_whats_next_page
     expect(page).to have_panel(
-      "Approximate information added",
+      "Information added",
       "Providers can see that you may offer placements",
     )
-    expect(page).to have_h1("What happens next?", class: "govuk-heading-l")
+    expect(page).to have_h1("What happens next", class: "govuk-heading-l")
     expect(page).to have_element(
       :p,
       text: "Providers who are looking for schools to work with can contact you on joe_bloggs@example.com.",
@@ -193,19 +192,19 @@ RSpec.describe "School user completes the interested journey and declares primar
     )
     expect(page).to have_element(
       :p,
-      text: "Once you know which placements you can offer, you can add placements to help providers know what trainees you need.",
+      text: "Once you are sure which placements your school can offer, add your placements. Doing so will mean you will be able to assign providers to them.",
       class: "govuk-body",
     )
-    expect(page).to have_link("add placements", href: placements_school_placements_path(@school))
+    expect(page).to have_link("add your placements", href: placements_school_placements_path(@school))
   end
 
   def then_i_see_the_phase_known_page
     expect(page).to have_title(
-      "Do you know what phase of education your placements will be? - Manage school placements - GOV.UK",
+      "What education phase could you offer placements in? - Manage school placements - GOV.UK",
     )
     expect(page).to have_element(
       :legend,
-      text: "Do you know what phase of education your placements will be?",
+      text: "What education phase could you offer placements in?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Primary", type: :checkbox)
@@ -241,8 +240,8 @@ RSpec.describe "School user completes the interested journey and declares primar
   end
 
   def and_i_see_the_education_phases_i_selected
-    expect(page).to have_h2("Education phase", class: "govuk-heading-m")
-    expect(page).to have_summary_list_row("Phase", "Primary and Secondary")
+    expect(page).to have_h2("Potential education phase", class: "govuk-heading-m")
+    expect(page).to have_summary_list_row("Phase", "Primary Secondary")
   end
 
   def and_i_see_the_message_to_provider_i_entered
@@ -290,12 +289,12 @@ RSpec.describe "School user completes the interested journey and declares primar
 
   def then_i_see_the_primary_year_group_selection_form
     expect(page).to have_title(
-      "Do you know what primary school year groups you would be willing to host placements in? - Manage school placements - GOV.UK",
+      "What year groups could you offer placements in? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "Do you know what primary school year groups you would be willing to host placements in?",
+      text: "What year groups could you offer placements in?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_element(:span, text: "Potential primary placement details", class: "govuk-caption-l")
@@ -317,10 +316,10 @@ RSpec.describe "School user completes the interested journey and declares primar
 
   def then_i_see_the_primary_placement_quantity_form
     expect(page).to have_title(
-      "How many primary placements you would be willing to host in each year group? - Manage school placements - GOV.UK",
+      "How many placements could you offer for each year group? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("How many primary placements you would be willing to host in each year group?", class: "govuk-heading-l")
+    expect(page).to have_h1("How many placements could you offer for each year group?", class: "govuk-heading-l")
     expect(page).to have_element(:span, text: "Potential primary placement details", class: "govuk-caption-l")
     expect(page).to have_field("Year 1", type: :number)
   end
@@ -331,13 +330,13 @@ RSpec.describe "School user completes the interested journey and declares primar
 
   def then_i_see_the_primary_placement_quantity_known_page
     expect(page).to have_title(
-      "Do you know the number of primary placements you would be willing to host in each year group? - Manage school placements - GOV.UK",
+      "Do you know how many placements could you offer for each primary school year group? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(:span, text: "Potential primary placement details", class: "govuk-caption-l")
     expect(page).to have_element(
       :legend,
-      text: "Do you know the number of primary placements you would be willing to host in each year group?",
+      text: "Do you know how many placements could you offer for each primary school year group?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Yes", type: :radio)
@@ -350,12 +349,12 @@ RSpec.describe "School user completes the interested journey and declares primar
 
   def then_i_see_the_secondary_subject_selection_form
     expect(page).to have_title(
-      "Do you know the secondary school subjects you could have placements in? - Manage school placements - GOV.UK",
+      "What subjects could you offer placements in? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(
       :legend,
-      text: "Do you know the secondary school subjects you could have placements in?",
+      text: "What subjects could you offer placements in?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_element(:span, text: "Potential secondary placement details", class: "govuk-caption-l")
@@ -375,10 +374,10 @@ RSpec.describe "School user completes the interested journey and declares primar
 
   def then_i_see_the_secondary_subject_placement_quantity_form
     expect(page).to have_title(
-      "How many secondary placements you would be willing to host in each subject? - Manage school placements - GOV.UK",
+      "How many placements could you offer for each subject? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("How many secondary placements you would be willing to host in each subject?", class: "govuk-heading-l")
+    expect(page).to have_h1("How many placements could you offer for each subject?", class: "govuk-heading-l")
     expect(page).to have_element(:span, text: "Potential secondary placement details", class: "govuk-caption-l")
     expect(page).to have_field("English", type: :number)
     expect(page).to have_field("Mathematics", type: :number)
@@ -391,13 +390,13 @@ RSpec.describe "School user completes the interested journey and declares primar
 
   def then_i_see_the_secondary_placement_quantity_known_page
     expect(page).to have_title(
-      "Do you know the number of secondary placements you would be willing to host? - Manage school placements - GOV.UK",
+      "Do you know how many secondary school placements you may be willing to offer? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(:span, text: "Potential secondary placement details", class: "govuk-caption-l")
     expect(page).to have_element(
       :legend,
-      text: "Do you know the number of secondary placements you would be willing to host?",
+      text: "Do you know how many secondary school placements you may be willing to offer?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Yes", type: :radio)

@@ -31,9 +31,16 @@ class Subject < ApplicationRecord
     "Design and technology",
     "Mathematics",
     "Physics",
+    "Science", # TODO: Category unsure
   ].freeze
-  LIT_LANG_SUBJECTS = ["English", "Modern Languages"].freeze
+  LIT_LANG_SUBJECTS = [
+    "English",
+    "Modern Languages",
+    "Latin", # TODO: Category unsure
+  ].freeze
   ART_HUMANITIES_SOCIAL_SUBJECTS = [
+    "Ancient Greek", # TODO: Category unsure
+    "Ancient Hebrew", # TODO: Category unsure
     "Art and design",
     "Business studies",
     "Citizenship",
@@ -50,7 +57,11 @@ class Subject < ApplicationRecord
     "Religious education",
     "Social sciences",
   ].freeze
-  HEALTH_PHYSICAL_EDUCATION_SUBJECTS = ["Health and social care", "Physical education"].freeze
+  HEALTH_PHYSICAL_EDUCATION_SUBJECTS = [
+    "Health and social care",
+    "Physical education",
+    "Physical education with an EBacc subject", # TODO: Category unsure
+  ].freeze
 
   enum :subject_area,
        { primary: "primary", secondary: "secondary" },

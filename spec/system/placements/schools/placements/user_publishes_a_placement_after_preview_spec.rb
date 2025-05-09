@@ -217,7 +217,7 @@ RSpec.describe "User publishes a placement after preview", service: :placements,
 
   def and_i_see_my_placement
     expect(page).to have_table_row({
-      "Subject" => "English",
+      "Placement" => "English",
       "Mentor" => "John Smith",
       "Expected date" => "Autumn term, Spring term",
       "Provider" => "Provider not assigned",
