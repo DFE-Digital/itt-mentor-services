@@ -31,7 +31,9 @@ RSpec.describe "Claims user views and submits claim", service: :claims, type: :s
   def given_an_eligible_school_exists_with_a_submitted_claim_and_a_draft_claim
     @user_anne = build(:claims_user, first_name: "Anne", last_name: "Wilson", email: "anne_wilson@education.gov.uk")
     @mentor =  build(:claims_mentor, first_name: "James", last_name: "Jameson")
-    @provider = create(:claims_provider, :best_practice_network)
+    @provider = build(:claims_provider, :best_practice_network) do |provider|
+      provider.provider_email_addresses.build(email_address: "best_practice_network@example.com", primary: true)
+    end
     @claim_window = build(:claim_window, :current)
     @date_completed = @claim_window.starts_on + 1.day
     @shelbyville_school = build(

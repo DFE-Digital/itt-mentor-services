@@ -53,12 +53,12 @@ RSpec.describe "Claims user edits a draft claim", service: :claims, type: :syste
       eligible_claim_windows: [@claim_window],
       mentors: [@mentor_james, @mentor_barry],
     )
-    @draft_claim = create(:claim,
-                          :draft,
-                          school: @shelbyville_school,
-                          reference: "88888888",
-                          provider: @provider,
-                          claim_window: @claim_window)
+    @draft_claim = build(:claim,
+                         :draft,
+                         school: @shelbyville_school,
+                         reference: "88888888",
+                         provider: @provider,
+                         claim_window: @claim_window)
     @draft_mentor_training = create(:mentor_training,
                                     claim: @draft_claim,
                                     mentor: @mentor_james,

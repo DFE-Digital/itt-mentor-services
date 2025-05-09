@@ -33,7 +33,9 @@ RSpec.describe "Claims user creates a claim for a mentor with a previous year cl
   def given_a_school_exists_with_a_previous_year_claim
     @user_anne = build(:claims_user, first_name: "Anne", last_name: "Wilson", email: "anne_wilson@education.gov.uk")
     @mentor = build(:claims_mentor, first_name: "Barry", last_name: "Garlow", trn: "8888888")
-    @provider = create(:claims_provider, :best_practice_network)
+    @provider = build(:claims_provider, :best_practice_network) do |provider|
+      provider.provider_email_addresses.build(email_address: "best_practice_network@example.com", primary: true)
+    end
     @current_claim_window = build(:claim_window, :current)
     @historic_claim_window = build(:claim_window, :historic)
     @date_submitted = @historic_claim_window.starts_on + 1.day
@@ -44,14 +46,14 @@ RSpec.describe "Claims user creates a claim for a mentor with a previous year cl
       eligible_claim_windows: [@current_claim_window],
       mentors: [@mentor],
     )
-    @submitted_claim = create(:claim,
-                              :submitted,
-                              school: @shelbyville_school,
-                              reference: "12345678",
-                              submitted_at: @date_submitted,
-                              provider: @provider,
-                              submitted_by: @user_anne,
-                              claim_window: @historic_claim_window)
+    @submitted_claim = build(:claim,
+                             :submitted,
+                             school: @shelbyville_school,
+                             reference: "12345678",
+                             submitted_at: @date_submitted,
+                             provider: @provider,
+                             submitted_by: @user_anne,
+                             claim_window: @historic_claim_window)
     @mentor_training = create(:mentor_training,
                               claim: @submitted_claim,
                               mentor: @mentor,
