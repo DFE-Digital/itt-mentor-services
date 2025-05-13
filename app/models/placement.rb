@@ -3,6 +3,7 @@
 # Table name: placements
 #
 #  id               :uuid             not null, primary key
+#  send_specific    :boolean          default(FALSE)
 #  year_group       :enum
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
@@ -34,11 +35,13 @@ class Placement < ApplicationRecord
   has_many :additional_subjects, through: :placement_additional_subjects, source: :subject
   has_many :placement_windows, class_name: "Placements::PlacementWindow", dependent: :destroy
   has_many :terms, class_name: "Placements::Term", through: :placement_windows
+  has_many :placement_key_stages, class_name: "Placements::PlacementKeyStage", dependent: :destroy
+  has_many :key_stages, class_name: "Placements::KeyStage", through: :placement_key_stages
 
   belongs_to :academic_year, class_name: "Placements::AcademicYear"
   belongs_to :school, class_name: "Placements::School"
   belongs_to :provider, class_name: "::Provider", optional: true
-  belongs_to :subject, class_name: "::Subject"
+  belongs_to :subject, class_name: "::Subject", optional: true
 
   accepts_nested_attributes_for :mentors, allow_destroy: true
 
@@ -55,7 +58,7 @@ class Placement < ApplicationRecord
     mixed_year_groups: "mixed_year_groups",
   }, validate: { allow_nil: true }
 
-  validates :school, presence: true
+  validates :subject, presence: true, if: -> { !send_specific }
 
   delegate :name, to: :provider, prefix: true, allow_nil: true
   delegate :has_child_subjects?, to: :subject, allow_nil: true, prefix: true
