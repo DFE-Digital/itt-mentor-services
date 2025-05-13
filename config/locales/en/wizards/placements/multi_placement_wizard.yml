@@ -113,7 +113,19 @@ en:
           hint: You will be able to enter the number of placements on the next screen
           continue: Continue
         year_group_placement_quantity_step:
-            title: Enter the number of primary school placements you can offer
-            caption: Primary placement details
-            enter_approximate: Enter an approximate number if you are unsure
-            continue: Continue
+          title: Enter the number of primary school placements you can offer
+          caption: Primary placement details
+          enter_approximate: Enter an approximate number if you are unsure
+          continue: Continue
+        sen_placement_quantity_step:
+          title: How many SEND placements can you offer?
+          caption: SEND placement details
+          enter_approximate: Enter an approximate number if you are unsure
+          continue: Continue
+        key_stage_step:
+          title: What SEND key stages can you offer placements in?
+          caption: SEND placement details
+          continue: Continue
+          options:
+            unknown: I’m not sure
+            unknown_description: You can discuss key stages with providers later

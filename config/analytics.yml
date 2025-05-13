@@ -201,6 +201,7 @@ shared:
     - provider_id
     - year_group
     - academic_year_id
+    - send_specific
   :school_contacts:
     - id
     - school_id

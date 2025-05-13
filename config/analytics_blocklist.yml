@@ -175,3 +175,14 @@ shared:
     - sen_provision_id
     - created_at
     - updated_at
+  :key_stages:
+    - id
+    - name
+    - created_at
+    - updated_at
+  :placement_key_stages:
+    - id
+    - placement_id
+    - key_stage_id
+    - created_at
+    - updated_at
