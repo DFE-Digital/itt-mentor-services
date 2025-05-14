@@ -91,20 +91,22 @@ module Placements
 
     def placements_information
       primary_placement_information.merge(
-        secondary_placement_information,
+        secondary_placement_information.merge(
+          send_placement_information,
+        ),
       )
     end
 
     def sen_quantity
       return 0 if steps[:sen_placement_quantity].blank?
 
-      steps.fetch(:sen_placement_quantity).sen_quantity
+      steps.fetch(:sen_placement_quantity).sen_quantity.to_i
     end
 
-    def key_stages_selected
+    def selected_key_stages
       return [UNKNOWN_OPTION] if value_unknown(steps.fetch(:key_stage).key_stages)
 
-      @key_stages_selected ||= Placements::KeyStage.where(id: steps.fetch(:key_stage).key_stages)
+      @selected_key_stages ||= ::Placements::KeyStage.where(id: steps.fetch(:key_stage).key_stages)
     end
 
     private
@@ -134,10 +136,11 @@ module Placements
         end
       end
 
-      sen_quantity.times do |i|
+      sen_quantity.times do
         placement = Placement.create!(school:, academic_year: upcoming_academic_year, send_specific: true)
+        next if value_unknown(steps.fetch(:key_stage).key_stages)
 
-        placement.key_stages << key_stages_selected
+        placement.key_stages << selected_key_stages
         placement.save!
       end
     end
@@ -229,8 +232,16 @@ module Placements
     end
 
     def send_steps
-      add_step(MultiPlacementWizard::SENPlacementQuantityStep)
-      add_step(MultiPlacementWizard::KeyStageStep)
+      if appetite_interested?
+        add_step(Interested::SENPlacementQuantityKnownStep)
+        return unless steps.fetch(:sen_placement_quantity_known).is_quantity_known?
+
+        add_step(Interested::SENPlacementQuantityStep)
+        add_step(Interested::KeyStageStep)
+      else
+        add_step(MultiPlacementWizard::SENPlacementQuantityStep)
+        add_step(MultiPlacementWizard::KeyStageStep)
+      end
     end
 
     def child_subject_steps
@@ -332,6 +343,20 @@ module Placements
         end
       end
       secondary_placement_details
+    end
+
+    def send_placement_information
+      return {} if steps[:sen_placement_quantity].blank?
+
+      send_placement_details = {}
+      send_placement_details["sen_placement_quantity"] = {
+        "sen_quantity" => steps.fetch(:sen_placement_quantity).sen_quantity,
+      }
+      send_placement_details["key_stage"] = {
+        "key_stages" => steps.fetch(:key_stage).key_stages,
+      }
+
+      send_placement_details
     end
 
     def save_potential_placements_information

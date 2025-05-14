@@ -1,0 +1,27 @@
+<%# locals: { wizard:, current_step: } -%>
+<%= govuk_summary_list(html_attributes: { id: "send_placements" }) do |summary_list| %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".number_of_placements")) %>
+    <% row.with_value do %>
+      <%= current_step.sen_quantity %>
+    <% end %>
+    <% row.with_action(text: t("change"),
+                       href: step_path(:sen_placement_quantity),
+                       visually_hidden_text: t(".send_placements"),
+                       classes: ["govuk-link--no-visited-state"]) %>
+  <% end %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".key_stages")) %>
+    <% row.with_value do %>
+      <%= govuk_list do %>
+        <% current_step.selected_key_stages.each do |key_stage| %>
+          <% if key_stage == Placements::AddHostingInterestWizard::UNKNOWN_OPTION %>
+            <li><%= t(".unknown") %></li>
+          <% else %>
+            <li><%= key_stage.name %></li>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

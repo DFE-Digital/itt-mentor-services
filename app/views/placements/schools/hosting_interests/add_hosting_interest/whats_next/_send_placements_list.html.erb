@@ -1,0 +1,25 @@
+<%# locals: { placement_details: nil } -%>
+<%= govuk_summary_list(html_attributes: { id: "send_placements" }, actions: false) do |summary_list| %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".number_of_placements")) %>
+    <% row.with_value do %>
+      <%= placement_details.dig("sen_placement_quantity", "sen_quantity").to_i %>
+    <% end %>
+  <% end %>
+
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".key_stages")) %>
+    <% row.with_value do %>
+      <%= govuk_list do %>
+        <% placement_details.dig("key_stage", "key_stages").each do |key_stage_id| %>
+          <% if key_stage_id == Placements::AddHostingInterestWizard::UNKNOWN_OPTION %>
+            <li><%= t(".unknown") %></li>
+          <% else %>
+            <% key_stage = Placements::KeyStage.find(key_stage_id) %>
+            <li><%= key_stage.name %></li>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
