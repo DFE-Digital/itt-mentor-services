@@ -41,7 +41,9 @@
 <% end %>
 
 <% if placement_details.dig("year_group_selection", "year_groups").present? ||
-  placement_details.dig("secondary_subject_selection", "subject_ids").present? %>
+  placement_details.dig("secondary_subject_selection", "subject_ids").present? ||
+  placement_details.dig("sen_placement_quantity", "sen_quantity").present? %>
+
   <h2 class="govuk-heading-m">
     <%= t(".your_placements_offers") %>
   </h2>
@@ -61,6 +63,15 @@
     </h2>
 
     <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/secondary_placements_list",
+      placement_details: placement_details %>
+  <% end %>
+
+  <% if placement_details.dig("sen_placement_quantity", "sen_quantity").present? %>
+    <h2 class="govuk-heading-m">
+      <%= t(".send_placements") %>
+    </h2>
+
+    <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/send_placements_list",
       placement_details: placement_details %>
   <% end %>
 <% end %>

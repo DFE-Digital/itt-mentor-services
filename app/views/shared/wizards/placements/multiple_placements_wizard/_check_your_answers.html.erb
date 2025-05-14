@@ -26,4 +26,10 @@
 <% end %>
 
 <% if current_step.sen_quantity.positive? %>
+  <h2 class="govuk-heading-m">
+    <%= potential ? t(".potential_send_placements") : t(".send_placements") %>
+  </h2>
+
+  <%= render "shared/wizards/placements/multiple_placements_wizard/check_your_answers/send_placements_list",
+    wizard:, current_step: %>
 <% end %>
