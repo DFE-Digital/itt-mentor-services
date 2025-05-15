@@ -34,6 +34,8 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
 
         ## Give feedback or report a problem
 
+        This is a pilot service for schools and teacher training providers in Leeds and Essex.
+
         If you need help or have feedback for us, contact [Manage.SchoolPlacements@education.gov.uk](mailto:Manage.SchoolPlacements@education.gov.uk).
 
         Thank you.
