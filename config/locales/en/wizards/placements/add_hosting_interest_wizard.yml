@@ -132,7 +132,7 @@ en:
             caption: Potential secondary placement details
             hint: 
               Subjects are taken from the DfE database of courses. If the subject you would like to host is not here, choose the closest option.
-            sharing_info: 
+            sharing_info:
               Sharing information on what you may be able to offer helps providers know whether to contact you. It is not a commitment to take a trainee teacher.
             stem_subjects: Science, technology, engineering and mathematics (STEM)
             lit_lang_subjects: Languages and literature
