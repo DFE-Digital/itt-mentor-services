@@ -28,7 +28,11 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
     then_i_see_the_placement_details_page_with_my_updated_year_group
     and_i_see_a_year_group_updated_success_message
 
-    when_i_click_on_change_expected_date
+    when_i_click_on_the_back_link
+    then_i_see_the_placements_index_page_with_updated_year_group
+
+    when_i_click_on_my_placement_with_updated_year_group
+    and_i_click_on_change_expected_date
     then_i_see_the_when_could_the_placement_take_place_page
     and_i_see_the_term_dates
 
@@ -250,9 +254,27 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
     expect(page).to have_success_banner("Year group updated")
   end
 
+  def then_i_see_the_placements_index_page_with_updated_year_group
+    expect(page).to have_title("Placements - Manage school placements - GOV.UK")
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_h1("Placements")
+    expect(page).to have_element(:a, text: "Add placement", class: "govuk-button")
+    expect(page).to have_table_row({
+      "Placement" => "Primary with english (Year 2)",
+      "Mentor" => "Mentor not assigned",
+      "Expected date" => "Autumn term",
+      "Provider" => "Provider not assigned",
+    })
+  end
+
+  def when_i_click_on_my_placement_with_updated_year_group
+    click_on "Primary with english (Year 2)"
+  end
+
   def when_i_click_on_change_expected_date
     click_on "Change Expected date"
   end
+  alias_method :and_i_click_on_change_expected_date, :when_i_click_on_change_expected_date
 
   def then_i_see_the_when_could_the_placement_take_place_page
     expect(page).to have_title("Select when the placement could be - Placement details - Manage school placements - GOV.UK")
