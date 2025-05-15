@@ -42,13 +42,27 @@ RSpec.describe Placement, type: :model do
     it { is_expected.to belong_to(:academic_year).class_name("Placements::AcademicYear") }
     it { is_expected.to belong_to(:school).class_name("Placements::School") }
     it { is_expected.to belong_to(:provider).class_name("::Provider").optional }
-    it { is_expected.to belong_to(:subject).class_name("::Subject") }
+
+    describe "#subject" do
+      let!(:a_subject) { create(:subject) }
+      let(:placement) { create(:placement, subject: a_subject) }
+
+      it { expect(placement.subject).to eq(a_subject) }
+    end
   end
 
   describe "validations" do
-    subject { build(:placement) }
+    context "when the placement is not SEND specific" do
+      subject { build(:placement) }
 
-    it { is_expected.to validate_presence_of(:school) }
+      it { is_expected.to validate_presence_of(:subject) }
+    end
+
+    context "when the placement is SEND specific" do
+      subject { build(:placement, :send) }
+
+      it { is_expected.not_to validate_presence_of(:subject) }
+    end
   end
 
   describe "delegations" do
