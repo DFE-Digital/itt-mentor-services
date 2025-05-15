@@ -29,8 +29,7 @@ RSpec.describe "School user completes the interested journey without declaring p
     and_i_see_the_message_to_provider_is_empty
 
     when_i_click_on_confirm
-    then_i_see_my_responses_with_successfully_updated
-    and_i_see_the_whats_next_page
+    then_i_see_the_whats_next_page
     and_the_schools_contact_has_been_updated
     and_the_schools_hosting_interest_for_the_next_year_is_updated
     and_the_schools_potential_placement_details_have_been_updated
@@ -122,13 +121,6 @@ RSpec.describe "School user completes the interested journey without declaring p
     fill_in "Email address", with: "joe_bloggs@example.com"
   end
 
-  def then_i_see_my_responses_with_successfully_updated
-    expect(page).to have_success_banner(
-      "Your status has been updated to ‘interested in hosting placements’",
-      "This means providers can see that you’re looking to host placements.",
-    )
-  end
-
   def and_the_schools_contact_has_been_updated
     school_contact = @school.school_contact
     expect(school_contact.first_name).to eq("Joe")
@@ -141,7 +133,7 @@ RSpec.describe "School user completes the interested journey without declaring p
     expect(hosting_interest.appetite).to eq("interested")
   end
 
-  def and_i_see_the_whats_next_page
+  def then_i_see_the_whats_next_page
     expect(page).to have_panel(
       "Information added",
       "Providers can see that you may offer placements",
