@@ -17,11 +17,22 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
 
         Please sign-in this week to record your school's preferences for offering placements for trainee teachers.
 
-        It is important to do this so teacher training providers know whether to contact you, and to ensure you do not miss out on getting trainee teachers in your school.
+        If you are not the right person to do this, please:
 
-        [Sign in to Manage school placements](http://placements.localhost/sign-in?utm_campaign=school&utm_medium=notification&utm_source=email)
+        - access the service using DfE sign-in and add an appropriate colleague in the Users section (you can do this because you are a DfE sign-in approver for your school)
+        - forward this email to the appropriate colleague after adding them as a user.
 
-        If you do not have DfE Sign-in, create an account. You can then return to this email to access the service.
+        It is important to do this so teacher training providers know whether to contact your school, and to ensure your school does not miss out on getting trainee teachers.
+
+        ## Sign in to record preferences
+
+        [Use DfE sign-in to access the Manage school placements service](http://placements.localhost/sign-in?utm_campaign=school&utm_medium=notification&utm_source=email)
+
+        If your colleague does not have DfE sign-in, they can [create an account](https://services.signin.education.gov.uk/).
+
+        After creating a DfE sign-in account, they will need to return to this email to access the service.
+
+        ## Give feedback or report a problem
 
         If you need help or have feedback for us, contact [Manage.SchoolPlacements@education.gov.uk](mailto:Manage.SchoolPlacements@education.gov.uk).
 
