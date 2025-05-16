@@ -26,8 +26,7 @@ RSpec.describe "School user enters another reason why they are not hosting",
     and_i_see_the_entered_school_contact_details
 
     when_i_click_on_continue
-    then_i_see_my_responses_with_successfully_updated
-    and_i_see_the_whats_next_page
+    then_i_see_the_whats_next_page
     and_the_schools_contact_has_been_updated
     and_the_schools_hosting_interest_for_the_next_year_is_updated
   end
@@ -171,13 +170,6 @@ RSpec.describe "School user enters another reason why they are not hosting",
     fill_in "Email address", with: "joe_bloggs@example.com"
   end
 
-  def then_i_see_my_responses_with_successfully_updated
-    expect(page).to have_success_banner(
-      "Your profile has been updated",
-      "You can change your profile in settings if your circumstances change.",
-    )
-  end
-
   def and_the_schools_contact_has_been_updated
     @school_contact = @school.school_contact.reload
     expect(@school_contact.first_name).to eq("Joe")
@@ -238,7 +230,7 @@ RSpec.describe "School user enters another reason why they are not hosting",
     fill_in "Tell us your reason", with: "Some other reason"
   end
 
-  def and_i_see_the_whats_next_page
+  def then_i_see_the_whats_next_page
     expect(page).to have_panel(
       "You are not offering placements this year",
       "Your contact details will not be shown to providers",

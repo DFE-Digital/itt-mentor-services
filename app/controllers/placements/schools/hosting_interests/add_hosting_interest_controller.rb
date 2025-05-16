@@ -19,10 +19,7 @@ class Placements::Schools::HostingInterests::AddHostingInterestController < Plac
       end
       @wizard.reset_state
 
-      redirect_to whats_next_placements_school_hosting_interests_path(@school), flash: {
-        heading: t(".heading.#{appetite}"),
-        body: t(".body.#{appetite}_html"),
-      }
+      redirect_to whats_next_placements_school_hosting_interests_path(@school)
     end
   end
 

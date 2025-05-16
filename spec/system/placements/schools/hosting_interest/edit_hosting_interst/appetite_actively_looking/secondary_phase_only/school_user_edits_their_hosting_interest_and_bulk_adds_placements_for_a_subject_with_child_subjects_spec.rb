@@ -45,8 +45,7 @@ RSpec.describe "School user edits their hosting interest and bulk adds placement
     then_i_see_the_check_your_answers_page
 
     when_i_click_on_publish_placements
-    then_i_see_my_responses_with_successfully_updated
-    and_i_see_the_whats_next_page
+    then_i_see_the_whats_next_page
     and_i_see_2_secondary_placements_for_modern_languages_have_been_created
 
     when_i_click_on_edit_your_placements
@@ -264,13 +263,6 @@ RSpec.describe "School user edits their hosting interest and bulk adds placement
     fill_in "Email address", with: "joe_bloggs@example.com"
   end
 
-  def then_i_see_my_responses_with_successfully_updated
-    expect(page).to have_success_banner(
-      "Placement information uploaded",
-      "Providers can see your placement preferences and may contact you to discuss them. You can add details to your placements such as expected date and provider.",
-    )
-  end
-
   def and_the_schools_contact_has_been_updated
     @school_contact = @school.school_contact.reload
     expect(@school_contact.first_name).to eq("Joe")
@@ -323,7 +315,7 @@ RSpec.describe "School user edits their hosting interest and bulk adds placement
     expect(page).to have_summary_list_row("Modern Languages", "2")
   end
 
-  def and_i_see_the_whats_next_page
+  def then_i_see_the_whats_next_page
     expect(page).to have_title(
       "What happens next? - Manage school placements - GOV.UK",
     )
