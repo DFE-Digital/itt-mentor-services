@@ -512,4 +512,24 @@ describe Claims::Support::ClaimPolicy do
       end
     end
   end
+
+  permissions :destroy? do
+    context "when user has a draft claim" do
+      it "grants access" do
+        expect(claim_policy).to permit(user, draft_claim)
+      end
+    end
+
+    context "when user has a submitted claim" do
+      it "grants access" do
+        expect(claim_policy).to permit(support_user, submitted_claim)
+      end
+    end
+
+    context "when user is not support user" do
+      it "denies access" do
+        expect(claim_policy).not_to permit(user, submitted_claim)
+      end
+    end
+  end
 end

@@ -24,7 +24,7 @@ class Claims::Support::ClaimPolicy < Claims::ApplicationPolicy
   end
 
   def destroy?
-    record.draft?
+    record.draft? || (record.submitted? && user.support_user?)
   end
 
   # TODO: Remove record.draft? and not create drafts for existing drafts
