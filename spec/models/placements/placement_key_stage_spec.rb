@@ -21,5 +21,8 @@
 require "rails_helper"
 
 RSpec.describe Placements::PlacementKeyStage, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "associations" do
+    it { is_expected.to belong_to(:placement) }
+    it { is_expected.to belong_to(:key_stage).class_name("Placements::KeyStage") }
+  end
 end

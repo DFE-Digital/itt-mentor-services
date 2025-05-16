@@ -8,9 +8,6 @@
 #  updated_at :datetime         not null
 #
 class Placements::KeyStage < ApplicationRecord
-  # SUMMER_TERM = "Summer term".freeze
-  # SPRING_TERM = "Spring term".freeze
-  # AUTUMN_TERM = "Autumn term".freeze
   EARLY_YEARS = "Early years".freeze
   KEY_STAGE_1 = "Key stage 1".freeze
   KEY_STAGE_2 = "Key stage 2".freeze

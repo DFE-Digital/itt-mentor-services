@@ -72,6 +72,24 @@ RSpec.describe PlacementDecorator do
         expect(placement.decorate.title).to eq("Maths (Year 1)")
       end
     end
+
+    context "when the placement is SEND specific" do
+      it "returns SEND" do
+        placement = create(:placement, :send)
+
+        expect(placement.decorate.title).to eq("SEND")
+      end
+
+      context "when the placement has key stages" do
+        it "returns SEND, followed by the key stages in brackets" do
+          key_stage_1 = build(:key_stage, name: "Key stage 1")
+          key_stage_2 = build(:key_stage, name: "Key stage 2")
+          placement = create(:placement, :send, key_stages: [key_stage_1, key_stage_2])
+
+          expect(placement.decorate.title).to eq("SEND (Key stage 1, Key stage 2)")
+        end
+      end
+    end
   end
 
   describe "#school_level" do
