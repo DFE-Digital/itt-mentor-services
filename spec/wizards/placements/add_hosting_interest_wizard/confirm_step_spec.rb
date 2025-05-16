@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Placements::AddHostingInterestWizard::CheckYourAnswersStep, type: :model do
+RSpec.describe Placements::AddHostingInterestWizard::ConfirmStep, type: :model do
   subject(:step) { described_class.new(wizard: mock_wizard, attributes:) }
 
   let(:mock_wizard) do
@@ -31,12 +31,20 @@ RSpec.describe Placements::AddHostingInterestWizard::CheckYourAnswersStep, type:
       )
     end
   end
+  let(:mock_note_to_providers_step) do
+    instance_double(Placements::AddHostingInterestWizard::NoteToProvidersStep).tap do |mock_note_to_providers_step|
+      allow(mock_note_to_providers_step).to receive_messages(
+        note:,
+      )
+    end
+  end
   let(:attributes) { nil }
   let!(:school) { create(:placements_school) }
   let(:first_name) { "Joe" }
   let(:last_name) { "Bloggs" }
   let(:email_address) { "joe_bloggs@example.com" }
   let(:selected_phases) { %w[Primary Secondary] }
+  let(:note) { nil }
 
   describe "delegations" do
     it { is_expected.to delegate_method(:phases).to(:phase_step) }
@@ -48,5 +56,6 @@ RSpec.describe Placements::AddHostingInterestWizard::CheckYourAnswersStep, type:
     it { is_expected.to delegate_method(:first_name).to(:school_contact_step).with_prefix(:school_contact) }
     it { is_expected.to delegate_method(:last_name).to(:school_contact_step).with_prefix(:school_contact) }
     it { is_expected.to delegate_method(:email_address).to(:school_contact_step).with_prefix(:school_contact) }
+    it { is_expected.to delegate_method(:note).to(:note_to_providers_step) }
   end
 end

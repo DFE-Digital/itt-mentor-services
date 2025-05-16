@@ -38,6 +38,8 @@ RSpec.describe Placement, type: :model do
     it { is_expected.to have_many(:additional_subjects).through(:placement_additional_subjects).class_name("Subject") }
     it { is_expected.to have_many(:placement_windows).class_name("Placements::PlacementWindow").dependent(:destroy) }
     it { is_expected.to have_many(:terms).through(:placement_windows).class_name("Placements::Term") }
+    it { is_expected.to have_many(:placement_key_stages).class_name("Placements::PlacementKeyStage") }
+    it { is_expected.to have_many(:key_stages).class_name("Placements::KeyStage") }
 
     it { is_expected.to belong_to(:academic_year).class_name("Placements::AcademicYear") }
     it { is_expected.to belong_to(:school).class_name("Placements::School") }

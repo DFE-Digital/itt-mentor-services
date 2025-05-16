@@ -334,10 +334,10 @@ module Placements
             step_name = step_name_for_child_subjects(subject:, selection_number:)
             child_subject_step = steps.fetch(step_name)
             secondary_placement_details["secondary_child_subject_placement_selection"][subject.name_as_attribute.to_s][selection_number.to_s] = {
-              parent_subject_id: child_subject_step.parent_subject_id,
-              selection_id: child_subject_step.selection_id,
-              selection_number: child_subject_step.selection_number,
-              child_subject_ids: child_subject_step.child_subject_ids,
+              "parent_subject_id" => child_subject_step.parent_subject_id,
+              "selection_id" => child_subject_step.selection_id,
+              "selection_number" => child_subject_step.selection_number,
+              "child_subject_ids" => child_subject_step.child_subject_ids,
             }
           end
         end
