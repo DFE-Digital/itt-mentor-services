@@ -5,13 +5,13 @@ RSpec.describe Placements::AddPlacementWizard::AdditionalSubjectsStep, type: :mo
 
   let(:mock_wizard) do
     instance_double(Placements::AddPlacementWizard).tap do |mock_wizard|
-      allow(mock_wizard).to receive(:steps).and_return({ subject: subject_step })
+      allow(mock_wizard).to receive(:subject_step).and_return(secondary_subject_selection_step)
     end
   end
 
-  let(:subject_step) do
-    instance_double(Placements::AddPlacementWizard::SubjectStep).tap do |subject_step|
-      allow(subject_step).to receive(:subject_id).and_return(modern_foreign_languages.id)
+  let(:secondary_subject_selection_step) do
+    instance_double(Placements::AddPlacementWizard::SecondarySubjectSelectionStep).tap do |secondary_subject_selection_step|
+      allow(secondary_subject_selection_step).to receive(:subject_id).and_return(modern_foreign_languages.id)
     end
   end
 

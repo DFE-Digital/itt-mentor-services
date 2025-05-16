@@ -10,9 +10,12 @@ module Placements
     def define_steps
       # Define the wizard steps here
       add_step(PhaseStep) unless school.primary_or_secondary_only?
-      add_step(SubjectStep)
-      add_step(AdditionalSubjectsStep) if steps.fetch(:subject).subject_has_child_subjects?
-      add_step(YearGroupStep) if placement_phase == School::PRIMARY_PHASE
+      case placement_phase
+      when School::PRIMARY_PHASE
+        primary_steps
+      when School::SECONDARY_PHASE
+        secondary_steps
+      end
       add_step(AcademicYearStep)
       add_step(TermsStep)
       add_step(MentorsStep) if school.mentors.present?
@@ -22,6 +25,19 @@ module Placements
 
     def placement_phase
       steps[:phase]&.phase || school.phase
+    end
+
+    def subject_step
+      case placement_phase
+      when School::PRIMARY_PHASE
+        steps.fetch(:primary_subject_selection)
+      when School::SECONDARY_PHASE
+        steps.fetch(:secondary_subject_selection)
+      end
+    end
+
+    def subject_step_name
+      step_name(subject_step.class)
     end
 
     def create_placement
@@ -36,7 +52,7 @@ module Placements
     def build_placement
       placement = school.placements.build
       placement.academic_year = steps.fetch(:academic_year).academic_year
-      placement.subject = steps.fetch(:subject).subject
+      placement.subject = subject_step.subject
       placement.terms = steps.fetch(:terms).terms
 
       if steps[:additional_subjects].present?
@@ -52,6 +68,16 @@ module Placements
       end
 
       placement
+    end
+
+    def primary_steps
+      add_step(PrimarySubjectSelectionStep)
+      add_step(YearGroupStep)
+    end
+
+    def secondary_steps
+      add_step(SecondarySubjectSelectionStep)
+      add_step(AdditionalSubjectsStep) if steps.fetch(:secondary_subject_selection).subject_has_child_subjects?
     end
   end
 end

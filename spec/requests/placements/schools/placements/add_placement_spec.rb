@@ -18,14 +18,14 @@ RSpec.describe "'Add placement' journey", service: :placements, type: :request d
   context "when starting a new wizard journey" do
     before do
       # Populate the wizard so it has some existing state
-      put step_path(:subject), params: { "placements_add_placement_wizard_subject_step[subject_id]" => drama.id }
+      put step_path(:secondary_subject_selection), params: { "placements_add_placement_wizard_secondary_subject_selection_step[subject_id]" => drama.id }
       put step_path(:academic_year), params: { "placements_add_placement_wizard_academic_year_step[academic_year_id]" => current_academic_year.id }
       put step_path(:terms), params: { "placements_add_placement_wizard_terms_step[term_ids]" => [summer_term.id] }
     end
 
     it "redirects to the first step of the wizard" do
       get start_path
-      expect(response).to redirect_to step_path(:subject)
+      expect(response).to redirect_to step_path(:secondary_subject_selection)
     end
   end
 
@@ -33,8 +33,8 @@ RSpec.describe "'Add placement' journey", service: :placements, type: :request d
     before do
       # Populate the wizard so it's ready to submit
       get start_path
-      put step_path(:subject), params: {
-        "placements_add_placement_wizard_subject_step[subject_id]" => drama.id,
+      put step_path(:secondary_subject_selection), params: {
+        "placements_add_placement_wizard_secondary_subject_selection_step[subject_id]" => drama.id,
       }
       put step_path(:academic_year), params: {
         "placements_add_placement_wizard_academic_year_step[academic_year_id]" => current_academic_year.id,
@@ -69,7 +69,6 @@ RSpec.describe "'Add placement' journey", service: :placements, type: :request d
     let(:test_paths) do
       [
         start_path,
-        step_path(:subject),
         step_path(:check_your_answers),
       ]
     end

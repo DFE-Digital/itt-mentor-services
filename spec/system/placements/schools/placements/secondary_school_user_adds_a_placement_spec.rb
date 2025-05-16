@@ -180,7 +180,9 @@ RSpec.describe "Secondary school user adds a placement", service: :placements, t
   end
 
   def and_i_see_the_secondary_subjects
+    expect(page).to have_h2("Languages and literature")
     expect(page).to have_field("English", type: :radio)
+    expect(page).to have_h2("Science, technology, engineering and mathematics (STEM)")
     expect(page).to have_field("Mathematics", type: :radio)
   end
 
