@@ -334,6 +334,12 @@ en:
             child_subject_ids: 
               blank: Please select a subject
               inclusion: Please select a subject
+        placements/multi_placement_wizard/sen_placement_quantity_step:
+          attributes:
+            sen_quantity: 
+              greater_than: Enter the number greater than 0
+              not_an_integer: Enter whole numbers only
+              blank: Enter the number of SEND placements you can offer
         claims/add_claim_wizard/provider_options_step:
           attributes:
             id:

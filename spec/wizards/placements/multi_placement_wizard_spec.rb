@@ -259,4 +259,62 @@ RSpec.describe Placements::MultiPlacementWizard do
       end
     end
   end
+
+  describe "#sen_quantity" do
+    subject(:sen_quantity) { wizard.sen_quantity }
+
+    context "when the number of SEND placements has not been set" do
+      it "returns zero" do
+        expect(sen_quantity).to eq(0)
+      end
+    end
+
+    context "when the number of SEND placements has been set" do
+      let(:state) do
+        {
+          "appetite" => { "appetite" => "actively_looking" },
+          "phase" => { "phases" => %w[SEND] },
+          "sen_placement_quantity" => { "sen_quantity" => "3" },
+        }
+      end
+
+      it "returns the quantity of SEND placements" do
+        expect(sen_quantity).to eq(3)
+      end
+    end
+  end
+
+  describe "#selected_key_stages" do
+    subject(:selected_key_stages) { wizard.selected_key_stages }
+
+    context "when key stages are unknown" do
+      let(:state) do
+        {
+          "phase" => { "phases" => %w[SEND] },
+          "sen_placement_quantity" => { "sen_quantity" => "3" },
+          "key_stage" => { "key_stages" => %w[unknown] },
+        }
+      end
+
+      it "returns unknown" do
+        expect(selected_key_stages).to contain_exactly("unknown")
+      end
+    end
+
+    context "when key stages have been selected" do
+      let(:key_stage_2) { create(:key_stage, name: "Key stage 2") }
+      let(:key_stage_5) { create(:key_stage, name: "Key stage 5") }
+      let(:state) do
+        {
+          "phase" => { "phases" => %w[SEND] },
+          "sen_placement_quantity" => { "sen_quantity" => "3" },
+          "key_stage" => { "key_stages" => [key_stage_2.id, key_stage_5.id] },
+        }
+      end
+
+      it "returns the key stages" do
+        expect(selected_key_stages).to contain_exactly(key_stage_2, key_stage_5)
+      end
+    end
+  end
 end
