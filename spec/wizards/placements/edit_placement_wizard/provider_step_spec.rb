@@ -58,7 +58,7 @@ RSpec.describe Placements::EditPlacementWizard::ProviderStep, type: :model do
   describe "#autocomplete_return_attributes_value" do
     subject(:autocomplete_return_attributes_value) { step.autocomplete_return_attributes_value }
 
-    it { is_expected.to contain_exactly("code") }
+    it { is_expected.to contain_exactly("postcode") }
   end
 
   describe "#scope" do

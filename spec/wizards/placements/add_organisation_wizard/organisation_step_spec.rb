@@ -119,7 +119,7 @@ RSpec.describe Placements::AddOrganisationWizard::OrganisationStep, type: :model
       let(:is_provider) { true }
 
       it "returns the attributes returned by the provider suggestions api" do
-        expect(step.autocomplete_return_attributes_value).to match_array(%w[code])
+        expect(step.autocomplete_return_attributes_value).to match_array(%w[postcode])
       end
     end
   end
