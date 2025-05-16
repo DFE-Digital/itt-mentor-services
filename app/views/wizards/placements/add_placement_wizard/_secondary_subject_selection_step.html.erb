@@ -1,0 +1,43 @@
+<% content_for :page_title, title_with_error_prefix(
+  t(".title", contextual_text:),
+  error: current_step.errors.any?,
+) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= contextual_text %></span>
+      <%= f.govuk_radio_buttons_fieldset(
+        :subject_id,
+        legend: { size: "l", text: t(".select_a_subject"), tag: "h1" },
+        hint: { text: t(".hint") },
+      ) do %>
+        <h2 class="govuk-heading-m"><%= t(".stem_subjects") %></h2>
+        <% current_step.stem_subjects.each_with_index do |subject, i| %>
+          <%= f.govuk_radio_button :subject_id, subject.id,
+            label: { text: subject.name },
+            link_errors: i.zero? %>
+        <% end %>
+        <h2 class="govuk-heading-m"><%= t(".lit_lang_subjects") %></h2>
+        <% current_step.lit_lang_subjects.each do |subject| %>
+          <%= f.govuk_radio_button :subject_id, subject.id,
+            label: { text: subject.name } %>
+        <% end %>
+        <h2 class="govuk-heading-m"><%= t(".art_humanities_social_subjects") %></h2>
+        <% current_step.art_humanities_social_subjects.each do |subject| %>
+          <%= f.govuk_radio_button :subject_id, subject.id,
+            label: { text: subject.name } %>
+        <% end %>
+        <h2 class="govuk-heading-m"><%= t(".health_physical_education_subjects") %></h2>
+        <% current_step.health_physical_education_subjects.each do |subject| %>
+          <%= f.govuk_radio_button :subject_id, subject.id,
+            label: { text: subject.name } %>
+        <% end %>
+      <% end %>
+
+      <%= f.govuk_submit t(".continue") %>
+    </div>
+  </div>
+<% end %>

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Placements::AddPlacementWizard::SubjectStep, type: :model do
+RSpec.describe Placements::AddPlacementWizard::PrimarySubjectSelectionStep, type: :model do
   subject(:step) { described_class.new(wizard: mock_wizard, attributes:) }
 
   let(:mock_wizard) do
@@ -14,10 +14,8 @@ RSpec.describe Placements::AddPlacementWizard::SubjectStep, type: :model do
   let(:attributes) { nil }
 
   let(:primary_subjects) { create_list(:subject, 5, :primary) }
-  let(:secondary_subjects) { create_list(:subject, 5, :secondary) }
 
   let(:primary_subject_ids) { primary_subjects.map(&:id) }
-  let(:secondary_subject_ids) { secondary_subjects.map(&:id) }
 
   describe "attributes" do
     it { is_expected.to have_attributes(subject_id: nil) }
@@ -26,33 +24,13 @@ RSpec.describe Placements::AddPlacementWizard::SubjectStep, type: :model do
   describe "validations" do
     it { is_expected.to validate_presence_of(:subject_id) }
 
-    context "when the phase is Primary" do
-      let(:phase) { "Primary" }
-
-      it { is_expected.to validate_inclusion_of(:subject_id).in_array(primary_subject_ids) }
-    end
-
-    context "when the phase is Secondary" do
-      let(:phase) { "Secondary" }
-
-      it { is_expected.to validate_inclusion_of(:subject_id).in_array(secondary_subject_ids) }
-    end
+    it { is_expected.to validate_inclusion_of(:subject_id).in_array(primary_subject_ids) }
   end
 
   describe "#subjects_for_selection" do
     subject { step.subjects_for_selection }
 
-    context "when the phase is Primary" do
-      let(:phase) { "Primary" }
-
-      it { is_expected.to match_array(primary_subjects) }
-    end
-
-    context "when the phase is Secondary" do
-      let(:phase) { "Secondary" }
-
-      it { is_expected.to match_array(secondary_subjects) }
-    end
+    it { is_expected.to match_array(primary_subjects) }
   end
 
   describe "#subject" do

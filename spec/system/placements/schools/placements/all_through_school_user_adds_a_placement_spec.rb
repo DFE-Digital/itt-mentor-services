@@ -94,7 +94,7 @@ RSpec.describe "All-through school user adds a placement", service: :placements,
 
     when_i_select_secondary
     and_i_click_on_continue
-    then_i_see_the_select_a_subject_page
+    then_i_see_the_select_a_secondary_subject_page
     and_i_see_the_secondary_subjects
     and_i_do_not_see_the_primary_subjects
 
@@ -103,7 +103,7 @@ RSpec.describe "All-through school user adds a placement", service: :placements,
     then_i_see_the_check_your_answers_page_with_secondary_subject
 
     when_i_change_the_subject
-    then_i_see_the_select_a_subject_page
+    then_i_see_the_select_a_secondary_subject_page
     and_i_see_english_is_selected
 
     when_i_select_maths
@@ -233,6 +233,14 @@ RSpec.describe "All-through school user adds a placement", service: :placements,
     expect(page).to have_link("Cancel", href: "/schools/#{@school.id}/placements")
   end
 
+  def then_i_see_the_select_a_secondary_subject_page
+    expect(page).to have_title("Select a subject - Placement details - Manage school placements - GOV.UK")
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
+    expect(page).to have_element(:legend, text: "Select a subject", class: "govuk-fieldset__legend")
+    expect(page).to have_link("Cancel", href: "/schools/#{@school.id}/placements")
+  end
+
   def and_i_see_the_primary_subjects
     expect(page).to have_field("Primary with english", type: :radio)
     expect(page).to have_field("Primary with mathematics", type: :radio)
@@ -255,7 +263,9 @@ RSpec.describe "All-through school user adds a placement", service: :placements,
   end
 
   def and_i_see_the_secondary_subjects
+    expect(page).to have_h2("Languages and literature")
     expect(page).to have_field("English", type: :radio)
+    expect(page).to have_h2("Science, technology, engineering and mathematics (STEM)")
     expect(page).to have_field("Mathematics", type: :radio)
   end
 
