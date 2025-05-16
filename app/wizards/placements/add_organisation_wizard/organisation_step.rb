@@ -13,7 +13,7 @@ class Placements::AddOrganisationWizard::OrganisationStep < Placements::AddOrgan
 
   def autocomplete_return_attributes_value
     if wizard.steps[:organisation_type].provider?
-      %w[code]
+      %w[postcode]
     else
       %w[town postcode]
     end

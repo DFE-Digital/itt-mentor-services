@@ -163,7 +163,7 @@ RSpec.describe Placements::AddPartnershipWizard::PartnershipStep, type: :model d
   describe "#autocomplete_return_attributes_value" do
     context "when organisation type is a provider" do
       it "returns the attributes returned by the provider suggestions api" do
-        expect(step.autocomplete_return_attributes_value).to match_array(%w[code])
+        expect(step.autocomplete_return_attributes_value).to match_array(%w[postcode])
       end
     end
 

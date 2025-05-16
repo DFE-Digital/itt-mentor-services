@@ -13,7 +13,7 @@ class Placements::AddPartnershipWizard::PartnershipStep < Placements::AddPartner
 
   def autocomplete_return_attributes_value
     if partner_organisation_model == Provider
-      %w[code]
+      %w[postcode]
     else
       %w[town postcode]
     end
