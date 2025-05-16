@@ -10,9 +10,12 @@ module Placements
     def define_steps
       # Define the wizard steps here
       add_step(PhaseStep) unless school.primary_or_secondary_only?
-      add_step(SubjectStep)
-      add_step(AdditionalSubjectsStep) if steps.fetch(:subject).subject_has_child_subjects?
-      add_step(YearGroupStep) if placement_phase == School::PRIMARY_PHASE
+      if placement_phase == School::PRIMARY_PHASE
+        year_group_steps
+      end
+      if placement_phase == School::SECONDARY_PHASE
+        secondary_subject_steps
+      end
       add_step(AcademicYearStep)
       add_step(TermsStep)
       add_step(MentorsStep) if school.mentors.present?
@@ -22,6 +25,14 @@ module Placements
 
     def placement_phase
       steps[:phase]&.phase || school.phase
+    end
+
+    def subject_step
+      if placement_phase == School::PRIMARY_PHASE
+        steps.fetch(:primary_subject_selection)
+      elsif placement_phase == School::SECONDARY_PHASE
+        steps.fetch(:secondary_subject_selection)
+      end
     end
 
     def create_placement
@@ -36,7 +47,7 @@ module Placements
     def build_placement
       placement = school.placements.build
       placement.academic_year = steps.fetch(:academic_year).academic_year
-      placement.subject = steps.fetch(:subject).subject
+      placement.subject = subject_step.subject
       placement.terms = steps.fetch(:terms).terms
 
       if steps[:additional_subjects].present?
@@ -52,6 +63,18 @@ module Placements
       end
 
       placement
+    end
+
+    def year_group_steps
+      add_step(PrimarySubjectSelectionStep)
+      #I think there are no primary subjects that have child subjects? This can be removed if so
+      add_step(AdditionalSubjectsStep) if subject_step.subject_has_child_subjects?
+      add_step(YearGroupStep)
+    end
+
+    def secondary_subject_steps
+      add_step(SecondarySubjectSelectionStep)
+      add_step(AdditionalSubjectsStep) if subject_step.subject_has_child_subjects?
     end
   end
 end
