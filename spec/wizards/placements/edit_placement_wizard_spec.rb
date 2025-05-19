@@ -52,6 +52,12 @@ RSpec.describe Placements::EditPlacementWizard do
 
       it { is_expected.to eq %i[terms] }
     end
+
+    context "with the key_stage step" do
+      let(:current_step) { :key_stage }
+
+      it { is_expected.to eq %i[key_stage] }
+    end
   end
 
   describe "#update_placement" do
@@ -156,6 +162,22 @@ RSpec.describe Placements::EditPlacementWizard do
 
         it "updates the placement" do
           expect(placement.terms).to contain_exactly(selected_term)
+        end
+      end
+
+      context "when the step is key_stages" do
+        let(:current_step) { :key_stage }
+        let(:key_stage_2) { create(:key_stage, name: "Key stage 2") }
+        let(:key_stage_5) { create(:key_stage, name: "Key stage 5") }
+
+        let(:state) do
+          {
+            "key_stage" => { "key_stages" => [key_stage_2, key_stage_5] },
+          }
+        end
+
+        it "updates the placement" do
+          expect(placement.key_stages).to contain_exactly(key_stage_2, key_stage_5)
         end
       end
     end

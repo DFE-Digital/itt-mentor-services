@@ -98,6 +98,10 @@ en:
           attributes:
             provider_id:
               blank: Select a provider
+        placements/edit_placement_wizard/key_stage_step:
+          attributes:
+            key_stages:
+              blank: Select a key stage
         placements/add_support_user_wizard/support_user_step:
           attributes:
             first_name:
