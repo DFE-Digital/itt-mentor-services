@@ -22,6 +22,7 @@
         <%= f.govuk_check_box :key_stages, current_step.unknown_option.value,
             label: { text: current_step.unknown_option.name },
             hint: { text: current_step.unknown_option.description },
+            checked: @placement.key_stages.blank?,
             exclusive: true %>
       <% end %>
 
