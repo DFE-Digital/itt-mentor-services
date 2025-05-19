@@ -48,6 +48,7 @@ en:
             send_placements_list:
               number_of_placements: Number of SEND placements
               key_stages: Key stages
+              unknown: I don’t know
             actively_looking:
               panel_title: Placement information added
               panel_text: Providers can see that you have placements available

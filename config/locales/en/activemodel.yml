@@ -344,6 +344,10 @@ en:
               greater_than: Enter the number greater than 0
               not_an_integer: Enter whole numbers only
               blank: Enter the number of SEND placements you can offer
+        placements/multi_placement_wizard/key_stage_step:
+          attributes:
+            key_stages: 
+              blank: Please select a key stage
         claims/add_claim_wizard/provider_options_step:
           attributes:
             id:
