@@ -13,4 +13,11 @@ en:
         provider_options_step:
           title: "%{organisation_count} results found for ‘%{search_param}’ - %{contextual_text}"
           continue: Continue
+        key_stage_step:
+          title: What SEND key stages can you offer placements in?
+          caption: SEND placement details
+          continue: Continue
+          options:
+            unknown: I don’t know
+            unknown_description: You can discuss key stages with providers later
 

@@ -15,6 +15,7 @@ module Placements
       add_step(AddPlacementWizard::YearGroupStep) if current_step == :year_group
       add_step(AddPlacementWizard::MentorsStep) if current_step == :mentors
       add_step(AddPlacementWizard::TermsStep) if current_step == :terms
+      add_step(KeyStageStep) if current_step == :key_stage
     end
 
     def update_placement
@@ -37,6 +38,10 @@ module Placements
         placement.terms = steps[:terms].terms
       end
 
+      if steps[:key_stage].present?
+        placement.key_stages = key_stages
+      end
+
       placement.save!
     end
 
@@ -45,6 +50,19 @@ module Placements
       state["year_group"] = { "year_group" => placement.year_group }
       state["mentors"] = { "mentor_ids" => placement.mentors.ids }
       state["terms"] = { "term_ids" => placement.terms.ids }
+      state["key_stage"] = { "key_stages" => placement.key_stages.ids }
+    end
+
+    private
+
+    def value_unknown(value)
+      value.include?(AddHostingInterestWizard::UNKNOWN_OPTION)
+    end
+
+    def key_stages
+      return [] if value_unknown(steps[:key_stage].key_stages)
+
+      KeyStage.where(id: steps[:key_stage].key_stages)
     end
   end
 end
