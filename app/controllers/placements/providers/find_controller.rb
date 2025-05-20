@@ -2,6 +2,7 @@ class Placements::Providers::FindController < Placements::ApplicationController
   before_action :set_provider
   before_action :selected_academic_year
   before_action :load_placements_and_subjects, only: %i[placements placement_information school_details]
+  before_action :store_filter_params, only: %i[index]
   helper_method :filter_form, :location_coordinates
 
   def index
@@ -119,5 +120,9 @@ class Placements::Providers::FindController < Placements::ApplicationController
 
   def selected_academic_year
     @selected_academic_year ||= current_user.selected_academic_year
+  end
+
+  def store_filter_params
+    session["find_filter_params"] = { filters: filter_params }
   end
 end

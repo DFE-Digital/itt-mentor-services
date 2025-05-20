@@ -1,6 +1,6 @@
 <%# locals: (school:, academic_year:, provider:, unfilled_subjects:, filled_subjects: -%>
 <%= content_for(:before_content) do %>
-  <%= govuk_back_link(href: placements_provider_find_index_path(provider)) %>
+  <%= govuk_back_link(href: placements_provider_find_index_path(provider, session["find_filter_params"])) %>
 <% end %>
 
 <h1 class="govuk-heading-l">
