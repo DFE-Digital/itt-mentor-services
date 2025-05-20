@@ -17,6 +17,7 @@ RSpec.describe "School user edits a send placement key stages", service: :placem
 
     when_i_select_key_stage_2
     and_i_select_key_stage_5
+    and_i_unselect_i_dont_know
     and_i_click_on_continue
     then_i_see_the_placement_details_page_with_my_updated_key_stage
     and_i_see_a_key_stage_updated_success_message
@@ -135,6 +136,10 @@ RSpec.describe "School user edits a send placement key stages", service: :placem
 
   def and_i_select_key_stage_5
     check "Key stage 5"
+  end
+
+  def and_i_unselect_i_dont_know
+    uncheck "I don’t know"
   end
 
   def and_i_see_a_key_stage_updated_success_message
