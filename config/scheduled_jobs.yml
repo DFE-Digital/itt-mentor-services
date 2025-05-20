@@ -45,4 +45,9 @@ send_entity_table_checks_to_bigquery:
 trim_expired_sessions:
   cron: "15 * * * *" # Every hour at quarter past
   class: "TrimExpiredSessionsJob"
-  description: Trim old sessions from the database
+  description: "Trim old sessions from the database"
+
+send_claims_slack_daily_roundup:
+    cron: "0 16 * * *" # Every day at 16:00
+    class: "Claims::Slack::DailyRoundupJob"
+    description: "Sends a daily roundup Slack message"
