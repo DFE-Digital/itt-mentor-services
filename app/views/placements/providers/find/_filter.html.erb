@@ -169,7 +169,7 @@
           <% end %>
 
           <% if filter_form.subject_ids.present? %>
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".subject") %></h3>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".secondary_subject") %></h3>
             <ul class="app-filter-tags">
               <% filter_form.subjects.each do |subject| %>
                 <li>
@@ -300,7 +300,7 @@
             <%= form.govuk_check_boxes_fieldset(
               :subject_ids,
               legend: {
-                text: t(".subject"),
+                text: t(".secondary_subject"),
                 size: "s",
               },
               small: true,

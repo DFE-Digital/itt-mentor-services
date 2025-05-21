@@ -46,7 +46,7 @@ RSpec.describe "Provider user filters schools by phase", service: :placements, t
     @primary_school = build(:placements_school, phase: "Primary", name: "Springfield Elementary")
     @secondary_school = build(:placements_school, phase: "Secondary", name: "Shelbyville High School")
 
-    @primary_subject = build(:subject, name: "Primary with mathematics", subject_area: "primary")
+    @primary_subject = build(:subject, name: "Primary", subject_area: "primary")
     @springfield_primary_placement = create(:placement, school: @primary_school, subject: @primary_subject)
 
     @secondary_subject = build(:subject, name: "Music", subject_area: "secondary")
@@ -99,7 +99,6 @@ RSpec.describe "Provider user filters schools by phase", service: :placements, t
 
   def and_i_see_only_secondary_subjects_listed_in_the_subjects_filter
     expect(page).to have_unchecked_field("Music")
-    expect(page).not_to have_unchecked_field("Primary with mathematics")
   end
 
   def and_i_see_that_the_secondary_phase_checkbox_is_selected
@@ -115,7 +114,6 @@ RSpec.describe "Provider user filters schools by phase", service: :placements, t
   end
 
   def and_i_see_all_subjects_listed_in_the_subjects_filter
-    expect(page).to have_unchecked_field("Primary with mathematics")
     expect(page).to have_unchecked_field("Music")
   end
 
