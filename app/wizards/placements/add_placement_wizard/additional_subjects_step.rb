@@ -28,7 +28,7 @@ class Placements::AddPlacementWizard::AdditionalSubjectsStep < BaseStep
   end
 
   def parent_subject_id
-    wizard.subject_step.subject_id
+    wizard.steps[:secondary_subject_selection].subject_id
   end
 
   def parent_subject
