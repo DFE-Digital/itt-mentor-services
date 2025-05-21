@@ -10,23 +10,14 @@ RSpec.describe "Primary school user adds a placement", service: :placements, typ
 
     # Test that each step of the wizard is working as expected
     when_i_click_on_the_add_placement_button
-    then_i_see_the_select_a_subject_page
-    and_i_see_the_primary_subjects
-    and_i_do_not_see_the_secondary_subjects
+    then_i_see_the_select_a_year_group_page
+    and_i_see_the_primary_year_groups
 
     when_i_click_on_the_back_link
     then_i_see_the_placements_index_page
 
     when_i_click_on_the_add_placement_button
-    when_i_click_on_continue
-    then_i_see_a_validation_error_for_selecting_a_subject
-
-    when_i_select_primary_with_english
     and_i_click_on_continue
-    then_i_see_the_select_a_year_group_page
-    and_i_see_the_primary_year_groups
-
-    when_i_click_on_continue
     then_i_see_a_validation_error_for_selecting_a_year_group
 
     when_i_select_year_1
@@ -75,20 +66,9 @@ RSpec.describe "Primary school user adds a placement", service: :placements, typ
     when_i_click_on_the_back_link
     then_i_see_the_select_a_year_group_page
 
-    when_i_click_on_the_back_link
-    then_i_see_the_select_a_subject_page
-
     # Test that the change link functionality works as expected
     when_i_continue_from_the_subject_page_to_the_check_your_answers_page
-    and_i_change_the_subject
-    then_i_see_the_select_a_subject_page
-    and_i_see_primary_with_english_is_selected
-
-    when_i_select_primary_with_maths
-    and_i_continue_from_the_subject_page_to_the_check_your_answers_page
-    then_i_see_the_check_your_answers_page_with_updated_subject
-
-    when_i_change_the_year_group
+    and_i_change_the_year_group
     then_i_see_the_select_a_year_group_page
     and_i_see_year_1_is_selected
 
@@ -153,10 +133,9 @@ RSpec.describe "Primary school user adds a placement", service: :placements, typ
       rating: "Outstanding",
     )
 
-    @primary_english_subject = create(:subject, name: "Primary with english", subject_area: :primary)
-    @primary_maths_subject = create(:subject, name: "Primary with mathematics", subject_area: :primary)
     @secondary_english_subject = create(:subject, name: "English", subject_area: :secondary)
     @secondary_maths_subject = create(:subject, name: "Mathematics", subject_area: :secondary)
+    @primary_subject = create(:subject, name: "Primary", subject_area: :primary)
 
     @autumn_term = create(:placements_term, name: "Autumn term")
     @spring_term = create(:placements_term, name: "Spring term")
@@ -198,16 +177,6 @@ RSpec.describe "Primary school user adds a placement", service: :placements, typ
     expect(page).to have_link("Cancel", href: "/schools/#{@school.id}/placements")
   end
 
-  def and_i_see_the_primary_subjects
-    expect(page).to have_field("Primary with english", type: :radio)
-    expect(page).to have_field("Primary with mathematics", type: :radio)
-  end
-
-  def and_i_do_not_see_the_secondary_subjects
-    expect(page).not_to have_field("English", type: :radio)
-    expect(page).not_to have_field("Mathematics", type: :radio)
-  end
-
   def when_i_click_on_the_back_link
     click_on "Back"
   end
@@ -220,10 +189,6 @@ RSpec.describe "Primary school user adds a placement", service: :placements, typ
 
   def then_i_see_a_validation_error_for_selecting_a_subject
     expect(page).to have_validation_error("Select a subject")
-  end
-
-  def when_i_select_primary_with_english
-    choose "Primary with english"
   end
 
   def then_i_see_the_select_a_year_group_page
@@ -353,7 +318,6 @@ RSpec.describe "Primary school user adds a placement", service: :placements, typ
   end
 
   def and_i_see_the_placement_details
-    expect(page).to have_summary_list_row("Subject", "Primary with english")
     expect(page).to have_summary_list_row("Year group", "Year 1")
     expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term, Spring term")
@@ -369,28 +333,18 @@ RSpec.describe "Primary school user adds a placement", service: :placements, typ
     click_on "Continue"
     click_on "Continue"
     click_on "Continue"
-    click_on "Continue"
   end
 
   alias_method :when_i_continue_from_the_subject_page_to_the_check_your_answers_page, :and_i_continue_from_the_subject_page_to_the_check_your_answers_page
 
-  def and_i_see_primary_with_english_is_selected
-    expect(page).to have_checked_field("Primary with english")
-  end
-
-  def when_i_select_primary_with_maths
-    choose "Primary with mathematics"
-  end
-
   def then_i_see_the_check_your_answers_page_with_updated_subject
-    expect(page).to have_summary_list_row("Subject", "Primary with mathematics")
     expect(page).to have_summary_list_row("Year group", "Year 1")
     expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term, Spring term")
     expect(page).to have_summary_list_row("Mentor", "John Smith")
   end
 
-  def when_i_change_the_year_group
+  def and_i_change_the_year_group
     click_on "Change Year group"
   end
 
@@ -410,7 +364,6 @@ RSpec.describe "Primary school user adds a placement", service: :placements, typ
   end
 
   def then_i_see_the_check_your_answers_page_with_updated_year_group
-    expect(page).to have_summary_list_row("Subject", "Primary with mathematics")
     expect(page).to have_summary_list_row("Year group", "Year 2")
     expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term, Spring term")
@@ -436,7 +389,6 @@ RSpec.describe "Primary school user adds a placement", service: :placements, typ
   end
 
   def then_i_see_the_check_your_answers_page_with_updated_academic_year
-    expect(page).to have_summary_list_row("Subject", "Primary with mathematics")
     expect(page).to have_summary_list_row("Year group", "Year 2")
     expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term, Spring term")
@@ -464,7 +416,6 @@ RSpec.describe "Primary school user adds a placement", service: :placements, typ
   end
 
   def then_i_see_the_check_your_answers_page_with_updated_term
-    expect(page).to have_summary_list_row("Subject", "Primary with mathematics")
     expect(page).to have_summary_list_row("Year group", "Year 2")
     expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Summer term")
@@ -489,7 +440,6 @@ RSpec.describe "Primary school user adds a placement", service: :placements, typ
   end
 
   def then_i_see_the_check_your_answers_page_with_updated_mentor
-    expect(page).to have_summary_list_row("Subject", "Primary with mathematics")
     expect(page).to have_summary_list_row("Year group", "Year 2")
     expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Summer term")
@@ -503,7 +453,7 @@ RSpec.describe "Primary school user adds a placement", service: :placements, typ
   def then_i_see_the_preview_placement_page
     expect(page).to have_title("Preview placement - Placement details - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Placement - Springfield Elementary Primary with mathematics (Year 2)")
+    expect(page).to have_h1("Placement - Springfield Elementary Primary (Year 2)")
     expect(page).to have_important_banner("This is a preview of how your placement will appear to teacher training providers.")
     expect(page).to have_h2("Placement dates")
     expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
@@ -546,7 +496,7 @@ RSpec.describe "Primary school user adds a placement", service: :placements, typ
 
   def and_i_see_my_placement
     expect(page).to have_table_row({
-      "Placement" => "Primary with mathematics (Year 2)",
+      "Placement" => "Primary (Year 2)",
       "Mentor" => "Jane Doe",
       "Expected date" => "Summer term",
       "Provider" => "Provider not assigned",

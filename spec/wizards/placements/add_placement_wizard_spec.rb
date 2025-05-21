@@ -29,7 +29,7 @@ RSpec.describe Placements::AddPlacementWizard do
     context "with a primary school" do
       let(:school) { primary_school }
 
-      it { is_expected.to eq %i[primary_subject_selection year_group academic_year terms mentors check_your_answers] }
+      it { is_expected.to eq %i[year_group academic_year terms mentors check_your_answers] }
     end
 
     context "with a secondary school" do
@@ -46,7 +46,7 @@ RSpec.describe Placements::AddPlacementWizard do
       context "when the Primary phase has been chosen" do
         let(:state) { { "phase" => { "phase" => "Primary" } } }
 
-        it { is_expected.to eq %i[phase primary_subject_selection year_group academic_year terms mentors check_your_answers] }
+        it { is_expected.to eq %i[phase year_group academic_year terms mentors check_your_answers] }
       end
 
       context "when the Secondary phase has been chosen" do
@@ -88,13 +88,14 @@ RSpec.describe Placements::AddPlacementWizard do
       let(:school) { primary_school }
       let(:state) do
         {
-          "primary_subject_selection" => { "subject_id" => primary.id },
           "year_group" => { "year_group" => "year_3" },
           "academic_year" => { "academic_year_id" => academic_year.id },
           "terms" => { "term_ids" => %w[any_term] },
           "mentors" => { "mentor_ids" => [selected_mentor.id] },
         }
       end
+
+      before { primary }
 
       it "creates a placement" do
         expect(placement).to be_persisted
@@ -109,13 +110,14 @@ RSpec.describe Placements::AddPlacementWizard do
       let(:school) { primary_school }
       let(:state) do
         {
-          "primary_subject_selection" => { "subject_id" => primary.id },
           "year_group" => { "year_group" => "year_3" },
           "academic_year" => { "academic_year_id" => academic_year.id },
           "terms" => { "term_ids" => %w[any_term] },
           "mentors" => { "mentor_ids" => mentor_not_known },
         }
       end
+
+      before { primary }
 
       it "creates a placement" do
         expect(placement).to be_persisted
@@ -272,23 +274,30 @@ RSpec.describe Placements::AddPlacementWizard do
     end
   end
 
-  describe "#subject_step" do
-    subject { wizard.subject_step }
+  describe "#subject" do
+    subject { wizard.subject }
+
+    before { primary }
 
     context "with a primary school" do
       let(:school) { primary_school }
 
-      it { is_expected.to be_instance_of(Placements::AddPlacementWizard::PrimarySubjectSelectionStep) }
+      it { is_expected.to eq(primary) }
     end
 
     context "with a secondary school" do
       let(:school) { secondary_school }
+      let(:state) { { "secondary_subject_selection" => { "subject_id" => drama.id } } }
 
-      it { is_expected.to be_instance_of(Placements::AddPlacementWizard::SecondarySubjectSelectionStep) }
+      before { french }
+
+      it { is_expected.to eq(drama) }
     end
 
     context "with an all-through school" do
       let(:school) { all_through_school }
+
+      before { french }
 
       context "when the phase step has not been answered yet" do
         it { is_expected.to be_nil }
@@ -297,49 +306,16 @@ RSpec.describe Placements::AddPlacementWizard do
       context "when Primary was chosen in the phase step" do
         let(:state) { { "phase" => { "phase" => "Primary" } } }
 
-        it { is_expected.to be_instance_of(Placements::AddPlacementWizard::PrimarySubjectSelectionStep) }
+        it { is_expected.to eq(primary) }
       end
 
-      context "when Secondary was chosen in the phase step" do
-        let(:state) { { "phase" => { "phase" => "Secondary" } } }
+      context "when secondary was chosen in the phase step and drama was chosen in the secondary subject selection step" do
+        let(:state) do
+          { "phase" => { "phase" => "Secondary" },
+            "secondary_subject_selection" => { "subject_id" => drama.id } }
+        end
 
-        it { is_expected.to be_instance_of(Placements::AddPlacementWizard::SecondarySubjectSelectionStep) }
-      end
-    end
-  end
-
-  describe "#subject_step_name" do
-    subject { wizard.subject_step_name }
-
-    context "with a primary school" do
-      let(:school) { primary_school }
-
-      it { is_expected.to eq(:primary_subject_selection) }
-    end
-
-    context "with a secondary school" do
-      let(:school) { secondary_school }
-
-      it { is_expected.to eq(:secondary_subject_selection) }
-    end
-
-    context "with an all-through school" do
-      let(:school) { all_through_school }
-
-      context "when the phase step has not been answered yet" do
-        it { is_expected.to eq(:nil_class) }
-      end
-
-      context "when Primary was chosen in the phase step" do
-        let(:state) { { "phase" => { "phase" => "Primary" } } }
-
-        it { is_expected.to eq(:primary_subject_selection) }
-      end
-
-      context "when Secondary was chosen in the phase step" do
-        let(:state) { { "phase" => { "phase" => "Secondary" } } }
-
-        it { is_expected.to eq(:secondary_subject_selection) }
+        it { is_expected.to eq(drama) }
       end
     end
   end

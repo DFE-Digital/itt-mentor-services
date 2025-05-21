@@ -25,15 +25,16 @@
                                classes: ["govuk-link--no-visited-state"]) %>
           <% end %>
         <% end %>
+        <% if wizard.steps.include?(:secondary_subject_selection) %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".subject")) %>
+            <% row.with_value(text: wizard.steps[:secondary_subject_selection].subject_name) %>
 
-        <% summary_list.with_row do |row| %>
-          <% row.with_key(text: t(".subject")) %>
-          <% row.with_value(text: wizard.subject_step.subject_name) %>
-
-          <% row.with_action(text: t(".change"),
-                             href: step_path(wizard.subject_step_name),
-                             visually_hidden_text: t(".subject"),
-                             classes: ["govuk-link--no-visited-state"]) %>
+            <% row.with_action(text: t(".change"),
+                               href: step_path(:secondary_subject_selection),
+                               visually_hidden_text: t(".subject"),
+                               classes: ["govuk-link--no-visited-state"]) %>
+          <% end %>
         <% end %>
 
         <% if wizard.steps.include?(:additional_subjects) %>

@@ -32,10 +32,6 @@ en:
           attributes:
             phase:
               blank: Select a phase
-        placements/add_placement_wizard/primary_subject_selection_step:
-          attributes:
-            subject_id:
-              blank: Select a subject
         placements/add_placement_wizard/secondary_subject_selection_step:
           attributes:
             subject_id:

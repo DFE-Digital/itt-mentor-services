@@ -5,7 +5,7 @@ RSpec.describe Placements::AddPlacementWizard::AdditionalSubjectsStep, type: :mo
 
   let(:mock_wizard) do
     instance_double(Placements::AddPlacementWizard).tap do |mock_wizard|
-      allow(mock_wizard).to receive(:subject_step).and_return(secondary_subject_selection_step)
+      allow(mock_wizard).to receive(:steps).and_return(secondary_subject_selection: secondary_subject_selection_step)
     end
   end
 

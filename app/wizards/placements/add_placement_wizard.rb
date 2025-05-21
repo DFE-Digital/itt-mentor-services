@@ -27,17 +27,13 @@ module Placements
       steps[:phase]&.phase || school.phase
     end
 
-    def subject_step
+    def subject
       case placement_phase
       when School::PRIMARY_PHASE
-        steps.fetch(:primary_subject_selection)
+        Subject.find_by!(name: "Primary")
       when School::SECONDARY_PHASE
-        steps.fetch(:secondary_subject_selection)
+        steps.fetch(:secondary_subject_selection).subject
       end
-    end
-
-    def subject_step_name
-      step_name(subject_step.class)
     end
 
     def create_placement
@@ -52,7 +48,7 @@ module Placements
     def build_placement
       placement = school.placements.build
       placement.academic_year = steps.fetch(:academic_year).academic_year
-      placement.subject = subject_step.subject
+      placement.subject = subject
       placement.terms = steps.fetch(:terms).terms
 
       if steps[:additional_subjects].present?
