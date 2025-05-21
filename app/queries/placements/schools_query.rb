@@ -14,6 +14,7 @@ class Placements::SchoolsQuery < ApplicationQuery
     scope = subject_condition(scope)
     scope = phase_condition(scope)
     scope = last_offered_placements_condition(scope)
+    scope = year_group_condition(scope)
     scope = itt_statuses_condition(scope)
     order_condition(scope)
   end
@@ -44,6 +45,12 @@ class Placements::SchoolsQuery < ApplicationQuery
            scope.left_outer_joins(placements: :additional_subjects)
                 .where(additional_subjects: { id: filter_params[:subject_ids] }),
          )
+  end
+
+  def year_group_condition(scope)
+    return scope if filter_params[:year_groups].blank?
+
+    scope.where(placements: { year_group: filter_params[:year_groups] })
   end
 
   def itt_statuses_condition(scope)

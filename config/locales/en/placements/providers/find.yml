@@ -53,6 +53,7 @@ en:
           trained_mentors: Trained mentors
           trained_mentors_true_label: "Yes"
           trained_mentors_false_label: "No"
+          primary_year_group: Primary year group
         placements:
           page_title: "%{school_name} - Find"
           placements: Placements

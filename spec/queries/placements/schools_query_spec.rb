@@ -26,7 +26,8 @@ describe Placements::SchoolsQuery do
     create(:placements_school, name: "York Secondary School", latitude: 29.732613, longitude: 105.448063)
   end
   let(:academic_year) { Placements::AcademicYear.current }
-  let(:placement) { create(:placement, school: query_school, academic_year:) }
+  let(:placement) { create(:placement, school: query_school, academic_year:, year_group:) }
+  let(:year_group) { nil }
 
   before do
     query_school
@@ -87,6 +88,18 @@ describe Placements::SchoolsQuery do
 
     context "when filtering by phase" do
       let(:params) { { filters: { phases: [query_school.phase] } } }
+
+      it "returns the filtered schools" do
+        expect(query.call).to include(query_school)
+        expect(query.call).not_to include(non_query_school)
+      end
+    end
+
+    context "when filtering by year group" do
+      before { placement }
+
+      let(:year_group) { "year_1" }
+      let(:params) { { filters: { year_groups: %w[year_1] } } }
 
       it "returns the filtered schools" do
         expect(query.call).to include(query_school)
