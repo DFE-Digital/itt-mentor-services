@@ -48,7 +48,7 @@ RSpec.describe PublishTeacherTraining::Subject::SyncAllJob, type: :job do
   def success_stub_request
     stub_request(
       :get,
-      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/subject_areas?include=subjects",
+      "https://api.publish-teacher-training-courses.service.gov.uk/api/public/v1/subject_areas?include=subjects",
     ).to_return(
       status: 200,
       body: response_body.to_json,
@@ -58,7 +58,7 @@ RSpec.describe PublishTeacherTraining::Subject::SyncAllJob, type: :job do
   def failure_stub_request
     stub_request(
       :get,
-      "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/subject_areas?include=subjects",
+      "https://api.publish-teacher-training-courses.service.gov.uk/api/public/v1/subject_areas?include=subjects",
     ).to_return(
       status: 200,
       body: invalid_response_body.to_json,
