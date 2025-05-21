@@ -11,7 +11,7 @@ describe Claims::Claim::RemoveInternalDrafts do
 
   describe "#call" do
     it "removes internal draft claims that haven't changed in at least 24 hours" do
-      create(:claim, status: :internal_draft, updated_at: 1.day.ago)
+      create(:claim, status: :internal_draft, updated_at: 25.hours.ago)
 
       expect { service }.to change(Claims::Claim, :count).from(4).to(3)
       expect(Claims::Claim.all).to eq(
