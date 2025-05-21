@@ -100,14 +100,9 @@ class Placements::Providers::FindController < Placements::ApplicationController
   end
 
   def filter_subjects_by_phase
-    scope = if filter_form.primary_only?
-              Subject.primary
-            elsif filter_form.secondary_only?
-              Subject.secondary
-            else
-              Subject
-            end
-    scope.order_by_name.select(:id, :name)
+    return Subject.none if filter_form.primary_only?
+
+    Subject.secondary.order_by_name.select(:id, :name)
   end
 
   def placements_last_offered
