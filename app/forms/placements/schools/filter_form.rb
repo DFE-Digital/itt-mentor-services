@@ -6,6 +6,7 @@ class Placements::Schools::FilterForm < ApplicationForm
   attribute :search_location, default: nil
   attribute :search_by_name, default: nil
   attribute :phases, default: []
+  attribute :year_groups, default: []
   attribute :itt_statuses, default: []
   attribute :last_offered_placements_academic_year_ids, default: []
 
@@ -49,6 +50,7 @@ class Placements::Schools::FilterForm < ApplicationForm
       search_location:,
       search_by_name:,
       phases:,
+      year_groups:,
       itt_statuses:,
       last_offered_placements_academic_year_ids:,
     }
@@ -56,6 +58,12 @@ class Placements::Schools::FilterForm < ApplicationForm
 
   def subjects
     @subjects ||= Subject.where(id: subject_ids).order_by_name
+  end
+
+  def year_group_options
+    @year_group_options || Placement.year_groups_as_options.select do |year_group|
+      year_groups.include?(year_group.value)
+    end
   end
 
   def schools_i_work_with

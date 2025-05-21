@@ -149,6 +149,25 @@
             </ul>
           <% end %>
 
+          <% if filter_form.year_group_options.present?%>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".primary_year_group") %></h3>
+            <ul class="app-filter-tags">
+              <% filter_form.year_group_options.each do |year_group| %>
+                <li>
+                  <%= govuk_link_to(
+                        year_group.name,
+                        filter_form.index_path_without_filter(
+                          filter: "year_groups",
+                          value: year_group.value,
+                        ),
+                        class: "app-filter__tag",
+                        no_visited_state: true,
+                      ) %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+
           <% if filter_form.subject_ids.present? %>
             <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".subject") %></h3>
             <ul class="app-filter-tags">
@@ -260,6 +279,19 @@
             ) do %>
               <% filter_form.last_offered_placement_options.each do |name, value| %>
                 <%= form.govuk_check_box :last_offered_placements_academic_year_ids, value, label: { text: name } %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <div class="app-filter__option">
+            <%= form.govuk_check_boxes_fieldset(
+              :itt_statuses,
+              legend: { text: t(".primary_year_group"), size: "s" },
+              small: true,
+              multiple: true,
+            ) do %>
+              <% Placement.year_groups_as_options.each do |year_group| %>
+                <%= form.govuk_check_box :year_groups, year_group.value, label: { text: year_group.name } %>
               <% end %>
             <% end %>
           </div>

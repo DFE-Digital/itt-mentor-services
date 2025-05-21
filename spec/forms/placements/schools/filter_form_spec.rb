@@ -259,6 +259,7 @@ describe Placements::Schools::FilterForm, type: :model do
           search_location: nil,
           search_by_name: nil,
           phases: [],
+          year_groups: [],
           itt_statuses: [],
           last_offered_placements_academic_year_ids: [],
         },

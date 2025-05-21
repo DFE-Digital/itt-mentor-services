@@ -81,6 +81,7 @@ class Placements::Providers::FindController < Placements::ApplicationController
       schools_i_work_with_ids: [],
       subject_ids: [],
       phases: [],
+      year_groups: [],
       itt_statuses: [],
       last_offered_placements_academic_year_ids: [],
       trained_mentors: [],
