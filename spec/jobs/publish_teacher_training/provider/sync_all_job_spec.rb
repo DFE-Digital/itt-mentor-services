@@ -5,7 +5,7 @@ RSpec.describe PublishTeacherTraining::Provider::SyncAllJob, type: :job do
     before do
       stub_request(
         :get,
-        "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/current/providers",
+        "https://api.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/current/providers",
       ).to_return(
         status: 200,
         body: {

@@ -103,7 +103,7 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
   private
 
   def publish_url
-    "https://www.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/current/providers"
+    "https://api.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/current/providers"
   end
 
   def non_existing_providers_request
