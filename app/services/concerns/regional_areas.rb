@@ -5,7 +5,7 @@ module RegionalAreas
     "E09000007", # Camden
     "E09000001", # City of London
     "E09000009", # Ealing
-    "E09000011", # Greenwhich
+    "E09000011", # Greenwich
     "E09000012", # Hackney
     "E09000013", # Hammersmith and Fulham
     "E09000014", # Haringey
@@ -42,8 +42,8 @@ module RegionalAreas
     "E06000036", # Bracknell Forest
     "E06000039", # Slough
     "E06000040", # Windsor and Maidenhead
-    "E07000006", # South Bucks
-    "E07000005", # Chiltern
+    "E07000006", # South Bucks - Inactive
+    "E07000005", # Chiltern - Inactive
     "E07000066", # Basildon
     "E07000068", # Brentwood
     "E07000072", # Epping Forest
@@ -60,17 +60,17 @@ module RegionalAreas
     "E07000107", # Dartford
     "E07000111", # Sevenoaks
     "E07000226", # Crawley
-    # Surrey – the whole county below
-    "E07000227", # Reigate and Banstead
+    # Surrey
+    "E07000211", # Reigate and Banstead
     "E07000215", # Tandridge
-    "E07000212", # Mole Valley
-    "E07000211", # Guildford
-    "E07000210", # Epsom and Ewell
-    "E07000209", # Elmbridge
+    "E07000210", # Mole Valley
+    "E07000209", # Guildford
+    "E07000208", # Epsom and Ewell
+    "E07000207", # Elmbridge
     "E07000213", # Spelthorne
     "E07000214", # Surrey Heath
     "E07000216", # Waverley
     "E07000217", # Woking
-    "E07000228", # Runnymede
+    "E07000212", # Runnymede
   ].freeze
 end
