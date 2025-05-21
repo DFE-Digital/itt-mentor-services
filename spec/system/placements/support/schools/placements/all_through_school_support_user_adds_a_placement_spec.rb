@@ -24,15 +24,6 @@ RSpec.describe "All-through support school user adds a placement", service: :pla
 
     when_i_select_primary
     and_i_click_on_continue
-    then_i_see_the_select_a_subject_page
-    and_i_see_the_primary_subjects
-    and_i_do_not_see_the_secondary_subjects
-
-    when_i_click_on_continue
-    then_i_see_a_validation_error_for_selecting_a_subject
-
-    when_i_select_primary_with_english
-    and_i_click_on_continue
     then_i_see_the_select_a_year_group_page
     and_i_see_the_primary_year_groups
 
@@ -84,9 +75,6 @@ RSpec.describe "All-through support school user adds a placement", service: :pla
 
     when_i_click_on_the_back_link
     then_i_see_the_select_a_year_group_page
-
-    when_i_click_on_the_back_link
-    then_i_see_the_select_a_subject_page
 
     # Test that the change link functionality works as expected
     when_i_continue_from_the_subject_page_to_the_check_your_answers_page
@@ -244,11 +232,6 @@ RSpec.describe "All-through support school user adds a placement", service: :pla
     expect(page).to have_link("Cancel", href: "/schools/#{@school.id}/placements")
   end
 
-  def and_i_see_the_primary_subjects
-    expect(page).to have_field("Primary with english", type: :radio)
-    expect(page).to have_field("Primary with mathematics", type: :radio)
-  end
-
   def and_i_do_not_see_the_primary_subjects
     expect(page).not_to have_field("Primary with english", type: :radio)
     expect(page).not_to have_field("Primary with mathematics", type: :radio)
@@ -270,11 +253,6 @@ RSpec.describe "All-through support school user adds a placement", service: :pla
     expect(page).to have_field("Mathematics", type: :radio)
   end
 
-  def and_i_do_not_see_the_secondary_subjects
-    expect(page).not_to have_field("English", type: :radio)
-    expect(page).not_to have_field("Mathematics", type: :radio)
-  end
-
   def when_i_click_on_the_back_link
     click_on "Back"
   end
@@ -287,10 +265,6 @@ RSpec.describe "All-through support school user adds a placement", service: :pla
 
   def then_i_see_a_validation_error_for_selecting_a_subject
     expect(page).to have_validation_error("Select a subject")
-  end
-
-  def when_i_select_primary_with_english
-    choose "Primary with english"
   end
 
   def then_i_see_the_select_a_year_group_page
@@ -420,7 +394,6 @@ RSpec.describe "All-through support school user adds a placement", service: :pla
   end
 
   def and_i_see_the_placement_details
-    expect(page).to have_summary_list_row("Subject", "Primary with english")
     expect(page).to have_summary_list_row("Year group", "Year 1")
     expect(page).to have_summary_list_row("Academic year", "This year (#{@current_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term, Spring term")
@@ -432,7 +405,6 @@ RSpec.describe "All-through support school user adds a placement", service: :pla
   end
 
   def and_i_continue_from_the_subject_page_to_the_check_your_answers_page
-    click_on "Continue"
     click_on "Continue"
     click_on "Continue"
     click_on "Continue"
