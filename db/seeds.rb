@@ -170,8 +170,16 @@ Claims::ClaimWindow.find_or_create_by!(
   academic_year: current_academic_year,
 )
 
+# Terms
+
 Placements::Term::VALID_NAMES.each do |term_name|
   Placements::Term.find_or_create_by!(name: term_name)
+end
+
+# Key Stages
+
+Placements::KeyStage::VALID_NAMES.each do |name|
+  Placements::KeyStage.find_or_create_by!(name:)
 end
 
 # Create placements

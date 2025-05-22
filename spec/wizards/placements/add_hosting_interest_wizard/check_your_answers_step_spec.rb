@@ -43,6 +43,8 @@ RSpec.describe Placements::AddHostingInterestWizard::CheckYourAnswersStep, type:
     it { is_expected.to delegate_method(:year_groups).to(:wizard) }
     it { is_expected.to delegate_method(:selected_secondary_subjects).to(:wizard) }
     it { is_expected.to delegate_method(:selected_providers).to(:wizard) }
+    it { is_expected.to delegate_method(:sen_quantity).to(:wizard) }
+    it { is_expected.to delegate_method(:selected_key_stages).to(:wizard) }
     it { is_expected.to delegate_method(:first_name).to(:school_contact_step).with_prefix(:school_contact) }
     it { is_expected.to delegate_method(:last_name).to(:school_contact_step).with_prefix(:school_contact) }
     it { is_expected.to delegate_method(:email_address).to(:school_contact_step).with_prefix(:school_contact) }

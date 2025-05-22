@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "School user adds their hosting interest and bulk adds placements for a subject with child subjects",
+RSpec.describe "School user bulk adds placements for a subject with child subjects",
                service: :placements,
                type: :system do
   scenario do
