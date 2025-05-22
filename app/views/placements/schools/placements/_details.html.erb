@@ -24,7 +24,7 @@
       <% end %>
     <% end %>
   <% end %>
-  <% if placement.send_specific %>
+  <% if placement.send_specific? %>
     <% summary_list.with_row do |row| %>
       <% row.with_key(text: t(".attributes.placements.key_stage")) %>
       <% row.with_value do %>
