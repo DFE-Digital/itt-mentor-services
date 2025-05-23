@@ -9,7 +9,10 @@ class Placements::MultiPlacementWizard::YearGroupPlacementQuantityStep < BaseSte
       attributes: attributes,
     )
 
-    super(wizard:, attributes:)
+    super(
+      wizard:,
+      attributes: attributes&.select { |k, _v| wizard.year_groups.include?(k) }
+    )
   end
 
   def valid_quantities
