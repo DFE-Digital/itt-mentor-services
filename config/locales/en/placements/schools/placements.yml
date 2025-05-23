@@ -88,6 +88,8 @@ en:
           mixed_year_groups_description: ""
         available: Available
         unavailable: Unavailable
+        assigned_to_provider: Assigned to provider
+        assigned_to_you: Assigned to you
         index:
             page_title: Placements
             placements: Placements

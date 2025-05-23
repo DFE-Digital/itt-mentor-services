@@ -156,7 +156,7 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
   def then_i_see_the_placement_details_page
     expect(page).to have_title("English - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_tag("Available", "turquoise")
+    expect(page).to have_tag("Available", "green")
     expect(page).to have_summary_list_row("Subject", "English")
     expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term")
@@ -210,7 +210,7 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
   def then_i_see_the_placement_details_page_with_my_updated_term
     expect(page).to have_title("English - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_element(:strong, text: "Available", class: "govuk-tag govuk-tag--turquoise")
+    expect(page).to have_element(:strong, text: "Available", class: "govuk-tag govuk-tag--green")
     expect(page).to have_summary_list_row("Subject", "English")
     expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term, Summer term")
@@ -261,7 +261,7 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
   def then_i_see_the_placement_details_page_with_john_smith
     expect(page).to have_title("English - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_element(:strong, text: "Available", class: "govuk-tag govuk-tag--turquoise")
+    expect(page).to have_element(:strong, text: "Available", class: "govuk-tag govuk-tag--green")
     expect(page).to have_summary_list_row("Subject", "English")
     expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term, Summer term")
@@ -287,7 +287,7 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
   end
 
   def then_i_see_the_placement_details_page_with_jane_doe
-    expect(page).to have_element(:strong, text: "Available", class: "govuk-tag govuk-tag--turquoise")
+    expect(page).to have_element(:strong, text: "Available", class: "govuk-tag govuk-tag--green")
     expect(page).to have_summary_list_row("Subject", "English")
     expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term, Summer term")
@@ -358,7 +358,7 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
   def then_i_see_the_placement_details_page_with_aes_sedai_trust
     expect(page).to have_title("English - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_element(:strong, text: "Unavailable", class: "govuk-tag govuk-tag--orange")
+    expect(page).to have_element(:strong, text: "Assigned to provider", class: "govuk-tag govuk-tag--blue")
     expect(page).to have_summary_list_row("Subject", "English")
     expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term, Summer term")

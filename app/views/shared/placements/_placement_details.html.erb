@@ -3,7 +3,7 @@
   <%= placement.title %>
 </h1>
 <div class="govuk-!-margin-top-0 govuk-!-margin-bottom-6">
-  <%= render Placement::StatusTagComponent.new(placement:) %>
+  <%= render Placement::StatusTagComponent.new(placement:, viewed_by_organisation:) %>
 </div>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">

@@ -3,7 +3,7 @@ class Placement::StatusTagComponentPreview < ApplicationComponentPreview
     school = FactoryBot.build(:placements_school, with_school_contact: false)
     placement = FactoryBot.build(:placement, school:)
 
-    render(Placement::StatusTagComponent.new(placement:))
+    render(Placement::StatusTagComponent.new(placement:, organisation: school))
   end
 
   def placement_with_provider
@@ -11,6 +11,6 @@ class Placement::StatusTagComponentPreview < ApplicationComponentPreview
     school = FactoryBot.build(:placements_school, with_school_contact: false)
     placement = FactoryBot.build(:placement, school:, provider:)
 
-    render(Placement::StatusTagComponent.new(placement:))
+    render(Placement::StatusTagComponent.new(placement:, organisation: school))
   end
 end

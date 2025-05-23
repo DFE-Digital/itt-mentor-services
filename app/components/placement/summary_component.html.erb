@@ -5,7 +5,7 @@
     <% end %>
   </h2>
   <div class="app-result-detail">
-    <%= render Placement::StatusTagComponent.new(placement:) %>
+    <%= render Placement::StatusTagComponent.new(placement:, viewed_by_organisation: provider) %>
   </div>
 
   <dl class="app-result-detail">
