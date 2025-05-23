@@ -1,6 +1,6 @@
 <%# locals: (school:, placement:, support: false) -%>
 <div class="govuk-!-margin-top-0 govuk-!-margin-bottom-6">
-  <%= render Placement::StatusTagComponent.new(placement:) %>
+  <%= render Placement::StatusTagComponent.new(placement:, viewed_by_organisation: school) %>
 </div>
 
 <%= govuk_summary_list do |summary_list| %>
