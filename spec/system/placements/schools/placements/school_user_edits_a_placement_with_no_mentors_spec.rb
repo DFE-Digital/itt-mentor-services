@@ -100,7 +100,7 @@ RSpec.describe "School user edits a placement with no mentors", service: :placem
   def then_i_see_the_placement_details_page
     expect(page).to have_title("Primary with english (Year 1) - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_tag("Available", "turquoise")
+    expect(page).to have_tag("Available", "green")
     expect(page).to have_summary_list_row("Subject", "Primary")
     expect(page).to have_summary_list_row("Year group", "Year 1")
     expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
@@ -172,7 +172,7 @@ RSpec.describe "School user edits a placement with no mentors", service: :placem
   def then_i_see_the_placement_details_page_with_assign_a_mentor_text
     expect(page).to have_title("Primary with english (Year 1) - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_tag("Available", "turquoise")
+    expect(page).to have_tag("Available", "green")
     expect(page).to have_summary_list_row("Subject", "Primary")
     expect(page).to have_summary_list_row("Year group", "Year 1")
     expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")

@@ -48,7 +48,7 @@
             <% body.with_row do |row| %>
               <% row.with_cell(text: govuk_link_to(placement.title, placements_provider_partner_school_placement_path(@provider, @partner_school, placement), no_visited_state: true)) %>
               <% row.with_cell do %>
-                <%= render Placement::StatusTagComponent.new(placement:) %>
+                <%= render Placement::StatusTagComponent.new(placement:, viewed_by_organisation: @provider) %>
               <% end %>
             <% end %>
           <% end %>
