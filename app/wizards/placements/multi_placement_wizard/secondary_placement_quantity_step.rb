@@ -7,7 +7,14 @@ class Placements::MultiPlacementWizard::SecondaryPlacementQuantityStep < Placeme
       attributes: attributes,
     )
 
-    super(wizard:, attributes:)
+    super(
+      wizard:,
+      attributes: attributes&.select do |k, _v|
+        wizard.selected_secondary_subjects
+        .map(&:name_as_attribute)
+        .include?(k)
+      end
+    )
   end
 
   def subjects

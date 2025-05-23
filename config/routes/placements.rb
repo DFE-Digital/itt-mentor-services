@@ -89,6 +89,14 @@ scope module: :placements,
         end
       end
 
+      resources :potential_placements do
+        collection do
+          get "edit", to: "potential_placements/edit_potential_placements#new", as: :new_edit_potential_placements
+          get "edit/:state_key/:step", to: "potential_placements/edit_potential_placements#edit", as: :edit_potential_placements
+          put "edit/:state_key/:step", to: "potential_placements/edit_potential_placements#update"
+        end
+      end
+
       resources :placements, only: %i[index show destroy] do
         member do
           get :confirm_unassign_provider
