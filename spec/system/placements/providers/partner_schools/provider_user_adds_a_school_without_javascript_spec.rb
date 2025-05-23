@@ -1,12 +1,13 @@
 require "rails_helper"
 
-RSpec.describe "Provider user adds a partner school without JavaScript",
+RSpec.describe "Provider user adds a school without JavaScript",
                service: :placements, type: :system do
   include ActiveJob::TestHelper
 
   scenario do
-    given_a_school_exists_with_a_provider
-    given_i_am_signed_in
+    given_two_schools_exist
+    and_a_provider_exists
+    and_i_am_signed_in
 
     when_i_navigate_to_the_provider_schools_page
     then_i_see_the_provider_schools_index_with_no_schools
@@ -64,9 +65,8 @@ RSpec.describe "Provider user adds a partner school without JavaScript",
 
   private
 
-  def given_a_school_exists_with_a_provider
+  def given_two_schools_exist
     @user_anne = build(:placements_user, first_name: "Anne", last_name: "Wilson", email: "anne_wilson@education.gov.uk")
-    @provider = create(:placements_provider, name: "Westbrook Provider", users: [@user_anne])
     @shelbyville_school = create(
       :placements_school,
       name: "Shelbyville Elementary",
@@ -77,18 +77,22 @@ RSpec.describe "Provider user adds a partner school without JavaScript",
       website: "www.shelbyville_elementary.com",
       telephone: "02083334444",
     )
-    @shelberg_high_school = @shelbyville_school = create(
+    @shelberg_high_school = create(
       :placements_school,
       name: "Shelberg High School",
     )
   end
 
-  def given_i_am_signed_in
+  def and_a_provider_exists
+    @provider = create(:placements_provider, name: "Westbrook Provider", users: [@user_anne])
+  end
+
+  def and_i_am_signed_in
     sign_in_as(@user_anne)
   end
 
   def when_i_navigate_to_the_provider_schools_page
-    within(".app-primary-navigation") do
+    within(primary_navigation) do
       click_on "Schools"
     end
   end
@@ -97,10 +101,10 @@ RSpec.describe "Provider user adds a partner school without JavaScript",
     expect(page).to have_title("Schools you work with - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Schools you work with")
-    expect(page).to have_text("View all placements your schools have published.")
-    expect(page).to have_text("Only schools you work with are able to assign you their placements.")
-    expect(page).to have_link("Add school")
-    expect(page).to have_text("There are no partner schools for Westbrook Provider")
+    expect(page).to have_element(:p, text: "View all placements your schools have published.")
+    expect(page).to have_element(:p, text: "Only schools you work with are able to assign you their placements.")
+    expect(page).to have_link("Add school", href: new_add_partner_school_placements_provider_partner_schools_path(@provider))
+    expect(page).to have_element(:p, text: "There are no partner schools for Westbrook Provider")
   end
 
   def when_i_click_on_add_school
@@ -177,8 +181,8 @@ RSpec.describe "Provider user adds a partner school without JavaScript",
     expect(page).to have_title("Confirm school details - School details - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Confirm school details")
-    expect(page).to have_text("Once added, they will be able to assign you to their placements.")
-    expect(page).to have_text("We will send them an email to let them know you have added them.")
+    expect(page).to have_element(:p, text: "Once added, they will be able to assign you to their placements.")
+    expect(page).to have_element(:p, text: "We will send them an email to let them know you have added them.")
     expect(page).to have_summary_list_row("Name", "Shelbyville Elementary")
     expect(page).to have_summary_list_row("UK provider reference number (UKPRN)", "54321")
     expect(page).to have_summary_list_row("Unique reference number (URN)", "12345")
@@ -195,9 +199,7 @@ RSpec.describe "Provider user adds a partner school without JavaScript",
   end
 
   def when_i_click_on_change_name
-    within(".govuk-summary-list") do
-      click_on "Change"
-    end
+    click_on "Change Name"
   end
 
   def when_i_click_on_confirm_and_add_school
@@ -208,9 +210,9 @@ RSpec.describe "Provider user adds a partner school without JavaScript",
     expect(page).to have_title("Schools you work with - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Schools you work with")
-    expect(page).to have_text("View all placements your schools have published.")
-    expect(page).to have_text("Only schools you work with are able to assign you their placements.")
-    expect(page).to have_link("Add school")
+    expect(page).to have_element(:p, text: "View all placements your schools have published.")
+    expect(page).to have_element(:p, text: "Only schools you work with are able to assign you their placements.")
+    expect(page).to have_link("Add school", href: new_add_partner_school_placements_provider_partner_schools_path(@provider))
     expect(page).to have_table_row({ "Name": "Shelbyville Elementary",
                                      "Unique reference number (URN)": "12345" })
     expect(page).to have_success_banner("School added", "Shelbyville Elementary can now assign you to their placements.")

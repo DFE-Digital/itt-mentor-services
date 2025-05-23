@@ -32,7 +32,7 @@ RSpec.describe "Claims support user view users for school", service: :claims, ty
   end
 
   def when_i_nagivate_to_organisations
-    within(".app-primary-navigation") do
+    within(primary_navigation) do
       click_on "Organisations"
     end
   end

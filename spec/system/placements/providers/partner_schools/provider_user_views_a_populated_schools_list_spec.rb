@@ -4,8 +4,8 @@ RSpec.describe "Provider user views a populated schools list",
                service: :placements, type: :system do
   scenario do
     given_two_schools_exist_with_a_provider_partnership_and_a_provider_user
-    given_one_school_exists_without_a_provider_partnership
-    given_i_am_signed_in
+    and_one_school_exists_without_a_provider_partnership
+    and_i_am_signed_in
 
     when_i_navigate_to_the_provider_schools_page
     then_i_see_the_provider_schools_index_with_the_two_partnered_schools
@@ -31,7 +31,7 @@ RSpec.describe "Provider user views a populated schools list",
     @school_partnership_two = create(:placements_partnership, school: @partnered_school_two, provider: @provider)
   end
 
-  def given_one_school_exists_without_a_provider_partnership
+  def and_one_school_exists_without_a_provider_partnership
     @unpartnered_school = create(
       :placements_school,
       name: "Lonely School",
@@ -39,12 +39,12 @@ RSpec.describe "Provider user views a populated schools list",
     )
   end
 
-  def given_i_am_signed_in
+  def and_i_am_signed_in
     sign_in_as(@user_anne)
   end
 
   def when_i_navigate_to_the_provider_schools_page
-    within(".app-primary-navigation") do
+    within(primary_navigation) do
       click_on "Schools"
     end
   end
@@ -53,8 +53,8 @@ RSpec.describe "Provider user views a populated schools list",
     expect(page).to have_title("Schools you work with - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Schools you work with")
-    expect(page).to have_text("View all placements your schools have published.")
-    expect(page).to have_text("Only schools you work with are able to assign you their placements.")
+    expect(page).to have_element(:p, text: "View all placements your schools have published.")
+    expect(page).to have_element(:p, text: "Only schools you work with are able to assign you their placements.")
     expect(page).to have_link("Add school")
     expect(page).to have_table_row({ "Name": "Shelbyville School",
                                      "Unique reference number (URN)": "12345" })

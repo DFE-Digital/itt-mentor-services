@@ -6,8 +6,8 @@ RSpec.describe "Provider user removes partner schools",
 
   scenario do
     given_a_provider_exists_with_two_partner_schools
-    given_placements_exist_with_shelbyville_elementary
-    given_i_am_signed_in
+    and_placements_exist_with_shelbyville_elementary
+    and_i_am_signed_in
 
     when_i_navigate_to_the_provider_schools_page
     then_i_see_the_provider_schools_index_with_two_schools
@@ -70,7 +70,7 @@ RSpec.describe "Provider user removes partner schools",
     @springfield_partnership = create(:placements_partnership, provider: @provider, school: @springfield_school)
   end
 
-  def given_placements_exist_with_shelbyville_elementary
+  def and_placements_exist_with_shelbyville_elementary
     @english = build(:subject, name: "English")
     @maths = build(:subject, name: "Mathematics")
     @science = build(:subject, name: "Science")
@@ -80,12 +80,12 @@ RSpec.describe "Provider user removes partner schools",
     @science_placement = create(:placement, school: @shelbyville_elementary, provider: @provider, subject: @science)
   end
 
-  def given_i_am_signed_in
+  def and_i_am_signed_in
     sign_in_as(@user_anne)
   end
 
   def when_i_navigate_to_the_provider_schools_page
-    within(".app-primary-navigation") do
+    within(primary_navigation) do
       click_on "Schools"
     end
   end
@@ -94,8 +94,8 @@ RSpec.describe "Provider user removes partner schools",
     expect(page).to have_title("Schools you work with - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Schools you work with")
-    expect(page).to have_text("View all placements your schools have published.")
-    expect(page).to have_text("Only schools you work with are able to assign you their placements.")
+    expect(page).to have_element(:p, text: "View all placements your schools have published.")
+    expect(page).to have_element(:p, text: "Only schools you work with are able to assign you their placements.")
     expect(page).to have_link("Add school")
     expect(page).to have_table_row({ "Name": "Shelbyville Elementary",
                                      "Unique reference number (URN)": "54321" })
@@ -134,8 +134,8 @@ RSpec.describe "Provider user removes partner schools",
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_link("Back")
     expect(page).to have_h1("Are you sure you want to delete this school?")
-    expect(page).to have_text("The school will no longer be able to assign you to their placements. You can still view placements at this school.")
-    expect(page).to have_text("You will remain assigned to current placements unless the school removes you.")
+    expect(page).to have_element(:p, text: "The school will no longer be able to assign you to their placements. You can still view placements at this school.")
+    expect(page).to have_element(:p, text: "You will remain assigned to current placements unless the school removes you.")
     expect(page).to have_warning_text("We will send an email to Springfield School. This will let them know they can no longer assign you to placements.")
     expect(page).to have_button("Delete school")
     expect(page).to have_link("Cancel")
@@ -149,8 +149,8 @@ RSpec.describe "Provider user removes partner schools",
     expect(page).to have_title("Schools you work with - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Schools you work with")
-    expect(page).to have_text("View all placements your schools have published.")
-    expect(page).to have_text("Only schools you work with are able to assign you their placements.")
+    expect(page).to have_element(:p, text: "View all placements your schools have published.")
+    expect(page).to have_element(:p, text: "Only schools you work with are able to assign you their placements.")
     expect(page).to have_link("Add school")
     expect(page).to have_table_row({ "Name": "Shelbyville Elementary",
                                      "Unique reference number (URN)": "54321" })
@@ -192,15 +192,15 @@ RSpec.describe "Provider user removes partner schools",
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_link("Back")
     expect(page).to have_h1("Are you sure you want to delete this school?")
-    expect(page).to have_text("The school will no longer be able to assign you to their placements. You can still view placements at this school.")
-    expect(page).to have_text("You will remain assigned to current placements unless the school removes you.")
+    expect(page).to have_element(:p, text: "The school will no longer be able to assign you to their placements. You can still view placements at this school.")
+    expect(page).to have_element(:p, text: "You will remain assigned to current placements unless the school removes you.")
     expect(page).to have_warning_text("We will send an email to Shelbyville Elementary. This will let them know they can no longer assign you to placements.")
     expect(page).to have_button("Delete school")
     expect(page).to have_link("Cancel")
   end
 
   def and_i_see_a_list_of_associated_placements_with_shelbyville_elementary_and_provider
-    expect(page).to have_text("You are currently assigned to:")
+    expect(page).to have_element(:p, text: "You are currently assigned to:")
     expect(page).to have_link("English (opens in new tab)", href: placements_provider_placement_path(@provider, @english_placement))
     expect(page).to have_link("Mathematics (opens in new tab)", href: placements_provider_placement_path(@provider, @maths_placement))
     expect(page).to have_link("Science (opens in new tab)", href: placements_provider_placement_path(@provider, @science_placement))
@@ -210,14 +210,14 @@ RSpec.describe "Provider user removes partner schools",
     expect(page).to have_title("Schools you work with - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Schools you work with")
-    expect(page).to have_text("View all placements your schools have published.")
-    expect(page).to have_text("Only schools you work with are able to assign you their placements.")
+    expect(page).to have_element(:p, text: "View all placements your schools have published.")
+    expect(page).to have_element(:p, text: "Only schools you work with are able to assign you their placements.")
     expect(page).to have_link("Add school")
-    expect(page).to have_text("There are no partner schools for Westbrook Provider")
+    expect(page).to have_element(:p, text: "There are no partner schools for Westbrook Provider")
   end
 
   def when_i_navigate_to_the_provider_schools_page
-    within(".app-primary-navigation") do
+    within(primary_navigation) do
       click_on "Schools"
     end
   end
@@ -226,10 +226,10 @@ RSpec.describe "Provider user removes partner schools",
     expect(page).to have_title("Schools you work with - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Schools you work with")
-    expect(page).to have_text("View all placements your schools have published.")
-    expect(page).to have_text("Only schools you work with are able to assign you their placements.")
+    expect(page).to have_element(:p, text: "View all placements your schools have published.")
+    expect(page).to have_element(:p, text: "Only schools you work with are able to assign you their placements.")
     expect(page).to have_link("Add school")
-    expect(page).to have_text("There are no partner schools for Westbrook Provider")
+    expect(page).to have_element(:p, text: "There are no partner schools for Westbrook Provider")
   end
 
   def and_i_see_a_success_message_for_the_deletion_of_shelbyville_elementary
