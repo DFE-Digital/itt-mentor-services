@@ -14,10 +14,6 @@ en:
           primary: Primary
           secondary: Secondary
           continue: Continue
-        primary_subject_selection_step:
-          title: Select a subject - %{contextual_text}
-          select_a_subject: Select a subject
-          continue: Continue
         secondary_subject_selection_step:
           title: Select a subject - %{contextual_text}
           select_a_subject: Select a subject

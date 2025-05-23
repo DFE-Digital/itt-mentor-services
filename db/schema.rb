@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_07_121235) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_23_154716) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -555,10 +555,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_07_121235) do
     t.string "local_authority_code"
     t.datetime "claims_grant_conditions_accepted_at"
     t.uuid "claims_grant_conditions_accepted_by_id"
-    t.jsonb "potential_placement_details"
     t.string "vendor_number"
     t.boolean "expression_of_interest_completed", default: false
     t.boolean "previously_offered_placements", default: false
+    t.jsonb "potential_placement_details"
     t.index ["claims_grant_conditions_accepted_by_id"], name: "index_schools_on_claims_grant_conditions_accepted_by_id"
     t.index ["claims_service"], name: "index_schools_on_claims_service"
     t.index ["latitude"], name: "index_schools_on_latitude"
