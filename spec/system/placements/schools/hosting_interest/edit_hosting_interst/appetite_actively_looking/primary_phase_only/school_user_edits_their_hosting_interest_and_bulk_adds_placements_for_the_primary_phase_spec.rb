@@ -51,7 +51,7 @@ RSpec.describe "School user edits their hosting interest and bulk adds placement
   private
 
   def given_subjects_exist
-    @primary = create(:subject, :primary, name: "Primary")
+    @primary = create(:subject, :primary, name: "Primary", code: "00")
   end
 
   def and_academic_years_exist

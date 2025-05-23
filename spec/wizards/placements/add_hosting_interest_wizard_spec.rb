@@ -143,7 +143,7 @@ RSpec.describe Placements::AddHostingInterestWizard do
     context "when the attributes passed are valid" do
       context "when the appetite is 'actively_looking'" do
         context "when the phase selected is 'Primary'" do
-          let!(:primary) { create(:subject, :primary, name: "Primary") }
+          let!(:primary) { create(:subject, :primary, name: "Primary", code: "00") }
           let(:state) do
             {
               "appetite" => { "appetite" => "actively_looking" },
@@ -271,7 +271,7 @@ RSpec.describe Placements::AddHostingInterestWizard do
         end
 
         context "when the phase selected is 'Primary' and 'Secondary'" do
-          let!(:primary) { create(:subject, :primary, name: "Primary") }
+          let!(:primary) { create(:subject, :primary, name: "Primary", code: "00") }
           let(:english) { create(:subject, :secondary, name: "English") }
           let(:mathematics) { create(:subject, :secondary, name: "Mathematics") }
           let(:state) do
@@ -462,7 +462,7 @@ RSpec.describe Placements::AddHostingInterestWizard do
     end
 
     context "when a secondary subject has been selected" do
-      let(:primary_subject) { create(:subject, :primary, name: "Primary") }
+      let(:primary_subject) { create(:subject, :primary, name: "Primary", code: "00") }
       let!(:english) { create(:subject, :secondary, name: "English") }
       let!(:mathematics) { create(:subject, :secondary, name: "Mathematics") }
       let(:science) { create(:subject, :secondary, name: "Science") }

@@ -30,7 +30,7 @@ module Placements
     def subject
       case placement_phase
       when School::PRIMARY_PHASE
-        Subject.find_by!(name: "Primary")
+        Subject.primary_subject
       when School::SECONDARY_PHASE
         steps.fetch(:secondary_subject_selection).subject
       end
@@ -67,7 +67,6 @@ module Placements
     end
 
     def primary_steps
-      add_step(PrimarySubjectSelectionStep)
       add_step(YearGroupStep)
     end
 

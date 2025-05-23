@@ -102,7 +102,7 @@ module Placements
         placement_quantity_for_year_group(year_group).times do
           Placement.create!(
             school:,
-            subject: Subject.find_by(name: "Primary"),
+            subject: Subject.primary_subject,
             year_group:,
             academic_year: upcoming_academic_year,
           )

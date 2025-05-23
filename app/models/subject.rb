@@ -83,4 +83,8 @@ class Subject < ApplicationRecord
   def name_as_attribute
     name.parameterize(separator: "_").to_sym
   end
+
+  def self.primary_subject
+    find_by!(name: "Primary", code: "00")
+  end
 end

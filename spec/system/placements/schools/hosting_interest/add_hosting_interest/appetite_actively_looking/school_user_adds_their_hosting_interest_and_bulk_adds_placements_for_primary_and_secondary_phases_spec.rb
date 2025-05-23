@@ -110,7 +110,7 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
   private
 
   def given_subjects_exist
-    @primary = create(:subject, :primary, name: "Primary")
+    @primary = create(:subject, :primary, name: "Primary", code: "00")
 
     @english = create(:subject, :secondary, name: "English")
     @mathematics = create(:subject, :secondary, name: "Mathematics")

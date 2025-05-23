@@ -36,7 +36,7 @@ RSpec.describe "School user bulk adds placements for the primary phases",
   private
 
   def given_subjects_exist
-    @primary = create(:subject, :primary, name: "Primary")
+    @primary = create(:subject, :primary, name: "Primary", code: "00")
   end
 
   def and_academic_years_exist
