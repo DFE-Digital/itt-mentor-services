@@ -28,14 +28,18 @@ module Placements
                                                      else
                                                        { "quantity_known" => "No" }
                                                      end
-      state["year_group_placement_quantity"] = potential_placement_details["year_group_placement_quantity"]
+      if potential_placement_details["year_group_placement_quantity"].present?
+        state["year_group_placement_quantity"] = potential_placement_details["year_group_placement_quantity"]
+      end
       state["secondary_subject_selection"] = potential_placement_details["secondary_subject_selection"]
       state["secondary_placement_quantity_known"] = if potential_placement_details["secondary_placement_quantity"].present?
                                                       { "quantity_known" => "Yes" }
                                                     else
                                                       { "quantity_known" => "No" }
                                                     end
-      state["secondary_placement_quantity"] = potential_placement_details["secondary_placement_quantity"]
+      if potential_placement_details["secondary_placement_quantity"].present?
+        state["secondary_placement_quantity"] = potential_placement_details["secondary_placement_quantity"]
+      end
       state["note_to_providers"] = potential_placement_details["note_to_providers"]
     end
 
