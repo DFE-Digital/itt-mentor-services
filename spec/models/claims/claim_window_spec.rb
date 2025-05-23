@@ -72,6 +72,14 @@ RSpec.describe Claims::ClaimWindow, type: :model do
     end
   end
 
+  describe "delegations" do
+    it { is_expected.to delegate_method(:name).to(:academic_year).with_prefix }
+    it { is_expected.to delegate_method(:starts_on).to(:academic_year).with_prefix }
+    it { is_expected.to delegate_method(:ends_on).to(:academic_year).with_prefix }
+    it { is_expected.to delegate_method(:past?).to(:ends_on) }
+    it { is_expected.to delegate_method(:future?).to(:starts_on) }
+  end
+
   describe "#current?" do
     it "returns true if the current date is inclusively within the starts on and ends on dates", freeze: "17 July 2024" do
       on_start_date = build(:claim_window, starts_on: Date.parse("17 July 2024"), ends_on: Date.parse("27 July 2024"))

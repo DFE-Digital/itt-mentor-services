@@ -9,7 +9,7 @@
       <% if policy(Claims::Claim.new(school: @school)).create? %>
         <% if @school.mentors.any? %>
           <%= govuk_warning_text do %>
-            <p class="govuk-body"><%= t(".guidance", end_date: l(Claims::ClaimWindow.current.ends_on, format: :long_with_day), start_year: Claims::ClaimWindow.current.starts_on.year, end_year: Claims::ClaimWindow.current.ends_on.year) %></p>
+            <p class="govuk-body"><%= t(".guidance", end_date: l(Claims::ClaimWindow.current.ends_on, format: :long_with_day), start_year: Claims::ClaimWindow.current.academic_year_starts_on.year, end_year: Claims::ClaimWindow.current.academic_year_ends_on.year) %></p>
           <% end %>
 
           <%= govuk_button_link_to(t(".add_claim"), new_add_claim_claims_school_claims_path) %>

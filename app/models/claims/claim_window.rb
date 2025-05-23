@@ -35,7 +35,7 @@ class Claims::ClaimWindow < ApplicationRecord
   validate :does_not_start_within_another_claim_window
   validate :does_not_end_within_another_claim_window
 
-  delegate :name, to: :academic_year, prefix: true
+  delegate :name, :starts_on, :ends_on, to: :academic_year, prefix: true
   delegate :past?, to: :ends_on
   delegate :future?, to: :starts_on
 
