@@ -135,7 +135,7 @@ RSpec.describe "Primary school user adds a placement", service: :placements, typ
 
     @secondary_english_subject = create(:subject, name: "English", subject_area: :secondary)
     @secondary_maths_subject = create(:subject, name: "Mathematics", subject_area: :secondary)
-    @primary_subject = create(:subject, name: "Primary", subject_area: :primary)
+    @primary_subject = create(:subject, name: "Primary", code: "00", subject_area: :primary)
 
     @autumn_term = create(:placements_term, name: "Autumn term")
     @spring_term = create(:placements_term, name: "Spring term")

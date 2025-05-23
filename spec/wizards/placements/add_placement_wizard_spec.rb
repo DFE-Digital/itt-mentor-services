@@ -15,7 +15,7 @@ RSpec.describe Placements::AddPlacementWizard do
   let(:modern_foreign_languages) { create(:subject, :secondary, name: "Modern foreign languages", child_subjects: [french, german]) }
   let(:french) { build(:subject, :secondary, name: "French") }
   let(:german) { build(:subject, :secondary, name: "German") }
-  let(:primary) { create(:subject, :primary, name: "Primary") }
+  let(:primary) { create(:subject, :primary, name: "Primary", code: "00") }
 
   let(:state) { {} }
   let(:params_data) { {} }

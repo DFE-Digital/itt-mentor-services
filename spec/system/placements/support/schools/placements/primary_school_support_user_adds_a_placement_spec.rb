@@ -135,7 +135,7 @@ RSpec.describe "Primary school user adds a placement", service: :placements, typ
       rating: "Outstanding",
     )
 
-    @primary_subject = create(:subject, name: "Primary", subject_area: :primary)
+    @primary_subject = create(:subject, name: "Primary", subject_area: :primary, code: "00")
     @secondary_english_subject = create(:subject, name: "English", subject_area: :secondary)
     @secondary_maths_subject = create(:subject, name: "Mathematics", subject_area: :secondary)
 
