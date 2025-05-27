@@ -1,12 +1,12 @@
 require "rails_helper"
 
-RSpec.describe "Provider user views placement list for partner school",
+RSpec.describe "Provider user views a placement for a partner school",
                service: :placements, type: :system do
   require "rails_helper"
 
   scenario do
     given_a_provider_exists_with_a_partner_school
-    and_that_partner_school_has_one_assigned_and_one_unassigned_placement
+    and_that_partner_school_has_one_assigned_placement
     and_i_am_signed_in
 
     when_i_navigate_to_the_provider_schools_page
@@ -17,6 +17,9 @@ RSpec.describe "Provider user views placement list for partner school",
 
     when_i_navigate_to_the_placments_page
     then_i_see_the_placments_list_for_shelbyville_school
+
+    when_i_click_on_the_assigned_placement
+    then_i_see_the_placement_details_page
   end
 
   private
@@ -26,6 +29,7 @@ RSpec.describe "Provider user views placement list for partner school",
     @provider = build(:placements_provider, name: "Westbrook Provider", users: [@user_anne])
     @shelbyville_elementary = build(
       :placements_school,
+      with_school_contact: false,
       name: "Shelbyville Elementary",
       urn: "54321",
       email_address: "www.shelbyville_elementary@sample.com",
@@ -33,15 +37,25 @@ RSpec.describe "Provider user views placement list for partner school",
       address1: "44 Langton Way",
       website: "www.shelbyville_elementary.com",
       telephone: "02083334444",
+      group: "Local authority maintained schools",
+      phase: "Secondary",
+      gender: "Mixed",
+      maximum_age: 16,
+      minimum_age: 11,
+      religious_character: "Church of England",
+      admissions_policy: "Comprehensive",
+      urban_or_rural: "Urban",
+      percentage_free_school_meals: 23,
+      rating: "Outstanding",
+      last_inspection_date: Date.new(2023, 1, 15),
     )
+    @school_contact = create(:school_contact, first_name: "Barry", last_name: "Garlow", email_address: "barry_garlow@education.gov.uk", school: @shelbyville_elementary)
     @shelbyville_partnership = create(:placements_partnership, provider: @provider, school: @shelbyville_elementary)
   end
 
-  def and_that_partner_school_has_one_assigned_and_one_unassigned_placement
+  def and_that_partner_school_has_one_assigned_placement
     @english_subject = build(:subject, name: "English")
-    @maths_subject = build(:subject, name: "Maths")
     @assigned_placement = create(:placement, school: @shelbyville_elementary, subject: @english_subject, provider: @provider)
-    @unassigned_placement = create(:placement, school: @shelbyville_elementary, subject: @maths_subject)
   end
 
   def and_i_am_signed_in
@@ -110,10 +124,40 @@ RSpec.describe "Provider user views placement list for partner school",
       expect(page).to have_table_row({ Subject: "English",
                                        Mentors: "Not yet known" })
     end
-    within("table#other-placements") do
-      expect(page).to have_content("Other placements")
-      expect(page).to have_table_row({ Subject: "Maths",
-                                       Status: "Available" })
-    end
+  end
+
+  def when_i_click_on_the_assigned_placement
+    click_on "English"
+  end
+
+  def then_i_see_the_placement_details_page
+    expect(page).to have_title("English - Manage school placements - GOV.UK")
+    expect(primary_navigation).to have_current_item("Schools")
+    expect(page).to have_link("Back")
+    expect(page).to have_h1("English")
+    expect(page).to have_element(:strong, class: "govuk-tag govuk-tag--blue", text: "Assigned to you")
+
+    expect(page).to have_h2("Placement dates")
+    expect(page).to have_summary_list_row("Academic year", "This year (2024 to 2025)")
+    expect(page).to have_summary_list_row("Expected date", "Any time in the academic year")
+
+    expect(page).to have_h2("Placement contact")
+    expect(page).to have_summary_list_row("First name", "Barry")
+    expect(page).to have_summary_list_row("Last name", "Garlow")
+    expect(page).to have_summary_list_row("Email address", "barry_garlow@education.gov.uk")
+
+    expect(page).to have_h2("Location")
+    expect(page).to have_summary_list_row("Address", "44 Langton Way")
+
+    expect(page).to have_h2("Additional details")
+    expect(page).to have_summary_list_row("Establishment group", "Local authority maintained schools")
+    expect(page).to have_summary_list_row("School phase", "Secondary")
+    expect(page).to have_summary_list_row("Gender", "Mixed")
+    expect(page).to have_summary_list_row("Age range", "11 to 16")
+    expect(page).to have_summary_list_row("Religious character", "Church of England")
+    expect(page).to have_summary_list_row("Urban or rural", "Urban")
+    expect(page).to have_summary_list_row("Admissions policy", "Comprehensive")
+    expect(page).to have_summary_list_row("Percentage free school meals", "23%")
+    expect(page).to have_summary_list_row("Ofsted rating", "Outstanding")
   end
 end
