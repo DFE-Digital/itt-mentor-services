@@ -20,6 +20,7 @@ RSpec.describe Gias::CSVImporter do
 
   it "logs messages to STDOUT" do
     expect(Rails.logger).to receive(:info).with("GIAS Data Imported!")
+    expect(Rails.logger).to receive(:info).with("Schools which have been closed have been purged from the database.")
 
     gias_importer
   end
@@ -170,6 +171,62 @@ RSpec.describe Gias::CSVImporter do
         it "does not create any additional joins between schools and SEN provisions" do
           expect { gias_importer }.not_to change(SchoolSENProvision, :count)
         end
+      end
+    end
+  end
+
+  describe "Removing schools that have been closed" do
+    context "when the school has not been onboarded" do
+      let(:school) { create(:school, urn: "999") }
+
+      before { school }
+
+      it "is removed from the database" do
+        expect { gias_importer }.to change { School.exists?(id: school.id) }.from(true).to(false)
+      end
+    end
+
+    context "when the school has partnerships" do
+      let(:school) { build(:school, urn: "999") }
+
+      before do
+        create(:placements_partnership, school:)
+      end
+
+      it "is not removed from the database" do
+        expect { gias_importer }.not_to change { School.exists?(id: school.id) }.from(true)
+      end
+    end
+
+    context "when the school has been onboarded to the placements service" do
+      let(:school) { create(:school, urn: "999", placements_service: true) }
+
+      it "is not removed from the database" do
+        expect { gias_importer }.not_to change { School.exists?(id: school.id) }.from(true)
+      end
+    end
+
+    context "when the school has been onboarded to the claims service" do
+      let(:school) { create(:school, urn: "999", claims_service: true) }
+
+      it "is not removed from the database" do
+        expect { gias_importer }.not_to change { School.exists?(id: school.id) }.from(true)
+      end
+    end
+
+    context "when the school has been onboarded to both services" do
+      let(:school) { create(:school, urn: "999", placements_service: true, claims_service: true) }
+
+      it "is not removed from the database" do
+        expect { gias_importer }.not_to change { School.exists?(id: school.id) }.from(true)
+      end
+    end
+
+    context "when the school has not been closed" do
+      let(:school) { create(:school, urn: "142") }
+
+      it "is not removed from the database" do
+        expect { gias_importer }.not_to change { School.exists?(id: school.id) }.from(true)
       end
     end
   end
