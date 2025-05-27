@@ -12,14 +12,19 @@ module Placements
     def define_steps
       # Define the wizard steps here
       add_step(PhaseStep)
-      add_step(MultiPlacementWizard::PhaseStep)
-      if phases.include?(::Placements::School::PRIMARY_PHASE)
+
+      if primary_phase?
         year_group_steps
       end
 
-      if phases.include?(::Placements::School::SECONDARY_PHASE)
+      if secondary_phase?
         secondary_subject_steps
       end
+
+      if send_specific?
+        send_steps
+      end
+
       add_step(CheckYourAnswersStep)
     end
 
@@ -67,6 +72,18 @@ module Placements
       @year_groups ||= steps.fetch(:year_group_selection).year_groups
     end
 
+    def sen_quantity
+      return 0 if steps[:sen_placement_quantity].blank?
+
+      steps.fetch(:sen_placement_quantity).sen_quantity.to_i
+    end
+
+    def selected_key_stages
+      return [AddHostingInterestWizard::UNKNOWN_OPTION] if value_unknown(steps.fetch(:key_stage).key_stages)
+
+      @selected_key_stages ||= ::Placements::KeyStage.where(id: steps.fetch(:key_stage).key_stages)
+    end
+
     private
 
     def create_placements
@@ -93,6 +110,18 @@ module Placements
           placement.save!
         end
       end
+
+      sen_quantity.times do
+        placement = Placement.create!(school:, academic_year: upcoming_academic_year, send_specific: true)
+        next if value_unknown(steps.fetch(:key_stage).key_stages)
+
+        placement.key_stages << selected_key_stages
+        placement.save!
+      end
+    end
+
+    def value_unknown(value)
+      value.include?(AddHostingInterestWizard::UNKNOWN_OPTION)
     end
 
     def create_partnerships
@@ -114,8 +143,8 @@ module Placements
     end
 
     def year_group_steps
-      add_step(MultiPlacementWizard::YearGroupSelectionStep)
-      add_step(MultiPlacementWizard::YearGroupPlacementQuantityStep)
+      add_step(YearGroupSelectionStep)
+      add_step(YearGroupPlacementQuantityStep)
     end
 
     def secondary_subject_steps
@@ -140,6 +169,11 @@ module Placements
       end
     end
 
+    def send_steps
+      add_step(SENPlacementQuantityStep)
+      add_step(KeyStageStep)
+    end
+
     def step_name_for_child_subjects(subject:, selection_number:)
       step_name(
         ::Placements::MultiPlacementWizard::SecondaryChildSubjectPlacementSelectionStep,
@@ -149,6 +183,18 @@ module Placements
 
     def phases
       @phases = steps.fetch(:phase).phases
+    end
+
+    def primary_phase?
+      phases.include?(::Placements::School::PRIMARY_PHASE)
+    end
+
+    def secondary_phase?
+      phases.include?(::Placements::School::SECONDARY_PHASE)
+    end
+
+    def send_specific?
+      phases.include?(MultiPlacementWizard::PhaseStep::SEND)
     end
   end
 end

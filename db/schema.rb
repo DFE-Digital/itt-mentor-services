@@ -287,6 +287,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_27_084322) do
     t.index ["school_id"], name: "index_hosting_interests_on_school_id"
   end
 
+  create_table "key_stages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "mentor_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type", null: false
     t.uuid "mentor_id", null: false
@@ -383,6 +389,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_27_084322) do
     t.index ["subject_id"], name: "index_placement_additional_subjects_on_subject_id"
   end
 
+  create_table "placement_key_stages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "placement_id", null: false
+    t.uuid "key_stage_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key_stage_id"], name: "index_placement_key_stages_on_key_stage_id"
+    t.index ["placement_id"], name: "index_placement_key_stages_on_placement_id"
+  end
+
   create_table "placement_mentor_joins", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "mentor_id", null: false
     t.uuid "placement_id", null: false
@@ -409,6 +424,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_27_084322) do
     t.uuid "subject_id"
     t.enum "year_group", enum_type: "placement_year_group"
     t.uuid "academic_year_id", null: false
+    t.boolean "send_specific", default: false
     t.index ["academic_year_id"], name: "index_placements_on_academic_year_id"
     t.index ["provider_id"], name: "index_placements_on_provider_id"
     t.index ["school_id"], name: "index_placements_on_school_id"
@@ -665,6 +681,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_27_084322) do
   add_foreign_key "payments", "users", column: "sent_by_id"
   add_foreign_key "placement_additional_subjects", "placements"
   add_foreign_key "placement_additional_subjects", "subjects"
+  add_foreign_key "placement_key_stages", "key_stages"
+  add_foreign_key "placement_key_stages", "placements"
   add_foreign_key "placement_mentor_joins", "mentors"
   add_foreign_key "placement_mentor_joins", "placements"
   add_foreign_key "placement_windows", "placements"

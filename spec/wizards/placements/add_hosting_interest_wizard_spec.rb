@@ -485,4 +485,167 @@ RSpec.describe Placements::AddHostingInterestWizard do
       end
     end
   end
+
+  describe "#placements_information" do
+    subject(:placements_information) { wizard.placements_information }
+
+    context "when the wizard has only primary placement information" do
+      let(:state) do
+        {
+          "appetite" => { "appetite" => "actively_looking" },
+          "phase" => { "phases" => %w[Primary] },
+          "year_group_selection" => { "year_groups" => %w[reception year_3 mixed_year_groups] },
+          "year_group_placement_quantity" => { "reception" => "1", "year_3" => "2", "mixed_year_groups" => "3" },
+          "school_contact" => {
+            "first_name" => "Joe",
+            "last_name" => "Bloggs",
+            "email_address" => "joe_bloggs@example.com",
+          },
+        }
+      end
+
+      it "returns a hash of the steps and attributes for creating primary placments" do
+        expect(placements_information).to eq(
+          {
+            "year_group_selection" => { "year_groups" => %w[reception year_3 mixed_year_groups] },
+            "year_group_placement_quantity" => { "reception" => 1, "year_3" => 2, "mixed_year_groups" => 3 },
+          },
+        )
+      end
+    end
+
+    context "when the wizard has only secondary placement information" do
+      let(:english) { create(:subject, :secondary, name: "English") }
+      let(:mathematics) { create(:subject, :secondary, name: "Mathematics") }
+      let(:statistics) { create(:subject, :secondary, name: "Statistics", parent_subject: mathematics) }
+      let(:mechanics) { create(:subject, :secondary, name: "Mechanics", parent_subject: mathematics) }
+      let(:state) do
+        {
+          "appetite" => { "appetite" => "actively_looking" },
+          "phase" => { "phases" => %w[Secondary] },
+          "secondary_subject_selection" => { "subject_ids" => [english.id, mathematics.id] },
+          "secondary_placement_quantity" => { "mathematics" => "2", "english" => "1" },
+          "secondary_child_subject_placement_selection_mathematics_1" => {
+            "child_subject_ids" => [statistics.id, mechanics.id],
+          },
+          "secondary_child_subject_placement_selection_mathematics_2" => {
+            "child_subject_ids" => [statistics.id],
+          },
+          "school_contact" => {
+            "first_name" => "Joe",
+            "last_name" => "Bloggs",
+            "email_address" => "joe_bloggs@example.com",
+          },
+        }
+      end
+
+      it "returns a hash of the steps and attributes for creating secondary placments" do
+        expect(placements_information).to eq(
+          "secondary_subject_selection" => { "subject_ids" => [english.id, mathematics.id] },
+          "secondary_placement_quantity" => { "mathematics" => 2, "english" => 1 },
+          "secondary_child_subject_placement_selection" => {
+            "mathematics" => {
+              "1" => {
+                "child_subject_ids" => [statistics.id, mechanics.id],
+                "parent_subject_id" => mathematics.id,
+                "selection_id" => "mathematics_1",
+                "selection_number" => 1,
+              },
+              "2" => {
+                "child_subject_ids" => [statistics.id],
+                "parent_subject_id" => mathematics.id,
+                "selection_id" => "mathematics_2",
+                "selection_number" => 2,
+              },
+            },
+          },
+        )
+      end
+    end
+
+    context "when the wizard has only SEND placement information" do
+      let(:key_stage_2) { create(:key_stage, name: "Key stage 2") }
+      let(:key_stage_5) { create(:key_stage, name: "Key stage 5") }
+      let(:state) do
+        {
+          "appetite" => { "appetite" => "actively_looking" },
+          "phase" => { "phases" => %w[SEND] },
+          "sen_placement_quantity" => { "sen_quantity" => "3" },
+          "key_stage" => { "key_stages" => [key_stage_2.id, key_stage_5.id] },
+          "school_contact" => {
+            "first_name" => "Joe",
+            "last_name" => "Bloggs",
+            "email_address" => "joe_bloggs@example.com",
+          },
+        }
+      end
+
+      it "returns a hash of the steps and attributes for creating SEND placements" do
+        expect(placements_information).to eq(
+          "sen_placement_quantity" => { "sen_quantity" => "3" },
+          "key_stage" => { "key_stages" => [key_stage_2.id, key_stage_5.id] },
+        )
+      end
+    end
+  end
+
+  describe "#sen_quantity" do
+    subject(:sen_quantity) { wizard.sen_quantity }
+
+    context "when the number of SEND placements has not been set" do
+      it "returns zero" do
+        expect(sen_quantity).to eq(0)
+      end
+    end
+
+    context "when the number of SEND placements has been set" do
+      let(:state) do
+        {
+          "appetite" => { "appetite" => "actively_looking" },
+          "phase" => { "phases" => %w[SEND] },
+          "sen_placement_quantity" => { "sen_quantity" => "3" },
+        }
+      end
+
+      it "returns the quantity of SEND placements" do
+        expect(sen_quantity).to eq(3)
+      end
+    end
+  end
+
+  describe "#selected_key_stages" do
+    subject(:selected_key_stages) { wizard.selected_key_stages }
+
+    context "when key stages are unknown" do
+      let(:state) do
+        {
+          "appetite" => { "appetite" => "actively_looking" },
+          "phase" => { "phases" => %w[SEND] },
+          "sen_placement_quantity" => { "sen_quantity" => "3" },
+          "key_stage" => { "key_stages" => %w[unknown] },
+        }
+      end
+
+      it "returns unknown" do
+        expect(selected_key_stages).to contain_exactly("unknown")
+      end
+    end
+
+    context "when key stages have been selected" do
+      let(:key_stage_2) { create(:key_stage, name: "Key stage 2") }
+      let(:key_stage_5) { create(:key_stage, name: "Key stage 5") }
+      let(:state) do
+        {
+          "appetite" => { "appetite" => "actively_looking" },
+          "phase" => { "phases" => %w[SEND] },
+          "sen_placement_quantity" => { "sen_quantity" => "3" },
+          "key_stage" => { "key_stages" => [key_stage_2.id, key_stage_5.id] },
+        }
+      end
+
+      it "returns the key stages" do
+        expect(selected_key_stages).to contain_exactly(key_stage_2, key_stage_5)
+      end
+    end
+  end
 end

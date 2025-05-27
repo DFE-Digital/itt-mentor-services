@@ -30,5 +30,7 @@ RSpec.describe Placements::MultiPlacementWizard::CheckYourAnswersStep, type: :mo
     it { is_expected.to delegate_method(:year_groups).to(:wizard) }
     it { is_expected.to delegate_method(:selected_secondary_subjects).to(:wizard) }
     it { is_expected.to delegate_method(:selected_providers).to(:wizard) }
+    it { is_expected.to delegate_method(:sen_quantity).to(:wizard) }
+    it { is_expected.to delegate_method(:selected_key_stages).to(:wizard) }
   end
 end
