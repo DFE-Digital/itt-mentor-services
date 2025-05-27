@@ -37,7 +37,7 @@
     </h2>
 
     <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/primary_placements_list",
-      placement_details: placement_details %>
+      placement_details: placement_details, action_link: nil %>
   <% end %>
 
   <% if placement_details.dig("secondary_subject_selection", "subject_ids").present? %>
@@ -46,6 +46,6 @@
     </h2>
 
     <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/secondary_placements_list",
-      placement_details: placement_details %>
+      placement_details: placement_details, action_link: nil %>
   <% end %>
 <% end %>

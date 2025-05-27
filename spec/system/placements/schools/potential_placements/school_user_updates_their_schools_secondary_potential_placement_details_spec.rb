@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "School user updates their school's potential placement details",
+RSpec.describe "School user updates their school's secondary potential placement details",
                service: :placements,
                type: :system do
   scenario do
@@ -9,29 +9,7 @@ RSpec.describe "School user updates their school's potential placement details",
     and_a_school_exists_with_a_hosting_interest_and_potential_placement_details
     and_i_am_signed_in
     and_i_see_the_schools_potential_placement_details
-    when_i_click_on_change_potential_phases
-    then_i_see_the_phase_known_page
-    and_primary_is_pre_selected
-    and_secondary_is_pre_selected
-
-    when_i_click_on_continue
-    then_i_see_the_primary_year_group_selection_form
-    and_year_2_is_pre_selected
-    and_year_3_is_pre_selected
-
-    when_i_unselect_year_2
-    and_i_select_year_5
-    and_i_click_on_continue
-    then_i_see_the_primary_placement_quantity_known_page
-
-    when_i_select_yes
-    and_i_click_on_continue
-    then_i_see_the_primary_placement_quantity_form
-    and_the_year_3_input_is_prefilled
-
-    when_i_fill_in_year_3_with_1
-    and_i_fill_in_year_5_with_2
-    and_i_click_on_continue
+    when_i_click_on_change_subject
     then_i_see_the_secondary_subject_selection_form
     and_english_is_pre_selected
     and_science_is_pre_selected
@@ -129,8 +107,8 @@ RSpec.describe "School user updates their school's potential placement details",
     )
   end
 
-  def when_i_click_on_change_potential_phases
-    click_on "Change Potential phases"
+  def when_i_click_on_change_subject
+    click_on "Change Subject"
   end
 
   def then_i_see_the_phase_known_page
@@ -366,8 +344,8 @@ RSpec.describe "School user updates their school's potential placement details",
 
   def and_i_see_the_potential_primary_placement_details_i_entered
     expect(page).to have_h2("Potential primary placements", class: "govuk-heading-m")
-    expect(page).to have_summary_list_row("Year 3", "1")
-    expect(page).to have_summary_list_row("Year 5", "2")
+    expect(page).to have_summary_list_row("Year 2", "1")
+    expect(page).to have_summary_list_row("Year 3", "2")
   end
 
   def and_i_see_the_potential_secondary_placement_details_i_entered
@@ -412,10 +390,10 @@ RSpec.describe "School user updates their school's potential placement details",
 
     expect(potential_placement_details["phase"]).to eq({ "phases" => %w[Primary Secondary] })
     expect(potential_placement_details["year_group_selection"]).to eq(
-      { "year_groups" => %w[year_3 year_5] },
+      { "year_groups" => %w[year_2 year_3] },
     )
     expect(potential_placement_details["year_group_placement_quantity"]).to eq(
-      { "year_3" => 1, "year_5" => 2 },
+      { "year_2" => 1, "year_3" => 2 },
     )
     expect(
       potential_placement_details.dig("secondary_subject_selection", "subject_ids").sort,

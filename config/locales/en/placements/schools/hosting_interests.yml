@@ -39,11 +39,13 @@ en:
               number_of_placements: Number of placements
               unknown: I don’t know
               not_entered: Not entered
+              change: Change
             secondary_placements_list:
               subject: Subject
               number_of_placements: Number of placements
               unknown: I don’t know
               not_entered: Not entered
+              change: Change
             actively_looking:
               panel_title: Placement information added
               panel_text: Providers can see that you have placements available

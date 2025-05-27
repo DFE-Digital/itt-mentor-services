@@ -5,6 +5,7 @@ module Placements
     delegate :potential_placement_details, :school_contact, to: :school
 
     def define_steps
+      setup_state if state.blank?
       add_step(Interested::PhaseStep)
       if phases.include?(::Placements::School::PRIMARY_PHASE)
         year_group_steps
