@@ -89,6 +89,29 @@ variable "create_database" {
   default     = true
 }
 
+variable "commands" {
+  description = "list of required docker image commands for k8s job to run"
+  type        = list(string)
+  default     = ["bundle"]
+}
+
+variable "arguments" {
+  description = "list of required docker image arguments for k8s job to run"
+  type        = list(string)
+  default     = ["exec", "rails", "db:prepare"]
+}
+
+variable "job_name" {
+  description = "name of the k8s job to run"
+  type        = string
+  default     = "migrations"
+}
+
+variable "enable_logit" {
+  description = "Enable logit.io logging"
+  default     = false
+}
+
 locals {
   postgres_ssl_mode       = var.enable_postgres_ssl ? "require" : "disable"
   app_env_values_from_yml = yamldecode(file("${path.module}/config/${var.config}_app_env.yml"))
