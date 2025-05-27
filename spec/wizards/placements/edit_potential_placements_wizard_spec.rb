@@ -11,7 +11,8 @@ RSpec.describe Placements::EditPotentialPlacementsWizard do
   end
 
   let(:academic_year) { Placements::AcademicYear.current.next }
-  let(:school) { create(:placements_school) }
+  let(:school) { create(:placements_school, potential_placement_details:) }
+  let(:potential_placement_details) { {} }
   let(:state) { {} }
   let(:params_data) { {} }
   let(:params) { ActionController::Parameters.new(params_data) }

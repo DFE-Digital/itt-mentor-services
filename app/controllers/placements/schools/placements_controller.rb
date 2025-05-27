@@ -6,6 +6,13 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
   helper_method :edit_attribute_path, :add_provider_path, :add_mentor_path
 
   def index
+    @hosting_interest = @school.current_hosting_interest(
+      academic_year: current_user.selected_academic_year,
+    )
+    @interested_hosting_interest = @hosting_interest&.interested?
+
+    return if @interested_hosting_interest
+
     @pagy, @placements = pagy(
       placements
         .where(academic_year: academic_year_scope)

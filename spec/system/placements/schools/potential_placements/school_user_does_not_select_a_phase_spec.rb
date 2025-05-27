@@ -8,7 +8,8 @@ RSpec.describe "School user does not select a phase",
     and_subjects_exist
     and_a_school_exists_with_a_hosting_interest_and_potential_placement_details
     and_i_am_signed_in
-    when_i_visit_the_edit_potential_placement_details_page
+    and_i_see_the_schools_potential_placement_details
+    when_i_click_on_change_potential_phases
     then_i_see_the_phase_known_page
     and_primary_is_pre_selected
     and_secondary_is_pre_selected
@@ -58,8 +59,33 @@ RSpec.describe "School user does not select a phase",
     sign_in_placements_user(organisations: [@school])
   end
 
-  def when_i_visit_the_edit_potential_placement_details_page
-    visit new_edit_potential_placements_placements_school_potential_placements_path(@school)
+  def and_i_see_the_schools_potential_placement_details
+    expect(page).to have_title("Placements - Manage school placements - GOV.UK")
+    expect(page).to have_h1("Placements you may be able to offer", class: "govuk-heading-l")
+    expect(page).to have_h2("Your potential placements", class: "govuk-heading-m")
+
+    expect(page).to have_element(:h3, text: "Education phases", class: "govuk-heading-s")
+    expect(page).to have_summary_list_row("Potential phases", "Primary Secondary")
+
+    expect(page).to have_element(:h3, text: "Potential primary placements", class: "govuk-heading-s")
+    expect(page).to have_summary_list_row("Year group", "Number of placements")
+    expect(page).to have_summary_list_row("Year 2", "1")
+    expect(page).to have_summary_list_row("Year 3", "2")
+
+    expect(page).to have_element(:h3, text: "Potential secondary placements", class: "govuk-heading-s")
+    expect(page).to have_summary_list_row("Subject", "Number of placements")
+    expect(page).to have_summary_list_row("English", "1")
+    expect(page).to have_summary_list_row("Science", "2")
+
+    expect(page).to have_element(:h3, text: "Additional information", class: "govuk-heading-s")
+    expect(page).to have_summary_list_row(
+      "Message to providers",
+      "Interested in offering placements at the provider's request",
+    )
+  end
+
+  def when_i_click_on_change_potential_phases
+    click_on "Change Potential phases"
   end
 
   def then_i_see_the_phase_known_page

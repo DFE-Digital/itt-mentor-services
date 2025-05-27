@@ -1,0 +1,97 @@
+<%# locals: { placement_details: } -%>
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l"><%= t(".placements_you_may_be_able_to_offer") %></h1>
+
+      <p class="govuk-body"><%= t(".providers_can_see_information") %></p>
+
+      <p class="govuk-body"><%= t(".you_can_change_your_potential_placements") %></p>
+
+      <%= govuk_inset_text(
+        text: embedded_link_text(
+          t(".once_you_are_sure",
+            link: govuk_link_to(
+              t(".update_your_details"),
+              new_edit_hosting_interest_placements_school_hosting_interest_path(@school, @hosting_interest),
+            )),
+        ),
+      ) %>
+
+      <h2 class="govuk-heading-m"><%= t(".your_potential_placements") %></h2>
+
+      <h3 class="govuk-heading-s">
+        <%= t(".education_phases") %>
+      </h3>
+
+      <%= govuk_summary_list(html_attributes: { id: "education_phases" }) do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".potential_phases")) %>
+          <% row.with_value do %>
+            <%= govuk_list do %>
+              <% placement_details.dig("phase", "phases").each do |phase| %>
+                <li><%= phase %></li>
+              <% end %>
+            <% end %>
+          <% end %>
+          <% row.with_action(
+            text: t(".change"),
+            href: new_edit_potential_placements_placements_school_potential_placements_path(@school),
+            visually_hidden_text: t(".potential_phases"),
+            html_attributes: { class: "govuk-link--no-visited-state" },
+          ) %>
+        <% end %>
+      <% end %>
+
+      <% if placement_details.dig("year_group_selection", "year_groups").present? ||
+        placement_details.dig("secondary_subject_selection", "subject_ids").present? %>
+        <% if placement_details.dig("year_group_selection", "year_groups").present? %>
+          <h3 class="govuk-heading-s">
+            <%= t(".potential_primary_placements") %>
+          </h3>
+
+          <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/primary_placements_list",
+            placement_details: placement_details,
+            action_link: edit_potential_placements_placements_school_potential_placements_path(
+              @school,
+              step: :year_group_selection,
+              state_key: :year_group_selection,
+            ) %>
+        <% end %>
+
+        <% if placement_details.dig("secondary_subject_selection", "subject_ids").present? %>
+          <h3 class="govuk-heading-s">
+            <%= t(".potential_secondary_placements") %>
+          </h3>
+
+          <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/secondary_placements_list",
+            placement_details: placement_details,
+            action_link: edit_potential_placements_placements_school_potential_placements_path(
+              @school,
+              step: :secondary_subject_selection,
+              state_key: :secondary_subject_selection,
+            ) %>
+        <% end %>
+      <% end %>
+
+      <h3 class="govuk-heading-s"><%= t(".additional_information") %></h3>
+
+      <%= govuk_summary_list(html_attributes: { id: "message_to_providers" }) do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".message_to_providers")) %>
+          <% row.with_value(text: placement_details.dig("note_to_providers", "note")) %>
+          <% row.with_action(
+            text: t(".change"),
+            href: edit_potential_placements_placements_school_potential_placements_path(
+              @school,
+              step: :note_to_providers,
+              state_key: :note_to_providers,
+            ),
+            visually_hidden_text: t(".message_to_providers"),
+            classes: ["govuk-link--no-visited-state"],
+          ) %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
