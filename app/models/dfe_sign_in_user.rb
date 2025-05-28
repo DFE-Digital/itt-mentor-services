@@ -16,12 +16,12 @@ class DfESignInUser
 
   def self.begin_session!(session, omniauth_payload)
     session["dfe_sign_in_user"] = {
-      "email" => omniauth_payload.fetch("info", "email"),
+      "email" => omniauth_payload.dig("info", "email"),
       "dfe_sign_in_uid" => omniauth_payload["uid"],
-      "first_name" => omniauth_payload.fetch("info", "first_name"),
-      "last_name" => omniauth_payload.fetch("info", "last_name"),
+      "first_name" => omniauth_payload.dig("info", "first_name"),
+      "last_name" => omniauth_payload.dig("info", "last_name"),
       "last_active_at" => Time.current,
-      "id_token" => omniauth_payload.fetch("credentials", "id_token"),
+      "id_token" => omniauth_payload.dig("credentials", "id_token"),
       "provider" => omniauth_payload["provider"],
     }
   end
