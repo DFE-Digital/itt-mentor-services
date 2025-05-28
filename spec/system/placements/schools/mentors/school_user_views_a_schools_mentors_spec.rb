@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support user views a schools mentors", service: :placements, type: :system do
+RSpec.describe "School user views a schools mentors", service: :placements, type: :system do
   scenario do
     given_a_school_with_mentors
     and_i_am_signed_in
