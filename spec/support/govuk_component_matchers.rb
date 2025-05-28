@@ -185,6 +185,10 @@ module GovukComponentMatchers
     page.find(".app-secondary-navigation")
   end
 
+  def header_navigation
+    page.find(".govuk-header__navigation")
+  end
+
   # Usage: expect(primary_navigation).to have_current_item("Schools")
   matcher :have_current_item do |text|
     match do |page|
