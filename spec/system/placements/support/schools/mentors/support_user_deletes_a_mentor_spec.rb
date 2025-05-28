@@ -1,114 +1,149 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Support / Schools / Mentor / Support User deletes a mentor",
-               service: :placements, type: :system do
-  let(:school) { create(:placements_school, name: "School 1") }
-  let(:mentor_1) do
-    create(:placements_mentor,
-           first_name: "John",
-           last_name: "Doe")
-  end
-  let(:mentor_2) do
-    create(:placements_mentor,
-           first_name: "Agatha",
-           last_name: "Christie")
-  end
+RSpec.describe "Support user deletes a mentor", service: :placements, type: :system do
+  scenario do
+    given_a_school_with_mentors
+    and_i_am_signed_in
 
-  before do
-    given_the_school_has_mentors(school:, mentors: [mentor_1, mentor_2])
-    given_i_am_signed_in_as_a_placements_support_user
-  end
+    when_i_click_on_the_london_school
+    and_i_navigate_to_mentors
+    then_i_can_see_the_mentors_index_page
 
-  context "when the mentor has no placements" do
-    scenario "Support User deletes a mentor from a school" do
-      when_i_visit_the_show_page_for(school, mentor_1)
-      and_i_click_on("Delete mentor")
-      then_i_am_asked_to_confirm(school, mentor_1)
-      when_i_click_on("Cancel")
-      then_i_return_to_mentor_page(school, mentor_1)
-      when_i_click_on("Delete mentor")
-      then_i_am_asked_to_confirm(school, mentor_1)
-      when_i_click_on("Delete mentor")
-      then_the_mentor_is_deleted_from_the_school(school, mentor_1)
-      and_a_school_mentor_remains_called("Agatha Christie")
-    end
-  end
+    when_i_click_on_joe_bloggs
+    then_i_see_the_mentor_details_for_joe_bloggs
 
-  context "when the mentor has placements" do
-    before { create(:placement, mentors: [mentor_1], school:) }
+    when_i_click_on_delete_mentor
+    then_i_see_the_are_you_sure_page
 
-    scenario "Suppoer User can not delete the mentor from the school" do
-      when_i_visit_the_show_page_for(school, mentor_1)
-      and_i_click_on("Delete mentor")
-      then_i_see_i_cannot_delete_the_mentor("John Doe")
-    end
+    when_i_click_on_delete_mentor
+    then_i_see_the_mentor_was_successfully_deleted
+    and_i_see_joe_bloggs_is_no_longer_in_the_mentors_index_page
   end
 
   private
 
-  def given_the_school_has_mentors(school:, mentors:)
-    mentors.each do |mentor|
-      create(:placements_mentor_membership, school:, mentor:)
-    end
-  end
-
-  def when_i_visit_the_show_page_for(school, mentor)
-    visit placements_school_mentor_path(school, mentor)
-  end
-
-  def when_i_click_on(text)
-    click_on text
-  end
-  alias_method :and_i_click_on, :when_i_click_on
-
-  def then_i_am_asked_to_confirm(_school, mentor)
-    organisations_is_selected_in_primary_nav
-    expect(page).to have_title(
-      "Are you sure you want to delete this mentor? - #{mentor.full_name} - Manage school placements",
+  def given_a_school_with_mentors
+    @school = create(:placements_school, name: "The London School")
+    @joe_bloggs_mentor = create(
+      :placements_mentor,
+      first_name: "Joe",
+      last_name: "Bloggs",
+      trn: 1_111_111,
+      schools: [@school],
     )
-    expect(page).to have_content mentor.full_name
-    expect(page).to have_content "Are you sure you want to delete this mentor?"
+    @jane_doe_mentor = create(
+      :placements_mentor,
+      first_name: "Jane",
+      last_name: "Doe",
+      trn: 2_222_222,
+      schools: [@school],
+    )
+    @john_smith_mentor = create(
+      :placements_mentor,
+      first_name: "John",
+      last_name: "Smith",
+      trn: 3_333_333,
+      schools: [@school],
+    )
   end
 
-  def organisations_is_selected_in_primary_nav
-    within(".govuk-header__navigation-list") do
-      expect(page).to have_link "Organisations"
-      expect(page).to have_link "Support users"
+  def and_i_am_signed_in
+    sign_in_placements_support_user
+  end
+
+  def when_i_click_on_the_london_school
+    click_on "The London School"
+  end
+
+  def and_i_navigate_to_mentors
+    within(primary_navigation) do
+      click_on "Mentors"
     end
   end
 
-  def then_i_return_to_mentor_page(school, mentor)
-    organisations_is_selected_in_primary_nav
-    expect(page).to have_current_path placements_school_mentor_path(school, mentor),
-                                      ignore_query: true
+  def then_i_can_see_the_mentors_index_page
+    expect(primary_navigation).to have_current_item("Mentors")
+    expect(page).to have_title("Mentors at your school - Manage school placements")
+    expect(page).to have_h1("Mentors at your school")
+    expect(page).to have_table_row({
+      "Name" => "Joe Bloggs",
+      "Teacher reference number (TRN)" => "1111111",
+    })
+    expect(page).to have_table_row({
+      "Name" => "Jane Doe",
+      "Teacher reference number (TRN)" => "2222222",
+    })
+    expect(page).to have_table_row({
+      "Name" => "John Smith",
+      "Teacher reference number (TRN)" => "3333333",
+    })
+    expect(page).to have_link(
+      "Add mentor",
+      href: new_add_mentor_placements_school_mentors_path(@school),
+      class: "govuk-button",
+    )
   end
 
-  def then_the_mentor_is_deleted_from_the_school(school, mentor)
-    organisations_is_selected_in_primary_nav
-    mentors_is_selected_in_secondary_nav
-    expect(mentor.mentor_memberships.find_by(school:)).to be_nil
-    within(".govuk-notification-banner__content") do
-      expect(page).to have_content "Mentor deleted"
-    end
-
-    expect(page).not_to have_content mentor.full_name
+  def when_i_click_on_joe_bloggs
+    click_on "Joe Bloggs"
   end
 
-  def mentors_is_selected_in_secondary_nav
-    within(".app-primary-navigation__list") do
-      expect(page).to have_link "Organisation details", current: "false"
-      expect(page).to have_link "Users", current: "false"
-      expect(page).to have_link "Mentors", current: "page"
-      expect(page).to have_link "Placements", current: "false"
-    end
+  def then_i_see_the_mentor_details_for_joe_bloggs
+    expect(primary_navigation).to have_current_item("Mentors")
+    expect(page).to have_title("Joe Bloggs - Manage school placements")
+    expect(page).to have_h1("Joe Bloggs")
+    expect(page).to have_summary_list_row("First name", "Joe")
+    expect(page).to have_summary_list_row("Last name", "Bloggs")
+    expect(page).to have_summary_list_row("Teacher reference number (TRN)", "1111111")
+    expect(page).to have_link(
+      "Delete mentor",
+      href: remove_placements_school_mentor_path(@school, @joe_bloggs_mentor),
+      class: "govuk-link app-link app-link--destructive",
+    )
   end
 
-  def and_a_school_mentor_remains_called(mentor_name)
-    expect(page).to have_content(mentor_name)
+  def when_i_click_on_delete_mentor
+    click_on "Delete mentor"
   end
 
-  def then_i_see_i_cannot_delete_the_mentor(mentor_name)
-    expect(page).to have_content(mentor_name)
-    expect(page).to have_content("You cannot delete this mentor")
+  def then_i_see_the_are_you_sure_page
+    expect(primary_navigation).to have_current_item("Mentors")
+    expect(page).to have_title(
+      "Are you sure you want to delete this mentor? - Joe Bloggs - Manage school placements",
+    )
+    expect(page).to have_span_caption("Joe Bloggs")
+    expect(page).to have_h1("Are you sure you want to delete this mentor?")
+    expect(page).to have_paragraph("You will no longer be able to assign Joe Bloggs to placements.")
+    expect(page).to have_button(
+      "Delete mentor",
+      class: "govuk-button govuk-button--warning",
+    )
+  end
+
+  def then_i_see_the_mentor_was_successfully_deleted
+    expect(page).to have_success_banner("Mentor deleted")
+  end
+
+  def and_i_see_joe_bloggs_is_no_longer_in_the_mentors_index_page
+    expect(primary_navigation).to have_current_item("Mentors")
+    expect(page).to have_title("Mentors at your school - Manage school placements")
+    expect(page).to have_h1("Mentors at your school")
+    expect(page).not_to have_table_row({
+      "Name" => "Joe Bloggs",
+      "Teacher reference number (TRN)" => "1111111",
+    })
+    expect(page).to have_table_row({
+      "Name" => "Jane Doe",
+      "Teacher reference number (TRN)" => "2222222",
+    })
+    expect(page).to have_table_row({
+      "Name" => "John Smith",
+      "Teacher reference number (TRN)" => "3333333",
+    })
+    expect(page).to have_link(
+      "Add mentor",
+      href: new_add_mentor_placements_school_mentors_path(@school),
+      class: "govuk-button",
+    )
   end
 end

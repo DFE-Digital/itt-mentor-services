@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support user views an empty list of mentors", service: :placements, type: :system do
+RSpec.describe "School user views an empty list of mentors", service: :placements, type: :system do
   scenario do
     given_a_school_exists
     and_i_am_signed_in

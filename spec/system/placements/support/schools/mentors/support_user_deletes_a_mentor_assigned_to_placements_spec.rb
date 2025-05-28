@@ -1,22 +1,26 @@
 require "rails_helper"
 
-RSpec.describe "Support user views a mentor", service: :placements, type: :system do
+RSpec.describe "Support user deletes a mentor assigned to placements", service: :placements, type: :system do
   scenario do
     given_a_school_with_mentors
     and_joe_bloggs_is_assigned_to_a_placement
     and_i_am_signed_in
 
-    when_i_navigate_to_mentors
+    when_i_click_on_the_london_school
+    and_i_navigate_to_mentors
     then_i_can_see_the_mentors_index_page
 
     when_i_click_on_joe_bloggs
     then_i_see_the_mentor_details_for_joe_bloggs
+
+    when_i_click_on_delete_mentor
+    then_i_see_i_can_not_delete_this_mentor
   end
 
   private
 
   def given_a_school_with_mentors
-    @school = create(:placements_school)
+    @school = create(:placements_school, name: "The London School")
     @joe_bloggs_mentor = create(
       :placements_mentor,
       first_name: "Joe",
@@ -51,16 +55,21 @@ RSpec.describe "Support user views a mentor", service: :placements, type: :syste
   end
 
   def and_i_am_signed_in
-    sign_in_placements_user(organisations: [@school])
+    sign_in_placements_support_user
   end
 
-  def when_i_navigate_to_mentors
+  def when_i_click_on_the_london_school
+    click_on "The London School"
+  end
+
+  def and_i_navigate_to_mentors
     within(primary_navigation) do
       click_on "Mentors"
     end
   end
 
   def then_i_can_see_the_mentors_index_page
+    expect(primary_navigation).to have_current_item("Mentors")
     expect(page).to have_title("Mentors at your school - Manage school placements")
     expect(page).to have_h1("Mentors at your school")
     expect(page).to have_table_row({
@@ -87,6 +96,7 @@ RSpec.describe "Support user views a mentor", service: :placements, type: :syste
   end
 
   def then_i_see_the_mentor_details_for_joe_bloggs
+    expect(primary_navigation).to have_current_item("Mentors")
     expect(page).to have_title("Joe Bloggs - Manage school placements")
     expect(page).to have_h1("Joe Bloggs")
     expect(page).to have_summary_list_row("First name", "Joe")
@@ -96,6 +106,25 @@ RSpec.describe "Support user views a mentor", service: :placements, type: :syste
       "Delete mentor",
       href: remove_placements_school_mentor_path(@school, @joe_bloggs_mentor),
       class: "govuk-link app-link app-link--destructive",
+    )
+  end
+
+  def when_i_click_on_delete_mentor
+    click_on "Delete mentor"
+  end
+
+  def then_i_see_i_can_not_delete_this_mentor
+    expect(primary_navigation).to have_current_item("Mentors")
+    expect(page).to have_title("You cannot delete this mentor - Joe Bloggs - Manage school placements")
+    expect(page).to have_span_caption("Joe Bloggs")
+    expect(page).to have_h1("You cannot delete this mentor")
+    expect(page).to have_element(
+      :p,
+      text: "Joe Bloggs must be removed from current placements before you can delete them.",
+    )
+    expect(page).to have_link(
+      "English (opens in new tab)",
+      href: placements_school_placement_path(@school, @placement),
     )
   end
 end
