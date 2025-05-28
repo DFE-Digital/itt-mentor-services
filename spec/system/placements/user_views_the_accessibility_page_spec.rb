@@ -31,7 +31,7 @@ RSpec.describe "User views the accessibility page", service: :placements, type: 
     strip_tags(content).split("\n").each do |paragraph|
       next if paragraph.blank?
 
-      expect(page).to have_content(paragraph.strip)
+      expect(page).to have_content paragraph.strip
     end
   end
 end

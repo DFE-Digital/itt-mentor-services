@@ -30,10 +30,10 @@ RSpec.describe "DfE user visits the placements start page", service: :placements
     strip_tags(content).split("\n").each do |paragraph|
       next if paragraph.blank?
 
-      expect(page).to have_content(paragraph.strip)
+      expect(page).to have_content paragraph.strip
     end
 
-    expect(page).to have_content("Related content")
+    expect(page).to have_h3("Related content")
     expect(page).to have_link(
       "Guidance on what schools need to do to offer trainee teacher placements",
       href: "https://www.gov.uk/guidance/offer-a-trainee-teacher-placement",
@@ -45,7 +45,7 @@ RSpec.describe "DfE user visits the placements start page", service: :placements
   end
 
   def and_i_see_the_start_now_button
-    expect(page).to have_content("Start now")
+    expect(page).to have_element(:a, text: "Start now", class: "govuk-button")
   end
 
   def when_i_click_on(text)
@@ -53,6 +53,6 @@ RSpec.describe "DfE user visits the placements start page", service: :placements
   end
 
   def then_i_can_see_the_dfe_sign_in_button
-    expect(page).to have_content("Sign in using DfE Sign In")
+    expect(page).to have_element(:button, text: "Sign in using DfE Sign In", class: "govuk-button")
   end
 end
