@@ -8,7 +8,7 @@ RSpec.describe "Persona user visits the placements start page", :persona_sign_in
     then_i_see_the_start_page_detail
     and_i_see_the_start_now_button
 
-    when_i_click_on("Start now")
+    when_i_click_on_start_now
     then_i_can_see_the_persona_sign_in_button
   end
 
@@ -45,14 +45,14 @@ RSpec.describe "Persona user visits the placements start page", :persona_sign_in
   end
 
   def and_i_see_the_start_now_button
-    expect(page).to have_element(:a, text: "Start now", class: "govuk-button")
+    expect(page).to have_link("Start now", class: "govuk-button")
   end
 
-  def when_i_click_on(text)
-    click_on text
+  def when_i_click_on_start_now
+    click_on "Start now"
   end
 
   def then_i_can_see_the_persona_sign_in_button
-    expect(page).to have_element(:button, text: "Sign in using a Persona", class: "govuk-button")
+    expect(page).to have_button("Sign in using a Persona")
   end
 end
