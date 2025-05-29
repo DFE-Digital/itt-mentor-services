@@ -20,6 +20,6 @@ RSpec.describe "Signed out user accesses the service", service: :placements, typ
 
   def then_i_am_redirected_to_the_sign_in_page
     expect(page).to have_h1("Sign in to Manage school placements")
-    expect(page).to have_element(:button, text: "Sign in using DfE Sign In", class: "govuk-button")
+    expect(page).to have_button("Sign in using DfE Sign In", class: "govuk-button")
   end
 end
