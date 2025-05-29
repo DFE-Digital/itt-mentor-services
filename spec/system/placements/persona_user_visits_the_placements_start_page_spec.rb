@@ -20,7 +20,7 @@ RSpec.describe "Persona user visits the placements start page", :persona_sign_in
 
     expect(page).to have_title("Manage school placements - GOV.UK")
     expect(page).to have_h1("Manage school placements")
-    expect(page).to have_element(:p, text: "Use this service if you are involved in arranging school placements for trainee teachers in England.", class: "govuk-body-m")
+    expect(page).to have_paragraph("Use this service if you are involved in arranging school placements for trainee teachers in England.")
   end
 
   def then_i_see_the_start_page_detail

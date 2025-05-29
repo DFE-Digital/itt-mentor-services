@@ -106,6 +106,15 @@ module GovukComponentMatchers
     end
   end
 
+  matcher :have_paragraph do |text|
+    match do |page|
+      page.find("p[class^='govuk-body']", text: text)
+      true
+    rescue Capybara::ElementNotFound
+      false
+    end
+  end
+
   matcher :have_span_caption do |text|
     match do |page|
       page.find("span[class^='govuk-caption-']", text:)
