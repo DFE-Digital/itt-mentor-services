@@ -17,7 +17,7 @@ RSpec.describe "User views the accessibility page", service: :placements, type: 
 
     expect(page).to have_title("Manage school placements - GOV.UK")
     expect(page).to have_h1("Manage school placements")
-    expect(page).to have_element(:p, text: "Use this service if you are involved in arranging school placements for trainee teachers in England.", class: "govuk-body-m")
+    expect(page).to have_paragraph("Use this service if you are involved in arranging school placements for trainee teachers in England.")
   end
 
   def and_i_click_on_the_accessibility_page_link

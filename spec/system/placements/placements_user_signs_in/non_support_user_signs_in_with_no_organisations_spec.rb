@@ -17,7 +17,7 @@ RSpec.describe "Non-support user signs in with no organisations", service: :plac
   def then_i_see_an_empty_organisations_page
     expect(page).to have_title("Organisations - Manage school placements - GOV.UK")
     expect(page).to have_h1("Organisations")
-    expect(page).to have_element(:p, text: "You are not a member of any placement organisations", class: "govuk-body")
+    expect(page).to have_paragraph("You are not a member of any placement organisations")
   end
 
   def and_it_is_not_the_support_organisations_page

@@ -47,5 +47,6 @@ RSpec.describe "Placements user signs out", service: :placements, type: :system 
 
   def then_i_am_redirected_to_the_sign_in_page
     expect(page).to have_h1("Sign in to Manage school placements")
-    expect(page).to have_button("Sign in using DfE Sign In", class: "govuk-button")  end
+    expect(page).to have_button("Sign in using DfE Sign In", class: "govuk-button")
+  end
 end

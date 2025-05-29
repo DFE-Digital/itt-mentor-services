@@ -37,8 +37,8 @@ RSpec.describe "Support user encounters DSI failure", service: :placements, type
   def then_i_see_an_error_page
     expect(page).to have_title("Sorry, there’s a problem with the service - Manage school placements - GOV.UK")
     expect(page).to have_h1("Sorry, there’s a problem with the service")
-    expect(page).to have_element(:p, class: "govuk-body", text: "Try again later.")
-    expect(page).to have_element(:p, class: "govuk-body", text: "If you reached this page after submitting information then it has not been saved. You’ll need to enter it again when the service is available.")
-    expect(page).to have_element(:p, class: "govuk-body", text: "If you have any questions, please email us at Manage.SchoolPlacements@education.gov.uk")
+    expect(page).to have_paragraph("Try again later.")
+    expect(page).to have_paragraph("If you reached this page after submitting information then it has not been saved. You’ll need to enter it again when the service is available.")
+    expect(page).to have_paragraph("If you have any questions, please email us at Manage.SchoolPlacements@education.gov.uk")
   end
 end
