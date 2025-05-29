@@ -124,6 +124,15 @@ module GovukComponentMatchers
     end
   end
 
+  matcher :have_govuk_body do |text|
+    match do |page|
+      page.find("p[class^='govuk-body']", text:)
+      true
+    rescue Capybara::ElementNotFound
+      false
+    end
+  end
+
   matcher :have_warning_text do |text|
     match do |page|
       page.within(".govuk-warning-text") do
