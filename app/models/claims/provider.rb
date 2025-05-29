@@ -43,7 +43,7 @@ class Claims::Provider < Provider
   ].freeze
 
   has_many :mentor_trainings
-  has_many :claims, through: :mentor_trainings
+  has_many :claims
 
   scope :private_beta_providers, -> { where(name: PRIVATE_BETA_PROVIDERS) }
 end
