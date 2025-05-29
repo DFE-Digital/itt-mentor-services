@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Placements / Support / Schools / Partner providers / Support user adds a partner provider without javascript",
+RSpec.describe "Support user adds a partner provider without javascript",
                service: :placements, type: :system do
   include ActiveJob::TestHelper
 
@@ -8,215 +8,319 @@ RSpec.describe "Placements / Support / Schools / Partner providers / Support use
     perform_enqueued_jobs { example.run }
   end
 
-  let!(:school) { create(:placements_school) }
-  let!(:provider) { create(:provider, :placements, name: "Manchester 1") }
-  let!(:provider_user) { create(:placements_user, providers: [provider]) }
+  scenario do
+    given_providers_exist
+    and_the_school_partner_providers_flag_is_enabled
+    and_i_am_signed_in
+    when_i_click_on_the_london_school
+    and_i_navigate_to_provider
+    then_i_am_on_the_providers_index_page
 
-  before do
-    Flipper.add(:school_partner_providers)
-    Flipper.enable(:school_partner_providers)
+    when_i_click_on_add_provider
+    then_i_see_the_add_provider_page
 
-    create(:provider, name: "Manchester 2")
-    create(:provider, :placements, name: "London")
-    create(:claims_provider, name: "Claims")
+    when_i_click_on_continue
+    then_i_see_a_validation_error_for_not_entering_a_provider_search_term
 
-    given_i_am_signed_in_as_a_placements_support_user
-  end
+    # Shelbyville University is already in user's list of providers
+    when_i_enter_shelb
+    and_i_click_on_continue
+    then_i_see_a_list_of_search_results_for_shelb
 
-  scenario "Support user adds a partner provider" do
-    when_i_visit_the_add_partner_provider_page_for(school)
-    and_i_enter_a_provider_named("Manch")
-    and_i_click_on("Continue")
-    then_i_see_list_of_placements_providers
-    when_i_choose("Manchester 1")
-    and_i_click_on("Continue")
-    then_i_see_the_check_details_page_for_provider("Manchester 1")
-    and_i_click_on("Confirm and add provider")
-    then_i_return_to_partner_provider_index
-    and_a_provider_is_listed(provider_name: "Manchester 1")
-    and_i_see_success_message
-    and_a_notification_email_is_sent_to(provider_user)
-  end
+    when_i_choose_shelbyville_university
+    and_i_click_on_continue
+    then_i_see_a_validation_error_for_shelbyville_university_is_already_in_my_list_of_providers
 
-  scenario "Support user adds a partner provider which already exists" do
-    given_a_partnership_exists_between(school, provider)
-    when_i_visit_the_add_partner_provider_page_for(school)
-    and_i_enter_a_provider_named("Manch")
-    and_i_click_on("Continue")
-    then_i_see_list_of_placements_providers
-    when_i_choose("Manchester 1")
-    and_i_click_on("Continue")
-    then_i_see_an_error("Manchester 1 has already been added. Try another provider")
-  end
+    # Ogdenville University has not been onboarded to the placements service
+    when_i_am_on_the_providers_index_page
+    and_i_click_on_add_provider
+    when_i_enter_ogden
+    and_i_click_on_continue
+    then_i_see_a_list_of_search_results_for_ogden
 
-  scenario "Support user submits the search form without selecting a provider" do
-    when_i_visit_the_add_partner_provider_page_for(school)
-    and_i_click_on("Continue")
-    then_i_see_an_error("Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode")
-  end
+    when_i_choose_ogdenville_university
+    and_i_click_on_continue
+    then_i_see_the_confirm_provider_details_page_for_ogdenville_university
 
-  scenario "Support user submits the options form without selecting a provider" do
-    when_i_visit_the_add_partner_provider_page_for(school)
-    and_i_enter_a_provider_named("Manch")
-    and_i_click_on("Continue")
-    then_i_see_list_of_placements_providers
-    and_i_click_on("Continue")
-    then_i_see_an_error("Select a provider")
-  end
+    when_i_click_on_confirm_and_add_provider
+    then_i_see_success_message_for_ogdenville
+    and_i_see_the_providers_index_page
+    and_i_see_ogdenville_university_listed
+    and_a_notification_email_is_not_sent_to_ogdenville_university
 
-  scenario "Support user reconsiders selecting a provider" do
-    when_i_visit_the_add_partner_provider_page_for(school)
-    and_i_enter_a_provider_named("Manch")
-    and_i_click_on("Continue")
-    then_i_see_list_of_placements_providers
-    when_i_choose("Manchester 1")
-    and_i_click_on("Continue")
-    then_i_see_the_check_details_page_for_provider("Manchester 1")
-    when_i_click_on("Back")
-    then_i_see_list_of_placements_providers
-    and_the_option_for_provider_has_been_pre_selected("Manchester 1")
-    when_i_click_on("Back")
-    then_i_see_the_search_input_pre_filled_with("Manch")
-    and_i_click_on("Continue")
-    then_i_see_list_of_placements_providers
-    when_i_choose("Manchester 1")
-    and_i_click_on("Continue")
-    then_i_see_the_check_details_page_for_provider("Manchester 1")
-  end
+    when_i_click_on_add_provider
+    and_i_enter_spring
+    and_i_click_on_continue
+    then_i_see_a_list_of_search_results_for_spring
 
-  scenario "Support user adds a partner provider, which is not onboarded on the placements service" do
-    given_the_provider_is_not_onboarded_on_placements_service(provider)
-    when_i_visit_the_add_partner_provider_page_for(school)
-    and_i_enter_a_provider_named("Manch")
-    and_i_click_on("Continue")
-    then_i_see_list_of_placements_providers
-    when_i_choose("Manchester 1")
-    and_i_click_on("Continue")
-    then_i_see_the_check_details_page_for_provider("Manchester 1")
-    and_i_click_on("Confirm and add provider")
-    then_i_return_to_partner_provider_index
-    and_a_provider_is_listed(provider_name: "Manchester 1")
-    and_i_see_success_message
-    and_a_notification_email_is_not_sent_to(provider_user)
+    when_i_choose_springfield_university
+    and_i_click_on_continue
+    then_i_see_the_confirm_provider_details_page_for_springfield_university
+
+    # User reconsiders selecting a provider using back link
+    when_i_click_on_back
+    then_i_see_a_list_of_search_results_for_spring
+    and_the_option_for_springfield_university_is_preselected
+
+    when_i_click_on_back
+    then_i_see_the_search_input_prefilled_with_spring
+
+    when_i_click_on_continue
+    and_i_choose_springfield_university
+    and_i_click_on_continue
+    then_i_see_the_confirm_provider_details_page_for_springfield_university
+
+    # User reconsiders selecting a provider using change link
+    when_i_click_on_change
+    then_i_see_the_search_input_prefilled_with_spring
+
+    when_i_click_on_continue
+    and_i_choose_springfield_university
+    and_i_click_on_continue
+    then_i_see_the_confirm_provider_details_page_for_springfield_university
+
+    when_i_click_on_confirm_and_add_provider
+    then_i_see_success_message_for_springfield_university
+    and_i_see_the_providers_index_page
+    and_i_see_springfield_university_listed
+    and_a_notification_email_is_sent_to_springfield_university
   end
 
   private
 
-  def when_i_visit_the_add_partner_provider_page_for(school)
-    visit new_add_partner_provider_placements_school_partner_providers_path(school)
+  def given_providers_exist
+    @springfield_university = create(:placements_provider,
+                                     name: "Springfield University",
+                                     ukprn: "10101010",
+                                     urn: "101010",
+                                     email_addresses: ["reception@springfield.ac.uk"],
+                                     telephone: "0101 010 0101",
+                                     website: "http://www.springfield.ac.uk",
+                                     address1: "Undisclosed")
+    @springfield_university_user = create(:placements_user, providers: [@springfield_university])
 
-    then_i_see_support_navigation_with_organisation_selected
+    @ogdenville_university = create(:provider,
+                                    name: "Ogdenville University",
+                                    ukprn: "00100010",
+                                    urn: "000010",
+                                    email_addresses: ["reception@ogdenville.ac.uk"],
+                                    telephone: "0000 000 1111",
+                                    website: "http://www.ogdenville.ac.uk",
+                                    address1: "1 Main Street")
+    @ogdenville_university_user = create(:placements_user, providers: [@ogdenville_university])
+
+    @shelbyville_university = create(:placements_provider, name: "Shelbyville University")
+    @shelbyville_college = create(:placements_provider, name: "Shelbyville College")
+    @ogdenville_teacher_training_centre = create(:placements_provider, name: "Ogdenville Teacher Training Centre")
+    @springfield_polytechnic = create(:placements_provider, name: "Springfield Polytechnic")
+
+    # Pre-existing partnership between school and Shelbyville University
+    @school = create(:school, :placements, name: "The London School")
+    create(:placements_partnership, school: @school, provider: @shelbyville_university)
   end
 
-  def then_i_see_support_navigation_with_organisation_selected
-    within(".govuk-header__navigation-list") do
-      expect(page).to have_link "Organisations"
-      expect(page).to have_link "Support users"
+  def and_the_school_partner_providers_flag_is_enabled
+    Flipper.add(:school_partner_providers)
+    Flipper.enable(:school_partner_providers)
+  end
+
+  def and_i_am_signed_in
+    sign_in_placements_support_user
+  end
+
+  def when_i_click_on_the_london_school
+    click_on "The London School"
+  end
+
+  def and_i_navigate_to_provider
+    within(primary_navigation) do
+      click_on "Providers"
     end
   end
 
-  def when_i_click_on(text)
-    click_on text
-  end
-  alias_method :and_i_click_on, :when_i_click_on
+  def then_i_am_on_the_providers_index_page
+    page.find(".app-primary-navigation__nav").click_on("Providers")
 
-  def and_i_enter_a_provider_named(provider_name)
-    fill_in "Add a provider", with: provider_name
+    expect(page).to have_current_path(placements_school_partner_providers_path(@school))
+    expect(page).to have_title("Providers you work with - Manage school placements - GOV.UK")
+    expect(primary_navigation).to have_current_item("Providers")
+    expect(page).to have_h1("Providers you work with")
   end
+  alias_method :and_i_see_the_providers_index_page, :then_i_am_on_the_providers_index_page
+  alias_method :when_i_am_on_the_providers_index_page, :then_i_am_on_the_providers_index_page
 
-  def then_i_see_list_of_placements_providers
-    expect(page).to have_content("Manchester 1")
-    expect(page).to have_content("Manchester 2")
-    expect(page).not_to have_content("London")
-    expect(page).not_to have_content("Claims")
+  def and_i_click_on_add_provider
+    click_on "Add provider"
   end
+  alias_method :when_i_click_on_add_provider, :and_i_click_on_add_provider
 
-  def then_i_choose(selection_name)
-    choose selection_name
-  end
-  alias_method :when_i_choose, :then_i_choose
+  def then_i_see_the_add_provider_page
+    expect(primary_navigation).to have_current_item("Providers")
+    expect(page).to have_title("Add a provider - Provider details - Manage school placements - GOV.UK")
 
-  def then_i_see_the_check_details_page_for_provider(provider_name)
-    expect(page).to have_content("Confirm provider details")
-    org_name_row = page.all(".govuk-summary-list__row")[0]
-    expect(org_name_row).to have_content(provider_name)
-  end
-
-  def then_i_return_to_partner_provider_index
-    expect(page.find(".govuk-heading-l")).to have_content("Providers you work with")
+    expect(page).to have_element(:span, text: "Provider details", class: "govuk-caption-l")
+    expect(page).to have_element(:div, text: "Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode", class: "govuk-hint")
+    expect(page).to have_button("Continue")
+    expect(page).to have_link("Cancel", href: "/schools/#{@school.id}/partner_providers")
   end
 
-  def and_a_provider_is_listed(provider_name:)
-    expect(page).to have_content(provider_name)
+  def and_i_enter_spring
+    fill_in "Add a provider", with: "Spring"
   end
 
-  def and_i_see_success_message
-    expect(page).to have_content "Provider added"
+  def then_i_see_a_list_of_search_results_for_spring
+    expect(page).to have_content("Springfield University")
+    expect(page).to have_content("Springfield Polytechnic")
+    expect(page).not_to have_content("Springfield Grammar")
   end
 
-  def given_a_partnership_exists_between(school, provider)
-    create(:placements_partnership, school:, provider:)
+  def and_i_choose_springfield_university
+    choose "Springfield University"
   end
-  alias_method :and_a_partnership_exists_between, :given_a_partnership_exists_between
+  alias_method :when_i_choose_springfield_university, :and_i_choose_springfield_university
 
-  def then_i_see_an_error(error_message)
-    # Error summary
-    expect(page.find(".govuk-error-summary")).to have_content(
-      "There is a problem",
-    )
-    expect(page.find(".govuk-error-summary")).to have_content(error_message)
-    # Error above input
-    expect(page.find(".govuk-error-message")).to have_content(error_message)
+  def and_i_click_on_continue
+    click_on "Continue"
+  end
+  alias_method :when_i_click_on_continue, :and_i_click_on_continue
+
+  def then_i_see_the_confirm_provider_details_page_for_springfield_university
+    expect(page).to have_title("Confirm provider details - Provider details - Manage school placements - GOV.UK")
+    expect(primary_navigation).to have_current_item("Providers")
+    expect(page).to have_h1("Confirm provider details")
+    expect(page).to have_element(:p, text: "Adding them means you will be able to assign them to your placements. We will send them an email to let them know you have added them.", class: "govuk-body")
+    expect(page).to have_h2("Provider")
+    expect(page).to have_summary_list_row("Name", "Springfield University")
+    expect(page).to have_summary_list_row("UK provider reference number (UKPRN)", "10101010")
+    expect(page).to have_summary_list_row("Unique reference number (URN)", "101010")
+    expect(page).to have_summary_list_row("Email address", "reception@springfield.ac.uk")
+    expect(page).to have_summary_list_row("Telephone number", "0101 010 0101")
+    expect(page).to have_summary_list_row("Address", "Undisclosed")
+    expect(page).to have_button("Confirm and add provider")
+    expect(page).to have_link("Cancel", href: "/schools/#{@school.id}/partner_providers")
   end
 
-  def given_i_have_completed_the_form_to_select(provider:)
-    params = {
-      "partnership" => { provider_id: provider.id, provider_name: provider.name },
-      school_id: school.id,
-    }
-    visit check_placements_support_school_partner_providers_path(params)
+  def when_i_click_on_confirm_and_add_provider
+    click_on "Confirm and add provider"
   end
 
-  def then_i_see_the_search_input_pre_filled_with(provider_name)
-    find_field "Add a provider", with: provider_name
+  def and_i_see_springfield_university_listed
+    expect(page).to have_table_row({
+      "Name" => "Springfield University",
+      "UK provider reference number (UKPRN)" => "10101010",
+    })
   end
 
-  def partner_provider_notification(user)
+  def then_i_see_success_message_for_springfield_university
+    expect(page).to have_success_banner("Provider added", "You can now add Springfield University to your placements.")
+  end
+
+  def springfield_university_notification
     ActionMailer::Base.deliveries.find do |delivery|
-      delivery.to.include?(user.email) &&
+      delivery.to.include?(@springfield_university_user.email) &&
         delivery.subject == "A school has added you"
     end
   end
 
-  def and_a_notification_email_is_sent_to(user)
-    email = partner_provider_notification(user)
+  def and_a_notification_email_is_sent_to_springfield_university
+    email = springfield_university_notification
 
     expect(email).not_to be_nil
   end
 
-  def and_a_notification_email_is_not_sent_to(user)
-    email = partner_provider_notification(user)
+  def then_i_see_a_validation_error_for_not_entering_a_provider_search_term
+    expect(page).to have_validation_error("Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode")
+  end
+
+  def when_i_enter_shelb
+    fill_in "Add a provider", with: "Shelb"
+  end
+
+  def then_i_see_a_list_of_search_results_for_shelb
+    expect(page).to have_content("Shelbyville University")
+    expect(page).to have_content("Shelbyville College")
+    expect(page).not_to have_content("Shelbyville Grammar")
+  end
+
+  def when_i_choose_shelbyville_university
+    choose "Shelbyville University"
+  end
+
+  def then_i_see_a_validation_error_for_shelbyville_university_is_already_in_my_list_of_providers
+    expect(page).to have_validation_error("Shelbyville University has already been added. Try another provider")
+  end
+
+  def when_i_enter_ogden
+    fill_in "Add a provider", with: "Ogden"
+  end
+
+  def then_i_see_a_list_of_search_results_for_ogden
+    expect(page).to have_content("Ogdenville University")
+    expect(page).to have_content("Ogdenville Teacher Training Centre")
+    expect(page).not_to have_content("Ogdenville Grammar")
+  end
+
+  def when_i_choose_ogdenville_university
+    choose "Ogdenville University"
+  end
+
+  def then_i_see_the_confirm_provider_details_page_for_ogdenville_university
+    expect(page).to have_title("Confirm provider details - Provider details - Manage school placements - GOV.UK")
+    expect(primary_navigation).to have_current_item("Providers")
+    expect(page).to have_h1("Confirm provider details")
+    expect(page).to have_element(:p, text: "Adding them means you will be able to assign them to your placements. We will send them an email to let them know you have added them.", class: "govuk-body")
+    expect(page).to have_h2("Provider")
+    expect(page).to have_summary_list_row("Name", "Ogdenville University")
+    expect(page).to have_summary_list_row("UK provider reference number (UKPRN)", "00100010")
+    expect(page).to have_summary_list_row("Unique reference number (URN)", "000010")
+    expect(page).to have_summary_list_row("Email address", "reception@ogdenville.ac.uk")
+    expect(page).to have_summary_list_row("Telephone number", "0000 000 1111")
+    expect(page).to have_summary_list_row("Address", "1 Main Street")
+    expect(page).to have_button("Confirm and add provider")
+    expect(page).to have_link("Cancel", href: "/schools/#{@school.id}/partner_providers")
+  end
+
+  def and_i_see_ogdenville_university_listed
+    expect(page).to have_table_row({
+      "Name" => "Ogdenville University",
+      "UK provider reference number (UKPRN)" => "00100010",
+    })
+  end
+
+  def then_i_see_success_message_for_ogdenville
+    expect(page).to have_success_banner("Provider added", "You can now add Ogdenville University to your placements.")
+  end
+
+  def ogdenville_university_notification
+    ActionMailer::Base.deliveries.find do |delivery|
+      delivery.to.include?(@ogdenville_university_user.email) &&
+        delivery.subject == "A school has added you"
+    end
+  end
+
+  def and_a_notification_email_is_not_sent_to_ogdenville_university
+    email = ogdenville_university_notification
 
     expect(email).to be_nil
   end
 
-  def expect_partner_providers_to_be_selected_in_primary_navigation
-    nav = page.find(".app-primary-navigation__nav")
-
-    within(nav) do
-      expect(page).to have_link "Placements", current: "false"
-      expect(page).to have_link "Mentors", current: "false"
-      expect(page).to have_link "Users", current: "false"
-      expect(page).to have_link "Organisation details", current: "false"
-      expect(page).to have_link "Providers", current: "page"
-    end
+  def when_i_click_on_back
+    click_on "Back"
   end
 
-  def given_the_provider_is_not_onboarded_on_placements_service(provider)
-    provider.update!(placements_service: false)
+  def and_i_click_on_back
+    click_on "Back"
   end
 
-  def and_the_option_for_provider_has_been_pre_selected(provider_name)
-    expect(page).to have_checked_field(provider_name)
+  def and_the_option_for_springfield_university_is_preselected
+    expect(page).to have_checked_field("Springfield University")
+  end
+
+  def then_i_see_the_search_input_prefilled_with_spring
+    find_field "Add a provider", with: "Spring"
+  end
+
+  def when_i_click_on_change
+    click_on "Change Name"
   end
 end
