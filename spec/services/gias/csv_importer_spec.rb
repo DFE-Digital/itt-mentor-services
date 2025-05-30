@@ -20,7 +20,7 @@ RSpec.describe Gias::CSVImporter do
 
   it "logs messages to STDOUT" do
     expect(Rails.logger).to receive(:info).with("GIAS Data Imported!")
-    expect(Rails.logger).to receive(:info).with("Schools which have been closed have been purged from the database.")
+    expect(Rails.logger).to receive(:info).with("Deleted schools which have been closed from the database.")
 
     gias_importer
   end
