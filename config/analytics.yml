@@ -201,6 +201,8 @@ shared:
     - provider_id
     - year_group
     - academic_year_id
+    - creator_id
+    - creator_type
   :school_contacts:
     - id
     - school_id

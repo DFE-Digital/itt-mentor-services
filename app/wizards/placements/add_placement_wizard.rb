@@ -1,9 +1,10 @@
 module Placements
   class AddPlacementWizard < BaseWizard
-    attr_reader :school
+    attr_reader :school, :current_user
 
-    def initialize(school:, params:, state:, current_step: nil)
+    def initialize(current_user:, school:, params:, state:, current_step: nil)
       @school = school
+      @current_user = current_user
       super(state:, params:, current_step:)
     end
 
@@ -46,7 +47,7 @@ module Placements
     end
 
     def build_placement
-      placement = school.placements.build
+      placement = school.placements.build(creator: current_user)
       placement.academic_year = steps.fetch(:academic_year).academic_year
       placement.subject = subject
       placement.terms = steps.fetch(:terms).terms

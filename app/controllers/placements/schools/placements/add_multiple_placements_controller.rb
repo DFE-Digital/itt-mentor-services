@@ -28,7 +28,13 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
   def set_wizard
     state = session[state_key] ||= {}
     current_step = params[:step]&.to_sym
-    @wizard = Placements::MultiPlacementWizard.new(school:, params:, state:, current_step:)
+    @wizard = Placements::MultiPlacementWizard.new(
+      current_user:,
+      school:,
+      params:,
+      state:,
+      current_step:,
+    )
   end
 
   def step_path(step)

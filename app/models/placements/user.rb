@@ -31,6 +31,7 @@ class Placements::User < User
            through: :user_memberships,
            source: :organisation,
            source_type: "Provider"
+  has_many :created_placements, class_name: "Placement", foreign_key: :creator_id
 
   def service
     :placements

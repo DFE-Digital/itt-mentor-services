@@ -1,13 +1,14 @@
 require "rails_helper"
 
 RSpec.describe Placements::MultiPlacementWizard do
-  subject(:wizard) { described_class.new(state:, params:, school:, current_step:) }
+  subject(:wizard) { described_class.new(state:, params:, school:, current_step:, current_user:) }
 
   let(:school) { create(:placements_school) }
   let(:state) { {} }
   let(:params_data) { {} }
   let(:params) { ActionController::Parameters.new(params_data) }
   let(:current_step) { nil }
+  let(:current_user) { create(:placements_user) }
 
   describe "#steps" do
     subject(:steps) { wizard.steps.keys }

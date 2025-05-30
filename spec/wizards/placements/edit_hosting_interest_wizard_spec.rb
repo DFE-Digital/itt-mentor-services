@@ -8,6 +8,7 @@ RSpec.describe Placements::EditHostingInterestWizard do
       params:,
       school:,
       current_step:,
+      current_user:,
     )
   end
 
@@ -24,6 +25,7 @@ RSpec.describe Placements::EditHostingInterestWizard do
   let(:params_data) { {} }
   let(:params) { ActionController::Parameters.new(params_data) }
   let(:current_step) { nil }
+  let(:current_user) { create(:placements_user) }
 
   describe "#steps" do
     subject(:steps) { wizard.steps.keys }

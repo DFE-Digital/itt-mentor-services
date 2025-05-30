@@ -1,10 +1,10 @@
 module Placements
   class EditHostingInterestWizard < AddHostingInterestWizard
-    attr_reader :school, :hosting_interest
+    attr_reader :school, :hosting_interest, :current_user
 
-    def initialize(hosting_interest:, school:, params:, state:, current_step: nil)
+    def initialize(current_user:, hosting_interest:, school:, params:, state:, current_step: nil)
       @hosting_interest = hosting_interest
-      super(school:, state:, params:, current_step:)
+      super(current_user:, school:, state:, params:, current_step:)
     end
 
     def define_steps

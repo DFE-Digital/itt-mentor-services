@@ -31,6 +31,7 @@ class Placements::Schools::PotentialPlacements::EditPotentialPlacementsControlle
     state = session[state_key] ||= {}
     current_step = params[:step]&.to_sym
     @wizard = Placements::EditPotentialPlacementsWizard.new(
+      current_user:,
       school:,
       params:,
       state:,

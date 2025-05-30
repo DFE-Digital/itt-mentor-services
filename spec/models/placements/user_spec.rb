@@ -26,6 +26,8 @@ RSpec.describe Placements::User do
   it_behaves_like "an academic year assignable object"
 
   describe "associations" do
+    it { is_expected.to have_many(:created_placements) }
+
     describe "#schools" do
       it { is_expected.to have_many(:schools).through(:user_memberships).source(:organisation) }
 
