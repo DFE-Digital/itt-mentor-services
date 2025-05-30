@@ -131,7 +131,7 @@ RSpec.describe "Support user adds a partner provider",
     expect(page).to have_title("Providers you work with - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Providers")
     expect(page).to have_h1("Providers you work with")
-    expect(page).to have_govuk_body("Add providers to be able to assign them to your placements.")
+    expect(page).to have_paragraph("Add providers to be able to assign them to your placements.")
     expect(page).to have_link("Add provider", class: "govuk-button")
   end
   alias_method :and_i_see_the_providers_index_page, :then_i_am_on_the_providers_index_page
@@ -176,7 +176,7 @@ RSpec.describe "Support user adds a partner provider",
     expect(primary_navigation).to have_current_item("Providers")
 
     expect(page).to have_h1("Confirm provider details")
-    expect(page).to have_govuk_body(
+    expect(page).to have_paragraph(
       "Adding them means you will be able to assign them to your placements. We will send them an email to let them know you have added them.",
     )
     expect(page).to have_h2("Provider")
@@ -263,7 +263,7 @@ RSpec.describe "Support user adds a partner provider",
     expect(page).to have_title("Confirm provider details - Provider details - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Providers")
     expect(page).to have_h1("Confirm provider details")
-    expect(page).to have_govuk_body(
+    expect(page).to have_paragraph(
       "Adding them means you will be able to assign them to your placements. We will send them an email to let them know you have added them.",
     )
     expect(page).to have_h2("Provider")
