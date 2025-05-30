@@ -135,14 +135,15 @@ module Gias
       Rails.logger.info "GIAS Data Imported!"
 
       Rails.logger.silence do
-        offboarded_schools_scope = School.where(placements_service: false, claims_service: false).where.missing(:partnerships)
-        onboarded_urns = school_records.pluck(:urn)
-        schools_to_remove = offboarded_schools_scope.where.not(urn: onboarded_urns)
+        # Schools which are not part of the claims service, placements service and do not have partnerships
+        inactive_schools_scope = School.where(placements_service: false, claims_service: false).where.missing(:partnerships)
+        # Inactive schools which did not appear in the imported data
+        schools_to_remove = inactive_schools_scope.where.not(urn: school_records.pluck(:urn))
 
         schools_to_remove.delete_all
       end
 
-      Rails.logger.info "Schools which have been closed have been purged from the database."
+      Rails.logger.info "Deleted schools which have been closed from the database."
     end
 
     private
