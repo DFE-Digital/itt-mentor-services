@@ -82,6 +82,7 @@ RSpec.describe "Support user adds a provider", :js, service: :placements, type: 
       placements_service: false,
       ukprn: "UKPRN01",
       urn: "URN01",
+      code: "111",
       email_addresses: ["itt@pineapple.university"],
       telephone: "(020) 0401 7222",
       website: "https://pineapple.university",
@@ -97,6 +98,7 @@ RSpec.describe "Support user adds a provider", :js, service: :placements, type: 
       placements_service: false,
       ukprn: "APPLE5",
       urn: "APL5",
+      code: "222",
       email_addresses: ["placements@apple.academy"],
       telephone: "01175 698444",
       website: "https://apple.academy",
@@ -173,11 +175,11 @@ RSpec.describe "Support user adds a provider", :js, service: :placements, type: 
   end
 
   def and_i_select_pineapple_university
-    page.find(".autocomplete__option", text: "Pineapple University", wait: 10).click
+    page.find(".autocomplete__option", text: "Pineapple University (SW4 9QZ, 111)", wait: 10).click
   end
 
   def and_i_select_apple_academy
-    page.find(".autocomplete__option", text: "Apple Academy", wait: 10).click
+    page.find(".autocomplete__option", text: "Apple Academy (BS1 5AY, 222)", wait: 10).click
   end
 
   def when_i_type_banana

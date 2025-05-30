@@ -103,7 +103,7 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
   private
 
   def given_that_placements_exist
-    @aes_sedai_provider = build(:placements_provider, name: "Aes Sedai Trust")
+    @aes_sedai_provider = build(:placements_provider, name: "Aes Sedai Trust", code: "111", postcode: "BR11RP")
     @ashaman_provider = build(:placements_provider, name: "Asha'man Trust")
 
     @springfield_elementary_school = build(
@@ -407,7 +407,7 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
   end
 
   def then_i_see_a_dropdown_item_for_aes_sedai_trust
-    expect(page).to have_css(".autocomplete__option", text: "Aes Sedai Trust", wait: 10)
+    expect(page).to have_css(".autocomplete__option", text: "Aes Sedai Trust (BR11RP, 111)", wait: 10)
   end
 
   def when_i_click_on_the_aes_sedai_trust_dropdown_item
