@@ -82,6 +82,7 @@ RSpec.describe School, type: :model do
     it { is_expected.to have_many(:mentor_memberships) }
     it { is_expected.to have_many(:mentors).through(:mentor_memberships) }
     it { is_expected.to have_many(:users).through(:user_memberships) }
+    it { is_expected.to have_many(:partnerships).class_name("Placements::Partnership").dependent(:destroy) }
   end
 
   context "with scopes" do

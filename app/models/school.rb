@@ -98,6 +98,8 @@ class School < ApplicationRecord
   has_many :placements
   has_many :academic_years, through: :placements
 
+  has_many :partnerships, class_name: "Placements::Partnership", dependent: :destroy
+
   has_one :school_contact, dependent: :destroy, class_name: "Placements::SchoolContact"
 
   normalizes :email_address, with: ->(value) { value.strip.downcase }
