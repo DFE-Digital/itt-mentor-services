@@ -124,7 +124,7 @@ module GovukComponentMatchers
     end
   end
 
-  matcher :have_govuk_body do |text|
+  matcher :have_paragraph do |text|
     match do |page|
       page.find("p[class^='govuk-body']", text:)
       true
