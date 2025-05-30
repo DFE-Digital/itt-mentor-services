@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_27_084322) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_29_144041) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -409,7 +409,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_27_084322) do
     t.uuid "subject_id"
     t.enum "year_group", enum_type: "placement_year_group"
     t.uuid "academic_year_id", null: false
+    t.string "creator_type"
+    t.uuid "creator_id"
     t.index ["academic_year_id"], name: "index_placements_on_academic_year_id"
+    t.index ["creator_type", "creator_id"], name: "index_placements_on_creator"
     t.index ["provider_id"], name: "index_placements_on_provider_id"
     t.index ["school_id"], name: "index_placements_on_school_id"
     t.index ["subject_id"], name: "index_placements_on_subject_id"

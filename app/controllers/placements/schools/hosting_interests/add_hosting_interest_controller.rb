@@ -44,7 +44,13 @@ class Placements::Schools::HostingInterests::AddHostingInterestController < Plac
   def set_wizard
     state = session[state_key] ||= {}
     current_step = params[:step]&.to_sym
-    @wizard = Placements::AddHostingInterestWizard.new(school:, params:, state:, current_step:)
+    @wizard = Placements::AddHostingInterestWizard.new(
+      current_user:,
+      school:,
+      params:,
+      state:,
+      current_step:,
+    )
   end
 
   def step_path(step)

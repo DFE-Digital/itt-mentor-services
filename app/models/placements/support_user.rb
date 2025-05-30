@@ -23,4 +23,6 @@
 class Placements::SupportUser < User
   include ActsAsSupportUser
   include AcademicYearAssignable
+
+  has_many :created_placements, class_name: "Placement", foreign_key: :creator_id
 end

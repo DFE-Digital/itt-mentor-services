@@ -1,11 +1,12 @@
 module Placements
   class MultiPlacementWizard < BaseWizard
-    attr_reader :school
+    attr_reader :school, :current_user
 
     delegate :school_contact, to: :school
 
-    def initialize(school:, params:, state:, current_step: nil)
+    def initialize(current_user:, school:, params:, state:, current_step: nil)
       @school = school
+      @current_user = current_user
       super(state:, params:, current_step:)
     end
 
@@ -77,13 +78,19 @@ module Placements
             subject: Subject.primary_subject,
             year_group:,
             academic_year: upcoming_academic_year,
+            creator: current_user,
           )
         end
       end
 
       selected_secondary_subjects.each do |subject|
         placement_quantity_for_subject(subject).times do |i|
-          placement = Placement.create!(school:, subject:, academic_year: upcoming_academic_year)
+          placement = Placement.create!(
+            school:,
+            subject:,
+            academic_year: upcoming_academic_year,
+            creator: current_user,
+          )
           next unless subject.has_child_subjects?
 
           step_name = step_name_for_child_subjects(subject:, selection_number: i + 1)

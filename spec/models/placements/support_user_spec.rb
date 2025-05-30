@@ -25,6 +25,10 @@ require "rails_helper"
 RSpec.describe Placements::SupportUser do
   it_behaves_like "an academic year assignable object"
 
+  describe "associations" do
+    it { is_expected.to have_many(:created_placements) }
+  end
+
   context "with validations" do
     subject { build(:placements_support_user) }
 

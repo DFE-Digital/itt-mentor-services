@@ -39,6 +39,7 @@ class Placements::Schools::HostingInterests::EditHostingInterestController < Pla
     state = session[state_key] ||= {}
     current_step = params[:step]&.to_sym
     @wizard = Placements::EditHostingInterestWizard.new(
+      current_user:,
       hosting_interest:,
       school:,
       params:,
