@@ -2,7 +2,7 @@
 <span class="govuk-caption-l"><%= caption %></span>
 <h1 class="govuk-heading-l"><%= t(".are_you_sure") %></h1>
 
-<%= simple_format(t(".user_will_no_longer", user_name: user.full_name)) %>
+<p class="govuk-body"><%= t(".user_will_no_longer", user_name: user.full_name) %></p>
 
 <%= render GovukComponent::WarningTextComponent.new(
   text: t(".user_will_be_sent_an_email", organisation_name: organisation.name),
