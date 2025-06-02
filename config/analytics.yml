@@ -173,6 +173,7 @@ shared:
     - claims_grant_conditions_accepted_by_id
     - expression_of_interest_completed
     - vendor_number
+    - potential_placement_details
   :providers:
     - id
     - code

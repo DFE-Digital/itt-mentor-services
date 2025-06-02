@@ -7,3 +7,5 @@ shared:
   users:
     - first_name
     - last_name
+  schools:
+    - potential_placement_details
