@@ -1,8 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Placements::AddOrganisationWizard do
-  subject(:wizard) { described_class.new(state:, params:, current_step: nil) }
+  subject(:wizard) { described_class.new(current_user:, state:, params:, current_step: nil) }
 
+  let(:current_user) { create(:placements_support_user) }
   let(:state) { {} }
   let(:params_data) { {} }
   let(:params) { ActionController::Parameters.new(params_data) }
@@ -126,6 +127,7 @@ RSpec.describe Placements::AddOrganisationWizard do
         wizard.onboard_organisation
         organisation.reload
         expect(organisation.placements_service).to be(true)
+        expect(organisation.manually_onboarded_by).to eq(current_user)
       end
     end
 

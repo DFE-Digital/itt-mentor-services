@@ -29,7 +29,7 @@ module Placements
     end
 
     def onboard_organisation
-      organisation.update!(placements_service: true)
+      organisation.update!(placements_service: true, manually_onboarded_by: current_user)
     end
 
     private
