@@ -84,6 +84,7 @@ class School < ApplicationRecord
 
   belongs_to :region
   belongs_to :trust, optional: true
+  belongs_to :manually_onboarded_by, polymorphic: true, optional: true
 
   has_many :user_memberships, as: :organisation
   has_many :users, through: :user_memberships

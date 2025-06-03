@@ -77,6 +77,7 @@ RSpec.describe School, type: :model do
   context "with associations" do
     it { is_expected.to belong_to(:region) }
     it { is_expected.to belong_to(:trust).optional }
+    it { is_expected.to belong_to(:manually_onboarded_by).optional }
 
     it { is_expected.to have_many(:user_memberships) }
     it { is_expected.to have_many(:mentor_memberships) }

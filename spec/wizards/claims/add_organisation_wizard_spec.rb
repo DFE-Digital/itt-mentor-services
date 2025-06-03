@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Claims::AddOrganisationWizard do
   subject(:wizard) { described_class.new(current_user:, state:, params:, current_step: nil) }
 
-  let(:current_user) { create(:claims_user) }
+  let(:current_user) { create(:claims_support_user) }
   let(:state) { {} }
   let(:params_data) { {} }
   let(:params) { ActionController::Parameters.new(params_data) }
@@ -137,6 +137,7 @@ RSpec.describe Claims::AddOrganisationWizard do
       expect(organisation.website).to eq(website)
       expect(organisation.telephone).to eq(telephone)
       expect(organisation.eligible_claim_windows).to contain_exactly(current_claim_window)
+      expect(organisation.manually_onboarded_by).to eq(current_user)
     end
   end
 
