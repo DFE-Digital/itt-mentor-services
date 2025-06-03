@@ -132,6 +132,8 @@ shared:
     - walk_travel_duration
     - drive_travel_duration
     - previously_offered_placements
+    - manually_onboarded_by_type
+    - manually_onboarded_by_id
   :school_contacts:
     - name
     - email_address
