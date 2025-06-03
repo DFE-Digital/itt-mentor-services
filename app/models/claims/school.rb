@@ -83,6 +83,7 @@ class Claims::School < School
   has_many :eligibilities, dependent: :destroy
   has_many :eligible_claim_windows, through: :eligibilities, source: :claim_window
 
+  belongs_to :manually_onboarded_by, polymorphic: true, optional: true
   belongs_to :claims_grant_conditions_accepted_by, class_name: "User", optional: true
 
   delegate :funding_available_per_hour, :name, to: :region, prefix: true, allow_nil: true

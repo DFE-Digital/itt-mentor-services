@@ -24,6 +24,8 @@ require "rails_helper"
 
 RSpec.describe Claims::User do
   describe "associations" do
+    it { is_expected.to have_many(:onboarded_schools).class_name("Claims::School") }
+
     describe "#schools" do
       it { is_expected.to have_many(:schools).through(:user_memberships).source(:organisation) }
 

@@ -78,9 +78,11 @@ RSpec.describe Claims::School do
     it { is_expected.to have_many(:claims) }
     it { is_expected.to have_many(:mentor_memberships) }
     it { is_expected.to have_many(:mentors).through(:mentor_memberships) }
-    it { is_expected.to belong_to(:claims_grant_conditions_accepted_by).class_name("User").optional }
     it { is_expected.to have_many(:eligibilities).dependent(:destroy) }
     it { is_expected.to have_many(:eligible_claim_windows).through(:eligibilities) }
+
+    it { is_expected.to belong_to(:manually_onboarded_by).optional }
+    it { is_expected.to belong_to(:claims_grant_conditions_accepted_by).class_name("User").optional }
 
     describe "#users" do
       it { is_expected.to have_many(:users).through(:user_memberships) }

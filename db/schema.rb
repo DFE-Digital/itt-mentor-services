@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_29_144041) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_02_132426) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -563,10 +563,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_29_144041) do
     t.string "vendor_number"
     t.boolean "expression_of_interest_completed", default: false
     t.boolean "previously_offered_placements", default: false
+    t.string "manually_onboarded_by_type"
+    t.uuid "manually_onboarded_by_id"
     t.index ["claims_grant_conditions_accepted_by_id"], name: "index_schools_on_claims_grant_conditions_accepted_by_id"
     t.index ["claims_service"], name: "index_schools_on_claims_service"
     t.index ["latitude"], name: "index_schools_on_latitude"
     t.index ["longitude"], name: "index_schools_on_longitude"
+    t.index ["manually_onboarded_by_type", "manually_onboarded_by_id"], name: "index_schools_on_manually_onboarded_by"
     t.index ["name"], name: "index_schools_on_name_trigram", opclass: :gin_trgm_ops, using: :gin
     t.index ["placements_service"], name: "index_schools_on_placements_service"
     t.index ["postcode"], name: "index_schools_on_postcode_trigram", opclass: :gin_trgm_ops, using: :gin

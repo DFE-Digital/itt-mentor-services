@@ -25,4 +25,8 @@ class Claims::User < User
            through: :user_memberships,
            source: :organisation,
            source_type: "School"
+
+  has_many :onboarded_schools,
+           class_name: "Claims::School",
+           foreign_key: :manually_onboarded_by_id
 end
