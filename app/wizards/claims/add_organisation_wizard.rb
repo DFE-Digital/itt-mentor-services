@@ -1,5 +1,10 @@
 module Claims
   class AddOrganisationWizard < BaseWizard
+    def initialize(current_user:, params:, state:, current_step: nil)
+      @current_user = current_user
+      super(state:, params:, current_step:)
+    end
+
     def define_steps
       if claim_windows_exist?
         add_step(NameStep)
@@ -25,6 +30,7 @@ module Claims
         region_id: steps.fetch(:region).region_id,
         website: steps.fetch(:contact_details).website,
         telephone: steps.fetch(:contact_details).telephone,
+        manually_onboarded_by: current_user,
       ).decorate
     end
 
@@ -40,6 +46,8 @@ module Claims
     end
 
     private
+
+    attr_reader :current_user
 
     def claim_windows_exist?
       Claims::ClaimWindow.current.present? ||
