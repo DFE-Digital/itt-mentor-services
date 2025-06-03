@@ -1,5 +1,10 @@
 module Placements
   class AddOrganisationWizard < BaseWizard
+    def initialize(current_user:, params:, state:, current_step: nil)
+      @current_user = current_user
+      super(state:, params:, current_step:)
+    end
+
     def define_steps
       add_step(OrganisationTypeStep)
       add_step(OrganisationStep)
@@ -26,5 +31,9 @@ module Placements
     def onboard_organisation
       organisation.update!(placements_service: true)
     end
+
+    private
+
+    attr_reader :current_user
   end
 end

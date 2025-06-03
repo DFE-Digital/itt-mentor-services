@@ -23,7 +23,7 @@ class Claims::Support::Organisations::AddOrganisationController < Claims::Suppor
   def set_wizard
     state = session[state_key] ||= {}
     current_step = params[:step]&.to_sym
-    @wizard = Claims::AddOrganisationWizard.new(params:, state:, current_step:)
+    @wizard = Claims::AddOrganisationWizard.new(current_user:, params:, state:, current_step:)
   end
 
   def authorize_school

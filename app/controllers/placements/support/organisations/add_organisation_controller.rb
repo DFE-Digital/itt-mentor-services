@@ -22,7 +22,7 @@ class Placements::Support::Organisations::AddOrganisationController < Placements
   def set_wizard
     state = session[state_key] ||= {}
     current_step = params[:step]&.to_sym
-    @wizard = Placements::AddOrganisationWizard.new(params:, state:, current_step:)
+    @wizard = Placements::AddOrganisationWizard.new(current_user:, params:, state:, current_step:)
   end
 
   def step_path(step)

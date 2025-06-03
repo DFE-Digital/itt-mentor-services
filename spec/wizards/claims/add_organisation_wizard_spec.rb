@@ -1,8 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Claims::AddOrganisationWizard do
-  subject(:wizard) { described_class.new(state:, params:, current_step: nil) }
+  subject(:wizard) { described_class.new(current_user:, state:, params:, current_step: nil) }
 
+  let(:current_user) { create(:claims_user) }
   let(:state) { {} }
   let(:params_data) { {} }
   let(:params) { ActionController::Parameters.new(params_data) }
