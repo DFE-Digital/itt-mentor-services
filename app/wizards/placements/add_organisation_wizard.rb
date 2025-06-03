@@ -29,7 +29,11 @@ module Placements
     end
 
     def onboard_organisation
-      organisation.update!(placements_service: true, manually_onboarded_by: current_user)
+      if organisation.instance_of?(::School)
+        organisation.update!(placements_service: true, manually_onboarded_by: current_user)
+      else
+        organisation.update!(placements_service: true)
+      end
     end
 
     private
