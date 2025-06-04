@@ -13,6 +13,8 @@
         <%= t(".title") %>
       </h1>
 
+      <p class="govuk-body"><%= t(".placement_visible_to_providers_text") %></p>
+
       <%= govuk_summary_list do |summary_list| %>
 
         <% if wizard.steps.include?(:phase) %>
@@ -90,8 +92,6 @@
           <% end %>
         <% end %>
       <% end %>
-
-      <%= govuk_inset_text(text: t(".info_text")) %>
 
       <div class="govuk-button-group">
         <%= f.govuk_submit t(".publish_placement") %>

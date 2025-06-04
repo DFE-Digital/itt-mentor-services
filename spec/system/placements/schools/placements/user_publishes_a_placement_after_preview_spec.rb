@@ -158,7 +158,7 @@ RSpec.describe "User publishes a placement after preview", service: :placements,
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Check your answers")
     expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
-    expect(page).to have_element(:div, text: "When a placement is published, it will be visible to teacher training providers.", class: "govuk-inset-text")
+    expect(page).to have_paragraph("Publishing your placements will mean they are visible to teacher training providers. They will see your school has available placements.")
     expect(page).to have_button("Publish placement")
     expect(page).to have_element(:a, text: "Preview placement", class: "govuk-link")
     expect(page).to have_link("Cancel", href: "/schools/#{@school.id}/placements")

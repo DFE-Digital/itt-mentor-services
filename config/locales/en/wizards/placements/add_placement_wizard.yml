@@ -47,6 +47,7 @@ en:
         check_your_answers_step:
           page_title: Check your answers - %{contextual_text}
           title: Check your answers
+          placement_visible_to_providers_text: Publishing your placements will mean they are visible to teacher training providers. They will see your school has available placements.
           phase: Phase
           subject: Subject
           additional_subjects: Additional subjects
