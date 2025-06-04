@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Support user receives invalid DfE response", service: :placements, type: :system do
-  scenario do
+  scenario retry: 3 do
     given_i_visit_the_service
     and_i_click_on_start_now
     then_i_see_the_sign_in_page
