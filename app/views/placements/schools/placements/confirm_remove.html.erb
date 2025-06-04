@@ -13,6 +13,10 @@
 
       <%= simple_format(t(".it_is_your_responsibility")) %>
 
+      <% if @placement.last_placement_for_school? %>
+        <%= govuk_warning_text text t.call(".last_placement_warning") %>
+      <% end %>
+
       <%= govuk_button_to t(".delete_placement"),
         placements_school_placement_path(@school, @placement),
         warning: true,
