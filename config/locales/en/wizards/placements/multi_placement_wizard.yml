@@ -79,6 +79,7 @@ en:
           select_all: Select all
         check_your_answers_step:
           title: Check your answers
+          placement_visible_to_providers_text: Publishing your placements will mean they are visible to teacher training providers. They will see your school has available placements.
           continue: Save and continue
           education_phase: Education phase
           phase: Phase
