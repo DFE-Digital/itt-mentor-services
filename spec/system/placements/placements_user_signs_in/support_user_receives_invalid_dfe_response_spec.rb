@@ -1,8 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "Support user receives invalid DfE response", service: :placements, type: :system do
-  scenario retry: 3 do
+  scenario do
     given_i_visit_the_service
+    and_dsi_returns_nil
     and_i_click_on_start_now
     then_i_see_the_sign_in_page
 
@@ -14,6 +15,10 @@ RSpec.describe "Support user receives invalid DfE response", service: :placement
 
   def given_i_visit_the_service
     visit placements_root_path
+  end
+
+  def and_dsi_returns_nil
+    OmniAuth.config.mock_auth[:dfe] = nil
   end
 
   def and_i_click_on_start_now
