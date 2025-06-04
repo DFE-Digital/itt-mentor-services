@@ -157,6 +157,7 @@ en:
           are_you_sure: Are you sure you want to delete this placement?
           cancel: Cancel
           it_is_your_responsibility: It is your responsibility to make sure that anyone relevant to organising this placement is aware it is being deleted.
+          last_placement_warning: You are deleting your last placement. We will ask you to confirm your placement availability so providers can know whether to contact you.
           delete_placement: Delete placement
         can_not_remove:
           page_title: "You cannot delete this placement - %{subject_names}"
