@@ -10,6 +10,8 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
+      <p class="govuk-body"><%= t(".placement_visible_to_providers_text") %></p>
+
       <%= render "shared/wizards/placements/multiple_placements_wizard/check_your_answers",
         current_step:,
         wizard: @wizard,

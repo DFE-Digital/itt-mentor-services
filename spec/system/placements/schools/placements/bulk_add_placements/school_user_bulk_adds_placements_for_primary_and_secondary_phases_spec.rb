@@ -270,6 +270,7 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Check your answers")
+    expect(page).to have_paragraph("Publishing your placements will mean they are visible to teacher training providers. They will see your school has available placements.")
 
     expect(page).to have_h2("Education phase")
     expect(page).to have_summary_list_row("Phase", "Primary Secondary")
