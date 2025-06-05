@@ -35,6 +35,7 @@ en:
         phase_step:
           caption: Placement details
           title: What education phase can your placements be?
+          hint: Select all that apply
           options:
             primary_description: 3 to 11 years
             secondary_description: 11 to 19 years

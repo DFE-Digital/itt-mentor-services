@@ -199,6 +199,10 @@ RSpec.describe "School user completes the interested journey and declares primar
       text: "What education phase could you offer placements in?",
       class: "govuk-fieldset__legend",
     )
+    expect(page).to have_hint(
+      "Select all that apply. Sharing information on what you may be able to offer helps providers know whether to contact you." \
+        " It is not a commitment to take a trainee teacher.",
+    )
     expect(page).to have_field("Primary", type: :checkbox)
     expect(page).to have_field("Secondary", type: :checkbox)
     expect(page).to have_field("I don’t know", type: :checkbox)

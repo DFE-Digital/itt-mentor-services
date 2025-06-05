@@ -13,7 +13,8 @@
         :phases,
         current_step.phases_for_selection,
         :name, :name, :description,
-        legend: { size: "l", text: t(".title"), tag: "h1" }
+        legend: { size: "l", text: t(".title"), tag: "h1" },
+        hint: { text: t(".hint") }
       ) %>
 
       <%= f.govuk_submit t(".continue") %>

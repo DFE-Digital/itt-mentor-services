@@ -20,8 +20,6 @@ RSpec.describe "School user completes the interested journey without declaring p
     and_i_click_on_continue
     then_i_see_the_phase_known_page
 
-    then_i_see_the_phase_known_page
-
     when_i_select_primary
     and_i_select_secondary
     and_i_click_on_continue
@@ -210,6 +208,10 @@ RSpec.describe "School user completes the interested journey without declaring p
       :legend,
       text: "What education phase could you offer placements in?",
       class: "govuk-fieldset__legend",
+    )
+    expect(page).to have_hint(
+      "Select all that apply. Sharing information on what you may be able to offer helps providers know whether to contact you." \
+        " It is not a commitment to take a trainee teacher.",
     )
     expect(page).to have_field("Primary", type: :checkbox)
     expect(page).to have_field("Secondary", type: :checkbox)

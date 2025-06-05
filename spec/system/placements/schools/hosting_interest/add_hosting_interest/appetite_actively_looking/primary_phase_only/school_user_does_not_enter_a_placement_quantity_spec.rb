@@ -100,6 +100,7 @@ RSpec.describe "School user does not enter a placement quantity",
       text: "What education phase can your placements be?",
       class: "govuk-fieldset__legend",
     )
+    expect(page).to have_hint("Select all that apply")
     expect(page).to have_field("Primary", type: :checkbox)
     expect(page).to have_field("Secondary", type: :checkbox)
   end

@@ -177,6 +177,7 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
       text: "What education phase can your placements be?",
       class: "govuk-fieldset__legend",
     )
+    expect(page).to have_hint("Select all that apply")
     expect(page).to have_field("Primary", type: :checkbox)
     expect(page).to have_field("Secondary", type: :checkbox)
   end
