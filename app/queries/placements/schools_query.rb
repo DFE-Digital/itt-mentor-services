@@ -72,7 +72,8 @@ class Placements::SchoolsQuery < ApplicationQuery
     end
 
     if hosting_interests.include?("filled_placements")
-      conditions << scope.where(hosting_interests: { appetite: "actively_looking" }, placements: { academic_year_id: academic_year.id }).excluding(scope.where(placements: { provider: nil }))
+      conditions << scope.where(hosting_interests: { appetite: "actively_looking" }, placements: { academic_year_id: academic_year.id })
+        .excluding(scope.where(placements: { academic_year_id: academic_year.id, provider: nil }))
     end
 
     conditions.reduce(scope.none) { |combined_scope, condition| combined_scope.or(condition) }

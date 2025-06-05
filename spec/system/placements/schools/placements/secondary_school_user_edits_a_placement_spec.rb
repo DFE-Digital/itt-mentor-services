@@ -111,6 +111,7 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
     )
 
     @secondary_english_subject = build(:subject, name: "English", subject_area: :secondary)
+    @secondary_science_subject = build(:subject, name: "Science", subject_area: :secondary)
 
     @autumn_term = build(:placements_term, name: "Autumn term")
     @spring_term = create(:placements_term, name: "Spring term")
@@ -128,6 +129,12 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
       subject: @secondary_english_subject,
       academic_year: @next_academic_year,
       terms: [@autumn_term],
+    )
+    _another_placement = create(
+      :placement,
+      school: @hogwarts_school,
+      subject: @secondary_science_subject,
+      academic_year: @next_academic_year,
     )
   end
 
@@ -152,10 +159,12 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
   end
 
   def and_i_see_my_placement
-    expect(page).to have_element(:td, text: "English", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Mentor not assigned", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Autumn term", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Provider not assigned", class: "govuk-table__cell")
+    expect(page).to have_table_row({
+      "Placement" => "English",
+      "Mentor" => "Mentor not assigned",
+      "Expected date" => "Autumn term",
+      "Provider" => "Provider not assigned",
+    })
   end
 
   def when_i_click_on_my_placement

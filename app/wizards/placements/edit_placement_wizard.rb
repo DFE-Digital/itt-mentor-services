@@ -1,17 +1,24 @@
 module Placements
   class EditPlacementWizard < BaseWizard
-    attr_reader :school, :placement
+    attr_reader :school, :placement, :current_user
 
-    def initialize(school:, params:, placement:, state:, current_step: nil)
+    def initialize(current_user:, school:, params:, placement:, state:, current_step: nil)
       @school = school
       @placement = placement
+      @current_user = current_user
       super(state:, params:, current_step:)
     end
 
     def define_steps
       # Define the wizard steps here
-      add_step(ProviderStep) if %i[provider provider_options].include?(current_step)
+      add_step(ProviderStep) if %i[provider provider_options assign_last_placement].include?(current_step)
       add_step(ProviderOptionsStep) if steps[:provider].present? && steps.fetch(:provider).provider.blank?
+      if steps[:provider].present? &&
+          school.placements.available_placements_for_academic_year(
+            current_user.selected_academic_year,
+          ).count == 1
+        add_step(AssignLastPlacementStep)
+      end
       add_step(AddPlacementWizard::YearGroupStep) if current_step == :year_group
       add_step(AddPlacementWizard::MentorsStep) if current_step == :mentors
       add_step(AddPlacementWizard::TermsStep) if current_step == :terms

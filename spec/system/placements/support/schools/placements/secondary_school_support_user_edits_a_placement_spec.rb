@@ -5,8 +5,10 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
     given_that_placements_exist
     and_i_am_signed_in
 
-    when_i_am_on_the_placements_index_page
-    then_i_see_my_placement
+    when_i_am_on_the_organisations_index_page
+    and_i_select_hogwarts
+    then_i_see_the_placements_index_page
+    and_i_see_my_placement
 
     when_i_click_on_my_placement
     then_i_see_the_placement_details_page
@@ -109,6 +111,7 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
     )
 
     @secondary_english_subject = build(:subject, name: "English", subject_area: :secondary)
+    @secondary_science_subject = build(:subject, name: "Science", subject_area: :secondary)
 
     @autumn_term = build(:placements_term, name: "Autumn term")
     @spring_term = create(:placements_term, name: "Spring term")
@@ -127,10 +130,25 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
       academic_year: @next_academic_year,
       terms: [@autumn_term],
     )
+    _another_placement = create(
+      :placement,
+      school: @hogwarts_school,
+      subject: @secondary_science_subject,
+      academic_year: @next_academic_year,
+    )
   end
 
   def and_i_am_signed_in
-    sign_in_placements_user(organisations: [@hogwarts_school])
+    sign_in_placements_support_user
+  end
+
+  def when_i_am_on_the_organisations_index_page
+    expect(page).to have_title("Organisations (3) - Manage school placements - GOV.UK")
+    expect(page).to have_h1("Organisations (3)")
+  end
+
+  def and_i_select_hogwarts
+    click_on "Hogwarts"
   end
 
   def when_i_am_on_the_placements_index_page
@@ -142,11 +160,13 @@ RSpec.describe "Secondary school user edits a placement", :js, service: :placeme
 
   alias_method :then_i_see_the_placements_index_page, :when_i_am_on_the_placements_index_page
 
-  def then_i_see_my_placement
-    expect(page).to have_element(:td, text: "English", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Mentor not assigned", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Autumn term", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Provider not assigned", class: "govuk-table__cell")
+  def and_i_see_my_placement
+    expect(page).to have_table_row({
+      "Placement" => "English",
+      "Mentor" => "Mentor not assigned",
+      "Expected date" => "Autumn term",
+      "Provider" => "Provider not assigned",
+    })
   end
 
   def when_i_click_on_my_placement

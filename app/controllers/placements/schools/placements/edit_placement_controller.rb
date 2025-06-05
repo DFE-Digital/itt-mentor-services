@@ -35,7 +35,14 @@ class Placements::Schools::Placements::EditPlacementController < Placements::App
   def set_wizard
     state = session[state_key] ||= {}
     current_step = params.fetch(:step).to_sym
-    @wizard = Placements::EditPlacementWizard.new(school:, placement: @placement, state:, params:, current_step:)
+    @wizard = Placements::EditPlacementWizard.new(
+      school:,
+      placement: @placement,
+      state:,
+      params:,
+      current_step:,
+      current_user:,
+    )
   end
 
   def authorize_placement

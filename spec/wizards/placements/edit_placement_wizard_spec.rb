@@ -1,15 +1,16 @@
 require "rails_helper"
 
 RSpec.describe Placements::EditPlacementWizard do
-  subject(:wizard) { described_class.new(state:, placement:, params:, school:, current_step:) }
+  subject(:wizard) { described_class.new(state:, placement:, params:, school:, current_step:, current_user:) }
 
   let(:school) { build(:placements_school, :primary, mentors:, partner_providers:) }
-  let(:placement) { create(:placement, school:) }
+  let(:placement) { create(:placement, school:, academic_year: current_user.selected_academic_year) }
   let(:state) { {} }
   let(:params_data) { { id: placement.id } }
   let(:params) { ActionController::Parameters.new(params_data) }
   let(:mentors) { build_list(:placements_mentor, 5) }
   let(:partner_providers) { build_list(:provider, 5) }
+  let(:current_user) { create(:placements_user, schools: [school]) }
 
   describe "#steps" do
     subject { wizard.steps.keys }
@@ -27,10 +28,16 @@ RSpec.describe Placements::EditPlacementWizard do
           }
         end
 
-        it { is_expected.to eq %i[provider] }
+        it { is_expected.to eq %i[provider assign_last_placement] }
       end
 
       context "when provider id is not set in the provider step" do
+        it { is_expected.to eq %i[provider provider_options assign_last_placement] }
+      end
+
+      context "when the this placement is not the last unassigned placement" do
+        before { create(:placement, school:, academic_year: current_user.selected_academic_year) }
+
         it { is_expected.to eq %i[provider provider_options] }
       end
     end
