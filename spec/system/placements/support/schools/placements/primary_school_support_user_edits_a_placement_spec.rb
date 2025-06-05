@@ -123,7 +123,7 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
       partner_providers: [@aes_sedai_provider, @ashaman_provider],
     )
 
-    @primary_english_subject = build(:subject, name: "Primary with english", subject_area: :primary)
+    @primary_subject = build(:subject, name: "Primary", subject_area: :primary)
 
     @autumn_term = build(:placements_term, name: "Autumn term")
     @spring_term = create(:placements_term, name: "Spring term")
@@ -138,10 +138,17 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
     @placement = create(
       :placement,
       school: @springfield_elementary_school,
-      subject: @primary_english_subject,
+      subject: @primary_subject,
       year_group: :year_1,
       academic_year: @next_academic_year,
       terms: [@autumn_term],
+    )
+    _another_placement = create(
+      :placement,
+      school: @springfield_elementary_school,
+      subject: @primary_subject,
+      year_group: :year_5,
+      academic_year: @next_academic_year,
     )
   end
 
@@ -166,18 +173,20 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
   end
 
   def and_i_see_my_placement
-    expect(page).to have_element(:td, text: "Primary with english (Year 1)", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Mentor not assigned", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Autumn term", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Provider not assigned", class: "govuk-table__cell")
+    expect(page).to have_table_row({
+      "Placement" => "Primary (Year 1)",
+      "Mentor" => "Mentor not assigned",
+      "Expected date" => "Autumn term",
+      "Provider" => "Provider not assigned",
+    })
   end
 
   def when_i_click_on_my_placement
-    click_on "Primary with english (Year 1)"
+    click_on "Primary (Year 1)"
   end
 
   def then_i_see_the_placement_details_page
-    expect(page).to have_title("Primary with english (Year 1) - Manage school placements - GOV.UK")
+    expect(page).to have_title("Primary (Year 1) - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_tag("Available", "green")
     expect(page).to have_summary_list_row("Subject", "Primary")
@@ -242,7 +251,7 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
   end
 
   def then_i_see_the_placement_details_page_with_my_updated_year_group
-    expect(page).to have_title("Primary with english (Year 2) - Manage school placements - GOV.UK")
+    expect(page).to have_title("Primary (Year 2) - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_tag("Available", "green")
     expect(page).to have_summary_list_row("Subject", "Primary")
@@ -283,7 +292,7 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
   end
 
   def then_i_see_the_placement_details_page_with_my_updated_term
-    expect(page).to have_title("Primary with english (Year 2) - Manage school placements - GOV.UK")
+    expect(page).to have_title("Primary (Year 2) - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_tag("Available", "green")
     expect(page).to have_summary_list_row("Subject", "Primary")
@@ -335,7 +344,7 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
   end
 
   def then_i_see_the_placement_details_page_with_john_smith
-    expect(page).to have_title("Primary with english (Year 2) - Manage school placements - GOV.UK")
+    expect(page).to have_title("Primary (Year 2) - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_tag("Available", "green")
     expect(page).to have_summary_list_row("Subject", "Primary")
@@ -434,7 +443,7 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
   end
 
   def then_i_see_the_placement_details_page_with_aes_sedai_trust
-    expect(page).to have_title("Primary with english (Year 2) - Manage school placements - GOV.UK")
+    expect(page).to have_title("Primary (Year 2) - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_tag("Assigned to provider", "blue")
     expect(page).to have_summary_list_row("Subject", "Primary")
@@ -460,11 +469,11 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
 
   def then_i_see_the_confirmation_page
     expect(page).to have_title(
-      "Are you sure you want to remove Aes Sedai Trust from this placement? - Primary with english (Year 2) - Manage school placements - GOV.UK",
+      "Are you sure you want to remove Aes Sedai Trust from this placement? - Primary (Year 2) - Manage school placements - GOV.UK",
     )
     expect(page).to have_element(
       :span,
-      text: "Primary with english (Year 2)",
+      text: "Primary (Year 2)",
       class: "govuk-caption-l",
     )
     expect(page).to have_h1(
@@ -497,7 +506,7 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
   end
 
   def then_i_see_the_placement_details_page_with_the_ashaman_trust
-    expect(page).to have_title("Primary with english (Year 2) - Manage school placements - GOV.UK")
+    expect(page).to have_title("Primary (Year 2) - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_tag("Unavailable", "orange")
     expect(page).to have_summary_list_row("Subject", "Primary")
@@ -514,9 +523,9 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
   end
 
   def then_i_see_the_preview_placement_page
-    expect(page).to have_title("Primary with english (Year 2) - Manage school placements - GOV.UK")
+    expect(page).to have_title("Primary (Year 2) - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Placement - Springfield Elementary\nPrimary with english (Year 2)")
+    expect(page).to have_h1("Placement - Springfield Elementary\nPrimary (Year 2)")
     expect(page).to have_important_banner("This is a preview of how your placement appears to teacher training providers.")
     expect(page).to have_h2("Placement dates")
     expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")

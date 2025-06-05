@@ -14,3 +14,11 @@ en:
         provider_options_step:
           title: "%{organisation_count} results found for ‘%{search_param}’ - %{contextual_text}"
           continue: Continue
+        assign_last_placement_step:
+          page_title: You are assigning your last available placement to a provider - %{contextual_text}
+          title: You are assigning your last available placement to a provider
+          assign_provider: Assign provider
+          you_status_will_change: 
+            Your status will be set to ‘no placements available’. Providers will no longer contact you about available placements.
+          you_can_add_more_placements:
+            You can add more placements at anytime.
