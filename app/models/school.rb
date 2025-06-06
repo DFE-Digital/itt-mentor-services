@@ -163,6 +163,10 @@ class School < ApplicationRecord
     hosting_interests.find_by(academic_year:)
   end
 
+  def new_hosting_interest_required?(academic_year:)
+    current_hosting_interest(academic_year:).blank? || !expression_of_interest_completed?
+  end
+
   def available_placements(academic_year:)
     placements.available_placements_for_academic_year(academic_year)
   end
@@ -179,5 +183,9 @@ class School < ApplicationRecord
     return false if potential_placement_details.blank?
 
     potential_placement_details.dig("phase", "phases").include?("SEND")
+  end
+
+  def last_placement_for_school?(placement:)
+    placements.where.not(id: placement.id).where(academic_year: placement.academic_year).none?
   end
 end

@@ -70,12 +70,12 @@ RSpec.describe "School user completes the interested journey and declares SEND p
   end
 
   def and_a_school_exists_with_a_hosting_interest
-    @school = create(:placements_school)
-    @hosting_interest = create(
+    @hosting_interest = build(
       :hosting_interest,
       school: @school,
       academic_year: @next_academic_year,
     )
+    @school = create(:placements_school, hosting_interests: [@hosting_interest])
   end
 
   def and_i_am_signed_in

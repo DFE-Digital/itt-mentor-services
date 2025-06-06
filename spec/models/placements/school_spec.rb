@@ -151,7 +151,7 @@ RSpec.describe Placements::School do
     end
 
     context "when there are multiple hosting interests" do
-      let(:current_hosting_interest) { build(:hosting_interest) }
+      let(:current_hosting_interest) { build(:hosting_interest, academic_year: academic_year) }
       let(:previous_hosting_interest) { build(:hosting_interest, academic_year: academic_year.previous) }
       let(:hosting_interests) { [current_hosting_interest, previous_hosting_interest] }
 

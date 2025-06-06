@@ -124,6 +124,15 @@ module GovukComponentMatchers
     end
   end
 
+  matcher :have_inset_text do |text|
+    match do |page|
+      page.find("div[class^='govuk-inset-text']", text:)
+      true
+    rescue Capybara::ElementNotFound
+      false
+    end
+  end
+
   matcher :have_hint do |text|
     match do |page|
       page.find("div[class^='govuk-hint']", text:)

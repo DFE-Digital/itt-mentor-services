@@ -71,7 +71,7 @@ RSpec.describe "School user completes the interested journey and declares primar
   end
 
   def and_i_am_signed_in
-    @school = create(:placements_school, with_school_contact: false)
+    @school = create(:placements_school, with_school_contact: false, with_hosting_interest: false)
     sign_in_placements_user(organisations: [@school])
   end
 
