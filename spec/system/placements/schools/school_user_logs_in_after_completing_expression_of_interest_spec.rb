@@ -16,7 +16,7 @@ RSpec.describe "School user logs in after completing expression of interest", se
   private
 
   def given_my_school_is_onboarded
-    @school = create(:placements_school, expression_of_interest_completed: true)
+    @school = create(:placements_school,   expression_of_interest_completed: true)
   end
 
   def and_i_am_signed_in

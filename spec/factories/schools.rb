@@ -104,11 +104,26 @@ FactoryBot.define do
             class: "Placements::School",
             parent: :school, traits: %i[placements] do
       transient do
+        hosting_interests { nil }
+        with_hosting_interest { nil }
         with_school_contact { true }
       end
 
       after(:build) do |school, evaluator|
         create(:school_contact, school:) if evaluator.with_school_contact
+
+        # If user passed in with_hosting_interest explicitly (true/false), respect it
+        if !evaluator.with_hosting_interest.nil?
+          create(:hosting_interest, school:, academic_year: Placements::AcademicYear.current.next) if evaluator.with_hosting_interest
+
+        # If user passed in hosting_interests directly, assume they want to manage it
+        elsif evaluator.hosting_interests.present?
+          evaluator.hosting_interests.each { |hi| school.hosting_interests << hi }
+
+        # If neither is passed, use default behavior
+        else
+          create(:hosting_interest, school:, academic_year: Placements::AcademicYear.current.next)
+        end
       end
     end
   end

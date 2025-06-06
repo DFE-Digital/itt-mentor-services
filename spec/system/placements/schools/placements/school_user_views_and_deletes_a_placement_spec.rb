@@ -46,6 +46,7 @@ RSpec.describe "School user views and deletes a placement", service: :placements
     )
 
     @primary_english_subject = build(:subject, name: "Primary with english", subject_area: :primary)
+    @primary_maths_subject = build(:subject, name: "Primary with mathematics", subject_area: :primary)
 
     @autumn_term = build(:placements_term, name: "Autumn term")
     @spring_term = create(:placements_term, name: "Spring term")
@@ -59,6 +60,14 @@ RSpec.describe "School user views and deletes a placement", service: :placements
       school: @springfield_elementary_school,
       subject: @primary_english_subject,
       year_group: :year_1,
+      academic_year: @next_academic_year,
+      terms: [@autumn_term],
+    )
+    @second_placement = create(
+      :placement,
+      school: @springfield_elementary_school,
+      subject: @primary_maths_subject,
+      year_group: :year_2,
       academic_year: @next_academic_year,
       terms: [@autumn_term],
     )
@@ -136,8 +145,5 @@ RSpec.describe "School user views and deletes a placement", service: :placements
 
   def and_my_placement_has_been_deleted
     expect(page).not_to have_element(:td, text: "Primary with english (Year 1)", class: "govuk-table__cell")
-    expect(page).not_to have_element(:td, text: "Not yet known", class: "govuk-table__cell")
-    expect(page).not_to have_element(:td, text: "Autumn term", class: "govuk-table__cell")
-    expect(page).not_to have_element(:td, text: "Not yet known", class: "govuk-table__cell")
   end
 end

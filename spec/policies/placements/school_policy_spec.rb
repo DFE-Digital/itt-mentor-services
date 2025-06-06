@@ -32,7 +32,7 @@ RSpec.describe Placements::SchoolPolicy do
     let(:selected_academic_year) { Placements::AcademicYear.current.next }
     let(:current_user) { create(:placements_user, schools: [school], selected_academic_year:) }
     let(:school) do
-      build(:placements_school, potential_placement_details:)
+      build(:placements_school, with_hosting_interest: false, potential_placement_details:)
     end
     let(:potential_placement_details) { nil }
     let(:hosting_interest) do
