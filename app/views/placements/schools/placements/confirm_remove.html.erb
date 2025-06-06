@@ -11,10 +11,10 @@
       <span class="govuk-caption-l"><%= @placement.title %></span>
       <h1 class="govuk-heading-l"><%= t(".are_you_sure") %></h1>
 
-      <%= simple_format(t(".it_is_your_responsibility")) %>
+      <%= simple_format(t(".it_is_your_responsibility"), class: "govuk-body") %>
 
-      <% if @placement.last_placement_for_school? %>
-        <%= govuk_warning_text text t.call(".last_placement_warning") %>
+      <% if @school.last_placement_for_school?(placement: @placement) %>
+        <%= govuk_warning_text text: t(".last_placement_warning") %>
       <% end %>
 
       <%= govuk_button_to t(".delete_placement"),

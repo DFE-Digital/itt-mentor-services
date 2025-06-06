@@ -165,6 +165,7 @@ en:
           description: '%{provider_name} must be removed from the placement before you can delete it.'
         destroy:
           placement_deleted: Placement deleted
+          last_placement_deleted_body: You no longer have placement information available. Confirm your placement availability so providers know whether to contact you.
         confirm_unassign_provider:
           page_title: "Are you sure you want to remove %{provider_name} from this placement? - %{subject_names}"
           are_you_sure: Are you sure you want to remove %{provider_name} from this placement?

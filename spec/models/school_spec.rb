@@ -249,4 +249,25 @@ RSpec.describe School, type: :model do
       end
     end
   end
+
+  describe "#last_placement_for_school?" do
+    let(:school) { create(:placements_school) }
+    let(:current_academic_year) { create(:placements_academic_year, :current) }
+    let(:placement) { create(:placement, school: school, academic_year: current_academic_year) }
+    let(:last_placement_for_school?) { school.last_placement_for_school?(placement: placement) }
+
+    it "returns true when no other placements exist for the school" do
+      expect(last_placement_for_school?).to be(true)
+    end
+
+    it "returns true when a placement exists for the school in a previous academic year" do
+      create(:placement, school: school, academic_year: create(:placements_academic_year, :previous))
+      expect(last_placement_for_school?).to be(true)
+    end
+
+    it "returns false when another placement exists for the school in the current academic year" do
+      create(:placement, school: school, academic_year: current_academic_year)
+      expect(last_placement_for_school?).to be(false)
+    end
+  end
 end

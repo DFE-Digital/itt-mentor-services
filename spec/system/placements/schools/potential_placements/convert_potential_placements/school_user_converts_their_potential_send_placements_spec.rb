@@ -69,13 +69,12 @@ RSpec.describe "School user converts their potential SEND placements",
       "key_stage_selection" => { "key_stage_ids" => [@key_stage_2.id, @key_stage_5.id] },
       "key_stage_placement_quantity" => { "key_stage_2" => 2, "key_stage_5" => 1 },
     }
-    @school = create(:placements_school, potential_placement_details:)
     @hosting_interest = create(
       :hosting_interest,
-      school: @school,
       academic_year: @next_academic_year,
       appetite: "interested",
     )
+    @school = create(:placements_school, potential_placement_details:, hosting_interests: [@hosting_interest])
   end
 
   def and_i_am_signed_in

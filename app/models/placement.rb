@@ -83,8 +83,4 @@ class Placement < ApplicationRecord
                      description: I18n.t("placements.schools.placements.year_groups.#{value}_description")
     end
   end
-
-  def last_placement_for_school?
-    school.placements.where.not(id: id).none?
-  end
 end

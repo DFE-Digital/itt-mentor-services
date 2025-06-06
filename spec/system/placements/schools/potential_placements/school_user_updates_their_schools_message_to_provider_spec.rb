@@ -52,13 +52,12 @@ RSpec.describe "School user updates their school's message to provider",
       "secondary_placement_quantity" => { "english" => 1, "science" => 2 },
       "year_group_placement_quantity" => { "year_2" => 1, "year_3" => 2 },
     }
-    @school = create(:placements_school, potential_placement_details:)
-    @hosting_interest = create(
+    @hosting_interest = build(
       :hosting_interest,
-      school: @school,
       academic_year: @next_academic_year,
       appetite: "interested",
     )
+    @school = create(:placements_school, hosting_interests: @hosting_interest, potential_placement_details:)
   end
 
   def and_i_am_signed_in
