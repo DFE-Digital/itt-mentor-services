@@ -6,7 +6,6 @@ class Placements::Schools::HostingInterests::EditHostingInterestController < Pla
   before_action :set_school
   before_action :set_hosting_interest
   before_action :set_wizard
-  before_action :authorize_hosting_interest
 
   def new
     @wizard.setup_state
@@ -58,9 +57,5 @@ class Placements::Schools::HostingInterests::EditHostingInterestController < Pla
 
   def appetite
     @hosting_interest.reload.appetite
-  end
-
-  def authorize_hosting_interest
-    authorize @hosting_interest, :edit?
   end
 end

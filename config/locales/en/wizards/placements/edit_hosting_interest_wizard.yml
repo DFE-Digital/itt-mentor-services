@@ -1,0 +1,22 @@
+en:
+  wizards:
+    placements:
+      edit_hosting_interest_wizard:
+        unable_to_change_step:
+          page_title:
+            You cannot change your placement availability because you have providers assigned to your placements - Placement details
+          caption: Placement details
+          title:
+            You cannot change your placement availability because you have providers assigned to your placements
+          you_must_remove_any_providers:
+            You must remove any providers from your placements before they can be removed.
+          it_is_your_responsibility:
+            It is your responsibility to speak to providers to ensure they do not place trainees at your school.
+          your_placements: Your placements
+        change_placement_availability_step:
+          page_title: Are you sure you want to change your placement availability? - Placement details
+          title: Are you sure you want to change your placement availability?
+          caption: Placement details
+          continue: Continue
+          changing_your_placement_availability:
+            Changing your placement availability will mean your existing placements will be deleted.

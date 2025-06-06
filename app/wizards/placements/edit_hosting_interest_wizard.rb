@@ -9,15 +9,24 @@ module Placements
 
     def define_steps
       # Define the wizard steps here
-      add_step(AppetiteStep)
-      case appetite
-      when "actively_looking"
-        actively_looking_steps
-      when "not_open"
-        add_step(ReasonNotHostingStep)
-        add_step(AreYouSureStep)
-      when "interested"
-        interested_steps
+      if school.placements.unavailable_placements_for_academic_year(
+        current_user.selected_academic_year,
+      ).present?
+        add_step(UnableToChangeStep)
+      else
+        if available_placements.present?
+          add_step(ChangePlacementAvailabilityStep)
+        end
+        add_step(AppetiteStep)
+        case appetite
+        when "actively_looking"
+          actively_looking_steps
+        when "not_open"
+          add_step(ReasonNotHostingStep)
+          add_step(AreYouSureStep)
+        when "interested"
+          interested_steps
+        end
       end
     end
 
@@ -36,6 +45,12 @@ module Placements
 
         hosting_interest.save!
 
+        available_placements.destroy_all unless appetite == "actively_looking"
+        school.update!(potential_placement_details: nil) unless appetite == "interested"
+        unless appetite == "not_open"
+          hosting_interest.update!(reasons_not_hosting: nil, other_reason_not_hosting: nil)
+        end
+
         if appetite == "interested"
           save_potential_placements_information
         else
@@ -50,6 +65,13 @@ module Placements
         "reasons_not_hosting" => hosting_interest.reasons_not_hosting,
         "other_reason_not_hosting" => hosting_interest.other_reason_not_hosting,
       }
+    end
+
+    def available_placements
+      @available_placements = school.placements
+        .available_placements_for_academic_year(
+          current_user.selected_academic_year,
+        )
     end
 
     private
