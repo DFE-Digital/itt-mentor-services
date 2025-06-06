@@ -6,7 +6,8 @@
 
       <%= render Placements::Schools::InterestTagComponent.new(
         school: school,
-        academic_year: current_user.selected_academic_year) %>
+        academic_year: current_user.selected_academic_year,
+      ) %>
 
       <p class="govuk-body govuk-!-margin-top-5"><%= t(".you_are_not_offering_placements") %></p>
 
