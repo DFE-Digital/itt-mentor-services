@@ -33,10 +33,13 @@ en:
     schools:
       placements:
         table:
-          subject: Subject
+          placement: Placement
           mentor: Mentor
           expected_date: Expected date
           provider: Provider
+          mentor_not_assigned: Mentor not assigned
+          date_not_added: Date not added
+          provider_not_assigned: Provider not assigned
         add_placement:
           edit:
             cancel: Cancel
