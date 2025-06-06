@@ -18,7 +18,7 @@ en:
           page_title: You are assigning your last available placement to a provider - %{contextual_text}
           title: You are assigning your last available placement to a provider
           assign_provider: Assign provider
-          you_status_will_change: 
+          your_status_will_change: 
             Your status will be set to ‘no placements available’. Providers will no longer contact you about available placements.
           you_can_add_more_placements:
             You can add more placements at anytime.
