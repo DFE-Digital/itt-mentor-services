@@ -19,6 +19,7 @@ RSpec.describe "Support user views a placement with a mentor assigned", service:
   def given_a_placement_exists
     @springfield_elementary_school = build(
       :placements_school,
+      with_hosting_interest: true,
       name: "Springfield Elementary",
       address1: "Westgate Street",
       address2: "Hackney",

@@ -42,6 +42,7 @@ RSpec.describe "User publishes a placement after preview", service: :placements,
   def given_that_placements_exist
     @school = create(
       :placements_school,
+      with_hosting_interest: true,
       name: "Hogwarts",
       address1: "Westgate Street",
       address2: "Hackney",

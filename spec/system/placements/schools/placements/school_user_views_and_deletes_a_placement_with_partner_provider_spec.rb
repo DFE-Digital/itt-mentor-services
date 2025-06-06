@@ -22,6 +22,7 @@ RSpec.describe "School user views and deletes a placement with a partner provide
 
     @springfield_elementary_school = build(
       :placements_school,
+      with_hosting_interest: true,
       name: "Springfield Elementary",
       address1: "Westgate Street",
       address2: "Hackney",

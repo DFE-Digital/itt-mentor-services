@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Placement school user views a list of placements", service: :placements, type: :system do
-  let!(:school) { create(:placements_school) }
-  let!(:another_school) { create(:placements_school) }
+  let!(:school) { create(:placements_school, with_hosting_interest: true) }
+  let!(:another_school) { create(:placements_school, with_hosting_interest: true) }
 
   scenario "View school placements page where school has no placements" do
     given_i_am_signed_in_as_a_placements_user(organisations: [school])

@@ -106,9 +106,13 @@ FactoryBot.define do
       transient do
         with_school_contact { true }
       end
+      transient do
+        with_hosting_interest { false }
+      end
 
       after(:build) do |school, evaluator|
         create(:school_contact, school:) if evaluator.with_school_contact
+        create(:hosting_interest, school:) if evaluator.with_hosting_interest
       end
     end
   end

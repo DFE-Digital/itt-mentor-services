@@ -31,6 +31,7 @@ RSpec.describe "School support user views and deletes a placement", service: :pl
   def given_that_placements_exist
     @springfield_elementary_school = build(
       :placements_school,
+      with_hosting_interest: true,
       name: "Springfield Elementary",
       address1: "Westgate Street",
       address2: "Hackney",

@@ -17,6 +17,7 @@ RSpec.describe "Support user views an empty placements index page", service: :pl
   def given_a_school_exists
     @school = create(
       :placements_school,
+      with_hosting_interest: true,
       name: "Springfield Elementary",
       address1: "Westgate Street",
       address2: "Hackney",

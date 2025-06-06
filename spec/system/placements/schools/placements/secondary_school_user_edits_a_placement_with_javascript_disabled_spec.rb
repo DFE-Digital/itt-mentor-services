@@ -102,6 +102,7 @@ RSpec.describe "Secondary school user edits a placement with javascript disabled
 
     @hogwarts_school = build(
       :placements_school,
+      with_hosting_interest: true,
       name: "Hogwarts",
       address1: "Westgate Street",
       address2: "Hackney",

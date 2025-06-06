@@ -120,6 +120,7 @@ RSpec.describe "Secondary school user adds a placement", service: :placements, t
   def given_that_placements_exist
     @school = create(
       :placements_school,
+      with_hosting_interest: true,
       name: "Hogwarts",
       address1: "Westgate Street",
       address2: "Hackney",

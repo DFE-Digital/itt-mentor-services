@@ -39,7 +39,7 @@ RSpec.describe "School user enters a float as a placement quantity",
   end
 
   def and_i_am_signed_in
-    @school = create(:placements_school)
+    @school = create(:placements_school, with_hosting_interest: true)
     sign_in_placements_user(organisations: [@school])
   end
 

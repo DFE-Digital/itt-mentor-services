@@ -32,11 +32,13 @@ RSpec.describe "Support user changes their selected academic year",
   def given_that_placements_exist
     @springfield_school = create(
       :placements_school,
+      with_hosting_interest: true,
       name: "Springfield Elementary",
     )
 
     @hogwarts_school = create(
       :placements_school,
+      with_hosting_interest: true,
       name: "Hogwarts",
     )
 

@@ -32,11 +32,19 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
 
   def destroy
     authorize @placement
-
-    @placement.destroy!
-    redirect_to index_path, flash: {
-      heading: t(".placement_deleted"),
-    }
+    if @placement.last_placement_for_school?(academic_year: academic_year_scope)
+      @school.hosting_interests.destroy_all
+      @placement.destroy!
+      redirect_to new_add_hosting_interest_placements_school_hosting_interests_path(@school), flash: {
+        heading: t(".placement_deleted"),
+        body: t(".last_placement_deleted_body"),
+      }
+    else
+      @placement.destroy!
+      redirect_to index_path, flash: {
+        heading: t(".placement_deleted"),
+      }
+    end
   end
 
   def preview; end
