@@ -164,3 +164,13 @@ en:
             You can assign a new provider once you have removed the current provider.
         unassign_provider:
           success: Provider removed
+        not_offering:
+          placements: Placements
+          you_are_not_offering_placements: You are not offering placements this academic year.
+          providers_will_see:
+            Providers will see that you are not offering placements and your contact information will be hidden.
+          we_will_email_you:
+            We will email you next year to check whether your placement availability has changed.
+          if_you_can_offer_placements:
+            If you think you can offer placements, %{link} to add placement information.
+          change_your_status: change your status

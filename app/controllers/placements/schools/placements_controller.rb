@@ -9,9 +9,7 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
     @hosting_interest = @school.current_hosting_interest(
       academic_year: current_user.selected_academic_year,
     )
-    @interested_hosting_interest = @hosting_interest&.interested?
-
-    return if @interested_hosting_interest
+    return if @hosting_interest&.interested? || @hosting_interest&.not_open?
 
     @pagy, @placements = pagy(
       placements
