@@ -80,7 +80,7 @@ class Placement < ApplicationRecord
     end
   end
 
-  def last_placement_for_school?
-    school.placements.where.not(id: id).none?
+  def last_placement_for_school?(academic_year:)
+    school.placements.where.not(id: id).where(academic_year: academic_year).none?
   end
 end
