@@ -48,6 +48,7 @@ RSpec.describe "School support user views and deletes a placement", service: :pl
     )
 
     @primary_english_subject = build(:subject, name: "Primary with english", subject_area: :primary)
+    @primary_maths_subject = build(:subject, name: "Primary with mathematics", subject_area: :primary)
 
     @autumn_term = build(:placements_term, name: "Autumn term")
     @spring_term = create(:placements_term, name: "Spring term")
@@ -61,6 +62,14 @@ RSpec.describe "School support user views and deletes a placement", service: :pl
       school: @springfield_elementary_school,
       subject: @primary_english_subject,
       year_group: :year_1,
+      academic_year: @next_academic_year,
+      terms: [@autumn_term],
+    )
+    @second_placement = create(
+      :placement,
+      school: @springfield_elementary_school,
+      subject: @primary_maths_subject,
+      year_group: :year_2,
       academic_year: @next_academic_year,
       terms: [@autumn_term],
     )
@@ -89,10 +98,14 @@ RSpec.describe "School support user views and deletes a placement", service: :pl
   alias_method :then_i_see_the_placements_index_page, :when_i_am_on_the_placements_index_page
 
   def and_i_see_my_placement
-    expect(page).to have_element(:td, text: "Primary with english (Year 1)", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Mentor not assigned", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Autumn term", class: "govuk-table__cell")
-    expect(page).to have_element(:td, text: "Provider not assigned", class: "govuk-table__cell")
+    expect(page).to have_table_row({ "Placement": "Primary with mathematics (Year 2)",
+                                     "Mentor": "Mentor not assigned",
+                                     "Expected date": "Autumn term",
+                                     "Provider": "Provider not assigned" })
+    expect(page).to have_table_row({ "Placement": "Primary with english (Year 1)",
+                                     "Mentor": "Mentor not assigned",
+                                     "Expected date": "Autumn term",
+                                     "Provider": "Provider not assigned" })
   end
 
   def when_i_click_on_my_placement
@@ -146,9 +159,9 @@ RSpec.describe "School support user views and deletes a placement", service: :pl
   end
 
   def and_my_placement_has_been_deleted
-    expect(page).not_to have_element(:td, text: "Primary with english (Year 1)", class: "govuk-table__cell")
-    expect(page).not_to have_element(:td, text: "Mentor not assigned", class: "govuk-table__cell")
-    expect(page).not_to have_element(:td, text: "Autumn term", class: "govuk-table__cell")
-    expect(page).not_to have_element(:td, text: "Provider not assigned", class: "govuk-table__cell")
+    expect(page).not_to have_table_row({ "Placement": "Primary with english (Year 1)",
+                                         "Mentor": "Mentor not assigned",
+                                         "Expected date": "Autumn term",
+                                         "Provider": "Provider not assigned" })
   end
 end

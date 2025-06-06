@@ -49,7 +49,7 @@ RSpec.describe "School user enters zero as a placement quantity",
   end
 
   def and_a_school_exists_with_a_hosting_interest
-    @school = create(:placements_school)
+    @school = create(:placements_school, with_hosting_interest: false)
     @hosting_interest = create(
       :hosting_interest,
       school: @school,

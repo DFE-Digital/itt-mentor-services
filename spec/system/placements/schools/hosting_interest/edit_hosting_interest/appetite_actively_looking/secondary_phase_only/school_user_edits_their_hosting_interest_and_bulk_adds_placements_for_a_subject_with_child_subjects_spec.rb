@@ -81,7 +81,7 @@ RSpec.describe "School user edits their hosting interest and bulk adds placement
   end
 
   def and_a_school_exists_with_a_hosting_interest
-    @school = create(:placements_school)
+    @school = create(:placements_school, with_hosting_interest: false)
     @hosting_interest = create(
       :hosting_interest,
       school: @school,

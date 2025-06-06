@@ -19,9 +19,8 @@ RSpec.describe "School user views and deletes a placement", service: :placements
 
     when_i_click_on_the_delete_placement_link
     and_i_click_on_the_delete_placement_button
-    then_i_see_the_placements_index_page
+    then_i_see_the_expression_of_interest_page
     and_i_see_a_success_message
-    and_my_placement_has_been_deleted
   end
 
   private
@@ -46,7 +45,6 @@ RSpec.describe "School user views and deletes a placement", service: :placements
     )
 
     @primary_english_subject = build(:subject, name: "Primary with english", subject_area: :primary)
-    @primary_maths_subject = build(:subject, name: "Primary with mathematics", subject_area: :primary)
 
     @autumn_term = build(:placements_term, name: "Autumn term")
     @spring_term = create(:placements_term, name: "Spring term")
@@ -60,14 +58,6 @@ RSpec.describe "School user views and deletes a placement", service: :placements
       school: @springfield_elementary_school,
       subject: @primary_english_subject,
       year_group: :year_1,
-      academic_year: @next_academic_year,
-      terms: [@autumn_term],
-    )
-    @second_placement = create(
-      :placement,
-      school: @springfield_elementary_school,
-      subject: @primary_maths_subject,
-      year_group: :year_2,
       academic_year: @next_academic_year,
       terms: [@autumn_term],
     )
@@ -87,10 +77,6 @@ RSpec.describe "School user views and deletes a placement", service: :placements
   alias_method :then_i_see_the_placements_index_page, :when_i_am_on_the_placements_index_page
 
   def then_i_see_my_placement
-    expect(page).to have_table_row({ "Placement": "Primary with mathematics (Year 2)",
-                                     "Mentor": "Mentor not assigned",
-                                     "Expected date": "Autumn term",
-                                     "Provider": "Provider not assigned" })
     expect(page).to have_table_row({ "Placement": "Primary with english (Year 1)",
                                      "Mentor": "Mentor not assigned",
                                      "Expected date": "Autumn term",
@@ -136,21 +122,22 @@ RSpec.describe "School user views and deletes a placement", service: :placements
     click_on "Delete placement"
   end
 
-  def then_i_see_the_placements_index_page
-    expect(page).to have_title("Placements - Manage school placements - GOV.UK")
+  def then_i_see_the_expression_of_interest_page
+    expect(page).to have_title(
+      "Can your school offer placements for trainee teachers in the academic year #{@next_academic_year_name}? - Manage school placements - GOV.UK",
+    )
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_h1("Placements")
-    expect(page).to have_link("Add placement", class: "govuk-button")
+    expect(page).to have_element(
+      :legend,
+      text: "Can your school offer placements for trainee teachers in the academic year #{@next_academic_year_name}?",
+      class: "govuk-fieldset__legend",
+    )
+    expect(page).to have_field("Yes - I can offer placements", type: :radio)
+    expect(page).to have_field("Maybe - I’m not sure yet", type: :radio)
+    expect(page).to have_field("No - I can’t offer placements", type: :radio)
   end
 
   def and_i_see_a_success_message
-    expect(page).to have_success_banner("Placement deleted")
-  end
-
-  def and_my_placement_has_been_deleted
-    expect(page).not_to have_table_row({ "Placement": "Primary with english (Year 1)",
-                                         "Mentor": "Mentor not assigned",
-                                         "Expected date": "Autumn term",
-                                         "Provider": "Provider not assigned" })
+    expect(page).to have_success_banner("Placement deleted", "You no longer have placement information available. Confirm your placement availability so providers know whether to contact you.")
   end
 end
