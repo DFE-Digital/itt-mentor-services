@@ -119,6 +119,7 @@ RSpec.describe "Primary school user adds a placement", service: :placements, typ
   def given_that_placements_exist
     @school = create(
       :placements_school,
+      with_hosting_interest: true,
       name: "Springfield Elementary",
       address1: "Westgate Street",
       address2: "Hackney",

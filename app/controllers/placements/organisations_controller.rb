@@ -30,10 +30,10 @@ class Placements::OrganisationsController < Placements::ApplicationController
 
   def landing_page_path(organisation)
     if organisation.is_a?(School)
-      if organisation.expression_of_interest_completed?
-        placements_school_placements_path(organisation)
-      else
+      if organisation.hosting_interests.blank? || !organisation.expression_of_interest_completed?
         new_add_hosting_interest_placements_school_hosting_interests_path(organisation)
+      else
+        placements_school_placements_path(organisation)
       end
     elsif !Flipper.enabled?(:provider_hide_find_placements, organisation) # Provider
       placements_provider_find_index_path(organisation)

@@ -38,6 +38,7 @@ RSpec.describe "School user edits a placement with no mentors", service: :placem
   def given_that_placements_exist
     @springfield_elementary_school = build(
       :placements_school,
+      with_hosting_interest: true,
       name: "Springfield Elementary",
       address1: "Westgate Street",
       address2: "Hackney",

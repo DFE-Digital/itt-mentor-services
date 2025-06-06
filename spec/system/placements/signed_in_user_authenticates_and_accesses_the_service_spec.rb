@@ -10,7 +10,7 @@ RSpec.describe "Signed in user authenticates and accesses the service", service:
   private
 
   def given_a_school_exists
-    @school = create(:placements_school, name: "Hogwarts")
+    @school = create(:placements_school, with_hosting_interest: true, name: "Hogwarts")
   end
 
   def and_i_am_signed_in

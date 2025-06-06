@@ -141,6 +141,7 @@ RSpec.describe "All-through support school user adds a placement", service: :pla
   def given_that_placements_exist
     @school = create(
       :placements_school,
+      with_hosting_interest: true,
       name: "Malory Towers",
       address1: "Westgate Street",
       address2: "Hackney",

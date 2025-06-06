@@ -113,6 +113,7 @@ RSpec.describe "Primary school user edits a placement with javascript disabled",
 
     @springfield_elementary_school = build(
       :placements_school,
+      with_hosting_interest: true,
       name: "Springfield Elementary",
       address1: "Westgate Street",
       address2: "Hackney",

@@ -29,6 +29,7 @@ RSpec.describe "School user views and deletes a placement", service: :placements
   def given_that_placements_exist
     @springfield_elementary_school = build(
       :placements_school,
+      with_hosting_interest: true,
       name: "Springfield Elementary",
       address1: "Westgate Street",
       address2: "Hackney",
@@ -123,7 +124,7 @@ RSpec.describe "School user views and deletes a placement", service: :placements
     click_on "Delete placement"
   end
 
-  def then_i_see_the_placements_index_page
+  def then_i_see_the_expression_of_interest_page
     expect(page).to have_title("Placements - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
@@ -132,12 +133,5 @@ RSpec.describe "School user views and deletes a placement", service: :placements
 
   def and_i_see_a_success_message
     expect(page).to have_success_banner("Placement deleted")
-  end
-
-  def and_my_placement_has_been_deleted
-    expect(page).not_to have_element(:td, text: "Primary with english (Year 1)", class: "govuk-table__cell")
-    expect(page).not_to have_element(:td, text: "Not yet known", class: "govuk-table__cell")
-    expect(page).not_to have_element(:td, text: "Autumn term", class: "govuk-table__cell")
-    expect(page).not_to have_element(:td, text: "Not yet known", class: "govuk-table__cell")
   end
 end
