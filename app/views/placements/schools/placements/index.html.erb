@@ -1,7 +1,9 @@
 <% content_for :page_title, t(".page_title") %>
 <%= render "placements/schools/primary_navigation", school: @school, current_navigation: :placements %>
-<% if @interested_hosting_interest %>
+<% if @hosting_interest&.interested? %>
   <%= render "/placements/schools/potential_placements/details", placement_details: @school.potential_placement_details %>
+<% elsif @hosting_interest&.not_open? %>
+  <%= render "/placements/schools/placements/not_offering", hosting_interest: @hosting_interest, school: @school %>
 <% else %>
   <div class="govuk-width-container">
     <div class="govuk-grid-row">

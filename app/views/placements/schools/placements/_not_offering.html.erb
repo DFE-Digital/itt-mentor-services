@@ -1,0 +1,28 @@
+<%# locals: { school:, hosting_interest: } -%>
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l"><%= t(".placements") %></h1>
+
+      <%= render Placements::Schools::InterestTagComponent.new(
+        school: school,
+        academic_year: current_user.selected_academic_year) %>
+
+      <p class="govuk-body govuk-!-margin-top-5"><%= t(".you_are_not_offering_placements") %></p>
+
+      <p class="govuk-body"><%= t(".providers_will_see") %></p>
+
+      <p class="govuk-body"><%= t(".we_will_email_you") %></p>
+
+      <p class="govuk-body">
+        <%= embedded_link_text(
+          t(".if_you_can_offer_placements",
+            link: govuk_link_to(
+              t(".change_your_status"),
+              new_edit_hosting_interest_placements_school_hosting_interest_path(@school, @hosting_interest),
+            )),
+        ) %>
+      </p>
+    </div>
+  </div>
+</div>
