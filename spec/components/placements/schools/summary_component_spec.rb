@@ -41,7 +41,7 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
       end
 
       it "displays a link to the school's details page" do
-        expect(page).to have_link("Hogwarts, London", href: "/providers/#{provider.id}/find/#{school.id}/placement_information")
+        expect(page).to have_link("Hogwarts, London", href: "/providers/#{provider.id}/find/#{school.id}/placements")
       end
 
       it "displays the school's name" do
@@ -50,21 +50,18 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
 
       it "displays the school's details", :aggregate_failures do
         expect(page).to have_content("School details")
-        expect(page).to have_content("Phase")
-        expect(page).to have_content("All-through")
-        expect(page).to have_content("Age range")
-        expect(page).to have_content("5 to 11")
+        expect(page).to have_content("Phase (age range)")
+        expect(page).to have_content("All-through (5 to 11)")
         expect(page).to have_content("Establishment group")
         expect(page).to have_content("Local authority maintained schools")
       end
 
       it "displays placement information", :aggregate_failures do
         expect(page).to have_content("Placement information")
+        expect(page).to have_content("Unfilled placements")
+        expect(page).to have_link("Approximate information available", href: "/providers/#{provider.id}/find/#{school.id}/placements")
         expect(page).to have_content("Last offered")
         expect(page).to have_content("This school has not previously hosted placements")
-        expect(page).to have_content("Contact")
-        expect(page).to have_content("Placement Coordinator")
-        expect(page).to have_content("placement_coordinator@example.school")
       end
 
       context "when location coordinates have been provided" do
@@ -107,10 +104,8 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
 
       it "displays the school's details", :aggregate_failures do
         expect(page).to have_content("School details")
-        expect(page).to have_content("Phase")
-        expect(page).to have_content("All-through")
-        expect(page).to have_content("Age range")
-        expect(page).to have_content("5 to 11")
+        expect(page).to have_content("Phase (age range)")
+        expect(page).to have_content("All-through (5 to 11)")
         expect(page).to have_content("Establishment group")
         expect(page).to have_content("Local authority maintained schools")
       end
@@ -119,13 +114,16 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
         expect(page).to have_content("Placement information")
         expect(page).to have_content("Unfilled placements")
         expect(page).to have_link("1 unfilled placement", href: "/providers/#{provider.id}/find/#{school.id}/placements")
-        expect(page).to have_content("Hosting subjects")
-        expect(page).to have_content("0 filled placements")
         expect(page).to have_content("Last offered")
         expect(page).to have_content("This school has not previously hosted placements")
-        expect(page).to have_content("Contact")
-        expect(page).to have_content("Placement Coordinator")
-        expect(page).to have_content("placement_coordinator@example.school")
+      end
+
+      it "displays the getting there section", :aggregate_failures do
+        expect(page).to have_content("Getting there")
+        expect(page).to have_content("Address")
+        expect(page).to have_content("Magical Lane")
+        expect(page).to have_content("London")
+        expect(page).to have_content("SW1A 1AA")
       end
 
       context "when location coordinates have been provided" do
@@ -167,10 +165,8 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
 
       it "displays the school's details", :aggregate_failures do
         expect(page).to have_content("School details")
-        expect(page).to have_content("Phase")
-        expect(page).to have_content("All-through")
-        expect(page).to have_content("Age range")
-        expect(page).to have_content("5 to 11")
+        expect(page).to have_content("Phase (age range)")
+        expect(page).to have_content("All-through (5 to 11)")
         expect(page).to have_content("Establishment group")
         expect(page).to have_content("Local authority maintained schools")
       end
@@ -183,9 +179,14 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
         expect(page).to have_content("1 filled placement")
         expect(page).to have_content("Last offered")
         expect(page).to have_content("This school has not previously hosted placements")
-        expect(page).to have_content("Contact")
-        expect(page).to have_content("Placement Coordinator")
-        expect(page).to have_content("placement_coordinator@example.school")
+      end
+
+      it "displays the getting there section", :aggregate_failures do
+        expect(page).to have_content("Getting there")
+        expect(page).to have_content("Address")
+        expect(page).to have_content("Magical Lane")
+        expect(page).to have_content("London")
+        expect(page).to have_content("SW1A 1AA")
       end
 
       context "when location coordinates have been provided" do
@@ -227,10 +228,8 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
 
       it "displays the school's details", :aggregate_failures do
         expect(page).to have_content("School details")
-        expect(page).to have_content("Phase")
-        expect(page).to have_content("All-through")
-        expect(page).to have_content("Age range")
-        expect(page).to have_content("5 to 11")
+        expect(page).to have_content("Phase (age range)")
+        expect(page).to have_content("All-through (5 to 11)")
         expect(page).to have_content("Establishment group")
         expect(page).to have_content("Local authority maintained schools")
       end
@@ -241,9 +240,14 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
         expect(page).to have_content("1 filled placement")
         expect(page).to have_content("Last offered")
         expect(page).to have_content("This school has not previously hosted placements")
-        expect(page).to have_content("Contact")
-        expect(page).to have_content("Placement Coordinator")
-        expect(page).to have_content("placement_coordinator@example.school")
+      end
+
+      it "displays the getting there section", :aggregate_failures do
+        expect(page).to have_content("Getting there")
+        expect(page).to have_content("Address")
+        expect(page).to have_content("Magical Lane")
+        expect(page).to have_content("London")
+        expect(page).to have_content("SW1A 1AA")
       end
 
       context "when location coordinates have been provided" do
@@ -277,7 +281,7 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
       end
 
       it "displays a link to the school's details page" do
-        expect(page).to have_link("Hogwarts, London", href: "/providers/#{provider.id}/find/#{school.id}/placement_information")
+        expect(page).to have_link("Hogwarts, London", href: "/providers/#{provider.id}/find/#{school.id}/placements")
       end
 
       it "displays the school's name" do
@@ -286,10 +290,8 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
 
       it "displays the school's details", :aggregate_failures do
         expect(page).to have_content("School details")
-        expect(page).to have_content("Phase")
-        expect(page).to have_content("All-through")
-        expect(page).to have_content("Age range")
-        expect(page).to have_content("5 to 11")
+        expect(page).to have_content("Phase (age range)")
+        expect(page).to have_content("All-through (5 to 11)")
         expect(page).to have_content("Establishment group")
         expect(page).to have_content("Local authority maintained schools")
       end
@@ -298,9 +300,14 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
         expect(page).to have_content("Placement information")
         expect(page).to have_content("Last offered")
         expect(page).to have_content("1 subject in #{previous_academic_year.name}")
-        expect(page).to have_content("Contact")
-        expect(page).to have_content("Placement Coordinator")
-        expect(page).to have_content("placement_coordinator@example.school")
+      end
+
+      it "displays the getting there section", :aggregate_failures do
+        expect(page).to have_content("Getting there")
+        expect(page).to have_content("Address")
+        expect(page).to have_content("Magical Lane")
+        expect(page).to have_content("London")
+        expect(page).to have_content("SW1A 1AA")
       end
 
       context "when location coordinates have been provided" do
@@ -354,18 +361,24 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
 
     it "displays the school's details", :aggregate_failures do
       expect(page).to have_content("School details")
-      expect(page).to have_content("Phase")
-      expect(page).to have_content("All-through")
-      expect(page).to have_content("Age range")
-      expect(page).to have_content("5 to 11")
+      expect(page).to have_content("Phase (age range)")
+      expect(page).to have_content("All-through (5 to 11)")
       expect(page).to have_content("Establishment group")
       expect(page).to have_content("Local authority maintained schools")
     end
 
     it "displays placement information", :aggregate_failures do
       expect(page).to have_content("Placement information")
-      expect(page).to have_content("Previous placements")
+      expect(page).to have_content("Last offered")
       expect(page).to have_content("This school has previously hosted placements")
+    end
+
+    it "displays the getting there section", :aggregate_failures do
+      expect(page).to have_content("Getting there")
+      expect(page).to have_content("Address")
+      expect(page).to have_content("Magical Lane")
+      expect(page).to have_content("London")
+      expect(page).to have_content("SW1A 1AA")
     end
   end
 
@@ -382,20 +395,24 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
 
     it "displays the school's details", :aggregate_failures do
       expect(page).to have_content("School details")
-      expect(page).to have_content("Phase")
-      expect(page).to have_content("All-through")
-      expect(page).to have_content("Age range")
-      expect(page).to have_content("5 to 11")
+      expect(page).to have_content("Phase (age range)")
+      expect(page).to have_content("All-through (5 to 11)")
       expect(page).to have_content("Establishment group")
       expect(page).to have_content("Local authority maintained schools")
     end
 
     it "displays placement information", :aggregate_failures do
       expect(page).to have_content("Placement information")
-      expect(page).to have_content("Placement subjects")
-      expect(page).to have_content("Not offering placements")
-      expect(page).to have_content("Previous placements")
+      expect(page).to have_content("Last offered")
       expect(page).to have_content("This school has not previously hosted placements")
+    end
+
+    it "displays the getting there section", :aggregate_failures do
+      expect(page).to have_content("Getting there")
+      expect(page).to have_content("Address")
+      expect(page).to have_content("Magical Lane")
+      expect(page).to have_content("London")
+      expect(page).to have_content("SW1A 1AA")
     end
 
     it "displays a message indicating the school doesn't want to be contacted" do
@@ -407,8 +424,18 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
         described_class.new(school:, provider:, academic_year:, location_coordinates: "41.40338, 2.17403")
       end
 
-      it "does not display the getting there section" do
-        expect(page).not_to have_content("Getting there")
+      it "displays the getting there section", :aggregate_failures do
+        expect(page).to have_content("Getting there")
+        expect(page).to have_content("Address")
+        expect(page).to have_content("Magical Lane")
+        expect(page).to have_content("London")
+        expect(page).to have_content("SW1A 1AA")
+        expect(page).to have_content("Distance")
+        expect(page).to have_content("42 miles")
+        expect(page).to have_content("Travel time")
+        expect(page).to have_content("30 minutes by public transport")
+        expect(page).to have_content("15 minutes drive")
+        expect(page).to have_content("45 minutes walk")
       end
     end
   end
@@ -427,17 +454,15 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
 
     it "displays the school's details", :aggregate_failures do
       expect(page).to have_content("School details")
-      expect(page).to have_content("Phase")
-      expect(page).to have_content("All-through")
-      expect(page).to have_content("Age range")
-      expect(page).to have_content("5 to 11")
+      expect(page).to have_content("Phase (age range)")
+      expect(page).to have_content("All-through (5 to 11)")
       expect(page).to have_content("Establishment group")
       expect(page).to have_content("Local authority maintained schools")
     end
 
     it "displays placement information", :aggregate_failures do
-      expect(page).to have_content("Placement availability unknown")
-      expect(page).to have_content("Previous placements")
+      expect(page).to have_content("Placement information")
+      expect(page).to have_content("Last offered")
       expect(page).to have_content("This school has not previously hosted placements")
     end
 

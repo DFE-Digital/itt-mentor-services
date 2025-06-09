@@ -3,10 +3,9 @@ en:
     placements:
       schools:
         summary_component:
-          phase: Phase
+          phase_age_range: Phase (age range)
           academic_year: Academic year
           terms: Expected date
-          age_range: Age range
           establishment_group: Establishment group
           gender: Gender
           religious_character: Religious character
@@ -31,6 +30,7 @@ en:
           unavailable_placements_count:
             one: "%{count} filled placement"
             other: "%{count} filled placements"
+          potential_placements: Approximate information available
           historically_offered_placements: This school has previously hosted placements
           last_offered: Last offered
           last_offered_count:
