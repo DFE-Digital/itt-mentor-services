@@ -14,7 +14,13 @@
 <%= render SecondaryNavigationComponent.new do |component| %>
   <% if (unfilled_subjects.any? || filled_subjects.any?) && school.current_hosting_interest(academic_year:).appetite == "actively_looking" %>
     <% component.with_navigation_item t(".placements"), placements_placements_provider_find_path %>
+    <% component.with_navigation_item t(".placement_information"), placement_information_placements_provider_find_path %>
+    <% component.with_navigation_item t(".school_details"), school_details_placements_provider_find_path %>
+  <% elsif school.current_hosting_interest(academic_year:)&.appetite == "interested" %>
+    <% component.with_navigation_item t(".placements"), placements_placements_provider_find_path %>
+    <% component.with_navigation_item t(".placement_information"), placement_information_placements_provider_find_path %>
+    <% component.with_navigation_item t(".school_details"), school_details_placements_provider_find_path %>
+  <% else %>
+    <% component.with_navigation_item t(".school_details"), school_details_placements_provider_find_path %>
   <% end %>
-  <% component.with_navigation_item t(".placement_information"), placement_information_placements_provider_find_path %>
-  <% component.with_navigation_item t(".school_details"), school_details_placements_provider_find_path %>
 <% end %>

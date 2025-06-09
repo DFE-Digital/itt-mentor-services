@@ -55,6 +55,12 @@ en:
           trained_mentors_false_label: "No"
           primary_year_group: Primary year group
         placements:
+          approximate_information: Approximate information from the school
+          proposed_phases: Proposed phases
+          proposed_year_groups: Proposed primary year groups
+          proposed_subjects: Proposed secondary subjects
+          potential_number_of_placements: Potential number of placements
+          message_from_the_school: Message from the school
           page_title: "%{school_name} - Find"
           placements: Placements
           placement_information: Placement information

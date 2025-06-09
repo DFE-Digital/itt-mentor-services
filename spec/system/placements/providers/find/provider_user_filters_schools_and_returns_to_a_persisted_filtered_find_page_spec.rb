@@ -18,7 +18,7 @@ RSpec.describe "Provider user filters schools and returns to a persisted filtere
     and_i_see_that_the_open_to_hosting_and_not_hosting_filter_tags
 
     when_i_click_on_springfield_elementary_school
-    then_i_see_the_springfield_elementary_school_placement_info_page
+    then_i_see_the_springfield_elementary_school_placements_page
 
     when_i_click_on_back
     then_i_see_the_find_schools_page
@@ -148,10 +148,10 @@ RSpec.describe "Provider user filters schools and returns to a persisted filtere
     click_on "Springfield Elementary"
   end
 
-  def then_i_see_the_springfield_elementary_school_placement_info_page
+  def then_i_see_the_springfield_elementary_school_placements_page
     expect(page).to have_title("Springfield Elementary - Find - Manage school placements - GOV.UK")
     expect(page).to have_h1("Springfield Elementary")
-    expect(page).to have_current_path("/providers/#{@provider.id}/find/#{@open_to_hosting_school.id}/placement_information")
+    expect(page).to have_current_path("/providers/#{@provider.id}/find/#{@open_to_hosting_school.id}/placements")
   end
 
   def when_i_click_on_back
