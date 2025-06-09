@@ -20,6 +20,14 @@ class Placements::Schools::SummaryComponent < ApplicationComponent
     I18n.t("components.placement.summary_component.distance_in_miles", distance:)
   end
 
+  def has_available_placements?
+    school_available_placements(academic_year:).exists?
+  end
+
+  def has_unavailable_placements?
+    school_unavailable_placements(academic_year:).exists?
+  end
+
   def available_placements_count
     @available_placements_count ||= school_available_placements(academic_year:).count
   end
