@@ -32,6 +32,27 @@ RSpec.describe Placements::EditHostingInterestWizard do
 
     it { is_expected.to eq %i[appetite] }
 
+    context "when the school has existing placements" do
+      context "when at least one placement is assigned to a provider" do
+        before do
+          create(
+            :placement,
+            school:,
+            provider: build(:placements_provider),
+            academic_year: current_user.selected_academic_year,
+          )
+        end
+
+        it { is_expected.to eq %i[unable_to_change] }
+      end
+
+      context "when all placements are not assigned to providers" do
+        before { create(:placement, school:, academic_year: current_user.selected_academic_year) }
+
+        it { is_expected.to eq %i[change_placement_availability appetite] }
+      end
+    end
+
     context "when the appetite is set to 'actively_looking' during the appetite step" do
       let(:state) do
         {
@@ -282,6 +303,52 @@ RSpec.describe Placements::EditHostingInterestWizard do
             expect(school.placements.where(subject_id: mathematics.id).count).to eq(3)
           end
         end
+
+        context "when the school has potential placement details" do
+          let(:state) do
+            {
+              "appetite" => { "appetite" => "actively_looking" },
+              "phase" => { "phases" => %w[Primary] },
+              "year_group_selection" => { "year_groups" => %w[reception year_3 mixed_year_groups] },
+              "year_group_placement_quantity" => { "reception" => "1", "year_3" => "2", "mixed_year_groups" => "3" },
+            }
+          end
+
+          before do
+            create(:subject, :primary, name: "Primary", code: "00")
+            school.update!(
+              potential_placement_details: { "appetite" => { "appetite" => "interested" } },
+            )
+          end
+
+          it "nullifies the schools potential placement details" do
+            expect { update_hosting_interest }.to change(school, :potential_placement_details).to(nil)
+          end
+        end
+
+        context "when the school has reasons for not hosting" do
+          let(:state) do
+            {
+              "appetite" => { "appetite" => "actively_looking" },
+              "phase" => { "phases" => %w[Primary] },
+              "year_group_selection" => { "year_groups" => %w[reception year_3 mixed_year_groups] },
+              "year_group_placement_quantity" => { "reception" => "1", "year_3" => "2", "mixed_year_groups" => "3" },
+            }
+          end
+
+          before do
+            create(:subject, :primary, name: "Primary", code: "00")
+            hosting_interest.update!(
+              reasons_not_hosting: ["High number of pupils with SEND needs", "Other"],
+              other_reason_not_hosting: "Some other reason",
+            )
+          end
+
+          it "nullifies the school's reasons for not hosting" do
+            expect { update_hosting_interest }.to change(hosting_interest, :reasons_not_hosting).to(nil)
+              .and change(hosting_interest, :other_reason_not_hosting).to(nil)
+          end
+        end
       end
 
       context "when the appetite is 'not_open'" do
@@ -313,6 +380,92 @@ RSpec.describe Placements::EditHostingInterestWizard do
               "Number of pupils with SEND needs",
               "Working to improve our OFSTED rating",
             )
+          end
+        end
+
+        context "when the school has potential placement details" do
+          before do
+            school.update!(
+              potential_placement_details: { "appetite" => { "appetite" => "interested" } },
+            )
+          end
+
+          it "nullifies the schools potential placement details" do
+            expect { update_hosting_interest }.to change(school, :potential_placement_details).to(nil)
+          end
+        end
+
+        context "when the school has existing placements" do
+          before { create(:placement, school:, academic_year: current_user.selected_academic_year) }
+
+          it "destroys all the placements for that school in the selected academic year" do
+            expect { update_hosting_interest }.to change {
+              school.placements.available_placements_for_academic_year(
+                current_user.selected_academic_year,
+              ).count
+            }.from(1).to(0)
+          end
+        end
+      end
+
+      context "when the appetite is 'interested'" do
+        context "when the phase is unknown" do
+          let(:state) do
+            {
+              "appetite" => { "appetite" => "interested" },
+              "phase" => { "phases" => %w[unknown] },
+              "note_to_providers" => { "note" => "" },
+            }
+          end
+
+          it "updates the schools potential placement details" do
+            expect { update_hosting_interest }.to change(school, :potential_placement_details).from(nil)
+            school.reload
+            potential_placement_details = school.potential_placement_details
+            expect(potential_placement_details["phase"]).to eq({ "phases" => %w[unknown] })
+            expect(potential_placement_details["note_to_providers"]).to eq({ "note" => "" })
+          end
+        end
+
+        context "when the school has existing placements" do
+          let(:state) do
+            {
+              "appetite" => { "appetite" => "interested" },
+              "phase" => { "phases" => %w[unknown] },
+              "note_to_providers" => { "note" => "" },
+            }
+          end
+
+          before { create(:placement, school:, academic_year: current_user.selected_academic_year) }
+
+          it "destroys all the placements for that school in the selected academic year" do
+            expect { update_hosting_interest }.to change {
+              school.placements.available_placements_for_academic_year(
+                current_user.selected_academic_year,
+              ).count
+            }.from(1).to(0)
+          end
+        end
+
+        context "when the school has reasons for not hosting" do
+          let(:state) do
+            {
+              "appetite" => { "appetite" => "interested" },
+              "phase" => { "phases" => %w[unknown] },
+              "note_to_providers" => { "note" => "" },
+            }
+          end
+
+          before do
+            hosting_interest.update!(
+              reasons_not_hosting: ["High number of pupils with SEND needs", "Other"],
+              other_reason_not_hosting: "Some other reason",
+            )
+          end
+
+          it "nullifies the school's reasons for not hosting" do
+            expect { update_hosting_interest }.to change(hosting_interest, :reasons_not_hosting).to(nil)
+              .and change(hosting_interest, :other_reason_not_hosting).to(nil)
           end
         end
       end
