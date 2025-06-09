@@ -14,7 +14,9 @@ class Placements::Providers::FindController < Placements::ApplicationController
     calculate_travel_time
   end
 
-  def placements; end
+  def placements
+    @interested_in_hosting = school.current_hosting_interest(academic_year: selected_academic_year)&.appetite == "interested"
+  end
 
   def placement_information
     @placements_last_offered = placements_last_offered

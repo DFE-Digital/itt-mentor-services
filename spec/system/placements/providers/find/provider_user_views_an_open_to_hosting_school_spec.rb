@@ -11,7 +11,6 @@ RSpec.describe "Provider user views a school which is open to hosting", service:
 
     when_i_click_on_the_open_to_hosting_school_name
     then_i_see_the_placement_information_page
-    and_i_cannot_see_the_placements_tab
 
     when_i_navigate_to_the_school_details_page
     then_i_see_the_school_details_page
@@ -47,6 +46,11 @@ RSpec.describe "Provider user views a school which is open to hosting", service:
       percentage_free_school_meals: 17,
       special_classes: "No Special Classes",
       send_provision: "Resourced provision",
+      potential_placement_details: { "phase" => { "phases" => %w[Primary Secondary] },
+                                     "note_to_providers" => { "note" => "We are a small school." },
+                                     "year_group_selection" => { "year_groups" => ["Year 1, Year 2"] },
+                                     "secondary_placement_quantity" => { "biology" => 1, "chemistry" => 2 },
+                                     "year_group_placement_quantity" => { "year_1" => 2, "year_2" => 1 } },
       hosting_interests:,
     )
   end
@@ -76,21 +80,19 @@ RSpec.describe "Provider user views a school which is open to hosting", service:
     click_on "Shelbyville High School"
   end
 
-  def and_i_cannot_see_the_placements_tab
-    expect(primary_navigation).not_to have_link("Placements", href: placements_placements_provider_find_path(@provider, @already_hosting_school))
-  end
-
   def then_i_see_the_placement_information_page
     expect(page).to have_title("Shelbyville High School - Find - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Find")
     expect(page).to have_h1("Shelbyville High School")
     expect(page).to have_tag("May offer placements", "yellow")
-    expect(secondary_navigation).to have_current_item("Placement information")
-    expect(page).to have_h2("Placement contact")
-    expect(page).to have_summary_list_row("Name", "Placement Coordinator")
-    expect(page).to have_summary_list_row("Email", "placement_coordinator@example.school")
-    expect(page).to have_h2("Placements hosted in previous years")
-    expect(page).to have_element(:p, text: "This school has not previously offered placements", class: "govuk-body")
+    expect(secondary_navigation).to have_current_item("Placements")
+    expect(page).to have_h3("Approximate information from the school")
+    expect(page).to have_result_detail_row("Proposed phases", "Primary Secondary")
+    expect(page).to have_result_detail_row("Proposed primary year groups", "2 Year 1 1 Year 2")
+    expect(page).to have_result_detail_row("Proposed secondary subjects", "1 Biology 2 Chemistry")
+    expect(page).to have_result_detail_row("Potential number of placements", "6")
+    expect(page).to have_h3("Message from the school")
+    expect(page).to have_paragraph("We are a small school.")
   end
 
   def when_i_navigate_to_the_school_details_page
