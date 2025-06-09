@@ -17,6 +17,7 @@ en:
           page_title: Are you sure you want to change your placement availability? - Placement details
           title: Are you sure you want to change your placement availability?
           caption: Placement details
+          your_placements: Your placements
           continue: Continue
           changing_your_placement_availability:
             Changing your placement availability will mean your existing placements will be deleted.
