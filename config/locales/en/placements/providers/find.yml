@@ -58,16 +58,17 @@ en:
             active: Only schools using the service
             all: All schools
         placements:
-          approximate_information: Approximate information from the school
-          proposed_phases: Proposed phases
-          proposed_year_groups: Proposed primary year groups
-          proposed_subjects: Proposed secondary subjects
-          potential_number_of_placements: Potential number of placements
-          message_from_the_school: Message from the school
+          phase: Phase
+          unknown: Unknown
+          potential_primary_placements: Potential primary school placements
+          year_group: Year group
+          number_of_placements: Number of placements
+          not_entered: Not entered
+          potential_secondary_placements: Potential secondary school placements
+          subject: Subject
+          additional_information: Additional information
+          message_to_providers: Message to providers
           page_title: "%{school_name} - Find"
-          placements: Placements
-          placement_information: Placement information
-          school_details: School details
           description: This school has specified which placements they would like to host in the %{academic_year_name} academic year.
           unfilled_placements:
             one: "%{count} unfilled placement"
