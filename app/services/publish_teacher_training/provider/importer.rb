@@ -25,6 +25,34 @@ module PublishTeacherTraining
 
       private
 
+      # NIoT has multiple organisations in other services, however we only want one in this service, the one we've
+      # chosen has the code 2N2, these are the ones we want to ignore
+      NIOT_CODES_TO_IGNORE = %w[
+        1YF
+        21J
+        1GV
+        2HE
+        24P
+        1MN
+        1TZ
+        5J5
+        7K9
+        L06
+        2P4
+        21P
+        1FE
+        3P4
+        3L4
+        2H7
+        2A6
+        4W2
+        4L1
+        4L3
+        4C2
+        5A6
+        2U6
+      ].freeze
+
       def invalid?(provider_attributes)
         provider_attributes["name"].blank? || provider_attributes["provider_type"].blank? ||
           provider_attributes["code"].blank?
@@ -36,6 +64,7 @@ module PublishTeacherTraining
           provider_attributes = provider_details["attributes"]
           @invalid_records << "Provider with code #{provider_attributes["code"]} is invalid" if invalid?(provider_attributes)
           next if invalid?(provider_attributes)
+          next if NIOT_CODES_TO_IGNORE.include?(provider_attributes["code"])
 
           @records << {
             code: provider_attributes["code"],
