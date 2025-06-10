@@ -5,36 +5,6 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
 
   it_behaves_like "a service object"
 
-  describe ".NIOT_CODES_TO_IGNORE" do
-    it "contains the correct values" do
-      expect(described_class::NIOT_CODES_TO_IGNORE).to match_array(%w[
-        1YF
-        21J
-        1GV
-        2HE
-        24P
-        1MN
-        1TZ
-        5J5
-        7K9
-        L06
-        2P4
-        21P
-        1FE
-        3P4
-        3L4
-        2H7
-        2A6
-        4W2
-        4L1
-        4L3
-        4C2
-        5A6
-        2U6
-      ])
-    end
-  end
-
   context "with only providers in API response which don't exist" do
     before do
       non_existing_providers_request
@@ -42,7 +12,7 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
 
     it "creates new provider records for responses" do
       expect { importer }.to change(Provider, :count).by(3)
-                                                     .and change(ProviderEmailAddress, :count).by(2)
+        .and change(ProviderEmailAddress, :count).by(2)
       expect(
         Provider.find_by(
           name: "Provider 1",
@@ -71,18 +41,6 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
         ),
       ).to be_present
     end
-
-    it "does not import the NIoT providers" do
-      expect(
-        Provider.find_by(
-          name: "NIoT",
-          code: "L06",
-          provider_type: :scitt,
-          latitude: 56.68806439999999,
-          longitude: -1.853286,
-        ),
-      ).not_to be_present
-    end
   end
 
   context "with providers in API response which pre-exist" do
@@ -96,7 +54,7 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
     it "creates new provider records for responses which don't already exist or are valid,
       and updates any pre-existing providers" do
       expect { importer }.to change(Provider, :count).by(1)
-                                                     .and change(ProviderEmailAddress, :count).by(2)
+        .and change(ProviderEmailAddress, :count).by(2)
       new_provider = Provider.find_by(
         name: "Provider 1",
         code: "Prov1",
@@ -186,17 +144,6 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
               "provider_type" => "lead_school",
               "email" => "provider_3@example.com",
               "latitude" => 53.68806439999999,
-              "longitude" => -1.853286,
-            },
-          },
-          {
-            "id" => 456,
-            "attributes" => {
-              "name" => "NIoT",
-              "code" => "L06",
-              "provider_type" => "scitt",
-              "email" => "niot@example.com",
-              "latitude" => 56.68806439999999,
               "longitude" => -1.853286,
             },
           },
