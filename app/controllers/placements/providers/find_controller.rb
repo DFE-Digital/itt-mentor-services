@@ -14,7 +14,7 @@ class Placements::Providers::FindController < Placements::ApplicationController
   end
 
   def placements
-    @interested_in_hosting = school.current_hosting_interest(academic_year: selected_academic_year)&.appetite == "interested"
+    @interested_in_hosting = school.current_hosting_interest(academic_year: selected_academic_year).interested?
   end
 
   def placement_information
