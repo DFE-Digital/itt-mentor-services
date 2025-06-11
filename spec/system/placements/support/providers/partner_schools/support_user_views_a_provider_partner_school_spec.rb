@@ -50,7 +50,7 @@ RSpec.describe "Support user views a provider partner school",
     )
     @shelbyville_partnership = create(:placements_partnership, provider: @provider, school: @shelbyville_elementary)
   end
-  
+
   def when_i_click_on_westbrook_provider
     click_on "Westbrook Provider"
   end
