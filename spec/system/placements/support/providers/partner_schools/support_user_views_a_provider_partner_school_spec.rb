@@ -50,7 +50,7 @@ RSpec.describe "Support user views a provider partner school",
     )
     @shelbyville_partnership = create(:placements_partnership, provider: @provider, school: @shelbyville_elementary)
   end
-  
+
   def when_i_click_on_westbrook_provider
     click_on "Westbrook Provider"
   end
@@ -72,9 +72,9 @@ RSpec.describe "Support user views a provider partner school",
     expect(page).to have_title("Schools you work with - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Schools you work with")
-    expect(page).to have_element(:p, text: "View all placements your schools have published.")
-    expect(page).to have_element(:p, text: "Only schools you work with are able to assign you their placements.")
-    expect(page).to have_link("Add school")
+    expect(page).to have_paragraph("View all placements your schools have published.")
+    expect(page).to have_paragraph("Only schools you work with are able to assign you their placements.")
+    expect(page).to have_link("Add school", href: new_add_partner_school_placements_provider_partner_schools_path(@provider))
     expect(page).to have_table_row({ "Name": "Shelbyville Elementary",
                                      "Unique reference number (URN)": "54321" })
   end
@@ -127,6 +127,6 @@ RSpec.describe "Support user views a provider partner school",
       expect(page).to have_summary_list_row("Last inspection date", "15 January 2023")
     end
 
-    expect(page).to have_link("Delete school")
+    expect(page).to have_link("Delete school", href: remove_placements_provider_partner_school_path(@provider, @shelbyville_elementary))
   end
 end
