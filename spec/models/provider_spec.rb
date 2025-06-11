@@ -99,6 +99,46 @@ RSpec.describe Provider, type: :model do
         expect(described_class.order_by_name).to eq([provider_2, provider_3, provider_1])
       end
     end
+
+    describe "#excluding_niot_providers" do
+      let!(:niot_headquarters) { create(:provider, code: "2N2") }
+      let!(:other_provider) { create(:provider, code: "3L3") }
+      let!(:niot_site_1) { create(:provider, code: "1YF") }
+      let!(:niot_site_2) { create(:provider, code: "21J") }
+      let!(:niot_site_3) { create(:provider, code: "1GV") }
+      let!(:niot_site_4) { create(:provider, code: "2HE") }
+      let!(:niot_site_5) { create(:provider, code: "24P") }
+      let!(:niot_site_6) { create(:provider, code: "1MN") }
+      let!(:niot_site_7) { create(:provider, code: "1TZ") }
+      let!(:niot_site_8) { create(:provider, code: "5J5") }
+      let!(:niot_site_9) { create(:provider, code: "7K9") }
+      let!(:niot_site_10) { create(:provider, code: "L06") }
+      let!(:niot_site_11) { create(:provider, code: "2P4") }
+      let!(:niot_site_12) { create(:provider, code: "21P") }
+      let!(:niot_site_13) { create(:provider, code: "1FE") }
+      let!(:niot_site_14) { create(:provider, code: "3P4") }
+      let!(:niot_site_15) { create(:provider, code: "3L4") }
+      let!(:niot_site_16) { create(:provider, code: "2H7") }
+      let!(:niot_site_17) { create(:provider, code: "2A6") }
+      let!(:niot_site_18) { create(:provider, code: "4W2") }
+      let!(:niot_site_19) { create(:provider, code: "4L1") }
+      let!(:niot_site_20) { create(:provider, code: "4L3") }
+      let!(:niot_site_21) { create(:provider, code: "4C2") }
+      let!(:niot_site_22) { create(:provider, code: "5A6") }
+      let!(:niot_site_23) { create(:provider, code: "2U6") }
+
+      it "returns all providers except those with the NIOT code" do
+        expect(described_class.excluding_niot_providers).to contain_exactly(niot_headquarters, other_provider)
+        expect(described_class.excluding_niot_providers).not_to include(
+          niot_site_1, niot_site_2, niot_site_3, niot_site_4,
+          niot_site_5, niot_site_6, niot_site_7, niot_site_8, niot_site_9,
+          niot_site_10, niot_site_11, niot_site_12, niot_site_13,
+          niot_site_14, niot_site_15, niot_site_16, niot_site_17,
+          niot_site_18, niot_site_19, niot_site_20, niot_site_21,
+          niot_site_22, niot_site_23
+        )
+      end
+    end
   end
 
   describe ".order_by_ids" do
