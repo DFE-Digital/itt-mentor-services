@@ -62,6 +62,10 @@ class Provider < ApplicationRecord
 
   scope :accredited, -> { where accredited: true }
   scope :placements_service, -> { where placements_service: true }
+
+  # This scope removes the additional NIoT provider records that exist in the publish API. The NIoT HQ is still included and should be the only NIoT result for the Claims service.
+  scope :excluding_niot_providers, -> { where.not(code: %w[1YF 21J 1GV 2HE 24P 1MN 1TZ 5J5 7K9 L06 2P4 21P 1FE 3P4 3L4 2H7 2A6 4W2 4L1 4L3 4C2 5A6 2U6]) }
+
   scope :order_by_name, -> { order(name: :asc) }
 
   multisearchable against: %i[name postcode],
