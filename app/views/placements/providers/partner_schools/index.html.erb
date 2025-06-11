@@ -3,8 +3,8 @@
 
 <div class="govuk-width-container">
   <h1 class="govuk-heading-l"><%= t(".schools_you_work_with") %></h1>
-  <p><%= t(".view_all_placements") %></p>
-  <p><%= t(".only_schools_you_work_with") %></p>
+  <p class="govuk-body"><%= t(".view_all_placements") %></p>
+  <p class="govuk-body"><%= t(".only_schools_you_work_with") %></p>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <%= govuk_button_link_to(t(".add_school"), new_add_partner_school_placements_provider_partner_schools_path) %>
@@ -27,7 +27,7 @@
         <% end %>
         <%= render PaginationComponent.new(pagy: @pagy) %>
       <% else %>
-        <p><%= t(".empty_state", provider_name: @provider.name) %></p>
+        <p class="govuk-body"><%= t(".empty_state", provider_name: @provider.name) %></p>
       <% end %>
     </div>
   </div>

@@ -31,6 +31,13 @@ RSpec.describe "Support user adds a partner school without JavaScript",
     and_i_click_on_continue
     then_i_see_the_multiple_school_results_page
 
+    when_i_click_on_change_your_search
+    then_i_see_the_add_school_page
+
+    when_i_type_in_the_incomplete_name_shelb
+    and_i_click_on_continue
+    then_i_see_the_multiple_school_results_page
+
     when_i_choose_shelbyville_elementary
     and_i_click_on_continue
     then_i_see_the_check_details_page_for_shelbyville_school
@@ -111,10 +118,10 @@ RSpec.describe "Support user adds a partner school without JavaScript",
     expect(page).to have_title("Schools you work with - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Schools you work with")
-    expect(page).to have_element(:p, text: "View all placements your schools have published.")
-    expect(page).to have_element(:p, text: "Only schools you work with are able to assign you their placements.")
+    expect(page).to have_paragraph("View all placements your schools have published.")
+    expect(page).to have_paragraph("Only schools you work with are able to assign you their placements.")
     expect(page).to have_link("Add school", href: new_add_partner_school_placements_provider_partner_schools_path(@provider))
-    expect(page).to have_element(:p, text: "There are no partner schools for Westbrook Provider")
+    expect(page).to have_paragraph("There are no partner schools for Westbrook Provider")
   end
 
   def when_i_click_on_add_school
@@ -125,10 +132,9 @@ RSpec.describe "Support user adds a partner school without JavaScript",
     expect(page).to have_title("Add a school - School details - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_span_caption("School details")
-    expect(page).to have_element(:span, class: "govuk-caption-l", text: "School details")
     expect(page).to have_hint("Enter a school name, unique reference number (URN) or postcode")
     expect(page).to have_button("Continue")
-    expect(page).to have_link("Cancel")
+    expect(page).to have_link("Cancel", href: placements_provider_partner_schools_path(@provider))
   end
 
   def when_i_click_on_back
@@ -157,7 +163,11 @@ RSpec.describe "Support user adds a partner school without JavaScript",
     expect(page).to have_field("Shelbyville Elementary", type: :radio)
     expect(page).to have_field("Shelberg High School", type: :radio)
     expect(page).to have_button("Continue")
-    expect(page).to have_link("Cancel")
+    expect(page).to have_link("Cancel", href: placements_provider_partner_schools_path(@provider))
+  end
+
+  def when_i_click_on_change_your_search
+    click_on "Change your search"
   end
 
   def when_i_choose_shelbyville_elementary
@@ -173,7 +183,7 @@ RSpec.describe "Support user adds a partner school without JavaScript",
     expect(page).to have_checked_field("Shelbyville Elementary", type: :radio)
     expect(page).to have_field("Shelberg High School", type: :radio)
     expect(page).to have_button("Continue")
-    expect(page).to have_link("Cancel")
+    expect(page).to have_link("Cancel", href: placements_provider_partner_schools_path(@provider))
   end
 
   def then_i_see_the_add_school_page_with_shelb_prepopulated
@@ -184,15 +194,15 @@ RSpec.describe "Support user adds a partner school without JavaScript",
     expect(page).to have_element(:input, class: "govuk-input", value: "Shelb")
     expect(page).to have_hint("Enter a school name, unique reference number (URN) or postcode")
     expect(page).to have_button("Continue")
-    expect(page).to have_link("Cancel")
+    expect(page).to have_link("Cancel", href: placements_provider_partner_schools_path(@provider))
   end
 
   def then_i_see_the_check_details_page_for_shelbyville_school
     expect(page).to have_title("Confirm school details - School details - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Confirm school details")
-    expect(page).to have_element(:p, text: "Once added, they will be able to assign you to their placements.")
-    expect(page).to have_element(:p, text: "We will send them an email to let them know you have added them.")
+    expect(page).to have_paragraph("Once added, they will be able to assign you to their placements.")
+    expect(page).to have_paragraph("We will send them an email to let them know you have added them.")
     expect(page).to have_summary_list_row("Name", "Shelbyville Elementary")
     expect(page).to have_summary_list_row("UK provider reference number (UKPRN)", "54321")
     expect(page).to have_summary_list_row("Unique reference number (URN)", "12345")
@@ -201,7 +211,7 @@ RSpec.describe "Support user adds a partner school without JavaScript",
     expect(page).to have_summary_list_row("Website", "http://www.shelbyville_elementary.com")
     expect(page).to have_summary_list_row("Address", "44 Langton Way")
     expect(page).to have_button("Confirm and add school")
-    expect(page).to have_link("Cancel")
+    expect(page).to have_link("Cancel", href: placements_provider_partner_schools_path(@provider))
   end
 
   def then_i_see_the_search_input_pre_filled_with_shelbyville_school
@@ -220,8 +230,8 @@ RSpec.describe "Support user adds a partner school without JavaScript",
     expect(page).to have_title("Schools you work with - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Schools you work with")
-    expect(page).to have_element(:p, text: "View all placements your schools have published.")
-    expect(page).to have_element(:p, text: "Only schools you work with are able to assign you their placements.")
+    expect(page).to have_paragraph("View all placements your schools have published.")
+    expect(page).to have_paragraph("Only schools you work with are able to assign you their placements.")
     expect(page).to have_link("Add school", href: new_add_partner_school_placements_provider_partner_schools_path(@provider))
     expect(page).to have_table_row({ "Name": "Shelbyville Elementary",
                                      "Unique reference number (URN)": "12345" })

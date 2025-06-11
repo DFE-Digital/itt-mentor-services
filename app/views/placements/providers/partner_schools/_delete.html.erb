@@ -3,9 +3,9 @@
 <span class="govuk-caption-l"><%= caption %></span>
 <h1 class="govuk-heading-l"><%= t(".are_you_sure") %></h1>
 
-<%= simple_format(t(".school_will_no_longer")) %>
+<%= simple_format(t(".school_will_no_longer"), class: "govuk-body") %>
 
-<%= simple_format(t(".school_will_remain_assigned")) %>
+<%= simple_format(t(".school_will_remain_assigned"), class: "govuk-body") %>
 
 <% if @partner_school.partner_provider_placements(provider).any? %>
   <p class="govuk-body"><%= t(".you_are_currently_assigned_to") %></p>
