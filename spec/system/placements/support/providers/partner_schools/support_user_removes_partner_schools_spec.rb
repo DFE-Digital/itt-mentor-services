@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Provider user removes partner schools",
+RSpec.describe "Support user removes partner schools",
                service: :placements, type: :system do
   include ActiveJob::TestHelper
 
@@ -83,7 +83,6 @@ RSpec.describe "Provider user removes partner schools",
     @science_placement = create(:placement, school: @shelbyville_elementary, provider: @provider, subject: @science)
   end
 
- 
   def when_i_click_on_westbrook_provider
     click_on "Westbrook Provider"
   end
