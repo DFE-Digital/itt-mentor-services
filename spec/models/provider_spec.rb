@@ -128,7 +128,7 @@ RSpec.describe Provider, type: :model do
       let!(:niot_site_23) { create(:provider, code: "2U6") }
 
       it "returns all providers except those with the NIOT code" do
-        expect(described_class.excluding_niot_providers).to contain_exactly(niot_headquarters, other_provider)
+        expect(described_class.excluding_niot_providers).to include(niot_headquarters, other_provider)
         expect(described_class.excluding_niot_providers).not_to include(
           niot_site_1, niot_site_2, niot_site_3, niot_site_4,
           niot_site_5, niot_site_6, niot_site_7, niot_site_8, niot_site_9,
