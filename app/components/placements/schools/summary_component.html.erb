@@ -1,17 +1,7 @@
 <li class="app-search-results__item">
   <h2 class="govuk-heading-m">
-    <% if (unfilled_subjects.exists? || filled_subjects.exists?) && open_to_hosting? %>
-      <%= govuk_link_to(placements_placements_provider_find_path(provider, school), no_visited_state: true) do %>
-        <%= "#{school.name}, #{school.town}" %>
-      <% end %>
-    <% elsif interested_in_hosting? %>
-      <%= govuk_link_to(placements_placements_provider_find_path(provider, school), no_visited_state: true) do %>
-        <%= "#{school.name}, #{school.town}" %>
-      <% end %>
-    <% else %>
-      <%= govuk_link_to(school_details_placements_provider_find_path(provider, school), no_visited_state: true) do %>
-        <%= "#{school.name}, #{school.town}" %>
-      <% end %>
+    <%= govuk_link_to(link_to_school, no_visited_state: true) do %>
+      <%= "#{school.name}, #{school.town}" %>
     <% end %>
   </h2>
 
