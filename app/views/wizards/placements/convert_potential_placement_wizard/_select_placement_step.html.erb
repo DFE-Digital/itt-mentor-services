@@ -1,0 +1,48 @@
+<% content_for :page_title, title_with_error_prefix(
+  t(".title"),
+  error: current_step.errors.any?,
+) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".caption") %></span>
+      <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+
+      <p class="govuk-body"><%= t(".select_all_that_apply") %></p>
+
+      <p class="govuk-body"><%= t(".you_can_add_or_edit") %></p>
+
+      <% if current_step.primary_year_groups.present? %>
+        <%= f.govuk_check_boxes_fieldset(:year_groups,
+          legend: { size: "m", text: t(".primary_placements"), tag: "h2" }) do %>
+          <% current_step.primary_year_groups.each_with_index do |year_group, i| %>
+            <%= f.govuk_check_box :year_groups, year_group.value,
+              label: { text: year_group.name },
+              hint: { text: t(".number_of_placements", count: current_step.placement_count(phase: :primary, key: year_group.value)) },
+              link_errors: i.zero? %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <% if current_step.secondary_subjects.present? %>
+        <%= f.govuk_check_boxes_fieldset(:subject_ids,
+          legend: { size: "m", text: t(".secondary_placements"), tag: "h2" }) do %>
+          <% current_step.secondary_subjects.each_with_index do |subject, i| %>
+            <%= f.govuk_check_box :subject_ids, subject.id,
+              label: { text: subject.name },
+              hint: { 
+                text: t(".number_of_placements", 
+                count: current_step.placement_count(phase: :secondary, key: subject.name_as_attribute.to_s)),
+              },
+              link_errors: i.zero? %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%= f.govuk_submit t(".publish_placements") %>
+    </div>
+  </div>
+<% end %>

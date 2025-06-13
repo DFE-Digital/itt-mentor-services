@@ -26,7 +26,12 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
     then_i_see_the_check_your_answers_page
 
     when_i_click_save_and_continue
-    then_i_see_my_responses_were_successfully_updated
+    then_i_see_the_whats_next_page
+    and_i_see_1_secondary_placement_for_english_has_been_created
+    and_i_see_4_secondary_placement_for_mathematics_have_been_created
+
+    when_i_click_on_edit_your_placements
+    then_i_am_on_the_placements_index_page
     and_i_see_1_secondary_placement_for_english
     and_i_see_4_secondary_placements_for_mathematics
   end
@@ -175,5 +180,38 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
     expect(page).to have_summary_list_row("Mathematics", "4")
 
     expect(page).not_to have_h2("Providers")
+  end
+
+  def then_i_see_the_whats_next_page
+    expect(page).to have_title(
+      "What happens next? - Manage school placements - GOV.UK",
+    )
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_panel(
+      "Placement information added",
+      "Providers can see that you have placements available",
+    )
+    expect(page).to have_h1("What happens next?", class: "govuk-heading-l")
+    expect(page).to have_element(
+      :p,
+      text: "Providers will be able to contact you on #{@school.school_contact_email_address} about your placement offers. After these discussions you can then decide whether to assign a provider to your placements.",
+      class: "govuk-body",
+    )
+    expect(page).to have_h2("Manage your placements", class: "govuk-heading-m")
+    expect(page).to have_h2("Your placements offer", class: "govuk-heading-m")
+    expect(page).not_to have_h2("Primary placements", class: "govuk-heading-m")
+    expect(page).to have_h2("Secondary placements", class: "govuk-heading-m")
+  end
+
+  def when_i_click_on_edit_your_placements
+    click_on "Edit your placements"
+  end
+
+  def and_i_see_1_secondary_placement_for_english_has_been_created
+    expect(page).to have_summary_list_row("English", "1")
+  end
+
+  def and_i_see_4_secondary_placement_for_mathematics_have_been_created
+    expect(page).to have_summary_list_row("Mathematics", "4")
   end
 end

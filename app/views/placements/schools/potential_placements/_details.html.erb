@@ -1,28 +1,26 @@
-<%# locals: { placement_details: } -%>
+<%# locals: { placement_details:, school:, hosting_interest:, academic_year: } -%>
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l"><%= t(".placements_you_may_be_able_to_offer") %></h1>
 
-      <p class="govuk-body"><%= t(".providers_can_see_information") %></p>
+      <%= render Placements::Schools::InterestTagComponent.new(school:, academic_year:) %>
 
-      <p class="govuk-body"><%= t(".you_can_change_your_potential_placements") %></p>
+      <p class="govuk-body govuk-!-margin-top-6"><%= t(".providers_can_see_information") %></p>
 
-      <%= govuk_inset_text(
-        text: embedded_link_text(
+      <p class="govuk-body">
+        <%= embedded_link_text(
           t(".once_you_are_sure",
             link: govuk_link_to(
-              t(".update_your_details"),
-              new_edit_hosting_interest_placements_school_hosting_interest_path(@school, @hosting_interest),
+              t(".add_your_placements"),
+              new_convert_potential_placements_placements_school_potential_placements_path(school),
             )),
-        ),
-      ) %>
+        )%>
+      </p>
 
       <h2 class="govuk-heading-m"><%= t(".your_potential_placements") %></h2>
 
-      <h3 class="govuk-heading-s">
-        <%= t(".education_phases") %>
-      </h3>
+      <h3 class="govuk-heading-s"><%= t(".education_phases") %></h3>
 
       <%= govuk_summary_list(html_attributes: { id: "education_phases" }) do |summary_list| %>
         <% summary_list.with_row do |row| %>
@@ -36,7 +34,7 @@
           <% end %>
           <% row.with_action(
             text: t(".change"),
-            href: new_edit_potential_placements_placements_school_potential_placements_path(@school),
+            href: new_edit_potential_placements_placements_school_potential_placements_path(school),
             visually_hidden_text: t(".potential_phases"),
             html_attributes: { class: "govuk-link--no-visited-state" },
           ) %>
@@ -53,7 +51,7 @@
           <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/primary_placements_list",
             placement_details: placement_details,
             action_link: edit_potential_placements_placements_school_potential_placements_path(
-              @school,
+              school,
               step: :year_group_selection,
               state_key: :year_group_selection,
             ) %>
@@ -67,7 +65,7 @@
           <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/secondary_placements_list",
             placement_details: placement_details,
             action_link: edit_potential_placements_placements_school_potential_placements_path(
-              @school,
+              school,
               step: :secondary_subject_selection,
               state_key: :secondary_subject_selection,
             ) %>
@@ -83,7 +81,7 @@
           <% row.with_action(
             text: t(".change"),
             href: edit_potential_placements_placements_school_potential_placements_path(
-              @school,
+              school,
               step: :note_to_providers,
               state_key: :note_to_providers,
             ),
@@ -92,6 +90,16 @@
           ) %>
         <% end %>
       <% end %>
+
+      <p class="govuk-body">
+        <%= embedded_link_text(
+          t(".if_you_can_no_longer_offer",
+            link: govuk_link_to(
+              t(".update_your_status"),
+              new_edit_hosting_interest_placements_school_hosting_interest_path(school, hosting_interest),
+            )),
+        )%>
+      </p>
     </div>
   </div>
 </div>

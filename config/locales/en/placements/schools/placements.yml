@@ -114,7 +114,14 @@ en:
             placement_count: 
               one: "%{count} placement"
               other: "%{count} placements"
-            add_and_edit_placements: Add and edit placements to let providers know your preferences
+            your_status_is_set:
+              Your status is set to %{status}. If this is no longer the case you can %{link}.
+            placements_available: placements available
+            add_and_edit_placements: Add and edit placements to let providers know your preferences.
+            change_your_status: change your status
+            if_you_know_the_providers:
+              If you know the providers you want to work with, assign them to your placements.
+              This will prevent other providers getting in contact with you about them.
         show:
           any_time: Any time in the academic year
           delete_placement: Delete placement

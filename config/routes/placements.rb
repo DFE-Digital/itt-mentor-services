@@ -94,6 +94,10 @@ scope module: :placements,
           get "edit", to: "potential_placements/edit_potential_placements#new", as: :new_edit_potential_placements
           get "edit/:state_key/:step", to: "potential_placements/edit_potential_placements#edit", as: :edit_potential_placements
           put "edit/:state_key/:step", to: "potential_placements/edit_potential_placements#update"
+
+          get "convert", to: "potential_placements/convert_potential_placements#new", as: :new_convert_potential_placements
+          get "convert/:state_key/:step", to: "potential_placements/convert_potential_placements#edit", as: :convert_potential_placements
+          put "convert/:state_key/:step", to: "potential_placements/convert_potential_placements#update"
         end
       end
 

@@ -1,0 +1,32 @@
+en:
+  wizards:
+    placements:
+      convert_potential_placement_wizard:
+        convert_placement_step:
+          title: 
+            Would you like to convert any of your current information?
+          caption: Placement details
+          hint: You can add or edit placements any time after publishing them.
+          continue: Continue
+          options:
+            "yes": Yes, I will select the potential placements I want to convert
+            yes_hint: Only the information you select will remain on the service
+            "no": No, I will manually add the placements I can offer
+            no_hint: 
+              Remove your potential information and replace with placements you can offer providers
+        select_placement_step:
+          title: Select the placements you can offer
+          caption: Placement details
+          select_all_that_apply:
+            Select all that apply from your current information about potential placements.
+            Provider will see you have available placements at your school.
+          you_can_add_or_edit:
+            You can add or edit placements any time after publishing them.
+          primary_placements: Primary placements
+          secondary_placements: Secondary placements
+          number_of_placements:
+            one: "%{count} placement"
+            other: "%{count} placements"
+          publish_placements: Publish placements
+
+
