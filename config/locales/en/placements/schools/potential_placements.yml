@@ -5,17 +5,23 @@ en:
         edit_potential_placements:
           edit:
             cancel: Cancel
+        convert_potential_placements:
+          edit:
+            cancel: Cancel
+          update:
+            success:
+              heading: "Information added"
+              body_html:
+                Your school has available placements.
+                <br><br>
+                Add further placements if you can offer more.
         details:
           placements_you_may_be_able_to_offer: Placements you may be able to offer
           providers_can_see_information:
-            Providers can see information about potential placements your school may be able to offer. 
-            They will be able to email the placement contact at your school.
-          you_can_change_your_potential_placements:
-            You can change your potential placements information at any time.
+            Providers can see your placement preferences and will be able to user your email to contact you.
           once_you_are_sure:
-            Once you are sure you can offer specific placements, %{link}. When placements are added, you can assign providers to them.
-          update_your_details:
-            update your details
+            Once you are sure which placements your school can offer, %{link}. You can then assign your placements to providers.
+          add_your_placements: add your placements
           education_phases: Education phases
           your_potential_placements: Your potential placements
           potential_phases: Potential phases
@@ -24,3 +30,5 @@ en:
           additional_information: Additional information
           message_to_providers: Message to providers
           change: Change
+          if_you_can_no_longer_offer: If you can no longer offer placements this academic year, %{link}.
+          update_your_status: update your status

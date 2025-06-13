@@ -217,15 +217,15 @@ RSpec.describe Placements::MultiPlacementWizard do
     end
   end
 
-  describe "#upcoming_academic_year" do
-    subject(:upcoming_academic_year) { wizard.upcoming_academic_year }
+  describe "#academic_year" do
+    subject(:academic_year) { wizard.academic_year }
 
     let(:next_academic_year) { Placements::AcademicYear.current.next }
 
-    before { next_academic_year }
+    before { current_user.update!(selected_academic_year: next_academic_year) }
 
     it "returns the next academic year" do
-      expect(upcoming_academic_year).to eq(next_academic_year)
+      expect(academic_year).to eq(next_academic_year)
     end
   end
 

@@ -13,13 +13,10 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
       redirect_to step_path(@wizard.next_step)
     else
       @wizard.update_school_placements
+      session["whats_next"] = @wizard.placements_information
       @wizard.reset_state
-      school.reload
 
-      redirect_to placements_school_placements_path(@school), flash: {
-        heading: t(".heading"),
-        body: t(".body_html"),
-      }
+      redirect_to whats_next_placements_school_hosting_interests_path(@school)
     end
   end
 

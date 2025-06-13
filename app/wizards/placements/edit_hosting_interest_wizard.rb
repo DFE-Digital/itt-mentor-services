@@ -74,17 +74,14 @@ module Placements
         )
     end
 
+    def academic_year
+      @academic_year ||= @current_user.selected_academic_year
+    end
+
     private
 
     def actively_looking_steps
-      add_step(MultiPlacementWizard::PhaseStep)
-      if phases.include?(::Placements::School::PRIMARY_PHASE)
-        year_group_steps
-      end
-
-      if phases.include?(::Placements::School::SECONDARY_PHASE)
-        secondary_subject_steps
-      end
+      add_placement_creation_steps(with_check_your_answers: false)
       add_step(CheckYourAnswersStep)
     end
 

@@ -32,11 +32,7 @@ class Placements::Schools::HostingInterests::AddHostingInterestController < Plac
 
     return if appetite == "not_open"
 
-    @placement_details = if appetite == "actively_looking"
-                           session["whats_next"]
-                         else
-                           @school.potential_placement_details
-                         end
+    @placement_details = session["whats_next"].presence || @school.potential_placement_details
   end
 
   private
@@ -62,7 +58,7 @@ class Placements::Schools::HostingInterests::AddHostingInterestController < Plac
   end
 
   def appetite
-    @appetite ||= next_academic_year_hosting_interest.appetite
+    @appetite ||= next_academic_year_hosting_interest&.appetite
   end
 
   def next_academic_year_hosting_interest

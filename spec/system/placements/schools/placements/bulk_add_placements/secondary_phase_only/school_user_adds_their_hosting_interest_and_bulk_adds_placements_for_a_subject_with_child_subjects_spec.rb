@@ -36,7 +36,11 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
     then_i_see_the_check_your_answers_page
 
     when_i_click_save_and_continue
-    then_i_see_my_responses_were_successfully_updated
+    then_i_see_the_whats_next_page
+    and_i_see_2_secondary_placement_for_modern_languages_has_been_created
+
+    when_i_click_on_edit_your_placements
+    then_i_am_on_the_placements_index_page
     and_i_see_1_secondary_placement_for_modern_languages_french
     and_i_see_1_secondary_placement_for_modern_languages_french_and_russian
   end
@@ -181,13 +185,6 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
     expect(page).to have_element(:h2, text: "Placement 2 of 2", class: "govuk-fieldset__heading")
   end
 
-  def then_i_see_my_responses_were_successfully_updated
-    expect(page).to have_success_banner(
-      "Placements added",
-      "Providers can see your placements and may contact you to discuss them. You can add details to your placements such as expected date and provider.",
-    )
-  end
-
   def and_i_see_1_secondary_placement_for_modern_languages_french
     expect(page).to have_link(
       "French",
@@ -221,6 +218,35 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
     expect(page).to have_summary_list_row("Phase", "Secondary")
 
     expect(page).to have_h2("Secondary placements")
+    expect(page).to have_summary_list_row("Modern Languages", "2")
+  end
+
+  def then_i_see_the_whats_next_page
+    expect(page).to have_title(
+      "What happens next? - Manage school placements - GOV.UK",
+    )
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_panel(
+      "Placement information added",
+      "Providers can see that you have placements available",
+    )
+    expect(page).to have_h1("What happens next?", class: "govuk-heading-l")
+    expect(page).to have_element(
+      :p,
+      text: "Providers will be able to contact you on #{@school.school_contact_email_address} about your placement offers. After these discussions you can then decide whether to assign a provider to your placements.",
+      class: "govuk-body",
+    )
+    expect(page).to have_h2("Manage your placements", class: "govuk-heading-m")
+    expect(page).to have_h2("Your placements offer", class: "govuk-heading-m")
+    expect(page).not_to have_h2("Primary placements", class: "govuk-heading-m")
+    expect(page).to have_h2("Secondary placements", class: "govuk-heading-m")
+  end
+
+  def when_i_click_on_edit_your_placements
+    click_on "Edit your placements"
+  end
+
+  def and_i_see_2_secondary_placement_for_modern_languages_has_been_created
     expect(page).to have_summary_list_row("Modern Languages", "2")
   end
 end
