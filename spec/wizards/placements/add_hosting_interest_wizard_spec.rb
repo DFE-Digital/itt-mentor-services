@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Placements::AddHostingInterestWizard do
   subject(:wizard) { described_class.new(state:, params:, school:, current_step:, current_user:) }
 
-  let(:school) { create(:placements_school) }
+  let(:school) { create(:placements_school, with_hosting_interest: false) }
   let(:state) { {} }
   let(:params_data) { {} }
   let(:params) { ActionController::Parameters.new(params_data) }
@@ -340,7 +340,7 @@ RSpec.describe Placements::AddHostingInterestWizard do
 
         context "when school has no hosting interest for the next academic year" do
           context "when school has no school contact assigned" do
-            let(:school) { create(:placements_school, with_school_contact: false) }
+            let(:school) { create(:placements_school, with_hosting_interest: false, with_school_contact: false) }
 
             it "creates hosting interest for the next academic year, assigns the appetite,
               reasons not hosting and creates a school contact" do

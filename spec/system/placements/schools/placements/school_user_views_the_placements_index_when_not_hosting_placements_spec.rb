@@ -14,6 +14,7 @@ RSpec.describe "School user views the placements index when not hosting placemen
   def given_a_school_exists_with_a_hosting_interest_not_open_to_hosting
     @springfield_elementary_school = build(
       :placements_school,
+      with_hosting_interest: false,
       name: "Springfield Elementary",
       address1: "Westgate Street",
       address2: "Hackney",

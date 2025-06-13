@@ -15,7 +15,7 @@ RSpec.describe "Provider user views a school which is not onboarded", service: :
 
   def given_that_schools_exist
     @provider = build(:placements_provider, name: "Aes Sedai Trust")
-    @not_onboarded_school = create(:placements_school, phase: "Secondary", name: "Shelbyville High School")
+    @not_onboarded_school = create(:placements_school, with_hosting_interest: false, phase: "Secondary", name: "Shelbyville High School")
   end
 
   def and_i_am_signed_in
