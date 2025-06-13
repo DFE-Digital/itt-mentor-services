@@ -97,9 +97,10 @@ module Placements
     end
 
     def detail_unknown?
-      value_unknown(
-        potential_placement_details.map { |_k, v| v.values }.compact.flatten.uniq,
-      ) ||
+      potential_placement_details.blank? ||
+        value_unknown(
+          potential_placement_details.map { |_k, v| v.values }.compact.flatten.uniq,
+        ) ||
         (potential_placement_details["year_group_selection"].present? &&
           potential_placement_details["year_group_placement_quantity"].blank?) ||
         (potential_placement_details["secondary_subject_selection"].present? &&

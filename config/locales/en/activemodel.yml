@@ -392,3 +392,15 @@ en:
               blank: Please enter a telephone number for the organisation
             website:
               blank: Please enter a website address for the organisation
+        placements/convert_potential_placement_wizard/covert_placement_step:
+          attributes:
+            covert:
+              blank: Please select if you would like to convert your current information
+              inclusion: Please select if you would like to convert your current information
+        placements/convert_potential_placement_wizard/select_placement_step:
+          attributes:
+            year_groups:
+              blank: Primary placements can't be blank
+            subject_ids:
+              blank: Secondary placements can't be blank
+

@@ -102,11 +102,9 @@ module Placements::MultiPlacementCreatable
     steps.fetch(:secondary_subject_selection).subject_ids
   end
 
-  def secondary_subject_steps(with_child_subject_steps: true)
+  def secondary_subject_steps
     add_step(::Placements::MultiPlacementWizard::SecondarySubjectSelectionStep)
     add_step(::Placements::MultiPlacementWizard::SecondaryPlacementQuantityStep)
-    return unless with_child_subject_steps
-
     child_subject_steps
   end
 

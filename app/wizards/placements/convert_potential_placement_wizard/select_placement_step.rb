@@ -4,6 +4,9 @@ class Placements::ConvertPotentialPlacementWizard::SelectPlacementStep < BaseSte
   attribute :year_groups, default: []
   attribute :subject_ids, default: []
 
+  validates :year_groups, presence: true, if: -> { primary_year_groups.present? && subject_ids.blank? }
+  validates :subject_ids, presence: true, if: -> { secondary_subjects.present? && year_groups.blank? }
+
   def primary_year_groups
     return [] if potential_placement_details.dig("year_group_selection", "year_groups").blank?
 
