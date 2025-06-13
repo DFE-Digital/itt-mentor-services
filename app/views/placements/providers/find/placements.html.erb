@@ -6,54 +6,140 @@
     <div class="govuk-grid-column-two-thirds">
       <%= render "placements/providers/find/details_navigation", school: @school, academic_year: @selected_academic_year, provider: @provider, unfilled_subjects: @unfilled_subjects, filled_subjects: @filled_subjects %>
 
-      <p class="govuk-body">
-        <%= t(".description", academic_year_name: current_user.selected_academic_year.name) %>
-      </p>
-
-      <% if @unfilled_placements.present? %>
-        <h2 class="govuk-heading-m">
-          <%= t(".unfilled_placements", count: @unfilled_placements.count) %>
-        </h2>
-
-        <%= govuk_table do |table| %>
-          <% table.with_head do |head| %>
-            <% head.with_row do |row| %>
-              <% row.with_cell text: t(".table.headers.subject") %>
-              <% row.with_cell text: t(".table.headers.expected_date") %>
-            <% end %>
-          <% end %>
-
-          <% @unfilled_placements.each do |placement| %>
-            <% table.with_body do |body| %>
-              <% body.with_row do |row| %>
-                <% row.with_cell do %>
-                  <%= govuk_link_to placement.title, placements_provider_placement_path(@provider, placement) %>
+      <% if @interested_in_hosting && @school.potential_placement_details.present? %>
+        <%= govuk_summary_list(html_attributes: { id: "education_phase" }, actions: false) do |summary_list| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".phase")) %>
+            <% if @school.potential_placement_details.dig("phase", "phases").empty? %>
+              <% row.with_value(text: t(".unknown")) %>
+            <% else %>
+              <% row.with_value do %>
+                <%= govuk_list do %>
+                  <% @school.potential_placement_details.dig("phase", "phases").each do |phase| %>
+                    <li><%= phase %></li>
+                  <% end %>
                 <% end %>
-                <% row.with_cell text: placement.term_names %>
               <% end %>
             <% end %>
           <% end %>
         <% end %>
-      <% end %>
 
-      <% if @filled_placements.present? %>
-        <h2 class="govuk-heading-m">
-          <%= t(".filled_placements", count: @filled_placements.count) %>
-        </h2>
+        <% if @school.potential_placement_details["year_group_placement_quantity"].present? %>
+          <h2 class="govuk-heading-m">
+            <%= t(".potential_primary_placements") %>
+          </h2>
 
-        <%= govuk_table do |table| %>
-          <% table.with_head do |head| %>
-            <% head.with_row do |row| %>
-              <% row.with_cell text: t(".table.headers.subject") %>
-              <% row.with_cell text: t(".table.headers.expected_date") %>
+          <%= govuk_summary_list(html_attributes: { id: "primary_placements" }, actions: false) do |summary_list| %>
+            <% summary_list.with_row do |row| %>
+              <% row.with_key(text: t(".year_group")) %>
+              <% row.with_value do %>
+                <strong><%= t(".number_of_placements") %></strong>
+              <% end %>
+            <% end %>
+
+            <% @school.potential_placement_details["year_group_placement_quantity"].each do |year_group, quantity| %>
+              <% if year_group == "unknown" %>
+                <% summary_list.with_row do |row| %>
+                  <% row.with_key(text: t(".unknown")) %>
+                  <% row.with_value(text: t(".not_entered")) %>
+                <% end %>
+              <% else %>
+                <% summary_list.with_row do |row| %>
+                  <% row.with_key(text: t("placements.schools.placements.year_groups.#{year_group}")) %>
+                  <% row.with_value(text: quantity.zero? ? t(".not_entered") : quantity) %>
+                <% end %>
+              <% end %>
             <% end %>
           <% end %>
 
-          <% @filled_placements.each do |placement| %>
-            <% table.with_body do |body| %>
-              <% body.with_row do |row| %>
-                <% row.with_cell text: placement.title %>
-                <% row.with_cell text: placement.term_names %>
+        <% end %>
+
+        <% if @school.potential_placement_details["secondary_placement_quantity"].present? %>
+          <h2 class="govuk-heading-m">
+            <%= t(".potential_secondary_placements") %>
+          </h2>
+
+          <%= govuk_summary_list(html_attributes: { id: "secondary_placements" }, actions: false) do |summary_list| %>
+            <% summary_list.with_row do |row| %>
+              <% row.with_key(text: t(".subject")) %>
+              <% row.with_value do %>
+                <strong><%= t(".number_of_placements") %></strong>
+              <% end %>
+            <% end %>
+
+            <% @school.potential_placement_details["secondary_placement_quantity"].each do |subject, quantity| %>
+              <% if subject == "unknown" %>
+                <% summary_list.with_row do |row| %>
+                  <% row.with_key(text: t(".unknown")) %>
+                  <% row.with_value(text: t(".not_entered")) %>
+                <% end %>
+              <% else %>
+                <% summary_list.with_row do |row| %>
+                  <% row.with_key(text: subject.titleize) %>
+                  <% row.with_value(text: quantity.zero? ? t(".not_entered") : quantity) %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+          <h2 class="govuk-heading-m"><%= t(".additional_information") %></h2>
+
+          <%= govuk_summary_list(html_attributes: { id: "message_to_providers" }, actions: false) do |summary_list| %>
+            <% summary_list.with_row do |row| %>
+              <% row.with_key(text: t(".message_to_providers")) %>
+              <% row.with_value(text: @school.potential_placement_details.dig("note_to_providers", "note")) %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <p class="govuk-body">
+          <%= t(".description", academic_year_name: current_user.selected_academic_year.name) %>
+        </p>
+
+        <% if @unfilled_placements.present? %>
+          <h2 class="govuk-heading-m">
+            <%= t(".unfilled_placements", count: @unfilled_placements.count) %>
+          </h2>
+
+          <%= govuk_table do |table| %>
+            <% table.with_head do |head| %>
+              <% head.with_row do |row| %>
+                <% row.with_cell text: t(".table.headers.subject") %>
+                <% row.with_cell text: t(".table.headers.expected_date") %>
+              <% end %>
+            <% end %>
+
+            <% @unfilled_placements.each do |placement| %>
+              <% table.with_body do |body| %>
+                <% body.with_row do |row| %>
+                  <% row.with_cell do %>
+                    <%= govuk_link_to placement.title, placements_provider_placement_path(@provider, placement) %>
+                  <% end %>
+                  <% row.with_cell text: placement.term_names %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+
+        <% if @filled_placements.present? %>
+          <h2 class="govuk-heading-m">
+            <%= t(".filled_placements", count: @filled_placements.count) %>
+          </h2>
+
+          <%= govuk_table do |table| %>
+            <% table.with_head do |head| %>
+              <% head.with_row do |row| %>
+                <% row.with_cell text: t(".table.headers.subject") %>
+                <% row.with_cell text: t(".table.headers.expected_date") %>
+              <% end %>
+            <% end %>
+
+            <% @filled_placements.each do |placement| %>
+              <% table.with_body do |body| %>
+                <% body.with_row do |row| %>
+                  <% row.with_cell text: placement.title %>
+                  <% row.with_cell text: placement.term_names %>
+                <% end %>
               <% end %>
             <% end %>
           <% end %>

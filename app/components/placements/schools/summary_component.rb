@@ -15,9 +15,27 @@ class Placements::Schools::SummaryComponent < ApplicationComponent
     @location_coordinates = location_coordinates
   end
 
+  def link_to_school
+    if (unfilled_subjects.exists? || filled_subjects.exists?) && open_to_hosting?
+      placements_placements_provider_find_path(provider, school)
+    elsif interested_in_hosting?
+      placements_placements_provider_find_path(provider, school)
+    else
+      school_details_placements_provider_find_path(provider, school)
+    end
+  end
+
   def distance_from_location
     distance = school.distance_to(location_coordinates).round(1)
     I18n.t("components.placement.summary_component.distance_in_miles", distance:)
+  end
+
+  def has_available_placements?
+    school_available_placements(academic_year:).exists?
+  end
+
+  def has_unavailable_placements?
+    school_unavailable_placements(academic_year:).exists?
   end
 
   def available_placements_count
