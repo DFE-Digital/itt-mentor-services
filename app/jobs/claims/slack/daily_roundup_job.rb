@@ -13,7 +13,7 @@ class Claims::Slack::DailyRoundupJob < ApplicationJob
       school_count: new_schools.count,
       provider_count: new_providers.count,
       total_claims_count: total_claims,
-    )
+    ).deliver_now
   end
 
   private
