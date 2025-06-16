@@ -28,7 +28,7 @@ RSpec.describe Claims::AddOrganisationWizard do
           }
         end
 
-        it { is_expected.to eq %i[name vendor_number claim_window region address contact_details check_your_answers] }
+        it { is_expected.to eq %i[name vendor_number region address contact_details check_your_answers] }
       end
     end
   end

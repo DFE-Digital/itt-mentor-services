@@ -30,16 +30,6 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
 
     when_i_enter_a_vendor_number
     and_i_click_continue
-    then_i_see_the_claim_window_page
-
-    when_i_click_continue
-    then_i_see_the_claim_window_error
-
-    when_i_click_on_the_claim_window_details_summary
-    then_i_see_the_claim_window_details_text
-
-    when_i_select_the_current_claim_window
-    and_i_click_continue
     then_i_see_the_region_page
 
     when_i_click_continue
@@ -83,13 +73,6 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
     and_i_navigate_back_to_check_your_answers_from_the_vendor_number_page
     then_i_see_the_check_your_answers_page_with_changed_vendor_number
 
-    when_i_click_to_change_the_claim_window
-    then_i_see_the_claim_window_page
-
-    when_i_change_the_claim_window
-    and_i_navigate_back_to_check_your_answers_from_the_claim_window_page
-    then_i_see_the_check_your_answers_page_with_changed_claim_window
-
     when_i_click_to_change_the_region
     then_i_see_the_region_page
 
@@ -125,7 +108,6 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
 
   def given_a_claim_window_exists
     @claim_window = create(:claim_window, :current).decorate
-    @claim_window_2 = create(:claim_window, :upcoming).decorate
   end
 
   def and_i_am_signed_in
@@ -218,35 +200,6 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
 
   def when_i_enter_a_vendor_number
     fill_in "Enter the organisation's vendor number", with: "123456789"
-  end
-
-  def then_i_see_the_claim_window_page
-    expect(page).to have_title("Select a claim window - Add organisation - Claim funding for mentor training - GOV.UK")
-    expect(primary_navigation).to have_current_item("Organisations")
-    expect(page).to have_span_caption("Add organisation")
-    expect(page).to have_element(:h1, text: "Select a claim window", class: "govuk-fieldset__heading")
-    expect(page).to have_link("Back")
-  end
-
-  def then_i_see_the_claim_window_error
-    expect(page).to have_validation_error("Please select a claim window")
-  end
-
-  def when_i_click_on_the_claim_window_details_summary
-    find(".govuk-details__summary").click
-  end
-
-  def then_i_see_the_claim_window_details_text
-    within ".govuk-details" do
-      within ".govuk-details__text" do
-        expect(page).to have_content("If you cannot see the dates you need you can create an additional claim window (opens in new tab).")
-        expect(page).to have_link("create an additional claim window (opens in new tab)", href: "/support/claim_windows")
-      end
-    end
-  end
-
-  def when_i_select_the_current_claim_window
-    choose @claim_window.name
   end
 
   def then_i_see_the_region_page
@@ -355,7 +308,6 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
     click_on "Continue"
     click_on "Continue"
     click_on "Continue"
-    click_on "Continue"
   end
 
   def then_i_see_the_check_your_answers_page_with_changed_organisation_name
@@ -383,40 +335,12 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
     click_on "Continue"
     click_on "Continue"
     click_on "Continue"
-    click_on "Continue"
   end
 
   def then_i_see_the_check_your_answers_page_with_changed_vendor_number
     expect(page).to have_summary_list_row("Organisation name", "Changed Organisation")
     expect(page).to have_summary_list_row("Vendor number", "987654321")
     expect(page).to have_summary_list_row("Claim window", @claim_window.name)
-    expect(page).to have_summary_list_row("Region", "Inner London")
-
-    expect(page).to have_h2("Contact details")
-    expect(page).to have_summary_list_row("Address", "123 Test Street Test Town AB12 3CD")
-    expect(page).to have_summary_list_row("Website", "https://www.testorganisation.com")
-    expect(page).to have_summary_list_row("Telephone number", "01234 567890")
-  end
-
-  def when_i_click_to_change_the_claim_window
-    click_link "Change Claim window"
-  end
-
-  def when_i_change_the_claim_window
-    choose @claim_window_2.name
-  end
-
-  def and_i_navigate_back_to_check_your_answers_from_the_claim_window_page
-    click_on "Continue"
-    click_on "Continue"
-    click_on "Continue"
-    click_on "Continue"
-  end
-
-  def then_i_see_the_check_your_answers_page_with_changed_claim_window
-    expect(page).to have_summary_list_row("Organisation name", "Changed Organisation")
-    expect(page).to have_summary_list_row("Vendor number", "987654321")
-    expect(page).to have_summary_list_row("Claim window", @claim_window_2.name)
     expect(page).to have_summary_list_row("Region", "Inner London")
 
     expect(page).to have_h2("Contact details")
@@ -442,7 +366,7 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
   def then_i_see_the_check_your_answers_page_with_changed_region
     expect(page).to have_summary_list_row("Organisation name", "Changed Organisation")
     expect(page).to have_summary_list_row("Vendor number", "987654321")
-    expect(page).to have_summary_list_row("Claim window", @claim_window_2.name)
+    expect(page).to have_summary_list_row("Claim window", @claim_window.name)
     expect(page).to have_summary_list_row("Region", "Outer London")
 
     expect(page).to have_h2("Contact details")
@@ -469,7 +393,7 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
   def then_i_see_the_check_your_answers_page_with_changed_address
     expect(page).to have_summary_list_row("Organisation name", "Changed Organisation")
     expect(page).to have_summary_list_row("Vendor number", "987654321")
-    expect(page).to have_summary_list_row("Claim window", @claim_window_2.name)
+    expect(page).to have_summary_list_row("Claim window", @claim_window.name)
     expect(page).to have_summary_list_row("Region", "Outer London")
 
     expect(page).to have_h2("Contact details")
@@ -493,7 +417,7 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
   def then_i_see_the_check_your_answers_page_with_changed_telephone_number
     expect(page).to have_summary_list_row("Organisation name", "Changed Organisation")
     expect(page).to have_summary_list_row("Vendor number", "987654321")
-    expect(page).to have_summary_list_row("Claim window", @claim_window_2.name)
+    expect(page).to have_summary_list_row("Claim window", @claim_window.name)
     expect(page).to have_summary_list_row("Region", "Outer London")
 
     expect(page).to have_h2("Contact details")
@@ -517,7 +441,7 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
   def then_i_see_the_check_your_answers_page_with_changed_website
     expect(page).to have_summary_list_row("Organisation name", "Changed Organisation")
     expect(page).to have_summary_list_row("Vendor number", "987654321")
-    expect(page).to have_summary_list_row("Claim window", @claim_window_2.name)
+    expect(page).to have_summary_list_row("Claim window", @claim_window.name)
     expect(page).to have_summary_list_row("Region", "Outer London")
 
     expect(page).to have_h2("Contact details")

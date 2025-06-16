@@ -9,7 +9,6 @@ module Claims
       if claim_windows_exist?
         add_step(NameStep)
         add_step(VendorNumberStep)
-        add_step(AddSchoolWizard::ClaimWindowStep)
         add_step(RegionStep)
         add_step(AddressStep)
         add_step(ContactDetailsStep)
@@ -40,9 +39,7 @@ module Claims
     end
 
     def claim_window
-      @claim_window ||= Claims::ClaimWindow.find(
-        steps.fetch(:claim_window).claim_window_id,
-      )
+      @claim_window = Claims::ClaimWindow.current
     end
 
     private

@@ -22,11 +22,8 @@ RSpec.describe "Support User adds a School without JavaScript", service: :claims
     then_i_see_list_of_schools
     then_i_choose("Manchester 1")
     and_i_click_continue
-    then_i_see_the_claim_window_page
-
-    when_i_select_the_current_claim_window
-    and_click_on_continue
     then_i_see_the_check_details_page_for_school("Manchester 1")
+
     when_i_click_save_organisation
     then_i_return_to_support_organisations_index
     and_a_school_is_listed(school_name: "Manchester 1")
@@ -65,20 +62,15 @@ RSpec.describe "Support User adds a School without JavaScript", service: :claims
     then_i_see_list_of_schools
     then_i_choose("Manchester 1")
     and_i_click_continue
-    then_i_see_the_claim_window_page
-
-    when_i_select_the_current_claim_window
-    and_click_on_continue
     then_i_see_the_check_details_page_for_school("Manchester 1")
+
     when_i_click_back
-    and_i_click_back
     and_the_option_for_school_has_been_pre_selected("Manchester 1")
     when_i_click_back
     then_i_see_the_search_input_pre_filled_with("Manch")
     and_i_click_continue
     then_i_see_list_of_schools
     then_i_choose("Manchester 1")
-    and_i_click_continue
     and_i_click_continue
     then_i_see_the_check_details_page_for_school("Manchester 1")
   end
@@ -166,19 +158,6 @@ RSpec.describe "Support User adds a School without JavaScript", service: :claims
 
   def and_the_option_for_school_has_been_pre_selected(school_name)
     expect(page).to have_checked_field(school_name)
-  end
-
-  def then_i_see_the_claim_window_page
-    expect(page).to have_title("Select a claim window - Add organisation")
-    expect(page).to have_element(:span, text: "Add organisation", class: "govuk-caption-l")
-    expect(page).to have_element(:h1, text: "Select a claim window", class: "govuk-fieldset__heading")
-
-    expect(page).to have_field(current_claim_window.name, type: :radio, visible: :all)
-    expect(page).to have_field(upcoming_claim_window.name, type: :radio, visible: :all)
-  end
-
-  def when_i_select_the_current_claim_window
-    choose current_claim_window.name
   end
 
   def and_click_on_continue

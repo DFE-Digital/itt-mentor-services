@@ -33,17 +33,6 @@ en:
           ukprn: UK provider reference number (UKPRN)
           website: Website
           claim_window: Claim window
-        claim_window_step:
-          page_title: Select a claim window - Add organisation
-          caption: Add organisation
-          title: Select a claim window
-          continue: Continue
-          hint: Select the current or upcoming claim window
-          claim_window_not_listed: The claim window I need is not listed
-          create_an_additional_claim_window:
-            If you cannot see the dates you need you can %{link}.
-          link_to_claim_windows:
-            create an additional claim window
         no_claim_window_step: 
           page_title: No claim windows - Add organisation
           caption: Add organisation
