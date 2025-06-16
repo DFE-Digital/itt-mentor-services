@@ -33,8 +33,8 @@
           <% current_step.secondary_subjects.each_with_index do |subject, i| %>
             <%= f.govuk_check_box :subject_ids, subject.id,
               label: { text: subject.name },
-              hint: { 
-                text: t(".number_of_placements", 
+              hint: {
+                text: t(".number_of_placements",
                 count: current_step.placement_count(phase: :secondary, key: subject.name_as_attribute.to_s)),
               },
               link_errors: i.zero? %>
