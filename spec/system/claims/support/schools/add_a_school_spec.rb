@@ -20,11 +20,8 @@ RSpec.describe "Support User adds a School", service: :claims, type: :system do
     then_i_see_a_dropdown_item_for("School 1")
     when_i_click_the_dropdown_item_for("School 1")
     and_i_click_continue
-    then_i_see_the_claim_window_page
-
-    when_i_select_the_current_claim_window
-    and_click_on_continue
     then_i_see_the_check_details_page_for_school("School 1")
+
     i_then_click_change_school_link
     and_i_click_continue
     when_i_click_save_organisation
@@ -55,15 +52,9 @@ RSpec.describe "Support User adds a School", service: :claims, type: :system do
     then_i_see_a_dropdown_item_for("School 1")
     when_i_click_the_dropdown_item_for("School 1")
     and_i_click_continue
-    then_i_see_the_claim_window_page
-
-    when_i_select_the_current_claim_window
-    and_click_on_continue
     then_i_see_the_check_details_page_for_school("School 1")
     when_i_click_back
-    and_i_click_back
     then_i_see_the_search_input_pre_filled_with("School 1")
-    and_i_click_continue
     and_i_click_continue
     then_i_see_the_check_details_page_for_school("School 1")
   end
@@ -73,7 +64,6 @@ RSpec.describe "Support User adds a School", service: :claims, type: :system do
   def i_then_click_change_school_link
     click_on "Change Organisation name"
     expect(page).to have_content("Enter a school name, URN or postcode")
-    click_on "Continue"
   end
 
   def and_there_is_an_existing_user_for(user_name)
@@ -156,19 +146,6 @@ RSpec.describe "Support User adds a School", service: :claims, type: :system do
     within(".autocomplete__wrapper") do
       expect(page.find("#claims-add-school-wizard-school-step-id-field").value).to eq(school_name)
     end
-  end
-
-  def then_i_see_the_claim_window_page
-    expect(page).to have_title("Select a claim window - Add organisation")
-    expect(page).to have_element(:span, text: "Add organisation", class: "govuk-caption-l")
-    expect(page).to have_element(:h1, text: "Select a claim window", class: "govuk-fieldset__heading")
-
-    expect(page).to have_field(current_claim_window.name, type: :radio, visible: :all)
-    expect(page).to have_field(upcoming_claim_window.name, type: :radio, visible: :all)
-  end
-
-  def when_i_select_the_current_claim_window
-    choose current_claim_window.name
   end
 
   def and_click_on_continue

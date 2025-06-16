@@ -4,7 +4,6 @@ module Claims
       if claim_windows_exist?
         add_step(SchoolStep)
         add_step(SchoolOptionsStep) if steps.fetch(:school).school.blank?
-        add_step(ClaimWindowStep)
         add_step(CheckYourAnswersStep)
       else
         add_step(NoClaimWindowStep)
@@ -24,9 +23,7 @@ module Claims
     end
 
     def claim_window
-      @claim_window = Claims::ClaimWindow.find(
-        steps.fetch(:claim_window).claim_window_id,
-      )
+      @claim_window = Claims::ClaimWindow.current
     end
 
     private
