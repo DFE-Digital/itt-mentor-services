@@ -1,0 +1,12 @@
+en:
+  claims:
+    support:
+      manually_onboarded_schools:
+        index:
+          heading: Manually onboarded schools
+          table:
+            headers:
+              school_name: School name
+              onboarded_by: Onboarded by
+              eligible_for: Eligible to claim dates
+          no_schools: No manually onboarded schools found.
