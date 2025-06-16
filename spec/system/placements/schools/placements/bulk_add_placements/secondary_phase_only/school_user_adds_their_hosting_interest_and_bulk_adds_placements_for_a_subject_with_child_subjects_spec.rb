@@ -35,7 +35,7 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
     and_i_click_on_continue
     then_i_see_the_check_your_answers_page
 
-    when_i_click_save_and_continue
+    when_i_click_on_publish_placements
     then_i_see_the_whats_next_page
     and_i_see_2_secondary_placement_for_modern_languages_has_been_created
 
@@ -203,8 +203,8 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
     )
   end
 
-  def when_i_click_save_and_continue
-    click_on "Save and continue"
+  def when_i_click_on_publish_placements
+    click_on "Publish placements"
   end
 
   def then_i_see_the_check_your_answers_page

@@ -26,7 +26,7 @@ RSpec.describe "School user bulk adds placements for the primary phases",
     and_i_click_on_continue
     then_i_see_the_check_your_answers_page
 
-    when_i_click_save_and_continue
+    when_i_click_on_publish_placements
     then_i_see_the_whats_next_page
     and_i_see_2_reception_primary_placements_have_been_created
     and_i_see_3_year_3_primary_placements_have_been_created
@@ -161,8 +161,8 @@ RSpec.describe "School user bulk adds placements for the primary phases",
     expect(page).to have_link("Primary (Mixed year groups)")
   end
 
-  def when_i_click_save_and_continue
-    click_on "Save and continue"
+  def when_i_click_on_publish_placements
+    click_on "Publish placements"
   end
 
   def then_i_see_the_check_your_answers_page
