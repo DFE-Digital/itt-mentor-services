@@ -5,7 +5,7 @@ class Placements::ConvertPotentialPlacementWizard::ConvertPlacementStep < BaseSt
   NO = "No".freeze
   CONVERT_OPTIONS = [YES, NO].freeze
 
-  validates :convert, presence: true, inclusion: CONVERT_OPTIONS
+  validates :convert, presence: true, inclusion: { in: CONVERT_OPTIONS }
 
   def options_for_selection
     CONVERT_OPTIONS.map do |option|

@@ -71,7 +71,7 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
     and_i_click_on_continue
     then_i_see_the_check_your_answers_page
 
-    when_i_click_save_and_continue
+    when_i_click_on_publish_placements
     then_i_see_the_whats_next_page
     and_i_see_2_year_1_primary_placements_have_been_created
     and_i_see_1_secondary_placement_for_english_has_been_created
@@ -259,8 +259,8 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
     expect(page).to have_link("Mathematics", count: 4)
   end
 
-  def when_i_click_save_and_continue
-    click_on "Save and continue"
+  def when_i_click_on_publish_placements
+    click_on "Publish placements"
   end
 
   def then_i_see_the_check_your_answers_page
