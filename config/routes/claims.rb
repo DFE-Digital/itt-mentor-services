@@ -283,6 +283,8 @@ scope module: :claims, as: :claims, constraints: {
 
     resources :mailers, only: :index
 
+    resources :manually_onboarded_schools, only: :index
+
     resources :claim_windows do
       get :new_check, path: :check, on: :collection
       get :edit_check, path: :check, on: :member
