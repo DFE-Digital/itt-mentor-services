@@ -54,6 +54,9 @@ en:
           trained_mentors_true_label: "Yes"
           trained_mentors_false_label: "No"
           primary_year_group: Primary year group
+          schools_to_show:
+            active: Only schools using the service
+            all: All schools
         placements:
           page_title: "%{school_name} - Find"
           placements: Placements

@@ -245,6 +245,25 @@
           </div>
 
           <div class="app-filter__option">
+            <%= form.govuk_radio_buttons_fieldset(
+              :schools_to_show,
+              legend: {
+                text: "Schools to show",
+                size: "s",
+              },
+              small: true,
+            ) do %>
+              <% %w[active all].each do |active_filter_option| %>
+                <%= form.govuk_radio_button :schools_to_show,
+                  active_filter_option,
+                  label: { text: t(".schools_to_show.#{active_filter_option}") },
+                  checked: params.dig(:filters, :schools_to_show) == active_filter_option ||
+                    active_filter_option == "active" && params.dig(:filters, :schools_to_show).blank? %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <div class="app-filter__option">
             <%= form.govuk_check_boxes_fieldset(
               :phases,
               legend: { text: t(".phase"), size: "s" },
