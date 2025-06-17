@@ -204,11 +204,31 @@ describe Placements::SchoolsQuery do
     end
 
     context "when filtering by location" do
+      let!(:close_query_school) do
+        create(
+          :placements_school,
+          name: "Bob's Primary School",
+          phase: "Primary",
+          latitude: 51.651101,
+          longitude: 14.347458,
+        )
+      end
+
+      let!(:far_query_school) do
+        create(
+          :placements_school,
+          name: "Bob's Primary School",
+          phase: "Primary",
+          latitude: 51.654505,
+          longitude: 14.319858,
+        )
+      end
+
       let(:location_coordinates) { [query_school.latitude, query_school.longitude] }
       let(:params) { { location_coordinates: } }
 
-      it "returns the filtered schools" do
-        expect(query.call).to include(query_school)
+      it "returns the filtered schools in order of distance" do
+        expect(query.call).to eq([query_school.becomes(School), close_query_school.becomes(School), far_query_school.becomes(School)])
         expect(query.call).not_to include(non_query_school)
       end
     end
