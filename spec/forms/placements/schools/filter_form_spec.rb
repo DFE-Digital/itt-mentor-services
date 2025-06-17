@@ -7,13 +7,13 @@ describe Placements::Schools::FilterForm, type: :model do
   let(:current_academic_year) { Placements::AcademicYear.current }
 
   describe "#filters_selected?" do
-    subject(:filter_form) { described_class.new(provider, params).filters_selected? }
+    subject(:filters_selected) { described_class.new(provider, params).filters_selected? }
 
     context "when given schools I work with id params" do
       let(:params) { { schools_i_work_with_ids: %w[school_id] } }
 
       it "returns true" do
-        expect(filter_form).to be(true)
+        expect(filters_selected).to be(true)
       end
     end
 
@@ -21,7 +21,7 @@ describe Placements::Schools::FilterForm, type: :model do
       let(:params) { { subject_ids: %w[subject_id] } }
 
       it "returns true" do
-        expect(filter_form).to be(true)
+        expect(filters_selected).to be(true)
       end
     end
 
@@ -30,7 +30,7 @@ describe Placements::Schools::FilterForm, type: :model do
         let(:params) { { search_location: "" } }
 
         it "return false" do
-          expect(filter_form).to be(false)
+          expect(filters_selected).to be(false)
         end
       end
 
@@ -38,7 +38,7 @@ describe Placements::Schools::FilterForm, type: :model do
         let(:params) { { search_location: "London" } }
 
         it "return true" do
-          expect(filter_form).to be(true)
+          expect(filters_selected).to be(true)
         end
       end
     end
@@ -48,7 +48,7 @@ describe Placements::Schools::FilterForm, type: :model do
         let(:params) { { search_by_name: "" } }
 
         it "return false" do
-          expect(filter_form).to be(false)
+          expect(filters_selected).to be(false)
         end
       end
 
@@ -56,7 +56,7 @@ describe Placements::Schools::FilterForm, type: :model do
         let(:params) { { search_by_name: "Hogwarts" } }
 
         it "returns true" do
-          expect(filter_form).to be(true)
+          expect(filters_selected).to be(true)
         end
       end
     end
@@ -65,7 +65,7 @@ describe Placements::Schools::FilterForm, type: :model do
       let(:params) { { phases: %w[primary secondary] } }
 
       it "returns true" do
-        expect(filter_form).to be(true)
+        expect(filters_selected).to be(true)
       end
     end
 
@@ -73,7 +73,7 @@ describe Placements::Schools::FilterForm, type: :model do
       let(:params) { { itt_statuses: %w[itt_status] } }
 
       it "returns true" do
-        expect(filter_form).to be(true)
+        expect(filters_selected).to be(true)
       end
     end
 
@@ -81,7 +81,7 @@ describe Placements::Schools::FilterForm, type: :model do
       let(:params) { { last_offered_placements_academic_year_ids: %w[academic_year_id] } }
 
       it "returns true" do
-        expect(filter_form).to be(true)
+        expect(filters_selected).to be(true)
       end
     end
 
@@ -89,7 +89,7 @@ describe Placements::Schools::FilterForm, type: :model do
       let(:params) { { schools_to_show: "active" } }
 
       it "returns false" do
-        expect(filter_form).to be(false)
+        expect(filters_selected).to be(false)
       end
     end
 
@@ -97,7 +97,7 @@ describe Placements::Schools::FilterForm, type: :model do
       let(:params) { {} }
 
       it "returns false" do
-        expect(filter_form).to be(false)
+        expect(filters_selected).to be(false)
       end
     end
   end
