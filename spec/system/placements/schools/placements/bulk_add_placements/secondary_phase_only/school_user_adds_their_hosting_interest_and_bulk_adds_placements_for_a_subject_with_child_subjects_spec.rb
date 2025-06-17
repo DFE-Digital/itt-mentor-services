@@ -238,8 +238,8 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
     )
     expect(page).to have_h2("Manage your placements", class: "govuk-heading-m")
     expect(page).to have_h2("Your placements offer", class: "govuk-heading-m")
-    expect(page).not_to have_h2("Primary placements", class: "govuk-heading-m")
-    expect(page).to have_h2("Secondary placements", class: "govuk-heading-m")
+    expect(page).not_to have_h3("Primary placements", class: "govuk-heading-m")
+    expect(page).to have_h3("Secondary placements", class: "govuk-heading-m")
   end
 
   def when_i_click_on_edit_your_placements

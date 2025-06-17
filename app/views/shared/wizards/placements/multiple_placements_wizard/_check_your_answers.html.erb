@@ -24,3 +24,12 @@
   <%= render "shared/wizards/placements/multiple_placements_wizard/check_your_answers/secondary_placements_list",
     wizard:, current_step: %>
 <% end %>
+
+<% if current_step.selected_key_stages.present? %>
+  <h2 class="govuk-heading-m">
+    <%= potential ? t(".potential_send_placements") : t(".send_placements") %>
+  </h2>
+
+  <%= render "shared/wizards/placements/multiple_placements_wizard/check_your_answers/send_placements_list",
+    wizard:, current_step: %>
+<% end %>

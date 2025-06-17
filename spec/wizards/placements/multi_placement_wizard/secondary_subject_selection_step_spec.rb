@@ -33,7 +33,7 @@ RSpec.describe Placements::MultiPlacementWizard::SecondarySubjectSelectionStep, 
 
     before { primary_subject }
 
-    it "raises an error" do
+    it "returns only secondary subjects" do
       expect(subjects_for_selection).to contain_exactly(
         english,
         mathematics,

@@ -29,5 +29,10 @@ FactoryBot.define do
 
     association :school, factory: :placements_school
     association :subject, factory: :subject
+
+    trait :send do
+      subject { nil }
+      send_specific { true }
+    end
   end
 end

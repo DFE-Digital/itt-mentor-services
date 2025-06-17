@@ -157,17 +157,21 @@ RSpec.describe Placements::EditPotentialPlacementsWizard do
 
     let(:english) { create(:subject, :secondary, name: "English") }
     let(:science) { create(:subject, :secondary, name: "Science") }
+    let(:key_stage_1) { create(:key_stage, name: "Key stage 1") }
+    let(:mixed_key_stages) { create(:key_stage, name: "Mixed key stages") }
     let(:school) { create(:placements_school, potential_placement_details:) }
 
     context "when the potential placement details includes quantities known" do
       let(:potential_placement_details) do
         {
-          "phase" => { "phases" => %w[Primary Secondary] },
+          "phase" => { "phases" => %w[Primary Secondary SEND] },
           "note_to_providers" => { "note" => "Interested in offering placements at the provider's request" },
           "year_group_selection" => { "year_groups" => %w[year_2 year_3] },
           "year_group_placement_quantity" => { "year_2" => 1, "year_3" => 2 },
           "secondary_subject_selection" => { "subject_ids" => [english.id, science.id] },
           "secondary_placement_quantity" => { "english" => 1, "science" => 2 },
+          "key_stage_selection" => { "key_stage_ids" => [key_stage_1.id, mixed_key_stages.id] },
+          "key_stage_placement_quantity" => { "key_stage_1" => 1, "mixed_key_stages" => 2 },
         }
       end
 
@@ -175,7 +179,7 @@ RSpec.describe Placements::EditPotentialPlacementsWizard do
         setup_state
         expect(state).to eq(
           {
-            "phase" => { "phases" => %w[Primary Secondary] },
+            "phase" => { "phases" => %w[Primary Secondary SEND] },
             "note_to_providers" => { "note" => "Interested in offering placements at the provider's request" },
             "year_group_selection" => { "year_groups" => %w[year_2 year_3] },
             "year_group_placement_quantity_known" => { "quantity_known" => "Yes" },
@@ -183,6 +187,9 @@ RSpec.describe Placements::EditPotentialPlacementsWizard do
             "secondary_subject_selection" => { "subject_ids" => [english.id, science.id] },
             "secondary_placement_quantity_known" => { "quantity_known" => "Yes" },
             "secondary_placement_quantity" => { "english" => 1, "science" => 2 },
+            "key_stage_selection" => { "key_stage_ids" => [key_stage_1.id, mixed_key_stages.id] },
+            "key_stage_placement_quantity_known" => { "quantity_known" => "Yes" },
+            "key_stage_placement_quantity" => { "key_stage_1" => 1, "mixed_key_stages" => 2 },
           },
         )
       end
@@ -191,10 +198,11 @@ RSpec.describe Placements::EditPotentialPlacementsWizard do
     context "when the potential placement details do not include quantities known" do
       let(:potential_placement_details) do
         {
-          "phase" => { "phases" => %w[Primary Secondary] },
+          "phase" => { "phases" => %w[Primary Secondary SEND] },
           "note_to_providers" => { "note" => "Interested in offering placements at the provider's request" },
           "year_group_selection" => { "year_groups" => %w[year_2 year_3] },
           "secondary_subject_selection" => { "subject_ids" => [english.id, science.id] },
+          "key_stage_selection" => { "key_stage_ids" => [key_stage_1.id, mixed_key_stages.id] },
         }
       end
 
@@ -202,12 +210,14 @@ RSpec.describe Placements::EditPotentialPlacementsWizard do
         setup_state
         expect(state).to eq(
           {
-            "phase" => { "phases" => %w[Primary Secondary] },
+            "phase" => { "phases" => %w[Primary Secondary SEND] },
             "note_to_providers" => { "note" => "Interested in offering placements at the provider's request" },
             "year_group_selection" => { "year_groups" => %w[year_2 year_3] },
             "year_group_placement_quantity_known" => { "quantity_known" => "No" },
             "secondary_subject_selection" => { "subject_ids" => [english.id, science.id] },
             "secondary_placement_quantity_known" => { "quantity_known" => "No" },
+            "key_stage_selection" => { "key_stage_ids" => [key_stage_1.id, mixed_key_stages.id] },
+            "key_stage_placement_quantity_known" => { "quantity_known" => "No" },
           },
         )
       end

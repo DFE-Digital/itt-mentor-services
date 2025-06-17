@@ -159,6 +159,30 @@ en:
             placement_number: "Placement %{placement_number} of %{step_count}"
             options:
               unknown: Not sure yet
+          key_stage_placement_quantity_step:
+            title: How many placements could you offer for each key stage?
+            caption: Potential SEND placement details
+            hint:
+              Sharing information on what you may be able to offer helps providers know whether to contact you.
+              It is not a commitment to take a trainee teacher.
+            continue: Continue
+          key_stage_placement_quantity_known_step:
+            title: Do you know how many placement you could offer each SEND key stage?
+            caption: Potential SEND placement details
+            hint:
+              Sharing information on what you may be able to offer helps providers know whether to contact you.
+              It is not a commitment to take a trainee teacher.
+            continue: Continue
+          key_stage_selection_step:
+            title: What key stages could you offer placements in?
+            caption: Potential SEND placement details
+            hint:
+              Sharing information on what you may be able to offer helps providers know whether to contact you.
+              It is not a commitment to take a trainee teacher.
+            continue: Continue
+            options:
+              unknown: I don’t know
+              unknown_description: A key stage will not be recorded
         not_open:
           school_contact_step:
             caption: Not offering placements this year

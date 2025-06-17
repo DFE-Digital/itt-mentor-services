@@ -1,0 +1,34 @@
+<%# locals: { placement_details: nil, action_link: nil } -%>
+<%= govuk_summary_list(html_attributes: { id: "send_placements" }, actions: action_link.present?) do |summary_list| %>
+  <% summary_list.with_row do |row| %>
+    <% row.with_key(text: t(".key_stage")) %>
+    <% row.with_value do %>
+      <strong><%= t(".number_of_placements") %></strong>
+    <% end %>
+    <% if action_link.present? %>
+      <% row.with_action(
+        text: t(".change"),
+        href: action_link,
+        visually_hidden_text: t(".key_stage"),
+        classes: ["govuk-link--no-visited-state"],
+      ) %>
+    <% end %>
+  <% end %>
+
+  <% placement_details.dig("key_stage_selection", "key_stage_ids").each do |key_stage_id| %>
+    <% if key_stage_id == Placements::AddHostingInterestWizard::UNKNOWN_OPTION %>
+      <% summary_list.with_row do |row| %>
+        <% row.with_key(text: t(".unknown")) %>
+        <% row.with_value(text: t(".not_entered")) %>
+      <% end %>
+    <% else %>
+      <% key_stage = Placements::KeyStage.find(key_stage_id) %>
+      <% summary_list.with_row do |row| %>
+        <% row.with_key(text: key_stage.name) %>
+        <% row.with_value do %>
+          <%= placement_details.dig("key_stage_placement_quantity", key_stage.name_as_attribute.to_s).to_i %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

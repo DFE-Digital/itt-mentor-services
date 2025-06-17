@@ -64,6 +64,12 @@ module Placements
       super
     end
 
+    def selected_key_stages
+      return [UNKNOWN_OPTION] if selected_key_stage_ids.include?(UNKNOWN_OPTION)
+
+      super
+    end
+
     def academic_year
       @academic_year ||= AcademicYear.current.next
     end
@@ -78,12 +84,18 @@ module Placements
 
     def interested_steps
       add_step(Interested::PhaseStep)
-      if phases.include?(::Placements::School::PRIMARY_PHASE)
+      if primary_phase?
         year_group_steps
       end
-      if phases.include?(::Placements::School::SECONDARY_PHASE)
+
+      if secondary_phase?
         secondary_subject_steps
       end
+
+      if send_specific?
+        send_steps
+      end
+
       add_step(Interested::NoteToProvidersStep)
       add_step(SchoolContactStep)
       add_step(ConfirmStep)
@@ -119,6 +131,20 @@ module Placements
 
         add_step(Interested::SecondaryPlacementQuantityStep)
         child_subject_steps(step_prefix: ::Placements::AddHostingInterestWizard::Interested)
+      else
+        super
+      end
+    end
+
+    def send_steps
+      if appetite_interested?
+        add_step(Interested::KeyStageSelectionStep)
+        return if value_unknown(selected_key_stage_ids)
+
+        add_step(Interested::KeyStagePlacementQuantityKnownStep)
+        return unless steps.fetch(:key_stage_placement_quantity_known).is_quantity_known?
+
+        add_step(Interested::KeyStagePlacementQuantityStep)
       else
         super
       end

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "School user completes the interested journey without declaring potential placement details",
+RSpec.describe "School user completes the interested journey and declares primary and secondary potential placement details",
                service: :placements,
                type: :system do
   scenario do

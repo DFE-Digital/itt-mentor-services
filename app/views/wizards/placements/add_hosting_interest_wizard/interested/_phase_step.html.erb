@@ -13,7 +13,7 @@
         legend: { size: "l", text: t(".title"), tag: "h1" },
         hint: { text: t(".hint") }) do %>
         <% current_step.phases_for_selection.each_with_index do |phase, i| %>
-          <%= f.govuk_check_box :phases, phase.name,
+          <%= f.govuk_check_box :phases, phase.value,
             label: { text: phase.name },
             hint: { text: phase.description },
             link_errors: i.zero? %>

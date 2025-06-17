@@ -40,7 +40,7 @@ en:
             primary_description: 3 to 11 years
             secondary_description: 11 to 19 years
             send: Special educational needs and disabilities (SEND) specific
-            send_description: You will be able to select year groups
+            send_description: You will be able to select key stages
           continue: Continue
         subjects_known_step:
           title: Do you know which subjects you would like to host?
@@ -115,7 +115,20 @@ en:
           hint: You will be able to enter the number of placements on the next screen
           continue: Continue
         year_group_placement_quantity_step:
-            title: Enter the number of primary school placements you can offer
-            caption: Primary placement details
-            enter_approximate: Enter an approximate number if you are unsure
-            continue: Continue
+          title: Enter the number of primary school placements you can offer
+          caption: Primary placement details
+          enter_approximate: Enter an approximate number if you are unsure
+          continue: Continue
+        key_stage_placement_quantity_step:
+          title: How many SEND placements can you offer?
+          caption: SEND placement details
+          enter_approximate: Enter an approximate number if you are unsure
+          continue: Continue
+        key_stage_selection_step:
+          title: What SEND key stages can you offer placements in?
+          caption: SEND placement details
+          hint: Select all that apply
+          continue: Continue
+          options:
+            unknown: I don’t know
+            unknown_description: You can discuss key stages with providers later
