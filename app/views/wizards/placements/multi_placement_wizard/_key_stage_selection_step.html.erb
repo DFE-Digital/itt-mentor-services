@@ -1,0 +1,30 @@
+<% content_for :page_title, title_with_error_prefix(
+  t(".title"),
+  error: current_step.errors.any?,
+) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".caption") %></span>
+     <%= f.govuk_check_boxes_fieldset(
+        :key_stage_ids,
+        legend: { size: "l", text: t(".title"), tag: "h1" },
+        hint: { text: t(".hint") },
+      ) do %>
+        <% current_step.key_stages_for_selection.each_with_index do |key_stage, i| %>
+          <%= f.govuk_check_box :key_stage_ids, key_stage.id,
+            label: { text: key_stage.name },
+            link_errors: i.zero? %>
+        <% end %>
+        <%= f.govuk_check_box_divider %>
+        <%= f.govuk_check_box :key_stage_ids, current_step.mixed_key_stage_option.id,
+            label: { text: current_step.mixed_key_stage_option.name } %>
+      <% end %>
+
+      <%= f.govuk_submit t(".continue") %>
+    </div>
+  </div>
+<% end %>

@@ -13,6 +13,8 @@ en:
             potential_primary_placements: Potential primary placements
             secondary_placements: Secondary placements
             potential_secondary_placements: Potential secondary placements
+            send_placements: SEND placements
+            potential_send_placements: Potential SEND placements
             not_entered: Not entered
             change: Change
             education_phase_list:
@@ -28,6 +30,12 @@ en:
               secondary_placements: Secondary placements
               number_of_placements: Number of placements
               subject: Subject
+              not_entered: Not entered
+              unknown: I don’t know
+            send_placements_list:
+              send_placements: SEND placements
+              number_of_placements: Number of placements
+              key_stage: Key stage
               not_entered: Not entered
               unknown: I don’t know
 

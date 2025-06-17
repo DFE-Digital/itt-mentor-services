@@ -1,11 +1,12 @@
 require "rails_helper"
 
-RSpec.describe "School user completes the interested journey without declaring specific year groups or subjects",
+RSpec.describe "School user completes the interested journey without declaring specific year groups or subjects or key stages",
                service: :placements,
                type: :system do
   scenario do
     given_academic_years_exist
     and_subjects_exist
+    and_key_stages_exist
     and_i_am_signed_in
 
     when_i_visit_the_add_hosting_interest_page
@@ -17,12 +18,17 @@ RSpec.describe "School user completes the interested journey without declaring s
 
     when_i_select_primary
     and_i_select_secondary
+    and_i_select_send
     and_i_click_on_continue
     then_i_see_the_primary_year_group_selection_form
 
     when_i_select_i_dont_know
     and_i_click_on_continue
     then_i_see_the_secondary_subject_selection_form
+
+    when_i_select_i_dont_know
+    and_i_click_on_continue
+    then_i_see_the_key_stage_selection_form
 
     when_i_select_i_dont_know
     and_i_click_on_continue
@@ -39,6 +45,7 @@ RSpec.describe "School user completes the interested journey without declaring s
     and_i_see_the_education_phases_i_selected
     and_i_see_the_potential_primary_placement_details_are_not_known
     and_i_see_the_potential_secondary_placement_details_are_not_known
+    and_i_see_the_potential_send_placement_details_are_not_known
     and_i_see_the_message_to_provider_i_entered
 
     when_i_click_on_confirm
@@ -63,6 +70,16 @@ RSpec.describe "School user completes the interested journey without declaring s
     @english = create(:subject, :secondary, name: "English")
     @mathematics = create(:subject, :secondary, name: "Mathematics")
     @science = create(:subject, :secondary, name: "Science")
+  end
+
+  def and_key_stages_exist
+    @early_years = create(:key_stage, name: "Early years")
+    @key_stage_1 = create(:key_stage, name: "Key stage 1")
+    @key_stage_2 = create(:key_stage, name: "Key stage 2")
+    @key_stage_3 = create(:key_stage, name: "Key stage 3")
+    @key_stage_4 = create(:key_stage, name: "Key stage 4")
+    @key_stage_5 = create(:key_stage, name: "Key stage 5")
+    @mixed_key_stages = create(:key_stage, name: "Mixed key stages")
   end
 
   def and_i_am_signed_in
@@ -238,7 +255,7 @@ RSpec.describe "School user completes the interested journey without declaring s
   def and_the_schools_potential_placement_details_have_been_updated
     potential_placement_details = @school.reload.potential_placement_details
 
-    expect(potential_placement_details["phase"]).to eq({ "phases" => %w[Primary Secondary] })
+    expect(potential_placement_details["phase"]).to eq({ "phases" => %w[Primary Secondary SEND] })
     expect(potential_placement_details["year_group_selection"]).to eq(
       { "year_groups" => %w[unknown] },
     )
@@ -249,6 +266,12 @@ RSpec.describe "School user completes the interested journey without declaring s
       { "subject_ids" => %w[unknown] },
     )
     expect(potential_placement_details["secondary_placement_quantity"]).to be_nil
+    expect(
+      potential_placement_details["key_stage_selection"],
+    ).to eq(
+      { "key_stage_ids" => %w[unknown] },
+    )
+    expect(potential_placement_details["key_stage_placement_quantity"]).to be_nil
     expect(potential_placement_details["note_to_providers"]).to eq(
       { "note" => "We are open to hosting additional placements at the provider's request." },
     )
@@ -260,6 +283,10 @@ RSpec.describe "School user completes the interested journey without declaring s
 
   def and_i_select_secondary
     check "Secondary"
+  end
+
+  def and_i_select_send
+    check "Special educational needs and disabilities (SEND) specific"
   end
 
   def then_i_see_the_primary_year_group_selection_form
@@ -390,5 +417,33 @@ RSpec.describe "School user completes the interested journey without declaring s
     within("#secondary_placements") do
       expect(page).to have_summary_list_row("I don’t know", "Not entered")
     end
+  end
+
+  def and_i_see_the_potential_send_placement_details_are_not_known
+    expect(page).to have_h2("Potential SEND placements", class: "govuk-heading-m")
+    within("#send_placements") do
+      expect(page).to have_summary_list_row("I don’t know", "Not entered")
+    end
+  end
+
+  def then_i_see_the_key_stage_selection_form
+    expect(page).to have_title(
+      "What key stages could you offer placements in? - Manage school placements - GOV.UK",
+    )
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_span_caption("Potential SEND placement details")
+    expect(page).to have_element(
+      :legend,
+      text: "What key stages could you offer placements in?",
+      class: "govuk-fieldset__legend",
+    )
+    expect(page).to have_field("Early year", type: :checkbox)
+    expect(page).to have_field("Key stage 1", type: :checkbox)
+    expect(page).to have_field("Key stage 2", type: :checkbox)
+    expect(page).to have_field("Key stage 3", type: :checkbox)
+    expect(page).to have_field("Key stage 4", type: :checkbox)
+    expect(page).to have_field("Key stage 5", type: :checkbox)
+    expect(page).to have_field("Mixed key stages", type: :checkbox)
+    expect(page).to have_field("I don’t know", type: :checkbox)
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_02_132426) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_17_154722) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -287,6 +287,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_02_132426) do
     t.index ["school_id"], name: "index_hosting_interests_on_school_id"
   end
 
+  create_table "key_stages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "mentor_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type", null: false
     t.uuid "mentor_id", null: false
@@ -411,8 +417,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_02_132426) do
     t.uuid "academic_year_id", null: false
     t.string "creator_type"
     t.uuid "creator_id"
+    t.boolean "send_specific", default: false
+    t.uuid "key_stage_id"
     t.index ["academic_year_id"], name: "index_placements_on_academic_year_id"
     t.index ["creator_type", "creator_id"], name: "index_placements_on_creator"
+    t.index ["key_stage_id"], name: "index_placements_on_key_stage_id"
     t.index ["provider_id"], name: "index_placements_on_provider_id"
     t.index ["school_id"], name: "index_placements_on_school_id"
     t.index ["subject_id"], name: "index_placements_on_subject_id"
