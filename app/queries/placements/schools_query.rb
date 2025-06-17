@@ -9,6 +9,7 @@ class Placements::SchoolsQuery < ApplicationQuery
   def call
     scope = School.left_outer_joins(:hosting_interests, :academic_years, :placements, :mentors)
 
+    scope = schools_to_show_condition(scope)
     scope = search_by_name_condition(scope)
     scope = schools_i_work_with_condition(scope)
     scope = subject_condition(scope)
@@ -122,5 +123,11 @@ class Placements::SchoolsQuery < ApplicationQuery
     else
       scope.order(:name)
     end
+  end
+
+  def schools_to_show_condition(scope)
+    return scope if filter_params[:schools_to_show] == "all"
+
+    scope.where(expression_of_interest_completed: true).or(scope.where.associated(:hosting_interests))
   end
 end

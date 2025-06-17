@@ -9,6 +9,7 @@ class Placements::Schools::FilterForm < ApplicationForm
   attribute :year_groups, default: []
   attribute :itt_statuses, default: []
   attribute :last_offered_placements_academic_year_ids, default: []
+  attribute :schools_to_show, default: "active"
 
   def initialize(provider, params = {})
     @provider = provider
@@ -19,6 +20,7 @@ class Placements::Schools::FilterForm < ApplicationForm
 
   def filters_selected?
     attributes
+      .except("schools_to_show")
       .values
       .compact
       .flatten
@@ -53,6 +55,7 @@ class Placements::Schools::FilterForm < ApplicationForm
       year_groups:,
       itt_statuses:,
       last_offered_placements_academic_year_ids:,
+      schools_to_show:,
     }
   end
 
@@ -98,7 +101,7 @@ class Placements::Schools::FilterForm < ApplicationForm
 
   private
 
-  SINGULAR_ATTRIBUTES = %w[search_location search_by_name].freeze
+  SINGULAR_ATTRIBUTES = %w[search_location search_by_name schools_to_show].freeze
 
   def compacted_attributes
     @compacted_attributes ||= attributes.compact_blank

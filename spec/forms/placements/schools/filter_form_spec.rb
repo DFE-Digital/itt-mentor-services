@@ -85,6 +85,14 @@ describe Placements::Schools::FilterForm, type: :model do
       end
     end
 
+    context "when given a schools to show params" do
+      let(:params) { { schools_to_show: "active" } }
+
+      it "returns false" do
+        expect(filter_form).to be(false)
+      end
+    end
+
     context "when given no params" do
       let(:params) { {} }
 
@@ -121,6 +129,7 @@ describe Placements::Schools::FilterForm, type: :model do
             provider,
             filters: {
               schools_i_work_with_ids: %w[school_id_2],
+              schools_to_show: "active",
             },
           ),
         )
@@ -143,6 +152,7 @@ describe Placements::Schools::FilterForm, type: :model do
             provider,
             filters: {
               subject_ids: %w[subject_id_2],
+              schools_to_show: "active",
             },
           ),
         )
@@ -161,7 +171,12 @@ describe Placements::Schools::FilterForm, type: :model do
             value: "London",
           ),
         ).to eq(
-          placements_provider_find_index_path(provider),
+          placements_provider_find_index_path(
+            provider,
+            filters: {
+              schools_to_show: "active",
+            },
+          ),
         )
       end
     end
@@ -178,7 +193,12 @@ describe Placements::Schools::FilterForm, type: :model do
             value: "Hogwarts",
           ),
         ).to eq(
-          placements_provider_find_index_path(provider),
+          placements_provider_find_index_path(
+            provider,
+            filters: {
+              schools_to_show: "active",
+            },
+          ),
         )
       end
     end
@@ -199,6 +219,7 @@ describe Placements::Schools::FilterForm, type: :model do
             provider,
             filters: {
               phases: %w[secondary],
+              schools_to_show: "active",
             },
           ),
         )
@@ -221,6 +242,7 @@ describe Placements::Schools::FilterForm, type: :model do
             provider,
             filters: {
               itt_statuses: %w[itt_status],
+              schools_to_show: "active",
             },
           ),
         )
@@ -243,6 +265,7 @@ describe Placements::Schools::FilterForm, type: :model do
             provider,
             filters: {
               last_offered_placements_academic_year_ids: %w[academic_year_id_2],
+              schools_to_show: "active",
             },
           ),
         )
@@ -262,6 +285,7 @@ describe Placements::Schools::FilterForm, type: :model do
           year_groups: [],
           itt_statuses: [],
           last_offered_placements_academic_year_ids: [],
+          schools_to_show: "active",
         },
       )
     end

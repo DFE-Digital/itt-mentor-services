@@ -78,6 +78,7 @@ class Placements::Providers::FindController < Placements::ApplicationController
     params.fetch(:filters, {}).permit(
       :search_location,
       :search_by_name,
+      :schools_to_show,
       schools_i_work_with_ids: [],
       subject_ids: [],
       phases: [],
