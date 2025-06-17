@@ -277,14 +277,14 @@ RSpec.describe "School user does not select a phase",
   def and_i_see_my_hosting_interest_is_placements_available
     expect(page).to have_tag("Placements available", "green")
     expect(page).to have_paragraph(
-      "Your status is set to placements available. If this is no longer the case you can change your status.",
-    )
-    expect(page).to have_paragraph(
       "Add and edit placements to let providers know your preferences.",
     )
     expect(page).to have_paragraph(
       "If you know the providers you want to work with, assign them to your placements. " \
       "This will prevent other providers getting in contact with you about them.",
+    )
+    expect(page).to have_paragraph(
+      "If your circumstances change and you are no longer able to offer placements, change your status.",
     )
   end
 end
