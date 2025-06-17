@@ -119,9 +119,13 @@ class Placements::SchoolsQuery < ApplicationQuery
         params[:location_coordinates],
       )
 
-      scope.where(id: school_ids).order(:name)
+      sanitised_ids = school_ids.map { |id| ActiveRecord::Base.connection.quote(id) }.join(",")
+      scope.where(id: school_ids)
+           .select("schools.*, array_position(ARRAY[#{sanitised_ids}]::uuid[], schools.id) AS ordering_index")
+           .distinct
+           .order(Arel.sql("ordering_index"))
     else
-      scope.order(:name)
+      scope.distinct.order(:name)
     end
   end
 

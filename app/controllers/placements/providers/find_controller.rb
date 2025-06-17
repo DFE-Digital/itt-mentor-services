@@ -9,7 +9,8 @@ class Placements::Providers::FindController < Placements::ApplicationController
     @subjects = filter_subjects_by_phase
     @schools_i_work_with = @provider.partner_schools.order_by_name
     query = Placements::SchoolsQuery.call(academic_year: selected_academic_year, params: query_params)
-    @pagy, @schools = pagy(all_schools.merge(query).distinct)
+    @pagy, @schools = pagy(query)
+    @schools = @schools.decorate
     calculate_travel_time
   end
 
