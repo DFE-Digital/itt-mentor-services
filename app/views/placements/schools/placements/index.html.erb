@@ -16,22 +16,22 @@
 
         <%= render Placements::Schools::InterestTagComponent.new(school: @school, academic_year: current_user.selected_academic_year) %>
 
+        <p class="govuk-body govuk-!-margin-top-6"><%= t(".add_and_edit_placements") %></p>
+
+        <p class="govuk-body"><%= t(".if_you_know_the_providers") %></p>
+
         <% if @hosting_interest.present? %>
-          <p class="govuk-body govuk-!-margin-top-6">
+          <p class="govuk-body">
             <%= embedded_link_text(
-              t(".your_status_is_set",
-                status: content_tag(:strong, t(".placements_available")),
+              t(".if_your_circumstances_change",
                 link: govuk_link_to(
                   t(".change_your_status"),
                   new_edit_hosting_interest_placements_school_hosting_interest_path(@school, @hosting_interest),
+                  no_visited_state: true,
                 )),
             ) %>
           </p>
         <% end %>
-
-        <p class="govuk-body"><%= t(".add_and_edit_placements") %></p>
-
-        <p class="govuk-body"><%= t(".if_you_know_the_providers") %></p>
       </div>
 
       <div class="govuk-grid-column-full">
