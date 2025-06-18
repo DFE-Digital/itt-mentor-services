@@ -10,7 +10,9 @@ RSpec.describe Claims::ClaimSlackNotifier do
         claim_count:,
         school_count:,
         provider_count:,
+        claim_amount:,
         total_claims_count:,
+        total_claims_amount:,
       )
     end
 
@@ -18,7 +20,9 @@ RSpec.describe Claims::ClaimSlackNotifier do
       let(:claim_count) { 5 }
       let(:school_count) { 3 }
       let(:provider_count) { 2 }
+      let(:claim_amount) { "£5000" }
       let(:total_claims_count) { 100 }
+      let(:total_claims_amount) { "£50000" }
 
       it "returns a message with the correct blocks" do
         expect(notification.blocks).to include(
@@ -59,13 +63,34 @@ RSpec.describe Claims::ClaimSlackNotifier do
             },
           },
           {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: ":money_with_wings: *#{claim_amount}* has been claimed in the past 24 hours",
+            },
+          },
+          {
             type: "divider",
           },
           {
             type: "section",
             text: {
               type: "mrkdwn",
-              text: "*#{total_claims_count}* claims have been created for the #{academic_year.name} academic year!",
+              text: "For the #{academic_year.name} academic year:",
+            },
+          },
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: ":chart_with_upwards_trend: *#{total_claims_count}* claims have been created",
+            },
+          },
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: ":bank: *#{total_claims_amount}* has been claimed",
             },
           },
         )
@@ -75,8 +100,10 @@ RSpec.describe Claims::ClaimSlackNotifier do
     context "when a single claim is created" do
       let(:claim_count) { 1 }
       let(:school_count) { 1 }
+      let(:claim_amount) { "£1000" }
       let(:provider_count) { 1 }
       let(:total_claims_count) { 1 }
+      let(:total_claims_amount) { "£1000" }
 
       it "returns a message with the correct blocks" do
         expect(notification.blocks).to include(
@@ -117,13 +144,34 @@ RSpec.describe Claims::ClaimSlackNotifier do
             },
           },
           {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: ":money_with_wings: *#{claim_amount}* has been claimed in the past 24 hours",
+            },
+          },
+          {
             type: "divider",
           },
           {
             type: "section",
             text: {
               type: "mrkdwn",
-              text: "*#{total_claims_count}* claim has been created for the #{academic_year.name} academic year!",
+              text: "For the #{academic_year.name} academic year:",
+            },
+          },
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: ":chart_with_upwards_trend: *#{total_claims_count}* claim has been created",
+            },
+          },
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: ":bank: *#{total_claims_amount}* has been claimed",
             },
           },
         )
