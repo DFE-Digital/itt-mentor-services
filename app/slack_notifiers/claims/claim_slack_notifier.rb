@@ -21,7 +21,7 @@ class Claims::ClaimSlackNotifier < Claims::ApplicationSlackNotifier
           type: "section",
           text: {
             type: "mrkdwn",
-            text: ":sparkles: *#{claim_count} #{"claim".pluralize(provider_count)}* #{has_or_have(claim_count)} been created",
+            text: ":sparkles: *#{claim_count} #{"claim".pluralize(claim_count)}* #{has_or_have(claim_count)} been created",
           },
         },
         {
