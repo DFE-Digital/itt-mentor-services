@@ -5,39 +5,45 @@
 <% end %>
 
 <div class="govuk-width-container">
-  <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
-  <% if @manually_onboarded_schools.exists? %>
-    <%= govuk_table do |table| %>
-      <% table.with_head do |head| %>
-        <% head.with_row do |row| %>
-          <% row.with_cell text: t(".table.headers.school_name") %>
-          <% row.with_cell text: t(".table.headers.onboarded_by") %>
-          <% row.with_cell text: t(".table.headers.eligible_for") %>
-        <% end %>
-      <% end %>
+      <% if @manually_onboarded_schools.exists? %>
+        <%= govuk_table do |table| %>
+          <% table.with_head do |head| %>
+            <% head.with_row do |row| %>
+              <% row.with_cell text: t(".table.headers.school_name") %>
+              <% row.with_cell text: t(".table.headers.onboarded_by") %>
+              <% row.with_cell text: t(".table.headers.eligible_for") %>
+            <% end %>
+          <% end %>
 
-      <% table.with_body do |body| %>
-        <% @manually_onboarded_schools.each do |school| %>
-          <% body.with_row do |row| %>
-            <% row.with_cell text: govuk_link_to(school.name, claims_support_school_path(school)) %>
-            <% row.with_cell text: school.manually_onboarded_by.full_name %>
-            <% row.with_cell do %>
-              <%= govuk_list do %>
-                <% school.eligible_claim_windows.order(starts_on: :desc).each do |claim_window| %>
-                  <% if claim_window.current? %>
-                    <li><strong><%= "#{window_range_display(claim_window.starts_on, claim_window.ends_on)} (current)" %></strong></li>
-                  <% else %>
-                    <li><%= window_range_display(claim_window.starts_on, claim_window.ends_on) %></li>
+          <% table.with_body do |body| %>
+            <% @manually_onboarded_schools.each do |school| %>
+              <% body.with_row do |row| %>
+                <% row.with_cell text: govuk_link_to(school.name, claims_support_school_path(school)) %>
+                <% row.with_cell text: school.manually_onboarded_by.full_name %>
+                <% row.with_cell do %>
+                  <%= govuk_list do %>
+                    <% school.eligible_claim_windows.order(starts_on: :desc).each do |claim_window| %>
+                      <% if claim_window.current? %>
+                        <li>
+                          <strong><%= "#{window_range_display(claim_window.starts_on, claim_window.ends_on)} (current)" %></strong>
+                        </li>
+                      <% else %>
+                        <li><%= window_range_display(claim_window.starts_on, claim_window.ends_on) %></li>
+                      <% end %>
+                    <% end %>
                   <% end %>
                 <% end %>
               <% end %>
             <% end %>
           <% end %>
         <% end %>
+      <% else %>
+        <p class="govuk-body"><%= t(".no_schools") %></p>
       <% end %>
-    <% end %>
-  <% else %>
-    <p class="govuk-body"><%= t(".no_schools") %></p>
-  <% end %>
+    </div>
+  </div>
 </div>
