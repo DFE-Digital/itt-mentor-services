@@ -16,9 +16,7 @@ class Placements::Schools::SummaryComponent < ApplicationComponent
   end
 
   def link_to_school
-    if (unfilled_subjects.exists? || filled_subjects.exists?) && open_to_hosting?
-      placements_placements_provider_find_path(provider, school)
-    elsif interested_in_hosting?
+    if (open_to_hosting? && (unfilled_subjects.exists? || filled_subjects.exists?)) || interested_in_hosting?
       placements_placements_provider_find_path(provider, school)
     else
       school_details_placements_provider_find_path(provider, school)
