@@ -1,5 +1,10 @@
 module Claims
   class AddSchoolWizard < BaseWizard
+    def initialize(current_user:, params:, state:, current_step: nil)
+      @current_user = current_user
+      super(state:, params:, current_step:)
+    end
+
     def define_steps
       if claim_windows_exist?
         add_step(SchoolStep)
@@ -17,7 +22,7 @@ module Claims
     end
 
     def onboard_school
-      school.update!(claims_service: true)
+      school.update!(claims_service: true, manually_onboarded_by: current_user)
       school.becomes(Claims::School)
         .eligibilities
         .create!(claim_window:)
@@ -30,6 +35,8 @@ module Claims
     end
 
     private
+
+    attr_reader :current_user
 
     def claim_windows_exist?
       Claims::ClaimWindow.current.present? ||

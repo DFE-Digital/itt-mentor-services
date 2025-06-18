@@ -1,8 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Claims::AddSchoolWizard do
-  subject(:wizard) { described_class.new(state:, params:, current_step: nil) }
+  subject(:wizard) { described_class.new(current_user:, state:, params:, current_step: nil) }
 
+  let(:current_user) { create(:claims_support_user) }
   let(:state) { {} }
   let(:params_data) { {} }
   let(:params) { ActionController::Parameters.new(params_data) }
@@ -67,6 +68,7 @@ RSpec.describe Claims::AddSchoolWizard do
         .and change(Claims::Eligibility, :count).by(1)
 
       school.reload
+      expect(school.manually_onboarded_by).to eq(current_user)
       expect(school.claims_service).to be(true)
       expect(current_claim_window.eligible_schools.ids).to contain_exactly(school.id)
     end
