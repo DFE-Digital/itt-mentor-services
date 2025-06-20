@@ -8,6 +8,6 @@ class Placements::EditPlacementWizard::ProviderStep < Placements::EditPlacementW
   end
 
   def autocomplete_return_attributes_value
-    %w[postcode code]
+    %w[postcode]
   end
 end

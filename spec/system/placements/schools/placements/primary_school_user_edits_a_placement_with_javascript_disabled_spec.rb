@@ -108,7 +108,7 @@ RSpec.describe "Primary school user edits a placement with javascript disabled",
   private
 
   def given_that_placements_exist
-    @aes_sedai_provider = build(:placements_provider, name: "Aes Sedai Trust", code: "111", postcode: "BR243F")
+    @aes_sedai_provider = build(:placements_provider, name: "Aes Sedai Trust", postcode: "BR243F")
     @ashaman_provider = build(:placements_provider, name: "Ashaman Trust")
 
     @springfield_elementary_school = build(
@@ -524,7 +524,7 @@ RSpec.describe "Primary school user edits a placement with javascript disabled",
     )
     expect(page).to have_element(:h1, text: "1 results found for 'Aes Sedai Trust'")
     expect(page).to have_field("Aes Sedai Trust")
-    expect(page).to have_hint("BR243F, 111")
+    expect(page).to have_hint("BR243F")
     expect(page).to have_button("Continue")
   end
 

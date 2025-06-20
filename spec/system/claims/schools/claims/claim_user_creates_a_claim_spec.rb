@@ -55,7 +55,7 @@ RSpec.describe "Claims user creates a claim", :js, service: :claims, type: :syst
     @user_anne = build(:claims_user, first_name: "Anne", last_name: "Wilson", email: "anne_wilson@education.gov.uk")
     @mentor_james = build(:claims_mentor, first_name: "James", last_name: "Jameson", trn: "1111111")
     @mentor_barry = build(:claims_mentor, first_name: "Barry", last_name: "Garlow", trn: "8888888")
-    @provider = create(:claims_provider, :best_practice_network, postcode: "BR20RL", code: "111")
+    @provider = create(:claims_provider, :best_practice_network, postcode: "BR20RL")
     @ineligible_provider = create(:claims_provider, :niot)
     @claim_window = build(:claim_window, :current)
     @date_completed = @claim_window.starts_on + 1.day
@@ -109,11 +109,11 @@ RSpec.describe "Claims user creates a claim", :js, service: :claims, type: :syst
   end
 
   def then_i_see_a_dropdown_item_for_best_practice_network
-    expect(page).to have_css(".autocomplete__option", text: "Best Practice Network (BR20RL, 111)", wait: 10)
+    expect(page).to have_css(".autocomplete__option", text: "Best Practice Network (BR20RL)", wait: 10)
   end
 
   def when_i_click_the_dropdown_item_for_best_practice_network
-    page.find(".autocomplete__option", text: "Best Practice Network (BR20RL, 111)").click
+    page.find(".autocomplete__option", text: "Best Practice Network (BR20RL)").click
   end
 
   def and_i_click_on_continue

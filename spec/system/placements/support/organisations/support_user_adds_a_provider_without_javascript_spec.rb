@@ -104,7 +104,6 @@ RSpec.describe "Support user adds a provider without JavaScript", service: :plac
       placements_service: false,
       ukprn: "UKPRN01",
       urn: "URN01",
-      code: "111",
       email_addresses: ["itt@pineapple.university"],
       telephone: "(020) 0401 7222",
       website: "https://pineapple.university",
@@ -120,7 +119,6 @@ RSpec.describe "Support user adds a provider without JavaScript", service: :plac
       placements_service: false,
       ukprn: "APPLE5",
       urn: "APL5",
-      code: "222",
       email_addresses: ["placements@apple.academy"],
       telephone: "01175 698444",
       website: "https://apple.academy",
@@ -235,9 +233,9 @@ RSpec.describe "Support user adds a provider without JavaScript", service: :plac
     expect(page).to have_element(:span, text: "Add organisation", class: "govuk-caption-l")
     expect(page).to have_element(:legend, text: "2 results found for 'apple'", class: "govuk-fieldset__legend")
     expect(page).to have_field("Pineapple University", type: :radio)
-    expect(page).to have_hint("SW4 9QZ, 111")
+    expect(page).to have_hint("SW4 9QZ")
     expect(page).to have_field("Apple Academy", type: :radio)
-    expect(page).to have_hint("BS1 5AY, 222")
+    expect(page).to have_hint("BS1 5AY")
     expect(page).to have_link("Cancel", href: placements_support_organisations_path)
   end
 
