@@ -13,6 +13,7 @@
         govuk_link_to(t(".claim_windows"), claims_support_claim_windows_path, no_visited_state: true),
         govuk_link_to(t(".onboard_users"), new_onboard_users_claims_support_schools_path, no_visited_state: true),
         govuk_link_to(t(".onboard_schools"), new_onboard_schools_claims_support_schools_path, no_visited_state: true),
+        govuk_link_to(t(".manually_onboarded_schools"), claims_support_manually_onboarded_schools_path, no_visited_state: true),
         govuk_link_to(t(".emails"), claims_support_mailers_path, no_visited_state: true),
         (govuk_link_to(t(".reset_database"), reset_claims_support_database_path, no_visited_state: true) unless HostingEnvironment.env.production?),
         (govuk_link_to(t(".revert_claims_to_submitted"), revert_to_submitted_claims_support_database_databases_claims_path, no_visited_state: true) unless HostingEnvironment.env.production?),

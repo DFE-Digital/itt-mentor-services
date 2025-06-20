@@ -11,3 +11,4 @@ en:
           revert_claims_to_submitted: Revert all claims to 'Submitted'
           onboard_users: Onboard users
           onboard_schools: Onboard schools
+          manually_onboarded_schools: Manually onboarded schools

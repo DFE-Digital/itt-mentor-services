@@ -1,6 +1,7 @@
 class AutocompleteSelectFormComponentPreview < ApplicationComponentPreview
   def school_onboarding_form
-    wizard = Claims::AddSchoolWizard.new(state: {}, params: {})
+    current_user = FactoryBot.build(:claims_support_user)
+    wizard = Claims::AddSchoolWizard.new(current_user:, state: {}, params: {})
     step = Claims::AddSchoolWizard::SchoolStep.new(
       wizard:, attributes: {},
     )

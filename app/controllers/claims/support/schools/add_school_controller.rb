@@ -23,7 +23,7 @@ class Claims::Support::Schools::AddSchoolController < Claims::Support::Applicati
   def set_wizard
     state = session[state_key] ||= {}
     current_step = params[:step]&.to_sym
-    @wizard = Claims::AddSchoolWizard.new(params:, state:, current_step:)
+    @wizard = Claims::AddSchoolWizard.new(current_user:, params:, state:, current_step:)
   end
 
   def authorize_school
