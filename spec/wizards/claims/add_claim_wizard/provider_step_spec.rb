@@ -51,7 +51,7 @@ RSpec.describe Claims::AddClaimWizard::ProviderStep, type: :model do
   describe "#autocomplete_return_attributes_value" do
     subject { step.autocomplete_return_attributes_value }
 
-    it { is_expected.to contain_exactly("postcode", "code") }
+    it { is_expected.to contain_exactly("postcode") }
   end
 
   describe "#scope" do
