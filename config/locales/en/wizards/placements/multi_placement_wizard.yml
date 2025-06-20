@@ -120,12 +120,12 @@ en:
           enter_approximate: Enter an approximate number if you are unsure
           continue: Continue
         key_stage_placement_quantity_step:
-          title: How many SEND placements can you offer?
+          title: Enter the number of SEND placements you can offer
           caption: SEND placement details
           enter_approximate: Enter an approximate number if you are unsure
           continue: Continue
         key_stage_selection_step:
-          title: What SEND key stages can you offer placements in?
+          title: What key stages can you offer SEND placements in?
           caption: SEND placement details
           hint: Select all that apply
           continue: Continue
