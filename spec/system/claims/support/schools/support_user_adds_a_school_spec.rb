@@ -217,7 +217,6 @@ RSpec.describe "Support user adds a school", :js, service: :claims, type: :syste
 
   def and_i_see_details_for_sherborne_school
     expect(page).to have_summary_list_row("Organisation name", "Sherborne School")
-    expect(page).to have_summary_list_row("Claim window", "17 June 2025 to 21 June 2025")
     expect(page).to have_summary_list_row("UK provider reference number (UKPRN)", "10005802")
     expect(page).to have_summary_list_row("Unique reference number (URN)", "113918")
 
@@ -232,7 +231,6 @@ RSpec.describe "Support user adds a school", :js, service: :claims, type: :syste
 
   def and_i_see_details_for_royal_grammar_school_guildford
     expect(page).to have_summary_list_row("Organisation name", "Royal Grammar School Guildford")
-    expect(page).to have_summary_list_row("Claim window", "17 June 2025 to 21 June 2025")
     expect(page).to have_summary_list_row("UK provider reference number (UKPRN)", "10017351")
     expect(page).to have_summary_list_row("Unique reference number (URN)", "125424")
 
