@@ -13,7 +13,7 @@ RSpec.describe Placements::EditHostingInterestWizard do
   end
 
   let(:academic_year) { Placements::AcademicYear.current.next }
-  let(:school) { create(:placements_school) }
+  let(:school) { create(:placements_school, with_hosting_interest: false) }
   let(:hosting_interest) do
     create(
       :hosting_interest,
@@ -366,7 +366,7 @@ RSpec.describe Placements::EditHostingInterestWizard do
         end
 
         context "when school has no hosting interest for the next academic year" do
-          let(:school) { create(:placements_school, with_school_contact: false) }
+          let(:school) { create(:placements_school, with_hosting_interest: false, with_school_contact: false) }
 
           it "creates hosting interest for the next academic year, assigns the appetite,
             and reasons not hosting" do
@@ -495,7 +495,7 @@ RSpec.describe Placements::EditHostingInterestWizard do
     subject(:setup_state) { wizard.setup_state }
 
     context "when the school has a hosting interest for the next academic year" do
-      let(:school) { create(:placements_school) }
+      let(:school) { create(:placements_school, with_hosting_interest: false) }
       let(:hosting_interest) do
         create(:hosting_interest,
                school:,

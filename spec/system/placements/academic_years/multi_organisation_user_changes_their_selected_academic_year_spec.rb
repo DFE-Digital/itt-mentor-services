@@ -43,6 +43,8 @@ RSpec.describe "School user changes their selected academic year",
     @current_academic_year = Placements::AcademicYear.current
     @next_academic_year = @current_academic_year.next
 
+    @current_year_hosting_interest = create(:hosting_interest, school: @springfield_school, academic_year: @current_academic_year)
+
     @current_academic_year_placements = create(
       :placement,
       school: @springfield_school,

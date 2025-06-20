@@ -125,7 +125,7 @@ RSpec.describe "School user manually adds placements instead of converting poten
       "secondary_placement_quantity" => { "english" => 1, "science" => 2 },
       "year_group_placement_quantity" => { "year_2" => 1, "year_3" => 2 },
     }
-    @school = create(:placements_school, potential_placement_details:)
+    @school = create(:placements_school, with_hosting_interest: false, potential_placement_details:)
     @hosting_interest = create(
       :hosting_interest,
       school: @school,

@@ -104,11 +104,19 @@ FactoryBot.define do
             class: "Placements::School",
             parent: :school, traits: %i[placements] do
       transient do
+        hosting_interests { [] }
+        with_hosting_interest { true }
         with_school_contact { true }
       end
 
       after(:build) do |school, evaluator|
         create(:school_contact, school:) if evaluator.with_school_contact
+
+        if evaluator.hosting_interests.present?
+          school.hosting_interests.concat(evaluator.hosting_interests)
+        elsif evaluator.with_hosting_interest
+          create(:hosting_interest, school:, academic_year: Placements::AcademicYear.current.next)
+        end
       end
     end
   end

@@ -132,7 +132,7 @@ RSpec.describe Placements::School do
 
   describe "#current_hosting_interest" do
     let(:academic_year) { Placements::AcademicYear.current }
-    let(:school) { create(:placements_school, hosting_interests:) }
+    let(:school) { create(:placements_school, with_hosting_interest: false, hosting_interests:) }
 
     context "when there is a current hosting interest" do
       let(:hosting_interests) { [build(:hosting_interest, academic_year:)] }
@@ -151,7 +151,7 @@ RSpec.describe Placements::School do
     end
 
     context "when there are multiple hosting interests" do
-      let(:current_hosting_interest) { build(:hosting_interest) }
+      let(:current_hosting_interest) { build(:hosting_interest, academic_year: academic_year) }
       let(:previous_hosting_interest) { build(:hosting_interest, academic_year: academic_year.previous) }
       let(:hosting_interests) { [current_hosting_interest, previous_hosting_interest] }
 
