@@ -31,11 +31,6 @@
           <% end %>
 
           <% summary_list.with_row do |row| %>
-            <% row.with_key(text: t(".claim_window")) %>
-            <% row.with_value(text: wizard.claim_window.decorate.name) %>
-          <% end %>
-
-          <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".region")) %>
             <% row.with_value(text: wizard.organisation.region_name) %>
             <% row.with_action(text: t(".change"),

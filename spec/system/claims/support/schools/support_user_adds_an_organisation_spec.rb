@@ -283,7 +283,6 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
 
     expect(page).to have_summary_list_row("Organisation name", "Test Organisation")
     expect(page).to have_summary_list_row("Vendor number", "123456789")
-    expect(page).to have_summary_list_row("Claim window", @claim_window.name)
     expect(page).to have_summary_list_row("Region", "Inner London")
 
     expect(page).to have_h2("Contact details")
@@ -313,7 +312,6 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
   def then_i_see_the_check_your_answers_page_with_changed_organisation_name
     expect(page).to have_summary_list_row("Organisation name", "Changed Organisation")
     expect(page).to have_summary_list_row("Vendor number", "123456789")
-    expect(page).to have_summary_list_row("Claim window", @claim_window.name)
     expect(page).to have_summary_list_row("Region", "Inner London")
 
     expect(page).to have_h2("Contact details")
@@ -340,7 +338,6 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
   def then_i_see_the_check_your_answers_page_with_changed_vendor_number
     expect(page).to have_summary_list_row("Organisation name", "Changed Organisation")
     expect(page).to have_summary_list_row("Vendor number", "987654321")
-    expect(page).to have_summary_list_row("Claim window", @claim_window.name)
     expect(page).to have_summary_list_row("Region", "Inner London")
 
     expect(page).to have_h2("Contact details")
@@ -366,7 +363,6 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
   def then_i_see_the_check_your_answers_page_with_changed_region
     expect(page).to have_summary_list_row("Organisation name", "Changed Organisation")
     expect(page).to have_summary_list_row("Vendor number", "987654321")
-    expect(page).to have_summary_list_row("Claim window", @claim_window.name)
     expect(page).to have_summary_list_row("Region", "Outer London")
 
     expect(page).to have_h2("Contact details")
@@ -393,7 +389,6 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
   def then_i_see_the_check_your_answers_page_with_changed_address
     expect(page).to have_summary_list_row("Organisation name", "Changed Organisation")
     expect(page).to have_summary_list_row("Vendor number", "987654321")
-    expect(page).to have_summary_list_row("Claim window", @claim_window.name)
     expect(page).to have_summary_list_row("Region", "Outer London")
 
     expect(page).to have_h2("Contact details")
@@ -417,7 +412,6 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
   def then_i_see_the_check_your_answers_page_with_changed_telephone_number
     expect(page).to have_summary_list_row("Organisation name", "Changed Organisation")
     expect(page).to have_summary_list_row("Vendor number", "987654321")
-    expect(page).to have_summary_list_row("Claim window", @claim_window.name)
     expect(page).to have_summary_list_row("Region", "Outer London")
 
     expect(page).to have_h2("Contact details")
@@ -441,7 +435,6 @@ RSpec.describe "Support user adds an organisation", service: :claims, type: :sys
   def then_i_see_the_check_your_answers_page_with_changed_website
     expect(page).to have_summary_list_row("Organisation name", "Changed Organisation")
     expect(page).to have_summary_list_row("Vendor number", "987654321")
-    expect(page).to have_summary_list_row("Claim window", @claim_window.name)
     expect(page).to have_summary_list_row("Region", "Outer London")
 
     expect(page).to have_h2("Contact details")
