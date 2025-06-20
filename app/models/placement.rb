@@ -35,8 +35,9 @@ class Placement < ApplicationRecord
   belongs_to :academic_year, class_name: "Placements::AcademicYear"
   belongs_to :school, class_name: "Placements::School"
   belongs_to :provider, class_name: "::Provider", optional: true
-  belongs_to :subject, class_name: "::Subject"
+  belongs_to :subject, class_name: "::Subject", optional: true
   belongs_to :creator, optional: true, polymorphic: true
+  belongs_to :key_stage, class_name: "Placements::KeyStage", optional: true
 
   accepts_nested_attributes_for :mentors, allow_destroy: true
 
@@ -54,6 +55,8 @@ class Placement < ApplicationRecord
   }, validate: { allow_nil: true }
 
   validates :school, presence: true
+  validates :subject, presence: true, if: -> { !send_specific }
+  validates :key_stage, presence: true, if: -> { send_specific }
 
   delegate :name, to: :provider, prefix: true, allow_nil: true
   delegate :has_child_subjects?, to: :subject, allow_nil: true, prefix: true

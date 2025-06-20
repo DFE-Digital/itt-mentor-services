@@ -1,5 +1,5 @@
 <%# locals: { placement_details: nil, action_link: nil } -%>
-<%= govuk_summary_list(html_attributes: { id: "primary_placements" }, actions: action_link.present?) do |summary_list| %>
+<%= govuk_summary_list(html_attributes: { id: "secondary_placements" }, actions: action_link.present?) do |summary_list| %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".subject")) %>
     <% row.with_value do %>

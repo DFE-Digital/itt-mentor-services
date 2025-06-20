@@ -48,7 +48,7 @@ RSpec.describe Placements::MultiPlacementWizard::SecondaryPlacementQuantityStep,
       end
     end
 
-    context "when there are primary subejects" do
+    context "when there are secondary subejects" do
       let(:selected_secondary_subjects) { Subject.where(id: [english.id, mathematics.id]) }
 
       it "creates a variable method per selected secondary subject" do

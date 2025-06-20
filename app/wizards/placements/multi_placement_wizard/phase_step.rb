@@ -3,20 +3,25 @@ class Placements::MultiPlacementWizard::PhaseStep < BaseStep
 
   validates :phases, presence: true
 
+  SEND = "SEND".freeze
+
   def phases_for_selection
     [
       OpenStruct.new(
         name: Placements::School::PRIMARY_PHASE,
+        value: Placements::School::PRIMARY_PHASE,
         description: I18n.t("#{locale_path}.options.#{Placements::School::PRIMARY_PHASE.downcase}_description"),
       ),
       OpenStruct.new(
         name: Placements::School::SECONDARY_PHASE,
+        value: Placements::School::SECONDARY_PHASE,
         description: I18n.t("#{locale_path}.options.#{Placements::School::SECONDARY_PHASE.downcase}_description"),
       ),
-      # OpenStruct.new(
-      #   name: I18n.t("#{locale_path}.options.send"),
-      #   description: I18n.t("#{locale_path}.options.send_description"),
-      # ),
+      OpenStruct.new(
+        name: I18n.t("#{locale_path}.options.send"),
+        value: SEND,
+        description: I18n.t("#{locale_path}.options.send_description"),
+      ),
     ]
   end
 

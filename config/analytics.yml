@@ -204,6 +204,13 @@ shared:
     - academic_year_id
     - creator_id
     - creator_type
+    - send_specific
+    - key_stage_id
+  :key_stages:
+    - id
+    - name
+    - created_at
+    - updated_at
   :school_contacts:
     - id
     - school_id

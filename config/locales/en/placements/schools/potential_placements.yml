@@ -27,6 +27,7 @@ en:
           potential_phases: Potential phases
           potential_primary_placements: Potential primary placements
           potential_secondary_placements: Potential secondary placements
+          potential_send_placements: Potential SEND placements
           additional_information: Additional information
           message_to_providers: Message to providers
           change: Change

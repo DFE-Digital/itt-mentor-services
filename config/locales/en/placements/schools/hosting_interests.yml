@@ -34,6 +34,7 @@ en:
               potential_placement_information: Your potential placements
               potential_primary_placements: Potential primary school placements
               potential_secondary_placements: Potential secondary school placements
+              potential_send_placements: Potential SEND placements
             primary_placements_list:
               year_group: Year group
               number_of_placements: Number of placements
@@ -42,6 +43,12 @@ en:
               change: Change
             secondary_placements_list:
               subject: Subject
+              number_of_placements: Number of placements
+              unknown: I don’t know
+              not_entered: Not entered
+              change: Change
+            send_placements_list:
+              key_stage: Key stage
               number_of_placements: Number of placements
               unknown: I don’t know
               not_entered: Not entered
@@ -56,6 +63,7 @@ en:
               your_placements_offers: Your placements offers
               primary_placements: Primary placements
               secondary_placements: Secondary placements
+              send_placements: SEND placements
               manage_your_placements: Manage your placements
               you_can_edit_placements: "%{link} to change or remove information."
               edit_your_placements: Edit your placements

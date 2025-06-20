@@ -87,11 +87,16 @@ module Placements
 
     def interested_steps
       add_step(Interested::PhaseStep)
-      if phases.include?(::Placements::School::PRIMARY_PHASE)
+      if primary_phase?
         year_group_steps
       end
-      if phases.include?(::Placements::School::SECONDARY_PHASE)
+
+      if secondary_phase?
         secondary_subject_steps
+      end
+
+      if send_specific?
+        send_steps
       end
       add_step(Interested::NoteToProvidersStep)
       add_step(ConfirmStep)

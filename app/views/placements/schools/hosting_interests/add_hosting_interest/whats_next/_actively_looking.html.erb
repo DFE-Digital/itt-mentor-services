@@ -41,26 +41,36 @@
 <% end %>
 
 <% if placement_details.dig("year_group_selection", "year_groups").present? ||
-  placement_details.dig("secondary_subject_selection", "subject_ids").present? %>
+  placement_details.dig("secondary_subject_selection", "subject_ids").present? ||
+  placement_details.dig("key_stage_selection", "key_stage_ids").present? %>
   <h2 class="govuk-heading-m">
     <%= t(".your_placements_offers") %>
   </h2>
 
   <% if placement_details.dig("year_group_selection", "year_groups").present? %>
-    <h2 class="govuk-heading-m">
+    <h3 class="govuk-heading-s">
       <%= t(".primary_placements") %>
-    </h2>
+    </h3>
 
     <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/primary_placements_list",
       placement_details: placement_details, action_link: nil %>
   <% end %>
 
   <% if placement_details.dig("secondary_subject_selection", "subject_ids").present? %>
-    <h2 class="govuk-heading-m">
+    <h3 class="govuk-heading-s">
       <%= t(".secondary_placements") %>
-    </h2>
+    </h3>
 
     <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/secondary_placements_list",
+      placement_details: placement_details, action_link: nil %>
+  <% end %>
+
+  <% if placement_details.dig("key_stage_selection", "key_stage_ids").present? %>
+    <h3 class="govuk-heading-s">
+      <%= t(".send_placements") %>
+    </h3>
+
+    <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/send_placements_list",
       placement_details: placement_details, action_link: nil %>
   <% end %>
 <% end %>

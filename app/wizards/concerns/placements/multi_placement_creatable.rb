@@ -3,12 +3,16 @@ module Placements::MultiPlacementCreatable
 
   def add_placement_creation_steps(with_check_your_answers: true)
     add_step(::Placements::MultiPlacementWizard::PhaseStep)
-    if phases.include?(::Placements::School::PRIMARY_PHASE)
+    if primary_phase?
       year_group_steps
     end
 
-    if phases.include?(::Placements::School::SECONDARY_PHASE)
+    if secondary_phase?
       secondary_subject_steps
+    end
+
+    if send_specific?
+      send_steps
     end
     return unless with_check_your_answers
 
@@ -45,6 +49,18 @@ module Placements::MultiPlacementCreatable
         placement.save!
       end
     end
+
+    selected_key_stages.each do |key_stage|
+      placement_quantity_for_key_stage(key_stage).times do
+        Placement.create!(
+          school:,
+          key_stage:,
+          academic_year:,
+          creator: current_user,
+          send_specific: true,
+        )
+      end
+    end
   end
 
   def year_groups
@@ -54,7 +70,15 @@ module Placements::MultiPlacementCreatable
   end
 
   def selected_secondary_subjects
-    Subject.secondary.where(id: selected_secondary_subject_ids).order_by_name
+    @selected_secondary_subjects ||= Subject.secondary.where(
+      id: selected_secondary_subject_ids,
+    ).order_by_name
+  end
+
+  def selected_key_stages
+    @selected_key_stages ||= ::Placements::KeyStage.where(
+      id: selected_key_stage_ids,
+    ).order_by_name
   end
 
   def placement_quantity_for_subject(subject)
@@ -67,6 +91,12 @@ module Placements::MultiPlacementCreatable
     return 0 if steps[:year_group_placement_quantity].blank?
 
     steps.fetch(:year_group_placement_quantity).try(year_group.to_sym).to_i
+  end
+
+  def placement_quantity_for_key_stage(key_stage)
+    return 0 if steps[:key_stage_placement_quantity].blank?
+
+    steps.fetch(:key_stage_placement_quantity).try(key_stage.name_as_attribute).to_i
   end
 
   def child_subject_placement_step_count
@@ -85,7 +115,9 @@ module Placements::MultiPlacementCreatable
 
   def placements_information
     primary_placement_information.merge(
-      secondary_placement_information,
+      secondary_placement_information.merge(
+        send_placement_information,
+      ),
     )
   end
 
@@ -100,6 +132,12 @@ module Placements::MultiPlacementCreatable
     return [] if steps[:secondary_subject_selection].blank?
 
     steps.fetch(:secondary_subject_selection).subject_ids
+  end
+
+  def selected_key_stage_ids
+    return [] if steps[:key_stage_selection].blank?
+
+    steps.fetch(:key_stage_selection).key_stage_ids
   end
 
   def secondary_subject_steps
@@ -126,6 +164,11 @@ module Placements::MultiPlacementCreatable
         end
       end
     end
+  end
+
+  def send_steps
+    add_step(::Placements::MultiPlacementWizard::KeyStageSelectionStep)
+    add_step(::Placements::MultiPlacementWizard::KeyStagePlacementQuantityStep)
   end
 
   def step_name_for_child_subjects(subject:, selection_number:)
@@ -184,5 +227,33 @@ module Placements::MultiPlacementCreatable
       end
     end
     secondary_placement_details
+  end
+
+  def send_placement_information
+    return {} if steps[:key_stage_selection].blank?
+
+    send_placement_details = {}
+    send_placement_details["key_stage_selection"] = {
+      "key_stage_ids" => steps.fetch(:key_stage_selection).key_stage_ids,
+    }
+    if steps[:key_stage_placement_quantity].present?
+      send_placement_details["key_stage_placement_quantity"] = {}
+      selected_key_stages.each do |key_stage|
+        send_placement_details["key_stage_placement_quantity"][key_stage.name_as_attribute.to_s] = placement_quantity_for_key_stage(key_stage)
+      end
+    end
+    send_placement_details
+  end
+
+  def primary_phase?
+    phases.include?(::Placements::School::PRIMARY_PHASE)
+  end
+
+  def secondary_phase?
+    phases.include?(::Placements::School::SECONDARY_PHASE)
+  end
+
+  def send_specific?
+    phases.include?(::Placements::MultiPlacementWizard::PhaseStep::SEND)
   end
 end

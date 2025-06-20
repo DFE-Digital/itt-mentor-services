@@ -38,8 +38,22 @@ RSpec.describe Placement, type: :model do
     it { is_expected.to belong_to(:academic_year).class_name("Placements::AcademicYear") }
     it { is_expected.to belong_to(:school).class_name("Placements::School") }
     it { is_expected.to belong_to(:provider).class_name("::Provider").optional }
-    it { is_expected.to belong_to(:subject).class_name("::Subject") }
+
     it { is_expected.to belong_to(:creator).optional }
+
+    describe "#subject" do
+      let!(:a_subject) { create(:subject) }
+      let(:placement) { create(:placement, subject: a_subject) }
+
+      it { expect(placement.subject).to eq(a_subject) }
+    end
+
+    describe "key_stage" do
+      let!(:key_stage) { create(:key_stage, name: "Key stage 1") }
+      let(:placement) { create(:placement, :send, key_stage:) }
+
+      it { expect(placement.key_stage).to eq(key_stage) }
+    end
 
     describe "#creator" do
       let(:placement) { build(:placement, creator:) }

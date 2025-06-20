@@ -42,7 +42,8 @@
       <% end %>
 
       <% if placement_details.dig("year_group_selection", "year_groups").present? ||
-        placement_details.dig("secondary_subject_selection", "subject_ids").present? %>
+        placement_details.dig("secondary_subject_selection", "subject_ids").present? ||
+        placement_details.dig("key_stage_selection", "key_stage_ids").present? %>
         <% if placement_details.dig("year_group_selection", "year_groups").present? %>
           <h3 class="govuk-heading-s">
             <%= t(".potential_primary_placements") %>
@@ -68,6 +69,20 @@
               school,
               step: :secondary_subject_selection,
               state_key: :secondary_subject_selection,
+            ) %>
+        <% end %>
+
+        <% if placement_details.dig("key_stage_selection", "key_stage_ids").present? %>
+          <h3 class="govuk-heading-s">
+            <%= t(".potential_send_placements") %>
+          </h3>
+
+          <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/send_placements_list",
+            placement_details: placement_details,
+            action_link: edit_potential_placements_placements_school_potential_placements_path(
+              school,
+              step: :key_stage_selection,
+              state_key: :key_stage_selection,
             ) %>
         <% end %>
       <% end %>
