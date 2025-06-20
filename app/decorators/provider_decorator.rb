@@ -1,6 +1,6 @@
 class ProviderDecorator < OrganisationDecorator
-  def organisation_identifier_hint
-    parts = [postcode, code].reject(&:blank?)
+  def town_and_postcode
+    parts = [town, city, postcode].reject(&:blank?)
     parts.join(", ")
   end
 

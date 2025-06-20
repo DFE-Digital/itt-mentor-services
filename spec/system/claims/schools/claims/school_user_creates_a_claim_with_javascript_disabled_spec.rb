@@ -60,7 +60,7 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
 
   def and_providers_exist
     @niot_provider = create(:provider, :niot)
-    @bpn_provider = create(:provider, :best_practice_network, postcode: "BR20RL", code: "111")
+    @bpn_provider = create(:provider, :best_practice_network, postcode: "BR20RL")
   end
 
   def and_i_am_signed_in
@@ -103,7 +103,7 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
       text: "1 results found for 'Best Practice Network'",
       class: "govuk-fieldset__heading",
     )
-    expect(page).to have_hint("BR20RL, 111")
+    expect(page).to have_hint("BR20RL")
   end
 
   def and_i_see_a_radio_button_for_best_practice_network
