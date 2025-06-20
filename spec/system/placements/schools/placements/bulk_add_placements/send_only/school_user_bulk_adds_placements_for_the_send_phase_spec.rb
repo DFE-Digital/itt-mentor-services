@@ -102,13 +102,13 @@ RSpec.describe "School user bulk adds placements for the send phase",
 
   def then_i_see_the_key_stage_selection_form
     expect(page).to have_title(
-      "What SEND key stages can you offer placements in? - Manage school placements - GOV.UK",
+      "What key stages can you offer SEND placements in? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_span_caption("SEND placement details")
     expect(page).to have_element(
       :legend,
-      text: "What SEND key stages can you offer placements in?",
+      text: "What key stages can you offer SEND placements in?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Early year", type: :checkbox)
@@ -130,11 +130,11 @@ RSpec.describe "School user bulk adds placements for the send phase",
 
   def then_i_see_the_key_stage_placement_quantity_form
     expect(page).to have_title(
-      "How many SEND placements can you offer? - Manage school placements - GOV.UK",
+      "Enter the number of SEND placements you can offer - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_span_caption("SEND placement details")
-    expect(page).to have_h1("How many SEND placements can you offer?", class: "govuk-heading-l")
+    expect(page).to have_h1("Enter the number of SEND placements you can offer", class: "govuk-heading-l")
     expect(page).to have_field("Key stage 2", type: :number)
     expect(page).to have_field("Key stage 5", type: :number)
   end

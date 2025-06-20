@@ -162,21 +162,23 @@ en:
           key_stage_placement_quantity_step:
             title: How many placements could you offer for each key stage?
             caption: Potential SEND placement details
+            enter_approximate: Enter an approximate number if you are unsure
             hint:
               Sharing information on what you may be able to offer helps providers know whether to contact you.
               It is not a commitment to take a trainee teacher.
             continue: Continue
           key_stage_placement_quantity_known_step:
-            title: Do you know how many placement you could offer each SEND key stage?
+            title: Do you know how many placements you could offer for each key stage?
             caption: Potential SEND placement details
             hint:
               Sharing information on what you may be able to offer helps providers know whether to contact you.
               It is not a commitment to take a trainee teacher.
             continue: Continue
           key_stage_selection_step:
-            title: What key stages could you offer placements in?
+            title: What key stages could you offer SEND placements in?
             caption: Potential SEND placement details
             hint:
+              Select all that apply. 
               Sharing information on what you may be able to offer helps providers know whether to contact you.
               It is not a commitment to take a trainee teacher.
             continue: Continue

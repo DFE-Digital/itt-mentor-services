@@ -273,13 +273,13 @@ RSpec.describe "School user completes the interested journey and declares SEND p
 
   def then_i_see_the_key_stage_selection_form
     expect(page).to have_title(
-      "What key stages could you offer placements in? - Manage school placements - GOV.UK",
+      "What key stages could you offer SEND placements in? - Manage school placements - GOV.UK",
     )
     expect(page).to have_current_item("Organisation details")
     expect(page).to have_span_caption("Potential SEND placement details")
     expect(page).to have_element(
       :legend,
-      text: "What key stages could you offer placements in?",
+      text: "What key stages could you offer SEND placements in?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Early year", type: :checkbox)
@@ -301,13 +301,13 @@ RSpec.describe "School user completes the interested journey and declares SEND p
 
   def then_i_see_the_key_stage_placement_quantity_known_page
     expect(page).to have_title(
-      "Do you know how many placement you could offer each SEND key stage? - Manage school placements - GOV.UK",
+      "Do you know how many placements you could offer for each key stage? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Organisation details")
     expect(page).to have_span_caption("Potential SEND placement details")
     expect(page).to have_element(
       :legend,
-      text: "Do you know how many placement you could offer each SEND key stage?",
+      text: "Do you know how many placements you could offer for each key stage?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Yes", type: :radio)

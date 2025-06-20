@@ -97,13 +97,13 @@ RSpec.describe "School user does not select a key stage",
 
   def then_i_see_the_key_stage_selection_form
     expect(page).to have_title(
-      "What SEND key stages can you offer placements in? - Manage school placements - GOV.UK",
+      "What key stages can you offer SEND placements in? - Manage school placements - GOV.UK",
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_span_caption("SEND placement details")
     expect(page).to have_element(
       :legend,
-      text: "What SEND key stages can you offer placements in?",
+      text: "What key stages can you offer SEND placements in?",
       class: "govuk-fieldset__legend",
     )
     expect(page).to have_field("Early year", type: :checkbox)
