@@ -195,6 +195,7 @@ RSpec.describe Placements::ConvertPotentialPlacementWizard do
           "select_placement" => {
             "year_groups" => %w[year_2 mixed_year_groups],
             "subject_ids" => [mathematics.id],
+            "key_stage_ids" => [key_stage_2.id],
           },
         }
       end
@@ -205,6 +206,8 @@ RSpec.describe Placements::ConvertPotentialPlacementWizard do
           "year_group_placement_quantity" => { "reception" => 1, "year_2" => 2, "mixed_year_groups" => 3 },
           "secondary_subject_selection" => { "subject_ids" => [mathematics.id, english.id] },
           "secondary_placement_quantity" => { "mathematics" => 2, "english" => 1 },
+          "key_stage_selection" => { "key_stage_ids" => [key_stage_2.id, key_stage_5.id] },
+          "key_stage_placement_quantity" => { "key_stage_2" => 2, "key_stage_5" => 1 },
         }
       end
 
@@ -214,7 +217,8 @@ RSpec.describe Placements::ConvertPotentialPlacementWizard do
         expect { convert_placements }.to change { school.placements.where(subject: primary, year_group: "year_2").count }.to(2)
           .and change { school.placements.where(subject: primary, year_group: "mixed_year_groups").count }.to(3)
           .and change { school.placements.where(subject: mathematics).count }.to(2)
-          .and change { school.placements.count }.to(7)
+          .and change { school.placements.where(key_stage: key_stage_2).count }.to(2)
+          .and change { school.placements.count }.to(9)
 
         expect(hosting_interest.reload.appetite).to eq("actively_looking")
         expect(school.reload.potential_placement_details).to be_nil

@@ -1,11 +1,12 @@
 require "rails_helper"
 
-RSpec.describe "School user converts their potential primary and secondary placements",
+RSpec.describe "School user converts their potential SEND placements",
                service: :placements,
                type: :system do
   scenario do
     given_academic_years_exist
     and_subjects_exist
+    and_key_stages_exist
     and_a_school_exists_with_a_hosting_interest_and_potential_placement_details
     and_i_am_signed_in
     and_i_see_the_placements_index_page
@@ -15,35 +16,19 @@ RSpec.describe "School user converts their potential primary and secondary place
     when_i_click_on_add_you_placements
     then_i_see_the_convert_current_information_page
 
-    when_i_click_on_continue
-    then_i_see_a_validation_error_for_not_selecting_whether_to_convert_potential_placement_information
-
     when_i_select_yes_i_will_select_the_potential_placements_i_want_to_convert
     and_i_click_on_continue
     then_i_see_the_select_placement_page
     and_i_see_the_year_groups_set_in_the_potential_placement_details
     and_i_see_the_subjects_set_in_the_potential_placement_details
+    and_i_see_the_key_stages_set_in_the_potential_placement_details
 
-    when_i_click_on_back
-    then_i_see_the_convert_current_information_page
-
-    when_i_click_on_continue
-    then_i_see_the_select_placement_page
-    and_i_see_the_year_groups_set_in_the_potential_placement_details
-    and_i_see_the_subjects_set_in_the_potential_placement_details
-
-    and_i_click_on_publish_placements
-    then_i_see_a_validation_error_for_not_selecting_a_primary_placement
-    and_i_see_a_validation_error_for_not_selecting_a_secondary_placement
-
-    when_i_select_year_2
-    and_i_select_science
+    when_i_select_key_stage_2
     and_i_click_on_publish_placements
     then_i_see_the_placements_index_page
     and_i_see_my_information_was_added_successfully
     and_i_see_my_hosting_interest_is_placements_available
-    and_i_see_1_placements_for_primary_year_2
-    and_i_see_2_placements_for_secondary_science
+    and_i_see_2_placements_for_key_stage_2
   end
 
   private
@@ -63,6 +48,16 @@ RSpec.describe "School user converts their potential primary and secondary place
     @science = create(:subject, :secondary, name: "Science")
   end
 
+  def and_key_stages_exist
+    @early_years = create(:key_stage, name: "Early years")
+    @key_stage_1 = create(:key_stage, name: "Key stage 1")
+    @key_stage_2 = create(:key_stage, name: "Key stage 2")
+    @key_stage_3 = create(:key_stage, name: "Key stage 3")
+    @key_stage_4 = create(:key_stage, name: "Key stage 4")
+    @key_stage_5 = create(:key_stage, name: "Key stage 5")
+    @mixed_key_stages = create(:key_stage, name: "Mixed key stages")
+  end
+
   def and_a_school_exists_with_a_hosting_interest_and_potential_placement_details
     potential_placement_details = {
       "phase" => { "phases" => %w[Primary Secondary] },
@@ -71,6 +66,8 @@ RSpec.describe "School user converts their potential primary and secondary place
       "secondary_subject_selection" => { "subject_ids" => [@english.id, @science.id] },
       "secondary_placement_quantity" => { "english" => 1, "science" => 2 },
       "year_group_placement_quantity" => { "year_2" => 1, "year_3" => 2 },
+      "key_stage_selection" => { "key_stage_ids" => [@key_stage_2.id, @key_stage_5.id] },
+      "key_stage_placement_quantity" => { "key_stage_2" => 2, "key_stage_5" => 1 },
     }
     @school = create(:placements_school, potential_placement_details:)
     @hosting_interest = create(
@@ -102,6 +99,10 @@ RSpec.describe "School user converts their potential primary and secondary place
     expect(page).to have_summary_list_row("Subject", "Number of placements")
     expect(page).to have_summary_list_row("English", "1")
     expect(page).to have_summary_list_row("Science", "2")
+
+    expect(page).to have_element(:h3, text: "Potential SEND placements", class: "govuk-heading-s")
+    expect(page).to have_summary_list_row("Key stage 2", "2")
+    expect(page).to have_summary_list_row("Key stage 5", "1")
 
     expect(page).to have_element(:h3, text: "Additional information", class: "govuk-heading-s")
     expect(page).to have_summary_list_row(
@@ -201,32 +202,34 @@ RSpec.describe "School user converts their potential primary and secondary place
     ).to eq("2 placements")
   end
 
-  def when_i_select_year_2
-    check "Year 2"
+  def and_i_see_the_key_stages_set_in_the_potential_placement_details
+    expect(page).to have_element(
+      :legend,
+      text: "SEND placements",
+      class: "govuk-fieldset__legend govuk-fieldset__legend--m",
+    )
+
+    expect(page).to have_field("Key stage 2", type: :checkbox)
+    expect(
+      page.find(
+        "#placements-convert-potential-placement-wizard-select-placement-step-key-stage-ids-#{@key_stage_2.id}-hint",
+      ).text,
+    ).to eq("2 placements")
+
+    expect(page).to have_field("Key stage 5", type: :checkbox)
+    expect(
+      page.find(
+        "#placements-convert-potential-placement-wizard-select-placement-step-key-stage-ids-#{@key_stage_5.id}-hint",
+      ).text,
+    ).to eq("1 placement")
   end
 
-  def and_i_select_science
-    check "Science"
+  def when_i_select_key_stage_2
+    check "Key stage 2"
   end
 
   def and_i_click_on_publish_placements
     click_on "Publish placements"
-  end
-
-  def then_i_see_a_validation_error_for_not_selecting_whether_to_convert_potential_placement_information
-    expect(page).to have_validation_error("Please select if you would like to convert your current information")
-  end
-
-  def then_i_see_a_validation_error_for_not_selecting_a_primary_placement
-    expect(page).to have_validation_error("Primary placements can't be blank")
-  end
-
-  def and_i_see_a_validation_error_for_not_selecting_a_secondary_placement
-    expect(page).to have_validation_error("Secondary placements can't be blank")
-  end
-
-  def when_i_click_on_back
-    click_on "Back"
   end
 
   def then_i_see_the_placements_index_page
@@ -237,24 +240,15 @@ RSpec.describe "School user converts their potential primary and secondary place
   end
   alias_method :and_i_see_the_placements_index_page, :then_i_see_the_placements_index_page
 
-  def and_i_see_1_placements_for_primary_year_2
+  def and_i_see_2_placements_for_key_stage_2
     expect(page).to have_table_row({
-      "Placement" => "Primary (Year 2)",
-      "Mentor" => "Mentor not assigned",
-      "Expected date" => "Any time in the academic year",
-      "Provider" => "Provider not assigned",
-    })
-  end
-
-  def and_i_see_2_placements_for_secondary_science
-    expect(page).to have_table_row({
-      "Placement" => "Science",
+      "Placement" => "SEND (Key stage 2)",
       "Mentor" => "Mentor not assigned",
       "Expected date" => "Any time in the academic year",
       "Provider" => "Provider not assigned",
     })
 
-    expect(page).to have_element(:td, text: "Science", count: 2)
+    expect(page).to have_element(:td, text: "SEND (Key stage 2)", count: 2)
   end
 
   def and_i_see_my_hosting_interest_is_may_offer_placements
