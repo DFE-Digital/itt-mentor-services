@@ -509,7 +509,7 @@ GEM
     rake (13.3.0)
     rbs (3.9.4)
       logger
-    rdoc (6.14.0)
+    rdoc (6.14.1)
       erb
       psych (>= 4.0.0)
     redcarpet (3.6.1)
@@ -609,10 +609,10 @@ GEM
       websocket (~> 1.0)
     semantic_logger (4.16.0)
       concurrent-ruby (~> 1.0)
-    sentry-rails (5.23.0)
+    sentry-rails (5.25.0)
       railties (>= 5.0)
-      sentry-ruby (~> 5.23.0)
-    sentry-ruby (5.23.0)
+      sentry-ruby (~> 5.25.0)
+    sentry-ruby (5.25.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
     shoulda-matchers (6.5.0)
