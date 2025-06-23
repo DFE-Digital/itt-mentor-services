@@ -24,6 +24,7 @@ en:
             You can add or edit placements any time after publishing them.
           primary_placements: Primary placements
           secondary_placements: Secondary placements
+          send_placements: SEND placements
           number_of_placements:
             one: "%{count} placement"
             other: "%{count} placements"
