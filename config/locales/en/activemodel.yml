@@ -403,6 +403,8 @@ en:
               blank: Primary placements can't be blank
             subject_ids:
               blank: Secondary placements can't be blank
+            key_stage_ids:
+              blank: SEND placements can't be blank
         placements/multi_placement_wizard/key_stage_selection_step:
           attributes:
             key_stage_ids:

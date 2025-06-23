@@ -21,6 +21,8 @@ RSpec.describe Placements::ConvertPotentialPlacementWizard do
   let(:english) { create(:subject, :secondary, name: "English") }
   let(:mathematics) { create(:subject, :secondary, name: "Mathematics") }
   let(:primary) { create(:subject, :primary, name: "Primary", code: "00") }
+  let(:key_stage_2) { create(:key_stage, name: "Key stage 2") }
+  let(:key_stage_5) { create(:key_stage, name: "Key stage 5") }
 
   describe "#steps" do
     subject(:steps) { wizard.steps.keys }
@@ -37,13 +39,15 @@ RSpec.describe Placements::ConvertPotentialPlacementWizard do
       it { is_expected.to eq %i[phase check_your_answers] }
     end
 
-    context "when the primary subject selection is unknown" do
+    context "when the primary year group selection is unknown" do
       let(:potential_placement_details) do
         {
           "phase" => { "phases" => %w[primary secondary] },
           "year_group_selection" => { "year_groups" => %w[unknown] },
           "secondary_subject_selection" => { "subject_ids" => [mathematics.id] },
           "secondary_placement_quantity" => { "mathematics" => 2 },
+          "key_stage_selection" => { "key_stage_ids" => [key_stage_2.id] },
+          "key_stage_placement_quantity" => { "key_stage_2" => 2 },
         }
       end
 
@@ -57,6 +61,23 @@ RSpec.describe Placements::ConvertPotentialPlacementWizard do
           "year_group_selection" => { "year_groups" => %w[year_2] },
           "year_group_placement_quantity" => { "year_2" => 2 },
           "secondary_subject_selection" => { "subject_ids" => %w[unknown] },
+          "key_stage_selection" => { "key_stage_ids" => [key_stage_2.id] },
+          "key_stage_placement_quantity" => { "key_stage_2" => 2 },
+        }
+      end
+
+      it { is_expected.to eq %i[phase check_your_answers] }
+    end
+
+    context "when the key stage selection is unknown" do
+      let(:potential_placement_details) do
+        {
+          "phase" => { "phases" => %w[SEND] },
+          "year_group_selection" => { "year_groups" => %w[year_2] },
+          "year_group_placement_quantity" => { "year_2" => 2 },
+          "secondary_subject_selection" => { "subject_ids" => [mathematics.id] },
+          "secondary_placement_quantity" => { "mathematics" => 2 },
+          "key_stage_selection" => { "key_stage_ids" => %w[unknown] },
         }
       end
 
@@ -70,6 +91,8 @@ RSpec.describe Placements::ConvertPotentialPlacementWizard do
           "year_group_selection" => { "year_groups" => %w[year_2] },
           "secondary_subject_selection" => { "subject_ids" => [mathematics.id] },
           "secondary_placement_quantity" => { "mathematics" => 2 },
+          "key_stage_selection" => { "key_stage_ids" => [key_stage_2.id] },
+          "key_stage_placement_quantity" => { "key_stage_2" => 2 },
         }
       end
 
@@ -83,6 +106,23 @@ RSpec.describe Placements::ConvertPotentialPlacementWizard do
           "year_group_selection" => { "year_groups" => %w[year_2] },
           "year_group_placement_quantity" => { "year_2" => 2 },
           "secondary_subject_selection" => { "subject_ids" => [mathematics.id] },
+          "key_stage_selection" => { "key_stage_ids" => [key_stage_2.id] },
+          "key_stage_placement_quantity" => { "key_stage_2" => 2 },
+        }
+      end
+
+      it { is_expected.to eq %i[phase check_your_answers] }
+    end
+
+    context "when the key stage placement quantity is blank" do
+      let(:potential_placement_details) do
+        {
+          "phase" => { "phases" => %w[primary secondary] },
+          "year_group_selection" => { "year_groups" => %w[year_2] },
+          "year_group_placement_quantity" => { "year_2" => 2 },
+          "secondary_subject_selection" => { "subject_ids" => [mathematics.id] },
+          "secondary_placement_quantity" => { "mathematics" => 2 },
+          "key_stage_selection" => { "key_stage_ids" => [key_stage_2.id] },
         }
       end
 
@@ -101,6 +141,18 @@ RSpec.describe Placements::ConvertPotentialPlacementWizard do
       it { is_expected.to eq %i[convert_placement phase check_your_answers] }
     end
 
+    context "when the key stage selection and quantity are present" do
+      let(:potential_placement_details) do
+        {
+          "phase" => { "phases" => %w[primary] },
+          "key_stage_selection" => { "key_stage_ids" => [key_stage_2.id] },
+          "key_stage_placement_quantity" => { "key_stage_2" => 2 },
+        }
+      end
+
+      it { is_expected.to eq %i[convert_placement phase check_your_answers] }
+    end
+
     context "when the secondary selection and quantity are present" do
       let(:potential_placement_details) do
         {
@@ -111,23 +163,25 @@ RSpec.describe Placements::ConvertPotentialPlacementWizard do
       end
 
       it { is_expected.to eq %i[convert_placement phase check_your_answers] }
+    end
 
-      context "when the convert placement step is true" do
-        let(:state) do
-          { "convert_placement" => { "convert" => "Yes" } }
-        end
-        let(:potential_placement_details) do
-          {
-            "phase" => { "phases" => %w[primary secondary] },
-            "year_group_selection" => { "year_groups" => %w[year_2] },
-            "year_group_placement_quantity" => { "year_2" => 2 },
-            "secondary_subject_selection" => { "subject_ids" => [mathematics.id] },
-            "secondary_placement_quantity" => { "mathematics" => 2 },
-          }
-        end
-
-        it { is_expected.to eq %i[convert_placement select_placement] }
+    context "when the convert placement step is true" do
+      let(:state) do
+        { "convert_placement" => { "convert" => "Yes" } }
       end
+      let(:potential_placement_details) do
+        {
+          "phase" => { "phases" => %w[primary secondary] },
+          "year_group_selection" => { "year_groups" => %w[year_2] },
+          "year_group_placement_quantity" => { "year_2" => 2 },
+          "secondary_subject_selection" => { "subject_ids" => [mathematics.id] },
+          "secondary_placement_quantity" => { "mathematics" => 2 },
+          "key_stage_selection" => { "key_stage_ids" => [key_stage_2.id] },
+          "key_stage_placement_quantity" => { "key_stage_2" => 2 },
+        }
+      end
+
+      it { is_expected.to eq %i[convert_placement select_placement] }
     end
   end
 

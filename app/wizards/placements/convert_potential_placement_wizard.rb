@@ -31,6 +31,7 @@ module Placements
           select_placement_step = steps.fetch(:select_placement)
           selected_year_groups = select_placement_step.year_groups
           selected_subject_ids = select_placement_step.subject_ids
+          selected_key_stage_ids = select_placement_step.key_stage_ids
 
           selected_year_groups.each do |year_group|
             placement_count(phase: :primary, key: year_group).times do
@@ -65,6 +66,19 @@ module Placements
               placement.save!
             end
           end
+
+          selected_key_stage_ids.each do |key_stage_id|
+            key_stage = KeyStage.find(key_stage_id)
+            placement_count(phase: :send, key: key_stage.name_as_attribute.to_s).times do
+              Placement.create!(
+                school:,
+                key_stage:,
+                academic_year:,
+                creator: current_user,
+                send_specific: true,
+              )
+            end
+          end
         else
           create_placements
         end
@@ -77,8 +91,10 @@ module Placements
     def placement_count(phase:, key:)
       if phase == :primary
         potential_placement_details.dig("year_group_placement_quantity", key).to_i
-      else
+      elsif phase == :secondary
         potential_placement_details.dig("secondary_placement_quantity", key).to_i
+      else
+        potential_placement_details.dig("key_stage_placement_quantity", key).to_i
       end
     end
 
@@ -104,7 +120,9 @@ module Placements
         (potential_placement_details["year_group_selection"].present? &&
           potential_placement_details["year_group_placement_quantity"].blank?) ||
         (potential_placement_details["secondary_subject_selection"].present? &&
-          potential_placement_details["secondary_placement_quantity"].blank?)
+          potential_placement_details["secondary_placement_quantity"].blank?) ||
+        (potential_placement_details["key_stage_selection"].present? &&
+          potential_placement_details["key_stage_placement_quantity"].blank?)
     end
 
     def value_unknown(value)
