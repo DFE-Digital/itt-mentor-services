@@ -15,14 +15,10 @@
     <% end %>
   <% end %>
 
-  <% placement_details.dig("key_stage_selection", "key_stage_ids").each do |key_stage_id| %>
-    <% if key_stage_id == Placements::AddHostingInterestWizard::UNKNOWN_OPTION %>
-      <% summary_list.with_row do |row| %>
-        <% row.with_key(text: t(".unknown")) %>
-        <% row.with_value(text: t(".not_entered")) %>
-      <% end %>
-    <% else %>
-      <% key_stage = Placements::KeyStage.find(key_stage_id) %>
+  <% if placement_detail_unknown(potential_placement_key_stage_id_selection(placement_details)) %>
+    <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/unknown", summary_list: %>
+  <% else %>
+    <% selected_placement_details(placement_details:, phase: :send).each do |key_stage| %>
       <% summary_list.with_row do |row| %>
         <% row.with_key(text: key_stage.name) %>
         <% row.with_value do %>

@@ -41,10 +41,8 @@
         <% end %>
       <% end %>
 
-      <% if placement_details.dig("year_group_selection", "year_groups").present? ||
-        placement_details.dig("secondary_subject_selection", "subject_ids").present? ||
-        placement_details.dig("key_stage_selection", "key_stage_ids").present? %>
-        <% if placement_details.dig("year_group_selection", "year_groups").present? %>
+      <% if potential_placement_details_viewable?(placement_details) %>
+        <% if potential_placement_year_group_selection(placement_details).present? %>
           <h3 class="govuk-heading-s">
             <%= t(".potential_primary_placements") %>
           </h3>
@@ -58,7 +56,7 @@
             ) %>
         <% end %>
 
-        <% if placement_details.dig("secondary_subject_selection", "subject_ids").present? %>
+        <% if potential_placement_subject_id_selection(placement_details).present? %>
           <h3 class="govuk-heading-s">
             <%= t(".potential_secondary_placements") %>
           </h3>
@@ -72,7 +70,7 @@
             ) %>
         <% end %>
 
-        <% if placement_details.dig("key_stage_selection", "key_stage_ids").present? %>
+        <% if potential_placement_key_stage_id_selection(placement_details).present? %>
           <h3 class="govuk-heading-s">
             <%= t(".potential_send_placements") %>
           </h3>
