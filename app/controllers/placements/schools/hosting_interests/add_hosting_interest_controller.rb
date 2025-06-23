@@ -14,9 +14,8 @@ class Placements::Schools::HostingInterests::AddHostingInterestController < Plac
     else
       @wizard.update_hosting_interest
       school.reload
-      if appetite == "actively_looking"
-        session["whats_next"] = @wizard.placements_information
-      end
+      session["whats_next"] = nil
+      session["whats_next"] = @wizard.placements_information if appetite == "actively_looking"
       @wizard.reset_state
 
       redirect_to whats_next_placements_school_hosting_interests_path(@school)

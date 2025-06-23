@@ -40,14 +40,12 @@
   <% end %>
 <% end %>
 
-<% if placement_details.dig("year_group_selection", "year_groups").present? ||
-  placement_details.dig("secondary_subject_selection", "subject_ids").present? ||
-  placement_details.dig("key_stage_selection", "key_stage_ids").present? %>
+<% if potential_placement_details_viewable?(placement_details) %>
   <h2 class="govuk-heading-m">
     <%= t(".your_placements_offers") %>
   </h2>
 
-  <% if placement_details.dig("year_group_selection", "year_groups").present? %>
+  <% if potential_placement_year_group_selection(placement_details).present? %>
     <h3 class="govuk-heading-s">
       <%= t(".primary_placements") %>
     </h3>
@@ -56,7 +54,7 @@
       placement_details: placement_details, action_link: nil %>
   <% end %>
 
-  <% if placement_details.dig("secondary_subject_selection", "subject_ids").present? %>
+  <% if potential_placement_subject_id_selection(placement_details).present? %>
     <h3 class="govuk-heading-s">
       <%= t(".secondary_placements") %>
     </h3>
@@ -65,7 +63,7 @@
       placement_details: placement_details, action_link: nil %>
   <% end %>
 
-  <% if placement_details.dig("key_stage_selection", "key_stage_ids").present? %>
+  <% if potential_placement_key_stage_id_selection(placement_details).present? %>
     <h3 class="govuk-heading-s">
       <%= t(".send_placements") %>
     </h3>
