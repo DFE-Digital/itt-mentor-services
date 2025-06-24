@@ -4,6 +4,7 @@ class PlacementDecorator < Draper::Decorator
   decorates_association :academic_year
 
   delegate :name, to: :subject, prefix: true, allow_nil: true
+  delegate :name, to: :key_stage, prefix: true, allow_nil: true
 
   def mentor_names
     if mentors.any?
