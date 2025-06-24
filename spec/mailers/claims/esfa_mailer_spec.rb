@@ -17,7 +17,7 @@ RSpec.describe Claims::ESFAMailer, type: :mailer do
 
     it "sends the claims require clawback email" do
       ClimateControl.modify CLAIMS_ESFA_EMAIL_ADDRESSES: esfa_emails.join(",") do
-        expect(claims_require_clawback_email.to).to match_array(esfa_emails)
+        expect(claims_require_clawback_email.to).to contain_exactly("example2@education.gov.uk")
         expect(claims_require_clawback_email.subject).to eq("Claims requiring clawback - Claim funding for mentor training")
         expect(claims_require_clawback_email.body.to_s.squish).to eq(<<~EMAIL.squish)
           To the payer,
@@ -53,7 +53,7 @@ RSpec.describe Claims::ESFAMailer, type: :mailer do
 
     it "sends the resend claims require clawback email" do
       ClimateControl.modify CLAIMS_ESFA_EMAIL_ADDRESSES: esfa_emails.join(",") do
-        expect(claims_require_clawback_email.to).to match_array(esfa_emails)
+        expect(claims_require_clawback_email.to).to contain_exactly("example2@education.gov.uk")
         expect(claims_require_clawback_email.subject).to eq("Claims requiring clawback - Claim funding for mentor training")
         expect(claims_require_clawback_email.body.to_s.squish).to eq(<<~EMAIL.squish)
           To the payer,

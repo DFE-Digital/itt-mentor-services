@@ -2,17 +2,21 @@ class Claims::ESFAMailer < Claims::ApplicationMailer
   def claims_require_clawback(clawback)
     @clawback = clawback
 
-    notify_email to: esfa_email_addresses,
-                 subject: t(".subject"),
-                 body: t(".body", url_for_csv: claims_clawback_claims_url(token:), support_email:, service_name:)
+    esfa_email_addresses.each do |esfa_email_address|
+      notify_email to: esfa_email_address,
+                   subject: t(".subject"),
+                   body: t(".body", url_for_csv: claims_clawback_claims_url(token:), support_email:, service_name:)
+    end
   end
 
   def resend_claims_require_clawback(clawback)
     @clawback = clawback
 
-    notify_email to: esfa_email_addresses,
-                 subject: t(".subject"),
-                 body: t(".body", url_for_csv: claims_clawback_claims_url(token:), support_email:, service_name:)
+    esfa_email_addresses.each do |esfa_email_address|
+      notify_email to: esfa_email_address,
+                   subject: t(".subject"),
+                   body: t(".body", url_for_csv: claims_clawback_claims_url(token:), support_email:, service_name:)
+    end
   end
 
   private
