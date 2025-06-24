@@ -236,6 +236,10 @@ Provider.create!(name: "Test Provider 123", code: "TEST 123")
 Provider.create!(name: "Test Provider 456", code: "TEST 456")
 Provider.create!(name: "Test Provider 789", code: "TEST 789")
 
+Placements::KeyStage::VALID_NAMES.each do |name|
+  Placements::KeyStage.find_or_create_by!(name:)
+end
+
 # Feature flags
 
 Flipper.add(:school_partner_providers)
