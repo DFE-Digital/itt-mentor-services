@@ -5,7 +5,7 @@ class Placements::AddHostingInterestWizard::SubjectsKnownStep < BaseStep
   NO = "No".freeze
   VALID_SUBJECTS_KNOWN = [YES, NO].freeze
 
-  validates :subjects_known, presence: true, inclusion: VALID_SUBJECTS_KNOWN
+  validates :subjects_known, presence: true, inclusion: { in: VALID_SUBJECTS_KNOWN }
 
   def responses_for_selection
     [

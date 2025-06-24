@@ -22,3 +22,7 @@ en:
             Your status will be set to ‘no placements available’. Providers will no longer contact you about available placements.
           you_can_add_more_placements:
             You can add more placements at anytime.
+        key_stage_step:
+          title: Select a key stage - %{contextual_text}
+          select_a_key_stage: Select a key stage
+          continue: Continue

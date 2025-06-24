@@ -59,6 +59,12 @@ RSpec.describe Placements::EditPlacementWizard do
 
       it { is_expected.to eq %i[terms] }
     end
+
+    context "with the key stage step" do
+      let(:current_step) { :key_stage }
+
+      it { is_expected.to eq %i[key_stage] }
+    end
   end
 
   describe "#update_placement" do
@@ -69,10 +75,12 @@ RSpec.describe Placements::EditPlacementWizard do
     let(:mentor_not_known) { Placements::AddPlacementWizard::MentorsStep::NOT_KNOWN }
     let(:selected_year_group) { :year_1 }
     let(:selected_term) { create(:placements_term, :summer) }
+    let(:key_stage_1) { create(:key_stage, name: "Key stage 1") }
 
     context "when the step is valid" do
       before do
         selected_term
+        key_stage_1
         _spring_term = create(:placements_term, :spring)
         _autumn_term = create(:placements_term, :autumn)
         edit_wizard
@@ -163,6 +171,20 @@ RSpec.describe Placements::EditPlacementWizard do
 
         it "updates the placement" do
           expect(placement.terms).to contain_exactly(selected_term)
+        end
+      end
+
+      context "when the step is key stage" do
+        let(:current_step) { :key_stage }
+
+        let(:state) do
+          {
+            "key_stage" => { "key_stage_id" => key_stage_1.id },
+          }
+        end
+
+        it "updates the placement" do
+          expect(placement.key_stage).to eq(key_stage_1)
         end
       end
     end

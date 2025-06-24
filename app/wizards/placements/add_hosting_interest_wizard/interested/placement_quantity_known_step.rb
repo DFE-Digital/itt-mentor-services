@@ -5,7 +5,7 @@ class Placements::AddHostingInterestWizard::Interested::PlacementQuantityKnownSt
   NO = "No".freeze
   QUANTITY_KNOWN_OPTIONS = [YES, NO].freeze
 
-  validates :quantity_known, presence: true, inclusion: QUANTITY_KNOWN_OPTIONS
+  validates :quantity_known, presence: true, inclusion: { in: QUANTITY_KNOWN_OPTIONS }
 
   def options_for_selection
     QUANTITY_KNOWN_OPTIONS.map do |option|
