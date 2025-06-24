@@ -61,6 +61,7 @@ en:
               assign_last_placement: Provider updated
               year_group: Year group updated
               terms: Expected date updated
+              key_stage: Key stage updated
           edit:
             edit_placement: Placement details
             cancel: Cancel
@@ -150,6 +151,7 @@ en:
               mentor: Mentor
               status: Status
               provider: Provider
+              key_stage: Key stage
         confirm_remove:
           page_title: "Are you sure you want to delete this placement? - %{subject_names}"
           are_you_sure: Are you sure you want to delete this placement?

@@ -5,7 +5,7 @@ class Placements::AddHostingInterestWizard::ListPlacementsStep < BaseStep
   NO = "No".freeze
   LIST_PLACEMENTS = [YES, NO].freeze
 
-  validates :list_placements, presence: true, inclusion: LIST_PLACEMENTS
+  validates :list_placements, presence: true, inclusion: { in: LIST_PLACEMENTS }
 
   def responses_for_selection
     [
