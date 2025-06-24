@@ -1,0 +1,8 @@
+en:
+  components:
+    claims:
+      claim_window_warning_banner_component:
+        claim_window_closing_soon:
+          one: There is %{count} day remaining to claim for ITT general mentor training before the claim window closes.
+          other: There are %{count} days remaining to claim for ITT general mentor training before the claim window closes.
+        important: Important
