@@ -105,7 +105,6 @@ RSpec.describe "Support user removes partner schools",
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Schools you work with")
     expect(page).to have_paragraph("View all placements your schools have published.")
-    expect(page).to have_paragraph("Only schools you work with are able to assign you their placements.")
     expect(page).to have_link("Add school", href: new_add_partner_school_placements_provider_partner_schools_path(@provider))
     expect(page).to have_table_row({ "Name": "Shelbyville Elementary",
                                      "Unique reference number (URN)": "54321" })
@@ -160,7 +159,6 @@ RSpec.describe "Support user removes partner schools",
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Schools you work with")
     expect(page).to have_paragraph("View all placements your schools have published.")
-    expect(page).to have_paragraph("Only schools you work with are able to assign you their placements.")
     expect(page).to have_link("Add school", href: new_add_partner_school_placements_provider_partner_schools_path(@provider))
     expect(page).to have_table_row({ "Name": "Shelbyville Elementary",
                                      "Unique reference number (URN)": "54321" })
@@ -221,7 +219,6 @@ RSpec.describe "Support user removes partner schools",
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Schools you work with")
     expect(page).to have_paragraph("View all placements your schools have published.")
-    expect(page).to have_paragraph("Only schools you work with are able to assign you their placements.")
     expect(page).to have_link("Add school", href: new_add_partner_school_placements_provider_partner_schools_path(@provider))
     expect(page).to have_paragraph("There are no partner schools for Westbrook Provider")
   end
@@ -237,7 +234,6 @@ RSpec.describe "Support user removes partner schools",
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Schools you work with")
     expect(page).to have_paragraph("View all placements your schools have published.")
-    expect(page).to have_paragraph("Only schools you work with are able to assign you their placements.")
     expect(page).to have_link("Add school", href: new_add_partner_school_placements_provider_partner_schools_path(@provider))
     expect(page).to have_paragraph("There are no partner schools for Westbrook Provider")
   end

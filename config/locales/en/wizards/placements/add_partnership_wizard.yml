@@ -20,13 +20,9 @@ en:
           page_title_school: Confirm school details - School details
           title_provider: Confirm provider details
           title_school: Confirm school details
-          intro_text_provider_html: | 
+          intro_text_provider: | 
             Adding them means you will be able to assign them to your placements. 
             We will send them an email to let them know you have added them.
-          intro_text_school_html: | 
-            <br>Once added, they will be able to assign you to their placements. 
-            <br>
-            <br>We will send them an email to let them know you have added them.
           header_provider: Provider
           header_school: School
           add_partner_provider: Confirm and add provider

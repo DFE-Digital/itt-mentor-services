@@ -92,7 +92,6 @@ RSpec.describe "Provider user adds a school", :js,
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Schools you work with")
     expect(page).to have_element(:p, text: "View all placements your schools have published.")
-    expect(page).to have_element(:p, text: "Only schools you work with are able to assign you their placements.")
     expect(page).to have_link("Add school", href: new_add_partner_school_placements_provider_partner_schools_path(@provider))
     expect(page).to have_element(:p, text: "There are no partner schools for Westbrook Provider")
   end
@@ -140,8 +139,6 @@ RSpec.describe "Provider user adds a school", :js,
     expect(page).to have_title("Confirm school details - School details - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Confirm school details")
-    expect(page).to have_element(:p, text: "Once added, they will be able to assign you to their placements.")
-    expect(page).to have_element(:p, text: "We will send them an email to let them know you have added them.")
     expect(page).to have_summary_list_row("Name", "Shelbyville Elementary")
     expect(page).to have_summary_list_row("UK provider reference number (UKPRN)", "54321")
     expect(page).to have_summary_list_row("Unique reference number (URN)", "12345")
@@ -172,11 +169,10 @@ RSpec.describe "Provider user adds a school", :js,
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Schools you work with")
     expect(page).to have_element(:p, text: "View all placements your schools have published.")
-    expect(page).to have_element(:p, text: "Only schools you work with are able to assign you their placements.")
     expect(page).to have_link("Add school")
     expect(page).to have_table_row({ "Name": "Shelbyville Elementary",
                                      "Unique reference number (URN)": "12345" })
-    expect(page).to have_success_banner("School added", "Shelbyville Elementary can now assign you to their placements.")
+    expect(page).to have_success_banner("School added")
   end
 
   def then_i_see_an_error_that_shelbyville_elementary_has_already_been_added
