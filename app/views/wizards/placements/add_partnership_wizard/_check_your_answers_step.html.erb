@@ -6,9 +6,13 @@
       <%= f.govuk_error_summary %>
 
       <h1 class="govuk-heading-l"><%= t(".title_#{wizard.partner_organisation_type}") %></h1>
-      <p class="govuk-body"><%= t(".intro_text_#{wizard.partner_organisation_type}_html") %></p>
+
+      <% if wizard.partner_organisation_type == "provider" %>
+        <p class="govuk-body"><%= t(".intro_text_provider") %></p>
+      <% end %>
 
       <h2 class="govuk-heading-m"><%= t(".header_#{wizard.partner_organisation_type}") %></h2>
+
       <%= render "placements/organisations/organisation_details", organisation: wizard.partner_organisation, change_link: step_path(:partnership) %>
       <%= f.govuk_submit t(".add_partner_#{wizard.partner_organisation_type}") %>
     <% end %>

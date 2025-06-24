@@ -73,7 +73,6 @@ RSpec.describe "Provider user views a placement for a partner school",
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Schools you work with")
     expect(page).to have_element(:p, text: "View all placements your schools have published.")
-    expect(page).to have_element(:p, text: "Only schools you work with are able to assign you their placements.")
     expect(page).to have_link("Add school")
     expect(page).to have_table_row({ "Name": "Shelbyville Elementary",
                                      "Unique reference number (URN)": "54321" })

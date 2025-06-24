@@ -119,7 +119,6 @@ RSpec.describe "Support user adds a partner school without JavaScript",
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Schools you work with")
     expect(page).to have_paragraph("View all placements your schools have published.")
-    expect(page).to have_paragraph("Only schools you work with are able to assign you their placements.")
     expect(page).to have_link("Add school", href: new_add_partner_school_placements_provider_partner_schools_path(@provider))
     expect(page).to have_paragraph("There are no partner schools for Westbrook Provider")
   end
@@ -201,8 +200,6 @@ RSpec.describe "Support user adds a partner school without JavaScript",
     expect(page).to have_title("Confirm school details - School details - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Confirm school details")
-    expect(page).to have_paragraph("Once added, they will be able to assign you to their placements.")
-    expect(page).to have_paragraph("We will send them an email to let them know you have added them.")
     expect(page).to have_summary_list_row("Name", "Shelbyville Elementary")
     expect(page).to have_summary_list_row("UK provider reference number (UKPRN)", "54321")
     expect(page).to have_summary_list_row("Unique reference number (URN)", "12345")
@@ -231,11 +228,10 @@ RSpec.describe "Support user adds a partner school without JavaScript",
     expect(primary_navigation).to have_current_item("Schools")
     expect(page).to have_h1("Schools you work with")
     expect(page).to have_paragraph("View all placements your schools have published.")
-    expect(page).to have_paragraph("Only schools you work with are able to assign you their placements.")
     expect(page).to have_link("Add school", href: new_add_partner_school_placements_provider_partner_schools_path(@provider))
     expect(page).to have_table_row({ "Name": "Shelbyville Elementary",
                                      "Unique reference number (URN)": "12345" })
-    expect(page).to have_success_banner("School added", "Shelbyville Elementary can now assign you to their placements.")
+    expect(page).to have_success_banner("School added")
   end
 
   def then_i_see_an_error_that_shelbyville_elementary_has_already_been_added

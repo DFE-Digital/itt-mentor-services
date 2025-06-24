@@ -18,10 +18,12 @@ class Placements::Partnerships::AddPartnershipController < Placements::Applicati
         )
       end
       @wizard.reset_state
-      redirect_to index_path, flash: {
-        heading: t(".success_heading"),
-        body: t(".success_body", partner_name: @wizard.partner_organisation.name),
-      }
+
+      flash[:heading] = t(".success_heading")
+      if @wizard.organisation.is_a?(Placements::School)
+        flash[:body] = t(".success_body", partner_name: @wizard.partner_organisation.name)
+      end
+      redirect_to index_path
     end
   end
 
