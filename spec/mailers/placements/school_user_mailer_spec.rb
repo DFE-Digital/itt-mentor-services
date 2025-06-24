@@ -261,7 +261,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
 
         Providers will be able to email [#{school.school_contact_email_address}](mailto:#{school.school_contact_email_address}) about your placement offers.
 
-        You do not need to take any further action untill providers contact you. After discussions with one or more providers you can then assign providers to your placements.
+        You do not need to take any further action until providers contact you. After discussions with one or more providers you can then assign providers to your placements.
 
         ## Your account
         [Sign in to Manage school placements](http://placements.localhost/sign-in?utm_campaign=school&utm_medium=notification&utm_source=email)

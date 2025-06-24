@@ -59,7 +59,8 @@ en:
               what_happens_next: What happens next?
               providers_can_contact_you:
                 Providers will be able to contact you on %{mailto} about your placement offers.
-                After these discussions you can then decide whether to assign a provider to your placements.
+              you_do_not_need_to_take_any_further_action:
+                You do not need to take any further action until providers contact you. After discussions with one or more providers, you can then decide whether to assign providers to your placements.
               your_placements_offers: Your placements offers
               primary_placements: Primary placements
               secondary_placements: Secondary placements

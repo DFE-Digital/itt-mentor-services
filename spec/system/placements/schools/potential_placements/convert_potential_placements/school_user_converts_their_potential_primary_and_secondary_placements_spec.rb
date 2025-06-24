@@ -276,14 +276,13 @@ RSpec.describe "School user converts their potential primary and secondary place
   def and_i_see_my_hosting_interest_is_placements_available
     expect(page).to have_tag("Placements available", "green")
     expect(page).to have_paragraph(
-      "Add and edit placements to let providers know your preferences.",
+      "Providers can see your placements and will email #{@school.school_contact_email_address} if they have suitable trainees.",
     )
     expect(page).to have_paragraph(
-      "If you know the providers you want to work with, assign them to your placements. " \
-      "This will prevent other providers getting in contact with you about them.",
+      "When you know the providers you want to work with, assign them to your placements. This will prevent other providers getting in contact with you about them.",
     )
     expect(page).to have_paragraph(
-      "If your circumstances change and you are no longer able to offer placements, change your status.",
+      "Edit placements to let providers know more details, such as the expected date.",
     )
   end
 end

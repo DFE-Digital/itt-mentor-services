@@ -20,15 +20,17 @@ module Placements::MultiPlacementCreatable
   end
 
   def create_placements
+    created_placements = []
     year_groups.each do |year_group|
       placement_quantity_for_year_group(year_group).times do
-        Placement.create!(
+        placement = Placement.create!(
           school:,
           subject: Subject.primary_subject,
           year_group:,
           academic_year:,
           creator: current_user,
         )
+        created_placements << placement
       end
     end
 
@@ -47,20 +49,24 @@ module Placements::MultiPlacementCreatable
           placement.additional_subjects << Subject.find(child_subject_id)
         end
         placement.save!
+        created_placements << placement
       end
     end
 
     selected_key_stages.each do |key_stage|
       placement_quantity_for_key_stage(key_stage).times do
-        Placement.create!(
+        placement = Placement.create!(
           school:,
           key_stage:,
           academic_year:,
           creator: current_user,
           send_specific: true,
         )
+        created_placements << placement
       end
     end
+
+    created_placements
   end
 
   def year_groups

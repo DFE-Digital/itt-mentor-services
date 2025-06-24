@@ -16,10 +16,6 @@
 
         <%= render Placements::Schools::InterestTagComponent.new(school: @school, academic_year: current_user.selected_academic_year) %>
 
-        <p class="govuk-body govuk-!-margin-top-6"><%= t(".add_and_edit_placements") %></p>
-
-        <p class="govuk-body"><%= t(".if_you_know_the_providers") %></p>
-
         <% if @hosting_interest.present? %>
           <p class="govuk-body">
             <%= embedded_link_text(
@@ -35,6 +31,12 @@
       </div>
 
       <div class="govuk-grid-column-full">
+
+        <p class="govuk-body govuk-!-margin-top-6"><%= t(".providers_can_see_your_placements", contact_email: @school.school_contact_email_address) %></p>
+
+        <p class="govuk-body"><%= t(".when_you_know_the_providers") %></p>
+
+        <p class="govuk-body"><%= t(".edit_placements") %></p>
 
         <% if @school.school_contact.present? %>
           <div class="govuk-button-group">

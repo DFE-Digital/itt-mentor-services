@@ -87,6 +87,8 @@ RSpec.describe "School user views and deletes a placement with a partner provide
     expect(page).to have_title("Primary with english (Year 1) - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_tag("Assigned to provider", "blue")
+    expect(page).to have_paragraph("Your placement is assigned to a provider. This means that you have agreed with the provider that their trainee will undertake this placement at your school.")
+    expect(page).to have_paragraph("Add a mentor when you know who it will be. Only your school will see this information.")
     expect(page).to have_summary_list_row("Subject", "Primary")
     expect(page).to have_summary_list_row("Year group", "Year 1")
     expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
