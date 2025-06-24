@@ -368,11 +368,7 @@ RSpec.describe "School user adds their hosting interest and bulk adds placements
       "Providers can see that you have placements available",
     )
     expect(page).to have_h1("What happens next?", class: "govuk-heading-l")
-    expect(page).to have_element(
-      :p,
-      text: "Providers will be able to contact you on joe_bloggs@example.com about your placement offers. After these discussions you can then decide whether to assign a provider to your placements.",
-      class: "govuk-body",
-    )
+    expect(page).to have_paragraph("Providers will be able to contact you on joe_bloggs@example.com about your placement offers.")
     expect(page).to have_h2("Manage your placements", class: "govuk-heading-m")
     expect(page).to have_h2("Your placements offer", class: "govuk-heading-m")
     expect(page).to have_h3("Primary placements", class: "govuk-heading-s")

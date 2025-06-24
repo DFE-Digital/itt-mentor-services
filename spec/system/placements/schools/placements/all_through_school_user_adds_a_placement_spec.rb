@@ -1,6 +1,12 @@
 require "rails_helper"
 
 RSpec.describe "All-through school user adds a placement", service: :placements, type: :system do
+  include ActiveJob::TestHelper
+
+  around do |example|
+    perform_enqueued_jobs { example.run }
+  end
+
   scenario do
     given_that_placements_exist
     and_i_am_signed_in
@@ -133,11 +139,17 @@ RSpec.describe "All-through school user adds a placement", service: :placements,
     then_i_see_the_placements_index_page
     and_i_see_a_success_message
     and_i_see_my_placement
+    and_a_notification_email_is_sent_to_the_school_user
+
+    when_i_click_on_my_placement
+    then_i_see_the_placement_details_page
   end
 
   def given_that_placements_exist
+    @user_anne = create(:placements_user, first_name: "Anne", last_name: "Wilson", email: "anne_wilson@education.gov.uk")
     @school = create(
       :placements_school,
+      with_school_contact: true,
       name: "Malory Towers",
       address1: "Westgate Street",
       address2: "Hackney",
@@ -152,6 +164,7 @@ RSpec.describe "All-through school user adds a placement", service: :placements,
       urban_or_rural: "(England/Wales) Urban major conurbation",
       percentage_free_school_meals: 15,
       rating: "Outstanding",
+      users: [@user_anne],
     )
 
     @secondary_english_subject = create(:subject, name: "English", subject_area: :secondary)
@@ -170,7 +183,7 @@ RSpec.describe "All-through school user adds a placement", service: :placements,
   end
 
   def and_i_am_signed_in
-    sign_in_placements_user(organisations: [@school])
+    sign_in_as(@user_anne)
   end
 
   def when_i_am_on_the_placements_index_page
@@ -577,5 +590,36 @@ RSpec.describe "All-through school user adds a placement", service: :placements,
 
   def when_i_unselect_any_time_in_the_academic_year
     uncheck "Any time in the academic year"
+  end
+
+  def school_placements_added_notification
+    ActionMailer::Base.deliveries.find do |delivery|
+      delivery.to.include?(@user_anne.email) &&
+        delivery.subject == "You have added placement information to Manage school placements"
+    end
+  end
+
+  def and_a_notification_email_is_sent_to_the_school_user
+    email = school_placements_added_notification
+
+    expect(email).not_to be_nil
+  end
+
+  def when_i_click_on_my_placement
+    click_on "Mathematics"
+  end
+
+  def then_i_see_the_placement_details_page
+    expect(page).to have_title("Mathematics - Manage school placements - GOV.UK")
+    expect(primary_navigation).to have_current_item("Placements")
+    expect(page).to have_paragraph("Providers can see your placements and will email #{@school.school_contact_email_address} if they have suitable trainees.")
+    expect(page).to have_paragraph("Assign a provider to this placement once you have agreed with them that their trainee will undertake this placement.")
+    expect(page).to have_summary_list_row("School level", "Secondary")
+    expect(page).to have_summary_list_row("Subject", "Mathematics")
+    expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
+    expect(page).to have_summary_list_row("Expected date", "Summer term")
+    expect(page).to have_summary_list_row("Mentor", "Jane Doe")
+    expect(page).to have_summary_list_row("Provider", "Assign a provider")
+    expect(page).to have_element(:div, text: "You can preview this placement as it appears to providers.", class: "govuk-inset-text")
   end
 end

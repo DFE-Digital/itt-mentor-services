@@ -3,6 +3,12 @@ require "rails_helper"
 RSpec.describe "School user bulk adds placements for primary and secondary phases",
                service: :placements,
                type: :system do
+  include ActiveJob::TestHelper
+
+  around do |example|
+    perform_enqueued_jobs { example.run }
+  end
+
   scenario do
     given_subjects_exist
     and_academic_years_exist
@@ -82,6 +88,7 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
     and_i_see_2_primary_placements_for_year_1
     and_i_see_1_secondary_placement_for_english
     and_i_see_4_secondary_placements_for_mathematics
+    and_a_notification_email_is_sent_to_the_school_user
   end
 
   private
@@ -102,8 +109,9 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
   end
 
   def and_i_am_signed_in
-    @school = create(:placements_school)
-    sign_in_placements_user(organisations: [@school])
+    @user_anne = create(:placements_user, first_name: "Anne", last_name: "Wilson", email: "anne_wilson@education.gov.uk")
+    @school = create(:placements_school, users: [@user_anne])
+    sign_in_as(@user_anne)
   end
 
   def when_i_am_on_the_placements_index_page
@@ -292,11 +300,7 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
       "Providers can see that you have placements available",
     )
     expect(page).to have_h1("What happens next?", class: "govuk-heading-l")
-    expect(page).to have_element(
-      :p,
-      text: "Providers will be able to contact you on #{@school.school_contact_email_address} about your placement offers. After these discussions you can then decide whether to assign a provider to your placements.",
-      class: "govuk-body",
-    )
+    expect(page).to have_paragraph("Providers will be able to contact you on #{@school.school_contact_email_address} about your placement offers")
     expect(page).to have_h2("Manage your placements", class: "govuk-heading-m")
     expect(page).to have_h2("Your placements offer", class: "govuk-heading-m")
     expect(page).to have_h3("Primary placements", class: "govuk-heading-s")
@@ -317,5 +321,18 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
 
   def and_i_see_4_secondary_placement_for_mathematics_have_been_created
     expect(page).to have_summary_list_row("Mathematics", "4")
+  end
+
+  def school_placements_added_notification
+    ActionMailer::Base.deliveries.find do |delivery|
+      delivery.to.include?(@user_anne.email) &&
+        delivery.subject == "You have added placement information to Manage school placements"
+    end
+  end
+
+  def and_a_notification_email_is_sent_to_the_school_user
+    email = school_placements_added_notification
+
+    expect(email).not_to be_nil
   end
 end

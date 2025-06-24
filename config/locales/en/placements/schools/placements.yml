@@ -117,15 +117,20 @@ en:
               one: "%{count} placement"
               other: "%{count} placements"
             placements_available: placements available
-            add_and_edit_placements: Add and edit placements to let providers know your preferences.
+            providers_can_see_your_placements: Providers can see your placements and will email %{contact_email} if they have suitable trainees.
+            edit_placements: Edit placements to let providers know more details, such as the expected date.
             change_your_status: change your status
-            if_you_know_the_providers:
-              If you know the providers you want to work with, assign them to your placements.
+            when_you_know_the_providers:
+              When you know the providers you want to work with, assign them to your placements.
               This will prevent other providers getting in contact with you about them.
             if_your_circumstances_change:
               If your circumstances change and you are no longer able to offer placements, %{link}.
         show:
           any_time: Any time in the academic year
+          providers_can_see_your_placements: Providers can see your placements and will email %{contact_email} if they have suitable trainees.
+          your_placement_is_assigned_to_a_provider: Your placement is assigned to a provider. This means that you have agreed with the provider that their trainee will undertake this placement at your school.
+          assign_a_provider: Assign a provider to this placement once you have agreed with them that their trainee will undertake this placement.
+          assign_a_mentor: Add a mentor when you know who it will be. Only your school will see this information.
           delete_placement: Delete placement
           preview_placement: You can %{href} as it appears to providers.
           preview_link: preview this placement

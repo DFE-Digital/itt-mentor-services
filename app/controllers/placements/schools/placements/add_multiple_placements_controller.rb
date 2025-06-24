@@ -13,6 +13,7 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
       redirect_to step_path(@wizard.next_step)
     else
       @wizard.update_school_placements
+      notify_user(@wizard.created_placements)
       session["whats_next"] = @wizard.placements_information
       @wizard.reset_state
 
@@ -40,5 +41,13 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
 
   def index_path
     placements_school_placements_path(@school)
+  end
+
+  def notify_user(placements)
+    Placements::Placements::NotifySchool::CreatePlacements.call(
+      user: current_user,
+      school: @school,
+      placements: placements,
+    )
   end
 end

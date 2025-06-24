@@ -17,6 +17,7 @@ class Placements::Schools::Placements::AddPlacementController < Placements::Appl
     else
       placement = @wizard.create_placement
       Placements::PlacementSlackNotifier.placement_created_notification(@school, placement.decorate).deliver_later
+      notify_user(placement)
       @wizard.reset_state
       redirect_to after_create_placement_path(@school), flash: {
         heading: t("wizards.placements.add_placement_wizard.update.success_heading"),
@@ -56,5 +57,13 @@ class Placements::Schools::Placements::AddPlacementController < Placements::Appl
 
   def add_mentor_path
     new_add_mentor_placements_school_mentors_path
+  end
+
+  def notify_user(placement)
+    Placements::Placements::NotifySchool::CreatePlacements.call(
+      user: current_user,
+      school: @school,
+      placements: [placement],
+    )
   end
 end
