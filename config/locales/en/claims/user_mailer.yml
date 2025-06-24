@@ -8,10 +8,16 @@ en:
   
           You have been invited to join the %{service_name} service for %{organisation_name} because you are a [DfE-sign approver](%{sign_in_approver_url}) for your organisation.
 
-          If you are not the right person in your organisation to submit funding claims for general mentor training, please:
+          If you are not the right person in your organisation to submit funding claims for initial teacher training (ITT) general mentor training, please:
 
           - access the service using DfE sign-in and add an appropriate colleague in the Users section
           - forward this email to the appropriate colleague after adding them as a user
+          
+          # Claim funding for mentor training service
+  
+          This new DfE service enables schools and education organisations to claim funding for the time spent becoming an ITT general mentor.
+  
+          Your organisation has been added to the service because an accredited ITT provider has informed DfE that one or more trainee teachers have undertaken a school placement there during academic year %{academic_year_name}.
 
           # Sign in to submit claims
   
@@ -25,7 +31,7 @@ en:
 
           # Prior to submitting claims
 
-          We recommend confirming with your accredited provider the number of hours you are claiming, as they may be asked to provide evidence to support this claim.
+          We recommend confirming with your accredited ITT provider the number of hours you are claiming, as they may be asked to provide evidence to support this claim.
   
           # Give feedback or report a problem
   

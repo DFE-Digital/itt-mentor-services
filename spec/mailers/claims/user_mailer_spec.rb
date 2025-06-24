@@ -6,6 +6,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
 
     let(:user) { create(:claims_user, first_name: "Joe") }
     let(:organisation) { create(:claims_school, name: "Shelbyville Elementary") }
+    let!(:claim_window) { create(:claim_window, :current) }
 
     it "sends the invitation" do
       expect(invite_email.to).to contain_exactly(user.email)
@@ -15,10 +16,16 @@ RSpec.describe Claims::UserMailer, type: :mailer do
 
         You have been invited to join the Claim funding for mentor training service for Shelbyville Elementary because you are a [DfE-sign approver](https://edd-help.signin.education.gov.uk/contact/create-account#:~:text=An%20approver%20is%20someone%20at%20your%20organisation%20responsible,person%2C%20such%20as%20an%20administrator%2C%20manager%2C%20or%20headteacher) for your organisation.
 
-        If you are not the right person in your organisation to submit funding claims for general mentor training, please:
+        If you are not the right person in your organisation to submit funding claims for initial teacher training (ITT) general mentor training, please:
 
         - access the service using DfE sign-in and add an appropriate colleague in the Users section
         - forward this email to the appropriate colleague after adding them as a user
+
+        # Claim funding for mentor training service
+
+        This new DfE service enables schools and education organisations to claim funding for the time spent becoming an ITT general mentor.
+
+        Your organisation has been added to the service because an accredited ITT provider has informed DfE that one or more trainee teachers have undertaken a school placement there during academic year #{claim_window.academic_year_name}.
 
         # Sign in to submit claims
 
@@ -32,7 +39,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
 
         # Prior to submitting claims
 
-        We recommend confirming with your accredited provider the number of hours you are claiming, as they may be asked to provide evidence to support this claim.
+        We recommend confirming with your accredited ITT provider the number of hours you are claiming, as they may be asked to provide evidence to support this claim.
 
         # Give feedback or report a problem
 
