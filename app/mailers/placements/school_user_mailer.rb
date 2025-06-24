@@ -11,6 +11,18 @@ class Placements::SchoolUserMailer < Placements::UserMailer
     super
   end
 
+  def placement_information_added_notification(user, organisation, placements)
+    @user_name = user.first_name
+    @placements = placements.map do |placement|
+      { title: placement.decorate.title, url: placements_school_placement_url(organisation, placement, utm_source: "email", utm_medium: "notification", utm_campaign: "school") }
+    end
+    @contact_email = organisation.school_contact_email_address
+    @service_name = service_name
+    @sign_in_url = sign_in_url(utm_source: "email", utm_medium: "notification", utm_campaign: "school")
+
+    notify_email to: user.email, subject: t(".subject")
+  end
+
   def partnership_created_notification(user, source_organisation, partner_organisation)
     @user_name = user.first_name
     @school_name = partner_organisation.name
