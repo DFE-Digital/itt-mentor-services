@@ -1,0 +1,5 @@
+<% if render? %>
+  <%= render(GovukComponent::NotificationBannerComponent.new(title_text: t(".important"))) do |nb|
+        nb.with_heading(text: t(".claim_window_closing_soon", count: days_until_claim_window_closes))
+      end %>
+<% end %>
