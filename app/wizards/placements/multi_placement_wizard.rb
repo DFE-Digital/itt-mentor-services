@@ -2,7 +2,7 @@ module Placements
   class MultiPlacementWizard < BaseWizard
     include ::Placements::MultiPlacementCreatable
 
-    attr_reader :school, :current_user
+    attr_reader :school, :current_user, :created_placements
 
     delegate :school_contact, to: :school
 
@@ -19,7 +19,7 @@ module Placements
     def update_school_placements
       raise "Invalid wizard state" unless valid?
 
-      ApplicationRecord.transaction do
+      @created_placements = ApplicationRecord.transaction do
         create_placements
       end
     end
