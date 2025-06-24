@@ -54,6 +54,7 @@ RSpec.describe "Invite a user to a school", service: :claims, type: :system do
   private
 
   def given_a_school_exists_with_claims_users
+    @claim_window = create(:claim_window, :current)
     @user_anne = create(:claims_user, first_name: "Anne", last_name: "Wilson", email: "anne_wilson@education.gov.uk")
     @user_charles = create(:claims_user, first_name: "Charles", last_name: "G", email: "charles_g@education.gov.uk")
 
