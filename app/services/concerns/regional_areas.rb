@@ -42,6 +42,7 @@ module RegionalAreas
     "E06000036", # Bracknell Forest
     "E06000039", # Slough
     "E06000040", # Windsor and Maidenhead
+    "E06000060", # Buckinghamshire
     "E07000006", # South Bucks - Inactive
     "E07000005", # Chiltern - Inactive
     "E07000066", # Basildon
