@@ -108,6 +108,10 @@ en:
           Amount being clawed back: %{clawback_amount}
           Claim reference: %{claim_reference}
           
+          You can view the claim on Claim funding for mentor training:
+          
+          %{link_to_claim}
+          
           # What happens next
           The funds will automatically be taken from you.
           

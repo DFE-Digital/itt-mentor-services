@@ -260,6 +260,10 @@ RSpec.describe Claims::UserMailer, type: :mailer do
 
         Amount being clawed back: £214.40
         Claim reference: 123
+          
+        You can view the claim on Claim funding for mentor training:
+        
+        http://claims.localhost/schools/#{school.id}/claims/#{claim.id}?utm_campaign=school&utm_medium=notification&utm_source=email
 
         # What happens next
         The funds will automatically be taken from you.
