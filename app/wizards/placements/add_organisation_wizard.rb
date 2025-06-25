@@ -1,5 +1,7 @@
 module Placements
   class AddOrganisationWizard < BaseWizard
+    attr_reader :current_user
+
     def initialize(current_user:, params:, state:, current_step: nil)
       @current_user = current_user
       super(state:, params:, current_step:)
@@ -36,8 +38,6 @@ module Placements
       end
     end
 
-    private
-
-    attr_reader :current_user
+    delegate :support_user?, to: :current_user
   end
 end

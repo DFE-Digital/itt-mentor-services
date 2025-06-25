@@ -1,7 +1,11 @@
 class ProviderDecorator < OrganisationDecorator
-  def town_and_postcode
-    parts = [town, city, postcode].reject(&:blank?)
-    parts.join(", ")
+  def organisation_identifier_hint(support_user)
+    if support_user
+      parts = [postcode, code].reject(&:blank?)
+      parts.join(", ")
+    else
+      postcode
+    end
   end
 
   def partner_school_placements(school)

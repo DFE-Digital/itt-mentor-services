@@ -6,6 +6,10 @@ class Claims::AddClaimWizard::ProviderStep < Claims::AddClaimWizard::ProviderSel
   end
 
   def autocomplete_return_attributes_value
-    %w[postcode]
+    if wizard.created_by.support_user?
+      %w[postcode code]
+    else
+      %w[postcode]
+    end
   end
 end

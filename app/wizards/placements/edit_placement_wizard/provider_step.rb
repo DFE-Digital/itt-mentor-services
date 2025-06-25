@@ -8,6 +8,10 @@ class Placements::EditPlacementWizard::ProviderStep < Placements::EditPlacementW
   end
 
   def autocomplete_return_attributes_value
-    %w[postcode]
+    if wizard.current_user.support_user?
+      %w[postcode code]
+    else
+      %w[postcode]
+    end
   end
 end

@@ -1,10 +1,11 @@
 require "rails_helper"
 
 RSpec.describe Placements::AddPartnershipWizard do
-  subject(:wizard) { described_class.new(organisation:, state:, params:, current_step: nil) }
+  subject(:wizard) { described_class.new(organisation:, current_user:, state:, params:, current_step: nil) }
 
   let(:state) { {} }
   let(:params_data) { {} }
+  let(:current_user) { create(:placements_user) }
   let(:organisation) { create(:placements_school) }
   let(:partner_organisation) { create(:provider) }
   let(:params) { ActionController::Parameters.new(params_data) }

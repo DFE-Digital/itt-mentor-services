@@ -5,13 +5,14 @@ RSpec.describe Placements::EditPlacementWizard::ProviderStep, type: :model do
 
   let(:mock_wizard) do
     instance_double(Placements::EditPlacementWizard).tap do |mock_wizard|
-      allow(mock_wizard).to receive(:school).and_return(school)
+      allow(mock_wizard).to receive_messages(school: school, current_user: current_user)
     end
   end
+  let(:current_user) { create(:placements_user) }
+
+  let!(:school) { create(:placements_school, name: "School 1", phase: "Primary", partner_providers: [partner_provider], users: [current_user]) }
 
   let(:attributes) { nil }
-
-  let!(:school) { create(:placements_school, name: "School 1", phase: "Primary", partner_providers: [partner_provider]) }
 
   let(:partner_provider) { build(:provider, :scitt) }
   let(:lead_school_provider) { create(:placements_provider, :lead_school) }
@@ -56,9 +57,19 @@ RSpec.describe Placements::EditPlacementWizard::ProviderStep, type: :model do
   end
 
   describe "#autocomplete_return_attributes_value" do
-    subject(:autocomplete_return_attributes_value) { step.autocomplete_return_attributes_value }
+    context "when current_user is not a support user" do
+      subject(:autocomplete_return_attributes_value) { step.autocomplete_return_attributes_value }
 
-    it { is_expected.to contain_exactly("postcode") }
+      it { is_expected.to contain_exactly("postcode") }
+    end
+
+    context "when current_user is a support user" do
+      subject(:autocomplete_return_attributes_value) { step.autocomplete_return_attributes_value }
+
+      let(:current_user) { create(:placements_support_user) }
+
+      it { is_expected.to contain_exactly("postcode", "code") }
+    end
   end
 
   describe "#scope" do

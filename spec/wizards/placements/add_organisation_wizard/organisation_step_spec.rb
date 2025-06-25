@@ -8,6 +8,7 @@ RSpec.describe Placements::AddOrganisationWizard::OrganisationStep, type: :model
       allow(mock_wizard).to receive_messages(
         organisation_type:,
         organisation_model:,
+        current_user:,
         steps: { organisation_type: organisation_type_step },
       )
     end
@@ -15,10 +16,10 @@ RSpec.describe Placements::AddOrganisationWizard::OrganisationStep, type: :model
 
   let(:organisation_type_step) do
     instance_double(Placements::AddOrganisationWizard::OrganisationTypeStep).tap do |organisation_type_step|
-      allow(organisation_type_step).to receive(:provider?).and_return(is_provider)
+      allow(organisation_type_step).to receive_messages(provider?: is_provider)
     end
   end
-
+  let(:current_user) { create(:placements_user) }
   let(:attributes) { nil }
   let(:organisation_type) { "school" }
   let(:organisation_model) { School }
@@ -118,8 +119,18 @@ RSpec.describe Placements::AddOrganisationWizard::OrganisationStep, type: :model
       let(:organisation_model) { Provider }
       let(:is_provider) { true }
 
-      it "returns the attributes returned by the provider suggestions api" do
-        expect(step.autocomplete_return_attributes_value).to match_array(%w[postcode])
+      context "when current user is not a support user" do
+        it "returns the attributes returned by the provider suggestions api" do
+          expect(step.autocomplete_return_attributes_value).to match_array(%w[postcode])
+        end
+      end
+
+      context "when current user is a support user" do
+        let(:current_user) { create(:placements_support_user) }
+
+        it "returns the attributes returned by the provider suggestions api" do
+          expect(step.autocomplete_return_attributes_value).to match_array(%w[postcode code])
+        end
       end
     end
   end

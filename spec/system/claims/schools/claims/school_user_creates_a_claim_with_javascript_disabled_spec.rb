@@ -60,7 +60,7 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
 
   def and_providers_exist
     @niot_provider = create(:provider, :niot)
-    @bpn_provider = create(:provider, :best_practice_network, postcode: "BR20RL")
+    @bpn_provider = create(:provider, :best_practice_network, postcode: "BR20RL", code: "111")
   end
 
   def and_i_am_signed_in

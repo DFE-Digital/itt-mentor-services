@@ -13,7 +13,11 @@ class Placements::AddOrganisationWizard::OrganisationStep < Placements::AddOrgan
 
   def autocomplete_return_attributes_value
     if wizard.steps[:organisation_type].provider?
-      %w[postcode]
+      if wizard.current_user.support_user?
+        %w[postcode code]
+      else
+        %w[postcode]
+      end
     else
       %w[town postcode]
     end
