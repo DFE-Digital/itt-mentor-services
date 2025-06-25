@@ -203,6 +203,20 @@ describe Placements::SchoolsQuery do
       end
     end
 
+    context "when filtering by send only" do
+      let(:params) { { filters: { send_only: ["SEND only"] } } }
+      let(:key_stage) { build(:key_stage, name: "Key stage 1") }
+
+      before do
+        create(:placement, :send, school: query_school, academic_year:, key_stage:)
+      end
+
+      it "returns the filtered schools with SEND placements" do
+        expect(query.call).to include(query_school)
+        expect(query.call).not_to include(non_query_school)
+      end
+    end
+
     context "when filtering by location" do
       let!(:close_query_school) do
         create(

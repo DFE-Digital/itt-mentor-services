@@ -93,6 +93,14 @@ describe Placements::Schools::FilterForm, type: :model do
       end
     end
 
+    context "when given send only params" do
+      let(:params) { { send_only: %w[SEND only] } }
+
+      it "returns true" do
+        expect(filters_selected).to be(true)
+      end
+    end
+
     context "when given no params" do
       let(:params) { {} }
 
@@ -271,6 +279,28 @@ describe Placements::Schools::FilterForm, type: :model do
         )
       end
     end
+
+    context "when removing send only params" do
+      let(:params) do
+        { send_only: ["SEND only"] }
+      end
+
+      it "returns the find index page path without the given send only param" do
+        expect(
+          filter_form.index_path_without_filter(
+            filter: "send_only",
+            value: "SEND only",
+          ),
+        ).to eq(
+          placements_provider_find_index_path(
+            provider,
+            filters: {
+              schools_to_show: "active",
+            },
+          ),
+        )
+      end
+    end
   end
 
   describe "#query_params" do
@@ -286,6 +316,7 @@ describe Placements::Schools::FilterForm, type: :model do
           itt_statuses: [],
           last_offered_placements_academic_year_ids: [],
           schools_to_show: "active",
+          send_only: [],
         },
       )
     end

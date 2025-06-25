@@ -1,5 +1,6 @@
 class Placements::SchoolsQuery < ApplicationQuery
   MAX_LOCATION_DISTANCE = 50
+  SEND_ONLY = "SEND only".freeze
 
   def initialize(academic_year:, params: {})
     @academic_year = academic_year
@@ -17,6 +18,7 @@ class Placements::SchoolsQuery < ApplicationQuery
     scope = last_offered_placements_condition(scope)
     scope = year_group_condition(scope)
     scope = itt_statuses_condition(scope)
+    scope = send_condition(scope)
     order_condition(scope)
   end
 
@@ -133,5 +135,12 @@ class Placements::SchoolsQuery < ApplicationQuery
     return scope if filter_params[:schools_to_show] == "all"
 
     scope.where(expression_of_interest_completed: true).or(scope.where.associated(:hosting_interests))
+  end
+
+  def send_condition(scope)
+    return scope if filter_params[:send_only].blank? ||
+      !filter_params[:send_only].include?(SEND_ONLY)
+
+    scope.where(placements: { send_specific: true })
   end
 end

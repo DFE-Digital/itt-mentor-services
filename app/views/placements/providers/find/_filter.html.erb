@@ -117,6 +117,25 @@
             </ul>
           <% end %>
 
+          <% if filter_form.send_only.present? %>
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".send_placements") %></h3>
+            <ul class="app-filter-tags">
+              <% filter_form.send_only.each do |send_only| %>
+                <li>
+                  <%= govuk_link_to(
+                        t(".show_only_send_placements"),
+                        filter_form.index_path_without_filter(
+                          filter: "send_only",
+                          value: send_only,
+                        ),
+                        class: "app-filter__tag",
+                        no_visited_state: true,
+                      ) %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+
           <% if filter_form.last_offered_placements_academic_year_ids.present? %>
             <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".last_offered_placements") %></h3>
             <ul class="app-filter-tags">
@@ -286,6 +305,17 @@
               <% %w[open not_open filled_placements unfilled_placements].each do |appetite| %>
                 <%= form.govuk_check_box :itt_statuses, appetite, label: { text: t("components.placements.schools.interest_tag_component.#{appetite}") } %>
               <% end %>
+            <% end %>
+          </div>
+
+          <div class="app-filter__option">
+            <%= form.govuk_check_boxes_fieldset(
+              :send_only,
+              legend: { text: t(".send_placements"), size: "s" },
+              small: true,
+              multiple: true,
+            ) do %>
+              <%= form.govuk_check_box :send_only, Placements::SchoolsQuery::SEND_ONLY, label: { text: t(".show_only_send_placements") } %>
             <% end %>
           </div>
 

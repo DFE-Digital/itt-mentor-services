@@ -10,6 +10,7 @@ class Placements::Schools::FilterForm < ApplicationForm
   attribute :itt_statuses, default: []
   attribute :last_offered_placements_academic_year_ids, default: []
   attribute :schools_to_show, default: "active"
+  attribute :send_only, default: []
 
   def initialize(provider, params = {})
     @provider = provider
@@ -56,6 +57,7 @@ class Placements::Schools::FilterForm < ApplicationForm
       itt_statuses:,
       last_offered_placements_academic_year_ids:,
       schools_to_show:,
+      send_only:,
     }
   end
 
