@@ -4,10 +4,13 @@ RSpec.describe Claims::AddClaimWizard::ProviderStep, type: :model do
   subject(:step) { described_class.new(wizard: mock_wizard, attributes:) }
 
   let(:attributes) { nil }
+  let(:created_by) { create(:claims_user) }
   let!(:niot_provider) { create(:claims_provider, :niot) }
 
   let(:mock_wizard) do
-    instance_double(Claims::AddClaimWizard)
+    instance_double(Claims::AddClaimWizard).tap do |mock_wizard|
+      allow(mock_wizard).to receive(:created_by).and_return(created_by)
+    end
   end
 
   describe "attributes" do

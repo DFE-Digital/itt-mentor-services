@@ -9,11 +9,15 @@ RSpec.describe Placements::AddPartnershipWizard::PartnershipStep, type: :model d
         organisation:,
         partner_organisation_model:,
         partner_organisation_type:,
+        current_user:,
       )
     end
   end
 
-  let(:organisation) { create(:placements_school) }
+  let(:current_user) { create(:placements_user) }
+
+  let(:organisation) { create(:placements_school, users: [current_user]) }
+
   let(:partner_organisation_model) { Provider }
   let(:partner_organisation_type) { "provider" }
   let(:attributes) { nil }

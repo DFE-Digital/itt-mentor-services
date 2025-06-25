@@ -32,6 +32,6 @@ class Placements::Partnerships::AddPartnershipController < Placements::Applicati
   def set_wizard
     state = session[state_key] ||= {}
     current_step = params[:step]&.to_sym
-    @wizard = Placements::AddPartnershipWizard.new(organisation: @organisation, params:, state:, current_step:)
+    @wizard = Placements::AddPartnershipWizard.new(organisation: @organisation, current_user:, params:, state:, current_step:)
   end
 end

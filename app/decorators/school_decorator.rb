@@ -16,7 +16,7 @@ class SchoolDecorator < OrganisationDecorator
     I18n.l(last_inspection_date, format: :long)
   end
 
-  def town_and_postcode
+  def organisation_identifier_hint(_support_user)
     parts = [town, postcode].reject(&:blank?)
     parts.join(", ")
   end
