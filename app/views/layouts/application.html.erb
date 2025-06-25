@@ -28,6 +28,10 @@
     <%= govuk_header(homepage_url: "/", classes: "app-header app-header--#{hosting_environment_color} app-header--full-border") do |header| %>
       <% header.with_product_name(name: service_name) %>
 
+      <% header.with_custom_logo do %>
+          <%= image_tag "/images/department-for-education_white.png", alt: "Department for Education", class: "govuk-header__logotype" %>
+      <% end %>
+
       <% if current_user %>
         <% if claims_service? %>
           <% header.with_navigation_item(text: t(".your_account"), href: account_path) %>
