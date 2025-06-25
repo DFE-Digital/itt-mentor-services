@@ -57,6 +57,10 @@ en:
           schools_to_show:
             active: Only schools using the service
             all: All schools
+          send_placements: SEND placements
+          send_only: SEND only
+          show_only_send_placements:
+            Show only schools with SEND specific placements
         placements:
           phase: Phase
           unknown: Unknown

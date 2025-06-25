@@ -89,6 +89,7 @@ class Placements::Providers::FindController < Placements::ApplicationController
       itt_statuses: [],
       last_offered_placements_academic_year_ids: [],
       trained_mentors: [],
+      send_only: [],
     )
   end
 
