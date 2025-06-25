@@ -124,16 +124,8 @@ RSpec.describe "School user completes the interested journey and declares primar
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Confirm and share what you may be able to offer", class: "govuk-heading-l")
     expect(page).to have_element(:span, text: "Potential placement details", class: "govuk-caption-l")
-    expect(page).to have_element(
-      :p,
-      text: "Providers will be able to see that you may be able to offer placements for trainee teachers.",
-      class: "govuk-body",
-    )
-    expect(page).to have_element(
-      :p,
-      text: "They will be able to see your potential placement details and will be able to use your email to contact you.",
-      class: "govuk-body",
-    )
+    expect(page).to have_paragraph("Providers will be able to see that you may be able to offer placements for trainee teachers.")
+    expect(page).to have_paragraph("They will be able to see your potential placement details and will be able to use your email to contact you.")
   end
 
   def then_i_see_the_school_contact_form
@@ -142,11 +134,7 @@ RSpec.describe "School user completes the interested journey and declares primar
     )
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Who should providers contact?")
-    expect(page).to have_element(
-      :p,
-      text: "Choose the person best placed to organise placements for trainee teachers at your school",
-      class: "govuk-body",
-    )
+    expect(page).to have_paragraph("Choose the person best placed to organise placements for trainee teachers at your school")
 
     expect(page).to have_field("First name")
     expect(page).to have_field("Last name")
@@ -172,21 +160,15 @@ RSpec.describe "School user completes the interested journey and declares primar
   end
 
   def then_i_see_the_whats_next_page
+    save_and_open_page
     expect(page).to have_panel(
       "Information added",
       "Providers can see that you may offer placements",
     )
     expect(page).to have_h1("What happens next", class: "govuk-heading-l")
-    expect(page).to have_element(
-      :p,
-      text: "Providers who are looking for schools to work with can contact you on joe_bloggs@example.com.",
-      class: "govuk-body",
-    )
-    expect(page).to have_element(
-      :p,
-      text: "Once you are sure which placements your school can offer, add your placements. Doing so will mean you will be able to assign providers to them.",
-      class: "govuk-body",
-    )
+    expect(page).to have_paragraph("Providers who are looking for schools to work with can contact you on joe_bloggs@example.com.")
+    expect(page).to have_paragraph("You do not need to take any further action until providers contact you.")
+    expect(page).to have_paragraph("Once you are sure which placements your school can offer, add your placements. Doing so will mean you will be able to assign providers to them.")
     expect(page).to have_link("add your placements", href: placements_school_placements_path(@school))
   end
 
