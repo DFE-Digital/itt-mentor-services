@@ -1,6 +1,21 @@
 <%= @user_name %>,
 
-You added placements on the Manage school placements service
+<% if @hosting_interest.interested? %>
+You added placements on the <%= @service_name %> service. Providers can see that your school may offer placements.
+
+<% @placements.each do |placement| %>
+- [<%= placement[:title] %>](<%= placement[:url] %>)
+<% end %>
+
+## What happens next?
+
+Providers will be able to email [<%= @contact_email %>](mailto:<%= @contact_email %>) about your placements your school may be able to offer.
+
+You do not need to take any further action until providers contact you.
+
+Once you are sure which placements your school can offer you can add individual placements with more detail. You can then assign providers to your placements.
+<% else %>
+You added placements on the <%= @service_name %> service.
 
 <% @placements.each do |placement| %>
 - [<%= placement[:title] %>](<%= placement[:url] %>)
@@ -11,8 +26,9 @@ You added placements on the Manage school placements service
 Providers will be able to email [<%= @contact_email %>](mailto:<%= @contact_email %>) about your placement offers.
 
 You do not need to take any further action until providers contact you. After discussions with one or more providers you can then assign providers to your placements.
+<% end %>
 
 ## Your account
-[Sign in to Manage school placements](<%= @sign_in_url %>)
+[Sign in to <%= @service_name %>](<%= @sign_in_url %>)
 
 <%= @service_name %> service

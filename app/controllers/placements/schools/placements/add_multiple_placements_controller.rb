@@ -48,6 +48,7 @@ class Placements::Schools::Placements::AddMultiplePlacementsController < Placeme
       user: current_user,
       school: @school,
       placements: placements,
+      academic_year: current_user.selected_academic_year,
     )
   end
 end

@@ -11,8 +11,22 @@ class Placements::SchoolUserMailerPreview < ActionMailer::Preview
     Placements::SchoolUserMailer.partnership_created_notification(user, provider, school)
   end
 
-  def placement_information_added_notification
-    Placements::SchoolUserMailer.placement_information_added_notification(user, school, [placement])
+  def placement_information_added_notification_green_path
+    Placements::SchoolUserMailer.placement_information_added_notification(
+      user,
+      school_with_appetite("actively_looking"),
+      [placement],
+      academic_year,
+    )
+  end
+
+  def placement_information_added_notification_amber_path
+    Placements::SchoolUserMailer.placement_information_added_notification(
+      user,
+      school_with_appetite("interested"),
+      [placement],
+      academic_year,
+    )
   end
 
   def partnership_destroyed_notification
@@ -34,6 +48,33 @@ class Placements::SchoolUserMailerPreview < ActionMailer::Preview
     )
   end
 
+  def school_with_appetite(appetite)
+    school = Placements::School.new(
+      id: stubbed_id,
+      name: "Test School",
+    )
+
+    hosting_interest = hosting_interest(appetite)
+
+    school.define_singleton_method(:current_hosting_interest) do |*_args|
+      hosting_interest
+    end
+
+    school.define_singleton_method(:school_contact_email_address) do |*_args|
+      "test@sample.com"
+    end
+
+    school
+  end
+
+  def hosting_interest(appetite)
+    Placements::HostingInterest.new(
+      id: stubbed_id,
+      academic_year:,
+      appetite:,
+    )
+  end
+
   def school
     Placements::School.new(id: stubbed_id, name: "Test School")
   end
@@ -48,6 +89,10 @@ class Placements::SchoolUserMailerPreview < ActionMailer::Preview
 
   def subject
     Subject.new(id: stubbed_id, name: "English")
+  end
+
+  def academic_year
+    Placements::AcademicYear.current.next
   end
 
   def stubbed_id
