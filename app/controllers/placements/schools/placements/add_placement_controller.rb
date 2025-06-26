@@ -64,6 +64,7 @@ class Placements::Schools::Placements::AddPlacementController < Placements::Appl
       user: current_user,
       school: @school,
       placements: [placement],
+      academic_year: current_user.selected_academic_year,
     )
   end
 end

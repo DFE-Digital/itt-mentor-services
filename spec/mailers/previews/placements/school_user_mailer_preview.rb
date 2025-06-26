@@ -11,8 +11,12 @@ class Placements::SchoolUserMailerPreview < ActionMailer::Preview
     Placements::SchoolUserMailer.partnership_created_notification(user, provider, school)
   end
 
-  def placement_information_added_notification
-    Placements::SchoolUserMailer.placement_information_added_notification(user, school, [placement])
+  def placement_information_added_notification_green_path
+    Placements::SchoolUserMailer.placement_information_added_notification(user, school_with_appetite("actively_looking"), [placement])
+  end
+
+  def placement_information_added_notification_amber_path
+    Placements::SchoolUserMailer.placement_information_added_notification(user, school_with_appetite("interested"), [placement])
   end
 
   def partnership_destroyed_notification
@@ -31,6 +35,22 @@ class Placements::SchoolUserMailerPreview < ActionMailer::Preview
       first_name: "Joe",
       last_name: "Bloggs",
       email: "joe_bloggs@example.com",
+    )
+  end
+
+  def school_with_appetite(appetite)
+    Placements::School.new(
+      id: stubbed_id,
+      name: "Test School",
+      hosting_interests: [hosting_interest(appetite)],
+    )
+  end
+
+  def hosting_interest(appetite)
+    Placements::HostingInterest.new(
+      id: stubbed_id,
+      academic_year: current_academic_year.next,
+      appetite: appetite,
     )
   end
 
