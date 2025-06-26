@@ -146,7 +146,8 @@ RSpec.describe "All-through school user adds a placement", service: :placements,
   end
 
   def given_that_placements_exist
-    @user_anne = create(:placements_user, first_name: "Anne", last_name: "Wilson", email: "anne_wilson@education.gov.uk")
+    @next_academic_year = build(:placements_academic_year, :next)
+    @user_anne = build(:placements_user, first_name: "Anne", last_name: "Wilson", email: "anne_wilson@education.gov.uk")
     @school = create(
       :placements_school,
       with_school_contact: true,

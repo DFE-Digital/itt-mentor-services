@@ -160,7 +160,6 @@ RSpec.describe "School user completes the interested journey and declares primar
   end
 
   def then_i_see_the_whats_next_page
-    save_and_open_page
     expect(page).to have_panel(
       "Information added",
       "Providers can see that you may offer placements",

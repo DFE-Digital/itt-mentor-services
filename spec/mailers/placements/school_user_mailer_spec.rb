@@ -240,34 +240,70 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
 
   describe "#placement_information_added_notification" do
     subject(:placement_information_added_notification) do
-      described_class.placement_information_added_notification(user, school, placements)
+      described_class.placement_information_added_notification(user, school, placements, academic_year)
     end
 
-    let(:placements) { [create(:placement, school: school)] }
-    let(:school) { create(:placements_school, name: "School 1") }
-    let(:user) { create(:placements_user, schools: [school]) }
+    let(:english_subject) { build(:subject, name: "English") }
+    let(:placements) { [create(:placement, school: school, subject: english_subject)] }
+    let(:hosting_interest) { build(:hosting_interest, academic_year:, appetite: appetite) }
+    let(:school) { build(:placements_school, name: "School 1", hosting_interests: [hosting_interest]) }
+    let(:user) { create(:placements_user, first_name: "Anne", schools: [school]) }
+    let(:academic_year) { create(:placements_academic_year, :next) }
 
-    it "sends a notification email to the user of the school" do
-      expect(placement_information_added_notification.to).to contain_exactly(user.email)
-      expect(placement_information_added_notification.subject).to eq("You have added placement information to Manage school placements")
-      expect(placement_information_added_notification.body).to have_content <<~EMAIL
-        #{user.first_name},
+    context "when appetite is actively looking" do
+      let(:appetite) { "actively_looking" }
 
-        You added placements on the Manage school placements service
+      it "sends a notification email to the user of the school" do
+        expect(placement_information_added_notification.to).to contain_exactly(user.email)
+        expect(placement_information_added_notification.subject).to eq("You have added placement information to Manage school placements")
+        expect(placement_information_added_notification.body).to have_content <<~EMAIL
+          Anne,
 
-        - [#{placements.first.decorate.title}](http://placements.localhost/schools/#{school.id}/placements/#{placements.first.id}?utm_campaign=school&utm_medium=notification&utm_source=email)
+          You added placements on the Manage school placements service.
 
-        ## What happens next?
+          - [English](http://placements.localhost/schools/#{school.id}/placements/#{placements.first.id}?utm_campaign=school&utm_medium=notification&utm_source=email)
 
-        Providers will be able to email [#{school.school_contact_email_address}](mailto:#{school.school_contact_email_address}) about your placement offers.
+          ## What happens next?
 
-        You do not need to take any further action until providers contact you. After discussions with one or more providers you can then assign providers to your placements.
+          Providers will be able to email [placement_coordinator@example.school](mailto:placement_coordinator@example.school) about your placement offers.
 
-        ## Your account
-        [Sign in to Manage school placements](http://placements.localhost/sign-in?utm_campaign=school&utm_medium=notification&utm_source=email)
+          You do not need to take any further action until providers contact you. After discussions with one or more providers you can then assign providers to your placements.
 
-        Manage school placements service
-      EMAIL
+          ## Your account
+          [Sign in to Manage school placements](http://placements.localhost/sign-in?utm_campaign=school&utm_medium=notification&utm_source=email)
+
+          Manage school placements service
+        EMAIL
+      end
+    end
+
+    context "when appetite is interested" do
+      let(:appetite) { "interested" }
+
+      it "sends a notification email to the user of the school" do
+        expect(placement_information_added_notification.to).to contain_exactly(user.email)
+        expect(placement_information_added_notification.subject).to eq("You have added placement information to Manage school placements")
+        expect(placement_information_added_notification.body).to have_content <<~EMAIL
+          Anne,
+
+          You added placements on the Manage school placements service. Providers can see that your school may offer placements.
+
+          - [English](http://placements.localhost/schools/#{school.id}/placements/#{placements.first.id}?utm_campaign=school&utm_medium=notification&utm_source=email)
+
+          ## What happens next?
+
+          Providers will be able to email [placement_coordinator@example.school](mailto:placement_coordinator@example.school) about your placements your school may be able to offer.
+
+          You do not need to take any further action until providers contact you.
+
+          Once you are sure which placements your school can offer you can add individual placements with more detail. You can then assign providers to your placements.
+
+          ## Your account
+          [Sign in to Manage school placements](http://placements.localhost/sign-in?utm_campaign=school&utm_medium=notification&utm_source=email)
+
+          Manage school placements service
+        EMAIL
+      end
     end
   end
 end

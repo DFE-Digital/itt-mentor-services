@@ -2,10 +2,11 @@ module Placements
   module Placements
     module NotifySchool
       class CreatePlacements < ApplicationService
-        def initialize(user:, school:, placements:)
+        def initialize(user:, school:, placements:, academic_year:)
           @user = user
           @school = school
           @placements = placements
+          @academic_year = academic_year
         end
 
         def call
@@ -17,7 +18,7 @@ module Placements
         def notify_user
           ::Placements::SchoolUserMailer
             .placement_information_added_notification(
-              @user, @school, @placements
+              @user, @school, @placements, @academic_year
             ).deliver_later
         end
       end
