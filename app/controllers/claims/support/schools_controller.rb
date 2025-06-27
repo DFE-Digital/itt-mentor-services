@@ -8,6 +8,14 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
 
   def show; end
 
+  def search
+    limit = params[:limit].to_i.clamp(25, 100)
+    schools = Claims::School.where("name ILIKE ?", "%#{params[:q]}%") if params[:q].presence
+    schools ||= Claims::School
+
+    render json: schools.limit(limit).as_json(only: [:id, :name])
+  end
+
   def remove_grant_conditions_acceptance_check; end
 
   def remove_grant_conditions_acceptance

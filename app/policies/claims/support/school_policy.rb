@@ -11,6 +11,10 @@ class Claims::Support::SchoolPolicy < Claims::ApplicationPolicy
     remove_grant_conditions_acceptance_check?
   end
 
+  def search?
+    user.support_user?
+  end
+
   class Scope < ApplicationPolicy::Scope
     def resolve
       scope.all
