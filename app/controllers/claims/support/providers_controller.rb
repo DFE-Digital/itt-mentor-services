@@ -5,7 +5,7 @@ class Claims::Support::ProvidersController < Claims::Support::ApplicationControl
     providers = Claims::Provider.where("name ILIKE ?", "%#{params[:q]}%") if params[:q].presence
     providers ||= Claims::Provider
 
-    render json: providers.limit(limit).as_json(only: [:id, :name])
+    render json: providers.limit(limit).as_json(only: %i[id name])
   end
 
   def authorize_provider
