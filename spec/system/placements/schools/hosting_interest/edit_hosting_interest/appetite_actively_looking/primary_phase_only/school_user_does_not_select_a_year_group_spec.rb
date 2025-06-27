@@ -42,7 +42,7 @@ RSpec.describe "School user does not select a year group",
   end
 
   def and_a_school_exists_with_a_hosting_interest
-    @school = create(:placements_school)
+    @school = create(:placements_school, with_hosting_interest: false)
     @hosting_interest = create(
       :hosting_interest,
       school: @school,

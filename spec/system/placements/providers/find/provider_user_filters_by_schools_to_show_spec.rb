@@ -27,6 +27,7 @@ RSpec.describe "Provider user filters schools by schools I work with", service: 
     @school_with_completed_eoi = create(:placements_school, name: "Springfield Elementary")
     @school_without_eoi = create(
       :placements_school,
+      with_hosting_interest: false,
       expression_of_interest_completed: false,
       name: "Hogwarts Elementary",
     )
@@ -35,7 +36,6 @@ RSpec.describe "Provider user filters schools by schools I work with", service: 
       name: "Brixton Academy",
       expression_of_interest_completed: false,
     )
-    create(:hosting_interest, school: @school_with_hosting_interest)
   end
 
   def and_i_am_signed_in

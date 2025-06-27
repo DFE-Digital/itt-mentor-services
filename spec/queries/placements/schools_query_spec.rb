@@ -8,6 +8,7 @@ describe Placements::SchoolsQuery do
   let(:query_school) do
     create(
       :placements_school,
+      with_hosting_interest: false,
       name: "London Primary School",
       phase: "All-through",
       minimum_age: "4",
@@ -23,7 +24,7 @@ describe Placements::SchoolsQuery do
     )
   end
   let(:non_query_school) do
-    create(:placements_school, name: "York Secondary School", latitude: 29.732613, longitude: 105.448063)
+    create(:placements_school, with_hosting_interest: false, name: "York Secondary School", latitude: 29.732613, longitude: 105.448063)
   end
   let(:academic_year) { Placements::AcademicYear.current }
   let(:placement) { create(:placement, school: query_school, academic_year:, year_group:) }
