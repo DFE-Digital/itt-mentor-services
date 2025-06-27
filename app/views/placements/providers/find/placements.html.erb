@@ -4,7 +4,7 @@
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <%= render "placements/providers/find/details_navigation", school: @school, academic_year: @selected_academic_year, provider: @provider, unfilled_subjects: @unfilled_subjects, filled_subjects: @filled_subjects %>
+      <%= render "placements/providers/find/details_navigation", school: @school, academic_year: @selected_academic_year, provider: @provider, unfilled_placements: @unfilled_placements, filled_placements: @filled_placements %>
 
       <% if @interested_in_hosting && @school.potential_placement_details.present? %>
         <%= govuk_summary_list(html_attributes: { id: "education_phase" }, actions: false) do |summary_list| %>
@@ -51,7 +51,6 @@
               <% end %>
             <% end %>
           <% end %>
-
         <% end %>
 
         <% if @school.potential_placement_details["secondary_placement_quantity"].present? %>
@@ -81,13 +80,43 @@
               <% end %>
             <% end %>
           <% end %>
-          <h2 class="govuk-heading-m"><%= t(".additional_information") %></h2>
+        <% end %>
 
-          <%= govuk_summary_list(html_attributes: { id: "message_to_providers" }, actions: false) do |summary_list| %>
+        <% if @school.potential_placement_details["key_stage_placement_quantity"].present? %>
+          <h2 class="govuk-heading-m">
+            <%= t(".potential_send_placements") %>
+          </h2>
+
+          <%= govuk_summary_list(html_attributes: { id: "send_placements" }, actions: false) do |summary_list| %>
             <% summary_list.with_row do |row| %>
-              <% row.with_key(text: t(".message_to_providers")) %>
-              <% row.with_value(text: @school.potential_placement_details.dig("note_to_providers", "note")) %>
+              <% row.with_key(text: t(".key_stage")) %>
+              <% row.with_value do %>
+                <strong><%= t(".number_of_placements") %></strong>
+              <% end %>
             <% end %>
+
+            <% @school.potential_placement_details["key_stage_placement_quantity"].each do |key_stage, quantity| %>
+              <% if key_stage == "unknown" %>
+                <% summary_list.with_row do |row| %>
+                  <% row.with_key(text: t(".unknown")) %>
+                  <% row.with_value(text: t(".not_entered")) %>
+                <% end %>
+              <% else %>
+                <% summary_list.with_row do |row| %>
+                  <% row.with_key(text: key_stage.titleize) %>
+                  <% row.with_value(text: quantity.zero? ? t(".not_entered") : quantity) %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+
+        <h2 class="govuk-heading-m"><%= t(".additional_information") %></h2>
+
+        <%= govuk_summary_list(html_attributes: { id: "message_to_providers" }, actions: false) do |summary_list| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".message_to_providers")) %>
+            <% row.with_value(text: @school.potential_placement_details.dig("note_to_providers", "note")) %>
           <% end %>
         <% end %>
       <% else %>

@@ -46,3 +46,6 @@ en:
           not_open_to_hosting: Not open to hosting placements
           placement_status: Previous placements
           offered_placements: Offered placements in %{academic_year_name} (%{subjects})
+          send_placements: SEND placements
+          "yes": "Yes"
+          "no": "No"
