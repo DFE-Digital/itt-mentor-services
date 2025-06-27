@@ -25,7 +25,7 @@ class Claims::Claim::FilterFormComponent < ApplicationComponent
     ids = Array(filter_form.public_send("#{klass.name.demodulize.underscore}_ids"))
     scope = klass.limit(25)
 
-    if ids.present? && ids.count < 25
+    if ids.present?
       extra_ids = klass.where.not(id: ids).limit(25 - ids.count).ids
       scope = klass.where(id: ids + extra_ids)
     end
