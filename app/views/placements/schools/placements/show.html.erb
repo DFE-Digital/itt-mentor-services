@@ -12,6 +12,16 @@
       <h1 class="govuk-heading-l govuk-!-margin-bottom-2">
         <%= @placement.title %>
       </h1>
+      <% if @placement.provider %>
+        <p class="govuk-body govuk-!-margin-top-6"><%= t(".your_placement_is_assigned_to_a_provider", contact_email: @school.school_contact_email_address) %></p>
+        <% unless @placement.mentors.any? %>
+          <p class="govuk-body"><%= t(".assign_a_mentor") %></p>
+        <% end %>
+      <% else %>
+        <p class="govuk-body govuk-!-margin-top-6"><%= t(".providers_can_see_your_placements", contact_email: @school.school_contact_email_address) %></p>
+
+        <p class="govuk-body"><%= t(".assign_a_provider") %></p>
+      <% end %>
 
       <%= render "placements/schools/placements/details", school: @school, placement: @placement %>
 

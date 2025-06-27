@@ -11,6 +11,10 @@ class Placements::SchoolUserMailerPreview < ActionMailer::Preview
     Placements::SchoolUserMailer.partnership_created_notification(user, provider, school)
   end
 
+  def placement_information_added_notification
+    Placements::SchoolUserMailer.placement_information_added_notification(user, school, [placement])
+  end
+
   def partnership_destroyed_notification
     Placements::SchoolUserMailer.partnership_destroyed_notification(user, provider, school)
   end

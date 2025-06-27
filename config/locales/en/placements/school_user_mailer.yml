@@ -11,3 +11,5 @@ en:
         subject: A provider has removed you
       placement_provider_removed_notification:
         subject: You have removed a provider from a placement
+      placement_information_added_notification:
+        subject: You have added placement information to Manage school placements
