@@ -59,6 +59,7 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
       it "displays placement information", :aggregate_failures do
         expect(page).to have_content("Placement information")
         expect(page).to have_content("Unfilled placements")
+        expect(page).to have_content("SEND placements")
         expect(page).to have_link("Approximate information available", href: "/providers/#{provider.id}/find/#{school.id}/placements")
         expect(page).to have_content("Last offered")
         expect(page).to have_content("This school has not previously hosted placements")
@@ -113,6 +114,7 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
       it "displays placement information", :aggregate_failures do
         expect(page).to have_content("Placement information")
         expect(page).to have_content("Unfilled placements")
+        expect(page).to have_content("SEND placements")
         expect(page).to have_link("1 unfilled placement", href: "/providers/#{provider.id}/find/#{school.id}/placements")
         expect(page).to have_content("Last offered")
         expect(page).to have_content("This school has not previously hosted placements")
@@ -174,6 +176,7 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
       it "displays placement information", :aggregate_failures do
         expect(page).to have_content("Placement information")
         expect(page).to have_content("Unfilled placements")
+        expect(page).to have_content("SEND placements")
         expect(page).to have_link("1 unfilled placement", href: "/providers/#{provider.id}/find/#{school.id}/placements")
         expect(page).to have_content("Hosting subjects")
         expect(page).to have_content("1 filled placement")
@@ -236,6 +239,7 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
 
       it "displays placement information", :aggregate_failures do
         expect(page).to have_content("Placement information")
+        expect(page).to have_content("SEND placements")
         expect(page).to have_content("Hosting subjects")
         expect(page).to have_content("1 filled placement")
         expect(page).to have_content("Last offered")

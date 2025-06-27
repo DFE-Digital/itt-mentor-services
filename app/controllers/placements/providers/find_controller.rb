@@ -33,8 +33,6 @@ class Placements::Providers::FindController < Placements::ApplicationController
   def load_placements_and_subjects
     @filled_placements = filled_placements(school).decorate
     @unfilled_placements = unfilled_placements(school).decorate
-    @filled_subjects = subjects_for_placements(@filled_placements)
-    @unfilled_subjects = subjects_for_placements(@unfilled_placements)
   end
 
   def calculate_travel_time
@@ -59,6 +57,7 @@ class Placements::Providers::FindController < Placements::ApplicationController
   def unfilled_placements(school)
     school.placements
           .where(academic_year_id: selected_academic_year.id, provider_id: nil)
+          .order_by_subject_school_name
           .distinct
   end
 
@@ -66,6 +65,7 @@ class Placements::Providers::FindController < Placements::ApplicationController
     school.placements
           .where(academic_year_id: selected_academic_year.id)
           .where.not(provider_id: nil)
+          .order_by_subject_school_name
           .distinct
   end
 

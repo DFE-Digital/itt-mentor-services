@@ -65,6 +65,20 @@
           </dd>
         </div>
       <% end %>
+      <% if open_to_hosting? || interested_in_hosting? %>
+        <div class="app-result-detail__row">
+          <dt class="app-result-detail__key">
+            <%= t(".send_placements") %>
+          </dt>
+          <dd class="app-result-detail__value">
+            <% if offering_send? %>
+              <%= t(".yes") %>
+            <% else %>
+              <%= t(".no") %>
+            <% end %>
+          </dd>
+        </div>
+      <% end %>
       <div class="app-result-detail__row">
         <dt class="app-result-detail__key">
           <%= t(".last_offered") %>

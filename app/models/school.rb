@@ -170,4 +170,14 @@ class School < ApplicationRecord
   def unavailable_placements(academic_year:)
     placements.unavailable_placements_for_academic_year(academic_year)
   end
+
+  def send_placements(academic_year:)
+    placements.send_placements_for_academic_year(academic_year)
+  end
+
+  def potential_send_placements?
+    return false if potential_placement_details.blank?
+
+    potential_placement_details.dig("phase", "phases").include?("SEND")
+  end
 end

@@ -66,6 +66,8 @@ en:
           not_entered: Not entered
           potential_secondary_placements: Potential secondary school placements
           subject: Subject
+          potential_send_placements: Potential SEND placements
+          key_stage: Key stage
           additional_information: Additional information
           message_to_providers: Message to providers
           page_title: "%{school_name} - Find"
