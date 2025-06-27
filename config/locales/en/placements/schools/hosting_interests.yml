@@ -28,6 +28,7 @@ en:
               what_happens_next: What happens next
               providers_can_contact_you:
                 Providers who are looking for schools to work with can contact you on %{mailto}.
+              you_do_not_need_to_take_any_further_action: You do not need to take any further action until providers contact you.
               once_you_know_which_placements:
                 Once you are sure which placements your school can offer, %{link}. Doing so will mean you will be able to assign providers to them.
               add_placements: add your placements

@@ -111,6 +111,11 @@ RSpec.describe "School user bulk adds placements for primary and secondary phase
   def and_i_am_signed_in
     @user_anne = create(:placements_user, first_name: "Anne", last_name: "Wilson", email: "anne_wilson@education.gov.uk")
     @school = create(:placements_school, users: [@user_anne])
+    @hosting_interest = create(
+      :hosting_interest,
+      school: @school,
+      academic_year: @next_academic_year,
+    )
     sign_in_as(@user_anne)
   end
 
