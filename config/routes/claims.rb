@@ -214,7 +214,17 @@ scope module: :claims, as: :claims, constraints: {
       end
     end
 
+    resources :providers, only: [] do
+      collection do
+        get :search
+      end
+    end
+
     resources :schools, only: %i[index show] do
+      collection do
+        get :search
+      end
+
       member do
         put :remove_grant_conditions_acceptance, path: "remove-grant-conditions-acceptance"
         get :remove_grant_conditions_acceptance_check, path: "remove-grant-conditions-acceptance"

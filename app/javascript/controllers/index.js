@@ -10,5 +10,8 @@ application.register("autocomplete", AutocompleteController)
 import FilterSearchController from "./filter_search_controller"
 application.register("filter-search", FilterSearchController)
 
+import AsyncFilterSearchController from "./async_filter_search_controller"
+application.register("async-filter-search", AsyncFilterSearchController)
+
 import FilterController from "./filter_controller"
 application.register("filter", FilterController)
