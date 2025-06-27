@@ -407,6 +407,7 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
     expect(page).to have_element(:label, text: "Select a provider", class: "govuk-label--l")
+    expect(page).to have_hint("Ensure you have agreed with the provider that their trainee will undertake this placement at your school")
     expect(page).to have_button("Continue")
     expect(page).to have_link("Cancel", href: "/schools/#{@springfield_elementary_school.id}/placements/#{@placement.id}")
   end
