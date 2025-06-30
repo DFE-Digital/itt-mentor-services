@@ -4,6 +4,11 @@ class Placements::ApplicationController < ApplicationController
   after_action :verify_policy_scoped, if: ->(c) { c.action_name == "index" }
   before_action :authorize_support_user!
 
+  # DFE Analytics namespace
+  def current_namespace
+    "placements"
+  end
+
   private
 
   def set_school
@@ -25,10 +30,5 @@ class Placements::ApplicationController < ApplicationController
   def restricted_placements_controller?
     # All users should be able to access routes to the PagesController
     !instance_of?(::Placements::PagesController)
-  end
-
-  # DFE Analytics namespace
-  def current_namespace
-    "placements"
   end
 end
