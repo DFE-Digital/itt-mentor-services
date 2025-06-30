@@ -1,6 +1,6 @@
 class Claims::ClaimsQuery < ApplicationQuery
   def call
-    scope = Claims::Claim.not_draft_status
+    scope = Claims::Claim.not_draft_status.includes(:claim_window, :provider, :academic_year, :mentor_trainings, school: :region)
     scope = search_condition(scope)
     scope = school_condition(scope)
     scope = provider_condition(scope)
