@@ -1,7 +1,7 @@
 class Placements::Providers::FindController < Placements::ApplicationController
   before_action :set_provider
   before_action :selected_academic_year
-  before_action :load_placements_and_subjects, only: %i[placements placement_information school_details]
+  before_action :load_placements_and_subjects, only: %i[placements placement_contact school_details]
   before_action :store_filter_params, only: %i[index]
   helper_method :filter_form, :location_coordinates
 
@@ -18,11 +18,11 @@ class Placements::Providers::FindController < Placements::ApplicationController
     @interested_in_hosting = school.current_hosting_interest(academic_year: selected_academic_year).interested?
   end
 
-  def placement_information
+  def placement_contact; end
+
+  def school_details
     @placements_last_offered = placements_last_offered
   end
-
-  def school_details; end
 
   private
 
