@@ -3,6 +3,11 @@ class Claims::ApplicationController < ApplicationController
 
   after_action :verify_authorized
 
+  # DFE Analytics namespace
+  def current_namespace
+    "claims"
+  end
+
   private
 
   def has_school_accepted_grant_conditions?

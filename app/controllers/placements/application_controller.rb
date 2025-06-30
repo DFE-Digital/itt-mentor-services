@@ -26,4 +26,9 @@ class Placements::ApplicationController < ApplicationController
     # All users should be able to access routes to the PagesController
     !instance_of?(::Placements::PagesController)
   end
+
+  # DFE Analytics namespace
+  def current_namespace
+    "placements"
+  end
 end
