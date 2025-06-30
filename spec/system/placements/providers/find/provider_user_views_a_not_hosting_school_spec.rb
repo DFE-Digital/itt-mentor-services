@@ -50,6 +50,6 @@ RSpec.describe "Provider user views a not hosting school", service: :placements,
 
   def and_i_cannot_see_a_link_to_view_the_not_hosting_school_details
     expect(page).not_to have_link("Shelbyville High School", href: placements_placements_provider_find_path(@provider, @not_hosting_school))
-    expect(page).not_to have_link("Shelbyville High School", href: placement_information_placements_provider_find_path(@provider, @not_hosting_school))
+    expect(page).not_to have_link("Shelbyville High School", href: placement_contact_placements_provider_find_path(@provider, @not_hosting_school))
   end
 end

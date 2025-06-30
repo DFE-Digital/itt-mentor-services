@@ -182,7 +182,7 @@ scope module: :placements,
       resources :find, only: %i[index] do
         member do
           get "placements", to: "find#placements"
-          get "placement_information", to: "find#placement_information"
+          get "placement_contact", to: "find#placement_contact"
           get "school_details", to: "find#school_details"
         end
       end

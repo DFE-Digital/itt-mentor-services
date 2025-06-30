@@ -12,8 +12,8 @@ RSpec.describe "Provider user views a school with previous, filled and unfilled 
     when_i_click_on_the_unfilled_placements_school_name
     then_i_can_see_the_placements_school_detail_page
 
-    when_i_navigate_to_the_placement_information_page
-    then_i_see_the_placement_information_page
+    when_i_navigate_to_the_placement_contact_page
+    then_i_see_the_placement_contact_page
 
     when_i_navigate_to_the_school_details_page
     then_i_see_the_school_details_page
@@ -90,7 +90,7 @@ RSpec.describe "Provider user views a school with previous, filled and unfilled 
     expect(page).to have_h1("Shelbyville High School")
     expect(page).to have_tag("Placements available", "green")
     expect(secondary_navigation).to have_current_item("Placements")
-    expect(page).to have_element(:p, text: "This school has specified which placements they would like to host in the #{@academic_year.name} academic year.", class: "govuk-body")
+    expect(page).to have_element(:p, text: "This school has specified which placements they can offer in the #{@academic_year.name} academic year.", class: "govuk-body")
     expect(page).to have_h2("1 unfilled placement")
     expect(page).to have_table_row({
       "Subject" => "Primary (Year 1)",
@@ -107,22 +107,20 @@ RSpec.describe "Provider user views a school with previous, filled and unfilled 
     expect(page).not_to have_h2("filled placements")
   end
 
-  def when_i_navigate_to_the_placement_information_page
-    click_on "Placement information"
+  def when_i_navigate_to_the_placement_contact_page
+    click_on "Contact"
   end
 
-  def then_i_see_the_placement_information_page
+  def then_i_see_the_placement_contact_page
     expect(page).to have_title("Shelbyville High School - Find - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Find")
     expect(page).to have_h1("Shelbyville High School")
     expect(page).to have_tag("Placements available", "green")
-    expect(secondary_navigation).to have_current_item("Placement information")
+    expect(page).to have_paragraph("Email this school if you have suitable trainees.")
+    expect(secondary_navigation).to have_current_item("Contact")
     expect(page).to have_h2("Placement contact")
     expect(page).to have_summary_list_row("Name", "Placement Coordinator")
     expect(page).to have_summary_list_row("Email", "placement_coordinator@example.school")
-    expect(page).to have_h2("Placements hosted in previous years")
-    expect(page).to have_summary_list_row(@previous_academic_year.name, "Offered placements in:")
-    expect(page).to have_summary_list_row(@previous_academic_year.name, "Primary (Year 3)")
   end
 
   def when_i_navigate_to_the_school_details_page
@@ -142,8 +140,10 @@ RSpec.describe "Provider user views a school with previous, filled and unfilled 
     expect(page).to have_summary_list_row("UK provider reference number (UKPRN)", "12345678")
     expect(page).to have_summary_list_row("Unique reference number (URN)", "123456")
 
+    expect(page).to have_h2("Previously offered placements")
+    expect(page).to have_summary_list_row(@previous_academic_year.name, "Primary (Year 3)")
+
     expect(page).to have_h2("General contact details")
-    expect(page).to have_summary_list_row("Telephone number", "01234567890")
     expect(page).to have_summary_list_row("Website", "www.shelbyville.sch.uk (opens in new tab)")
     expect(page).to have_link("www.shelbyville.sch.uk (opens in new tab)", href: "http://www.shelbyville.sch.uk", target: "_blank")
     expect(page).to have_summary_list_row("Address", "123 Main St Shelbyville 12345")

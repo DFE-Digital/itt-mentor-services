@@ -75,7 +75,7 @@ en:
           additional_information: Additional information
           message_to_providers: Message to providers
           page_title: "%{school_name} - Find"
-          description: This school has specified which placements they would like to host in the %{academic_year_name} academic year.
+          description: This school has specified which placements they can offer in the %{academic_year_name} academic year.
           unfilled_placements:
             one: "%{count} unfilled placement"
             other: "%{count} unfilled placements"
@@ -88,27 +88,26 @@ en:
               expected_date: Expected date
         details_navigation:
           page_title: "%{school_name} - Find"
+          email_this_school: Email this school if you have suitable trainees.
           placements: Placements
-          placement_information: Placement information
+          placement_contact: Contact
           school_details: School details
-        placement_information:
+        placement_contact:
           page_title: "%{school_name} - Find"
           placements: Placements
-          placement_information: Placement information
           school_details: School details
           placement_contact: Placement contact
           name: Name
           email: Email
           mentors: Mentors
           trained_mentors: Trained mentors
-          placements_hosted_in_previous_years: Placements hosted in previous years
-          offered_placements_in: "Offered placements in:"
-          unknown: This school has not previously offered placements
         school_details:
           page_title: "%{school_name} - Find"
           placements: Placements
           placement_information: Placement information
           school_details: School details
+          placements_hosted_in_previous_years: Previously offered placements
+          unknown_previous_placements: This school has not previously offered placements
           phase: Phase
           age_range: Age range
           ukprn: UK provider reference number (UKPRN)

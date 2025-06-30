@@ -20,30 +20,6 @@
           <% row.with_value(text: @school.school_contact_email_address) %>
         <% end %>
       <% end %>
-
-      <h2 class="govuk-heading-m">
-        <%= t(".placements_hosted_in_previous_years") %>
-      </h2>
-
-      <% if @placements_last_offered.any? %>
-        <%= govuk_summary_list(actions: false) do |summary_list| %>
-          <% @placements_last_offered.each do |academic_year, placements| %>
-            <% summary_list.with_row do |row| %>
-              <% row.with_key(text: academic_year.name) %>
-              <% row.with_value do %>
-                  <p class="govuk-body"><%= t(".offered_placements_in") %></p>
-                  <ul class="govuk-list">
-                    <% placements.each do |placement| %>
-                      <li><%= placement.title %></li>
-                    <% end %>
-                  </ul>
-              <% end %>
-            <% end %>
-          <% end %>
-        <% end %>
-      <% else %>
-        <p class="govuk-body"><%= t(".unknown") %></p>
-      <% end %>
     </div>
   </div>
 </div>

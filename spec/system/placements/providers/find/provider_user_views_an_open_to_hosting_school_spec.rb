@@ -10,7 +10,7 @@ RSpec.describe "Provider user views a school which is open to hosting", service:
     and_i_see_all_schools
 
     when_i_click_on_the_open_to_hosting_school_name
-    then_i_see_the_placement_information_page
+    then_i_see_the_placements_page
 
     when_i_navigate_to_the_school_details_page
     then_i_see_the_school_details_page
@@ -80,11 +80,12 @@ RSpec.describe "Provider user views a school which is open to hosting", service:
     click_on "Shelbyville High School"
   end
 
-  def then_i_see_the_placement_information_page
+  def then_i_see_the_placements_page
     expect(page).to have_title("Shelbyville High School - Find - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Find")
     expect(page).to have_h1("Shelbyville High School")
     expect(page).to have_tag("May offer placements", "yellow")
+    expect(page).to have_paragraph("Email this school if you have suitable trainees.")
     expect(secondary_navigation).to have_current_item("Placements")
     expect(page).to have_summary_list_row("Phase", "Primary Secondary")
     expect(page).to have_h2("Potential primary school placements")
