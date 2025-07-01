@@ -15,3 +15,6 @@ application.register("async-filter-search", AsyncFilterSearchController)
 
 import FilterController from "./filter_controller"
 application.register("filter", FilterController)
+
+import MapController from "./map_controller"
+application.register("map", MapController)

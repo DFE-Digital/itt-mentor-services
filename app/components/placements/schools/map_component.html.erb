@@ -1,0 +1,8 @@
+<div id="map"
+  data-controller="map"
+  data-map-latitude-value="<%= school.latitude %>"
+  data-map-longitude-value="<%= school.longitude %>"
+  data-map-key-value="<%= ENV.fetch("GOOGLE_MAPS_API_KEY", "") %>"
+  data-map-marker-title-value="<%= school.name %>"
+  data-map-map-id-value="<%= school.urn %>">
+</div>
