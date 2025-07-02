@@ -3,13 +3,15 @@ import { Controller } from "@hotwired/stimulus";
 // Connects to data-controller="map"
 export default class extends Controller {
   static values = { 
-    key: String, latitude: Number, longitude: Number, markerTitle: String, mapId: String, 
+    key: String, mapId: String, baseLongitude: Number, baseLatitude: Number,
   }
+
+  static targets = ["schools", "map"]
 
   connect() {
     this.activateAPI();
     this.generateMap();
-    this.element.classList.add("active-map");
+    this.mapTarget.classList.add("active-map");
   }
 
   activateAPI() {
@@ -24,18 +26,30 @@ export default class extends Controller {
   async generateMap(){
     const { Map } = await google.maps.importLibrary("maps");
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-    const position = {lat: this.latitudeValue, lng: this.longitudeValue};
+    const position = {lat: this.baseLatitudeValue, lng: this.baseLongitudeValue};
+    const mapDiv = this.mapTarget;
+    let zoom = 15;
 
-    const map = new Map(this.element, {
-      zoom: 15,
+    if (this.schoolsTargets.length > 1){
+      zoom = 10;
+    }
+
+    const map = new Map(mapDiv, {
+      zoom: zoom,
       center: position,
       mapId: this.mapIdValue,
     });
 
-    const marker = new AdvancedMarkerElement({
-      map: map,
-      position: position,
-      title: this.markerTitleValue,
+    Array.from(this.schoolsTargets).forEach(function (school) {
+      const markerPosition = {
+        lat: Number(school.dataset.markerLatitude), 
+        lng: Number(school.dataset.markerLongitude)
+      }
+      new AdvancedMarkerElement({
+        map: map,
+        position: markerPosition,
+        title: school.dataset.markerTitle,
+      });
     });
   }
 }

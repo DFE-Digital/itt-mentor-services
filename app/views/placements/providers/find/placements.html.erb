@@ -175,7 +175,11 @@
         <% end %>
       <% end %>
 
-      <%= render Placements::Schools::MapComponent.new(school: @school) %>
+      <%= render Placements::Schools::MapComponent.new(
+        schools: [@school],
+        base_latitude: @school.latitude,
+        base_longitude: @school.longitude,
+      ) %>
     </div>
   </div>
 </div>

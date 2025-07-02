@@ -1,8 +1,15 @@
-<div id="map"
+<div id="map-component"
   data-controller="map"
-  data-map-latitude-value="<%= school.latitude %>"
-  data-map-longitude-value="<%= school.longitude %>"
   data-map-key-value="<%= ENV.fetch("GOOGLE_MAPS_API_KEY", "") %>"
-  data-map-marker-title-value="<%= school.name %>"
-  data-map-map-id-value="<%= school.urn %>">
+  data-map-base-latitude-value="<%= base_latitude %>"
+  data-map-base-longitude-value="<%= base_longitude %>"
+  data-map-map-id-value="<%= map_id %>">
+  <% schools.each do |school| %>
+    <div data-map-target="schools"
+      data-marker-latitude="<%= school.latitude %>"
+      data-marker-longitude="<%= school.longitude %>"
+      data-marker-title="<%= school.name %>">
+    </div>
+  <% end %>
+  <div id="map" data-map-target="map"></div>
 </div>

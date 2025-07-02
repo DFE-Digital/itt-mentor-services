@@ -124,6 +124,6 @@ class Placements::Providers::FindController < Placements::ApplicationController
   end
 
   def store_filter_params
-    session["find_filter_params"] = { filters: filter_params }
+    session["find_filter_params"] = { filters: filter_params, page: params[:page] }
   end
 end
