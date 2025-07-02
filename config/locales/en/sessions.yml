@@ -2,7 +2,12 @@ en:
   sessions:
     new:
       heading: Sign in to %{service_name}
-      description: Use DfE Sign-in to access your account.
+      pilot_service: This is a pilot service for schools and teacher training providers in Leeds and Essex.
+      access_your_account: Access your account using DfE Sign-In.
       sign_in_with_dsi: Sign in using DfE Sign In
       sign_in_with_persona: Sign in using a Persona
+      if_you_do_not_have_an_account: If you do not have an account
+      colleagues_can_add: Colleagues in your organisation can add you if they have an account.
+      if_your_organisation: If your organisation has not been set up to use this service, email %{support_email}.
+      sign_in_may_be_different: DfE Sign-In may be different from sign-in for other services.
       disclaimer: If you do not have a DfE Sign-in account but need access to %{service_name}, email %{support_email}.
