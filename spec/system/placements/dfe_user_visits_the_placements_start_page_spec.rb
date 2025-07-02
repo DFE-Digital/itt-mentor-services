@@ -9,7 +9,10 @@ RSpec.describe "DfE user visits the placements start page", service: :placements
     and_i_see_the_start_now_button
 
     when_i_click_on_start_now
-    then_i_can_see_the_dfe_sign_in_button
+    then_i_can_see_the_dfe_sign_in_page
+
+    when_i_click_on_if_you_do_not_have_an_account
+    then_i_see_the_details_text
   end
 
   private
@@ -52,7 +55,20 @@ RSpec.describe "DfE user visits the placements start page", service: :placements
     click_on "Start now"
   end
 
-  def then_i_can_see_the_dfe_sign_in_button
+  def then_i_can_see_the_dfe_sign_in_page
+    expect(page).to have_paragraph("This is a pilot service for schools and teacher training providers in Leeds and Essex.")
+    expect(page).to have_paragraph("Access your account using DfE Sign-In.")
+    expect(page).to have_element(:span, class: "govuk-details__summary-text", text: "If you do not have an account")
     expect(page).to have_button("Sign in using DfE Sign In")
+  end
+
+  def when_i_click_on_if_you_do_not_have_an_account
+    find("span.govuk-details__summary-text", text: "If you do not have an account").click
+  end
+
+  def then_i_see_the_details_text
+    expect(page).to have_paragraph("Colleagues in your organisation can add you if they have an account.")
+    expect(page).to have_paragraph("If your organisation has not been set up to use this service, email Manage.SchoolPlacements@education.gov.uk.")
+    expect(page).to have_paragraph("DfE Sign-In may be different from sign-in for other services.")
   end
 end
