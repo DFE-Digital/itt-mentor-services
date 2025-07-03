@@ -32,6 +32,9 @@ en:
           remove_mentor:
             page_title: Are you sure you want to remove this mentor? - %{user_name} - %{school_name}
             are_you_sure: Are you sure you want to remove this mentor?
+            no_longer_appear_html:
+              "%{mentor_name} will be removed as a mentor from your school.<br>
+              %{mentor_name} will still be assigned to any claims that have been submitted."
             cancel: Cancel
             remove_mentor: Remove mentor
           cannot_remove_mentor:
