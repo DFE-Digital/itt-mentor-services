@@ -73,6 +73,10 @@ RSpec.describe "Claims school user removes a mentor from a school", service: :cl
     expect(page).to have_title("Are you sure you want to remove this mentor? - James Jameson - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Mentors")
     expect(page).to have_h1("Are you sure you want to remove this mentor?")
+    expect(page).to have_warning_text(
+      "James Jameson will be removed as a mentor from your school. " \
+      "James Jameson will still be assigned to any claims that have been submitted.",
+    )
     expect(page).to have_span_caption("James Jameson")
     expect(page).to have_button("Remove mentor")
     expect(page).to have_link("Cancel")

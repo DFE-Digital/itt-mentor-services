@@ -17,6 +17,8 @@ class Mentor < ApplicationRecord
   has_many :mentor_memberships
   has_many :schools, through: :mentor_memberships
 
+  has_many :mentor_trainings, class_name: "Claims::MentorTraining"
+
   has_many :placement_mentor_joins, dependent: :restrict_with_error
   has_many :placements, through: :placement_mentor_joins
 

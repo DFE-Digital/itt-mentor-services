@@ -158,7 +158,7 @@ RSpec.describe Claims::EditClaimWizard do
       end
 
       it "returns the mentors assigned to the claim" do
-        expect(selected_mentors).to contain_exactly(mentor_1)
+        expect(selected_mentors).to contain_exactly(mentor_1.becomes(Mentor))
       end
     end
 
@@ -222,7 +222,7 @@ RSpec.describe Claims::EditClaimWizard do
     end
 
     context "when the mentors and training hours are changed" do
-      let(:another_mentor) { create(:claims_mentor, schools: [school], first_name: "Bob", last_name: "Bletcher") }
+      let(:another_mentor) { create(:claims_mentor, schools: [school], first_name: "Bob", last_name: "Bletcher").becomes(Mentor) }
       let(:state) do
         {
           "provider" => { "id" => provider.id },
@@ -235,7 +235,7 @@ RSpec.describe Claims::EditClaimWizard do
       it "updates the claim with the selected mentors and training hours" do
         update_claim
         claim.reload
-        expect(claim.mentors).to contain_exactly(mentor_1, another_mentor)
+        expect(claim.mentors).to contain_exactly(mentor_1.becomes(Mentor), another_mentor)
 
         mentor_1_training = claim.mentor_trainings.find_by(mentor_id: mentor_1)
         expect(mentor_1_training.hours_completed).to eq(12)
