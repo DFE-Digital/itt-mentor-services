@@ -30,6 +30,10 @@ RSpec.describe "Remove a mentor from a school", service: :claims, type: :system 
 
   def when_i_confirm_removal
     expect(page).to have_content("Are you sure you want to remove this mentor?")
+    expect(page).to have_warning_text(
+      "Bilbo Baggins will be removed as a mentor from your school. " \
+      "Bilbo Baggins will still be assigned to any claims that have been submitted.",
+    )
     click_on "Remove mentor"
     expect(page).to have_content("Mentor removed")
   end
