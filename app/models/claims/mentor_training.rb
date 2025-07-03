@@ -32,7 +32,7 @@
 #
 class Claims::MentorTraining < ApplicationRecord
   belongs_to :claim
-  belongs_to :mentor
+  belongs_to :mentor, class_name: "::Mentor"
   belongs_to :provider
 
   audited associated_with: :claim

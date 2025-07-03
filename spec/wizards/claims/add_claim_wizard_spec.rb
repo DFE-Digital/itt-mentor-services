@@ -128,8 +128,8 @@ RSpec.describe Claims::AddClaimWizard do
   end
 
   describe "#claim" do
-    let(:mentor_1) { create(:claims_mentor, schools: [school]) }
-    let(:mentor_2) { create(:claims_mentor, schools: [school]) }
+    let(:mentor_1) { create(:claims_mentor, schools: [school]).becomes(Mentor) }
+    let(:mentor_2) { create(:claims_mentor, schools: [school]).becomes(Mentor) }
     let(:state) do
       {
         "provider" => { "id" => provider.id },
@@ -163,8 +163,8 @@ RSpec.describe Claims::AddClaimWizard do
   describe "#create_claim" do
     subject(:create_claim) { wizard.create_claim }
 
-    let(:mentor_1) { create(:claims_mentor, schools: [school], first_name: "Alan", last_name: "Anderson") }
-    let(:mentor_2) { create(:claims_mentor, schools: [school], first_name: "Bob", last_name: "Bletcher") }
+    let(:mentor_1) { create(:claims_mentor, schools: [school], first_name: "Alan", last_name: "Anderson").becomes(Mentor) }
+    let(:mentor_2) { create(:claims_mentor, schools: [school], first_name: "Bob", last_name: "Bletcher").becomes(Mentor) }
 
     let(:state) do
       {
