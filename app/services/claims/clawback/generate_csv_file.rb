@@ -6,6 +6,7 @@ class Claims::Clawback::GenerateCSVFile < ApplicationService
     school_urn
     school_name
     school_local_authority
+    provider_name
     claim_amount
     clawback_amount
     school_type_of_establishment
@@ -28,6 +29,7 @@ class Claims::Clawback::GenerateCSVFile < ApplicationService
           claim.school.urn,
           claim.school_name,
           claim.school.local_authority_name,
+          claim.provider_name,
           claim.amount,
           claim.total_clawback_amount,
           claim.school.type_of_establishment,
