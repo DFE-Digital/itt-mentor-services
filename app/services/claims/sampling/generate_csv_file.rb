@@ -13,6 +13,7 @@ class Claims::Sampling::GenerateCSVFile < ApplicationService
     mentor_hours_of_training
     claim_accepted
     rejection_reason
+    provider_name
   ].freeze
 
   def initialize(claims:, provider_name:)
@@ -36,6 +37,7 @@ class Claims::Sampling::GenerateCSVFile < ApplicationService
             claim.submitted_at.iso8601,
             mentor_training.mentor_full_name,
             mentor_training.hours_completed,
+            claim.provider.name,
           ]
         end
       end

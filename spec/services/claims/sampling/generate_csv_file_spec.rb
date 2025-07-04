@@ -26,6 +26,7 @@ describe Claims::Sampling::GenerateCSVFile do
         mentor_hours_of_training
         claim_accepted
         rejection_reason
+        provider_name
       ])
 
       claims.each_with_index do |claim, index|
@@ -39,6 +40,7 @@ describe Claims::Sampling::GenerateCSVFile do
           claim.submitted_at.iso8601,
           claim.mentor_trainings.first.mentor_full_name,
           claim.mentor_trainings.first.hours_completed.to_s,
+          claim.provider.name,
         ])
       end
     end

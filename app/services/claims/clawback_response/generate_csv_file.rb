@@ -12,6 +12,7 @@ class Claims::ClawbackResponse::GenerateCSVFile < ApplicationService
     school_group
     claim_submission_date
     claim_status
+    provider_name
   ].freeze
 
   def initialize(csv_content:)
@@ -34,6 +35,7 @@ class Claims::ClawbackResponse::GenerateCSVFile < ApplicationService
           row["school_group"],
           row["claim_submission_date"],
           row["claim_status"],
+          row["provider_name"],
         ]
       end
 

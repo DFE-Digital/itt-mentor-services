@@ -12,7 +12,7 @@ describe Claims::Payments::Claim::GenerateCSVFile do
 
       csv = CSV.read(generate_csv_file.path)
 
-      expect(csv.first).to eq(%w[claim_reference school_urn school_name school_local_authority claim_amount school_type_of_establishment school_group claim_submission_date claim_status claim_unpaid_reason])
+      expect(csv.first).to eq(%w[claim_reference school_urn school_name school_local_authority claim_amount school_type_of_establishment school_group claim_submission_date claim_status claim_unpaid_reason provider_name])
 
       claims.each_with_index do |claim, index|
         expect(csv[index + 1]).to eq([
@@ -25,6 +25,7 @@ describe Claims::Payments::Claim::GenerateCSVFile do
           claim.school.group,
           claim.submitted_at&.iso8601,
           claim.status,
+          claim.provider.name,
         ])
       end
     end

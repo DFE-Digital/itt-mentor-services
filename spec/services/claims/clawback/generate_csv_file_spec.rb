@@ -21,9 +21,10 @@ describe Claims::Clawback::GenerateCSVFile do
            group: "Independent schools",
            type_of_establishment: "Other independent school")
   end
-  let(:claim_1) { create(:claim, :submitted, status: :clawback_in_progress, school: school_a, reference: "11111111") }
-  let(:claim_2) { create(:claim, :submitted, status: :clawback_in_progress, school: school_b, reference: "22222222") }
-  let(:claim_3) { create(:claim, :submitted, status: :clawback_in_progress, school: school_b, reference: "33333333") }
+  let(:provider) { create(:claims_provider, name: "Springfield Trust") }
+  let(:claim_1) { create(:claim, :submitted, status: :clawback_in_progress, school: school_a, reference: "11111111", provider: provider) }
+  let(:claim_2) { create(:claim, :submitted, status: :clawback_in_progress, school: school_b, reference: "22222222", provider: provider) }
+  let(:claim_3) { create(:claim, :submitted, status: :clawback_in_progress, school: school_b, reference: "33333333", provider: provider) }
   let(:mentor_jane_doe) do
     create(:claims_mentor, schools: [school_a, school_b], first_name: "Jane", last_name: "Doe")
   end
@@ -111,6 +112,7 @@ describe Claims::Clawback::GenerateCSVFile do
         school_group
         claim_submission_date
         claim_status
+        provider_name
       ])
       expect(csv[1]).to eq(
         [
@@ -124,6 +126,7 @@ describe Claims::Clawback::GenerateCSVFile do
           "Academy",
           claim_1.submitted_at&.iso8601,
           "clawback_in_progress",
+          "Springfield Trust",
         ],
       )
       expect(csv[2]).to eq(
@@ -138,6 +141,7 @@ describe Claims::Clawback::GenerateCSVFile do
           "Independent schools",
           claim_2.submitted_at&.iso8601,
           "clawback_in_progress",
+          "Springfield Trust",
         ],
       )
     end
