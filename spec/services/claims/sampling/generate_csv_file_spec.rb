@@ -21,6 +21,7 @@ describe Claims::Sampling::GenerateCSVFile do
         school_local_authority
         school_type_of_establishment
         school_group
+        provider_name
         claim_submission_date
         mentor_full_name
         mentor_hours_of_training
@@ -36,6 +37,7 @@ describe Claims::Sampling::GenerateCSVFile do
           school.local_authority_name,
           school.type_of_establishment,
           school.group,
+          claim.provider_name,
           claim.submitted_at.iso8601,
           claim.mentor_trainings.first.mentor_full_name,
           claim.mentor_trainings.first.hours_completed.to_s,
