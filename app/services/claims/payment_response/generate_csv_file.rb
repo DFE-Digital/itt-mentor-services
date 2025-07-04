@@ -12,6 +12,7 @@ class Claims::PaymentResponse::GenerateCSVFile < ApplicationService
     claim_submission_date
     claim_status
     claim_unpaid_reason
+    provider_name
   ].freeze
 
   def initialize(csv_content:)
@@ -34,6 +35,7 @@ class Claims::PaymentResponse::GenerateCSVFile < ApplicationService
           row["claim_submission_date"],
           row["claim_status"],
           row["claim_unpaid_reason"],
+          row["provider_name"],
         ]
       end
 

@@ -13,6 +13,7 @@ class Claims::SamplingResponse::GenerateCSVFile < ApplicationService
     mentor_hours_of_training
     claim_accepted
     rejection_reason
+    provider_name
   ].freeze
 
   def initialize(csv_content:, provider_name:)
@@ -37,6 +38,7 @@ class Claims::SamplingResponse::GenerateCSVFile < ApplicationService
           row["mentor_hours_of_training"],
           row["claim_accepted"],
           row["rejection_reason"],
+          row["provider_name"],
         ]
       end
 
