@@ -3,6 +3,11 @@ en:
     claims:
       claim_window_warning_banner_component:
         claim_window_closing_soon:
-          one: There is %{count} day remaining to claim for ITT general mentor training before the claim window closes.
-          other: There are %{count} days remaining to claim for ITT general mentor training before the claim window closes.
+          days:
+            one: There is %{count} day remaining to claim for ITT general mentor training before the claim window closes.
+            other: There are %{count} days remaining to claim for ITT general mentor training before the claim window closes.
+          hours:
+            zero: There are %{minutes} minutes remaining to claim for ITT general mentor training before the claim window closes.
+            one: There is %{count} hour and %{minutes} minutes remaining to claim for ITT general mentor training before the claim window closes.
+            other: There are %{count} hours and %{minutes} minutes remaining to claim for ITT general mentor training before the claim window closes.
         important: Important
