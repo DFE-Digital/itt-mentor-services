@@ -21,6 +21,36 @@ describe Claims::ClaimWindowForm, type: :model do
       expect(claim_window_form).to be_invalid
       expect(claim_window_form.errors[:ends_on]).to include("Enter a window closing date that is after the opening date")
     end
+
+    context "with validating against existing claim windows" do
+      before do
+        create(:claim_window, starts_on: Date.parse("1 July 2024"), ends_on: Date.parse("31 July 2024"), academic_year:)
+      end
+
+      it "validates that the start date does not fall within an existing claim window" do
+        claim_window_form.starts_on = Date.parse("17 July 2024")
+        claim_window_form.ends_on = Date.parse("27 August 2024")
+
+        expect(claim_window_form).to be_invalid
+        expect(claim_window_form.errors[:starts_on]).to include("Select a date that is not within an existing claim window")
+      end
+
+      it "validates that the end date does not fall within an existing claim window" do
+        claim_window_form.starts_on = Date.parse("1 June 2024")
+        claim_window_form.ends_on = Date.parse("17 July 2024")
+
+        expect(claim_window_form).to be_invalid
+        expect(claim_window_form.errors[:ends_on]).to include("Select a date that is not within an existing claim window")
+      end
+
+      it "validates that no claim windows existing within the given start and end dates" do
+        claim_window_form.starts_on = Date.parse("1 June 2024")
+        claim_window_form.ends_on = Date.parse("31 August 2024")
+
+        expect(claim_window_form).to be_invalid
+        expect(claim_window_form.errors[:starts_on]).to include("A claim window already exists within the selected dates")
+      end
+    end
   end
 
   describe "#academic_year_name" do

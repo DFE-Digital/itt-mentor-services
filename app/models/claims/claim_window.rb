@@ -34,6 +34,7 @@ class Claims::ClaimWindow < ApplicationRecord
 
   validate :does_not_start_within_another_claim_window
   validate :does_not_end_within_another_claim_window
+  validate :does_not_overlap_another_claim_window
 
   delegate :name, :starts_on, :ends_on, to: :academic_year, prefix: true
   delegate :past?, to: :ends_on
@@ -71,5 +72,14 @@ class Claims::ClaimWindow < ApplicationRecord
     return unless Claims::ClaimWindow.where.not(id:).where("starts_on <= :ends_on AND ends_on >= :ends_on", ends_on:).exists?
 
     errors.add(:ends_on, :overlap)
+  end
+
+  def does_not_overlap_another_claim_window
+    return unless Claims::ClaimWindow.where.not(id:).where(
+      "starts_on >= :starts_on AND ends_on <= :ends_on", starts_on:, ends_on:
+    ).exists?
+
+    errors.add(:starts_on, :existing_window)
+    errors.add(:ends_on, :existing_window)
   end
 end

@@ -13,6 +13,7 @@ class Claims::ClaimWindowForm < ApplicationForm
 
   validate :does_not_start_within_another_claim_window, if: :starts_on_is_date?
   validate :does_not_end_within_another_claim_window, if: :ends_on_is_date?
+  validate :does_not_overlap_another_claim_window, if: -> { starts_on_is_date? && ends_on_is_date? }
 
   def initialize(attributes = {})
     super
@@ -56,5 +57,13 @@ class Claims::ClaimWindowForm < ApplicationForm
     return unless Claims::ClaimWindow.where.not(id:).where("starts_on <= :ends_on AND ends_on >= :ends_on", ends_on:).exists?
 
     errors.add(:ends_on, :overlap)
+  end
+
+  def does_not_overlap_another_claim_window
+    return unless Claims::ClaimWindow.where.not(id:).where(
+      "starts_on >= :starts_on AND ends_on <= :ends_on", starts_on:, ends_on:
+    ).exists?
+
+    errors.add(:starts_on, :existing_window)
   end
 end

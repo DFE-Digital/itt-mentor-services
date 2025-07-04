@@ -69,6 +69,14 @@ RSpec.describe Claims::ClaimWindow, type: :model do
         expect(claim_window).to be_invalid
         expect(claim_window.errors[:ends_on]).to include("Select a date that is not within an existing claim window")
       end
+
+      it "validates that no claim windows existing within the given start and end dates" do
+        claim_window.starts_on = Date.parse("1 June 2024")
+        claim_window.ends_on = Date.parse("31 August 2024")
+
+        expect(claim_window).to be_invalid
+        expect(claim_window.errors[:starts_on]).to include("A claim window already exists within the selected dates")
+      end
     end
   end
 
