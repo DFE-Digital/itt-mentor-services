@@ -27,7 +27,7 @@ describe Claims::ClawbackResponse::GenerateCSVFile do
            reason_clawed_back: "Invalid claim")
   end
 
-  let(:csv_content) { "claim_reference,school_urn,school_name,school_local_authority,claim_amount,clawback_amount,school_type_of_establishment,school_group,claim_submission_date,claim_status\n11111111,aaaaaaaa,School A,Local Auth A,876.00,876.00,Academy converter,Academy,#{claim_1.submitted_at&.iso8601},clawback_in_progress" }
+  let(:csv_content) { "claim_reference,school_urn,school_name,school_local_authority,claim_amount,clawback_amount,school_type_of_establishment,school_group,claim_submission_date,claim_status,provider_name\n11111111,aaaaaaaa,School A,Local Auth A,876.00,876.00,Academy converter,Academy,#{claim_1.submitted_at&.iso8601},clawback_in_progress,Springfield Trust" }
 
   before { claim_1_jane_doe_mentor_training }
 
@@ -43,6 +43,7 @@ describe Claims::ClawbackResponse::GenerateCSVFile do
         school_urn
         school_name
         school_local_authority
+        provider_name
         claim_amount
         clawback_amount
         school_type_of_establishment
@@ -56,6 +57,7 @@ describe Claims::ClawbackResponse::GenerateCSVFile do
           "aaaaaaaa",
           "School A",
           "Local Auth A",
+          "Springfield Trust",
           "876.00",
           "876.00",
           "Academy converter",
