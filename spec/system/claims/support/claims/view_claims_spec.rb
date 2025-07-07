@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "View claims", :js, service: :claims, type: :system do
+RSpec.describe "View claims", service: :claims, type: :system do
   let!(:support_user) { create(:claims_support_user) }
   let!(:school_1) { create(:claims_school) }
   let!(:school_2) { create(:claims_school) }
@@ -25,71 +25,57 @@ RSpec.describe "View claims", :js, service: :claims, type: :system do
 
   scenario "Support user visits the claims index page" do
     when_i_visit_claim_index_page
-    then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
+    then_i_see_a_list_of_claims([claim_4, claim_5, claim_6, claim_7])
     and_i_see_no_draft_claims
     when_i_check_school_filter(school_1)
-    then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6])
+    then_i_see_a_list_of_claims([claim_4, claim_5, claim_6])
     when_i_check_provider_filter(provider_1)
-    then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5])
+    then_i_see_a_list_of_claims([claim_4, claim_5])
     when_i_set_submitted_after(5, 4, 2024)
-    then_i_see_a_list_of_claims([claim_2, claim_3, claim_4])
+    then_i_see_a_list_of_claims([claim_4])
     when_i_set_submitted_before(6, 4, 2024)
-    then_i_see_a_list_of_claims([claim_3, claim_4])
+    then_i_see_a_list_of_claims([claim_4])
     when_i_search_for_claim_reference(claim_3.reference)
-    then_i_see_a_list_of_claims([claim_3])
+    then_i_see_no_claims
     when_i_remove_my_search
-    then_i_see_a_list_of_claims([claim_3, claim_4])
+    then_i_see_a_list_of_claims([claim_4])
     when_i_remove_the_filter("06/04/2024")
-    then_i_see_a_list_of_claims([claim_2, claim_3, claim_4])
+    then_i_see_a_list_of_claims([claim_4])
     when_i_remove_the_filter("05/04/2024")
-    then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5])
+    then_i_see_a_list_of_claims([claim_4, claim_5])
     when_i_remove_the_filter(provider_1.name)
-    then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6])
+    then_i_see_a_list_of_claims([claim_4, claim_5, claim_6])
     when_i_remove_the_filter(school_1.name)
-    then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
+    then_i_see_a_list_of_claims([claim_4, claim_5, claim_6, claim_7])
   end
 
   context "when filtering by a status" do
     scenario "Support user filters claims in a submitted status" do
       when_i_visit_claim_index_page
-      then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
+      then_i_see_a_list_of_claims([claim_4, claim_5, claim_6, claim_7])
       and_i_see_no_draft_claims
       when_i_check_status_filter("Submitted")
-      then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
+      then_i_see_a_list_of_claims([claim_4, claim_5, claim_6, claim_7])
       when_i_remove_the_filter("Submitted")
-      then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
+      then_i_see_a_list_of_claims([claim_4, claim_5, claim_6, claim_7])
     end
   end
 
   context "when filtering by academic years" do
     scenario "a support user filters claims by a single academic year" do
       when_i_visit_claim_index_page
-      then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
+      then_i_see_a_list_of_claims([claim_4, claim_5, claim_6, claim_7])
       and_i_see_no_draft_claims
-      when_i_check_academic_year_filter(academic_year_1)
+      when_i_select_academic_year_filter(academic_year_1)
       then_i_see_a_list_of_claims([claim_2])
-      when_i_remove_the_filter(academic_year_1.name)
-      then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
-    end
-
-    scenario "a support user filters claims by multiple academic years" do
-      when_i_visit_claim_index_page
-      then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
-      and_i_see_no_draft_claims
-      when_i_check_academic_year_filter(academic_year_1)
-      then_i_see_a_list_of_claims([claim_2])
-      when_i_check_academic_year_filter(academic_year_2)
-      then_i_see_a_list_of_claims([claim_2, claim_3])
-      when_i_remove_the_filter(academic_year_2.name)
-      then_i_see_a_list_of_claims([claim_2])
-      when_i_remove_the_filter(academic_year_1.name)
-      then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
+      when_i_select_academic_year_filter(claim_7.academic_year)
+      then_i_see_a_list_of_claims([claim_4, claim_5, claim_6, claim_7])
     end
   end
 
-  scenario "Support user uses the js filter search" do
+  scenario "Support user uses the js filter search", :js do
     when_i_visit_claim_index_page
-    then_i_see_a_list_of_claims([claim_2, claim_3, claim_4, claim_5, claim_6, claim_7])
+    then_i_see_a_list_of_claims([claim_4, claim_5, claim_6, claim_7])
     when_i_search_the_school_filter_with(school_2.name)
     then_i_see_only_my_filter_school_as_an_option
     when_i_check_school_filter(school_2)
@@ -143,8 +129,8 @@ RSpec.describe "View claims", :js, service: :claims, type: :system do
     click_on("Apply filters")
   end
 
-  def when_i_check_academic_year_filter(academic_year)
-    page.find("#claims-support-claims-filter-form-academic-year-ids-#{academic_year.id}-field", visible: :all).check
+  def when_i_select_academic_year_filter(academic_year)
+    choose academic_year.name
     click_on("Apply filters")
   end
 
@@ -196,5 +182,9 @@ RSpec.describe "View claims", :js, service: :claims, type: :system do
 
     other_school_option = page.find_all("#claims-support-claims-filter-form-school-ids-#{school_1.id}-field", wait: false)
     expect(other_school_option.blank?).to be(true)
+  end
+
+  def then_i_see_no_claims
+    expect(page).to have_paragraph("There are no claims")
   end
 end

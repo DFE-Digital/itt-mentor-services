@@ -37,15 +37,23 @@ RSpec.describe Claims::Claim::FilterFormComponent, type: :component do
   end
 
   context "when there are multiple claim window academic years" do
-    before do
+    let(:current_claim_window) do
       create(:claim_window, :current)
-      create(:claim_window, :historic)
+    end
+    let(:historic_claim_window) { create(:claim_window, :historic) }
+    let(:current_academic_year) { current_claim_window.academic_year }
+    let(:historic_academic_year) { historic_claim_window.academic_year }
+
+    before do
+      current_claim_window
+      historic_claim_window
     end
 
     it "renders academic year filters" do
       render_inline(component)
 
-      expect(page).to have_field("claims_support_claims_filter_form[academic_year_ids][]")
+      expect(page).to have_field(current_academic_year.name, checked: true)
+      expect(page).to have_field(historic_academic_year.name)
     end
   end
 

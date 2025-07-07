@@ -275,9 +275,7 @@
               <% %w[active all].each do |active_filter_option| %>
                 <%= form.govuk_radio_button :schools_to_show,
                   active_filter_option,
-                  label: { text: t(".schools_to_show.#{active_filter_option}") },
-                  checked: params.dig(:filters, :schools_to_show) == active_filter_option ||
-                    active_filter_option == "active" && params.dig(:filters, :schools_to_show).blank? %>
+                  label: { text: t(".schools_to_show.#{active_filter_option}") } %>
               <% end %>
             <% end %>
           </div>

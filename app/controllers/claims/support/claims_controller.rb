@@ -34,6 +34,7 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
       :search,
       :search_school,
       :search_provider,
+      :academic_year_id,
       "submitted_after(1i)",
       "submitted_after(2i)",
       "submitted_after(3i)",
@@ -45,7 +46,6 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
       provider_ids: [],
       school_ids: [],
       statuses: [],
-      academic_year_ids: [],
     ).with_defaults(index_path:)
   end
 
