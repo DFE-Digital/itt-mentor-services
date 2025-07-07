@@ -57,7 +57,7 @@ gem "govuk_markdown"
 gem "redcarpet", "~> 3.6"
 
 # GoodJob backend for Active Job
-gem "good_job", "~> 4.10"
+gem "good_job", "~> 4.11"
 
 # Store user sessions in the database
 gem "activerecord-session_store"
