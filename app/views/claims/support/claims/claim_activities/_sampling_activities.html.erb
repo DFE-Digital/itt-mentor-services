@@ -1,9 +1,9 @@
-<%# locals: (claim_activity:) -%>
+<%# locals: (claim_activity:, provider_samplings:) -%>
 
 <h2 class="govuk-heading-m"><%= t(".providers") %></h2>
 
-<% claim_activity.record.provider_samplings.each do |provider_sampling| %>
-  <h3 class="govuk-heading-s"><%= provider_sampling.provider.name %></h3>
+<% provider_samplings.each do |provider_sampling| %>
+  <h3 class="govuk-heading-s"><%= provider_sampling.provider_name %></h3>
 
   <div class="govuk-button-group">
     <%= govuk_button_link_to t(".download_csv"), provider_sampling.csv_file, secondary: true %>
