@@ -51,8 +51,8 @@ class Claims::ClaimsQuery < ApplicationQuery
   end
 
   def academic_year_condition(scope)
-    return scope if params[:academic_year_ids].blank?
+    return scope if params[:academic_year_id].blank?
 
-    scope.where(claim_window_id: Claims::ClaimWindow.select(:id).where(academic_year_id: params[:academic_year_ids]))
+    scope.where(claim_window_id: Claims::ClaimWindow.select(:id).where(academic_year_id: params[:academic_year_id]))
   end
 end

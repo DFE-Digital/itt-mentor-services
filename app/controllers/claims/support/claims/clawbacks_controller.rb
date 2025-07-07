@@ -48,6 +48,7 @@ class Claims::Support::Claims::ClawbacksController < Claims::Support::Applicatio
       :search,
       :search_school,
       :search_provider,
+      :academic_year_id,
       "submitted_after(1i)",
       "submitted_after(2i)",
       "submitted_after(3i)",
@@ -59,7 +60,6 @@ class Claims::Support::Claims::ClawbacksController < Claims::Support::Applicatio
       provider_ids: [],
       school_ids: [],
       statuses: [],
-      academic_year_ids: [],
     ).with_defaults(index_path:)
   end
 

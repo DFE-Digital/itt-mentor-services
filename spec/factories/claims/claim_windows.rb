@@ -21,10 +21,11 @@
 #
 FactoryBot.define do
   factory :claim_window, class: "Claims::ClaimWindow" do
+    academic_year { AcademicYear.for_date(Date.current) }
+
     trait :current do
       starts_on { 2.days.ago }
       ends_on { 2.days.from_now }
-      association :academic_year, :current
     end
 
     trait :historic do

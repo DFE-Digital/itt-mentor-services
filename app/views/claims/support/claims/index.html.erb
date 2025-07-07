@@ -24,7 +24,7 @@
 
       <%= render PaginationComponent.new(pagy: @pagy) %>
     <% else %>
-      <p>
+      <p class="govuk-body">
         <%= t("no_records", records: "claims") %>
       </p>
     <% end %>
