@@ -9,9 +9,14 @@ class Claims::Support::Claims::ClaimActivitiesController < Claims::Support::Appl
 
   def show
     authorize [:claims, claim_activity]
-
-    if claim_activity.sampling_uploaded?
-      @pagy, @provider_samplings = pagy(claim_activity.record.provider_samplings.order_by_provider_name)
+    case @claim_activity.action
+    when *Claims::ClaimActivity::SAMPLING_ACTIONS
+      @pagy, @provider_samplings = pagy(@claim_activity.record.provider_samplings.order_by_provider_name)
+    when *Claims::ClaimActivity::PAYMENT_AND_CLAWBACK_ACTIONS
+      @pagy, @claims = pagy(@claim_activity.record.claims.order(:reference))
+      @claims_by_provider = @claims.group_by(&:provider)
+    when *Claims::ClaimActivity::MANUAL_ACTIONS
+      @claim = @claim_activity.record
     end
 
     @claim_activity = claim_activity.decorate
