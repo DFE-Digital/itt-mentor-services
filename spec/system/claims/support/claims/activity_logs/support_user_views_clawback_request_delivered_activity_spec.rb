@@ -1,6 +1,8 @@
 require "rails_helper"
 
-RSpec.describe "Support user views clawback request delivered activity spec", service: :claims, type: :system do
+RSpec.describe "Support user views clawback request delivered activity spec",
+               service: :claims,
+               type: :system do
   scenario do
     given_clawback_request_delivered_activity_exists
     and_i_am_signed_in
@@ -112,6 +114,6 @@ RSpec.describe "Support user views clawback request delivered activity spec", se
 
   def then_i_receive_a_csv_file
     expect(page.response_headers["Content-Type"]).to eq("text/csv")
-    expect(page.response_headers["Content-Disposition"]).to eq("attachment; filename=\"example-clawbacks.csv\"; filename*=UTF-8''example-clawbacks.csv")
+    expect(page.response_headers["Content-Disposition"]).to eq("attachment; filename=\"clawbacks_for_payer.csv\"; filename*=UTF-8''clawbacks_for_payer.csv")
   end
 end
