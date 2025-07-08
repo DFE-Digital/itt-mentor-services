@@ -11,4 +11,13 @@ class AcademicYearDecorator < Draper::Decorator
       I18n.t("placements.academic_year.previous_academic_year", academic_year: academic_year.name)
     end
   end
+
+  def card_name
+    case academic_year
+    when AcademicYear.for_date(Date.current)
+      "#{academic_year.name} #{I18n.t("placements.academic_year.current")}"
+    else
+      academic_year.name
+    end
+  end
 end

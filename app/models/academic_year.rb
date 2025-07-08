@@ -17,6 +17,8 @@ class AcademicYear < ApplicationRecord
   validates :ends_on, presence: true, comparison: { greater_than_or_equal_to: :starts_on }
 
   scope :order_by_date, -> { order(starts_on: :asc) }
+  scope :order_by_date_desc, -> { order(starts_on: :desc) }
+  scope :before_date, ->(date) { where("starts_on <= ?", for_date(date).starts_on) }
 
   START_DATE = {
     day: 1,
@@ -44,5 +46,13 @@ class AcademicYear < ApplicationRecord
 
   def has_upcoming_claim_windows?
     claim_windows.upcoming.exists?
+  end
+
+  def self.current
+    for_date(Date.current)
+  end
+
+  def current?
+    self == self.class.current
   end
 end

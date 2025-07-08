@@ -2,30 +2,35 @@ require "rails_helper"
 
 RSpec.describe "Claims user creates a claim for a mentor with a previous year claim", :js, service: :claims, type: :system do
   scenario do
-    given_a_school_exists_with_a_previous_year_claim
-    and_i_am_signed_in
-    then_i_see_the_claims_index_page_with_a_submitted_claim
+    Timecop.travel(Time.zone.local(2025, 7, 3)) do
+      given_a_school_exists_with_a_previous_year_claim
+      and_i_am_signed_in
+      then_i_see_the_claims_index_page_with_no_submitted_claims_for_this_year
 
-    when_i_click_on_add_claim
-    then_i_see_the_select_provider_step
+      when_i_click_on_previous_academic_year
+      then_i_see_the_claims_index_page_with_a_submitted_claim
 
-    when_i_enter_a_provider_named_best_practice_network
-    then_i_see_a_dropdown_item_for_best_practice_network
+      when_i_click_on_add_claim
+      then_i_see_the_select_provider_step
 
-    when_i_click_the_dropdown_item_for_best_practice_network
-    and_i_click_on_continue
-    then_i_see_the_select_mentors_step
+      when_i_enter_a_provider_named_best_practice_network
+      then_i_see_a_dropdown_item_for_best_practice_network
 
-    when_i_select_barry_garlow
-    and_i_click_on_continue
-    then_i_see_the_select_training_hours_step_for_barry_garlow
+      when_i_click_the_dropdown_item_for_best_practice_network
+      and_i_click_on_continue
+      then_i_see_the_select_mentors_step
 
-    when_i_select_the_maximum_hours_for_barry_garlow
-    and_i_click_on_continue
-    then_i_see_the_check_your_answers_page
+      when_i_select_barry_garlow
+      and_i_click_on_continue
+      then_i_see_the_select_training_hours_step_for_barry_garlow
 
-    when_i_click_on_accept_and_submit
-    then_i_see_the_claim_submitted_page
+      when_i_select_the_maximum_hours_for_barry_garlow
+      and_i_click_on_continue
+      then_i_see_the_check_your_answers_page
+
+      when_i_click_on_accept_and_submit
+      then_i_see_the_claim_submitted_page
+    end
   end
 
   private
@@ -64,6 +69,18 @@ RSpec.describe "Claims user creates a claim for a mentor with a previous year cl
 
   def and_i_am_signed_in
     sign_in_as(@user_anne)
+  end
+
+  def then_i_see_the_claims_index_page_with_no_submitted_claims_for_this_year
+    expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
+    expect(primary_navigation).to have_current_item("Claims")
+    expect(page).to have_h1("Claims")
+    expect(page).to have_link("Add claim", href: "/schools/#{@shelbyville_school.id}/claims/new")
+    expect(page).to have_paragraph("There are no claims for Shelbyville Elementary in the 2024 to 2025 academic year.")
+  end
+
+  def when_i_click_on_previous_academic_year
+    click_on("2022 to 2023")
   end
 
   def then_i_see_the_claims_index_page_with_a_submitted_claim

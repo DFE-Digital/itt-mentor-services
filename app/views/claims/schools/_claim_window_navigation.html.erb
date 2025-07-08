@@ -1,0 +1,5 @@
+<%= render ClaimWindowNavigationComponent.new do |component| %>
+  <% @previous_academic_years.each do |academic_year| %>
+    <% component.with_navigation_item academic_year:, url: claims_school_claims_path(@school, academic_year_id: academic_year.id), current: @academic_year == academic_year %>
+  <% end %>
+<% end %>

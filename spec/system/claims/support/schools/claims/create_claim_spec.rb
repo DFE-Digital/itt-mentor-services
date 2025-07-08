@@ -56,7 +56,9 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
     when_i_click("Continue")
     then_i_check_my_answers
     when_i_click("Accept and submit")
-    then_i_am_redirectd_to_index_page(Claims::Claim.draft.first)
+    then_i_am_redirected_to_index_page_with_no_claim
+    when_i_click_on_2020_to_2021
+    then_i_see_the_new_claim
   end
 
   scenario "Colin attempts to create a claim but backs off before the check page" do
@@ -271,12 +273,20 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
     find("#claims-add-claim-wizard-mentor-training-step-hours-to-claim-maximum-field", visible: :all).checked?
   end
 
-  def then_i_am_redirectd_to_index_page(claim)
+  def then_i_am_redirected_to_index_page_with_no_claim
     within(".govuk-notification-banner--success") do
       expect(page).to have_content "Claim added"
     end
 
-    expect(page).to have_content(claim.reference)
+    expect(page).to have_paragraph("There are no claims for #{school.name}")
+  end
+
+  def when_i_click_on_2020_to_2021
+    click_on "2020 to 2021"
+  end
+
+  def then_i_see_the_new_claim
+    expect(page).to have_content(Claims::Claim.draft.first.reference)
   end
 
   def then_i_see_the_error(message)

@@ -3,14 +3,17 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
 
   before_action :has_school_accepted_grant_conditions?
   before_action :set_claim, only: %i[show confirmation remove destroy]
+  before_action :set_academic_year, only: :index
   before_action :authorize_claim
 
   helper_method :edit_attribute_path
 
   def index
-    @pagy, @claims = pagy(
-      @school.claims.includes(:provider, :mentor_trainings).active.order_created_at_desc,
-    )
+    @current_academic_year_selected = @academic_year.current?
+    @current_claim_window = Claims::ClaimWindow.current
+    @previous_claim_window = Claims::ClaimWindow.previous
+    @previous_academic_years = AcademicYear.before_date(Date.current).order_by_date_desc.decorate
+    @pagy, @claims = pagy(claims_for_academic_year)
   end
 
   def show; end
@@ -45,5 +48,20 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
 
   def edit_attribute_path(attribute)
     new_edit_claim_claims_school_claim_path(@school, @claim, step: attribute)
+  end
+
+  def set_academic_year
+    @academic_year = if params[:academic_year_id].present?
+                       AcademicYear.find(params[:academic_year_id])
+                     else
+                       AcademicYear.current
+                     end
+  end
+
+  def claims_for_academic_year
+    @school.claims.includes(:provider, :mentor_trainings)
+    .joins(:academic_year)
+    .where(academic_year: { id: @academic_year.id })
+    .order_created_at_desc
   end
 end

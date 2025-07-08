@@ -4,6 +4,7 @@ en:
         current_academic_year: This year (%{academic_year})
         next_academic_year: Next year (%{academic_year})
         previous_academic_year: Previous year (%{academic_year})
+        current: (current)
     providers:
       placements:
         index:
