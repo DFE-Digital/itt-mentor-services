@@ -20,6 +20,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
         "submitted_before(3i)" => nil,
         school_ids: [],
         provider_ids: [],
+        mentor_ids: [],
         statuses: [],
         academic_year_id: current_academic_year.id,
         index_path: nil,
@@ -37,6 +38,13 @@ describe Claims::Support::Claims::FilterForm, type: :model do
 
     it "returns true if provider_ids present" do
       params = { provider_ids: %w[provider_id] }
+      form = described_class.new(params)
+
+      expect(form.filters_selected?).to be(true)
+    end
+
+    it "returns true if mentor_ids present" do
+      params = { mentor_ids: %w[mentor_id] }
       form = described_class.new(params)
 
       expect(form.filters_selected?).to be(true)
@@ -217,6 +225,25 @@ describe Claims::Support::Claims::FilterForm, type: :model do
     end
   end
 
+  describe "#mentors" do
+    it "returns a collection of mentors based on mentor_ids param" do
+      mentor = create(:mentor)
+      params = { mentor_ids: [mentor.id] }
+      call = described_class.new(params).mentors
+
+      expect(call).to eq([mentor])
+    end
+
+    context "when mentor_ids is empty" do
+      it "returns empty array" do
+        params = { mentor_ids: [] }
+        call = described_class.new(params).mentors
+
+        expect(call).to eq([])
+      end
+    end
+  end
+
   describe "#academic_year" do
     let(:historic_start_date) { current_academic_year.starts_on - 1.year }
     let(:historic_end_date) { current_academic_year.ends_on - 1.year }
@@ -260,6 +287,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
         "submitted_before(3i)" => "2",
         school_ids: %w[school_id],
         provider_ids: %w[provider_id],
+        mentor_ids: %w[mentor_id],
         statuses: %w[submitted],
         academic_year_id: current_academic_year.id,
       }
@@ -269,6 +297,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
       expect(call).to eq(
         provider_ids: %w[provider_id],
         school_ids: %w[school_id],
+        mentor_ids: %w[mentor_id],
         search: "claim_reference",
         search_provider: "provider",
         search_school: "school_name",

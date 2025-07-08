@@ -17,11 +17,18 @@ class Claims::Claim::FilterFormComponent < ApplicationComponent
     @schools = schools || limit_records(Claims::School)
   end
 
+  def mentors
+    limit_records(
+      Mentor.trained_in_academic_year(filter_form.academic_year),
+      order: %i[first_name last_name],
+    )
+  end
+
   private
 
   attr_reader :claims, :filter_form
 
-  def limit_records(klass)
+  def limit_records(klass, order: :name)
     ids = Array(filter_form.public_send("#{klass.name.demodulize.underscore}_ids"))
     scope = klass.limit(25)
 
@@ -30,6 +37,6 @@ class Claims::Claim::FilterFormComponent < ApplicationComponent
       scope = klass.where(id: ids + extra_ids)
     end
 
-    scope.order(:name)
+    scope.order(order)
   end
 end

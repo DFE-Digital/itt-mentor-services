@@ -220,6 +220,12 @@ scope module: :claims, as: :claims, constraints: {
       end
     end
 
+    resources :mentors, only: [] do
+      collection do
+        get "search/:academic_year_id", to: "mentors#search", as: :search
+      end
+    end
+
     resources :schools, only: %i[index show] do
       collection do
         get :search
