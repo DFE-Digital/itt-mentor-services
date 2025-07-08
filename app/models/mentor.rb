@@ -28,6 +28,13 @@ class Mentor < ApplicationRecord
   validates :trn, presence: true, uniqueness: true, format: /\A\d{7}\z/
 
   scope :order_by_full_name, -> { order(first_name: :asc, last_name: :asc) }
+  scope :trained_in_academic_year, lambda { |academic_year|
+    joins(
+      mentor_trainings: { claim: :claim_window },
+    ).where(
+      claim_windows: { academic_year_id: academic_year.id },
+    ).distinct
+  }
 
   def full_name
     "#{first_name} #{last_name}".strip

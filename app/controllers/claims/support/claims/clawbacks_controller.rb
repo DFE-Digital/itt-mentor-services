@@ -60,6 +60,7 @@ class Claims::Support::Claims::ClawbacksController < Claims::Support::Applicatio
       provider_ids: [],
       school_ids: [],
       statuses: [],
+      mentor_ids: [],
     ).with_defaults(index_path:)
   end
 

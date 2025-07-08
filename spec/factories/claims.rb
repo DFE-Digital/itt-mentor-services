@@ -80,6 +80,7 @@ FactoryBot.define do
     end
 
     trait :audit_requested do
+      payment_in_progress
       status { :sampling_in_progress }
       sampling_reason { "Small claim" }
     end

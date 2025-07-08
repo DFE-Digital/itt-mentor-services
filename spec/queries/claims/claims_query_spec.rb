@@ -97,5 +97,31 @@ describe Claims::ClaimsQuery do
         expect(claims_query).to contain_exactly(expected_claim)
       end
     end
+
+    context "when given mentor ids" do
+      let(:params) { { mentor_ids: [mentor_1.id, mentor_2.id] } }
+
+      let(:mentor_1) { build(:mentor, first_name: "John", last_name: "Smith") }
+      let(:mentor_2) { build(:mentor, first_name: "Anne", last_name: "Doe") }
+      let(:mentor_3) { build(:mentor, first_name: "Sarah", last_name: "James") }
+
+      let(:mentor_1_claim) { build(:claim, :submitted) }
+      let(:mentor_2_claim) { build(:claim, :draft) }
+      let(:mentor_3_claim) { build(:claim, :submitted) }
+
+      let(:mentor_1_training) { create(:mentor_training, claim: mentor_1_claim, mentor: mentor_1) }
+      let(:mentor_2_training) { create(:mentor_training, claim: mentor_2_claim, mentor: mentor_2) }
+      let(:mentor_3_training) { create(:mentor_training, claim: mentor_3_claim, mentor: mentor_3) }
+
+      before do
+        mentor_1_training
+        mentor_2_training
+        mentor_3_training
+      end
+
+      it "filters the results by mentor" do
+        expect(claims_query).to contain_exactly(mentor_1_claim)
+      end
+    end
   end
 end

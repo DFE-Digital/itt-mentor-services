@@ -129,8 +129,22 @@ export default class extends Controller {
       label.setAttribute("for", input.id);
       label.textContent = school.name;
 
+      if (school.hint) {
+        const hint = document.createElement("div");
+        hint.className = "govuk-hint govuk-checkboxes__hint";
+        hint.textContent = school.hint;
+      }
+
       div.appendChild(input);
       div.appendChild(label);
+
+      if (school.hint) {
+        const hint = document.createElement("div");
+        hint.className = "govuk-hint govuk-checkboxes__hint";
+        hint.textContent = school.hint;
+        div.appendChild(hint);
+      }
+
       fragment.appendChild(div);
     });
 

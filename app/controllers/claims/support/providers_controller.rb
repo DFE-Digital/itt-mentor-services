@@ -8,6 +8,8 @@ class Claims::Support::ProvidersController < Claims::Support::ApplicationControl
     render json: providers.limit(limit).as_json(only: %i[id name])
   end
 
+  private
+
   def authorize_provider
     authorize Claims::Provider
   end

@@ -62,6 +62,34 @@ RSpec.describe Mentor, type: :model do
         )
       end
     end
+
+    describe "#trained_in_academic_year" do
+      subject(:trained_in_academic_year) do
+        described_class.trained_in_academic_year(current_claim_window.academic_year)
+      end
+
+      let(:historic_claim_window) { build(:claim_window, :historic) }
+      let(:current_claim_window) { build(:claim_window, :current) }
+
+      let(:current_trained_mentor) { build(:mentor, first_name: "Anne", last_name: "Smith") }
+      let(:historic_trained_mentor) { build(:mentor, first_name: "Anne", last_name: "Doe") }
+      let(:untrained_mentor) { create(:mentor, first_name: "John", last_name: "Doe") }
+
+      let(:historic_claim) { build(:claim, claim_window: historic_claim_window) }
+      let(:current_claim) { build(:claim, claim_window: current_claim_window) }
+
+      let(:historic_mentor_training) { create(:mentor_training, claim: historic_claim, mentor: historic_trained_mentor) }
+      let(:current_mentor_training) { create(:mentor_training, claim: current_claim, mentor: current_trained_mentor) }
+
+      before do
+        historic_mentor_training
+        current_mentor_training
+      end
+
+      it "returns mentors who trained in during the given academic year" do
+        expect(trained_in_academic_year).to contain_exactly(current_trained_mentor)
+      end
+    end
   end
 
   describe "#full_name" do
