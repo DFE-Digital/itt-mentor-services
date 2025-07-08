@@ -1,6 +1,9 @@
 require "rails_helper"
 
-RSpec.describe "Support user views payment request delivered activity spec", service: :claims, type: :system do
+RSpec.describe "Support user views payment request delivered activity spec",
+               freeze: "01 July 2025",
+               service: :claims,
+               type: :system do
   scenario do
     given_payment_request_delivered_activity_exists
     and_i_am_signed_in
@@ -112,6 +115,8 @@ RSpec.describe "Support user views payment request delivered activity spec", ser
 
   def then_i_receive_a_csv_file
     expect(page.response_headers["Content-Type"]).to eq("text/csv")
-    expect(page.response_headers["Content-Disposition"]).to eq("attachment; filename=\"example-payments.csv\"; filename*=UTF-8''example-payments.csv")
+    expect(page.response_headers["Content-Disposition"]).to eq(
+      "attachment; filename=\"payment-claims-#{Time.current.strftime("%Y-%m-%d")} 00-00-00 UTC.csv\"; filename*=UTF-8''payment-claims-#{Time.current.strftime("%Y-%m-%d")}%2000-00-00%20UTC.csv",
+    )
   end
 end

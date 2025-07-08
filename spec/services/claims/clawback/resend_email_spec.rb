@@ -3,7 +3,8 @@ require "rails_helper"
 describe Claims::Clawback::ResendEmail do
   subject(:resend_email) { described_class.call(clawback:) }
 
-  let(:clawback) { create(:clawback) }
+  let(:claims) { create_list(:claim, 1, :submitted) }
+  let(:clawback) { create(:clawback, claims: claims) }
 
   describe "#call" do
     it "enqueues the delivery of an email" do
