@@ -1,0 +1,5 @@
+<%= render ClaimWindowNavigationComponent.new do |component| %>
+  <% AcademicYear.before_date(Date.current).order_by_date_desc.each do |academic_year| %>
+    <% component.with_navigation_item academic_year.decorate.card_name, claims_school_claims_path(@school, academic_year_id: academic_year.id) %>
+  <% end %>
+<% end %>
