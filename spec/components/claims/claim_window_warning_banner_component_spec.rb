@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Claims::ClaimWindowWarningBannerComponent, type: :component do
+RSpec.describe Claims::ClaimWindowWarningBannerComponent, freeze: "1 July 2025", type: :component do
   subject(:component) { described_class.new }
 
   let(:claim_window) { create(:claim_window, :current, ends_on:) }
@@ -10,7 +10,7 @@ RSpec.describe Claims::ClaimWindowWarningBannerComponent, type: :component do
   end
 
   context "when there are > 30 days left in the claim window" do
-    let(:ends_on) { 2.months.from_now }
+    let(:ends_on) { Date.new(2025, 9, 1) }
 
     it "does not render the banner" do
       render_inline(component)
@@ -22,7 +22,7 @@ RSpec.describe Claims::ClaimWindowWarningBannerComponent, type: :component do
 
   context "when there are <= 30 days left in the claim window" do
     context "when there is more than 1 day left" do
-      let(:ends_on) { 1.week.from_now }
+      let(:ends_on) { Date.new(2025, 7, 8) }
 
       it "renders the banner" do
         render_inline(component)
@@ -34,7 +34,7 @@ RSpec.describe Claims::ClaimWindowWarningBannerComponent, type: :component do
     end
 
     context "when there is 1 day left" do
-      let(:ends_on) { 1.day.from_now }
+      let(:ends_on) { Date.new(2025, 7, 2) }
 
       it "renders the banner" do
         render_inline(component)
