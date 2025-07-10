@@ -3,7 +3,8 @@ require "rails_helper"
 RSpec.describe Claims::ClaimWindowWarningBannerComponent, freeze: "1 July 2025", type: :component do
   subject(:component) { described_class.new }
 
-  let(:claim_window) { create(:claim_window, :current, ends_on:) }
+  let(:claim_window) { create(:claim_window, :current, ends_on:, starts_on:) }
+  let(:starts_on) { 8.months.ago }
 
   before do
     claim_window
