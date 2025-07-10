@@ -210,7 +210,7 @@
                     multiple: false,
                   ) do %>
                     <% mentors.each do |mentor| %>
-                      <%= form.govuk_check_box :mentor_ids, mentor.id, label: { text: mentor.full_name }, hint: { text: mentor.trn } %>
+                      <%= form.govuk_check_box :mentor_ids, mentor.id, label: { text: mentor.full_name }, hint: { text: mentor.trn, class: "secondary-text govuk-!-font-size-16" } %>
                     <% end %>
                   <% end %>
                 </div>

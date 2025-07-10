@@ -140,7 +140,7 @@ export default class extends Controller {
 
       if (school.hint) {
         const hint = document.createElement("div");
-        hint.className = "govuk-hint govuk-checkboxes__hint";
+        hint.className = "govuk-hint govuk-checkboxes__hint secondary-text govuk-!-font-size-16";
         hint.textContent = school.hint;
         div.appendChild(hint);
       }
