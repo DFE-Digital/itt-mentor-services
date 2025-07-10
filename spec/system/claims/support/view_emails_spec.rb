@@ -22,7 +22,7 @@ RSpec.describe "View Emails", service: :claims, type: :system do
 
   def when_i_visit_the_emails_page
     click_on "Settings"
-    click_on "Emails"
+    click_on "View email templates"
   end
 
   def then_i_can_see_the_list_of_claims_email_templates

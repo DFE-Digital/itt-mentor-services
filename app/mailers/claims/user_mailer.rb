@@ -74,4 +74,24 @@ class Claims::UserMailer < Claims::ApplicationMailer
                          service_name:,
                          service_url: claims_root_url(utm_source: "email", utm_medium: "notification", utm_campaign: "school"))
   end
+
+  def claims_have_not_been_submitted(user)
+    claim_window = Claims::ClaimWindow.current
+    academic_year_name = claim_window.academic_year_name
+    deadline = l(claim_window.ends_on, format: :long)
+
+    notify_email to: user.email,
+                 subject: t(".subject", deadline:),
+                 body: t(
+                   ".body",
+                   claim_window: Claims::ClaimWindow.current,
+                   next_claim_window_opens: l(Claims::ClaimWindow.next&.starts_on, format: :long),
+                   user_name: user.first_name,
+                   deadline:,
+                   academic_year_name:,
+                   service_name:,
+                   support_email:,
+                   sign_in_url: sign_in_url(utm_source: "email", utm_medium: "notification", utm_campaign: "school"),
+                 )
+  end
 end
