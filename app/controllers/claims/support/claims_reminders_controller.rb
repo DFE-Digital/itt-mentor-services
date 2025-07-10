@@ -16,10 +16,6 @@ class Claims::Support::ClaimsRemindersController < Claims::Support::ApplicationC
     }
   end
 
-  def providers_no_claims_submitted
-    @providers = Claims::Provider.where.missing(:claims)
-  end
-
   private
 
   def set_claim_window
