@@ -8,6 +8,7 @@ class Claims::SamplingResponse::GenerateCSVFile < ApplicationService
     school_local_authority
     school_type_of_establishment
     school_group
+    provider_name
     claim_submission_date
     mentor_full_name
     mentor_hours_of_training
@@ -32,6 +33,7 @@ class Claims::SamplingResponse::GenerateCSVFile < ApplicationService
           row["school_local_authority"],
           row["school_type_of_establishment"],
           row["school_group"],
+          row["provider_name"],
           row["claim_submission_date"],
           row["mentor_full_name"],
           row["mentor_hours_of_training"],
