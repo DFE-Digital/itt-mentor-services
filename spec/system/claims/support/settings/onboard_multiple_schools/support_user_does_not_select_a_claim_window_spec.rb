@@ -37,7 +37,7 @@ RSpec.describe "Support user does not select a claim window", service: :claims, 
   end
 
   def and_i_navigate_to_onboard_multiple_schools
-    click_on "Onboard schools"
+    click_on "Make schools eligible to submit claims"
   end
 
   def then_i_see_the_claim_window_page
