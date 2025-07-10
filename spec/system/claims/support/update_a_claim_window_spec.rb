@@ -58,7 +58,7 @@ RSpec.describe "Update a claim window", freeze: "17 July 2024", service: :claims
 
   def when_i_visit_the_claim_windows_page
     click_on "Settings"
-    click_on "Claim windows"
+    click_on "Manage claim windows"
   end
 
   def then_i_see(content)

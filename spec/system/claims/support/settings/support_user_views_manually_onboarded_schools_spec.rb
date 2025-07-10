@@ -38,11 +38,11 @@ RSpec.describe "Support user views manually onboarded schools", service: :claims
   end
 
   def then_i_see_the_manually_onboarded_schools_link
-    expect(page).to have_link("Manually onboarded schools", href: "/support/manually_onboarded_schools")
+    expect(page).to have_link("View manually onboarded schools", href: "/support/manually_onboarded_schools")
   end
 
   def when_i_click_on_the_manually_onboarded_schools_link
-    click_on "Manually onboarded schools"
+    click_on "View manually onboarded schools"
   end
 
   def then_i_see_the_manually_onboarded_schools_page

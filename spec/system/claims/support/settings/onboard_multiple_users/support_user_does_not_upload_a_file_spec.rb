@@ -31,7 +31,7 @@ RSpec.describe "Support user does not upload a file", service: :claims, type: :s
   end
 
   def and_i_navigate_to_onboard_multiple_users
-    click_on "Onboard users"
+    click_on "Invite users to the service"
   end
 
   def then_i_see_the_upload_page

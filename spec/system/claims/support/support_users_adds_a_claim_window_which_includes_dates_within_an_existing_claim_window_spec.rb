@@ -46,7 +46,7 @@ RSpec.describe "Support user adds a claim window which includes dates within an 
   end
 
   def and_click_on_claims_windows
-    click_on "Claim windows"
+    click_on "Manage claim windows"
   end
 
   def then_i_see_the_claims_windows_index_page

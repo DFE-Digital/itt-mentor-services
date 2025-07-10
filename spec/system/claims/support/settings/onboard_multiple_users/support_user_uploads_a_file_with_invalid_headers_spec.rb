@@ -32,7 +32,7 @@ RSpec.describe "Support user uploads a file with invalid headers", service: :cla
   end
 
   def and_i_navigate_to_onboard_multiple_users
-    click_on "Onboard users"
+    click_on "Invite users to the service"
   end
 
   def then_i_see_the_upload_page
