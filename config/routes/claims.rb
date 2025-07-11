@@ -304,8 +304,10 @@ scope module: :claims, as: :claims, constraints: {
     resources :claims_reminders do
       collection do
         get "schools_not_submitted_claims", to: "claims_reminders#schools_not_submitted_claims", as: :schools_not_submitted_claims
-        get "providers_no_claims_submitted", to: "claims_reminders#providers_no_claims_submitted", as: :remind_providers
         post "schools_not_submitted_claims", to: "claims_reminders#send_schools_not_submitted_claims", as: :send_schools_not_submitted_claims
+
+        get "providers_not_submitted_claims", to: "claims_reminders#providers_not_submitted_claims", as: :providers_not_submitted_claims
+        post "providers_not_submitted_claims", to: "claims_reminders#send_providers_not_submitted_claims", as: :send_providers_not_submitted_claims
       end
     end
 
