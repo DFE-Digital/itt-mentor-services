@@ -59,9 +59,20 @@ class Claims::MentorTraining < ApplicationRecord
 
   delegate :full_name, to: :mentor, prefix: true, allow_nil: true
   delegate :name, to: :provider, prefix: true, allow_nil: true
+  delegate :school, to: :claim
+  delegate :region, to: :school
+  delegate :region_funding_available_per_hour, to: :school
 
   def set_training_type
     self.training_type = training_allowance.training_type
+  end
+
+  def corrected_hours_completed
+    hours_completed - hours_clawed_back.to_i
+  end
+
+  def clawback_amount
+    corrected_hours_completed * region_funding_available_per_hour
   end
 
   private
