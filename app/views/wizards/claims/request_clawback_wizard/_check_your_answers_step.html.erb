@@ -46,11 +46,15 @@
         <%= govuk_summary_list(html_attributes: { id: "mentor-training-#{mentor_training.id}" }) do |summary_list| %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".number_of_hours")) %>
-            <% row.with_value(text: current_step.mentor_training_clawback_hours(mentor_training)) %>
+            <% row.with_value(text: current_step.mentor_training_correct_hours(mentor_training)) %>
             <% row.with_action(text: t(".change"),
                                href: step_path(@wizard.step_name_for_mentor_training_clawback(mentor_training)),
                                visually_hidden_text: t(".number_of_hours"),
                                classes: ["govuk-link--no-visited-state"]) %>
+          <% end %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".hours_clawed_back")) %>
+            <% row.with_value(text: current_step.mentor_training_clawback_hours(mentor_training)) %>
           <% end %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: t(".rate")) %>
