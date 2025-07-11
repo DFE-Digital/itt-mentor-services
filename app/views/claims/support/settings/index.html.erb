@@ -23,8 +23,6 @@
       <h2 class="govuk-heading-m"><%= t(".developer_tools") %></h2>
       <%= govuk_list [
         govuk_link_to(t(".background_jobs"), "/good_job", no_visited_state: true, new_tab: true),
-        # Uncomment the following line and add a translation to add a link to the feature flags page
-        # govuk_link_to(t(".feature_flags"), "/flipper", no_visited_state: true, new_tab: true),
         (govuk_link_to(t(".reset_database"), reset_claims_support_database_path, no_visited_state: true) unless HostingEnvironment.env.production?),
         (govuk_link_to(t(".revert_claims_to_submitted"), revert_to_submitted_claims_support_database_databases_claims_path, no_visited_state: true) unless HostingEnvironment.env.production?),
       ], spaced: true %>
