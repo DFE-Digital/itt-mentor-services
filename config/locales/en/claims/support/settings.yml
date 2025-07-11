@@ -7,6 +7,7 @@ en:
           background_jobs: Background jobs
           claim_windows: Manage claim windows
           schools_not_submitted_claims: Remind schools to submit claims
+          providers_not_submitted_claims: Remind providers to submit claims
           emails: View email templates
           reset_database: Reset database
           revert_claims_to_submitted: Revert all claims to 'Submitted'

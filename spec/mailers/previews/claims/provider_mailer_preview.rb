@@ -9,6 +9,10 @@ class Claims::ProviderMailerPreview < ActionMailer::Preview
     Claims::ProviderMailer.resend_sampling_checks_required(provider_sampling, email_address: "example@example.com")
   end
 
+  def claims_have_not_been_submitted
+    Claims::ProviderMailer.claims_have_not_been_submitted(provider_name: provider.name, email_address: "test.provider@example.com")
+  end
+
   private
 
   def provider_sampling
