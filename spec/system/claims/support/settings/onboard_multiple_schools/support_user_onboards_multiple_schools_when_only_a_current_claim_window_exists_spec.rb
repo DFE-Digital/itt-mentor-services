@@ -57,7 +57,7 @@ RSpec.describe "Support user onboards multiple schools when only a current claim
   end
 
   def and_i_navigate_to_onboard_multiple_schools
-    click_on "Onboard schools"
+    click_on "Make schools eligible to submit claims"
   end
 
   def then_i_see_the_upload_page

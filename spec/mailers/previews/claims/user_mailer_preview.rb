@@ -19,6 +19,10 @@ class Claims::UserMailerPreview < ActionMailer::Preview
     Claims::UserMailer.claim_requires_clawback(claim, user)
   end
 
+  def claims_have_not_been_submitted
+    Claims::UserMailer.claims_have_not_been_submitted(user)
+  end
+
   private
 
   def user

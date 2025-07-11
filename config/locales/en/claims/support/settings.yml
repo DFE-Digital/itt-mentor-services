@@ -5,10 +5,14 @@ en:
         index:
           heading: Settings
           background_jobs: Background jobs
-          claim_windows: Claim windows
-          emails: Emails
+          claim_windows: Manage claim windows
+          schools_not_submitted_claims: Remind schools to submit claims
+          emails: View email templates
           reset_database: Reset database
           revert_claims_to_submitted: Revert all claims to 'Submitted'
-          onboard_users: Onboard users
-          onboard_schools: Onboard schools
-          manually_onboarded_schools: Manually onboarded schools
+          onboard_users: Invite users to the service
+          onboard_schools: Make schools eligible to submit claims
+          manually_onboarded_schools: View manually onboarded schools
+          service_management: Service management
+          service_information: Service information
+          developer_tools: Developer tools

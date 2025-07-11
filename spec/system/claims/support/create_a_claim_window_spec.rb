@@ -41,7 +41,7 @@ RSpec.describe "Create a claim window", freeze: "20 July 2024", service: :claims
 
   def when_i_visit_the_claim_windows_page
     click_on "Settings"
-    click_on "Claim windows"
+    click_on "Manage claim windows"
   end
 
   def and_i_click_on_the_add_claim_window_button

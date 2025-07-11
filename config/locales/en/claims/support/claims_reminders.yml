@@ -1,0 +1,16 @@
+en:
+  claims:
+    support:
+      claims_reminders:
+        send_schools_not_submitted_claims:
+          success: Emails dispatched successfully
+          success_body: An email has been sent to all of the users for schools that have not submitted claims for the current claim window.
+        schools_not_submitted_claims:
+          heading: Remind schools to submit claims
+          number_of_schools:
+            one: There is currently %{count} school that has not submitted claims for the current claim window.
+            other: There are currently %{count} schools that have not submitted claims for the current claim window.
+          deadline: The deadline for submitting claims is %{deadline}, the email that is sent will use this date.
+          warning: An email will be sent to all of the users for schools that have not submitted claims for the current claim window. This action cannot be undone.
+          send_reminders: Send reminders
+          no_schools: All eligible schools have submitted claims for the current claim window, therefore no reminders can be sent.

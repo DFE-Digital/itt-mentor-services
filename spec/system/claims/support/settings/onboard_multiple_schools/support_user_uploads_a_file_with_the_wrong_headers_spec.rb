@@ -42,7 +42,7 @@ RSpec.describe "Support user does upload a file with wrong headers", service: :c
   end
 
   def and_i_navigate_to_onboard_multiple_schools
-    click_on "Onboard schools"
+    click_on "Make schools eligible to submit claims"
   end
 
   def then_i_see_the_upload_page
