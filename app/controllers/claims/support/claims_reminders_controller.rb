@@ -6,7 +6,7 @@ class Claims::Support::ClaimsRemindersController < Claims::Support::ApplicationC
   def schools_not_submitted_claims; end
 
   def send_schools_not_submitted_claims
-    @schools.flat_map(&:users).each do |user|
+    Claims::User.joins(:schools).where(schools: { id: @schools.ids }).find_each do |user|
       Claims::UserMailer.claims_have_not_been_submitted(user).deliver_later
     end
 
@@ -23,7 +23,7 @@ class Claims::Support::ClaimsRemindersController < Claims::Support::ApplicationC
   end
 
   def set_schools
-    @schools = Claims::School.includes(:users, :eligible_claim_windows)
+    @schools = Claims::School.includes(:eligible_claim_windows)
                              .where(eligible_claim_windows: { id: @claim_window.id })
                              .where.missing(:claims)
   end
