@@ -11,6 +11,10 @@
 
         <p class="govuk-body"><%= t(".deadline", deadline: l(@claim_window.ends_on, format: :long)) %></p>
 
+        <p class="govuk-body">
+          <%= govuk_link_to(t(".preview"), url_for(controller: "/rails/mailers", action: :preview, path: "claims/provider_mailer/claims_have_not_been_submitted"), no_visited_state: true, new_tab: true) %>
+        </p>
+
         <%= govuk_warning_text(text: t(".warning")) %>
 
         <%= govuk_button_to(t(".send_reminders"), send_providers_not_submitted_claims_claims_support_claims_reminders_path) %>

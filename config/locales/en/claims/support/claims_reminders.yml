@@ -27,3 +27,4 @@ en:
             warning: An email will be sent to all of the providers that have not had claims assigned to them for the current claim window. This action cannot be undone.
             send_reminders: Send reminders
             no_providers: All providers have had claims assigned to them for the current claim window, therefore no reminders can be sent.
+            preview: Preview email
