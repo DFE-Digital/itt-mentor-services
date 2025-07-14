@@ -366,4 +366,67 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
       end
     end
   end
+
+  describe "#claims_have_not_been_submitted" do
+    subject(:claims_have_not_been_submitted_email) do
+      described_class.claims_have_not_been_submitted(
+        provider_name: provider_name,
+        email_address: email_address,
+      )
+    end
+
+    let(:provider_name) { "Aes Sedai Trust" }
+    let(:email_address) { "admin@aes-sedai-trust.com" }
+    let!(:claim_window) { create(:claim_window, :current) }
+    let!(:next_claim_window) { create(:claim_window, :upcoming) }
+
+    it "sends the claims have not been submitted email" do
+      expect(claims_have_not_been_submitted_email.to).to contain_exactly(email_address)
+      expect(claims_have_not_been_submitted_email.subject).to eq("Deadline #{I18n.l(claim_window.ends_on, format: :long)}: your schools haven’t claimed for ITT mentor funding")
+      expect(claims_have_not_been_submitted_email.body.to_s.squish).to eq(<<~EMAIL.squish)
+        Dear Aes Sedai Trust,
+
+        The Claim Funding for ITT Mentoring Training digital service launched in April 2025.
+
+        Your placement schools are eligible to claim funding for the time their ITT mentors spent in training this academic year.
+
+        However, no claims are currently associated with you as an accredited provider, which means your schools may be missing out on funding they’re entitled to.
+
+        ## What You Need to Do
+
+        To help your schools claim their funding:
+
+        1. Add all your placement schools for this academic year to the Register trainee teacher service.
+        2. Contact your placement schools to advise them to submit their claims via the new service.
+
+        ## Claim Deadline
+
+        The deadline for schools to submit claims is #{I18n.l(claim_window.ends_on, format: :long)}. Claims submitted after this date will need to wait until the next window opens on #{I18n.l(next_claim_window.starts_on, format: :long)}.
+
+        ## Guidance for Schools
+
+        ## How to Access the Service
+
+        1. Check for an onboarding email from DfE.
+        2. If not received, ask the school’s DfE Sign-in approver to check and add users.
+        3. If no one has received it, confirm with the accredited provider that the school is on the Register trainee teacher service.
+        4. For help, contact: [#{support_email}](mailto:#{support_email})
+
+        ### How to Make a Claim
+
+        - Sign in using a DfE Sign-in account\*
+        - Claim for ITT general mentors only (for ECT mentors, [follow this guidance](https://www.gov.uk/guidance/funding-and-eligibility-for-ecf-based-training))
+        - Ensure the mentor’s name matches the Teacher Register (update via [Access Teaching Qualifications](https://www.gov.uk/guidance/access-your-teaching-qualifications) if needed)\*\*
+
+        \\* DfE Sign-in now uses multi-factor authentication. Users may need to create a new account with a secure password.
+        \\*\\* To update a mentor’s name, submit a change via Access Teaching Qualifications.
+
+        For more information, see [additional guidance](https://assets.publishing.service.gov.uk/media/67448404e26d6f8ca3cb358d/General_mentor_training_-_additional_guidance.pdf) or contact: [#{support_email}](mailto:#{support_email}).
+
+        Kind regards
+
+        #{service_name} team
+      EMAIL
+    end
+  end
 end
