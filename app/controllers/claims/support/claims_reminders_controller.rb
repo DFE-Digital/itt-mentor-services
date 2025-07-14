@@ -45,7 +45,7 @@ class Claims::Support::ClaimsRemindersController < Claims::Support::ApplicationC
   end
 
   def set_providers
-    @providers = Claims::Provider.left_outer_joins(:claims)
+    @providers = Claims::Provider.accredited.left_outer_joins(:claims)
                                  .where(claims: { id: nil })
                                  .or(
                                    Claims::Provider.left_outer_joins(:claims)

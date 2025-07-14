@@ -19,7 +19,7 @@ RSpec.describe "Support user views remind providers to submit claims when school
 
   def and_schools_have_not_claimed
     @claim_window = create(:claim_window, :current)
-    @provider = create(:claims_provider, name: "Test Provider")
+    @provider = create(:claims_provider, name: "Test Provider", accredited: true)
     @claim = create(:claim, claim_window: @claim_window)
     @school = create(:claims_school, eligible_claim_windows: [@claim_window])
   end
@@ -44,6 +44,7 @@ RSpec.describe "Support user views remind providers to submit claims when school
     expect(page).to have_h1("Remind providers to submit claims")
     expect(page).to have_paragraph("There is currently 1 provider that has not had claims assigned to them for the current claim window.")
     expect(page).to have_paragraph("The deadline for submitting claims is #{I18n.l(@claim_window.ends_on, format: :long)}, the email that is sent will use this date.")
+    expect(page).to have_link("Preview email (opens in new tab)", href: "/rails/mailers/claims/provider_mailer/claims_have_not_been_submitted")
     expect(page).to have_warning_text("An email will be sent to all of the providers that have not had claims assigned to them for the current claim window. This action cannot be undone.")
     expect(page).to have_button("Send reminders")
   end
