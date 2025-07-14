@@ -16,7 +16,7 @@ class Api::ProviderSuggestionsController < ApplicationController
   end
 
   def claims_providers_scope
-    @claims_providers_scope ||= Provider.excluding_niot_providers
+    @claims_providers_scope ||= Provider.excluding_niot_providers.accredited
   end
 
   def placements_providers_scope

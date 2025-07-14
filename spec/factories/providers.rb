@@ -69,6 +69,10 @@ FactoryBot.define do
       name { "NIoT: National Institute of Teaching, founded by the School-Led Development Trust" }
     end
 
+    trait :accredited do
+      accredited { true }
+    end
+
     transient do
       email_addresses { [] }
     end
@@ -90,6 +94,6 @@ FactoryBot.define do
     end
   end
 
-  factory :claims_provider, class: "Claims::Provider", parent: :provider
+  factory :claims_provider, class: "Claims::Provider", parent: :provider, traits: %i[accredited]
   factory :placements_provider, class: "Placements::Provider", parent: :provider, traits: %i[placements]
 end
