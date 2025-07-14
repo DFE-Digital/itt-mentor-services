@@ -16,7 +16,11 @@ RSpec.describe Claims::RequestClawbackWizard::CheckYourAnswersStep, type: :model
 
   let(:mentor_training_clawback_step) do
     instance_double(Claims::RequestClawbackWizard::MentorTrainingClawbackStep).tap do |mentor_training_clawback_step|
-      allow(mentor_training_clawback_step).to receive_messages(number_of_hours: 15, reason_for_clawback: "reason")
+      allow(mentor_training_clawback_step).to receive_messages(
+        number_of_hours: 5,
+        hours_clawed_back: 15,
+        reason_for_clawback: "reason",
+      )
     end
   end
 

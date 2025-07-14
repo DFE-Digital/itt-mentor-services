@@ -118,7 +118,7 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
 
     expect(page).to have_element(:span, text: "Clawbacks - Claim 11111111", class: "govuk-caption-l")
     expect(page).to have_h1("Clawback details")
-    expect(page).to have_element(:label, text: "Number of hours to clawback", class: "govuk-label")
+    expect(page).to have_element(:label, text: "Number of hours the mentor worked", class: "govuk-label")
     expect(page).to have_element(:div, text: "Jane Smith's original claim was for 20 hours", class: "govuk-hint")
     expect(page).to have_element(:label, text: "Notes on your decision", class: "govuk-label")
     expect(page).to have_element(:div, text: "Only include details related to Jane Smith", class: "govuk-hint")
@@ -132,7 +132,7 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
 
     expect(page).to have_element(:span, text: "Clawbacks - Claim 11111111", class: "govuk-caption-l")
     expect(page).to have_h1("Clawback details")
-    expect(page).to have_element(:label, text: "Number of hours to clawback", class: "govuk-label")
+    expect(page).to have_element(:label, text: "Number of hours the mentor worked", class: "govuk-label")
     expect(page).to have_element(:div, text: "John Doe's original claim was for 20 hours", class: "govuk-hint")
     expect(page).to have_element(:label, text: "Notes on your decision", class: "govuk-label")
     expect(page).to have_element(:div, text: "Only include details related to John Doe", class: "govuk-hint")
@@ -158,7 +158,7 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
   end
 
   def then_i_see_a_validation_error_when_entering_too_many_hours_for_jane_smith
-    expect(page).to have_validation_error("must be less than or equal to 20")
+    expect(page).to have_validation_error("must be less than 20")
   end
 
   def when_i_enter_valid_data
@@ -174,27 +174,31 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
     expect(page).to have_element(:p, text: "This information will be shared with #{@claim_one.school_name}.", class: "govuk-body")
 
     within "#claim-totals" do
-      expect(page).to have_summary_list_row("Hours", "40")
+      expect(page).to have_summary_list_row("Hours the mentor worked", "40")
       expect(page).to have_summary_list_row("Hourly rate", @claim_one.school_region_funding_available_per_hour)
       expect(page).to have_summary_list_row("Amount", "£#{ActiveSupport::NumberHelper.number_to_delimited(@claim_one.school_region_funding_available_per_hour * 40)}")
     end
 
     within "#clawback-totals" do
-      expect(page).to have_summary_list_row("Hours", "16")
+      expect(page).to have_summary_list_row("Hours the mentor worked", "24")
       expect(page).to have_summary_list_row("Hourly rate", @claim_one.school_region_funding_available_per_hour)
-      expect(page).to have_summary_list_row("Clawback amount", "£#{@claim_one.school_region_funding_available_per_hour * 16}")
+      expect(page).to have_summary_list_row("Clawback amount", "£#{ActiveSupport::NumberHelper.number_to_delimited(@claim_one.school_region_funding_available_per_hour * 24)}")
     end
 
     within "#mentor-training-#{@john_doe_training.id}" do
-      expect(page).to have_summary_list_row("Hours", "8")
+      expect(page).to have_summary_list_row("Original hours claimed", "20")
+      expect(page).to have_summary_list_row("Hours the mentor worked", "8")
+      expect(page).to have_summary_list_row("Hours clawed back", "12")
       expect(page).to have_summary_list_row("Hourly rate", @claim_one.school_region_funding_available_per_hour)
-      expect(page).to have_summary_list_row("Clawback amount", "£#{@claim_one.school_region_funding_available_per_hour * 8}")
+      expect(page).to have_summary_list_row("Clawback amount", "£#{@claim_one.school_region_funding_available_per_hour * 12}")
     end
 
     within "#mentor-training-#{@john_doe_training.id}" do
-      expect(page).to have_summary_list_row("Hours", "8")
+      expect(page).to have_summary_list_row("Original hours claimed", "20")
+      expect(page).to have_summary_list_row("Hours the mentor worked", "8")
+      expect(page).to have_summary_list_row("Hours clawed back", "12")
       expect(page).to have_summary_list_row("Hourly rate", @claim_one.school_region_funding_available_per_hour)
-      expect(page).to have_summary_list_row("Clawback amount", "£#{@claim_one.school_region_funding_available_per_hour * 8}")
+      expect(page).to have_summary_list_row("Clawback amount", "£#{@claim_one.school_region_funding_available_per_hour * 12}")
     end
 
     expect(page).to have_button("Request clawback")

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support user edits a clawback request on a claim", service: :claims, type: :system do
+RSpec.describe "Support user edits a mentor training for a clawback request", service: :claims, type: :system do
   include ActionView::Helpers::TextHelper
 
   scenario do
@@ -39,12 +39,18 @@ RSpec.describe "Support user edits a clawback request on a claim", service: :cla
                         reference: 11_111_111)
 
     @john_doe = create(:claims_mentor, first_name: "John", last_name: "Doe")
+    @sarah_jane = create(:claims_mentor, first_name: "Sarah", last_name: "Jane")
 
     @john_doe_training = create(:mentor_training, claim: @claim_one, mentor: @john_doe,
                                                   hours_completed: 20, not_assured: true,
                                                   hours_clawed_back: 7,
                                                   reason_not_assured: "Mismatch in hours recorded compared with hours claimed.",
                                                   reason_clawed_back: "Mismatch in hours recorded compared with hours claimed.")
+    @sarah_jane_training = create(:mentor_training, claim: @claim_one, mentor: @sarah_jane,
+                                                    hours_completed: 15, not_assured: true,
+                                                    hours_clawed_back: 5,
+                                                    reason_not_assured: "Mismatch in hours recorded compared with hours claimed.",
+                                                    reason_clawed_back: "Mismatch in hours recorded compared with hours claimed.")
   end
 
   def and_i_am_signed_in
@@ -77,13 +83,15 @@ RSpec.describe "Support user edits a clawback request on a claim", service: :cla
     expect(page).to have_summary_list_row("Accredited provider", @claim_one.provider.name)
     expect(page).to have_h2("Hours of training")
     @claim_one.mentor_trainings.not_assured.order_by_mentor_full_name.each do |mentor_training|
-      within(".govuk-summary-card") do
-        expect(page).to have_element(:div, text: mentor_training.mentor.full_name, class: "govuk-summary-card__title-wrapper")
-        within(".govuk-summary-card__content") do
-          expect(page).to have_summary_list_row("Mentor worked hours", pluralize(mentor_training.corrected_hours_completed, "hour"))
-          expect(page).to have_summary_list_row("Original hours claimed", pluralize(mentor_training.hours_completed, "hour"))
-          expect(page).to have_summary_list_row("Hours clawed back", pluralize(mentor_training.hours_clawed_back, "hour"))
-          expect(page).to have_summary_list_row("Reason for clawback", mentor_training.reason_clawed_back)
+      within("#mentor-training-#{mentor_training.id}") do
+        within(".govuk-summary-card") do
+          expect(page).to have_element(:div, text: mentor_training.mentor.full_name, class: "govuk-summary-card__title-wrapper")
+          within(".govuk-summary-card__content") do
+            expect(page).to have_summary_list_row("Mentor worked hours", pluralize(mentor_training.corrected_hours_completed, "hour"))
+            expect(page).to have_summary_list_row("Original hours claimed", pluralize(mentor_training.hours_completed, "hour"))
+            expect(page).to have_summary_list_row("Hours clawed back", pluralize(mentor_training.hours_clawed_back, "hour"))
+            expect(page).to have_summary_list_row("Reason for clawback", mentor_training.reason_clawed_back)
+          end
         end
       end
     end
@@ -97,7 +105,7 @@ RSpec.describe "Support user edits a clawback request on a claim", service: :cla
   alias_method :and_i_see_the_show_page_for_claim_one, :then_i_see_the_show_page_for_claim_one
 
   def when_i_click_on_the_change_link_for_clawback_reason
-    all("a", text: "Change").last.click
+    click_on "Change John Doe Mentor worked hours"
   end
 
   def then_i_see_the_clawback_step_for_claim_one
@@ -146,13 +154,15 @@ RSpec.describe "Support user edits a clawback request on a claim", service: :cla
   def and_i_see_the_updated_show_page_for_claim_one
     expect(page).to have_h2("Hours of training")
     @claim_one.mentor_trainings.not_assured.order_by_mentor_full_name.each do |mentor_training|
-      within(".govuk-summary-card") do
-        expect(page).to have_element(:div, text: mentor_training.mentor.full_name, class: "govuk-summary-card__title-wrapper")
-        within(".govuk-summary-card__content") do
-          expect(page).to have_summary_list_row("Mentor worked hours", pluralize(mentor_training.corrected_hours_completed, "hour"))
-          expect(page).to have_summary_list_row("Original hours claimed", pluralize(mentor_training.hours_completed, "hour"))
-          expect(page).to have_summary_list_row("Hours clawed back", pluralize(mentor_training.hours_clawed_back, "hour"))
-          expect(page).to have_summary_list_row("Reason for clawback", mentor_training.reason_clawed_back)
+      within("#mentor-training-#{mentor_training.id}") do
+        within(".govuk-summary-card") do
+          expect(page).to have_element(:div, text: mentor_training.mentor.full_name, class: "govuk-summary-card__title-wrapper")
+          within(".govuk-summary-card__content") do
+            expect(page).to have_summary_list_row("Mentor worked hours", pluralize(mentor_training.corrected_hours_completed, "hour"))
+            expect(page).to have_summary_list_row("Original hours claimed", pluralize(mentor_training.hours_completed, "hour"))
+            expect(page).to have_summary_list_row("Hours clawed back", pluralize(mentor_training.hours_clawed_back, "hour"))
+            expect(page).to have_summary_list_row("Reason for clawback", mentor_training.reason_clawed_back)
+          end
         end
       end
     end
