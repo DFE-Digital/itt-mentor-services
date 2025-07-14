@@ -6,7 +6,7 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
-      <% if @providers.count.positive? %>
+      <% if @providers.exists? %>
         <p class="govuk-body"><%= t(".number_of_providers", count: @providers.count) %></p>
 
         <p class="govuk-body"><%= t(".deadline", deadline: l(@claim_window.ends_on, format: :long)) %></p>
