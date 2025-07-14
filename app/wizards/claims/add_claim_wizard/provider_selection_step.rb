@@ -4,7 +4,10 @@ class Claims::AddClaimWizard::ProviderSelectionStep < BaseStep
   validates :id, presence: true
 
   def provider
-    @provider ||= Claims::Provider.find_by(id:)
+    @provider ||= Claims::Provider
+      .excluding_niot_providers
+      .accredited
+      .find_by(id:)
   end
 
   def scope
