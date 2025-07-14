@@ -42,6 +42,7 @@ RSpec.describe "Support user views remind schools to submit claims when schools 
     expect(page).to have_h1("Remind schools to submit claims")
     expect(page).to have_paragraph("There is currently 1 school that has not submitted claims for the current claim window.")
     expect(page).to have_paragraph("The deadline for submitting claims is #{I18n.l(@claim_window.ends_on, format: :long)}, the email that is sent will use this date.")
+    expect(page).to have_link("Preview email (opens in new tab)", href: "/rails/mailers/claims/user_mailer/claims_have_not_been_submitted")
     expect(page).to have_warning_text("An email will be sent to all of the users for schools that have not submitted claims for the current claim window. This action cannot be undone.")
     expect(page).to have_button("Send reminders")
   end

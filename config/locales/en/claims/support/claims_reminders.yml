@@ -14,3 +14,4 @@ en:
           warning: An email will be sent to all of the users for schools that have not submitted claims for the current claim window. This action cannot be undone.
           send_reminders: Send reminders
           no_schools: All eligible schools have submitted claims for the current claim window, therefore no reminders can be sent.
+          preview: Preview email
