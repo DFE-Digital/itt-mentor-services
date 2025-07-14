@@ -118,14 +118,22 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
     expect(page).to have_summary_list_row("Accredited provider", @clawback_requested_claim.provider_name)
     expect(page).to have_h2("Hours of training")
     @clawback_requested_claim.mentor_trainings.not_assured.order_by_mentor_full_name.each do |mentor_training|
-      expect(page).to have_element(:dt, text: mentor_training.mentor.full_name, class: "govuk-summary-list__key")
-      expect(page).to have_summary_list_row("Original hours claimed", pluralize(mentor_training.hours_completed, "hour"))
-      expect(page).to have_summary_list_row("Amount clawed back", pluralize(mentor_training.hours_clawed_back, "hour"))
-      expect(page).to have_summary_list_row("Reason for clawback", mentor_training.reason_clawed_back)
+      within(".govuk-summary-card") do
+        expect(page).to have_element(:div, text: mentor_training.mentor.full_name, class: "govuk-summary-card__title-wrapper")
+        within(".govuk-summary-card__content") do
+          expect(page).to have_summary_list_row("Mentor worked hours", pluralize(mentor_training.corrected_hours_completed, "hour"))
+          expect(page).to have_summary_list_row("Original hours claimed", pluralize(mentor_training.hours_completed, "hour"))
+          expect(page).to have_summary_list_row("Hours clawed back", pluralize(mentor_training.hours_clawed_back, "hour"))
+          expect(page).to have_summary_list_row("Reason for clawback", mentor_training.reason_clawed_back)
+        end
+      end
     end
-    expect(page).to have_h2("Grant funding")
-    expect(page).to have_summary_list_row("Original claim amount", @clawback_requested_claim.amount)
-    expect(page).to have_summary_list_row("Hours clawed back", pluralize(@clawback_requested_claim.mentor_trainings.sum(:hours_clawed_back), "hour"))
+
+    within("#grant_funding") do
+      expect(page).to have_h2("Grant funding")
+      expect(page).to have_summary_list_row("Original claim amount", @clawback_requested_claim.amount)
+      expect(page).to have_summary_list_row("Hours clawed back", pluralize(@clawback_requested_claim.mentor_trainings.sum(:hours_clawed_back), "hour"))
+    end
   end
 
   def when_i_click_on_change
@@ -138,7 +146,7 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
 
     expect(page).to have_element(:span, text: "Clawbacks - Claim 22222222", class: "govuk-caption-l")
     expect(page).to have_h1("Clawback details")
-    expect(page).to have_element(:label, text: "Number of hours to clawback", class: "govuk-label")
+    expect(page).to have_element(:label, text: "Number of hours the mentor worked", class: "govuk-label")
     expect(page).to have_element(:div, text: "James Chess' original claim was for 15 hours", class: "govuk-hint")
     expect(page).to have_element(:label, text: "Notes on your decision", class: "govuk-label")
     expect(page).to have_element(:div, text: "Only include details related to #{@mentor.full_name}", class: "govuk-hint")
