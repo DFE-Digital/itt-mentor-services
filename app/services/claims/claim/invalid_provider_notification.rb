@@ -7,7 +7,7 @@ class Claims::Claim::InvalidProviderNotification < ApplicationService
 
     users_to_notify.find_each do |user|
       claims = Claims::Claim.where(created_by: user, status: :invalid_provider)
-      Claims::UserMailer.claims_assigned_to_invalid_provider(user.id, claims.ids).deliver_later
+      Claims::UserMailer.claims_assigned_to_invalid_provider(user, claims).deliver_later
     end
   end
 end
