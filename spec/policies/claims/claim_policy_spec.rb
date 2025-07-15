@@ -402,4 +402,32 @@ describe Claims::ClaimPolicy do
       end
     end
   end
+
+  permissions :invalid_provider? do
+    context "when the claim is invalid provider and created by the user" do
+      let(:claim) { build(:claim, status: :invalid_provider, created_by: user) }
+
+      it "grants access" do
+        expect(claim_policy).to permit(user, claim)
+      end
+    end
+
+    context "when the claim is invalid provider and created by another user" do
+      let(:other_user) { build(:claims_user) }
+      let(:claim) { build(:claim, status: :invalid_provider, created_by: other_user) }
+
+      it "denies access" do
+        expect(claim_policy).not_to permit(user, claim)
+      end
+    end
+
+    context "when the user is a support user" do
+      let(:support_user) { build(:claims_support_user) }
+      let(:claim) { build(:claim, status: :invalid_provider, created_by: user) }
+
+      it "grants access" do
+        expect(claim_policy).to permit(support_user, claim)
+      end
+    end
+  end
 end
