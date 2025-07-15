@@ -119,6 +119,14 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
     end
   end
 
+  context "when the claim's status is 'invalid_provider'" do
+    let(:claim) { build(:claim, status: :invalid_provider) }
+
+    it "renders a red tag" do
+      expect(page).to have_css(".govuk-tag--red", text: "Invalid provider")
+    end
+  end
+
   Claims::Claim.statuses.each_key do |status|
     context "with a claim of status '#{status}'" do
       let(:claim) { build(:claim, status:) }
