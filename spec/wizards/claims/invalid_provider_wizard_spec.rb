@@ -99,20 +99,5 @@ RSpec.describe Claims::InvalidProviderWizard do
         expect(wizard.provider).to eq(another_provider)
       end
     end
-
-    context "when the provider is set in the provider options step" do
-      let(:another_provider) { create(:claims_provider, :niot) }
-
-      let(:state) do
-        {
-          "provider" => { "id" => another_provider.name },
-          "provider_options" => { "id" => another_provider.id, "search_param" => another_provider.name },
-        }
-      end
-
-      it "returns the provider assigned to the provider options step" do
-        expect(wizard.provider).to eq(another_provider)
-      end
-    end
   end
 end

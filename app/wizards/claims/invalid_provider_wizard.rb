@@ -25,7 +25,7 @@ module Claims
     end
 
     def provider
-      steps[:provider_options]&.provider || steps[:provider]&.provider
+      steps[:provider]&.provider
     end
 
     private
