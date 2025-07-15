@@ -4,6 +4,8 @@ REGION=UK South
 SERVICE_NAME=itt-mentor-services
 SERVICE_SHORT=ittms
 DOCKER_REPOSITORY=ghcr.io/dfe-digital/itt-mentor-services
+TERRAFORM_MODULES_TAG=2381-aks-spike-image-pull-using-ghcr
+ENVIRONMENT=dv_review
 
 help:
 	@grep -E '^[a-zA-Z\._\-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
