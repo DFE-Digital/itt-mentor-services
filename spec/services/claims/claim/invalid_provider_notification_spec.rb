@@ -44,6 +44,36 @@ RSpec.describe Claims::Claim::InvalidProviderNotification, type: :service do
       it "does not send duplicate notifications for the same user" do
         expect(Claims::UserMailer).to have_received(:claims_assigned_to_invalid_provider).with(user, [claim1, claim2]).once
       end
+
+      context "when there are over 100 emails to send" do
+        let(:mailer_double) { instance_double(ActionMailer::MessageDelivery) }
+        let(:users) { create_list(:claims_user, 150) }
+
+        before do
+          users.each do |user|
+            create(:claim, created_by: user, status: :invalid_provider)
+          end
+
+          allow(Claims::UserMailer).to receive(:claims_assigned_to_invalid_provider).and_return(mailer_double)
+          allow(mailer_double).to receive(:deliver_later)
+
+          described_class.call
+        end
+
+        it "sends notifications in batches and delays them accordingly", :aggregate_failures do
+          users[0..99].each do |user|
+            claims = Claims::Claim.where(created_by: user, status: :invalid_provider)
+            expect(Claims::UserMailer).to have_received(:claims_assigned_to_invalid_provider).with(user.id, claims.ids)
+            expect(mailer_double).to have_received(:deliver_later).with(wait: 0.minutes)
+          end
+
+          users[100..149].each do |user|
+            claims = Claims::Claim.where(created_by: user, status: :invalid_provider)
+            expect(Claims::UserMailer).to have_received(:claims_assigned_to_invalid_provider).with(user.id, claims.ids)
+            expect(mailer_double).to have_received(:deliver_later).with(wait: 1.minute)
+          end
+        end
+      end
     end
   end
 end
