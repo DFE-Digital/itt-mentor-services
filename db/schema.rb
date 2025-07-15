@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_17_154722) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_15_093722) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -18,7 +18,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_17_154722) do
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
   create_enum "appetite", ["actively_looking", "interested", "not_open", "already_organised"]
-  create_enum "claim_status", ["internal_draft", "draft", "submitted", "payment_in_progress", "payment_information_requested", "payment_information_sent", "paid", "payment_not_approved", "sampling_in_progress", "sampling_provider_not_approved", "sampling_not_approved", "clawback_requested", "clawback_in_progress", "clawback_complete"]
+  create_enum "claim_status", ["internal_draft", "draft", "submitted", "payment_in_progress", "payment_information_requested", "payment_information_sent", "paid", "payment_not_approved", "sampling_in_progress", "sampling_provider_not_approved", "sampling_not_approved", "clawback_requested", "clawback_in_progress", "clawback_complete", "invalid_provider"]
   create_enum "mentor_training_type", ["refresher", "initial"]
   create_enum "placement_status", ["draft", "published"]
   create_enum "placement_year_group", ["nursery", "reception", "year_1", "year_2", "year_3", "year_4", "year_5", "year_6", "mixed_year_groups"]
