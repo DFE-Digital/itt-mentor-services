@@ -25,6 +25,7 @@ en:
         clawback_requested: Ready for clawback
         clawback_in_progress: Sent to payer for clawback
         clawback_complete: Clawback complete
+        invalid_provider: Invalid provider
       claims/claim_activity/action:
         approved_by_school: School %{school_name} approved audit for claim %{claim_reference}
         clawback_requested: Clawback requested for claim %{claim_reference}

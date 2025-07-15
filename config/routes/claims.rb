@@ -60,6 +60,10 @@ scope module: :claims, as: :claims, constraints: {
           get "edit", to: "claims/edit_claim#new", as: :new_edit_claim
           get "edit/:state_key/:step", to: "claims/edit_claim#edit", as: :edit_claim
           put "edit/:state_key/:step", to: "claims/edit_claim#update"
+
+          get "invalid_provider", to: "claims/invalid_provider#new", as: :new_invalid_provider
+          get "invalid_provider/:state_key/:step", to: "claims/invalid_provider#edit", as: :invalid_provider
+          put "invalid_provider/:state_key/:step", to: "claims/invalid_provider#update"
         end
 
         collection do

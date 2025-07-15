@@ -1,0 +1,9 @@
+en:
+  claims:
+    schools:
+      claims:
+        invalid_provider:
+          edit:
+            caption: Claim details
+            save: Accept and submit
+            cancel: Cancel

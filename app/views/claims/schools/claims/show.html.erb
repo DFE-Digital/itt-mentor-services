@@ -22,8 +22,12 @@
         <p class="govuk-body"><%= t(".submitted_by", name: @claim.submitted_by.full_name, date: l(@claim.submitted_on, format: :long)) %></p>
       <% end %>
 
+      <% if @claim.invalid_provider? %>
+        <%= govuk_warning_text text: t(".invalid_provider") %>
+      <% end %>
+
       <h2 class="govuk-heading-m"><%= t(".details") %></h2>
-      <%= govuk_summary_list(actions: policy(@claim).edit?) do |summary_list| %>
+      <%= govuk_summary_list(actions: policy(@claim).edit? || @claim.invalid_provider?) do |summary_list| %>
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: Claims::Claim.human_attribute_name(:school)) %>
           <% row.with_value(text: @school.name) %>
@@ -38,10 +42,10 @@
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: Claims::Claim.human_attribute_name(:accredited_provider)) %>
             <% row.with_value(text: @claim.provider.name) %>
-            <% if policy(@claim).edit? %>
+            <% if policy(@claim).edit? || @claim.invalid_provider? %>
               <% row.with_action(
                 text: t("change"),
-                href: edit_attribute_path(:provider),
+                href: @claim.invalid_provider? ? new_invalid_provider_claims_school_claim_path(@school, @claim, step: :provider) : edit_attribute_path(:provider),
                 visually_hidden_text: Claims::Claim.human_attribute_name(:accredited_provider),
                 html_attributes: { class: "govuk-link--no-visited-state" },
               ) %>
