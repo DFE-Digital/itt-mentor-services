@@ -175,3 +175,39 @@ en:
           Kind regards,
           
           %{service_name} team
+
+      claims_assigned_to_invalid_provider:
+        subject: "Action by 25 July: Change your ITT mentor funding claim to ensure it gets paid"
+        body: |
+          Dear %{user_name}
+  
+          Thank you for submitting a claim through the %{service_name} service.
+        
+          The following claims, submitted by your school, cannot be processed because the ITT provider recorded is not an accredited provider:
+          
+          %{claims}
+          
+          To ensure your claim can be processed and paid, please log-in to the service and record the accredited provider.
+          
+          ## What You Need to Do
+        
+          To update your accredited provider:
+          
+          1. Log in to the %{service_name} service
+          2. Go to the ‘Claims’ tab
+          3. Click on a claim with the "Invalid provider" status
+          4. Click ‘Change’ next to your current provider selection
+          5. Enter your accredited provider's name in the search box
+          6. Click ‘Continue’
+        
+          ## Deadline: Friday 25 July 2025
+          
+          Please update your provider information by this date to avoid delays in payment.
+        
+          If you are unsure who the accredited provider is, contact your ITT provider to confirm or review this list: [https://www.gov.uk/government/publications/accredited-initial-teacher-training-itt-providers/list-of-providers-accredited-to-deliver-itt-from-september-2024]([https://www.gov.uk/government/publications/accredited-initial-teacher-training-itt-providers/list-of-providers-accredited-to-deliver-itt-from-september-2024).
+        
+          If you have any questions, contact us at:
+          [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk)
+          
+          Kind regards,
+          %{service_name} team

@@ -94,4 +94,18 @@ class Claims::UserMailer < Claims::ApplicationMailer
                    sign_in_url: sign_in_url(utm_source: "email", utm_medium: "notification", utm_campaign: "school"),
                  )
   end
+
+  def claims_assigned_to_invalid_provider(user, claims)
+    claims_string = claims.pluck(:reference).to_sentence
+
+    notify_email to: user.email,
+                 subject: t(".subject"),
+                 body: t(
+                   ".body",
+                   user_name: user.first_name,
+                   support_email:,
+                   service_name:,
+                   claims: claims_string,
+                 )
+  end
 end

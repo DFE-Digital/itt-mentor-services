@@ -341,4 +341,57 @@ RSpec.describe Claims::UserMailer, type: :mailer do
       EMAIL
     end
   end
+
+  describe "claims_assigned_to_invalid_provider" do
+    subject(:claims_assigned_to_invalid_provider_email) { described_class.claims_assigned_to_invalid_provider(user, claims) }
+
+    let(:user) { create(:claims_user, first_name: "Joe") }
+    let(:claims) do
+      [
+        create(:claim, reference: "123", school: school),
+        create(:claim, reference: "456", school: school),
+        create(:claim, reference: "789", school: school),
+      ]
+    end
+    let(:school) { create(:claims_school, name: "Shelbyville Elementary") }
+
+    it "sends the invalid provider email" do
+      expect(claims_assigned_to_invalid_provider_email.to).to contain_exactly(user.email)
+      expect(claims_assigned_to_invalid_provider_email.subject).to eq("Action by 25 July: Change your ITT mentor funding claim to ensure it gets paid")
+      expect(claims_assigned_to_invalid_provider_email.body.to_s.squish).to eq(<<~EMAIL.squish)
+        Dear Joe
+
+        Thank you for submitting a claim through the Claim funding for mentor training service.
+
+        The following claims, submitted by your school, cannot be processed because the ITT provider recorded is not an accredited provider:
+
+        #{claims.pluck(:reference).to_sentence}
+
+        To ensure your claim can be processed and paid, please log-in to the service and record the accredited provider.
+
+        ## What You Need to Do
+
+        To update your accredited provider:
+
+        1. Log in to the Claim funding for mentor training service
+        2. Go to the ‘Claims’ tab
+        3. Click on a claim with the "Invalid provider" status
+        4. Click ‘Change’ next to your current provider selection
+        5. Enter your accredited provider's name in the search box
+        6. Click ‘Continue’
+
+        ## Deadline: Friday 25 July 2025
+
+        Please update your provider information by this date to avoid delays in payment.
+
+        If you are unsure who the accredited provider is, contact your ITT provider to confirm or review this list: [https://www.gov.uk/government/publications/accredited-initial-teacher-training-itt-providers/list-of-providers-accredited-to-deliver-itt-from-september-2024]([https://www.gov.uk/government/publications/accredited-initial-teacher-training-itt-providers/list-of-providers-accredited-to-deliver-itt-from-september-2024).
+
+        If you have any questions, contact us at:
+        [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk)
+
+        Kind regards,
+        Claim funding for mentor training team
+      EMAIL
+    end
+  end
 end

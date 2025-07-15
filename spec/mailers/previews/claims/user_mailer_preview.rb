@@ -23,6 +23,10 @@ class Claims::UserMailerPreview < ActionMailer::Preview
     Claims::UserMailer.claims_have_not_been_submitted(user)
   end
 
+  def claims_assigned_to_invalid_provider
+    Claims::UserMailer.claims_assigned_to_invalid_provider(user, [claim, claim, claim])
+  end
+
   private
 
   def user
