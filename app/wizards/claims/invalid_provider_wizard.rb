@@ -13,7 +13,6 @@ module Claims
 
     def define_steps
       add_step(AddClaimWizard::ProviderStep)
-      add_step(AddClaimWizard::ProviderOptionsStep) if steps.fetch(:provider).provider.blank?
     end
 
     def update_claim

@@ -343,14 +343,14 @@ RSpec.describe Claims::UserMailer, type: :mailer do
   end
 
   describe "claims_assigned_to_invalid_provider" do
-    subject(:claims_assigned_to_invalid_provider_email) { described_class.claims_assigned_to_invalid_provider(user, claims) }
+    subject(:claims_assigned_to_invalid_provider_email) { described_class.claims_assigned_to_invalid_provider(user.id, claims.map(&:id)) }
 
     let(:user) { create(:claims_user, first_name: "Joe") }
     let(:claims) do
       [
-        create(:claim, reference: "123", school: school),
-        create(:claim, reference: "456", school: school),
-        create(:claim, reference: "789", school: school),
+        create(:claim, reference: "123", school: school, status: :invalid_provider),
+        create(:claim, reference: "456", school: school, status: :invalid_provider),
+        create(:claim, reference: "789", school: school, status: :invalid_provider),
       ]
     end
     let(:school) { create(:claims_school, name: "Shelbyville Elementary") }
