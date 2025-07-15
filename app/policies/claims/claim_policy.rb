@@ -15,6 +15,10 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
     edit?
   end
 
+  def invalid_provider?
+    record.invalid_provider? && (record.created_by == user || user.support_user?)
+  end
+
   def submit?
     current_claim_window? && record.in_draft? && school_eligible_to_claim?
   end
