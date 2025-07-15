@@ -70,8 +70,9 @@ class Claims::Claim < ApplicationRecord
   PAYMENT_ACTIONABLE_STATUSES = %w[payment_information_requested payment_information_sent].freeze
   SAMPLING_STATUSES = %w[sampling_in_progress sampling_provider_not_approved].freeze
   CLAWBACK_STATUSES = %w[clawback_requested clawback_in_progress sampling_not_approved].freeze
+  INCIDENT_STATUSES = %w[invalid_provider].freeze
 
-  scope :active, -> { where(status: ACTIVE_STATUSES) }
+  scope :active, -> { where(status: ACTIVE_STATUSES + INCIDENT_STATUSES) }
   scope :order_created_at_desc, -> { order(created_at: :desc) }
   scope :not_draft_status, -> { where.not(status: DRAFT_STATUSES) }
   scope :paid_for_current_academic_year, lambda {
@@ -95,6 +96,7 @@ class Claims::Claim < ApplicationRecord
          clawback_requested: "clawback_requested",
          clawback_in_progress: "clawback_in_progress",
          clawback_complete: "clawback_complete",
+         invalid_provider: "invalid_provider",
        },
        validate: true
 

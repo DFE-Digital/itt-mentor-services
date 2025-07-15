@@ -118,6 +118,7 @@ RSpec.describe Claims::Claim, type: :model do
           clawback_requested: "clawback_requested",
           clawback_in_progress: "clawback_in_progress",
           clawback_complete: "clawback_complete",
+          invalid_provider: "invalid_provider",
         )
         .backed_by_column_of_type(:enum)
     end
