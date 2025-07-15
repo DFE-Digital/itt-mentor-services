@@ -29,20 +29,20 @@ RSpec.describe Claims::Claim::InvalidProviderNotification, type: :service do
 
       before do
         allow(Claims::UserMailer).to receive(:claims_assigned_to_invalid_provider)
-          .with(user, [claim1, claim2]).and_return(instance_double(ActionMailer::MessageDelivery, deliver_later: true))
+          .with(user.id, [claim1.id, claim2.id]).and_return(instance_double(ActionMailer::MessageDelivery, deliver_later: true))
         allow(Claims::UserMailer).to receive(:claims_assigned_to_invalid_provider)
-          .with(other_user, [other_claim]).and_return(instance_double(ActionMailer::MessageDelivery, deliver_later: true))
+          .with(other_user.id, [other_claim.id]).and_return(instance_double(ActionMailer::MessageDelivery, deliver_later: true))
 
         described_class.call
       end
 
       it "sends email notifications to users with invalid provider claims" do
-        expect(Claims::UserMailer).to have_received(:claims_assigned_to_invalid_provider).with(user, [claim1, claim2])
-        expect(Claims::UserMailer).to have_received(:claims_assigned_to_invalid_provider).with(other_user, [other_claim])
+        expect(Claims::UserMailer).to have_received(:claims_assigned_to_invalid_provider).with(user.id, [claim1.id, claim2.id])
+        expect(Claims::UserMailer).to have_received(:claims_assigned_to_invalid_provider).with(other_user.id, [other_claim.id])
       end
 
       it "does not send duplicate notifications for the same user" do
-        expect(Claims::UserMailer).to have_received(:claims_assigned_to_invalid_provider).with(user, [claim1, claim2]).once
+        expect(Claims::UserMailer).to have_received(:claims_assigned_to_invalid_provider).with(user.id, [claim1.id, claim2.id]).once
       end
 
       context "when there are over 100 emails to send" do
