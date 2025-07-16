@@ -26,6 +26,8 @@
       <% table.with_head do |head| %>
         <% head.with_row do |row| %>
           <% row.with_cell text: 1 %>
+          <% row.with_cell text: t(".csv_table.headers.first_name") %>
+          <% row.with_cell text: t(".csv_table.headers.last_name") %>
           <% row.with_cell text: t(".csv_table.headers.school_urn") %>
           <% row.with_cell text: t(".csv_table.headers.email") %>
         <% end %>
@@ -36,6 +38,22 @@
         <% csv_row = current_step.csv[csv_row_index] %>
         <% body.with_row do |row| %>
           <% row.with_cell(text: csv_row_index + 2) %>
+          <% row.with_cell do %>
+            <p>
+              <% if current_step.missing_first_name_rows.include?(csv_row_index) %>
+                <strong class="error-text"><%= t(".csv_table.errors.missing_first_name") %></strong><br>
+              <% end %>
+              <%= csv_row["first_name"] %>
+            </p>
+          <% end %>
+          <% row.with_cell do %>
+            <p>
+              <% if current_step.missing_last_name_rows.include?(csv_row_index) %>
+                <strong class="error-text"><%= t(".csv_table.errors.missing_last_name") %></strong><br>
+              <% end %>
+              <%= csv_row["last_name"] %>
+            </p>
+          <% end %>
           <% row.with_cell do %>
             <p>
               <% if current_step.invalid_school_urn_rows.include?(csv_row_index) %>

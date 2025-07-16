@@ -14,6 +14,8 @@ RSpec.describe Claims::OnboardUsersWizard::UploadStep, type: :model do
         csv_upload: nil,
         csv_content: nil,
         file_name: nil,
+        missing_first_name_rows: [],
+        missing_last_name_rows: [],
         invalid_email_rows: [],
         invalid_school_urn_rows: [],
       )
@@ -88,7 +90,7 @@ RSpec.describe Claims::OnboardUsersWizard::UploadStep, type: :model do
           it "returns errors for missing headers" do
             expect(step.valid?).to be(false)
             expect(step.errors.messages[:csv_upload]).to include(
-              "Your file needs a column called ‘email’ and ‘school_urn’.",
+              "Your file needs a column called ‘email’, ‘school_urn’, ‘first_name’, and ‘last_name’.",
             )
             expect(step.errors.messages[:csv_upload]).to include(
               "Right now it has columns called ‘something_random’.",
@@ -135,6 +137,34 @@ RSpec.describe Claims::OnboardUsersWizard::UploadStep, type: :model do
         pending "Validation temp removed"
         expect(csv_inputs_valid).to be(false)
         expect(step.invalid_email_rows).to contain_exactly(0)
+      end
+    end
+
+    context "when csv_content contains missing first_name" do
+      let(:csv_content) do
+        "school_name,school_urn,first_name,last_name,email\r\n" \
+        "London School,111111,James,Samson,test@sample.com\r\n" \
+        "London School,111111,,Smith,test@sample.com"
+      end
+      let(:attributes) { { csv_content: } }
+
+      it "returns false and assigns the csv row to the missing first_name attribute" do
+        expect(csv_inputs_valid).to be(false)
+        expect(step.missing_first_name_rows).to contain_exactly(1)
+      end
+    end
+
+    context "when csv_content contains missing last_name attribute" do
+      let(:csv_content) do
+        "school_name,school_urn,first_name,last_name,email\r\n" \
+        "London School,111111,James,,test@sample.com\r\n" \
+        "London School,111111,James,Samson,test@sample.com"
+      end
+      let(:attributes) { { csv_content: } }
+
+      it "returns false and assigns the csv row to the missing last_name attribute" do
+        expect(csv_inputs_valid).to be(false)
+        expect(step.missing_last_name_rows).to contain_exactly(0)
       end
     end
 
