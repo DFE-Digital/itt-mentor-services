@@ -361,13 +361,13 @@ RSpec.describe Claims::UserMailer, type: :mailer do
       expect(claims_assigned_to_invalid_provider_email.body.to_s.squish).to eq(<<~EMAIL.squish)
         Dear Joe
 
-        Thank you for submitting a claim through the Claim funding for mentor training service.
+        Thank you for using the Claim funding for mentor training service.
 
         The following claims, submitted by your school, cannot be processed because the ITT provider recorded is not an accredited provider:
 
         #{claims.pluck(:reference).to_sentence}
 
-        To ensure your claim can be processed and paid, please log-in to the service and record the accredited provider.
+        To ensure your claims can be processed and paid, please log-in to the service and record the accredited provider. You will need to do this for each claim with the “Invalid provider” status.
 
         ## What You Need to Do
 
