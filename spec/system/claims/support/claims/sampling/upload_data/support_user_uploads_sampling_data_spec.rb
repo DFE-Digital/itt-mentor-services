@@ -146,7 +146,7 @@ RSpec.describe "Support user uploads sampling data", service: :claims, type: :sy
       "url" => "/support/claims/sampling/claims/#{@current_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @current_claim.academic_year.name,
-      "provider_name" => @current_claim.provider.name,
+      "provider_name" => @current_claim.provider_name,
       "submitted_at" => I18n.l(@current_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })

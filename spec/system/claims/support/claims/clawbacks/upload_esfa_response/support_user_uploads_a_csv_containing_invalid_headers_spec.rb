@@ -78,7 +78,7 @@ RSpec.describe "Support user uploads a CSV containing invalid headers",
       "url" => "/support/claims/clawbacks/claims/#{@clawback_in_progress_claim.id}",
       "status" => "Clawback in progress",
       "academic_year" => @clawback_in_progress_claim.academic_year.name,
-      "provider_name" => @clawback_in_progress_claim.provider.name,
+      "provider_name" => @clawback_in_progress_claim.provider_name,
       "submitted_at" => I18n.l(@clawback_in_progress_claim.submitted_at.to_date, format: :long),
       "amount" => @clawback_in_progress_claim.amount.format(symbol: true, decimal_mark: ".", no_cents: true),
     })

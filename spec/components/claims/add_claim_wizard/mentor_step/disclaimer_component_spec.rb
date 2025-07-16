@@ -29,7 +29,7 @@ RSpec.describe Claims::AddClaimWizard::MentorStep::DisclaimerComponent, type: :c
       render_inline described_class.new(mentor_step:)
 
       expect(page).to have_css(".govuk-details")
-      expect(page).to have_content "If a mentor you have added is not showing in the list, they have already claimed 20 hours with #{claim.provider.name}."
+      expect(page).to have_content "If a mentor you have added is not showing in the list, they have already claimed 20 hours with #{claim.provider_name}."
       expect(page).to have_content "If you think this is a mistake, contact ittmentor.funding@education.gov.uk."
     end
   end

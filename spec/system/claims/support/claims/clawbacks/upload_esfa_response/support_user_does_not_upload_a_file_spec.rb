@@ -62,7 +62,7 @@ RSpec.describe "Support user does not upload a file",
       "url" => "/support/claims/clawbacks/claims/#{@claim.id}",
       "status" => "Clawback in progress",
       "academic_year" => @claim.academic_year.name,
-      "provider_name" => @claim.provider.name,
+      "provider_name" => @claim.provider_name,
       "submitted_at" => I18n.l(@claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })

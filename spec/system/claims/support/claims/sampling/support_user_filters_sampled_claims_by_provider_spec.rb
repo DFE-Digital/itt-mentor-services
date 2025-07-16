@@ -114,7 +114,7 @@ RSpec.describe "Support user filters sampled claims by provider", service: :clai
       "url" => "/support/claims/sampling/claims/#{@niot_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @niot_claim.academic_year.name,
-      "provider_name" => @niot_claim.provider.name,
+      "provider_name" => @niot_claim.provider_name,
       "submitted_at" => I18n.l(@niot_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })
@@ -126,7 +126,7 @@ RSpec.describe "Support user filters sampled claims by provider", service: :clai
       "url" => "/support/claims/sampling/claims/#{@bpn_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @bpn_claim.academic_year.name,
-      "provider_name" => @bpn_claim.provider.name,
+      "provider_name" => @bpn_claim.provider_name,
       "submitted_at" => I18n.l(@bpn_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })
