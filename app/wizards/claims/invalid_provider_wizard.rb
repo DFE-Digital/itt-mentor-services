@@ -19,12 +19,8 @@ module Claims
       Claims::Claim::Submit.call(claim: updated_claim, user: created_by)
     end
 
-    def setup_state
-      state["provider"] = { "id" => nil }
-    end
-
     def provider
-      steps[:provider]&.provider
+      steps.fetch(:provider).provider
     end
 
     private
