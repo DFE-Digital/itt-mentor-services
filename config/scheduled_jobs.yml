@@ -51,3 +51,8 @@ send_claims_slack_daily_roundup:
     cron: "0 16 * * *" # Every day at 16:00
     class: "Claims::Slack::DailyRoundupJob"
     description: "Sends a daily roundup Slack message"
+
+send_notify_email_batches:
+  cron: "*/1 * * * *" # Every minute
+  class: "NotifyEmailDispatchJob"
+  description: "Dispatches queued Notify emails in batches of 100"

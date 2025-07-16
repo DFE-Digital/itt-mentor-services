@@ -10,6 +10,20 @@ class ApplicationMailer < Mail::Notify::Mailer
 
   private
 
+  def view_mail(_template_id, subject:, to:, **_headers)
+    # Compose the email body from the view
+    body = render_to_string(template: "#{mailer_name}/#{action_name}")
+
+    NotifyEmailQueue.create!(
+      recipient: to,
+      subject: subject,
+      body: body,
+    )
+
+    # Return a dummy Mail::Message object so Rails mailer logic doesn't break
+    Mail::Message.new(to: to, subject: subject, body: body)
+  end
+
   def environment_prefix
     return "" if HostingEnvironment.env.in? %w[production test]
 

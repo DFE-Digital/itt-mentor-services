@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_15_093722) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_16_143424) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -332,6 +332,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_15_093722) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["trn"], name: "index_mentors_on_trn", unique: true
+  end
+
+  create_table "notify_email_queues", force: :cascade do |t|
+    t.string "recipient", null: false
+    t.string "subject", null: false
+    t.text "body", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "sent_at"
+    t.text "error"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipient"], name: "index_notify_email_queues_on_recipient"
+    t.index ["sent_at"], name: "index_notify_email_queues_on_sent_at"
+    t.index ["status"], name: "index_notify_email_queues_on_status"
   end
 
   create_table "partnerships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
