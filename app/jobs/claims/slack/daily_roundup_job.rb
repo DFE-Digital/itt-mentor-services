@@ -16,6 +16,7 @@ class Claims::Slack::DailyRoundupJob < ApplicationJob
       claim_amount: humanized_money_with_symbol(todays_claims.map(&:amount).sum),
       total_claims_count: total_claims.count,
       total_claims_amount: humanized_money_with_symbol(total_claims.map(&:amount).sum),
+      invalid_claim_count: total_claims.where(status: :invalid_provider).count,
     ).deliver_now
   end
 
