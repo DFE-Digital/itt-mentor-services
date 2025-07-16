@@ -1,5 +1,5 @@
 class Claims::ClaimSlackNotifier < Claims::ApplicationSlackNotifier
-  def claim_submitted_notification(academic_year: AcademicYear.for_date(Date.current), claim_count: 0, school_count: 0, provider_count: 0, claim_amount: "£0", total_claims_count: 0, total_claims_amount: "£0")
+  def claim_submitted_notification(academic_year: AcademicYear.for_date(Date.current), claim_count: 0, school_count: 0, provider_count: 0, claim_amount: "£0", total_claims_count: 0, total_claims_amount: "£0", invalid_claim_count: 0)
     message(
       blocks: [
         {
@@ -43,6 +43,13 @@ class Claims::ClaimSlackNotifier < Claims::ApplicationSlackNotifier
           text: {
             type: "mrkdwn",
             text: ":money_with_wings: *#{claim_amount}* has been claimed in the past 24 hours",
+          },
+        },
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: ":warning: *#{invalid_claim_count} #{"claim".pluralize(invalid_claim_count)}* #{has_or_have(invalid_claim_count)} an invalid provider and cannot be paid",
           },
         },
         {

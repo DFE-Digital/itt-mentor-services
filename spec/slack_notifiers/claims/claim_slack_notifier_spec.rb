@@ -10,6 +10,7 @@ RSpec.describe Claims::ClaimSlackNotifier do
         claim_count:,
         school_count:,
         provider_count:,
+        invalid_claim_count:,
         claim_amount:,
         total_claims_count:,
         total_claims_amount:,
@@ -21,6 +22,7 @@ RSpec.describe Claims::ClaimSlackNotifier do
       let(:school_count) { 3 }
       let(:provider_count) { 2 }
       let(:claim_amount) { "£5000" }
+      let(:invalid_claim_count) { 3 }
       let(:total_claims_count) { 100 }
       let(:total_claims_amount) { "£50000" }
 
@@ -70,6 +72,13 @@ RSpec.describe Claims::ClaimSlackNotifier do
             },
           },
           {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: ":warning: *#{invalid_claim_count} claims* have an invalid provider and cannot be paid",
+            },
+          },
+          {
             type: "divider",
           },
           {
@@ -102,6 +111,7 @@ RSpec.describe Claims::ClaimSlackNotifier do
       let(:school_count) { 1 }
       let(:claim_amount) { "£1000" }
       let(:provider_count) { 1 }
+      let(:invalid_claim_count) { 1 }
       let(:total_claims_count) { 1 }
       let(:total_claims_amount) { "£1000" }
 
@@ -141,6 +151,13 @@ RSpec.describe Claims::ClaimSlackNotifier do
             text: {
               type: "mrkdwn",
               text: ":student: *#{provider_count} #{"provider".pluralize(provider_count)}* has been selected for the first time",
+            },
+          },
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: ":warning: *#{invalid_claim_count} claim* has an invalid provider and cannot be paid",
             },
           },
           {
