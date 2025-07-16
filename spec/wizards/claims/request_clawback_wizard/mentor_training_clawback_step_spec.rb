@@ -69,4 +69,14 @@ RSpec.describe Claims::RequestClawbackWizard::MentorTrainingClawbackStep, type: 
       expect(step.mentor_training).to eq(mentor_trainings.first)
     end
   end
+
+  describe "#hours_clawed_back" do
+    let(:attributes) { { mentor_training_id: mentor_training.id, number_of_hours: 5, reason_for_clawback: "reason" } }
+
+    let(:mentor_training) { create(:mentor_training, claim:, hours_completed: 15, not_assured: true, reason_not_assured: "reason") }
+
+    it "returns the hours clawed back for a mentor training" do
+      expect(step.hours_clawed_back).to eq(10)
+    end
+  end
 end
