@@ -17,6 +17,8 @@ en:
 
               - email
               - school_urn
+              - first_name
+              - last_name
         confirmation_step:
           page_title: Are you sure you want to upload the users? - Onboard users - Claims
           caption: Onboard users
@@ -42,6 +44,8 @@ en:
               last_name: last_name
               email: email
             errors:
+              missing_first_name: Enter a first name
+              missing_last_name: Enter a last name
               invalid_email: Enter a valid email address
               invalid_school: Enter a valid onboarded school urn
           only_showing_rows_with_errors: Only showing rows with errors
