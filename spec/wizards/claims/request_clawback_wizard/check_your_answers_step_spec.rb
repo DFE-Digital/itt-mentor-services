@@ -46,6 +46,12 @@ RSpec.describe Claims::RequestClawbackWizard::CheckYourAnswersStep, type: :model
     end
   end
 
+  describe "#mentor_training_correct_hours" do
+    it "return the number of hours the mentor actually trained for" do
+      expect(step.mentor_training_correct_hours(mentor_training)).to eq(5)
+    end
+  end
+
   describe "#mentor_training_clawback_hours" do
     it "returns the number of hours for the mentor training clawback" do
       expect(step.mentor_training_clawback_hours(mentor_training)).to eq(15)

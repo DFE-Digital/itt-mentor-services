@@ -99,6 +99,9 @@ RSpec.describe Claims::MentorTraining, type: :model do
   describe "delegations" do
     it { is_expected.to delegate_method(:full_name).to(:mentor).with_prefix.allow_nil }
     it { is_expected.to delegate_method(:name).to(:provider).with_prefix.allow_nil }
+    it { is_expected.to delegate_method(:school).to(:claim) }
+    it { is_expected.to delegate_method(:region).to(:school) }
+    it { is_expected.to delegate_method(:region_funding_available_per_hour).to(:school) }
   end
 
   describe "#hours_completed" do
@@ -198,6 +201,26 @@ RSpec.describe Claims::MentorTraining, type: :model do
       mentor_training.set_training_type
 
       expect(mentor_training.training_type).to eq("pineapple")
+    end
+  end
+
+  describe "#corrected_hours_completed" do
+    subject(:corrected_hours_completed) { mentor_training.corrected_hours_completed }
+
+    let(:mentor_training) { build(:mentor_training, hours_completed: 20, hours_clawed_back: 5) }
+
+    it "returns the hours_completed minus the hours_clawed_back" do
+      expect(corrected_hours_completed).to eq(15)
+    end
+  end
+
+  describe "#clawback_amount" do
+    subject(:clawback_amount) { mentor_training.clawback_amount }
+
+    let(:mentor_training) { create(:mentor_training, hours_completed: 20, hours_clawed_back: 5) }
+
+    it "returns the amount claimed back for the mentor training" do
+      expect(clawback_amount.to_f).to eq(225.5)
     end
   end
 end
