@@ -54,7 +54,7 @@ RSpec.describe "Support user reverts claims to submitted", service: :claims, typ
       "url" => "/support/claims/#{@paid_claim.id}",
       "status" => "Paid",
       "academic_year" => @paid_claim.academic_year.name,
-      "provider_name" => @paid_claim.provider.name,
+      "provider_name" => @paid_claim.provider_name,
       "submitted_at" => I18n.l(@paid_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })
@@ -66,7 +66,7 @@ RSpec.describe "Support user reverts claims to submitted", service: :claims, typ
       "url" => "/support/claims/#{@sampling_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @sampling_claim.academic_year.name,
-      "provider_name" => @sampling_claim.provider.name,
+      "provider_name" => @sampling_claim.provider_name,
       "submitted_at" => I18n.l(@sampling_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })
@@ -78,7 +78,7 @@ RSpec.describe "Support user reverts claims to submitted", service: :claims, typ
       "url" => "/support/claims/#{@clawed_back_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @clawed_back_claim.academic_year.name,
-      "provider_name" => @clawed_back_claim.provider.name,
+      "provider_name" => @clawed_back_claim.provider_name,
       "submitted_at" => I18n.l(@clawed_back_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })
@@ -115,7 +115,7 @@ RSpec.describe "Support user reverts claims to submitted", service: :claims, typ
       "url" => "/support/claims/#{@paid_claim.id}",
       "status" => "Submitted",
       "academic_year" => @paid_claim.academic_year.name,
-      "provider_name" => @paid_claim.provider.name,
+      "provider_name" => @paid_claim.provider_name,
       "submitted_at" => I18n.l(@paid_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })
@@ -127,7 +127,7 @@ RSpec.describe "Support user reverts claims to submitted", service: :claims, typ
       "url" => "/support/claims/#{@sampling_claim.id}",
       "status" => "Submitted",
       "academic_year" => @sampling_claim.academic_year.name,
-      "provider_name" => @sampling_claim.provider.name,
+      "provider_name" => @sampling_claim.provider_name,
       "submitted_at" => I18n.l(@sampling_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })
@@ -139,7 +139,7 @@ RSpec.describe "Support user reverts claims to submitted", service: :claims, typ
       "url" => "/support/claims/#{@clawed_back_claim.id}",
       "status" => "Submitted",
       "academic_year" => @clawed_back_claim.academic_year.name,
-      "provider_name" => @clawed_back_claim.provider.name,
+      "provider_name" => @clawed_back_claim.provider_name,
       "submitted_at" => I18n.l(@clawed_back_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })

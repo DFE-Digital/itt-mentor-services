@@ -80,7 +80,7 @@ RSpec.describe "Support user filters sampled claims by academic year", service: 
       "url" => "/support/claims/sampling/claims/#{@current_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @current_claim.academic_year.name,
-      "provider_name" => @current_claim.provider.name,
+      "provider_name" => @current_claim.provider_name,
       "submitted_at" => I18n.l(@current_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })
@@ -92,7 +92,7 @@ RSpec.describe "Support user filters sampled claims by academic year", service: 
       "url" => "/support/claims/sampling/claims/#{@previous_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @previous_claim.academic_year.name,
-      "provider_name" => @previous_claim.provider.name,
+      "provider_name" => @previous_claim.provider_name,
       "submitted_at" => I18n.l(@previous_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })

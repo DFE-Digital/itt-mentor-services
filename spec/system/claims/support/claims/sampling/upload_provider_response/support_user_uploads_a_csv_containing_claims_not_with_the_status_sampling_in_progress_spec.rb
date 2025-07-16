@@ -86,7 +86,7 @@ RSpec.describe "Support user uploads a CSV containing claims not with the status
       "url" => "/support/claims/sampling/claims/#{@sampling_in_progress_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @sampling_in_progress_claim.academic_year.name,
-      "provider_name" => @sampling_in_progress_claim.provider.name,
+      "provider_name" => @sampling_in_progress_claim.provider_name,
       "submitted_at" => I18n.l(@sampling_in_progress_claim.submitted_at.to_date, format: :long),
       "amount" => @sampling_in_progress_claim.amount.format(symbol: true, decimal_mark: ".", no_cents: true),
     })

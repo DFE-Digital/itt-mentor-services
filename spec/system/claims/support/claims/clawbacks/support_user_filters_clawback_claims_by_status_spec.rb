@@ -121,7 +121,7 @@ RSpec.describe "Support user filters clawback claims by status", service: :claim
       "url" => "/support/claims/clawbacks/claims/#{@clawback_in_progress_claim.id}",
       "status" => "Clawback in progress",
       "academic_year" => @clawback_in_progress_claim.academic_year.name,
-      "provider_name" => @clawback_in_progress_claim.provider.name,
+      "provider_name" => @clawback_in_progress_claim.provider_name,
       "submitted_at" => I18n.l(@clawback_in_progress_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })
@@ -133,7 +133,7 @@ RSpec.describe "Support user filters clawback claims by status", service: :claim
       "url" => "/support/claims/clawbacks/claims/#{@clawback_requested_claim.id}",
       "status" => "Clawback in progress",
       "academic_year" => @clawback_requested_claim.academic_year.name,
-      "provider_name" => @clawback_requested_claim.provider.name,
+      "provider_name" => @clawback_requested_claim.provider_name,
       "submitted_at" => I18n.l(@clawback_requested_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })
@@ -145,7 +145,7 @@ RSpec.describe "Support user filters clawback claims by status", service: :claim
       "url" => "/support/claims/clawbacks/claims/#{@sampling_not_approved_claim.id}",
       "status" => "Sent to payer for clawback",
       "academic_year" => @sampling_not_approved_claim.academic_year.name,
-      "provider_name" => @sampling_not_approved_claim.provider.name,
+      "provider_name" => @sampling_not_approved_claim.provider_name,
       "submitted_at" => I18n.l(@sampling_not_approved_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })

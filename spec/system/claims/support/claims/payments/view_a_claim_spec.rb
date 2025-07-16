@@ -37,7 +37,7 @@ RSpec.describe "View claims", service: :claims, type: :system do
     expect(page).to have_content("Payer needs information")
     expect(page).to have_content("School#{claim.school_name}")
     expect(page).to have_content("Academic year#{claim.academic_year_name}")
-    expect(page).to have_content("Accredited provider#{claim.provider.name}")
+    expect(page).to have_content("Accredited provider#{claim.provider_name}")
 
     within(".govuk-inset-text") do
       expect(page).to have_content("Some reason")

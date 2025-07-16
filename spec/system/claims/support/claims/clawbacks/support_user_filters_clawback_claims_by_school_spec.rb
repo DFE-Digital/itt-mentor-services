@@ -114,7 +114,7 @@ RSpec.describe "Support user filters clawback claims by school", service: :claim
       "url" => "/support/claims/clawbacks/claims/#{@springfield_claim.id}",
       "status" => "Clawback in progress",
       "academic_year" => @springfield_claim.academic_year.name,
-      "provider_name" => @springfield_claim.provider.name,
+      "provider_name" => @springfield_claim.provider_name,
       "submitted_at" => I18n.l(@springfield_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })
@@ -126,7 +126,7 @@ RSpec.describe "Support user filters clawback claims by school", service: :claim
       "url" => "/support/claims/clawbacks/claims/#{@hogwarts_claim.id}",
       "status" => "Clawback in progress",
       "academic_year" => @hogwarts_claim.academic_year.name,
-      "provider_name" => @hogwarts_claim.provider.name,
+      "provider_name" => @hogwarts_claim.provider_name,
       "submitted_at" => I18n.l(@hogwarts_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })

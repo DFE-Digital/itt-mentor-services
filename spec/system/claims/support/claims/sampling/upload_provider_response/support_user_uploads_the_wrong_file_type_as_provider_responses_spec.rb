@@ -60,7 +60,7 @@ RSpec.describe "Support user uploads the wrong file type as provider responses",
       "url" => "/support/claims/sampling/claims/#{@claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @claim.academic_year.name,
-      "provider_name" => @claim.provider.name,
+      "provider_name" => @claim.provider_name,
       "submitted_at" => I18n.l(@claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })

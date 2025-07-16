@@ -56,7 +56,7 @@ RSpec.describe "Support user does not assign a support user to a claim", service
       "url" => "/support/claims/#{@claim.id}",
       "status" => "Submitted",
       "academic_year" => @claim.academic_year.name,
-      "provider_name" => @claim.provider.name,
+      "provider_name" => @claim.provider_name,
       "submitted_at" => I18n.l(@claim.submitted_at.to_date, format: :long),
       "amount" => "0.00",
     })

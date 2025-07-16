@@ -82,7 +82,7 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
     expect(page).to have_link("Request clawback", href: "/support/claims/clawbacks/claims/new/#{@claim_not_approved_claim.id}")
     expect(page).to have_summary_list_row("School", @claim_not_approved_claim.school_name)
     expect(page).to have_summary_list_row("Academic year", @claim_not_approved_claim.academic_year_name)
-    expect(page).to have_summary_list_row("Accredited provider", @claim_not_approved_claim.provider.name)
+    expect(page).to have_summary_list_row("Accredited provider", @claim_not_approved_claim.provider_name)
     expect(page).to have_h2("Hours of training")
     @claim_not_approved_claim.mentor_trainings.order_by_mentor_full_name.each do |mentor_training|
       expect(page).to have_summary_list_row(mentor_training.mentor.full_name, "#{mentor_training.hours_completed} hours")
@@ -115,7 +115,7 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
     expect(page).not_to have_link("Request clawback", href: "/support/claims/clawbacks/claims/new/#{@clawback_requested_claim.id}", class: "govuk-link govuk-button")
     expect(page).to have_summary_list_row("School", @clawback_requested_claim.school_name)
     expect(page).to have_summary_list_row("Academic year", @clawback_requested_claim.academic_year_name)
-    expect(page).to have_summary_list_row("Accredited provider", @clawback_requested_claim.provider.name)
+    expect(page).to have_summary_list_row("Accredited provider", @clawback_requested_claim.provider_name)
     expect(page).to have_h2("Hours of training")
     @clawback_requested_claim.mentor_trainings.not_assured.order_by_mentor_full_name.each do |mentor_training|
       expect(page).to have_element(:dt, text: mentor_training.mentor.full_name, class: "govuk-summary-list__key")
@@ -165,7 +165,7 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
     expect(page).not_to have_link("Request clawback", href: "/support/claims/clawbacks/claims/new/#{@clawback_in_progress_claim.id}", class: "govuk-link govuk-button")
     expect(page).to have_summary_list_row("School", @clawback_in_progress_claim.school_name)
     expect(page).to have_summary_list_row("Academic year", @clawback_in_progress_claim.academic_year_name)
-    expect(page).to have_summary_list_row("Accredited provider", @clawback_in_progress_claim.provider.name)
+    expect(page).to have_summary_list_row("Accredited provider", @clawback_in_progress_claim.provider_name)
     expect(page).to have_summary_list_row("Mentors") do |row|
       @clawback_in_progress_claim.mentors.each do |mentor|
         expect(row).to have_css("ul.govuk-list li", text: mentor.full_name)

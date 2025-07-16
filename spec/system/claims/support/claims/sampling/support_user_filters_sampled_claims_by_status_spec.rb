@@ -105,7 +105,7 @@ RSpec.describe "Support user filters sampled claims by status", service: :claims
       "url" => "/support/claims/sampling/claims/#{@sampling_in_progress_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @sampling_in_progress_claim.academic_year.name,
-      "provider_name" => @sampling_in_progress_claim.provider.name,
+      "provider_name" => @sampling_in_progress_claim.provider_name,
       "submitted_at" => I18n.l(@sampling_in_progress_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })
@@ -117,7 +117,7 @@ RSpec.describe "Support user filters sampled claims by status", service: :claims
       "url" => "/support/claims/sampling/claims/#{@sampling_provider_not_approved_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @sampling_provider_not_approved_claim.academic_year.name,
-      "provider_name" => @sampling_provider_not_approved_claim.provider.name,
+      "provider_name" => @sampling_provider_not_approved_claim.provider_name,
       "submitted_at" => I18n.l(@sampling_provider_not_approved_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })

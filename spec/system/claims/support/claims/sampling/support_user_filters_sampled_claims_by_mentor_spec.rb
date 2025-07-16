@@ -117,7 +117,7 @@ RSpec.describe "Support user filters sampled claims by mentor", service: :claims
       "url" => "/support/claims/sampling/claims/#{@mentor_1_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @mentor_1_claim.academic_year.name,
-      "provider_name" => @mentor_1_claim.provider.name,
+      "provider_name" => @mentor_1_claim.provider_name,
       "submitted_at" => I18n.l(@mentor_1_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })
@@ -129,7 +129,7 @@ RSpec.describe "Support user filters sampled claims by mentor", service: :claims
       "url" => "/support/claims/sampling/claims/#{@mentor_2_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @mentor_2_claim.academic_year.name,
-      "provider_name" => @mentor_2_claim.provider.name,
+      "provider_name" => @mentor_2_claim.provider_name,
       "submitted_at" => I18n.l(@mentor_2_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })
@@ -155,7 +155,7 @@ RSpec.describe "Support user filters sampled claims by mentor", service: :claims
       "url" => "/support/claims/sampling/claims/#{@mentor_1_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @mentor_1_claim.academic_year.name,
-      "provider_name" => @mentor_1_claim.provider.name,
+      "provider_name" => @mentor_1_claim.provider_name,
       "submitted_at" => I18n.l(@mentor_1_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })
@@ -167,7 +167,7 @@ RSpec.describe "Support user filters sampled claims by mentor", service: :claims
       "url" => "/support/claims/sampling/claims/#{@mentor_2_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @mentor_2_claim.academic_year.name,
-      "provider_name" => @mentor_2_claim.provider.name,
+      "provider_name" => @mentor_2_claim.provider_name,
       "submitted_at" => I18n.l(@mentor_2_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })

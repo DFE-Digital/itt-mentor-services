@@ -72,7 +72,7 @@ RSpec.describe "View payments claims", service: :claims, type: :system do
       "url" => "/support/claims/payments/claims/#{@information_requested_claim.id}",
       "status" => "Payer needs information",
       "academic_year" => @information_requested_claim.academic_year.name,
-      "provider_name" => @information_requested_claim.provider.name,
+      "provider_name" => @information_requested_claim.provider_name,
       "submitted_at" => I18n.l(@information_requested_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })
@@ -84,7 +84,7 @@ RSpec.describe "View payments claims", service: :claims, type: :system do
       "url" => "/support/claims/payments/claims/#{@information_sent_claim.id}",
       "status" => "Information sent to payer",
       "academic_year" => @information_sent_claim.academic_year.name,
-      "provider_name" => @information_sent_claim.provider.name,
+      "provider_name" => @information_sent_claim.provider_name,
       "submitted_at" => I18n.l(@information_sent_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })

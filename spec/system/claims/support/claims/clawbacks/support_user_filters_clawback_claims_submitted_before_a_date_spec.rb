@@ -90,7 +90,7 @@ RSpec.describe "Support user filters clawback claims submitted before a date", s
       "url" => "/support/claims/clawbacks/claims/#{@may_claim.id}",
       "status" => "Clawback in progress",
       "academic_year" => @may_claim.academic_year.name,
-      "provider_name" => @may_claim.provider.name,
+      "provider_name" => @may_claim.provider_name,
       "submitted_at" => I18n.l(@may_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })
@@ -102,7 +102,7 @@ RSpec.describe "Support user filters clawback claims submitted before a date", s
       "url" => "/support/claims/clawbacks/claims/#{@july_claim.id}",
       "status" => "Clawback in progress",
       "academic_year" => @july_claim.academic_year.name,
-      "provider_name" => @july_claim.provider.name,
+      "provider_name" => @july_claim.provider_name,
       "submitted_at" => I18n.l(@july_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })

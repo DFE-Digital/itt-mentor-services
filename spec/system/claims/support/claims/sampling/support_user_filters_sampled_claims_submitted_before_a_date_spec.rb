@@ -90,7 +90,7 @@ RSpec.describe "Support user filters sampled claims submitted before a date", se
       "url" => "/support/claims/sampling/claims/#{@may_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @may_claim.academic_year.name,
-      "provider_name" => @may_claim.provider.name,
+      "provider_name" => @may_claim.provider_name,
       "submitted_at" => I18n.l(@may_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })
@@ -102,7 +102,7 @@ RSpec.describe "Support user filters sampled claims submitted before a date", se
       "url" => "/support/claims/sampling/claims/#{@july_claim.id}",
       "status" => "Sampling in progress",
       "academic_year" => @july_claim.academic_year.name,
-      "provider_name" => @july_claim.provider.name,
+      "provider_name" => @july_claim.provider_name,
       "submitted_at" => I18n.l(@july_claim.submitted_at.to_date, format: :long),
       "amount" => "£0.00",
     })
