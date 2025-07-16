@@ -68,18 +68,6 @@ RSpec.describe Claims::InvalidProviderWizard do
     end
   end
 
-  describe "#setup_state" do
-    subject(:setup_state) { wizard.setup_state }
-
-    it "sets the state to values related to the claim" do
-      expect { setup_state }.to change(wizard, :state).to(
-        {
-          "provider" => { "id" => nil },
-        },
-      )
-    end
-  end
-
   describe "#provider" do
     context "when the provider isn't set in the provider step" do
       it "returns nil as the provider is invalid" do

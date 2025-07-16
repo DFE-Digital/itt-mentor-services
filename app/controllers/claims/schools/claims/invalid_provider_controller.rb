@@ -7,16 +7,13 @@ class Claims::Schools::Claims::InvalidProviderController < Claims::ApplicationCo
 
   helper_method :index_path
 
-  def new
-    @wizard.setup_state
-    redirect_to step_path(params.require(:step).to_sym)
-  end
-
   def update
     if @wizard.valid?
       @wizard.update_claim
       @wizard.reset_state
       redirect_to confirmation_claims_school_claim_path(@school, @wizard.claim)
+    else
+      render "edit"
     end
   end
 
