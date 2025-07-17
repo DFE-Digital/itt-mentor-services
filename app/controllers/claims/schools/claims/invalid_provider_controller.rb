@@ -8,7 +8,11 @@ class Claims::Schools::Claims::InvalidProviderController < Claims::ApplicationCo
   helper_method :index_path
 
   def update
-    if @wizard.valid?
+    if !@wizard.save_step
+      render "edit"
+    elsif @wizard.next_step.present?
+      redirect_to step_path(@wizard.next_step)
+    elsif @wizard.valid?
       @wizard.update_claim
       @wizard.reset_state
       redirect_to confirmation_claims_school_claim_path(@school, @wizard.claim)
