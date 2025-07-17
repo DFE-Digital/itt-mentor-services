@@ -13,3 +13,5 @@ en:
         subject: You have removed a provider from a placement
       placement_information_added_notification:
         subject: You have added placement information to Manage school placements
+      future_of_service_notification:
+        subject: Future of the Manage School Placements Service

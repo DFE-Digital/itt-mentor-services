@@ -306,4 +306,48 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
       end
     end
   end
+
+  describe "#future_of_service_notification" do
+    subject(:future_of_service_notification) { described_class.future_of_service_notification(user) }
+
+    let(:user) { create(:placements_user, first_name: "Sam") }
+
+    it "sends invitation email" do
+      expect(future_of_service_notification.to).to contain_exactly(user.email)
+      expect(future_of_service_notification.subject).to eq("Future of the Manage School Placements Service")
+      expect(future_of_service_notification.body.raw_source.gsub("\r\n", "\n")).to have_content <<~EMAIL
+        Dear Sam,
+
+        We are writing to inform you of upcoming changes to the Manage School Placements service and to thank you for participating in the pilot of this digital service.
+
+        ## Service Changes from September 2025
+        The Manage School Placements service will no longer be available in its current form after September 2025.
+
+        Over the past year we have tested the service, gathered extensive feedback through research with schools and providers and iteratively improved the service throughout. Our aim was to identify ways to support schools to participate in ITT and help providers manage and find school placements.
+
+        Whilst we have gained positive insights through the pilot and identified several features that would bring value to schools and providers, we have decided not to pursue a nationwide roll out of the service.
+
+        For this service to work effectively, we needed to be confident that the vast majority of schools and providers would use it. The pilot has shown that without mandating use of the service – something we did not want to do – it would be extremely difficult to encourage widespread engagement and usage. Existing systems to manage placements, workload concerns, and worries about increasing competition in the placement market were all reasons for a lack of confidence in the service. We took this feedback seriously which is why we have taken the decision not to roll out the service wider.
+
+        However, several aspects of the service did test well, particularly the creation of a process for schools to express an interest in offering placements. We will be exploring ways to enable this process to continue which we will keep you updated on.
+
+        ## What You Need to Do
+        To prepare for the closure of the service, we ask that you extract any data you may need from the service by Friday 26th September. If you require assistance with this, please don't hesitate to contact us.
+
+        ## Thank You
+        We would like to extend our sincere thanks for your participation in the pilot of this digital service. The insights we've gained have played a crucial role in shaping a more effective solution for both schools and providers.
+
+        If you have any questions or concerns, please feel free to reach out to us.
+
+        Kind regards,
+
+        The Manage school placements team.
+
+        ## Your account
+        [Sign in to Manage school placements](http://placements.localhost/sign-in?utm_campaign=email&utm_medium=notification&utm_source=email)
+
+        Manage school placements service
+      EMAIL
+    end
+  end
 end
