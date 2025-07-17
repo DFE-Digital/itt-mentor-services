@@ -37,6 +37,42 @@ RSpec.describe Claims::InvalidProviderWizard do
 
   before { mentor_1_training }
 
+  describe "#steps" do
+    subject { wizard.steps.keys }
+
+    let(:another_provider) { create(:claims_provider, :best_practice_network) }
+    let(:state) { { "provider" => { "id" => another_provider.id } } }
+
+    context "when the provider selected has not been claimed for with the maximum training hours" do
+      it { is_expected.to eq(%i[provider]) }
+    end
+
+    context "when the provider selected has already been claimed for with the maximum training hours" do
+      before do
+        another_claim = create(
+          :claim,
+          :submitted,
+          school:,
+          reference: "12345679",
+          provider: another_provider,
+          created_by:,
+          reviewed: true,
+          claim_window:,
+        )
+        create(
+          :mentor_training,
+          claim: another_claim,
+          mentor: mentor_1,
+          provider: another_provider,
+          hours_completed: 20,
+          date_completed: claim_window.starts_on + 1.day,
+        )
+      end
+
+      it { is_expected.to eq(%i[provider unable_to_assign_provider]) }
+    end
+  end
+
   describe "delegations" do
     it { is_expected.to delegate_method(:name).to(:provider).with_prefix(true) }
   end

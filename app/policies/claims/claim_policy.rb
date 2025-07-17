@@ -28,7 +28,7 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
   end
 
   def destroy?
-    record.draft?
+    record.draft? || invalid_provider?
   end
 
   def confirmation?
