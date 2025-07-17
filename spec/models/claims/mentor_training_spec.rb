@@ -217,10 +217,21 @@ RSpec.describe Claims::MentorTraining, type: :model do
   describe "#clawback_amount" do
     subject(:clawback_amount) { mentor_training.clawback_amount }
 
-    let(:mentor_training) { create(:mentor_training, hours_completed: 20, hours_clawed_back: 5) }
+    let(:region) { regions(:inner_london) }
+    let(:school) { build(:claims_school, region:) }
+    let(:claim) { build(:claim, school:) }
+
+    let(:mentor_training) do
+      create(
+        :mentor_training,
+        claim:,
+        hours_completed: 20,
+        hours_clawed_back: 5,
+      )
+    end
 
     it "returns the amount claimed back for the mentor training" do
-      expect(clawback_amount.to_f).to eq(225.5)
+      expect(clawback_amount.to_f).to eq(268.0)
     end
   end
 end
