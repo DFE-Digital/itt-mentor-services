@@ -13,8 +13,9 @@ class Claims::Support::ClaimsRemindersController < Claims::Support::ApplicationC
     users_to_notify.find_in_batches(batch_size: 100) do |users_batch|
       users_batch.each do |user|
         Claims::UserMailer.claims_have_not_been_submitted(user).deliver_later(wait: time_to_wait)
-        time_to_wait += 1.minute
       end
+
+      time_to_wait += 1.minute
     end
 
     redirect_to schools_not_submitted_claims_claims_support_claims_reminders_path, flash: {
@@ -32,8 +33,9 @@ class Claims::Support::ClaimsRemindersController < Claims::Support::ApplicationC
     email_addresses_to_notify.find_in_batches(batch_size: 100) do |email_batch|
       email_batch.each do |email|
         Claims::ProviderMailer.claims_have_not_been_submitted(provider_name: email.provider_name, email_address: email.email_address).deliver_later(wait: time_to_wait)
-        time_to_wait += 1.minute
       end
+
+      time_to_wait += 1.minute
     end
 
     redirect_to providers_not_submitted_claims_claims_support_claims_reminders_path, flash: {
