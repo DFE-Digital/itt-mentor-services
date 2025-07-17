@@ -13,6 +13,9 @@ module Claims
 
     def define_steps
       add_step(AddClaimWizard::ProviderStep)
+      return if mentors_with_claimable_hours.any?
+
+      add_step(UnableToAssignProviderStep)
     end
 
     def update_claim
@@ -33,6 +36,18 @@ module Claims
       end
 
       claim
+    end
+
+    def mentors_with_claimable_hours
+      return Claims::Mentor.none if provider.blank?
+
+      @mentors_with_claimable_hours ||= Claims::MentorsWithRemainingClaimableHoursQuery.call(
+        params: {
+          school:,
+          provider:,
+          claim: Claims::Claim.new(claim_window: Claims::ClaimWindow.current),
+        },
+      )
     end
   end
 end
