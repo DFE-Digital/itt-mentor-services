@@ -26,4 +26,6 @@ class ProviderEmailAddress < ApplicationRecord
   validates :email_address, uniqueness: { scope: :provider_id, case_sensitive: false }
 
   scope :primary, -> { where(primary: true).order(created_at: :desc) }
+
+  delegate :name, to: :provider, prefix: true, allow_nil: true
 end

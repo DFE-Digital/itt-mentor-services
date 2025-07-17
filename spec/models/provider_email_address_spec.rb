@@ -32,4 +32,8 @@ RSpec.describe ProviderEmailAddress, type: :model do
     it { is_expected.to validate_presence_of(:email_address) }
     it { is_expected.to validate_uniqueness_of(:email_address).scoped_to(:provider_id).case_insensitive }
   end
+
+  describe "delegations" do
+    it { is_expected.to delegate_method(:name).to(:provider).with_prefix(true).allow_nil }
+  end
 end
