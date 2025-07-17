@@ -19,7 +19,7 @@
 #  fk_rails_...  (clawback_id => clawbacks.id)
 #
 FactoryBot.define do
-  factory :clawback_claim do
+  factory :clawback_claim, class: "Claims::ClawbackClaim" do
     claim { nil }
     clawback { nil }
   end

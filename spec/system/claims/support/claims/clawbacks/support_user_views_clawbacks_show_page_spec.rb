@@ -25,6 +25,10 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
     # support user clicks back on wizard step
     when_i_click_on_back
     then_i_see_the_show_page_for_the_clawback_requested_claim
+
+    when_i_navigate_to_the_clawbacks_index_page
+    and_i_click_on_claim_with_status_of_clawback_in_progress
+    then_i_see_the_show_page_for_the_clawback_in_progress_claim
   end
 
   private
@@ -44,7 +48,7 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
                                          reference: 33_333_333)
 
     @mentor = create(:claims_mentor, first_name: "James", last_name: "Chess")
-
+    @colin = build(:claims_support_user, :colin)
     create(:mentor_training,
            hours_completed: 15,
            claim: @clawback_requested_claim,
@@ -53,6 +57,9 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
            reason_clawed_back: "Insufficient evidence",
            hours_clawed_back: 2,
            mentor: @mentor)
+    @clawback_requested_activity_log = create(:claim_activity, :clawback_requested, user: @colin, record: @clawback_requested_claim)
+    @clawback = build(:clawback, claims: [@clawback_in_progress_claim])
+    @clawback_response_uploaded_activity_log = create(:claim_activity, :clawback_response_uploaded, user: @colin, record: @clawback)
   end
 
   def and_i_am_signed_in
@@ -134,6 +141,12 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
       expect(page).to have_summary_list_row("Original claim amount", @clawback_requested_claim.amount)
       expect(page).to have_summary_list_row("Hours clawed back", pluralize(@clawback_requested_claim.mentor_trainings.sum(:hours_clawed_back), "hour"))
     end
+
+    expect(page).to have_h2("Grant funding")
+    expect(page).to have_summary_list_row("Original claim amount", @clawback_requested_claim.amount)
+    expect(page).to have_h2("History")
+    expect(page).to have_element("h3", class: "app-timeline__title", text: "Clawback requested for claim 22222222")
+    expect(page).to have_link("View details", href: claims_support_claims_claim_activity_path(@clawback_requested_activity_log))
   end
 
   def when_i_click_on_change
@@ -169,7 +182,7 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
     expect(primary_navigation).to have_current_item("Claims")
     expect(page).to have_element(:span, text: "Clawbacks - Claim 33333333", class: "govuk-caption-l")
     expect(page).to have_h1(@clawback_in_progress_claim.school_name)
-    expect(page).to have_element(:strong, text: "Clawback in progress", class: "govuk-tag govuk-tag--orange")
+    expect(page).to have_element(:strong, text: "Sent to payer for clawback", class: "govuk-tag govuk-tag--yellow")
     expect(page).not_to have_link("Request clawback", href: "/support/claims/clawbacks/claims/new/#{@clawback_in_progress_claim.id}", class: "govuk-link govuk-button")
     expect(page).to have_summary_list_row("School", @clawback_in_progress_claim.school_name)
     expect(page).to have_summary_list_row("Academic year", @clawback_in_progress_claim.academic_year_name)
@@ -179,5 +192,8 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
         expect(row).to have_css("ul.govuk-list li", text: mentor.full_name)
       end
     end
+    expect(page).to have_h2("History")
+    expect(page).to have_element("h3", class: "app-timeline__title", text: "Payer clawback response uploaded for 1 claim")
+    expect(page).to have_link("View details", href: claims_support_claims_claim_activity_path(@clawback_response_uploaded_activity_log))
   end
 end

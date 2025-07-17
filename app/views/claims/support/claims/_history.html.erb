@@ -1,0 +1,31 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m"><%= t(".sub_heading") %></h2>
+
+    <% if @claim_activities.any? %>
+      <div class="app-timeline">
+        <% @claim_activities.each do |claim_activity| %>
+          <div class="app-timeline__item">
+            <div class="app-timeline__header">
+              <h3 class="app-timeline__title">
+                <%= claim_activity.title %>
+              </h3>
+
+              <p class="app-timeline__byline">
+                <%= t(".byline", user: claim_activity.user_full_name, time: l(claim_activity.created_at, format: :date_at_time)) %>
+              </p>
+            </div>
+
+            <div class="app-timeline__description">
+              <%= govuk_link_to t(".view_details"), claims_support_claims_claim_activity_path(claim_activity) %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <%= render PaginationComponent.new(pagy: @pagy) %>
+    <% else %>
+      <p class="govuk-body"><%= t(".no_activity") %></p>
+    <% end %>
+  </div>
+</div>

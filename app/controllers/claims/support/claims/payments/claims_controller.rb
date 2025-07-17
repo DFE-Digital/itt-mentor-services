@@ -4,7 +4,12 @@ class Claims::Support::Claims::Payments::ClaimsController < Claims::Support::App
   before_action :set_claim, only: %i[show confirm_information_sent information_sent confirm_paid paid confirm_reject reject]
   before_action :authorize_claim
 
-  def show; end
+  def show
+    claim_activities = Claims::ClaimActivitiesForClaimQuery.call(claim: @claim)
+    @pagy, @claim_activities = pagy(claim_activities)
+    @claim_activities = claim_activities.decorate
+  end
+
   def confirm_information_sent; end
 
   def information_sent
