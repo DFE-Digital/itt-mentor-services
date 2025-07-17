@@ -42,5 +42,6 @@ RSpec.describe "View claims", service: :claims, type: :system do
     within(".govuk-inset-text") do
       expect(page).to have_content("Some reason")
     end
+    expect(page).to have_h2("History")
   end
 end
