@@ -1,0 +1,19 @@
+en:
+  wizards:
+    claims:
+      invalid_provider_wizard:
+        unable_to_assign_provider_step: 
+          page_title: Unable to assign provider - Claim details
+          title: Unable to assign provider
+          caption: Claim details
+          can_not_assign_provider:
+            You can not assign this claim to %{provider_name}.
+          mentors_on_this_claim_have_already_claimed:
+            There are mentors included in this claim who have already had 20 hours of training,
+            or will exceed 20 hours of training, claimed for with Best Practice Network.
+          you_may_need_to_delete_this_claim:
+            You may need to %{link} and submit another claim for %{provider_name}, or another provider.
+          delete_this_claim: delete this claim
+          change_provider: Change the accredited provider
+          please_review_the_claims: Please review the %{link} that have already been submitted for your mentors.
+          claims: claims

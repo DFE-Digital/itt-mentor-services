@@ -1,0 +1,42 @@
+<% content_for(:page_title) { sanitize t(".page_title") } %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l"><%= t(".caption") %></span>
+    <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+
+    <p class="govuk-body">
+      <%= t(".can_not_assign_provider", provider_name: current_step.provider.name) %>
+    </p>
+
+    <p class="govuk-body">
+      <%= t(".mentors_on_this_claim_have_already_claimed", provider_name: current_step.provider.name) %>
+    </p>
+
+    <p class="govuk-body">
+      <%= embedded_link_text(
+        t(".please_review_the_claims",
+          link: govuk_link_to(
+            t(".claims"),
+            claims_school_claims_path(@school),
+          )),
+      ) %>
+    </p>
+
+    <p class="govuk-body">
+      <%= embedded_link_text(
+        t(".you_may_need_to_delete_this_claim",
+          provider_name: current_step.provider.name,
+          link: govuk_link_to(
+            t(".delete_this_claim"),
+            remove_claims_school_claim_path(@school, current_step.claim),
+            class: "app-link app-link--destructive",
+          )),
+      ) %>
+    </p>
+
+    <p class="govuk-body">
+      <%= govuk_link_to t(".change_provider"), back_link_path %>
+    </p>
+  </div>
+</div>
