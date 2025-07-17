@@ -37,6 +37,10 @@ class Placements::SchoolUserMailerPreview < ActionMailer::Preview
     Placements::SchoolUserMailer.placement_provider_removed_notification(user, school, provider, placement)
   end
 
+  def future_of_service_notification
+    Placements::SchoolUserMailer.future_of_service_notification(user)
+  end
+
   private
 
   def user

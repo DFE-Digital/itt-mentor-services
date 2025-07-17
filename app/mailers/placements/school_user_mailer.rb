@@ -63,4 +63,11 @@ class Placements::SchoolUserMailer < Placements::UserMailer
 
     notify_email to: user.email, subject: t(".subject")
   end
+
+  def future_of_service_notification(user)
+    @user_name = user.first_name
+    @service_name = service_name
+    @sign_in_url = sign_in_url(utm_source: "email", utm_medium: "notification", utm_campaign: "email")
+    notify_email to: user.email, subject: t(".subject", service_name:)
+  end
 end
