@@ -12,7 +12,11 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
     @academic_years = AcademicYear.where(id: Claims::ClaimWindow.select(:academic_year_id)).order_by_date
   end
 
-  def show; end
+  def show
+    claim_activities = Claims::ClaimActivitiesForClaimQuery.call(claim: @claim)
+    @pagy, @claim_activities = pagy(claim_activities)
+    @claim_activities = claim_activities.decorate
+  end
 
   def download_csv
     csv_data = Claims::Claim::GenerateCSV.call(claims: @filtered_claims)

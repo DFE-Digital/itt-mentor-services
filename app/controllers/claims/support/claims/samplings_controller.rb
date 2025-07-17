@@ -10,7 +10,11 @@ class Claims::Support::Claims::SamplingsController < Claims::Support::Applicatio
     )
   end
 
-  def show; end
+  def show
+    claim_activities = Claims::ClaimActivitiesForClaimQuery.call(claim: @claim)
+    @pagy, @claim_activities = pagy(claim_activities)
+    @claim_activities = claim_activities.decorate
+  end
 
   def confirm_approval; end
 

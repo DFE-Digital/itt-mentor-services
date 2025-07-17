@@ -22,5 +22,15 @@ FactoryBot.define do
 
     claims { build_list(:claim, 3, :submitted) }
     csv_file { file_fixture("example-payments.csv") }
+
+    transient do
+      claims_for_link { [] }
+    end
+
+    after(:build) do |payment, eval|
+      eval.claims_for_link.each do |cl|
+        payment.payment_claims.build(claim: cl)
+      end
+    end
   end
 end

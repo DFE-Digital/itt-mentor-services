@@ -42,6 +42,13 @@ en:
           mentor_with_index: Mentor %{index}
           mentor: Mentor
           submitted_by: Submitted by %{name} on %{date}.
+        history:
+          sub_heading: History
+          no_activity: There is no activity.
+          byline: "%{user} on %{time}"
+          showing: "Showing %{count} of %{total_count} files"
+          view_all_files: View all files
+          view_details: View details
         details:
           original: Original hours claimed
           clawed_back: Amount clawed back
