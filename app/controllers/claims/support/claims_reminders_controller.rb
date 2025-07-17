@@ -6,7 +6,6 @@ class Claims::Support::ClaimsRemindersController < Claims::Support::ApplicationC
 
   def schools_not_submitted_claims; end
 
-  # :nocov:
   def send_schools_not_submitted_claims
     time_to_wait = 0.minutes
     users_to_notify = Claims::User.joins(:schools).where(schools: { id: @schools.ids })
@@ -23,9 +22,7 @@ class Claims::Support::ClaimsRemindersController < Claims::Support::ApplicationC
       body: t(".success_body"),
     }
   end
-  # :nocov:
 
-  # :nocov:
   def providers_not_submitted_claims; end
 
   def send_providers_not_submitted_claims
@@ -44,7 +41,6 @@ class Claims::Support::ClaimsRemindersController < Claims::Support::ApplicationC
       body: t(".success_body"),
     }
   end
-  # :nocov:
 
   private
 
