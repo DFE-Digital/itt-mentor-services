@@ -7,8 +7,12 @@ class Claims::RequestClawbackWizard::CheckYourAnswersStep < BaseStep
     steps.fetch(step_name_for_mentor_training_clawback(mentor_training))
   end
 
-  def mentor_training_clawback_hours(mentor_training)
+  def mentor_training_correct_hours(mentor_training)
     mentor_training_clawback_data(mentor_training).number_of_hours.to_i
+  end
+
+  def mentor_training_clawback_hours(mentor_training)
+    mentor_training_clawback_data(mentor_training).hours_clawed_back
   end
 
   def mentor_training_clawback_amount(mentor_training)

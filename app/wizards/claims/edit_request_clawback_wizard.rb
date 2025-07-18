@@ -39,19 +39,21 @@ module Claims
     end
 
     def esfa_responses_for_mentor_trainings
-      mentor_trainings.map do |mentor_training|
+      mentor_trainings.map { |mentor_training|
         mentor_training_clawback_step = steps[step_name_for_mentor_training_clawback(mentor_training)]
+        next if mentor_training_clawback_step.blank?
+
         {
           id: mentor_training.id,
-          number_of_hours: mentor_training_clawback_step.number_of_hours,
+          hours_clawed_back: mentor_training_clawback_step.hours_clawed_back,
           reason_for_clawback: mentor_training_clawback_step.reason_for_clawback,
         }
-      end
+      }.compact.flatten
     end
 
     def setup_state
       state[step_name_for_mentor_training_clawback(mentor_training).to_s] = {
-        "number_of_hours" => mentor_training.hours_clawed_back,
+        "number_of_hours" => mentor_training.hours_completed - mentor_training.hours_clawed_back,
         "reason_for_clawback" => mentor_training.reason_clawed_back,
       }
     end

@@ -5,7 +5,7 @@ en:
         mentor_training_clawback_step:
           page_title: Clawback details for %{mentor_name} - %{school_name} - Claim %{reference}
           title: Clawback details for %{mentor_name}
-          hours: Number of hours to clawback
+          hours: Number of hours the mentor worked
           hours_hint: 
             one: "%{mentor_name} original claim was for %{count} hour"
             other: "%{mentor_name} original claim was for %{count} hours"
@@ -20,9 +20,10 @@ en:
           page_title: Check your answers - %{school_name} - Claim %{reference}
           title: Check your answers
           total_title: Total clawback
-          mentor_training_title: Clawback request for %{mentor_name}
+          clawback_details: Clawback details
           rate: Hourly rate
-          number_of_hours: Hours
+          number_of_hours: Hours the mentor worked
+          hours_clawed_back: Hours clawed back
           clawback_amount: Clawback amount
           reason: Notes on your decision
           submit: Request clawback
@@ -30,3 +31,5 @@ en:
           original_claim: Original claim
           amount: Amount
           information_shared_with_school: This information will be shared with %{school_name}.
+          original: Original hours claimed
+          hour: hour

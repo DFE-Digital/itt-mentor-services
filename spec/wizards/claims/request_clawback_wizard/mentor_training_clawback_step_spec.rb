@@ -40,13 +40,13 @@ RSpec.describe Claims::RequestClawbackWizard::MentorTrainingClawbackStep, type: 
     context "when the number of hours is equal to the hours completed" do
       let(:attributes) { { mentor_training_id: mentor_training.id, number_of_hours: 3, reason_for_clawback: "reason" } }
 
-      it { is_expected.to be_valid }
+      it { is_expected.not_to be_valid }
     end
 
     context "when the number of hours is less than 1" do
       let(:attributes) { { mentor_training_id: mentor_training.id, number_of_hours: 0, reason_for_clawback: "reason" } }
 
-      it { is_expected.not_to be_valid }
+      it { is_expected.to be_valid }
     end
   end
 
@@ -67,6 +67,16 @@ RSpec.describe Claims::RequestClawbackWizard::MentorTrainingClawbackStep, type: 
 
     it "returns the mentor training with the given ID" do
       expect(step.mentor_training).to eq(mentor_trainings.first)
+    end
+  end
+
+  describe "#hours_clawed_back" do
+    let(:attributes) { { mentor_training_id: mentor_training.id, number_of_hours: 5, reason_for_clawback: "reason" } }
+
+    let(:mentor_training) { create(:mentor_training, claim:, hours_completed: 15, not_assured: true, reason_not_assured: "reason") }
+
+    it "returns the hours clawed back for a mentor training" do
+      expect(step.hours_clawed_back).to eq(10)
     end
   end
 end

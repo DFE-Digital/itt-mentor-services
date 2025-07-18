@@ -43,7 +43,7 @@ RSpec.describe Claims::EditRequestClawbackWizard, type: :model do
     it "prepopulates the state with the relevant clawback information" do
       step_name = wizard.step_name_for_mentor_training_clawback(mentor_training).to_s
       expected_state = {
-        "number_of_hours" => 6,
+        "number_of_hours" => 14,
         "reason_for_clawback" => "Insufficient evidence",
       }
 
@@ -70,7 +70,7 @@ RSpec.describe Claims::EditRequestClawbackWizard, type: :model do
         wizard.update_clawback
 
         mentor_training.reload
-        expect(mentor_training.hours_clawed_back).to eq(1)
+        expect(mentor_training.hours_clawed_back).to eq(19)
         expect(mentor_training.reason_clawed_back).to eq("New evidence")
       end
     end

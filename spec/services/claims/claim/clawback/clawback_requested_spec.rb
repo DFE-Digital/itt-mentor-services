@@ -21,8 +21,8 @@ describe Claims::Claim::Clawback::ClawbackRequested do
       let(:mentor_training_2) { create(:mentor_training, claim:, not_assured: true, reason_not_assured: "reason") }
       let(:esfa_responses) do
         [
-          { id: mentor_training_1.id, number_of_hours: 20, reason_for_clawback: "Some reason" },
-          { id: mentor_training_2.id, number_of_hours: 10, reason_for_clawback: "Another reason" },
+          { id: mentor_training_1.id, hours_clawed_back: 20, reason_for_clawback: "Some reason" },
+          { id: mentor_training_2.id, hours_clawed_back: 10, reason_for_clawback: "Another reason" },
         ]
       end
 
@@ -43,7 +43,7 @@ describe Claims::Claim::Clawback::ClawbackRequested do
       context "when an esfa response is not given for a mentor training associated with this claim" do
         let(:esfa_responses) do
           [
-            { id: mentor_training_1.id, number_of_hours: 20, reason_for_clawback: "Some reason" },
+            { id: mentor_training_1.id, hours_clawed_back: 20, reason_for_clawback: "Some reason" },
           ]
         end
 

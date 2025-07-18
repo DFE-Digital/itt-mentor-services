@@ -30,7 +30,7 @@ module Claims
         mentor_training_clawback_step = steps[step_name_for_mentor_training_clawback(mentor_training)]
         {
           id: mentor_training.id,
-          number_of_hours: mentor_training_clawback_step.number_of_hours,
+          hours_clawed_back: mentor_training_clawback_step.hours_clawed_back,
           reason_for_clawback: mentor_training_clawback_step.reason_for_clawback,
         }
       end

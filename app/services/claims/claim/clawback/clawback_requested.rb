@@ -11,7 +11,7 @@ class Claims::Claim::Clawback::ClawbackRequested < ApplicationService
         next if esfa_mentor_training_response.blank?
 
         mentor_training.update!(
-          hours_clawed_back: esfa_mentor_training_response[:number_of_hours],
+          hours_clawed_back: esfa_mentor_training_response[:hours_clawed_back],
           reason_clawed_back: esfa_mentor_training_response[:reason_for_clawback],
         )
       end

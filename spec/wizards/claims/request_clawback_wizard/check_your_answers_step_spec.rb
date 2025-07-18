@@ -16,7 +16,11 @@ RSpec.describe Claims::RequestClawbackWizard::CheckYourAnswersStep, type: :model
 
   let(:mentor_training_clawback_step) do
     instance_double(Claims::RequestClawbackWizard::MentorTrainingClawbackStep).tap do |mentor_training_clawback_step|
-      allow(mentor_training_clawback_step).to receive_messages(number_of_hours: 15, reason_for_clawback: "reason")
+      allow(mentor_training_clawback_step).to receive_messages(
+        number_of_hours: 5,
+        hours_clawed_back: 15,
+        reason_for_clawback: "reason",
+      )
     end
   end
 
@@ -39,6 +43,12 @@ RSpec.describe Claims::RequestClawbackWizard::CheckYourAnswersStep, type: :model
 
     it "returns the data for the mentor training clawback" do
       expect(step.mentor_training_clawback_data(mentor_training)).to eq(mentor_training_clawback_step)
+    end
+  end
+
+  describe "#mentor_training_correct_hours" do
+    it "return the number of hours the mentor actually trained for" do
+      expect(step.mentor_training_correct_hours(mentor_training)).to eq(5)
     end
   end
 

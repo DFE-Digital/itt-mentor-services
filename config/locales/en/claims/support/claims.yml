@@ -62,3 +62,5 @@ en:
           hours_clawed_back: Hours clawed back
           clawback_amount: Clawback amount
           adjusted_total: Adjusted grant funding total
+          mentor_worked_hours: Mentor worked hours
+          rate: Hourly rate

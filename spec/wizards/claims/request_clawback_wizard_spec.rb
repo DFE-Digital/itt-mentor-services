@@ -46,13 +46,13 @@ RSpec.describe Claims::RequestClawbackWizard do
       end
 
       it "returns an array of hashes containing the mentor training id, number of hours and reason for clawback" do
-        expect(wizard.esfa_responses_for_mentor_trainings).to eq([{ id: mentor_training.id, number_of_hours: 5, reason_for_clawback: "Some reason" }])
+        expect(wizard.esfa_responses_for_mentor_trainings).to eq([{ id: mentor_training.id, hours_clawed_back: 15, reason_for_clawback: "Some reason" }])
       end
     end
   end
 
   describe "#submit_esfa_responses" do
-    let(:esfa_responses) { [{ id: mentor_training.id, number_of_hours: 5, reason_for_clawback: "Some reason" }] }
+    let(:esfa_responses) { [{ id: mentor_training.id, hours_clawed_back: 15, reason_for_clawback: "Some reason" }] }
 
     before do
       user
