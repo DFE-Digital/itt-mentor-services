@@ -4,9 +4,9 @@ describe Claims::PaymentResponse::GenerateCSVFile do
   subject(:generate_csv_file) { described_class.call(csv_content:) }
 
   let(:csv_content) do
-    "claim_reference,school_urn,school_name,school_local_authority,claim_amount,school_type_of_establishment,school_group,claim_submission_date,claim_status,claim_unpaid_reason\n" \
-    "12345678,11111111,School A,London,500.00,Free schools 16 to 19,Free Schools,2025-01-27,paid\n" \
-    "87654321,22222222,School B,York,999.99,Academy sponsor led,Academies,2025-01-27,unpaid,Some reason"
+    "claim_reference,school_urn,school_name,school_local_authority,claim_amount,school_type_of_establishment,school_group,claim_submission_date,claim_status,claim_unpaid_reason,provider_name\n" \
+    "12345678,11111111,School A,London,500.00,Free schools 16 to 19,Free Schools,2025-01-27,paid,,Springfield Trust\n" \
+    "87654321,22222222,School B,York,999.99,Academy sponsor led,Academies,2025-01-27,unpaid,Some reason,Springfield Trust"
   end
 
   describe "#call" do
@@ -17,7 +17,7 @@ describe Claims::PaymentResponse::GenerateCSVFile do
       csv = CSV.read(generate_csv_file.path, headers: true)
 
       expect(csv.headers).to eq(
-        %w[claim_reference school_urn school_name school_local_authority claim_amount school_type_of_establishment school_group claim_submission_date claim_status claim_unpaid_reason],
+        %w[claim_reference school_urn school_name school_local_authority provider_name claim_amount school_type_of_establishment school_group claim_submission_date claim_status claim_unpaid_reason],
       )
 
       first_row = csv[0]
@@ -31,6 +31,7 @@ describe Claims::PaymentResponse::GenerateCSVFile do
       expect(first_row["claim_submission_date"]).to eq("2025-01-27")
       expect(first_row["claim_status"]).to eq("paid")
       expect(first_row["claim_unpaid_reason"]).to be_nil
+      expect(first_row["provider_name"]).to eq("Springfield Trust")
 
       last_row = csv[1]
       expect(last_row["claim_reference"]).to eq("87654321")
@@ -43,6 +44,7 @@ describe Claims::PaymentResponse::GenerateCSVFile do
       expect(last_row["claim_submission_date"]).to eq("2025-01-27")
       expect(last_row["claim_status"]).to eq("unpaid")
       expect(last_row["claim_unpaid_reason"]).to eq("Some reason")
+      expect(last_row["provider_name"]).to eq("Springfield Trust")
     end
   end
 end

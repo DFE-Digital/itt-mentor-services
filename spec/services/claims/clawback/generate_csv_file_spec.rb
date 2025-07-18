@@ -21,9 +21,10 @@ describe Claims::Clawback::GenerateCSVFile do
            group: "Independent schools",
            type_of_establishment: "Other independent school")
   end
-  let(:claim_1) { create(:claim, :submitted, status: :clawback_in_progress, school: school_a, reference: "11111111") }
-  let(:claim_2) { create(:claim, :submitted, status: :clawback_in_progress, school: school_b, reference: "22222222") }
-  let(:claim_3) { create(:claim, :submitted, status: :clawback_in_progress, school: school_b, reference: "33333333") }
+  let(:provider) { create(:claims_provider, name: "Springfield Trust") }
+  let(:claim_1) { create(:claim, :submitted, status: :clawback_in_progress, school: school_a, reference: "11111111", provider:) }
+  let(:claim_2) { create(:claim, :submitted, status: :clawback_in_progress, school: school_b, reference: "22222222", provider:) }
+  let(:claim_3) { create(:claim, :submitted, status: :clawback_in_progress, school: school_b, reference: "33333333", provider:) }
   let(:mentor_jane_doe) do
     create(:claims_mentor, schools: [school_a, school_b], first_name: "Jane", last_name: "Doe")
   end
@@ -105,6 +106,7 @@ describe Claims::Clawback::GenerateCSVFile do
         school_urn
         school_name
         school_local_authority
+        provider_name
         claim_amount
         clawback_amount
         school_type_of_establishment
@@ -118,6 +120,7 @@ describe Claims::Clawback::GenerateCSVFile do
           "aaaaaaaa",
           "School A",
           "Local Auth A",
+          "Springfield Trust",
           "876.00",
           "876.00",
           "Academy converter",
@@ -132,6 +135,7 @@ describe Claims::Clawback::GenerateCSVFile do
           "bbbbbbbb",
           "School B",
           "Local Auth B",
+          "Springfield Trust",
           "2316.00",
           "1544.00",
           "Other independent school",

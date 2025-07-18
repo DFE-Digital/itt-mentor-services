@@ -6,6 +6,7 @@ class Claims::Payments::Claim::GenerateCSVFile < ApplicationService
     school_urn
     school_name
     school_local_authority
+    provider_name
     claim_amount
     school_type_of_establishment
     school_group
@@ -28,6 +29,7 @@ class Claims::Payments::Claim::GenerateCSVFile < ApplicationService
           claim.school.urn,
           claim.school_name,
           claim.school.local_authority_name,
+          claim.provider_name,
           claim.amount.format(symbol: false, decimal_mark: ".", no_cents: false),
           claim.school.type_of_establishment,
           claim.school.group,
