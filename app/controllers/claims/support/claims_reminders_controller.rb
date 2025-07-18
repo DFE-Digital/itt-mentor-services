@@ -7,16 +7,9 @@ class Claims::Support::ClaimsRemindersController < Claims::Support::ApplicationC
   def schools_not_submitted_claims; end
 
   def send_schools_not_submitted_claims
-    time_to_wait = 0.minutes
     users_to_notify = Claims::User.joins(:schools).where(schools: { id: @schools.ids })
 
-    users_to_notify.find_in_batches(batch_size: 100) do |users_batch|
-      users_batch.each do |user|
-        Claims::UserMailer.claims_have_not_been_submitted(user).deliver_later(wait: time_to_wait)
-      end
-
-      time_to_wait += 1.minute
-    end
+    NotifyRateLimiter.call(collection: users_to_notify, mailer: "Claims::UserMailer", mailer_method: :claims_have_not_been_submitted)
 
     redirect_to schools_not_submitted_claims_claims_support_claims_reminders_path, flash: {
       heading: t(".success"),
