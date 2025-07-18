@@ -21,7 +21,31 @@
       </h2>
 
       <% if @schools.any? %>
-        <p class="govuk-hint"><%= @search_location.blank? ? t(".results_sorted_alpha") : t(".results_sorted_distance", search_location: @search_location) %></p>
+        <% if @search_location.present? %>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-three-quarters">
+              <p class="govuk-hint"><%= @search_location.blank? ? t(".results_sorted_alpha") : t(".results_sorted_distance", search_location: @search_location) %></p>
+            </div>
+            <div class="govuk-grid-column-one-quarter">
+              <% if params[:show_map] %>
+                <%= govuk_link_to("Hide map", placements_provider_find_index_path(@provider, filters: filter_form.query_params, page: params[:page])) %>
+              <% else %>
+                <%= govuk_link_to("View on a map", placements_provider_find_index_path(@provider, filters: filter_form.query_params, show_map: true, page: params[:page])) %>
+              <% end %>
+            </div>
+          </div>
+        <% else %>
+          <p class="govuk-hint"><%= @search_location.blank? ? t(".results_sorted_alpha") : t(".results_sorted_distance", search_location: @search_location) %></p>
+        <% end %>
+
+        <% if @search_location.present? && params[:show_map] %>
+          <%= render Placements::Schools::MapComponent.new(
+            schools: @schools,
+            base_latitude: @schools.first.latitude,
+            base_longitude: @schools.first.longitude,
+          ) %>
+        <% end %>
+
         <ul class="app-search-results">
           <%= render(Placements::Schools::SummaryComponent.with_collection(@schools, provider: @provider, academic_year: @selected_academic_year, location_coordinates:)) %>
         </ul>
