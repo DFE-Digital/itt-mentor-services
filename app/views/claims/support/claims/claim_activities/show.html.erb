@@ -13,14 +13,14 @@
 
   <% case @claim_activity.action %>
   <% when *Claims::ClaimActivity::SAMPLING_ACTIONS %>
-    <%= render "sampling_activities", claim_activity: @claim_activity %>
+    <%= render "sampling_activities", claim_activity: @claim_activity, provider_samplings: @provider_samplings %>
   <% when *Claims::ClaimActivity::PAYMENT_AND_CLAWBACK_ACTIONS %>
-    <%= render "payment_and_clawback_activities", claim_activity: @claim_activity %>
+    <%= render "payment_and_clawback_activities", claim_activity: @claim_activity, claims: @claims_by_provider %>
   <% when *Claims::ClaimActivity::MANUAL_ACTIONS %>
-    <%= render "manual_activities", claim_activity: @claim_activity %>
+    <%= render "manual_activities", claim: @claim %>
   <% else %>
     <%= render "base_response_activity", claim_activity: @claim_activity %>
   <% end %>
 
-  <%= render PaginationComponent.new(pagy: @pagy) if @pagy %>
+  <%= render PaginationComponent.new(pagy: @pagy) if @pagy.present? %>
 </div>

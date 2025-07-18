@@ -1,4 +1,4 @@
-<%# locals: (claim_activity:) -%>
+<%# locals: (claim_activity:, claims:) -%>
 
 <div class="govuk-button-group">
   <%= govuk_button_link_to t(".download_csv"), claim_activity.record.csv_file, secondary: true %>
@@ -9,7 +9,7 @@
 
 <h2 class="govuk-heading-m"><%= t(".providers") %></h2>
 
-<% claim_activity.claims_by_provider.each do |provider, provider_claims| %>
+<% claims.each do |provider, provider_claims| %>
   <h3 class="govuk-heading-s"><%= provider.name %></h3>
 
   <%= govuk_table do |table| %>
