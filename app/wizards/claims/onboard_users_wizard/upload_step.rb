@@ -4,12 +4,14 @@ class Claims::OnboardUsersWizard::UploadStep < BaseStep
   attribute :file_name
   attribute :invalid_email_rows, default: []
   attribute :invalid_school_urn_rows, default: []
+  attribute :missing_first_name_rows, default: []
+  attribute :missing_last_name_rows, default: []
 
   validates :csv_upload, presence: true, if: -> { csv_content.blank? }
   validate :validate_csv_file, if: -> { csv_upload.present? }
   validate :validate_csv_headers, if: -> { csv_content.present? }
 
-  REQUIRED_HEADERS = %w[email school_urn].freeze
+  REQUIRED_HEADERS = %w[email school_urn first_name last_name].freeze
 
   def initialize(wizard:, attributes:)
     super(wizard:, attributes:)
@@ -43,16 +45,18 @@ class Claims::OnboardUsersWizard::UploadStep < BaseStep
 
     reset_input_attributes
 
-    csv.each_with_index do |row, _i|
+    csv.each_with_index do |row, i|
       next if row.all? { |_k, v| v.blank? }
 
-      # Temp removed to make the CSV upload work
+      validate_name_fields(row, i)
       # validate_email(row, i)
       # validate_school_urn(row, i)
     end
 
     invalid_email_rows.blank? &&
-      invalid_school_urn_rows.blank?
+      invalid_school_urn_rows.blank? &&
+      missing_first_name_rows.blank? &&
+      missing_last_name_rows.blank?
   end
 
   def process_csv
@@ -84,8 +88,15 @@ class Claims::OnboardUsersWizard::UploadStep < BaseStep
   end
 
   def reset_input_attributes
+    self.missing_first_name_rows = []
+    self.missing_last_name_rows = []
     self.invalid_email_rows = []
     self.invalid_school_urn_rows = []
+  end
+
+  def validate_name_fields(row, row_number)
+    missing_first_name_rows << row_number if row["first_name"].blank?
+    missing_last_name_rows << row_number if row["last_name"].blank?
   end
 
   def validate_email(row, row_number)
