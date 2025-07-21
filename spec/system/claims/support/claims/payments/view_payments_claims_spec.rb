@@ -127,7 +127,7 @@ RSpec.describe "View payments claims", service: :claims, type: :system do
     within("#action_calculator") do
       expect(page).to have_element(
         :p,
-        text: "2 claims require more information",
+        text: "10 claims require more information",
         class: "govuk-body",
       )
     end

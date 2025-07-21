@@ -67,7 +67,7 @@ class Claims::Claim < ApplicationRecord
 
   ACTIVE_STATUSES = %i[draft submitted].freeze
   DRAFT_STATUSES = %i[internal_draft draft].freeze
-  PAYMENT_ACTIONABLE_STATUSES = %w[payment_information_requested payment_information_sent].freeze
+  PAYMENT_ACTIONABLE_STATUSES = %w[submitted payment_in_progress payment_information_requested payment_information_sent].freeze
   SAMPLING_STATUSES = %w[sampling_in_progress sampling_provider_not_approved].freeze
   CLAWBACK_STATUSES = %w[clawback_requested clawback_in_progress sampling_not_approved].freeze
   INCIDENT_STATUSES = %w[invalid_provider].freeze
