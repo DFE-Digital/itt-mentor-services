@@ -28,7 +28,7 @@ RSpec.describe "View payments claims", service: :claims, type: :system do
   scenario "Support user visits the claims index page with claims due for payments processing" do
     given_there_are_claims_due_for_payments_processing
     when_i_visit_claims_payments_index_page
-    then_i_see_claims_require_more_information
+    then_i_see_claims_require_more_information(number_of_claims: 2)
     and_i_see_an_information_requested_claim
     and_i_see_an_information_sent_claim
   end
@@ -40,7 +40,7 @@ RSpec.describe "View payments claims", service: :claims, type: :system do
     when_i_visit_claims_payments_index_page
     then_i_see_claims_are_waiting_to_be_sent_to_payer
     and_i_see_claims_are_waiting_to_be_sent_to_payer
-    and_i_see_claims_require_more_information
+    and_i_see_claims_require_more_information(number_of_claims: 10)
     and_i_see_an_information_requested_claim
     and_i_see_an_information_sent_claim
   end
@@ -123,11 +123,11 @@ RSpec.describe "View payments claims", service: :claims, type: :system do
   alias_method :and_i_see_claims_are_waiting_to_be_sent_to_payer,
                :then_i_see_claims_are_waiting_to_be_sent_to_payer
 
-  def then_i_see_claims_require_more_information
+  def then_i_see_claims_require_more_information(number_of_claims:)
     within("#action_calculator") do
       expect(page).to have_element(
         :p,
-        text: "10 claims require more information",
+        text: "#{number_of_claims} claims require more information",
         class: "govuk-body",
       )
     end
