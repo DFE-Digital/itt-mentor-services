@@ -9,7 +9,7 @@ RSpec.describe "Support user uploads a CSV containing invalid an unpaid reason",
 
     when_i_navigate_to_the_payments_claims_index_page
     then_i_see_the_payments_claims_index_page
-    and_i_see_no_payment_claims_have_been_uploaded
+    and_i_see_claims_with_the_status_payment_in_progress
 
     when_i_click_on_upload_payer_response
     then_i_see_the_upload_csv_page
@@ -49,6 +49,7 @@ RSpec.describe "Support user uploads a CSV containing invalid an unpaid reason",
   def then_i_see_the_payments_claims_index_page
     expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
     expect(page).to have_h1("Claims")
+    expect(page).to have_h2("Payments")
     expect(primary_navigation).to have_current_item("Claims")
     expect(secondary_navigation).to have_current_item("Payments")
     expect(page).to have_current_path(claims_support_claims_payments_path, ignore_query: true)
@@ -60,9 +61,26 @@ RSpec.describe "Support user uploads a CSV containing invalid an unpaid reason",
     expect(page).to have_element(:label, text: "Upload CSV file")
   end
 
-  def and_i_see_no_payment_claims_have_been_uploaded
-    expect(page).to have_h2("Payments")
-    expect(page).to have_element(:p, text: "There are no claims waiting to be processed.")
+  def and_i_see_claims_with_the_status_payment_in_progress
+    expect(page).to have_claim_card({
+      "title" => "#{@payment_in_progress_claim_1.reference} - #{@payment_in_progress_claim_1.school.name}",
+      "url" => "/support/claims/payments/claims/#{@payment_in_progress_claim_1.id}",
+      "status" => "Payer payment review",
+      "academic_year" => @payment_in_progress_claim_1.academic_year.name,
+      "provider_name" => @payment_in_progress_claim_1.provider_name,
+      "submitted_at" => I18n.l(@payment_in_progress_claim_1.submitted_at.to_date, format: :long),
+      "amount" => "£0.00",
+    })
+
+    expect(page).to have_claim_card({
+      "title" => "#{@payment_in_progress_claim_2.reference} - #{@payment_in_progress_claim_2.school.name}",
+      "url" => "/support/claims/payments/claims/#{@payment_in_progress_claim_2.id}",
+      "status" => "Payer payment review",
+      "academic_year" => @payment_in_progress_claim_2.academic_year.name,
+      "provider_name" => @payment_in_progress_claim_2.provider_name,
+      "submitted_at" => I18n.l(@payment_in_progress_claim_2.submitted_at.to_date, format: :long),
+      "amount" => "£0.00",
+    })
   end
 
   def when_i_click_on_upload_payer_response

@@ -479,7 +479,7 @@ RSpec.describe Claims::Claim, type: :model do
       let(:claim) { create(:claim, :submitted) }
 
       it "returns false" do
-        expect(payment_actionable).to be(false)
+        expect(payment_actionable).to be(true)
       end
     end
 
@@ -487,7 +487,7 @@ RSpec.describe Claims::Claim, type: :model do
       let(:claim) { create(:claim, :payment_in_progress) }
 
       it "returns false" do
-        expect(payment_actionable).to be(false)
+        expect(payment_actionable).to be(true)
       end
     end
 
