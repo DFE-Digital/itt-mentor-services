@@ -102,8 +102,12 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
 
   private
 
+  def year
+    AcademicYear.for_date(Date.current).starts_on.year
+  end
+
   def publish_url
-    "https://api.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/current/providers"
+    "https://api.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/#{year}/providers"
   end
 
   def non_existing_providers_request

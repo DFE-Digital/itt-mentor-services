@@ -3,10 +3,12 @@ require "rails_helper"
 RSpec.describe PublishTeacherTraining::Provider::Api do
   subject(:provider_api) { described_class.call }
 
+  let(:year) { AcademicYear.for_date(Date.current).starts_on.year }
+
   before do
     stub_request(
       :get,
-      "https://api.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/current/providers",
+      "https://api.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/#{year}/providers",
     ).to_return(
       status: 200,
       body: {
