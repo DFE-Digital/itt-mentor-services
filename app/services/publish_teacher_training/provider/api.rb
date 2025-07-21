@@ -15,7 +15,11 @@ module PublishTeacherTraining
       private
 
       def all_providers_url
-        "#{ENV["PUBLISH_BASE_URL"]}/api/public/v1/recruitment_cycles/current/providers"
+        "#{ENV["PUBLISH_BASE_URL"]}/api/public/v1/recruitment_cycles/#{year}/providers"
+      end
+
+      def year
+        AcademicYear.for_date(Date.current).starts_on.year
       end
     end
   end
