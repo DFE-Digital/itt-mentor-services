@@ -13,7 +13,7 @@ class Claims::Claim::FilterFormComponent < ApplicationComponent
     @filter_form = filter_form
     @statuses = statuses
     @academic_years = academic_years
-    @providers = providers || limit_records(Claims::Provider)
+    @providers = providers || limit_records(Claims::Provider.accredited.excluding_niot_providers)
     @schools = schools || limit_records(Claims::School)
   end
 
