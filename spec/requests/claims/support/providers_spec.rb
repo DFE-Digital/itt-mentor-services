@@ -98,6 +98,39 @@ RSpec.describe "Providers", type: :request do
           { "id" => provider2.id, "name" => provider2.name },
         )
       end
+
+      it "returns only accredited providers" do
+        claims_user = create(:claims_support_user)
+        sign_in_as claims_user
+
+        provider1 = create(:claims_provider, name: "Test Provider 1")
+        _provider2 = create(:claims_provider, name: "Test Provider 2", accredited: false)
+
+        get search_path
+
+        expect(response).to have_http_status(:ok)
+        json_response = JSON.parse(response.body)
+        expect(json_response).to contain_exactly(
+          { "id" => provider1.id, "name" => provider1.name },
+        )
+      end
+
+      it "returns only NIoT headquarters" do
+        claims_user = create(:claims_support_user)
+        sign_in_as claims_user
+
+        niot_headquarters = create(:claims_provider, code: "2N2", name: "NIoT")
+        _niot_site_1 = create(:claims_provider, code: "1YF", name: "NIoT")
+        _niot_site_2 = create(:claims_provider, code: "21J", name: "NIoT")
+
+        get search_path
+
+        expect(response).to have_http_status(:ok)
+        json_response = JSON.parse(response.body)
+        expect(json_response).to contain_exactly(
+          { "id" => niot_headquarters.id, "name" => niot_headquarters.name },
+        )
+      end
     end
   end
 end
