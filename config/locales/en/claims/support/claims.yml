@@ -28,7 +28,8 @@ en:
           submit: Search
           clear: Clear search
           status: Status
-          mentors: Mentors
+          mentor: Mentor
+          support_user: Support user
         show:
           page_caption: Claim %{reference}
           page_title: "%{school_name} - Claim %{reference}"

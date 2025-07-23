@@ -15,6 +15,7 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
   attribute :statuses, default: []
   attribute :academic_year_id, default: AcademicYear.for_date(Date.current).id
   attribute :mentor_ids, default: []
+  attribute :support_user_ids, default: []
 
   attribute :index_path
 
@@ -31,7 +32,8 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
       submitted_after.present? ||
       submitted_before.present? ||
       statuses.present? ||
-      mentor_ids.present?
+      mentor_ids.present? ||
+      support_user_ids.present?
   end
 
   def index_path_without_filter(filter:, value: nil)
@@ -78,6 +80,10 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
     @mentors ||= Mentor.find(mentor_ids)
   end
 
+  def support_users
+    @support_users ||= Claims::SupportUser.find(support_user_ids)
+  end
+
   def query_params
     {
       search:,
@@ -90,6 +96,7 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
       statuses:,
       academic_year_id:,
       mentor_ids:,
+      support_user_ids:,
     }
   end
 

@@ -10,6 +10,8 @@ en:
         id: ID
         reference: Claim reference
         submitted_at: Date submitted
+        support_user:
+          unassigned: Unassigned
       claims/claim/status:
         internal_draft: Internal draft
         draft: Draft

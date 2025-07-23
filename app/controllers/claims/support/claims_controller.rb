@@ -47,6 +47,7 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
       school_ids: [],
       statuses: [],
       mentor_ids: [],
+      support_user_ids: [],
     ).with_defaults(index_path:)
   end
 

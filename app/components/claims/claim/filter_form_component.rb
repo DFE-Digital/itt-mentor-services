@@ -1,4 +1,6 @@
 class Claims::Claim::FilterFormComponent < ApplicationComponent
+  UNASSIGNED = "unassigned".freeze
+
   def initialize(
     filter_form:,
     statuses: Claims::Claim.statuses.values.without(*Claims::Claim::DRAFT_STATUSES.map(&:to_s)),
@@ -22,6 +24,10 @@ class Claims::Claim::FilterFormComponent < ApplicationComponent
       Mentor.trained_in_academic_year(filter_form.academic_year),
       order: %i[first_name last_name],
     )
+  end
+
+  def support_users
+    Claims::SupportUser.all.order_by_full_name
   end
 
   private

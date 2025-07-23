@@ -9,6 +9,7 @@ class Claims::ClaimsQuery < ApplicationQuery
     scope = status_condition(scope)
     scope = academic_year_condition(scope)
     scope = mentor_condition(scope)
+    scope = support_user_condition(scope)
 
     scope.order_created_at_desc
   end
@@ -61,5 +62,16 @@ class Claims::ClaimsQuery < ApplicationQuery
     return scope if params[:mentor_ids].blank?
 
     scope.where(mentor_trainings: { mentor_id: params[:mentor_ids] })
+  end
+
+  def support_user_condition(scope)
+    return scope if params[:support_user_ids].blank?
+
+    # replace unassigned with nil
+    support_user_search = params[:support_user_ids].map do |support_user_id|
+      support_user_id == Claims::Claim::FilterFormComponent::UNASSIGNED ? nil : support_user_id
+    end
+
+    scope.where(support_user_id: support_user_search)
   end
 end

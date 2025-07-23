@@ -3,4 +3,5 @@ en:
     claim:
       card_component:
         claim_title: "%{reference} - %{school_name}"
-        clawback_amount: Clawback amount
+        clawback_amount: Clawback 
+        support_user: Support user
