@@ -11,7 +11,8 @@
       <div class="govuk-body-s"><%= claim.academic_year_name %></div>
       <div class="govuk-body-s"><%= claim.provider_name %></div>
       <% if current_user.support_user? %>
-        <div>
+        <div class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-2"></div>
+        <div class="govuk-!-margin-top-2">
           <p class="govuk-body-s"><strong><%= t(".support_user") %>: </strong><%= claim.support_user_assigned %></p>
         </div>
       <% end %>
