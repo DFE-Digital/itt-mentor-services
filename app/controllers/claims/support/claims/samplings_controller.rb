@@ -57,6 +57,7 @@ class Claims::Support::Claims::SamplingsController < Claims::Support::Applicatio
       school_ids: [],
       statuses: [],
       mentor_ids: [],
+      support_user_ids: [],
     ).with_defaults(index_path:)
   end
 

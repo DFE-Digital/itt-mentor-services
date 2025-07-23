@@ -18,7 +18,7 @@
     <% if @claims.any? %>
       <div class="govuk-!-margin-bottom-2">
         <% @claims.each do |claim| %>
-          <%= render Claim::CardComponent.new(claim:, href: claims_support_claim_path(claim)) %>
+          <%= render Claim::CardComponent.new(claim:, href: claims_support_claim_path(claim), current_user:) %>
         <% end %>
       </div>
 

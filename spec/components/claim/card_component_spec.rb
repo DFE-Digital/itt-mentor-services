@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Claim::CardComponent, type: :component do
   include Rails.application.routes.url_helpers
 
-  subject(:component) { described_class.new(claim:, href:) }
+  subject(:component) { described_class.new(claim:, href:, current_user:) }
 
   let(:claim) do
     create(:claim, :submitted, submitted_at: "2024/04/08", school:) do |claim|
@@ -12,8 +12,8 @@ RSpec.describe Claim::CardComponent, type: :component do
   end
 
   let(:href) { claims_support_claim_path(claim) }
-
   let(:school) { create(:claims_school, region: regions(:inner_london)) }
+  let(:current_user) { create(:claims_user, schools: [school]) }
 
   it "renders a card with claim details" do
     render_inline(component)

@@ -10,14 +10,19 @@
     <div class="claim-card__body__details">
       <div class="govuk-body-s"><%= claim.academic_year_name %></div>
       <div class="govuk-body-s"><%= claim.provider_name %></div>
+      <% if current_user.support_user? %>
+        <div>
+          <p class="govuk-body-s"><strong><%= t(".support_user") %>: </strong><%= claim.support_user_assigned %></p>
+        </div>
+      <% end %>
     </div>
 
     <div class="claim-card__body__right">
       <div class="govuk-body-s"><%= l(claim.submitted_at.to_date, format: :long) %></div>
       <div class="govuk-body-s"><%= humanized_money_with_symbol(claim.amount) %></div>
       <% if claim.status == "clawback_requested" %>
-      <div class="govuk-body-s govuk-!-font-weight-bold"><%= t(".clawback_amount") %></div>
-      <div class="govuk-body-s"><%= humanized_money_with_symbol(claim.total_clawback_amount) %></div>
+        <div class="govuk-body-s govuk-!-font-weight-bold"><%= t(".clawback_amount") %></div>
+        <div class="govuk-body-s"><%= humanized_money_with_symbol(claim.total_clawback_amount) %></div>
       <% end %>
     </div>
   </div>

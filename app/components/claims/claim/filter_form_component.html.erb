@@ -86,8 +86,24 @@
                     </ul>
                   <% end %>
 
+                  <% if filter_form.support_user_ids.present? %>
+                    <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.support_user") %></h3>
+                    <ul class="app-filter-tags">
+                      <% filter_form.support_users.each do |support_user| %>
+                        <li>
+                        <%= govuk_link_to(
+                          support_user.full_name,
+                          filter_form.index_path_without_filter(filter: "support_user_ids", value: support_user.id),
+                          class: "app-filter__tag",
+                          no_visited_state: true,
+                        ) %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  <% end %>
+
                   <% if filter_form.mentor_ids.present? %>
-                    <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.mentors") %></h3>
+                    <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.mentor") %></h3>
                     <ul class="app-filter-tags">
                       <% filter_form.mentors.each do |mentor| %>
                         <li>
@@ -198,12 +214,29 @@
                   <% end %>
                 </div>
 
+                <div class="app-filter__option" data-controller="filter-search">
+                  <%= form.govuk_check_boxes_fieldset(
+                    :support_user_ids,
+                    legend: {
+                      text: t("claims.support.claims.index.support_user"),
+                      size: "s",
+                    },
+                    small: true,
+                    multiple: false,
+                  ) do %>
+                    <% support_users.each do |support_user| %>
+                      <%= form.govuk_check_box :support_user_ids, support_user.id, label: { text: support_user.full_name } %>
+                    <% end %>
+                    <%= form.govuk_check_box :support_user_ids, UNASSIGNED, label: { text: t(".unassigned") } %>
+                  <% end %>
+                </div>
+
                 <div class="app-filter__option" data-controller="async-filter-search" data-async-filter-search-endpoint-value="/support/mentors/search/<%= filter_form.academic_year.id %>"
                      data-async-filter-search-fieldname-value="claims_support_claims_filter_form[mentor_ids][]" data-async-filter-search-labelname-value="claims-support-claims-filter-form-mentor-ids">
                   <%= form.govuk_check_boxes_fieldset(
                     :mentor_ids,
                     legend: {
-                      text: t("claims.support.claims.index.mentors"),
+                      text: t("claims.support.claims.index.mentor"),
                       size: "s",
                     },
                     small: true,
