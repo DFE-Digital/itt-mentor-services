@@ -123,5 +123,47 @@ describe Claims::ClaimsQuery do
         expect(claims_query).to contain_exactly(mentor_1_claim)
       end
     end
+
+    context "when given support user ids" do
+      let(:support_user_1) { build(:claims_support_user, first_name: "John", last_name: "Smith") }
+      let(:support_user_2) { build(:claims_support_user, first_name: "Anne", last_name: "Doe") }
+      let(:support_user_3) { build(:claims_support_user, first_name: "Sarah", last_name: "James") }
+
+      let(:claim_1) { create(:claim, :submitted, support_user: support_user_1) }
+      let(:claim_2) { create(:claim, :submitted, support_user: support_user_2) }
+      let(:claim_3) { create(:claim, :submitted, support_user: support_user_3) }
+      let(:non_assigned_claim) { create(:claim, :submitted) }
+
+      before do
+        claim_1
+        claim_2
+        claim_3
+        non_assigned_claim
+      end
+
+      context "when only support user ids are given" do
+        let(:params) { { support_user_ids: [support_user_1.id, support_user_2.id] } }
+
+        it "filters the results by supoort user" do
+          expect(claims_query).to contain_exactly(claim_1, claim_2)
+        end
+      end
+
+      context "when the only support user id given is 'unassigned'" do
+        let(:params) { { support_user_ids: %w[unassigned] } }
+
+        it "filters the results not assigned to support users" do
+          expect(claims_query).to contain_exactly(non_assigned_claim)
+        end
+      end
+
+      context "when given support user ids and 'unassigned'" do
+        let(:params) { { support_user_ids: ["unassigned", support_user_1.id, support_user_2.id] } }
+
+        it "filters the results" do
+          expect(claims_query).to contain_exactly(non_assigned_claim, claim_1, claim_2)
+        end
+      end
+    end
   end
 end

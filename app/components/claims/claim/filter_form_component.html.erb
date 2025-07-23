@@ -91,12 +91,22 @@
                     <ul class="app-filter-tags">
                       <% filter_form.support_users.each do |support_user| %>
                         <li>
-                        <%= govuk_link_to(
-                          support_user.full_name,
-                          filter_form.index_path_without_filter(filter: "support_user_ids", value: support_user.id),
-                          class: "app-filter__tag",
-                          no_visited_state: true,
-                        ) %>
+                          <%= govuk_link_to(
+                            support_user.full_name,
+                            filter_form.index_path_without_filter(filter: "support_user_ids", value: support_user.id),
+                            class: "app-filter__tag",
+                            no_visited_state: true,
+                          ) %>
+                        </li>
+                      <% end %>
+                      <% if filter_form.support_user_ids.include?(UNASSIGNED) %>
+                        <li>
+                          <%= govuk_link_to(
+                            UNASSIGNED.titleize,
+                            filter_form.index_path_without_filter(filter: "support_user_ids", value: UNASSIGNED),
+                            class: "app-filter__tag",
+                            no_visited_state: true,
+                          ) %>
                         </li>
                       <% end %>
                     </ul>
