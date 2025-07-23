@@ -81,7 +81,9 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
   end
 
   def support_users
-    @support_users ||= Claims::SupportUser.find(support_user_ids)
+    @support_users ||= Claims::SupportUser.find(support_user_ids.reject do |id|
+      id == Claims::Claim::FilterFormComponent::UNASSIGNED
+    end)
   end
 
   def query_params

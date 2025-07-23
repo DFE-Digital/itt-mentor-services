@@ -40,7 +40,7 @@ FactoryBot.define do
   factory :provider do
     # Provider codes are 3 character alphanumeric strings – e.g. "T92"
     # Since they're derived from a sequence, they're guaranteed to be unique.
-    sequence(:code) { |n| n.to_s(36).rjust(3, "0").upcase }
+    sequence(:code, "AA1")
 
     name { Faker::University.name }
     provider_type { Provider.provider_types.keys.sample }

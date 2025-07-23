@@ -19,7 +19,7 @@ RSpec.describe Claims::Claim::FilterFormComponent, type: :component do
     current_mentor_training
   end
 
-  it "renders search bar with the statuses, provider_ids, school_ids, mentor_ids, submitted_after, and submitted_before filters" do
+  it "renders search bar with the statuses, provider_ids, school_ids, mentor_ids, support_user_ids, submitted_after, and submitted_before filters" do
     render_inline(component)
 
     expect(page).to have_field("claims_support_claims_filter_form[search]")
@@ -27,6 +27,7 @@ RSpec.describe Claims::Claim::FilterFormComponent, type: :component do
     expect(page).to have_field("claims_support_claims_filter_form[provider_ids][]")
     expect(page).to have_field("claims_support_claims_filter_form[school_ids][]")
     expect(page).to have_field("claims_support_claims_filter_form[mentor_ids][]")
+    expect(page).to have_field("claims_support_claims_filter_form[support_user_ids][]")
     expect(page).to have_field("claims_support_claims_filter_form[submitted_after(1i)]")
     expect(page).to have_field("claims_support_claims_filter_form[submitted_after(2i)]")
     expect(page).to have_field("claims_support_claims_filter_form[submitted_after(3i)]")
@@ -122,6 +123,17 @@ RSpec.describe Claims::Claim::FilterFormComponent, type: :component do
 
     it "returns only mentors who trained during the selected academic year" do
       expect(mentors).to contain_exactly(current_trained_mentor)
+    end
+  end
+
+  describe "#support_users" do
+    subject(:support_users) { component.support_users }
+
+    let!(:claims_support_user) { create(:claims_support_user) }
+    let(:placements_support_user) { create(:placements_support_user) }
+
+    it "returns only claims support users" do
+      expect(support_users).to contain_exactly(claims_support_user)
     end
   end
 end
