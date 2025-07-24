@@ -25,6 +25,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
         academic_year_id: current_academic_year.id,
         index_path: nil,
         support_user_ids: [],
+        training_types: [],
       )
     end
   end
@@ -63,6 +64,13 @@ describe Claims::Support::Claims::FilterForm, type: :model do
       form = described_class.new(params)
 
       expect(form.filters_selected?).to be(false)
+    end
+
+    it "returns true if training_types present" do
+      params = { training_types: %w[initial] }
+      form = described_class.new(params)
+
+      expect(form.filters_selected?).to be(true)
     end
 
     it "returns true if submitted_after is present" do
@@ -316,6 +324,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
         provider_ids: %w[provider_id],
         support_user_ids: %w[support_user_id],
         mentor_ids: %w[mentor_id],
+        training_types: %w[initial],
         statuses: %w[submitted],
         academic_year_id: current_academic_year.id,
       }
@@ -333,6 +342,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
         submitted_after: Date.new(2024, 1, 2),
         submitted_before: Date.new(2023, 1, 2),
         statuses: %w[submitted],
+        training_types: %w[initial],
         academic_year_id: current_academic_year.id,
       )
     end

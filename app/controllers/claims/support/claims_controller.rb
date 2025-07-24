@@ -48,6 +48,7 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
       statuses: [],
       mentor_ids: [],
       support_user_ids: [],
+      training_types: [],
     ).with_defaults(index_path:)
   end
 
