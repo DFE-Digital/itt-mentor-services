@@ -10,6 +10,7 @@ class Claims::ClaimsQuery < ApplicationQuery
     scope = academic_year_condition(scope)
     scope = mentor_condition(scope)
     scope = support_user_condition(scope)
+    scope = training_type_condition(scope)
 
     scope.order_created_at_desc
   end
@@ -73,5 +74,11 @@ class Claims::ClaimsQuery < ApplicationQuery
     end
 
     scope.where(support_user_id: support_user_search)
+  end
+
+  def training_type_condition(scope)
+    return scope if params[:training_types].blank?
+
+    scope.where(mentor_trainings: { training_type: params[:training_types] })
   end
 end

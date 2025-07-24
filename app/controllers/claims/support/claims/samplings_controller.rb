@@ -58,6 +58,7 @@ class Claims::Support::Claims::SamplingsController < Claims::Support::Applicatio
       statuses: [],
       mentor_ids: [],
       support_user_ids: [],
+      training_types: [],
     ).with_defaults(index_path:)
   end
 

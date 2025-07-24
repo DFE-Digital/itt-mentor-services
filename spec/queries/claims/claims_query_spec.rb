@@ -160,9 +160,31 @@ describe Claims::ClaimsQuery do
       context "when given support user ids and 'unassigned'" do
         let(:params) { { support_user_ids: ["unassigned", support_user_1.id, support_user_2.id] } }
 
-        it "filters the results" do
+        it "filters the results by support user and not assigned" do
           expect(claims_query).to contain_exactly(non_assigned_claim, claim_1, claim_2)
         end
+      end
+    end
+
+    context "when given training types" do
+      let(:params) { { training_types: %w[initial] } }
+
+      let(:claim_1) { build(:claim, :submitted) }
+      let(:claim_2) { build(:claim, :draft) }
+      let(:claim_3) { build(:claim, :submitted) }
+
+      let(:initial_mentor_training) { create(:mentor_training, claim: claim_1, training_type: :initial) }
+      let(:draft_mentor_training) { create(:mentor_training, claim: claim_2, training_type: :initial) }
+      let(:refresher_mentor_training) { create(:mentor_training, claim: claim_3, training_type: :refresher) }
+
+      before do
+        initial_mentor_training
+        draft_mentor_training
+        refresher_mentor_training
+      end
+
+      it "filters the results by mentor training 'training type'" do
+        expect(claims_query).to contain_exactly(claim_1)
       end
     end
   end

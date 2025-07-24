@@ -38,6 +38,22 @@
                     </div>
                   </div>
 
+                  <% if filter_form.training_types.present? %>
+                    <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.training_type") %></h3>
+                    <ul class="app-filter-tags">
+                      <% filter_form.training_types.each do |training_type| %>
+                        <li>
+                        <%= govuk_link_to(
+                          training_type.titleize,
+                          filter_form.index_path_without_filter(filter: "training_types", value: training_type),
+                          class: "app-filter__tag",
+                          no_visited_state: true,
+                        ) %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  <% end %>
+
                   <% if filter_form.statuses.present? %>
                     <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.status") %></h3>
                     <ul class="app-filter-tags">
@@ -173,6 +189,22 @@
                     <% end %>
                   </div>
                 <% end %>
+
+                <div class="app-filter__option">
+                    <%= form.govuk_check_boxes_fieldset(
+                      :training_types,
+                      legend: {
+                        text: t("claims.support.claims.index.training_type"),
+                        size: "s",
+                      },
+                      small: true,
+                      multiple: false,
+                    ) do %>
+                      <% training_types.each do |training_type| %>
+                        <%= form.govuk_check_box :training_types, training_type, label: { text: training_type.titleize } %>
+                      <% end %>
+                    <% end %>
+                  </div>
 
                 <div class="app-filter__option" data-controller="filter-search">
                   <%= form.govuk_check_boxes_fieldset(

@@ -136,4 +136,12 @@ RSpec.describe Claims::Claim::FilterFormComponent, type: :component do
       expect(support_users).to contain_exactly(claims_support_user)
     end
   end
+
+  describe "#training_types" do
+    subject(:training_types) { component.training_types }
+
+    it "returns the training types" do
+      expect(training_types).to contain_exactly("initial", "refresher")
+    end
+  end
 end

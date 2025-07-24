@@ -16,6 +16,7 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
   attribute :academic_year_id, default: AcademicYear.for_date(Date.current).id
   attribute :mentor_ids, default: []
   attribute :support_user_ids, default: []
+  attribute :training_types, default: []
 
   attribute :index_path
 
@@ -33,7 +34,8 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
       submitted_before.present? ||
       statuses.present? ||
       mentor_ids.present? ||
-      support_user_ids.present?
+      support_user_ids.present? ||
+      training_types.present?
   end
 
   def index_path_without_filter(filter:, value: nil)
@@ -99,6 +101,7 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
       academic_year_id:,
       mentor_ids:,
       support_user_ids:,
+      training_types:,
     }
   end
 

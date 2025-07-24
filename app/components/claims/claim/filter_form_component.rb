@@ -30,6 +30,10 @@ class Claims::Claim::FilterFormComponent < ApplicationComponent
     Claims::SupportUser.all.order_by_full_name
   end
 
+  def training_types
+    Claims::MentorTraining.training_types.keys.sort
+  end
+
   private
 
   attr_reader :claims, :filter_form

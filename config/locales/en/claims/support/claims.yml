@@ -30,6 +30,7 @@ en:
           status: Status
           mentor: Mentor
           support_user: Support user
+          training_type: Training type
         show:
           page_caption: Claim %{reference}
           page_title: "%{school_name} - Claim %{reference}"

@@ -58,6 +58,7 @@ class Claims::Support::Claims::PaymentsController < Claims::Support::Application
       statuses: [],
       mentor_ids: [],
       support_user_ids: [],
+      training_types: [],
     )
   end
 
