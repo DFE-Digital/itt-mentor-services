@@ -27,6 +27,9 @@ RSpec.describe Claims::Slack::DailyRoundupJob, type: :job do
     it "sends the daily claims notification" do
       described_class.perform_now
 
+      total_claims_amount = Claims::Claim.all.map(&:amount).sum
+      average_claim_amount = total_claims_amount / Claims::Claim.count.to_f
+
       expect(slack_notifier).to have_received(:claim_submitted_notification).with(
         claim_count: 1,
         school_count: 1,
@@ -34,7 +37,8 @@ RSpec.describe Claims::Slack::DailyRoundupJob, type: :job do
         invalid_claim_count: 1,
         claim_amount: humanized_money_with_symbol(yesterdays_claim.amount),
         total_claims_count: 3,
-        total_claims_amount: humanized_money_with_symbol(previous_claim.amount + yesterdays_claim.amount),
+        total_claims_amount: humanized_money_with_symbol(total_claims_amount),
+        average_claim_amount: humanized_money_with_symbol(average_claim_amount),
       )
 
       expect(slack_message).to have_received(:deliver_now)
