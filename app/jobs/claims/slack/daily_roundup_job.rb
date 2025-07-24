@@ -4,10 +4,12 @@ class Claims::Slack::DailyRoundupJob < ApplicationJob
 
   def perform
     current_claim_window = Claims::ClaimWindow.current
+    current_academic_year = current_claim_window.academic_year
     todays_claims = claims_since(Time.current.yesterday.change(hour: 16))
     new_schools = new_organisations(todays_claims, :school_id)
     new_providers = new_organisations(todays_claims, :provider_id)
-    total_claims = Claims::Claim.where(claim_window: current_claim_window)
+    total_claims = Claims::Claim.joins(:claim_window).where(claim_window: { academic_year_id: current_academic_year.id })
+    average_amount = total_claims.map(&:amount).sum / total_claims.count.to_f
 
     Claims::ClaimSlackNotifier.claim_submitted_notification(
       claim_count: todays_claims.count,
@@ -17,6 +19,7 @@ class Claims::Slack::DailyRoundupJob < ApplicationJob
       total_claims_count: total_claims.count,
       total_claims_amount: humanized_money_with_symbol(total_claims.map(&:amount).sum),
       invalid_claim_count: total_claims.where(status: :invalid_provider).count,
+      average_claim_amount: average_amount,
     ).deliver_now
   end
 

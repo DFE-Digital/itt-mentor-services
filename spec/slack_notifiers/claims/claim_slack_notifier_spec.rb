@@ -14,6 +14,7 @@ RSpec.describe Claims::ClaimSlackNotifier do
         claim_amount:,
         total_claims_count:,
         total_claims_amount:,
+        average_claim_amount:,
       )
     end
 
@@ -25,6 +26,7 @@ RSpec.describe Claims::ClaimSlackNotifier do
       let(:invalid_claim_count) { 3 }
       let(:total_claims_count) { 100 }
       let(:total_claims_amount) { "£50000" }
+      let(:average_claim_amount) { "£500" }
 
       it "returns a message with the correct blocks" do
         expect(notification.blocks).to include(
@@ -102,6 +104,13 @@ RSpec.describe Claims::ClaimSlackNotifier do
               text: ":bank: *#{total_claims_amount}* has been claimed",
             },
           },
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: ":abacus: *#{average_claim_amount}* is the average amount claimed",
+            },
+          },
         )
       end
     end
@@ -114,6 +123,7 @@ RSpec.describe Claims::ClaimSlackNotifier do
       let(:invalid_claim_count) { 1 }
       let(:total_claims_count) { 1 }
       let(:total_claims_amount) { "£1000" }
+      let(:average_claim_amount) { "£1000" }
 
       it "returns a message with the correct blocks" do
         expect(notification.blocks).to include(
@@ -189,6 +199,13 @@ RSpec.describe Claims::ClaimSlackNotifier do
             text: {
               type: "mrkdwn",
               text: ":bank: *#{total_claims_amount}* has been claimed",
+            },
+          },
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: ":abacus: *#{average_claim_amount}* is the average amount claimed",
             },
           },
         )
