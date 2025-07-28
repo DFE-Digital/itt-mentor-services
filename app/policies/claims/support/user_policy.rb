@@ -3,6 +3,10 @@ class Claims::Support::UserPolicy < Claims::ApplicationPolicy
     true
   end
 
+  def download?
+    true
+  end
+
   def destroy?
     user != record
   end

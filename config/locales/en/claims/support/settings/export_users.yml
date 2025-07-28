@@ -1,0 +1,7 @@
+en:
+  claims:
+    support:
+      settings:
+        export_users:
+          edit:
+            cancel: Cancel

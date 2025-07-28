@@ -8,6 +8,8 @@ en:
           claim_windows: Manage claim windows
           schools_not_submitted_claims: Remind schools to submit claims
           providers_not_submitted_claims: Remind providers to submit claims
+          export: Export
+          export_users: Export users (CSV)
           emails: View email templates
           reset_database: Reset database
           revert_claims_to_submitted: Revert all claims to 'Submitted'
@@ -17,3 +19,4 @@ en:
           service_management: Service management
           service_information: Service information
           developer_tools: Developer tools
+          export: Export
