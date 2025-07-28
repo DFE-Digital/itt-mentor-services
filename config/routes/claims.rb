@@ -271,6 +271,10 @@ scope module: :claims, as: :claims, constraints: {
       end
     end
 
+    get "export_users", to: "settings/export_users#new", as: :new_claims_export_users
+    get "export_users/:state_key/:step", to: "settings/export_users#edit", as: :claims_export_users
+    put "export_users/:state_key/:step", to: "settings/export_users#update"
+    post "export_users/:state_key/download", to: "settings/export_users#download", as: :download_claims_export_users
     resources :claim_windows do
       get :new_check, path: :check, on: :collection
       get :edit_check, path: :check, on: :member

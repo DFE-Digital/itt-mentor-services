@@ -1,0 +1,48 @@
+en:
+  wizards:
+    claims:
+      export_users_wizard:
+        page_title: Export users
+        caption: Export users
+        download_csv: Download CSV
+
+        claim_window_step:
+          title: Which claim windows do you want to include?
+          caption: Export users
+          select_claim_window: Select which claim windows to include
+          options:
+            all: All claim windows
+            specific: A specific claim window
+          continue: Continue
+
+        specific_claim_window_step:
+          title: Choose a claim window
+          select_a_claim_window: Select a claim window
+          caption: Export users
+          continue: Continue
+
+        activity_level_step:
+          title: Which users do you want to include?
+          caption: Export users
+          select_users: Select which users to include
+          select_valid_activity_level: Select a valid activity level
+          options:
+            all: All users
+            active: Active users
+            activity_level_hint: Active users are users who have logged in
+          continue: Continue
+
+        check_your_answers_step:
+          page_title: Check your answers before downloading
+          caption: Export users
+          title: Check your answers
+          download_csv: Download CSV
+          claim_window:
+            label: Claim window
+            all: All claim windows
+            missing: Not selected
+          activity_level:
+            label: Activity level
+            all: All users
+            active: Only active users
+            missing: Not specified
