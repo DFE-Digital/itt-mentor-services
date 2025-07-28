@@ -27,6 +27,11 @@
         (govuk_link_to(t(".reset_database"), reset_claims_support_database_path, no_visited_state: true) unless HostingEnvironment.env.production?),
         (govuk_link_to(t(".revert_claims_to_submitted"), revert_to_submitted_claims_support_database_databases_claims_path, no_visited_state: true) unless HostingEnvironment.env.production?),
       ], spaced: true %>
+
+      <h2 class="govuk-heading-m"><%= t(".export") %></h2>
+      <%= govuk_list [
+        govuk_link_to(t(".export_users"), claims_support_new_claims_export_users_path, no_visited_state: true),
+      ], spaced: true %>
     </div>
   </div>
 </div>

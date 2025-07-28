@@ -1,0 +1,48 @@
+<% content_for :page_title, title_with_error_prefix(
+  t(".page_title"),
+  error: current_step.errors.any?,
+) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l"><%= t(".caption") %></span>
+    <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+
+    <%= govuk_summary_list do |summary_list| %>
+      <% summary_list.with_row do |row| %>
+        <% row.with_key(text: t(".claim_window.label")) %>
+        <% row.with_value do %>
+          <% if wizard.steps[:claim_window].all_claim_windows? %>
+            <%= "All claim windows" %>
+          <% else %>
+            <%= wizard.steps[:specific_claim_window].claim_window.decorate.name %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <% summary_list.with_row do |row| %>
+        <% row.with_key(text: t(".activity_level.label")) %>
+        <% row.with_value do %>
+          <% case wizard.steps[:activity_level].activity_selection %>
+          <% when "all" %>
+            <%= t(".activity_level.all") %>
+          <% when "active" %>
+            <%= t(".activity_level.active") %>
+          <% else %>
+            <%= t(".activity_level.missing") %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= form_with(
+          url: claims_support_download_claims_export_users_path(state_key: params[:state_key]),
+          method: :post,
+          local: true,
+        ) do %>
+      <button type="submit" class="govuk-button">
+        <%= t(".download_csv") %>
+      </button>
+    <% end %>
+  </div>
+</div>
