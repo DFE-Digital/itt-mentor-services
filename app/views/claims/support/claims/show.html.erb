@@ -2,7 +2,7 @@
 <% content_for(:page_title) { sanitize t(".page_title", school_name: @claim.school_name, reference: @claim.reference) } %>
 
 <% content_for(:before_content) do %>
-  <%= govuk_back_link href: claims_support_claims_path %>
+  <%= govuk_back_link href: claims_support_claims_path(session["claims_filter_params"]) %>
 <% end %>
 
 <div class="govuk-width-container">
