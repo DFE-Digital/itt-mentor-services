@@ -17,7 +17,7 @@
         <% else %>
           <%= govuk_inset_text text: t(".add_mentor_guidance_html", link_to: govuk_link_to(t(".add_a_mentor"), claims_school_mentors_path(@school))) %>
         <% end %>
-      <% elsif !@school.eligible_for_claim_window?(Claims::ClaimWindow.current) %>
+      <% elsif Claims::ClaimWindow.current.present? && !@school.eligible_for_claim_window?(Claims::ClaimWindow.current) %>
         <%= govuk_warning_text do %>
           <p class="govuk-body"><%= t(".not_eligible_html", support_email: mail_to(t("claims.support_email"), t("claims.support_email_html"), class: "govuk-link")) %>
         <% end %>
@@ -25,6 +25,10 @@
         <%= govuk_inset_text do %>
           <p class="govuk-body"><%= t(".window_closed", start_year: Claims::ClaimWindow.previous.academic_year.starts_on.year, end_year: Claims::ClaimWindow.previous.academic_year.ends_on.year) %></p>
           <p class="govuk-body"><%= sanitize t(".window_closed_guidance", link_to: govuk_link_to(t(".window_closed_guidance_link_text"), claims_school_mentors_path(@school)), time: l(Claims::ClaimWindow.previous.ends_on.end_of_day, format: :time_on_date)) %></p>
+          <% if AcademicYear.for_date(Date.current).has_upcoming_claim_windows? %>
+            <% next_window = Claims::ClaimWindow.next %>
+            <p class="govuk-body"><%= t(".upcoming_window_guidance", starts_on: l(next_window.starts_on, format: :long_with_day), ends_on: l(next_window.ends_on, format: :long_with_day), academic_year_name: next_window.academic_year_name) %></p>
+          <% end %>
         <% end %>
       <% end %>
     </div>

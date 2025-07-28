@@ -40,6 +40,8 @@ class Claims::ClaimWindow < ApplicationRecord
   delegate :past?, to: :ends_on
   delegate :future?, to: :starts_on
 
+  scope :upcoming, -> { where(starts_on: Date.current..).order(starts_on: :asc) }
+
   def current?
     (starts_on..ends_on).cover?(Date.current)
   end
@@ -57,7 +59,7 @@ class Claims::ClaimWindow < ApplicationRecord
   end
 
   def self.next
-    where(starts_on: Date.current..).order(starts_on: :asc).first
+    upcoming.first
   end
 
   private

@@ -14,7 +14,7 @@
     <% else %>
       <%= govuk_inset_text text: t(".add_mentor_guidance_html", link_to: govuk_link_to(t(".add_a_mentor"), claims_support_school_mentors_path(@school))) %>
     <% end %>
-  <% elsif !@school.eligible_for_claim_window?(Claims::ClaimWindow.current) %>
+  <% elsif Claims::ClaimWindow.current.present? && !@school.eligible_for_claim_window?(Claims::ClaimWindow.current) %>
     <%= govuk_warning_text do %>
       <p class="govuk-body"><%= t(".not_eligible_html", support_email: mail_to(t("claims.support_email"), t("claims.support_email_html"), class: "govuk-link")) %>
     <% end %>

@@ -10,6 +10,8 @@
 #  updated_at :datetime         not null
 #
 class AcademicYear < ApplicationRecord
+  has_many :claim_windows, class_name: "Claims::ClaimWindow"
+
   validates :name, presence: true
   validates :starts_on, presence: true
   validates :ends_on, presence: true, comparison: { greater_than_or_equal_to: :starts_on }
@@ -38,5 +40,9 @@ class AcademicYear < ApplicationRecord
       ends_on:,
       name: "#{start_year} to #{start_year + 1}",
     )
+  end
+
+  def has_upcoming_claim_windows?
+    claim_windows.upcoming.exists?
   end
 end
