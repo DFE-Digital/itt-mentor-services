@@ -45,7 +45,7 @@ module Claims
         params: {
           school:,
           provider:,
-          claim: Claims::Claim.new(claim_window: Claims::ClaimWindow.current),
+          claim: Claims::Claim.new(claim_window: claim.claim_window),
         },
       )
     end
