@@ -39,6 +39,7 @@ en:
           window_closed_guidance: "You can still %{link_to}. Final closing date for claims: <strong>%{time}</strong>."
           window_closed_guidance_link_text: add a mentor
           window_closed_support: Email %{link_to} if you have a query about your claims.
+          upcoming_window_guidance: A second claim window will open %{starts_on} and will close %{ends_on} to enable you to submit claims for any remaining mentor training for the %{academic_year_name} academic year.
         remove:
           page_title: Are you sure you want to remove this claim?
           caption: Claim - %{reference}
