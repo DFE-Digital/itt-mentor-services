@@ -2,6 +2,7 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
   before_action :set_claim, only: %i[show]
   before_action :authorize_claim
   helper_method :filter_form
+  before_action :store_filter_params, only: %i[index]
   before_action :set_filtered_claims, only: %i[index download_csv]
 
   def index
@@ -62,5 +63,9 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
 
   def index_path
     claims_support_claims_path
+  end
+
+  def store_filter_params
+    session["claims_filter_params"] = { claims_support_claims_filter_form: filter_params.to_h }
   end
 end

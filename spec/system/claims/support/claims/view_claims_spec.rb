@@ -49,6 +49,25 @@ RSpec.describe "View claims", service: :claims, type: :system do
     then_i_see_a_list_of_claims([claim_4, claim_5, claim_6, claim_7])
   end
 
+  scenario "Filters persist across claim navigation" do
+    when_i_visit_claim_index_page
+    then_i_see_a_list_of_claims([claim_4, claim_5, claim_6, claim_7])
+    when_i_check_school_filter(school_1)
+    then_i_see_a_list_of_claims([claim_4, claim_5, claim_6])
+
+    # Navigate to a claim
+    within(".claim-card:nth-child(1)") do
+      click_link(claim_4.reference)
+    end
+    expect(page).to have_content(claim_4.reference)
+
+    # Use the back link (which should include session filter)
+    click_link("Back")
+
+    # Confirm that the filter is still applied after returning
+    then_i_see_a_list_of_claims([claim_4, claim_5, claim_6])
+  end
+
   context "when filtering by a status" do
     scenario "Support user filters claims in a submitted status" do
       when_i_visit_claim_index_page
