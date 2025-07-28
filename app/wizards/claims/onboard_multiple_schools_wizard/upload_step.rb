@@ -37,13 +37,11 @@ class Claims::OnboardMultipleSchoolsWizard::UploadStep < BaseStep
     return true if csv_content.blank?
 
     reset_input_attributes
-    csv.each_with_index do |row, _i|
-      next if row["name"].blank? &&
-        row["urn"].blank?
+    csv.each_with_index do |row, i|
+      next if row["name"].blank? && row["urn"].blank?
 
-      # Temp removed to make the CSV upload work
-      # validate_name(row, i)
-      # validate_urn(row, i)
+      validate_name(row, i)
+      validate_urn(row, i)
     end
 
     invalid_school_name_rows.blank? &&
