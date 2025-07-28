@@ -31,9 +31,7 @@ RSpec.describe Claims::OnboardUsersWizard do
         }
       end
 
-      # Temp removed to make the CSV upload work
-      # it { is_expected.to eq(%i[upload upload_errors]) }
-      it { is_expected.to eq(%i[upload confirmation]) }
+      it { is_expected.to eq(%i[upload upload_errors]) }
     end
   end
 
@@ -69,11 +67,7 @@ RSpec.describe Claims::OnboardUsersWizard do
       end
 
       it "returns an invalid wizard error" do
-        # expect { upload_users }.to raise_error("Invalid wizard state")
-
-        expect { upload_users }.not_to have_enqueued_job(
-          Claims::User::CreateCollectionJob,
-        )
+        expect { upload_users }.to raise_error("Invalid wizard state")
       end
     end
 
@@ -84,11 +78,7 @@ RSpec.describe Claims::OnboardUsersWizard do
       end
 
       it "returns an invalid wizard error" do
-        # expect { upload_users }.to raise_error("Invalid wizard state")
-
-        expect { upload_users }.not_to have_enqueued_job(
-          Claims::User::CreateCollectionJob,
-        )
+        expect { upload_users }.to raise_error("Invalid wizard state")
       end
     end
   end

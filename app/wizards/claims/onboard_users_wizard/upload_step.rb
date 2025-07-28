@@ -49,8 +49,8 @@ class Claims::OnboardUsersWizard::UploadStep < BaseStep
       next if row.all? { |_k, v| v.blank? }
 
       validate_name_fields(row, i)
-      # validate_email(row, i)
-      # validate_school_urn(row, i)
+      validate_email(row, i)
+      validate_school_urn(row, i)
     end
 
     invalid_email_rows.blank? &&
