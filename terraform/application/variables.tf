@@ -112,6 +112,12 @@ variable "enable_logit" {
   default     = false
 }
 
+variable "run_as_non_root" {
+  type        = bool
+  default     = true
+  description = "Whether to enforce that containers must run as non-root user"
+}
+
 locals {
   postgres_ssl_mode       = var.enable_postgres_ssl ? "require" : "disable"
   app_env_values_from_yml = yamldecode(file("${path.module}/config/${var.config}_app_env.yml"))

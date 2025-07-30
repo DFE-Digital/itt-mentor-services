@@ -47,6 +47,8 @@ module "web_application" {
   docker_image               = var.docker_image
   enable_logit               = true
 
+  run_as_non_root = var.run_as_non_root
+
   send_traffic_to_maintenance_page = false
 }
 
@@ -69,4 +71,6 @@ module "worker_application" {
   docker_image               = var.docker_image
   enable_logit               = true
   enable_gcp_wif             = true
+
+  run_as_non_root = var.run_as_non_root
 }
