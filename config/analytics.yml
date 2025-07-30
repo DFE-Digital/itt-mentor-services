@@ -160,7 +160,6 @@ shared:
     - send_provision
     - rating
     - last_inspection_date
-    - email_address
     - district_admin_name
     - district_admin_code
     - region_id
