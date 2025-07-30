@@ -77,6 +77,10 @@ FactoryBot.define do
     sequence(:urn) { _1 }
     name { Faker::Educator.primary_school }
 
+    transient do
+      email_address { nil }
+    end
+
     trait :claims do
       claims_grant_conditions_accepted_at { Time.zone.now }
       claims_grant_conditions_accepted_by_id { User.first }
@@ -96,6 +100,12 @@ FactoryBot.define do
       phase { "Secondary" }
     end
 
+    after(:build) do |school, evaluator|
+      if evaluator.email_address
+        school.build_school_contact(email_address: evaluator.email_address)
+      end
+    end
+
     factory :claims_school,
             class: "Claims::School",
             parent: :school, traits: %i[claims]
@@ -110,7 +120,11 @@ FactoryBot.define do
       end
 
       after(:build) do |school, evaluator|
-        create(:school_contact, school:) if evaluator.with_school_contact
+        if evaluator.email_address
+          school.build_school_contact(email_address: evaluator.email_address)
+        elsif evaluator.with_school_contact
+          create(:school_contact, school:)
+        end
 
         if evaluator.hosting_interests.present?
           school.hosting_interests.concat(evaluator.hosting_interests)

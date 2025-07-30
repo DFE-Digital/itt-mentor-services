@@ -1,4 +1,5 @@
 class SchoolDecorator < OrganisationDecorator
+  delegate :email_address, to: :school_contact, allow_nil: true
   attribute :transit_travel_duration
   attribute :walk_travel_duration
   attribute :drive_travel_duration
