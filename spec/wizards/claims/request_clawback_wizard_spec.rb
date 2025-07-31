@@ -1,7 +1,13 @@
 require "rails_helper"
 
 RSpec.describe Claims::RequestClawbackWizard do
+  include ActiveJob::TestHelper
+
   subject(:wizard) { described_class.new(claim:, current_user:, state:, params:, current_step: nil) }
+
+  around do |example|
+    perform_enqueued_jobs { example.run }
+  end
 
   let(:state) { {} }
   let(:params_data) { {} }
@@ -57,6 +63,8 @@ RSpec.describe Claims::RequestClawbackWizard do
     before do
       user
       allow(Claims::Claim::Clawback::ClawbackRequested).to receive(:call)
+
+      allow(Claims::UserMailer).to receive(:claim_requires_clawback).and_return(instance_double(ActionMailer::MessageDelivery, deliver_later: true))
     end
 
     context "when the wizard is valid" do
@@ -76,7 +84,7 @@ RSpec.describe Claims::RequestClawbackWizard do
 
       it "creates a claim activity record" do
         expect { wizard.submit_esfa_responses }.to change(Claims::ClaimActivity, :count).by(1)
-          .and enqueue_mail(Claims::UserMailer, :claim_requires_clawback)
+        expect(Claims::UserMailer).to have_received(:claim_requires_clawback).with(user, claim).once
         expect(Claims::ClaimActivity.last.action).to eq("clawback_requested")
         expect(Claims::ClaimActivity.last.user).to eq(current_user)
         expect(Claims::ClaimActivity.last.record).to eq(claim)

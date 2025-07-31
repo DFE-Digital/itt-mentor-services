@@ -1,7 +1,13 @@
 require "rails_helper"
 
 describe Claims::Claim::CreateDraft do
+  include ActiveJob::TestHelper
+
   subject(:draft_service) { described_class.call(claim:) }
+
+  around do |example|
+    perform_enqueued_jobs { example.run }
+  end
 
   let!(:claim) { create(:claim, reference: nil, status: :internal_draft, school:) }
   let(:school) { create(:claims_school, urn: "1234") }
