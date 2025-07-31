@@ -44,7 +44,7 @@ class Claims::UserMailer < Claims::ApplicationMailer
                  )
   end
 
-  def claim_created_support_notification(claim, user)
+  def claim_created_support_notification(user, claim)
     link_to_claim = claims_school_claim_url(id: claim.id, school_id: claim.school.id, utm_source: "email", utm_medium: "notification", utm_campaign: "school")
 
     notify_email to: user.email,
@@ -60,7 +60,7 @@ class Claims::UserMailer < Claims::ApplicationMailer
                  )
   end
 
-  def claim_requires_clawback(claim, user)
+  def claim_requires_clawback(user, claim)
     link_to_claim = claims_school_claim_url(id: claim.id, school_id: claim.school.id, utm_source: "email", utm_medium: "notification", utm_campaign: "school")
 
     notify_email to: user.email,
@@ -95,9 +95,8 @@ class Claims::UserMailer < Claims::ApplicationMailer
                  )
   end
 
-  def claims_assigned_to_invalid_provider(user_id, claim_ids)
-    user = Claims::User.find(user_id)
-    claims = Claims::Claim.where(id: claim_ids, status: :invalid_provider)
+  def claims_assigned_to_invalid_provider(user)
+    claims = Claims::Claim.where(created_by: user, status: :invalid_provider)
     claims_string = claims.pluck(:reference).to_sentence
 
     notify_email to: user.email,

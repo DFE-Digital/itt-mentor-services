@@ -175,7 +175,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
   end
 
   describe "#claim_created_support_notification" do
-    subject(:claim_confirmation_email) { described_class.with(service: support_user.service).claim_created_support_notification(claim, user_of_a_school) }
+    subject(:claim_confirmation_email) { described_class.with(service: support_user.service).claim_created_support_notification(user_of_a_school, claim) }
 
     context "when a claim has been created" do
       let(:support_user) { create(:claims_support_user, :colin) }
@@ -232,7 +232,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
   end
 
   describe "#claim_requires_clawback" do
-    subject(:clawback_email) { described_class.claim_requires_clawback(claim, user) }
+    subject(:clawback_email) { described_class.claim_requires_clawback(user, claim) }
 
     let(:user) { create(:claims_user) }
     let(:school) { build(:claims_school, region: regions(:inner_london)) }
@@ -343,17 +343,19 @@ RSpec.describe Claims::UserMailer, type: :mailer do
   end
 
   describe "claims_assigned_to_invalid_provider" do
-    subject(:claims_assigned_to_invalid_provider_email) { described_class.claims_assigned_to_invalid_provider(user.id, claims.map(&:id)) }
+    subject(:claims_assigned_to_invalid_provider_email) { described_class.claims_assigned_to_invalid_provider(user) }
 
     let(:user) { create(:claims_user, first_name: "Joe") }
     let(:claims) do
       [
-        create(:claim, reference: "123", school: school, status: :invalid_provider),
-        create(:claim, reference: "456", school: school, status: :invalid_provider),
-        create(:claim, reference: "789", school: school, status: :invalid_provider),
+        create(:claim, reference: "123", school: school, created_by: user, status: :invalid_provider),
+        create(:claim, reference: "456", school: school, created_by: user, status: :invalid_provider),
+        create(:claim, reference: "789", school: school, created_by: user, status: :invalid_provider),
       ]
     end
     let(:school) { create(:claims_school, name: "Shelbyville Elementary") }
+
+    before { claims }
 
     it "sends the invalid provider email" do
       expect(claims_assigned_to_invalid_provider_email.to).to contain_exactly(user.email)

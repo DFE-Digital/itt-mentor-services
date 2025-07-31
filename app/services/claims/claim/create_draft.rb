@@ -18,10 +18,12 @@ class Claims::Claim::CreateDraft < ApplicationService
   attr_reader :claim
 
   def send_claim_created_support_notification_email
-    claim.school_users.each do |user|
-      Claims::UserMailer
-        .claim_created_support_notification(claim, user).deliver_later
-    end
+    NotifyRateLimiter.call(
+      collection: claim.school_users,
+      mailer: "Claims::UserMailer",
+      mailer_method: :claim_created_support_notification,
+      mailer_args: [claim],
+    )
   end
 
   def status_changed_to_draft?

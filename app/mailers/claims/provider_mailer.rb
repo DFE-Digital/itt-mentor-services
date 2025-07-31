@@ -13,9 +13,9 @@ class Claims::ProviderMailer < Claims::ApplicationMailer
                  )
   end
 
-  def resend_sampling_checks_required(provider_sampling, email_address:)
-    @provider_sampling = provider_sampling
+  def resend_sampling_checks_required(email_address, provider_sampling)
     @email_address = email_address
+    @provider_sampling = provider_sampling
 
     notify_email to: email_address,
                  subject: t(".subject"),
@@ -27,18 +27,18 @@ class Claims::ProviderMailer < Claims::ApplicationMailer
                  )
   end
 
-  def claims_have_not_been_submitted(provider_name:, email_address:)
+  def claims_have_not_been_submitted(email_address_record)
     claim_window = Claims::ClaimWindow.current
     academic_year_name = claim_window.academic_year_name
     deadline = l(claim_window.ends_on, format: :long)
 
-    notify_email to: email_address,
+    notify_email to: email_address_record.email_address,
                  subject: t(".subject", deadline:),
                  body: t(
                    ".body",
                    claim_window: Claims::ClaimWindow.current,
                    next_claim_window_opens: l(Claims::ClaimWindow.next.starts_on, format: :long),
-                   provider_name:,
+                   provider_name: email_address_record.provider_name,
                    deadline:,
                    academic_year_name:,
                    service_name:,
