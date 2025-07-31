@@ -1,6 +1,12 @@
 require "rails_helper"
 
 RSpec.describe "Claims Reminders", type: :request do
+  include ActiveJob::TestHelper
+
+  around do |example|
+    perform_enqueued_jobs { example.run }
+  end
+
   describe "POST /claims/support/claims_reminders/send_schools_not_submitted_claims" do
     let(:claim_window) { create(:claim_window, :current) }
     let(:next_claim_window) { create(:claim_window, :upcoming) }
@@ -44,10 +50,10 @@ RSpec.describe "Claims Reminders", type: :request do
     it "sends reminders to providers and redirects with a flash message" do
       post send_providers_not_submitted_claims_claims_support_claims_reminders_path
 
-      expect(Claims::ProviderMailer).to have_received(:claims_have_not_been_submitted).once.with(provider_with_no_claims.provider_email_addresses.first, [], {})
-      expect(Claims::ProviderMailer).to have_received(:claims_have_not_been_submitted).with(provider_with_claims_in_previous_window.provider_email_addresses.first, [], {})
+      expect(Claims::ProviderMailer).to have_received(:claims_have_not_been_submitted).once.with(provider_with_no_claims.provider_email_addresses.first)
+      expect(Claims::ProviderMailer).to have_received(:claims_have_not_been_submitted).with(provider_with_claims_in_previous_window.provider_email_addresses.first)
 
-      expect(Claims::ProviderMailer).not_to have_received(:claims_have_not_been_submitted).with(provider_with_claims_in_current_window.provider_email_addresses.first, [], {})
+      expect(Claims::ProviderMailer).not_to have_received(:claims_have_not_been_submitted).with(provider_with_claims_in_current_window.provider_email_addresses.first)
     end
   end
 end

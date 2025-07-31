@@ -33,7 +33,7 @@ RSpec.describe NotifyRateLimiterJob, type: :job do
             mailer.to_s,
             mailer_method.to_s,
             "deliver_now",
-            { args: [item, mailer_args, mailer_kwargs] },
+            { args: [item, "arg1", mailer_kwargs] },
           )
         end
       end
