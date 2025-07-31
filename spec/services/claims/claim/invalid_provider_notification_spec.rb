@@ -22,27 +22,31 @@ RSpec.describe Claims::Claim::InvalidProviderNotification, type: :service do
     end
 
     context "when there are claims with invalid provider status" do
-      let!(:claim1) { create(:claim, created_by: user, status: :invalid_provider) }
-      let!(:claim2) { create(:claim, created_by: user, status: :invalid_provider) }
+      let(:claim1) { create(:claim, created_by: user, status: :invalid_provider) }
+      let(:claim2) { create(:claim, created_by: user, status: :invalid_provider) }
 
-      let!(:other_claim) { create(:claim, created_by: other_user, status: :invalid_provider) }
+      let(:other_claim) { create(:claim, created_by: other_user, status: :invalid_provider) }
 
       before do
         allow(Claims::UserMailer).to receive(:claims_assigned_to_invalid_provider)
-          .with(user.id, [claim1.id, claim2.id]).and_return(instance_double(ActionMailer::MessageDelivery, deliver_later: true))
+          .with(user, [], {}).and_return(instance_double(ActionMailer::MessageDelivery, deliver_later: true))
         allow(Claims::UserMailer).to receive(:claims_assigned_to_invalid_provider)
-          .with(other_user.id, [other_claim.id]).and_return(instance_double(ActionMailer::MessageDelivery, deliver_later: true))
+          .with(other_user, [], {}).and_return(instance_double(ActionMailer::MessageDelivery, deliver_later: true))
+
+        claim1
+        claim2
+        other_claim
 
         described_class.call
       end
 
       it "sends email notifications to users with invalid provider claims" do
-        expect(Claims::UserMailer).to have_received(:claims_assigned_to_invalid_provider).with(user.id, [claim1.id, claim2.id])
-        expect(Claims::UserMailer).to have_received(:claims_assigned_to_invalid_provider).with(other_user.id, [other_claim.id])
+        expect(Claims::UserMailer).to have_received(:claims_assigned_to_invalid_provider).with(user, [], {})
+        expect(Claims::UserMailer).to have_received(:claims_assigned_to_invalid_provider).with(other_user, [], {})
       end
 
       it "does not send duplicate notifications for the same user" do
-        expect(Claims::UserMailer).to have_received(:claims_assigned_to_invalid_provider).with(user.id, [claim1.id, claim2.id]).once
+        expect(Claims::UserMailer).to have_received(:claims_assigned_to_invalid_provider).with(user, [], {}).once
       end
 
       context "when there are over 100 emails to send" do
@@ -62,16 +66,15 @@ RSpec.describe Claims::Claim::InvalidProviderNotification, type: :service do
 
         it "sends notifications in batches and delays them accordingly", :aggregate_failures do
           users[0..99].each do |user|
-            claims = Claims::Claim.where(created_by: user, status: :invalid_provider)
-            expect(Claims::UserMailer).to have_received(:claims_assigned_to_invalid_provider).with(user.id, claims.ids)
-            expect(mailer_double).to have_received(:deliver_later).with(wait: 0.minutes)
+            expect(Claims::UserMailer).to have_received(:claims_assigned_to_invalid_provider).with(user, [], {})
           end
 
           users[100..149].each do |user|
-            claims = Claims::Claim.where(created_by: user, status: :invalid_provider)
-            expect(Claims::UserMailer).to have_received(:claims_assigned_to_invalid_provider).with(user.id, claims.ids)
-            expect(mailer_double).to have_received(:deliver_later).with(wait: 1.minute)
+            expect(Claims::UserMailer).to have_received(:claims_assigned_to_invalid_provider).with(user, [], {})
           end
+
+          expect(mailer_double).to have_received(:deliver_later).with(wait: 0.minutes).exactly(100).times
+          expect(mailer_double).to have_received(:deliver_later).with(wait: 1.minute).exactly(52).times
         end
       end
     end

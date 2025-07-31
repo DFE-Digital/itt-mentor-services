@@ -13,7 +13,7 @@ class NotifyRateLimiter < ApplicationService
 
   def call
     collection.find_in_batches(batch_size:) do |batch|
-      NotifyRateLimiterJob.perform_now(wait_time, batch, mailer, mailer_method, mailer_args, mailer_kwargs)
+      NotifyRateLimiterJob.perform_later(wait_time, batch, mailer, mailer_method, mailer_args, mailer_kwargs)
       @wait_time += interval
     end
   end

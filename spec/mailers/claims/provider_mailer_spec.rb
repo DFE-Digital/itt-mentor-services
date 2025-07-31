@@ -190,7 +190,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
   end
 
   describe "#resend_sampling_checks_required" do
-    subject(:resend_sampling_checks_required_email) { described_class.resend_sampling_checks_required(provider_sampling, email_address: provider.primary_email_address) }
+    subject(:resend_sampling_checks_required_email) { described_class.resend_sampling_checks_required(provider.primary_email_address, provider_sampling) }
 
     context "when the completion date is a weekday" do
       let(:current_date) { "20/01/2025" }
@@ -370,13 +370,13 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
   describe "#claims_have_not_been_submitted" do
     subject(:claims_have_not_been_submitted_email) do
       described_class.claims_have_not_been_submitted(
-        provider_name: provider_name,
-        email_address: email_address,
+        create(:provider_email_address, provider:, email_address:),
       )
     end
 
     let(:provider_name) { "Aes Sedai Trust" }
     let(:email_address) { "admin@aes-sedai-trust.com" }
+    let(:provider) { create(:claims_provider, name: provider_name) }
     let!(:claim_window) { create(:claim_window, :current) }
     let!(:next_claim_window) { create(:claim_window, :upcoming) }
 
