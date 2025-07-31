@@ -44,9 +44,10 @@ RSpec.describe "Claims Reminders", type: :request do
     it "sends reminders to providers and redirects with a flash message" do
       post send_providers_not_submitted_claims_claims_support_claims_reminders_path
 
-      expect(Claims::ProviderMailer).to have_received(:claims_have_not_been_submitted).once.with(provider_name: provider_with_no_claims.name, email_address: provider_with_no_claims.email_addresses.first)
-      expect(Claims::ProviderMailer).not_to have_received(:claims_have_not_been_submitted).with(provider_name: provider_with_claims_in_current_window.name, email_address: provider_with_claims_in_current_window.email_addresses.first)
-      expect(Claims::ProviderMailer).to have_received(:claims_have_not_been_submitted).with(provider_name: provider_with_claims_in_previous_window.name, email_address: provider_with_claims_in_previous_window.email_addresses.first)
+      expect(Claims::ProviderMailer).to have_received(:claims_have_not_been_submitted).once.with(provider_with_no_claims.provider_email_addresses.first, [], {})
+      expect(Claims::ProviderMailer).to have_received(:claims_have_not_been_submitted).with(provider_with_claims_in_previous_window.provider_email_addresses.first, [], {})
+
+      expect(Claims::ProviderMailer).not_to have_received(:claims_have_not_been_submitted).with(provider_with_claims_in_current_window.provider_email_addresses.first, [], {})
     end
   end
 end
