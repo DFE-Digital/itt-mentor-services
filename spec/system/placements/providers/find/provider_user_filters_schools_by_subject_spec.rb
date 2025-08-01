@@ -50,7 +50,7 @@ RSpec.describe "Provider user filters schools by subject", service: :placements,
   end
 
   def when_i_navigate_to_the_find_schools_page
-    within ".app-primary-navigation__nav" do
+    within primary_navigation do
       click_on "Find"
     end
   end

@@ -175,7 +175,7 @@ RSpec.describe "School support user edits a placement with no mentors", service:
   end
 
   def when_i_click_on_the_placements_navigation_item
-    within ".app-primary-navigation__nav" do
+    within primary_navigation do
       click_on "Placements"
     end
   end

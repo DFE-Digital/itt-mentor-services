@@ -37,7 +37,7 @@ RSpec.describe "Claims school user removes a mentor from a school", service: :cl
   end
 
   def and_i_navigate_to_mentors
-    within ".app-primary-navigation" do
+    within primary_navigation do
       click_on "Mentors"
     end
   end

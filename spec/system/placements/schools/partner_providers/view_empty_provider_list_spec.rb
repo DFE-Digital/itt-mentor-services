@@ -24,13 +24,13 @@ RSpec.describe "User without partnerships views the provider index",
   end
 
   def when_i_click_on_providers_in_the_navigation_menu
-    within ".app-primary-navigation__nav" do
+    within primary_navigation do
       click_on "Providers"
     end
   end
 
   def then_i_see_the_providers_index_page
-    page.find(".app-primary-navigation__nav").click_on("Providers")
+    click_on("Providers")
     expect(primary_navigation).to have_current_item("Providers")
 
     expect(page).to have_title("Providers you work with - Manage school placements - GOV.UK")

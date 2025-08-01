@@ -95,7 +95,7 @@ RSpec.describe "Claims school user adds mentors to schools", service: :claims, t
   end
 
   def when_i_navigate_to_mentors
-    within ".app-primary-navigation" do
+    within primary_navigation do
       click_on "Mentors"
     end
   end
