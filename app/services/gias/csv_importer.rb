@@ -165,7 +165,8 @@ module Gias
 
       # Rest of England Schools
       rest_of_england = Region.find_or_create_by!(name: "Rest of England") { |region| region.claims_funding_available_per_hour = 43.80 }
-      School.where(region_id: nil).update_all(region_id: rest_of_england.id)
+      schools_to_update = School.where(region_id: nil).or(School.where.not(district_admin_code: (FRINGE_AREAS + OUTER_LONDON_AREAS + INNER_LONDON_AREAS)))
+      schools_to_update.update_all(region_id: rest_of_england.id)
     end
 
     def associate_schools_to_trusts(trust_data)

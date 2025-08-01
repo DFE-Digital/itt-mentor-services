@@ -38,6 +38,16 @@ RSpec.describe Gias::CSVImporter do
     expect(rest_of_england_school.region.name).to eq("Rest of England")
   end
 
+  it "updates school regions when they're incorrectly mapped" do
+    fringe_region = Region.find_by(name: "Fringe")
+    rest_of_england_region = Region.find_by(name: "Rest of England")
+    rest_of_england_school = create(:school, urn: "132", district_admin_code: "E09000099", region: fringe_region)
+
+    gias_importer
+
+    expect(rest_of_england_school.reload.region).to eq(rest_of_england_region)
+  end
+
   describe "associating schools with trusts" do
     context "when the trust does not exist" do
       it "creates the trust" do
