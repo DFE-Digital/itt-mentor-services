@@ -229,9 +229,9 @@ RSpec.describe "Claims support user adds mentors to schools", service: :claims, 
   end
 
   def expect_organisations_to_be_selected_in_primary_navigation
-    within(".app-primary-navigation__nav") do
+    within primary_navigation do
       expect(page).to have_link "Organisations", current: "page"
-      expect(page).to have_link "Support users", current: "false"
+      expect(page).to have_link "Support users", current: "true"
     end
   end
 

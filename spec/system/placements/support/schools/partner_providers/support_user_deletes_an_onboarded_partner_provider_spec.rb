@@ -98,7 +98,7 @@ RSpec.describe "Support user deletes an onboarded partner provider",
   end
 
   def and_i_navigate_to_providers
-    within ".app-primary-navigation__nav" do
+    within primary_navigation do
       click_on "Providers"
     end
   end

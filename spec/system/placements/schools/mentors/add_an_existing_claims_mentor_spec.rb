@@ -43,7 +43,7 @@ RSpec.describe "School user adds an existing claims mentor", service: :placement
   end
 
   def when_i_am_on_the_mentors_index_page
-    within ".app-primary-navigation__nav" do
+    within primary_navigation do
       click_on "Mentors"
     end
   end

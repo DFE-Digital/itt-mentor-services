@@ -30,7 +30,7 @@ RSpec.describe "Provider user searchers for a subject filter option", :js, servi
   end
 
   def when_i_navigate_to_the_placements_index_page
-    within ".app-primary-navigation__nav" do
+    within primary_navigation do
       click_on "My placements"
     end
   end

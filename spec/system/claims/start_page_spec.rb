@@ -67,8 +67,13 @@ RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :sy
   alias_method :and_i_visit_the_start_page, :given_i_am_on_the_start_page
 
   def then_i_can_see_the_start_page
-    within(".govuk-header") do
-      expect(page).to have_content("Claim funding for mentor training")
+    within ".govuk-header__logo" do
+      expect(page).to have_css("a.govuk-header__link.govuk-header__link--homepage")
+
+      expect(page).to have_css(
+        'img.govuk-header__logotype[alt="Department for Education"][src$="department-for-education_white.png"]',
+        visible: :all,
+      )
     end
 
     expect(page).to have_content("Use this service to make a claim for the time spent becoming an initial teacher training (ITT) mentor.")

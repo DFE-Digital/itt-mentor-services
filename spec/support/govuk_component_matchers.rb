@@ -205,7 +205,7 @@ module GovukComponentMatchers
   end
 
   def primary_navigation
-    page.find(".app-primary-navigation")
+    page.find(".govuk-service-navigation")
   end
 
   def secondary_navigation

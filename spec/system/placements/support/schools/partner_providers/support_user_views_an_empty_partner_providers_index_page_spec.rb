@@ -56,7 +56,7 @@ RSpec.describe "Support user views an empty partner providers index page",
   end
 
   def and_i_navigate_to_providers
-    within ".app-primary-navigation__nav" do
+    within primary_navigation do
       click_on "Providers"
     end
   end

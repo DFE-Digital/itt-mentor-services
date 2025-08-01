@@ -76,7 +76,7 @@ RSpec.describe "Support user view a schools partner providers",
   end
 
   def and_i_navigate_to_providers
-    within ".app-primary-navigation__nav" do
+    within primary_navigation do
       click_on "Providers"
     end
   end
