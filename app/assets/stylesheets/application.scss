@@ -11,3 +11,24 @@ $govuk-assets-path: "";
 @import "filter-form";
 @import "app-related-aside";
 @import "lists";
+
+.govuk-header {
+  .govuk-header__link .govuk-header__logotype {
+    height: 30px;
+  }
+
+  .govuk-header__link:focus .govuk-header__logotype {
+    content: url("/images/department-for-education_black.png");
+    height: 30px;
+  }
+
+  .govuk-header__navigation-list {
+    display: flex;
+    justify-content: flex-end;
+
+    > li:not(:last-child)::after {
+      content: "|";
+      margin-left: 15px;
+    }
+  }
+}

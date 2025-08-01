@@ -50,7 +50,7 @@ RSpec.describe "Support user views a schools empty mentors index page",
   end
 
   def and_i_navigate_to_mentors
-    within ".app-primary-navigation__nav" do
+    within primary_navigation do
       click_on "Mentors"
     end
   end

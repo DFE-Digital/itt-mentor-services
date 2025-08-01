@@ -1,19 +1,19 @@
 <% content_for(:primary_navigation_content) do %>
   <% if policy_scope(Claims::School.all).many? %>
     <%= content_for(:header_content) do %>
-      <%= render(ContentHeaderComponent.new(
-        title: @school.name,
-        actions: [
-          govuk_link_to(t(".change_organisation"), claims_schools_path, no_visited_state: true),
-        ],
-      )) %>
+      <%= render ContentHeaderComponent.new(
+            title: @school.name,
+            actions: [
+              govuk_link_to(t(".change_organisation"), claims_schools_path, no_visited_state: true),
+            ],
+          ) %>
     <% end %>
   <% end %>
 
-  <%= render PrimaryNavigationComponent.new do |component| %>
-    <% component.with_navigation_item t(".claims"), claims_school_claims_path(school), current: local_assigns[:current] == :claims %>
-    <% component.with_navigation_item t(".mentors"), claims_school_mentors_path(school), current: local_assigns[:current] == :mentors %>
-    <% component.with_navigation_item t(".users"), claims_school_users_path(school), current: local_assigns[:current] == :users %>
-    <% component.with_navigation_item t(".details"), claims_school_path(school) %>
-  <% end %>
+  <%= render PrimaryNavigationComponent.new(
+        context: :claims_school,
+        current_user: current_user,
+        organisation: @school,
+        current_navigation: local_assigns[:current],
+      ) %>
 <% end %>

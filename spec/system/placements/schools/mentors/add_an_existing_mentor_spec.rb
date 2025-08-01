@@ -31,7 +31,7 @@ RSpec.describe "School user attempts to add mentor who is already registered at 
   end
 
   def when_i_am_on_the_mentors_index_page
-    page.find(".app-primary-navigation__nav").click_on("Mentors")
+    click_on("Mentors")
     expect(page).to have_title("Mentors at your school - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Mentors")
 

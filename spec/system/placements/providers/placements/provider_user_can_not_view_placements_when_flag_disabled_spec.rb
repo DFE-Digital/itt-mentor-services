@@ -42,12 +42,12 @@ RSpec.describe "Provider user can not view placements when flag disabled", servi
   end
 
   def and_i_do_not_see_the_find_placements_tab
-    within(".app-primary-navigation__nav") do
+    within(primary_navigation) do
       expect(page).not_to have_link "Find"
       expect(page).to have_link "My placements", current: "page"
-      expect(page).to have_link "Schools", current: "false"
-      expect(page).to have_link "Users", current: "false"
-      expect(page).to have_link "Organisation details", current: "false"
+      expect(page).to have_link "Schools", current: "true"
+      expect(page).to have_link "Users", current: "true"
+      expect(page).to have_link "Organisation details", current: "true"
     end
   end
 end
