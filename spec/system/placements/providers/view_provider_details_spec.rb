@@ -30,14 +30,12 @@ RSpec.describe "Placements / Providers / View provider details", service: :place
   end
 
   def expect_organisation_details_to_be_selected_in_primary_navigation
-    nav = page.find(".app-primary-navigation__nav")
-
-    within(nav) do
-      expect(page).to have_link "Find", current: "false"
-      expect(page).to have_link "My placements", current: "false"
-      expect(page).to have_link "Users", current: "false"
+    within(primary_navigation) do
+      expect(page).to have_link "Find", current: "true"
+      expect(page).to have_link "My placements", current: "true"
+      expect(page).to have_link "Users", current: "true"
       expect(page).to have_link "Organisation details", current: "page"
-      expect(page).to have_link "Schools", current: "false"
+      expect(page).to have_link "Schools", current: "true"
     end
   end
 

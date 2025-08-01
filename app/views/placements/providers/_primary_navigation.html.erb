@@ -1,19 +1,14 @@
-<%# locals: (current_navigation: nil, provider:) -%>
+<%# locals: (current_navigation:, provider:) -%>
 
 <%= content_for(:header_content) do %>
   <%= render Placements::OrganisationSwitcherComponent.new(user: current_user, organisation: provider) %>
 <% end %>
 
 <%= content_for(:primary_navigation_content) do %>
-  <%= render PrimaryNavigationComponent.new do |component| %>
-    <% unless Flipper.enabled?(:provider_hide_find_placements, provider) %>
-      <% component.with_navigation_item t(".find"), placements_provider_find_index_path(provider), current: current_navigation == :find %>
-    <% end %>
-    <% component.with_navigation_item t(".placements"), placements_provider_placements_path(provider), current: current_navigation == :placements %>
-    <% component.with_navigation_item t(".schools"), placements_provider_partner_schools_path(provider), current: current_navigation == :partner_schools %>
-    <% component.with_navigation_item t(".users"), placements_provider_users_path(provider), current: current_navigation == :users %>
-    <% component.with_navigation_item t(".organisation_details"),
-                                      placements_provider_path(provider),
-                                      current: current_navigation == :organisation_details %>
-  <% end %>
+  <%= render PrimaryNavigationComponent.new(
+        context: :placements_provider,
+        current_user: current_user,
+        organisation: provider,
+        current_navigation: current_navigation,
+      ) %>
 <% end %>
