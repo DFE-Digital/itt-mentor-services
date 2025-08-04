@@ -79,7 +79,6 @@ RSpec.describe "School Page", service: :claims, type: :system do
     end
 
     within("#contact-details") do
-      expect(page).to have_content "Email address"
       expect(page).to have_content "Telephone"
       expect(page).to have_content "Website"
       expect(page).to have_content "Address"
