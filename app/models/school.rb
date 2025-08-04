@@ -72,6 +72,7 @@
 #  fk_rails_...  (trust_id => trusts.id)
 #
 class School < ApplicationRecord
+  self.ignored_columns += %w[email_address]
   include PgSearch::Model
   extend Geocoder::Model::ActiveRecord
 
@@ -103,15 +104,12 @@ class School < ApplicationRecord
 
   has_one :school_contact, dependent: :destroy, class_name: "Placements::SchoolContact"
 
-  normalizes :email_address, with: ->(value) { value.strip.downcase }
-
   validates_with UniqueIdentifierValidator
 
   validates :urn, uniqueness: { case_sensitive: false }, if: -> { urn.present? }
   validates :vendor_number, uniqueness: { case_sensitive: false }, if: -> { vendor_number.present? }
 
   validates :name, presence: true
-  validates :email_address, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_nil: true
 
   scope :placements_service, -> { where placements_service: true }
   scope :claims_service, -> { where claims_service: true }
@@ -154,9 +152,7 @@ class School < ApplicationRecord
   end
 
   def email_addresses
-    return [] if email_address.nil?
-
-    [email_address]
+    Array(school_contact&.email_address).compact
   end
 
   def current_hosting_interest(academic_year:)
