@@ -20,7 +20,7 @@
   <% end %>
     <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".email_address")) %>
-    <% if organisation.email_addresses.present? %>
+    <% if organisation.try(:email_addresses).present? %>
       <% row.with_value do %>
         <% organisation.email_addresses.each do |email_address| %>
           <%= govuk_mail_to(email_address, email_address) %>
