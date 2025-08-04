@@ -53,7 +53,6 @@ RSpec.describe "Support user removes partner schools",
       :placements_school,
       name: "Springfield School",
       urn: "12345",
-      email_address: "www.springfield_school@sample.com",
       ukprn: "54322",
       address1: "44 Baddle Way",
       website: "www.springfield_school.com",
@@ -63,7 +62,6 @@ RSpec.describe "Support user removes partner schools",
       :placements_school,
       name: "Shelbyville Elementary",
       urn: "54321",
-      email_address: "www.shelbyville_elementary@sample.com",
       ukprn: "55555",
       address1: "44 Langton Way",
       website: "www.shelbyville_elementary.com",
@@ -124,7 +122,6 @@ RSpec.describe "Support user removes partner schools",
     expect(page).to have_summary_list_row("Name", "Springfield School")
     expect(page).to have_summary_list_row("UK provider reference number (UKPRN)", "54322")
     expect(page).to have_summary_list_row("Unique reference number (URN)", "12345")
-    expect(page).to have_summary_list_row("Email address", "www.springfield_school@sample.com")
     expect(page).to have_summary_list_row("Telephone number", "02083335555")
     expect(page).to have_summary_list_row("Website", "http://www.springfield_school.com")
     expect(page).to have_summary_list_row("Address", "44 Baddle Way")
@@ -185,7 +182,6 @@ RSpec.describe "Support user removes partner schools",
     expect(page).to have_summary_list_row("Name", "Shelbyville Elementary")
     expect(page).to have_summary_list_row("UK provider reference number (UKPRN)", "55555")
     expect(page).to have_summary_list_row("Unique reference number (URN)", "54321")
-    expect(page).to have_summary_list_row("Email address", "www.shelbyville_elementary@sample.com")
     expect(page).to have_summary_list_row("Telephone number", "02083334444")
     expect(page).to have_summary_list_row("Website", "http://www.shelbyville_elementary.com")
     expect(page).to have_summary_list_row("Address", "44 Langton Way")
