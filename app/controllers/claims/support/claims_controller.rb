@@ -1,7 +1,7 @@
 class Claims::Support::ClaimsController < Claims::Support::ApplicationController
   before_action :set_claim, only: %i[show]
   before_action :authorize_claim
-  helper_method :filter_form
+  helper_method :filter_form, :edit_attribute_path
   before_action :store_filter_params, only: %i[index]
   before_action :set_filtered_claims, only: %i[index download_csv]
 
@@ -67,5 +67,19 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
 
   def store_filter_params
     session["claims_filter_params"] = { claims_support_claims_filter_form: filter_params.to_h }
+  end
+
+  def edit_attribute_path(mentor_training_id:)
+    if @claim.clawback_requested?
+      new_edit_request_clawback_claims_support_claims_clawback_path(
+        claim_id: @claim.id,
+        mentor_training_id:,
+      )
+    else
+      new_edit_sent_clawback_claims_support_claims_clawback_path(
+        claim_id: @claim.id,
+        mentor_training_id:,
+      )
+    end
   end
 end

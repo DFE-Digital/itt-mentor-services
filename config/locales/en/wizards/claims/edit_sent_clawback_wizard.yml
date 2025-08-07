@@ -1,0 +1,14 @@
+en:
+  wizards:
+    claims:
+      edit_sent_clawback_wizard:
+        warning_step:
+          page_title: Are you sure? - %{school_name} - Claim %{reference}
+          title: Are you sure?
+          caption: Clawbacks
+          continue: Continue
+          audit_log: audit log
+          clawback_has_been_submitted: This clawback has been submitted to the payer.
+          once_changes_have_been_made:
+            Once changes have been made you will need to resend the request for payment email to the payer via %{link}. 
+            Make sure that you have updated all incorrect clawback requests before resending the email.

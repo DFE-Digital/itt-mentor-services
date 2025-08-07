@@ -95,13 +95,10 @@
             <% summary_list.with_row do |row| %>
               <% row.with_key(text: t(".mentor_worked_hours")) %>
               <% row.with_value(text: pluralize(mentor_training.corrected_hours_completed, t(".hour"))) %>
-              <% if policy(claim).edit? || claim.clawback_requested? %>
+              <% if policy(claim).edit? || claim.in_clawback? %>
                 <% row.with_action(text: t("change"),
                                    visually_hidden_text: "#{mentor_training.mentor.full_name} #{t(".mentor_worked_hours")}",
-                                   href: new_edit_request_clawback_claims_support_claims_clawback_path(
-                                     claim_id: claim.id,
-                                     mentor_training_id: mentor_training.id,
-                                   ),
+                                   href: edit_attribute_path(mentor_training_id: mentor_training.id),
                                    html_attributes: {
                                      class: "govuk-link--no-visited-state",
                                    }) %>
@@ -126,13 +123,10 @@
             <% summary_list.with_row do |row| %>
               <% row.with_key(text: t(".reason_clawed_back")) %>
               <% row.with_value(text: mentor_training.reason_clawed_back) %>
-              <% if policy(claim).edit? || claim.clawback_requested? %>
+              <% if policy(claim).edit? || claim.in_clawback? %>
                 <% row.with_action(text: t("change"),
                                    visually_hidden_text: "#{mentor_training.mentor.full_name} #{t(".reason_clawed_back")}",
-                                   href: new_edit_request_clawback_claims_support_claims_clawback_path(
-                                     claim_id: claim.id,
-                                     mentor_training_id: mentor_training.id,
-                                   ),
+                                   href: edit_attribute_path(mentor_training_id: mentor_training.id),
                                    html_attributes: {
                                      class: "govuk-link--no-visited-state",
                                    }) %>

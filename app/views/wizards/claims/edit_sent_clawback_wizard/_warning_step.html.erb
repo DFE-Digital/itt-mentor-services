@@ -1,0 +1,24 @@
+<% content_for(:page_title) { sanitize t(".page_title", school_name: current_step.school.name, reference: current_step.claim.reference) } %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+
+    <p class="govuk-body"><%= t(".clawback_has_been_submitted") %></p>
+
+    <p class="govuk-body">
+      <%= embedded_link_text(
+        t(".once_changes_have_been_made",
+        link: govuk_link_to(
+          t(".audit_log"),
+          current_step.audit_log_path,
+          new_tab: true,
+        )),
+      ) %>
+    </p>
+
+    <%= form_with(model: current_step, url: current_step_path, method: :put) do |f| %>
+      <%= f.govuk_submit t(".continue") %>
+    <% end %>
+  </div>
+</div>
