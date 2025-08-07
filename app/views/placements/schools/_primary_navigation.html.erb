@@ -1,29 +1,14 @@
-<%# locals: (current_navigation: nil, school:) -%>
+<%# locals: (current_navigation:, school:) -%>
 
 <%= content_for(:header_content) do %>
   <%= render Placements::OrganisationSwitcherComponent.new(user: current_user, organisation: school) %>
 <% end %>
 
 <%= content_for(:primary_navigation_content) do %>
-  <%= render PrimaryNavigationComponent.new do |component| %>
-    <% if school.expression_of_interest_completed? %>
-      <% component.with_navigation_item t(".placements"),
-        placements_school_placements_path(school),
-        current: current_navigation == :placements %>
-    <% else %>
-      <% component.with_navigation_item t(".placements"),
-        new_add_hosting_interest_placements_school_hosting_interests_path(school),
-        current: current_navigation == :placements %>
-    <% end %>
-    <% component.with_navigation_item t(".mentors"), placements_school_mentors_path(school), current: current_navigation == :mentors %>
-    <% if Flipper.enabled?(:school_partner_providers, school) %>
-      <% component.with_navigation_item t(".providers"),
-                                        placements_school_partner_providers_path(school),
-                                        current: current_navigation == :partner_providers %>
-    <% end %>
-    <% component.with_navigation_item t(".users"), placements_school_users_path(school), current: current_navigation == :users %>
-    <% component.with_navigation_item t(".organisation_details"),
-                                      placements_school_path(school),
-                                      current: current_navigation == :organisation_details %>
-  <% end %>
+  <%= render PrimaryNavigationComponent.new(
+        context: :placements_school,
+        current_user: current_user,
+        organisation: school,
+        current_navigation: current_navigation,
+      ) %>
 <% end %>

@@ -156,7 +156,7 @@ RSpec.describe "Claim user updates an invalid provider to a provider they have a
   end
 
   def when_i_navigate_back_to_the_claims_index_page
-    within ".app-primary-navigation" do
+    within primary_navigation do
       click_on "Claims"
     end
   end

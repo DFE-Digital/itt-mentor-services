@@ -31,7 +31,7 @@ RSpec.describe "Remove a support user", service: :claims, type: :system do
   private
 
   def and_i_visit_the_support_users_page
-    within(".app-primary-navigation nav") do
+    within primary_navigation do
       click_on "Support users"
     end
   end

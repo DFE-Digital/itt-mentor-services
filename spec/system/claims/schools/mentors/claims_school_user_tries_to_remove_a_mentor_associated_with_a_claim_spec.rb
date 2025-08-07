@@ -73,7 +73,7 @@ RSpec.describe "Claims school user tries to remove a mentor associated with a cl
   end
 
   def when_i_navigate_to_mentors
-    within ".app-primary-navigation" do
+    within primary_navigation do
       click_on "Mentors"
     end
   end
