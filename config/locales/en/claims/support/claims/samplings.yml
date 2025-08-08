@@ -20,6 +20,12 @@ en:
             mentor_with_index: Mentor %{index}
             mentor: Mentor
             submitted_by: Submitted by %{name} on %{date}.
+          history:
+            no_activity: There is no activity.
+            byline: "%{user} on %{time}"
+            showing: "Showing %{count} of %{total_count} files"
+            view_all_files: View all files
+            view_details: View details
           confirm_approval:
             page_caption: Auditing - Claim %{reference}
             page_title: Are you sure you want to approve the claim?

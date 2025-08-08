@@ -13,7 +13,11 @@ class Claims::Support::Claims::ClawbacksController < Claims::Support::Applicatio
     )
   end
 
-  def show; end
+  def show
+    claim_activities = Claims::ClaimActivitiesForClaimQuery.call(claim: @claim)
+    @pagy, @claim_activities = pagy(claim_activities)
+    @claim_activities = claim_activities.decorate
+  end
 
   def new
     @clawback_requested_claims = Claims::Claim.clawback_requested

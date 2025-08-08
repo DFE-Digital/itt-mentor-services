@@ -20,6 +20,12 @@ en:
             mentor_with_index: Mentor %{index}
             mentor: Mentor
             submitted_by: Submitted by %{name} on %{date}.
+          history:
+            no_activity: There is no activity.
+            byline: "%{user} on %{time}"
+            showing: "Showing %{count} of %{total_count} files"
+            view_all_files: View all files
+            view_details: View details
           new: 
             page_title: Send claims to payer - Clawbacks
             caption: Clawbacks
