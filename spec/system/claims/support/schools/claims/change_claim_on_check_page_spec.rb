@@ -1,7 +1,15 @@
 require "rails_helper"
 
 RSpec.describe "Change claim on check page", :js, service: :claims, type: :system do
-  let!(:school) { create(:claims_school, mentors: [mentor1, mentor2, mentor3], region: regions(:inner_london)) }
+  let!(:claim_window) { create(:claim_window, :current) }
+  let!(:school) do
+    create(
+      :claims_school,
+      mentors: [mentor1, mentor2, mentor3],
+      region: regions(:inner_london),
+      eligible_claim_windows: [claim_window],
+    )
+  end
   let!(:colin) do
     create(
       :claims_support_user,
@@ -19,7 +27,6 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
   before do
     user_exists_in_dfe_sign_in(user: colin)
     given_i_sign_in
-    given_there_is_a_current_claim_window
     when_i_click(school.name)
     when_i_click_on_claims
 
@@ -129,10 +136,6 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
     click_on "Sign in using DfE Sign In"
   end
 
-  def given_there_is_a_current_claim_window
-    @claim_window = create(:claim_window, :current)
-  end
-
   def given_i_visit_claim_support_check_page
     visit check_claims_support_school_claim_path(school, claim)
   end
@@ -206,7 +209,7 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
   def then_i_check_my_answers(provider, mentors, mentor_hours)
     expect(page).to have_h1("Check your answers before submitting your claim", class: "govuk-heading-l")
 
-    expect(page).to have_summary_list_row("Academic year", @claim_window.academic_year_name)
+    expect(page).to have_summary_list_row("Academic year", claim_window.academic_year_name)
     expect(page).to have_summary_list_row("Provider", provider.name)
 
     expect(page).to have_h2("Hours of training", class: "govuk-heading-m")
@@ -247,7 +250,7 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
   end
 
   def when_i_click_on_claims
-    within(".app-secondary-navigation__list") do
+    within(primary_navigation) do
       click_on("Claims")
     end
   end

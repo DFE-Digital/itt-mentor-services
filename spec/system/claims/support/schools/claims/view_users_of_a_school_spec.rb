@@ -42,7 +42,7 @@ RSpec.describe "Claims support user view users for school", service: :claims, ty
   end
 
   def and_i_click_on_users
-    within secondary_navigation do
+    within primary_navigation do
       click_on "Users"
     end
   end
@@ -60,18 +60,16 @@ RSpec.describe "Claims support user view users for school", service: :claims, ty
       text: "Search by organisation name or postcode",
       class: "govuk-label govuk-label--m",
     )
-    expect(page).to have_link("Shelbyville Elementary", href: "/support/schools/#{@shelbyville_school.id}")
+    expect(page).to have_link("Shelbyville Elementary", href: "/schools/#{@shelbyville_school.id}/claims")
   end
 
   def then_i_see_the_claim_users_page
     expect(page).to have_title("Claim funding for mentor training - GOV.UK")
-    expect(primary_navigation).to have_current_item("Organisations")
-    expect(secondary_navigation).to have_current_item("Users")
-    expect(page).to have_h1("Shelbyville Elementary")
-    expect(page).to have_h2("Users")
+    expect(primary_navigation).to have_current_item("Users")
+    expect(page).to have_h1("Users")
     expect(page).to have_table_row({
-      "Name" => "Anne Wilson",
-      "Email" => "anne_wilson@education.gov.uk",
+      "Full name" => "Anne Wilson",
+      "Email address" => "anne_wilson@education.gov.uk",
     })
   end
 end

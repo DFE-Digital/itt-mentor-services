@@ -7,3 +7,5 @@ en:
             caption: Claim details
             save: Accept and submit
             cancel: Cancel
+          update:
+            success: Claim added

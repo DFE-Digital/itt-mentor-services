@@ -6,4 +6,7 @@ en:
           edit:
             caption: Claim details
             save: Accept and submit
+            update_claim: Update claim
             cancel: Cancel
+          update:
+              success: Claim updated

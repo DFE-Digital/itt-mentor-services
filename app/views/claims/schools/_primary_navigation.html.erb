@@ -1,10 +1,14 @@
 <% content_for(:primary_navigation_content) do %>
-  <% if policy_scope(Claims::School.all).many? %>
+  <% if current_user.support_user? || policy_scope(Claims::School.all).many? %>
     <%= content_for(:header_content) do %>
       <%= render(ContentHeaderComponent.new(
         title: @school.name,
         actions: [
-          govuk_link_to(t(".change_organisation"), claims_schools_path, no_visited_state: true),
+          govuk_link_to(
+            t(".change_organisation"),
+            current_user.support_user? ? claims_support_schools_path : claims_schools_path,
+            no_visited_state: true,
+          ),
         ],
       )) %>
     <% end %>

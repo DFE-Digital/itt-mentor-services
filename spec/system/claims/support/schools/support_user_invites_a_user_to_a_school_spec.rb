@@ -120,34 +120,33 @@ RSpec.describe "Support user invites a user to a school", service: :claims, type
   end
 
   def when_i_navigate_to_the_claim_school_users_page
-    within(secondary_navigation) do
+    within(primary_navigation) do
       click_on "Users"
     end
   end
 
   def then_i_see_the_claim_users_page
     expect(page).to have_title("Claim funding for mentor training - GOV.UK")
-    expect(secondary_navigation).to have_current_item("Users")
-    expect(page).to have_h1("Shelbyville Elementary")
-    expect(page).to have_h2("Users")
+    expect(primary_navigation).to have_current_item("Users")
+    expect(page).to have_h1("Users")
     expect(page).to have_link(
       text: "Add user",
       class: "govuk-button",
     )
     expect(page).to have_table_row({
-      "Name" => "Anne Wilson",
-      "Email" => "anne_wilson@education.gov.uk",
+      "Full name" => "Anne Wilson",
+      "Email address" => "anne_wilson@education.gov.uk",
     })
     expect(page).to have_table_row({
-      "Name" => "Charles G",
-      "Email" => "charles_g@education.gov.uk",
+      "Full name" => "Charles G",
+      "Email address" => "charles_g@education.gov.uk",
     })
   end
 
   def then_i_see_the_add_user_page
     expect(page).to have_link("Back")
     expect(page).to have_title("Claim funding for mentor training - GOV.UK")
-    expect(page).to have_span_caption("Add user - Shelbyville Elementary")
+    expect(page).to have_span_caption("User details")
     expect(page).to have_h1("User details")
     expect(page).to have_field("First name")
     expect(page).to have_field("Last name")
@@ -162,7 +161,7 @@ RSpec.describe "Support user invites a user to a school", service: :claims, type
   def then_i_see_the_add_user_page_with_persisted_details
     expect(page).to have_link("Back")
     expect(page).to have_title("Claim funding for mentor training - GOV.UK")
-    expect(page).to have_span_caption("Add user - Shelbyville Elementary")
+    expect(page).to have_span_caption("User details")
     expect(page).to have_h1("User details")
     expect(page).to have_field("First name", with: "Barry")
     expect(page).to have_field("Last name", with: "Garlow")
@@ -177,7 +176,7 @@ RSpec.describe "Support user invites a user to a school", service: :claims, type
   def then_i_see_the_add_user_page_with_persisted_details_of_the_new_user
     expect(page).to have_link("Back")
     expect(page).to have_title("Claim funding for mentor training - GOV.UK")
-    expect(page).to have_span_caption("Add user - Shelbyville Elementary")
+    expect(page).to have_span_caption("User details")
     expect(page).to have_h1("User details")
     expect(page).to have_field("First name", with: "Simon")
     expect(page).to have_field("Last name", with: "Garlow")
@@ -196,7 +195,7 @@ RSpec.describe "Support user invites a user to a school", service: :claims, type
   def then_i_see_the_add_user_page_with_email_in_use_error
     expect(page).to have_link("Back")
     expect(page).to have_title("Claim funding for mentor training - GOV.UK")
-    expect(page).to have_span_caption("Add user - Shelbyville Elementary")
+    expect(page).to have_span_caption("User details")
     expect(page).to have_h1("User details")
     expect(page).to have_validation_error("Email address already in use")
     expect(page).to have_field("First name", with: "Charles")
@@ -239,23 +238,22 @@ RSpec.describe "Support user invites a user to a school", service: :claims, type
   def then_i_see_the_claim_users_page_with_new_user_with_edited_details
     expect(page).to have_title("Claim funding for mentor training - GOV.UK")
     expect(page).to have_success_banner("User added")
-    expect(page).to have_h1("Shelbyville Elementary")
-    expect(page).to have_h2("Users")
+    expect(page).to have_h1("Users")
     expect(page).to have_link(
       text: "Add user",
       class: "govuk-button",
     )
     expect(page).to have_table_row({
-      "Name" => "Simon Garlow",
-      "Email" => "simon_garlow@education.gov.uk",
+      "Full name" => "Simon Garlow",
+      "Email address" => "simon_garlow@education.gov.uk",
     })
     expect(page).to have_table_row({
-      "Name" => "Anne Wilson",
-      "Email" => "anne_wilson@education.gov.uk",
+      "Full name" => "Anne Wilson",
+      "Email address" => "anne_wilson@education.gov.uk",
     })
     expect(page).to have_table_row({
-      "Name" => "Charles G",
-      "Email" => "charles_g@education.gov.uk",
+      "Full name" => "Charles G",
+      "Email address" => "charles_g@education.gov.uk",
     })
   end
 
@@ -263,7 +261,7 @@ RSpec.describe "Support user invites a user to a school", service: :claims, type
     expect(page).to have_title("Claim funding for mentor training - GOV.UK")
     expect(page).to have_h1("Confirm user details")
     expect(page).to have_h2("Details")
-    expect(page).to have_span_caption("Add user - Shelbyville Elementary")
+    expect(page).to have_span_caption("User details")
     expect(page).to have_summary_list_row("First name", "Barry", "Change")
     expect(page).to have_summary_list_row("Last name", "Garlow", "Change")
     expect(page).to have_summary_list_row("Email", "barry_garlow@education.gov.uk", "Change")
@@ -271,14 +269,14 @@ RSpec.describe "Support user invites a user to a school", service: :claims, type
       "Barry Garlow will be sent an email to tell them you’ve added them to Shelbyville Elementary.",
     )
     expect(page).to have_button("Confirm and add user")
-    expect(page).to have_link("Cancel", href: "/support/schools/#{@shelbyville_school.id}/users")
+    expect(page).to have_link("Cancel", href: "/schools/#{@shelbyville_school.id}/users")
   end
 
   def then_i_see_the_confirm_user_details_page_with_new_details
     expect(page).to have_title("Claim funding for mentor training - GOV.UK")
     expect(page).to have_h1("Confirm user details")
     expect(page).to have_h2("Details")
-    expect(page).to have_span_caption("Add user - Shelbyville Elementary")
+    expect(page).to have_span_caption("User details")
     expect(page).to have_summary_list_row("First name", "Simon", "Change")
     expect(page).to have_summary_list_row("Last name", "Garlow", "Change")
     expect(page).to have_summary_list_row("Email", "simon_garlow@education.gov.uk", "Change")
@@ -286,7 +284,7 @@ RSpec.describe "Support user invites a user to a school", service: :claims, type
       "Simon Garlow will be sent an email to tell them you’ve added them to Shelbyville Elementary.",
     )
     expect(page).to have_button("Confirm and add user")
-    expect(page).to have_link("Cancel", href: "/support/schools/#{@shelbyville_school.id}/users")
+    expect(page).to have_link("Cancel", href: "/schools/#{@shelbyville_school.id}/users")
   end
 
   def then_i_see_the_details_page_for_the_edited_details_user

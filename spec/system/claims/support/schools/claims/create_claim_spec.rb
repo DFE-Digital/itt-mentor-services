@@ -8,7 +8,13 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
           name: "2020 to 2021")
   end
   let!(:claim_window) { create(:claim_window, :current, academic_year:) }
-  let!(:school) { create(:claims_school, region: regions(:inner_london)) }
+  let!(:school) do
+    create(
+      :claims_school,
+      region: regions(:inner_london),
+      eligible_claim_windows: [claim_window],
+    )
+  end
   let!(:mentor1) { create(:claims_mentor, first_name: "Anne", schools: [school]) }
   let!(:mentor2) { create(:claims_mentor, first_name: "Joe", schools: [school]) }
   let!(:colin) do
@@ -203,7 +209,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
   end
 
   def when_i_click_on_claims
-    within(".app-secondary-navigation__list") do
+    within(primary_navigation) do
       click_on("Claims")
     end
   end
@@ -307,7 +313,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
   end
 
   def then_i_expect_to_be_on_the_claims_index_page
-    expect(page).to have_current_path(claims_support_school_claims_path(school))
+    expect(page).to have_current_path(claims_school_claims_path(school))
   end
 
   def and_i_enter_a_provider_named_best_practice_network

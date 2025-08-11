@@ -33,32 +33,25 @@ RSpec.describe "View a schools claims", service: :claims, type: :system do
   end
 
   def when_i_visit_the_claims_support_school_claims_page
-    visit claims_support_school_claims_path(school)
+    click_on school.name
   end
 
   def i_see_a_list_of_the_schools_claims
-    expect(page).to have_content("Claim reference")
-    expect(page).to have_content("Accredited provider")
-    expect(page).to have_content("Mentors")
-    expect(page).to have_content("Date submitted")
-    expect(page).to have_content("Status")
-    expect(page).to have_content("Date submitted")
+    expect(page).to have_table_row({
+      "Reference" => draft_claim.reference,
+      "Accredited provider" => draft_claim.provider_name,
+      "Mentors" => draft_claim.mentors.map(&:full_name).join(""),
+      "Date submitted" => "-",
+      "Status" => "Draft",
+    })
 
-    within("tbody tr:nth-child(1)") do
-      expect(page).to have_content(draft_claim.reference)
-      expect(page).to have_content(draft_claim.provider_name)
-      expect(page).to have_content(draft_claim.mentors.map(&:full_name).join(""))
-      expect(page).to have_content("-")
-      expect(page).to have_content("Draft")
-    end
-
-    within("tbody tr:nth-child(2)") do
-      expect(page).to have_content(submitted_claim.reference)
-      expect(page).to have_content(submitted_claim.provider_name)
-      expect(page).to have_content(submitted_claim.mentors.map(&:full_name).join(""))
-      expect(page).to have_content("5 March 2024")
-      expect(page).to have_content("Submitted")
-    end
+    expect(page).to have_table_row({
+      "Reference" => submitted_claim.reference,
+      "Accredited provider" => submitted_claim.provider_name,
+      "Mentors" => submitted_claim.mentors.map(&:full_name).join(""),
+      "Date submitted" => "5 March 2024",
+      "Status" => "Submitted",
+    })
   end
 
   def i_dont_see_claims_from_other_schools

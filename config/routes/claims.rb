@@ -253,50 +253,6 @@ scope module: :claims, as: :claims, constraints: {
         get "onboard_users/:state_key/:step", to: "settings/onboard_users#edit", as: :onboard_users
         put "onboard_users/:state_key/:step", to: "settings/onboard_users#update"
       end
-
-      scope module: :schools do
-        resources :claims, except: %i[new create edit] do
-          collection do
-            get "new", to: "claims/add_claim#new", as: :new_add_claim
-            get "new/:state_key/:step", to: "claims/add_claim#edit", as: :add_claim
-            put "new/:state_key/:step", to: "claims/add_claim#update"
-            get :rejected
-          end
-
-          member do
-            get :remove
-            get :confirmation
-
-            get "edit", to: "claims/edit_claim#new", as: :new_edit_claim
-            get "edit/:state_key/:step", to: "claims/edit_claim#edit", as: :edit_claim
-            put "edit/:state_key/:step", to: "claims/edit_claim#update"
-          end
-
-          collection do
-            get :rejected
-          end
-        end
-
-        resources :mentors, only: %i[index show destroy] do
-          member { get :remove }
-
-          collection do
-            get "new", to: "mentors/add_mentor#new", as: :new_add_mentor
-            get "new/:state_key/:step", to: "mentors/add_mentor#edit", as: :add_mentor
-            put "new/:state_key/:step", to: "mentors/add_mentor#update"
-          end
-        end
-
-        resources :users, only: %i[index show destroy] do
-          get :remove, on: :member
-
-          collection do
-            get "new", to: "users/add_user#new", as: :new_add_user
-            get "new/:state_key/:step", to: "users/add_user#edit", as: :add_user
-            put "new/:state_key/:step", to: "users/add_user#update"
-          end
-        end
-      end
     end
 
     get :settings, to: "settings#index"
