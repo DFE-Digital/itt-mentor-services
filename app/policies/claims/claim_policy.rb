@@ -4,7 +4,10 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
   end
 
   def edit?
-    claim_claim_window_current? && record.in_draft? && school_eligible_to_claim?
+    return false unless record.in_draft?
+    return true if user.support_user?
+
+    claim_claim_window_current? && school_eligible_to_claim?
   end
 
   def update?
@@ -20,11 +23,15 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
   end
 
   def submit?
-    current_claim_window? && record.in_draft? && school_eligible_to_claim?
+    return false if user.support_user?
+
+    rejected?
   end
 
   def rejected?
-    submit?
+    current_claim_window? &&
+      record.in_draft? &&
+      (school_eligible_to_claim? || user.support_user?)
   end
 
   def destroy?

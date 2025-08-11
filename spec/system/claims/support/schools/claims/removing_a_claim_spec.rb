@@ -66,7 +66,7 @@ RSpec.describe "Create claim", service: :claims, type: :system do
   end
 
   def when_i_click_on_claims
-    within(".app-secondary-navigation__list") do
+    within(primary_navigation) do
       click_on("Claims")
     end
   end

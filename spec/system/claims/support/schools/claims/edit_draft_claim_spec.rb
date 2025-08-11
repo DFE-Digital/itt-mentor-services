@@ -93,7 +93,7 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
 
     when_another_claim_has_been_submitted_for_provider_niot
     when_i_click("Update claim")
-    then_i_see_i_can_not_sumbit_the_claim
+    then_i_see_i_can_not_submit_the_claim
   end
 
   private
@@ -156,9 +156,9 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
 
   def then_i_cant_edit_the_submitted_claim
     click_on submitted_claim.reference
-    change_links = all("a", text: "Change")
 
-    expect(change_links).to be_empty
+    expect(page).not_to have_link("Change Accredited provider")
+    expect(page).not_to have_link("Change Mentors")
   end
 
   def when_i_select_a_school
@@ -166,7 +166,7 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
   end
 
   def when_i_click_on_claims
-    within(".app-secondary-navigation__list") do
+    within(primary_navigation) do
       click_on("Claims")
     end
   end
@@ -232,7 +232,7 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
            date_completed: claim_window.starts_on + 1.day)
   end
 
-  def then_i_see_i_can_not_sumbit_the_claim
+  def then_i_see_i_can_not_submit_the_claim
     expect(page).to have_h1("You cannot submit the claim")
     expect(page).to have_content("You cannot submit the claim because your mentors’ information has recently changed.")
   end

@@ -20,7 +20,7 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
 
   def remove_grant_conditions_acceptance
     @school.update!(claims_grant_conditions_accepted_at: nil, claims_grant_conditions_accepted_by: nil)
-    redirect_to claims_support_school_path(@school), flash: {
+    redirect_to claims_school_path(@school), flash: {
       heading: t(".success"),
     }
   end

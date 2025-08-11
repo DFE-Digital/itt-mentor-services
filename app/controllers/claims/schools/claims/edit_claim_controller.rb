@@ -21,7 +21,13 @@ class Claims::Schools::Claims::EditClaimController < Claims::ApplicationControll
     elsif @wizard.valid?
       @wizard.update_claim
       @wizard.reset_state
-      redirect_to confirmation_claims_school_claim_path(@school, @wizard.claim)
+      if current_user.support_user?
+        redirect_to index_path, flash: {
+          heading: t(".success"),
+        }
+      else
+        redirect_to confirmation_claims_school_claim_path(@school, @wizard.claim)
+      end
     else
       redirect_to rejected_claims_school_claims_path(@school)
     end

@@ -24,7 +24,7 @@ RSpec.describe "Remove a user", service: :claims, type: :system do
   def and_i_navigate_to_a_school_user_details_page(school, user)
     click_on school.name
 
-    within(".app-secondary-navigation") do
+    within(primary_navigation) do
       click_on "Users"
     end
 
@@ -36,7 +36,7 @@ RSpec.describe "Remove a user", service: :claims, type: :system do
   end
 
   def then_i_am_taken_to_a_removal_confirmation_page(school, user)
-    expect(page).to have_content "#{user.full_name} - #{school.name}"
+    expect(page).to have_content user.full_name.to_s
     expect(page).to have_content "#{user.full_name} will be sent an email to tell them you removed them from #{school.name}."
   end
 

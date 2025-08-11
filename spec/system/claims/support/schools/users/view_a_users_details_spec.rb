@@ -10,7 +10,7 @@ RSpec.describe "View a users details", service: :claims, type: :system do
 
   scenario "I sign in as a support user and invite a user to a school" do
     sign_in_as_support_user
-    visit_claims_support_school_users_page
+    visit_claims_school_users_page
     verify_user_details
   end
 
@@ -27,14 +27,17 @@ RSpec.describe "View a users details", service: :claims, type: :system do
     click_on "Sign in using DfE Sign In"
   end
 
-  def visit_claims_support_school_users_page
-    visit claims_support_school_user_path(id: user.id, school_id: school.id)
+  def visit_claims_school_users_page
+    click_on school.name
+    within(primary_navigation) do
+      click_on "Users"
+    end
   end
 
   def verify_user_details
-    expect(page).to have_content("Test School")
-    expect(page).to have_content("Barry")
-    expect(page).to have_content("Garlow")
-    expect(page).to have_content("barry.garlow@gmail.com")
+    expect(page).to have_table_row({
+      "Full name" => "Barry Garlow",
+      "Email address" => "barry.garlow@gmail.com",
+    })
   end
 end

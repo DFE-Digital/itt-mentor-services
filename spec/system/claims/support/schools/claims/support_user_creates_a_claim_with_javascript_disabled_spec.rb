@@ -56,6 +56,7 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
       name: "London School",
       mentors: [@mentor_1, @mentor_2, @mentor_3],
       region: regions(:inner_london),
+      eligible_claim_windows: [@claim_window],
     )
   end
 
@@ -73,7 +74,7 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
   end
 
   def and_i_navigate_to_claims
-    within(secondary_navigation) do
+    within(primary_navigation) do
       click_on "Claims"
     end
   end
@@ -150,7 +151,7 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
   def then_i_see_the_mentor_training_hours_step_for_joe_bloggs
     expect(page).to have_element(
       :span,
-      text: "Claim details - #{@school.name} - Best Practice Network",
+      text: "Claim details - Best Practice Network",
       class: "govuk-caption-l",
     )
     expect(page).to have_element(:h1, text: "How many hours of training did Joe Bloggs complete?", class: "govuk-fieldset__heading")
@@ -166,7 +167,7 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
   def then_i_see_the_mentor_training_hours_step_for_sarah_doe
     expect(page).to have_element(
       :span,
-      text: "Claim details - #{@school.name} - Best Practice Network",
+      text: "Claim details - Best Practice Network",
       class: "govuk-caption-l",
     )
     expect(page).to have_element(:h1, text: "How many hours of training did Sarah Doe complete?", class: "govuk-fieldset__heading")
@@ -214,10 +215,10 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
 
     claim = Claims::Claim.draft.order(:submitted_at).last
     expect(page).to have_table_row({
-      "Claim reference" => claim.reference,
+      "Reference" => claim.reference,
       "Accredited provider" => "Best Practice Network",
       "Mentors" => "Joe Bloggs Sarah Doe",
-      "Claim amount" => "£1,393.60",
+      "Amount" => "£1,393.60",
       "Date submitted" => "-",
       "Status" => "Draft",
     })

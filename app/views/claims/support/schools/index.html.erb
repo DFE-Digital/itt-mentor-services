@@ -22,7 +22,7 @@
         <% @schools.each do |school| %>
           <%= render(OrganisationListItem.new(
             organisation: school,
-            organisation_url: claims_support_school_path(school),
+            organisation_url: claims_school_claims_path(school),
           )) %>
         <% end %>
           <%= render PaginationComponent.new(pagy: @pagy) %>

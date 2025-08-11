@@ -13,6 +13,7 @@ RSpec.describe "Remove a users agreement to the grant conditions for a school", 
   scenario "When a support user removes a schools agreement to grant conditions" do
     given_i_sign_in_as(support_user)
     and_i_visit_the_school_page(school)
+    and_i_click_on_organisation_details
     i_see_the_school_details(school)
     click_on "Remove user's agreement to the grant conditions"
     i_then_see_the_remove_agreement_check_page
@@ -35,8 +36,16 @@ RSpec.describe "Remove a users agreement to the grant conditions for a school", 
     click_on school.name
   end
 
+  def and_i_click_on_organisation_details
+    click_on "Organisation details"
+  end
+
   def i_see_the_school_details(school)
-    expect(page).to have_selector("h1", text: school.name)
+    expect(page).to have_h1("Organisation details")
+    expect(page).to have_summary_list_row(
+      "Name",
+      school.name,
+    )
   end
 
   def i_see_the_schools_details_sections_without_grant_conditions_accepted

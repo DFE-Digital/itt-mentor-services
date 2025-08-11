@@ -16,7 +16,13 @@ class Claims::Schools::Claims::AddClaimController < Claims::ApplicationControlle
     elsif @wizard.valid?
       @wizard.create_claim
       @wizard.reset_state
-      redirect_to confirmation_claims_school_claim_path(@school, @wizard.claim)
+      if current_user.support_user?
+        redirect_to claims_school_claims_path(@school), flash: {
+          heading: t(".success"),
+        }
+      else
+        redirect_to confirmation_claims_school_claim_path(@school, @wizard.claim)
+      end
     else
       redirect_to rejected_claims_school_claims_path(@school)
     end

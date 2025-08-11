@@ -72,7 +72,7 @@ RSpec.describe "Claims support user adds mentors to schools", service: :claims, 
       then_i_see_form_with_dob("12", "11", "1986")
       when_i_click_on("Continue")
       then_i_see_check_page_for(new_mentor)
-      when_i_click_on("Change")
+      when_i_click_on("Change Teacher reference number (TRN)")
       then_i_see_form_with_trn(claims_mentor.trn)
       then_i_see_form_with_dob("12", "11", "1986")
       when_i_click_on("Continue")
@@ -201,7 +201,7 @@ RSpec.describe "Claims support user adds mentors to schools", service: :claims, 
 
   def given_i_navigate_to_schools_mentors_list(school)
     click_on school.name
-    within(".app-secondary-navigation") do
+    within(primary_navigation) do
       click_on "Mentors"
     end
   end
@@ -218,7 +218,7 @@ RSpec.describe "Claims support user adds mentors to schools", service: :claims, 
   end
 
   def then_i_see_check_page_for(mentor)
-    expect_organisations_to_be_selected_in_primary_navigation
+    expect(primary_navigation).to have_current_item("Mentors")
     expect(page).to have_content "Mentor details"
     expect(page).to have_content "Confirm mentor details"
     name_row = page.all(".govuk-summary-list__row")[0]
@@ -255,7 +255,7 @@ RSpec.describe "Claims support user adds mentors to schools", service: :claims, 
   end
 
   def then_i_see_the_index_page(school)
-    expect(page).to have_current_path claims_support_school_mentors_path(school), ignore_query: true
+    expect(page).to have_current_path claims_school_mentors_path(school), ignore_query: true
   end
 
   def then_i_see_errors(errors)
@@ -283,7 +283,7 @@ RSpec.describe "Claims support user adds mentors to schools", service: :claims, 
 
   def then_i_see_no_results_page(_school_name, trn)
     expect(page).to have_title "No results found for ‘#{trn}’"
-    expect(page).to have_content "Mentor details - #{school.name}"
+    expect(page).to have_content "Mentor details"
     expect(page).to have_content "No results found for ‘#{trn}’"
   end
 

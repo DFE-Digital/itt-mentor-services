@@ -47,7 +47,10 @@ RSpec.describe "Remove a mentor from a school", service: :claims, type: :system 
   end
 
   def when_i_visit_the_support_school_mentors_page(school)
-    visit claims_support_school_mentors_path(school)
+    click_on school.name
+    within(primary_navigation) do
+      click_on "Mentors"
+    end
   end
 
   def when_i_see_a_list_of_the_schools_mentors

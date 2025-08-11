@@ -8,16 +8,18 @@ RSpec.describe "View a school", service: :claims, type: :system do
   scenario "View a school's details as a support user" do
     given_i_sign_in_as(support_user)
     and_i_visit_the_school_page(school)
+    and_i_click_on_organsation_details
     i_see_the_school_details(school)
-    and_i_see_the_secondary_navigation_links(school)
+    and_i_see_the_primary_navigation_links(school)
     i_see_the_schools_details_sections
   end
 
   scenario "View a school's details when they have NOT accepted grant conditions as a support user" do
     given_i_sign_in_as(support_user)
     and_i_visit_the_school_page(school_not_accepted_grant_conditions)
+    and_i_click_on_organsation_details
     i_see_the_school_details(school_not_accepted_grant_conditions)
-    and_i_see_the_secondary_navigation_links(school_not_accepted_grant_conditions)
+    and_i_see_the_primary_navigation_links(school_not_accepted_grant_conditions)
     i_see_the_schools_details_sections_without_grant_conditions_accepted
   end
 
@@ -28,14 +30,18 @@ RSpec.describe "View a school", service: :claims, type: :system do
   end
 
   def i_see_the_school_details(school)
-    expect(page).to have_selector("h1", text: school.name)
+    expect(page).to have_h1("Organisation details")
+    expect(page).to have_summary_list_row(
+      "Name",
+      school.name,
+    )
   end
 
-  def and_i_see_the_secondary_navigation_links(school)
-    within(".app-secondary-navigation") do
-      expect(page).to have_link("Details", href: "/support/schools/#{school.id}")
-      expect(page).to have_link("Users", href: "/support/schools/#{school.id}/users")
-      expect(page).to have_link("Claims", href: "/support/schools/#{school.id}/claims")
+  def and_i_see_the_primary_navigation_links(school)
+    within(primary_navigation) do
+      expect(page).to have_link("Organisation details", href: "/schools/#{school.id}")
+      expect(page).to have_link("Users", href: "/schools/#{school.id}/users")
+      expect(page).to have_link("Claims", href: "/schools/#{school.id}/claims")
     end
   end
 
@@ -47,5 +53,9 @@ RSpec.describe "View a school", service: :claims, type: :system do
 
   def i_see_the_schools_details_sections_without_grant_conditions_accepted
     expect(page).to have_content("This school has not agreed to the grant conditions")
+  end
+
+  def and_i_click_on_organsation_details
+    click_on "Organisation details"
   end
 end
