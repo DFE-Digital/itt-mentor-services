@@ -30,6 +30,7 @@ module Claims
 
     def not_assured_mentor_trainings
       @not_assured_mentor_trainings ||= claim.mentor_trainings
+        .includes(:mentor, :provider)
         .not_assured
         .order_by_mentor_full_name
     end

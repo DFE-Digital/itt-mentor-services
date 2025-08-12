@@ -73,7 +73,7 @@ module Claims
     end
 
     def provider_responses_for_mentor_trainings(claim, provider_responses)
-      claim.mentor_trainings.map do |mentor_training|
+      claim.mentor_trainings.includes(:mentor, :provider).map do |mentor_training|
         provider_response_for_mentor = provider_responses.find do |provider_response|
           provider_response["mentor_full_name"] == mentor_training.mentor_full_name
         end

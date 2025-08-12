@@ -49,6 +49,15 @@ RSpec.configure do |config|
     end
   end
 
+  config.before do
+    Bullet.start_request
+  end
+
+  config.after do
+    Bullet.perform_out_of_channel_notifications if Bullet.notification?
+    Bullet.end_request
+  end
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = [Rails.root.join("spec/fixtures")]
 

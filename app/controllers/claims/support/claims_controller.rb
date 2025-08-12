@@ -58,7 +58,7 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
   end
 
   def set_claim
-    @claim = Claims::Claim.find(params.require(:id))
+    @claim = Claims::Claim.includes(mentor_trainings: :mentor).find(params.require(:id))
   end
 
   def authorize_claim
