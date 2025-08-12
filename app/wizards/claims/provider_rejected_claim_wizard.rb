@@ -30,7 +30,7 @@ module Claims
     end
 
     def mentor_trainings
-      @mentor_trainings ||= claim.mentor_trainings.order_by_mentor_full_name
+      @mentor_trainings ||= claim.mentor_trainings.includes(:mentor).order_by_mentor_full_name
     end
 
     def selected_mentor_trainings
@@ -48,7 +48,7 @@ module Claims
     private
 
     def provider_responses_for_mentor_trainings
-      mentor_trainings.map do |mentor_training|
+      mentor_trainings.includes(:provider).map do |mentor_training|
         provider_response_step = steps[step_name_for_provider_response(mentor_training)]
         {
           id: mentor_training.id,

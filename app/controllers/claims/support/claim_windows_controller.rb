@@ -5,7 +5,9 @@ class Claims::Support::ClaimWindowsController < Claims::Support::ApplicationCont
   helper_method :claim_window_form
 
   def index
-    @claim_windows = Claims::ClaimWindow.order(starts_on: :desc)
+    @claim_windows = Claims::ClaimWindow
+                       .includes(:academic_year)
+                       .order(starts_on: :desc)
   end
 
   def new; end

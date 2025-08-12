@@ -48,7 +48,7 @@ class Claims::Support::Claim::ResponsesComponent < ApplicationComponent
   private
 
   def mentor_trainings
-    @mentor_trainings ||= claim.mentor_trainings
+    @mentor_trainings ||= claim.mentor_trainings.includes(:mentor)
   end
 
   def not_assured_mentor_trainings

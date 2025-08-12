@@ -1,7 +1,7 @@
 class Claims::Support::Claims::ClaimActivitiesController < Claims::Support::ApplicationController
   def index
     claim_activities = Claims::ClaimActivity
-      .includes(:user, record: [:school, :provider ])
+      .includes(:user, record: %i[school provider])
       .order(created_at: :desc)
     authorize [:claims, claim_activities]
 
@@ -13,7 +13,11 @@ class Claims::Support::Claims::ClaimActivitiesController < Claims::Support::Appl
     authorize [:claims, claim_activity]
     case @claim_activity.action
     when *Claims::ClaimActivity::SAMPLING_ACTIONS
-      @pagy, @provider_samplings = pagy(@claim_activity.record.provider_samplings.order_by_provider_name)
+      @pagy, @provider_samplings = pagy(
+        @claim_activity.record.provider_samplings.includes(
+          :provider, :csv_file_attachment, claims: [:mentor_trainings, { school: :region }]
+        ).order_by_provider_name,
+      )
     when *Claims::ClaimActivity::PAYMENT_AND_CLAWBACK_ACTIONS
       @pagy, @claims = pagy(@claim_activity.record.claims.order(:reference))
       @claims_by_provider = @claims.includes(

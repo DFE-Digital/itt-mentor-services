@@ -15,7 +15,7 @@ class Claims::ProviderRejectedClaimWizard::MentorTrainingStep < BaseStep
     if mentor_training_ids.blank?
       []
     else
-      mentor_trainings.where(id: mentor_training_ids).ids
+      mentor_trainings.except(:order).where(id: mentor_training_ids).ids
     end
   end
 end

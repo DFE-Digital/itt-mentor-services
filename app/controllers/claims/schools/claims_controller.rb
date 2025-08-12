@@ -9,7 +9,7 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
 
   def index
     @pagy, @claims = pagy(
-      @school.claims.includes(:provider, :mentor_trainings).active.order_created_at_desc
+      @school.claims.includes(:provider, :mentor_trainings).active.order_created_at_desc,
     )
   end
 
