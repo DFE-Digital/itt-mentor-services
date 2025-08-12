@@ -414,7 +414,7 @@ GEM
     parallel (1.27.0)
     parallel_tests (5.3.0)
       parallel
-    parser (3.3.8.0)
+    parser (3.3.9.0)
       ast (~> 2.4.1)
       racc
     pg (1.5.9)
@@ -667,12 +667,14 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
-    undercover (0.6.4)
+    undercover (0.7.4)
       base64
       bigdecimal
       imagen (>= 0.2.0)
       rainbow (>= 2.1, < 4.0)
       rugged (>= 0.27, < 1.10)
+      simplecov
+      simplecov_json_formatter
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
@@ -794,7 +796,7 @@ DEPENDENCIES
   syntax_tree-rbs
   timecop
   tzinfo-data
-  undercover (~> 0.6.4)
+  undercover (~> 0.7.4)
   view_component
   web-console
   webmock
