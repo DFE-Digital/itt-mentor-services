@@ -8,7 +8,9 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   helper_method :edit_attribute_path
 
   def index
-    @pagy, @claims = pagy(@school.claims.active.order_created_at_desc)
+    @pagy, @claims = pagy(
+      @school.claims.includes(:provider, :mentor_trainings).active.order_created_at_desc
+    )
   end
 
   def show; end

@@ -1,6 +1,8 @@
 class Claims::Support::Claims::ClaimActivitiesController < Claims::Support::ApplicationController
   def index
-    claim_activities = Claims::ClaimActivity.order(created_at: :desc)
+    claim_activities = Claims::ClaimActivity
+      .includes(:user, record: [:school, :provider ])
+      .order(created_at: :desc)
     authorize [:claims, claim_activities]
 
     @pagy, @claim_activities = pagy(claim_activities)
@@ -14,7 +16,9 @@ class Claims::Support::Claims::ClaimActivitiesController < Claims::Support::Appl
       @pagy, @provider_samplings = pagy(@claim_activity.record.provider_samplings.order_by_provider_name)
     when *Claims::ClaimActivity::PAYMENT_AND_CLAWBACK_ACTIONS
       @pagy, @claims = pagy(@claim_activity.record.claims.order(:reference))
-      @claims_by_provider = @claims.group_by(&:provider)
+      @claims_by_provider = @claims.includes(
+        :provider, :mentor_trainings, school: :region
+      ).group_by(&:provider)
     when *Claims::ClaimActivity::MANUAL_ACTIONS
       @claim = @claim_activity.record
     end
