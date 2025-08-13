@@ -14,6 +14,7 @@ class Claims::Support::Claim::ActionsComponent < ApplicationComponent
       sampling_in_progress
       sampling_provider_not_approved
       sampling_not_approved
+      clawback_requires_approval
     ].include?(claim.status)
   end
 end
