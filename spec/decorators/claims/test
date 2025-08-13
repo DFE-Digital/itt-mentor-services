@@ -1,9 +1,0 @@
-Failed examples:
-
-rspec ./spec/system/claims/support/schools/claims/edit_draft_claim_spec.rb:53 # Edit a draft claim As a support user I can edit a draft claim
-rspec ./spec/system/claims/support/schools/claims/edit_draft_claim_spec.rb:65 # Edit a draft claim A support user I can't edit a non draft claim
-rspec ./spec/system/claims/support/schools/claims/edit_draft_claim_spec.rb:69 # Edit a draft claim Anne edits the draft claim without selecting a mentor
-rspec ./spec/system/claims/support/schools/claims/edit_draft_claim_spec.rb:79 # Edit a draft claim Anne submits the draft claim which is invalid
-rspec ./spec/system/claims/support/schools/claims/removing_a_claim_spec.rb:48 # Create claim When removing a draft claim
-rspec ./spec/system/claims/support/schools/claims/view_a_schools_claims_spec.rb:20 # View a schools claims View a school's claims as a support user
-rspec ./spec/system/claims/support/settings/support_user_views_manually_onboarded_schools_spec.rb:4 # Support user views manually onboarded schools is expected to have visible link "View manually onboarded schools" with href "/support/manually_onboarded_schools"

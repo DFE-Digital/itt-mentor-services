@@ -69,8 +69,8 @@ Rails.application.configure do
   config.action_controller.raise_on_missing_callback_actions = true
 
   config.after_initialize do
-    Bullet.enable = true
-    Bullet.bullet_logger = true
+    Bullet.enable = false
+    Bullet.bullet_logger = false
     Bullet.unused_eager_loading_enable = false
     Bullet.raise = true # raise an error if n+1 query occurs
   end

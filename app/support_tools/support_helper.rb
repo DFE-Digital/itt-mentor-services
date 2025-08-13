@@ -2,7 +2,7 @@ class SupportHelper
   def self.deactivate_school(school:, claims_service: false, placements_service: false)
     ApplicationRecord.transaction do
       if claims_service
-        claims_school = school.becomes(Claims::School).includes(:claims)
+        claims_school = school.becomes(Claims::School)
         if claims_school.claims.where.not(status: Claims::Claim::ACTIVE_STATUSES).present?
           raise "School has claims not in draft or submitted. School can not be offboarded."
         else

@@ -1,7 +1,9 @@
 require "rails_helper"
 
 describe Claims::Payments::Claim::GenerateCSVFile do
-  subject(:generate_csv_file) { described_class.call(claims:) }
+  subject(:generate_csv_file) do
+    described_class.call(claims: Claims::Claim.where(id: claims.pluck(:id)))
+  end
 
   let(:claims) { create_list(:claim, 3) }
 
