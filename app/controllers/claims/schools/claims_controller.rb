@@ -32,7 +32,7 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
   private
 
   def set_claim
-    @claim = @school.claims.find(claim_id)
+    @claim = @school.claims.includes(mentor_trainings: :mentor).find(claim_id)
   end
 
   def claim_id

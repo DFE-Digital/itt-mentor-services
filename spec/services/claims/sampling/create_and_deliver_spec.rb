@@ -4,7 +4,8 @@ describe Claims::Sampling::CreateAndDeliver do
   subject(:create_and_deliver) { described_class.call(current_user:, claims:, csv_data:) }
 
   let(:current_user) { create(:claims_support_user) }
-  let!(:claims) { [create(:claim, :paid)] }
+  let!(:claim) { create(:claim, :paid) }
+  let(:claims) { Claims::Claim.where(id: claim.id)}
   let(:csv_data) { [{ id: claims.first.id, sampling_reason: "ABCD" }] }
 
   describe "#call" do

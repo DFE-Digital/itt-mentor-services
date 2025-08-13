@@ -8,7 +8,7 @@ class Claims::Sampling::CreateAndDeliver < ApplicationService
   attr_reader :current_user, :claims, :csv_data
 
   def call
-    claims.group_by(&:provider).each do |provider, provider_claims|
+    claims.includes(:provider, :mentor_trainings, school: :region).group_by(&:provider).each do |provider, provider_claims|
       ActiveRecord::Base.transaction do |transaction|
         provider_claims.each do |claim|
           Claims::Claim::Sampling::InProgress.call(claim:, sampling_reason: sampling_reason(claim))
