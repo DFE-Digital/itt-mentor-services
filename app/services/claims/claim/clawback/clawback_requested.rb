@@ -1,7 +1,8 @@
 class Claims::Claim::Clawback::ClawbackRequested < ApplicationService
-  def initialize(claim:, esfa_responses: [])
+  def initialize(claim:, current_user:, esfa_responses: [])
     @claim = claim
     @esfa_responses = esfa_responses
+    @current_user = current_user
   end
 
   def call
@@ -16,11 +17,15 @@ class Claims::Claim::Clawback::ClawbackRequested < ApplicationService
         )
       end
 
-      claim.update!(status: :clawback_requested)
+      # claim.update!(status: :clawback_requested)
+      claim.update!(
+        status: :clawback_requires_approval,
+        clawback_requested_by: current_user,
+      )
     end
   end
 
   private
 
-  attr_reader :claim, :esfa_responses
+  attr_reader :claim, :esfa_responses, :current_user
 end

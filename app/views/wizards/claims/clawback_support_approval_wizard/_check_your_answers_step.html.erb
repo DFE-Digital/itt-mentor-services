@@ -1,0 +1,37 @@
+<% content_for(:page_title) { sanitize title_with_error_prefix(t(".page_title", reference: @wizard.claim_reference), error: current_step.errors.any?) } %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".caption", reference: @wizard.claim_reference) %></span>
+      <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+
+      <%= govuk_summary_list do |summary_list| %>
+        <% current_step.mentor_trainings.each do |mentor_training| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: mentor_training.mentor_full_name) %>
+            <% row.with_value do %>
+              <% if current_step.clawback_approved?(mentor_training) %>
+                <%= govuk_tag(text: t(".approved"), colour: "green") %>
+              <% else %>
+                <%= govuk_tag(text: t(".not_approved"), colour: "red") %>
+              <% end %>
+            <% end %>
+            <% row.with_action(text: t("change"),
+                               href: step_path(
+                                 current_step.step_name_for_approval(mentor_training),
+                               ),
+                               visually_hidden_text: mentor_training.mentor_full_name,
+                               html_attributes: {
+                                 class: "govuk-link--no-visited-state",
+                               }) %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%= f.govuk_submit t(".continue") %>
+    </div>
+  </div>
+<% end %>

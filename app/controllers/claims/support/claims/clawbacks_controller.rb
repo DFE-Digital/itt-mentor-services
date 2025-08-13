@@ -9,7 +9,7 @@ class Claims::Support::Claims::ClawbacksController < Claims::Support::Applicatio
 
   def index
     @pagy, @claims = pagy(
-      @filtered_claims.where(status: %i[clawback_requested clawback_in_progress sampling_not_approved]),
+      @filtered_claims.where(status: Claims::Claim::CLAWBACK_STATUSES),
     )
   end
 

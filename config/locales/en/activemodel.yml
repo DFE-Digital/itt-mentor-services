@@ -410,3 +410,9 @@ en:
           attributes:
             key_stage_ids:
                blank: Please select a key stage
+        claims/clawback_support_approval_wizard/approval_step:
+          attributes:
+            approved:
+              blank: Please select whether or not this clawback information is correct
+            reason_clawback_rejected:
+              blank: Please enter a reason why you are rejecting this clawback

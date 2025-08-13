@@ -42,6 +42,7 @@ module Claims
       Claims::Claim::Clawback::ClawbackRequested.call(
         claim:,
         esfa_responses: esfa_responses_for_mentor_trainings,
+        current_user:,
       )
 
       NotifyRateLimiter.call(

@@ -18,7 +18,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_20_132738) do
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
   create_enum "appetite", ["actively_looking", "interested", "not_open", "already_organised"]
-  create_enum "claim_status", ["internal_draft", "draft", "submitted", "payment_in_progress", "payment_information_requested", "payment_information_sent", "paid", "payment_not_approved", "sampling_in_progress", "sampling_provider_not_approved", "sampling_not_approved", "clawback_requested", "clawback_in_progress", "clawback_complete", "invalid_provider"]
+  create_enum "claim_status", ["internal_draft", "draft", "submitted", "payment_in_progress", "payment_information_requested", "payment_information_sent", "paid", "payment_not_approved", "sampling_in_progress", "sampling_provider_not_approved", "sampling_not_approved", "clawback_requested", "clawback_in_progress", "clawback_complete", "invalid_provider", "clawback_requires_approval", "clawback_rejected"]
   create_enum "mentor_training_type", ["refresher", "initial"]
   create_enum "placement_status", ["draft", "published"]
   create_enum "placement_year_group", ["nursery", "reception", "year_1", "year_2", "year_3", "year_4", "year_5", "year_6", "mixed_year_groups"]
@@ -125,7 +125,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_20_132738) do
     t.text "unpaid_reason"
     t.string "zendesk_url"
     t.uuid "support_user_id"
+    t.uuid "clawback_approved_by_id"
+    t.uuid "clawback_requested_by_id"
     t.index ["claim_window_id"], name: "index_claims_on_claim_window_id"
+    t.index ["clawback_approved_by_id"], name: "index_claims_on_clawback_approved_by_id"
+    t.index ["clawback_requested_by_id"], name: "index_claims_on_clawback_requested_by_id"
     t.index ["created_by_type", "created_by_id"], name: "index_claims_on_created_by"
     t.index ["provider_id"], name: "index_claims_on_provider_id"
     t.index ["reference"], name: "index_claims_on_reference"
@@ -322,6 +326,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_20_132738) do
     t.text "reason_not_assured"
     t.integer "hours_clawed_back"
     t.text "reason_clawed_back"
+    t.text "reason_clawback_rejected"
     t.index ["claim_id"], name: "index_mentor_trainings_on_claim_id"
     t.index ["mentor_id"], name: "index_mentor_trainings_on_mentor_id"
     t.index ["provider_id"], name: "index_mentor_trainings_on_provider_id"
