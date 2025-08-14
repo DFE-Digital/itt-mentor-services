@@ -23,7 +23,11 @@ module Claims
       raise "Invalid wizard state" unless valid?
 
       if all_approved?
-        claim.update!(status: :clawback_requested)
+        claim.update!(
+          status: :clawback_requested,
+          clawback_approved_by: current_user,
+        )
+        binding.pry
       else
         claim.update!(status: :clawback_rejected)
       end

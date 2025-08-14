@@ -98,6 +98,7 @@ shared:
     - sampling_reason
     - payment_in_progress_at
     - unpaid_reason
+    - clawback_approved_by_id
   :samplings:
     - id
     - created_at

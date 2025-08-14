@@ -1,8 +1,7 @@
 class Claims::Claim::Clawback::ClawbackRequested < ApplicationService
-  def initialize(claim:, current_user: nil, esfa_responses: [])
+  def initialize(claim:, esfa_responses: [])
     @claim = claim
     @esfa_responses = esfa_responses
-    @current_user = current_user
   end
 
   def call
@@ -24,5 +23,5 @@ class Claims::Claim::Clawback::ClawbackRequested < ApplicationService
 
   private
 
-  attr_reader :claim, :esfa_responses, :current_user
+  attr_reader :claim, :esfa_responses
 end

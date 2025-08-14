@@ -27,4 +27,5 @@ class Claims::SupportUser < User
   has_many :onboarded_schools,
            class_name: "Claims::School",
            foreign_key: :manually_onboarded_by_id
+  has_many :clawback_approved_claims, class_name: "Claims::Claim", foreign_key: :clawback_approved_by_id
 end

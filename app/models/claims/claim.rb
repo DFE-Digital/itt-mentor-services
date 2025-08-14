@@ -47,6 +47,7 @@ class Claims::Claim < ApplicationRecord
   belongs_to :created_by, polymorphic: true
   belongs_to :submitted_by, polymorphic: true, optional: true
   belongs_to :support_user, class_name: "Claims::SupportUser", optional: true
+  belongs_to :clawback_approved_by, class_name: "Claims::SupportUser", foreign_key: :clawback_approved_by_id, optional: true
 
   has_one :academic_year, through: :claim_window
 
