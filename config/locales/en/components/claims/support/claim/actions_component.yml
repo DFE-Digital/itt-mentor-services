@@ -12,4 +12,4 @@ en:
               information_sent: Confirm information sent
               paid: Confirm claim paid
               reject: Reject claim
-              approve_clawback: Approve clawback
+              review_clawback: Review clawback
