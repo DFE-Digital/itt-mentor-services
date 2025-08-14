@@ -25,3 +25,5 @@ en:
           caption: Approve clawback - Claim - %{reference}
           title: Check your answers
           continue: Continue
+          approved: Approved
+          not_approved: Not approved

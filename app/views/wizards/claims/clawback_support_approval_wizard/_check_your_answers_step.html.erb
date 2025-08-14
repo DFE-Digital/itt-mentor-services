@@ -14,9 +14,9 @@
             <% row.with_key(text: mentor_training.mentor_full_name) %>
             <% row.with_value do %>
               <% if current_step.clawback_approved?(mentor_training) %>
-                <%= govuk_tag(text: "Approved", colour: "green") %>
+                <%= govuk_tag(text: t(".approved"), colour: "green") %>
               <% else %>
-                <%= govuk_tag(text: "Rejected", colour: "red") %>
+                <%= govuk_tag(text: t(".not_approved"), colour: "red") %>
               <% end %>
             <% end %>
             <% row.with_action(text: t("change"),

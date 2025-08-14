@@ -23,9 +23,9 @@ module Claims
       raise "Invalid wizard state" unless valid?
 
       if all_approved?
-        binding.pry
+        claim.update!(status: :clawback_requested)
       else
-        binding.pry
+        claim.update!(status: :clawback_rejected)
       end
     end
 

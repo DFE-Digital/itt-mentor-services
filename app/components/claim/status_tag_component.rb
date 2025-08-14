@@ -39,6 +39,7 @@ class Claim::StatusTagComponent < ApplicationComponent
       clawback_complete: "blue",
       invalid_provider: "red",
       clawback_requires_approval: "orange",
+      clawback_rejected: "red",
     }.with_indifferent_access
   end
 end

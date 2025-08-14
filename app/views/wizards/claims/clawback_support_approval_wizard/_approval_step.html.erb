@@ -35,16 +35,6 @@
         <% end %>
 
         <% summary_list.with_row do |row| %>
-          <% row.with_key(text: t(".school")) %>
-          <% row.with_value(text: current_step.claim.school_name) %>
-        <% end %>
-
-        <% summary_list.with_row do |row| %>
-          <% row.with_key(text: t(".school_comments")) %>
-          <% row.with_value(text: current_step.mentor_training.reason_rejected) %>
-        <% end %>
-
-        <% summary_list.with_row do |row| %>
           <% row.with_key(text: t(".provider")) %>
           <% row.with_value(text: current_step.claim.provider_name) %>
         <% end %>
@@ -52,6 +42,16 @@
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t(".provider_comments")) %>
           <% row.with_value(text: current_step.mentor_training.reason_not_assured) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".school")) %>
+          <% row.with_value(text: current_step.claim.school_name) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".school_comments")) %>
+          <% row.with_value(text: current_step.mentor_training.reason_rejected) %>
         <% end %>
 
         <% summary_list.with_row do |row| %>

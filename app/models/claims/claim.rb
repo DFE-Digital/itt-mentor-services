@@ -69,7 +69,7 @@ class Claims::Claim < ApplicationRecord
   DRAFT_STATUSES = %i[internal_draft draft].freeze
   PAYMENT_ACTIONABLE_STATUSES = %w[submitted payment_in_progress payment_information_requested payment_information_sent].freeze
   SAMPLING_STATUSES = %w[sampling_in_progress sampling_provider_not_approved].freeze
-  CLAWBACK_STATUSES = %w[clawback_requested clawback_in_progress sampling_not_approved clawback_requires_approval].freeze
+  CLAWBACK_STATUSES = %w[clawback_requested clawback_in_progress sampling_not_approved clawback_requires_approval clawback_rejected].freeze
   INCIDENT_STATUSES = %w[invalid_provider].freeze
 
   scope :active, -> { where(status: ACTIVE_STATUSES + INCIDENT_STATUSES) }
@@ -142,7 +142,7 @@ class Claims::Claim < ApplicationRecord
   end
 
   def in_clawback?
-    %w[clawback_requested clawback_in_progress clawback_complete clawback_requires_approval].include?(status)
+    %w[clawback_requested clawback_in_progress clawback_complete clawback_requires_approval clawback_rejected].include?(status)
   end
 
   def amount_after_clawback
