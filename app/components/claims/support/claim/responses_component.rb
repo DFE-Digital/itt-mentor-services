@@ -58,8 +58,8 @@ class Claims::Support::Claim::ResponsesComponent < ApplicationComponent
           content_tag(
             :li,
             "#{mentor_training.mentor_full_name}: #{mentor_training.reason_clawed_back}",
-            ),
-          )
+          ),
+        )
       end
     end
   end
@@ -73,8 +73,8 @@ class Claims::Support::Claim::ResponsesComponent < ApplicationComponent
           content_tag(
             :li,
             "#{mentor_training.mentor_full_name}: #{mentor_training.reason_clawback_rejected}",
-            ),
-          )
+          ),
+        )
       end
     end
   end
@@ -96,6 +96,7 @@ class Claims::Support::Claim::ResponsesComponent < ApplicationComponent
   def clawed_back_mentor_trainings
     @clawed_back_mentor_trainings ||= mentor_trainings.where.not(reason_clawed_back: nil)
   end
+
   def clawback_rejected_mentor_trainings
     @clawback_rejected_mentor_trainings ||= mentor_trainings.where.not(reason_clawback_rejected: nil)
   end

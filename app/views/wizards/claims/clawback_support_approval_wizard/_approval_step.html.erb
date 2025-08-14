@@ -64,7 +64,7 @@
         <%= f.govuk_collection_radio_buttons(
           :approved, current_step.options_for_selection, :name, :name,
           legend: { text: t(".confirm_correct"), size: "s" },
-          inline: true,
+          inline: true
         ) %>
 
         <%= f.govuk_text_area :reason_clawback_rejected,

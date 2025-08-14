@@ -53,9 +53,9 @@ module Claims
     private
 
     def approval_steps
-      steps.values.select { |step|
+      steps.values.select do |step|
         step.is_a?(ApprovalStep)
-      }
+      end
     end
 
     def all_approved?
