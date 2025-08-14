@@ -27,7 +27,6 @@ module Claims
           status: :clawback_requested,
           clawback_approved_by: current_user,
         )
-        binding.pry
       else
         claim.update!(status: :clawback_rejected)
       end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_14_092139) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_14_100816) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -126,8 +126,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_14_092139) do
     t.string "zendesk_url"
     t.uuid "support_user_id"
     t.uuid "clawback_approved_by_id"
+    t.uuid "clawback_requested_by_id"
     t.index ["claim_window_id"], name: "index_claims_on_claim_window_id"
     t.index ["clawback_approved_by_id"], name: "index_claims_on_clawback_approved_by_id"
+    t.index ["clawback_requested_by_id"], name: "index_claims_on_clawback_requested_by_id"
     t.index ["created_by_type", "created_by_id"], name: "index_claims_on_created_by"
     t.index ["provider_id"], name: "index_claims_on_provider_id"
     t.index ["reference"], name: "index_claims_on_reference"
