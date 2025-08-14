@@ -22,6 +22,7 @@ shared:
     - reason_not_assured
     - reason_clawed_back
     - hours_clawed_back
+    - reason_clawback_rejected
   :user_memberships:
     - id
     - user_id

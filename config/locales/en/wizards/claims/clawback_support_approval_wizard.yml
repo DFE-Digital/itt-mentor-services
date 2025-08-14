@@ -20,6 +20,8 @@ en:
           provider_comments: Provider comments
           school_comments: School comments
           rate: Hourly rate
+          please_add_reason: If No, please provide a reason
+          confirm_correct: I confirm that the information for this clawback is correct
         check_your_answers_step:
           page_title: Check your answers - Approve clawback - Claim - %{reference}
           caption: Approve clawback - Claim - %{reference}

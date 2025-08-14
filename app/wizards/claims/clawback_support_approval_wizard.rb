@@ -28,6 +28,12 @@ module Claims
           clawback_approved_by: current_user,
         )
       else
+        mentor_trainings.each do |mentor_training|
+          reason_clawback_rejected = steps.fetch(
+            step_name_for_approval(mentor_training),
+          ).reason_clawback_rejected
+          mentor_training.update!(reason_clawback_rejected:)
+        end
         claim.update!(status: :clawback_rejected)
       end
     end

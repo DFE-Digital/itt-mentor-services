@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_14_100816) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_14_121915) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -324,6 +324,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_14_100816) do
     t.text "reason_not_assured"
     t.integer "hours_clawed_back"
     t.text "reason_clawed_back"
+    t.text "reason_clawback_rejected"
     t.index ["claim_id"], name: "index_mentor_trainings_on_claim_id"
     t.index ["mentor_id"], name: "index_mentor_trainings_on_mentor_id"
     t.index ["provider_id"], name: "index_mentor_trainings_on_provider_id"

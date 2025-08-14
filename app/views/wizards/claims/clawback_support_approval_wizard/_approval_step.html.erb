@@ -63,9 +63,12 @@
       <div class="govuk-!-margin-bottom-5">
         <%= f.govuk_collection_radio_buttons(
           :approved, current_step.options_for_selection, :name, :name,
-          legend: { text: 'I confirm that the information for this clawback is correct.', size: "s" },
+          legend: { text: t(".confirm_correct"), size: "s" },
           inline: true,
         ) %>
+
+        <%= f.govuk_text_area :reason_clawback_rejected,
+          label: { text: t(".please_add_reason"), size: "s" } %>
       </div>
 
       <%= f.govuk_submit t(".continue") %>

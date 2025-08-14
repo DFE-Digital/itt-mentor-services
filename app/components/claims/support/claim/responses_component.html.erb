@@ -21,5 +21,15 @@
 
     <p class="govuk-heading-s"><%= t(".comments_from_school", school_name: claim.school_name) %></p>
     <p class="govuk-body"><%= school_response %></p>
+
+    <% if reasons_for_clawback_exist? %>
+      <p class="govuk-heading-s"><%= t(".reasons_for_clawback") %></p>
+      <p class="govuk-body"><%= reasons_clawed_back %></p>
+    <% end %>
+
+    <% if claim.clawback_rejected? %>
+      <p class="govuk-heading-s"><%= t(".reasons_clawback_rejected") %></p>
+      <p class="govuk-body"><%= reason_clawback_rejected %></p>
+    <% end %>
   <% end %>
 <% end %>
