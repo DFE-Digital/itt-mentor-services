@@ -23,7 +23,7 @@ class Claims::Payments::Claim::GenerateCSVFile < ApplicationService
     CSV.open(file_name, "w", headers: true) do |csv|
       csv << HEADERS
 
-      claims.includes(:provider, :mentor_trainings, school: :region).find_each do |claim|
+      claims.includes(:provider, :mentor_trainings, school: :region).order(:reference).each do |claim|
         csv << [
           claim.reference,
           claim.school.urn,
