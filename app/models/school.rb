@@ -72,7 +72,6 @@
 #  fk_rails_...  (trust_id => trusts.id)
 #
 class School < ApplicationRecord
-  self.ignored_columns += %w[email_address]
   include PgSearch::Model
   extend Geocoder::Model::ActiveRecord
 

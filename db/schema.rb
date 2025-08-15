@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_15_093722) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_15_112517) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -557,7 +557,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_15_093722) do
     t.string "send_provision"
     t.string "rating"
     t.date "last_inspection_date"
-    t.string "email_address"
     t.string "district_admin_name"
     t.string "district_admin_code"
     t.uuid "region_id"
