@@ -142,7 +142,7 @@ RSpec.describe "Support user adds a partner provider without javascript",
   end
 
   def then_i_am_on_the_providers_index_page
-    page.find(".app-primary-navigation__nav").click_on("Providers")
+    click_on("Providers")
 
     expect(page).to have_current_path(placements_school_partner_providers_path(@school))
     expect(page).to have_title("Providers you work with - Manage school placements - GOV.UK")

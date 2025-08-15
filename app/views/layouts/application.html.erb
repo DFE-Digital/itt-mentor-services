@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" class="govuk-template">
+<html lang="en" class="govuk-template--rebranded">
   <head>
     <title><%= [yield(:page_title).presence, service_name, "GOV.UK"].compact.join(" - ") %></title>
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= tag.meta(name: "viewport", content: "width=device-width, initial-scale=1") %>
-    <%= tag.meta(property: "og:image", content: asset_path("images/govuk-opengraph-image.png")) %>
-    <%= tag.meta(name: "theme-color", content: "#0b0c0c") %>
-    <%= favicon_link_tag asset_path("images/favicon.ico"), type: nil, sizes: "48x48" %>
-    <%= favicon_link_tag asset_path("images/favicon.svg"), type: "image/svg+xml", sizes: "any" %>
-    <%= favicon_link_tag asset_path("images/govuk-icon-mask.svg"), rel: "mask-icon", color: "#0b0c0c", type: nil %>
-    <%= favicon_link_tag asset_path("images/govuk-icon-180.png"), rel: "apple-touch-icon", type: nil %>
+    <%= tag.meta name: "viewport", content: "width=device-width, initial-scale=1" %>
+    <%= tag.meta property: "og:image", content: asset_path("rebrand/images/govuk-opengraph-image.png") %>
+    <%= tag.meta name: "theme-color", content: "#1d70b8" %>
+
+    <%= favicon_link_tag asset_path("rebrand/images/favicon.ico") %>
+    <%= favicon_link_tag asset_path("rebrand/images/favicon.svg"), type: "image/svg+xml", sizes: "any" %>
+    <%= favicon_link_tag asset_path("rebrand/images/govuk-icon-mask.svg"), rel: "mask-icon", color: "#0b0c0c" %>
+    <%= favicon_link_tag asset_path("rebrand/images/govuk-icon-180.png"), rel: "apple-touch-icon" %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
@@ -26,7 +27,9 @@
     <%= govuk_skip_link %>
 
     <%= govuk_header(homepage_url: "/", classes: "app-header app-header--#{hosting_environment_color} app-header--full-border") do |header| %>
-      <% header.with_product_name(name: service_name) %>
+      <% header.with_custom_logo do %>
+        <%= image_tag asset_path("/images/department-for-education_white.png"), alt: "Department for Education", class: "govuk-header__logotype" %>
+      <% end %>
 
       <% if current_user %>
         <% if claims_service? %>
@@ -36,19 +39,26 @@
         <% if current_user.support_user? && !claims_service? %>
           <%= render "placements/support/header_navigation", header: %>
         <% end %>
+
         <% header.with_navigation_item(text: t(".sign_out"), href: sign_out_path) %>
       <% end %>
     <% end %>
 
+    <%= yield :primary_navigation_content %>
+
     <div class="govuk-width-container">
-      <%= govuk_phase_banner(tag: { text: hosting_environment_phase(current_service), colour: hosting_environment_color }, classes: [class_names("app-phase-banner", "app-phase-banner__env--#{HostingEnvironment.env}")]) do %>
+      <%= govuk_phase_banner(
+            tag: {
+              text: hosting_environment_phase(current_service),
+              colour: hosting_environment_color,
+            },
+            classes: [class_names("app-phase-banner", "app-phase-banner__env--#{HostingEnvironment.env}")],
+          ) do %>
         <%== t(".#{current_service}.phase_banner.description", feedback_link: govuk_link_to(t(".#{current_service}.phase_banner.feedback"), feedback_url, target: "_blank", rel: "noreferrer", class: "govuk-link--no-visited-state")) %>
       <% end %>
 
       <%= yield :header_content %>
     </div>
-
-    <%= yield :primary_navigation_content %>
 
     <% if content_for?(:breadcrumbs) %>
       <%= tag.div yield(:breadcrumbs), class: "govuk-width-container" %>

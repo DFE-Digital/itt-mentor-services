@@ -45,7 +45,7 @@ RSpec.describe "Remove a user", service: :claims, type: :system do
   end
 
   def when_i_navigate_to_users
-    within(".app-primary-navigation") do
+    within(primary_navigation) do
       click_on "Users"
     end
   end

@@ -62,7 +62,7 @@ RSpec.describe "Provider user views a placement for a partner school",
   end
 
   def when_i_navigate_to_the_provider_schools_page
-    within(".app-primary-navigation") do
+    within(primary_navigation) do
       click_on "Schools"
     end
   end

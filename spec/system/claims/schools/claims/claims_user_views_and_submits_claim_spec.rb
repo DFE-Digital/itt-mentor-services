@@ -107,7 +107,7 @@ RSpec.describe "Claims user views and submits claim", service: :claims, type: :s
   end
 
   def when_i_navigate_back_to_the_claims_index_page
-    within ".app-primary-navigation" do
+    within primary_navigation do
       click_on "Claims"
     end
   end
