@@ -1,0 +1,77 @@
+<% content_for(:page_title) { sanitize title_with_error_prefix(t(".page_title", reference: @wizard.claim_reference, mentor_name: current_step.mentor_training.mentor.full_name), error: current_step.errors.any?) } %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".caption", reference: @wizard.claim_reference) %></span>
+      <h1 class="govuk-heading-l"><%= t(".title", mentor_name: current_step.mentor_training.mentor.full_name) %></h1>
+
+      <%= govuk_summary_list(actions: false) do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".original")) %>
+          <% row.with_value(text: pluralize(current_step.mentor_training.hours_completed, t(".hour"))) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".mentor_worked_hours")) %>
+          <% row.with_value(text: pluralize(current_step.mentor_training.corrected_hours_completed, t(".hour"))) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".hours_clawed_back")) %>
+          <% row.with_value(text: pluralize(current_step.mentor_training.hours_clawed_back, t(".hour"))) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".rate")) %>
+          <% row.with_value(text: humanized_money_with_symbol(current_step.mentor_training.region_funding_available_per_hour)) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".clawback_amount")) %>
+          <% row.with_value(text: humanized_money_with_symbol(current_step.mentor_training.clawback_amount)) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".provider")) %>
+          <% row.with_value(text: current_step.claim.provider_name) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".provider_comments")) %>
+          <% row.with_value(text: current_step.mentor_training.reason_not_assured) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".school")) %>
+          <% row.with_value(text: current_step.claim.school_name) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".school_comments")) %>
+          <% row.with_value(text: current_step.mentor_training.reason_rejected) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".reason_clawed_back")) %>
+          <% row.with_value(text: current_step.mentor_training.reason_clawed_back) %>
+        <% end %>
+      <% end %>
+
+      <div class="govuk-!-margin-bottom-5">
+        <%= f.govuk_collection_radio_buttons(
+          :approved, current_step.options_for_selection, :name, :name,
+          legend: { text: t(".confirm_correct"), size: "s" },
+          inline: true
+        ) %>
+
+        <%= f.govuk_text_area :reason_clawback_rejected,
+          label: { text: t(".please_add_reason"), size: "s" } %>
+      </div>
+
+      <%= f.govuk_submit t(".continue") %>
+    </div>
+  </div>
+<% end %>

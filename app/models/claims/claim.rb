@@ -47,6 +47,8 @@ class Claims::Claim < ApplicationRecord
   belongs_to :created_by, polymorphic: true
   belongs_to :submitted_by, polymorphic: true, optional: true
   belongs_to :support_user, class_name: "Claims::SupportUser", optional: true
+  belongs_to :clawback_approved_by, class_name: "Claims::SupportUser", optional: true
+  belongs_to :clawback_requested_by, class_name: "Claims::SupportUser", optional: true
 
   has_one :academic_year, through: :claim_window
 
@@ -69,7 +71,7 @@ class Claims::Claim < ApplicationRecord
   DRAFT_STATUSES = %i[internal_draft draft].freeze
   PAYMENT_ACTIONABLE_STATUSES = %w[submitted payment_in_progress payment_information_requested payment_information_sent].freeze
   SAMPLING_STATUSES = %w[sampling_in_progress sampling_provider_not_approved].freeze
-  CLAWBACK_STATUSES = %w[clawback_requested clawback_in_progress sampling_not_approved].freeze
+  CLAWBACK_STATUSES = %w[clawback_requested clawback_in_progress sampling_not_approved clawback_requires_approval clawback_rejected].freeze
   INCIDENT_STATUSES = %w[invalid_provider].freeze
 
   scope :active, -> { where(status: ACTIVE_STATUSES + INCIDENT_STATUSES) }
@@ -97,6 +99,8 @@ class Claims::Claim < ApplicationRecord
          clawback_in_progress: "clawback_in_progress",
          clawback_complete: "clawback_complete",
          invalid_provider: "invalid_provider",
+         clawback_requires_approval: "clawback_requires_approval",
+         clawback_rejected: "clawback_rejected",
        },
        validate: true
 
@@ -140,7 +144,7 @@ class Claims::Claim < ApplicationRecord
   end
 
   def in_clawback?
-    %w[clawback_requested clawback_in_progress clawback_complete].include?(status)
+    %w[clawback_requested clawback_in_progress clawback_complete clawback_requires_approval clawback_rejected].include?(status)
   end
 
   def amount_after_clawback

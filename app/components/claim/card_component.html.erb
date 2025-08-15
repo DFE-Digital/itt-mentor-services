@@ -14,6 +14,12 @@
         <div class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-2"></div>
         <div class="govuk-!-margin-top-2">
           <p class="govuk-body-s"><strong><%= t(".support_user") %>: </strong><%= claim.support_user_assigned %></p>
+          <% if claim.clawback_requested_by.present? %>
+            <p class="govuk-body-s"><strong><%= "Clawback requested by" %>: </strong><%= claim.clawback_requested_by.full_name %></p>
+          <% end %>
+          <% if claim.clawback_approved_by.present? %>
+            <p class="govuk-body-s"><strong><%= "Clawback approved by" %>: </strong><%= claim.clawback_approved_by.full_name %></p>
+          <% end %>
         </div>
       <% end %>
     </div>

@@ -1,0 +1,11 @@
+en:
+  claims:
+    support:
+      claims:
+        clawbacks:
+          clawback_support_approval:
+            edit:
+              cancel: Cancel
+            update:
+              heading: Clawback approved
+              body: This clawback can now be sent to the Payer.

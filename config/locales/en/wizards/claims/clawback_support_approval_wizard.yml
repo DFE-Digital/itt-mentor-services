@@ -1,0 +1,31 @@
+en:
+  wizards:
+    claims:
+      clawback_support_approval_wizard:
+        approval_step:
+          page_title: Approve clawback - %{mentor_name} - Claim - %{reference}
+          caption: Claim - %{reference}
+          title: Approve clawback - %{mentor_name}
+          continue: Continue
+          approve: Approve
+          original: Original hours claimed
+          reason_clawed_back: Reason for clawback
+          hour: hour
+          original_amount: Original claim amount
+          hours_clawed_back: Hours clawed back
+          clawback_amount: Clawback amount
+          mentor_worked_hours: Mentor worked hours
+          school: School
+          provider: Provider
+          provider_comments: Provider comments
+          school_comments: School comments
+          rate: Hourly rate
+          please_add_reason: If No, please provide a reason
+          confirm_correct: I confirm that the information for this clawback is correct
+        check_your_answers_step:
+          page_title: Check your answers - Approve clawback - Claim - %{reference}
+          caption: Approve clawback - Claim - %{reference}
+          title: Check your answers
+          continue: Continue
+          approved: Approved
+          not_approved: Not approved

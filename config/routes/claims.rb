@@ -169,6 +169,10 @@ scope module: :claims, as: :claims, constraints: {
           get "edit/:claim_id/:mentor_training_id", to: "edit_request_clawback#new", as: :new_edit_request_clawback
           get "edit/:state_key/:claim_id/:mentor_training_id/:step", to: "edit_request_clawback#edit", as: :edit_request_clawback
           put "edit/:state_key/:claim_id/:mentor_training_id/:step", to: "edit_request_clawback#update"
+
+          get "approval/:claim_id", to: "clawbacks/clawback_support_approval#new", as: :new_clawback_support_approval
+          get "approval/:state_key/:claim_id/:step", to: "clawbacks/clawback_support_approval#edit", as: :clawback_support_approval
+          put "approval/:state_key/:claim_id/:step", to: "clawbacks/clawback_support_approval#update"
         end
 
         collection do

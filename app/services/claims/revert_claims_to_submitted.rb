@@ -8,6 +8,8 @@ class Claims::RevertClaimsToSubmitted < ApplicationService
         unpaid_reason: nil,
         payment_in_progress_at: nil,
         sampling_reason: nil,
+        clawback_requested_by_id: nil,
+        clawback_approved_by_id: nil,
       )
       Claims::MentorTraining.update_all(
         hours_clawed_back: nil,
@@ -16,6 +18,7 @@ class Claims::RevertClaimsToSubmitted < ApplicationService
         not_assured: false,
         reason_rejected: nil,
         rejected: false,
+        reason_clawback_rejected: nil,
       )
       Claims::ClaimActivity.destroy_all
     end

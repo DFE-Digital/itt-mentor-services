@@ -22,6 +22,7 @@ shared:
     - reason_not_assured
     - reason_clawed_back
     - hours_clawed_back
+    - reason_clawback_rejected
   :user_memberships:
     - id
     - user_id
@@ -98,6 +99,8 @@ shared:
     - sampling_reason
     - payment_in_progress_at
     - unpaid_reason
+    - clawback_approved_by_id
+    - clawback_requested_by_id
   :samplings:
     - id
     - created_at
