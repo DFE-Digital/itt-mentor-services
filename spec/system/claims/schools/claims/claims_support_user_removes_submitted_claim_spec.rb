@@ -33,7 +33,7 @@ RSpec.describe "Claims support user removes submitted claim", service: :claims, 
       users: [@user_anne],
       eligible_claim_windows: [@claim_window],
       mentors: [@mentor],
-      )
+    )
     @submitted_claim = create(:claim,
                               :submitted,
                               school: @shelbyville_school,
