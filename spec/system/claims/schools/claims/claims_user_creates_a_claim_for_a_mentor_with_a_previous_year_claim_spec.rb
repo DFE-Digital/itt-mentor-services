@@ -4,6 +4,9 @@ RSpec.describe "Claims user creates a claim for a mentor with a previous year cl
   scenario do
     given_a_school_exists_with_a_previous_year_claim
     and_i_am_signed_in
+    then_i_see_the_claims_index_page_with_no_submitted_claims_for_this_year
+
+    when_i_click_on_previous_academic_year
     then_i_see_the_claims_index_page_with_a_submitted_claim
 
     when_i_click_on_add_claim
@@ -38,6 +41,8 @@ RSpec.describe "Claims user creates a claim for a mentor with a previous year cl
     end
     @current_claim_window = build(:claim_window, :current)
     @historic_claim_window = build(:claim_window, :historic)
+    @historic_academic_year_name = @historic_claim_window.academic_year.decorate.card_name
+    @current_academic_year_name = @current_claim_window.academic_year.name
     @date_submitted = @historic_claim_window.starts_on + 1.day
     @shelbyville_school = build(
       :claims_school,
@@ -64,6 +69,18 @@ RSpec.describe "Claims user creates a claim for a mentor with a previous year cl
 
   def and_i_am_signed_in
     sign_in_as(@user_anne)
+  end
+
+  def then_i_see_the_claims_index_page_with_no_submitted_claims_for_this_year
+    expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
+    expect(primary_navigation).to have_current_item("Claims")
+    expect(page).to have_h1("Claims")
+    expect(page).to have_link("Add claim", href: "/schools/#{@shelbyville_school.id}/claims/new")
+    expect(page).to have_paragraph("There are no claims for Shelbyville Elementary in the #{@current_academic_year_name} academic year.")
+  end
+
+  def when_i_click_on_previous_academic_year
+    click_on(@historic_academic_year_name)
   end
 
   def then_i_see_the_claims_index_page_with_a_submitted_claim
