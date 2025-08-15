@@ -430,4 +430,34 @@ describe Claims::ClaimPolicy do
       end
     end
   end
+
+  permissions :destroy? do
+    context "when the claim is in draft status" do
+      it "grants access" do
+        expect(claim_policy).to permit(user, draft_claim)
+      end
+    end
+
+    context "when the claim is invalid provider" do
+      let(:claim) { build(:claim, status: :invalid_provider, created_by: user) }
+
+      it "grants access" do
+        expect(claim_policy).to permit(user, claim)
+      end
+    end
+
+    context "when the claim is submitted and user is a support user" do
+      let(:user) { build(:claims_support_user) }
+
+      it "grants access" do
+        expect(claim_policy).to permit(user, submitted_claim)
+      end
+    end
+
+    context "when the claim is submitted and user is not a support user" do
+      it "denies access" do
+        expect(claim_policy).not_to permit(user, submitted_claim)
+      end
+    end
+  end
 end
