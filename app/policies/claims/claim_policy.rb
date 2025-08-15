@@ -35,7 +35,7 @@ class Claims::ClaimPolicy < Claims::ApplicationPolicy
   end
 
   def destroy?
-    record.draft? || invalid_provider?
+    record.draft? || invalid_provider? || (record.submitted? && user.support_user?)
   end
 
   def confirmation?
