@@ -127,6 +127,22 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
     end
   end
 
+  context "when the claim's status is 'clawback_requires_approval'" do
+    let(:claim) { build(:claim, status: :clawback_requires_approval) }
+
+    it "renders an orange tag" do
+      expect(page).to have_css(".govuk-tag--orange", text: "Clawback requires approval")
+    end
+  end
+
+  context "when the claim's status is 'clawback_rejected'" do
+    let(:claim) { build(:claim, status: :clawback_rejected) }
+
+    it "renders a red tag" do
+      expect(page).to have_css(".govuk-tag--red", text: "Clawback rejected")
+    end
+  end
+
   Claims::Claim.statuses.each_key do |status|
     context "with a claim of status '#{status}'" do
       let(:claim) { build(:claim, status:) }

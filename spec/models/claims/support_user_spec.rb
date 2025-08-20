@@ -26,6 +26,8 @@ RSpec.describe Claims::SupportUser do
   describe "associations" do
     it { is_expected.to have_many(:assigned_claims).class_name("Claims::Claim") }
     it { is_expected.to have_many(:onboarded_schools).class_name("Claims::School") }
+    it { is_expected.to have_many(:clawback_requested_claims).class_name("Claims::Claim") }
+    it { is_expected.to have_many(:clawback_approved_claims).class_name("Claims::Claim") }
   end
 
   context "with validations" do

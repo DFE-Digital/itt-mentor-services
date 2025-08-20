@@ -11,7 +11,7 @@ class Claims::Support::Claims::Clawbacks::ClawbackSupportApprovalController < Cl
     elsif @wizard.next_step.present?
       redirect_to step_path(@wizard.next_step)
     else
-      @wizard.request_approval
+      @wizard.approve_clawback
       @wizard.reset_state
       redirect_to index_path, flash: {
         heading: t(".heading"),
