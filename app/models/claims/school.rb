@@ -81,7 +81,8 @@ class Claims::School < School
   has_many :mentor_memberships
   has_many :mentors, through: :mentor_memberships
   has_many :eligibilities, dependent: :destroy
-  has_many :eligible_claim_windows, through: :eligibilities, source: :claim_window
+  has_many :eligible_academic_years, through: :eligibilities, source: :academic_year
+  has_many :eligible_claim_windows, through: :eligible_academic_years, source: :claim_windows
 
   belongs_to :claims_grant_conditions_accepted_by, class_name: "User", optional: true
 
