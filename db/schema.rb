@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_15_112517) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_20_132738) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -164,6 +164,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_15_112517) do
     t.uuid "school_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "academic_year_id"
+    t.index ["academic_year_id"], name: "index_eligibilities_on_academic_year_id"
     t.index ["claim_window_id"], name: "index_eligibilities_on_claim_window_id"
     t.index ["school_id"], name: "index_eligibilities_on_school_id"
   end
@@ -662,6 +664,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_15_112517) do
   add_foreign_key "claims", "schools"
   add_foreign_key "clawback_claims", "claims"
   add_foreign_key "clawback_claims", "clawbacks"
+  add_foreign_key "eligibilities", "academic_years", validate: false
   add_foreign_key "eligibilities", "claim_windows"
   add_foreign_key "eligibilities", "schools"
   add_foreign_key "hosting_interests", "academic_years"

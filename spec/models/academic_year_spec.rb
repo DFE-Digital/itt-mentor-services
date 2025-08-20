@@ -113,7 +113,6 @@ RSpec.describe AcademicYear, type: :model do
     end
   end
 
-
   describe "#next" do
     let!(:current_academic_year) { described_class.current }
     let(:next_start_year) { current_academic_year.starts_on.year + 1 }

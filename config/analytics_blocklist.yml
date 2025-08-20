@@ -162,6 +162,7 @@ shared:
   :eligibilities:
     - id
     - claim_window_id
+    - academic_year_id
     - school_id
     - created_at
     - updated_at
