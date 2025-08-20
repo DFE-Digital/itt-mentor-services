@@ -15,11 +15,12 @@ RSpec.describe "Claims user views the claims index page when claim window has cl
     @mentor =  build(:claims_mentor)
     @claim_window = build(:claim_window, :current, ends_on: 1.day.ago)
     @academic_year = @claim_window.academic_year
+    @eligibility = build(:eligibility, claim_window: @claim_window, academic_year: @academic_year)
     @shelbyville_school = create(
       :claims_school,
       name: "Shelbyville Elementary",
       users: [@user_anne],
-      eligible_claim_windows: [@claim_window],
+      eligibilities: [@eligibility],
       mentors: [@mentor],
     )
   end

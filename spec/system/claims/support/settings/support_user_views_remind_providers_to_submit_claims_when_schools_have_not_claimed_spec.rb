@@ -21,7 +21,8 @@ RSpec.describe "Support user views remind providers to submit claims when school
     @claim_window = create(:claim_window, :current)
     @provider = create(:claims_provider, name: "Test Provider", accredited: true)
     @claim = create(:claim, claim_window: @claim_window)
-    @school = create(:claims_school, eligible_claim_windows: [@claim_window])
+    @eligibility = build(:eligibility, claim_window: @claim_window)
+    @school = create(:claims_school, eligibilities: [@eligibility])
   end
 
   def when_i_navigate_to_the_settings_index_page

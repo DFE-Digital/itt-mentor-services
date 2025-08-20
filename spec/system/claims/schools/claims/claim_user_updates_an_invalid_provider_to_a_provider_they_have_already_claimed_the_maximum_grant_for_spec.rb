@@ -36,12 +36,13 @@ RSpec.describe "Claim user updates an invalid provider to a provider they have a
     end
     @unaccredited_provider = build(:claims_provider, name: "Unaccredited provider")
     @claim_window = build(:claim_window, :current)
+    @eligibility = build(:eligibility, claim_window: @claim_window)
     @date_completed = @claim_window.starts_on + 1.day
     @shelbyville_school = build(
       :claims_school,
       name: "Shelbyville Elementary",
       users: [@user_anne],
-      eligible_claim_windows: [@claim_window],
+      eligibilities: [@eligibility],
       mentors: [@mentor_james],
     )
     @claim = build(:claim,

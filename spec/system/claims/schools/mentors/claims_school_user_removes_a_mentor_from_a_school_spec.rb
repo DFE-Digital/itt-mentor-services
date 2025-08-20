@@ -23,11 +23,12 @@ RSpec.describe "Claims school user removes a mentor from a school", service: :cl
     @user_anne = build(:claims_user, first_name: "Anne", last_name: "Wilson", email: "anne_wilson@education.gov.uk")
     @mentor_james = build(:claims_mentor, first_name: "James", last_name: "Jameson")
     @claim_window = build(:claim_window, :current)
+    @eligibility = build(:eligibility, claim_window: @claim_window)
     @shelbyville_school = create(
       :claims_school,
       name: "Shelbyville Elementary",
       users: [@user_anne],
-      eligible_claim_windows: [@claim_window],
+      eligibilities: [@eligibility],
       mentors: [@mentor_james],
     )
   end

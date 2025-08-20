@@ -8,11 +8,12 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
           name: "2020 to 2021")
   end
   let!(:claim_window) { create(:claim_window, :current, academic_year:) }
+  let!(:eligibility) { build(:eligibility, claim_window:) }
   let!(:school) do
     create(
       :claims_school,
       region: regions(:inner_london),
-      eligible_claim_windows: [claim_window],
+      eligibilities: [eligibility],
     )
   end
   let!(:mentor1) { create(:claims_mentor, first_name: "Anne", schools: [school]) }

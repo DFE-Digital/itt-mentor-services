@@ -43,6 +43,7 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
 
   def given_an_claim_window_exists
     @claim_window = create(:claim_window, :current)
+    @eligibility = build(:eligibility, claim_window: @claim_window)
     @academic_year = @claim_window.academic_year
   end
 
@@ -56,7 +57,7 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
       name: "London School",
       mentors: [@mentor_1, @mentor_2, @mentor_3],
       region: regions(:inner_london),
-      eligible_claim_windows: [@claim_window],
+      eligibilities: [@eligibility],
     )
   end
 

@@ -45,12 +45,13 @@ RSpec.describe "Claims user edits a draft claim", service: :claims, type: :syste
       provider.provider_email_addresses.build(email_address: "best_practice_network@example.com", primary: true)
     end
     @claim_window = build(:claim_window, :current)
+    @eligibility = build(:eligibility, claim_window: @claim_window)
     @date_completed = @claim_window.starts_on + 1.day
     @shelbyville_school = build(
       :claims_school,
       name: "Shelbyville Elementary",
       users: [@user_anne],
-      eligible_claim_windows: [@claim_window],
+      eligibilities: [@eligibility],
       mentors: [@mentor_james, @mentor_barry],
     )
     @draft_claim = build(:claim,
