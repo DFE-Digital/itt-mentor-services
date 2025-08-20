@@ -13,12 +13,4 @@ class Placements::AcademicYear < AcademicYear
   has_many :placements
   has_many :hosting_interests
   has_many :users, foreign_key: :selected_academic_year_id
-
-  def next
-    Placements::AcademicYear.for_date(starts_on + 1.year)
-  end
-
-  def previous
-    Placements::AcademicYear.for_date(starts_on - 1.year)
-  end
 end
