@@ -69,11 +69,12 @@ RSpec.describe "Claims school user adds mentors to schools", service: :claims, t
     @mentor_barry =  build(:claims_mentor, first_name: "Barry", last_name: "Garlow", trn: "3078146")
     @mentor_sam = build(:claims_mentor, first_name: "Sam", last_name: "Pete")
     @claim_window = build(:claim_window, :current)
+    @eligibility = build(:eligibility, claim_window: @claim_window)
     @shelbyville_school = create(
       :claims_school,
       name: "Shelbyville Elementary",
       users: [@user_anne],
-      eligible_claim_windows: [@claim_window],
+      eligibilities: [@eligibility],
       mentors: [@mentor_james],
     )
   end

@@ -18,8 +18,10 @@ RSpec.describe "Support user views remind schools to submit claims when schools 
   end
 
   def and_schools_have_not_claimed
-    @claim_window = create(:claim_window, :current)
-    @school = create(:claims_school, eligible_claim_windows: [@claim_window])
+    @academic_year = AcademicYear.current
+    @claim_window = build(:claim_window, :current, academic_year: @academic_year)
+    @eligibility = build(:eligibility, claim_window: @claim_window)
+    @school = create(:claims_school, eligibilities: [@eligibility])
   end
 
   def when_i_navigate_to_the_settings_index_page

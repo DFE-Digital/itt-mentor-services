@@ -2,12 +2,13 @@ require "rails_helper"
 
 RSpec.describe "Change claim on check page", :js, service: :claims, type: :system do
   let!(:claim_window) { create(:claim_window, :current) }
+  let!(:eligibility) { create(:eligibility, claim_window:) }
   let!(:school) do
     create(
       :claims_school,
       mentors: [mentor1, mentor2, mentor3],
       region: regions(:inner_london),
-      eligible_claim_windows: [claim_window],
+      eligibilities: [eligibility],
     )
   end
   let!(:colin) do

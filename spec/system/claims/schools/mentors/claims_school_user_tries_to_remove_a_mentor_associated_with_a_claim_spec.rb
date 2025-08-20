@@ -32,12 +32,13 @@ RSpec.describe "Claims school user tries to remove a mentor associated with a cl
     @mentor_barry = build(:claims_mentor, first_name: "Barry", last_name: "Garlow")
     @provider = build(:claims_provider, :best_practice_network)
     @claim_window = build(:claim_window, :current)
+    @eligibility = build(:eligibility, claim_window: @claim_window)
     @date_completed = @claim_window.starts_on + 1.day
     @shelbyville_school = build(
       :claims_school,
       name: "Shelbyville Elementary",
       users: [@user_anne],
-      eligible_claim_windows: [@claim_window],
+      eligibilities: [@eligibility],
       mentors: [@mentor_james, @mentor_barry],
     )
     @draft_claim = build(:claim,

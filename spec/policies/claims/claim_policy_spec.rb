@@ -4,7 +4,7 @@ describe Claims::ClaimPolicy do
   subject(:claim_policy) { described_class }
 
   let(:user) { build(:claims_user) }
-  let(:school) { build(:claims_school, eligible_claim_windows: [current_claim_window]) }
+  let(:school) { create(:claims_school, eligibilities: [eligibility]) }
 
   let(:internal_draft_claim) { build(:claim, school:) }
   let(:draft_claim) { build(:claim, :draft, school:) }
@@ -30,6 +30,7 @@ describe Claims::ClaimPolicy do
 
   let(:claim_window) { Claims::ClaimWindow::Build.call(claim_window_params: { starts_on: 2.days.ago, ends_on: 2.days.from_now }) }
   let(:current_claim_window) { Claims::ClaimWindow.current }
+  let(:eligibility) { build(:eligibility, claim_window: current_claim_window) }
 
   before do
     claim_window.save!(validate: false)
