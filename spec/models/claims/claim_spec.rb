@@ -47,6 +47,9 @@ RSpec.describe Claims::Claim, type: :model do
     it { is_expected.to belong_to(:claim_window) }
     it { is_expected.to belong_to(:support_user).class_name("Claims::SupportUser").optional }
     it { is_expected.to belong_to(:submitted_by).optional }
+    it { is_expected.to belong_to(:clawback_approved_by).class_name("Claims::SupportUser").optional }
+    it { is_expected.to belong_to(:clawback_requested_by).class_name("Claims::SupportUser").optional }
+
     it { is_expected.to have_many(:mentor_trainings).dependent(:destroy) }
     it { is_expected.to have_many(:mentors).through(:mentor_trainings) }
     it { is_expected.to have_many(:provider_sampling_claims).dependent(:destroy) }
@@ -119,6 +122,8 @@ RSpec.describe Claims::Claim, type: :model do
           clawback_in_progress: "clawback_in_progress",
           clawback_complete: "clawback_complete",
           invalid_provider: "invalid_provider",
+          clawback_requires_approval: "clawback_requires_approval",
+          clawback_rejected: "clawback_rejected",
         )
         .backed_by_column_of_type(:enum)
     end
@@ -408,6 +413,22 @@ RSpec.describe Claims::Claim, type: :model do
 
     context "when the claim has status clawback_complete" do
       let(:claim) { create(:claim, status: :clawback_complete) }
+
+      it "returns true" do
+        expect(claim.in_clawback?).to be(true)
+      end
+    end
+
+    context "when the claim has status clawback_requires_approval" do
+      let(:claim) { create(:claim, status: :clawback_requires_approval) }
+
+      it "returns true" do
+        expect(claim.in_clawback?).to be(true)
+      end
+    end
+
+    context "when the claim has status clawback_rejected" do
+      let(:claim) { create(:claim, status: :clawback_rejected) }
 
       it "returns true" do
         expect(claim.in_clawback?).to be(true)

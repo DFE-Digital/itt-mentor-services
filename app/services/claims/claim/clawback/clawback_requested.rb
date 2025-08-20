@@ -17,7 +17,6 @@ class Claims::Claim::Clawback::ClawbackRequested < ApplicationService
         )
       end
 
-      # claim.update!(status: :clawback_requested)
       claim.update!(
         status: :clawback_requires_approval,
         clawback_requested_by: current_user,

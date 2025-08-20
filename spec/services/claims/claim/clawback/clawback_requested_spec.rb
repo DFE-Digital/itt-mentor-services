@@ -2,9 +2,10 @@ require "rails_helper"
 
 describe Claims::Claim::Clawback::ClawbackRequested do
   let!(:claim) { create(:claim, :submitted, status: :sampling_not_approved) }
+  let!(:current_user) { create(:claims_support_user) }
 
   describe "#call" do
-    subject(:call) { described_class.call(claim:, esfa_responses:) }
+    subject(:call) { described_class.call(claim:, esfa_responses:, current_user:) }
 
     context "when given no esfa responses" do
       let(:esfa_responses) { [] }
@@ -12,7 +13,9 @@ describe Claims::Claim::Clawback::ClawbackRequested do
       it "changes to status of the claim to clawback requested" do
         expect { call }.to change(claim, :status)
           .from("sampling_not_approved")
-          .to("clawback_requested")
+          .to("clawback_requires_approval")
+          .and change(claim, :clawback_requested_by_id)
+          .to(current_user.id)
       end
     end
 
@@ -29,7 +32,9 @@ describe Claims::Claim::Clawback::ClawbackRequested do
       it "updates the mentor trainings with the given response" do
         expect { call }.to change(claim, :status)
           .from("sampling_not_approved")
-          .to("clawback_requested")
+          .to("clawback_requires_approval")
+          .and change(claim, :clawback_requested_by_id)
+          .to(current_user.id)
 
         mentor_training_1.reload
         mentor_training_2.reload

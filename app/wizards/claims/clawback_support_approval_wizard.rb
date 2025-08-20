@@ -19,7 +19,7 @@ module Claims
       add_step(CheckYourAnswersStep)
     end
 
-    def request_approval
+    def approve_clawback
       raise "Invalid wizard state" unless valid?
 
       if all_approved?

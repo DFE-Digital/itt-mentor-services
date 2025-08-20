@@ -70,7 +70,7 @@ RSpec.describe Claims::Support::Claim::ActionsComponent, type: :component do
   end
 
   context "when claim status is sampling provider not approved" do
-    let(:claim) { create(:claim, :sampling_provider_not_approved) }
+    let(:claim) { create(:claim, status: :sampling_provider_not_approved) }
 
     it "renders actions" do
       expect(page).to have_element(:div, class: "claim-actions")
@@ -84,7 +84,7 @@ RSpec.describe Claims::Support::Claim::ActionsComponent, type: :component do
   end
 
   context "when claim status is sampling not approved" do
-    let(:claim) { create(:claim, :sampling_not_approved) }
+    let(:claim) { create(:claim, status: :sampling_not_approved) }
 
     it "renders actions" do
       expect(page).to have_element(:div, class: "claim-actions")
@@ -95,7 +95,7 @@ RSpec.describe Claims::Support::Claim::ActionsComponent, type: :component do
   end
 
   context "when claim status is clawback requested" do
-    let(:claim) { create(:claim, :clawback_requested) }
+    let(:claim) { create(:claim, :audit_requested, status: :clawback_requested) }
 
     it "does not renders actions" do
       expect(page).not_to have_element(:div, class: "claim-actions")
@@ -103,7 +103,7 @@ RSpec.describe Claims::Support::Claim::ActionsComponent, type: :component do
   end
 
   context "when claim status is clawback in progress" do
-    let(:claim) { create(:claim, :clawback_in_progress) }
+    let(:claim) { create(:claim, :audit_requested, status: :clawback_in_progress) }
 
     it "does not renders actions" do
       expect(page).not_to have_element(:div, class: "claim-actions")
@@ -111,10 +111,32 @@ RSpec.describe Claims::Support::Claim::ActionsComponent, type: :component do
   end
 
   context "when claim status is clawback complete" do
-    let(:claim) { create(:claim, :clawback_complete) }
+    let(:claim) { create(:claim, :audit_requested, status: :clawback_complete) }
 
     it "does not renders actions" do
       expect(page).not_to have_element(:div, class: "claim-actions")
+    end
+  end
+
+  context "when claim status is clawback requires approval" do
+    let(:claim) { create(:claim, :audit_requested, status: :clawback_requires_approval) }
+
+    it "renders actions" do
+      expect(page).to have_element(:div, class: "claim-actions")
+
+      expect(page).to have_element(:a, text: "Review clawback", class: "govuk-button")
+      expect(page).to have_link("Review clawback", href: "/support/claims/clawbacks/claims/#{claim.id}/approval")
+    end
+  end
+
+  context "when claim status is clawback rejected" do
+    let(:claim) { create(:claim, :audit_requested, status: :clawback_rejected) }
+
+    it "renders actions" do
+      expect(page).to have_element(:div, class: "claim-actions")
+
+      expect(page).to have_element(:a, text: "Request clawback", class: "govuk-button")
+      expect(page).to have_link("Request clawback", href: "/support/claims/clawbacks/claims/new/#{claim.id}")
     end
   end
 end

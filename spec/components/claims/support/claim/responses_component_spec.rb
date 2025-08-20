@@ -413,7 +413,7 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
       end
       let(:mentor_trainings) { [mentor_training_1, mentor_training_2] }
 
-      it "returns true" do
+      it "returns the reasons mentor training was not assured" do
         expect(provider_response).to eq(
           "<ul class=\"govuk-list\"><li>Joe Bloggs: Incorrect number of hours</li><li>Sarah Doe: Invalid mentor</li></ul>",
         )
@@ -460,7 +460,7 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
       end
       let(:mentor_trainings) { [mentor_training_1, mentor_training_2] }
 
-      it "returns true" do
+      it "returns reasons why the mentor trainings were rejected" do
         expect(school_response).to eq(
           "<ul class=\"govuk-list\"><li>Joe Bloggs: Incorrect number of hours</li><li>Sarah Doe: Invalid mentor</li></ul>",
         )
@@ -474,6 +474,165 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
 
       it "returns false" do
         expect(school_response).to eq("")
+      end
+    end
+  end
+
+  describe "#reasons_for_clawback_exist?" do
+    subject(:reasons_for_clawback_exist) do
+      described_class.new(claim:).reasons_for_clawback_exist?
+    end
+
+    let(:claim) do
+      create(:claim,
+             :audit_requested,
+             status: :clawback_requires_approval,
+             mentor_trainings:)
+    end
+    let(:mentor_1) { build(:claims_mentor, first_name: "Joe", last_name: "Bloggs") }
+    let(:mentor_2) { build(:claims_mentor, first_name: "Sarah", last_name: "Doe") }
+
+    context "when the mentor trainings associated with a claim have a reason for being clawed back" do
+      let(:mentor_training_1) do
+        build(:mentor_training,
+              :rejected,
+              mentor: mentor_1,
+              hours_completed: 2,
+              hours_clawed_back: 2,
+              reason_clawed_back: "Mentor did not attend training")
+      end
+      let(:mentor_training_2) do
+        build(:mentor_training,
+              :rejected,
+              mentor: mentor_2,
+              hours_completed: 20,
+              hours_clawed_back: 15,
+              reason_clawed_back: "Too many hours claimed for")
+      end
+      let(:mentor_trainings) { [mentor_training_1, mentor_training_2] }
+
+      it "returns true" do
+        expect(reasons_for_clawback_exist).to be(true)
+      end
+    end
+
+    context "when the mentor trainings associated with a claim do not have reasons for being clawed back" do
+      let(:mentor_training_1) do
+        build(:mentor_training,
+              :rejected,
+              mentor: mentor_1,
+              hours_completed: 2,
+              hours_clawed_back: 2)
+      end
+      let(:mentor_training_2) do
+        build(:mentor_training,
+              :rejected,
+              mentor: mentor_2,
+              hours_completed: 20,
+              hours_clawed_back: 15)
+      end
+      let(:mentor_trainings) { [mentor_training_1, mentor_training_2] }
+
+      it "returns false" do
+        expect(reasons_for_clawback_exist).to be(false)
+      end
+    end
+  end
+
+  describe "#reasons_clawed_back" do
+    subject(:reasons_clawed_back) { described_class.new(claim:).reasons_clawed_back }
+
+    let(:claim) do
+      create(:claim,
+             :audit_requested,
+             status: :clawback_requires_approval,
+             mentor_trainings:)
+    end
+    let(:mentor_1) { build(:claims_mentor, first_name: "Joe", last_name: "Bloggs") }
+    let(:mentor_2) { build(:claims_mentor, first_name: "Sarah", last_name: "Doe") }
+
+    context "when the mentor trainings associated with a claim have a reasons clawed back" do
+      let(:mentor_training_1) do
+        build(:mentor_training,
+              :rejected,
+              mentor: mentor_1,
+              hours_completed: 2,
+              hours_clawed_back: 2,
+              reason_clawed_back: "Mentor did not attend training")
+      end
+      let(:mentor_training_2) do
+        build(:mentor_training,
+              :rejected,
+              mentor: mentor_2,
+              hours_completed: 20,
+              hours_clawed_back: 15,
+              reason_clawed_back: "Too many hours claimed for")
+      end
+      let(:mentor_trainings) { [mentor_training_1, mentor_training_2] }
+
+      it "returns reasons why the mentor trainings were rejected" do
+        expect(reasons_clawed_back).to eq(
+          "<ul class=\"govuk-list\"><li>Joe Bloggs: Mentor did not attend training</li><li>Sarah Doe: Too many hours claimed for</li></ul>",
+        )
+      end
+    end
+
+    context "when the mentor trainings associated with a claim do not have reasons clawed back" do
+      let(:mentor_trainings) do
+        build_list(:mentor_training, 2)
+      end
+
+      it "returns false" do
+        expect(reasons_clawed_back).to eq("")
+      end
+    end
+  end
+
+  describe "#reason_clawback_rejected" do
+    subject(:reason_clawback_rejected) { described_class.new(claim:).reason_clawback_rejected }
+
+    let(:claim) do
+      create(:claim,
+             :audit_requested,
+             status: :clawback_requires_approval,
+             mentor_trainings:)
+    end
+    let(:mentor_1) { build(:claims_mentor, first_name: "Joe", last_name: "Bloggs") }
+    let(:mentor_2) { build(:claims_mentor, first_name: "Sarah", last_name: "Doe") }
+
+    context "when the mentor trainings associated with a claim have a reasons clawed back" do
+      let(:mentor_training_1) do
+        build(:mentor_training,
+              :rejected,
+              mentor: mentor_1,
+              hours_completed: 2,
+              hours_clawed_back: 2,
+              reason_clawback_rejected: "Too many hours clawed back")
+      end
+      let(:mentor_training_2) do
+        build(:mentor_training,
+              :rejected,
+              mentor: mentor_2,
+              hours_completed: 20,
+              hours_clawed_back: 15,
+              reason_clawback_rejected: "Incorrect mentor")
+      end
+      let(:mentor_trainings) { [mentor_training_1, mentor_training_2] }
+
+      it "returns reasons why the mentor trainings were rejected" do
+        expect(reason_clawback_rejected).to eq(
+          "<ul class=\"govuk-list\"><li>Joe Bloggs: Too many hours clawed back</li><li>Sarah Doe: Incorrect mentor</li></ul>",
+        )
+      end
+    end
+
+    context "when the mentor trainings associated with a claim do not have reasons clawed back" do
+      let(:mentor_trainings) do
+        build_list(:mentor_training, 2)
+      end
+
+      it "returns false" do
+        expect(reason_clawback_rejected).to eq("")
       end
     end
   end

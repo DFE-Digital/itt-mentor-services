@@ -17,6 +17,8 @@ RSpec.describe Claims::ClaimHelper do
         "clawback_in_progress",
         "clawback_complete",
         "invalid_provider",
+        "clawback_requires_approval",
+        "clawback_rejected",
       )
     end
   end
