@@ -10,7 +10,7 @@ class Claims::School::OnboardSchoolsJob < ApplicationJob
 
       Claims::Eligibility.find_or_create_by!(
         school:,
-        claim_window:,
+        academic_year:,
       )
     end
   end
@@ -19,11 +19,11 @@ class Claims::School::OnboardSchoolsJob < ApplicationJob
 
   attr_reader :claim_window_id
 
-  def claim_window
+  def academic_year
     if claim_window_id
-      Claims::ClaimWindow.find(claim_window_id)
+      Claims::ClaimWindow.find(claim_window_id).academic_year
     else
-      Claims::ClaimWindow.current
+      Claims::ClaimWindow.current.academic_year
     end
   end
 end

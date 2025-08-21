@@ -8,9 +8,9 @@ RSpec.describe "Claims Reminders", type: :request do
   end
 
   describe "POST /claims/support/claims_reminders/send_schools_not_submitted_claims" do
-    let(:claim_window) { build(:claim_window, :current) }
+    let(:claim_window) { create(:claim_window, :current) }
     let(:next_claim_window) { create(:claim_window, :upcoming) }
-    let(:eligibility) { build(:eligibility, claim_window: claim_window) }
+    let(:eligibility) { build(:eligibility, academic_year: claim_window.academic_year) }
     let(:claims_school) { build(:claims_school, eligibilities: [eligibility]) }
     let(:claims_user) { create(:claims_user, schools: [claims_school]) }
     let(:support_user) { create(:claims_support_user) }

@@ -12,8 +12,8 @@ RSpec.describe "Claims user views the claims index page when mentors are present
   def given_an_eligible_school_exists_with_a_mentor_and_no_claims
     @user_anne = build(:claims_user, first_name: "Anne", last_name: "Wilson", email: "anne_wilson@education.gov.uk")
     @mentor =  build(:claims_mentor)
-    @claim_window = build(:claim_window, :current)
-    @eligibility = build(:eligibility, claim_window: @claim_window)
+    @claim_window = create(:claim_window, :current)
+    @eligibility = build(:eligibility, academic_year: @claim_window.academic_year)
     @shelbyville_school = create(
       :claims_school,
       name: "Shelbyville Elementary",
