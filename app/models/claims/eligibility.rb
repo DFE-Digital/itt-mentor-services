@@ -17,8 +17,6 @@
 #
 
 class Claims::Eligibility < ApplicationRecord
-  # self.ignored_columns = %i[claim_window_id]
-
   belongs_to :school
   belongs_to :claim_window
   belongs_to :academic_year, optional: true

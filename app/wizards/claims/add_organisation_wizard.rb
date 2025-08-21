@@ -34,16 +34,16 @@ module Claims
     end
 
     def create_organisation
-      organisation.eligibilities.build(academic_year:, claim_window:)
+      organisation.eligibilities.build(claim_window:, academic_year:)
       organisation.save!
-    end
-
-    def academic_year
-      @academic_year ||= AcademicYear.current
     end
 
     def claim_window
       @claim_window ||= Claims::ClaimWindow.current
+    end
+
+    def academic_year
+      @academic_year ||= @claim_window.academic_year
     end
 
     private
