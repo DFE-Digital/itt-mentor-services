@@ -26,6 +26,7 @@ describe Claims::Support::ClaimPolicy do
   let(:clawback_requested_claim) { create(:claim, :submitted, status: :clawback_requested) }
   let(:clawback_in_progress_claim) { create(:claim, :submitted, status: :clawback_in_progress) }
   let(:clawback_complete_claim) { create(:claim, :submitted, status: :clawback_complete) }
+  let(:clawback_requires_approval_claim) { create(:claim, :submitted, status: :clawback_requires_approval) }
 
   before do
     Claims::ClaimWindow::Build.call(claim_window_params: { starts_on: 2.days.ago, ends_on: 2.days.from_now }).save!(validate: false)
@@ -529,6 +530,38 @@ describe Claims::Support::ClaimPolicy do
     context "when user is not support user" do
       it "denies access" do
         expect(claim_policy).not_to permit(user, submitted_claim)
+      end
+    end
+  end
+
+  permissions :approve_clawback? do
+    context "when user is not a support user" do
+      it "denies access" do
+        expect(claim_policy).not_to permit(user, clawback_requires_approval_claim)
+      end
+    end
+
+    context "when user is a support user" do
+      context "when the claim does not have the status clawback requires approval" do
+        it "denies access" do
+          expect(claim_policy).not_to permit(support_user, clawback_requested_claim)
+        end
+      end
+
+      context "when the support user is the same user who requested the clawback" do
+        before do
+          clawback_requires_approval_claim.update!(clawback_requested_by: support_user)
+        end
+
+        it "denies access" do
+          expect(claim_policy).not_to permit(support_user, clawback_requires_approval_claim)
+        end
+      end
+
+      context "when the support user is not the same user who requested the clawback" do
+        it "grants access" do
+          expect(claim_policy).to permit(support_user, clawback_requires_approval_claim)
+        end
       end
     end
   end

@@ -15,8 +15,8 @@ en:
           hours_clawed_back: Hours clawed back
           clawback_amount: Clawback amount
           mentor_worked_hours: Mentor worked hours
-          school: School
-          provider: Provider
+          school: School name
+          provider: Provider name
           provider_comments: Provider comments
           school_comments: School comments
           rate: Hourly rate
@@ -29,3 +29,4 @@ en:
           continue: Continue
           approved: Approved
           not_approved: Not approved
+          approval_for: approval for %{mentor_name}

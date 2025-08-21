@@ -7,5 +7,9 @@ en:
             edit:
               cancel: Cancel
             update:
-              heading: Clawback approved
-              body: This clawback can now be sent to the Payer.
+              approved:
+                heading: Clawback approved
+                body: This clawback can now be sent to the Payer.
+              rejected:
+                heading: Clawback rejected
+                body: Please inform %{support_user_name} that this clawback has been rejected.
