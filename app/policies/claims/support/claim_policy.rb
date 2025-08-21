@@ -44,7 +44,6 @@ class Claims::Support::ClaimPolicy < Claims::ApplicationPolicy
     record.clawback_requires_approval? && user.support_user? && record.clawback_requested_by != user
   end
 
-
   private
 
   def current_claim_window?

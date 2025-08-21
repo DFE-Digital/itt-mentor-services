@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Support user approves the clawback requested by another support user",
-  service: :claims,
-  type: :system do
+               service: :claims,
+               type: :system do
   include ActionView::Helpers::TextHelper
 
   scenario do
@@ -42,12 +42,11 @@ RSpec.describe "Support user approves the clawback requested by another support 
     @support_user = create(:claims_support_user, first_name: "Harry", last_name: "Potter")
 
     @claim_one = create(:claim,
-      :audit_requested,
-      status: :clawback_requires_approval,
-      reference: 11_111_111,
-      clawback_requested_by: @support_user,
-      school: @school,
-    )
+                        :audit_requested,
+                        status: :clawback_requires_approval,
+                        reference: 11_111_111,
+                        clawback_requested_by: @support_user,
+                        school: @school)
 
     @john_doe = create(:claims_mentor, first_name: "John", last_name: "Doe", schools: [@school])
 
@@ -145,7 +144,7 @@ RSpec.describe "Support user approves the clawback requested by another support 
     )
     expect(page).to have_summary_list_row(
       "Clawback amount",
-      Money.new(@school.region.funding_available_per_hour * 7, "GBP").format
+      Money.new(@school.region.funding_available_per_hour * 7, "GBP").format,
     )
     expect(page).to have_summary_list_row("Provider name", @claim_one.provider_name)
     expect(page).to have_summary_list_row("Provider comments", "Not assured")
