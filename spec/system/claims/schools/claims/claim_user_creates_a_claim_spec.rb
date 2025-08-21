@@ -57,8 +57,8 @@ RSpec.describe "Claims user creates a claim", :js, service: :claims, type: :syst
     @mentor_barry = build(:claims_mentor, first_name: "Barry", last_name: "Garlow", trn: "8888888")
     @provider = create(:claims_provider, :best_practice_network, postcode: "BR20RL")
     @ineligible_provider = create(:claims_provider, :niot)
-    @claim_window = build(:claim_window, :current)
-    @eligibility = build(:eligibility, claim_window: @claim_window)
+    @claim_window = create(:claim_window, :current)
+    @eligibility = build(:eligibility, academic_year: @claim_window.academic_year)
     @date_completed = @claim_window.starts_on + 1.day
     @shelbyville_school = create(
       :claims_school,

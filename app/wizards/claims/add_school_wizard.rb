@@ -24,7 +24,7 @@ module Claims
       school.update!(claims_service: true, manually_onboarded_by: current_user)
       school.becomes(Claims::School)
         .eligibilities
-        .create!(claim_window:)
+        .create!(academic_year: claim_window.academic_year)
     end
 
     def claim_window

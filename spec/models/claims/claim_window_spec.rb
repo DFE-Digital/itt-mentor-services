@@ -28,9 +28,6 @@ RSpec.describe Claims::ClaimWindow, type: :model do
 
   describe "associations" do
     it { is_expected.to belong_to(:academic_year) }
-
-    it { is_expected.to have_many(:eligibilities).dependent(:destroy) }
-    it { is_expected.to have_many(:eligible_schools).through(:eligibilities) }
   end
 
   describe "validations" do
@@ -150,6 +147,25 @@ RSpec.describe Claims::ClaimWindow, type: :model do
       _another_next_window = create(:claim_window, starts_on: Date.parse("8 August 2024"), ends_on: Date.parse("31 October 2024"), academic_year:)
 
       expect(described_class.next).to eq(next_window)
+    end
+  end
+
+  describe "#eligible_schools" do
+    it "returns schools that are eligible for the claim window" do
+      school1 = create(:claims_school)
+      school2 = create(:claims_school)
+      create(:eligibility, school: school1, academic_year:)
+      create(:eligibility, school: school2, academic_year:)
+
+      expect(claim_window.eligible_schools).to contain_exactly(school1, school2)
+    end
+
+    it "does not return schools that are not eligible for the claim window" do
+      school1 = create(:claims_school)
+      _school2 = create(:claims_school)
+      create(:eligibility, school: school1, academic_year:)
+
+      expect(claim_window.eligible_schools).to contain_exactly(school1)
     end
   end
 end

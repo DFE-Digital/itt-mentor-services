@@ -141,8 +141,8 @@ RSpec.describe Claims::AddOrganisationWizard do
     end
   end
 
-  describe "#claim_window" do
-    subject(:claim_window) { wizard.claim_window }
+  describe "#academic_year" do
+    subject(:academic_year) { wizard.academic_year }
 
     let(:current_claim_window) { create(:claim_window, :current) }
     let(:state) do
@@ -151,8 +151,8 @@ RSpec.describe Claims::AddOrganisationWizard do
       }
     end
 
-    it "returns the current claim window" do
-      expect(claim_window).to eq(current_claim_window)
+    it "returns the academic year for the specified claim window" do
+      expect(academic_year).to eq(current_claim_window.academic_year)
     end
   end
 end

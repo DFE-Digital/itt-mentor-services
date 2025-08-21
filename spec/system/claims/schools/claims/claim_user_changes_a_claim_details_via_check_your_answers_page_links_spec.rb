@@ -58,8 +58,8 @@ RSpec.describe "Claims user changes a claim details via check your answers page 
     @user_anne = build(:claims_user, first_name: "Anne", last_name: "Wilson", email: "anne_wilson@education.gov.uk")
     @mentor_james = build(:claims_mentor, first_name: "James", last_name: "Jameson", trn: "1111111")
     @mentor_barry = build(:claims_mentor, first_name: "Barry", last_name: "Garlow", trn: "8888888")
-    @claim_window = build(:claim_window, :current)
-    @eligibility = build(:eligibility, claim_window: @claim_window)
+    @claim_window = create(:claim_window, :current)
+    @eligibility = build(:eligibility, academic_year: @claim_window.academic_year)
     @provider = create(:claims_provider, :best_practice_network)
     @ineligible_provider = create(:claims_provider, :niot)
     @date_completed = @claim_window.starts_on + 1.day

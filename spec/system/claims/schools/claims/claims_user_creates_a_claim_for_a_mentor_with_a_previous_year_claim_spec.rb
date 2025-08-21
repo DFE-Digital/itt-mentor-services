@@ -41,10 +41,10 @@ RSpec.describe "Claims user creates a claim for a mentor with a previous year cl
     @provider = build(:claims_provider, :best_practice_network) do |provider|
       provider.provider_email_addresses.build(email_address: "best_practice_network@example.com", primary: true)
     end
-    @current_claim_window = build(:claim_window, :current)
+    @current_claim_window = create(:claim_window, :current)
     @historic_claim_window = build(:claim_window, :historic)
     @date_submitted = @historic_claim_window.starts_on + 1.day
-    @eligibility = build(:eligibility, claim_window: @current_claim_window)
+    @eligibility = build(:eligibility, academic_year: @current_claim_window.academic_year)
     @shelbyville_school = build(
       :claims_school,
       name: "Shelbyville Elementary",
