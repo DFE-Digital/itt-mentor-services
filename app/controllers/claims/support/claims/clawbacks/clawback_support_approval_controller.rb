@@ -1,7 +1,7 @@
 class Claims::Support::Claims::Clawbacks::ClawbackSupportApprovalController < Claims::Support::ApplicationController
   include WizardController
-  before_action :skip_authorization
   before_action :set_claim
+  before_action :authorize_claim
   before_action :set_wizard
   helper_method :index_path
 
@@ -13,17 +13,25 @@ class Claims::Support::Claims::Clawbacks::ClawbackSupportApprovalController < Cl
     else
       @wizard.approve_clawback
       @wizard.reset_state
-      redirect_to index_path, flash: {
-        heading: t(".heading"),
-        body: t(".body"),
-      }
+      @claim.reload
+      if @claim.clawback_requested?
+        redirect_to index_path, flash: {
+          heading: t(".approved.heading"),
+          body: t(".approved.body"),
+        }
+      else
+        redirect_to index_path, flash: {
+          heading: t(".rejected.heading"),
+          body: t(".rejected.body", support_user_name: @claim.clawback_requested_by.full_name),
+        }
+      end
     end
   end
 
   private
 
   def set_claim
-    @claim = Claims::Claim.find(params[:claim_id])
+    @claim = Claims::Claim.find(params[:id])
   end
 
   def set_wizard
@@ -37,6 +45,10 @@ class Claims::Support::Claims::Clawbacks::ClawbackSupportApprovalController < Cl
   end
 
   def index_path
-    claims_support_claims_clawbacks_path
+    claims_support_claims_clawback_path(@claim)
+  end
+
+  def authorize_claim
+    authorize @claim, :approve_clawback?
   end
 end

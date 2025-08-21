@@ -172,7 +172,7 @@ scope module: :claims, as: :claims, constraints: {
 
           get "approval", to: "clawbacks/clawback_support_approval#new", as: :new_clawback_support_approval
           get "approval/:state_key/:step", to: "clawbacks/clawback_support_approval#edit", as: :clawback_support_approval
-          put "approval/:state_key:step", to: "clawbacks/clawback_support_approval#update"
+          put "approval/:state_key/:step", to: "clawbacks/clawback_support_approval#update"
         end
 
         collection do

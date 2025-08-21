@@ -91,6 +91,12 @@ RSpec.describe Claims::ClawbackSupportApprovalWizard, type: :model do
         expect(mentor_training.reason_clawback_rejected).to eq("Some reason")
       end
     end
+
+    context "when one of the steps is invalid" do
+      it "returns an error" do
+        expect { approve_clawback }.to raise_error("Invalid wizard state")
+      end
+    end
   end
 
   describe "#step_name_for_approval" do

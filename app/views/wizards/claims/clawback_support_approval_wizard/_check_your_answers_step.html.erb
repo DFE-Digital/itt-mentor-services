@@ -23,7 +23,7 @@
                                href: step_path(
                                  current_step.step_name_for_approval(mentor_training),
                                ),
-                               visually_hidden_text: mentor_training.mentor_full_name,
+                               visually_hidden_text: t(".approval_for", mentor_name: mentor_training.mentor_full_name),
                                html_attributes: {
                                  class: "govuk-link--no-visited-state",
                                }) %>
