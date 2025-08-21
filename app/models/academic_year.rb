@@ -55,4 +55,12 @@ class AcademicYear < ApplicationRecord
   def current?
     self == self.class.current
   end
+
+  def next
+    self.class.for_date(starts_on + 1.year)
+  end
+
+  def previous
+    self.class.for_date(starts_on - 1.year)
+  end
 end

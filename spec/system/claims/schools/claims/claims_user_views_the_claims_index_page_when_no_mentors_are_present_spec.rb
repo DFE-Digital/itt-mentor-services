@@ -12,8 +12,7 @@ RSpec.describe "Claims user views the claims index page when no mentors are pres
 
   def given_an_eligible_school_exists_with_no_mentors_or_internal_draft_claims
     @user_anne = build(:claims_user, first_name: "Anne", last_name: "Wilson", email: "anne_wilson@education.gov.uk")
-    @academic_year = AcademicYear.current
-    @claim_window = build(:claim_window, :current, academic_year: @academic_year)
+    @claim_window = build(:claim_window, :current)
     @eligibility = build(:eligibility, claim_window: @claim_window)
     @shelbyville_school = create(
       :claims_school,
