@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "View a schools claims", service: :claims, type: :system do
-  let!(:school) { create(:school, :claims).becomes(Claims::School) }
+  let!(:school) { create(:school, :claims, name: "Hogwarts").becomes(Claims::School) }
   let!(:another_school) { create(:school, :claims).becomes(Claims::School) }
 
   let!(:colin) { create(:claims_support_user, :colin) }
@@ -33,7 +33,7 @@ RSpec.describe "View a schools claims", service: :claims, type: :system do
   end
 
   def when_i_visit_the_claims_support_school_claims_page
-    click_on school.name
+    click_on "Hogwarts"
   end
 
   def i_see_a_list_of_the_schools_claims
