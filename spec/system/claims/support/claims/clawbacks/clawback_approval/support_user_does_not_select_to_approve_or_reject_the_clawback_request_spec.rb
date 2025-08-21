@@ -118,10 +118,10 @@ RSpec.describe "Support user does not select to approve or reject the clawback r
 
   def then_i_see_the_clawback_approval_form_for_john_doe
     expect(page).to have_title(
-      "Approve clawback - John Doe - Claim - 11111111 - Claim funding for mentor training - GOV.UK",
+      "Review clawback - John Doe - Claim - 11111111 - Claim funding for mentor training - GOV.UK",
     )
     expect(page).to have_span_caption("Claim - 11111111")
-    expect(page).to have_h1("Approve clawback - John Doe")
+    expect(page).to have_h1("Review clawback - John Doe")
 
     expect(page).to have_summary_list_row("Original hours claimed", "20 hours")
     expect(page).to have_summary_list_row("Mentor worked hours", "13 hours")

@@ -3,9 +3,9 @@ en:
     claims:
       clawback_support_approval_wizard:
         approval_step:
-          page_title: Approve clawback - %{mentor_name} - Claim - %{reference}
+          page_title: Review clawback - %{mentor_name} - Claim - %{reference}
           caption: Claim - %{reference}
-          title: Approve clawback - %{mentor_name}
+          title: Review clawback - %{mentor_name}
           continue: Continue
           approve: Approve
           original: Original hours claimed
@@ -23,8 +23,8 @@ en:
           please_add_reason: If No, please provide a reason
           confirm_correct: I confirm that the information for this clawback is correct
         check_your_answers_step:
-          page_title: Check your answers - Approve clawback - Claim - %{reference}
-          caption: Approve clawback - Claim - %{reference}
+          page_title: Check your answers - Review clawback - Claim - %{reference}
+          caption: Review clawback - Claim - %{reference}
           title: Check your answers
           continue: Continue
           approved: Approved

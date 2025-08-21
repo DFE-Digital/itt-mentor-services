@@ -128,10 +128,10 @@ RSpec.describe "Support user rejects the clawback requested by another support u
 
   def then_i_see_the_clawback_approval_form_for_john_doe
     expect(page).to have_title(
-      "Approve clawback - John Doe - Claim - 11111111 - Claim funding for mentor training - GOV.UK",
+      "Review clawback - John Doe - Claim - 11111111 - Claim funding for mentor training - GOV.UK",
     )
     expect(page).to have_span_caption("Claim - 11111111")
-    expect(page).to have_h1("Approve clawback - John Doe")
+    expect(page).to have_h1("Review clawback - John Doe")
 
     expect(page).to have_summary_list_row("Original hours claimed", "20 hours")
     expect(page).to have_summary_list_row("Mentor worked hours", "13 hours")
@@ -181,9 +181,9 @@ RSpec.describe "Support user rejects the clawback requested by another support u
 
   def then_i_see_the_check_your_answers_page
     expect(page).to have_title(
-      "Check your answers - Approve clawback - Claim - 11111111 - Claim funding for mentor training - GOV.UK",
+      "Check your answers - Review clawback - Claim - 11111111 - Claim funding for mentor training - GOV.UK",
     )
-    expect(page).to have_span_caption("Approve clawback - Claim - 11111111")
+    expect(page).to have_span_caption("Review clawback - Claim - 11111111")
     expect(page).to have_h1("Check your answers")
 
     expect(page).to have_summary_list_row("John Doe", "Not approved")
