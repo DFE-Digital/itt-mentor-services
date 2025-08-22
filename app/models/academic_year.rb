@@ -11,6 +11,8 @@
 #
 class AcademicYear < ApplicationRecord
   has_many :claim_windows, class_name: "Claims::ClaimWindow"
+  has_many :eligibilities, class_name: "Claims::Eligibility"
+  has_many :eligible_schools, through: :eligibilities, source: :school
 
   validates :name, presence: true
   validates :starts_on, presence: true

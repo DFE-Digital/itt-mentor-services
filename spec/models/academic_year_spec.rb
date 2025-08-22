@@ -12,6 +12,12 @@
 require "rails_helper"
 
 RSpec.describe AcademicYear, type: :model do
+  describe "associations" do
+    it { is_expected.to have_many(:claim_windows).class_name("Claims::ClaimWindow") }
+    it { is_expected.to have_many(:eligibilities).class_name("Claims::Eligibility") }
+    it { is_expected.to have_many(:eligible_schools).through(:eligibilities).source(:school) }
+  end
+
   describe "with validations" do
     subject(:academic_year) do
       build(:academic_year,
