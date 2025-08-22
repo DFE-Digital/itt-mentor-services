@@ -34,6 +34,7 @@ class Claims::ClaimWindow < ApplicationRecord
   validate :does_not_overlap_another_claim_window
 
   delegate :name, :starts_on, :ends_on, to: :academic_year, prefix: true
+  delegate :eligible_schools, to: :academic_year, allow_nil: true
   delegate :past?, to: :ends_on
   delegate :future?, to: :starts_on
 
@@ -57,11 +58,6 @@ class Claims::ClaimWindow < ApplicationRecord
 
   def self.next
     upcoming.first
-  end
-
-  def eligible_schools
-    eligible_school_ids = Claims::Eligibility.where(academic_year:).select(:school_id)
-    Claims::School.where(id: eligible_school_ids)
   end
 
   private
