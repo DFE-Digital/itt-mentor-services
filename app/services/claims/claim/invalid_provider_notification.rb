@@ -1,6 +1,7 @@
 class Claims::Claim::InvalidProviderNotification < ApplicationService
   def call
-    created_by_ids = Claims::Claim.where(status: :invalid_provider).select(:created_by_id)
+    claim_window_ids_for_academic_year = AcademicYear.current.claim_windows.pluck(:id)
+    created_by_ids = Claims::Claim.where(claim_window_id: claim_window_ids_for_academic_year, status: :invalid_provider).select(:created_by_id)
     users_to_notify = Claims::User.where(id: created_by_ids).distinct
 
     return if users_to_notify.empty?

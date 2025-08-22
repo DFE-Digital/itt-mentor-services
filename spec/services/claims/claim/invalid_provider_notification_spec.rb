@@ -84,5 +84,42 @@ RSpec.describe Claims::Claim::InvalidProviderNotification, type: :service do
         end
       end
     end
+
+    context "when there are invalid claims in previous academic years" do
+      let(:current_academic_year) { create(:academic_year, :current) }
+      let(:previous_academic_year) { create(:academic_year, :historic) }
+
+      let(:current_claim_window) { create(:claim_window, :current) }
+      let(:older_claim_window_in_current_academic_year) { create(:claim_window, starts_on: 4.months.ago, ends_on: 3.months.ago, academic_year: current_academic_year) }
+      let(:historic_claim_window) { create(:claim_window, :historic) }
+
+      before do
+        allow(Claims::UserMailer).to receive(:claims_assigned_to_invalid_provider)
+          .with(user).and_return(instance_double(ActionMailer::MessageDelivery, deliver_later: true))
+        allow(Claims::UserMailer).to receive(:claims_assigned_to_invalid_provider)
+          .with(other_user).and_return(instance_double(ActionMailer::MessageDelivery, deliver_later: true))
+      end
+
+      it "only notifies users with invalid-provider claims in claim windows for the current academic_year" do
+        create(:claim, created_by: user, status: :invalid_provider, claim_window: current_claim_window)
+        create(:claim, created_by: user, status: :invalid_provider, claim_window: historic_claim_window)
+
+        create(:claim, created_by: other_user, status: :invalid_provider, claim_window: historic_claim_window)
+
+        described_class.call
+
+        expect(Claims::UserMailer).to have_received(:claims_assigned_to_invalid_provider).with(user)
+        expect(Claims::UserMailer).not_to have_received(:claims_assigned_to_invalid_provider).with(other_user)
+      end
+
+      it "deduplicates notifications per user even when multiple claim windows exist in the same academic year" do
+        create(:claim, created_by: user, status: :invalid_provider, claim_window: current_claim_window)
+        create(:claim, created_by: user, status: :invalid_provider, claim_window: older_claim_window_in_current_academic_year)
+
+        described_class.call
+
+        expect(Claims::UserMailer).to have_received(:claims_assigned_to_invalid_provider).with(user).once
+      end
+    end
   end
 end

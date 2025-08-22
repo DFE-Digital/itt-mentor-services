@@ -48,6 +48,11 @@ trim_expired_sessions:
   description: "Trim old sessions from the database"
 
 send_claims_slack_daily_roundup:
-    cron: "0 16 * * *" # Every day at 16:00
-    class: "Claims::Slack::DailyRoundupJob"
-    description: "Sends a daily roundup Slack message"
+  cron: "0 16 * * *" # Every day at 16:00
+  class: "Claims::Slack::DailyRoundupJob"
+  description: "Sends a daily roundup Slack message"
+
+notify_claims_users_they_have_invalid_provider_claims:
+  cron: "0 9 * * MON" # Every monday at 9:00
+  class: "Claims::User::NotifyUsersOfInvalidProviderClaimsJob"
+  description: "Reminds users to address claims with invalid providers"
