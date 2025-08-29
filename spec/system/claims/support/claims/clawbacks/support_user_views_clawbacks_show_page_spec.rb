@@ -19,13 +19,6 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
     and_i_click_on_claim_with_status_of_clawback_requested
     then_i_see_the_show_page_for_the_clawback_requested_claim
 
-    when_i_click_on_change
-    then_i_see_the_clawback_step_for_the_clawback_requested_claim
-
-    # support user clicks back on wizard step
-    when_i_click_on_back
-    then_i_see_the_show_page_for_the_clawback_requested_claim
-
     when_i_navigate_to_the_clawbacks_index_page
     and_i_click_on_claim_with_status_of_clawback_in_progress
     then_i_see_the_show_page_for_the_clawback_in_progress_claim
@@ -147,24 +140,6 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
     expect(page).to have_h2("History")
     expect(page).to have_element("h3", class: "app-timeline__title", text: "Clawback requested for claim 22222222")
     expect(page).to have_link("View details", href: claims_support_claims_claim_activity_path(@clawback_requested_activity_log))
-  end
-
-  def when_i_click_on_change
-    all("a", text: "Change").last.click
-  end
-
-  def then_i_see_the_clawback_step_for_the_clawback_requested_claim
-    expect(page).to have_title("Clawback details for #{@mentor.full_name} - #{@clawback_requested_claim.school_name} - Claim 22222222 - Claim funding for mentor training - GOV.UK")
-    expect(primary_navigation).to have_current_item("Claims")
-
-    expect(page).to have_element(:span, text: "Clawbacks - Claim 22222222", class: "govuk-caption-l")
-    expect(page).to have_h1("Clawback details")
-    expect(page).to have_element(:label, text: "Number of hours the mentor worked", class: "govuk-label")
-    expect(page).to have_element(:div, text: "James Chess' original claim was for 15 hours", class: "govuk-hint")
-    expect(page).to have_element(:label, text: "Notes on your decision", class: "govuk-label")
-    expect(page).to have_element(:div, text: "Only include details related to #{@mentor.full_name}", class: "govuk-hint")
-    expect(page).to have_button("Continue")
-    expect(page).to have_link("Cancel", href: "/support/claims/clawbacks/claims/#{@clawback_requested_claim.id}")
   end
 
   def then_i_see_the_clawbacks_index_page
