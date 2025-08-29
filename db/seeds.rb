@@ -3,8 +3,9 @@ return unless Rails.env.development? || HostingEnvironment.env.review?
 
 def create_claim(school:, provider:, created_by:, reference:, status:)
   claim_window = Claims::ClaimWindow.current
+  academic_year = claim_window.academic_year
 
-  Claims::Eligibility.find_or_create_by!(school:, claim_window:)
+  Claims::Eligibility.find_or_create_by!(school:, academic_year:)
   return unless mentor_remaining_hours(school:, provider:).any?
 
   claim = Claims::Claim.create!(
