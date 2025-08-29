@@ -33,3 +33,24 @@ en:
           information_shared_with_school: This information will be shared with %{school_name}.
           original: Original hours claimed
           hour: hour
+          notice: No clawback required
+          no_hours_clawed_back: This mentor will not have any hours clawed back
+        no_clawback_required_step:
+          page_title: No clawback required - %{school_name} - Claim %{reference}
+          title: No clawback required
+          total_title: Total clawback
+          clawback_details: Clawback details
+          rate: Hourly rate
+          number_of_hours: Hours the mentor worked
+          submit: Move claim to paid
+          original_claim: Original claim
+          amount: Amount
+          there_are_no_hours_to_clawback: You have indicated that the original claim was correct and that all hours claimed for were worked. As there are no hours to clawback, this claim will move back to the paid status.
+          hour: hour
+          hours_clawed_back: Hours clawed back
+          clawback_amount: Clawback amount
+          reason: Notes on your decision
+          change: Change
+          notice: No clawback required
+          no_hours_clawed_back: This mentor will not have any hours clawed back
+          original: Original hours claimed

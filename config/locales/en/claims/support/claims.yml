@@ -50,6 +50,9 @@ en:
           view_all_files: View all files
           view_details: View details
         details:
+          mentor_training_title:
+            zero: "%{mentor_name} — no clawback required"
+            other: "%{mentor_name}"
           original: Original hours claimed
           clawed_back: Amount clawed back
           reason_clawed_back: Reason for clawback
@@ -73,3 +76,5 @@ en:
           adjusted_total: Adjusted grant funding total
           mentor_worked_hours: Mentor worked hours
           rate: Hourly rate
+          notice: No clawback required
+          no_hours_clawed_back: This mentor will not have any hours clawed back
