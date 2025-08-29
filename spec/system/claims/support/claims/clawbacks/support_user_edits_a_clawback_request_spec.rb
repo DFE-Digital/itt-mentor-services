@@ -35,7 +35,7 @@ RSpec.describe "Support user edits a clawback request on a claim", service: :cla
   def given_claims_exist
     @claim_one = create(:claim,
                         :submitted,
-                        status: :clawback_requested,
+                        status: :clawback_requires_approval,
                         reference: 11_111_111)
 
     @john_doe = create(:claims_mentor, first_name: "John", last_name: "Doe")
@@ -70,7 +70,7 @@ RSpec.describe "Support user edits a clawback request on a claim", service: :cla
     expect(primary_navigation).to have_current_item("Claims")
     expect(page).to have_element(:span, text: "Clawbacks - Claim 11111111", class: "govuk-caption-l")
     expect(page).to have_h1(@claim_one.school_name)
-    expect(page).to have_element(:strong, text: "Ready for clawback", class: "govuk-tag govuk-tag--turquoise")
+    expect(page).to have_element(:strong, text: "Clawback requires approval", class: "govuk-tag govuk-tag--orange")
     expect(page).not_to have_link("Request clawback", href: "/support/claims/clawbacks/claims/new/#{@claim_one.id}", class: "govuk-link govuk-button")
     expect(page).to have_summary_list_row("School", @claim_one.school_name)
     expect(page).to have_summary_list_row("Academic year", @claim_one.academic_year_name)
@@ -127,7 +127,7 @@ RSpec.describe "Support user edits a clawback request on a claim", service: :cla
   end
 
   def then_i_see_a_validation_error_for_entering_too_many_hours
-    expect(page).to have_validation_error("must be less than #{@john_doe_training.hours_completed}")
+    expect(page).to have_validation_error("must be less than or equal to #{@john_doe_training.hours_completed}")
   end
 
   def when_i_enter_a_valid_number_of_hours
