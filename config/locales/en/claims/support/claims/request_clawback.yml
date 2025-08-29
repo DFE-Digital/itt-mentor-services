@@ -4,4 +4,5 @@ en:
       claims:
         request_clawback:
           update:
-            success_heading: Clawback requested
+            clawback_requested_success: Clawback requested
+            no_clawback_success: Claim has been moved to the paid status

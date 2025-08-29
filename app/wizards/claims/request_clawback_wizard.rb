@@ -14,11 +14,27 @@ module Claims
                  { mentor_training_id: mentor_training.id },
                  :mentor_training_id)
       end
-      add_step(CheckYourAnswersStep)
+      if mentor_trainings_have_clawback_hours?
+        add_step(CheckYourAnswersStep)
+      else
+        add_step(NoClawbackRequiredStep)
+      end
     end
 
     def mentor_trainings
       @mentor_trainings ||= claim.mentor_trainings.not_assured.order_by_mentor_full_name
+    end
+
+    def mentor_trainings_have_clawback_hours?
+      esfa_responses_for_mentor_trainings.sum { |mt| mt[:hours_clawed_back] }.positive?
+    end
+
+    def success_message
+      if mentor_trainings_have_clawback_hours?
+        I18n.t("claims.support.claims.request_clawback.update.clawback_requested_success")
+      else
+        I18n.t("claims.support.claims.request_clawback.update.no_clawback_success")
+      end
     end
 
     def step_name_for_mentor_training_clawback(mentor_training)
@@ -36,9 +52,17 @@ module Claims
       end
     end
 
-    def submit_esfa_responses
+    def update_claim
       raise "Invalid wizard state" unless valid?
 
+      if mentor_trainings_have_clawback_hours?
+        submit_esfa_responses
+      else
+        Claims::Claim::Clawback::ClawbackNotRequired.call(claim:, esfa_responses: esfa_responses_for_mentor_trainings)
+      end
+    end
+
+    def submit_esfa_responses
       Claims::Claim::Clawback::ClawbackRequested.call(
         claim:,
         esfa_responses: esfa_responses_for_mentor_trainings,

@@ -57,7 +57,7 @@ RSpec.describe Claims::RequestClawbackWizard do
     end
   end
 
-  describe "#submit_esfa_responses" do
+  describe "#update_claim" do
     let(:esfa_responses) { [{ id: mentor_training.id, hours_clawed_back: 15, reason_for_clawback: "Some reason" }] }
 
     before do
@@ -78,12 +78,12 @@ RSpec.describe Claims::RequestClawbackWizard do
       end
 
       it "calls the ClawbackRequested service with the claim and payer responses" do
-        wizard.submit_esfa_responses
+        wizard.update_claim
         expect(Claims::Claim::Clawback::ClawbackRequested).to have_received(:call).with(claim:, esfa_responses:, current_user:)
       end
 
       it "creates a claim activity record" do
-        expect { wizard.submit_esfa_responses }.to change(Claims::ClaimActivity, :count).by(1)
+        expect { wizard.update_claim }.to change(Claims::ClaimActivity, :count).by(1)
         expect(Claims::UserMailer).to have_received(:claim_requires_clawback).with(user, claim).once
         expect(Claims::ClaimActivity.last.action).to eq("clawback_requested")
         expect(Claims::ClaimActivity.last.user).to eq(current_user)
@@ -93,7 +93,7 @@ RSpec.describe Claims::RequestClawbackWizard do
 
     context "when the wizard is invalid" do
       it "raises an error" do
-        expect { wizard.submit_esfa_responses }.to raise_error("Invalid wizard state")
+        expect { wizard.update_claim }.to raise_error("Invalid wizard state")
       end
     end
   end

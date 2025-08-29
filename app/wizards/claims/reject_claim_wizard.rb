@@ -48,6 +48,7 @@ module Claims
           id: mentor_training.id,
           rejected: true,
           reason_rejected: school_response_step.reason_rejected,
+          clawback_requested: true,
         }
       end
     end

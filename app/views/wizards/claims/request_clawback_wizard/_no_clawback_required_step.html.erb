@@ -7,8 +7,6 @@
 
       <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
-      <p class="govuk-body"><%= t(".information_shared_with_school", school_name: @claim.school_name) %></p>
-
       <h2 class="govuk-heading-m"><%= t(".original_claim") %></h2>
       <%= govuk_summary_list(html_attributes: { id: "claim-totals" }) do |summary_list| %>
         <% summary_list.with_row do |row| %>
@@ -90,6 +88,8 @@
           <% end %>
         </div>
       <% end %>
+
+      <%= govuk_warning_text text: t(".there_are_no_hours_to_clawback") %>
 
       <%= f.govuk_submit t(".submit") %>
     <% end %>
