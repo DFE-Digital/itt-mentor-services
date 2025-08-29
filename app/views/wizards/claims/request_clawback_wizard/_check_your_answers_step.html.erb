@@ -78,7 +78,7 @@
                                    visually_hidden_text: t(".reason"),
                                    classes: ["govuk-link--no-visited-state"]) %>
               <% end %>
-              <% if current_step.mentor_training_clawback_hours(mentor_training) == 0 %>
+              <% if current_step.mentor_training_clawback_hours(mentor_training).zero? %>
                 <% summary_list.with_row do |row| %>
                   <% row.with_key(text: t(".notice")) %>
                   <% row.with_value do %>
