@@ -17,10 +17,10 @@ class Claims::Support::Claims::RequestClawbackController < Claims::ApplicationCo
     elsif @wizard.next_step.present?
       redirect_to step_path(@wizard.next_step)
     else
-      @wizard.submit_esfa_responses
+      @wizard.update_claim
       @wizard.reset_state
       redirect_to index_path, flash: {
-        heading: t(".success_heading"),
+        heading: @wizard.success_message,
       }
     end
   end

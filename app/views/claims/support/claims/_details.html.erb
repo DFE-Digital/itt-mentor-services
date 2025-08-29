@@ -85,7 +85,7 @@
   <% if claim.in_clawback? %>
     <% claim.mentor_trainings.not_assured.order_by_mentor_full_name.each do |mentor_training| %>
       <div id="mentor-training-<%= mentor_training.id %>">
-        <%= govuk_summary_card(title: mentor_training.mentor.full_name) do |card| %>
+        <%= govuk_summary_card(title: t(".mentor_training_title", mentor_name: mentor_training.mentor.full_name, count: mentor_training.hours_clawed_back)) do |card| %>
           <% card.with_summary_list do |summary_list| %>
             <% summary_list.with_row do |row| %>
               <% row.with_key(text: t(".original")) %>
@@ -95,7 +95,7 @@
             <% summary_list.with_row do |row| %>
               <% row.with_key(text: t(".mentor_worked_hours")) %>
               <% row.with_value(text: pluralize(mentor_training.corrected_hours_completed, t(".hour"))) %>
-              <% if policy(claim).edit? || claim.clawback_requested? %>
+              <% if policy(claim).edit? || claim.clawback_requires_approval? %>
                 <% row.with_action(text: t("change"),
                                    visually_hidden_text: "#{mentor_training.mentor.full_name} #{t(".mentor_worked_hours")}",
                                    href: new_edit_request_clawback_claims_support_claims_clawback_path(
@@ -126,7 +126,7 @@
             <% summary_list.with_row do |row| %>
               <% row.with_key(text: t(".reason_clawed_back")) %>
               <% row.with_value(text: mentor_training.reason_clawed_back) %>
-              <% if policy(claim).edit? || claim.clawback_requested? %>
+              <% if policy(claim).edit? || claim.clawback_requires_approval? %>
                 <% row.with_action(text: t("change"),
                                    visually_hidden_text: "#{mentor_training.mentor.full_name} #{t(".reason_clawed_back")}",
                                    href: new_edit_request_clawback_claims_support_claims_clawback_path(
@@ -136,6 +136,14 @@
                                    html_attributes: {
                                      class: "govuk-link--no-visited-state",
                                    }) %>
+              <% end %>
+            <% end %>
+            <% unless mentor_training.hours_clawed_back.positive? %>
+              <% summary_list.with_row do |row| %>
+                <% row.with_key(text: t(".notice")) %>
+                <% row.with_value do %>
+                  <%= govuk_warning_text text: t(".no_hours_clawed_back") %>
+                <% end %>
               <% end %>
             <% end %>
           <% end %>
