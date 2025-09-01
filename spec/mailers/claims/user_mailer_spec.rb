@@ -359,7 +359,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
 
     it "sends the invalid provider email" do
       expect(claims_assigned_to_invalid_provider_email.to).to contain_exactly(user.email)
-      expect(claims_assigned_to_invalid_provider_email.subject).to eq("Action by 25 July: Change your ITT mentor funding claim to ensure it gets paid")
+      expect(claims_assigned_to_invalid_provider_email.subject).to eq("Action by 5 December: Change your ITT mentor funding claim to ensure it gets paid")
       expect(claims_assigned_to_invalid_provider_email.body.to_s.squish).to eq(<<~EMAIL.squish)
         Dear Joe
 
@@ -382,7 +382,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
         5. Enter your accredited provider's name in the search box
         6. Click ‘Continue’
 
-        ## Deadline: Friday 25 July 2025
+        ## Deadline: Friday 5 December 2025
 
         Please update your provider information by this date to avoid delays in payment.
 

@@ -14,17 +14,20 @@ RSpec.describe "Support user views manually onboarded schools", service: :claims
   private
 
   def given_manually_onboarded_schools_exist
-    @current_claim_window = create(:claim_window, :current)
-    @previous_claim_window = create(:claim_window, :historic)
+    @current_academic_year = AcademicYear.current
+    @previous_academic_year = AcademicYear.current.previous
+
+    @current_claim_window = create(:claim_window, :current, academic_year: @current_academic_year)
+    @previous_claim_window = create(:claim_window, :historic, academic_year: @previous_academic_year)
 
     @london_onboarding_user = create(:claims_support_user, first_name: "London", last_name: "Onboarder User", email: "london_onboarder@education.gov.uk")
     @london_school = create(:claims_school, name: "London School", urn: 111_111, manually_onboarded_by: @london_onboarding_user)
-    create(:eligibility, school: @london_school, claim_window: @current_claim_window)
-    create(:eligibility, school: @london_school, claim_window: @previous_claim_window)
+    create(:eligibility, school: @london_school, academic_year: @current_academic_year)
+    create(:eligibility, school: @london_school, academic_year: @previous_academic_year)
 
     @guildford_onboarding_user = create(:claims_support_user, first_name: "Guildford", last_name: "Onboarder User", email: "guildford_onboarder@education.gov.uk")
     @guildford_school = create(:claims_school, name: "Guildford School", urn: 222_222, manually_onboarded_by: @guildford_onboarding_user)
-    create(:eligibility, school: @guildford_school, claim_window: @current_claim_window)
+    create(:eligibility, school: @guildford_school, academic_year: @current_academic_year)
   end
 
   def and_i_am_signed_in
