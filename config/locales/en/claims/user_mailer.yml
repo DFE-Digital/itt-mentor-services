@@ -177,7 +177,7 @@ en:
           %{service_name} team
 
       claims_assigned_to_invalid_provider:
-        subject: "Action by 25 July: Change your ITT mentor funding claim to ensure it gets paid"
+        subject: "Action by 5 December: Change your ITT mentor funding claim to ensure it gets paid"
         body: |
           Dear %{user_name}
   
@@ -200,7 +200,7 @@ en:
           5. Enter your accredited provider's name in the search box
           6. Click ‘Continue’
         
-          ## Deadline: Friday 25 July 2025
+          ## Deadline: Friday 5 December 2025
           
           Please update your provider information by this date to avoid delays in payment.
         

@@ -24,7 +24,7 @@ class Claims::UserMailerPreview < ActionMailer::Preview
   end
 
   def claims_assigned_to_invalid_provider
-    Claims::UserMailer.claims_assigned_to_invalid_provider(user, [claim, claim, claim])
+    Claims::UserMailer.claims_assigned_to_invalid_provider(user)
   end
 
   private

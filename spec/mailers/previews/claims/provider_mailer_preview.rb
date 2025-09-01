@@ -20,7 +20,7 @@ class Claims::ProviderMailerPreview < ActionMailer::Preview
   end
 
   def email_address_record
-    @email_address_record ||= Claims::ProviderEmailAddress.new(
+    @email_address_record ||= ProviderEmailAddress.new(
       id: stubbed_id,
       provider:,
       email_address: "test.provider@example.com",
