@@ -135,7 +135,7 @@ RSpec.describe "Provider user views a placement for a partner school",
     expect(page).to have_element(:strong, class: "govuk-tag govuk-tag--blue", text: "Assigned to you")
 
     expect(page).to have_h2("Placement dates")
-    expect(page).to have_summary_list_row("Academic year", "This year (2024 to 2025)")
+    expect(page).to have_summary_list_row("Academic year", "This year (#{AcademicYear.current.name})")
     expect(page).to have_summary_list_row("Expected date", "Any time in the academic year")
 
     expect(page).to have_h2("Placement contact")

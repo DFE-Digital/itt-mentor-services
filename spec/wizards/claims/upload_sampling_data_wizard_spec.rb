@@ -10,10 +10,7 @@ RSpec.describe Claims::UploadSamplingDataWizard do
     AcademicYear.for_date(Date.current) || create(:academic_year, :current)
   end
   let(:current_claim_window) do
-    create(:claim_window,
-           starts_on: current_academic_year.starts_on + 1.day,
-           ends_on: current_academic_year.starts_on + 1.month,
-           academic_year: current_academic_year)
+    create(:claim_window, :current, academic_year: current_academic_year)
   end
   let(:current_year_paid_claim) do
     create(:claim, :submitted,
@@ -95,15 +92,6 @@ RSpec.describe Claims::UploadSamplingDataWizard do
   describe "#paid_claims" do
     subject(:paid_claims) { wizard.paid_claims }
 
-    let(:current_academic_year) do
-      AcademicYear.for_date(Date.current) || create(:academic_year, :current)
-    end
-    let(:current_claim_window) do
-      create(:claim_window,
-             starts_on: current_academic_year.starts_on + 1.day,
-             ends_on: current_academic_year.starts_on + 1.month,
-             academic_year: current_academic_year)
-    end
     let(:another_paid_claim) { create(:claim, :submitted, status: :paid) }
     let(:current_year_draft_claim) { create(:claim, :draft, claim_window: current_claim_window) }
 
