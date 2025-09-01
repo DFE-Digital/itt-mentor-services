@@ -26,7 +26,7 @@ RSpec.describe "Support user adds a claim window which includes dates within an 
   private
 
   def given_a_claims_window_exists
-    @academic_year = AcademicYear.for_date("01/07/2025")
+    @academic_year = AcademicYear.for_date(Date.parse("01/07/2025"))
     @existing_claim_window = create(
       :claim_window,
       starts_on: Date.parse("01/07/2025"),
