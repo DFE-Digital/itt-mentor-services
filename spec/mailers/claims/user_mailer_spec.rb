@@ -287,7 +287,6 @@ RSpec.describe Claims::UserMailer, type: :mailer do
 
     let(:user) { create(:claims_user, first_name: "Joe") }
     let!(:claim_window) { create(:claim_window, :current) }
-    let!(:next_claim_window) { create(:claim_window, :upcoming) }
 
     it "sends the claims not submitted email" do
       expect(claims_not_submitted_email.to).to contain_exactly(user.email)
@@ -331,7 +330,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
 
         ## Important
 
-        The deadline to submit claims is #{I18n.l(claim_window.ends_on, format: :long)}. After this date, you will have to wait until the next claim window to opens on #{I18n.l(next_claim_window.starts_on, format: :long)}.
+        The deadline to submit claims is #{I18n.l(claim_window.ends_on, format: :long)}.
 
         For more information, see [additional guidance](https://assets.publishing.service.gov.uk/media/67448404e26d6f8ca3cb358d/General_mentor_training_-_additional_guidance.pdf) or email [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk).
 
