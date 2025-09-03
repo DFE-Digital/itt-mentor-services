@@ -9,24 +9,6 @@ class Claims::Support::Claims::PaymentsController < Claims::Support::Application
     @pagy, @claims = pagy(filtered_claims)
   end
 
-  def new
-    submitted_claims
-
-    unless policy(Claims::Payment).create?
-      render "new_not_permitted"
-    end
-  end
-
-  def create
-    Claims::Payment::CreateAndDeliver.call(current_user:)
-
-    redirect_to claims_support_claims_payments_path, flash: {
-      success: true,
-      heading: t(".heading"),
-      body: t(".body_html"),
-    }
-  end
-
   private
 
   def filtered_claims
