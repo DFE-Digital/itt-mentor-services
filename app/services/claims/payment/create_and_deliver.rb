@@ -1,6 +1,7 @@
 class Claims::Payment::CreateAndDeliver < ApplicationService
-  def initialize(current_user:)
+  def initialize(current_user:, claim_window:)
     @current_user = current_user
+    @claim_window = claim_window
   end
 
   def call
@@ -25,9 +26,9 @@ class Claims::Payment::CreateAndDeliver < ApplicationService
 
   private
 
-  attr_reader :current_user
+  attr_reader :current_user, :claim_window
 
   def submitted_claims
-    @submitted_claims ||= Claims::Claim.submitted
+    @submitted_claims ||= Claims::Claim.submitted.where(claim_window:)
   end
 end
