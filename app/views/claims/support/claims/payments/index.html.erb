@@ -9,7 +9,7 @@
   <h2 class="govuk-heading-m"><%= t(".sub_heading", count: @pagy.count) %></h2>
 
   <div class="govuk-button-group">
-    <%= govuk_button_link_to t(".buttons.send_claims_to_esfa"), new_claims_support_claims_payment_path %>
+    <%= govuk_button_link_to t(".buttons.send_claims_to_esfa"), new_submit_claims_to_be_paid_claims_support_claims_payments_path %>
     <%= govuk_button_link_to t(".buttons.upload_esfa_response"), new_upload_payer_response_claims_support_claims_payments_path, secondary: true %>
   </div>
 
