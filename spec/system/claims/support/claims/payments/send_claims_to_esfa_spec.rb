@@ -55,7 +55,7 @@ RSpec.describe "Send claims to payer", service: :claims, type: :system do
   end
 
   def then_i_can_see_a_confirmation_page
-    expect(page).to have_css("p.govuk-caption-l", text: "Payments")
+    expect(page).to have_css("p.govuk-caption-l", text: "Pay claims")
     expect(page).to have_css("h1.govuk-heading-l", text: "Send claims to payer")
     expect(page).to have_css("p.govuk-body", text: "There are 3 claims included in this submission.")
     expect(page).to have_css("p.govuk-body", text: "Selecting ‘Send claims’ will:")

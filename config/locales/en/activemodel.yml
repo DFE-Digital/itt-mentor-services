@@ -416,3 +416,7 @@ en:
               blank: Please select whether or not this clawback information is correct
             reason_clawback_rejected:
               blank: Please enter a reason why you are rejecting this clawback
+        claims/submit_claims_to_be_paid_wizard/select_claim_window_step:
+          attributes:
+            claim_window:
+              blank: Please select a claim window

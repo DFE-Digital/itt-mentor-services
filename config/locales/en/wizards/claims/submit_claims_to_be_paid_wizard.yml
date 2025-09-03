@@ -3,18 +3,18 @@ en:
     claims:
       submit_claims_to_be_paid_wizard:
         select_claim_window_step:
-          page_title: Select claim window - Pay claims - Claims
-          caption: Pay claims
+          page_title: Select claim window
+          caption: Submit claims to be paid
           title: Select claim window
           select_claim_window: Select claim window
           continue: Continue
         no_claims_to_pay_step:
-          page_caption: Payments
+          page_caption: Submit claims to be paid
           page_title: There are no claims to send for payment
           description: You cannot send any claims to the payer because there are no claims pending payment.
           cancel: Cancel
         check_your_answers_step:
-          page_caption: Payments
+          page_caption: Submit claims to be paid
           page_title: Send claims to payer
           description:
             one: There is %{count} claim included in this submission.
