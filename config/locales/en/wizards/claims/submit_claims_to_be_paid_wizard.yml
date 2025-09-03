@@ -1,0 +1,30 @@
+en:
+  wizards:
+    claims:
+      submit_claims_to_be_paid_wizard:
+        select_claim_window_step:
+          page_title: Select claim window - Pay claims - Claims
+          caption: Pay claims
+          title: Select claim window
+          select_claim_window: Select claim window
+          continue: Continue
+        no_claims_to_pay_step:
+          page_caption: Payments
+          page_title: There are no claims to send for payment
+          description: You cannot send any claims to the payer because there are no claims pending payment.
+          cancel: Cancel
+        check_your_answers_step:
+          page_caption: Payments
+          page_title: Send claims to payer
+          description:
+            one: There is %{count} claim included in this submission.
+            other: There are %{count} claims included in this submission.
+          details:
+            heading: "Selecting ‘Send claims’ will:"
+            list:
+              - create a CSV containing a list of all ‘Submitted’ claims
+              - send an email to the payer containing a link to the generated CSV - this link expires after 7 days
+              - update the claim status from ‘Submitted’ to ‘Payment in progress’
+          warning: This action cannot be undone.
+          submit: Send claims
+          cancel: Cancel
