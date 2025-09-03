@@ -1,0 +1,13 @@
+en:
+  claims:
+    support:
+      claims:
+        payments:
+          submit_claims_to_be_paid:
+            edit:
+              cancel: Cancel
+            update:
+              heading: Claims sent to payer
+              body_html:
+                The status of these claims have been updated to ‘Payer payment review’.<br><br>
+                You must wait for the payer to respond before you can take any further action on these claims.

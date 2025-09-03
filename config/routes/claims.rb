@@ -128,11 +128,15 @@ scope module: :claims, as: :claims, constraints: {
         end
       end
 
-      resources :payments, only: %i[index new create] do
+      resources :payments, only: %i[index] do
         collection do
           get "payer_response/new", to: "payments/upload_payer_response#new", as: :new_upload_payer_response
           get "payer_response/new/:state_key/:step", to: "payments/upload_payer_response#edit", as: :upload_payer_response
           put "payer_response/new/:state_key/:step", to: "payments/upload_payer_response#update"
+
+          get "submit_claims_to_be_paid/new", to: "payments/submit_claims_to_be_paid#new", as: :new_submit_claims_to_be_paid
+          get "submit_claims_to_be_paid/:state_key/:step", to: "payments/submit_claims_to_be_paid#edit", as: :submit_claims_to_be_paid
+          put "submit_claims_to_be_paid/:state_key/:step", to: "payments/submit_claims_to_be_paid#update"
         end
       end
       resources :payment_responses, only: %i[new update] do

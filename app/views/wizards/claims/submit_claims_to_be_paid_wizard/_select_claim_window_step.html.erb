@@ -1,0 +1,32 @@
+<% content_for :page_title, title_with_error_prefix(
+  sanitize(t(".page_title")),
+  error: current_step.errors.any?,
+) %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".caption") %></span>
+
+      <%= form_for(current_step, url: current_step_path, method: :put, multipart: true) do |f| %>
+        <%= f.govuk_error_summary %>
+
+        <%= f.govuk_radio_buttons_fieldset(
+          :claim_window,
+          legend: {
+            size: "l",
+            text: t(".select_claim_window"),
+            tag: "h1",
+          },
+        ) do %>
+
+          <% current_step.claim_windows.each do |claim_window| %>
+            <%= f.govuk_radio_button :claim_window, claim_window.id, label: { text: claim_window.current? ? "#{claim_window.name} (current)" : claim_window.name } %>
+          <% end %>
+        <% end %>
+
+        <%= f.govuk_submit t(".continue") %>
+      <% end %>
+    </div>
+  </div>
+</div>
