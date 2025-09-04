@@ -19,7 +19,10 @@ module Claims
     def pay_claims
       raise "Invalid wizard state" unless valid?
 
-      Claims::Payment::CreateAndDeliver.call(current_user:, claim_window:)
+      Claims::Payment::CreateAndDeliverJob.perform_later(
+        current_user_id: current_user.id,
+        claim_window_id: claim_window.id,
+      )
     end
 
     private
