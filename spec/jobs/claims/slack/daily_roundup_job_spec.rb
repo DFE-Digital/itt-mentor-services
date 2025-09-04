@@ -31,6 +31,7 @@ RSpec.describe Claims::Slack::DailyRoundupJob, type: :job do
       average_claim_amount = total_claims_amount / Claims::Claim.count.to_f
 
       expect(slack_notifier).to have_received(:claim_submitted_notification).with(
+        academic_year: claim_window.academic_year,
         claim_count: 1,
         school_count: 1,
         provider_count: 0,
