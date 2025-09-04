@@ -60,5 +60,28 @@ describe Claims::Claim::Submit do
         expect(claim.submitted_at).to eq(submitted_at)
       end
     end
+
+    context "when there is a current claim window" do
+      it "assigns the claim to the current claim window" do
+        current_claim_window = Claims::ClaimWindow.current
+        past_claim_window = create(:claim_window, :historic)
+        claim.update!(claim_window: past_claim_window)
+
+        expect { submit_service }.to change(claim, :claim_window).from(past_claim_window).to(current_claim_window)
+      end
+    end
+
+    context "when there is no current claim window" do
+      before do
+        allow(Claims::ClaimWindow).to receive(:current).and_return(nil)
+      end
+
+      it "does not change the claim window" do
+        past_claim_window = create(:claim_window, :historic)
+        claim.update!(claim_window: past_claim_window)
+
+        expect { submit_service }.to not_change(claim, :claim_window)
+      end
+    end
   end
 end

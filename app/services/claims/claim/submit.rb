@@ -33,7 +33,12 @@ class Claims::Claim::Submit < ApplicationService
       claim.submitted_at = Time.current
       claim.submitted_by = user
       claim.reference = generate_reference if claim.reference.nil?
+      claim.claim_window = claim_window
       claim
     end
+  end
+
+  def claim_window
+    Claims::ClaimWindow.current || claim.claim_window
   end
 end
