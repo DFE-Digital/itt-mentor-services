@@ -44,9 +44,9 @@ RSpec.describe Claims::SubmitClaimsToBePaidWizard do
 
     context "when the steps are valid" do
       it "the payments create and deliver service" do
-        expect(Claims::Payment::CreateAndDeliver).to receive(:call).with(
-          current_user:,
-          claim_window:,
+        expect(Claims::Payment::CreateAndDeliverJob).to receive(:perform_later).with(
+          current_user_id: current_user.id,
+          claim_window_id:,
         )
 
         pay_claims
