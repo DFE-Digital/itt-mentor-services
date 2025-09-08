@@ -300,7 +300,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
 
     context "when academic_year_ids is empty" do
       it "returns the current academic year by default" do
-        params = { academic_year_id: nil }
+        params = {}
         call = described_class.new(params).academic_year
 
         expect(call).to eq(current_academic_year)
