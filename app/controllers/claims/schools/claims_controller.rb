@@ -12,7 +12,8 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
     @current_academic_year_selected = @academic_year.current?
     @current_claim_window = Claims::ClaimWindow.current
     @previous_claim_window = Claims::ClaimWindow.previous
-    @previous_academic_years = AcademicYear.before_date(Date.current).order_by_date_desc.decorate
+    academic_year_scope = AcademicYear.before_date(@current_claim_window&.academic_year&.starts_on || Date.current)
+    @previous_academic_years = academic_year_scope.where.associated(:claim_windows).distinct.order_by_date_desc.decorate
     @pagy, @claims = pagy(claims_for_academic_year)
   end
 
@@ -50,11 +51,15 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
     new_edit_claim_claims_school_claim_path(@school, @claim, step: attribute)
   end
 
+  def claim_window_academic_year
+    @claim_window_academic_year ||= Claims::ClaimWindow.current&.academic_year || Claims::ClaimWindow.previous&.academic_year
+  end
+
   def set_academic_year
     @academic_year = if params[:academic_year_id].present?
                        AcademicYear.find(params[:academic_year_id])
                      else
-                       AcademicYear.current
+                       claim_window_academic_year
                      end
   end
 

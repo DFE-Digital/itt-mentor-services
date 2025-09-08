@@ -4,7 +4,7 @@ class Claims::Claim::FilterFormComponent < ApplicationComponent
   def initialize(
     filter_form:,
     statuses: Claims::Claim.statuses.values.without(*Claims::Claim::DRAFT_STATUSES.map(&:to_s)),
-    academic_years: AcademicYear.where(id: Claims::ClaimWindow.select(:academic_year_id)).order_by_date,
+    academic_years: AcademicYear.where(id: Claims::ClaimWindow.select(:academic_year_id)).order_by_date_desc,
     providers: nil,
     schools: nil,
     classes: [],

@@ -20,7 +20,7 @@ class AcademicYear < ApplicationRecord
 
   scope :order_by_date, -> { order(starts_on: :asc) }
   scope :order_by_date_desc, -> { order(starts_on: :desc) }
-  scope :before_date, ->(date) { where("starts_on <= ?", for_date(date).starts_on) }
+  scope :before_date, ->(date) { where("academic_years.starts_on <= ?", for_date(date).starts_on) }
 
   START_DATE = {
     day: 1,

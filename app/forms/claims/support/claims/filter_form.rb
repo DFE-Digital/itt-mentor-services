@@ -13,7 +13,7 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
   attribute :school_ids, default: []
   attribute :provider_ids, default: []
   attribute :statuses, default: []
-  attribute :academic_year_id, default: AcademicYear.for_date(Date.current).id
+  attribute :academic_year_id, default: -> { Claims::Support::Claims::FilterForm.default_academic_year_id }
   attribute :mentor_ids, default: []
   attribute :support_user_ids, default: []
   attribute :training_types, default: []
@@ -73,8 +73,6 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
   end
 
   def academic_year
-    return AcademicYear.for_date(Date.current) if academic_year_id.blank?
-
     @academic_year ||= AcademicYear.find(academic_year_id)
   end
 
@@ -133,6 +131,12 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
     uri = URI(path)
     uri.query = args.to_query
     uri.to_s
+  end
+
+  def self.default_academic_year_id
+    Claims::ClaimWindow.current&.academic_year&.id ||
+      Claims::ClaimWindow.previous&.academic_year&.id ||
+      AcademicYear.for_date(Date.current).id
   end
 
   private
