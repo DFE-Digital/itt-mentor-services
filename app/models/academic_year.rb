@@ -58,6 +58,11 @@ class AcademicYear < ApplicationRecord
     self == self.class.current
   end
 
+  # Returns the academic year for the current claim window, previous claim window, or current academic year in that order.
+  def self.for_latest_claim_window
+    Claims::ClaimWindow.current&.academic_year || Claims::ClaimWindow.previous&.academic_year || AcademicYear.current
+  end
+
   def next
     self.class.for_date(starts_on + 1.year)
   end
