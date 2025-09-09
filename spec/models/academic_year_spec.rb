@@ -180,6 +180,8 @@ RSpec.describe AcademicYear, type: :model do
                name: "2024 to 2025")
       end
 
+      before { previous_academic_year.destroy }
+
       it "creates a new academic year for the previous year" do
         expect { current_academic_year.previous }.to change(described_class, :count).by(1)
 
