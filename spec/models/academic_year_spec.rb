@@ -171,23 +171,55 @@ RSpec.describe AcademicYear, type: :model do
     it "returns the previous academic year" do
       expect(current_academic_year.previous).to eq(previous_academic_year)
     end
+
+    context "when the previous academic year does not exist" do
+      let!(:current_academic_year) do
+        create(:academic_year,
+               starts_on: Date.parse("1 September 2020"),
+               ends_on: Date.parse("31 August 2021"),
+               name: "2024 to 2025")
+      end
+
+      it "creates a new academic year for the previous year" do
+        expect { current_academic_year.previous }.to change(described_class, :count).by(1)
+
+        created_academic_year = current_academic_year.previous
+        expect(created_academic_year.starts_on).to eq(Date.parse("1 September 2019"))
+        expect(created_academic_year.ends_on).to eq(Date.parse("31 August 2020"))
+        expect(created_academic_year.name).to eq("2019 to 2020")
+      end
+    end
   end
 
-  context "when the previous academic year does not exist" do
-    let!(:current_academic_year) do
-      create(:academic_year,
-             starts_on: Date.parse("1 September 2020"),
-             ends_on: Date.parse("31 August 2021"),
-             name: "2024 to 2025")
+  describe ".for_latest_claim_window" do
+    let!(:current_academic_year) { described_class.current }
+    let!(:next_academic_year) { current_academic_year.next }
+    let!(:previous_academic_year) { current_academic_year.previous }
+
+    context "when there is a current claim window" do
+      let(:current_claim_window) { create(:claim_window, :current, academic_year: next_academic_year) }
+
+      before { current_claim_window }
+
+      it "returns the academic year for the current claim window" do
+        expect(described_class.for_latest_claim_window).to eq(next_academic_year)
+      end
     end
 
-    it "creates a new academic year for the previous year" do
-      expect { current_academic_year.previous }.to change(described_class, :count).by(1)
+    context "when there is no current claim window but there is a previous claim window" do
+      let(:previous_claim_window) { create(:claim_window, :historic, academic_year: previous_academic_year) }
 
-      created_academic_year = current_academic_year.previous
-      expect(created_academic_year.starts_on).to eq(Date.parse("1 September 2019"))
-      expect(created_academic_year.ends_on).to eq(Date.parse("31 August 2020"))
-      expect(created_academic_year.name).to eq("2019 to 2020")
+      before { previous_claim_window }
+
+      it "returns the academic year for the previous claim window" do
+        expect(described_class.for_latest_claim_window).to eq(previous_academic_year)
+      end
+    end
+
+    context "when there are no current or previous claim windows" do
+      it "returns the current academic year" do
+        expect(described_class.for_latest_claim_window).to eq(current_academic_year)
+      end
     end
   end
 end

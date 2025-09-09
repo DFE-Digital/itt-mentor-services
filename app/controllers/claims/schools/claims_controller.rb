@@ -51,15 +51,11 @@ class Claims::Schools::ClaimsController < Claims::ApplicationController
     new_edit_claim_claims_school_claim_path(@school, @claim, step: attribute)
   end
 
-  def claim_window_academic_year
-    @claim_window_academic_year ||= Claims::ClaimWindow.current&.academic_year || Claims::ClaimWindow.previous&.academic_year
-  end
-
   def set_academic_year
     @academic_year = if params[:academic_year_id].present?
                        AcademicYear.find(params[:academic_year_id])
                      else
-                       claim_window_academic_year
+                       AcademicYear.for_latest_claim_window
                      end
   end
 
