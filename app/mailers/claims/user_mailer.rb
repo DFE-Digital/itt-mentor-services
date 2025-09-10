@@ -76,7 +76,6 @@ class Claims::UserMailer < Claims::ApplicationMailer
   end
 
   def claims_have_not_been_submitted(user)
-    claim_window = Claims::ClaimWindow.current
     academic_year_name = claim_window.academic_year_name
     deadline = l(claim_window.ends_on, format: :long)
 
@@ -94,6 +93,52 @@ class Claims::UserMailer < Claims::ApplicationMailer
                  )
   end
 
+  def your_school_has_not_signed_in(user)
+    academic_year_name = claim_window.academic_year_name
+    deadline = l(claim_window.ends_on, format: :long)
+    user_schools = user.schools
+                     .joins(:users, :eligible_claim_windows)
+                     .where(eligible_claim_windows: { id: eligible_claim_windows.ids })
+                     .where(users: { last_signed_in_at: nil })
+                     .where.not(id: Claims::School.joins(:users).where.not(users: { last_signed_in_at: nil }))
+    user_school_names = user_schools.pluck(:name).to_sentence
+
+    notify_email to: user.email,
+                 subject: t(".subject", deadline:),
+                 body: t(
+                   ".body",
+                   user_name: user.first_name,
+                   user_school_names:,
+                   deadline:,
+                   academic_year_name:,
+                   service_name:,
+                   support_email:,
+                 )
+  end
+
+  def your_school_has_signed_in_but_not_claimed(user)
+    academic_year_name = claim_window.academic_year_name
+    deadline = l(claim_window.ends_on, format: :long)
+    user_schools = user.schools
+                       .joins(:users, :eligible_claim_windows)
+                       .where.not(users: { last_signed_in_at: nil })
+                       .where(eligible_claim_windows: { id: eligible_claim_windows.ids })
+                       .where.missing(:claims)
+    user_school_names = user_schools.pluck(:name).to_sentence
+
+    notify_email to: user.email,
+                 subject: t(".subject", deadline:),
+                 body: t(
+                   ".body",
+                   user_name: user.first_name,
+                   user_school_names:,
+                   deadline:,
+                   academic_year_name:,
+                   service_name:,
+                   support_email:,
+                 )
+  end
+
   def claims_assigned_to_invalid_provider(user)
     claims = Claims::Claim.where(created_by: user, status: :invalid_provider)
     claims_string = claims.pluck(:reference).to_sentence
@@ -107,5 +152,15 @@ class Claims::UserMailer < Claims::ApplicationMailer
                    service_name:,
                    claims: claims_string,
                  )
+  end
+
+  private
+
+  def claim_window
+    @claim_window ||= Claims::ClaimWindow.current
+  end
+
+  def eligible_claim_windows
+    @eligible_claim_windows ||= Claims::ClaimWindow.where(academic_year_id: claim_window.academic_year_id)
   end
 end

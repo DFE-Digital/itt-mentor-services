@@ -5,7 +5,7 @@ en:
         subject: Invitation to join %{service_name}
         body: |
           Dear %{user_name},
-  
+          
           You have been invited to join the %{service_name} service for %{organisation_name} because you are a [DfE-sign approver](%{sign_in_approver_url}) for your organisation.
 
           If you are not the right person in your organisation to submit funding claims for initial teacher training (ITT) general mentor training, please:
@@ -14,45 +14,45 @@ en:
           - forward this email to the appropriate colleague after adding them as a user
           
           # Claim funding for mentor training service
-  
+          
           This new DfE service enables schools and education organisations to claim funding for the time spent becoming an ITT general mentor.
-  
+          
           Your organisation has been added to the service because an accredited ITT provider has informed DfE that one or more trainee teachers have undertaken a school placement there during academic year %{academic_year_name}.
 
           # Sign in to submit claims
-  
+          
           Sign in using DfE sign-in:
-  
+          
           [%{sign_in_url}](%{sign_in_url})
-  
+          
           If your colleague needs to create a DfE Sign-in account, they can do this after clicking "Sign in using DfE Sign-in"
-  
+          
           After creating a DfE Sign-in account, they will need to return to this email and [sign in to access the service](%{sign_in_url})
 
           # Prior to submitting claims
 
           We recommend confirming with your accredited ITT provider the number of hours you are claiming, as they may be asked to provide evidence to support this claim.
-  
+          
           # Give feedback or report a problem
-  
+          
           If you have any questions or feedback, please contact the team at [%{support_email}](mailto:%{support_email}).
-  
+          
           Regards
-  
+          
           %{service_name} team
       user_membership_destroyed_notification:
         subject: You have been removed from %{service_name}
         body: |
           Dear %{user_name},
-  
+          
           You have been removed from the %{service_name} service for %{organisation_name}.
-  
+          
           # Give feedback or report a problem
-  
+          
           If you have any questions or feedback, please contact the team at [%{support_email}](mailto:%{support_email}).
-  
+          
           Regards
-  
+          
           %{service_name} team
 
       claim_submitted_notification:
@@ -80,20 +80,20 @@ en:
         subject: New draft claim for mentor training
         body: |
           Dear %{user_name},
-  
+          
           We have added a draft claim for mentor training for %{organisation_name}.
             Your claim reference is %{reference}.
-  
+          
           You can view the claim, edit and submit it on Claim funding for mentor training:
-  
+          
           %{link_to_claim}
-  
+          
           # Give feedback or report a problem
-  
+          
           If you have any questions or feedback, please contact the team at [%{support_email}](mailto:%{support_email}).
-  
+          
           Regards
-  
+          
           Claim funding for mentor training team
 
       claim_requires_clawback:
@@ -131,20 +131,20 @@ en:
         subject: "Deadline %{deadline}: Claim Your ITT Mentor Training Funding"
         body: |
           Dear %{user_name},
-  
+          
           The Claim Funding for ITT Mentoring Training digital service launched in April 2025.
-  
+          
           We believe your school is eligible to claim funding for the time your Initial Teacher Training (ITT) mentors spent in training this academic year.
-  
+          
           If your school has been added to the Register trainee teacher service by your accredited provider, you should have been onboarded and are eligible to claim. However, we’ve not yet received a claim from you.
-  
+          
           ## Eligibility Criteria
 
           To claim funding, an ITT mentor must have:
           
           - Completed up to 20 hours of initial mentor training
           - Mentored at least one trainee during the %{academic_year_name} academic year
-  
+          
           ## How to access the service
           
           Check if you’ve received an onboarding email from DfE.
@@ -156,16 +156,16 @@ en:
           For further help see [additional guidance](https://assets.publishing.service.gov.uk/media/67448404e26d6f8ca3cb358d/General_mentor_training_-_additional_guidance.pdf) or contact: [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk).
           
           ## How to make a claim
-        
+          
           To make a claim, you will need to:
           
           - Sign in using your DfE Sign-in account*
           - Claim for ITT general mentors only (if you’re claiming for ECT mentors, [follow this guidance](https://www.gov.uk/guidance/funding-and-eligibility-for-ecf-based-training))
           - Ensure the mentor’s name matches the Teacher Register (update names via Access Teaching Qualifications if needed)**
-  
+          
           \*DfE Sign-in now uses multi-factor authentication. You may need to create a new account with a secure password.
           \*\*To update a mentor’s name, submit a change via [Access Teaching Qualifications](https://www.gov.uk/guidance/access-your-teaching-qualifications).
-  
+          
           ## Important
           
           The deadline to submit claims is %{deadline}.
@@ -180,7 +180,7 @@ en:
         subject: "Action by 5 December: Change your ITT mentor funding claim to ensure it gets paid"
         body: |
           Dear %{user_name}
-  
+          
           Thank you for using the %{service_name} service.
           
           The following claims, submitted by your school, cannot be processed because the ITT provider recorded is not an accredited provider:
@@ -190,7 +190,7 @@ en:
           To ensure your claims can be processed and paid, please log-in to the service and record the accredited provider. You will need to do this for each claim with the “Invalid provider” status.
           
           ## What You Need to Do
-        
+          
           To update your accredited provider:
           
           1. Log in to the %{service_name} service
@@ -199,15 +199,107 @@ en:
           4. Click ‘Change’ next to your current provider selection
           5. Enter your accredited provider's name in the search box
           6. Click ‘Continue’
-        
+          
           ## Deadline: Friday 5 December 2025
           
           Please update your provider information by this date to avoid delays in payment.
-        
+          
           If you are unsure who the accredited provider is, contact your ITT provider to confirm or review this list: [https://www.gov.uk/government/publications/accredited-initial-teacher-training-itt-providers/list-of-providers-accredited-to-deliver-itt-from-september-2024]([https://www.gov.uk/government/publications/accredited-initial-teacher-training-itt-providers/list-of-providers-accredited-to-deliver-itt-from-september-2024).
-        
+          
           If you have any questions, contact us at:
           [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk)
+          
+          Kind regards,
+          %{service_name} team
+
+      your_school_has_not_signed_in:
+        subject: "Deadline %{deadline}: Claim funding for ITT Mentor training"
+        body: |
+          Dear %{user_name},
+          
+          The Claim Funding for ITT Mentoring Training digital service launched in April 2025.
+          
+          We believe your school is eligible to claim funding for the time your Initial Teacher Training (ITT) mentors spent in training this academic year, but we can see you’ve not yet accessed the service.
+          
+          Your eligible schools include %{user_school_names}.
+          
+          If your school has been added to the Register trainee teacher service by your accredited provider, you should have been onboarded and are eligible to claim. Follow the simple steps below to access the service and claim funding for your ITT Mentor training for the %{academic_year_name} academic year.
+          
+          ## Eligibility Criteria
+          
+          To claim funding, an ITT mentor must have:
+          
+          - Completed up to 20 hours of initial mentor training
+          - Mentored at least one trainee during the %{academic_year_name} academic year
+          
+          ## How to access the service
+          
+          1. Check if you’ve received an onboarding email from DfE.
+          2. If not, ask your school’s DfE Sign-in approver if they’ve received it and can add users.
+          3. If no one has received it, confirm with your accredited provider that your school is on the Register trainee teacher service.
+          4. For further help see [additional guidance](https://assets.publishing.service.gov.uk/media/67448404e26d6f8ca3cb358d/General_mentor_training_-_additional_guidance.pdf) or [%{support_email}](mailto:%{support_email})
+          
+          ## How to make a claim
+          
+          To make a claim, you will need to:
+          
+          - Sign in using yourDfE Sign-in account*
+          - Claim for ITT general mentors only (if you’re claiming for ECT mentors, [follow this guidance](https://www.gov.uk/guidance/funding-and-eligibility-for-ecf-based-training))
+          - Add your mentor(s) by inputting their teacher reference number and date of birth to look up their name in our data
+          - Ensure the mentor’s name matches the Teacher Register (update names via [Access Teaching Qualifications](https://www.gov.uk/guidance/access-your-teaching-qualifications) if needed)**
+          
+          \*DfE Sign-in now uses multi-factor authentication. You may need to create a new account with a secure password.
+          \*\*To update a mentor’s name, submit a change via [Access Teaching Qualifications](https://www.gov.uk/guidance/access-your-teaching-qualifications).
+          
+          ## Deadline
+          
+          The final claim window for the %{academic_year_name} academic year is open now and closes on %{deadline}. Submit your claim before this date to ensure you don’t lose out on funding.
+          
+          Kind regards,
+          %{service_name} team
+
+      your_school_has_signed_in_but_not_claimed:
+        subject: "Deadline %{deadline}: Claim funding for ITT Mentor training"
+        body: |
+          Dear %{user_name},
+          
+          The Claim Funding for ITT Mentoring Training digital service launched in April 2025.
+          
+          We can see you’ve logged into the service but not submitted a claim - we believe your school is eligible to claim funding for the time your Initial Teacher Training (ITT) mentors spent in training in the %{academic_year_name} academic year.
+          
+          Your eligible schools include %{user_school_names}.
+          
+          Follow the simple steps below to submit a claim.
+          
+          ## Eligibility Criteria
+          
+          To claim funding, an ITT mentor must have:
+          
+          - Completed up to 20 hours of initial mentor training
+          - Mentored at least one trainee during the %{academic_year_name} academic year
+          
+          ## How to access the service
+          
+          1. Check if you’ve received an onboarding email from DfE.
+          2. If not, ask your school’s DfE Sign-in approver if they’ve received it and can add users.
+          3. If no one has received it, confirm with your accredited provider that your school is on the Register trainee teacher service.
+          4. For further help see [additional guidance](https://assets.publishing.service.gov.uk/media/67448404e26d6f8ca3cb358d/General_mentor_training_-_additional_guidance.pdf) or [%{support_email}](mailto:%{support_email})
+          
+          ## How to make a claim
+          
+          To make a claim, you will need to:
+          
+          - Sign in using yourDfE Sign-in account*
+          - Claim for ITT general mentors only (if you’re claiming for ECT mentors, [follow this guidance](https://www.gov.uk/guidance/funding-and-eligibility-for-ecf-based-training))
+          - Add your mentor(s) by inputting their teacher reference number and date of birth to look up their name in our data
+          - Ensure the mentor’s name matches the Teacher Register (update names via [Access Teaching Qualifications](https://www.gov.uk/guidance/access-your-teaching-qualifications) if needed)**
+          
+          \*DfE Sign-in now uses multi-factor authentication. You may need to create a new account with a secure password.
+          \*\*To update a mentor’s name, submit a change via [Access Teaching Qualifications](https://www.gov.uk/guidance/access-your-teaching-qualifications).
+          
+          ## Deadline
+          
+          The final claim window for the %{academic_year_name} academic year is open now and closes on %{deadline}. Submit your claim before this date to ensure you don’t lose out on funding.
           
           Kind regards,
           %{service_name} team
