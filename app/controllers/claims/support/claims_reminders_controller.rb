@@ -3,8 +3,8 @@ class Claims::Support::ClaimsRemindersController < Claims::Support::ApplicationC
   before_action :set_claim_window
   before_action :set_schools, only: %i[schools_not_submitted_claims send_schools_not_submitted_claims]
   before_action :set_providers, only: %i[providers_not_submitted_claims send_providers_not_submitted_claims]
-  before_action :set_schools_without_sign_in, only: %i[schools_not_signed_in send_schools_not_signed_in]
-  before_action :set_schools_with_sign_ins_without_claims, only: %i[school_has_signed_in_but_not_claimed send_your_school_has_signed_in_but_not_claimed]
+  before_action :schools_without_sign_in, only: %i[schools_not_signed_in send_schools_not_signed_in]
+  before_action :schools_with_sign_ins_without_claims, only: %i[school_has_signed_in_but_not_claimed send_your_school_has_signed_in_but_not_claimed]
 
   def schools_not_submitted_claims; end
 
@@ -104,14 +104,14 @@ class Claims::Support::ClaimsRemindersController < Claims::Support::ApplicationC
                                  .distinct
   end
 
-  def set_schools_without_sign_in
+  def schools_without_sign_in
     @schools_without_sign_in ||= Claims::School
                                 .includes(:users)
                                 .where(users: { last_signed_in_at: nil })
                                 .where.not(id: Claims::School.joins(:users).where.not(users: { last_signed_in_at: nil }))
   end
 
-  def set_schools_with_sign_ins_without_claims
+  def schools_with_sign_ins_without_claims
     @schools_with_sign_ins_without_claims ||= Claims::School
                                             .joins(:users)
                                             .where.not(users: { last_signed_in_at: nil })
