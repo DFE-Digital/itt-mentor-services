@@ -27,6 +27,14 @@ class Claims::UserMailerPreview < ActionMailer::Preview
     Claims::UserMailer.claims_assigned_to_invalid_provider(user)
   end
 
+  def your_school_has_not_signed_in
+    Claims::UserMailer.your_school_has_not_signed_in(user)
+  end
+
+  def your_school_has_signed_in_but_not_claimed
+    Claims::UserMailer.your_school_has_signed_in_but_not_claimed(user)
+  end
+
   private
 
   def user

@@ -4,7 +4,7 @@ en:
       claims_reminders:
         send_schools_not_submitted_claims:
           success: Emails dispatched successfully
-          success_body: An email has been sent to all of the users for schools that have not submitted claims for the current claim window.
+          success_body: An email has been sent to all of the users for schools that have not submitted claims for the current academic year.
         schools_not_submitted_claims:
           heading: Remind schools to submit claims
           number_of_schools:
@@ -28,3 +28,29 @@ en:
             send_reminders: Send reminders
             no_providers: All providers have had claims assigned to them for the current claim window, therefore no reminders can be sent.
             preview: Preview email
+        send_schools_not_signed_in:
+          success: Emails dispatched successfully
+          success_body: An email has been sent to all of the users for schools that have not signed in to the service during the current academic year.
+        send_your_school_has_signed_in_but_not_claimed:
+          success: Emails dispatched successfully
+          success_body: An email has been sent to all of the users for schools that have signed in to the service during the current academic year but haven't made a claim.
+        schools_not_signed_in:
+          heading: Remind schools to sign in
+          number_of_schools:
+            one: There is currently %{count} school that has not signed in for the current academic year.
+            other: There are currently %{count} schools that have not signed in for the current academic year.
+          deadline: The deadline for submitting claims is %{deadline}, the email that is sent will use this date.
+          warning: An email will be sent to all of the users for schools that have not signed in for the current academic year. This action cannot be undone.
+          send_reminders: Send reminders
+          no_schools: All eligible schools have signed in for the current academic year, therefore no reminders can be sent.
+          preview: Preview email
+        school_has_signed_in_but_not_claimed:
+          heading: Remind schools that have signed in to make claims
+          number_of_schools:
+              one: There is currently %{count} school that has signed in but not made a claim for the current academic year.
+              other: There are currently %{count} schools that have signed in but not made a claim for the current academic year.
+          deadline: The deadline for submitting claims is %{deadline}, the email that is sent will use this date.
+          warning: An email will be sent to all of the users for schools that have signed in but not made a claim for the current academic year. This action cannot be undone.
+          send_reminders: Send reminders
+          no_schools: All eligible schools have made a claim for the current academic year, therefore no reminders can be sent.
+          preview: Preview email

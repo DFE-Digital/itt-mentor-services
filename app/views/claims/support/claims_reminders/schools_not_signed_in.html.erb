@@ -1,0 +1,26 @@
+<%# content_for :page_title, t(".heading") %>
+<% render "claims/support/primary_navigation", current: :settings %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
+
+      <% if @schools_without_sign_in.exists? %>
+        <p class="govuk-body"><%= t(".number_of_schools", count: @schools_without_sign_in.count) %></p>
+
+        <p class="govuk-body"><%= t(".deadline", deadline: l(@claim_window.ends_on, format: :long)) %></p>
+
+        <p class="govuk-body">
+          <%= govuk_link_to(t(".preview"), url_for(controller: "/rails/mailers", action: :preview, path: "claims/user_mailer/your_school_has_not_signed_in"), no_visited_state: true, new_tab: true) %>
+        </p>
+
+        <%= govuk_warning_text(text: t(".warning")) %>
+
+        <%= govuk_button_to(t(".send_reminders"), send_schools_not_submitted_claims_claims_support_claims_reminders_path) %>
+      <% else %>
+        <p class="govuk-body"><%= t(".no_schools") %></p>
+      <% end %>
+    </div>
+  </div>
+</div>

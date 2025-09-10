@@ -8,6 +8,8 @@ en:
           claim_windows: Manage claim windows
           schools_not_submitted_claims: Remind schools to submit claims
           providers_not_submitted_claims: Remind providers to submit claims
+          schools_not_signed_in: Remind schools to sign in
+          school_has_signed_in_but_not_claimed: Remind schools that have signed in to make claims
           export: Export
           export_users: Export users (CSV)
           emails: View email templates

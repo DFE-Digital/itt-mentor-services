@@ -9,6 +9,9 @@ RSpec.describe "Support user views remind schools to submit claims when schools 
 
     when_i_click_on_the_remind_schools_to_submit_claims_link
     then_i_see_information_about_schools_that_have_not_claimed
+
+    when_i_click_on_send_reminders
+    then_i_see_the_reminders_sent_success_banner
   end
 
   private
@@ -53,6 +56,6 @@ RSpec.describe "Support user views remind schools to submit claims when schools 
   end
 
   def then_i_see_the_reminders_sent_success_banner
-    expect(page).to have_success_banner("An email has been sent to all of the users for schools that have not submitted claims for the current claim window.")
+    expect(page).to have_success_banner("Emails dispatched successfully", "An email has been sent to all of the users for schools that have not submitted claims for the current academic year.")
   end
 end
