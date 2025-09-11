@@ -92,6 +92,38 @@ terraform-apply: terraform-init
 terraform-destroy: terraform-init
 	terraform -chdir=terraform/application destroy -var-file "config/${CONFIG}.tfvars.json" ${AUTO_APPROVE}
 
+secret-init:
+	$(if $(VAULT_NAME),,$(error Missing VAULT_NAME))
+	$(if $(SECRET_NAME),,$(error Please specify SECRET_NAME))
+
+secret-list: secret-init
+    # list existing secrets
+    # make secret-list VAULT_NAME=your-keyvault SECRET_LIST="secret1 secret2"
+	$(if ${SECRET_LIST}, , $(error Please specify a SECRET_LIST variable containing a space separated list of secret names to retrieve))
+	@for secret in ${SECRET_LIST}; do \
+		echo "$$secret: $$(az keyvault secret show --vault-name ${VAULT_NAME} --name $$secret --query value -o tsv)"; \
+	done
+
+secret-add: secret-init
+ # add new secret/amend existing
+   # make secret-add VAULT_NAME=your-keyvault SECRET_NAME=your-secret SECRET_VALUE=your-value
+	$(if $(SECRET_VALUE),,$(error Please specify SECRET_VALUE))
+	@VAL_SECRET=$$(echo "$$SECRET_NAME" | tr ' _' '-' | tr '[:lower:]' '[:upper:]'); \
+	if [ "$$SECRET_NAME" = "$$VAL_SECRET" ]; then \
+		echo "Secret name is valid"; \
+		az keyvault secret set --vault-name "$(VAULT_NAME)" --name "$(SECRET_NAME)" --value "$(SECRET_VALUE)"; \
+	else \
+		echo "Secret names must be upper case and hyphenated i.e. instead of '$(SECRET_NAME)' maybe use '$$VAL_SECRET'"; \
+	fi
+
+secret-delete: secret-init
+   # delete existing secret
+   # make secret-delete VAULT_NAME=your-keyvault SECRET_NAME=your-secret
+	$(if ${SECRET_NAME}, , $(error Please specify a SECRET_NAME variable containing the name of the secret to add))
+	az keyvault secret delete --vault-name ${VAULT_NAME} --name ${SECRET_NAME}
+
+
+
 set-what-if:
 	$(eval WHAT_IF=--what-if)
 
