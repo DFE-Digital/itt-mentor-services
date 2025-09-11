@@ -119,7 +119,7 @@ secret-add: secret-init
 secret-delete: secret-init
    # delete existing secret
    # make secret-delete VAULT_NAME=your-keyvault SECRET_NAME=your-secret
-	$(if ${SECRET_NAME}, , $(error Please specify a SECRET_NAME variable containing the name of the secret to add))
+	$(if ${SECRET_NAME}, , $(error Please specify a SECRET_NAME variable containing the name of the secret to delete))
 	az keyvault secret delete --vault-name ${VAULT_NAME} --name ${SECRET_NAME}
 
 
