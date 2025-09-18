@@ -303,3 +303,22 @@ en:
           
           Kind regards,
           %{service_name} team
+      claim_rejected_by_provider:
+        subject: "Provider has indicated a school has an invalid claim: Claim funding for ITT Mentor training"
+        body: |
+          Dear %{user_name},
+          
+          Your claim with reference %{claim_reference} has failed the provider audit.
+          
+          %{provider_name} has indicated that:
+
+          %{provider_response}
+
+          If you agree that the provider is correct, please forward this email onto us at [%{support_email}](mailto:%{support_email}), with the response “accept”. We will then begin the clawback (refund) process for the inaccurately claimed funds.
+          
+          If you disagree, please forward this email onto us at [%{support_email}](mailto:%{support_email}), providing supporting evidence.
+          Please provide this evidence within 5 working days, upon receiving the evidence, we will review it and respond back within 5 working days.
+          
+          Kind regards,
+
+          %{service_name} team

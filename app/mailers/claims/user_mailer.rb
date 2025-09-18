@@ -154,6 +154,22 @@ class Claims::UserMailer < Claims::ApplicationMailer
                  )
   end
 
+  def claim_rejected_by_provider(user, claim)
+    link_to_claim = claims_school_claim_url(id: claim.id, school_id: claim.school.id, utm_source: "email", utm_medium: "notification", utm_campaign: "school")
+
+    notify_email to: user.email,
+                 subject: t(".subject"),
+                 body: t(".body",
+                         user_name: user.first_name,
+                         claim_reference: claim.reference,
+                         provider_name: claim.provider_name,
+                         provider_response: claim.provider_responses,
+                         link_to_claim:,
+                         support_email:,
+                         service_name:,
+                         service_url: claims_root_url(utm_source: "email", utm_medium: "notification", utm_campaign: "school"))
+  end
+
   private
 
   def claim_window
@@ -162,5 +178,9 @@ class Claims::UserMailer < Claims::ApplicationMailer
 
   def eligible_claim_windows
     @eligible_claim_windows ||= Claims::ClaimWindow.where(academic_year_id: claim_window.academic_year_id)
+  end
+
+  def not_assured_mentor_trainings(claim)
+    @not_assured_mentor_trainings ||= claim.mentor_trainings.not_assured
   end
 end
