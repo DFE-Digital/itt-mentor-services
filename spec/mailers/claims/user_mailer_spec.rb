@@ -553,7 +553,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
         Dear #{user.first_name},
 
         Your claim with reference 123 has failed the provider audit.
-        #{"  "}
+
         #{claim.provider_name} has indicated that:
 
         - Jane Doe: ECT Mentor
