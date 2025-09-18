@@ -553,17 +553,17 @@ RSpec.describe Claims::UserMailer, type: :mailer do
         Dear #{user.first_name},
 
         Your claim with reference 123 has failed the provider audit.
-          
+        #{"  "}
         #{claim.provider_name} has indicated that:
 
         - Jane Doe: ECT Mentor
         - John Smith: Mentor not recognised
 
         If you agree that the provider is correct, please forward this email onto us at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk), with the response “accept”. We will then begin the clawback (refund) process for the inaccurately claimed funds.
-        
+
         If you disagree, please forward this email onto us at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk), providing supporting evidence.
         Please provide this evidence within 5 working days, upon receiving the evidence, we will review it and respond back within 5 working days.
-        
+
         Kind regards,
 
         Claim funding for mentor training team
