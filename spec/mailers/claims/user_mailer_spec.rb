@@ -520,7 +520,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
     subject(:claim_rejected_by_provider) { described_class.claim_rejected_by_provider(user, claim) }
 
     let(:user) { create(:claims_user) }
-    let(:school) { build(:claims_school, region: regions(:inner_london)) }
+    let(:school) { build(:claims_school) }
     let(:claim) { build(:claim, reference: "123", school:).decorate }
     let(:mentor_1) { build(:claims_mentor, schools: [school], first_name: "Jane", last_name: "Doe") }
     let(:mentor_2) { build(:claims_mentor, schools: [school], first_name: "John", last_name: "Smith") }
