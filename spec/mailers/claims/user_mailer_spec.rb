@@ -515,4 +515,59 @@ RSpec.describe Claims::UserMailer, type: :mailer do
       EMAIL
     end
   end
+
+  describe "#claim_rejected_by_provider" do
+    subject(:claim_rejected_by_provider) { described_class.claim_rejected_by_provider(user, claim) }
+
+    let(:user) { create(:claims_user) }
+    let(:school) { build(:claims_school, region: regions(:inner_london)) }
+    let(:claim) { build(:claim, reference: "123", school:).decorate }
+    let(:mentor_1) { build(:claims_mentor, schools: [school], first_name: "Jane", last_name: "Doe") }
+    let(:mentor_2) { build(:claims_mentor, schools: [school], first_name: "John", last_name: "Smith") }
+    let(:mentor_training_1) do
+      create(:mentor_training,
+             :not_assured,
+             claim:,
+             mentor: mentor_1,
+             reason_not_assured: "ECT Mentor")
+    end
+    let(:mentor_training_2) do
+      create(:mentor_training,
+             :not_assured,
+             claim:,
+             mentor: mentor_2,
+             reason_not_assured: "Mentor not recognised")
+    end
+
+    before do
+      mentor_training_1
+      mentor_training_2
+    end
+
+    it "sends the claim rejected by provider email" do
+      expect(claim_rejected_by_provider.to).to contain_exactly(user.email)
+      expect(claim_rejected_by_provider.subject).to eq(
+        "Provider has indicated a school has an invalid claim: Claim funding for ITT Mentor training",
+      )
+      expect(claim_rejected_by_provider.body.to_s.squish).to eq(<<~EMAIL.squish)
+        Dear #{user.first_name},
+
+        Your claim with reference 123 has failed the provider audit.
+          
+        #{claim.provider_name} has indicated that:
+
+        - Jane Doe: ECT Mentor
+        - John Smith: Mentor not recognised
+
+        If you agree that the provider is correct, please forward this email onto us at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk), with the response “accept”. We will then begin the clawback (refund) process for the inaccurately claimed funds.
+        
+        If you disagree, please forward this email onto us at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk), providing supporting evidence.
+        Please provide this evidence within 5 working days, upon receiving the evidence, we will review it and respond back within 5 working days.
+        
+        Kind regards,
+
+        Claim funding for mentor training team
+      EMAIL
+    end
+  end
 end

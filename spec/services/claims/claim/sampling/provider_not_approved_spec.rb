@@ -1,18 +1,30 @@
 require "rails_helper"
 
 describe Claims::Claim::Sampling::ProviderNotApproved do
-  let!(:claim) { create(:claim, :submitted, status: :sampling_in_progress) }
+  let!(:claim) { create(:claim, :submitted, status: :sampling_in_progress, school:) }
+
+  let(:school) { create(:school) }
 
   describe "#call" do
     subject(:call) { described_class.call(claim:, provider_responses:) }
 
     context "when given no provider responses" do
       let(:provider_responses) { [] }
+      let!(:users) do
+        create_list(:claims_user, 1, schools: [school])
+      end
 
       it "changes to status of the claim to provider not approved" do
         expect { call }.to change(claim, :status)
           .from("sampling_in_progress")
           .to("sampling_provider_not_approved")
+      end
+
+      it "dispatches an email to the school users" do
+        expect { call }.to have_enqueued_job(
+          NotifyRateLimiterJob,
+        ).with(0.minutes, users, "Claims::UserMailer", :claim_rejected_by_provider, [claim], {})
+        .once
       end
     end
 
