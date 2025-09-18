@@ -22,4 +22,36 @@ RSpec.describe Claims::ClaimDecorator do
       end
     end
   end
+
+  describe "#provider_responses" do
+    subject(:provider_responses) { claim.decorate.provider_responses }
+
+    let(:claim) { create(:claim, school:) }
+    let(:school) { build(:claims_school) }
+    let(:mentor_1) { build(:claims_mentor, schools: [school], first_name: "Jane", last_name: "Doe") }
+    let(:mentor_2) { build(:claims_mentor, schools: [school], first_name: "John", last_name: "Smith") }
+    let(:mentor_training_1) do
+      create(:mentor_training,
+             :not_assured,
+             claim:,
+             mentor: mentor_1,
+             reason_not_assured: "ECT Mentor")
+    end
+    let(:mentor_training_2) do
+      create(:mentor_training,
+             :not_assured,
+             claim:,
+             mentor: mentor_2,
+             reason_not_assured: "Mentor not recognised")
+    end
+
+    before do
+      mentor_training_1
+      mentor_training_2
+    end
+
+    it "returns the providers responses" do
+      expect(provider_responses).to eq("- Jane Doe: ECT Mentor\n- John Smith: Mentor not recognised\n")
+    end
+  end
 end
