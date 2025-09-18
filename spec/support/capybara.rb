@@ -17,7 +17,7 @@ Capybara.register_driver :selenium_chrome_headless do |app|
     opts.add_argument("--window-size=1400,1400")
   end
 
-  options.browser_version = "140"
+  options.browser_version = "128"
 
   Capybara::Selenium::Driver.new(app, browser: :chrome, options:)
 end
