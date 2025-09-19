@@ -20,10 +20,20 @@ class Claims::Claim::Sampling::ProviderNotApproved < ApplicationService
       claim.update!(
         status: :sampling_provider_not_approved,
       )
+      notify_school
     end
   end
 
   private
 
   attr_reader :claim, :provider_responses
+
+  def notify_school
+    NotifyRateLimiter.call(
+      collection: claim.school_users,
+      mailer: "Claims::UserMailer",
+      mailer_method: :claim_rejected_by_provider,
+      mailer_args: [claim.decorate],
+    )
+  end
 end

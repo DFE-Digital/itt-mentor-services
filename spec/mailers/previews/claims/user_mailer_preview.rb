@@ -35,6 +35,10 @@ class Claims::UserMailerPreview < ActionMailer::Preview
     Claims::UserMailer.your_school_has_signed_in_but_not_claimed(user)
   end
 
+  def claim_rejected_by_provider
+    Claims::UserMailer.claim_rejected_by_provider(user, claim)
+  end
+
   private
 
   def user
@@ -69,6 +73,10 @@ class Claims::UserMailerPreview < ActionMailer::Preview
   class PreviewClaim < Claims::Claim
     def total_clawback_amount
       Money.new(38_910, "GBP")
+    end
+
+    def provider_responses
+      "- Jane Doe: Mentor not recognised\n- Frodo Baggins: ECT Mentor"
     end
   end
 end
