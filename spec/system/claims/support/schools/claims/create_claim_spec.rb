@@ -12,12 +12,13 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
   let!(:school) do
     create(
       :claims_school,
+      name: "The London School",
       region: regions(:inner_london),
       eligibilities: [eligibility],
     )
   end
-  let!(:mentor1) { create(:claims_mentor, first_name: "Anne", schools: [school]) }
-  let!(:mentor2) { create(:claims_mentor, first_name: "Joe", schools: [school]) }
+  let!(:mentor1) { create(:claims_mentor, first_name: "Anne", last_name: "Frank", schools: [school]) }
+  let!(:mentor2) { create(:claims_mentor, first_name: "Joe", last_name: "Doe", schools: [school]) }
   let!(:colin) do
     create(
       :claims_support_user,
@@ -121,24 +122,33 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
     then_i_see_a_dropdown_item_for_best_practice_network
 
     when_i_click_the_dropdown_item_for_best_practice_network
-    when_i_click("Continue")
+    and_i_click("Continue")
+    then_i_see_the_mentor_selection_page(bpn)
+
     when_i_click("Continue")
     then_i_see_the_error("Select a mentor")
+
     when_i_select_all_mentors
     when_i_click("Continue")
+    then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor1)
+
     when_i_click("Continue")
     then_i_see_the_error("Select the number of hours")
+
     when_i_choose_other_amount
-    when_i_click("Continue")
+    and_i_click("Continue")
     then_i_see_the_error("Enter the number of hours")
+
     when_i_choose_other_amount_and_input_hours(-1)
     when_i_click("Continue")
     then_i_see_the_error("Enter the number of hours between 1 and 20")
+
     when_i_choose_other_amount_and_input_hours(21)
-    when_i_click("Continue")
+    and_i_click("Continue")
     then_i_see_the_error("Enter the number of hours between 1 and 20")
+
     when_i_choose_other_amount_and_input_hours(0.5)
-    when_i_click("Continue")
+    and_i_click("Continue")
     then_i_see_the_error("Enter whole numbers only")
   end
 
@@ -182,8 +192,12 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
     then_i_see_a_dropdown_item_for_niot
 
     when_i_click_the_dropdown_item_for_niot
+    and_i_click("Continue")
+    then_i_see_the_mentor_selection_page(niot)
+
     when_i_click("Continue")
-    when_i_click("Continue")
+    then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor1)
+
     when_i_click("Continue")
     then_i_should_land_on_the_check_page
   end
@@ -208,6 +222,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
   def when_i_click(button)
     click_on(button)
   end
+  alias_method :and_i_click, :when_i_click
 
   def when_i_click_on_claims
     within(primary_navigation) do
@@ -345,5 +360,22 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
 
   def when_i_click_the_dropdown_item_for_niot
     page.find(".autocomplete__option", text: niot.name).click
+  end
+
+  def then_i_see_the_mentor_selection_page(provider)
+    expect(page).to have_title(
+      "Select mentors that trained with #{provider.name} - Claim details - Claim funding for mentor training - GOV.UK",
+    )
+    expect(page).to have_span_caption("Claim details")
+    expect(page).to have_element(
+      :h1,
+      text: "Select mentors that trained with #{provider.name}",
+      class: "govuk-fieldset__heading",
+    )
+
+    expect(page).to have_hint("Select all teachers that completed training to be initial teacher training (ITT) mentors.")
+
+    expect(page).to have_field("Anne Frank", type: :checkbox, visible: :all)
+    expect(page).to have_field("Joe Doe", type: :checkbox, visible: :all)
   end
 end

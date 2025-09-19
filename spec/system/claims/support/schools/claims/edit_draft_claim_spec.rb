@@ -52,12 +52,24 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
 
   scenario "As a support user I can edit a draft claim", :js do
     when_i_visit_the_draft_claim_show_page
-    then_i_edit_the_provider(
+    and_i_edit_the_provider(
       current_provider: best_practice_network_provider,
     )
-    then_i_edit_the_mentors
-    then_i_edit_the_hours_of_training
+    and_i_click("Continue")
+    then_i_see_the_mentor_selection_page(niot_provider)
+
+    when_i_select_mentor(another_claims_mentor)
+    and_i_click("Continue")
+    then_i_expect_the_training_hours_for(claims_mentor, niot_provider)
+
+    when_i_click("Continue")
+    then_i_expect_the_training_hours_for(another_claims_mentor, niot_provider)
+
+    when_i_select_another_amount
+    and_i_enter_another_amount_of_hours(15)
+    and_i_click("Continue")
     then_i_expect_the_current_draft_claims_to_not_have_my_changes
+
     when_i_click("Update claim")
     then_i_update_the_claim(another_claims_mentor)
   end
@@ -83,9 +95,13 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
     then_i_see_a_dropdown_item_for_niot
 
     when_i_click_the_dropdown_item_for_niot
-    when_i_click("Continue") # To mentors step
-    when_i_click("Continue") # To mentor training step
-    when_i_click("Continue") # To check your answers
+    and_i_click("Continue")
+    then_i_see_the_mentor_selection_page(niot_provider)
+
+    when_i_click("Continue")
+    then_i_expect_the_training_hours_for(claims_mentor, niot_provider)
+
+    when_i_click("Continue")
     then_i_see_the_check_your_answers_page(
       provider: niot_provider,
       hours_completed: 6,
@@ -107,26 +123,24 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
     )
   end
 
-  def then_i_edit_the_hours_of_training
-    page.choose("Another amount")
-    fill_in("Number of hours", with: 15)
-    click_on("Continue")
+  def when_i_select_another_amount
+    choose "Another amount"
   end
 
-  def then_i_edit_the_mentors
-    page.check(another_claims_mentor.full_name)
-    click_on("Continue")
-    page.choose("20 hours")
-    click_on("Continue")
+  def and_i_enter_another_amount_of_hours(number_of_hours)
+    fill_in "Number of hours", with: 15
   end
 
-  def then_i_edit_the_provider(current_provider:)
+  def when_i_select_mentor(mentor)
+    check mentor.full_name
+  end
+
+  def and_i_edit_the_provider(current_provider:)
     expect(page).to have_content(current_provider.name)
     click_on "Change Accredited provider"
     when_i_enter_a_provider_named_niot
     then_i_see_a_dropdown_item_for_niot
     when_i_click_the_dropdown_item_for_niot
-    click_on("Continue")
   end
 
   def when_i_visit_the_draft_claim_show_page
@@ -195,6 +209,7 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
   def when_i_click(button)
     click_on(button)
   end
+  alias_method :and_i_click, :when_i_click
 
   def when_i_click_to_change_mentors
     click_on "Change Mentor"
@@ -268,5 +283,37 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
 
   def when_i_click_the_dropdown_item_for_niot
     page.find(".autocomplete__option", text: niot_provider.name).click
+  end
+
+  def then_i_see_the_mentor_selection_page(provider)
+    expect(page).to have_title(
+      "Select mentors that trained with #{provider.name} - Claim details - Claim funding for mentor training - GOV.UK",
+    )
+    expect(page).to have_span_caption("Claim details")
+    expect(page).to have_element(
+      :h1,
+      text: "Select mentors that trained with #{provider.name}",
+      class: "govuk-fieldset__heading",
+    )
+
+    expect(page).to have_hint("Select all teachers that completed training to be initial teacher training (ITT) mentors.")
+
+    expect(page).to have_field("Barry Garlow", type: :checkbox, visible: :all)
+    expect(page).to have_field("Laura Clark", type: :checkbox, visible: :all)
+  end
+
+  def then_i_expect_the_training_hours_for(mentor, provider)
+    expect(page).to have_title(
+      "How many hours of training did #{mentor.full_name} complete? - Claim details - #{provider.name} - Claim funding for mentor training - GOV.UK",
+    )
+    expect(page).to have_span_caption("Claim details - #{provider.name}")
+    expect(page).to have_element(
+      :h1,
+      text: "How many hours of training did #{mentor.full_name} complete?",
+      class: "govuk-fieldset__heading",
+    )
+
+    expect(page).to have_field("20 hours", type: :radio, visible: :all)
+    expect(page).to have_field("Another amount", type: :radio, visible: :all)
   end
 end

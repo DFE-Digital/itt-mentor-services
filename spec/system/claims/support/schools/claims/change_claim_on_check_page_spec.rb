@@ -6,6 +6,7 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
   let!(:school) do
     create(
       :claims_school,
+      name: "The London School",
       mentors: [mentor1, mentor2, mentor3],
       region: regions(:inner_london),
       eligibilities: [eligibility],
@@ -21,9 +22,9 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
   let!(:bpn) { create(:claims_provider, :best_practice_network) }
   let!(:niot) { create(:claims_provider, :niot) }
 
-  let(:mentor1) { create(:mentor, first_name: "Anne") }
-  let(:mentor2) { create(:mentor, first_name: "Joe") }
-  let(:mentor3) { create(:mentor, first_name: "Joeana") }
+  let(:mentor1) { create(:mentor, first_name: "Anne", last_name: "Frank") }
+  let(:mentor2) { create(:mentor, first_name: "Bob",  last_name: "Doe") }
+  let(:mentor3) { create(:mentor, first_name: "John", last_name: "Smith") }
 
   before do
     user_exists_in_dfe_sign_in(user: colin)
@@ -57,9 +58,17 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
     then_i_see_a_dropdown_item_for_niot
 
     when_i_click_the_dropdown_item_for_niot
+    and_i_click("Continue")
+    then_i_see_the_mentor_selection_page(niot)
+    and_i_see_anne_frank_is_preselected
+    and_i_see_bob_doe_is_preselected
+
     when_i_click("Continue")
-    when_i_click("Continue") # Mentors step
-    when_i_click("Continue") # Mentors 1 step
+    then_i_expect_the_training_hours_for(20, mentor1)
+
+    when_i_click("Continue")
+    then_i_expect_the_training_hours_for(12, mentor2)
+
     when_i_click("Continue") # Mentors 2 step
     then_i_check_my_answers(niot, [mentor1, mentor2], [20, 12])
     when_i_click("Accept and submit")
@@ -68,12 +77,17 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
 
   scenario "Colin changes the mentors on claim on check page" do
     when_i_click_change_mentors
-    then_i_expect_the_mentors_to_be_checked([mentor1, mentor2])
+    then_i_see_the_mentor_selection_page(bpn)
+    and_i_expect_the_mentors_to_be_checked([mentor1, mentor2])
+
     when_i_uncheck_the_mentors([mentor1, mentor2])
-    when_i_click("Continue")
+    and_i_click("Continue")
     then_i_see_the_error("Select a mentor")
+
     when_i_check_the_mentor(mentor2)
-    when_i_click("Continue")
+    and_i_click("Continue")
+    then_i_expect_the_training_hours_for(12, mentor2)
+
     when_i_click("Continue") # Mentors 2 step
     then_i_check_my_answers(
       bpn,
@@ -86,35 +100,47 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
 
   scenario "Colin changes the mentors on claim without inputting hours" do
     when_i_click_change_mentors
-    then_i_expect_the_mentors_to_be_checked([mentor1, mentor2])
+    then_i_see_the_mentor_selection_page(bpn)
+    and_i_expect_the_mentors_to_be_checked([mentor1, mentor2])
+
     when_i_check_the_mentor(mentor3)
-    when_i_click("Continue")
+    and_i_click("Continue")
     then_i_expect_the_training_hours_for(20, mentor1)
+
     when_i_click("Continue")
     then_i_expect_the_training_hours_for(12, mentor2)
+
     when_i_click("Continue")
-    when_i_click("Continue") # I do not imput hours for Mentor 3
+    then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor3)
+
+    when_i_click("Continue")
     then_i_see_the_error("Select the number of hours")
+
     when_i_add_training_hours("20 hours")
-    when_i_click("Continue")
+    and_i_click("Continue")
     then_i_check_my_answers(bpn, [mentor1, mentor2, mentor3], [20, 12, 20])
   end
 
   scenario "Colin changes the training hours for a mentor on check page" do
     when_i_click_change_training_hours_for_mentor
     then_i_expect_the_training_hours_to_be_selected(20)
+
     when_i_choose_other_amount
-    when_i_click("Continue")
+    and_i_click("Continue")
     then_i_see_the_error("Enter the number of hours")
+
     when_i_choose_other_amount_and_input_hours(6)
+    and_i_click("Continue")
+    then_i_expect_the_training_hours_for(12, mentor2)
+
     when_i_click("Continue")
-    when_i_click("Continue") # Mentor 2 step
     then_i_check_my_answers(bpn, [mentor1, mentor2], [6, 12])
   end
 
   scenario "Collin intends to change the training hours but clicks back link" do
     when_i_click_change_training_hours_for_mentor
     then_i_expect_the_training_hours_to_be_selected(20)
+
     when_i_click("Back")
     then_i_see_the_list_of_mentors
   end
@@ -166,15 +192,16 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
     has_checked_field?("#claim-provider-form-provider-id-#{provider.id}-field")
   end
 
-  def then_i_expect_the_mentors_to_be_checked(mentors)
+  def and_i_expect_the_mentors_to_be_checked(mentors)
     mentors.each do |mentor|
-      has_checked_field?("#claim-mentor-ids-#{mentor.id}-field")
+      expect(page).to have_checked_field(mentor.full_name, type: "checkbox", visible: :all)
     end
   end
 
   def when_i_click(button)
     click_on(button)
   end
+  alias_method :and_i_click, :when_i_click
 
   def when_i_change_the_provider
     page.choose(niot.name)
@@ -296,5 +323,31 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
 
   def when_i_click_the_dropdown_item_for_niot
     page.find(".autocomplete__option", text: niot.name).click
+  end
+
+  def then_i_see_the_mentor_selection_page(provider)
+    expect(page).to have_title(
+      "Select mentors that trained with #{provider.name} - Claim details - Claim funding for mentor training - GOV.UK",
+    )
+    expect(page).to have_span_caption("Claim details")
+    expect(page).to have_element(
+      :h1,
+      text: "Select mentors that trained with #{provider.name}",
+      class: "govuk-fieldset__heading",
+    )
+
+    expect(page).to have_hint("Select all teachers that completed training to be initial teacher training (ITT) mentors.")
+
+    expect(page).to have_field("Anne Frank", type: :checkbox, visible: :all)
+    expect(page).to have_field("Bob Doe", type: :checkbox, visible: :all)
+    expect(page).to have_field("John Smith", type: :checkbox, visible: :all)
+  end
+
+  def and_i_see_anne_frank_is_preselected
+    expect(page).to have_checked_field("Anne Frank", type: :checkbox, visible: :all)
+  end
+
+  def and_i_see_bob_doe_is_preselected
+    expect(page).to have_checked_field("Bob Doe", type: :checkbox, visible: :all)
   end
 end
