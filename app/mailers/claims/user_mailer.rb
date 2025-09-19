@@ -179,8 +179,4 @@ class Claims::UserMailer < Claims::ApplicationMailer
   def eligible_claim_windows
     @eligible_claim_windows ||= Claims::ClaimWindow.where(academic_year_id: claim_window.academic_year_id)
   end
-
-  def not_assured_mentor_trainings(claim)
-    @not_assured_mentor_trainings ||= claim.mentor_trainings.not_assured
-  end
 end
