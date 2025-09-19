@@ -128,7 +128,7 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
   end
 
   def and_i_enter_another_amount_of_hours(number_of_hours)
-    fill_in "Number of hours", with: 15
+    fill_in "Number of hours", with: number_of_hours
   end
 
   def when_i_select_mentor(mentor)
