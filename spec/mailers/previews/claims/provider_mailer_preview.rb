@@ -2,11 +2,11 @@ class Claims::ProviderMailerPreview < ActionMailer::Preview
   include ActionDispatch::TestProcess::FixtureFile
 
   def sampling_checks_required
-    Claims::ProviderMailer.sampling_checks_required("example@example.com", provider_sampling)
+    Claims::ProviderMailer.sampling_checks_required(provider_sampling, email_address: "example@example.com")
   end
 
   def resend_sampling_checks_required
-    Claims::ProviderMailer.resend_sampling_checks_required("example@example.com", provider_sampling)
+    Claims::ProviderMailer.resend_sampling_checks_required(provider_sampling, email_address: "example@example.com")
   end
 
   def claims_have_not_been_submitted
