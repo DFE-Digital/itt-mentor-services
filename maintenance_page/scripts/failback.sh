@@ -6,11 +6,9 @@ NAMESPACE=$(jq -r '.namespace' terraform/application/config/${CONFIG}.tfvars.jso
 
 echo Reset internal ingress
 kubectl -n ${NAMESPACE} apply -f maintenance_page/manifests/${CONFIG}/ingress_internal_to_main.yml
-kubectl -n ${NAMESPACE} apply -f maintenance_page/manifests/${CONFIG}/ingress_internal_to_main2.yml
 
 echo Delete temp ingress
 kubectl -n ${NAMESPACE} delete  --ignore-not-found=true -f maintenance_page/manifests/${CONFIG}/ingress_temp_to_main.yml
-kubectl -n ${NAMESPACE} delete  --ignore-not-found=true -f maintenance_page/manifests/${CONFIG}/ingress_temp_to_main2.yml
 
 echo Delete maintenance ingress
 kubectl -n ${NAMESPACE} delete  --ignore-not-found=true -f maintenance_page/manifests/${CONFIG}/ingress_maintenance.yml

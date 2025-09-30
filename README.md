@@ -2,10 +2,9 @@
 
 [![View performance data on Skylight](https://badges.skylight.io/status/6v9PqzmAQIZi.svg?token=Qy2pZYtgRhgzOEiw8KVg4W9NcBRP2spyrwET1FsqaAE)](https://www.skylight.io/app/applications/6v9PqzmAQIZi)
 
-This application has two main services:
+This application has one service:
 
 - Claim funding for mentor training: A service for placement partners to claim funding for their general mentors’ training.
-- Manage school placements: A service for training providers and placement partners to manage their mentors and placements.
 
 ## Live Environments
 
@@ -17,15 +16,6 @@ This application has two main services:
 | Sandbox    | [sandbox](https://sandbox.claim-funding-for-mentor-training.education.gov.uk) | Demo environment for end-users                                         | bat-production |
 | Staging    | [staging](https://staging.claim-funding-for-mentor-training.education.gov.uk) | For internal use by DfE for testing - Production-like environment      | bat-staging    |
 | QA         | [qa](https://qa.claim-funding-for-mentor-training.education.gov.uk)           | For internal use by DfE for testing - Automatically deployed from main | bat-qa         |
-
-### Manage school placements
-
-| Name       | URL                                                                  | Purpose                                                                | AKS Namespace  |
-| ---------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------- |
-| Production | [www](https://manage-school-placements.education.gov.uk)             | Public site                                                            | bat-production |
-| Sandbox    | [sandbox](https://sandbox.manage-school-placements.education.gov.uk) | Demo environment for end-users                                         | bat-production |
-| Staging    | [staging](https://staging.manage-school-placements.education.gov.uk) | For internal use by DfE for testing - Production-like environment      | bat-staging    |
-| QA         | [qa](https://qa.manage-school-placements.education.gov.uk)           | For internal use by DfE for testing - Automatically deployed from main | bat-qa         |
 
 ## Setup
 
