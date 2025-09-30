@@ -21,17 +21,13 @@ kubectl apply -n ${NAMESPACE} -f maintenance_page/manifests/${CONFIG}/ingress_ma
 ### Change ingress ###
 echo Configure internal ingress to point at the maintenance app
 kubectl apply -n ${NAMESPACE} -f maintenance_page/manifests/${CONFIG}/ingress_internal_to_maintenance.yml
-kubectl apply -n ${NAMESPACE} -f maintenance_page/manifests/${CONFIG}/ingress_internal_to_maintenance2.yml
 
 echo Create temp ingress
 kubectl apply -n ${NAMESPACE} -f maintenance_page/manifests/${CONFIG}/ingress_temp_to_main.yml
-kubectl apply -n ${NAMESPACE} -f maintenance_page/manifests/${CONFIG}/ingress_temp_to_main2.yml
 
 # Retrieve the teacherservices.cloud internal domain from the temp ingress manifest
 TEMP_URL=$(awk '/name:.*cloud/ {print $2}' ./maintenance_page/manifests/${CONFIG}/ingress_temp_to_main.yml)
-TEMP2_URL=$(awk '/name:.*cloud/ {print $2}' ./maintenance_page/manifests/${CONFIG}/ingress_temp_to_main2.yml)
 
 echo
 echo Maintenance page enabled at main URL
 echo Application available for testing at https://${TEMP_URL}
-echo Application available for testing at https://${TEMP2_URL}
