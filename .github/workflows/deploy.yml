@@ -78,7 +78,6 @@ jobs:
             | App               | URL                                                                                      |
             | ----------------- | ---------------------------------------------------------------------------------------- |
             | Track & Pay       | <https://track-and-pay-pr-${{ inputs.pr-number }}.test.teacherservices.cloud>            |
-            | School Placements | <https://manage-school-placements-pr-${{ inputs.pr-number }}.test.teacherservices.cloud> |
 
       - name: Slack Notification
         if: ${{ failure() && inputs.environment != 'review' }}
