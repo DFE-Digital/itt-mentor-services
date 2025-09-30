@@ -4,12 +4,15 @@ RSpec.describe Claims::Sampling::SendProviderRemindersJob, type: :job do
   subject(:send_reminders_job) { described_class.new }
 
   let(:provider) { create(:provider, email_addresses: %w[example@example.com example2@example.com]) }
-  let(:provider_sampling) { create(:provider_sampling, provider:) }
-  let(:wait_time) { 5.minutes }
+  let(:claim) { build(:claim, status: :sampling_in_progress, provider:) }
+  let(:provider_sampling) { build(:provider_sampling, provider:) }
+  let(:provider_sampling_claim) { create(:claims_provider_sampling_claim, claim:, provider_sampling:) }
+  let(:wait_time) { 0.minutes }
   let(:mail) { instance_double(ActionMailer::MessageDelivery, deliver_later: nil) }
 
   before do
     allow(Claims::ProviderMailer).to receive(:sampling_checks_required).and_return(mail)
+    provider_sampling_claim
   end
 
   describe "#perform" do
