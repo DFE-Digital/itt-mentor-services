@@ -37,7 +37,6 @@ class Claims::ProviderMailer < Claims::ApplicationMailer
                  body: t(
                    ".body",
                    claim_window: Claims::ClaimWindow.current,
-                   next_claim_window_opens: l(Claims::ClaimWindow.next.starts_on, format: :long),
                    provider_name: email_address_record.provider_name,
                    deadline:,
                    academic_year_name:,
