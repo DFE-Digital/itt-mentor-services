@@ -65,10 +65,8 @@ runs:
       shell: bash
       run: |
         CLAIMS_EXTERNAL_HOST=$(echo $HOSTNAMES | jq -r '.[0]')
-        PLACEMENTS_EXTERNAL_HOST=$(echo $HOSTNAMES | jq -r '.[1]')
 
         export CLAIMS_EXTERNAL_HOST=$CLAIMS_EXTERNAL_HOST
-        export PLACEMENTS_EXTERNAL_HOST=$PLACEMENTS_EXTERNAL_HOST
 
         bin/rspec spec/smoke_tests --tag smoke_test -b
       env:

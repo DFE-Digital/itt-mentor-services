@@ -67,7 +67,6 @@ jobs:
             | App               | URL                                                                                      |
             | ----------------- | ---------------------------------------------------------------------------------------- |
             | Track & Pay       | <https://track-and-pay-pr-${{ github.event.number }}.test.teacherservices.cloud>            |
-            | School Placements | <https://manage-school-placements-pr-${{ github.event.number }}.test.teacherservices.cloud> |
 
   deploy_nonprod:
     name: Deploy to ${{ matrix.environment }} environment

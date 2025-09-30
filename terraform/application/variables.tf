@@ -124,7 +124,6 @@ locals {
 
   ingress_domain_map = {
     INGRESS_CLAIMS_HOST     = "track-and-pay-${var.environment}.${module.cluster_data.ingress_domain}"
-    INGRESS_PLACEMENTS_HOST = "manage-school-placements-${var.environment}.${module.cluster_data.ingress_domain}"
   }
 
   claims_domain_map = (
@@ -132,15 +131,9 @@ locals {
     {} : { CLAIMS_HOST = local.ingress_domain_map["INGRESS_CLAIMS_HOST"] }
   )
 
-  placements_domain_map = (
-    contains(keys(local.app_env_values_from_yml), "PLACEMENTS_HOST") ?
-    {} : { PLACEMENTS_HOST = local.ingress_domain_map["INGRESS_PLACEMENTS_HOST"] }
-  )
-
   app_env_values = merge(
     local.app_env_values_from_yml,
-    local.claims_domain_map,
-    local.placements_domain_map
+    local.claims_domain_map
   )
 
   app_resource_group_name = "${var.azure_resource_prefix}-${var.service_short}-${var.config_short}-rg"

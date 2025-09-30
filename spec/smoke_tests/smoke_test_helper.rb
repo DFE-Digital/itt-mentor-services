@@ -24,8 +24,6 @@ RSpec.configure do |config|
     case service.to_s
     when "claims"
       ENV["CLAIMS_EXTERNAL_HOST"]
-    when "placements"
-      ENV["PLACEMENTS_EXTERNAL_HOST"]
     end
   end
 end
