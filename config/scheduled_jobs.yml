@@ -61,3 +61,8 @@ remind_providers_to_respond_to_sampling:
     cron: "0 9 * * MON" # Every monday at 10:00
     class: "Claims::Sampling::RemindProvidersToRespondJob"
     description: "Reminds providers to respond to audit requests"
+
+remind_schools_to_respond_to_sampling:
+    cron: "0 9 * * TUE" # Every monday at 10:00
+    class: "Claims::Sampling::RemindSchoolsToRespondJob"
+    description: "Reminds schools to respond to audit requests"
