@@ -162,8 +162,8 @@ en:
           2. Contact your placement schools to advise them to submit their claims via the new service.
   
           ## Claim Deadline
-  
-          The deadline for schools to submit claims is %{deadline}. Claims submitted after this date will need to wait until the next window opens on %{next_claim_window_opens}.
+          
+          The deadline for schools to submit claims for the %{academic_year_name} is %{deadline}.
   
           ## Guidance for Schools
           

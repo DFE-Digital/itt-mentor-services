@@ -378,7 +378,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
     let(:email_address) { "admin@aes-sedai-trust.com" }
     let(:provider) { create(:claims_provider, name: provider_name) }
     let!(:claim_window) { create(:claim_window, :current) }
-    let!(:next_claim_window) { create(:claim_window, :upcoming) }
+    let(:academic_year_name) { claim_window.academic_year_name }
 
     it "sends the claims have not been submitted email" do
       expect(claims_have_not_been_submitted_email.to).to contain_exactly(email_address)
@@ -401,7 +401,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
         ## Claim Deadline
 
-        The deadline for schools to submit claims is #{I18n.l(claim_window.ends_on, format: :long)}. Claims submitted after this date will need to wait until the next window opens on #{I18n.l(next_claim_window.starts_on, format: :long)}.
+        The deadline for schools to submit claims for the #{academic_year_name} is #{I18n.l(claim_window.ends_on, format: :long)}.
 
         ## Guidance for Schools
 
