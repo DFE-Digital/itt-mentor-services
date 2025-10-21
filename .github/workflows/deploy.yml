@@ -24,6 +24,10 @@ on:
       dev-cluster:
         description: Development cluster name (Optional)
         required: false
+      maintenance_traffic:
+        description: Enable maintenance mode traffic during deployment
+        required: false
+        default: 'false'
 
 jobs:
   deploy:
@@ -66,6 +70,7 @@ jobs:
           azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           pull-request-number: ${{ inputs.pr-number }}
           dev-cluster: ${{ inputs.dev-cluster }}
+          maintenance_traffic: ${{ inputs.maintenance_traffic }}
 
       - name: Post comment to Pull Request ${{ inputs.pr-number }}
         if: ${{ inputs.environment != 'review' && inputs.environment != 'dv_review' }}
