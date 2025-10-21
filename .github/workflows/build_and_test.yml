@@ -61,7 +61,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install proj-bin
       - name: Use Node.js 20.9.0
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 20.9.0
           cache: "npm"
