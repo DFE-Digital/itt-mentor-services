@@ -8,6 +8,7 @@ on:
         type: choice
         options:
         - dv_review
+        - review
         - staging
         - production
       mode:
