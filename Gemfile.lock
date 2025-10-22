@@ -667,7 +667,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
-    undercover (0.7.4)
+    undercover (0.8.1)
       base64
       bigdecimal
       imagen (>= 0.2.0)
@@ -796,7 +796,7 @@ DEPENDENCIES
   syntax_tree-rbs
   timecop
   tzinfo-data
-  undercover (~> 0.7.4)
+  undercover (~> 0.8.1)
   view_component
   web-console
   webmock
