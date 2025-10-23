@@ -26,6 +26,7 @@ on:
         required: false
       maintenance_traffic:
         description: Enable maintenance mode traffic during deployment
+        type: boolean
         required: false
         default: 'false'
 
