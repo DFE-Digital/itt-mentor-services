@@ -48,7 +48,7 @@ module "web_application" {
 
   run_as_non_root = var.run_as_non_root
 
-  send_traffic_to_maintenance_page = false
+  send_traffic_to_maintenance_page = var.send_traffic_to_maintenance_page
 }
 
 module "worker_application" {
