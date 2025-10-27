@@ -116,7 +116,7 @@ GEM
     azure-blob (0.5.9)
       rexml
     base64 (0.3.0)
-    benchmark (0.4.1)
+    benchmark (0.5.0)
     better_html (2.2.0)
       actionview (>= 7.0)
       activesupport (>= 7.0)
@@ -188,7 +188,7 @@ GEM
     drb (2.2.3)
     email_validator (2.2.4)
       activemodel
-    erb (5.0.2)
+    erb (5.1.1)
     erb_lint (0.9.0)
       activesupport
       better_html (>= 2.0.1)
@@ -421,7 +421,7 @@ GEM
     pg_search (2.3.7)
       activerecord (>= 6.1)
       activesupport (>= 6.1)
-    pp (0.6.2)
+    pp (0.6.3)
       prettyprint
     prettier_print (1.2.1)
     prettyprint (0.2.0)
@@ -448,7 +448,7 @@ GEM
       activesupport (>= 3.0.0)
     raabro (1.4.0)
     racc (1.8.1)
-    rack (3.2.1)
+    rack (3.2.3)
     rack-oauth2 (2.2.1)
       activesupport
       attr_required
@@ -513,9 +513,10 @@ GEM
     rake (13.3.0)
     rbs (3.9.4)
       logger
-    rdoc (6.14.2)
+    rdoc (6.15.0)
       erb
       psych (>= 4.0.0)
+      tsort
     redcarpet (3.6.1)
     regexp_parser (2.11.1)
     reline (0.6.2)
@@ -612,10 +613,10 @@ GEM
       websocket (~> 1.0)
     semantic_logger (4.16.0)
       concurrent-ruby (~> 1.0)
-    sentry-rails (5.27.0)
-      railties (>= 5.0)
-      sentry-ruby (~> 5.27.0)
-    sentry-ruby (5.27.0)
+    sentry-rails (6.0.0)
+      railties (>= 5.2.0)
+      sentry-ruby (~> 6.0.0)
+    sentry-ruby (6.0.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
     shoulda-matchers (6.5.0)
@@ -661,6 +662,7 @@ GEM
     timecop (0.9.10)
     timeout (0.4.3)
     trailblazer-option (0.1.2)
+    tsort (0.2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
