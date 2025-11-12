@@ -140,7 +140,6 @@ shared:
     - first_name
     - last_name
   :users:
-    - email
     - selected_academic_year_id
   :providers:
     - telephone
