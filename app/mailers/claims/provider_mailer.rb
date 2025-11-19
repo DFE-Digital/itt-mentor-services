@@ -55,8 +55,8 @@ class Claims::ProviderMailer < Claims::ApplicationMailer
   end
 
   def completion_date
-    date = Date.current
+    date = Date.current + 21.days
     date = date.next_weekday if date.on_weekend?
-    (date + 30.days).strftime("%d %B %Y")
+    date.strftime("%d %B %Y")
   end
 end
