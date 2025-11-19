@@ -27,6 +27,8 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
   let(:mentor3) { create(:mentor, first_name: "John", last_name: "Smith") }
 
   before do
+    Timecop.travel(claim_window.starts_on)
+
     user_exists_in_dfe_sign_in(user: colin)
     given_i_sign_in
     when_i_click(school.name)
@@ -48,6 +50,10 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
     when_i_choose_other_amount_and_input_hours(12)
     when_i_click("Continue")
     then_i_check_my_answers(bpn, [mentor1, mentor2], [20, 12])
+  end
+
+  after do
+    Timecop.return
   end
 
   scenario "Colin changes the provider on claim on check page and doesn't need to add the mentor hours again" do
