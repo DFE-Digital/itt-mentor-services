@@ -7,7 +7,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
   let(:service_name) { "Claim funding for mentor training" }
   let(:support_email) { "ittmentor.funding@education.gov.uk" }
   let(:service_url) { claims_root_url }
-  let(:completion_date) { "19 February 2025" }
+  let(:completion_date) { "10 February 2025" }
   let(:download_access_token_double) { instance_double(Claims::DownloadAccessToken) }
 
   before do
