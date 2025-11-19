@@ -29,9 +29,14 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
   let!(:niot) { create(:claims_provider, :niot) }
 
   before do
+    Timecop.travel(Time.zone.local(2020, 9, 5))
     user_exists_in_dfe_sign_in(user: colin)
     given_i_sign_in
     given_there_is_a_current_claim_window
+  end
+
+  after do
+    Timecop.return
   end
 
   scenario "Colin creates a claim" do
