@@ -66,7 +66,7 @@ class Claims::OnboardMultipleSchoolsWizard::UploadStep < BaseStep
   end
 
   def csv
-    @csv ||= CSV.parse(read_csv, headers: true, skip_blanks: true)
+    @csv ||= CSV.parse(read_csv, headers: true, skip_blanks: true, encoding: "iso-8859-1:utf-8")
   end
 
   private
