@@ -25,7 +25,7 @@ class Claims::PaymentResponse < ApplicationRecord
   validates :csv_file, presence: true
 
   def row_count
-    @row_count ||= CSV.parse(csv_file.download, headers: true).length
+    @row_count ||= CSV.parse(csv_file.download, headers: true, encoding: "iso-8859-1:utf-8").length
   end
 
   def downloaded?

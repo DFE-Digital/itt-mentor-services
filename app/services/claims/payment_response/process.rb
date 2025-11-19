@@ -8,7 +8,7 @@ class Claims::PaymentResponse::Process < ApplicationService
     return if Claims::Claim.payment_in_progress.none?
 
     ActiveRecord::Base.transaction do
-      CSV.parse(payment_response.csv_file.download, headers: true).each do |row|
+      CSV.parse(payment_response.csv_file.download, headers: true, encoding: "iso-8859-1:utf-8").each do |row|
         claim = Claims::Claim.find_by(reference: row["claim_reference"])
 
         next unless claim

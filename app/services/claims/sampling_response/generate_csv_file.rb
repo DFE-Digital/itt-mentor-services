@@ -25,7 +25,7 @@ class Claims::SamplingResponse::GenerateCSVFile < ApplicationService
     CSV.open(file_name, "w", headers: true) do |csv|
       csv << HEADERS
 
-      CSV.parse(csv_content.strip, headers: :first_row, return_headers: false) do |row|
+      CSV.parse(csv_content.strip, headers: :first_row, return_headers: false, encoding: "iso-8859-1:utf-8") do |row|
         csv << [
           row["claim_reference"],
           row["school_urn"],

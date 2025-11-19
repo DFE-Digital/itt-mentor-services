@@ -7,7 +7,7 @@ class UpdateSchoolEmails < ApplicationService
 
   def call
     ApplicationRecord.transaction do
-      CSV.parse(csv_string, headers: true) do |row|
+      CSV.parse(csv_string, headers: true, encoding: "iso-8859-1:utf-8") do |row|
         school = School.find_by(urn: row["urn"])
 
         if school.nil?
