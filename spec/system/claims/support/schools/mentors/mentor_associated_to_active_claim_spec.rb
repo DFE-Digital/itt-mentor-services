@@ -4,7 +4,7 @@ RSpec.describe "When removing a mentor", service: :claims, type: :system do
   let!(:mentor1) { create(:claims_mentor, first_name: "Bilbo", last_name: "Baggins") }
   let!(:mentor2) { create(:claims_mentor, first_name: "Bilbo", last_name: "Testa") }
 
-  let!(:school) { create(:claims_school, mentors: [mentor1, mentor2], region: regions(:inner_london)) }
+  let!(:school) { create(:claims_school, name: "Hogwarts School of Witchcraft and Wizardry", mentors: [mentor1, mentor2], region: regions(:inner_london)) }
 
   let!(:colin) { create(:claims_support_user, :colin) }
 
