@@ -13,7 +13,7 @@ class Claims::ProviderMailer < Claims::ApplicationMailer
                  )
   end
 
-  def resend_sampling_checks_required(email_address, provider_sampling)
+  def resend_sampling_checks_required(provider_sampling, email_address)
     @email_address = email_address
     @provider_sampling = provider_sampling
 
