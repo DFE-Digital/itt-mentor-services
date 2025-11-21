@@ -7,7 +7,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
   let(:service_name) { "Claim funding for mentor training" }
   let(:support_email) { "ittmentor.funding@education.gov.uk" }
   let(:service_url) { claims_root_url }
-  let(:completion_date) { "10 February 2025" }
+  let(:completion_date) { "11 December 2025" }
   let(:download_access_token_double) { instance_double(Claims::DownloadAccessToken) }
 
   before do
@@ -190,7 +190,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
   end
 
   describe "#resend_sampling_checks_required" do
-    subject(:resend_sampling_checks_required_email) { described_class.resend_sampling_checks_required(provider.primary_email_address, provider_sampling) }
+    subject(:resend_sampling_checks_required_email) { described_class.resend_sampling_checks_required(provider_sampling, provider.primary_email_address) }
 
     context "when the completion date is a weekday" do
       let(:current_date) { "20/01/2025" }
@@ -209,7 +209,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
         expect(resend_sampling_checks_required_email.body.to_s.squish).to eq(<<~EMAIL.squish)
           #{provider.name},
 
-          ^ We are resending this email as requested. Please disregard any previous emails you may have received.
+          We are sending this email as a reminder.
 
           You are required by Department for Education (DfE) to complete quality assurance on funding claims associated with #{provider.name}.
 
@@ -296,15 +296,15 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
         expect(resend_sampling_checks_required_email.body.to_s.squish).to eq(<<~EMAIL.squish)
           #{provider.name},
 
-          ^ We are resending this email as requested. Please disregard any previous emails you may have received.
+          We are sending this email as a reminder.
 
           You are required by Department for Education (DfE) to complete quality assurance on funding claims associated with #{provider.name}.
 
           One or more schools submitted funding requests to DfE due to you providing training for their staff to become initial teacher training (ITT) mentors.
 
-          # You must complete quality assurance by #{completion_date}
+          # You must complete quality assurance by 11 December 2025
 
-          If you do not check these claims by 11:59pm on #{completion_date}, we may escalate the assurance process. This can include removing funding from schools you worked with.
+          If you do not check these claims by 11:59pm on 11 December 2025, we may escalate the assurance process. This can include removing funding from schools you worked with.
 
           ------------
 
@@ -322,7 +322,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
             - fill in ‘yes’ or no’ in the ‘claim_accepted’ column
             - for any ‘no’ answers, give us a reason for rejection validated by the school in the ‘rejection_reason’ column
-            - reply to this email and attach the updated file by #{completion_date}
+            - reply to this email and attach the updated file by 11 December 2025
 
           ## If the claims are accurate
           If the mentors, hours and number of claims are correct, mark the claims as ‘yes’ in the ‘claim_accepted’ column of the CSV file.
