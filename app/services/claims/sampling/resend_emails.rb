@@ -10,7 +10,7 @@ class Claims::Sampling::ResendEmails < ApplicationService
       provider_sampling.download_access_tokens.where(email_address: email_addresses).destroy_all
 
       email_addresses.each do |email_address|
-        Claims::ProviderMailer.resend_sampling_checks_required(provider_sampling, email_address:).deliver_later
+        Claims::ProviderMailer.resend_sampling_checks_required(provider_sampling, email_address).deliver_later
       end
     end
   end

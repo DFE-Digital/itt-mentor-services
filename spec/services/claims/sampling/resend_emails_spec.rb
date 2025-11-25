@@ -22,9 +22,9 @@ describe Claims::Sampling::ResendEmails do
 
       it "enqueues the delivery of an email to each provider email address" do
         expect { resend_emails }.to enqueue_mail(Claims::ProviderMailer, :resend_sampling_checks_required).exactly(3)
-        .and enqueue_mail(Claims::ProviderMailer, :resend_sampling_checks_required).with(provider_sampling, email_address: "example@provider.com")
-        .and enqueue_mail(Claims::ProviderMailer, :resend_sampling_checks_required).with(provider_sampling, email_address: "example2@provider.com")
-        .and enqueue_mail(Claims::ProviderMailer, :resend_sampling_checks_required).with(provider_sampling, email_address: "example3@provider.com")
+        .and enqueue_mail(Claims::ProviderMailer, :resend_sampling_checks_required).with(provider_sampling, "example@provider.com")
+        .and enqueue_mail(Claims::ProviderMailer, :resend_sampling_checks_required).with(provider_sampling, "example2@provider.com")
+        .and enqueue_mail(Claims::ProviderMailer, :resend_sampling_checks_required).with(provider_sampling, "example3@provider.com")
       end
 
       it "destroys all download access tokens for the given email addresses" do
