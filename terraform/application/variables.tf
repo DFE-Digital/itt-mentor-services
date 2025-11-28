@@ -118,6 +118,12 @@ variable "run_as_non_root" {
   description = "Whether to enforce that containers must run as non-root user"
 }
 
+variable "send_traffic_to_maintenance_page" {
+  type        = bool
+  default     = false
+  description = "During a maintenance operation, keep sending traffic to the maintenance page instead of resetting the ingress"
+}
+
 locals {
   postgres_ssl_mode       = var.enable_postgres_ssl ? "require" : "disable"
   app_env_values_from_yml = yamldecode(file("${path.module}/config/${var.config}_app_env.yml"))
