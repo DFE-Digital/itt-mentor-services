@@ -9,6 +9,6 @@ jobs:
       fail-fast: false
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Block Fixup Commit Merge
         uses: 13rac1/block-fixup-merge-action@v2.0.0

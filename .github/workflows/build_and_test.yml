@@ -18,7 +18,7 @@ jobs:
             command: bundle exec erb_lint app
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -48,7 +48,7 @@ jobs:
       DATABASE_URL: postgres://postgres:password@localhost:5432
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Setup Ruby
