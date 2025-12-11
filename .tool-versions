@@ -1,6 +1,6 @@
 # App dependencies
 nodejs    20.9.0
-ruby      3.3.5
+ruby      3.4.1
 yarn      1.22.1
 
 # Cloud infrastructure dependencies
