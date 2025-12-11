@@ -156,6 +156,7 @@ class Claims::UserMailer < Claims::ApplicationMailer
 
   def claim_rejected_by_provider(user, claim)
     link_to_claim = claims_school_claim_url(id: claim.id, school_id: claim.school.id, utm_source: "email", utm_medium: "notification", utm_campaign: "school")
+    claim = claim.decorate
 
     notify_email to: user.email,
                  subject: t(".subject"),
