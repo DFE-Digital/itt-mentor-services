@@ -58,7 +58,6 @@ runs:
     - name: Set up Ruby 3.4.1
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.4.1
         bundler-cache: true
 
     - name: Run Smoke Tests
