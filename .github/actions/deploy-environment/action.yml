@@ -23,6 +23,10 @@ inputs:
   dev-cluster:
     description: Development cluster name (Optional)
     required: false
+  maintenance_traffic:
+    description: enable traffic to maintenance site after deployment
+    required: false
+    default: 'false'
 
 runs:
   using: composite
@@ -47,6 +51,7 @@ runs:
         DOCKER_IMAGE_TAG: ${{ inputs.docker-image }}
         PR_NUMBER: ${{ inputs.pull-request-number }}
         CLUSTER: ${{ inputs.dev-cluster }}
+        MAINTENANCE_TRAFFIC: ${{ inputs.maintenance_traffic }}
 
     - name: Extract Terraform outputs
       shell: bash

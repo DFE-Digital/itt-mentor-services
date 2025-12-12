@@ -24,6 +24,11 @@ on:
       dev-cluster:
         description: Development cluster name (Optional)
         required: false
+      maintenance_traffic:
+        description: Enable maintenance mode traffic during deployment
+        type: boolean
+        required: false
+        default: false
 
 jobs:
   deploy:
@@ -50,11 +55,11 @@ jobs:
         if: ${{ inputs.environment != 'review' && inputs.environment != 'dv_review' }}
         uses: azure/CLI@v2
         id: keyvault-yaml-secret
-        with:
-          inlineScript: |
-            SLACK_WEBHOOK=$(az keyvault secret show --name "SLACK-WEBHOOK" --vault-name "${{ secrets.INF_KEY_VAULT }}" --query "value" -o tsv)
-            echo "::add-mask::$SLACK_WEBHOOK"
-            echo "SLACK_WEBHOOK=$SLACK_WEBHOOK" >> $GITHUB_OUTPUT
+#        with:
+#          inlineScript: |
+#            SLACK_WEBHOOK=$(az keyvault secret show --name "SLACK-WEBHOOK" --vault-name "${{ secrets.INF_KEY_VAULT }}" --query "value" -o tsv)
+#            echo "::add-mask::$SLACK_WEBHOOK"
+#            echo "SLACK_WEBHOOK=$SLACK_WEBHOOK" >> $GITHUB_OUTPUT
 
       - uses: ./.github/actions/deploy-environment
         id: deploy
@@ -66,6 +71,7 @@ jobs:
           azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           pull-request-number: ${{ inputs.pr-number }}
           dev-cluster: ${{ inputs.dev-cluster }}
+          maintenance_traffic: ${{ inputs.maintenance_traffic }}
 
       - name: Post comment to Pull Request ${{ inputs.pr-number }}
         if: ${{ inputs.environment != 'review' && inputs.environment != 'dv_review' }}
@@ -79,11 +85,11 @@ jobs:
             | ----------------- | ---------------------------------------------------------------------------------------- |
             | Track & Pay       | <https://track-and-pay-pr-${{ inputs.pr-number }}.test.teacherservices.cloud>            |
 
-      - name: Slack Notification
-        if: ${{ failure() && inputs.environment != 'review' }}
-        uses: rtCamp/action-slack-notify@master
-        env:
-          SLACK_COLOR: failure
-          SLACK_TITLE: Failure deploying release to${{ inputs.environment }}
-          SLACK_MESSAGE: Failure deploying release to ${{ inputs.environment }} - Docker tag ${{ inputs.sha }}
-          SLACK_WEBHOOK: ${{ steps.keyvault-yaml-secret.outputs.SLACK_WEBHOOK }}
+#      - name: Slack Notification
+#        if: ${{ failure() && inputs.environment != 'review' }}
+#        uses: rtCamp/action-slack-notify@master
+#        env:
+#          SLACK_COLOR: failure
+#          SLACK_TITLE: Failure deploying release to${{ inputs.environment }}
+#          SLACK_MESSAGE: Failure deploying release to ${{ inputs.environment }} - Docker tag ${{ inputs.sha }}
+#          SLACK_WEBHOOK: ${{ steps.keyvault-yaml-secret.outputs.SLACK_WEBHOOK }}
