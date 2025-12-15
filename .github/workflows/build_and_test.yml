@@ -66,7 +66,7 @@ jobs:
       - name: Run RSpec tests
         run: bundle exec rails test:prepare parallel:setup zeitwerk:check parallel:spec
       - name: Upload code coverage report
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: code-coverage
           path: coverage/
@@ -74,7 +74,7 @@ jobs:
         run: bundle exec undercover --compare origin/main
       - name: Upload failure screenshots
         if: failure()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: failure-screenshots
           path: tmp/capybara/
