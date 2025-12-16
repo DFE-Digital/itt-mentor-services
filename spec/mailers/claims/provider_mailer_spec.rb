@@ -57,7 +57,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           To complete the CSV, you must:
 
-            - fill in ‘yes’ or no’ in the ‘claim_accepted’ column
+            - fill in ‘yes’ or ‘no’ in the ‘claim_accepted’ column
             - for any ‘no’ answers, give us a reason for rejection validated by the school in the ‘rejection_reason’ column
             - reply to this email and attach the updated file by #{completion_date}
 
@@ -209,15 +209,17 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
         expect(resend_sampling_checks_required_email.body.to_s.squish).to eq(<<~EMAIL.squish)
           #{provider.name},
 
-          We are sending this email as a reminder.
+          Department for Education (DfE) requires you to complete quality assurance on funding claims associated with #{provider.name}.
 
-          You are required by Department for Education (DfE) to complete quality assurance on funding claims associated with #{provider.name}.
+          The deadline for this passed on 11 December 2025, so action is overdue. We did not receive a response to our original request sent on 20 November 2025, and subsequent reminders, to the email address we have on record.
 
-          One or more schools submitted funding requests to DfE due to you providing training for their staff to become initial teacher training (ITT) mentors.
+          One or more schools submitted funding requests to DfE due to you providing training for their staff to become initial teacher training (ITT) general mentors.
 
-          # You must complete quality assurance by 11 December 2025
+          # This quality assurance must be completed by the final deadline of Wednesday 7 January 2026
 
-          If you do not check these claims by 11:59pm on 11 December 2025, we may escalate the assurance process. This can include removing funding from schools you worked with.
+          If you do not check these claims by 11:59pm on Wednesday 7 January 2026, we may escalate the assurance process. This can include removing funding from schools you worked with.
+
+          If you are not the right person in your organisation to check the claims, please escalate this within your organisation to the right colleague at the earliest opportunity.
 
           ------------
 
@@ -229,13 +231,13 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           [http://claims.localhost/sampling/claims?token=token&utm_campaign=provider&utm_medium=notification&utm_source=email](http://claims.localhost/sampling/claims?token=token&utm_campaign=provider&utm_medium=notification&utm_source=email)
 
-          This link will expire in 7 days due to data security. To request a new link, reply to this email.
+          This is a one-time link which will expire as soon as one person in your organisation has opened it. If not opened sooner, the link will expire in 7 days. These measures are in place due to data security. To request a new link, reply to this email and confirm the email address(es) it should be sent to.
 
           To complete the CSV, you must:
 
-            - fill in ‘yes’ or no’ in the ‘claim_accepted’ column
-            - for any ‘no’ answers, give us a reason for rejection validated by the school in the ‘rejection_reason’ column
-            - reply to this email and attach the updated file by 11 December 2025
+          - fill in ‘yes’ or ‘no’ in the ‘claim_accepted’ column
+          - for any ‘no’ answers, give us a reason for rejection validated by the school in the ‘rejection_reason’ column
+          - reply to this email and attach the updated file by 7 January 2026
 
           ## If the claims are accurate
           If the mentors, hours and number of claims are correct, mark the claims as ‘yes’ in the ‘claim_accepted’ column of the CSV file.
@@ -296,15 +298,17 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
         expect(resend_sampling_checks_required_email.body.to_s.squish).to eq(<<~EMAIL.squish)
           #{provider.name},
 
-          We are sending this email as a reminder.
+          Department for Education (DfE) requires you to complete quality assurance on funding claims associated with #{provider.name}.
 
-          You are required by Department for Education (DfE) to complete quality assurance on funding claims associated with #{provider.name}.
+          The deadline for this passed on 11 December 2025, so action is overdue. We did not receive a response to our original request sent on 20 November 2025, and subsequent reminders, to the email address we have on record.
 
-          One or more schools submitted funding requests to DfE due to you providing training for their staff to become initial teacher training (ITT) mentors.
+          One or more schools submitted funding requests to DfE due to you providing training for their staff to become initial teacher training (ITT) general mentors.
 
-          # You must complete quality assurance by 11 December 2025
+          # This quality assurance must be completed by the final deadline of Wednesday 7 January 2026
 
-          If you do not check these claims by 11:59pm on 11 December 2025, we may escalate the assurance process. This can include removing funding from schools you worked with.
+          If you do not check these claims by 11:59pm on Wednesday 7 January 2026, we may escalate the assurance process. This can include removing funding from schools you worked with.
+
+          If you are not the right person in your organisation to check the claims, please escalate this within your organisation to the right colleague at the earliest opportunity.
 
           ------------
 
@@ -316,13 +320,13 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           [http://claims.localhost/sampling/claims?token=token&utm_campaign=provider&utm_medium=notification&utm_source=email](http://claims.localhost/sampling/claims?token=token&utm_campaign=provider&utm_medium=notification&utm_source=email)
 
-          This link will expire in 7 days due to data security. To request a new link, reply to this email.
+          This is a one-time link which will expire as soon as one person in your organisation has opened it. If not opened sooner, the link will expire in 7 days. These measures are in place due to data security. To request a new link, reply to this email and confirm the email address(es) it should be sent to.
 
           To complete the CSV, you must:
 
-            - fill in ‘yes’ or no’ in the ‘claim_accepted’ column
-            - for any ‘no’ answers, give us a reason for rejection validated by the school in the ‘rejection_reason’ column
-            - reply to this email and attach the updated file by 11 December 2025
+          - fill in ‘yes’ or ‘no’ in the ‘claim_accepted’ column
+          - for any ‘no’ answers, give us a reason for rejection validated by the school in the ‘rejection_reason’ column
+          - reply to this email and attach the updated file by 7 January 2026
 
           ## If the claims are accurate
           If the mentors, hours and number of claims are correct, mark the claims as ‘yes’ in the ‘claim_accepted’ column of the CSV file.
