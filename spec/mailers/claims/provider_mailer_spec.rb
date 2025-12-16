@@ -142,7 +142,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           To complete the CSV, you must:
 
-            - fill in ‘yes’ or no’ in the ‘claim_accepted’ column
+            - fill in ‘yes’ or ‘no’ in the ‘claim_accepted’ column
             - for any ‘no’ answers, give us a reason for rejection validated by the school in the ‘rejection_reason’ column
             - reply to this email and attach the updated file by #{completion_date}
 
