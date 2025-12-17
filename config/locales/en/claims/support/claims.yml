@@ -52,6 +52,7 @@ en:
         details:
           mentor_training_title:
             zero: "%{mentor_name} — no clawback required"
+            one: "%{mentor_name}"
             other: "%{mentor_name}"
           original: Original hours claimed
           clawed_back: Amount clawed back
