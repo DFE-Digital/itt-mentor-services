@@ -299,12 +299,12 @@ GEM
       csv
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
-    i18n (1.14.7)
+    i18n (1.14.8)
       concurrent-ruby (~> 1.0)
     imagen (0.2.0)
       parser (>= 2.5, != 2.5.1.1)
     io-console (0.8.2)
-    irb (1.15.3)
+    irb (1.16.0)
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
@@ -346,7 +346,8 @@ GEM
     matrix (0.4.2)
     method_source (1.1.0)
     mini_mime (1.1.5)
-    minitest (5.27.0)
+    minitest (6.0.0)
+      prism (~> 1.5)
     monetize (1.13.0)
       money (~> 6.12)
     money (6.16.0)
@@ -438,7 +439,7 @@ GEM
       pry (>= 0.13, < 0.16)
     pry-rails (0.3.11)
       pry (>= 0.13.0)
-    psych (5.3.0)
+    psych (5.3.1)
       date
       stringio
     public_suffix (6.0.2)
@@ -497,7 +498,7 @@ GEM
     rails-html-sanitizer (1.6.2)
       loofah (~> 2.21)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
-    rails_semantic_logger (4.17.0)
+    rails_semantic_logger (4.19.0)
       rack
       railties (>= 5.1)
       semantic_logger (~> 4.16)
@@ -513,7 +514,7 @@ GEM
     rake (13.3.1)
     rbs (3.9.4)
       logger
-    rdoc (6.17.0)
+    rdoc (7.0.2)
       erb
       psych (>= 4.0.0)
       tsort
@@ -611,7 +612,7 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 4.0)
       websocket (~> 1.0)
-    semantic_logger (4.16.0)
+    semantic_logger (4.17.0)
       concurrent-ruby (~> 1.0)
     sentry-rails (6.0.0)
       railties (>= 5.2.0)
@@ -638,7 +639,7 @@ GEM
     smart_properties (1.17.0)
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
-    stringio (3.1.9)
+    stringio (3.2.0)
     strong_migrations (2.4.0)
       activerecord (>= 7.1)
     swd (2.0.3)
