@@ -1,0 +1,7 @@
+claims.localhost {
+    reverse_proxy localhost:3000
+}
+
+placements.localhost {
+    reverse_proxy localhost:3000
+}

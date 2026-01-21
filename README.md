@@ -41,6 +41,7 @@ brew install asdf # Mac-specific
 asdf plugin add nodejs
 asdf plugin add ruby
 asdf plugin add yarn
+asdf plugin add caddy
 asdf plugin add azure-cli
 asdf plugin add jq
 asdf plugin add kubectl
@@ -108,9 +109,7 @@ You will also need to create a `.env` file in the same directory as `.env.test` 
 
 To run the application locally:
 
-1. Run `yarn` to install dependencies for the web app to run
-2. Run `bin/setup` to setup the database
-3. Run `bin/dev` to launch the app on <http://placements.localhost:3000> or <http://claims.localhost:3000>
+1. Run `bin/setup` to install dependencies, set up the database and launch the app on <http://placements.localhost:3000> or <http://claims.localhost:3000>.
 
 ### Seed Data
 

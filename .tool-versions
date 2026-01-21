@@ -2,6 +2,7 @@
 nodejs    20.9.0
 ruby      3.4.1
 yarn      1.22.1
+caddy     2.9.1
 
 # Cloud infrastructure dependencies
 # https://github.com/DFE-Digital/teacher-services-cloud/blob/main/documentation/developer-onboarding.md#software-requirements
