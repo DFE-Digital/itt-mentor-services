@@ -24,6 +24,19 @@ RSpec.describe Claims::Slack::DailyRoundupJob, type: :job do
       allow(slack_notifier).to receive(:claim_submitted_notification).and_return(slack_message)
     end
 
+    context "when there is no current claim window" do
+      before do
+        allow(Claims::ClaimWindow).to receive(:current).and_return(nil)
+      end
+
+      it "does not send a notification" do
+        described_class.perform_now
+
+        expect(slack_notifier).not_to have_received(:claim_submitted_notification)
+        expect(slack_message).not_to have_received(:deliver_now)
+      end
+    end
+
     it "sends the daily claims notification" do
       described_class.perform_now
 

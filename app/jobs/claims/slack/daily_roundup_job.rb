@@ -4,6 +4,8 @@ class Claims::Slack::DailyRoundupJob < ApplicationJob
 
   def perform
     current_claim_window = Claims::ClaimWindow.current
+    return unless current_claim_window
+
     claim_window_academic_year = current_claim_window.academic_year
     todays_claims = claims_since(Time.current.yesterday.change(hour: 16))
     new_schools = new_organisations(todays_claims, :school_id)
