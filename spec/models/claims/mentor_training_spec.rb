@@ -98,6 +98,7 @@ RSpec.describe Claims::MentorTraining, type: :model do
 
   describe "delegations" do
     it { is_expected.to delegate_method(:full_name).to(:mentor).with_prefix.allow_nil }
+    it { is_expected.to delegate_method(:trn).to(:mentor).with_prefix.allow_nil }
     it { is_expected.to delegate_method(:name).to(:provider).with_prefix.allow_nil }
     it { is_expected.to delegate_method(:school).to(:claim) }
     it { is_expected.to delegate_method(:region).to(:school) }

@@ -57,7 +57,7 @@ class Claims::MentorTraining < ApplicationRecord
   scope :not_assured, -> { where(not_assured: true) }
   scope :rejected, -> { where(rejected: true) }
 
-  delegate :full_name, to: :mentor, prefix: true, allow_nil: true
+  delegate :full_name, :trn, to: :mentor, prefix: true, allow_nil: true
   delegate :name, to: :provider, prefix: true, allow_nil: true
   delegate :school, to: :claim
   delegate :region, :region_funding_available_per_hour, to: :school
