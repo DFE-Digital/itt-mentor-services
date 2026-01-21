@@ -4,7 +4,9 @@
 <div class="govuk-width-container">
   <h1 class="govuk-heading-l"><%= @school.name %></h1>
 
-  <%= render "claims/support/schools/secondary_navigation", school: @school %>
+  <%= render SecondaryNavigationComponent.new do |component| %>
+    <% component.with_navigation_item t("claims.support.schools.secondary_navigation.details"), claims_support_school_path(@school) %>
+  <% end %>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
