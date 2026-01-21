@@ -12,7 +12,12 @@ class Claims::Slack::DailyRoundupJob < ApplicationJob
     new_providers = new_organisations(todays_claims, :provider_id)
     total_claims = Claims::Claim.joins(:claim_window).where(claim_window: { academic_year_id: claim_window_academic_year.id })
     total_amount = total_claims.map(&:amount).sum
-    average_amount = total_amount / total_claims.count.to_f
+    total_claims_count = total_claims.count
+    average_amount = if total_claims_count.zero?
+                       0
+                     else
+                       total_amount / total_claims_count.to_f
+                     end
 
     Claims::ClaimSlackNotifier.claim_submitted_notification(
       academic_year: claim_window_academic_year,
