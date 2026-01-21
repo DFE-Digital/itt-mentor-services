@@ -23,6 +23,7 @@ describe Claims::Sampling::GenerateCSVFile do
         school_group
         provider_name
         claim_submission_date
+        mentor_trn
         mentor_full_name
         mentor_hours_of_training
         claim_accepted
@@ -39,6 +40,7 @@ describe Claims::Sampling::GenerateCSVFile do
           school.group,
           claim.provider_name,
           claim.submitted_at.iso8601,
+          claim.mentor_trainings.first.mentor_trn,
           claim.mentor_trainings.first.mentor_full_name,
           claim.mentor_trainings.first.hours_completed.to_s,
         ])

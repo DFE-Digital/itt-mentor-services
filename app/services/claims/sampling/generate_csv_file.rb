@@ -10,6 +10,7 @@ class Claims::Sampling::GenerateCSVFile < ApplicationService
     school_group
     provider_name
     claim_submission_date
+    mentor_trn
     mentor_full_name
     mentor_hours_of_training
     claim_accepted
@@ -36,6 +37,7 @@ class Claims::Sampling::GenerateCSVFile < ApplicationService
             claim.school.group,
             claim.provider_name,
             claim.submitted_at.iso8601,
+            mentor_training.mentor_trn,
             mentor_training.mentor_full_name,
             mentor_training.hours_completed,
           ]
