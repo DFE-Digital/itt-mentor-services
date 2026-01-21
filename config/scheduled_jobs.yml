@@ -59,10 +59,10 @@ notify_claims_users_they_have_invalid_provider_claims:
 
 remind_providers_to_respond_to_sampling:
     cron: "0 10 * * MON" # Every monday at 10:00
-    class: "Claims::Sampling::RemindProvidersToRespondJob"
+    class: "Claims::Sampling::SendProviderRemindersJob"
     description: "Reminds providers to respond to audit requests"
 
 remind_schools_to_respond_to_sampling:
     cron: "0 10 * * TUE" # Every tuesday at 10:00
-    class: "Claims::Sampling::RemindSchoolsToRespondJob"
+    class: "Claims::Sampling::SendSchoolRemindersJob"
     description: "Reminds schools to respond to audit requests"
