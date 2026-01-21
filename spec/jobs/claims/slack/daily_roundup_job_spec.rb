@@ -52,11 +52,11 @@ RSpec.describe Claims::Slack::DailyRoundupJob, type: :job do
         claim_window = create(:claim_window, :current)
         _invalid_claim = create(:claim, claim_window:, status: :invalid_provider, created_at: 2.weeks.ago)
         _previous_claim = create(:claim, claim_window:,
-                                 created_at: 2.weeks.ago,
-                                 mentor_trainings: build_list(:mentor_training, 3, hours_completed: 15))
+                                         created_at: 2.weeks.ago,
+                                         mentor_trainings: build_list(:mentor_training, 3, hours_completed: 15))
         yesterdays_claim = create(:claim, claim_window:,
-                                  created_at: Time.current.yesterday.change(hour: 16),
-                                  mentor_trainings: build_list(:mentor_training, 3, hours_completed: 15))
+                                          created_at: Time.current.yesterday.change(hour: 16),
+                                          mentor_trainings: build_list(:mentor_training, 3, hours_completed: 15))
 
         described_class.perform_now
 
