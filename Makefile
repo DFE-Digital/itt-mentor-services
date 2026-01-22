@@ -4,6 +4,7 @@ REGION=UK South
 SERVICE_NAME=itt-mentor-services
 SERVICE_SHORT=ittms
 DOCKER_REPOSITORY=ghcr.io/dfe-digital/itt-mentor-services
+PR_NUMBER=1797
 
 help:
 	@grep -E '^[a-zA-Z\._\-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -82,6 +83,8 @@ terraform-init: composed-variables set-azure-account
 	$(eval export TF_VAR_service_short=${SERVICE_SHORT})
 	$(eval export TF_VAR_docker_image=${DOCKER_REPOSITORY}:${DOCKER_IMAGE_TAG})
 	$(eval export TF_VAR_environment=${ENVIRONMENT})
+	$(eval export TF_VAR_send_traffic_to_maintenance_page=${MAINTENANCE_TRAFFIC})
+	echo "TF_VAR_send_traffic_to_maintenance_page=${MAINTENANCE_TRAFFIC}"
 
 terraform-plan: terraform-init
 	terraform -chdir=terraform/application plan -var-file "config/${CONFIG}.tfvars.json"
