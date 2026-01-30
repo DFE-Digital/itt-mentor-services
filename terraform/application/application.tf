@@ -7,7 +7,7 @@ module "application_configuration" {
   service_short          = var.service_short
   config_short           = var.config_short
   secret_key_vault_short = "app"
-  istio_gateway          = var.istio_enabled
+  istio_enabled          = var.istio_enabled
 
   # Delete for non rails apps
   is_rails_application = true
