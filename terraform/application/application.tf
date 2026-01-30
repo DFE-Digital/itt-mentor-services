@@ -7,7 +7,6 @@ module "application_configuration" {
   service_short          = var.service_short
   config_short           = var.config_short
   secret_key_vault_short = "app"
-  istio_enabled          = var.istio_enabled
 
   # Delete for non rails apps
   is_rails_application = true
@@ -46,6 +45,7 @@ module "web_application" {
   replicas                   = var.app_replicas
   docker_image               = var.docker_image
   enable_logit               = true
+  istio_enabled              = var.istio_enabled
 
   run_as_non_root = var.run_as_non_root
 
