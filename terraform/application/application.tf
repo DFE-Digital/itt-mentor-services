@@ -39,13 +39,13 @@ module "web_application" {
     local.ingress_domain_map["INGRESS_CLAIMS_HOST"]
   ]
 
+  istio_enabled              = var.istio_enabled
   cluster_configuration_map  = module.cluster_data.configuration_map
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
   replicas                   = var.app_replicas
   docker_image               = var.docker_image
   enable_logit               = true
-  istio_enabled              = var.istio_enabled
 
   run_as_non_root = var.run_as_non_root
 
