@@ -53,7 +53,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           [http://claims.localhost/sampling/claims?token=token&utm_campaign=provider&utm_medium=notification&utm_source=email](http://claims.localhost/sampling/claims?token=token&utm_campaign=provider&utm_medium=notification&utm_source=email)
 
-          This link will expire in 7 days due to data security. To request a new link, reply to this email.
+          Before you download this link, please note that it will expire as soon as one person in your organisation has downloaded it. If it is not opened in 7 days, it will expire due to data security. To request a new link, reply to this email
 
           To complete the CSV, you must:
 
@@ -138,7 +138,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           [http://claims.localhost/sampling/claims?token=token&utm_campaign=provider&utm_medium=notification&utm_source=email](http://claims.localhost/sampling/claims?token=token&utm_campaign=provider&utm_medium=notification&utm_source=email)
 
-          This link will expire in 7 days due to data security. To request a new link, reply to this email.
+          Before you download this link, please note that it will expire as soon as one person in your organisation has downloaded it. If it is not opened in 7 days, it will expire due to data security. To request a new link, reply to this email
 
           To complete the CSV, you must:
 

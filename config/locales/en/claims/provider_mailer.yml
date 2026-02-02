@@ -23,8 +23,8 @@ en:
           Visit the GOV.UK claim funding for mentor training website to download the file:
 
           [%{download_csv_url}](%{download_csv_url})
-
-          This link will expire in 7 days due to data security. To request a new link, reply to this email.
+          
+          Before you download this link, please note that it will expire as soon as one person in your organisation has downloaded it. If it is not opened in 7 days, it will expire due to data security. To request a new link, reply to this email
 
           To complete the CSV, you must:
 
