@@ -22,9 +22,9 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
   attribute :index_path
 
   def initialize(params = {})
-    params[:school_ids].compact_blank! if params[:school_ids].present?
-    params[:provider_ids].compact_blank! if params[:provider_ids].present?
-    params[:claim_window_ids].compact_blank! if params[:claim_window_ids].present?
+    params[:school_ids].presence&.compact_blank!
+    params[:provider_ids].presence&.compact_blank!
+    params[:claim_window_ids].presence&.compact_blank!
 
     super(params)
   end

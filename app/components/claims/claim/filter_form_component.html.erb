@@ -215,7 +215,7 @@
                     },
                     small: true,
                     multiple: false,
-                    ) do %>
+                  ) do %>
                     <% claim_windows.each do |claim_window| %>
                       <%= form.govuk_check_box :claim_window_ids, claim_window.id, label: { text: claim_window.short_name } %>
                     <% end %>
