@@ -15,6 +15,7 @@ class Claims::ClaimsQuery < ApplicationQuery
     scope = submitted_before(scope)
     scope = status_condition(scope)
     scope = academic_year_condition(scope)
+    scope = claim_window_condition(scope)
     scope = mentor_condition(scope)
     scope = support_user_condition(scope)
     scope = training_type_condition(scope)
@@ -64,6 +65,12 @@ class Claims::ClaimsQuery < ApplicationQuery
     return scope if params[:academic_year_id].blank?
 
     scope.where(claim_window_id: Claims::ClaimWindow.select(:id).where(academic_year_id: params[:academic_year_id]))
+  end
+
+  def claim_window_condition(scope)
+    return scope if params[:claim_window_ids].blank?
+
+    scope.where(claim_window_id: params[:claim_window_ids])
   end
 
   def mentor_condition(scope)

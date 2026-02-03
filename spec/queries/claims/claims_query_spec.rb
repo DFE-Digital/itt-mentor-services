@@ -49,6 +49,19 @@ describe Claims::ClaimsQuery do
       end
     end
 
+    context "when given claim window ids" do
+      let(:academic_year) { build(:academic_year, starts_on: Date.parse("1 September 2001"), ends_on: Date.parse("31 August 2002"), name: "2001 to 2002") }
+      let(:claim_window) { build(:claim_window, academic_year:, starts_on: 2.weeks.ago, ends_on: 1.week.ago) }
+      let(:params) { { claim_window_ids: [claim_window.id] } }
+
+      it "filters the results by provided claim window ids" do
+        claim_belonging_to_filtered_claim_window = create(:claim, :submitted, claim_window:)
+        _claim_not_belonging_to_filtered_claim_window = create(:claim, :submitted)
+
+        expect(claims_query).to contain_exactly(claim_belonging_to_filtered_claim_window)
+      end
+    end
+
     context "when given academic year ids" do
       let(:academic_year) { build(:academic_year, starts_on: Date.parse("1 September 2001"), ends_on: Date.parse("31 August 2002"), name: "2001 to 2002") }
       # The current claim window gets chosen by default for created claims, so we need to create one in the past
