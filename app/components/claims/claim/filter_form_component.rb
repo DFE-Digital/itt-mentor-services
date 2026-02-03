@@ -34,6 +34,10 @@ class Claims::Claim::FilterFormComponent < ApplicationComponent
     Claims::MentorTraining.training_types.keys.sort
   end
 
+  def claim_windows
+    filter_form.academic_year.claim_windows.decorate
+  end
+
   private
 
   attr_reader :claims, :filter_form

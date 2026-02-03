@@ -38,6 +38,22 @@
                     </div>
                   </div>
 
+                  <% if filter_form.claim_windows.present? %>
+                    <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.claim_window") %></h3>
+                    <ul class="app-filter-tags">
+                      <% filter_form.claim_windows.each do |claim_window| %>
+                        <li>
+                          <%= govuk_link_to(
+                            claim_window.short_name,
+                            filter_form.index_path_without_filter(filter: "claim_window_ids", value: claim_window.id),
+                            class: "app-filter__tag",
+                            no_visited_state: true,
+                          ) %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  <% end %>
+
                   <% if filter_form.training_types.present? %>
                     <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.training_type") %></h3>
                     <ul class="app-filter-tags">
@@ -189,6 +205,22 @@
                     <% end %>
                   </div>
                 <% end %>
+
+                <div class="app-filter__option">
+                  <%= form.govuk_check_boxes_fieldset(
+                    :claim_window_ids,
+                    legend: {
+                      text: t("claims.support.claims.index.claim_window"),
+                      size: "s",
+                    },
+                    small: true,
+                    multiple: false,
+                    ) do %>
+                    <% claim_windows.each do |claim_window| %>
+                      <%= form.govuk_check_box :claim_window_ids, claim_window.id, label: { text: claim_window.short_name } %>
+                    <% end %>
+                  <% end %>
+                </div>
 
                 <div class="app-filter__option">
                     <%= form.govuk_check_boxes_fieldset(
