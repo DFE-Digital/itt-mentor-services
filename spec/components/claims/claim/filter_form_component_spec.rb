@@ -34,6 +34,7 @@ RSpec.describe Claims::Claim::FilterFormComponent, type: :component do
     expect(page).to have_field("claims_support_claims_filter_form[submitted_before(1i)]")
     expect(page).to have_field("claims_support_claims_filter_form[submitted_before(2i)]")
     expect(page).to have_field("claims_support_claims_filter_form[submitted_before(3i)]")
+    expect(page).to have_field("claims_support_claims_filter_form[claim_window_ids][]")
   end
 
   it "allows users to filter by all claim statuses, except from the draft statuses" do
@@ -123,6 +124,23 @@ RSpec.describe Claims::Claim::FilterFormComponent, type: :component do
 
     it "returns only mentors who trained during the selected academic year" do
       expect(mentors).to contain_exactly(current_trained_mentor)
+    end
+  end
+
+  describe "#claim_windows" do
+    subject(:claim_windows) { component.claim_windows }
+    let(:current_claim_window) { create(:claim_window, :current) }
+    let(:historic_claim_window) { create(:claim_window, :historic) }
+    let(:academic_year) { current_claim_window.academic_year }
+
+    before do
+      historic_claim_window
+      current_claim_window
+      filter_form.academic_year_id = academic_year.id
+    end
+
+    it "returns claim windows for the selected academic year" do
+      expect(claim_windows).to contain_exactly(current_claim_window.decorate)
     end
   end
 
