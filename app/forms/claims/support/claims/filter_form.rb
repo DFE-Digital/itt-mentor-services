@@ -14,6 +14,7 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
   attribute :provider_ids, default: []
   attribute :statuses, default: []
   attribute :academic_year_id, default: -> { AcademicYear.for_latest_claim_window.id }
+  attribute :claim_window_ids, default: []
   attribute :mentor_ids, default: []
   attribute :support_user_ids, default: []
   attribute :training_types, default: []
@@ -23,6 +24,7 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
   def initialize(params = {})
     params[:school_ids].compact_blank! if params[:school_ids].present?
     params[:provider_ids].compact_blank! if params[:provider_ids].present?
+    params[:claim_window_ids].compact_blank! if params[:claim_window_ids].present?
 
     super(params)
   end
@@ -35,7 +37,8 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
       statuses.present? ||
       mentor_ids.present? ||
       support_user_ids.present? ||
-      training_types.present?
+      training_types.present? ||
+      claim_window_ids.present?
   end
 
   def index_path_without_filter(filter:, value: nil)
@@ -86,6 +89,10 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
     end)
   end
 
+  def claim_windows
+    @claim_windows ||= academic_year.claim_windows.where(id: claim_window_ids).decorate
+  end
+
   def query_params
     {
       search:,
@@ -100,6 +107,7 @@ class Claims::Support::Claims::FilterForm < ApplicationForm
       mentor_ids:,
       support_user_ids:,
       training_types:,
+      claim_window_ids:,
     }
   end
 

@@ -52,6 +52,14 @@ describe Claims::Support::Claims::FilterForm, type: :model do
       expect(form.filters_selected?).to be(true)
     end
 
+    it "returns true if claim_window_ids present" do
+      params = { claim_window_ids: %w[claim_window_id] }
+      form = described_class.new(params)
+
+      expect(form.filters_selected?).to be(true)
+    end
+
+
     it "returns true if support_user_ids present" do
       params = { support_user_ids: %w[support_user_id] }
       form = described_class.new(params)
@@ -327,6 +335,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
         training_types: %w[initial],
         statuses: %w[submitted],
         academic_year_id: current_academic_year.id,
+        claim_window_ids: %w[claim_window_id],
       }
 
       call = described_class.new(params).query_params
@@ -344,6 +353,7 @@ describe Claims::Support::Claims::FilterForm, type: :model do
         statuses: %w[submitted],
         training_types: %w[initial],
         academic_year_id: current_academic_year.id,
+        claim_window_ids: %w[claim_window_id],
       )
     end
   end
