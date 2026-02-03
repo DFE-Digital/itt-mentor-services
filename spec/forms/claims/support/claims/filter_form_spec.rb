@@ -59,7 +59,6 @@ describe Claims::Support::Claims::FilterForm, type: :model do
       expect(form.filters_selected?).to be(true)
     end
 
-
     it "returns true if support_user_ids present" do
       params = { support_user_ids: %w[support_user_id] }
       form = described_class.new(params)

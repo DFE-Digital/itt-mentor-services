@@ -129,6 +129,7 @@ RSpec.describe Claims::Claim::FilterFormComponent, type: :component do
 
   describe "#claim_windows" do
     subject(:claim_windows) { component.claim_windows }
+
     let(:current_claim_window) { create(:claim_window, :current) }
     let(:historic_claim_window) { create(:claim_window, :historic) }
     let(:academic_year) { current_claim_window.academic_year }
