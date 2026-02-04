@@ -41,6 +41,7 @@ class Claims::Support::Claims::PaymentsController < Claims::Support::Application
       mentor_ids: [],
       support_user_ids: [],
       training_types: [],
+      claim_window_ids: [],
     )
   end
 
