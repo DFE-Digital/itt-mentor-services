@@ -67,6 +67,7 @@ class Claims::Support::Claims::ClawbacksController < Claims::Support::Applicatio
       mentor_ids: [],
       support_user_ids: [],
       training_types: [],
+      claim_window_ids: [],
     ).with_defaults(index_path:)
   end
 
