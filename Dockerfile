@@ -70,7 +70,7 @@ RUN apk add --update --no-cache tzdata && \
 RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
 
 # libpq: required to run postgres
-RUN apk add --no-cache libpq
+RUN apk add -U --no-cache libpq libcrypto3=3.3.6-r0
 
 # proj-util: provides cs2cs, required by Gias::CSVTransformer::CoordinateTransformer
 RUN apk add --no-cache proj-util
