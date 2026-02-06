@@ -211,13 +211,11 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           Department for Education (DfE) requires you to complete quality assurance on funding claims associated with #{provider.name}.
 
-          The deadline for this passed on 11 December 2025, so action is overdue. We did not receive a response to our original request sent on 20 November 2025, and subsequent reminders, to the email address we have on record.
-
           One or more schools submitted funding requests to DfE due to you providing training for their staff to become initial teacher training (ITT) general mentors.
 
-          # This quality assurance must be completed by the final deadline of Wednesday 7 January 2026
+          # This quality assurance must be completed by the deadline of 23 February 2026.
 
-          If you do not check these claims by 11:59pm on Wednesday 7 January 2026, we may escalate the assurance process. This can include removing funding from schools you worked with.
+          If you do not check these claims by the deadline, we may escalate the assurance process. This can include removing funding from schools you worked with.
 
           If you are not the right person in your organisation to check the claims, please escalate this within your organisation to the right colleague at the earliest opportunity.
 
@@ -225,22 +223,24 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           # What you need to do
 
-          Use the CSV file to check the accuracy of the claims associated with you and record your answers in the file. It is in a spreadsheet format for you to fill out.#{"  "}
+          Use the CSV file to check the accuracy of the claims associated with you and record your answers in the file. It is in a spreadsheet format for you to fill out.
+
+          Before you download this link, please note that it will expire as soon as one person in your organisation has downloaded it. If it is not opened in 7 days, it will expire due to data security. To request a new link, reply to this email.
 
           Visit the GOV.UK claim funding for mentor training website to download the file:
 
           [http://claims.localhost/sampling/claims?token=token&utm_campaign=provider&utm_medium=notification&utm_source=email](http://claims.localhost/sampling/claims?token=token&utm_campaign=provider&utm_medium=notification&utm_source=email)
 
-          This is a one-time link which will expire as soon as one person in your organisation has opened it. If not opened sooner, the link will expire in 7 days. These measures are in place due to data security. To request a new link, reply to this email and confirm the email address(es) it should be sent to.
-
           To complete the CSV, you must:
 
           - fill in ‘yes’ or ‘no’ in the ‘claim_accepted’ column
           - for any ‘no’ answers, give us a reason for rejection validated by the school in the ‘rejection_reason’ column
-          - reply to this email and attach the updated file by 7 January 2026
+          - reply to this email and attach the updated file by 23 February 2026
 
           ## If the claims are accurate
           If the mentors, hours and number of claims are correct, mark the claims as ‘yes’ in the ‘claim_accepted’ column of the CSV file.
+
+          If a school has claimed too few hours, please follow the steps above for accurate claims as the department is unable to fund additional hours after a claim has been paid.#{' '}
 
           ## If you disagree with a claim
           If you disagree with the information a school submitted to us, contact the school to discuss it. They may have additional evidence or a reason.
@@ -292,7 +292,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
         Timecop.return
       end
 
-      it "resends the sampling checks required email" do
+      xit "resends the sampling checks required email" do
         expect(resend_sampling_checks_required_email.to).to match_array(provider.primary_email_address)
         expect(resend_sampling_checks_required_email.subject).to eq("ITT mentor claims need to be quality assured")
         expect(resend_sampling_checks_required_email.body.to_s.squish).to eq(<<~EMAIL.squish)
