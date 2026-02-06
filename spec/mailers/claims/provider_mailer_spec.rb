@@ -240,7 +240,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
           ## If the claims are accurate
           If the mentors, hours and number of claims are correct, mark the claims as ‘yes’ in the ‘claim_accepted’ column of the CSV file.
 
-          If a school has claimed too few hours, please follow the steps above for accurate claims as the department is unable to fund additional hours after a claim has been paid.#{' '}
+          If a school has claimed too few hours, please follow the steps above for accurate claims as the department is unable to fund additional hours after a claim has been paid.
 
           ## If you disagree with a claim
           If you disagree with the information a school submitted to us, contact the school to discuss it. They may have additional evidence or a reason.
@@ -281,94 +281,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
       end
     end
 
-    context "when the completion date is a weekend" do
-      let(:current_date) { "18/01/2025" }
-
-      before do
-        Timecop.freeze(Time.zone.parse("#{current_date} 00:00"))
-      end
-
-      after do
-        Timecop.return
-      end
-
-      xit "resends the sampling checks required email" do
-        expect(resend_sampling_checks_required_email.to).to match_array(provider.primary_email_address)
-        expect(resend_sampling_checks_required_email.subject).to eq("ITT mentor claims need to be quality assured")
-        expect(resend_sampling_checks_required_email.body.to_s.squish).to eq(<<~EMAIL.squish)
-          #{provider.name},
-
-          Department for Education (DfE) requires you to complete quality assurance on funding claims associated with #{provider.name}.
-
-          The deadline for this passed on 11 December 2025, so action is overdue. We did not receive a response to our original request sent on 20 November 2025, and subsequent reminders, to the email address we have on record.
-
-          One or more schools submitted funding requests to DfE due to you providing training for their staff to become initial teacher training (ITT) general mentors.
-
-          # This quality assurance must be completed by the final deadline of Wednesday 7 January 2026
-
-          If you do not check these claims by 11:59pm on Wednesday 7 January 2026, we may escalate the assurance process. This can include removing funding from schools you worked with.
-
-          If you are not the right person in your organisation to check the claims, please escalate this within your organisation to the right colleague at the earliest opportunity.
-
-          ------------
-
-          # What you need to do
-
-          Use the CSV file to check the accuracy of the claims associated with you and record your answers in the file. It is in a spreadsheet format for you to fill out.#{"  "}
-
-          Visit the GOV.UK claim funding for mentor training website to download the file:
-
-          [http://claims.localhost/sampling/claims?token=token&utm_campaign=provider&utm_medium=notification&utm_source=email](http://claims.localhost/sampling/claims?token=token&utm_campaign=provider&utm_medium=notification&utm_source=email)
-
-          This is a one-time link which will expire as soon as one person in your organisation has opened it. If not opened sooner, the link will expire in 7 days. These measures are in place due to data security. To request a new link, reply to this email and confirm the email address(es) it should be sent to.
-
-          To complete the CSV, you must:
-
-          - fill in ‘yes’ or ‘no’ in the ‘claim_accepted’ column
-          - for any ‘no’ answers, give us a reason for rejection validated by the school in the ‘rejection_reason’ column
-          - reply to this email and attach the updated file by 7 January 2026
-
-          ## If the claims are accurate
-          If the mentors, hours and number of claims are correct, mark the claims as ‘yes’ in the ‘claim_accepted’ column of the CSV file.
-
-          ## If you disagree with a claim
-          If you disagree with the information a school submitted to us, contact the school to discuss it. They may have additional evidence or a reason.
-
-          ## If the school gives you valid evidence after speaking to them
-          If you accept the evidence the placement school provides, mark the claim as ‘yes’ in the ‘claim_accepted’ column.
-
-          ## If the school does not give you valid evidence after speaking to them
-          If the school cannot provide any additional information or cannot provide information that you accept, mark the claim as ‘no’ in the ‘claim_accepted’ column.
-
-          You must give a reason why a claim is incorrect. Write this in the ‘rejection_reason’ column.
-
-          Some reasons may include that a mentor is:
-
-            - on the Early Career Framework (ECF), rather than ITT
-            - claiming too many hours
-            - claiming too few hours
-            - not known to you
-            - not employed at the school
-
-          --------
-
-          ## After you complete quality assurance
-
-          For any rejected claims, we will contact schools to confirm they agree. Make sure you speak to the school about rejected claims before you submit your answers to us. This will avoid any confusion about their eligibility for funding.
-
-          --------
-
-          ## Contact us
-
-          If you need any help with completing the quality assurance, contact the team at [#{support_email}](mailto:#{support_email})
-
-          Learn more about [funding for mentor training on GOV.UK](http://claims.localhost/?utm_campaign=provider&utm_medium=notification&utm_source=email)
-
-
-          Claim funding for mentor training team
-        EMAIL
-      end
-    end
+    # Add a context for when the completion date is a weekend after adding the fixed date logic
   end
 
   describe "#claims_have_not_been_submitted" do
