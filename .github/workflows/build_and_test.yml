@@ -58,10 +58,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install proj-bin
-      - name: Use Node.js 20.15.1
+      - name: Use Node.js 22.15.1
         uses: actions/setup-node@v6
         with:
-          node-version: 20.15.1
+          node-version: 22.15.1
           cache: "npm"
       - name: Run RSpec tests
         run: bundle exec rails test:prepare parallel:setup zeitwerk:check parallel:spec
