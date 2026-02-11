@@ -1,14 +1,14 @@
 <%= govuk_summary_list(html_attributes: { id: "contact-details" }, actions: false) do |summary_list| %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".telephone_number")) %>
-    <% row.with_value(**summary_row_value(value: @school.telephone)) %>
+    <% row.with_value(**summary_row_value(value: organisation.telephone)) %>
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".website")) %>
-    <% if @school.website.present? %>
+    <% if organisation.website.present? %>
       <% row.with_value do %>
-        <%= govuk_link_to(@school.website,
-                          external_link(@school.website),
+        <%= govuk_link_to(organisation.website,
+                          external_link(organisation.website),
                           target: "_blank",
                           rel: "noopener noreferrer") %>
       <% end %>
@@ -18,6 +18,6 @@
   <% end %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: t(".address")) %>
-    <% row.with_value(**summary_row_value(value: @school.formatted_address)) %>
+    <% row.with_value(**summary_row_value(value: organisation.formatted_address)) %>
   <% end %>
 <% end %>

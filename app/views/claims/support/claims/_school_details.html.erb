@@ -1,0 +1,9 @@
+<h1 class="govuk-heading-l"><%= t(".heading") %></h1>
+
+<%= render "claims/schools/organisation_details", organisation: %>
+<h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".grant_conditions") %></h2>
+<%= render "shared/organisations/grant_conditions", organisation: %>
+<h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".grant_funding") %></h2>
+<%= render "shared/organisations/grant_funding", organisation: %>
+<h2 class="govuk-heading-m govuk-!-margin-top-9"><%= t(".contact_details") %></h2>
+<%= render "claims/schools/contact_details", organisation: organisation.decorate %>
