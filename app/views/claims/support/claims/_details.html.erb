@@ -33,7 +33,7 @@
 <%= govuk_summary_list(actions: policy(claim).edit?) do |summary_list| %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: Claims::Claim.human_attribute_name(:school)) %>
-    <% row.with_value(text: govuk_link_to(claim.school_name, claims_support_school_path(claim.school))) %>
+    <% row.with_value(text: claim.school_name) %>
   <% end %>
 
   <% summary_list.with_row do |row| %>
