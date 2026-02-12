@@ -85,6 +85,7 @@ RSpec.describe Claims::Claim, type: :model do
   end
 
   context "with delegations" do
+    it { is_expected.to delegate_method(:code).to(:provider).with_prefix }
     it { is_expected.to delegate_method(:name).to(:provider).with_prefix }
     it { is_expected.to delegate_method(:primary_email_address).to(:provider).with_prefix }
     it { is_expected.to delegate_method(:users).to(:school).with_prefix }
