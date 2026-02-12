@@ -10,11 +10,15 @@ RSpec.describe Claims::Claim::GenerateCSV do
     school2 = create(:claims_school, :claims, name: "School name 2", region: regions(:outer_london), urn: "5678", local_authority_name: "blah", local_authority_code: "BLA", type_of_establishment: "Academy converter", group: "Academy")
     school3 = create(:claims_school, :claims, name: "School name 3", region: regions(:fringe), urn: "5679", local_authority_name: "blah", local_authority_code: "BLA", type_of_establishment: "Academy converter", group: "Academy")
 
-    claim1 = create(:claim, status: :submitted, submitted_at: Time.zone.local(2023, 8, 29, 22, 35, 0), school: school1, reference: "12345678")
-    claim2 = create(:claim, status: :submitted, submitted_at: Time.zone.local(2023, 8, 29, 22, 35, 0), school: school2, reference: "12345679")
-    claim3 = create(:claim, status: :submitted, submitted_at: Time.zone.local(2023, 8, 29, 22, 35, 0), school: school3, reference: "12345677")
-    claim4 = create(:claim, status: :submitted, submitted_at: Time.zone.local(2023, 8, 29, 22, 35, 0), school: school3, reference: "12345671")
-    draft_claim = create(:claim, status: :draft, school: school3, reference: "12345670")
+    provider1 = create(:claims_provider, :niot, name: "Provider 1", code: "P1")
+    provider2 = create(:claims_provider, :niot, name: "Provider 2", code: "P2")
+    provider3 = create(:claims_provider, :niot, name: "Provider 3", code: "P3")
+
+    claim1 = create(:claim, status: :submitted, submitted_at: Time.zone.local(2023, 8, 29, 22, 35, 0), school: school1, provider: provider1, reference: "12345678")
+    claim2 = create(:claim, status: :submitted, submitted_at: Time.zone.local(2023, 8, 29, 22, 35, 0), school: school2, provider: provider2, reference: "12345679")
+    claim3 = create(:claim, status: :submitted, submitted_at: Time.zone.local(2023, 8, 29, 22, 35, 0), school: school3, provider: provider1, reference: "12345677")
+    claim4 = create(:claim, status: :submitted, submitted_at: Time.zone.local(2023, 8, 29, 22, 35, 0), school: school3, provider: provider2, reference: "12345671")
+    draft_claim = create(:claim, status: :draft, school: school3, provider: provider3, reference: "12345670")
 
     create(:mentor_training, claim: claim1, hours_completed: 10)
     create(:mentor_training, claim: claim2, hours_completed: 10)
@@ -33,17 +37,17 @@ RSpec.describe Claims::Claim::GenerateCSV do
   end
 
   it "inserts the correct headers" do
-    expect(generate_claims_csv.lines.first.chomp).to eq("claim_reference,school_urn,school_name,school_local_authority,claim_amount,school_type_of_establishment,school_group,claim_submission_date,claim_status,claim_unpaid_reason")
+    expect(generate_claims_csv.lines.first.chomp).to eq("claim_reference,school_urn,school_name,school_local_authority,school_type_of_establishment,school_group,provider_name,provider_code,claim_amount,claim_submission_date,claim_status,claim_unpaid_reason")
   end
 
   it "contains all claims" do
     expect(generate_claims_csv.lines.sort).to eq([
-      "claim_reference,school_urn,school_name,school_local_authority,claim_amount,school_type_of_establishment,school_group,claim_submission_date,claim_status,claim_unpaid_reason\n",
-      "12345670,5679,School name 3,blah,45.10,Academy converter,Academy,,draft\n",
-      "12345671,5679,School name 3,blah,90.20,Academy converter,Academy,2023-08-29T22:35:00Z,submitted\n",
-      "12345677,5679,School name 3,blah,676.50,Academy converter,Academy,2023-08-29T22:35:00Z,submitted\n",
-      "12345678,1234,School name 1,blah,536.00,Academy converter,Academy,2023-08-29T22:35:00Z,submitted\n",
-      "12345679,5678,School name 2,blah,482.50,Academy converter,Academy,2023-08-29T22:35:00Z,submitted\n",
+      "claim_reference,school_urn,school_name,school_local_authority,school_type_of_establishment,school_group,provider_name,provider_code,claim_amount,claim_submission_date,claim_status,claim_unpaid_reason\n",
+      "12345670,5679,School name 3,blah,Academy converter,Academy,Provider 3,P3,45.10,,draft\n",
+      "12345671,5679,School name 3,blah,Academy converter,Academy,Provider 2,P2,90.20,2023-08-29T22:35:00Z,submitted\n",
+      "12345677,5679,School name 3,blah,Academy converter,Academy,Provider 1,P1,676.50,2023-08-29T22:35:00Z,submitted\n",
+      "12345678,1234,School name 1,blah,Academy converter,Academy,Provider 1,P1,536.00,2023-08-29T22:35:00Z,submitted\n",
+      "12345679,5678,School name 2,blah,Academy converter,Academy,Provider 2,P2,482.50,2023-08-29T22:35:00Z,submitted\n",
     ].sort)
   end
 end
