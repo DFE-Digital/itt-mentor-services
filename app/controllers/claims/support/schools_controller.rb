@@ -38,10 +38,10 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
   end
 
   def schools
-    @schools ||= if params[:name_or_postcode].blank?
+    @schools ||= if params[:name_urn_or_postcode].blank?
                    Claims::School.order(:name)
                  else
-                   Claims::School.search_name_postcode(params[:name_or_postcode]).order(:name)
+                   Claims::School.search_name_urn_postcode(params[:name_urn_or_postcode]).order(:name)
                  end
   end
 
