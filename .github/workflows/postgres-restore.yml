@@ -10,8 +10,11 @@ on:
         default: staging
         type: choice
         options:
+        options:
+        - 'qa'
+        - 'sandbox'
         - 'staging'
-#        - 'production'
+        - 'production'
       confirm-production:
         description: Must be set to true if restoring production
         required: true
