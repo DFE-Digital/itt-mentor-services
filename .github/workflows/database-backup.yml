@@ -10,6 +10,8 @@ on:
         default: staging
         type: choice
         options:
+        - 'qa'
+        - 'sandbox'
         - 'staging'
         - 'production'
       backup-file:
