@@ -92,10 +92,12 @@ RSpec.describe "Support user requests a clawback with all mentors incorrect", se
     @claim_one.mentor_trainings.order_by_mentor_full_name.each do |mentor_training|
       expect(page).to have_summary_list_row(mentor_training.mentor.full_name, "#{mentor_training.hours_completed} hours")
     end
-    expect(page).to have_h2("Grant funding")
-    expect(page).to have_summary_list_row("Total hours", "#{@claim_one.mentor_trainings.sum(:hours_completed)} hours")
-    expect(page).to have_summary_list_row("Hourly rate", @claim_one.school.region.funding_available_per_hour)
-    expect(page).to have_summary_list_row("Claim amount", @claim_one.amount.format(symbol: true, decimal_mark: ".", no_cents: true))
+    within "#grant_funding" do
+      expect(page).to have_h2("Grant funding")
+      expect(page).to have_summary_list_row("Total hours", "#{@claim_one.mentor_trainings.sum(:hours_completed)} hours")
+      expect(page).to have_summary_list_row("Hourly rate", @claim_one.school.region.funding_available_per_hour)
+      expect(page).to have_summary_list_row("Claim amount", @claim_one.amount.format(symbol: true, decimal_mark: ".", no_cents: true))
+    end
   end
 
   def when_i_click_on_request_clawback
