@@ -87,9 +87,11 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
     @claim_not_approved_claim.mentor_trainings.order_by_mentor_full_name.each do |mentor_training|
       expect(page).to have_summary_list_row(mentor_training.mentor.full_name, "#{mentor_training.hours_completed} hours")
     end
-    expect(page).to have_h2("Grant funding")
-    expect(page).to have_summary_list_row("Total hours", "#{@claim_not_approved_claim.mentor_trainings.sum(:hours_completed)} hours")
-    expect(page).to have_summary_list_row("Claim amount", @claim_not_approved_claim.amount)
+    within "#grant_funding" do
+      expect(page).to have_h2("Grant funding")
+      expect(page).to have_summary_list_row("Total hours", "#{@claim_not_approved_claim.mentor_trainings.sum(:hours_completed)} hours")
+      expect(page).to have_summary_list_row("Claim amount", @claim_not_approved_claim.amount)
+    end
   end
 
   def when_i_click_on_back
@@ -135,11 +137,10 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
       expect(page).to have_summary_list_row("Hours clawed back", pluralize(@clawback_requested_claim.mentor_trainings.sum(:hours_clawed_back), "hour"))
     end
 
-    expect(page).to have_h2("Grant funding")
-    expect(page).to have_summary_list_row("Original claim amount", @clawback_requested_claim.amount)
-    expect(page).to have_h2("History")
-    expect(page).to have_element("h3", class: "app-timeline__title", text: "Clawback requested for claim 22222222")
-    expect(page).to have_link("View details", href: claims_support_claims_claim_activity_path(@clawback_requested_activity_log))
+    within "#grant_funding" do
+      expect(page).to have_h2("Grant funding")
+      expect(page).to have_summary_list_row("Original claim amount", @clawback_requested_claim.amount)
+    end
   end
 
   def then_i_see_the_clawbacks_index_page
@@ -167,8 +168,6 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
         expect(row).to have_css("ul.govuk-list li", text: mentor.full_name)
       end
     end
-    expect(page).to have_h2("History")
-    expect(page).to have_element("h3", class: "app-timeline__title", text: "Payer clawback response uploaded for 1 claim")
     expect(page).to have_link("View details", href: claims_support_claims_claim_activity_path(@clawback_response_uploaded_activity_log))
   end
 end

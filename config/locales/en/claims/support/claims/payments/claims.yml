@@ -12,6 +12,10 @@ en:
               mentor_with_index: Mentor %{index}
               mentor: Mentor
               submitted_by: Submitted by %{name} on %{date}.
+              claim_details: Claim details
+              school_details: School details
+              school_users: School users
+              history: History
             history:
               no_activity: Claim activity will be shown here after the claim has been processed
               byline: "%{user} on %{time}"

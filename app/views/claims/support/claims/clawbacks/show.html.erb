@@ -8,20 +8,37 @@
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l"><%= t(".page_caption", reference: @claim.reference) %></span>
-      <h1 class="govuk-heading-l"><%= @claim.school_name %> <%= render Claim::StatusTagComponent.new(claim: @claim) %></h1>
+      <%= govuk_tabs do |tabs| %>
+        <% tabs.with_tab(label: t(".claim_details")) do %>
+          <span class="govuk-caption-l"><%= t(".page_caption", reference: @claim.reference) %></span>
+          <h1 class="govuk-heading-l"><%= @claim.school_name %> <%= render Claim::StatusTagComponent.new(claim: @claim) %></h1>
 
-      <%= render Claims::Support::Claim::ResponsesComponent.new(claim: @claim) %>
+          <%= render Claims::Support::Claim::ResponsesComponent.new(claim: @claim) %>
 
-      <%= render Claims::Support::Claim::ActionsComponent.new(claim: @claim) %>
+          <%= render Claims::Support::Claim::ActionsComponent.new(claim: @claim) %>
 
-      <% if @claim.submitted? %>
-        <p class="govuk-body"><%= t(".submitted_by", name: @claim.submitted_by.full_name, date: l(@claim.submitted_on, format: :long)) %></p>
+          <% if @claim.submitted_by_id? %>
+            <p class="govuk-body"><%= t(".submitted_by", name: @claim.submitted_by.full_name, date: l(@claim.submitted_on, format: :long)) %></p>
+          <% end %>
+
+          <%= render "claims/support/claims/details", claim: @claim %>
+        <% end %>
+
+        <% tabs.with_tab(label: t(".school_details")) do %>
+          <p class="govuk-caption-l"><%= t(".page_caption", reference: @claim.reference) %></p>
+          <%= render "claims/support/claims/school_details", organisation: @claim.school %>
+        <% end %>
+
+        <% tabs.with_tab(label: t(".school_users")) do %>
+          <p class="govuk-caption-l"><%= t(".page_caption", reference: @claim.reference) %></p>
+          <%= render "claims/support/claims/school_users", organisation: @claim.school %>
+        <% end %>
+
+        <% tabs.with_tab(label: t(".history")) do %>
+          <p class="govuk-caption-l"><%= t(".page_caption", reference: @claim.reference) %></p>
+          <%= render "claims/support/claims/history", claim: @claim %>
+        <% end %>
       <% end %>
-
-      <%= render "claims/support/claims/details", claim: @claim %>
-
-      <%= render "claims/support/claims/history", claim: @claim %>
     </div>
   </div>
 </div>

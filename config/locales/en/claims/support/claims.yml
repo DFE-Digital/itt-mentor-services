@@ -43,6 +43,10 @@ en:
           mentor_with_index: Mentor %{index}
           mentor: Mentor
           submitted_by: Submitted by %{name} on %{date}.
+          claim_details: Claim details
+          school_details: School details
+          school_users: School users
+          history: History
         history:
           sub_heading: History
           no_activity: There is no activity.
@@ -50,6 +54,18 @@ en:
           showing: "Showing %{count} of %{total_count} files"
           view_all_files: View all files
           view_details: View details
+        school_users:
+          heading: School users
+          name: Name
+          email: Email
+          last_signed_in: Last signed in
+          never_signed_in: Never signed in
+          no_users: This school has no users.
+        school_details:
+          heading: School details
+          grant_conditions: Grant conditions
+          grant_funding: Grant funding
+          contact_details: Contact details
         details:
           mentor_training_title:
             zero: "%{mentor_name} — no clawback required"
