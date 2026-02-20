@@ -34,7 +34,6 @@ en:
           claim_window: Claim window
         show:
           page_caption: Claim %{reference}
-          claim_details: Claim details
           page_title: "%{school_name} - Claim %{reference}"
           reason: Reason claim is being audited
           approve: Approve claim
@@ -44,6 +43,10 @@ en:
           mentor_with_index: Mentor %{index}
           mentor: Mentor
           submitted_by: Submitted by %{name} on %{date}.
+          claim_details: Claim details
+          school_details: School details
+          school_users: School users
+          history: History
         history:
           sub_heading: History
           no_activity: There is no activity.

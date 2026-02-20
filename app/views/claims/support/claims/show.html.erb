@@ -10,7 +10,7 @@
     <div class="govuk-grid-column-two-thirds">
       <%= govuk_tabs do |tabs| %>
         <% tabs.with_tab(label: t(".claim_details")) do %>
-          <p class="govuk-caption-l"><%= t(".page_caption", reference: @claim.reference) %></p>
+          <span class="govuk-caption-l"><%= t(".page_caption", reference: @claim.reference) %></span>
           <h1 class="govuk-heading-l"><%= @claim.school_name %> <%= render Claim::StatusTagComponent.new(claim: @claim) %></h1>
 
           <%= render Claims::Support::Claim::ResponsesComponent.new(claim: @claim) %>
@@ -24,17 +24,17 @@
           <%= render "claims/support/claims/details", claim: @claim %>
         <% end %>
 
-        <% tabs.with_tab(label: "School details") do %>
+        <% tabs.with_tab(label: t(".school_details")) do %>
           <p class="govuk-caption-l"><%= t(".page_caption", reference: @claim.reference) %></p>
           <%= render "claims/support/claims/school_details", organisation: @claim.school %>
         <% end %>
 
-        <% tabs.with_tab(label: "School users") do %>
+        <% tabs.with_tab(label: t(".school_users")) do %>
           <p class="govuk-caption-l"><%= t(".page_caption", reference: @claim.reference) %></p>
           <%= render "claims/support/claims/school_users", organisation: @claim.school %>
         <% end %>
 
-        <% tabs.with_tab(label: "History") do %>
+        <% tabs.with_tab(label: t(".history")) do %>
           <p class="govuk-caption-l"><%= t(".page_caption", reference: @claim.reference) %></p>
           <%= render "claims/support/claims/history", claim: @claim %>
         <% end %>
