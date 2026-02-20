@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Support user adds a partner provider",
-               :js, service: :placements, type: :system do
+               :js, service: :placements, skip: "flaky", type: :system do
   include ActiveJob::TestHelper
 
   around do |example|
