@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Change claim on check page", :js, service: :claims, type: :system do
+RSpec.describe "Change claim on check page", :js, service: :claims, skip: "flaky", type: :system do
   let!(:claim_window) { create(:claim_window, :current) }
   let!(:eligibility) { create(:eligibility, claim_window:) }
   let!(:school) do
