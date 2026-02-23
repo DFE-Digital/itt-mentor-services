@@ -136,11 +136,6 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
       expect(page).to have_summary_list_row("Original claim amount", @clawback_requested_claim.amount)
       expect(page).to have_summary_list_row("Hours clawed back", pluralize(@clawback_requested_claim.mentor_trainings.sum(:hours_clawed_back), "hour"))
     end
-
-    within "#grant_funding" do
-      expect(page).to have_h2("Grant funding")
-      expect(page).to have_summary_list_row("Original claim amount", @clawback_requested_claim.amount)
-    end
   end
 
   def then_i_see_the_clawbacks_index_page

@@ -21,11 +21,12 @@ RSpec.describe "View claims", service: :claims, type: :system do
 
   def given_i_sign_in
     sign_in_claims_support_user
+    @last_signed_in_at = 1.day.ago
     @school_user = create(:claims_user,
                           first_name: "Sarah",
                           last_name: "Smith",
                           email: "sarah.smith@hogwarts.ac.uk",
-                          last_signed_in_at: 1.day.ago)
+                          last_signed_in_at: @last_signed_in_at)
     @school = create(:claims_school, name: "Hogwarts", urn: "123456", users: [@school_user])
     @claim = create(:claim, :payment_information_requested, unpaid_reason: "Some reason", school: @school)
   end
@@ -56,7 +57,7 @@ RSpec.describe "View claims", service: :claims, type: :system do
   end
 
   def then_i_can_see_the_details_of_the_school
-    expect(page).to have_h1("School details")
+    expect(page).to have_h2("School details")
 
     expect(page).to have_summary_list_row("Name", "Hogwarts")
     expect(page).to have_summary_list_row("Unique reference number (URN)", "123456")
@@ -67,12 +68,12 @@ RSpec.describe "View claims", service: :claims, type: :system do
   end
 
   def then_i_can_see_the_school_users
-    expect(page).to have_h1("School users")
+    expect(page).to have_h2("School users")
 
     expect(page).to have_table_row({
       "Name" => "Sarah Smith",
       "Email" => "sarah.smith@hogwarts.ac.uk",
-      "Last signed in" => 1.day.ago.strftime("%d %b %H:%M"),
+      "Last signed in" => @last_signed_in_at.strftime("%d %b %H:%M"),
     })
   end
 
@@ -81,7 +82,7 @@ RSpec.describe "View claims", service: :claims, type: :system do
   end
 
   def then_i_can_see_the_claim_history
-    expect(page).to have_h1("History")
+    expect(page).to have_h2("History")
 
     expect(page).to have_paragraph("There is no activity.")
   end
