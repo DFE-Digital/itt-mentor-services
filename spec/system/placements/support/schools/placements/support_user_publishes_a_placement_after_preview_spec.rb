@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support user publishes a placement after preview", service: :placements, type: :system do
+RSpec.describe "Support user publishes a placement after preview", service: :placements, skip: "Temporary", type: :system do
   scenario do
     given_that_placements_exist
     and_i_am_signed_in

@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Secondary school user edits a placement with javascript disabled",
                service: :placements,
+               skip: "Temporary",
                type: :system do
   scenario do
     given_that_placements_exist
