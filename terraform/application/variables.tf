@@ -156,3 +156,5 @@ locals {
   azure_storage_access_key   = azurerm_storage_account.general_storage_account.primary_access_key
   azure_storage_container    = azurerm_storage_container.general_container.name
 }
+
+variable "postgres_version" { default = 14 }
