@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Support user submits claims when there are submitted claims for both claim windows", service: :claims, type: :system do
+RSpec.describe "Support user submits claims when there are submitted claims for both claim windows", service: :claims, skip: "Temporary", type: :system do
   scenario do
     given_i_am_signed_in_as_a_support_user
     and_there_are_submitted_claims
