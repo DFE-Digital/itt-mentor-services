@@ -213,7 +213,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           One or more schools submitted funding requests to DfE due to you providing training for their staff to become initial teacher training (ITT) general mentors.
 
-          # This quality assurance must be completed by the deadline of 23 February 2026.
+          # This quality assurance must be completed as soon as possible.
 
           If you do not check these claims by the deadline, we may escalate the assurance process. This can include removing funding from schools you worked with.
 
@@ -235,7 +235,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
 
           - fill in ‘yes’ or ‘no’ in the ‘claim_accepted’ column
           - for any ‘no’ answers, give us a reason for rejection validated by the school in the ‘rejection_reason’ column
-          - reply to this email and attach the updated file by 23 February 2026
+          - reply to this email and attach the updated file as soon as possible
 
           ## If the claims are accurate
           If the mentors, hours and number of claims are correct, mark the claims as ‘yes’ in the ‘claim_accepted’ column of the CSV file.
