@@ -32,7 +32,7 @@ en:
           number_of_hours: Number of hours
           warning: You can only claim for the time spent becoming an initial teacher training (ITT) mentor. This funding is not available for training early career framework (ECF) mentors.
           initial_hours_of_training_hint: "%{mentor_full_name} (TRN %{mentor_trn}) is eligible for %{remaining_hours} hours of training."
-          refresher_hours_of_training_hint: "%{mentor_full_name} (TRN %{mentor_trn}) is eligible for %{remaining_hours} hours of refresher training as they have previously claimed up 20 hours of mentor training."
+          refresher_hours_of_training_hint: "%{mentor_full_name} (TRN %{mentor_trn}) is eligible for %{remaining_hours} hours of refresher training as they have previously claimed up to %{num_initial_hours} hours of mentor training."
         check_your_answers_step:
           page_title: Check your answers before submitting your claim - %{contextual_text}
           title: Check your answers before submitting your claim
@@ -57,5 +57,5 @@ en:
         no_mentors_step:
           page_title: No mentors for %{provider_name} - %{contextual_text}
           heading_empty: No mentors for %{provider_name}
-          no_mentors_with_claimable_hours: There are no mentors you can include in a claim because they have already had 20 hours of training claimed for with %{provider_name}.
+          no_mentors_with_claimable_hours: There are no mentors you can include in a claim because they have already had %{num_initial_hours} hours of training claimed for with %{provider_name}.
           change_provider: Change the accredited provider
