@@ -11,7 +11,7 @@ class Claims::TrainingAllowance
   end
 
   def total_hours
-    training_type == INITIAL_TRAINING_TYPE ? INITIAL_TRAINING_HOURS : REFRESHER_TRAINING_HOURS
+    training_type == INITIAL_TRAINING_TYPE ? initial_training_hours : refresher_training_hours
   end
 
   def remaining_hours
@@ -27,12 +27,9 @@ class Claims::TrainingAllowance
   attr_reader :mentor, :provider, :academic_year, :claim_to_exclude
 
   INITIAL_TRAINING_TYPE = :initial
-  INITIAL_TRAINING_HOURS = 20
   REFRESHER_TRAINING_TYPE = :refresher
-  REFRESHER_TRAINING_HOURS = 6
 
-  private_constant :INITIAL_TRAINING_TYPE, :INITIAL_TRAINING_HOURS, :REFRESHER_TRAINING_TYPE,
-                   :REFRESHER_TRAINING_HOURS
+  private_constant :INITIAL_TRAINING_TYPE, :REFRESHER_TRAINING_TYPE
 
   def mentor_training_scope
     @mentor_training_scope ||= provider.mentor_trainings
@@ -53,5 +50,13 @@ class Claims::TrainingAllowance
       .where.not(claim_id: claim_to_exclude&.id)
       .merge(Claims::Claim.not_internal_draft.not_payment_not_approved)
       .sum(:hours_completed)
+  end
+
+  def initial_training_hours
+    Claims::TrainingHours.new(academic_year:).initial
+  end
+
+  def refresher_training_hours
+    Claims::TrainingHours.new(academic_year:).refresher
   end
 end
