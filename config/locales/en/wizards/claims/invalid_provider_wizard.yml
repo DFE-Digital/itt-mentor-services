@@ -9,8 +9,8 @@ en:
           can_not_assign_provider:
             You can not assign this claim to %{provider_name}.
           mentors_on_this_claim_have_already_claimed:
-            There are mentors included in this claim who have already had 20 hours of training,
-            or will exceed 20 hours of training, claimed for with Best Practice Network.
+            There are mentors included in this claim who have already had %{num_initial_hours} hours of training,
+            or will exceed %{num_initial_hours} hours of training, claimed for with %{provider_name}.
           you_may_need_to_delete_this_claim:
             You may need to %{link} and submit another claim for %{provider_name}, or another provider.
           delete_this_claim: delete this claim

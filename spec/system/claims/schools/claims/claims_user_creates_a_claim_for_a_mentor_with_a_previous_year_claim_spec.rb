@@ -166,7 +166,7 @@ RSpec.describe "Claims user creates a claim for a mentor with a previous year cl
     expect(page).to have_title("How many hours of training did Barry Garlow complete? - Claim details - Best Practice Network - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Claims")
     expect(page).to have_element(:h1, class: "govuk-fieldset__heading", text: "How many hours of training did Barry Garlow complete?")
-    expect(page).to have_hint("Barry Garlow (TRN 8888888) is eligible for 6 hours of refresher training as they have previously claimed up 20 hours of mentor training.")
+    expect(page).to have_hint("Barry Garlow (TRN 8888888) is eligible for 6 hours of refresher training as they have previously claimed up to 20 hours of mentor training.")
     expect(page).to have_element(:label, class: "govuk-label govuk-radios__label", text: "6 hours")
     expect(page).to have_element(:label, class: "govuk-label govuk-radios__label", text: "Another amount")
 

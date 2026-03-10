@@ -6,6 +6,6 @@ en:
           disclaimer_component:
             disclaimer_foreword: You must %{mentors_link} before they can be associated with a claim.
             add_mentors: add mentors
-            disclaimer: If a mentor you have added is not showing in the list, they have already claimed 20 hours with %{provider_name}.
+            disclaimer: If a mentor you have added is not showing in the list, they have already claimed %{num_initial_hours} hours with %{provider_name}.
             disclaimer_contact: If you think this is a mistake, contact %{email_link}.
             mentor_not_listed: My mentor is not listed
