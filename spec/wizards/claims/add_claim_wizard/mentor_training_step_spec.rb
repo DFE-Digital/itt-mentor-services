@@ -153,7 +153,7 @@ RSpec.describe Claims::AddClaimWizard::MentorTrainingStep, type: :model do
       before { allow(step.training_allowance).to receive(:training_type).and_return(:refresher) }
 
       it "returns the hint message for refresher training" do
-        expect(hours_of_training_hint).to include("#{mentor.first_name} #{mentor.last_name} (TRN #{mentor.trn}) is eligible for 6 hours of refresher training as they have previously claimed up 20 hours of mentor training.")
+        expect(hours_of_training_hint).to include("#{mentor.first_name} #{mentor.last_name} (TRN #{mentor.trn}) is eligible for 6 hours of refresher training as they have previously claimed up to 20 hours of mentor training.")
       end
     end
   end

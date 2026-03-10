@@ -8,7 +8,8 @@
     <h1 class="govuk-heading-l"><%= t(".heading_empty", provider_name: @wizard.provider_name) %></h1>
 
     <p class="govuk-body">
-      <%= t(".no_mentors_with_claimable_hours", provider_name: @wizard.provider_name) %>
+      <%= t(".no_mentors_with_claimable_hours", provider_name: @wizard.provider_name,
+                                                num_initial_hours: Claims::TrainingHours.for(training_type: :initial, academic_year: AcademicYear.current)) %>
     </p>
 
     <p class="govuk-body">
