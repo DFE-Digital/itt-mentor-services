@@ -15,7 +15,7 @@ class Claims::AddClaimWizard::MentorStep::DisclaimerComponent < ApplicationCompo
                          claims_school_mentors_path(mentor_step.claim.school),
                          no_visited_state: true,
                        )))) +
-        tag.p(sanitize(t(".disclaimer", provider_name:))) +
+        tag.p(sanitize(t(".disclaimer", provider_name:, num_initial_hours: Claims::TrainingHours.for(training_type: :initial, academic_year: AcademicYear.current)))) +
         tag.p(sanitize(t(".disclaimer_contact", email_link:)))
     end
   end

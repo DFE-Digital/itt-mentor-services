@@ -57,7 +57,10 @@ class Claims::AddClaimWizard::MentorTrainingStep < BaseStep
     if training_allowance.training_type == :initial
       I18n.t("wizards.claims.add_claim_wizard.mentor_training_step.initial_hours_of_training_hint", mentor_full_name:, mentor_trn:, remaining_hours:)
     else
-      I18n.t("wizards.claims.add_claim_wizard.mentor_training_step.refresher_hours_of_training_hint", mentor_full_name:, mentor_trn:, remaining_hours:)
+      I18n.t("wizards.claims.add_claim_wizard.mentor_training_step.refresher_hours_of_training_hint",
+             mentor_full_name:,
+             mentor_trn:, remaining_hours:,
+             num_initial_hours: Claims::TrainingHours.for(training_type: :initial, academic_year: AcademicYear.current))
     end
   end
 
