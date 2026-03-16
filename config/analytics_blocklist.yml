@@ -37,6 +37,12 @@ shared:
     - record_id
     - blob_id
     - created_at
+  :bank_holidays:
+    - id
+    - title
+    - date
+    - created_at
+    - updated_at
   :claims:
     - zendesk_url
     - support_user_id
