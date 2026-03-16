@@ -10,7 +10,6 @@ on:
         default: staging
         type: choice
         options:
-        options:
         - 'qa'
         - 'sandbox'
         - 'staging'
