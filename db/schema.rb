@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_16_113543) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_16_155447) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -89,6 +89,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_16_113543) do
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["date"], name: "index_bank_holidays_on_date", unique: true
   end
 
   create_table "claim_activities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

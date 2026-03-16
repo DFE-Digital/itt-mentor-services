@@ -8,6 +8,10 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+# Indexes
+#
+#  index_bank_holidays_on_date  (date) UNIQUE
+#
 
 require "rails_helper"
 
