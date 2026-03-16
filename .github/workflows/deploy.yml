@@ -69,7 +69,7 @@ jobs:
 
       - name: Post comment to Pull Request ${{ inputs.pr-number }}
         if: ${{ inputs.environment != 'review' && inputs.environment != 'dv_review' }}
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         with:
           header: aks
           message: |
