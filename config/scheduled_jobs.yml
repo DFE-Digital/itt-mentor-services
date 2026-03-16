@@ -66,3 +66,8 @@ remind_schools_to_respond_to_sampling:
     cron: "0 10 * * TUE" # Every tuesday at 10:00
     class: "Claims::Sampling::SendSchoolRemindersJob"
     description: "Reminds schools to respond to audit requests"
+
+sync_bank_holidays:
+    cron: "0 0 1 * *" # Every month on the 1st at 00:00
+    class: "BankHolidays::SyncJob"
+    description: "Sync bank holidays with data imported from the UK government API"
