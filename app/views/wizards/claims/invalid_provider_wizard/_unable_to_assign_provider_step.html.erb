@@ -10,8 +10,7 @@
     </p>
 
     <p class="govuk-body">
-      <%= t(".mentors_on_this_claim_have_already_claimed", provider_name: current_step.provider.name, num_initial_hours: Claims::TrainingHours.for(training_type: :initial, academic_year: AcademicYear.current)) %>
-    </p>
+      <%= t(".mentors_on_this_claim_have_already_claimed", provider_name: current_step.provider.name, num_initial_hours: Claims::TrainingHours.for(training_type: :initial, academic_year: current_step.claim.claim_window.academic_year)) %>    </p>
 
     <p class="govuk-body">
       <%= embedded_link_text(

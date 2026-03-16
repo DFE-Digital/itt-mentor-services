@@ -179,7 +179,7 @@ RSpec.describe Claims::TrainingAllowance, type: :model do
           end
         end
 
-        context "when the mentor has completed 20 hours of training in the current academic year" do
+        context "when the mentor has completed 16 hours of training in the current academic year" do
           let(:hours_completed) { 16 }
 
           it "returns the expected results" do

@@ -60,7 +60,7 @@ class Claims::AddClaimWizard::MentorTrainingStep < BaseStep
       I18n.t("wizards.claims.add_claim_wizard.mentor_training_step.refresher_hours_of_training_hint",
              mentor_full_name:,
              mentor_trn:, remaining_hours:,
-             num_initial_hours: Claims::TrainingHours.for(training_type: :initial, academic_year: AcademicYear.current))
+             num_initial_hours: Claims::TrainingHours.for(training_type: :initial, academic_year: @wizard.academic_year))
     end
   end
 
