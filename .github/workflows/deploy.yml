@@ -48,7 +48,7 @@ jobs:
 
       - name: Fetch secrets from key vault
         if: ${{ inputs.environment != 'review' && inputs.environment != 'dv_review' }}
-        uses: azure/CLI@v2
+        uses: azure/CLI@v3
         id: keyvault-yaml-secret
         with:
           inlineScript: |

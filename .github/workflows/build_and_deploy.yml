@@ -95,7 +95,7 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Fetch secrets from key vault
-        uses: azure/CLI@v2
+        uses: azure/CLI@v3
         id: keyvault-yaml-secret
         with:
           inlineScript: |
@@ -144,7 +144,7 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Fetch secrets from key vault
-        uses: azure/CLI@v2
+        uses: azure/CLI@v3
         id: keyvault-yaml-secret
         with:
           inlineScript: |
@@ -189,7 +189,7 @@ jobs:
           subscription-id:  ${{ secrets.AZURE_SUBSCRIPTION_ID   }}
 
       - name: Fetch secrets from key vault
-        uses: azure/CLI@v2
+        uses: azure/CLI@v3
         id: keyvault-secret
         with:
           inlineScript: |
@@ -229,7 +229,7 @@ jobs:
           subscription-id:  ${{ secrets.AZURE_SUBSCRIPTION_ID   }}
 
       - name: Fetch secrets from key vault
-        uses: azure/CLI@v2
+        uses: azure/CLI@v3
         id: keyvault-secret
         with:
           inlineScript: |
