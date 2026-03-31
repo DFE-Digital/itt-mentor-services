@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe Claims::Clawback::GenerateCSVFile do
-  subject(:generate_csv_file) { described_class.call(claims:) }
+  subject(:generate_csv_file) { described_class.call(claim_ids:) }
 
   let(:school_a) do
     create(:claims_school,
@@ -84,7 +84,7 @@ describe Claims::Clawback::GenerateCSVFile do
            hours_clawed_back: 5,
            reason_clawed_back: "Invalid claim")
   end
-  let(:claims) { Claims::Claim.where(id: [claim_1.id, claim_2.id]).order(:reference) }
+  let(:claim_ids) { Claims::Claim.where(id: [claim_1.id, claim_2.id]).order(:reference).ids }
 
   before do
     claim_1_jane_doe_mentor_training
