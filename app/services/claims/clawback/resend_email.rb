@@ -5,7 +5,7 @@ class Claims::Clawback::ResendEmail < ApplicationService
 
   def call
     ActiveRecord::Base.transaction do |transaction|
-      csv_file = Claims::Clawback::GenerateCSVFile.call(claims: clawback.claims)
+      csv_file = Claims::Clawback::GenerateCSVFile.call(claim_ids: clawback.claims.ids)
       clawback.update!(csv_file: File.open(csv_file.to_io))
 
       transaction.after_commit do

@@ -12,7 +12,7 @@ class Claims::Clawback::CreateAndDeliver < ApplicationService
         claim.update!(status: :clawback_in_progress)
       end
 
-      csv_file = Claims::Clawback::GenerateCSVFile.call(claims: clawback_requested_claims)
+      csv_file = Claims::Clawback::GenerateCSVFile.call(claim_ids: clawback_requested_claims.ids)
 
       clawback = Claims::Clawback.create!(claims: clawback_requested_claims, csv_file: File.open(csv_file.to_io))
 
