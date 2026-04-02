@@ -1,31 +1,52 @@
-resource "azurerm_storage_account" "general_storage_account" {
-  name                             = local.azure_storage_account_name
-  resource_group_name              = local.app_resource_group_name
-  location                         = "UK South"
-  account_tier                     = "Standard"
-  account_replication_type         = "LRS"
-  allow_nested_items_to_be_public  = false
-  cross_tenant_replication_enabled = false
+#########################
+######PUBLIC STORAGE
 
-  dynamic "blob_properties" {
-    for_each = var.environment == "production" ? [1] : []
 
-    content {
-      delete_retention_policy {
-        days = 7
-      }
+module "storage_public" {
+  source = "./vendor/modules/aks//aks/storage_account"
 
-      container_delete_retention_policy {
-        days = 7
-      }
-    }
-  }
+  name                          = "pub"
+  environment                   = var.environment
+  azure_resource_prefix         = var.azure_resource_prefix
+  service_short                 = var.service_short
+  config_short                  = var.config_short
+  public_network_access_enabled = true            ##TOGGLE PUB/PRIV
+  cluster_configuration_map     = module.cluster_data.configuration_map
+  use_private_storage           = false           ##TOGGLE PUB/PRIV
 
-  lifecycle { ignore_changes = [tags] }
+  # Create containers for the application (all containers are private)
+  containers = [
+    { name = "files" }
+  ]
+
+  # Configure blob lifecycle management (default: delete after 7 days)
+  container_delete_retention_days = var.storage_container_delete_retention_days
+  blob_delete_after_days          = 0
+
 }
 
-resource "azurerm_storage_container" "general_container" {
-  name                  = "storage"
-  storage_account_id  = azurerm_storage_account.general_storage_account.id
-  container_access_type = "private"
+#########################
+######PRIVATE STORAGE
+
+module "storage_private" {
+  source = "./vendor/modules/aks//aks/storage_account"
+
+  name                          = "priv"
+  environment                   = var.environment
+  azure_resource_prefix         = var.azure_resource_prefix
+  service_short                 = var.service_short
+  config_short                  = var.config_short
+  public_network_access_enabled = false                         ##TOGGLE PUB/PRIV
+  cluster_configuration_map     = module.cluster_data.configuration_map
+  use_private_storage           = true                          ##TOGGLE PUB/PRIV
+
+  # Create containers for the application (all containers are private)
+  containers = [
+    { name = "files" }
+  ]
+
+  # Configure blob lifecycle management (default: delete after 7 days)
+#  container_delete_retention_days = var.storage_container_delete_retention_days
+  blob_delete_after_days          = 0
+
 }
