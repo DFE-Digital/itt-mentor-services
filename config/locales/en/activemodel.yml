@@ -156,6 +156,10 @@ en:
               between: Enter the number of hours between %{min} and %{max}
             hours_to_claim:
               blank: Select the number of hours
+        claims/add_claim_wizard/confirmation_step:
+          attributes:
+            confirmed:
+              blank: You must confirm before submitting your claim
         claims/add_claim_wizard/check_your_answers_step:
           attributes:
             base:

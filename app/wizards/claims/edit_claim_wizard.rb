@@ -26,6 +26,7 @@ module Claims
           selected_mentors.each do |mentor|
             add_step(AddClaimWizard::MentorTrainingStep, { mentor_id: mentor.id }, :mentor_id)
           end
+          add_step(AddClaimWizard::ConfirmationStep)
           add_step(AddClaimWizard::CheckYourAnswersStep)
         else
           add_step(AddClaimWizard::NoMentorsStep)

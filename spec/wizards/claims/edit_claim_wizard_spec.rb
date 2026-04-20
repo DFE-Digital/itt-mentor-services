@@ -48,7 +48,7 @@ RSpec.describe Claims::EditClaimWizard do
       }
     end
 
-    it { is_expected.to eq [:provider, :mentor, "mentor_training_#{mentor_1.id}".to_sym, :check_your_answers] }
+    it { is_expected.to eq [:provider, :mentor, "mentor_training_#{mentor_1.id}".to_sym, :confirmation, :check_your_answers] }
 
     context "when current step is declaration" do
       let(:current_step) { :declaration }
@@ -66,7 +66,7 @@ RSpec.describe Claims::EditClaimWizard do
         }
       end
 
-      it { is_expected.to eq [:provider, :provider_options, :mentor, "mentor_training_#{mentor_1.id}".to_sym, :check_your_answers] }
+      it { is_expected.to eq [:provider, :provider_options, :mentor, "mentor_training_#{mentor_1.id}".to_sym, :confirmation, :check_your_answers] }
     end
 
     context "when there are no mentors with claimable hours for the given provider" do

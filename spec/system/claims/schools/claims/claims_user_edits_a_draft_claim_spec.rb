@@ -26,6 +26,10 @@ RSpec.describe "Claims user edits a draft claim", service: :claims, type: :syste
 
     when_i_choose_fifteen_hours
     and_i_click_on_continue
+    then_i_see_the_confirmation_page
+
+    when_i_check_the_confirmation_box
+    and_i_click_on_continue
     then_i_see_the_check_your_answers_page_with_barry_garlow_as_a_mentor_and_fifteen_hours_of_training
 
     when_i_click_on_accept_and_submit
@@ -255,6 +259,17 @@ RSpec.describe "Claims user edits a draft claim", service: :claims, type: :syste
   def when_i_choose_fifteen_hours
     page.choose("Another amount")
     fill_in "Number of hours", with: "15"
+  end
+
+  def then_i_see_the_confirmation_page
+    expect(page).to have_title("Confirmation - Claim details - Claim funding for mentor training - GOV.UK")
+    expect(primary_navigation).to have_current_item("Claims")
+    expect(page).to have_h1("Confirmation")
+    expect(page).to have_button("Continue")
+  end
+
+  def when_i_check_the_confirmation_box
+    check "I confirm that the school has verified the number of hours of training with Best Practice Network"
   end
 
   def then_i_see_the_check_your_answers_page_with_barry_garlow_as_a_mentor_and_fifteen_hours_of_training

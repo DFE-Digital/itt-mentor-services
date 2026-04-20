@@ -33,6 +33,10 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
     when_i_choose_another_amount
     and_enter_6_hours
     and_i_click_on_continue
+    then_i_see_the_confirmation_page
+
+    when_i_check_the_confirmation_box
+    and_i_click_on_continue
     then_i_see_the_check_your_answers_page
 
     when_i_click_on_save_claim
@@ -183,6 +187,15 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
 
   def and_enter_6_hours
     fill_in "Number of hours", with: 6
+  end
+
+  def then_i_see_the_confirmation_page
+    expect(page).to have_h1("Confirmation")
+    expect(page).to have_button("Continue")
+  end
+
+  def when_i_check_the_confirmation_box
+    check "I confirm that the school has verified the number of hours of training with Best Practice Network"
   end
 
   def then_i_see_the_check_your_answers_page
