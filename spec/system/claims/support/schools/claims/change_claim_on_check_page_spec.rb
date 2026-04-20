@@ -49,6 +49,9 @@ RSpec.describe "Change claim on check page", :js, service: :claims, skip: "flaky
     then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor2)
     when_i_choose_other_amount_and_input_hours(12)
     when_i_click("Continue")
+    then_i_see_the_confirmation_page
+    when_i_check_the_confirmation_box
+    when_i_click("Continue")
     then_i_check_my_answers(bpn, [mentor1, mentor2], [20, 12])
   end
 
@@ -76,6 +79,9 @@ RSpec.describe "Change claim on check page", :js, service: :claims, skip: "flaky
     then_i_expect_the_training_hours_for(12, mentor2)
 
     when_i_click("Continue") # Mentors 2 step
+    then_i_see_the_confirmation_page
+    when_i_check_the_confirmation_box
+    when_i_click("Continue")
     then_i_check_my_answers(niot, [mentor1, mentor2], [20, 12])
     when_i_click("Accept and submit")
     then_i_am_redirected_to_index_page
@@ -95,6 +101,9 @@ RSpec.describe "Change claim on check page", :js, service: :claims, skip: "flaky
     then_i_expect_the_training_hours_for(12, mentor2)
 
     when_i_click("Continue") # Mentors 2 step
+    then_i_see_the_confirmation_page
+    when_i_check_the_confirmation_box
+    when_i_click("Continue")
     then_i_check_my_answers(
       bpn,
       [mentor2],
@@ -124,6 +133,9 @@ RSpec.describe "Change claim on check page", :js, service: :claims, skip: "flaky
 
     when_i_add_training_hours("20 hours")
     and_i_click("Continue")
+    then_i_see_the_confirmation_page
+    when_i_check_the_confirmation_box
+    when_i_click("Continue")
     then_i_check_my_answers(bpn, [mentor1, mentor2, mentor3], [20, 12, 20])
   end
 
@@ -139,6 +151,9 @@ RSpec.describe "Change claim on check page", :js, service: :claims, skip: "flaky
     and_i_click("Continue")
     then_i_expect_the_training_hours_for(12, mentor2)
 
+    when_i_click("Continue")
+    then_i_see_the_confirmation_page
+    when_i_check_the_confirmation_box
     when_i_click("Continue")
     then_i_check_my_answers(bpn, [mentor1, mentor2], [6, 12])
   end
@@ -238,6 +253,15 @@ RSpec.describe "Change claim on check page", :js, service: :claims, skip: "flaky
   def then_i_expect_the_training_hours_for(hours, mentor)
     expect(page).to have_content("How many hours of training did #{mentor.full_name} complete?")
     then_i_expect_the_training_hours_to_be_selected(hours)
+  end
+
+  def then_i_see_the_confirmation_page
+    expect(page).to have_h1("Confirmation")
+    expect(page).to have_button("Continue")
+  end
+
+  def when_i_check_the_confirmation_box
+    check "I confirm that the school has verified the number of hours of training with Best Practice Network"
   end
 
   def then_i_check_my_answers(provider, mentors, mentor_hours)

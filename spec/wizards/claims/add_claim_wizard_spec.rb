@@ -40,7 +40,7 @@ RSpec.describe Claims::AddClaimWizard do
       let!(:mentor_1) { create(:claims_mentor, schools: [school], first_name: "Alan", last_name: "Anderson") }
 
       context "with claimable hours" do
-        it { is_expected.to eq %i[provider mentor check_your_answers] }
+        it { is_expected.to eq %i[provider mentor confirmation check_your_answers] }
 
         context "when the provider is set in the provider options step" do
           let(:state) do
@@ -50,7 +50,7 @@ RSpec.describe Claims::AddClaimWizard do
             }
           end
 
-          it { is_expected.to eq %i[provider provider_options mentor check_your_answers] }
+          it { is_expected.to eq %i[provider provider_options mentor confirmation check_your_answers] }
         end
       end
 
@@ -64,7 +64,7 @@ RSpec.describe Claims::AddClaimWizard do
           }
         end
 
-        it { is_expected.to eq [:provider, :mentor, "mentor_training_#{mentor_1.id}".to_sym, "mentor_training_#{mentor_2.id}".to_sym, :check_your_answers] }
+        it { is_expected.to eq [:provider, :mentor, "mentor_training_#{mentor_1.id}".to_sym, "mentor_training_#{mentor_2.id}".to_sym, :confirmation, :check_your_answers] }
       end
 
       context "with no claimable hours" do

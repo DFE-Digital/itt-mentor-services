@@ -68,6 +68,10 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
     when_i_select_another_amount
     and_i_enter_another_amount_of_hours(15)
     and_i_click("Continue")
+    then_i_see_the_confirmation_page
+
+    when_i_check_the_confirmation_box
+    and_i_click("Continue")
     then_i_expect_the_current_draft_claims_to_not_have_my_changes
 
     when_i_click("Update claim")
@@ -101,6 +105,10 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
     when_i_click("Continue")
     then_i_expect_the_training_hours_for(claims_mentor, niot_provider)
 
+    when_i_click("Continue")
+    then_i_see_the_confirmation_page
+
+    when_i_check_the_confirmation_box
     when_i_click("Continue")
     then_i_see_the_check_your_answers_page(
       provider: niot_provider,
@@ -250,6 +258,15 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
   def then_i_see_i_can_not_submit_the_claim
     expect(page).to have_h1("You cannot submit the claim")
     expect(page).to have_content("You cannot submit the claim because your mentors’ information has recently changed.")
+  end
+
+  def then_i_see_the_confirmation_page
+    expect(page).to have_h1("Confirmation")
+    expect(page).to have_button("Continue")
+  end
+
+  def when_i_check_the_confirmation_box
+    check "I confirm that the school has verified the number of hours of training with NIoT: National Institute of Teaching, founded by the School-Led Development Trust"
   end
 
   def then_i_see_the_check_your_answers_page(provider:, hours_completed:)

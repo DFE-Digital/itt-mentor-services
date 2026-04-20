@@ -22,6 +22,7 @@ module Claims
         steps.fetch(:mentor).selected_mentors.each do |mentor|
           add_step(MentorTrainingStep, { mentor_id: mentor.id }, :mentor_id)
         end
+        add_step(ConfirmationStep)
         add_step(CheckYourAnswersStep)
       else
         add_step(NoMentorsStep)

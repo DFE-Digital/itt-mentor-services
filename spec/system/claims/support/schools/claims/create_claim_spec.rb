@@ -61,6 +61,9 @@ RSpec.describe "Create claim", :js, service: :claims, skip: "flaky", type: :syst
     then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor2)
     when_i_choose_other_amount_and_input_hours(12)
     when_i_click("Continue")
+    then_i_see_the_confirmation_page
+    when_i_check_the_confirmation_box
+    when_i_click("Continue")
     then_i_check_my_answers
     when_i_click("Accept and submit")
     then_i_see_the_new_claim
@@ -107,6 +110,9 @@ RSpec.describe "Create claim", :js, service: :claims, skip: "flaky", type: :syst
     when_i_click("Continue")
     then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor2)
     when_i_choose_other_amount_and_input_hours(12)
+    when_i_click("Continue")
+    then_i_see_the_confirmation_page
+    when_i_check_the_confirmation_box
     when_i_click("Continue")
     then_i_check_my_answers
     when_another_claim_with_same_mentors_has_been_created([mentor1, mentor2])
@@ -263,6 +269,15 @@ RSpec.describe "Create claim", :js, service: :claims, skip: "flaky", type: :syst
   def when_i_choose_other_amount_and_input_hours(hours)
     page.choose("Another amount")
     fill_in("Number of hours", with: hours)
+  end
+
+  def then_i_see_the_confirmation_page
+    expect(page).to have_h1("Confirmation")
+    expect(page).to have_button("Continue")
+  end
+
+  def when_i_check_the_confirmation_box
+    check "I confirm that the school has verified the number of hours of training with Best Practice Network"
   end
 
   def then_i_check_my_answers
