@@ -190,12 +190,12 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
   end
 
   def then_i_see_the_confirmation_page
-    expect(page).to have_h1("Confirmation")
+    expect(page).to have_h1("Confirm training hours have been verified with Best Practice Network")
     expect(page).to have_button("Continue")
   end
 
   def when_i_check_the_confirmation_box
-    check "I confirm that the school has verified the number of hours of training with Best Practice Network"
+    check "Best Practice Network has verified the number of hours recorded in this claim"
   end
 
   def then_i_see_the_check_your_answers_page

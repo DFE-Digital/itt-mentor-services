@@ -264,12 +264,12 @@ RSpec.describe "Claims user edits a draft claim", service: :claims, type: :syste
   def then_i_see_the_confirmation_page
     expect(page).to have_title("Confirmation - Claim details - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Claims")
-    expect(page).to have_h1("Confirmation")
+    expect(page).to have_h1("Confirm training hours have been verified with Best Practice Network")
     expect(page).to have_button("Continue")
   end
 
   def when_i_check_the_confirmation_box
-    check "I confirm that the school has verified the number of hours of training with Best Practice Network"
+    check "Best Practice Network has verified the number of hours recorded in this claim"
   end
 
   def then_i_see_the_check_your_answers_page_with_barry_garlow_as_a_mentor_and_fifteen_hours_of_training
