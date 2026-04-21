@@ -7,9 +7,11 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l"><%= contextual_text %></span>
-      <h1 class="govuk-heading-l"><%= t(".title") %></h1>
-      <%= f.govuk_check_box :confirmed, true, false, label: { text: t(".label", provider_name: @wizard.provider_name) }, link_errors: true %>
-      <%= f.govuk_submit t(".continue") %>
+      <h1 class="govuk-heading-l"><%= t(".title", provider_name: @wizard.provider_name) %></h1>
+      <div class="govuk-!-margin-bottom-4">
+        <%= f.govuk_check_box :confirmed, true, false, label: { text: t(".label", provider_name: @wizard.provider_name) }, link_errors: true %>
+      </div>
+      <%= f.govuk_submit t(".continue"), class: "govuk-margin-top" %>
     </div>
   </div>
 <% end %>

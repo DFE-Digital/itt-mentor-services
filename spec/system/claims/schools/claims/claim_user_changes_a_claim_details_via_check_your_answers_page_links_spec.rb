@@ -50,7 +50,7 @@ RSpec.describe "Claims user changes a claim details via check your answers page 
     then_i_see_the_select_training_hours_step_for_james_jameson_with_persisted_details
 
     when_i_click_on_continue
-    then_i_see_the_confirmation_page
+    then_i_see_the_niot_confirmation_page
 
     when_i_check_the_niot_confirmation_box
     and_i_click_on_continue
@@ -253,17 +253,23 @@ RSpec.describe "Claims user changes a claim details via check your answers page 
   def then_i_see_the_confirmation_page
     expect(page).to have_title("Confirmation - Claim details - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Claims")
-    expect(page).to have_h1("Confirmation")
+    expect(page).to have_h1("Confirm training hours have been verified with Best Practice Network")
+    expect(page).to have_button("Continue")
+  end
+
+  def then_i_see_the_niot_confirmation_page
+    expect(page).to have_title("Confirmation - Claim details - Claim funding for mentor training - GOV.UK")
+    expect(primary_navigation).to have_current_item("Claims")
+    expect(page).to have_h1("Confirm training hours have been verified with NIoT: National Institute of Teaching, founded by the School-Led Development Trust")
     expect(page).to have_button("Continue")
   end
 
   def when_i_check_the_niot_confirmation_box
-    check "I confirm that the school has verified the number of hours of training with NIoT: National Institute of Teaching, founded by the School-Led Development Trust"
-
+    check "NIoT: National Institute of Teaching, founded by the School-Led Development Trust has verified the number of hours recorded in this claim"
   end
 
   def when_i_check_the_confirmation_box
-    check "I confirm that the school has verified the number of hours of training with Best Practice Network"
+    check "Best Practice Network has verified the number of hours recorded in this claim"
   end
 
   def then_i_see_the_check_your_answers_page
