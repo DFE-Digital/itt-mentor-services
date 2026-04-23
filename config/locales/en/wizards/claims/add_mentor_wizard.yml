@@ -19,6 +19,7 @@ en:
           change: Change
           heading: Confirm mentor details
           details: Details
+          ecf_warning: This funding is not available for training early career teacher (ECT) mentors.
           trn: Teacher reference number (TRN)
           date_of_birth: Date of birth
           privacy_link: privacy notice

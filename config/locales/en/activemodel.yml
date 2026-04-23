@@ -159,7 +159,7 @@ en:
         claims/add_claim_wizard/confirmation_step:
           attributes:
             confirmed:
-              blank: You must confirm training hours before submitting your claim
+              blank: You must confirm the number of training hours with your provider
         claims/add_claim_wizard/check_your_answers_step:
           attributes:
             base:

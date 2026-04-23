@@ -185,12 +185,12 @@ RSpec.describe "Claims user creates a claim for a mentor with a previous year cl
   def then_i_see_the_confirmation_page
     expect(page).to have_title("Confirmation - Claim details - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Claims")
-    expect(page).to have_h1("Confirm training hours have been verified with Best Practice Network")
+    expect(page).to have_h1("Confirm training hours with Best Practice Network")
     expect(page).to have_button("Continue")
   end
 
   def when_i_check_the_confirmation_box
-    check "Best Practice Network has verified the number of hours recorded in this claim"
+    check "I have confirmed the number of training hours recorded in this claim with Best Practice Network"
   end
 
   def then_i_see_the_check_your_answers_page

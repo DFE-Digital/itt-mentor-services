@@ -15,6 +15,7 @@ en:
           further_information: If we need further information to process your claim we will email you.
           we_may_check_your_claim: We may check your claim
           after_payment: After payment we may check your claim to ensure it is accurate.
+          maintained_schools_payment: Maintained schools and maintained alternative provision settings will receive payment via their local authority. All other settings will receive payment directly. We will make this payment alongside your regular funding and it will appear as a separate line on that remittance.
           provider_contact: "%{provider_name} will contact you if your claim undergoes a check."
         rejected:
           page_title: You cannot submit the claim
