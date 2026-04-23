@@ -261,12 +261,12 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
   end
 
   def then_i_see_the_confirmation_page
-    expect(page).to have_h1("Confirm training hours have been verified with NIoT: National Institute of Teaching, founded by the School-Led Development Trust")
+    expect(page).to have_h1("Confirm training hours with NIoT: National Institute of Teaching, founded by the School-Led Development Trust")
     expect(page).to have_button("Continue")
   end
 
   def when_i_check_the_confirmation_box
-    check "NIoT: National Institute of Teaching, founded by the School-Led Development Trust has verified the number of hours recorded in this claim"
+    check "I have confirmed the number of training hours recorded in this claim with NIoT: National Institute of Teaching, founded by the School-Led Development Trust"
   end
 
   def then_i_see_the_check_your_answers_page(provider:, hours_completed:)

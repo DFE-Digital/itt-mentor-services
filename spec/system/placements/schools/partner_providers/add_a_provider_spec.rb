@@ -148,11 +148,11 @@ RSpec.describe "School user adds a provider to their list of providers",
   end
 
   def then_i_see_a_dropdown_item_for_springfield_university
-    expect(page).to have_css(".autocomplete__option", text: "Springfield University", wait: 10)
+    then_i_see_a_dropdown_item_for("Springfield University")
   end
 
   def when_i_click_on_the_springfield_university_dropdown_item
-    page.find(".autocomplete__option", text: "Springfield University").click
+    when_i_click_on_the_dropdown_item_for("Springfield University")
   end
 
   def and_i_click_on_continue
@@ -225,11 +225,11 @@ RSpec.describe "School user adds a provider to their list of providers",
   end
 
   def then_i_see_a_dropdown_item_for_shelbyville_university
-    expect(page).to have_css(".autocomplete__option", text: "Shelbyville University", wait: 10)
+    then_i_see_a_dropdown_item_for("Shelbyville University")
   end
 
   def when_i_click_on_the_shelbyville_university_dropdown_item
-    page.find(".autocomplete__option", text: "Shelbyville University").click
+    when_i_click_on_the_dropdown_item_for("Shelbyville University")
   end
 
   def then_i_see_a_validation_error_for_shelbyville_university_is_already_in_my_list_of_providers
@@ -241,11 +241,34 @@ RSpec.describe "School user adds a provider to their list of providers",
   end
 
   def then_i_see_a_dropdown_item_for_ogdenville_university
-    expect(page).to have_css(".autocomplete__option", text: "Ogdenville University", wait: 10)
+    then_i_see_a_dropdown_item_for("Ogdenville University")
   end
 
   def when_i_click_on_the_ogdenville_university_dropdown_item
-    page.find(".autocomplete__option", text: "Ogdenville University").click
+    when_i_click_on_the_dropdown_item_for("Ogdenville University")
+  end
+
+  def then_i_see_a_dropdown_item_for(provider_name)
+    within(".autocomplete__wrapper") do
+      expect(page).to have_css(".autocomplete__option", text: provider_name, wait: 10)
+    end
+  end
+
+  def when_i_click_on_the_dropdown_item_for(provider_name)
+    attempts = 0
+
+    begin
+      attempts += 1
+      within(".autocomplete__wrapper") do
+        expect(page).to have_css(".autocomplete__option", text: provider_name, wait: 10)
+        all(".autocomplete__option", text: provider_name, minimum: 1).first.click
+      end
+    rescue Selenium::WebDriver::Error::UnknownError, Selenium::WebDriver::Error::StaleElementReferenceError => e
+      stale_node_error = e.message.include?("Node with given id does not belong to the document")
+      raise unless attempts < 3 && stale_node_error
+
+      retry
+    end
   end
 
   def then_i_see_the_confirm_provider_details_page_for_ogdenville_university

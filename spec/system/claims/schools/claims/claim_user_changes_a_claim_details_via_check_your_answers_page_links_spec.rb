@@ -253,14 +253,14 @@ RSpec.describe "Claims user changes a claim details via check your answers page 
   def then_i_see_the_confirmation_page
     expect(page).to have_title("Confirmation - Claim details - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Claims")
-    expect(page).to have_h1("Confirm training hours have been verified with Best Practice Network")
+    expect(page).to have_h1("Confirm training hours with Best Practice Network")
     expect(page).to have_button("Continue")
   end
 
   def then_i_see_the_niot_confirmation_page
     expect(page).to have_title("Confirmation - Claim details - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Claims")
-    expect(page).to have_h1("Confirm training hours have been verified with NIoT: National Institute of Teaching, founded by the School-Led Development Trust")
+    expect(page).to have_h1("I have confirmed the number of training hours recorded in this claim with  NIoT: National Institute of Teaching, founded by the School-Led Development Trust")
     expect(page).to have_button("Continue")
   end
 
