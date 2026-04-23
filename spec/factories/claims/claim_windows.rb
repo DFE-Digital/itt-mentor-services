@@ -21,7 +21,7 @@
 #
 FactoryBot.define do
   factory :claim_window, class: "Claims::ClaimWindow" do
-    academic_year { AcademicYear.for_date(Date.current) }
+    academic_year { AcademicYear.for_date(Date.new(2024, 1, 1)) }
 
     trait :current do
       starts_on { 2.days.ago }
@@ -31,7 +31,7 @@ FactoryBot.define do
     trait :historic do
       starts_on { 2.years.ago }
       ends_on { starts_on + 2.months }
-      academic_year { AcademicYear.for_date(starts_on) }
+      academic_year { AcademicYear.for_date(Date.new(2023, 1, 1)) }
     end
 
     trait :upcoming do

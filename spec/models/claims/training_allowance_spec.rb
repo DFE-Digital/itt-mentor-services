@@ -365,14 +365,14 @@ RSpec.describe Claims::TrainingAllowance, type: :model do
     context "when the claim is made after 2026" do
       let!(:academic_year) do
         create(:academic_year,
-               starts_on: Date.parse("1 September 2026"),
-               ends_on: Date.parse("31 August 2027"),
+               starts_on: Date.parse("1 September 2025"),
+               ends_on: Date.parse("31 August 2026"),
                name: "2026 to 2027")
       end
       let(:previous_academic_year) do
         create(:academic_year,
-               starts_on: Date.parse("1 September 2025"),
-               ends_on: Date.parse("31 August 2026"),
+               starts_on: Date.parse("1 September 2024"),
+               ends_on: Date.parse("31 August 2025"),
                name: "2025 to 2026")
       end
       let(:claim_window) { build(:claim_window, :current, academic_year:) }

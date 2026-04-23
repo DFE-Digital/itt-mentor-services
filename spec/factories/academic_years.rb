@@ -12,14 +12,14 @@
 FactoryBot.define do
   factory :academic_year do
     trait :current do
-      starts_on { Date.parse("1 September #{Date.current.year - 1}") }
-      ends_on { Date.parse("31 August #{Date.current.year}") }
+      starts_on { Date.parse("1 September 2024") }
+      ends_on { Date.parse("31 August 2025") }
       name { "#{starts_on.year} to #{ends_on.year}" }
     end
 
     trait :historic do
-      starts_on { Date.parse("1 September #{Date.current.year - 2}") }
-      ends_on { Date.parse("31 August #{Date.current.year - 1}") }
+      starts_on { Date.parse("1 September 2023") }
+      ends_on { Date.parse("31 August 2024") }
       name { "#{starts_on.year} to #{ends_on.year}" }
     end
   end

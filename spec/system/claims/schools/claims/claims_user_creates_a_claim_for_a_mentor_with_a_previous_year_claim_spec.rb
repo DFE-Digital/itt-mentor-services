@@ -77,7 +77,7 @@ RSpec.describe "Claims user creates a claim for a mentor with a previous year cl
     expect(primary_navigation).to have_current_item("Claims")
     expect(page).to have_h1("Claims")
     expect(page).to have_link("Add claim", href: "/schools/#{@shelbyville_school.id}/claims/new")
-    expect(page).to have_paragraph("There are no claims for Shelbyville Elementary in the 2024 to 2025 academic year.")
+    expect(page).to have_paragraph("There are no claims for Shelbyville Elementary in the 2023 to 2024 academic year.")
   end
 
   def when_i_click_on_previous_academic_year
