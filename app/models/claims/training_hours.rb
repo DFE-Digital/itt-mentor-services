@@ -4,12 +4,12 @@ class Claims::TrainingHours
 
   HOURS_BY_PERIOD = {
     initial: {
-      pre_2026: 20,
-      post_2026: 16,
+      pre_2025: 20,
+      post_2025: 16,
     },
     refresher: {
-      pre_2026: 6,
-      post_2026: 6,
+      pre_2025: 6,
+      post_2025: 6,
     },
   }.freeze
 
@@ -40,6 +40,6 @@ class Claims::TrainingHours
   attr_reader :academic_year
 
   def period
-    academic_year.starts_on < Date.new(2026, 1, 1) ? :pre_2026 : :post_2026
+    academic_year.starts_on < Date.new(2025, 1, 1) ? :pre_2025 : :post_2025
   end
 end

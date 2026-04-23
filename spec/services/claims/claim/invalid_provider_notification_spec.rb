@@ -8,6 +8,9 @@ RSpec.describe Claims::Claim::InvalidProviderNotification, type: :service do
   end
 
   describe "#call" do
+    let!(:current_academic_year) { AcademicYear.for_date(Date.current) }
+    let!(:current_claim_window) { create(:claim_window, :current, academic_year: current_academic_year) }
+
     let(:user) { build(:claims_user) }
     let(:other_user) { build(:claims_user) }
 
@@ -86,10 +89,10 @@ RSpec.describe Claims::Claim::InvalidProviderNotification, type: :service do
     end
 
     context "when there are invalid claims in previous academic years" do
-      let(:current_academic_year) { create(:academic_year, :current) }
+      let(:current_academic_year) { AcademicYear.for_date(Date.current) }
       let(:previous_academic_year) { create(:academic_year, :historic) }
 
-      let(:current_claim_window) { create(:claim_window, :current) }
+      let(:current_claim_window) { create(:claim_window, :current, academic_year: current_academic_year) }
       let(:older_claim_window_in_current_academic_year) { create(:claim_window, starts_on: 4.months.ago, ends_on: 3.months.ago, academic_year: current_academic_year) }
       let(:historic_claim_window) { create(:claim_window, :historic) }
 

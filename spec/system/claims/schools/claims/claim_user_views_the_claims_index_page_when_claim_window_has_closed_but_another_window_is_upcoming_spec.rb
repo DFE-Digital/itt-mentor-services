@@ -13,13 +13,14 @@ RSpec.describe "Claims user views the claims index page when claim window has cl
   def given_an_eligible_school_exists_and_the_claim_window_is_closing
     @user_anne = build(:claims_user, first_name: "Anne", last_name: "Wilson", email: "anne_wilson@education.gov.uk")
     @mentor =  build(:claims_mentor)
-    @claim_window = create(:claim_window, :current, ends_on: 1.day.ago)
+    @current_academic_year = AcademicYear.for_date(Date.current)
+    @claim_window = create(:claim_window, :current, ends_on: 1.day.ago, academic_year: @current_academic_year)
     @academic_year = @claim_window.academic_year
     @upcoming_claim_window = create(
       :claim_window,
       starts_on: @claim_window.ends_on + 1.week,
       ends_on: @claim_window.ends_on + 2.weeks,
-      academic_year: @academic_year,
+      academic_year: @current_academic_year,
     )
     @eligibility = build(:eligibility, academic_year: @academic_year)
     @shelbyville_school = create(
