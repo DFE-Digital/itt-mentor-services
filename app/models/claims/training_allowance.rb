@@ -7,11 +7,11 @@ class Claims::TrainingAllowance
   end
 
   def training_type
-    @training_type ||= has_trained_in_a_previous_year? ? REFRESHER_TRAINING_TYPE : INITIAL_TRAINING_TYPE
+    @training_type ||= has_trained_in_a_previous_year? ? Claims::TrainingHours::REFRESHER_TRAINING_TYPE : Claims::TrainingHours::INITIAL_TRAINING_TYPE
   end
 
   def total_hours
-    training_type == INITIAL_TRAINING_TYPE ? initial_training_hours : refresher_training_hours
+    training_type == Claims::TrainingHours::INITIAL_TRAINING_TYPE ? initial_training_hours : refresher_training_hours
   end
 
   def remaining_hours
@@ -25,11 +25,6 @@ class Claims::TrainingAllowance
   private
 
   attr_reader :mentor, :provider, :academic_year, :claim_to_exclude
-
-  INITIAL_TRAINING_TYPE = :initial
-  REFRESHER_TRAINING_TYPE = :refresher
-
-  private_constant :INITIAL_TRAINING_TYPE, :REFRESHER_TRAINING_TYPE
 
   def mentor_training_scope
     @mentor_training_scope ||= provider.mentor_trainings
