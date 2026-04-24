@@ -62,5 +62,57 @@ RSpec.describe Claims::School::OnboardSchoolsJob, type: :job do
         described_class.perform_later(school_ids:)
       }.to have_enqueued_job(described_class).on_queue("default")
     end
+
+    describe "eligibility email rate limiting" do
+      let(:school_ids) { [london_school.id, york_school.id, guildford_school.id] }
+
+      before do
+        create(:claim_window, :current)
+        allow(NotifyRateLimiter).to receive(:call)
+      end
+
+      it "sends eligibility emails via NotifyRateLimiter with school context" do
+        create_list(:user_membership, 1, organisation: london_school)
+
+        described_class.perform_now(school_ids: [london_school.id])
+
+        expect(NotifyRateLimiter).to have_received(:call).with(
+          hash_including(
+            mailer: "Claims::UserMailer",
+            mailer_method: :your_school_is_eligible_to_claim,
+            mailer_args: [london_school],
+            batch_size: described_class::MAX_EMAILS_PER_MINUTE,
+            interval: 1.minute,
+            initial_wait_time: 0.minutes,
+          ),
+        )
+      end
+
+      it "batches smaller schools into the same minute up to the configured cap" do
+        stub_const("Claims::School::OnboardSchoolsJob::MAX_EMAILS_PER_MINUTE", 3)
+
+        create_list(:user_membership, 2, organisation: london_school)
+        create_list(:user_membership, 1, organisation: york_school)
+        create_list(:user_membership, 1, organisation: guildford_school)
+
+        described_class.perform_now(school_ids:)
+
+        expect(NotifyRateLimiter).to have_received(:call).with(hash_including(mailer_args: [london_school], initial_wait_time: 0.minutes))
+        expect(NotifyRateLimiter).to have_received(:call).with(hash_including(mailer_args: [york_school], initial_wait_time: 0.minutes))
+        expect(NotifyRateLimiter).to have_received(:call).with(hash_including(mailer_args: [guildford_school], initial_wait_time: 1.minute))
+      end
+
+      it "reserves enough minutes for a school that needs multiple batches" do
+        stub_const("Claims::School::OnboardSchoolsJob::MAX_EMAILS_PER_MINUTE", 3)
+
+        create_list(:user_membership, 4, organisation: london_school)
+        create_list(:user_membership, 1, organisation: york_school)
+
+        described_class.perform_now(school_ids: [london_school.id, york_school.id])
+
+        expect(NotifyRateLimiter).to have_received(:call).with(hash_including(mailer_args: [london_school], initial_wait_time: 0.minutes))
+        expect(NotifyRateLimiter).to have_received(:call).with(hash_including(mailer_args: [york_school], initial_wait_time: 2.minutes))
+      end
+    end
   end
 end

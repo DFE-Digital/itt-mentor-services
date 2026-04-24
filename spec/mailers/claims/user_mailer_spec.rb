@@ -571,6 +571,61 @@ RSpec.describe Claims::UserMailer, type: :mailer do
     end
   end
 
+  describe "#your_school_is_eligible_to_claim" do
+    subject(:eligibility_email) { described_class.your_school_is_eligible_to_claim(user, school) }
+
+    let(:user) { create(:claims_user, first_name: "Joe") }
+    let(:school) { create(:claims_school, name: "Shelbyville Elementary") }
+
+    it "sends the eligibility email" do
+      expect(eligibility_email.to).to contain_exactly(user.email)
+      expect(eligibility_email.subject).to eq("Onboarding update to Claim funding for mentor training")
+      expect(eligibility_email.body).to have_content <<~EMAIL
+        Dear Joe,
+
+        You have been onboarded to the Claim funding for mentor training service to submit claims for initial teacher training (ITT) general mentor funding for the academic year 2025/26.
+
+        If you are not the right person in your organisation to submit funding claims for ITT general mentor training, please:
+        - access the service using DfE sign-in and add an appropriate colleague in the Users section
+        - forward this email to the appropriate colleague after adding them as a user
+
+        Shelbyville Elementary has been added to the service because an accredited ITT provider has informed DfE that one or more trainee teachers have undertaken a school placement there during academic year 2025/26.
+
+        The claim window to submit claims for ITT general mentor training for academic year 2025/26 will open on Monday 27 April 2026.
+
+        Sign in using DfE sign-in:
+
+        If your colleague needs to create a DfE sign-in account, they can do this after clicking "Sign in using DfE sign-in". After creating a DfE sign-in, they can return to this email to access the service.
+
+        [http://claims.localhost/sign-in?utm_campaign=school&utm_medium=notification&utm_source=email](http://claims.localhost/sign-in?utm_campaign=school&utm_medium=notification&utm_source=email)
+
+        Prior to submitting claims, schools must confirm the correct number of training hours you are claiming with the relevant provider, as they may be asked to provide evidence to support this claim.
+
+        If you have any questions or feedback, please contact the team at (support email - itt general mentor funding).
+      EMAIL
+    end
+
+    context "when HostingEnvironment.env is 'production'" do
+      before do
+        allow(HostingEnvironment).to receive(:env).and_return("production")
+      end
+
+      it "does not prepend the hosting environment to the subject" do
+        expect(eligibility_email.subject).to eq("Onboarding update to Claim funding for mentor training")
+      end
+    end
+
+    context "when HostingEnvironment.env is 'staging'" do
+      before do
+        allow(HostingEnvironment).to receive(:env).and_return("staging")
+      end
+
+      it "prepends the hosting environment to the subject" do
+        expect(eligibility_email.subject).to eq("[STAGING] Onboarding update to Claim funding for mentor training")
+      end
+    end
+  end
+
   describe "delivery scheduling" do
     include ActiveJob::TestHelper
 
