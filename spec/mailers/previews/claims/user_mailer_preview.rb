@@ -39,6 +39,10 @@ class Claims::UserMailerPreview < ActionMailer::Preview
     Claims::UserMailer.claim_rejected_by_provider(user, claim)
   end
 
+  def your_school_is_eligible_to_claim
+    Claims::UserMailer.your_school_is_eligible_to_claim(user, school)
+  end
+
   private
 
   def user

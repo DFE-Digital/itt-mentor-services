@@ -171,6 +171,15 @@ class Claims::UserMailer < Claims::ApplicationMailer
                          service_url: claims_root_url(utm_source: "email", utm_medium: "notification", utm_campaign: "school"))
   end
 
+  def your_school_is_eligible_to_claim(user, school)
+    notify_email to: user.email,
+                 subject: t(".subject"),
+                 body: t(".body",
+                         user_name: user.first_name,
+                         school_name: school.name,
+                         sign_in_url: sign_in_url(utm_source: "email", utm_medium: "notification", utm_campaign: "school"))
+  end
+
   private
 
   def claim_window

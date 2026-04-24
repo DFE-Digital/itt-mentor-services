@@ -37,5 +37,17 @@ describe NotifyRateLimiter do
         expect(NotifyRateLimiterJob).to have_received(:perform_later).with(1.minute, anything, mailer, mailer_method, %w[arg1 arg2], { name: "Bob" })
       end
     end
+
+    context "when an initial wait time is provided" do
+      it "offsets the first batch by the provided wait time" do
+        allow(NotifyRateLimiterJob).to receive(:perform_later).with(2.minutes, anything, mailer, mailer_method, mailer_args, mailer_kwargs)
+        allow(NotifyRateLimiterJob).to receive(:perform_later).with(3.minutes, anything, mailer, mailer_method, mailer_args, mailer_kwargs)
+
+        described_class.call(collection:, mailer:, mailer_method:, initial_wait_time: 2.minutes)
+
+        expect(NotifyRateLimiterJob).to have_received(:perform_later).with(2.minutes, anything, mailer, mailer_method, mailer_args, mailer_kwargs)
+        expect(NotifyRateLimiterJob).to have_received(:perform_later).with(3.minutes, anything, mailer, mailer_method, mailer_args, mailer_kwargs)
+      end
+    end
   end
 end
