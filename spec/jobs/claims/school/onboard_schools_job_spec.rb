@@ -113,6 +113,30 @@ RSpec.describe Claims::School::OnboardSchoolsJob, type: :job do
         expect(NotifyRateLimiter).to have_received(:call).with(hash_including(mailer_args: [london_school], initial_wait_time: 0.minutes))
         expect(NotifyRateLimiter).to have_received(:call).with(hash_including(mailer_args: [york_school], initial_wait_time: 2.minutes))
       end
+
+      it "shifts a large school to the next minute when prior schools used part of the current minute" do
+        stub_const("Claims::School::OnboardSchoolsJob::MAX_EMAILS_PER_MINUTE", 3)
+
+        create_list(:user_membership, 1, organisation: london_school)
+        create_list(:user_membership, 4, organisation: york_school)
+
+        described_class.perform_now(school_ids: [london_school.id, york_school.id])
+
+        expect(NotifyRateLimiter).to have_received(:call).with(hash_including(mailer_args: [london_school], initial_wait_time: 0.minutes))
+        expect(NotifyRateLimiter).to have_received(:call).with(hash_including(mailer_args: [york_school], initial_wait_time: 1.minute))
+      end
+
+      it "rolls over to the next minute when a smaller school exceeds remaining capacity" do
+        stub_const("Claims::School::OnboardSchoolsJob::MAX_EMAILS_PER_MINUTE", 3)
+
+        create_list(:user_membership, 2, organisation: london_school)
+        create_list(:user_membership, 2, organisation: york_school)
+
+        described_class.perform_now(school_ids: [london_school.id, york_school.id])
+
+        expect(NotifyRateLimiter).to have_received(:call).with(hash_including(mailer_args: [london_school], initial_wait_time: 0.minutes))
+        expect(NotifyRateLimiter).to have_received(:call).with(hash_including(mailer_args: [york_school], initial_wait_time: 1.minute))
+      end
     end
   end
 end
