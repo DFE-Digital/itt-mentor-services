@@ -90,8 +90,8 @@ RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :sy
 
     expect(page).to have_content(
       "When to submit a claim\n"\
-      "For the school year starting September 2024:\n"\
-      "you can add your ITT mentor training hours and submit a claim from May 2025 "\
+      "For the school year starting September 2025:\n"\
+      "you can add your ITT mentor training hours and submit a claim from April 2026 "\
       "when you are registered in the service, we will email you reminders of claim opening dates and deadlines",\
     )
 
