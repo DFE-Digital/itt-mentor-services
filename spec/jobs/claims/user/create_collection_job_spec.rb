@@ -43,6 +43,16 @@ RSpec.describe Claims::User::CreateCollectionJob, type: :job do
         }.to have_enqueued_job(Claims::User::CreateAndDeliverJob).twice
       end
 
+      it "rate limits Claims::User::CreateAndDeliverJob scheduling" do
+        stub_const("Claims::User::CreateCollectionJob::MAX_CREATE_AND_DELIVER_PER_MINUTE", 1)
+        allow(Claims::User::CreateAndDeliverJob).to receive(:set).and_call_original
+
+        described_class.perform_now(user_details:)
+
+        expect(Claims::User::CreateAndDeliverJob).to have_received(:set).with(wait: 0.minutes)
+        expect(Claims::User::CreateAndDeliverJob).to have_received(:set).with(wait: 1.minute)
+      end
+
       context "when a user already exists" do
         before do
           create(:claims_user, schools: [school], email: "joe_bloggs@example.com")
