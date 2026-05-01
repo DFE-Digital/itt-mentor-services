@@ -177,6 +177,7 @@ class Claims::UserMailer < Claims::ApplicationMailer
                  body: t(".body",
                          user_name: user.first_name,
                          school_name: school.name,
+                         support_email:,
                          sign_in_url: sign_in_url(utm_source: "email", utm_medium: "notification", utm_campaign: "school"))
   end
 
