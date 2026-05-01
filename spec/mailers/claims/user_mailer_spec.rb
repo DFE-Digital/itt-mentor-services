@@ -601,7 +601,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
 
         Prior to submitting claims, schools must confirm the correct number of training hours you are claiming with the relevant provider, as they may be asked to provide evidence to support this claim.
 
-        If you have any questions or feedback, please contact the team at (support email - itt general mentor funding).
+        If you have any questions or feedback, please contact the team at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk).
       EMAIL
     end
 
