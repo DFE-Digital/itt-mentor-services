@@ -1,0 +1,44 @@
+<%= render "claims/support/primary_navigation", current: :claims %>
+<% content_for(:page_title) { sanitize t("#{translation_scope}.page_title", school_name: claim.school_name, reference: claim.reference) } %>
+
+<% content_for(:before_content) do %>
+  <%= govuk_back_link href: back_path %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= govuk_tabs do |tabs| %>
+        <% tabs.with_tab(label: t("#{translation_scope}.claim_details")) do %>
+          <span class="govuk-caption-l"><%= t("#{translation_scope}.page_caption", reference: claim.reference) %></span>
+          <h1 class="govuk-heading-l"><%= claim.school_name %> <%= render Claim::StatusTagComponent.new(claim:) %></h1>
+
+          <%= render Claims::Support::Claim::ResponsesComponent.new(claim:) %>
+
+          <%= render Claims::Support::Claim::ActionsComponent.new(claim:) %>
+
+          <% if claim.submitted_by_id? %>
+            <p class="govuk-body"><%= t("#{translation_scope}.submitted_by", name: claim.submitted_by.full_name, date: l(claim.submitted_on, format: :long)) %></p>
+          <% end %>
+
+          <%= render "claims/support/claims/details", claim: %>
+        <% end %>
+
+        <% tabs.with_tab(label: t("#{translation_scope}.school_details")) do %>
+          <p class="govuk-caption-l"><%= t("#{translation_scope}.page_caption", reference: claim.reference) %></p>
+          <%= render "claims/support/claims/school_details", organisation: claim.school %>
+        <% end %>
+
+        <% tabs.with_tab(label: t("#{translation_scope}.school_users")) do %>
+          <p class="govuk-caption-l"><%= t("#{translation_scope}.page_caption", reference: claim.reference) %></p>
+          <%= render "claims/support/claims/school_users", organisation: claim.school %>
+        <% end %>
+
+        <% tabs.with_tab(label: t("#{translation_scope}.history")) do %>
+          <p class="govuk-caption-l"><%= t("#{translation_scope}.page_caption", reference: claim.reference) %></p>
+          <%= render "claims/support/claims/history", claim: %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
