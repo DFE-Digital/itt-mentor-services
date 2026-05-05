@@ -92,6 +92,46 @@ terraform-apply: terraform-init
 terraform-destroy: terraform-init
 	terraform -chdir=terraform/application destroy -var-file "config/${CONFIG}.tfvars.json" ${AUTO_APPROVE}
 
+secret-init:
+	$(if $(VAULT_NAME),,$(error Missing VAULT_NAME))
+	$(if $(SECRET_NAME),,$(error Please specify SECRET_NAME))
+
+secret-list:
+    # make secret-list VAULT_NAME=your-keyvault   							   (LIST EXISTING SECRETS - ALL SECRETS)
+    # make secret-list VAULT_NAME=your-keyvault SECRET_LIST="secret1 secret2"  (LIST SPECIFIC SECRETS)
+	@if [ -n "$(SECRET_LIST)" ]; then \
+		echo "Listing selected secrets from vault $(VAULT_NAME)"; \
+		for secret in $(SECRET_LIST); do \
+			value=$$(az keyvault secret show --vault-name $(VAULT_NAME) --name $$secret --query value -o tsv); \
+			echo "$$secret: $$value"; \
+		done; \
+	else \
+	  echo "Listing all secrets from vault $(VAULT_NAME)"; \
+	  az keyvault secret list --vault-name $(VAULT_NAME) --query "[].name" -o tsv | while read secret; do \
+	    value=$$(az keyvault secret show --vault-name $(VAULT_NAME) --name $$secret --query value -o tsv); \
+	    echo "$$secret: $$value"; \
+	  done; \
+	fi
+
+secret-add: secret-init
+   # make secret-add VAULT_NAME=your-keyvault SECRET_NAME=your-secret SECRET_VALUE=your-value  (ADD OR UPDATE A SECRET)
+	$(if $(SECRET_VALUE),,$(error Please specify SECRET_VALUE))
+	@VAL_SECRET=$$(echo "$$SECRET_NAME" | tr ' _' '-' | tr '[:lower:]' '[:upper:]'); \
+	if [ "$$SECRET_NAME" = "$$VAL_SECRET" ]; then \
+		echo "Secret name is valid"; \
+		az keyvault secret set --vault-name "$(VAULT_NAME)" --name "$(SECRET_NAME)" --value "$(SECRET_VALUE)"; \
+	else \
+		echo "Secret names must be upper case and hyphenated i.e. instead of '$(SECRET_NAME)' maybe use '$$VAL_SECRET'"; \
+	fi
+
+secret-delete: secret-init
+   # make secret-delete VAULT_NAME=your-keyvault SECRET_NAME=your-secret (DELETE AN EXISTING SECRET)
+	@read -p "Delete secret '$(SECRET_NAME)' from vault '$(VAULT_NAME)'? [y/N] " ans; \
+	[ "$$ans" = "y" ] || [ "$$ans" = "Y" ] || { echo "Aborted."; exit 1; }; \
+	az keyvault secret delete --vault-name $(VAULT_NAME) --name $(SECRET_NAME)
+
+
+
 set-what-if:
 	$(eval WHAT_IF=--what-if)
 
