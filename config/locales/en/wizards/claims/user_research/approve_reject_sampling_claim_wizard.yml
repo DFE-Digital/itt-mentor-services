@@ -1,0 +1,32 @@
+en:
+  wizards:
+    claims:
+      user_research:
+        approve_reject_sampling_claim_wizard:
+          mentor_step:
+            page_title: Select mentors to review - %{contextual_text}
+            caption: "Claim %{claim_reference}"
+            heading: Which mentors do you want to review?
+            continue: Continue
+          mentor_training_step:
+            page_title: Hours of training for %{mentor_full_name} - %{contextual_text}
+            caption: "Claim %{claim_reference}"
+            heading: "How many hours did %{mentor_full_name} (TRN: %{mentor_trn}) actually complete?"
+            label: Hours completed
+            hint: "Enter a number between 1 and %{max_hours}"
+            reason_label: Why are you rejecting this?
+            reason_hint: Provide the reason for rejecting this mentor's training hours
+            continue: Continue
+          check_your_answers_step:
+            page_title: Check your answers - %{contextual_text}
+            caption: "Claim %{claim_reference}"
+            approve_title: Approve this claim
+            reject_title: Reject this claim
+            details: Details
+            mentor_hours: Selected mentor hours
+            original_hours: Original hours claimed
+            worked_hours: Mentor worked hours
+            clawed_back_hours: Hours clawed back
+            approve_warning: Once you approve this claim, the status will update to 'approved'.
+            reject_warning: Once you reject this claim, the status will update to 'rejected by provider'.
+            submit: Confirm
