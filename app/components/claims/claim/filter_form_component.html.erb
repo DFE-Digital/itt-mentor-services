@@ -102,7 +102,7 @@
                     </ul>
                   <% end %>
 
-                  <% if filter_form.provider_ids.present? %>
+                  <% if show_providers && filter_form.provider_ids.present? %>
                     <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.accredited_provider") %></h3>
                     <ul class="app-filter-tags">
                       <% filter_form.providers.each do |provider| %>
@@ -118,7 +118,7 @@
                     </ul>
                   <% end %>
 
-                  <% if filter_form.support_user_ids.present? %>
+                  <% if show_support_users && filter_form.support_user_ids.present? %>
                     <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.support_user") %></h3>
                     <ul class="app-filter-tags">
                       <% filter_form.support_users.each do |support_user| %>
@@ -160,7 +160,7 @@
                     </ul>
                   <% end %>
 
-                  <% if filter_form.submitted_after.present? %>
+                  <% if show_submitted_dates && filter_form.submitted_after.present? %>
                     <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.submitted_after") %></h3>
                     <ul class="app-filter-tags">
                       <%= govuk_link_to(
@@ -172,7 +172,7 @@
                     </ul>
                   <% end %>
 
-                  <% if filter_form.submitted_before.present? %>
+                  <% if show_submitted_dates && filter_form.submitted_before.present? %>
                     <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.submitted_before") %></h3>
                     <ul class="app-filter-tags">
                       <%= govuk_link_to(
@@ -271,6 +271,7 @@
                   <% end %>
                 </div>
 
+                <% if show_providers %>
                 <div class="app-filter__option" data-controller="async-filter-search" data-async-filter-search-endpoint-value="/support/providers/search"
                      data-async-filter-search-fieldname-value="claims_support_claims_filter_form[provider_ids][]" data-async-filter-search-labelname-value="claims-support-claims-filter-form-provider-ids">
                   <%= form.govuk_check_boxes_fieldset(
@@ -287,7 +288,9 @@
                     <% end %>
                   <% end %>
                 </div>
+                <% end %>
 
+                <% if show_support_users %>
                 <div class="app-filter__option" data-controller="filter-search">
                   <%= form.govuk_check_boxes_fieldset(
                     :support_user_ids,
@@ -304,6 +307,7 @@
                     <%= form.govuk_check_box :support_user_ids, UNASSIGNED, label: { text: t(".unassigned") } %>
                   <% end %>
                 </div>
+                <% end %>
 
                 <div class="app-filter__option" data-controller="async-filter-search" data-async-filter-search-endpoint-value="/support/mentors/search/<%= filter_form.academic_year.id %>"
                      data-async-filter-search-fieldname-value="claims_support_claims_filter_form[mentor_ids][]" data-async-filter-search-labelname-value="claims-support-claims-filter-form-mentor-ids">
@@ -322,6 +326,7 @@
                   <% end %>
                 </div>
 
+                <% if show_submitted_dates %>
                 <div class="app-filter__option">
                   <%= form.govuk_date_field(
                     :submitted_after,
@@ -340,6 +345,7 @@
                     hint: { text: t("claims.support.claims.index.submitted_before_hint"), size: "s" },
                   ) %>
                 </div>
+                <% end %>
               </div>
             </div>
           </div>

@@ -1,0 +1,8 @@
+en:
+  claims:
+    user_research:
+      sampling_claims:
+        reject:
+          success: Claim rejected successfully
+          edit:
+            cancel: Cancel

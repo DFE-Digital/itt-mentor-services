@@ -1,0 +1,12 @@
+en:
+  claims:
+    user_research:
+      sampling_claims:
+        approve:
+          new:
+            title: Are you sure you want to approve this claim?
+            body: This will mark the claim as 'Paid'.
+            approve: Approve claim
+            cancel: Cancel
+          create:
+            success: Claim approved

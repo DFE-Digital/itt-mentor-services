@@ -1,0 +1,16 @@
+<% content_for :page_title, "Provider research prototype" %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">Provider research prototype</h1>
+      <p class="govuk-body">Use your research invite details to access the prototype claims view.</p>
+
+      <%= form_with url: claims_user_research_provider_session_path, method: :post, scope: nil do |f| %>
+        <%= f.govuk_text_field :provider_code, label: { text: "Provider code" }, autocomplete: "off" %>
+        <%= f.govuk_email_field :email, label: { text: "Research email" }, autocomplete: "email" %>
+        <%= f.govuk_submit "Sign in" %>
+      <% end %>
+    </div>
+  </div>
+</div>
