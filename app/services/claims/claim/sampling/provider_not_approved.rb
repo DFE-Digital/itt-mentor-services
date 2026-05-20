@@ -12,10 +12,11 @@ class Claims::Claim::Sampling::ProviderNotApproved < ApplicationService
         end
         next if mentor_training_provider_response.blank?
 
-        mentor_training.update!(
+        mentor_training.assign_attributes(
           not_assured: mentor_training_provider_response[:not_assured],
           reason_not_assured: mentor_training_provider_response[:reason_not_assured],
         )
+        mentor_training.save!(validate: false)
       end
       claim.update!(
         status: :sampling_provider_not_approved,

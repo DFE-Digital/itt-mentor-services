@@ -1,0 +1,72 @@
+<% content_for :page_title, "Claim #{@claim.reference}" %>
+
+<% content_for(:before_content) do %>
+  <%= govuk_back_link href: claims_user_research_provider_claims_path %>
+<% end %>
+
+<div class="govuk-width-container">
+  <p class="govuk-caption-l">Provider prototype</p>
+  <h1 class="govuk-heading-l"><%= @claim.school_name %></h1>
+
+  <p class="govuk-body">Claim reference <strong><%= @claim.reference %></strong></p>
+
+  <% if @claim.status == "sampling_in_progress" %>
+    <div class="govuk-button-group">
+      <%= govuk_button_link_to(
+        "Approve claim",
+        new_approve_claim_claims_user_research_provider_claim_path(@claim),
+      ) %>
+      <%= govuk_button_link_to(
+        "Reject claim",
+        new_reject_claim_claims_user_research_provider_claim_path(@claim),
+        class: "govuk-button govuk-button--warning",
+      ) %>
+    </div>
+  <% end %>
+
+  <%= govuk_summary_list(actions: false) do |summary_list| %>
+    <% summary_list.with_row do |row| %>
+      <% row.with_key(text: "Provider") %>
+      <% row.with_value(text: @provider.name) %>
+    <% end %>
+
+    <% summary_list.with_row do |row| %>
+      <% row.with_key(text: "Academic year") %>
+      <% row.with_value(text: @claim.academic_year_name) %>
+    <% end %>
+
+    <% summary_list.with_row do |row| %>
+      <% row.with_key(text: "Status") %>
+      <% row.with_value(text: Claims::Claim.human_attribute_name("status.#{@claim.status}")) %>
+    <% end %>
+
+    <% summary_list.with_row do |row| %>
+      <% row.with_key(text: "Amount") %>
+      <% row.with_value(text: humanized_money_with_symbol(@claim.amount)) %>
+    <% end %>
+
+     <% summary_list.with_row do |row| %>
+       <% row.with_key(text: "Submitted") %>
+       <% row.with_value(text: l(@claim.submitted_on, format: :long)) %>
+     <% end %>
+   <% end %>
+
+  <h2 class="govuk-heading-m">Mentors</h2>
+  <%= govuk_table do |table| %>
+    <% table.with_head do |head| %>
+      <% head.with_row do |head_row| %>
+        <% head_row.with_cell(text: "Name") %>
+        <% head_row.with_cell(text: "Hours claimed") %>
+      <% end %>
+    <% end %>
+
+    <% table.with_body do |body| %>
+      <% @claim.mentor_trainings.order_by_mentor_full_name.each do |mentor_training| %>
+        <% body.with_row do |table_row| %>
+          <% table_row.with_cell(text: mentor_training.mentor.full_name) %>
+          <% table_row.with_cell(text: pluralize(mentor_training.hours_completed, "hour")) %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

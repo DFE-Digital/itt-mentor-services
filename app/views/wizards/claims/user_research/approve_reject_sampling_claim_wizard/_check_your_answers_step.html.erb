@@ -1,0 +1,71 @@
+<% content_for :page_title, title_with_error_prefix(t(".page_title", contextual_text: @wizard.claim_reference), error: current_step.errors.any?) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".caption", claim_reference: @wizard.claim_reference) %></span>
+      <h1 class="govuk-heading-l"><%= @wizard.action == "approve" ? t(".approve_title") : t(".reject_title") %></h1>
+
+      <h2 class="govuk-heading-m"><%= t(".details") %></h2>
+
+      <%= govuk_summary_list(actions: false) do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: Claims::Claim.human_attribute_name(:reference)) %>
+          <% row.with_value(text: @wizard.claim_reference) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: Claims::Claim.human_attribute_name(:provider)) %>
+          <% row.with_value(text: @wizard.provider_name) %>
+        <% end %>
+      <% end %>
+
+      <h2 class="govuk-heading-m"><%= t(".mentor_hours") %></h2>
+
+      <% @wizard.steps[:mentor].selected_mentors.each do |mentor| %>
+        <% mentor_training_step = @wizard.steps[@wizard.step_name_for_mentor(mentor)] %>
+        <% mentor_training = @wizard.mentor_trainings.find { |training| training.mentor_id == mentor.id } %>
+        <% original_hours = mentor_training&.hours_completed.to_i %>
+        <% worked_hours = mentor_training_step.hours_completed.to_i %>
+        <% clawed_back_hours = [original_hours - worked_hours, 0].max %>
+
+        <%= govuk_summary_card(title: mentor.full_name) do |card| %>
+          <% card.with_summary_list do |summary_list| %>
+            <% summary_list.with_row do |row| %>
+              <% row.with_key(text: t('.original_hours')) %>
+              <% row.with_value(text: pluralize(original_hours, "hour")) %>
+            <% end %>
+            <% summary_list.with_row do |row| %>
+              <% row.with_key(text: t('.worked_hours')) %>
+              <% row.with_value(text: pluralize(worked_hours, "hour")) %>
+              <% row.with_action(
+                text: t("change"),
+                href: step_path(@wizard.step_name_for_mentor(mentor)),
+                visually_hidden_text: "Hours of training for #{mentor.full_name}",
+                html_attributes: { class: "govuk-link--no-visited-state" },
+              ) %>
+            <% end %>
+            <% summary_list.with_row do |row| %>
+              <% row.with_key(text: t('.clawed_back_hours')) %>
+              <% row.with_value(text: pluralize(clawed_back_hours, "hour")) %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%= govuk_warning_text do %>
+        <% if @wizard.action == "approve" %>
+          <%= t(".approve_warning") %>
+        <% else %>
+          <%= t(".reject_warning") %>
+        <% end %>
+      <% end %>
+
+      <div class="govuk-button-group">
+        <%= f.govuk_submit t(".submit") %>
+      </div>
+    </div>
+  </div>
+<% end %>
