@@ -5,7 +5,7 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
-      <% @personas.each do |persona| %>
+      <% @personas.select { |p| p.first_name == "Patricia" }.each do |persona| %>
         <%= render PersonaSignInComponent.new(persona) %>
       <% end %>
     </div>
