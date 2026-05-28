@@ -3,6 +3,6 @@ en:
     user_research:
       sampling_claims:
         reject:
-          success: Claim rejected successfully
+          success: Claim amended successfully
           edit:
             cancel: Cancel

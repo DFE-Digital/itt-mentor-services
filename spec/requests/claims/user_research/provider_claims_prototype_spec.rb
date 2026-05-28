@@ -77,9 +77,13 @@ RSpec.describe "Provider claims user research prototype", type: :request do
     end
 
     it "resets the demo data back to the initial claims set" do
-      school = create(:claims_school)
-      create(:claims_mentor, schools: [school])
-      create(:claim, :submitted, provider:, school:)
+      # Create multiple schools and mentors to support the expanded 36-claim dataset
+      4.times do
+        school = create(:claims_school)
+        3.times { create(:claims_mentor, schools: [school]) }
+      end
+
+      create(:claim, :submitted, provider:, school: Claims::School.first)
 
       post claims_user_research_provider_session_path, params: {
         provider_code: "BPN01",
@@ -93,14 +97,38 @@ RSpec.describe "Provider claims user research prototype", type: :request do
 
       expect(response).to redirect_to(claims_user_research_provider_claims_path)
       expect(demo_provider.name).to eq("Test provider")
-      expect(demo_claims.count).to eq(12)
+      expect(demo_claims.count).to eq(36)
       expect(demo_claims.pluck(:status)).to contain_exactly(
         "sampling_in_progress",
         "sampling_in_progress",
+        "sampling_in_progress",
+        "sampling_in_progress",
+        "sampling_in_progress",
         "sampling_provider_not_approved",
         "sampling_provider_not_approved",
+        "sampling_provider_not_approved",
+        "sampling_not_approved",
+        "sampling_not_approved",
+        "sampling_not_approved",
+        "sampling_not_approved",
         "submitted",
         "submitted",
+        "submitted",
+        "submitted",
+        "submitted",
+        "submitted",
+        "submitted",
+        "paid",
+        "paid",
+        "paid",
+        "paid",
+        "paid",
+        "paid",
+        "paid",
+        "paid",
+        "paid",
+        "paid",
+        "paid",
         "paid",
         "paid",
         "paid",

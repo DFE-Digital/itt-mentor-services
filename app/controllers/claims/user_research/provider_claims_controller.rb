@@ -6,6 +6,15 @@ class Claims::UserResearch::ProviderClaimsController < Claims::ApplicationContro
     sampling_in_progress
   ].freeze
 
+  STATUS_ORDER = Arel.sql(<<~SQL.squish).freeze
+    CASE status
+      WHEN 'sampling_in_progress'           THEN 1
+      WHEN 'sampling_provider_not_approved' THEN 2
+      WHEN 'paid'                           THEN 3
+      ELSE 4
+    END
+  SQL
+
   skip_before_action :authenticate_user!
 
   before_action :skip_authorization
@@ -48,6 +57,7 @@ class Claims::UserResearch::ProviderClaimsController < Claims::ApplicationContro
     @filtered_claims = Claims::ClaimsQuery.call(params: filter_form.query_params)
       .where(provider_id: prototype_provider_ids)
       .where(status: VISIBLE_STATUSES)
+      .reorder(STATUS_ORDER)
   end
 
   def filter_form
