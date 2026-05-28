@@ -18,11 +18,6 @@ class Claims::UserResearch::ProviderClaimsPrototype
       name: "Test provider",
       email: "research+test-provider@example.org",
     ),
-    "NIOT1" => ProviderProfile.new(
-      code: "NIOT1",
-      name: "National Institute of Teaching",
-      email: "research+niot@example.org",
-    ),
   }.freeze
 
   CLAIMS = {
@@ -53,18 +48,6 @@ class Claims::UserResearch::ProviderClaimsPrototype
         school_name: "Riverdale Academy",
         status: "Submitted",
         submitted_on: Date.new(2026, 4, 25),
-        academic_year: "2025 to 2026",
-        mentor_count: 4,
-        amount: "GBP 1,500.00",
-      ),
-    ],
-    "NIOT1" => [
-      ClaimRecord.new(
-        id: "proto-claim-2001",
-        reference: "2001",
-        school_name: "Riverdale Academy",
-        status: "Payment in progress",
-        submitted_on: Date.new(2026, 4, 21),
         academic_year: "2025 to 2026",
         mentor_count: 4,
         amount: "GBP 1,500.00",

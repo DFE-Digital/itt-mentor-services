@@ -8,15 +8,22 @@
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l"><%= contextual_text %></span>
 
+      <% mentor_trainings = @wizard.mentor_trainings %>
       <%= f.govuk_collection_check_boxes(
         :mentor_ids,
         current_step.mentors,
-        :id, :full_name, :trn,
+        :id,
+        :full_name,
+        ->(mentor) {
+          training = mentor_trainings.find { |mt| mt.mentor_id == mentor.id }
+          pluralize(training&.hours_completed.to_i, "hour") + " claimed"
+        },
         legend: {
           size: "l",
           text: t(".heading"),
           tag: "h1",
-        }
+        },
+        hint: { text: t(".hint") }
       ) %>
 
       <%= f.govuk_submit t(".continue") %>

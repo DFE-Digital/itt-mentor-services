@@ -3,19 +3,59 @@ module Claims
     class ProviderClaimsDemoReset
       DEMO_PROVIDER_CODE = "TEST01".freeze
       DEMO_PROVIDER_NAME = "Test provider".freeze
+      DEMO_MENTORS = [
+        { first_name: "Alice",   last_name: "Demo", trn: "9900001" },
+        { first_name: "Bob",     last_name: "Demo", trn: "9900002" },
+        { first_name: "Carol",   last_name: "Demo", trn: "9900003" },
+        { first_name: "David",   last_name: "Demo", trn: "9900004" },
+        { first_name: "Eve",     last_name: "Demo", trn: "9900005" },
+        { first_name: "Frank",   last_name: "Demo", trn: "9900006" },
+      ].freeze
       DEMO_CLAIMS = [
+        # Current academic year - Window 0 (Sept-Dec)
         { reference: "90000001", status: :sampling_in_progress, training_type: :initial, academic_year: :current, claim_window_index: 0 },
-        { reference: "90000002", status: :sampling_provider_not_approved, training_type: :refresher, academic_year: :current, claim_window_index: 1 },
+        { reference: "90000002", status: :submitted, training_type: :refresher, academic_year: :current, claim_window_index: 0 },
         { reference: "90000003", status: :submitted, training_type: :initial, academic_year: :current, claim_window_index: 0 },
-        { reference: "90000004", status: :paid, training_type: :refresher, academic_year: :current, claim_window_index: 1 },
-        { reference: "90000005", status: :sampling_in_progress, training_type: :refresher, academic_year: :previous, claim_window_index: 0 },
-        { reference: "90000006", status: :sampling_provider_not_approved, training_type: :initial, academic_year: :previous, claim_window_index: 1 },
-        { reference: "90000007", status: :submitted, training_type: :refresher, academic_year: :previous, claim_window_index: 0 },
-        { reference: "90000008", status: :paid, training_type: :initial, academic_year: :previous, claim_window_index: 1 },
-        { reference: "90000009", status: :paid, training_type: :initial, academic_year: :two_years_ago, claim_window_index: 0 },
-        { reference: "90000010", status: :paid, training_type: :refresher, academic_year: :two_years_ago, claim_window_index: 1 },
-        { reference: "90000011", status: :paid, training_type: :initial, academic_year: :two_years_ago, claim_window_index: 0 },
-        { reference: "90000012", status: :paid, training_type: :refresher, academic_year: :two_years_ago, claim_window_index: 1 },
+        { reference: "90000004", status: :paid, training_type: :refresher, academic_year: :current, claim_window_index: 0 },
+        { reference: "90000005", status: :sampling_in_progress, training_type: :initial, academic_year: :current, claim_window_index: 0 },
+        { reference: "90000006", status: :sampling_not_approved, training_type: :refresher, academic_year: :current, claim_window_index: 0 },
+        # Current academic year - Window 1 (May-June)
+        { reference: "90000007", status: :sampling_provider_not_approved, training_type: :initial, academic_year: :current, claim_window_index: 1 },
+        { reference: "90000008", status: :submitted, training_type: :refresher, academic_year: :current, claim_window_index: 1 },
+        { reference: "90000009", status: :paid, training_type: :initial, academic_year: :current, claim_window_index: 1 },
+        { reference: "90000010", status: :paid, training_type: :refresher, academic_year: :current, claim_window_index: 1 },
+        { reference: "90000011", status: :sampling_in_progress, training_type: :initial, academic_year: :current, claim_window_index: 1 },
+        { reference: "90000012", status: :submitted, training_type: :refresher, academic_year: :current, claim_window_index: 1 },
+
+        # Previous academic year (2024/2025) - Window 0 (Sept-Dec)
+        { reference: "90000013", status: :paid, training_type: :refresher, academic_year: :previous, claim_window_index: 0 },
+        { reference: "90000014", status: :paid, training_type: :initial, academic_year: :previous, claim_window_index: 0 },
+        { reference: "90000015", status: :paid, training_type: :refresher, academic_year: :previous, claim_window_index: 0 },
+        { reference: "90000016", status: :paid, training_type: :initial, academic_year: :previous, claim_window_index: 0 },
+        { reference: "90000017", status: :paid, training_type: :refresher, academic_year: :previous, claim_window_index: 0 },
+        { reference: "90000018", status: :paid, training_type: :initial, academic_year: :previous, claim_window_index: 0 },
+        # Previous academic year (2024/2025) - Window 1 (May-June)
+        { reference: "90000019", status: :paid, training_type: :refresher, academic_year: :previous, claim_window_index: 1 },
+        { reference: "90000020", status: :paid, training_type: :initial, academic_year: :previous, claim_window_index: 1 },
+        { reference: "90000021", status: :paid, training_type: :refresher, academic_year: :previous, claim_window_index: 1 },
+        { reference: "90000022", status: :paid, training_type: :initial, academic_year: :previous, claim_window_index: 1 },
+        { reference: "90000023", status: :paid, training_type: :refresher, academic_year: :previous, claim_window_index: 1 },
+        { reference: "90000024", status: :paid, training_type: :initial, academic_year: :previous, claim_window_index: 1 },
+
+        # Two years ago - Window 0 (Sept-Dec)
+        { reference: "90000025", status: :paid, training_type: :initial, academic_year: :two_years_ago, claim_window_index: 0 },
+        { reference: "90000026", status: :paid, training_type: :refresher, academic_year: :two_years_ago, claim_window_index: 0 },
+        { reference: "90000027", status: :paid, training_type: :initial, academic_year: :two_years_ago, claim_window_index: 0 },
+        { reference: "90000028", status: :paid, training_type: :refresher, academic_year: :two_years_ago, claim_window_index: 0 },
+        { reference: "90000029", status: :sampling_not_approved, training_type: :initial, academic_year: :two_years_ago, claim_window_index: 0 },
+        { reference: "90000030", status: :sampling_not_approved, training_type: :refresher, academic_year: :two_years_ago, claim_window_index: 0 },
+        # Two years ago - Window 1 (May-June)
+        { reference: "90000031", status: :paid, training_type: :initial, academic_year: :two_years_ago, claim_window_index: 1 },
+        { reference: "90000032", status: :paid, training_type: :refresher, academic_year: :two_years_ago, claim_window_index: 1 },
+        { reference: "90000033", status: :paid, training_type: :initial, academic_year: :two_years_ago, claim_window_index: 1 },
+        { reference: "90000034", status: :paid, training_type: :refresher, academic_year: :two_years_ago, claim_window_index: 1 },
+        { reference: "90000035", status: :paid, training_type: :initial, academic_year: :two_years_ago, claim_window_index: 1 },
+        { reference: "90000036", status: :paid, training_type: :refresher, academic_year: :two_years_ago, claim_window_index: 1 },
       ].freeze
 
       def self.call
@@ -26,6 +66,7 @@ module Claims
         Claims::Claim.transaction do
           provider.claims.destroy_all
           provider.update!(name: DEMO_PROVIDER_NAME)
+          ensure_demo_mentors!
           create_demo_claims
         end
       end
@@ -46,12 +87,29 @@ module Claims
         end
       end
 
+      def ensure_demo_mentors!
+        mentor_records = DEMO_MENTORS.map do |attrs|
+          Mentor.find_or_create_by!(trn: attrs[:trn]) do |m|
+            m.first_name = attrs[:first_name]
+            m.last_name  = attrs[:last_name]
+          end
+        end
+
+        eligible_schools.each do |school|
+          school.mentors = (school.mentors + mentor_records).uniq
+        end
+
+        # Reload so school.mentors reflects the new assignments
+        @eligible_schools = nil
+      end
+
       def eligible_schools
-        @eligible_schools ||= Claims::School.includes(:mentors).select { |school| school.mentors.any? }.first(DEMO_CLAIMS.count)
+        @eligible_schools ||= Claims::School.first(DEMO_CLAIMS.count)
       end
 
       def create_demo_claim(school:, reference:, status:, training_type:, academic_year:, claim_window_index:)
         selected_claim_window = demo_claim_window(academic_year:, claim_window_index:)
+        submitted_at = demo_submitted_at(selected_claim_window, reference)
 
         claim = Claims::Claim.create!(
           claim_window: selected_claim_window,
@@ -60,34 +118,31 @@ module Claims
           reference:,
           created_by: demo_support_user,
           status:,
-          submitted_at: Time.current,
+          submitted_at:,
           submitted_by: demo_support_user,
           sampling_reason: status == :sampling_in_progress ? "Demo audit request" : nil,
         )
 
-        school.mentors.each do |mentor|
-          hours = demo_hours_for(mentor:, provider:, academic_year: selected_claim_window.academic_year)
-          next if hours.zero?
+        school.mentors.each_with_index do |mentor, mentor_index|
+          # Use validate: false to bypass the training allowance cap — demo data
+          # should always have mentor trainings regardless of allowance state.
+          hours = ((reference.to_i + mentor_index) % 5) + 1 # 1–5 hours, varied per mentor
 
-          Claims::MentorTraining.create!(
+          mt = Claims::MentorTraining.new(
             claim:,
             mentor:,
             provider:,
             hours_completed: hours,
             training_type:,
-            date_completed: Time.current,
+            date_completed: submitted_at,
           )
+          mt.save!(validate: false)
         end
       end
 
-      def demo_hours_for(mentor:, provider:, academic_year:)
-        training_allowance = Claims::TrainingAllowance.new(
-          mentor:,
-          provider:,
-          academic_year:,
-        )
-
-        [training_allowance.remaining_hours, 5].compact.min.clamp(1, 5)
+      def demo_submitted_at(claim_window, reference)
+        days_offset = reference.to_i % 10 # 0–9 days into the window for variance
+        claim_window.starts_on + days_offset.days
       end
 
       def demo_support_user

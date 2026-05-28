@@ -9,7 +9,9 @@
   <div class="claim-card__body">
     <div class="claim-card__body__details">
       <div class="govuk-body-s"><%= claim.academic_year_name %></div>
-      <div class="govuk-body-s"><%= claim.provider_name %></div>
+      <% if show_provider %>
+        <div class="govuk-body-s"><%= claim.provider_name %></div>
+      <% end %>
       <% if current_user.support_user? %>
         <div class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-2"></div>
         <div class="govuk-!-margin-top-2">

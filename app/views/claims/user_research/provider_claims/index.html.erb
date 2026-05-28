@@ -4,7 +4,7 @@
 <div class="govuk-width-container" data-controller="filter">
   <h1 class="govuk-heading-l">Your claims</h1>
 
-  <p class="govuk-body">Signed in as <strong><%= @provider.name %></strong>.</p>
+  <p class="govuk-body">Signed in as <strong>Patricia</strong>.</p>
 
   <h2 class="govuk-heading-m"><%= t("claims.support.claims.index.sub_heading", count: @pagy.count) %></h2>
 
@@ -21,7 +21,8 @@
           <%= render Claim::CardComponent.new(
             claim:,
             href: claims_user_research_provider_claim_path(claim),
-            current_user: current_user || User.new,
+            current_user: User.new,
+            show_provider: false,
           ) %>
         <% end %>
       </div>
