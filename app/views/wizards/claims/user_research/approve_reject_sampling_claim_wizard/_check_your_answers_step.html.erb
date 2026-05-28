@@ -28,7 +28,7 @@
         <% mentor_training_step = @wizard.steps[@wizard.step_name_for_mentor(mentor)] %>
         <% mentor_training = @wizard.mentor_trainings.find { |training| training.mentor_id == mentor.id } %>
         <% original_hours = mentor_training&.hours_completed.to_i %>
-        <% worked_hours = mentor_training_step.hours_completed.to_i %>
+        <% worked_hours = mentor_training_step.worked_hours %>
         <% clawed_back_hours = [original_hours - worked_hours, 0].max %>
 
         <%= govuk_summary_card(title: mentor.full_name) do |card| %>

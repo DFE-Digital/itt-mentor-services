@@ -82,7 +82,8 @@ RSpec.describe "Provider sampling claims approval/rejection wizard", type: :requ
       put response.request.path, params: {
         claims_user_research_approve_reject_sampling_claim_wizard_mentor_training_step: {
           mentor_id: mentor1.id,
-          hours_completed: "8",
+          hours_option: "custom",
+          custom_hours: "8",
           reason_not_assured: "Insufficient evidence provided for claimed hours",
         },
       }
@@ -93,7 +94,7 @@ RSpec.describe "Provider sampling claims approval/rejection wizard", type: :requ
       follow_redirect!
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include("Reject this claim")
+      expect(response.body).to include("Amend this claim")
 
       put response.request.path, params: {}
 
@@ -117,13 +118,14 @@ RSpec.describe "Provider sampling claims approval/rejection wizard", type: :requ
 
       follow_redirect!
 
-      put response.request.path, params: {
-        claims_user_research_approve_reject_sampling_claim_wizard_mentor_training_step: {
-          mentor_id: mentor1.id,
-          hours_completed: "8",
-          reason_not_assured: "",
-        },
-      }
+       put response.request.path, params: {
+         claims_user_research_approve_reject_sampling_claim_wizard_mentor_training_step: {
+           mentor_id: mentor1.id,
+           hours_option: "custom",
+           custom_hours: "8",
+           reason_not_assured: "",
+         },
+       }
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("There is a problem")
@@ -137,7 +139,7 @@ RSpec.describe "Provider sampling claims approval/rejection wizard", type: :requ
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("Approve claim")
-      expect(response.body).to include("Reject claim")
+      expect(response.body).to include("Amend claim")
     end
 
     it "does not display buttons for non-sampling claims" do
@@ -147,7 +149,7 @@ RSpec.describe "Provider sampling claims approval/rejection wizard", type: :requ
 
       expect(response).to have_http_status(:ok)
       expect(response.body).not_to include("Approve claim")
-      expect(response.body).not_to include("Reject claim")
+      expect(response.body).not_to include("Amend claim")
     end
   end
 end

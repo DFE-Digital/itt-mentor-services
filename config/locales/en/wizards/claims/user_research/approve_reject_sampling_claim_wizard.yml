@@ -13,8 +13,15 @@ en:
             page_title: Hours of training for %{mentor_full_name} - %{contextual_text}
             caption: "Claim %{claim_reference}"
             heading: "How many hours did %{mentor_full_name} (TRN: %{mentor_trn}) actually complete?"
-            label: Hours completed
+            hours_fieldset_legend: How many hours did this mentor work?
+            hours_fieldset_hint: "Select one of the options below"
+            remove_all_hours: Remove all hours
+            remove_all_hours_hint: The mentor did not work any hours
+            enter_hours_worked: Enter hours worked
+            label: Hours worked
+            number_of_hours: Number of hours
             hint: "Enter a number between 1 and %{max_hours}"
+            custom_hours_hint: "Enter a number between 1 and %{count}"
             reason_label: Why are you amending this?
             reason_hint: Provide the reason for amending this mentor's training hours
             continue: Continue
