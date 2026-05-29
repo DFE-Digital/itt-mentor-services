@@ -84,7 +84,7 @@ terraform-init: composed-variables set-azure-account
 	$(eval export TF_VAR_environment=${ENVIRONMENT})
 
 terraform-plan: terraform-init
-	terraform -chdir=terraform/application plan -var-file "config/${CONFIG}.tfvars.json"
+	terraform -chdir=terraform/application plan ${DETAILED_EXITCODE} -var-file "config/${CONFIG}.tfvars.json"
 
 terraform-apply: terraform-init
 	terraform -chdir=terraform/application apply -var-file "config/${CONFIG}.tfvars.json" ${AUTO_APPROVE}
@@ -125,7 +125,7 @@ domains-infra-init: ittms_domain set-azure-account ## make domains-infra-init - 
 	terraform -chdir=terraform/domains/infrastructure init -reconfigure -upgrade
 
 domains-infra-plan: domains-infra-init ## terraform plan for dns core resources
-	terraform -chdir=terraform/domains/infrastructure plan -var-file config/zones.tfvars.json
+	terraform -chdir=terraform/domains/infrastructure plan ${DETAILED_EXITCODE} -var-file config/zones.tfvars.json
 
 domains-infra-apply: domains-infra-init ## terraform apply for dns core resources
 	terraform -chdir=terraform/domains/infrastructure apply -var-file config/zones.tfvars.json ${AUTO_APPROVE}
@@ -137,7 +137,7 @@ domains-init: ittms_domain composed-variables set-azure-account
 	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure -backend-config=key=$(or $(DOMAINS_TERRAFORM_BACKEND_KEY), ittmsdomains_${ENVIRONMENT}.tfstate)
 
 domains-plan: domains-init  ## Terraform plan for DNS environment domains. Usage: make development domains-plan
-	terraform -chdir=terraform/domains/environment_domains plan -var-file config/${ENVIRONMENT}.tfvars.json
+	terraform -chdir=terraform/domains/environment_domains plan ${DETAILED_EXITCODE} -var-file config/${ENVIRONMENT}.tfvars.json
 
 domains-apply: domains-init ## Terraform apply for DNS environment domains. Usage: make development domains-apply
 	terraform -chdir=terraform/domains/environment_domains apply -var-file config/${ENVIRONMENT}.tfvars.json ${AUTO_APPROVE}
