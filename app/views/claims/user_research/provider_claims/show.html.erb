@@ -56,6 +56,8 @@
 
     <% not_assured_trainings.each do |mentor_training| %>
       <% original_hours = mentor_training.hours_completed.to_i %>
+      <% hours_clawed_back = mentor_training.hours_clawed_back.to_i %>
+      <% worked_hours = original_hours - hours_clawed_back %>
       <% amount = original_hours * mentor_training.region_funding_available_per_hour %>
       <%= govuk_summary_card(title: mentor_training.mentor.full_name) do |card| %>
         <% card.with_summary_list do |summary_list| %>
@@ -64,8 +66,12 @@
             <% row.with_value(text: pluralize(original_hours, "hour")) %>
           <% end %>
           <% summary_list.with_row do |row| %>
-            <% row.with_key(text: "Hours amended") %>
-            <% row.with_value(text: pluralize(original_hours, "hour")) %>
+            <% row.with_key(text: "Hours worked") %>
+            <% row.with_value(text: pluralize(worked_hours, "hour")) %>
+          <% end %>
+          <% summary_list.with_row do |row|%>
+            <% row.with_key(text: "Amended hours") %>
+            <% row.with_value(text: pluralize(hours_clawed_back, "hour")) %>
           <% end %>
           <% summary_list.with_row do |row| %>
             <% row.with_key(text: "Amount claimed") %>
