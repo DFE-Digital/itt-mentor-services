@@ -101,6 +101,7 @@ RSpec.describe "Provider sampling claims approval/rejection wizard", type: :requ
       expect(response).to redirect_to(claims_user_research_provider_claims_path)
 
       expect(claim.reload.status).to eq("sampling_provider_not_approved")
+      expect(claim.mentor_trainings.find_by(mentor_id: mentor1.id)&.hours_clawed_back).to eq(2)
     end
 
     it "requires a rejection reason" do

@@ -34,7 +34,7 @@ en:
             mentor_hours: Selected mentor hours
             original_hours: Original hours claimed
             worked_hours: Mentor worked hours
-            clawed_back_hours: Hours amended
+            clawed_back_hours: Amended hours
             approve_warning: Once you approve this claim, the status will be updated to 'approved'.
             reject_warning: Once you amend this claim, the status will be updated to 'rejected by provider' and the school will receive an email with the next steps.
             submit: Confirm

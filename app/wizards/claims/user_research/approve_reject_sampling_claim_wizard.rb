@@ -78,11 +78,12 @@ module Claims
       def provider_responses_for_mentor_trainings
         mentor_trainings.map do |mentor_training|
           step_name_value = step_name(MentorTrainingStep, mentor_training.mentor_id)
-          provider_response_step = steps[step_name_value]
+          mentor_training_step = steps[step_name_value]
           {
             id: mentor_training.id,
-            not_assured: provider_response_step.present?,
-            reason_not_assured: provider_response_step&.reason_not_assured,
+            not_assured: mentor_training_step.present?,
+            reason_not_assured: mentor_training_step&.reason_not_assured,
+            hours_clawed_back: mentor_training_step.present? ? [mentor_training.hours_completed.to_i - mentor_training_step.worked_hours, 0].max : nil,
           }
         end
       end
