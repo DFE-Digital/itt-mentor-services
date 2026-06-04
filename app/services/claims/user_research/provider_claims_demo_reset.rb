@@ -56,6 +56,8 @@ module Claims
         { reference: "90000034", status: :paid, training_type: :refresher, academic_year: :two_years_ago, claim_window_index: 1 },
         { reference: "90000035", status: :paid, training_type: :initial, academic_year: :two_years_ago, claim_window_index: 1 },
         { reference: "90000036", status: :paid, training_type: :refresher, academic_year: :two_years_ago, claim_window_index: 1 },
+        # Extra claim requested for user research: audit required for St Gregories
+        { reference: "90000037", status: :sampling_in_progress, training_type: :initial, academic_year: :current, claim_window_index: 1, school_name: "St Gregory's Catholic Primary School" },
       ].freeze
 
       def self.call
@@ -83,8 +85,16 @@ module Claims
       def create_demo_claims
         schools = eligible_schools
         DEMO_CLAIMS.each_with_index do |claim_definition, index|
-          create_demo_claim(school: schools.fetch(index % schools.count), **claim_definition)
+          fallback_school = schools.fetch(index % schools.count)
+          school = school_for_claim(claim_definition, fallback_school)
+          create_demo_claim(school:, **claim_definition.except(:school_name))
         end
+      end
+
+      def school_for_claim(claim_definition, fallback_school)
+        return fallback_school if claim_definition[:school_name].blank?
+
+        Claims::School.find_by("name ILIKE ?", claim_definition[:school_name]) || fallback_school
       end
 
       def ensure_demo_mentors!
