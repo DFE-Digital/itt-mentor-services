@@ -33,7 +33,7 @@ describe Claims::Claim::Sampling::ProviderNotApproved do
       let(:mentor_training_2) { create(:mentor_training, claim:) }
       let(:provider_responses) do
         [
-          { id: mentor_training_1.id, not_assured: true, reason_not_assured: "Some reason" },
+          { id: mentor_training_1.id, not_assured: true, reason_not_assured: "Some reason", hours_clawed_back: 2 },
           { id: mentor_training_2.id, not_assured: false, reason_not_assured: nil },
         ]
       end
@@ -46,7 +46,9 @@ describe Claims::Claim::Sampling::ProviderNotApproved do
         mentor_training_1.reload
         expect(mentor_training_1.not_assured).to be(true)
         expect(mentor_training_1.reason_not_assured).to eq("Some reason")
+        expect(mentor_training_1.hours_clawed_back).to eq(2)
         expect(mentor_training_2.reload.not_assured).to be(false)
+        expect(mentor_training_2.reload.hours_clawed_back).to be_nil
       end
 
       context "when a provider response is not given for a mentor training associated with this claim" do

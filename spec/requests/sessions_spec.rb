@@ -15,6 +15,23 @@ RSpec.describe "Sessions", type: :request do
       # roots implemented
       expect(response).to render_template("claims/schools/index")
     end
+
+    it "redirects Patricia to the provider research prototype" do
+      patricia = create(
+        :claims_user,
+        first_name: "Patricia",
+        last_name: "Adebayo",
+        email: "patricia@example.com",
+      )
+      user_exists_in_dfe_sign_in(user: patricia)
+
+      get "/auth/dfe/callback"
+
+      follow_redirect!
+
+      expect(response).to have_http_status(:success)
+      expect(response).to render_template("claims/user_research/provider_claims/index")
+    end
   end
 
   describe "GET /auth/failure" do

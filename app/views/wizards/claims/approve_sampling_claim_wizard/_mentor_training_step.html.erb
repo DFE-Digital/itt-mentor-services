@@ -1,0 +1,16 @@
+<% content_for :page_title, t(".page_title", mentor_full_name: current_step.mentor_full_name) %>
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".caption", claim_reference: @wizard.claim_reference) %></span>
+      <h1 class="govuk-heading-l"><%= t(".heading", mentor_full_name: current_step.mentor_full_name, mentor_trn: current_step.mentor_trn) %></h1>
+      <%= f.govuk_number_field(
+        :hours_completed,
+        label: { text: t(".label"), size: "m" },
+        hint: { text: t(".hint", max_hours: current_step.max_hours) }
+      ) %>
+      <%= f.govuk_submit t(".continue") %>
+    </div>
+  </div>
+<% end %>

@@ -1,4 +1,10 @@
-<% content_for :breadcrumbs, govuk_breadcrumbs(breadcrumbs: { t("home") => claims_root_path }, collapse_on_mobile: true) %>
+<% if session[:provider_research_code].present? %>
+  <% content_for(:before_content) do %>
+    <%= govuk_back_link href: claims_user_research_provider_claims_path %>
+  <% end %>
+<% else %>
+  <% content_for :breadcrumbs, govuk_breadcrumbs(breadcrumbs: { t("home") => claims_root_path }, collapse_on_mobile: true) %>
+<% end %>
 <% content_for(:page_title) { t(".page_title") } %>
 
 <div class="govuk-width-container">

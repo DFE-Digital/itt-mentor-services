@@ -1,0 +1,12 @@
+en:
+  claims:
+    user_research:
+      sampling_claims:
+        approve:
+          new:
+            title: Are you sure you want to approve this claim?
+            body: By approving this claim, you confirm that you have checked your records and the hours are correct for all mentors. The claim will be marked as 'Paid' and no further action is required.
+            approve: Approve claim
+            cancel: Cancel
+          create:
+            success: Claim approved
