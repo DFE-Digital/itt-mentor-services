@@ -58,12 +58,12 @@ class DfESignInUser
   end
 
   def user
-    @user ||= User.where(type: [support_user_klass, user_klass].map(&:to_s))
+    @user ||= User.where(type: user_klasses.map(&:to_s))
       .and(
         User.where(dfe_sign_in_uid:).where.not(dfe_sign_in_uid: nil)
           .or(User.where(email:)),
       )
-      .order(type: :asc) # so support users take precedence
+      .order(Arel.sql(user_type_priority_sql))
       .first
   end
 
@@ -82,13 +82,19 @@ class DfESignInUser
     end
   end
 
-  def user_klass
+  def user_klasses
     case service
     when :placements
-      Placements::User
+      [support_user_klass, Placements::User]
     when :claims
-      Claims::User
+      [support_user_klass, Claims::User, Claims::ProviderUser]
     end
+  end
+
+  def user_type_priority_sql
+    # Ensure support users take precedence if duplicate records exist for an email/uid.
+    parts = user_klasses.each_with_index.map { |klass, index| "WHEN '#{klass}' THEN #{index}" }
+    "CASE type #{parts.join(" ")} ELSE 999 END"
   end
 
   def signed_in_from_dfe?
