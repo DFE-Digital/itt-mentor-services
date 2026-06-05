@@ -67,6 +67,7 @@ FactoryBot.define do
   end
 
   factory :claims_user, class: "Claims::User", parent: :user
+  factory :claims_provider_user, class: "Claims::ProviderUser", parent: :user
   factory :support_user, traits: [:support], parent: :user
 
   factory :placements_user,

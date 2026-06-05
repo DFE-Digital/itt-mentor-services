@@ -25,6 +25,32 @@ RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
     end
   end
 
+  context "when the user is assigned to a provider" do
+    let!(:provider_organisation) { create(:claims_provider, name: "Claims Provider") }
+
+    scenario "I sign in as a provider user and can access the service" do
+      given_there_is_an_existing_provider_user_for("Patricia")
+      and_the_provider_user_is_part_of_an_organisation(provider_organisation)
+      when_i_visit_the_sign_in_path
+      when_i_click_sign_in
+      then_i_am_redirected_to_the_schools_page
+    end
+  end
+
+  context "when the provider user is assigned to multiple providers" do
+    let!(:provider_organisation) { create(:claims_provider, name: "Claims Provider 1") }
+    let!(:another_provider_organisation) { create(:claims_provider, name: "Claims Provider 2") }
+
+    scenario "I sign in as a provider user and can access the service" do
+      given_there_is_an_existing_provider_user_for("Patricia")
+      and_the_provider_user_is_part_of_an_organisation(provider_organisation)
+      and_the_provider_user_is_part_of_an_organisation(another_provider_organisation)
+      when_i_visit_the_sign_in_path
+      when_i_click_sign_in
+      then_i_am_redirected_to_the_schools_page
+    end
+  end
+
   scenario "I sign in as a support user" do
     given_a_school_has_been_onboarded_onto_the_claims_service(name: "Claims School")
     given_there_is_an_existing_support_user_for("Colin")
@@ -160,8 +186,18 @@ RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
     user_exists_in_dfe_sign_in(user:)
   end
 
+  def given_there_is_an_existing_provider_user_for(user_name, with_dfe_sign_id: true)
+    user = create(:claims_provider_user, user_name.downcase.to_sym)
+    user.update!(dfe_sign_in_uid: nil) unless with_dfe_sign_id
+    user_exists_in_dfe_sign_in(user:)
+  end
+
   def and_the_user_is_part_of_an_organisation(organisation)
     organisation.users << User.find_by(email: "anne_wilson@example.org")
+  end
+
+  def and_the_provider_user_is_part_of_an_organisation(organisation)
+    organisation.users << User.find_by(email: "patricia@example.com")
   end
 
   def given_a_school_has_been_onboarded_onto_the_claims_service(name:)

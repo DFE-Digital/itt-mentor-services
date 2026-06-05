@@ -122,6 +122,12 @@ schools.each do |school|
   claims_mary.user_memberships.find_or_create_by!(organisation: school)
 end
 
+# Provider Patricia
+claims_patricia = Claims::ProviderUser.find_by!(email: "patricia@example.com")
+Claims::Provider.order_by_name.first(2).each do |provider|
+  claims_patricia.user_memberships.find_or_create_by!(organisation: provider)
+end
+
 # Create dummy mentors
 mentors_data = [{ first_name: "Sarah", last_name: "Doe", trn: "1234567" },
                 { first_name: "John", last_name: "Doe", trn: "1212121" },
