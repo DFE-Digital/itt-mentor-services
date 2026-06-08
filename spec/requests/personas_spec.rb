@@ -19,5 +19,12 @@ RSpec.describe "Personas", type: :request do
       get "/personas"
       expect(response).to have_http_status(:success)
     end
+
+    context "when placements service", service: :placements do
+      it "returns http success" do
+        get "/personas"
+        expect(response).to have_http_status(:success)
+      end
+    end
   end
 end
