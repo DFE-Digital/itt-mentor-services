@@ -101,7 +101,7 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
-    addressable (2.8.9)
+    addressable (2.9.0)
       public_suffix (>= 2.0.2, < 8.0)
     aes_key_wrap (1.1.0)
     amazing_print (2.0.0)
@@ -178,8 +178,9 @@ GEM
     dotenv-rails (3.2.0)
       dotenv (= 3.2.0)
       railties (>= 6.1)
-    down (5.4.2)
+    down (5.6.0)
       addressable (~> 2.8)
+      base64 (~> 0.3)
     draper (4.0.4)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
@@ -747,7 +748,7 @@ DEPENDENCIES
   dfe-analytics!
   discard
   dotenv-rails
-  down (~> 5.4)
+  down (~> 5.6)
   draper
   erb_lint
   factory_bot_rails
