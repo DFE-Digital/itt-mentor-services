@@ -1,0 +1,51 @@
+en:
+  wizards:
+    claims:
+      onboard_providers_wizard:
+        upload_step:
+          page_title: Upload providers - Onboard providers - Claims
+          caption: Onboard providers
+          title: Upload providers
+          upload_csv_file: Upload CSV file
+          upload: Upload
+          csv_help: Help with the CSV file
+          upload_the_csv_file: Upload the CSV file sent to you with the list of provider users.
+          csv_help_details: |
+            Use this form to upload the CSV file with provider users.
+
+            The CSV file must contain the following headers in the first row:
+
+              - email
+              - provider_code
+              - first_name
+              - last_name
+        confirmation_step:
+          page_title: Are you sure you want to upload the providers? - Onboard providers - Claims
+          caption: Onboard providers
+          title: Confirm you want to upload providers
+          preview_file_name: Preview of %{file_name}
+          confirm_upload: Confirm upload
+          only_showing_first_five_rows: Only showing the first 5 rows
+          showing_all_rows: Showing all rows
+        upload_errors_step:
+          page_title: Upload providers - Onboard providers - Claims
+          caption: Onboard providers
+          title: Upload providers
+          error_summary:
+            title: There is a problem
+            errors_to_fix:
+                one: You need to fix %{count} error related to a specific row
+                other: You need to fix %{count} errors related to specific rows
+          csv_table:
+            headers:
+              first_name: first_name
+              last_name: last_name
+              provider_code: provider_code
+              email: email
+            errors:
+              missing_first_name: Enter a first name
+              missing_last_name: Enter a last name
+              invalid_email: Enter a valid email address
+              invalid_provider: Enter a valid onboarded provider code
+          only_showing_rows_with_errors: Only showing rows with errors
+          upload_your_file_again: Upload your file again

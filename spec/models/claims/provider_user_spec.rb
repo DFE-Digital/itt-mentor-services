@@ -50,4 +50,10 @@ RSpec.describe Claims::ProviderUser do
       expect(provider_user.organisation_count).to eq(2)
     end
   end
+
+  describe "#service" do
+    it "returns :claims" do
+      expect(described_class.new.service).to eq(:claims)
+    end
+  end
 end

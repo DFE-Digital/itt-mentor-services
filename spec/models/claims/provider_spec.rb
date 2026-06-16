@@ -40,6 +40,28 @@ require "rails_helper"
 
 RSpec.describe Claims::Provider, type: :model do
   context "with associations" do
+    describe "#users" do
+      it { is_expected.to have_many(:users).through(:user_memberships) }
+
+      it "returns only Claims::ProviderUser records" do
+        claims_provider = create(:claims_provider)
+        claims_provider_user = create(:claims_provider_user)
+
+        claims_provider.users << claims_provider_user
+
+        expect(claims_provider.users).to contain_exactly(claims_provider_user)
+        expect(claims_provider.users).to all(be_a(Claims::ProviderUser))
+      end
+
+      it "does not allow non-claims provider users to be added" do
+        claims_provider = create(:claims_provider)
+
+        expect {
+          claims_provider.users << create(:placements_user)
+        }.to raise_error(ActiveRecord::AssociationTypeMismatch)
+      end
+    end
+
     it { is_expected.to have_many(:mentor_trainings) }
     it { is_expected.to have_many(:claims) }
   end

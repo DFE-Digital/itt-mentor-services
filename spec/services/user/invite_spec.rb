@@ -17,6 +17,15 @@ RSpec.describe User::Invite do
           expect { user_invite_service }.to have_enqueued_mail(Claims::UserMailer, :user_membership_created_notification).with(user, organisation)
         end
       end
+
+      describe "when the organisation is a provider" do
+        let(:user) { create(:claims_provider_user) }
+        let(:organisation) { create(:claims_provider) }
+
+        it "calls mailer with correct prams" do
+          expect { user_invite_service }.to have_enqueued_mail(Claims::ProviderUserMailer, :user_membership_created_notification).with(user, organisation)
+        end
+      end
     end
 
     context "when the user's service is Placements" do
