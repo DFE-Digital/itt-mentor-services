@@ -10,12 +10,12 @@ en:
           providers_not_submitted_claims: Remind providers to submit claims
           schools_not_signed_in: Remind schools to sign in
           school_has_signed_in_but_not_claimed: Remind schools that have signed in to make claims
-          export: Export
           export_users: Export users (CSV)
           emails: View email templates
           reset_database: Reset database
-          revert_claims_to_submitted: Revert all claims to 'Submitted'
+          revert_claims_to_submitted: "Revert all claims to 'Submitted'"
           onboard_users: Invite users to the service
+          onboard_providers: Invite providers to the service
           onboard_schools: Make schools eligible to submit claims
           manually_onboarded_schools: View manually onboarded schools
           service_management: Service management

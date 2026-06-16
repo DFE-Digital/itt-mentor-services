@@ -42,6 +42,10 @@ class Claims::Provider < Provider
     "NIoT: National Institute of Teaching, founded by the School-Led Development Trust",
   ].freeze
 
+  has_many :users,
+           through: :user_memberships,
+           source: :user,
+           class_name: "Claims::ProviderUser"
   has_many :mentor_trainings
   has_many :claims
 

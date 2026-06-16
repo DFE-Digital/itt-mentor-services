@@ -260,6 +260,10 @@ scope module: :claims, as: :claims, constraints: {
         get "onboard_users", to: "settings/onboard_users#new", as: :new_onboard_users
         get "onboard_users/:state_key/:step", to: "settings/onboard_users#edit", as: :onboard_users
         put "onboard_users/:state_key/:step", to: "settings/onboard_users#update"
+
+        get "onboard_providers", to: "settings/onboard_providers#new", as: :new_onboard_providers
+        get "onboard_providers/:state_key/:step", to: "settings/onboard_providers#edit", as: :onboard_providers
+        put "onboard_providers/:state_key/:step", to: "settings/onboard_providers#update"
       end
     end
 
