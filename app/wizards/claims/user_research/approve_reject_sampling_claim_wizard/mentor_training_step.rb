@@ -13,7 +13,7 @@ class Claims::UserResearch::ApproveRejectSamplingClaimWizard::MentorTrainingStep
   validate :custom_hours_within_available_range, if: :custom_hours_selected?
   validates :reason_not_assured, presence: { message: "Please enter a reason" }, if: :reject_action?
 
-  delegate :full_name, :trn, to: :mentor, prefix: true
+  delegate :full_name, to: :mentor, prefix: true
   delegate :name, to: :provider, prefix: true
   delegate :action, to: :wizard
 
@@ -45,11 +45,14 @@ class Claims::UserResearch::ApproveRejectSamplingClaimWizard::MentorTrainingStep
     mentor_training&.training_type || :initial
   end
 
-  def worked_hours
+  def completed_hours
     return 0 if hours_option == REMOVE_ALL_HOURS
 
     custom_hours.to_i
   end
+
+  alias_method :trained_hours, :completed_hours
+  alias_method :worked_hours, :completed_hours
 
   private
 

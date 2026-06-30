@@ -2,6 +2,7 @@ class Claims::UserResearch::ProviderSessionsController < Claims::ApplicationCont
   skip_before_action :authenticate_user!
   before_action :skip_authorization
   def new; end
+
   def create
     provider = prototype.provider_for(
       code: params[:provider_code],
@@ -16,11 +17,14 @@ class Claims::UserResearch::ProviderSessionsController < Claims::ApplicationCont
       render :new, status: :unprocessable_content
     end
   end
+
   def destroy
     session.delete(:provider_research_code)
     redirect_to claims_root_path
   end
+
   private
+
   def prototype
     @prototype ||= Claims::UserResearch::ProviderClaimsPrototype.new
   end

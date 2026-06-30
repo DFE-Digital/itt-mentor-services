@@ -1,19 +1,26 @@
 <% content_for :page_title, "Your claims" %>
 
-
 <div class="govuk-width-container" data-controller="filter">
   <h1 class="govuk-heading-l">Your claims</h1>
 
-  <p class="govuk-body">Signed in as <strong>Patricia</strong>.</p>
+  <button type="button" class="govuk-button" data-module="govuk-button">
+    Download claims
+  </button>
 
-  <h2 class="govuk-heading-m"><%= t("claims.support.claims.index.sub_heading", count: @pagy.count) %></h2>
+  <h2 class="govuk-heading-m">Claims requiring audit (<%= @audit_requested_count %>)</h2>
 
   <%= render Claims::Claim::FilterFormComponent.new(
     filter_form:,
     statuses: Claims::UserResearch::ProviderClaimsController::VISIBLE_STATUSES,
+    show_academic_years: false,
+    show_claim_windows: false,
+    show_training_types: false,
+    show_statuses: false,
     show_providers: false,
     show_support_users: false,
+    show_mentors: false,
     show_submitted_dates: false,
+    show_search: false,
   ) do %>
     <% if @claims.any? %>
       <div class="govuk-!-margin-bottom-2">
@@ -22,6 +29,7 @@
             claim:,
             href: claims_user_research_provider_claim_path(claim),
             current_user: User.new,
+            status_text: provider_status_text_for(claim),
             show_provider: false,
           ) %>
         <% end %>

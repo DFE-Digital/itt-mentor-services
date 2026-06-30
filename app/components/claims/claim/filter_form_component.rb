@@ -7,9 +7,15 @@ class Claims::Claim::FilterFormComponent < ApplicationComponent
     academic_years: AcademicYear.where(id: Claims::ClaimWindow.select(:academic_year_id)).order_by_date_desc,
     providers: nil,
     schools: nil,
+    show_academic_years: true,
+    show_claim_windows: true,
+    show_training_types: true,
+    show_statuses: true,
     show_providers: true,
     show_support_users: true,
+    show_mentors: true,
     show_submitted_dates: true,
+    show_search: true,
     classes: [],
     html_attributes: {}
   )
@@ -20,9 +26,15 @@ class Claims::Claim::FilterFormComponent < ApplicationComponent
     @academic_years = academic_years
     @providers = providers || limit_records(Claims::Provider.accredited.excluding_niot_providers)
     @schools = schools || limit_records(Claims::School)
+    @show_academic_years = show_academic_years
+    @show_claim_windows = show_claim_windows
+    @show_training_types = show_training_types
+    @show_statuses = show_statuses
     @show_providers = show_providers
     @show_support_users = show_support_users
+    @show_mentors = show_mentors
     @show_submitted_dates = show_submitted_dates
+    @show_search = show_search
   end
 
   def mentors
@@ -46,7 +58,8 @@ class Claims::Claim::FilterFormComponent < ApplicationComponent
 
   private
 
-  attr_reader :claims, :filter_form, :show_providers, :show_support_users, :show_submitted_dates
+  attr_reader :claims, :filter_form, :show_academic_years, :show_claim_windows, :show_training_types,
+              :show_statuses, :show_providers, :show_support_users, :show_mentors, :show_submitted_dates, :show_search
 
   def limit_records(klass, order: :name)
     ids = Array(filter_form.public_send("#{klass.name.demodulize.underscore}_ids"))

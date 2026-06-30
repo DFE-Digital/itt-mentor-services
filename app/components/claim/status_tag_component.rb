@@ -1,14 +1,15 @@
 class Claim::StatusTagComponent < ApplicationComponent
   attr_reader :claim
 
-  def initialize(claim:, classes: [], html_attributes: {})
+  def initialize(claim:, text: nil, classes: [], html_attributes: {})
     super(classes:, html_attributes:)
 
     @claim = claim
+    @text = text
   end
 
   def call
-    govuk_tag(text: Claims::Claim.human_attribute_name("status.#{claim.status}"), colour:)
+    govuk_tag(text: @text || Claims::Claim.human_attribute_name("status.#{claim.status}"), colour:)
   end
 
   private

@@ -8,7 +8,7 @@
       <%= f.govuk_number_field(
         :hours_completed,
         label: { text: t(".label"), size: "m" },
-        hint: { text: t(".hint", max_hours: current_step.max_hours) }
+        hint: { text: t(".hint", max_hours: current_step.max_hours) },
       ) %>
       <%= f.govuk_submit t(".continue") %>
     </div>

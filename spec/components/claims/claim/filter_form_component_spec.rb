@@ -37,6 +37,39 @@ RSpec.describe Claims::Claim::FilterFormComponent, type: :component do
     expect(page).to have_field("claims_support_claims_filter_form[claim_window_ids][]")
   end
 
+  context "when configured to show only the schools filter" do
+    subject(:component) do
+      described_class.new(
+        filter_form:,
+        show_academic_years: false,
+        show_claim_windows: false,
+        show_training_types: false,
+        show_statuses: false,
+        show_providers: false,
+        show_support_users: false,
+        show_mentors: false,
+        show_submitted_dates: false,
+        show_search: false,
+      )
+    end
+
+    it "renders the schools filter only" do
+      render_inline(component)
+
+      expect(page).to have_field("claims_support_claims_filter_form[school_ids][]")
+      expect(page).not_to have_field("claims_support_claims_filter_form[search]")
+      expect(page).not_to have_field("claims_support_claims_filter_form[academic_year_id]")
+      expect(page).not_to have_field("claims_support_claims_filter_form[claim_window_ids][]")
+      expect(page).not_to have_field("claims_support_claims_filter_form[training_types][]")
+      expect(page).not_to have_field("claims_support_claims_filter_form[statuses][]")
+      expect(page).not_to have_field("claims_support_claims_filter_form[provider_ids][]")
+      expect(page).not_to have_field("claims_support_claims_filter_form[support_user_ids][]")
+      expect(page).not_to have_field("claims_support_claims_filter_form[mentor_ids][]")
+      expect(page).not_to have_field("claims_support_claims_filter_form[submitted_after(1i)]")
+      expect(page).not_to have_field("claims_support_claims_filter_form[submitted_before(1i)]")
+    end
+  end
+
   it "allows users to filter by all claim statuses, except from the draft statuses" do
     render_inline(component)
 
