@@ -28,6 +28,56 @@ RSpec.describe Claim::CardComponent, type: :component do
   let(:clawback_requested_by) { create(:claims_support_user, first_name: "Jane", last_name: "Doe") }
   let(:clawback_approved_by) { support_user }
 
+  context "when rendering a provider-facing card" do
+    subject(:component) do
+      described_class.new(
+        claim:,
+        href:,
+        current_user:,
+        show_provider: false,
+        status_text: "Amended",
+      )
+    end
+
+    let(:status) { :sampling_provider_not_approved }
+
+    it "hides the provider name and uses the overridden status text" do
+      render_inline(component)
+
+      expect(page).to have_link(claim.school_name, href: claims_support_claim_path(claim))
+      expect(page).to have_content(claim.reference)
+      expect(page).to have_content("Amended")
+      expect(page).not_to have_content("Rejected by provider")
+      expect(page).to have_content(claim.academic_year_name)
+      expect(page).not_to have_content(claim.provider_name)
+    end
+  end
+
+  context "when rendering a provider-facing card for an approved claim" do
+    subject(:component) do
+      described_class.new(
+        claim:,
+        href:,
+        current_user:,
+        show_provider: false,
+        status_text: "Approved",
+      )
+    end
+
+    let(:status) { :paid }
+
+    it "hides the provider name and uses the approved status text" do
+      render_inline(component)
+
+      expect(page).to have_link(claim.school_name, href: claims_support_claim_path(claim))
+      expect(page).to have_content(claim.reference)
+      expect(page).to have_content("Approved")
+      expect(page).not_to have_content("Paid")
+      expect(page).to have_content(claim.academic_year_name)
+      expect(page).not_to have_content(claim.provider_name)
+    end
+  end
+
   context "when current user is not a support user" do
     it "renders a card with claim details without support user details" do
       render_inline(component)

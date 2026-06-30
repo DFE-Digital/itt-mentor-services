@@ -43,8 +43,6 @@ module Claims
       end
     end
 
-    def provider
-      claim.provider
-    end
+    delegate :provider, to: :claim
   end
 end

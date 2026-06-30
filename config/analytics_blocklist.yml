@@ -133,6 +133,7 @@ shared:
     - labels
     - locked_by_id
     - locked_at
+    - lock_type
   :schools:
     - transit_travel_duration
     - walk_travel_duration
