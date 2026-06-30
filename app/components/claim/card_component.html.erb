@@ -3,7 +3,7 @@
     <div class="claim-card__header__name govuk-heading-s">
       <%= govuk_link_to t(".claim_title", reference: claim.reference, school_name: claim.school_name), href, no_visited_state: true %>
     </div>
-    <%= render Claim::StatusTagComponent.new(claim:, classes: %w[govuk-body-s]) %>
+    <%= render Claim::StatusTagComponent.new(claim:, text: status_text, classes: %w[govuk-body-s]) %>
   </div>
 
   <div class="claim-card__body">

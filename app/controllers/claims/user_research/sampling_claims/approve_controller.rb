@@ -4,8 +4,7 @@ class Claims::UserResearch::SamplingClaims::ApproveController < Claims::Applicat
   before_action :redirect_unless_logged_in
   before_action :set_claim
 
-  def new
-  end
+  def new; end
 
   def create
     Claims::Claim::Sampling::Paid.call(claim: @claim)

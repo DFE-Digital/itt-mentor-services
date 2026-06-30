@@ -60,6 +60,9 @@ module Claims
         { reference: "90000037", status: :sampling_in_progress, training_type: :initial, academic_year: :current, claim_window_index: 1, school_name: "St Gregory's Catholic Primary School" },
       ].freeze
 
+      RESET_STATUS = :sampling_in_progress
+      RESET_CLAIMS_LIMIT = 6
+
       def self.call
         new.call
       end
@@ -84,10 +87,14 @@ module Claims
 
       def create_demo_claims
         schools = eligible_schools
-        DEMO_CLAIMS.each_with_index do |claim_definition, index|
+        reset_claim_definitions.each_with_index do |claim_definition, index|
           fallback_school = schools.fetch(index % schools.count)
           school = school_for_claim(claim_definition, fallback_school)
-          create_demo_claim(school:, **claim_definition.except(:school_name))
+          create_demo_claim(
+            school:,
+            status: RESET_STATUS,
+            **claim_definition.except(:school_name, :status),
+          )
         end
       end
 
@@ -114,7 +121,11 @@ module Claims
       end
 
       def eligible_schools
-        @eligible_schools ||= Claims::School.first(DEMO_CLAIMS.count)
+        @eligible_schools ||= Claims::School.first(reset_claim_definitions.count)
+      end
+
+      def reset_claim_definitions
+        @reset_claim_definitions ||= DEMO_CLAIMS.first(RESET_CLAIMS_LIMIT)
       end
 
       def create_demo_claim(school:, reference:, status:, training_type:, academic_year:, claim_window_index:)

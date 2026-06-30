@@ -1,9 +1,8 @@
 class Claims::UserResearch::ProviderClaimsController < Claims::ApplicationController
   VISIBLE_STATUSES = %w[
-    submitted
-    paid
-    sampling_provider_not_approved
     sampling_in_progress
+    sampling_provider_not_approved
+    paid
   ].freeze
 
   STATUS_ORDER = Arel.sql(<<~SQL.squish).freeze
@@ -22,9 +21,10 @@ class Claims::UserResearch::ProviderClaimsController < Claims::ApplicationContro
   before_action :set_provider
   before_action :set_filtered_claims, only: :index
 
-  helper_method :filter_form
+  helper_method :filter_form, :provider_status_text_for
 
   def index
+    @audit_requested_count = @filtered_claims.where(status: "sampling_in_progress").count
     @pagy, @claims = pagy(@filtered_claims)
   end
 
@@ -62,6 +62,13 @@ class Claims::UserResearch::ProviderClaimsController < Claims::ApplicationContro
 
   def filter_form
     @filter_form ||= Claims::Support::Claims::FilterForm.new(filter_params)
+  end
+
+  def provider_status_text_for(claim)
+    return "Amended" if claim.sampling_provider_not_approved?
+    return "Approved" if claim.paid?
+
+    Claims::Claim.human_attribute_name("status.#{claim.status}")
   end
 
   def filter_params
