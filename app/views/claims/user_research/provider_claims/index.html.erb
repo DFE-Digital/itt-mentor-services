@@ -11,9 +11,15 @@
   <%= render Claims::Claim::FilterFormComponent.new(
     filter_form:,
     statuses: Claims::UserResearch::ProviderClaimsController::VISIBLE_STATUSES,
+    show_academic_years: false,
+    show_claim_windows: false,
+    show_training_types: false,
+    show_statuses: false,
     show_providers: false,
     show_support_users: false,
+    show_mentors: false,
     show_submitted_dates: false,
+    show_search: false,
   ) do %>
     <% if @claims.any? %>
       <div class="govuk-!-margin-bottom-2">

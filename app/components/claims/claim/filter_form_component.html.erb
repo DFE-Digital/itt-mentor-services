@@ -38,7 +38,7 @@
                     </div>
                   </div>
 
-                  <% if filter_form.claim_windows.present? %>
+                  <% if show_claim_windows && filter_form.claim_windows.present? %>
                     <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.claim_window") %></h3>
                     <ul class="app-filter-tags">
                       <% filter_form.claim_windows.each do |claim_window| %>
@@ -54,7 +54,7 @@
                     </ul>
                   <% end %>
 
-                  <% if filter_form.training_types.present? %>
+                  <% if show_training_types && filter_form.training_types.present? %>
                     <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.training_type") %></h3>
                     <ul class="app-filter-tags">
                       <% filter_form.training_types.each do |training_type| %>
@@ -70,7 +70,7 @@
                     </ul>
                   <% end %>
 
-                  <% if filter_form.statuses.present? %>
+                  <% if show_statuses && filter_form.statuses.present? %>
                     <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.status") %></h3>
                     <ul class="app-filter-tags">
                       <% filter_form.statuses.each do |status| %>
@@ -144,7 +144,7 @@
                     </ul>
                   <% end %>
 
-                  <% if filter_form.mentor_ids.present? %>
+                  <% if show_mentors && filter_form.mentor_ids.present? %>
                     <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t("claims.support.claims.index.mentor") %></h3>
                     <ul class="app-filter-tags">
                       <% filter_form.mentors.each do |mentor| %>
@@ -188,7 +188,7 @@
 
               <div class="app-filter__options">
                 <%= form.govuk_submit t("apply_filters") %>
-                <% if @academic_years.many? %>
+                <% if show_academic_years && @academic_years.many? %>
                   <div class="app-filter__option">
                     <%= form.govuk_radio_buttons_fieldset(
                       :academic_year_id,
@@ -206,23 +206,26 @@
                   </div>
                 <% end %>
 
-                <div class="app-filter__option">
-                  <%= form.govuk_check_boxes_fieldset(
-                    :claim_window_ids,
-                    legend: {
-                      text: t("claims.support.claims.index.claim_window"),
-                      size: "s",
-                    },
-                    small: true,
-                    multiple: false,
-                  ) do %>
-                    <% claim_windows.each do |claim_window| %>
-                      <%= form.govuk_check_box :claim_window_ids, claim_window.id, label: { text: claim_window.short_name } %>
+                <% if show_claim_windows %>
+                  <div class="app-filter__option">
+                    <%= form.govuk_check_boxes_fieldset(
+                      :claim_window_ids,
+                      legend: {
+                        text: t("claims.support.claims.index.claim_window"),
+                        size: "s",
+                      },
+                      small: true,
+                      multiple: false,
+                    ) do %>
+                      <% claim_windows.each do |claim_window| %>
+                        <%= form.govuk_check_box :claim_window_ids, claim_window.id, label: { text: claim_window.short_name } %>
+                      <% end %>
                     <% end %>
-                  <% end %>
-                </div>
+                  </div>
+                <% end %>
 
-                <div class="app-filter__option">
+                <% if show_training_types %>
+                  <div class="app-filter__option">
                     <%= form.govuk_check_boxes_fieldset(
                       :training_types,
                       legend: {
@@ -237,22 +240,25 @@
                       <% end %>
                     <% end %>
                   </div>
+                <% end %>
 
-                <div class="app-filter__option" data-controller="filter-search">
-                  <%= form.govuk_check_boxes_fieldset(
-                    :statuses,
-                    legend: {
-                      text: t("claims.support.claims.index.status"),
-                      size: "s",
-                    },
-                    small: true,
-                    multiple: false,
-                  ) do %>
-                    <% @statuses.each do |status| %>
-                      <%= form.govuk_check_box :statuses, status, label: { text: Claims::Claim.human_attribute_name("status.#{status}") } %>
+                <% if show_statuses %>
+                  <div class="app-filter__option" data-controller="filter-search">
+                    <%= form.govuk_check_boxes_fieldset(
+                      :statuses,
+                      legend: {
+                        text: t("claims.support.claims.index.status"),
+                        size: "s",
+                      },
+                      small: true,
+                      multiple: false,
+                    ) do %>
+                      <% @statuses.each do |status| %>
+                        <%= form.govuk_check_box :statuses, status, label: { text: Claims::Claim.human_attribute_name("status.#{status}") } %>
+                      <% end %>
                     <% end %>
-                  <% end %>
-                </div>
+                  </div>
+                <% end %>
 
                 <div class="app-filter__option" data-controller="async-filter-search" data-async-filter-search-endpoint-value="/support/schools/search"
                 data-async-filter-search-fieldname-value="claims_support_claims_filter_form[school_ids][]" data-async-filter-search-labelname-value="claims-support-claims-filter-form-school-ids">
@@ -309,22 +315,24 @@
                 </div>
                 <% end %>
 
-                <div class="app-filter__option" data-controller="async-filter-search" data-async-filter-search-endpoint-value="/support/mentors/search/<%= filter_form.academic_year.id %>"
-                     data-async-filter-search-fieldname-value="claims_support_claims_filter_form[mentor_ids][]" data-async-filter-search-labelname-value="claims-support-claims-filter-form-mentor-ids">
-                  <%= form.govuk_check_boxes_fieldset(
-                    :mentor_ids,
-                    legend: {
-                      text: t("claims.support.claims.index.mentor"),
-                      size: "s",
-                    },
-                    small: true,
-                    multiple: false,
-                  ) do %>
-                    <% mentors.each do |mentor| %>
-                      <%= form.govuk_check_box :mentor_ids, mentor.id, label: { text: mentor.full_name }, hint: { text: mentor.trn, class: "secondary-text govuk-!-font-size-16" } %>
+                <% if show_mentors %>
+                  <div class="app-filter__option" data-controller="async-filter-search" data-async-filter-search-endpoint-value="/support/mentors/search/<%= filter_form.academic_year.id %>"
+                       data-async-filter-search-fieldname-value="claims_support_claims_filter_form[mentor_ids][]" data-async-filter-search-labelname-value="claims-support-claims-filter-form-mentor-ids">
+                    <%= form.govuk_check_boxes_fieldset(
+                      :mentor_ids,
+                      legend: {
+                        text: t("claims.support.claims.index.mentor"),
+                        size: "s",
+                      },
+                      small: true,
+                      multiple: false,
+                    ) do %>
+                      <% mentors.each do |mentor| %>
+                        <%= form.govuk_check_box :mentor_ids, mentor.id, label: { text: mentor.full_name }, hint: { text: mentor.trn, class: "secondary-text govuk-!-font-size-16" } %>
+                      <% end %>
                     <% end %>
-                  <% end %>
-                </div>
+                  </div>
+                <% end %>
 
                 <% if show_submitted_dates %>
                 <div class="app-filter__option">
@@ -353,15 +361,17 @@
       </div>
 
       <div class="govuk-grid-column-two-thirds">
-        <div class="govuk-form-group search-form">
-          <%= form.govuk_text_field :search, type: :search, value: filter_form.search, label: { text: t(".search_label"), size: "s" } %>
-          <%= form.govuk_submit t(".submit") %>
-        </div>
+        <% if show_search %>
+          <div class="govuk-form-group search-form">
+            <%= form.govuk_text_field :search, type: :search, value: filter_form.search, label: { text: t(".search_label"), size: "s" } %>
+            <%= form.govuk_submit t(".submit") %>
+          </div>
 
-        <% unless filter_form.search.blank? %>
-          <p class="clear-search">
-            <%= govuk_link_to t(".search_clear"), filter_form.clear_search_path, no_visited_state: true %>
-          </p>
+          <% unless filter_form.search.blank? %>
+            <p class="clear-search">
+              <%= govuk_link_to t(".search_clear"), filter_form.clear_search_path, no_visited_state: true %>
+            </p>
+          <% end %>
         <% end %>
 
         <div class="govuk-section-break govuk-section-break--m govuk-section-break--visible"></div>

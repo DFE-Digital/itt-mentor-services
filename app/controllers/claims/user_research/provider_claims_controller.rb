@@ -1,8 +1,5 @@
 class Claims::UserResearch::ProviderClaimsController < Claims::ApplicationController
   VISIBLE_STATUSES = %w[
-    submitted
-    paid
-    sampling_provider_not_approved
     sampling_in_progress
   ].freeze
 
