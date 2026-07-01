@@ -118,6 +118,18 @@ variable "run_as_non_root" {
   description = "Whether to enforce that containers must run as non-root user"
 }
 
+variable "storage_container_delete_retention_days" {
+  type        = number
+  default     = null
+  description = "Number of days to retain deleted containers"
+}
+
+variable "use_private_storage" {
+  type        = bool
+  description = "Whether to deploy a private Storage Account"
+  default     = false
+}
+
 locals {
   postgres_ssl_mode       = var.enable_postgres_ssl ? "require" : "disable"
   app_env_values_from_yml = yamldecode(file("${path.module}/config/${var.config}_app_env.yml"))
@@ -152,9 +164,9 @@ locals {
   # e.g.
   #   production   -> [s189p01][ittms][pd]appsa       -> s189p01ittmspdappsa
   #   review-12345 -> [s189t01][ittms][rv-12345]appsa -> s189t01ittmsrv12345appsa
-  azure_storage_account_name = "${var.azure_resource_prefix}${var.service_short}${local.environment_compact}appsa"
-  azure_storage_access_key   = azurerm_storage_account.general_storage_account.primary_access_key
-  azure_storage_container    = azurerm_storage_container.general_container.name
+  azure_storage_account_name = module.storage_public.name
+  azure_storage_access_key   = module.storage_public.primary_access_key
+  azure_storage_container    = module.storage_public.primary_blob_endpoint
 }
 
 variable "postgres_version" { default = 14 }
