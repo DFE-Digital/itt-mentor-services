@@ -94,7 +94,13 @@ RSpec.describe "Provider sampling claims approval/rejection wizard", type: :requ
       follow_redirect!
 
       expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Mentor hour changes")
+      expect(response.body).to include("Hours originally claimed")
+      expect(response.body).to include("Hours mentor actually worked")
+      expect(response.body).to include("Hours removed from claim")
       expect(response.body).to include("Amend this claim")
+      expect(response.body).to include("status will be updated to")
+      expect(response.body).to include("amended")
 
       put response.request.path, params: {}
 

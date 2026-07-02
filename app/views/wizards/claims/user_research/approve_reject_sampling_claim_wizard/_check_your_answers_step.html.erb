@@ -5,7 +5,7 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l"><%= t(".caption", claim_reference: @wizard.claim_reference) %></span>
+      <span class="govuk-caption-l"><%= t(".caption", school_name: @wizard.school_name) %></span>
       <h1 class="govuk-heading-l"><%= @wizard.action == "approve" ? t(".approve_title") : t(".reject_title") %></h1>
 
       <h2 class="govuk-heading-m"><%= t(".details") %></h2>

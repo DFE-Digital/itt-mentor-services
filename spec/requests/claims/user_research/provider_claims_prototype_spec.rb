@@ -36,11 +36,11 @@ RSpec.describe "Provider claims user research prototype", type: :request do
       expect(response).to redirect_to(claims_root_path)
     end
 
-    it "shows only audit requested claims, with the schools filter, scoped to the signed-in provider" do
+    it "shows audit requested, amended and approved claims, with the schools filter, scoped to the signed-in provider" do
       hidden_submitted_claim = create(:claim, :submitted, provider:)
-      hidden_paid_claim = create(:claim, :submitted, provider:, status: "paid")
       visible_audit_requested_claim = create(:claim, :submitted, provider:, status: "sampling_in_progress")
-      hidden_rejected_by_provider_claim = create(:claim, :submitted, provider:, status: "sampling_provider_not_approved")
+      visible_amended_claim = create(:claim, :submitted, provider:, status: "sampling_provider_not_approved")
+      visible_approved_claim = create(:claim, :submitted, provider:, status: "paid")
       hidden_claim_in_other_status = create(:claim, :submitted, provider:, status: "payment_in_progress")
       hidden_claim = create(:claim, :submitted, provider: other_provider)
 
@@ -65,21 +65,23 @@ RSpec.describe "Provider claims user research prototype", type: :request do
       expect(response.body).not_to include("claims_support_claims_filter_form[mentor_ids][]")
       expect(response.body).not_to include("claims_support_claims_filter_form[submitted_after(1i)]")
       expect(response.body).not_to include("claims_support_claims_filter_form[submitted_before(1i)]")
+      expect(response.body).to include("Claims requiring audit (1)")
       expect(response.body).to include("Audit requested")
+      expect(response.body).to include("Amended")
+      expect(response.body).to include("Approved")
       expect(response.body).not_to include("Submitted")
       expect(response.body).not_to include("Paid")
-      expect(response.body).not_to include("Rejected by provider")
       expect(response.body).not_to include("Payer payment review")
       expect(response.body).not_to include("Payer needs information")
       expect(response.body).to include(visible_audit_requested_claim.reference)
+      expect(response.body).to include(visible_amended_claim.reference)
+      expect(response.body).to include(visible_approved_claim.reference)
       expect(response.body).not_to include(hidden_submitted_claim.reference)
-      expect(response.body).not_to include(hidden_paid_claim.reference)
-      expect(response.body).not_to include(hidden_rejected_by_provider_claim.reference)
       expect(response.body).not_to include(hidden_claim_in_other_status.reference)
       expect(response.body).not_to include(hidden_claim.reference)
     end
 
-    it "renders a reset demo data button" do
+    it "renders the download claims and reset demo data buttons" do
       post claims_user_research_provider_session_path, params: {
         provider_code: "BPN01",
         email: "research+test-provider@example.org",
@@ -87,6 +89,8 @@ RSpec.describe "Provider claims user research prototype", type: :request do
 
       get claims_user_research_provider_claims_path
 
+      expect(response.body).to include("Download claims")
+      expect(response.body).not_to include("Signed in as")
       expect(response.body).to include("Reset demo data")
     end
 
@@ -132,8 +136,39 @@ RSpec.describe "Provider claims user research prototype", type: :request do
       get claims_user_research_provider_claim_path(claim)
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include("Claim reference")
+      expect(response.body).to include(claim.school_name)
       expect(response.body).to include(claim.reference)
+      expect(response.body).not_to include("Provider prototype")
+    end
+
+    it "shows the amended tag for a provider-rejected claim" do
+      claim = create(:claim, :submitted, provider:, status: :sampling_provider_not_approved)
+
+      post claims_user_research_provider_session_path, params: {
+        provider_code: "BPN01",
+        email: "research+test-provider@example.org",
+      }
+
+      get claims_user_research_provider_claim_path(claim)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Amended")
+      expect(response.body).not_to include("Rejected by provider")
+    end
+
+    it "shows the approved tag for a paid claim" do
+      claim = create(:claim, :submitted, provider:, status: :paid)
+
+      post claims_user_research_provider_session_path, params: {
+        provider_code: "BPN01",
+        email: "research+test-provider@example.org",
+      }
+
+      get claims_user_research_provider_claim_path(claim)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Approved")
+      expect(response.body).not_to include("Paid")
     end
 
     it "returns not found for a claim outside the provider session" do

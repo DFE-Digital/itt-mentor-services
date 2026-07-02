@@ -5,10 +5,8 @@
 <% end %>
 
 <div class="govuk-width-container">
-  <p class="govuk-caption-l">Provider prototype</p>
-  <h1 class="govuk-heading-l"><%= @claim.school_name %></h1>
-
-  <p class="govuk-body">Claim reference <strong><%= @claim.reference %></strong></p>
+  <p class="govuk-caption-l"><%= @claim.school_name %></p>
+  <h1 class="govuk-heading-l"><%= @claim.reference %></h1>
 
   <% if @claim.status == "sampling_in_progress" %>
     <div class="govuk-button-group">
@@ -34,7 +32,7 @@
     <% summary_list.with_row do |row| %>
       <% row.with_key(text: "Status") %>
       <% row.with_value do %>
-        <%= render Claim::StatusTagComponent.new(claim: @claim) %>
+        <%= render Claim::StatusTagComponent.new(claim: @claim, text: provider_status_text_for(@claim)) %>
       <% end %>
     <% end %>
 
@@ -50,7 +48,7 @@
    <% end %>
 
   <% if @claim.sampling_provider_not_approved? %>
-    <h2 class="govuk-heading-m">Amended mentors</h2>
+    <h2 class="govuk-heading-m">Mentors with amended hours</h2>
     <% not_assured_trainings = @claim.mentor_trainings.order_by_mentor_full_name.select(&:not_assured?) %>
     <% assured_trainings = @claim.mentor_trainings.order_by_mentor_full_name.reject(&:not_assured?) %>
 
@@ -62,15 +60,15 @@
       <%= govuk_summary_card(title: mentor_training.mentor.full_name) do |card| %>
         <% card.with_summary_list do |summary_list| %>
           <% summary_list.with_row do |row| %>
-            <% row.with_key(text: "Original hours claimed") %>
+            <% row.with_key(text: "Hours originally claimed") %>
             <% row.with_value(text: pluralize(original_hours, "hour")) %>
           <% end %>
           <% summary_list.with_row do |row| %>
-            <% row.with_key(text: "Hours worked") %>
+            <% row.with_key(text: "Hours mentor actually worked") %>
             <% row.with_value(text: pluralize(worked_hours, "hour")) %>
           <% end %>
           <% summary_list.with_row do |row|%>
-            <% row.with_key(text: "Amended hours") %>
+            <% row.with_key(text: "Hours removed from claim") %>
             <% row.with_value(text: pluralize(hours_clawed_back, "hour")) %>
           <% end %>
           <% summary_list.with_row do |row| %>

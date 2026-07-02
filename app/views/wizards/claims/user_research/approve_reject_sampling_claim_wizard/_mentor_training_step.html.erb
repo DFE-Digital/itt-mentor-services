@@ -1,4 +1,4 @@
-<% contextual_text = t(".caption", claim_reference: @wizard.claim_reference) %>
+<% contextual_text = t(".caption", school_name: @wizard.school_name) %>
 <% content_for :page_title, title_with_error_prefix(t(".page_title", contextual_text:, mentor_full_name: current_step.mentor_full_name), error: current_step.errors.any?) %>
 
 <%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
@@ -7,7 +7,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l"><%= contextual_text %></span>
-      <h1 class="govuk-heading-l"><%= t(".heading", mentor_full_name: current_step.mentor_full_name, mentor_trn: current_step.mentor_trn) %></h1>
+      <h1 class="govuk-heading-l"><%= t(".heading", mentor_full_name: current_step.mentor_full_name) %></h1>
 
       <% if @wizard.action == "reject" %>
         <%= f.govuk_radio_buttons_fieldset(

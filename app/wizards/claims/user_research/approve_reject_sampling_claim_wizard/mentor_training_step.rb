@@ -13,7 +13,7 @@ class Claims::UserResearch::ApproveRejectSamplingClaimWizard::MentorTrainingStep
   validate :custom_hours_within_available_range, if: :custom_hours_selected?
   validates :reason_not_assured, presence: { message: "Please enter a reason" }, if: :reject_action?
 
-  delegate :full_name, :trn, to: :mentor, prefix: true
+  delegate :full_name, to: :mentor, prefix: true
   delegate :name, to: :provider, prefix: true
   delegate :action, to: :wizard
 

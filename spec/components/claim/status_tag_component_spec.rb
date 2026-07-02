@@ -87,6 +87,28 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
     end
   end
 
+  context "when a custom tag label is provided" do
+    subject(:component) { described_class.new(claim:, text: "Amended") }
+
+    let(:claim) { build(:claim, status: :sampling_provider_not_approved) }
+
+    it "renders the custom text with the status colour" do
+      expect(page).to have_css(".govuk-tag--turquoise", text: "Amended")
+      expect(page).not_to have_text("Rejected by provider")
+    end
+  end
+
+  context "when a custom tag label is provided for a paid claim" do
+    subject(:component) { described_class.new(claim:, text: "Approved") }
+
+    let(:claim) { build(:claim, status: :paid) }
+
+    it "renders the custom text with the paid status colour" do
+      expect(page).to have_css(".govuk-tag--blue", text: "Approved")
+      expect(page).not_to have_text("Paid")
+    end
+  end
+
   context "when the claim's status is 'sampling_not_approved'" do
     let(:claim) { build(:claim, status: :sampling_not_approved) }
 

@@ -1,4 +1,4 @@
-<% contextual_text = t(".caption", claim_reference: @wizard.claim_reference) %>
+<% contextual_text = t(".caption", school_name: @wizard.school_name) %>
 <% content_for :page_title, title_with_error_prefix(t(".page_title", contextual_text:), error: current_step.errors.any?) %>
 
 <%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
