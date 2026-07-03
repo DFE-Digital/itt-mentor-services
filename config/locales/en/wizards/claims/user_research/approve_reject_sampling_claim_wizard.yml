@@ -8,17 +8,17 @@ en:
             caption: "%{school_name}"
             heading: Which mentors do you want to review?
             continue: Continue
-            hint: Before amending any hours, you should check with the school to confirm how many hours the mentor worked. Select the mentors whose hours you want to amend.
+            hint: Before amending any hours, check with the school to confirm how many training hours each mentor completed. Select the mentors whose hours claimed you want to amend.
           mentor_training_step:
             page_title: Hours of training for %{mentor_full_name} - %{contextual_text}
             caption: "%{school_name}"
             heading: "How many hours did %{mentor_full_name} actually complete?"
-            hours_fieldset_legend: How many hours did this mentor work?
+            hours_fieldset_legend: How many training hours did this mentor complete?
             hours_fieldset_hint: "Select one of the options below"
             remove_all_hours: Remove all hours
-            remove_all_hours_hint: The mentor did not work any hours
-            enter_hours_worked: Enter the hours the mentor worked
-            label: Hours worked
+            remove_all_hours_hint: The mentor did not complete any training hours
+            enter_hours_completed: Enter the training hours the mentor completed
+            label: Training hours completed
             number_of_hours: Number of hours
             hint: "Enter a number between 1 and %{max_hours}"
             custom_hours_hint: "Enter a number between 1 and %{count}"
@@ -31,10 +31,10 @@ en:
             approve_title: Approve this claim
             reject_title: Amend this claim
             details: Details
-            mentor_hours: Mentor hour changes
+            mentor_hours: Mentor hours to amend
             original_hours: Hours originally claimed
-            worked_hours: Hours mentor actually worked
+            completed_hours: Hours mentor completed training
             clawed_back_hours: Hours removed from claim
             approve_warning: Once you approve this claim, the status will be updated to 'approved'.
-            reject_warning: Once you amend this claim, the status will be updated to 'amended' and the school will receive an email with the next steps.
+            reject_warning: Once you amend this claim, the status will be updated to 'Amended' and the school will receive an email with the next steps.
             submit: Confirm

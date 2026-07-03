@@ -83,7 +83,7 @@ module Claims
             id: mentor_training.id,
             not_assured: mentor_training_step.present?,
             reason_not_assured: mentor_training_step&.reason_not_assured,
-            hours_clawed_back: mentor_training_step.present? ? [mentor_training.hours_completed.to_i - mentor_training_step.worked_hours, 0].max : nil,
+            hours_clawed_back: mentor_training_step.present? ? [mentor_training.hours_completed.to_i - mentor_training_step.completed_hours, 0].max : nil,
           }
         end
       end

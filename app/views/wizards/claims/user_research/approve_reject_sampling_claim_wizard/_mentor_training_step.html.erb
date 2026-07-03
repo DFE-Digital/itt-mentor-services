@@ -19,7 +19,7 @@
           },
           hint: { text: t(".hours_fieldset_hint", max_hours: current_step.max_hours) },
         ) do %>
-          <%= f.govuk_radio_button(:hours_option, "custom", label: { text: t(".enter_hours_worked") }) do %>
+          <%= f.govuk_radio_button(:hours_option, "custom", label: { text: t(".enter_hours_completed") }) do %>
             <%= f.govuk_number_field(
               :custom_hours,
               class: "govuk-input--width-2",

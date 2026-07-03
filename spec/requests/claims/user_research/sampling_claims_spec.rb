@@ -26,10 +26,12 @@ RSpec.describe "Provider sampling claims approval/rejection wizard", type: :requ
   end
 
   describe "GET /user-research/provider/claims/:id/approve_claim/new", service: :claims do
-    it "renders the approve confirmation page" do
+    it "renders the approve confirmation page with school name caption and no Provider prototype text" do
       get new_approve_claim_claims_user_research_provider_claim_path(claim)
 
       expect(response).to have_http_status(:ok)
+      expect(response.body).to include(school.name)
+      expect(response.body).not_to include("Provider prototype")
       expect(response.body).to include("Are you sure you want to approve this claim?")
     end
   end
@@ -79,6 +81,11 @@ RSpec.describe "Provider sampling claims approval/rejection wizard", type: :requ
       # Step 2: Confirm hours and provide rejection reason
       follow_redirect!
 
+      expect(response.body).to include(school.name)
+      expect(response.body).to include("How many hours did #{mentor1.full_name} actually complete?")
+      expect(response.body).to include("Enter the training hours the mentor completed")
+      expect(response.body).not_to include("TRN")
+
       put response.request.path, params: {
         claims_user_research_approve_reject_sampling_claim_wizard_mentor_training_step: {
           mentor_id: mentor1.id,
@@ -94,13 +101,13 @@ RSpec.describe "Provider sampling claims approval/rejection wizard", type: :requ
       follow_redirect!
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include("Mentor hour changes")
+      expect(response.body).to include("Mentor hours to amend")
       expect(response.body).to include("Hours originally claimed")
-      expect(response.body).to include("Hours mentor actually worked")
-      expect(response.body).to include("Hours removed from claim")
+      expect(response.body).to include("Hours mentor completed training")
+
       expect(response.body).to include("Amend this claim")
       expect(response.body).to include("status will be updated to")
-      expect(response.body).to include("amended")
+      expect(response.body).to include("Amended")
 
       put response.request.path, params: {}
 
@@ -157,6 +164,42 @@ RSpec.describe "Provider sampling claims approval/rejection wizard", type: :requ
       expect(response).to have_http_status(:ok)
       expect(response.body).not_to include("Approve claim")
       expect(response.body).not_to include("Amend claim")
+    end
+  end
+
+  describe "Show page amended mentor summary", service: :claims do
+    let(:mentor) { mentor1 }
+
+    let(:amended_claim) do
+      create(:claim,
+        :submitted,
+        provider:,
+        school:,
+        status: "sampling_provider_not_approved",
+        mentor_trainings: [
+          build(:mentor_training,
+            mentor:,
+            hours_completed: 10,
+            hours_clawed_back: 3,
+            not_assured: true,
+            reason_not_assured: "Only 7 hours of evidence provided"),
+        ])
+    end
+
+    before do
+      get claims_user_research_provider_claim_path(amended_claim)
+    end
+
+    it "shows the amended mentor summary section with completed-training labels" do
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include("Mentors with amended hours")
+      expect(response.body).to include("Hours originally claimed")
+      expect(response.body).to include("Training hours mentor completed")
+      expect(response.body).to include("Hours removed from claim")
+      expect(response.body).to include("Reason for amendment")
+      expect(response.body).to include("Only 7 hours of evidence provided")
+      expect(response.body).not_to include("Mentors with worked hours")
+      expect(response.body).not_to include("Hours mentor actually worked")
     end
   end
 end

@@ -45,11 +45,14 @@ class Claims::UserResearch::ApproveRejectSamplingClaimWizard::MentorTrainingStep
     mentor_training&.training_type || :initial
   end
 
-  def worked_hours
+  def completed_hours
     return 0 if hours_option == REMOVE_ALL_HOURS
 
     custom_hours.to_i
   end
+
+  alias_method :trained_hours, :completed_hours
+  alias_method :worked_hours, :completed_hours
 
   private
 
