@@ -59,6 +59,50 @@ RSpec.describe Claims::UserResearch::ApproveRejectSamplingClaimWizard do
         expect(Claims::ClaimActivity.last.action).to eq("provider_approved_audit")
       end
     end
+
+    context "when rejecting a claim" do
+      let(:action) { "reject" }
+      let(:state) do
+        {
+          "mentor" => { "mentor_ids" => [mentor.id] },
+          "mentor_training_#{mentor.id}" => {
+            "mentor_id" => mentor.id,
+            "reason_not_assured" => "Training not completed",
+            "hours_option" => "custom",
+            "custom_hours" => "3",
+          },
+        }
+      end
+
+      it "marks the claim as provider not approved and records support activity" do
+        expect {
+          wizard.process_submission
+        }.to change { claim.reload.status }.from("sampling_in_progress").to("sampling_provider_not_approved")
+          .and change(Claims::ClaimActivity, :count).by(1)
+
+        expect(Claims::ClaimActivity.last.action).to eq("rejected_by_provider")
+      end
+    end
+
+    context "when action is unsupported" do
+      let(:action) { "review" }
+      let(:state) do
+        {
+          "mentor" => { "mentor_ids" => [mentor.id] },
+          "mentor_training_#{mentor.id}" => {
+            "mentor_id" => mentor.id,
+          },
+        }
+      end
+
+      it "does not change claim state or record activity" do
+        expect {
+          wizard.process_submission
+        }.not_to change(Claims::ClaimActivity, :count)
+
+        expect(claim.reload.status).to eq("sampling_in_progress")
+      end
+    end
   end
 
   describe "#academic_year" do
