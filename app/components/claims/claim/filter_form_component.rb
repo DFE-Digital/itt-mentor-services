@@ -59,7 +59,7 @@ class Claims::Claim::FilterFormComponent < ApplicationComponent
   private
 
   attr_reader :claims, :filter_form, :show_academic_years, :show_claim_windows, :show_training_types,
-    :show_statuses, :show_providers, :show_support_users, :show_mentors, :show_submitted_dates, :show_search
+              :show_statuses, :show_providers, :show_support_users, :show_mentors, :show_submitted_dates, :show_search
 
   def limit_records(klass, order: :name)
     ids = Array(filter_form.public_send("#{klass.name.demodulize.underscore}_ids"))

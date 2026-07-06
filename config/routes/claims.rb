@@ -159,23 +159,23 @@ scope module: :claims, as: :claims, constraints: {
         post :check, on: :collection
       end
 
-       resources :samplings, path: "sampling/claims", only: %i[index show] do
-         member do
-           get :confirm_approval
-           put :update
+      resources :samplings, path: "sampling/claims", only: %i[index show] do
+        member do
+          get :confirm_approval
+          put :update
 
-           get "approve/new", to: "samplings/approve#new", as: :new_approve
-           get "approve/new/:state_key/:step", to: "samplings/approve#edit", as: :approve
-           put "approve/new/:state_key/:step", to: "samplings/approve#update"
+          get "approve/new", to: "samplings/approve#new", as: :new_approve
+          get "approve/new/:state_key/:step", to: "samplings/approve#edit", as: :approve
+          put "approve/new/:state_key/:step", to: "samplings/approve#update"
 
-           get "provider_rejected/new", to: "samplings/provider_rejected#new", as: :new_provider_rejected
-           get "provider_rejected/new/:state_key/:step", to: "samplings/provider_rejected#edit", as: :provider_rejected
-           put "provider_rejected/new/:state_key/:step", to: "samplings/provider_rejected#update"
+          get "provider_rejected/new", to: "samplings/provider_rejected#new", as: :new_provider_rejected
+          get "provider_rejected/new/:state_key/:step", to: "samplings/provider_rejected#edit", as: :provider_rejected
+          put "provider_rejected/new/:state_key/:step", to: "samplings/provider_rejected#update"
 
-           get "reject/new", to: "samplings/reject#new", as: :new_rejected
-           get "reject/new/:state_key/:step", to: "samplings/reject#edit", as: :reject
-           put "reject/new/:state_key/:step", to: "samplings/reject#update"
-         end
+          get "reject/new", to: "samplings/reject#new", as: :new_rejected
+          get "reject/new/:state_key/:step", to: "samplings/reject#edit", as: :reject
+          put "reject/new/:state_key/:step", to: "samplings/reject#update"
+        end
 
         collection do
           get "new", to: "samplings/upload_data#new", as: :new_upload_data

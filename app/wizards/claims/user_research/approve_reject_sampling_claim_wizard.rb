@@ -51,13 +51,9 @@ module Claims
         end
       end
 
-      def provider
-        claim.provider
-      end
+      delegate :provider, to: :claim
 
-      def school
-        claim.school
-      end
+      delegate :school, to: :claim
 
       def academic_year
         claim.claim_window.academic_year

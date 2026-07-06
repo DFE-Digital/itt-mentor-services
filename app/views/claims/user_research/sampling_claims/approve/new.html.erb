@@ -11,7 +11,7 @@
   <p class="govuk-body"><%= t(".body") %></p>
 
   <%= form_with url: approve_claim_claims_user_research_provider_claim_path(@claim),
-               builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
+                builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
     <div class="govuk-button-group">
       <%= f.govuk_submit t(".approve") %>
       <%= govuk_link_to t(".cancel"), claims_user_research_provider_claim_path(@claim), no_visited_state: true %>
