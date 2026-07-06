@@ -25,6 +25,21 @@ RSpec.describe "Provider claims user research prototype", type: :request do
     end
   end
 
+  describe "DELETE /user-research/provider-session", service: :claims do
+    it "clears the provider research session and redirects to claims root" do
+      post claims_user_research_provider_session_path, params: {
+        provider_code: "BPN01",
+        email: "research+test-provider@example.org",
+      }
+
+      delete claims_user_research_provider_session_path
+
+      expect(response).to redirect_to(claims_root_path)
+      follow_redirect!
+      expect(response.body).to include("Claim funding for mentor training")
+    end
+  end
+
   describe "GET /user-research/provider/claims", service: :claims do
     let(:expected_demo_statuses) do
       Array.new(

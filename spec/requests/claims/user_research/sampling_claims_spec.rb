@@ -42,6 +42,14 @@ RSpec.describe "Provider sampling claims approval/rejection wizard", type: :requ
 
       expect(response).to redirect_to(/reject_claim\/new\/.*\/mentor/)
     end
+
+    it "redirects to claims root when not logged in" do
+      delete claims_user_research_provider_session_path
+
+      get new_reject_claim_claims_user_research_provider_claim_path(claim)
+
+      expect(response).to redirect_to(claims_root_path)
+    end
   end
 
   describe "Approve flow", service: :claims do
@@ -52,6 +60,14 @@ RSpec.describe "Provider sampling claims approval/rejection wizard", type: :requ
       follow_redirect!
       expect(response.body).to include("Claim approved")
       expect(claim.reload.status).to eq("paid")
+    end
+
+    it "redirects to claims root when not logged in" do
+      delete claims_user_research_provider_session_path
+
+      post approve_claim_claims_user_research_provider_claim_path(claim)
+
+      expect(response).to redirect_to(claims_root_path)
     end
   end
 
