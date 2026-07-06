@@ -8,14 +8,14 @@ RSpec.describe "Provider sampling claims approval/rejection wizard", type: :requ
 
   let(:claim) do
     create(:claim,
-      :submitted,
-      provider:,
-      school:,
-      status: "sampling_in_progress",
-      mentor_trainings: [
-        build(:mentor_training, mentor: mentor1, hours_completed: 10),
-        build(:mentor_training, mentor: mentor2, hours_completed: 15),
-      ])
+           :submitted,
+           provider:,
+           school:,
+           status: "sampling_in_progress",
+           mentor_trainings: [
+             build(:mentor_training, mentor: mentor1, hours_completed: 10),
+             build(:mentor_training, mentor: mentor2, hours_completed: 15),
+           ])
   end
 
   before do
@@ -82,8 +82,9 @@ RSpec.describe "Provider sampling claims approval/rejection wizard", type: :requ
       follow_redirect!
 
       expect(response.body).to include(school.name)
-      expect(response.body).to include("How many hours did #{mentor1.full_name} actually complete?")
-      expect(response.body).to include("Enter the training hours the mentor completed")
+      expect(response.body).to include("How many hours of training did #{mentor1.full_name} actually complete?")
+      expect(response.body).to include("Hours of training originally claimed: 10")
+      expect(response.body).to include("Enter the hours of training the mentor completed")
       expect(response.body).not_to include("TRN")
 
       put response.request.path, params: {
@@ -101,9 +102,9 @@ RSpec.describe "Provider sampling claims approval/rejection wizard", type: :requ
       follow_redirect!
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include("Mentor hours to amend")
-      expect(response.body).to include("Hours originally claimed")
-      expect(response.body).to include("Hours mentor completed training")
+      expect(response.body).to include("Hours of training to amend")
+      expect(response.body).to include("Hours of training originally claimed")
+      expect(response.body).to include("Actual hours of training")
 
       expect(response.body).to include("Amend this claim")
       expect(response.body).to include("status will be updated to")
@@ -132,14 +133,14 @@ RSpec.describe "Provider sampling claims approval/rejection wizard", type: :requ
 
       follow_redirect!
 
-       put response.request.path, params: {
-         claims_user_research_approve_reject_sampling_claim_wizard_mentor_training_step: {
-           mentor_id: mentor1.id,
-           hours_option: "custom",
-           custom_hours: "8",
-           reason_not_assured: "",
-         },
-       }
+      put response.request.path, params: {
+        claims_user_research_approve_reject_sampling_claim_wizard_mentor_training_step: {
+          mentor_id: mentor1.id,
+          hours_option: "custom",
+          custom_hours: "8",
+          reason_not_assured: "",
+        },
+      }
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include("There is a problem")
@@ -172,18 +173,18 @@ RSpec.describe "Provider sampling claims approval/rejection wizard", type: :requ
 
     let(:amended_claim) do
       create(:claim,
-        :submitted,
-        provider:,
-        school:,
-        status: "sampling_provider_not_approved",
-        mentor_trainings: [
-          build(:mentor_training,
-            mentor:,
-            hours_completed: 10,
-            hours_clawed_back: 3,
-            not_assured: true,
-            reason_not_assured: "Only 7 hours of evidence provided"),
-        ])
+             :submitted,
+             provider:,
+             school:,
+             status: "sampling_provider_not_approved",
+             mentor_trainings: [
+               build(:mentor_training,
+                     mentor:,
+                     hours_completed: 10,
+                     hours_clawed_back: 3,
+                     not_assured: true,
+                     reason_not_assured: "Only 7 hours of evidence provided"),
+             ])
     end
 
     before do

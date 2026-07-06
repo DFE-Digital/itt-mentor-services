@@ -27,7 +27,10 @@ RSpec.describe "Provider claims user research prototype", type: :request do
 
   describe "GET /user-research/provider/claims", service: :claims do
     let(:expected_demo_statuses) do
-      Claims::UserResearch::ProviderClaimsDemoReset::DEMO_CLAIMS.map { |claim| claim.fetch(:status).to_s }
+      Array.new(
+        Claims::UserResearch::ProviderClaimsDemoReset::RESET_CLAIMS_LIMIT,
+        Claims::UserResearch::ProviderClaimsDemoReset::RESET_STATUS.to_s,
+      )
     end
 
     it "redirects back to the claims landing page if no provider session exists" do
@@ -95,7 +98,7 @@ RSpec.describe "Provider claims user research prototype", type: :request do
     end
 
     it "resets the demo data back to the initial claims set" do
-      # Create multiple schools and mentors to support the expanded 37-claim dataset
+      # Create multiple schools and mentors to support the reset claims dataset
       4.times do
         school = create(:claims_school)
         3.times { create(:claims_mentor, schools: [school]) }
@@ -116,9 +119,9 @@ RSpec.describe "Provider claims user research prototype", type: :request do
       expect(response).to redirect_to(claims_user_research_provider_claims_path)
       expect(demo_provider.name).to eq("Test provider")
       expect(demo_claims.count).to eq(expected_demo_statuses.count)
-      expect(demo_claims.pluck(:status)).to contain_exactly(*expected_demo_statuses)
-      expect(demo_claims.map { |claim| claim.academic_year.id }.uniq.count).to eq(3)
-      expect(demo_claims.map(&:claim_window_id).uniq.count).to eq(6)
+      expect(demo_claims.pluck(:status)).to match_array(expected_demo_statuses)
+      expect(demo_claims.map { |claim| claim.academic_year.id }.uniq.count).to eq(1)
+      expect(demo_claims.map(&:claim_window_id).uniq.count).to eq(1)
       expect(demo_claims.joins(:mentor_trainings).pluck("mentor_trainings.training_type").uniq)
         .to contain_exactly("initial", "refresher")
     end

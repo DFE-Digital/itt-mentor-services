@@ -34,11 +34,11 @@
         <%= govuk_summary_card(title: mentor.full_name) do |card| %>
           <% card.with_summary_list do |summary_list| %>
             <% summary_list.with_row do |row| %>
-              <% row.with_key(text: t('.original_hours')) %>
+              <% row.with_key(text: t(".original_hours")) %>
               <% row.with_value(text: pluralize(original_hours, "hour")) %>
             <% end %>
             <% summary_list.with_row do |row| %>
-              <% row.with_key(text: t('.completed_hours')) %>
+              <% row.with_key(text: t(".completed_hours")) %>
               <% row.with_value(text: pluralize(completed_hours, "hour")) %>
               <% row.with_action(
                 text: t("change"),
