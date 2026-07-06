@@ -1,7 +1,7 @@
 class Claims::ApproveSamplingClaimWizard::MentorStep < BaseStep
   attribute :mentor_ids, default: []
 
-  validates :mentor_ids, presence: true, inclusion: { in: ->(step) { step.mentors.except(:order).ids } }
+  validates :mentor_ids, presence: true, inclusion: { in: ->(step) { step.mentors.map(&:id) } }
 
   delegate :mentor_trainings, to: :wizard
 

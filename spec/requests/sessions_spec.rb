@@ -14,6 +14,7 @@ RSpec.describe "Sessions", type: :request do
       # TODO: Change render_template once redirect to service specific
       # roots implemented
       expect(response).to render_template("claims/schools/index")
+      expect(session[:provider_research_code]).to be_nil
     end
 
     it "redirects Patricia to the provider research prototype" do
@@ -31,6 +32,7 @@ RSpec.describe "Sessions", type: :request do
 
       expect(response).to have_http_status(:success)
       expect(response).to render_template("claims/user_research/provider_claims/index")
+      expect(session[:provider_research_code]).to eq("BPN01")
     end
   end
 
