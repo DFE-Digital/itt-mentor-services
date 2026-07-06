@@ -25,7 +25,7 @@ module Claims
       raise "Invalid wizard state" unless valid?
 
       Claims::Claim::Sampling::Paid.call(claim:)
-      Claims::ClaimActivity.create!(action: :approved_by_support, user: current_user, record: claim)
+      Claims::ClaimActivity.create!(action: :provider_approved_audit, user: current_user, record: claim)
     end
 
     def mentor_trainings

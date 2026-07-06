@@ -28,7 +28,7 @@ module Claims
 
         if action == "approve"
           Claims::Claim::Sampling::Paid.call(claim:)
-          create_claim_activity(:approved_by_provider)
+          create_claim_activity(:provider_approved_audit)
         elsif action == "reject"
           Claims::Claim::Sampling::ProviderNotApproved.call(
             claim:,

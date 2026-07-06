@@ -7,7 +7,6 @@ class Claims::ApproveSamplingClaimWizard::MentorTrainingStep < BaseStep
 
   delegate :full_name, :trn, to: :mentor, prefix: true
   delegate :name, to: :provider, prefix: true
-  delegate :wizard, to: :wizard
 
   def mentor
     @mentor ||= wizard.mentor_trainings.find { |mt| mt.mentor_id.to_s == mentor_id.to_s }&.mentor
