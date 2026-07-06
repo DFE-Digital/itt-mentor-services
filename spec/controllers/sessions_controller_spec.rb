@@ -8,8 +8,7 @@ RSpec.describe SessionsController, type: :controller do
     let(:current_user) { build_stubbed(:claims_user, first_name: "Patricia") }
 
     before do
-      allow(controller).to receive(:current_service).and_return(current_service)
-      allow(controller).to receive(:current_user).and_return(current_user)
+      allow(controller).to receive_messages(current_service: current_service, current_user: current_user)
     end
 
     it "returns true for Patricia in claims service" do
@@ -26,6 +25,14 @@ RSpec.describe SessionsController, type: :controller do
 
     context "when service is not claims" do
       let(:current_service) { :placements }
+
+      it "returns false" do
+        expect(claims_patricia_persona?).to be(false)
+      end
+    end
+
+    context "when there is no current user" do
+      let(:current_user) { nil }
 
       it "returns false" do
         expect(claims_patricia_persona?).to be(false)

@@ -77,5 +77,52 @@ RSpec.describe Claims::UserResearch::ApproveRejectSamplingClaimWizard::MentorTra
       expect(step).not_to be_valid
       expect(step.errors[:custom_hours]).to include("Enter a number of hours between 1 and 8")
     end
+
+    context "when custom hours are within range" do
+      let(:attributes) do
+        {
+          mentor_id: mentor.id,
+          hours_option: described_class::CUSTOM_HOURS,
+          custom_hours: "3",
+          reason_not_assured: "Not enough evidence",
+        }
+      end
+
+      it "is valid" do
+        expect(step).to be_valid
+      end
+    end
+
+    context "when custom hours are blank" do
+      let(:attributes) do
+        {
+          mentor_id: mentor.id,
+          hours_option: described_class::CUSTOM_HOURS,
+          custom_hours: "",
+          reason_not_assured: "Not enough evidence",
+        }
+      end
+
+      it "adds the range validation error" do
+        expect(step).not_to be_valid
+        expect(step.errors[:custom_hours]).to include("Enter a number of hours between 1 and 8")
+      end
+    end
+
+    context "when custom hours are non-numeric" do
+      let(:attributes) do
+        {
+          mentor_id: mentor.id,
+          hours_option: described_class::CUSTOM_HOURS,
+          custom_hours: "abc",
+          reason_not_assured: "Not enough evidence",
+        }
+      end
+
+      it "adds the range validation error" do
+        expect(step).not_to be_valid
+        expect(step.errors[:custom_hours]).to include("Enter a number of hours between 1 and 8")
+      end
+    end
   end
 end
