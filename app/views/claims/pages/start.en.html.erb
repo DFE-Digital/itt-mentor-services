@@ -8,14 +8,23 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <p class="govuk-body">
-        Use this service to make a claim for the time spent becoming an initial teacher training (ITT) mentor.
+        Use this service to make a claim for the time spent becoming an initial teacher training (ITT) mentor, or audit ITT mentor training claims.
       </p>
 
       <h2 class="govuk-heading-m">Who can use this service</h2>
 
       <p class="govuk-body">
-        You can use this service if you are a school or education organisation that:
+        You can use this service if you are:
       </p>
+
+      <%= govuk_list type: :bullet do %>
+        <li>a school or education organisation that hosts ITT placements and claims funding for mentor training</li>
+        <li>an accredited ITT provider that needs to review and audit mentor training claims submitted through the service</li>
+      <% end %>
+
+      <p class="govuk-body">Schools and providers will be given access to different parts of the service based on their role.</p>
+
+      <h2 class="govuk-heading-m">For schools</h2>
 
       <%= govuk_list type: :bullet do %>
         <li>offers ITT placements with an accredited provider</li>
@@ -27,7 +36,7 @@
         This funding is not available for training early career framework (ECF) mentors. To claim for ECF mentors, <%= govuk_link_to "you need a different service", "https://manage-training-for-early-career-teachers.education.gov.uk" %>.
       <% end %>
 
-      <h2 class="govuk-heading-m">When to submit a claim</h2>
+      <h3 class="govuk-heading-s">When to submit a claim</h3>
 
       <p class="govuk-body">For the school year starting September 2025:</p>
 
@@ -36,7 +45,7 @@
         <li>when you are registered in the service, we will email you reminders of claim opening dates and deadlines</li>
       <% end %>
 
-      <h2 class="govuk-heading-m">Before you start</h2>
+      <h3 class="govuk-heading-s">Before you start</h3>
 
       <p class="govuk-body">You will be asked for:</p>
 
@@ -46,6 +55,18 @@
         <li>your mentors’ dates of birth</li>
         <li>completed training hours - you should check these with your provider</li>
       <% end %>
+
+      <h2 class="govuk-heading-m">For accredited ITT providers</h2>
+
+      <p class="govuk-body">Accredited ITT providers can use the provider console to:</p>
+
+      <%= govuk_list type: :bullet do %>
+        <li>view mentor training claims associated with their trainees</li>
+        <li>review claim information submitted by placement schools</li>
+        <li>audit mentor training hours and supporting data</li>
+      <% end %>
+
+      <h2 class="govuk-heading-m">Accessing the service</h2>
 
       <p class="govuk-body">To access this service, you will be asked to sign in or create a Department for Education (DfE) Sign-in account. DfE Sign-in is how schools and other education organisations access DfE online services.</p>
 
