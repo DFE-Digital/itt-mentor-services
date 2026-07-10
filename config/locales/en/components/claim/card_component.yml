@@ -2,6 +2,6 @@ en:
   components:
     claim:
       card_component:
-        claim_title: "%{reference} - %{school_name}"
+        claim_reference: "Claim reference: %{reference}"
         clawback_amount: Clawback 
         support_user: Support user
