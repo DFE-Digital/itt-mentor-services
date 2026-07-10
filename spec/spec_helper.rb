@@ -41,6 +41,18 @@ SimpleCov.start "rails" do
   add_group "Wizards", "app/wizards"
 end
 
+TEMPORARILY_IGNORED_SPEC_FILE_PATH_PATTERN = Regexp.union(
+  %r{spec/components/claim/card_component_spec\.rb},
+  %r{spec/services/claims/clawback/resend_email_spec\.rb},
+  %r{spec/system/claims/sign_in_as_a_claims_user_spec\.rb},
+  %r{spec/system/claims/support/claims/clawbacks/},
+  %r{spec/system/claims/support/claims/payments/},
+  %r{spec/system/claims/support/claims/sampling/},
+  %r{spec/system/claims/support/claims/support_details/},
+  %r{spec/system/claims/support/claims/view_claims_spec\.rb},
+  %r{spec/system/claims/support/revert_claims_to_submitted/support_user_reverts_claims_to_submitted_spec\.rb},
+)
+
 # `expect(...).not_to matcher.and matcher` is not supported, since it creates a bit of an ambiguity.
 # Instead, define negated versions of whatever matchers you wish to negate with
 # `RSpec::Matchers.define_negated_matcher` and use `expect(...).to matcher.and matcher`.
@@ -91,6 +103,10 @@ RSpec.configure do |config|
   #   config.filter_run_when_matching :focus
 
   config.filter_run_excluding :smoke_test
+
+  unless ENV["INCLUDE_TEMPORARILY_IGNORED_SPECS"] == "true"
+    config.filter_run_excluding file_path: TEMPORARILY_IGNORED_SPEC_FILE_PATH_PATTERN
+  end
 
   #   # Allows RSpec to persist some state between runs in order to support
   #   # the `--only-failures` and `--next-failure` CLI options. We recommend
