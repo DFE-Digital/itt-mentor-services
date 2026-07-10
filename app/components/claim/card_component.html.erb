@@ -1,14 +1,14 @@
 <div class="claim-card">
   <div class="claim-card__header">
     <div class="claim-card__header__name govuk-heading-s">
-      <%= govuk_link_to t(".claim_title", reference: claim.reference, school_name: claim.school_name), href, no_visited_state: true %>
+      <%= govuk_link_to claim.school_name, href, no_visited_state: true %>
     </div>
     <%= render Claim::StatusTagComponent.new(claim:, text: status_text, classes: %w[govuk-body-s]) %>
   </div>
 
   <div class="claim-card__body">
     <div class="claim-card__body__details">
-      <div class="govuk-body-s"><%= claim.academic_year_name %></div>
+      <div class="govuk-body-s"><%= claim.school.decorate.address %></div>
       <% if show_provider %>
         <div class="govuk-body-s"><%= claim.provider_name %></div>
       <% end %>
@@ -28,6 +28,7 @@
 
     <div class="claim-card__body__right">
       <div class="govuk-body-s"><%= l(claim.submitted_at.to_date, format: :long) %></div>
+      <div class="govuk-body-s"><%= t(".claim_reference", reference: claim.reference) %></div>
       <div class="govuk-body-s"><%= humanized_money_with_symbol(claim.amount) %></div>
       <% if claim.status == "clawback_requested" %>
         <div class="govuk-body-s govuk-!-font-weight-bold"><%= t(".clawback_amount") %></div>

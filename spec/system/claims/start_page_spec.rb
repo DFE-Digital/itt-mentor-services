@@ -107,8 +107,8 @@ RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :sy
       "Before you start\n"\
       "You will be asked for:\n"\
       "the name of your accredited ITT provider "\
-      "your mentors' teacher reference numbers (TRN) "\
-      "your mentors' dates of birth "\
+      "your mentors’ teacher reference numbers (TRN) "\
+      "your mentors’ dates of birth "\
       "completed training hours - you should check these with your provider",
     )
 

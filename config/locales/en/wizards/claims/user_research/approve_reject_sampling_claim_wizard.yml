@@ -24,7 +24,7 @@ en:
             hint: "Enter a number between 1 and %{max_hours}"
             custom_hours_hint: "Enter a number between 1 and %{count}"
             reason_label: Why are you amending this?
-            reason_hint: Provide the reason for amending this mentor's hours of training
+            reason_hint: Provide a reason for amending this mentor’s hours. This reason will be shared with the school and should explain why the originally claimed hours are being changed.
             continue: Continue
           check_your_answers_step:
             page_title: Check your answers - %{contextual_text}
