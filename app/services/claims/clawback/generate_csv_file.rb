@@ -56,6 +56,7 @@ class Claims::Clawback::GenerateCSVFile < ApplicationService
   end
 
   def file_name
-    Rails.root.join("tmp/clawbacks_for_payer-#{Time.current.strftime('%Y%m%d%H%M%S%L')}.csv")
+    timestamp = Time.current.strftime("%Y%m%d%H%M%S%L")
+    Rails.root.join("tmp/clawbacks_for_payer-#{timestamp}.csv")
   end
 end
