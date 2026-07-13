@@ -177,7 +177,7 @@ RSpec.describe "Support user adds a school", :js, service: :claims, type: :syste
   end
 
   def and_i_select_st_champions
-    page.find(".autocomplete__option", text: "St Champions", wait: 10).click
+    click_autocomplete_option("St Champions")
   end
 
   def then_i_see_a_validation_error_for_school_already_added
@@ -197,7 +197,7 @@ RSpec.describe "Support user adds a school", :js, service: :claims, type: :syste
   end
 
   def and_i_select_sherborne_school
-    page.find(".autocomplete__option", text: "Sherborne School", wait: 10).click
+    click_autocomplete_option("Sherborne School")
   end
 
   def when_i_type_guildford
@@ -205,7 +205,25 @@ RSpec.describe "Support user adds a school", :js, service: :claims, type: :syste
   end
 
   def and_i_select_royal_grammar_school_guildford
-    page.find(".autocomplete__option", text: "Royal Grammar School Guildford", wait: 10).click
+    click_autocomplete_option("Royal Grammar School Guildford")
+  end
+
+  def click_autocomplete_option(name)
+    attempts = 0
+
+    begin
+      attempts += 1
+
+      within(".autocomplete__wrapper") do
+        expect(page).to have_css(".autocomplete__option", text: name, wait: 10)
+        all(".autocomplete__option", text: name, minimum: 1).first.click
+      end
+    rescue Selenium::WebDriver::Error::UnknownError, Selenium::WebDriver::Error::StaleElementReferenceError => e
+      stale_node_error = e.message.include?("Node with given id does not belong to the document")
+      raise unless attempts < 3 && stale_node_error
+
+      retry
+    end
   end
 
   def then_i_see_the_check_your_answers_page

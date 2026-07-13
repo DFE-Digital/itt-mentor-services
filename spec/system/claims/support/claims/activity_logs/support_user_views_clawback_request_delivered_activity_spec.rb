@@ -114,6 +114,7 @@ RSpec.describe "Support user views clawback request delivered activity spec",
 
   def then_i_receive_a_csv_file
     expect(page.response_headers["Content-Type"]).to eq("text/csv")
-    expect(page.response_headers["Content-Disposition"]).to eq("attachment; filename=\"clawbacks_for_payer.csv\"; filename*=UTF-8''clawbacks_for_payer.csv")
+    disposition = page.response_headers["Content-Disposition"]
+    expect(disposition).to match(/attachment; filename="clawbacks_for_payer-\d{17}\.csv"; filename\*=UTF-8''clawbacks_for_payer-\d{17}\.csv/)
   end
 end
