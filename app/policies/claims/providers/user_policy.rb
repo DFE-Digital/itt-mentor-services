@@ -17,7 +17,6 @@ class Claims::Providers::UserPolicy < Claims::Providers::ApplicationPolicy
   def read?
     return true if user.support_user?
     return false unless provider_user?
-    return true if record.is_a?(Class)
 
     record.user_memberships.where(organisation: user.providers).exists?
   end
