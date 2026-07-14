@@ -1,4 +1,8 @@
 class Claims::Providers::ApplicationPolicy < Claims::ApplicationPolicy
+  def index?
+    user.support_user? || provider_user?
+  end
+
   def read?
     user.support_user? || provider_user?
   end
