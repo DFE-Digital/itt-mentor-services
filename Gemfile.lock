@@ -11,10 +11,10 @@ GIT
 
 GIT
   remote: https://github.com/citizensadvice/capybara_accessible_selectors
-  revision: 818bb2401925ecd872ea21fb1e4faab61751219f
+  revision: a00d2db0ce3de1a2a47b2180f8f3eed4399b36be
   branch: main
   specs:
-    capybara_accessible_selectors (0.11.0)
+    capybara_accessible_selectors (0.15.0)
       capybara (~> 3.36)
 
 GEM
@@ -348,7 +348,7 @@ GEM
       notifications-ruby-client (~> 6.0)
       rack (>= 2.1.4.1)
     marcel (1.0.4)
-    matrix (0.4.2)
+    matrix (0.4.3)
     method_source (1.1.0)
     mini_mime (1.1.5)
     minitest (6.0.6)
