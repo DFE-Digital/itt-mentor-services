@@ -103,7 +103,7 @@ gem "geocoder"
 gem "audited"
 
 # BigQuery
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.15"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.17"
 
 # Migrations
 gem "strong_migrations"
@@ -154,7 +154,7 @@ group :test do
   # launch browser when inspecting capybara specs
   gem "launchy"
   gem "timecop"
-  gem "undercover", "~> 0.8.1"
+  gem "undercover", "~> 0.8.5"
   gem "webmock"
 
   gem "rubocop-govuk", require: false
