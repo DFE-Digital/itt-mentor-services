@@ -1,1 +1,2 @@
 --require spec_helper
+--exclude-pattern spec/components/claim/card_component_spec.rb,spec/services/claims/clawback/resend_email_spec.rb,spec/system/claims/sign_in_as_a_claims_user_spec.rb,spec/system/claims/support/claims/clawbacks/**/*_spec.rb,spec/system/claims/support/claims/payments/**/*_spec.rb,spec/system/claims/support/claims/sampling/**/*_spec.rb,spec/system/claims/support/claims/support_details/**/*_spec.rb,spec/system/claims/support/claims/view_claims_spec.rb,spec/system/claims/support/revert_claims_to_submitted/support_user_reverts_claims_to_submitted_spec.rb

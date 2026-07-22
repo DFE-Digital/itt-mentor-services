@@ -1,0 +1,131 @@
+<% content_for :page_title, "Claim #{@claim.reference}" %>
+
+<% content_for(:before_content) do %>
+  <%= govuk_back_link href: claims_user_research_provider_claims_path %>
+<% end %>
+
+<div class="govuk-width-container">
+  <p class="govuk-caption-l"><%= @claim.school_name %></p>
+  <h1 class="govuk-heading-l"><%= "Claim reference #{@claim.reference}" %></h1>
+
+  <% if @claim.status == "sampling_in_progress" %>
+    <div class="govuk-button-group">
+      <%= govuk_button_link_to(
+        "Approve claim",
+        new_approve_claim_claims_user_research_provider_claim_path(@claim),
+      ) %>
+      <%= govuk_button_link_to(
+        "Amend claim",
+        new_reject_claim_claims_user_research_provider_claim_path(@claim),
+        class: "govuk-button govuk-button--warning",
+      ) %>
+    </div>
+  <% end %>
+
+  <%= govuk_summary_list(actions: false) do |summary_list| %>
+
+    <% summary_list.with_row do |row| %>
+      <% row.with_key(text: "Academic year") %>
+      <% row.with_value(text: @claim.academic_year_name) %>
+    <% end %>
+
+    <% summary_list.with_row do |row| %>
+      <% row.with_key(text: "Status") %>
+      <% row.with_value do %>
+        <%= render Claim::StatusTagComponent.new(claim: @claim, text: provider_status_text_for(@claim)) %>
+      <% end %>
+    <% end %>
+
+    <% summary_list.with_row do |row| %>
+      <% row.with_key(text: "Amount") %>
+      <% row.with_value(text: humanized_money_with_symbol(@claim.amount)) %>
+    <% end %>
+
+     <% summary_list.with_row do |row| %>
+       <% row.with_key(text: "Submitted") %>
+       <% row.with_value(text: l(@claim.submitted_on, format: :long)) %>
+     <% end %>
+   <% end %>
+
+  <% if @claim.sampling_provider_not_approved? %>
+    <h2 class="govuk-heading-m">Mentors with amended hours</h2>
+    <% not_assured_trainings = @claim.mentor_trainings.order_by_mentor_full_name.select(&:not_assured?) %>
+    <% assured_trainings = @claim.mentor_trainings.order_by_mentor_full_name.reject(&:not_assured?) %>
+
+    <% not_assured_trainings.each do |mentor_training| %>
+      <% original_hours = mentor_training.hours_completed.to_i %>
+      <% hours_clawed_back = mentor_training.hours_clawed_back.to_i %>
+      <% completed_hours = original_hours - hours_clawed_back %>
+      <% amount = original_hours * mentor_training.region_funding_available_per_hour %>
+      <%= govuk_summary_card(title: mentor_training.mentor.full_name) do |card| %>
+        <% card.with_summary_list do |summary_list| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: "Hours originally claimed") %>
+            <% row.with_value(text: pluralize(original_hours, "hour")) %>
+          <% end %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: "Training hours mentor completed") %>
+            <% row.with_value(text: pluralize(completed_hours, "hour")) %>
+          <% end %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: "Hours removed from claim") %>
+            <% row.with_value(text: pluralize(hours_clawed_back, "hour")) %>
+          <% end %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: "Amount claimed") %>
+            <% row.with_value(text: humanized_money_with_symbol(amount)) %>
+          <% end %>
+          <% if mentor_training.reason_not_assured.present? %>
+            <% summary_list.with_row do |row| %>
+              <% row.with_key(text: "Reason for amendment") %>
+              <% row.with_value(text: mentor_training.reason_not_assured) %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% if assured_trainings.any? %>
+      <h2 class="govuk-heading-m">Mentors</h2>
+      <%= govuk_table do |table| %>
+        <% table.with_head do |head| %>
+          <% head.with_row do |head_row| %>
+            <% head_row.with_cell(text: "Name") %>
+            <% head_row.with_cell(text: "Hours claimed") %>
+            <% head_row.with_cell(text: "Amount claimed") %>
+          <% end %>
+        <% end %>
+        <% table.with_body do |body| %>
+          <% assured_trainings.each do |mentor_training| %>
+            <% body.with_row do |table_row| %>
+              <% table_row.with_cell(text: mentor_training.mentor.full_name) %>
+              <% table_row.with_cell(text: pluralize(mentor_training.hours_completed, "hour")) %>
+              <% table_row.with_cell(text: humanized_money_with_symbol(mentor_training.hours_completed.to_i * mentor_training.region_funding_available_per_hour)) %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <h2 class="govuk-heading-m">Mentors</h2>
+    <%= govuk_table do |table| %>
+      <% table.with_head do |head| %>
+        <% head.with_row do |head_row| %>
+          <% head_row.with_cell(text: "Name") %>
+          <% head_row.with_cell(text: "Hours claimed") %>
+          <% head_row.with_cell(text: "Amount") %>
+        <% end %>
+      <% end %>
+
+      <% table.with_body do |body| %>
+        <% @claim.mentor_trainings.order_by_mentor_full_name.each do |mentor_training| %>
+          <% body.with_row do |table_row| %>
+            <% table_row.with_cell(text: mentor_training.mentor.full_name) %>
+            <% table_row.with_cell(text: pluralize(mentor_training.hours_completed, "hour")) %>
+            <% table_row.with_cell(text: humanized_money_with_symbol(mentor_training.hours_completed.to_i * mentor_training.region_funding_available_per_hour)) %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

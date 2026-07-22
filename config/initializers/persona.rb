@@ -9,7 +9,7 @@ CLAIMS_PERSONAS = [
     first_name: "Patricia",
     last_name: "Adebayo",
     email: "patricia@example.com",
-    type: "Claims::ProviderUser",
+    type: "Claims::User",
   },
   {
     first_name: "Mary",

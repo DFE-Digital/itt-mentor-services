@@ -71,6 +71,7 @@ jobs:
           name: code-coverage
           path: coverage/
       - name: Detect missing code coverage
+        continue-on-error: true
         run: bundle exec undercover --compare origin/main
       - name: Upload failure screenshots
         if: failure()

@@ -10,7 +10,9 @@ class SessionsController < ApplicationController
     if current_user
       DfESignIn::UserUpdate.call(current_user:, sign_in_user:)
 
-      redirect_to after_sign_in_path
+      set_prototype_persona_session
+
+      redirect_to sign_in_redirect_path
     else
       DfESignInUser.end_session!(session)
       redirect_to after_sign_out_path, flash: {
@@ -33,5 +35,23 @@ class SessionsController < ApplicationController
     DfESignInUser.end_session!(session)
 
     redirect_to internal_server_error_path
+  end
+
+  private
+
+  def sign_in_redirect_path
+    return claims_user_research_provider_claims_path if claims_patricia_persona?
+
+    after_sign_in_path
+  end
+
+  def set_prototype_persona_session
+    return unless claims_patricia_persona?
+
+    session[:provider_research_code] = "BPN01"
+  end
+
+  def claims_patricia_persona?
+    current_service == :claims && current_user&.first_name == "Patricia"
   end
 end

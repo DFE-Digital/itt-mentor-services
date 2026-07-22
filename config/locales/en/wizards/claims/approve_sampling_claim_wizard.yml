@@ -1,0 +1,16 @@
+en:
+  wizards:
+    claims:
+      approve_sampling_claim_wizard:
+        mentor_step:
+          page_title: Select mentors to review
+          caption: "Auditing - Claim %{claim_reference}"
+          heading: Which mentors do you want to review?
+          continue: Continue
+        mentor_training_step:
+          page_title: Hours of training for %{mentor_full_name}
+          caption: "Auditing - Claim %{claim_reference}"
+          heading: "How many hours of training did %{mentor_full_name} actually complete?"
+          label: Number of hours
+          hint: "Enter a number between 1 and %{max_hours}"
+          continue: Continue

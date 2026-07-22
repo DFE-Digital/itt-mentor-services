@@ -1,0 +1,55 @@
+<% content_for :page_title, "Your claims" %>
+
+<div class="govuk-width-container" data-controller="filter">
+  <h1 class="govuk-heading-l">Your claims</h1>
+
+  <button type="button" class="govuk-button" data-module="govuk-button">
+    Download claims
+  </button>
+
+  <h2 class="govuk-heading-m">Claims requiring audit (<%= @audit_requested_count %>)</h2>
+
+  <%= render Claims::Claim::FilterFormComponent.new(
+    filter_form:,
+    statuses: Claims::UserResearch::ProviderClaimsController::VISIBLE_STATUSES,
+    show_academic_years: false,
+    show_claim_windows: false,
+    show_training_types: false,
+    show_statuses: false,
+    show_providers: false,
+    show_support_users: false,
+    show_mentors: false,
+    show_submitted_dates: false,
+    show_search: false,
+  ) do %>
+    <% if @claims.any? %>
+      <div class="govuk-!-margin-bottom-2">
+        <% @claims.each do |claim| %>
+          <%= render Claim::CardComponent.new(
+            claim:,
+            href: claims_user_research_provider_claim_path(claim),
+            current_user: User.new,
+            status_text: provider_status_text_for(claim),
+            show_provider: false,
+          ) %>
+        <% end %>
+      </div>
+
+      <%= render PaginationComponent.new(pagy: @pagy) %>
+    <% else %>
+      <p class="govuk-body">
+        <%= t("no_records", records: "claims") %>
+      </p>
+    <% end %>
+  <% end %>
+
+  <div class="govuk-button-group govuk-!-margin-top-2">
+    <%= govuk_button_to(
+      "Reset demo data",
+      reset_demo_claims_user_research_provider_claims_path,
+      method: :post,
+      warning: true,
+      class: "govuk-button govuk-button--warning",
+    ) %>
+  </div>
+</div>

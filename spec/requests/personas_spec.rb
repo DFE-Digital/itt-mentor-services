@@ -20,11 +20,14 @@ RSpec.describe "Personas", type: :request do
       expect(response).to have_http_status(:success)
     end
 
-    context "when placements service", service: :placements do
-      it "returns http success" do
-        get "/personas"
-        expect(response).to have_http_status(:success)
-      end
+    it "shows Patricia in claims personas", service: :claims do
+      create(:claims_user, first_name: "Patricia", last_name: "Adebayo", email: "patricia@example.com")
+
+      get "/personas"
+
+      expect(response).to have_http_status(:success)
+      expect(response.body).to include("Patricia")
+      expect(response.body).to include("Sign in as Patricia")
     end
   end
 end

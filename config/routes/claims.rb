@@ -31,6 +31,22 @@ scope module: :claims, as: :claims, constraints: {
     end
   end
 
+  namespace :user_research, path: "user-research" do
+    resource :provider_session, only: %i[create destroy]
+    resources :provider_claims, path: "provider/claims", only: %i[index show] do
+      post :reset_demo, on: :collection
+
+      member do
+        get "approve_claim/new", to: "sampling_claims/approve#new", as: :new_approve_claim
+        post "approve_claim", to: "sampling_claims/approve#create", as: :approve_claim
+
+        get "reject_claim/new", to: "sampling_claims/reject#new", as: :new_reject_claim
+        get "reject_claim/new/:state_key/:step", to: "sampling_claims/reject#edit", as: :reject_claim
+        put "reject_claim/new/:state_key/:step", to: "sampling_claims/reject#update"
+      end
+    end
+  end
+
   resources :schools, only: %i[index show] do
     scope module: :schools do
       resources :claims, except: %i[new create edit] do
@@ -147,6 +163,10 @@ scope module: :claims, as: :claims, constraints: {
         member do
           get :confirm_approval
           put :update
+
+          get "approve/new", to: "samplings/approve#new", as: :new_approve
+          get "approve/new/:state_key/:step", to: "samplings/approve#edit", as: :approve
+          put "approve/new/:state_key/:step", to: "samplings/approve#update"
 
           get "provider_rejected/new", to: "samplings/provider_rejected#new", as: :new_provider_rejected
           get "provider_rejected/new/:state_key/:step", to: "samplings/provider_rejected#edit", as: :provider_rejected

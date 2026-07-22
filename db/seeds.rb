@@ -122,8 +122,8 @@ schools.each do |school|
   claims_mary.user_memberships.find_or_create_by!(organisation: school)
 end
 
-# Provider Patricia
-claims_patricia = Claims::ProviderUser.find_by!(email: "patricia@example.com")
+# Provider research Patricia
+claims_patricia = Claims::User.find_by!(email: "patricia@example.com")
 Claims::Provider.order_by_name.first(2).each do |provider|
   claims_patricia.user_memberships.find_or_create_by!(organisation: provider)
 end
