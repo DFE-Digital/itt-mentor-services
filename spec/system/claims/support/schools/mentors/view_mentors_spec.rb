@@ -4,8 +4,8 @@ RSpec.describe "View a school's mentors", service: :claims, type: :system do
   let!(:mentor1) { create(:mentor, first_name: "Bilbo", last_name: "Baggins") }
   let!(:mentor2) { create(:mentor, first_name: "Bilbo", last_name: "Test") }
   let!(:mentor3) { create(:mentor, trn: "1234567") }
-  let!(:school) { create(:claims_school, mentors: [mentor1, mentor2]) }
-  let!(:another_school) { create(:claims_school) }
+  let!(:school) { create(:claims_school, name: "Springfield Elementary", mentors: [mentor1, mentor2]) }
+  let!(:another_school) { create(:claims_school, name: "Shelbyville Elementary") }
   let!(:colin) { create(:claims_support_user, :colin) }
 
   scenario "View a school's mentors as a support user" do
