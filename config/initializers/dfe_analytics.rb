@@ -43,6 +43,12 @@ DfE::Analytics.configure do |config|
   #
   config.enable_analytics = proc { ALLOWED_ENVS.include?(ENV.fetch("HOSTING_ENV", "development")) }
 
+  if Rails.env.in?(%w[development qa])
+    config.airbyte_stream_config_path = "terraform/application/config/airbyte_stream_config.json"
+    # Perform airbyte checks on startup and allow airbyte config generation
+    config.airbyte_enabled = Rails.env.development? || ENV["BIGQUERY_AIRBYTE_DATASET"].present?
+  end
+
   # The environment we’re running in. This value will be attached
   # to all events we send to BigQuery.
   #
