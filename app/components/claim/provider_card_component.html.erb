@@ -1,0 +1,29 @@
+<div class="claim-card">
+  <div class="claim-card__header">
+    <div class="claim-card__header__name govuk-heading-s">
+      <%= govuk_link_to href, no_visited_state: true do %>
+        <% if claim.school_urn.present? %>
+          <%= claim.school_urn %>,
+        <% end %>
+        <%= claim.school_name %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="claim-card__body">
+    <div class="claim-card__body__details">
+      <div class="govuk-body-s"><%= claim.school.decorate.address %></div>
+    </div>
+
+    <div class="claim-card__body__right">
+      <div class="govuk-body-s govuk-!-margin-bottom-2">
+        <%= render Claim::ProviderStatusTagComponent.new(claim:, classes: %w[govuk-body-s]) %>
+      </div>
+      <% if claim.created_at.present? %>
+        <div class="govuk-body-s"><%= t(".date_submitted", date: l(claim.created_at.to_date, format: :long)) %></div>
+      <% end %>
+      <div class="govuk-body-s"><%= t(".claim_reference", reference: claim.reference) %></div>
+      <div class="govuk-body-s"><%= t(".claim_amount", amount: humanized_money_with_symbol(claim.amount)) %></div>
+    </div>
+  </div>
+</div>
