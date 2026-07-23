@@ -1,0 +1,7 @@
+en:
+  components:
+    claim:
+      provider_card_component:
+        claim_reference: "Claim reference: %{reference}"
+        claim_amount: "Claim amount: %{amount}"
+        date_submitted: "Date submitted: %{date}"
