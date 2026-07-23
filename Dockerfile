@@ -3,7 +3,7 @@
 # production: runs the actual app
 
 # Build builder image
-FROM ruby:3.4.1-alpine3.21 AS builder
+FROM ruby:3.4.10-alpine3.23 AS builder
 
 # RUN apk -U upgrade && \
 #     apk add --update --no-cache gcc git libc6-compat libc-dev make nodejs \
@@ -54,7 +54,7 @@ RUN rm -rf node_modules log/* tmp/* /tmp && \
   find /usr/local/bundle/gems -name "*.html" -delete
 
 # Build runtime image
-FROM ruby:3.4.1-alpine3.21 AS production
+FROM ruby:3.4.10-alpine3.23 AS production
 
 # Use rails production environment when deployed using docker
 ENV RAILS_ENV=production
@@ -70,7 +70,7 @@ RUN apk add --update --no-cache tzdata && \
 RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
 
 # libpq: required to run postgres
-RUN apk add -U --no-cache libpq libcrypto3=3.3.6-r0
+RUN apk add -U --no-cache libpq libcrypto3
 
 # proj-util: provides cs2cs, required by Gias::CSVTransformer::CoordinateTransformer
 RUN apk add --no-cache proj-util
