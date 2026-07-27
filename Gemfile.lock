@@ -296,7 +296,8 @@ GEM
       thor
       tilt
     hashdiff (1.2.1)
-    hashie (5.0.0)
+    hashie (5.1.0)
+      logger
     html-attributes-utils (1.0.2)
       activesupport (>= 6.1.4.4)
     httparty (0.24.2)
@@ -390,8 +391,9 @@ GEM
       jwt (>= 1.5, < 3)
     okcomputer (1.19.2)
       benchmark
-    omniauth (2.1.3)
+    omniauth (2.1.4)
       hashie (>= 3.4.6)
+      logger
       rack (>= 2.2.3)
       rack-protection
     omniauth-rails_csrf_protection (1.0.2)
