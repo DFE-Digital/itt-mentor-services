@@ -82,7 +82,7 @@ gem "down", "~> 5.6"
 # HTTP Request
 gem "httparty"
 
-gem "money-rails", "~> 1.12"
+gem "money-rails", "~> 3.0"
 
 gem "pg_search"
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
