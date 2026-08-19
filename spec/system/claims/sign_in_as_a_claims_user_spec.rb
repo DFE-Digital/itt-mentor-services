@@ -33,7 +33,7 @@ RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
       and_the_provider_user_is_part_of_an_organisation(provider_organisation)
       when_i_visit_the_sign_in_path
       when_i_click_sign_in
-      then_i_am_redirected_to_the_schools_page
+      then_i_am_redirected_to_the_provider_claims_page_for(provider_organisation)
     end
   end
 
@@ -47,7 +47,7 @@ RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
       and_the_provider_user_is_part_of_an_organisation(another_provider_organisation)
       when_i_visit_the_sign_in_path
       when_i_click_sign_in
-      then_i_am_redirected_to_the_schools_page
+      then_i_am_redirected_to_the_provider_organisations_page
     end
   end
 
@@ -299,5 +299,13 @@ RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
 
   def then_i_am_redirected_to_the_schools_page
     expect(page).to have_current_path(claims_schools_path)
+  end
+
+  def then_i_am_redirected_to_the_provider_claims_page_for(provider)
+    expect(page).to have_current_path(claims_provider_claims_path(provider))
+  end
+
+  def then_i_am_redirected_to_the_provider_organisations_page
+    expect(page).to have_current_path(claims_providers_path)
   end
 end

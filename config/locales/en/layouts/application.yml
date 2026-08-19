@@ -4,6 +4,7 @@ en:
       success: Success
       alert: Important
       your_account: Your account
+      change_organisation: Change organisation
       sign_out: Sign out
 
       claims:

@@ -1,0 +1,7 @@
+en:
+  components:
+    claims:
+      providers:
+        claims:
+          filter_form_component:
+            school: School

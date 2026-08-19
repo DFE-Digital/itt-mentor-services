@@ -34,6 +34,9 @@
       <% if current_user %>
         <% if claims_service? %>
           <% header.with_navigation_item(text: t(".your_account"), href: account_path) %>
+          <% if current_user.is_a?(Claims::ProviderUser) && current_user.providers.many? %>
+            <% header.with_navigation_item(text: t(".change_organisation"), href: claims_providers_path) %>
+          <% end %>
         <% end %>
 
         <% if current_user.support_user? && !claims_service? %>

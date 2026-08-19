@@ -256,89 +256,89 @@
 
                 <div class="app-filter__option" data-controller="async-filter-search" data-async-filter-search-endpoint-value="/support/schools/search"
                 data-async-filter-search-fieldname-value="claims_support_claims_filter_form[school_ids][]" data-async-filter-search-labelname-value="claims-support-claims-filter-form-school-ids">
-                  <%= form.govuk_check_boxes_fieldset(
-                    :school_ids,
-                    legend: {
-                      text: t("claims.support.claims.index.school"),
-                      size: "s",
-                    },
-                    small: true,
-                    multiple: false,
-                  ) do %>
-                    <% @schools.each do |school| %>
-                      <%= form.govuk_check_box :school_ids, school.id, label: { text: school.name } %>
+                    <%= form.govuk_check_boxes_fieldset(
+                      :school_ids,
+                      legend: {
+                        text: t("claims.support.claims.index.school"),
+                        size: "s",
+                      },
+                      small: true,
+                      multiple: false,
+                    ) do %>
+                      <% @schools.each do |school| %>
+                        <%= form.govuk_check_box :school_ids, school.id, label: { text: school.name } %>
+                      <% end %>
                     <% end %>
-                  <% end %>
                 </div>
 
                 <div class="app-filter__option" data-controller="async-filter-search" data-async-filter-search-endpoint-value="/support/providers/search"
-                     data-async-filter-search-fieldname-value="claims_support_claims_filter_form[provider_ids][]" data-async-filter-search-labelname-value="claims-support-claims-filter-form-provider-ids">
-                  <%= form.govuk_check_boxes_fieldset(
-                    :provider_ids,
-                    legend: {
-                      text: t("claims.support.claims.index.provider"),
-                      size: "s",
-                    },
-                    small: true,
-                    multiple: false,
-                  ) do %>
-                    <% @providers.each do |provider| %>
-                      <%= form.govuk_check_box :provider_ids, provider.id, label: { text: provider.name } %>
+                       data-async-filter-search-fieldname-value="claims_support_claims_filter_form[provider_ids][]" data-async-filter-search-labelname-value="claims-support-claims-filter-form-provider-ids">
+                    <%= form.govuk_check_boxes_fieldset(
+                      :provider_ids,
+                      legend: {
+                        text: t("claims.support.claims.index.provider"),
+                        size: "s",
+                      },
+                      small: true,
+                      multiple: false,
+                    ) do %>
+                      <% @providers.each do |provider| %>
+                        <%= form.govuk_check_box :provider_ids, provider.id, label: { text: provider.name } %>
+                      <% end %>
                     <% end %>
-                  <% end %>
                 </div>
 
                 <div class="app-filter__option" data-controller="filter-search">
-                  <%= form.govuk_check_boxes_fieldset(
-                    :support_user_ids,
-                    legend: {
-                      text: t("claims.support.claims.index.support_user"),
-                      size: "s",
-                    },
-                    small: true,
-                    multiple: false,
-                  ) do %>
-                    <% support_users.each do |support_user| %>
-                      <%= form.govuk_check_box :support_user_ids, support_user.id, label: { text: support_user.full_name } %>
+                    <%= form.govuk_check_boxes_fieldset(
+                      :support_user_ids,
+                      legend: {
+                        text: t("claims.support.claims.index.support_user"),
+                        size: "s",
+                      },
+                      small: true,
+                      multiple: false,
+                    ) do %>
+                      <% support_users.each do |support_user| %>
+                        <%= form.govuk_check_box :support_user_ids, support_user.id, label: { text: support_user.full_name } %>
+                      <% end %>
+                      <%= form.govuk_check_box :support_user_ids, UNASSIGNED, label: { text: t(".unassigned") } %>
                     <% end %>
-                    <%= form.govuk_check_box :support_user_ids, UNASSIGNED, label: { text: t(".unassigned") } %>
-                  <% end %>
                 </div>
 
                 <div class="app-filter__option" data-controller="async-filter-search" data-async-filter-search-endpoint-value="/support/mentors/search/<%= filter_form.academic_year.id %>"
-                     data-async-filter-search-fieldname-value="claims_support_claims_filter_form[mentor_ids][]" data-async-filter-search-labelname-value="claims-support-claims-filter-form-mentor-ids">
-                  <%= form.govuk_check_boxes_fieldset(
-                    :mentor_ids,
-                    legend: {
-                      text: t("claims.support.claims.index.mentor"),
-                      size: "s",
-                    },
-                    small: true,
-                    multiple: false,
-                  ) do %>
-                    <% mentors.each do |mentor| %>
-                      <%= form.govuk_check_box :mentor_ids, mentor.id, label: { text: mentor.full_name }, hint: { text: mentor.trn, class: "secondary-text govuk-!-font-size-16" } %>
+                       data-async-filter-search-fieldname-value="claims_support_claims_filter_form[mentor_ids][]" data-async-filter-search-labelname-value="claims-support-claims-filter-form-mentor-ids">
+                    <%= form.govuk_check_boxes_fieldset(
+                      :mentor_ids,
+                      legend: {
+                        text: t("claims.support.claims.index.mentor"),
+                        size: "s",
+                      },
+                      small: true,
+                      multiple: false,
+                    ) do %>
+                      <% mentors.each do |mentor| %>
+                        <%= form.govuk_check_box :mentor_ids, mentor.id, label: { text: mentor.full_name }, hint: { text: mentor.trn, class: "secondary-text govuk-!-font-size-16" } %>
+                      <% end %>
                     <% end %>
-                  <% end %>
                 </div>
 
                 <div class="app-filter__option">
-                  <%= form.govuk_date_field(
-                    :submitted_after,
-                    date_of_birth: true,
-                    maxlength_enabled: true,
-                    legend: { text: t("claims.support.claims.index.submitted_after"), size: "s" },
-                    hint: { text: t("claims.support.claims.index.submitted_after_hint"), size: "s" },
-                  ) %>
+                    <%= form.govuk_date_field(
+                      :submitted_after,
+                      date_of_birth: true,
+                      maxlength_enabled: true,
+                      legend: { text: t("claims.support.claims.index.submitted_after"), size: "s" },
+                      hint: { text: t("claims.support.claims.index.submitted_after_hint"), size: "s" },
+                    ) %>
                 </div>
 
                 <div class="app-filter__option">
-                  <%= form.govuk_date_field(
-                    :submitted_before,
-                    maxlength_enabled: true,
-                    legend: { text: t("claims.support.claims.index.submitted_before"), size: "s" },
-                    hint: { text: t("claims.support.claims.index.submitted_before_hint"), size: "s" },
-                  ) %>
+                    <%= form.govuk_date_field(
+                      :submitted_before,
+                      maxlength_enabled: true,
+                      legend: { text: t("claims.support.claims.index.submitted_before"), size: "s" },
+                      hint: { text: t("claims.support.claims.index.submitted_before_hint"), size: "s" },
+                    ) %>
                 </div>
               </div>
             </div>

@@ -1,0 +1,30 @@
+<%= content_for :page_title, t(".heading") %>
+<% render "claims/providers/primary_navigation" %>
+
+<div class="govuk-width-container">
+  <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
+
+  <h2 class="govuk-heading-m"><%= t(".sub_heading", count: @pagy.count) %></h2>
+
+  <%= render Claims::Providers::Claims::FilterFormComponent.new(
+    filter_form:,
+    schools: @schools,
+    school_search_endpoint: claims_provider_schools_search_path(@provider),
+    school_search_fieldname: "claims_providers_claims_filter_form[school_ids][]",
+    school_search_labelname: "claims-providers-claims-filter-form-school-ids",
+  ) do %>
+    <% if @claims.any? %>
+      <div class="govuk-!-margin-bottom-2">
+        <% @claims.each do |claim| %>
+          <%= render Claim::ProviderCardComponent.new(claim:, href: claims_provider_claim_path(@provider, claim), current_user:) %>
+        <% end %>
+      </div>
+
+      <%= render PaginationComponent.new(pagy: @pagy) %>
+    <% else %>
+      <p class="govuk-body">
+        <%= t("no_records", records: "claims") %>
+      </p>
+    <% end %>
+  <% end %>
+</div>

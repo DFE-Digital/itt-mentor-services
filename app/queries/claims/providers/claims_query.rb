@@ -14,7 +14,8 @@ class Claims::Providers::ClaimsQuery < ApplicationQuery
   end
 
   def call
-    scope = school_condition(claims)
+    scope = provider_status_condition(claims)
+    scope = school_condition(scope)
     order_condition(scope)
   end
 
@@ -27,6 +28,10 @@ class Claims::Providers::ClaimsQuery < ApplicationQuery
     return scope if school_ids.blank?
 
     scope.where(school_id: school_ids)
+  end
+
+  def provider_status_condition(scope)
+    scope.where(status: Claims::Providers::Claims::StatusesQuery.values)
   end
 
   def order_condition(scope)

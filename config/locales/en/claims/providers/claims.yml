@@ -1,0 +1,15 @@
+en:
+  claims:
+    providers:
+      index:
+        organisations: Organisations
+      primary_navigation:
+        change_organisation: Change organisation
+      claims:
+        index:
+          heading: Claims
+          sub_heading: Claims (%{count})
+        show:
+          page_title: Claim %{reference}
+          date_submitted: Date submitted
+          mentors: Mentors
