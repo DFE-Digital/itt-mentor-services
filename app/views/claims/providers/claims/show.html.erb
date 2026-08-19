@@ -1,0 +1,48 @@
+<% content_for :page_title, t(".page_title", reference: @claim.reference) %>
+<% render "claims/providers/primary_navigation" %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: claims_provider_claims_path(@provider)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l"><%= t(".page_title", reference: @claim.reference) %></h1>
+      <p class="govuk-body govuk-!-margin-bottom-6"><%= render Claim::ProviderStatusTagComponent.new(claim: @claim) %></p>
+
+      <%= govuk_summary_list(actions: false) do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: Claims::Claim.human_attribute_name(:school)) %>
+          <% row.with_value(text: @claim.school.name) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: Claims::Claim.human_attribute_name(:accredited_provider)) %>
+          <% row.with_value(text: @claim.provider_name) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".date_submitted")) %>
+          <% row.with_value(text: l(@claim.created_at.to_date, format: :long)) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: Claims::Claim.human_attribute_name(:claim_amount)) %>
+          <% row.with_value(text: humanized_money_with_symbol(@claim.amount)) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".mentors")) %>
+          <% row.with_value do %>
+            <ul class="govuk-list">
+              <% @claim.mentors.order_by_full_name.each do |mentor| %>
+                <li><%= mentor.full_name %></li>
+              <% end %>
+            </ul>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

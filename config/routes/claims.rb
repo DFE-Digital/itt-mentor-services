@@ -95,6 +95,13 @@ scope module: :claims, as: :claims, constraints: {
     end
   end
 
+  resources :providers, only: %i[index] do
+    scope module: :providers do
+      resources :claims, only: %i[index show]
+      get "schools/search", to: "schools#search", as: :schools_search
+    end
+  end
+
   namespace :support do
     root to: redirect("/support/schools")
 

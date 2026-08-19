@@ -33,6 +33,12 @@ class ApplicationController < ActionController::Base
       requested_path
     elsif current_user.support_user?
       support_root_path
+    elsif current_service == :claims && current_user.is_a?(Claims::ProviderUser)
+      if current_user.providers.one?
+        claims_provider_claims_path(current_user.providers.first)
+      else
+        claims_providers_path
+      end
     else
       organisations_path
     end

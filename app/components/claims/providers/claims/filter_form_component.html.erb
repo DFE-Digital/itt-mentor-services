@@ -1,0 +1,91 @@
+<div data-controller="filter">
+  <div>
+    <button class="govuk-button govuk-button--secondary show-filter-button" type="button" data-action="click->filter#open"><%= t("show_filter") %></button>
+  </div>
+
+  <%= form_with(
+    model: filter_form,
+    url: request.original_url,
+    method: "get",
+    builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+  ) do |form| %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-third">
+        <div class="app-filter-layout display-none-on-mobile" data-filter-target="filter">
+          <div class="app-filter-layout__filter">
+            <div class="app-filter__header">
+              <div class="app-filter__header-title">
+                <h2 class="govuk-heading-m"><%= t("filter") %></h2>
+              </div>
+              <div class="app-filter__header-action">
+                <button class="app-filter__close" type="button" data-action="click->filter#close"><%= t("close") %></button>
+              </div>
+            </div>
+
+            <div class="app-filter-layout__content">
+              <% if filter_form.filters_selected? %>
+                <div class="app-filter-layout__selected">
+                  <div class="app-filter__selected-heading">
+                    <div class="app-filter__heading-title">
+                      <h2 class="govuk-heading-m govuk-!-margin-bottom-1"><%= t("selected_filters") %></h2>
+                      <p class="govuk-body">
+                        <%= govuk_link_to(
+                          t("clear_filters"),
+                          filter_form.clear_filters_path,
+                          no_visited_state: true,
+                        ) %>
+                      </p>
+                    </div>
+                  </div>
+
+                  <% if filter_form.school_ids.present? %>
+                    <h3 class="govuk-heading-s govuk-!-margin-bottom-0"><%= t(".school") %></h3>
+                    <ul class="app-filter-tags">
+                      <% filter_form.schools.each do |school| %>
+                        <li>
+                          <%= govuk_link_to(
+                            school.name,
+                            filter_form.index_path_without_filter(filter: "school_ids", value: school.id),
+                            class: "app-filter__tag",
+                            no_visited_state: true,
+                          ) %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  <% end %>
+                </div>
+              <% end %>
+
+              <div class="app-filter__options">
+                <%= form.govuk_submit t("apply_filters") %>
+
+                <div class="app-filter__option" data-controller="async-filter-search" data-async-filter-search-endpoint-value="<%= school_search_endpoint %>"
+                     data-async-filter-search-fieldname-value="<%= school_search_fieldname %>" data-async-filter-search-labelname-value="<%= school_search_labelname %>">
+                  <%= form.govuk_check_boxes_fieldset(
+                    :school_ids,
+                    legend: {
+                      text: t(".school"),
+                      size: "s",
+                    },
+                    small: true,
+                    multiple: false,
+                  ) do %>
+                    <% schools.each do |school| %>
+                      <%= form.govuk_check_box :school_ids, school.id, label: { text: school.name } %>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-section-break govuk-section-break--m govuk-section-break--visible"></div>
+
+        <%= content %>
+      </div>
+    </div>
+  <% end %>
+</div>
