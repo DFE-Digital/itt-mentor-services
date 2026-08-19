@@ -63,6 +63,16 @@ def hours_completed(mentor:, provider:)
   rand(1..training_allowance.remaining_hours)
 end
 
+def with_network_safe_seed_step(step_name)
+  yield
+rescue Errno::ECONNRESET, Net::ReadTimeout, OpenSSL::SSL::SSLError => e
+  Rails.logger.warn("Skipping seed step '#{step_name}' due to network error: #{e.class} #{e.message}")
+end
+
+def skip_external_seed_sync?
+  ENV["SKIP_EXTERNAL_SEED_SYNC"] == "true"
+end
+
 # Persona Creation (Dummy User Creation)
 Rails.logger.debug "Creating Personas"
 
@@ -79,7 +89,13 @@ Rails.logger.debug "Personas successfully created!"
 
 Money.locale_backend = nil
 
-Gias::SyncAllSchoolsJob.perform_now unless School.any?
+if skip_external_seed_sync?
+  Rails.logger.warn("Skipping external school/provider/subject sync because SKIP_EXTERNAL_SEED_SYNC=true")
+else
+  with_network_safe_seed_step("Gias::SyncAllSchoolsJob") do
+    Gias::SyncAllSchoolsJob.perform_now unless School.any?
+  end
+end
 
 School.last(2).each do |school|
   school.update!(claims_service: true, placements_service: true)
@@ -89,8 +105,12 @@ School.first.update!(placements_service: true)
 School.second.update!(claims_service: true)
 
 Rails.logger.debug "Services added to schools"
-# Create Providers Imported from Publfish
-PublishTeacherTraining::Provider::Importer.call unless Provider.any?
+# Create Providers Imported from Publish
+unless skip_external_seed_sync?
+  with_network_safe_seed_step("PublishTeacherTraining::Provider::Importer") do
+    PublishTeacherTraining::Provider::Importer.call unless Provider.any?
+  end
+end
 
 # Associate Placements Users with Organisations
 # Single School Anne
@@ -124,7 +144,12 @@ end
 
 # Provider Patricia
 claims_patricia = Claims::ProviderUser.find_by!(email: "patricia@example.com")
-Claims::Provider.order_by_name.first(2).each do |provider|
+patricia_seed_providers = Claims::Provider.private_beta_providers.order_by_name
+
+# Keep Patricia's seeded memberships aligned with the providers we seed claims for.
+claims_patricia.user_memberships.where.not(organisation: patricia_seed_providers).destroy_all
+
+patricia_seed_providers.each do |provider|
   claims_patricia.user_memberships.find_or_create_by!(organisation: provider)
 end
 
@@ -147,7 +172,11 @@ mentors = Mentor.where(trn: %w[1234567 1212121 1313131])
 end
 
 # Create subjects
-PublishTeacherTraining::Subject::Import.call
+unless skip_external_seed_sync?
+  with_network_safe_seed_step("PublishTeacherTraining::Subject::Import") do
+    PublishTeacherTraining::Subject::Import.call
+  end
+end
 
 # Create initial claim windows
 initial_claim_date = Date.parse("1 September 2023")
@@ -220,12 +249,13 @@ end
 # Generate claims
 
 reference = 12_345_678
-created_by = Claims::SupportUser.last
+claims_patricia = Claims::ProviderUser.find_by!(email: "patricia@example.com")
+patricia_providers_for_claims = claims_patricia.providers.order_by_name
 Claims::School.all.find_each do |school|
-  Claims::Provider.private_beta_providers.each do |claim_provider|
+  patricia_providers_for_claims.each do |claim_provider|
     create_claim(school:,
                  provider: claim_provider,
-                 created_by:,
+                 created_by: claims_patricia,
                  reference:,
                  status: :paid)
 
@@ -233,7 +263,7 @@ Claims::School.all.find_each do |school|
 
     create_claim(school:,
                  provider: claim_provider,
-                 created_by:,
+                 created_by: claims_patricia,
                  reference:,
                  status: :submitted)
 
