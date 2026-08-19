@@ -7,5 +7,32 @@ en:
           sub_heading: Claims (%{count})
         show:
           page_title: Claim %{reference}
-          date_submitted: Date submitted
+          claim_reference: Claim reference %{reference}
+          academic_year: Academic year
+          status: Status
+          amount: Amount
+          submitted: Submitted
           mentors: Mentors
+          mentor_name: Name
+          hours_claimed: Hours claimed
+          approve_claim: Approve claim
+          amend_claim: Amend claim
+          mentors_with_amended_hours: Mentors with amended hours
+          hours_originally_claimed: Hours originally claimed
+          training_hours_completed: Training hours mentor completed
+          hours_removed_from_claim: Hours removed from claim
+          amount_claimed: Amount claimed
+          reason_for_amendment: Reason for amendment
+        approve:
+          new:
+            title: Are you sure you want to approve this claim?
+            body: By approving this claim, you confirm that you have checked your records and the hours are correct for all mentors. The claim will be marked as 'Paid' and no further action is required.
+            approve: Approve claim
+            cancel: Cancel
+          create:
+            success: Claim approved
+        reject:
+          edit:
+            cancel: Cancel
+          update:
+            success: Claim amended successfully

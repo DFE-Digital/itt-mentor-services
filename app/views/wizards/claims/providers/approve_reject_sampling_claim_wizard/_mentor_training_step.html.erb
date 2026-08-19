@@ -1,0 +1,50 @@
+<% contextual_text = t(".caption", school_name: @wizard.school_name) %>
+<% content_for :page_title, title_with_error_prefix(t(".page_title", contextual_text:, mentor_full_name: current_step.mentor_full_name), error: current_step.errors.any?) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= contextual_text %></span>
+      <h1 class="govuk-heading-l"><%= t(".heading", mentor_full_name: current_step.mentor_full_name) %></h1>
+      <p class="govuk-body"><%= t(".original_hours_claimed", hours: current_step.max_hours) %></p>
+
+      <% if @wizard.action == "reject" %>
+        <%= f.govuk_radio_buttons_fieldset(
+          :hours_option,
+          legend: {
+            size: "m",
+            text: t(".hours_fieldset_legend"),
+            tag: "h2",
+          },
+          hint: { text: t(".hours_fieldset_hint", max_hours: current_step.max_hours) },
+        ) do %>
+          <%= f.govuk_radio_button(:hours_option, "custom", label: { text: t(".enter_hours_completed") }) do %>
+            <%= f.govuk_number_field(
+              :custom_hours,
+              class: "govuk-input--width-2",
+              min: 1,
+              max: current_step.max_hours,
+              label: { text: t(".number_of_hours"), class: "govuk-!-font-weight-bold" },
+              hint: { text: t(".custom_hours_hint", count: current_step.max_hours) },
+            ) %>
+          <% end %>
+
+          <%= f.govuk_radio_divider %>
+
+          <%= f.govuk_radio_button :hours_option, "remove_all", label: { text: t(".remove_all_hours") }, hint: { text: t(".remove_all_hours_hint") } %>
+        <% end %>
+
+        <%= f.govuk_text_area(
+          :reason_not_assured,
+          label: { text: t(".reason_label"), size: "m" },
+          hint: { text: t(".reason_hint") },
+          rows: 5,
+        ) %>
+      <% end %>
+
+      <%= f.govuk_submit t(".continue") %>
+    </div>
+  </div>
+<% end %>

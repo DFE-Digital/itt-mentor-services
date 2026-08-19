@@ -18,7 +18,7 @@ class Claims::Providers::ClaimsController < Claims::Providers::ApplicationContro
 
   def claims
     policy_scope(Claims::Claim.where(provider: @provider))
-      .includes(:school, :provider)
+      .includes(:school, :provider, :claim_window, mentor_trainings: :mentor)
       .not_draft_status
       .provider_visible
       .order_created_at_desc
