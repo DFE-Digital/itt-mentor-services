@@ -21,6 +21,14 @@ class Claims::Providers::ClaimPolicy < Claims::Providers::ApplicationPolicy
     user.providers.exists?(id: record.provider_id)
   end
 
+  def approve?
+    read? && record.sampling_in_progress?
+  end
+
+  def reject?
+    approve?
+  end
+
   def search?
     index?
   end

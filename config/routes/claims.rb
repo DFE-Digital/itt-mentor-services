@@ -97,7 +97,16 @@ scope module: :claims, as: :claims, constraints: {
 
   resources :providers, only: %i[index] do
     scope module: :providers do
-      resources :claims, only: %i[index show]
+      resources :claims, only: %i[index show] do
+        member do
+          get "approve/new", to: "claims/approve#new", as: :new_approve
+          post "approve", to: "claims/approve#create", as: :approve
+
+          get "reject/new", to: "claims/reject#new", as: :new_reject
+          get "reject/new/:state_key/:step", to: "claims/reject#edit", as: :reject
+          put "reject/new/:state_key/:step", to: "claims/reject#update"
+        end
+      end
       get "schools/search", to: "schools#search", as: :schools_search
     end
   end
