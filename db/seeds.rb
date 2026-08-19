@@ -63,7 +63,6 @@ def hours_completed(mentor:, provider:)
   rand(1..training_allowance.remaining_hours)
 end
 
-# Persona Creation (Dummy User Creation)
 Rails.logger.debug "Creating Personas"
 
 # Create the same personas for each service
@@ -106,7 +105,7 @@ end
 
 # Provider Patrica
 placements_patrica = Placements::User.find_by!(email: "patricia@example.com")
-provider = Provider.first
+provider = Provider.first || Provider.create!(name: "Seed Provider", code: "SEED01", placements_service: true)
 provider.update!(placements_service: true)
 placements_patrica.user_memberships.find_or_create_by!(organisation: provider)
 
@@ -176,7 +175,6 @@ current_academic_year = AcademicYear.for_date(current_date)
 AcademicYear.for_date(current_date - 1.year)
 AcademicYear.for_date(current_date + 1.year)
 
-# Create a current claim window
 Claims::ClaimWindow.find_or_create_by!(
   starts_on: Date.current.beginning_of_month,
   ends_on: Date.current.end_of_month,
@@ -237,7 +235,7 @@ Claims::School.all.find_each do |school|
                  provider: claim_provider,
                  created_by: claims_patricia,
                  reference:,
-                 status: :submitted)
+                 status: :sampling_in_progress)
 
     reference += 1
   end
