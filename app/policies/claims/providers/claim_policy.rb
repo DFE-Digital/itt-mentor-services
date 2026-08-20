@@ -20,4 +20,8 @@ class Claims::Providers::ClaimPolicy < Claims::Providers::ApplicationPolicy
 
     user.providers.exists?(id: record.provider_id)
   end
+
+  def search?
+    index?
+  end
 end

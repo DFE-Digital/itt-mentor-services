@@ -73,10 +73,12 @@ class Claims::Claim < ApplicationRecord
   SAMPLING_STATUSES = %w[sampling_in_progress sampling_provider_not_approved].freeze
   CLAWBACK_STATUSES = %w[clawback_requested clawback_in_progress sampling_not_approved clawback_requires_approval clawback_rejected].freeze
   INCIDENT_STATUSES = %w[invalid_provider].freeze
+  PROVIDER_VISIBLE_STATUSES = %w[sampling_in_progress sampling_provider_not_approved paid].freeze
 
   scope :active, -> { where(status: ACTIVE_STATUSES + INCIDENT_STATUSES) }
   scope :order_created_at_desc, -> { order(created_at: :desc) }
   scope :not_draft_status, -> { where.not(status: DRAFT_STATUSES) }
+  scope :provider_visible, -> { where(status: PROVIDER_VISIBLE_STATUSES) }
   scope :paid_for_current_academic_year, lambda {
     paid.joins(claim_window: :academic_year)
     .where(academic_years: { id: AcademicYear.for_date(Date.current).id })

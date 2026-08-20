@@ -25,40 +25,8 @@ class Claims::Providers::Claims::FilterForm < ApplicationForm
     generate_path(claims_providers_claims_filter_form: {})
   end
 
-  def clear_search_path
-    index_path
-  end
-
-  def search
-    nil
-  end
-
   def schools
     @schools ||= Claims::School.find(school_ids)
-  end
-
-  def claim_windows
-    []
-  end
-
-  def training_types
-    []
-  end
-
-  def support_user_ids
-    []
-  end
-
-  def mentor_ids
-    []
-  end
-
-  def submitted_after
-    nil
-  end
-
-  def submitted_before
-    nil
   end
 
   def query_params

@@ -31,7 +31,7 @@ class Claims::Providers::ClaimsQuery < ApplicationQuery
   end
 
   def provider_status_condition(scope)
-    scope.where(status: Claims::Providers::Claims::StatusesQuery.values)
+    scope.provider_visible
   end
 
   def order_condition(scope)

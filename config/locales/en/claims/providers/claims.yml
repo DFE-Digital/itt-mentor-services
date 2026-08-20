@@ -1,10 +1,6 @@
 en:
   claims:
     providers:
-      index:
-        organisations: Organisations
-      primary_navigation:
-        change_organisation: Change organisation
       claims:
         index:
           heading: Claims
