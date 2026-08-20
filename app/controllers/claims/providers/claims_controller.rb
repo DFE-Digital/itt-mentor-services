@@ -20,7 +20,7 @@ class Claims::Providers::ClaimsController < Claims::Providers::ApplicationContro
     policy_scope(Claims::Claim.where(provider: @provider))
       .includes(:school, :provider)
       .not_draft_status
-      .where(status: Claims::Providers::Claims::StatusesQuery.values)
+      .provider_visible
       .order_created_at_desc
   end
 

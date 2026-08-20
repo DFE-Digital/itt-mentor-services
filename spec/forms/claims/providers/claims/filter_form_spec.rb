@@ -46,6 +46,19 @@ describe Claims::Providers::Claims::FilterForm, type: :model do
     end
   end
 
+  describe "#schools" do
+    it "returns the schools for the selected school ids" do
+      school = create(:claims_school)
+      form = described_class.new(index_path:, school_ids: [school.id])
+
+      expect(form.schools).to eq([school])
+    end
+
+    it "returns an empty collection when no schools are selected" do
+      expect(described_class.new(index_path:).schools).to eq([])
+    end
+  end
+
   describe "#query_params" do
     it "returns the school filters" do
       form = described_class.new(index_path:, school_ids: %w[school-id])
