@@ -31,7 +31,7 @@ RSpec.describe "Provider user views claims", service: :claims, type: :system do
     create(
       :claim,
       :submitted,
-      status: :sampling_provider_not_approved,
+      status: :sampling_in_progress,
       provider:,
       school:,
       created_by: provider_user,
@@ -113,8 +113,10 @@ RSpec.describe "Provider user views claims", service: :claims, type: :system do
     click_on "Riverbank Primary"
 
     expect(page).to have_current_path(claims_provider_claim_path(provider, claim_for_provider))
-    expect(page).to have_content("Claim #{claim_for_provider.reference}")
-    expect(page).to have_content("Date submitted")
+    expect(page).to have_content("Claim reference #{claim_for_provider.reference}")
+    expect(page).to have_content("Submitted")
     expect(page).to have_content("Mentors")
+    expect(page).to have_link("Approve claim")
+    expect(page).to have_link("Amend claim")
   end
 end
