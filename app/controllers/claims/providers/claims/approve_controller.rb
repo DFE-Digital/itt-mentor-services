@@ -27,6 +27,6 @@ class Claims::Providers::Claims::ApproveController < Claims::Providers::Applicat
     @provider_claims ||= policy_scope(Claims::Claim.where(provider: @provider))
       .includes(:school, :provider, :claim_window, mentor_trainings: :mentor)
       .not_draft_status
-      .where(status: Claims::Providers::Claims::StatusesQuery.values)
+      .provider_visible
   end
 end

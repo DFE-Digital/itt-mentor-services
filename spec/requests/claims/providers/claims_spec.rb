@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Provider claims", type: :request, service: :claims do
+RSpec.describe "Provider claims", service: :claims, type: :request do
   let(:provider) { create(:claims_provider, name: "Test provider") }
   let(:other_provider) { create(:claims_provider, name: "Other provider") }
   let(:provider_user) { create(:claims_provider_user, :patricia) }

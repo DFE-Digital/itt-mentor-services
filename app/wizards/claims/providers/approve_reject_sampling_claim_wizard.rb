@@ -11,9 +11,7 @@ module Claims
       end
 
       delegate :reference, to: :claim, prefix: true
-      delegate :name, :region_funding_available_per_hour, to: :school, prefix: true
-      delegate :name, to: :provider, prefix: true
-      delegate :name, to: :academic_year, prefix: true
+      delegate :name, to: :school, prefix: true
       delegate :provider, :school, to: :claim
 
       def define_steps
@@ -50,10 +48,6 @@ module Claims
             mentor_id: mentor_training.mentor_id,
           }
         end
-      end
-
-      def academic_year
-        claim.claim_window.academic_year
       end
 
       def step_name_for_mentor(mentor)
