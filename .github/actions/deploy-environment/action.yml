@@ -39,6 +39,11 @@ runs:
         azure-tenant-id: ${{ inputs.azure-tenant-id }}
         azure-subscription-id: ${{ inputs.azure-subscription-id }}
 
+    - uses: google-github-actions/auth@v2
+      with:
+        project_id: rugged-abacus-218110
+        workload_identity_provider: projects/712009772377/locations/global/workloadIdentityPools/itt-mentor-services/providers/itt-mentor-services
+
     - name: Terraform Apply
       shell: bash
       run: |
