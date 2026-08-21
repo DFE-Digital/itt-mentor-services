@@ -17,7 +17,7 @@ class Claims::Claim::Sampling::ProviderNotApproved < ApplicationService
           reason_not_assured: mentor_training_provider_response[:reason_not_assured],
           hours_clawed_back: mentor_training_provider_response[:hours_clawed_back],
         )
-        mentor_training.save!(validate: false)
+        mentor_training.save!
       end
       claim.update!(
         status: :sampling_provider_not_approved,
