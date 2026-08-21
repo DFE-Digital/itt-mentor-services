@@ -14,7 +14,6 @@ class Claims::Providers::ApproveRejectSamplingClaimWizard::MentorTrainingStep < 
   validates :reason_not_assured, presence: { message: "Please enter a reason" }, if: :reject_action?
 
   delegate :full_name, to: :mentor, prefix: true
-  delegate :name, to: :provider, prefix: true
   delegate :action, to: :wizard
 
   def initialize(wizard:, attributes:)
@@ -26,23 +25,15 @@ class Claims::Providers::ApproveRejectSamplingClaimWizard::MentorTrainingStep < 
   end
 
   def mentor
-    @mentor ||= wizard.mentor_trainings.find { |mt| mt.mentor_id.to_s == mentor_id.to_s }&.mentor
+    @mentor ||= mentor_training&.mentor&.becomes(Claims::Mentor)
   end
 
   def mentor_training
     @mentor_training ||= wizard.mentor_trainings.find { |mt| mt.mentor_id.to_s == mentor_id.to_s }
   end
 
-  def provider
-    mentor_training&.provider
-  end
-
   def max_hours
     mentor_training&.hours_completed || 0
-  end
-
-  def training_type
-    mentor_training&.training_type || :initial
   end
 
   def completed_hours
@@ -50,9 +41,6 @@ class Claims::Providers::ApproveRejectSamplingClaimWizard::MentorTrainingStep < 
 
     custom_hours.to_i
   end
-
-  alias_method :trained_hours, :completed_hours
-  alias_method :worked_hours, :completed_hours
 
   private
 

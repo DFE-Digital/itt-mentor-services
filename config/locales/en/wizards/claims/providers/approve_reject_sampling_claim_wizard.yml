@@ -30,6 +30,7 @@ en:
             approve_title: Approve this claim
             reject_title: Amend this claim
             details: Details
+            school: School
             mentor_hours: Hours of training to amend
             original_hours: Hours of training originally claimed
             completed_hours: Actual hours of training
