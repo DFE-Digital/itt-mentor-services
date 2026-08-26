@@ -158,3 +158,7 @@ locals {
 }
 
 variable "postgres_version" { default = 14 }
+
+
+# pg_airbyte_enabled used in the postgres module
+variable "pg_airbyte_enabled" { default = false }
