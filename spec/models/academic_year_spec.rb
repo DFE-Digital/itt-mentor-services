@@ -69,24 +69,24 @@ RSpec.describe AcademicYear, type: :model do
       end
     end
 
-    context "when date is not within an existing academic year" do
+    context "when date is not within an existing academic year", freeze: "1 September 2020" do
       it "creates a new academic year" do
-        date = Date.parse("5 October 2026")
+        date = Date.parse("5 October 2018")
         expect { described_class.for_date(date) }.to change(described_class, :count).by(1)
         new_academic_year = described_class.for_date(date)
-        expect(new_academic_year.starts_on).to eq(Date.parse("1 September 2026"))
-        expect(new_academic_year.ends_on).to eq(Date.parse("31 August 2027"))
-        expect(new_academic_year.name).to eq("2026 to 2027")
+        expect(new_academic_year.starts_on).to eq(Date.parse("1 September 2018"))
+        expect(new_academic_year.ends_on).to eq(Date.parse("31 August 2019"))
+        expect(new_academic_year.name).to eq("2018 to 2019")
       end
     end
 
-    context "when start month is before September and academic year does not exist" do
+    context "when start month is before September and academic year does not exist", freeze: "1 September 2020" do
       it "creates a new academic year starting the previous year" do
-        date = Date.parse("14 March 2026")
+        date = Date.parse("14 March 2018")
         new_academic_year = described_class.for_date(date)
-        expect(new_academic_year.starts_on).to eq(Date.parse("1 September 2025"))
-        expect(new_academic_year.ends_on).to eq(Date.parse("31 August 2026"))
-        expect(new_academic_year.name).to eq("2025 to 2026")
+        expect(new_academic_year.starts_on).to eq(Date.parse("1 September 2017"))
+        expect(new_academic_year.ends_on).to eq(Date.parse("31 August 2018"))
+        expect(new_academic_year.name).to eq("2017 to 2018")
       end
     end
   end
