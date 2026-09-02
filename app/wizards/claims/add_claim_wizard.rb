@@ -43,6 +43,7 @@ module Claims
           {
             mentor_id: mentor_training_step.mentor_id,
             hours_completed: mentor_training_step.hours_completed,
+            training_type: mentor_training_step.training_type,
             provider:,
           }
         end,

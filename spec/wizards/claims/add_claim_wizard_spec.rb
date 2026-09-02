@@ -158,6 +158,73 @@ RSpec.describe Claims::AddClaimWizard do
       expect(claim.mentor_trainings.map(&:mentor)).to contain_exactly(mentor_1, mentor_2)
       expect(claim.mentor_trainings.map(&:hours_completed)).to contain_exactly(20, 16)
     end
+
+    describe "training_type" do
+      subject(:mentor_training) do
+        wizard.claim.mentor_trainings.find { |training| training.mentor_id == mentor.id }
+      end
+
+      let(:mentor) { create(:claims_mentor, schools: [school]).becomes(Mentor) }
+      let(:state) do
+        {
+          "provider" => { "id" => provider.id },
+          "mentor" => { "mentor_ids" => [mentor.id] },
+          "mentor_training_#{mentor.id}" => {
+            "mentor_id" => mentor.id, "hours_to_claim" => "maximum"
+          },
+        }
+      end
+
+      context "when the mentor has not previously claimed for the provider" do
+        it "sets the training type to initial" do
+          expect(mentor_training.training_type).to eq("initial")
+        end
+      end
+
+      context "when the mentor has claimed for the same provider in the previous academic year" do
+        before do
+          create(
+            :claim, :submitted,
+            claim_window: build(:claim_window, :historic),
+            mentor_trainings: [build(:mentor_training, mentor:, provider:)]
+          )
+        end
+
+        it "sets the training type to refresher" do
+          expect(mentor_training.training_type).to eq("refresher")
+        end
+      end
+
+      context "when the mentor has claimed for a different provider in the previous academic year" do
+        let(:other_provider) { create(:claims_provider) }
+
+        before do
+          create(
+            :claim, :submitted,
+            claim_window: build(:claim_window, :historic),
+            mentor_trainings: [build(:mentor_training, mentor:, provider: other_provider)]
+          )
+        end
+
+        it "sets the training type to initial" do
+          expect(mentor_training.training_type).to eq("initial")
+        end
+      end
+
+      context "when the mentor claimed for the same provider only in the current academic year" do
+        before do
+          create(
+            :claim, :submitted,
+            claim_window:,
+            mentor_trainings: [build(:mentor_training, mentor:, provider:)]
+          )
+        end
+
+        it "sets the training type to initial" do
+          expect(mentor_training.training_type).to eq("initial")
+        end
+      end
+    end
   end
 
   describe "#create_claim" do
