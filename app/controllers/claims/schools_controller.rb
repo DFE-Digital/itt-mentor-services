@@ -13,7 +13,7 @@ class Claims::SchoolsController < Claims::ApplicationController
   private
 
   def set_school
-    @school = Claims::School.find(params.require(:id)).decorate
+    @school = policy_scope(Claims::School).find(params.require(:id)).decorate
     session[:claims_current_school_id] = @school.id
   end
 
