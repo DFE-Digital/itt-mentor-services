@@ -70,4 +70,28 @@ RSpec.describe ApplicationHelper do
       end
     end
   end
+
+  describe "#account_navigation_items" do
+    context "when there is no current user" do
+      it "returns an empty array" do
+        without_partial_double_verification do
+          allow(self).to receive(:current_user).and_return(nil)
+        end
+
+        expect(account_navigation_items).to eq([])
+      end
+    end
+  end
+
+  describe "#claims_account_school" do
+    context "when the current user is not a claims school user" do
+      it "returns nil" do
+        without_partial_double_verification do
+          allow(self).to receive(:current_user).and_return(create(:claims_support_user))
+        end
+
+        expect(claims_account_school).to be_nil
+      end
+    end
+  end
 end
