@@ -1,3 +1,7 @@
+<% if (provider = claims_account_provider) %>
+  <%= render "claims/providers/primary_navigation", provider:, current: nil %>
+<% end %>
+
 <div class="govuk-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">

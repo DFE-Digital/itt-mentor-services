@@ -1,4 +1,5 @@
 <% content_for :page_title, t(".page_title", reference: @claim.reference) %>
+<%= render "claims/providers/primary_navigation", provider: @provider, current: :claims %>
 
 <% content_for(:before_content) do %>
   <%= govuk_back_link(href: claims_provider_claims_path(@provider)) %>

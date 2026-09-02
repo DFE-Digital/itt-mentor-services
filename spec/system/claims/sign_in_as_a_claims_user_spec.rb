@@ -25,6 +25,24 @@ RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
     end
   end
 
+  context "when the user is assigned to multiple schools" do
+    let!(:organisation) { create(:school, :claims, name: "Claims School 1") }
+    let!(:another_organisation) { create(:school, :claims, name: "Claims School 2") }
+
+    scenario "the account page keeps the selected school's navigation" do
+      given_there_is_an_existing_user_for("Anne")
+      and_the_user_is_part_of_an_organisation(organisation)
+      and_the_user_is_part_of_an_organisation(another_organisation)
+      when_i_visit_the_sign_in_path
+      when_i_click_sign_in
+      then_i_am_redirected_to_the_schools_page
+      when_i_select_the_school("Claims School 1")
+      when_i_visit_my_account_page
+      then_i_see_user_details_for_anne
+      and_the_account_page_shows_the_school_navigation
+    end
+  end
+
   context "when the user is assigned to a provider" do
     let!(:provider_organisation) { create(:claims_provider, name: "Claims Provider") }
 
@@ -60,6 +78,7 @@ RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
 
     and_i_visit_my_account_page
     then_i_see_user_details_for_colin
+    and_the_account_page_shows_the_support_navigation
   end
 
   context "when response from dfe sign in is invalid" do
@@ -111,6 +130,7 @@ RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
         then_i_am_redirected_to_the_sign_in_page
         when_i_click_sign_in
         then_i_see_user_details_for_anne
+        and_the_account_page_shows_the_school_navigation
       end
 
       scenario "when I sign in as a multi-organisation user I am redirected to my organisations page" do
@@ -196,6 +216,10 @@ RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
     organisation.users << User.find_by(email: "anne_wilson@example.org")
   end
 
+  def when_i_select_the_school(name)
+    click_on name
+  end
+
   def and_the_provider_user_is_part_of_an_organisation(organisation)
     organisation.users << User.find_by(email: "patricia@example.com")
   end
@@ -256,6 +280,23 @@ RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
     expect(page).to have_content(first_name)
     expect(page).to have_content(last_name)
     expect(page).to have_content(email)
+  end
+
+  def and_the_account_page_shows_the_support_navigation
+    within(".govuk-service-navigation") do
+      expect(page).to have_link("Organisations")
+      expect(page).to have_link("Settings")
+      expect(page).to have_link("Your account", current: "page")
+    end
+  end
+
+  def and_the_account_page_shows_the_school_navigation
+    within(".govuk-service-navigation") do
+      expect(page).to have_link("Claims")
+      expect(page).to have_link("Mentors")
+      expect(page).to have_link("Organisation details")
+      expect(page).to have_link("Your account", current: "page")
+    end
   end
 
   def i_do_not_have_access_to_the_service

@@ -84,6 +84,9 @@ RSpec.describe "Provider user views claims", service: :claims, type: :system do
     click_on "Sign in using DfE Sign In"
 
     expect(page).to have_current_path(claims_providers_path)
+    within(".govuk-service-navigation") do
+      expect(page).to have_link("Change organisation", current: "page")
+    end
     click_on "North Star SCITT"
 
     expect(page).to have_current_path(claims_provider_claims_path(provider))
@@ -95,6 +98,9 @@ RSpec.describe "Provider user views claims", service: :claims, type: :system do
     expect(page).to have_no_content("Claim reference: #{claim_for_other_provider.reference}")
     expect(page).to have_no_content("Claim reference: #{unsupported_status_claim_for_provider.reference}")
     expect(page).to have_link("Change organisation", href: claims_providers_path)
+    within(".govuk-service-navigation") do
+      expect(page).to have_link("Claims", current: "page")
+    end
 
     check "Riverbank Primary"
     click_on "Apply filters"
@@ -118,5 +124,24 @@ RSpec.describe "Provider user views claims", service: :claims, type: :system do
     expect(page).to have_content("Mentors")
     expect(page).to have_link("Approve claim")
     expect(page).to have_link("Amend claim")
+
+    within(".govuk-service-navigation") do
+      click_on "Claims"
+    end
+
+    expect(page).to have_current_path(claims_provider_claims_path(provider))
+
+    visit account_path
+
+    within(".govuk-service-navigation") do
+      expect(page).to have_link("Claims", href: claims_provider_claims_path(provider))
+    end
+
+    click_on "Change organisation"
+
+    expect(page).to have_current_path(claims_providers_path)
+    within(".govuk-service-navigation") do
+      expect(page).to have_link("Claims", href: claims_provider_claims_path(provider))
+    end
   end
 end

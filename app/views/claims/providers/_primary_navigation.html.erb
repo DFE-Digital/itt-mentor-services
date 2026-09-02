@@ -1,0 +1,8 @@
+<% content_for(:primary_navigation_content) do %>
+  <%= render PrimaryNavigationComponent.new(
+        context: :claims_provider,
+        current_user: current_user,
+        organisation: provider,
+        current_navigation: local_assigns[:current],
+      ) %>
+<% end %>
