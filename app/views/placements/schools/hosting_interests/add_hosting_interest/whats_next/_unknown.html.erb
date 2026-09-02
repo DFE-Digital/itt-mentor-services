@@ -1,5 +1,4 @@
-<%# locals: { summary_list: } -%>
 <% summary_list.with_row do |row| %>
-  <% row.with_key(text: t(".unknown")) %>
-  <% row.with_value(text: t(".not_entered")) %>
+  <% row.with_key(text: unknown_text) %>
+  <% row.with_value(text: not_entered_text) %>
 <% end %>

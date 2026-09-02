@@ -35,7 +35,7 @@ class Claim::ProviderStatusTagComponent < ApplicationComponent
   def status_colours
     {
       sampling_in_progress: "yellow",
-      sampling_provider_not_approved: "turquoise",
+      sampling_provider_not_approved: "teal",
       paid: "blue",
     }.with_indifferent_access
   end

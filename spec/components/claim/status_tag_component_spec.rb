@@ -26,8 +26,8 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
   context "when the claim's status is 'submitted'" do
     let(:claim) { build(:claim, status: :submitted) }
 
-    it "renders a turquoise tag" do
-      expect(page).to have_css(".govuk-tag--turquoise", text: "Submitted")
+    it "renders a teal tag" do
+      expect(page).to have_css(".govuk-tag--teal", text: "Submitted")
     end
   end
 
@@ -42,8 +42,8 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
   context "when the claim's status is 'payment_information_requested'" do
     let(:claim) { build(:claim, status: :payment_information_requested) }
 
-    it "renders a turquoise tag" do
-      expect(page).to have_css(".govuk-tag--turquoise", text: "Payer needs information")
+    it "renders a teal tag" do
+      expect(page).to have_css(".govuk-tag--teal", text: "Payer needs information")
     end
   end
 
@@ -82,24 +82,24 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
   context "when the claim's status is 'sampling_provider_not_approved'" do
     let(:claim) { build(:claim, status: :sampling_provider_not_approved) }
 
-    it "renders a turquoise tag" do
-      expect(page).to have_css(".govuk-tag--turquoise", text: "Rejected by provider")
+    it "renders a teal tag" do
+      expect(page).to have_css(".govuk-tag--teal", text: "Rejected by provider")
     end
   end
 
   context "when the claim's status is 'sampling_not_approved'" do
     let(:claim) { build(:claim, status: :sampling_not_approved) }
 
-    it "renders a turquoise tag" do
-      expect(page).to have_css(".govuk-tag--turquoise", text: "Rejected by school")
+    it "renders a teal tag" do
+      expect(page).to have_css(".govuk-tag--teal", text: "Rejected by school")
     end
   end
 
   context "when the claim's status is 'clawback_requested'" do
     let(:claim) { build(:claim, status: :clawback_requested) }
 
-    it "renders a turquoise tag" do
-      expect(page).to have_css(".govuk-tag--turquoise", text: "Ready for clawback")
+    it "renders a teal tag" do
+      expect(page).to have_css(".govuk-tag--teal", text: "Ready for clawback")
     end
   end
 

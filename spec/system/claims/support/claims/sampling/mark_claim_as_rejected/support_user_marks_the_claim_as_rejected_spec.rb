@@ -126,7 +126,7 @@ RSpec.describe "Support user marks a claim as rejected", service: :claims, type:
     )
     expect(page).to have_element(:p, text: "Auditing - Claim #{@claim.reference}", class: "govuk-caption-l")
     expect(page).to have_h1(@claim.school.name)
-    expect(page).to have_element(:strong, text: "Rejected by provider", class: "govuk-tag govuk-tag--turquoise")
+    expect(page).to have_element(:strong, text: "Rejected by provider", class: "govuk-tag govuk-tag--teal")
   end
 
   def when_i_click_on_reject_claim
@@ -152,7 +152,7 @@ RSpec.describe "Support user marks a claim as rejected", service: :claims, type:
     )
     expect(page).to have_h1(@claim.school.name)
 
-    expect(page).to have_element(:strong, text: "Rejected by school", class: "govuk-tag govuk-tag--turquoise")
+    expect(page).to have_element(:strong, text: "Rejected by school", class: "govuk-tag govuk-tag--teal")
     expect(page).to have_success_banner("Claim updated")
   end
 

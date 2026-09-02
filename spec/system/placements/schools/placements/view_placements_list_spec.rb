@@ -128,9 +128,9 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
   def expect_placements_is_selected_in_the_primary_navigation
     within(primary_navigation) do
       expect(page).to have_link "Placements", current: "page"
-      expect(page).to have_link "Mentors", current: "true"
-      expect(page).to have_link "Users", current: "true"
-      expect(page).to have_link "Organisation details", current: "true"
+      expect(page).to have_link "Mentors", current: nil
+      expect(page).to have_link "Users", current: nil
+      expect(page).to have_link "Organisation details", current: nil
     end
   end
 

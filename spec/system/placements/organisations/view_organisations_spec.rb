@@ -58,9 +58,9 @@ RSpec.describe "View organisations", service: :placements, type: :system do
     expect(page).to have_current_path placements_school_placements_path(school), ignore_query: true
     within(primary_navigation) do
       expect(page).to have_link "Placements", current: "page"
-      expect(page).to have_link "Mentors", current: "true"
-      expect(page).to have_link "Users", current: "true"
-      expect(page).to have_link "Organisation details", current: "true"
+      expect(page).to have_link "Mentors", current: nil
+      expect(page).to have_link "Users", current: nil
+      expect(page).to have_link "Organisation details", current: nil
     end
 
     within(".govuk-main-wrapper") do
@@ -81,10 +81,10 @@ RSpec.describe "View organisations", service: :placements, type: :system do
     expect(page).to have_current_path placements_provider_find_index_path(provider), ignore_query: true
     within(primary_navigation) do
       expect(page).to have_link "Find", current: "page"
-      expect(page).to have_link "My placements", current: "true"
-      expect(page).to have_link "Schools", current: "true"
-      expect(page).to have_link "Users", current: "true"
-      expect(page).to have_link "Organisation details", current: "true"
+      expect(page).to have_link "My placements", current: nil
+      expect(page).to have_link "Schools", current: nil
+      expect(page).to have_link "Users", current: nil
+      expect(page).to have_link "Organisation details", current: nil
     end
   end
 

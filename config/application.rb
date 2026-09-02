@@ -43,8 +43,8 @@ module IttMentorServices
     config.action_mailer.show_previews = true
     config.action_mailer.preview_paths << Rails.root.join("spec/mailers/previews").to_s
 
-    config.view_component.preview_paths << Rails.root.join("spec/components/previews").to_s
-    config.view_component.default_preview_layout = "component_preview"
+    config.view_component.previews.paths << Rails.root.join("spec/components/previews").to_s
+    config.view_component.previews.default_layout = "component_preview"
 
     config.autoload_paths += %W[#{config.root}/app/assets/components]
     config.exceptions_app = routes

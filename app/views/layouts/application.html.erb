@@ -7,13 +7,13 @@
     <%= csp_meta_tag %>
 
     <%= tag.meta name: "viewport", content: "width=device-width, initial-scale=1" %>
-    <%= tag.meta property: "og:image", content: asset_path("rebrand/images/govuk-opengraph-image.png") %>
+    <%= tag.meta property: "og:image", content: asset_path("images/govuk-opengraph-image.png") %>
     <%= tag.meta name: "theme-color", content: "#1d70b8" %>
 
-    <%= favicon_link_tag asset_path("rebrand/images/favicon.ico") %>
-    <%= favicon_link_tag asset_path("rebrand/images/favicon.svg"), type: "image/svg+xml", sizes: "any" %>
-    <%= favicon_link_tag asset_path("rebrand/images/govuk-icon-mask.svg"), rel: "mask-icon", color: "#0b0c0c" %>
-    <%= favicon_link_tag asset_path("rebrand/images/govuk-icon-180.png"), rel: "apple-touch-icon" %>
+    <%= favicon_link_tag asset_path("images/favicon.ico") %>
+    <%= favicon_link_tag asset_path("images/favicon.svg"), type: "image/svg+xml", sizes: "any" %>
+    <%= favicon_link_tag asset_path("images/govuk-icon-mask.svg"), rel: "mask-icon", color: "#0b0c0c" %>
+    <%= favicon_link_tag asset_path("images/govuk-icon-180.png"), rel: "apple-touch-icon" %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
@@ -30,24 +30,13 @@
       <% header.with_custom_logo do %>
         <%= image_tag asset_path("/images/department-for-education_white.png"), alt: "Department for Education", class: "govuk-header__logotype" %>
       <% end %>
-
-      <% if current_user %>
-        <% if claims_service? %>
-          <% header.with_navigation_item(text: t(".your_account"), href: account_path) %>
-          <% if current_user.is_a?(Claims::ProviderUser) && current_user.providers.many? %>
-            <% header.with_navigation_item(text: t(".change_organisation"), href: claims_providers_path) %>
-          <% end %>
-        <% end %>
-
-        <% if current_user.support_user? && !claims_service? %>
-          <%= render "placements/support/header_navigation", header: %>
-        <% end %>
-
-        <% header.with_navigation_item(text: t(".sign_out"), href: sign_out_path) %>
-      <% end %>
     <% end %>
 
-    <%= yield :primary_navigation_content %>
+    <% if content_for?(:primary_navigation_content) %>
+      <%= yield :primary_navigation_content %>
+    <% elsif current_user %>
+      <%= govuk_service_navigation(navigation_items: account_navigation_items) %>
+    <% end %>
 
     <div class="govuk-width-container">
       <%= govuk_phase_banner(

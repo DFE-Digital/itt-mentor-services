@@ -116,6 +116,11 @@ RSpec.describe "View claims", service: :claims, type: :system do
   end
 
   def then_i_see_a_list_of_claims(claims)
+    # Wait for the (possibly JS-filtered) list to settle before inspecting
+    # individual cards, otherwise Selenium can hold a stale node reference
+    # while Turbo re-renders the results.
+    expect(page).to have_css(".claim-card", count: claims.count)
+
     claims.each_with_index do |claim, index|
       within(".claim-card:nth-child(#{index + 1})") do
         expect(page).to have_content(claim.school_name)
@@ -199,8 +204,12 @@ RSpec.describe "View claims", service: :claims, type: :system do
     my_selection = page.find("#claims-support-claims-filter-form-school-ids-#{school_2.id}-field", visible: :all)
     expect(my_selection.present?).to be(true)
 
-    other_school_option = page.find_all("#claims-support-claims-filter-form-school-ids-#{school_1.id}-field", wait: false)
-    expect(other_school_option.blank?).to be(true)
+    # Wait for the JS filter to remove the non-matching option rather than
+    # racing it with a non-waiting `find_all(wait: false)`.
+    expect(page).to have_no_css(
+      "#claims-support-claims-filter-form-school-ids-#{school_1.id}-field",
+      visible: :all,
+    )
   end
 
   def then_i_see_no_claims

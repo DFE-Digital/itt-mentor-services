@@ -61,7 +61,7 @@ RSpec.describe "Placements support user adds another support user",
   end
 
   def when_i_am_on_the_support_users_index_page
-    within(".govuk-header__navigation-list") do
+    within(".govuk-service-navigation__list") do
       click_on "Support users"
     end
   end

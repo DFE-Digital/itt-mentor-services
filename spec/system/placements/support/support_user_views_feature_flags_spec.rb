@@ -24,7 +24,7 @@ RSpec.describe "Support user views feature flags", :js, service: :placements, ty
   end
 
   def when_i_click_on_settings
-    within ".govuk-header" do
+    within ".govuk-service-navigation" do
       click_on "Settings"
     end
   end

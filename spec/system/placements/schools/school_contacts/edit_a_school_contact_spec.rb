@@ -18,6 +18,7 @@ RSpec.describe "Placements / Schools / School Contacts / Edit a school contact",
       email_address: "placement_coordinator@example.school",
     )
     when_i_click_on_change(attribute: :name)
+    and_the_organisation_details_tab_remains_selected_in_primary_navigation
     then_i_see_the_inputs_pre_filled_with(
       first_name: "Placement",
       last_name: "Coordinator",
@@ -93,12 +94,14 @@ RSpec.describe "Placements / Schools / School Contacts / Edit a school contact",
 
   def expect_organisation_details_to_be_selected_in_primary_navigation
     within(primary_navigation) do
-      expect(page).to have_link "Placements", current: "true"
-      expect(page).to have_link "Mentors", current: "true"
-      expect(page).to have_link "Users", current: "true"
+      expect(page).to have_link "Placements", current: nil
+      expect(page).to have_link "Mentors", current: nil
+      expect(page).to have_link "Users", current: nil
       expect(page).to have_link "Organisation details", current: "page"
     end
   end
+  alias_method :and_the_organisation_details_tab_remains_selected_in_primary_navigation,
+               :expect_organisation_details_to_be_selected_in_primary_navigation
 
   def when_i_click_on(text)
     click_on text

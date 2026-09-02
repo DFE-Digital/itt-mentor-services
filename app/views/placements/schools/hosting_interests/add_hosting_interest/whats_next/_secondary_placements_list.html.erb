@@ -16,7 +16,7 @@
   <% end %>
 
   <% if placement_detail_unknown(potential_placement_subject_id_selection(placement_details)) %>
-    <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/unknown", summary_list: %>
+    <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/unknown", summary_list:, unknown_text: t(".unknown"), not_entered_text: t(".not_entered") %>
   <% else %>
     <% selected_placement_details(placement_details:, phase: :secondary).each do |subject| %>
       <% summary_list.with_row do |row| %>

@@ -213,7 +213,7 @@ module GovukComponentMatchers
   end
 
   def header_navigation
-    page.find(".govuk-header__navigation")
+    page.find(".govuk-service-navigation")
   end
 
   # Usage: expect(primary_navigation).to have_current_item("Schools")

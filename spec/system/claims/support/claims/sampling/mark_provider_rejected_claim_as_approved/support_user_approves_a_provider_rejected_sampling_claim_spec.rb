@@ -99,7 +99,7 @@ RSpec.describe "Support user approves a provider rejected sampling claim", servi
     )
     expect(page).to have_element(:p, text: "Auditing - Claim #{@provider_rejected_sampling_claim.reference}", class: "govuk-caption-l")
     expect(page).to have_h1(@provider_rejected_sampling_claim.school.name)
-    expect(page).to have_element(:strong, text: "Rejected by provider", class: "govuk-tag govuk-tag--turquoise")
+    expect(page).to have_element(:strong, text: "Rejected by provider", class: "govuk-tag govuk-tag--teal")
   end
 
   def when_i_click_on_back

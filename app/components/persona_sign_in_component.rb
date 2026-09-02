@@ -18,7 +18,7 @@ class PersonaSignInComponent < ApplicationComponent
     when "Colin"
       "blue"
     else
-      "turquoise"
+      "teal"
     end
   end
 end

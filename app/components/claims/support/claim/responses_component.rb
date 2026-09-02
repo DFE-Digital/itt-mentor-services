@@ -14,15 +14,8 @@ class Claims::Support::Claim::ResponsesComponent < ApplicationComponent
   def provider_response
     return "" if not_assured_mentor_trainings.blank?
 
-    content_tag(:ul, class: "govuk-list") do
-      not_assured_mentor_trainings.order_by_mentor_full_name.each do |mentor_training|
-        concat(
-          content_tag(
-            :li,
-            "#{mentor_training.mentor_full_name}: #{mentor_training.reason_not_assured}",
-          ),
-        )
-      end
+    list_of(not_assured_mentor_trainings) do |mentor_training|
+      "#{mentor_training.mentor_full_name}: #{mentor_training.reason_not_assured}"
     end
   end
 
@@ -33,15 +26,8 @@ class Claims::Support::Claim::ResponsesComponent < ApplicationComponent
   def school_response
     return "" if rejected_mentor_trainings.blank?
 
-    content_tag(:ul, class: "govuk-list") do
-      rejected_mentor_trainings.order_by_mentor_full_name.each do |mentor_training|
-        concat(
-          content_tag(
-            :li,
-            "#{mentor_training.mentor_full_name}: #{mentor_training.reason_rejected}",
-          ),
-        )
-      end
+    list_of(rejected_mentor_trainings) do |mentor_training|
+      "#{mentor_training.mentor_full_name}: #{mentor_training.reason_rejected}"
     end
   end
 
@@ -52,34 +38,28 @@ class Claims::Support::Claim::ResponsesComponent < ApplicationComponent
   def reasons_clawed_back
     return "" if clawed_back_mentor_trainings.blank?
 
-    content_tag(:ul, class: "govuk-list") do
-      clawed_back_mentor_trainings.order_by_mentor_full_name.each do |mentor_training|
-        concat(
-          content_tag(
-            :li,
-            "#{mentor_training.mentor_full_name}: #{mentor_training.reason_clawed_back}",
-          ),
-        )
-      end
+    list_of(clawed_back_mentor_trainings) do |mentor_training|
+      "#{mentor_training.mentor_full_name}: #{mentor_training.reason_clawed_back}"
     end
   end
 
   def reason_clawback_rejected
     return "" if clawback_rejected_mentor_trainings.blank?
 
-    content_tag(:ul, class: "govuk-list") do
-      clawback_rejected_mentor_trainings.order_by_mentor_full_name.each do |mentor_training|
-        concat(
-          content_tag(
-            :li,
-            "#{mentor_training.mentor_full_name}: #{mentor_training.reason_clawback_rejected}",
-          ),
-        )
-      end
+    list_of(clawback_rejected_mentor_trainings) do |mentor_training|
+      "#{mentor_training.mentor_full_name}: #{mentor_training.reason_clawback_rejected}"
     end
   end
 
   private
+
+  def list_of(mentor_trainings)
+    items = mentor_trainings.order_by_mentor_full_name.map do |mentor_training|
+      tag.li(yield(mentor_training))
+    end
+
+    tag.ul(safe_join(items), class: "govuk-list")
+  end
 
   def mentor_trainings
     @mentor_trainings ||= claim.mentor_trainings.includes(:mentor)

@@ -39,7 +39,7 @@ RSpec.describe "Placements / Organisations / Support user views a School", type:
   end
 
   def when_i_navigate_back_to_the_organisations_list
-    within(".govuk-header__navigation-list") do
+    within(".govuk-service-navigation__list") do
       click_on "Organisations"
     end
   end

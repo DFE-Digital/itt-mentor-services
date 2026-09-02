@@ -190,7 +190,7 @@ RSpec.describe "Support user approves the clawback requested by another support 
   end
 
   def and_i_see_the_clawback_requested_tag
-    expect(page).to have_tag("Ready for clawback", "turquoise")
+    expect(page).to have_tag("Ready for clawback", "teal")
   end
 
   def and_i_see_a_success_banner
