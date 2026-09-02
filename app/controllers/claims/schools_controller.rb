@@ -14,6 +14,7 @@ class Claims::SchoolsController < Claims::ApplicationController
 
   def set_school
     @school = Claims::School.find(params.require(:id)).decorate
+    session[:claims_current_school_id] = @school.id
   end
 
   def redirect_to_school_claims_when_belongs_to_one_school

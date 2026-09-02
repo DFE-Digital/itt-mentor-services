@@ -6,6 +6,7 @@ module Claims::BelongsToSchool
 
     def set_school
       @school = policy_scope(Claims::School).find(params.require(:school_id))
+      session[:claims_current_school_id] = @school.id
     end
   end
 end

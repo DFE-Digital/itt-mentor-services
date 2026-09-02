@@ -1,4 +1,9 @@
-<% content_for :breadcrumbs, govuk_breadcrumbs(breadcrumbs: { t("home") => claims_root_path }, collapse_on_mobile: true) %>
+<% if (navigation = account_primary_navigation) %>
+  <% content_for(:primary_navigation_content) do %>
+    <%= render navigation %>
+  <% end %>
+<% end %>
+
 <% content_for(:page_title) { t(".page_title") } %>
 
 <div class="govuk-width-container">

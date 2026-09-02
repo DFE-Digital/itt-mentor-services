@@ -16,5 +16,6 @@ class Claims::Providers::ApplicationController < Claims::ApplicationController
 
   def set_provider
     @provider = policy_scope(Claims::Provider).find(params.require(:provider_id))
+    session[:claims_current_provider_id] = @provider.id
   end
 end

@@ -21,6 +21,7 @@ class PrimaryNavigationComponent < ApplicationComponent
     {
       claims_support: "claims.support.primary_navigation",
       claims_school: "claims.schools.primary_navigation",
+      claims_provider: "claims.providers.primary_navigation",
       placements_school: "placements.schools.primary_navigation",
       placements_provider: "placements.providers.primary_navigation",
     }.fetch(context, "placements.providers.primary_navigation")
@@ -30,6 +31,7 @@ class PrimaryNavigationComponent < ApplicationComponent
     case context
     when :claims_support then claims_support_navigation_items
     when :claims_school then claims_school_navigation_items
+    when :claims_provider then claims_provider_navigation_items
     when :placements_school then placements_school_navigation_items
     else
       placements_provider_navigation_items
@@ -57,6 +59,12 @@ class PrimaryNavigationComponent < ApplicationComponent
       [:mentors, claims_school_mentors_path(organisation), :mentors],
       [:users, claims_school_users_path(organisation), :users],
       [:details, claims_school_path(organisation), :details],
+    ])
+  end
+
+  def claims_provider_navigation_items
+    build_navigation_items([
+      [:claims, claims_provider_claims_path(organisation), :claims],
     ])
   end
 
