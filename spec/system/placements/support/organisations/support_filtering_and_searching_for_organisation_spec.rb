@@ -184,7 +184,7 @@ RSpec.describe "Support user filters and searches for organisations", service: :
   end
 
   def then_i_see_support_navigation_with_organisation_selected
-    within(".govuk-header__navigation-list") do
+    within(".govuk-service-navigation__list") do
       expect(page).to have_link "Organisations"
       expect(page).to have_link "Support users"
     end

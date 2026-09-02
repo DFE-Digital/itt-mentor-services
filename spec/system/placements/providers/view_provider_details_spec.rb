@@ -31,11 +31,11 @@ RSpec.describe "Placements / Providers / View provider details", service: :place
 
   def expect_organisation_details_to_be_selected_in_primary_navigation
     within(primary_navigation) do
-      expect(page).to have_link "Find", current: "true"
-      expect(page).to have_link "My placements", current: "true"
-      expect(page).to have_link "Users", current: "true"
+      expect(page).to have_link "Find", current: nil
+      expect(page).to have_link "My placements", current: nil
+      expect(page).to have_link "Users", current: nil
       expect(page).to have_link "Organisation details", current: "page"
-      expect(page).to have_link "Schools", current: "true"
+      expect(page).to have_link "Schools", current: nil
     end
   end
 

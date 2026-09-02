@@ -68,7 +68,7 @@ RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :sy
 
   def then_i_can_see_the_start_page
     within ".govuk-header__logo" do
-      expect(page).to have_css("a.govuk-header__link.govuk-header__link--homepage")
+      expect(page).to have_css("a.govuk-header__link.govuk-header__homepage-link")
 
       expect(page).to have_css(
         'img.govuk-header__logotype[alt="Department for Education"][src$="department-for-education_white.png"]',

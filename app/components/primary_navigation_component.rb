@@ -7,12 +7,8 @@ class PrimaryNavigationComponent < ApplicationComponent
     @current_navigation = current_navigation
   end
 
-  def service_name
-    if context.to_s.include?("claims")
-      "Claim funding for mentor training"
-    else
-      "Manage school placements"
-    end
+  def all_navigation_items
+    navigation_items + helpers.account_navigation_items
   end
 
   private
@@ -20,6 +16,15 @@ class PrimaryNavigationComponent < ApplicationComponent
   attr_reader :context, :current_user, :organisation, :current_navigation
 
   delegate :current_page?, :t, to: :view_context
+
+  def translation_scope
+    {
+      claims_support: "claims.support.primary_navigation",
+      claims_school: "claims.schools.primary_navigation",
+      placements_school: "placements.schools.primary_navigation",
+      placements_provider: "placements.providers.primary_navigation",
+    }.fetch(context, "placements.providers.primary_navigation")
+  end
 
   def navigation_items
     case context
@@ -80,7 +85,7 @@ class PrimaryNavigationComponent < ApplicationComponent
   end
 
   def build_item(text_key, href:, key:)
-    { text: t(".#{text_key}"), href:, current: current?(key) }
+    { text: t("#{translation_scope}.#{text_key}"), href:, current: current?(key) }
   end
 
   def build_navigation_items(defs)

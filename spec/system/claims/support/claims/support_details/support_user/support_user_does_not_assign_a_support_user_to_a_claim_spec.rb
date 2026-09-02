@@ -72,7 +72,7 @@ RSpec.describe "Support user does not assign a support user to a claim", service
     )
     expect(page).to have_element(:p, text: "Claim #{@claim.reference}", class: "govuk-caption-l")
     expect(page).to have_h1(@claim.school.name)
-    expect(page).to have_element(:strong, text: "Submitted", class: "govuk-tag govuk-tag--turquoise")
+    expect(page).to have_element(:strong, text: "Submitted", class: "govuk-tag govuk-tag--teal")
     expect(page).to have_current_path(claims_support_claim_path(@claim), ignore_query: true)
   end
 

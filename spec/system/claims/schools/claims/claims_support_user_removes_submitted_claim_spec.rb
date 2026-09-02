@@ -76,7 +76,7 @@ RSpec.describe "Claims support user removes submitted claim", service: :claims, 
     expect(page).to have_title("Claim - 88888888 - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Claims")
     expect(page).to have_h1("Claim - 88888888")
-    expect(page).to have_tag("Submitted", "turquoise")
+    expect(page).to have_tag("Submitted", "teal")
     expect(page).to have_h2("Details")
     expect(page).to have_summary_list_row("School", "Shelbyville Elementary")
     expect(page).to have_summary_list_row("Academic year", @claim_window.academic_year.name.to_s)

@@ -108,7 +108,7 @@ RSpec.describe "Support user changes the mentor who is being rejected by the pro
     )
     expect(page).to have_h1(@claim.school.name)
 
-    expect(page).to have_element(:strong, text: "Rejected by provider", class: "govuk-tag govuk-tag--turquoise")
+    expect(page).to have_element(:strong, text: "Rejected by provider", class: "govuk-tag govuk-tag--teal")
     expect(page).to have_success_banner("Claim updated")
   end
 

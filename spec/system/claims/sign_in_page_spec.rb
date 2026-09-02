@@ -21,7 +21,7 @@ RSpec.describe "Sign in Page", service: :claims, type: :system do
 
   def i_can_see_the_dfe_logo_in_the_header
     within ".govuk-header__logo" do
-      expect(page).to have_css('a.govuk-header__link.govuk-header__link--homepage[href="/"]')
+      expect(page).to have_css('a.govuk-header__link.govuk-header__homepage-link[href="/"]')
 
       expect(page).to have_css(
         'img.govuk-header__logotype[alt="Department for Education"][src$="department-for-education_white.png"]',

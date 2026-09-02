@@ -76,11 +76,11 @@ RSpec.describe "Placements / Providers / Placements / View a placement",
 
   def expect_placements_to_be_selected_in_primary_navigation
     within(primary_navigation) do
-      expect(page).to have_link "Find", current: "true"
+      expect(page).to have_link "Find", current: nil
       expect(page).to have_link "My placements", current: "page"
-      expect(page).to have_link "Schools", current: "true"
-      expect(page).to have_link "Users", current: "true"
-      expect(page).to have_link "Organisation details", current: "true"
+      expect(page).to have_link "Schools", current: nil
+      expect(page).to have_link "Users", current: nil
+      expect(page).to have_link "Organisation details", current: nil
     end
   end
 

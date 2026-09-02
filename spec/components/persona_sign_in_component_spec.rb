@@ -47,7 +47,7 @@ RSpec.describe PersonaSignInComponent, type: :component do
       let(:persona) { create(:placements_user) }
 
       it "returns orange" do
-        expect(type_tag_colour).to eq("turquoise")
+        expect(type_tag_colour).to eq("teal")
       end
     end
   end
