@@ -63,7 +63,7 @@ gem "good_job", "~> 4.19"
 gem "activerecord-session_store"
 
 gem "govuk-components", "~> 6.4.1"
-gem "govuk_design_system_formbuilder", "~> 6.4.0"
+gem "govuk_design_system_formbuilder", "~> 6.5.0"
 
 # DfE Sign-in
 gem "omniauth"
