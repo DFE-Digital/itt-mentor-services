@@ -1,4 +1,4 @@
-<%# locals: (school:, academic_year:, provider:, unfilled_placements:, filled_placements: -%>
+<%# locals: (school:, academic_year:, provider:, unfilled_placements:, filled_placements:) -%>
 <%= content_for(:before_content) do %>
   <%= govuk_back_link(href: placements_provider_find_index_path(provider, session["find_filter_params"])) %>
 <% end %>
