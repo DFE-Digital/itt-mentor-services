@@ -101,7 +101,7 @@ class Claims::UserMailer < Claims::ApplicationMailer
                      .where(eligible_claim_windows: { id: eligible_claim_windows.ids })
                      .where(users: { last_signed_in_at: nil })
                      .where.not(id: Claims::School.joins(:users).where.not(users: { last_signed_in_at: nil }))
-    user_school_names = user_schools.pluck(:name).to_sentence
+    user_school_names = user_schools.order(:name).pluck(:name).to_sentence
 
     notify_email to: user.email,
                  subject: t(".subject", deadline:),
@@ -124,7 +124,7 @@ class Claims::UserMailer < Claims::ApplicationMailer
                        .where.not(users: { last_signed_in_at: nil })
                        .where(eligible_claim_windows: { id: eligible_claim_windows.ids })
                        .where.missing(:claims)
-    user_school_names = user_schools.pluck(:name).to_sentence
+    user_school_names = user_schools.order(:name).pluck(:name).to_sentence
 
     notify_email to: user.email,
                  subject: t(".subject", deadline:),

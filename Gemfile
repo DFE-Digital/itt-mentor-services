@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby file: ".ruby-version"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
-gem "rails", "~> 8.0.2"
+gem "rails", "~> 8.1.3"
 
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
@@ -62,8 +62,8 @@ gem "good_job", "~> 4.19"
 # Store user sessions in the database
 gem "activerecord-session_store"
 
-gem "govuk-components", "~> 6.4.1"
-gem "govuk_design_system_formbuilder", "~> 6.4.0"
+gem "govuk-components", "~> 6.5.0"
+gem "govuk_design_system_formbuilder", "~> 6.5.0"
 
 # DfE Sign-in
 gem "omniauth"
