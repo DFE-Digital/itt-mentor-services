@@ -188,3 +188,5 @@ gem "flipper", "~> 1.3"
 gem "flipper-active_record", "~> 1.4"
 
 gem "flipper-ui", "~> 1.4"
+
+gem "rack-utf8_sanitizer", "~> 1.11"
