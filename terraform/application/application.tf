@@ -18,12 +18,19 @@ module "application_configuration" {
       PGSSLMODE        = local.postgres_ssl_mode
   })
 
-  secret_variables = {
+  secret_variables = merge({
     DATABASE_URL               = module.postgres.url
     AZURE_STORAGE_ACCOUNT_NAME = local.azure_storage_account_name
     AZURE_STORAGE_ACCESS_KEY   = local.azure_storage_access_key
     AZURE_STORAGE_CONTAINER    = local.azure_storage_container
-  }
+  },
+  {
+    AIRBYTE_CONFIGURATION = var.airbyte_enabled ? jsonencode({
+    SOURCE_ID      = module.airbyte[0].airbyte_source_id
+    DESTINATION_ID = module.airbyte[0].airbyte_destination_id
+    CONNECTION_ID  = module.airbyte[0].airbyte_connection_id
+    }) : null
+  })
 }
 
 module "web_application" {
