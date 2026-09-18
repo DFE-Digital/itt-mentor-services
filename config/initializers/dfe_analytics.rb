@@ -45,7 +45,7 @@ DfE::Analytics.configure do |config|
 
   hosting_env = ENV.fetch("HOSTING_ENV", "development")
 
-  if %w[development qa].include?(hosting_env)
+  if %w[development qa production].include?(hosting_env)
     config.airbyte_stream_config_path = "terraform/application/config/airbyte_stream_config.json"
     # Perform airbyte checks on startup and allow airbyte config generation
     config.airbyte_enabled = Rails.env.development? || ENV["BIGQUERY_AIRBYTE_DATASET"].present?
