@@ -19,6 +19,8 @@ RSpec.describe Claims::UploadPayerPaymentResponseWizard::UploadStep, type: :mode
         invalid_claim_rows: [],
         invalid_claim_status_rows: [],
         invalid_claim_unpaid_reason_rows: [],
+        invalid_claim_paid_to_la_rows: [],
+        invalid_claim_date_paid_rows: [],
       )
     }
   end
@@ -35,9 +37,9 @@ RSpec.describe Claims::UploadPayerPaymentResponseWizard::UploadStep, type: :mode
 
       context "when the csv_content is present" do
         let(:csv_content) do
-          "claim_reference,claim_status,claim_unpaid_reason\r\n" \
-          "11111111,paid,\r\n" \
-          "22222222,unpaid,Some reason"
+          "claim_reference,claim_status,claim_unpaid_reason,claim_paid_to_la,claim_date_paid\r\n" \
+          "11111111,paid,,no,2026-09-21\r\n" \
+          "22222222,unpaid,Some reason,,"
         end
         let(:attributes) { { csv_content: } }
 
@@ -100,7 +102,8 @@ RSpec.describe Claims::UploadPayerPaymentResponseWizard::UploadStep, type: :mode
           it "returns errors for missing headers" do
             expect(step.valid?).to be(false)
             expect(step.errors.messages[:csv_upload]).to include(
-              "Your file needs a column called ‘claim_reference’, ‘claim_status’, and ‘claim_unpaid_reason’.",
+              "Your file needs a column called ‘claim_reference’, ‘claim_status’, ‘claim_unpaid_reason’, " \
+              "‘claim_paid_to_la’, and ‘claim_date_paid’.",
             )
             expect(step.errors.messages[:csv_upload]).to include(
               "Right now it has columns called ‘something_random’.",
@@ -108,6 +111,79 @@ RSpec.describe Claims::UploadPayerPaymentResponseWizard::UploadStep, type: :mode
           end
         end
       end
+    end
+  end
+
+  describe "#csv_inputs_valid?" do
+    subject(:csv_inputs_valid) { step.csv_inputs_valid? }
+
+    let(:attributes) { { csv_content: } }
+
+    before { create(:claim, :payment_in_progress, reference: 11_111_111) }
+
+    context "when a paid row is missing claim_paid_to_la" do
+      let(:csv_content) do
+        "claim_reference,claim_status,claim_unpaid_reason,claim_paid_to_la,claim_date_paid\r\n" \
+        "11111111,paid,,,2026-09-21"
+      end
+
+      it "records the row as invalid" do
+        expect(csv_inputs_valid).to be(false)
+        expect(step.invalid_claim_paid_to_la_rows).to contain_exactly(0)
+      end
+    end
+
+    context "when a paid row has an unparseable claim_date_paid" do
+      let(:csv_content) do
+        "claim_reference,claim_status,claim_unpaid_reason,claim_paid_to_la,claim_date_paid\r\n" \
+        "11111111,paid,,yes,not a date"
+      end
+
+      it "records the row as invalid" do
+        expect(csv_inputs_valid).to be(false)
+        expect(step.invalid_claim_date_paid_rows).to contain_exactly(0)
+      end
+    end
+
+    context "when an unpaid row leaves the payment details blank" do
+      let(:csv_content) do
+        "claim_reference,claim_status,claim_unpaid_reason,claim_paid_to_la,claim_date_paid\r\n" \
+        "11111111,unpaid,Some reason,,"
+      end
+
+      it "does not record the row as invalid" do
+        expect(csv_inputs_valid).to be(true)
+      end
+    end
+  end
+
+  describe "#paid_to_la_for" do
+    let(:attributes) { { csv_content: } }
+    let(:csv_content) do
+      "claim_reference,claim_status,claim_unpaid_reason,claim_paid_to_la,claim_date_paid\r\n" \
+      "11111111,paid,,Yes,2026-09-21\r\n" \
+      "22222222,paid,,no,2026-09-21\r\n" \
+      "33333333,unpaid,Some reason,,"
+    end
+
+    it "parses the column into a boolean, or nil when absent" do
+      expect(step.csv.map { |row| step.paid_to_la_for(row) }).to eq([true, false, nil])
+    end
+  end
+
+  describe "#date_paid_for" do
+    let(:attributes) { { csv_content: } }
+    let(:csv_content) do
+      "claim_reference,claim_status,claim_unpaid_reason,claim_paid_to_la,claim_date_paid\r\n" \
+      "11111111,paid,,yes,2026-09-21\r\n" \
+      "22222222,paid,,no,not a date\r\n" \
+      "33333333,unpaid,Some reason,,"
+    end
+
+    it "parses the column into a time, or nil when unparseable or absent" do
+      expect(step.csv.map { |row| step.date_paid_for(row) }).to eq(
+        [Time.zone.parse("2026-09-21"), nil, nil],
+      )
     end
   end
 end
