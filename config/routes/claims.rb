@@ -155,10 +155,6 @@ scope module: :claims, as: :claims, constraints: {
           put "submit_claims_to_be_paid/:state_key/:step", to: "payments/submit_claims_to_be_paid#update"
         end
       end
-      resources :payment_responses, only: %i[new update] do
-        post :check, on: :collection
-      end
-
       resources :samplings, path: "sampling/claims", only: %i[index show] do
         member do
           get :confirm_approval
