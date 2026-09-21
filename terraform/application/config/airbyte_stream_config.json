@@ -772,6 +772,21 @@
             "fieldPath": [
               "clawback_requested_by_id"
             ]
+          },
+          {
+            "fieldPath": [
+              "paid_to_la"
+            ]
+          },
+          {
+            "fieldPath": [
+              "date_paid"
+            ]
+          },
+          {
+            "fieldPath": [
+              "paid_notification_sent_at"
+            ]
           }
         ]
       },
