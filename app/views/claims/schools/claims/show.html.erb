@@ -114,6 +114,25 @@
           <% end %>
         <% end %>
 
+        <% if @claim.paid? %>
+          <h2 class="govuk-heading-m"><%= t(".payment_details") %></h2>
+          <%= govuk_summary_list(actions: false) do |summary_list| %>
+            <% summary_list.with_row do |row| %>
+              <% row.with_key(text: Claims::Claim.human_attribute_name(:date_paid)) %>
+              <% row.with_value(text: @claim.date_paid ? l(@claim.date_paid.to_date, format: :long) : t("none")) %>
+            <% end %>
+
+            <% summary_list.with_row do |row| %>
+              <% row.with_key(text: Claims::Claim.human_attribute_name(:paid_to_la)) %>
+              <% if @claim.paid_to_la.nil? %>
+                <% row.with_value(text: t("none")) %>
+              <% else %>
+                <% row.with_value(text: @claim.paid_to_la ? t(".paid_to.local_authority") : t(".paid_to.academy")) %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+
         <% if policy(@claim).remove? %>
           <%= govuk_link_to t(".remove_claim"), remove_claims_school_claim_path(@school, @claim), class: "app-link app-link--destructive" %>
         <% end %>
