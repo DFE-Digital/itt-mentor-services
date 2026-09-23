@@ -60,12 +60,14 @@ class Claims::UserMailer < Claims::ApplicationMailer
                  )
   end
 
-  def claim_payment_in_progress_notification(user, _claim)
+  def claim_payment_in_progress_notification(user, claim)
     notify_email to: user.email,
                  subject: t(".subject"),
                  body: t(
                    ".body",
                    user_name: user.first_name,
+                   paid_date: l(claim.date_paid.to_date, format: :long),
+                   contact_us_date: l(claim.date_paid.to_date + 7.days, format: :long),
                    support_email:,
                    service_name:,
                  )

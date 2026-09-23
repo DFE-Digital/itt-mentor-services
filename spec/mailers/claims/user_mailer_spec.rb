@@ -287,7 +287,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
 
     let(:user) { create(:claims_user, first_name: "Joe") }
     let(:school) { create(:claims_school, name: "Shelbyville Elementary", region: regions(:inner_london)) }
-    let(:claim) { create(:claim, :payment_in_progress, reference: "123", school:) }
+    let(:claim) { create(:claim, :paid, reference: "123", school:, date_paid: Date.new(2026, 10, 8)) }
 
     it "sends the payment in progress email" do
       expect(payment_in_progress_email.to).to contain_exactly(user.email)
@@ -297,13 +297,11 @@ RSpec.describe Claims::UserMailer, type: :mailer do
 
         You submitted a funding claim for initial teacher training (ITT) mentor training.
 
-        You can expect to receive payment by 8 October.
-
-        We are processing your claim and will send the payment to the bank account linked to your organisation.
+        You can expect to receive payment by 8 October 2026.
 
         Maintained schools and maintained alternative provision settings will receive payment via their local authority.
 
-        If you do not receive the payment by 14 October, contact the claim funding for mentor training team.
+        If you do not receive the payment by 15 October 2026, contact the claim funding for mentor training team.
 
         # What happens next
 
