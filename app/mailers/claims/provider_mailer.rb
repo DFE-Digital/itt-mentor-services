@@ -8,8 +8,8 @@ class Claims::ProviderMailer < Claims::ApplicationMailer
                  body: t(
                    ".body",
                    provider_name: @provider_sampling.provider_name,
-                   download_csv_url: claims_sampling_claims_url(token:, utm_source: "email", utm_medium: "notification", utm_campaign: "provider"),
-                   support_email:, service_name:, completion_date:, service_url: claims_root_url(utm_source: "email", utm_medium: "notification", utm_campaign: "provider")
+                   number_of_claims:,
+                   support_email:, completion_date:, service_url: claims_root_url(utm_source: "email", utm_medium: "notification", utm_campaign: "provider")
                  )
   end
 
@@ -54,8 +54,13 @@ class Claims::ProviderMailer < Claims::ApplicationMailer
     Claims::DownloadAccessToken.create!(activity_record: provider_sampling, email_address:).generate_token_for(:csv_download)
   end
 
+  def number_of_claims
+    count = provider_sampling.claims.count
+    "#{count} #{"claim".pluralize(count)}"
+  end
+
   def completion_date
-    date = Date.current + 21.days
+    date = Date.current + 30.days
     date = date.next_weekday if date.on_weekend?
     date.strftime("%d %B %Y")
   end
