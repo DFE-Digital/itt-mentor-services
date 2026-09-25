@@ -303,58 +303,6 @@ en:
           
           Kind regards,
           %{service_name} team
-      claim_payment_in_progress_notification:
-        subject: Your mentor training claim payment is being processed
-        body: |
-          Dear %{user_name},
-
-          You submitted a funding claim for initial teacher training (ITT) mentor training.
-
-          You can expect to receive payment by 8 October.
-
-          We are processing your claim and will send the payment to the bank account linked to your organisation.
-
-          Maintained schools and maintained alternative provision settings will receive payment via their local authority.
-
-          If you do not receive the payment by 14 October, contact the claim funding for mentor training team.
-
-          # What happens next
-
-          You do not need to take any action.
-
-          We will send another email when your claim has been paid.
-
-          # Contact us
-
-          If you need help, contact the team at [%{support_email}](mailto:%{support_email}).
-
-          [Learn more about funding for mentor training on GOV.UK](https://www.gov.uk/government/publications/initial-teacher-training-reform-funding-guidance)
-
-          %{service_name} team
-      claim_paid_notification:
-        subject: Your mentor training claim has been paid
-        body: |
-          Dear %{user_name},
-
-          Your funding claim for initial teacher training (ITT) mentor training has been paid.
-
-          The payment has been sent to the bank account linked to your organisation. It may take a few working days to appear in your account, depending on your bank.
-
-          Maintained schools and maintained alternative provision settings will receive payment via their local authority.
-
-          You can [log into the service](%{link_to_claim}) to view the payment status which includes the payment date and confirms whether payment has been made to the relevant local authority, or directly to the organisation.
-
-          # What you need to do
-
-          In line with the conditions of grant, schools should keep evidence of the expenditure they claim for the general mentor role for assurance purposes.
-
-          # Contact us
-
-          If you need help, contact the team at [%{support_email}](mailto:%{support_email}).
-
-          [Learn more about funding for mentor training on GOV.UK](https://www.gov.uk/government/publications/initial-teacher-training-reform-funding-guidance)
-
-          %{service_name} team
       claim_rejected_by_provider:
         subject: "Provider has indicated a school has an invalid claim: Claim funding for ITT Mentor training"
         body: |

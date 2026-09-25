@@ -79,9 +79,6 @@ class Claims::Claim < ApplicationRecord
   scope :order_created_at_desc, -> { order(created_at: :desc) }
   scope :not_draft_status, -> { where.not(status: DRAFT_STATUSES) }
   scope :provider_visible, -> { where(status: PROVIDER_VISIBLE_STATUSES) }
-  scope :awaiting_paid_notification, lambda {
-    paid.where(paid_notification_sent_at: nil).where(date_paid: ..Time.current)
-  }
   scope :paid_for_current_academic_year, lambda {
     paid.joins(claim_window: :academic_year)
     .where(academic_years: { id: AcademicYear.for_date(Date.current).id })

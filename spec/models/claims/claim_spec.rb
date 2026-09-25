@@ -204,22 +204,6 @@ RSpec.describe Claims::Claim, type: :model do
         expect(described_class.paid_for_current_academic_year).to contain_exactly(current_year_paid_claim)
       end
     end
-
-    describe "#awaiting_paid_notification" do
-      let!(:claim_paid_today) { create(:claim, :paid, date_paid: Time.current) }
-      let!(:claim_paid_earlier) { create(:claim, :paid, date_paid: 3.days.ago) }
-
-      before do
-        create(:claim, :paid, date_paid: Time.current, paid_notification_sent_at: 1.hour.ago)
-        create(:claim, :paid, date_paid: 1.day.from_now)
-        create(:claim, :paid, date_paid: nil)
-        create(:claim, :payment_in_progress, date_paid: Time.current)
-      end
-
-      it "returns paid claims paid on or before now which have not been notified" do
-        expect(described_class.awaiting_paid_notification).to contain_exactly(claim_paid_today, claim_paid_earlier)
-      end
-    end
   end
 
   describe "#submitted_on" do
