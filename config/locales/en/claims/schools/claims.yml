@@ -71,7 +71,3 @@ en:
           submit: Accept and submit
           submitted_by: Submitted by %{name} on %{date}.
           invalid_provider: The accredited provider for this claim is invalid. Use the change link below to record an accredited provider so this claim can be paid.
-          payment_details: Payment details
-          paid_to:
-            local_authority: Local authority
-            academy: Academy
