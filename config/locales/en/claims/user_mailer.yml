@@ -336,11 +336,13 @@ en:
 
           Your funding claim for initial teacher training (ITT) mentor training has been paid.
 
-          The payment has been sent to the bank account linked to your organisation. It may take a few working days to appear in your account, depending on your bank.
+          Your payment for this claim has been sent to %{payment_destination}.
 
-          Maintained schools and maintained alternative provision settings will receive payment via their local authority.
+          * Payment date: %{date_paid}
+          * Claim reference: %{claim_reference}
+          * Claim amount: %{claim_amount}
 
-          You can [log into the service](%{link_to_claim}) to view the payment status which includes the payment date and confirms whether payment has been made to the relevant local authority, or directly to the organisation.
+          You can [log into the service](%{link_to_claim}) to view the payment status, payment date and whether the payment was made to your local authority or directly to your organisation.
 
           # What you need to do
 
