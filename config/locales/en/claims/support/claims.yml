@@ -96,7 +96,3 @@ en:
           rate: Hourly rate
           notice: No clawback required
           no_hours_clawed_back: This mentor will not have any hours clawed back
-          payment_details: Payment details
-          paid_to:
-            local_authority: Local authority
-            academy: Academy
