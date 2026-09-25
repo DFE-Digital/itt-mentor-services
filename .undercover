@@ -1,0 +1,1 @@
+-x test/*,spec/*,db/*,config/*,*_test.rb,*_spec.rb,app/controllers/claims/support/claims/payment_responses_controller.rb,app/policies/claims/support/claims/payment_response_policy.rb
