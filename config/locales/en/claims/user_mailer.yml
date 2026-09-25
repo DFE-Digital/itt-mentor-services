@@ -310,11 +310,13 @@ en:
 
           You submitted a funding claim for initial teacher training (ITT) mentor training.
 
-          You can expect to receive payment by %{paid_date}.
+          You can expect to receive payment by 8 October.
+
+          We are processing your claim and will send the payment to the bank account linked to your organisation.
 
           Maintained schools and maintained alternative provision settings will receive payment via their local authority.
 
-          If you do not receive the payment by %{contact_us_date}, contact the claim funding for mentor training team.
+          If you do not receive the payment by 14 October, contact the claim funding for mentor training team.
 
           # What happens next
 

@@ -20,6 +20,16 @@ class Claims::Payment::CreateAndDeliver < ApplicationService
 
       transaction.after_commit do
         Claims::PaymentMailer.payment_created_notification(payment).deliver_later
+
+        payment.claims.find_each do |claim|
+          NotifyRateLimiter.call(
+            batch_size: 1,
+            collection: claim.school_users,
+            mailer: "Claims::UserMailer",
+            mailer_method: :claim_payment_in_progress_notification,
+            mailer_args: [claim],
+          )
+        end
       end
     end
   end
