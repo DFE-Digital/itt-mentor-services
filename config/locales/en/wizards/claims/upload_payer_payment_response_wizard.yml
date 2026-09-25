@@ -30,8 +30,6 @@ en:
               - claim_submission_date
               - claim_status
               - claim_unpaid_reason
-              - claim_paid_to_la
-              - claim_date_paid
         upload_errors_step:
           title: Upload payer response
           caption: Payments
@@ -46,14 +44,10 @@ en:
               claim_reference: claim_reference
               claim_status: claim_status
               claim_unpaid_reason: claim_unpaid_reason
-              claim_paid_to_la: claim_paid_to_la
-              claim_date_paid: claim_date_paid
             errors:
               invalid_claim_reference: Enter a valid claim reference
               invalid_claim_status: Enter a valid claim status
               invalid_claim_unpaid_reason: Enter a reason
-              invalid_claim_paid_to_la: Enter yes or no
-              invalid_claim_date_paid: Enter a valid date paid
           only_showing_rows_with_errors: Only showing rows with errors
           upload_your_file_again: Upload your file again
         confirmation_step:

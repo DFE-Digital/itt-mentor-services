@@ -11,21 +11,5 @@ describe Claims::Claim::Payment::Paid do
         .from("payment_in_progress")
         .to("paid")
     end
-
-    context "when payment details are given" do
-      subject(:call) do
-        described_class.call(claim:, paid_to_la: true, date_paid: "2026-09-21")
-      end
-
-      it "stores the payment details against the claim" do
-        call
-
-        expect(claim.reload).to have_attributes(
-          status: "paid",
-          paid_to_la: true,
-          date_paid: Time.zone.parse("2026-09-21"),
-        )
-      end
-    end
   end
 end

@@ -23,8 +23,8 @@ RSpec.describe Claims::UploadPayerPaymentResponseWizard do
 
     context "when the csv contains invalid inputs" do
       let(:csv_content) do
-        "claim_reference,claim_status,claim_unpaid_reason,claim_paid_to_la,claim_date_paid\r\n" \
-        "22222222,paid,Some reason,no,2026-09-21"
+        "claim_reference,claim_status,claim_unpaid_reason\r\n" \
+        "22222222,paid,Some reason"
       end
       let(:state) do
         {
@@ -62,8 +62,8 @@ RSpec.describe Claims::UploadPayerPaymentResponseWizard do
 
     context "when the steps are valid" do
       let(:csv_content) do
-        "claim_reference,claim_status,claim_unpaid_reason,claim_paid_to_la,claim_date_paid\r\n" \
-        "11111111,paid,Some reason,no,2026-09-21"
+        "claim_reference,claim_status,claim_unpaid_reason\r\n" \
+        "11111111,paid,Some reason"
       end
 
       it "queues a job to flag the claim for sampling" do
@@ -84,9 +84,9 @@ RSpec.describe Claims::UploadPayerPaymentResponseWizard do
 
       context "when the uploaded content includes an invalid input" do
         let(:csv_content) do
-          "claim_reference,claim_status,claim_unpaid_reason,claim_paid_to_la,claim_date_paid\r\n" \
-          "11111111,paid,Some reason,no,2026-09-21\r\n" \
-          "22222222,unpaid,,,"
+          "claim_reference,claim_status,claim_unpaid_reason\r\n" \
+          "11111111,paid,Some reason\r\n" \
+          "22222222,unpaid,"
         end
 
         it "returns an invalid wizard error" do
@@ -130,9 +130,9 @@ RSpec.describe Claims::UploadPayerPaymentResponseWizard do
         create(:claim, :payment_in_progress, reference: 22_222_222)
       end
       let(:csv_content) do
-        "claim_reference,claim_status,claim_unpaid_reason,claim_paid_to_la,claim_date_paid\r\n" \
-        "11111111,paid,,yes,2026-09-21\r\n" \
-        "22222222,unpaid,Some reason,,"
+        "claim_reference,claim_status,claim_unpaid_reason\r\n" \
+        "11111111,paid,\r\n" \
+        "22222222,unpaid,Some reason"
       end
       let(:state) do
         {
@@ -149,15 +149,11 @@ RSpec.describe Claims::UploadPayerPaymentResponseWizard do
             id: payment_in_progress_claim_1.id,
             status: "paid",
             unpaid_reason: nil,
-            paid_to_la: true,
-            date_paid: Time.zone.parse("2026-09-21").iso8601,
           },
           {
             id: payment_in_progress_claim_2.id,
             status: "unpaid",
             unpaid_reason: "Some reason",
-            paid_to_la: nil,
-            date_paid: nil,
           },
         )
       end

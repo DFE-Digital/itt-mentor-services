@@ -31,8 +31,6 @@
           <% row.with_cell text: t(".csv_table.headers.claim_reference") %>
           <% row.with_cell text: t(".csv_table.headers.claim_status") %>
           <% row.with_cell text: t(".csv_table.headers.claim_unpaid_reason") %>
-          <% row.with_cell text: t(".csv_table.headers.claim_paid_to_la") %>
-          <% row.with_cell text: t(".csv_table.headers.claim_date_paid") %>
         <% end %>
       <% end %>
 
@@ -63,22 +61,6 @@
                   <strong class="error-text"><%= t(".csv_table.errors.invalid_claim_unpaid_reason") %></strong><br>
                 <% end %>
                 <%= csv_row["claim_unpaid_reason"] %>
-              </p>
-            <% end %>
-            <% row.with_cell do %>
-              <p>
-                <% if current_step.invalid_claim_paid_to_la_rows.include?(csv_row_index) %>
-                  <strong class="error-text"><%= t(".csv_table.errors.invalid_claim_paid_to_la") %></strong><br>
-                <% end %>
-                <%= csv_row["claim_paid_to_la"] %>
-              </p>
-            <% end %>
-            <% row.with_cell do %>
-              <p>
-                <% if current_step.invalid_claim_date_paid_rows.include?(csv_row_index) %>
-                  <strong class="error-text"><%= t(".csv_table.errors.invalid_claim_date_paid") %></strong><br>
-                <% end %>
-                <%= csv_row["claim_date_paid"] %>
               </p>
             <% end %>
           <% end %>

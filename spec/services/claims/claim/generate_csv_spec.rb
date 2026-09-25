@@ -37,12 +37,12 @@ RSpec.describe Claims::Claim::GenerateCSV do
   end
 
   it "inserts the correct headers" do
-    expect(generate_claims_csv.lines.first.chomp).to eq("claim_reference,school_urn,school_name,school_local_authority,school_type_of_establishment,school_group,provider_name,provider_code,claim_amount,claim_submission_date,claim_status,claim_unpaid_reason,claim_paid_to_la,claim_date_paid")
+    expect(generate_claims_csv.lines.first.chomp).to eq("claim_reference,school_urn,school_name,school_local_authority,school_type_of_establishment,school_group,provider_name,provider_code,claim_amount,claim_submission_date,claim_status,claim_unpaid_reason")
   end
 
   it "contains all claims" do
     expect(generate_claims_csv.lines.sort).to eq([
-      "claim_reference,school_urn,school_name,school_local_authority,school_type_of_establishment,school_group,provider_name,provider_code,claim_amount,claim_submission_date,claim_status,claim_unpaid_reason,claim_paid_to_la,claim_date_paid\n",
+      "claim_reference,school_urn,school_name,school_local_authority,school_type_of_establishment,school_group,provider_name,provider_code,claim_amount,claim_submission_date,claim_status,claim_unpaid_reason\n",
       "12345670,5679,School name 3,blah,Academy converter,Academy,Provider 3,P3,45.10,,draft\n",
       "12345671,5679,School name 3,blah,Academy converter,Academy,Provider 2,P2,90.20,2023-08-29T22:35:00Z,submitted\n",
       "12345677,5679,School name 3,blah,Academy converter,Academy,Provider 1,P1,676.50,2023-08-29T22:35:00Z,submitted\n",

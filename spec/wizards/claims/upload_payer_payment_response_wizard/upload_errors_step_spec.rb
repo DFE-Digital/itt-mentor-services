@@ -16,8 +16,6 @@ RSpec.describe Claims::UploadPayerPaymentResponseWizard::UploadErrorsStep, type:
         invalid_claim_rows:,
         invalid_claim_status_rows:,
         invalid_claim_unpaid_reason_rows:,
-        invalid_claim_paid_to_la_rows:,
-        invalid_claim_date_paid_rows:,
       )
     end
   end
@@ -27,15 +25,11 @@ RSpec.describe Claims::UploadPayerPaymentResponseWizard::UploadErrorsStep, type:
   let(:invalid_claim_rows) { [] }
   let(:invalid_claim_status_rows) { [] }
   let(:invalid_claim_unpaid_reason_rows) { [] }
-  let(:invalid_claim_paid_to_la_rows) { [] }
-  let(:invalid_claim_date_paid_rows) { [] }
 
   describe "delegations" do
     it { is_expected.to delegate_method(:invalid_claim_rows).to(:upload_step) }
     it { is_expected.to delegate_method(:invalid_claim_status_rows).to(:upload_step) }
     it { is_expected.to delegate_method(:invalid_claim_unpaid_reason_rows).to(:upload_step) }
-    it { is_expected.to delegate_method(:invalid_claim_paid_to_la_rows).to(:upload_step) }
-    it { is_expected.to delegate_method(:invalid_claim_date_paid_rows).to(:upload_step) }
     it { is_expected.to delegate_method(:file_name).to(:upload_step) }
     it { is_expected.to delegate_method(:csv).to(:upload_step) }
   end
@@ -46,11 +40,9 @@ RSpec.describe Claims::UploadPayerPaymentResponseWizard::UploadErrorsStep, type:
     let(:invalid_claim_rows) { [1] }
     let(:invalid_claim_status_rows) { [1, 2, 3] }
     let(:invalid_claim_unpaid_reason_rows) { [1, 2, 4, 5] }
-    let(:invalid_claim_paid_to_la_rows) { [5, 6] }
-    let(:invalid_claim_date_paid_rows) { [6, 7] }
 
     it "merges all the validation attributes containing row numbers together (removing duplicates)" do
-      expect(row_indexes_with_errors).to contain_exactly(1, 2, 3, 4, 5, 6, 7)
+      expect(row_indexes_with_errors).to contain_exactly(1, 2, 3, 4, 5)
     end
   end
 
@@ -60,11 +52,9 @@ RSpec.describe Claims::UploadPayerPaymentResponseWizard::UploadErrorsStep, type:
     let(:invalid_claim_rows) { [1] }
     let(:invalid_claim_status_rows) { [1, 2, 3, 4] }
     let(:invalid_claim_unpaid_reason_rows) { [1, 2] }
-    let(:invalid_claim_paid_to_la_rows) { [3] }
-    let(:invalid_claim_date_paid_rows) { [3, 4] }
 
     it "adds together the number of elements in validation attribute" do
-      expect(error_count).to eq(10)
+      expect(error_count).to eq(7)
     end
   end
 end
