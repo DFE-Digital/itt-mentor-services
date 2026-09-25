@@ -18,11 +18,11 @@ RSpec.describe Claims::User::NotifyUsersOfPaidClaimsJob, type: :job do
         notify_users_job.perform
 
         expect(NotifyRateLimiter).to have_received(:call).once.with(
-          batch_size: 1,
           collection: [school_user],
           mailer: "Claims::UserMailer",
           mailer_method: :claim_paid_notification,
           mailer_args: [claim],
+          initial_wait_time: 0.minutes,
         )
       end
 
@@ -38,11 +38,11 @@ RSpec.describe Claims::User::NotifyUsersOfPaidClaimsJob, type: :job do
         notify_users_job.perform
 
         expect(NotifyRateLimiter).to have_received(:call).once.with(
-          batch_size: 1,
           collection: [school_user],
           mailer: "Claims::UserMailer",
           mailer_method: :claim_paid_notification,
           mailer_args: [claim],
+          initial_wait_time: 0.minutes,
         )
       end
     end
@@ -86,6 +86,25 @@ RSpec.describe Claims::User::NotifyUsersOfPaidClaimsJob, type: :job do
         notify_users_job.perform
 
         expect(NotifyRateLimiter).not_to have_received(:call)
+      end
+    end
+
+    context "when more than 100 school users are awaiting a paid notification" do
+      let(:other_school) { create(:claims_school) }
+
+      before do
+        create_list(:claims_user, 99, schools: [school])
+        create_list(:claims_user, 2, schools: [other_school])
+      end
+
+      it "sends no more than 100 emails a minute across all claims" do
+        create(:claim, :paid, school:, date_paid: Time.current)
+        create(:claim, :paid, school: other_school, date_paid: Time.current)
+
+        notify_users_job.perform
+
+        expect(NotifyRateLimiter).to have_received(:call).with(hash_including(initial_wait_time: 0.minutes))
+        expect(NotifyRateLimiter).to have_received(:call).with(hash_including(initial_wait_time: 1.minute))
       end
     end
 

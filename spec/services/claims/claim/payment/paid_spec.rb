@@ -20,12 +20,24 @@ describe Claims::Claim::Payment::Paid do
       call
 
       expect(NotifyRateLimiter).to have_received(:call).once.with(
-        batch_size: 1,
         collection: [school_user],
         mailer: "Claims::UserMailer",
         mailer_method: :claim_payment_in_progress_notification,
         mailer_args: [claim],
+        initial_wait_time: 0.minutes,
       )
+    end
+
+    context "when a notification wait time is given" do
+      subject(:call) { described_class.call(claim:, notification_wait_time: 3.minutes) }
+
+      it "delays the notifications by the wait time" do
+        call
+
+        expect(NotifyRateLimiter).to have_received(:call).once.with(
+          hash_including(initial_wait_time: 3.minutes),
+        )
+      end
     end
 
     context "when payment details are given" do
