@@ -36,6 +36,11 @@ remove_unprocessed_claims_payment_responses:
   class: "Claims::RemoveUnprocessedPaymentResponsesJob"
   description: "Remove unprocessed claims payment responses"
 
+notify_claims_users_their_claims_have_been_paid:
+  cron: "0 23 * * *" # Every day at 23:00.
+  class: "Claims::User::NotifyUsersOfPaidClaimsJob"
+  description: "Notifies school users of claims which have been paid"
+
 send_entity_table_checks_to_bigquery:
   cron: "30 0 * * *" # Every day at 00:30.
   class: "DfE::Analytics::EntityTableCheckJob"
