@@ -60,31 +60,6 @@ class Claims::UserMailer < Claims::ApplicationMailer
                  )
   end
 
-  def claim_payment_in_progress_notification(user, _claim)
-    notify_email to: user.email,
-                 subject: t(".subject"),
-                 body: t(
-                   ".body",
-                   user_name: user.first_name,
-                   support_email:,
-                   service_name:,
-                 )
-  end
-
-  def claim_paid_notification(user, claim)
-    link_to_claim = claims_school_claim_url(id: claim.id, school_id: claim.school.id, utm_source: "email", utm_medium: "notification", utm_campaign: "school")
-
-    notify_email to: user.email,
-                 subject: t(".subject"),
-                 body: t(
-                   ".body",
-                   user_name: user.first_name,
-                   link_to_claim:,
-                   support_email:,
-                   service_name:,
-                 )
-  end
-
   def claim_requires_clawback(user, claim)
     link_to_claim = claims_school_claim_url(id: claim.id, school_id: claim.school.id, utm_source: "email", utm_medium: "notification", utm_campaign: "school")
 
