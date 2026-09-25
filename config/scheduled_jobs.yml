@@ -37,7 +37,7 @@ remove_unprocessed_claims_payment_responses:
   description: "Remove unprocessed claims payment responses"
 
 notify_claims_users_their_claims_have_been_paid:
-  cron: "0 23 * * *" # Every day at 23:00.
+  cron: "0 01 * * *" # Every day at 01:00.
   class: "Claims::User::NotifyUsersOfPaidClaimsJob"
   description: "Notifies school users of claims which have been paid"
 
