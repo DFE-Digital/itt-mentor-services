@@ -1,8 +1,10 @@
 class AddPaymentDetailsToClaims < ActiveRecord::Migration[8.0]
   def change
-    change_table :claims, bulk: true do |t|
-      t.boolean :paid_to_la
-      t.datetime :date_paid
+    safety_assured do
+      change_table :claims, bulk: true do |t|
+        t.boolean :paid_to_la
+        t.datetime :date_paid
+      end
     end
   end
 end
