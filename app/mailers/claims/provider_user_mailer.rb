@@ -4,7 +4,6 @@ class Claims::ProviderUserMailer < Claims::ApplicationMailer
                  subject: t(".subject", service_name:),
                  body: t(
                    ".body",
-                   user_name: user.first_name,
                    organisation_name: organisation.name,
                    service_name:,
                    support_email:,
