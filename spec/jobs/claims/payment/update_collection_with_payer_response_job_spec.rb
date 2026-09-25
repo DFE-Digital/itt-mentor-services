@@ -20,6 +20,28 @@ RSpec.describe Claims::Payment::UpdateCollectionWithPayerResponseJob, type: :job
       end
     end
 
+    context "when more than 100 school users will be notified of payment" do
+      let(:claims) { create_list(:claim, 2, :payment_in_progress) }
+      let(:claim_update_details) do
+        [
+          { id: claims[0].id, status: "paid", unpaid_reason: nil },
+          { id: claims[1].id, status: "paid", unpaid_reason: nil },
+        ]
+      end
+
+      before do
+        create_list(:claims_user, 60, schools: [claims[0].school])
+        create_list(:claims_user, 60, schools: [claims[1].school])
+      end
+
+      it "delays the notifications so no more than 100 emails are sent a minute" do
+        expect { perform }.to have_enqueued_job(Claims::Payment::UpdateClaimWithPayerResponseJob)
+          .with(anything, notification_wait_time: 0.minutes)
+          .and have_enqueued_job(Claims::Payment::UpdateClaimWithPayerResponseJob)
+          .with(anything, notification_wait_time: 1.minute)
+      end
+    end
+
     context "when the status in the update details is not paid or unpaid" do
       let(:claim_update_details) do
         [
