@@ -8,19 +8,14 @@ RSpec.describe "Service updates page", service: :claims, type: :system do
   end
 
   scenario "View all service updates" do
-    given_i_am_on_the_start_page
-    when_i_click_on_the_link_to_service_updates
+    when_i_visit_the_service_updates_page
     then_i_see_all_service_updates
   end
 
   private
 
-  def given_i_am_on_the_start_page
-    visit "/"
-  end
-
-  def when_i_click_on_the_link_to_service_updates
-    click_on "View all news and updates"
+  def when_i_visit_the_service_updates_page
+    visit "/service-updates"
   end
 
   def then_i_see_all_service_updates
