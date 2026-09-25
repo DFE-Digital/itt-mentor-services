@@ -102,6 +102,9 @@ shared:
     - unpaid_reason
     - clawback_approved_by_id
     - clawback_requested_by_id
+    - paid_to_la
+    - date_paid
+    - paid_notification_sent_at
   :provider_samplings:
     - id
     - sampling_id

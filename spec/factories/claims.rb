@@ -75,6 +75,13 @@ FactoryBot.define do
       status { :payment_information_sent }
     end
 
+    trait :paid do
+      payment_in_progress
+      status { :paid }
+      paid_to_la { false }
+      date_paid { Time.current }
+    end
+
     trait :payment_not_approved do
       status { :payment_not_approved }
     end

@@ -10,6 +10,8 @@ en:
         id: ID
         reference: Claim reference
         submitted_at: Date submitted
+        date_paid: Date paid
+        paid_to_la: Paid to
         support_user:
           unassigned: Unassigned
       claims/claim/status:
