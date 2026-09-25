@@ -178,12 +178,13 @@ RSpec.describe Claims::UploadPayerPaymentResponseWizard::UploadStep, type: :mode
       "11111111,paid,,yes,2026-09-21\r\n" \
       "22222222,paid,,no,not a date\r\n" \
       "33333333,paid,,no,2026-13-45\r\n" \
-      "44444444,unpaid,Some reason,,"
+      "44444444,unpaid,Some reason,,\r\n" \
+      "55555555,paid,,no,30/09/2026"
     end
 
     it "parses the column into a time, or nil when unparseable, out of range or absent" do
       expect(step.csv.map { |row| step.date_paid_for(row) }).to eq(
-        [Time.zone.parse("2026-09-21"), nil, nil, nil],
+        [Time.zone.parse("2026-09-21"), nil, nil, nil, Time.zone.local(2026, 9, 30)],
       )
     end
   end
