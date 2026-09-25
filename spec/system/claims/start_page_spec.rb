@@ -1,16 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :system do
-  before do
-    allow(MarkdownDocument).to receive(:from_directory).and_return([
-      MarkdownDocument.from_file(file_fixture("service_update.md")),
-    ])
-  end
-
   scenario "User visits the start page" do
     given_i_am_on_the_start_page
     then_i_can_see_the_start_page
-    then_i_see_a_link_to_all_service_updates
+    then_i_see_the_related_content
 
     when_i_click_start_now
     then_i_land_on_the_sign_in_page
@@ -135,12 +129,10 @@ RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :sy
     expect(page.current_url).to eq("http://claims.localhost/support/schools")
   end
 
-  def then_i_see_a_link_to_all_service_updates
+  def then_i_see_the_related_content
     expect(page).to have_link(
       "Initial teacher training reform funding guidance - GOV.UK",
       href: "https://www.gov.uk/government/publications/initial-teacher-training-reform-funding-guidance",
     )
-    expect(page).to have_link("Service Update", href: "/service-updates#service-update")
-    expect(page).to have_link("View all news and updates", href: "/service-updates")
   end
 end
