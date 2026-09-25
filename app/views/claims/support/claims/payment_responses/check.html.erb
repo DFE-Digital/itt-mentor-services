@@ -1,0 +1,23 @@
+<%= render "claims/support/primary_navigation", current: :claims %>
+<% content_for(:page_title) { sanitize t(".page_title") } %>
+
+<% content_for(:before_content) do %>
+  <%= govuk_back_link href: claims_support_claims_payments_path %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= form_with model: claims_payment_response, url: claims_support_claims_payment_response_path(claims_payment_response) do |f| %>
+        <p class="govuk-caption-l"><%= t(".page_caption") %></p>
+        <h1 class="govuk-heading-l"><%= t(".page_title") %></h1>
+
+        <p class="govuk-body"><%= t(".description", count: claims_payment_response.row_count) %></p>
+
+        <%= f.govuk_submit t(".submit") %>
+      <% end %>
+
+      <p class="govuk-body"><%= govuk_link_to t(".cancel"), claims_support_claims_payments_path %></p>
+    </div>
+  </div>
+</div>
