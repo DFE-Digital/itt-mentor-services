@@ -15,6 +15,14 @@ class Claims::UserMailerPreview < ActionMailer::Preview
     Claims::UserMailer.claim_created_support_notification(claim, user)
   end
 
+  def claim_payment_in_progress_notification
+    Claims::UserMailer.claim_payment_in_progress_notification(user, claim)
+  end
+
+  def claim_paid_notification
+    Claims::UserMailer.claim_paid_notification(user, claim)
+  end
+
   def claim_requires_clawback
     Claims::UserMailer.claim_requires_clawback(claim, user)
   end
