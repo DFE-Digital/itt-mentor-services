@@ -337,13 +337,11 @@ RSpec.describe Claims::UserMailer, type: :mailer do
 
         Your funding claim for initial teacher training (ITT) mentor training has been paid.
 
-        Your payment for this claim has been sent to your local authority.
+        The payment has been sent to the bank account linked to your organisation. It may take a few working days to appear in your account, depending on your bank.
 
-        * Payment date: 21 September 2026
-        * Claim reference: 123
-        * Claim amount: #{claim.amount.format(symbol: true, decimal_mark: ".", no_cents: false)}
+        Maintained schools and maintained alternative provision settings will receive payment via their local authority.
 
-        You can [log into the service](http://claims.localhost/schools/#{school.id}/claims/#{claim.id}?utm_campaign=school&utm_medium=notification&utm_source=email) to view the payment status, payment date and whether the payment was made to your local authority or directly to your organisation.
+        You can [log into the service](http://claims.localhost/schools/#{school.id}/claims/#{claim.id}?utm_campaign=school&utm_medium=notification&utm_source=email) to view the payment status which includes the payment date and confirms whether payment has been made to the relevant local authority, or directly to the organisation.
 
         # What you need to do
 
@@ -357,16 +355,6 @@ RSpec.describe Claims::UserMailer, type: :mailer do
 
         Claim funding for mentor training team
       EMAIL
-    end
-
-    context "when the claim was paid directly to the organisation" do
-      let(:claim) do
-        create(:claim, :paid, reference: "123", school:, paid_to_la: false, date_paid: Date.new(2026, 9, 21))
-      end
-
-      it "says the payment was sent to the organisation's bank account" do
-        expect(paid_email.body.to_s.squish).to include("Your payment for this claim has been sent to the bank account linked to your organisation.")
-      end
     end
   end
 

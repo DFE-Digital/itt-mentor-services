@@ -81,10 +81,6 @@ class Claims::UserMailer < Claims::ApplicationMailer
                  body: t(
                    ".body",
                    user_name: user.first_name,
-                   payment_destination: claim.paid_to_la ? "your local authority" : "the bank account linked to your organisation",
-                   date_paid: l(claim.date_paid.to_date, format: :long),
-                   claim_reference: claim.reference,
-                   claim_amount: claim.amount.format(symbol: true, decimal_mark: ".", no_cents: false),
                    link_to_claim:,
                    support_email:,
                    service_name:,
