@@ -100,7 +100,8 @@ RSpec.describe "Support user uploads a CSV containing invalid headers",
 
   def then_i_see_validation_error_regarding_invalid_headers
     expect(page).to have_validation_error(
-      "Your file needs a column called ‘claim_status’ and ‘claim_unpaid_reason’.",
+      "Your file needs a column called ‘claim_status’, ‘claim_unpaid_reason’, ‘claim_paid_to_la’, " \
+      "and ‘claim_date_paid’.",
     )
     expect(page).to have_element(
       :ul,
