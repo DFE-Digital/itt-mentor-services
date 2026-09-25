@@ -7,14 +7,6 @@ class Claims::Claim::Payment::Paid < ApplicationService
 
   def call
     claim.update!(status: :paid, paid_to_la:, date_paid:)
-
-    NotifyRateLimiter.call(
-      batch_size: 1,
-      collection: claim.school_users,
-      mailer: "Claims::UserMailer",
-      mailer_method: :claim_payment_in_progress_notification,
-      mailer_args: [claim],
-    )
   end
 
   private
