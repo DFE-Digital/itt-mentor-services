@@ -63,7 +63,7 @@ class Claims::UserMailerPreview < ActionMailer::Preview
   end
 
   def claim
-    PreviewClaim.new(id: SecureRandom.uuid, school:, provider:, reference: 123_456_789)
+    PreviewClaim.new(id: SecureRandom.uuid, school:, provider:, reference: 123_456_789, date_paid: Time.current)
   end
 
   def school
