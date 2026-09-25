@@ -9,24 +9,15 @@ RSpec.describe Claims::ProviderUserMailer, type: :mailer do
 
     it "sends the invitation" do
       expect(invite_email.to).to contain_exactly(user.email)
-      expect(invite_email.subject).to eq("Claim funding for mentor training: you have been added to the service")
+      expect(invite_email.subject).to eq("Invitation to join Claim funding for mentor training")
       expect(invite_email.body).to have_content <<~EMAIL
-        You have been added to the Claim funding for mentor training service on behalf of Best Practice Network.
+        Dear Joe,
 
-        The Department for Education is preparing to audit claims for Initial Teacher Training (ITT) general mentor funding.
+        You have been invited to join the Claim funding for mentor training service for Best Practice Network.
 
-        If claims from placement schools associated with your organisation are selected for audit, you will be able to audit claims directly on the service.
+        Sign in using DfE Sign-in:
 
-        ## You do not need to do anything yet
-
-        Claims relating to your organisation may or may not be selected for audit. We will contact you with more information if you are selected for audit.
-
-        ## If you are not the right person to audit claims
-
-        If you are not the right person in your organisation to audit claims for ITT general mentor funding, please:
-
-        * access the [service](http://claims.localhost/sign-in?utm_campaign=provider&utm_medium=notification&utm_source=email) using DfE Sign-in and add an appropriate colleague in the Users section
-        * new users will receive relevant communications from the service after they have been onboarded
+        [http://claims.localhost/sign-in?utm_campaign=provider&utm_medium=notification&utm_source=email](http://claims.localhost/sign-in?utm_campaign=provider&utm_medium=notification&utm_source=email)
 
         # Give feedback or report a problem
 

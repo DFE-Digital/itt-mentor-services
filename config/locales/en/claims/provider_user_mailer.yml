@@ -2,24 +2,15 @@ en:
   claims:
     provider_user_mailer:
       user_membership_created_notification:
-        subject: "%{service_name}: you have been added to the service"
+        subject: Invitation to join %{service_name}
         body: |
-          You have been added to the %{service_name} service on behalf of %{organisation_name}.
+          Dear %{user_name},
 
-          The Department for Education is preparing to audit claims for Initial Teacher Training (ITT) general mentor funding.
+          You have been invited to join the %{service_name} service for %{organisation_name}.
 
-          If claims from placement schools associated with your organisation are selected for audit, you will be able to audit claims directly on the service.
+          Sign in using DfE Sign-in:
 
-          ## You do not need to do anything yet
-
-          Claims relating to your organisation may or may not be selected for audit. We will contact you with more information if you are selected for audit.
-
-          ## If you are not the right person to audit claims
-
-          If you are not the right person in your organisation to audit claims for ITT general mentor funding, please:
-
-          * access the [service](%{sign_in_url}) using DfE Sign-in and add an appropriate colleague in the Users section
-          * new users will receive relevant communications from the service after they have been onboarded
+          [%{sign_in_url}](%{sign_in_url})
 
           # Give feedback or report a problem
 
