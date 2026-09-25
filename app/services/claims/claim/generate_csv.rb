@@ -14,8 +14,6 @@ class Claims::Claim::GenerateCSV < ApplicationService
     claim_submission_date
     claim_status
     claim_unpaid_reason
-    claim_paid_to_la
-    claim_date_paid
   ].freeze
 
   def initialize(claims:)

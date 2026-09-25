@@ -6,27 +6,13 @@ class Claims::UploadPayerPaymentResponseWizard::UploadStep < BaseStep
   attribute :invalid_claim_rows, default: []
   attribute :invalid_claim_status_rows, default: []
   attribute :invalid_claim_unpaid_reason_rows, default: []
-  attribute :invalid_claim_paid_to_la_rows, default: []
-  attribute :invalid_claim_date_paid_rows, default: []
 
   validates :csv_upload, presence: true, if: -> { csv_content.blank? }
   validate :validate_csv_file, if: -> { csv_upload.present? }
   validate :validate_csv_headers, if: -> { csv_content.present? }
 
   VALID_UPLOAD_STATUSES = %w[submitted paid unpaid].freeze
-  REQUIRED_HEADERS = %w[
-    claim_reference
-    claim_status
-    claim_unpaid_reason
-    claim_paid_to_la
-    claim_date_paid
-  ].freeze
-  PAID_TO_LA_VALUES = {
-    "yes" => true,
-    "true" => true,
-    "no" => false,
-    "false" => false,
-  }.freeze
+  REQUIRED_HEADERS = %w[claim_reference claim_status claim_unpaid_reason].freeze
 
   delegate :payment_in_progress_claims, to: :wizard
 
@@ -60,28 +46,11 @@ class Claims::UploadPayerPaymentResponseWizard::UploadStep < BaseStep
       validate_claim_reference(row, i)
       validate_claim_status(row, i)
       validate_claim_unpaid_reason(row, i)
-      validate_claim_paid_to_la(row, i)
-      validate_claim_date_paid(row, i)
     end
 
     invalid_claim_rows.blank? &&
       invalid_claim_status_rows.blank? &&
-      invalid_claim_unpaid_reason_rows.blank? &&
-      invalid_claim_paid_to_la_rows.blank? &&
-      invalid_claim_date_paid_rows.blank?
-  end
-
-  def paid_to_la_for(row)
-    PAID_TO_LA_VALUES[row["claim_paid_to_la"].to_s.strip.downcase]
-  end
-
-  def date_paid_for(row)
-    value = row["claim_date_paid"].to_s.strip
-    return if value.blank?
-
-    Time.zone.parse(value)
-  rescue ArgumentError
-    nil
+      invalid_claim_unpaid_reason_rows.blank?
   end
 
   def validate_csv_headers
@@ -123,8 +92,6 @@ class Claims::UploadPayerPaymentResponseWizard::UploadStep < BaseStep
     self.invalid_claim_rows = []
     self.invalid_claim_status_rows = []
     self.invalid_claim_unpaid_reason_rows = []
-    self.invalid_claim_paid_to_la_rows = []
-    self.invalid_claim_date_paid_rows = []
   end
 
   ### CSV input valiations
@@ -146,23 +113,5 @@ class Claims::UploadPayerPaymentResponseWizard::UploadStep < BaseStep
       row["claim_unpaid_reason"].blank?
 
     invalid_claim_unpaid_reason_rows << row_number
-  end
-
-  def validate_claim_paid_to_la(row, row_number)
-    return unless paid_row?(row)
-    return unless paid_to_la_for(row).nil?
-
-    invalid_claim_paid_to_la_rows << row_number
-  end
-
-  def validate_claim_date_paid(row, row_number)
-    return unless paid_row?(row)
-    return if date_paid_for(row).present?
-
-    invalid_claim_date_paid_rows << row_number
-  end
-
-  def paid_row?(row)
-    row["claim_status"].to_s.downcase == "paid"
   end
 end

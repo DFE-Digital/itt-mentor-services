@@ -2,8 +2,6 @@ class Claims::UploadPayerPaymentResponseWizard::UploadErrorsStep < BaseStep
   delegate :invalid_claim_rows,
            :invalid_claim_status_rows,
            :invalid_claim_unpaid_reason_rows,
-           :invalid_claim_paid_to_la_rows,
-           :invalid_claim_date_paid_rows,
            :file_name,
            :csv,
            to: :upload_step
@@ -21,9 +19,7 @@ class Claims::UploadPayerPaymentResponseWizard::UploadErrorsStep < BaseStep
   def combined_errors
     invalid_claim_rows +
       invalid_claim_status_rows +
-      invalid_claim_unpaid_reason_rows +
-      invalid_claim_paid_to_la_rows +
-      invalid_claim_date_paid_rows
+      invalid_claim_unpaid_reason_rows
   end
 
   def upload_step

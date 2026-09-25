@@ -43,8 +43,6 @@ module Claims
           id: claim.id,
           status: row["claim_status"].downcase,
           unpaid_reason: row["claim_unpaid_reason"],
-          paid_to_la: upload_step.paid_to_la_for(row),
-          date_paid: upload_step.date_paid_for(row)&.iso8601,
         }
       end
     end
@@ -54,17 +52,13 @@ module Claims
     attr_reader :current_user
 
     def csv_inputs_valid?
-      @csv_inputs_valid ||= upload_step.csv_inputs_valid?
+      @csv_inputs_valid ||= steps.fetch(:upload).csv_inputs_valid?
     end
 
     def csv_rows
-      upload_step.csv.reject do |row|
+      steps.fetch(:upload).csv.reject do |row|
         row["claim_reference"].blank?
       end
-    end
-
-    def upload_step
-      steps.fetch(:upload)
     end
   end
 end

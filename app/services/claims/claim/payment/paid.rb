@@ -1,15 +1,13 @@
 class Claims::Claim::Payment::Paid < ApplicationService
-  def initialize(claim:, paid_to_la: nil, date_paid: nil)
+  def initialize(claim:)
     @claim = claim
-    @paid_to_la = paid_to_la
-    @date_paid = date_paid
   end
 
   def call
-    claim.update!(status: :paid, paid_to_la:, date_paid:)
+    claim.update!(status: :paid)
   end
 
   private
 
-  attr_reader :claim, :paid_to_la, :date_paid
+  attr_reader :claim
 end
