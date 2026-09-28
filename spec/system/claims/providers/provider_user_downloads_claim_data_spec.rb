@@ -90,10 +90,10 @@ RSpec.describe "Provider user downloads claim data", service: :claims, type: :sy
     expect(page.response_headers["Content-Type"]).to include("text/csv")
 
     csv = CSV.parse(page.body, headers: true)
-    expect(csv.headers).to eq(%w[academic_year school_urn school_name claim_reference mentor_first_name mentor_last_name hours_claimed provider_name])
+    expect(csv.headers).to eq(%w[academic_year school_urn school_name claim_reference mentor_first_name mentor_last_name hours_claimed])
     expect(csv.map(&:fields)).to eq([
-      [@historic_claim_window.academic_year_name, "123456", "Riverbank Primary", "9000001", "Barry", "Garlow", "12", "North Star SCITT"],
-      [@current_claim_window.academic_year_name, "123456", "Riverbank Primary", "9000002", "Barry", "Garlow", "5", "North Star SCITT"],
+      [@historic_claim_window.academic_year_name, "123456", "Riverbank Primary", "9000001", "Barry", "Garlow", "12"],
+      [@current_claim_window.academic_year_name, "123456", "Riverbank Primary", "9000002", "Barry", "Garlow", "5"],
     ])
   end
 end

@@ -9,7 +9,6 @@ class Claims::Claim::GenerateProviderCSV < ApplicationService
     mentor_first_name
     mentor_last_name
     hours_claimed
-    provider_name
   ].freeze
 
   def initialize(claims:)
@@ -30,7 +29,6 @@ class Claims::Claim::GenerateProviderCSV < ApplicationService
             mentor_training.mentor.first_name,
             mentor_training.mentor.last_name,
             mentor_training.corrected_hours_completed,
-            claim.provider_name,
           ]
         end
       end
@@ -45,7 +43,7 @@ class Claims::Claim::GenerateProviderCSV < ApplicationService
     claims
       .reorder(nil)
       .joins(:school, claim_window: :academic_year)
-      .includes(:school, :provider, claim_window: :academic_year, mentor_trainings: :mentor)
+      .includes(:school, claim_window: :academic_year, mentor_trainings: :mentor)
       .order("academic_years.starts_on", "schools.name", :reference)
   end
 end
