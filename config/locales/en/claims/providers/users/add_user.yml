@@ -1,0 +1,11 @@
+en:
+  claims:
+    providers:
+      users:
+        add_user:
+          edit:
+            caption: User details
+            cancel: Cancel
+          update:
+            success: User added
+            success_body: "%{user_name} is now able to view and audit claims on behalf of %{provider_name}"

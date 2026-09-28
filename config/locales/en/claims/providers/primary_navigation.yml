@@ -3,3 +3,4 @@ en:
     providers:
       primary_navigation:
         claims: Claims
+        users: Users

@@ -1,0 +1,20 @@
+en:
+  claims:
+    providers:
+      users:
+        index:
+          heading: Users
+          add_user: Add user
+          no_users: There are no users for %{provider_name}.
+        show:
+          details: Details
+          remove_user: Remove user
+        remove:
+          page_title: Are you sure you want to remove this user? - %{user_name}
+          caption: "%{user_name}"
+          heading: Are you sure you want to remove this user?
+          warning: "%{user_name} will be sent an email to tell them you removed them from %{provider_name}."
+          remove_user: Remove user
+          cancel: Cancel
+        destroy:
+          success: User removed

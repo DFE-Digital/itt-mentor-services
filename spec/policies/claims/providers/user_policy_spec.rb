@@ -25,9 +25,18 @@ RSpec.describe Claims::Providers::UserPolicy do
     it { is_expected.not_to permit(school_user, user_in_assigned_provider) }
   end
 
-  permissions :create?, :destroy?, :update? do
+  permissions :create?, :update? do
+    it { is_expected.to permit(support_user, Claims::ProviderUser) }
+    it { is_expected.to permit(provider_user, Claims::ProviderUser) }
+    it { is_expected.not_to permit(school_user, Claims::ProviderUser) }
+  end
+
+  permissions :destroy? do
     it { is_expected.to permit(support_user, user_in_assigned_provider) }
-    it { is_expected.not_to permit(provider_user, user_in_assigned_provider) }
+    it { is_expected.to permit(provider_user, user_in_assigned_provider) }
+    it { is_expected.not_to permit(provider_user, user_in_other_provider) }
+    it { is_expected.not_to permit(provider_user, provider_user) }
+    it { is_expected.not_to permit(school_user, user_in_assigned_provider) }
   end
 
   describe "scope" do
