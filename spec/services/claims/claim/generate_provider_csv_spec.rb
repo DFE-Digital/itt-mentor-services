@@ -29,12 +29,12 @@ RSpec.describe Claims::Claim::GenerateProviderCSV do
     current_year = current_claim_window.academic_year_name
 
     expect(generate_provider_csv.lines.first.chomp).to eq(
-      "academic_year,school_urn,school_name,claim_reference,mentor_first_name,mentor_last_name,hours_claimed,provider_name",
+      "academic_year,school_urn,school_name,claim_reference,mentor_first_name,mentor_last_name,hours_claimed",
     )
     expect(generate_provider_csv.lines.drop(1).map(&:chomp)).to contain_exactly(
-      "#{historic_year},111111,Hogwarts,11111111,Barry,Garlow,20,Best Practice Network",
-      "#{historic_year},111111,Hogwarts,11111111,Sarah,Doe,6,Best Practice Network",
-      "#{current_year},222222,Springfield Elementary,22222222,Barry,Garlow,6,Best Practice Network",
+      "#{historic_year},111111,Hogwarts,11111111,Barry,Garlow,20",
+      "#{historic_year},111111,Hogwarts,11111111,Sarah,Doe,6",
+      "#{current_year},222222,Springfield Elementary,22222222,Barry,Garlow,6",
     )
     expect(generate_provider_csv.lines.last).to start_with(current_year)
   end
