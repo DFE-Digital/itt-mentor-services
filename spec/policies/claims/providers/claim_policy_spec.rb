@@ -25,6 +25,12 @@ RSpec.describe Claims::Providers::ClaimPolicy do
     it { is_expected.not_to permit(school_user, assigned_claim) }
   end
 
+  permissions :download? do
+    it { is_expected.to permit(provider_user, Claims::Claim) }
+    it { is_expected.not_to permit(support_user, Claims::Claim) }
+    it { is_expected.not_to permit(school_user, Claims::Claim) }
+  end
+
   permissions :create?, :destroy?, :update? do
     it { is_expected.to permit(support_user, assigned_claim) }
     it { is_expected.not_to permit(provider_user, assigned_claim) }
