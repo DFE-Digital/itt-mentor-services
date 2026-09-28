@@ -97,6 +97,7 @@ scope module: :claims, as: :claims, constraints: {
 
   resources :providers, only: %i[index] do
     scope module: :providers do
+      resource :claims_download, path: "claims/download", only: :show
       resources :claims, only: %i[index show] do
         member do
           get "approve/new", to: "claims/approve#new", as: :new_approve

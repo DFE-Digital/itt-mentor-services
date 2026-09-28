@@ -41,6 +41,10 @@
           </dd>
         </div>
       </dl>
+
+      <% if (provider = claims_account_provider) %>
+        <%= govuk_button_link_to t(".download_claim_data"), claims_provider_claims_download_path(provider), secondary: true %>
+      <% end %>
     </div>
   </div>
 </div>

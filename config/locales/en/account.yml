@@ -2,3 +2,4 @@ en:
   account:
     show:
       page_title: Your account
+      download_claim_data: Download claim data

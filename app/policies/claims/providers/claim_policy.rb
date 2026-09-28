@@ -29,6 +29,10 @@ class Claims::Providers::ClaimPolicy < Claims::Providers::ApplicationPolicy
     approve?
   end
 
+  def download?
+    provider_user?
+  end
+
   def search?
     index?
   end
