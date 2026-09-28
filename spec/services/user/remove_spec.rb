@@ -20,6 +20,18 @@ RSpec.describe User::Remove do
       end
     end
 
+    context "when the user is a claims provider user" do
+      let(:user) { create(:claims_provider_user) }
+      let(:organisation) { create(:claims_provider) }
+      let!(:membership) { create(:user_membership, user:, organisation:) }
+
+      it "calls mailer with correct params" do
+        expect { remove_user_service }.to have_enqueued_mail(Claims::ProviderUserMailer, :user_membership_destroyed_notification).with(user, organisation)
+
+        expect { membership.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
     context "when the user is a placements user" do
       let(:user) { create(:placements_user) }
       let(:organisation) { create(:placements_school) }
