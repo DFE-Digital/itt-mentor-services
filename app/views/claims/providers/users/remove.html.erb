@@ -1,0 +1,23 @@
+<% content_for(:page_title) { sanitize(t(".page_title", user_name: @user.full_name)) } %>
+<%= render "claims/providers/primary_navigation", provider: @provider, current: :users %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: claims_provider_user_path(@provider, @user)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= t(".caption", user_name: @user.full_name) %></span>
+      <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
+
+      <%= govuk_warning_text(text: t(".warning", user_name: @user.full_name, provider_name: @provider.name)) %>
+
+      <%= govuk_button_to t(".remove_user"), claims_provider_user_path(@provider, @user), warning: true, method: :delete %>
+
+      <p class="govuk-body">
+        <%= govuk_link_to(t(".cancel"), claims_provider_user_path(@provider, @user), no_visited_state: true) %>
+      </p>
+    </div>
+  </div>
+</div>

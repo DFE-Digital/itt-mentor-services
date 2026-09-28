@@ -16,12 +16,18 @@ class Claims::AddUserWizard::UserStep < BaseStep
   end
 
   def user
-    @user ||= Claims::User.find_or_initialize_by(email:).tap do |user|
+    @user ||= user_class.find_or_initialize_by(email:).tap do |user|
       user.assign_attributes(first_name:, last_name:)
     end
   end
 
   def membership
     @membership ||= user.user_memberships.new(organisation:)
+  end
+
+  private
+
+  def user_class
+    organisation.is_a?(Provider) ? Claims::ProviderUser : Claims::User
   end
 end

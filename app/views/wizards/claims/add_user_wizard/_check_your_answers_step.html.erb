@@ -9,7 +9,9 @@
         <span class="govuk-caption-l"><%= contextual_text %></span>
         <h1 class="govuk-heading-l"><%= t(".title") %></h1>
 
-        <p class="govuk-body"><%= t(".description", user_name: wizard.steps[:user].first_name) %></p>
+        <p class="govuk-body">
+          <%= t(wizard.organisation.is_a?(Provider) ? ".provider_description" : ".description", user_name: wizard.steps[:user].first_name) %>
+        </p>
 
         <h2 class="govuk-heading-m"><%= t(".details") %></h2>
         <%= govuk_summary_list(actions: true) do |summary_list| %>
@@ -41,7 +43,7 @@
 
         <div class="govuk-warning-text">
           <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-          <strong class="govuk-warning-text__text"><%= t(".warning", user_name: wizard.steps[:user].user.full_name, school_name: @school.name) %></strong>
+          <strong class="govuk-warning-text__text"><%= t(".warning", user_name: wizard.steps[:user].user.full_name, organisation_name: wizard.organisation.name) %></strong>
         </div>
 
         <%= f.govuk_submit t(".submit") %>

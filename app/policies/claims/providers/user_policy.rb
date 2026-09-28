@@ -20,4 +20,16 @@ class Claims::Providers::UserPolicy < Claims::Providers::ApplicationPolicy
 
     record.user_memberships.where(organisation: user.providers).exists?
   end
+
+  def create?
+    user.support_user? || provider_user?
+  end
+
+  def update?
+    create?
+  end
+
+  def destroy?
+    read? && user != record
+  end
 end

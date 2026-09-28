@@ -65,6 +65,7 @@ class PrimaryNavigationComponent < ApplicationComponent
   def claims_provider_navigation_items
     build_navigation_items([
       [:claims, claims_provider_claims_path(organisation), :claims],
+      [:users, claims_provider_users_path(organisation), :users],
     ])
   end
 

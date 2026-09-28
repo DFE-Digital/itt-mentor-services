@@ -10,7 +10,8 @@ en:
           page_title: Check your answers - %{caption}
           title: Confirm user details
           submit: Confirm and add user
-          warning: "%{user_name} will be sent an email to tell them you’ve added them to %{school_name}."
+          warning: "%{user_name} will be sent an email to tell them you’ve added them to %{organisation_name}."
           change: Change
           description: Once added, %{user_name} will be able to view and create claims on behalf of your school.
+          provider_description: Once added, %{user_name} will be able to view and audit claims on behalf of your organisation.
           details: Details

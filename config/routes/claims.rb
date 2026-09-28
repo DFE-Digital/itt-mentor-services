@@ -108,6 +108,16 @@ scope module: :claims, as: :claims, constraints: {
         end
       end
       get "schools/search", to: "schools#search", as: :schools_search
+
+      resources :users, only: %i[index show destroy] do
+        get :remove, on: :member
+
+        collection do
+          get "new", to: "users/add_user#new", as: :new_add_user
+          get "new/:state_key/:step", to: "users/add_user#edit", as: :add_user
+          put "new/:state_key/:step", to: "users/add_user#update"
+        end
+      end
     end
   end
 

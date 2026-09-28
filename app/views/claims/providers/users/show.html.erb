@@ -1,0 +1,37 @@
+<% content_for :page_title, @user.full_name %>
+<%= render "claims/providers/primary_navigation", provider: @provider, current: :users %>
+
+<%= content_for(:before_content) do %>
+  <%= govuk_back_link(href: claims_provider_users_path(@provider)) %>
+<% end %>
+
+<div class="govuk-width-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= @provider.name %></span>
+      <h1 class="govuk-heading-l"><%= @user.full_name %></h1>
+
+      <h2 class="govuk-heading-m"><%= t(".details") %></h2>
+      <%= govuk_summary_list(actions: false) do |summary_list| %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: User.human_attribute_name(:first_name)) %>
+          <% row.with_value(text: @user.first_name) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: User.human_attribute_name(:last_name)) %>
+          <% row.with_value(text: @user.last_name) %>
+        <% end %>
+
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: User.human_attribute_name(:email)) %>
+          <% row.with_value(text: @user.email) %>
+        <% end %>
+      <% end %>
+
+      <% if policy(@user).destroy? %>
+        <%= govuk_link_to t(".remove_user"), remove_claims_provider_user_path(@provider, @user), class: "app-link app-link--destructive" %>
+      <% end %>
+    </div>
+  </div>
+</div>

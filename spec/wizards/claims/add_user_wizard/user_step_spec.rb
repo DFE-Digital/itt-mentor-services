@@ -75,6 +75,23 @@ RSpec.describe Claims::AddUserWizard::UserStep, type: :model do
         end
       end
 
+      context "when the organisation is a provider" do
+        let(:organisation) { create(:claims_provider) }
+
+        it "returns a new provider user" do
+          expect(step.user).to be_a(Claims::ProviderUser)
+        end
+
+        context "when a school user with the same email already exists" do
+          before { create(:claims_user, email:) }
+
+          it "returns a new provider user rather than the school user" do
+            expect(step.user).to be_a(Claims::ProviderUser)
+            expect(step.user.new_record?).to be(true)
+          end
+        end
+      end
+
       context "when the first name or last name do not match the user record attributes" do
         let!(:existing_user) { create(:claims_user, first_name: "Jake", last_name: "Bloggs", email:) }
 
