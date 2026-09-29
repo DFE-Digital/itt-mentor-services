@@ -171,7 +171,7 @@ class Claims::UserMailer < Claims::ApplicationMailer
   end
 
   def claims_assigned_to_invalid_provider(user)
-    claims = Claims::Claim.where(created_by: user, status: :invalid_provider)
+    claims = Claims::Claim.where(created_by: user, status: :invalid_provider).order(:reference)
     claims_string = claims.pluck(:reference).to_sentence
 
     notify_email to: user.email,
