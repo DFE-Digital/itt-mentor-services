@@ -36,8 +36,18 @@ RSpec.describe Claims::ProviderSampling, type: :model do
   end
 
   describe "delegations" do
-    it { is_expected.to delegate_method(:email_addresses).to(:provider).with_prefix }
     it { is_expected.to delegate_method(:name).to(:provider).with_prefix }
+  end
+
+  describe "#provider_users" do
+    it "returns the provider's claims provider users" do
+      provider = create(:claims_provider)
+      provider_user = create(:claims_provider_user, providers: [provider])
+      create(:claims_provider_user)
+      provider_sampling = create(:provider_sampling, provider:)
+
+      expect(provider_sampling.provider_users).to contain_exactly(provider_user)
+    end
   end
 
   describe "#downloaded?" do

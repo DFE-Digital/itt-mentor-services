@@ -1,17 +1,13 @@
 class Claims::Sampling::SendProviderRemindersJob < ApplicationJob
   queue_as :default
 
-  delegate :email_addresses, to: :provider, allow_nil: true
-
   def perform
     wait_time = 0.minutes
 
     provider_samplings.find_in_batches(batch_size: 100) do |batch|
       batch.each do |provider_sampling|
-        next unless provider_sampling.provider_email_addresses.any?
-
-        provider_sampling.provider_email_addresses.each do |email_address|
-          Claims::ProviderMailer.sampling_checks_required(provider_sampling, email_address).deliver_later(wait: wait_time)
+        provider_sampling.provider_users.each do |provider_user|
+          Claims::ProviderMailer.sampling_checks_required(provider_sampling, provider_user).deliver_later(wait: wait_time)
         end
       end
 

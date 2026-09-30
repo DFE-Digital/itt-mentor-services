@@ -5,6 +5,7 @@ describe Claims::Sampling::CreateAndDeliver do
 
   let(:current_user) { create(:claims_support_user) }
   let!(:claim) { create(:claim, :paid) }
+  let!(:provider_user) { create(:claims_provider_user, providers: [claim.provider]) }
   let(:claims) { Claims::Claim.where(id: claim.id) }
   let(:csv_data) { [{ id: claims.first.id, sampling_reason: "ABCD" }] }
 
@@ -16,7 +17,7 @@ describe Claims::Sampling::CreateAndDeliver do
         .and change(Claims::ClaimActivity, :count).by(1)
         .and change { Claims::Claim.pluck(:status).uniq }.from(%w[paid]).to(%w[sampling_in_progress])
         .and change { Claims::Claim.pluck(:sampling_reason).uniq }.from([nil]).to(%w[ABCD])
-        .and enqueue_mail(Claims::ProviderMailer, :sampling_checks_required)
+        .and enqueue_mail(Claims::ProviderMailer, :sampling_checks_required).with(an_instance_of(Claims::ProviderSampling), provider_user)
       end
     end
   end

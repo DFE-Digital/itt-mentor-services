@@ -17,8 +17,8 @@ class Claims::Sampling::CreateAndDeliver < ApplicationService
         provider_sampling = Claims::ProviderSampling.create!(provider:, claims: provider_claims, sampling:, csv_file: File.open(csv_for_provider(provider_claims, provider.name).to_io))
 
         transaction.after_commit do
-          provider.email_addresses.each do |email_address|
-            Claims::ProviderMailer.sampling_checks_required(provider_sampling, email_address:).deliver_later
+          provider_sampling.provider_users.each do |provider_user|
+            Claims::ProviderMailer.sampling_checks_required(provider_sampling, provider_user).deliver_later
           end
         end
       end

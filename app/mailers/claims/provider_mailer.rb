@@ -1,9 +1,9 @@
 class Claims::ProviderMailer < Claims::ApplicationMailer
-  def sampling_checks_required(provider_sampling, email_address:)
+  def sampling_checks_required(provider_sampling, provider_user)
     @provider_sampling = provider_sampling
-    @email_address = email_address
+    @provider_user = provider_user
 
-    notify_email to: email_address,
+    notify_email to: provider_user.email,
                  subject: t(".subject"),
                  body: t(
                    ".body",
@@ -13,11 +13,11 @@ class Claims::ProviderMailer < Claims::ApplicationMailer
                  )
   end
 
-  def resend_sampling_checks_required(provider_sampling, email_address)
-    @email_address = email_address
+  def resend_sampling_checks_required(provider_sampling, provider_user)
+    @provider_user = provider_user
     @provider_sampling = provider_sampling
 
-    notify_email to: email_address,
+    notify_email to: provider_user.email,
                  subject: t(".subject"),
                  body: t(
                    ".body",
@@ -48,10 +48,10 @@ class Claims::ProviderMailer < Claims::ApplicationMailer
 
   private
 
-  attr_reader :provider_sampling, :email_address
+  attr_reader :provider_sampling, :provider_user
 
   def token
-    Claims::DownloadAccessToken.create!(activity_record: provider_sampling, email_address:).generate_token_for(:csv_download)
+    Claims::DownloadAccessToken.create!(activity_record: provider_sampling, email_address: provider_user.email).generate_token_for(:csv_download)
   end
 
   def number_of_claims
