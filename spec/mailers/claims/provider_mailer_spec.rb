@@ -212,7 +212,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
   describe "#claims_have_not_been_submitted" do
     subject(:claims_have_not_been_submitted_email) do
       described_class.claims_have_not_been_submitted(
-        create(:provider_email_address, provider:, email_address:),
+        create(:claims_provider_user, email: email_address, providers: [provider]).user_memberships.first,
       )
     end
 

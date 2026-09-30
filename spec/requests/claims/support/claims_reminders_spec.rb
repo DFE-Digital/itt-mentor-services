@@ -33,12 +33,14 @@ RSpec.describe "Claims Reminders", type: :request do
 
   describe "POST /claims/support/claims_reminders/send_providers_not_submitted_claims" do
     let(:claim_window) { create(:claim_window, :current) }
-    let(:email_address) { build(:provider_email_address) }
     let(:current_claim) { build(:claim, claim_window: claim_window) }
     let(:previous_claim) { build(:claim, claim_window: build(:claim_window, :historic)) }
     let!(:provider_with_no_claims) { create(:claims_provider, name: "Test Provider", accredited: true) }
     let!(:provider_with_claims_in_current_window) { create(:claims_provider, name: "Provider with Claims", claims: [current_claim], accredited: true) }
     let!(:provider_with_claims_in_previous_window) { create(:claims_provider, name: "Provider with Previous Claims", claims: [previous_claim], accredited: true) }
+    let!(:provider_with_no_claims_user) { create(:claims_provider_user, providers: [provider_with_no_claims]) }
+    let!(:provider_with_claims_in_current_window_user) { create(:claims_provider_user, providers: [provider_with_claims_in_current_window]) }
+    let!(:provider_with_claims_in_previous_window_user) { create(:claims_provider_user, providers: [provider_with_claims_in_previous_window]) }
     let(:support_user) { create(:claims_support_user) }
 
     before do
@@ -51,10 +53,10 @@ RSpec.describe "Claims Reminders", type: :request do
     it "sends reminders to providers and redirects with a flash message" do
       post send_providers_not_submitted_claims_claims_support_claims_reminders_path
 
-      expect(Claims::ProviderMailer).to have_received(:claims_have_not_been_submitted).once.with(provider_with_no_claims.provider_email_addresses.first)
-      expect(Claims::ProviderMailer).to have_received(:claims_have_not_been_submitted).with(provider_with_claims_in_previous_window.provider_email_addresses.first)
+      expect(Claims::ProviderMailer).to have_received(:claims_have_not_been_submitted).once.with(provider_with_no_claims_user.user_memberships.first)
+      expect(Claims::ProviderMailer).to have_received(:claims_have_not_been_submitted).once.with(provider_with_claims_in_previous_window_user.user_memberships.first)
 
-      expect(Claims::ProviderMailer).not_to have_received(:claims_have_not_been_submitted).with(provider_with_claims_in_current_window.provider_email_addresses.first)
+      expect(Claims::ProviderMailer).not_to have_received(:claims_have_not_been_submitted).with(provider_with_claims_in_current_window_user.user_memberships.first)
     end
   end
 

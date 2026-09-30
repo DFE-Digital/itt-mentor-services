@@ -10,7 +10,7 @@ class Claims::ProviderMailerPreview < ActionMailer::Preview
   end
 
   def claims_have_not_been_submitted
-    Claims::ProviderMailer.claims_have_not_been_submitted(email_address_record)
+    Claims::ProviderMailer.claims_have_not_been_submitted(user_membership)
   end
 
   private
@@ -19,12 +19,8 @@ class Claims::ProviderMailerPreview < ActionMailer::Preview
     @provider_sampling ||= Claims::ProviderSampling.new(id: stubbed_id, provider:)
   end
 
-  def email_address_record
-    @email_address_record ||= ProviderEmailAddress.new(
-      id: stubbed_id,
-      provider:,
-      email_address: "test.provider@example.com",
-    )
+  def user_membership
+    @user_membership ||= UserMembership.new(id: stubbed_id, user: provider_user, organisation: provider)
   end
 
   def provider_user

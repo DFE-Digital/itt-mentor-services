@@ -26,10 +26,11 @@ class Claims::Support::ClaimsRemindersController < Claims::Support::ApplicationC
   def providers_not_submitted_claims; end
 
   def send_providers_not_submitted_claims
-    email_addresses_to_notify = ProviderEmailAddress.includes(:provider).where(provider: @providers)
+    user_memberships_to_notify = UserMembership.includes(:user, :organisation)
+                                               .where(organisation: @providers, user: Claims::ProviderUser.all)
 
     NotifyRateLimiter.call(
-      collection: email_addresses_to_notify,
+      collection: user_memberships_to_notify,
       mailer: "Claims::ProviderMailer",
       mailer_method: :claims_have_not_been_submitted,
     )
