@@ -220,7 +220,7 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
 
     expect(page).to have_element(
       :p,
-      text: "We have sent a copy of your claim to best_practice_network@example.com",
+      text: "We have sent a copy of your claim to Best Practice Network",
       class: "govuk-body",
     )
     expect(page).to have_element(

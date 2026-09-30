@@ -42,9 +42,7 @@ RSpec.describe "Claims user creates a claim for a mentor with a previous year cl
   def given_a_school_exists_with_a_previous_year_claim
     @user_anne = build(:claims_user, first_name: "Anne", last_name: "Wilson", email: "anne_wilson@education.gov.uk")
     @mentor = build(:claims_mentor, first_name: "Barry", last_name: "Garlow", trn: "8888888")
-    @provider = build(:claims_provider, :best_practice_network) do |provider|
-      provider.provider_email_addresses.build(email_address: "best_practice_network@example.com", primary: true)
-    end
+    @provider = build(:claims_provider, :best_practice_network)
     @current_claim_window = create(:claim_window, :current)
     @historic_claim_window = build(:claim_window, :historic)
     @date_submitted = @historic_claim_window.starts_on + 1.day
@@ -229,7 +227,7 @@ RSpec.describe "Claims user creates a claim for a mentor with a previous year cl
     expect(page).to have_element(:h1, class: "govuk-panel__title", text: "Claim submitted")
     expect(page).to have_text("Your reference number")
 
-    expect(page).to have_text("We have sent a copy of your claim to best_practice_network@example.com")
+    expect(page).to have_text("We have sent a copy of your claim to Best Practice Network")
 
     expect(page).to have_h2("What happens next")
     expect(page).to have_text("If we need further information to process your claim we will email you.")

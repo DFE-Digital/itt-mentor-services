@@ -109,7 +109,7 @@ class Claims::Claim < ApplicationRecord
        },
        validate: true
 
-  delegate :code, :name, :primary_email_address, to: :provider, prefix: true, allow_nil: true
+  delegate :code, :name, to: :provider, prefix: true, allow_nil: true
   delegate :urn, :postcode, :region_funding_available_per_hour, to: :school, prefix: true, allow_nil: true
   delegate :name, :users, to: :school, prefix: true
   delegate :full_name, to: :submitted_by, prefix: true, allow_nil: true

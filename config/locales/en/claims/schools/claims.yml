@@ -9,7 +9,7 @@ en:
           feedback_link_html: "%{feedback_link}"
           your_reference_number_id: Your reference number
           what_happens_next: What happens next
-          we_have_sent_a_copy: We have sent a copy of your claim to %{provider_email}
+          we_have_sent_a_copy: We have sent a copy of your claim to %{provider_name}
           receive payment: You will automatically receive your payment from September %{year}.
           payment_details: Academies and independent schools will receive the payment directly. Maintained schools payments are made to their local authority.
           further_information: If we need further information to process your claim we will email you.

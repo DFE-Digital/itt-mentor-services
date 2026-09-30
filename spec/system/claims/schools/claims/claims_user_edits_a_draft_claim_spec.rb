@@ -45,9 +45,7 @@ RSpec.describe "Claims user edits a draft claim", service: :claims, type: :syste
     @user_anne = build(:claims_user, first_name: "Anne", last_name: "Wilson", email: "anne_wilson@education.gov.uk")
     @mentor_james = build(:claims_mentor, first_name: "James", last_name: "Jameson")
     @mentor_barry = build(:claims_mentor, first_name: "Barry", last_name: "Garlow", trn: "8888888")
-    @provider = build(:claims_provider, :best_practice_network) do |provider|
-      provider.provider_email_addresses.build(email_address: "best_practice_network@example.com", primary: true)
-    end
+    @provider = build(:claims_provider, :best_practice_network)
     @claim_window = build(:claim_window, :current)
     @eligibility = build(:eligibility, claim_window: @claim_window)
     @date_completed = @claim_window.starts_on + 1.day
@@ -306,7 +304,7 @@ RSpec.describe "Claims user edits a draft claim", service: :claims, type: :syste
     expect(page).to have_text("Your reference number")
 
     expect(page).to have_text("88888888")
-    expect(page).to have_text("We have sent a copy of your claim to best_practice_network@example.com")
+    expect(page).to have_text("We have sent a copy of your claim to Best Practice Network")
 
     expect(page).to have_h2("What happens next")
     expect(page).to have_text("If we need further information to process your claim we will email you.")
