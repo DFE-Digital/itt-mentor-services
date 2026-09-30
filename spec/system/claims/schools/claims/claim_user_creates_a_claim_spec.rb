@@ -274,7 +274,7 @@ RSpec.describe "Claims user creates a claim", :js, service: :claims, type: :syst
 
     expect(page).to have_element(:strong, text: @shelbyville_school.claims.first.reference)
 
-    expect(page).to have_text("We have sent a copy of your claim to best_practice_network@example.com")
+    expect(page).to have_text("We have sent a copy of your claim to Best Practice Network")
 
     expect(page).to have_h2("What happens next")
     expect(page).to have_text("If we need further information to process your claim we will email you.")

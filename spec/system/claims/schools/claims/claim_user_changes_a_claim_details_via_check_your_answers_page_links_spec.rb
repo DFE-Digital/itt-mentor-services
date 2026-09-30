@@ -315,7 +315,7 @@ RSpec.describe "Claims user changes a claim details via check your answers page 
     expect(page).to have_element(:h1, class: "govuk-panel__title", text: "Claim submitted")
     expect(page).to have_text("Your reference number")
     expect(page).to have_element(:strong, text: @shelbyville_school.claims.first.reference)
-    expect(page).to have_text("We have sent a copy of your claim to niotnational_institute_of_teachingfounded_by_the_school-led_development_trust@example.com")
+    expect(page).to have_text("We have sent a copy of your claim to NIoT: National Institute of Teaching, founded by the School-Led Development Trust")
 
     expect(page).to have_h2("What happens next")
     expect(page).to have_text("If we need further information to process your claim we will email you.")

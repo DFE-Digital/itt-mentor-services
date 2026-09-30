@@ -9,7 +9,7 @@
         <div><strong><%= @claim.reference %></strong></div>
       <% end %>
 
-      <p class="govuk-body"><%= t(".we_have_sent_a_copy", provider_email: @claim.provider_primary_email_address) %></p>
+      <p class="govuk-body"><%= t(".we_have_sent_a_copy", provider_name: @claim.provider_name) %></p>
 
       <h2 class="govuk-heading-m"><%= t(".what_happens_next") %></h2>
       <p class="govuk-body"><%= t(".receive payment", year: @claim.academic_year_ends_on.year) %></p>

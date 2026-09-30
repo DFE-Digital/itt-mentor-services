@@ -26,9 +26,7 @@ RSpec.describe "Claim user updates an invalid provider claim", :js, service: :cl
   def given_an_eligible_school_exists_with_an_invalid_provider_claim
     @user_anne = build(:claims_user, first_name: "Anne", last_name: "Wilson", email: "anne_wilson@education.gov.uk")
     @mentor_james = build(:claims_mentor, first_name: "James", last_name: "Jameson")
-    @provider = create(:claims_provider, :best_practice_network, accredited: true) do |provider|
-      provider.provider_email_addresses.build(email_address: "best_practice_network@example.com", primary: true)
-    end
+    @provider = create(:claims_provider, :best_practice_network, accredited: true)
     @unaccredited_provider = build(:claims_provider, name: "Unaccredited provider")
     @claim_window = build(:claim_window, :current)
     @eligibility = build(:eligibility, claim_window: @claim_window)
@@ -131,7 +129,7 @@ RSpec.describe "Claim user updates an invalid provider claim", :js, service: :cl
     expect(page).to have_text("Your reference number")
 
     expect(page).to have_text("88888888")
-    expect(page).to have_text("We have sent a copy of your claim to best_practice_network@example.com")
+    expect(page).to have_text("We have sent a copy of your claim to Best Practice Network")
 
     expect(page).to have_h2("What happens next")
     expect(page).to have_text("If we need further information to process your claim we will email you.")
