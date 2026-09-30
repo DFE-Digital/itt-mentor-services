@@ -2,11 +2,11 @@ class Claims::ProviderMailerPreview < ActionMailer::Preview
   include ActionDispatch::TestProcess::FixtureFile
 
   def sampling_checks_required
-    Claims::ProviderMailer.sampling_checks_required(provider_sampling, email_address: "example@example.com")
+    Claims::ProviderMailer.sampling_checks_required(provider_sampling, provider_user)
   end
 
   def resend_sampling_checks_required
-    Claims::ProviderMailer.resend_sampling_checks_required(provider_sampling, email_address: "example@example.com")
+    Claims::ProviderMailer.resend_sampling_checks_required(provider_sampling, provider_user)
   end
 
   def claims_have_not_been_submitted
@@ -24,6 +24,15 @@ class Claims::ProviderMailerPreview < ActionMailer::Preview
       id: stubbed_id,
       provider:,
       email_address: "test.provider@example.com",
+    )
+  end
+
+  def provider_user
+    @provider_user ||= Claims::ProviderUser.new(
+      id: stubbed_id,
+      first_name: "Test",
+      last_name: "User",
+      email: "test.provider@example.com",
     )
   end
 
