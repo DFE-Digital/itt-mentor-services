@@ -7,7 +7,6 @@ en:
             buttons:
               approve: Approve claim
               reject_claim: Reject claim
-              confirm_provider_reject: Confirm provider rejected claim
               request_clawback: Request clawback
               information_sent: Confirm information sent
               paid: Confirm claim paid

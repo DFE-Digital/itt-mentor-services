@@ -11,7 +11,6 @@ class Claims::Support::Claim::ActionsComponent < ApplicationComponent
     %w[
       payment_information_requested
       payment_information_sent
-      sampling_in_progress
       sampling_provider_not_approved
       sampling_not_approved
       clawback_requires_approval
