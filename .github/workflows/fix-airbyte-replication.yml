@@ -26,9 +26,9 @@ permissions:
   id-token: write
 
 env:
-  SERVICE_NAME: register
-  SERVICE_SHORT: rtt
-  TF_VARS_PATH: terraform/aks/workspace-variables
+  SERVICE_NAME: itt-mentor-services
+  SERVICE_SHORT: ittms
+  TF_VARS_PATH: terraform/application/config
 
 jobs:
   fix-replication:
