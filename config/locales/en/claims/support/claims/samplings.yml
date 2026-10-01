@@ -11,7 +11,6 @@ en:
               other: Auditing (%{count})
             no_claims: There are no claims waiting to be processed.
             upload_claims: Upload claims to be audited
-            upload_provider_response: Upload provider response
           show:
             page_caption: Auditing - Claim %{reference}
             page_title: "%{school_name} - Auditing - Claim %{reference}"
