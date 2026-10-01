@@ -13,7 +13,7 @@ RSpec.describe "Support user approves a claim", service: :claims, type: :system 
     then_i_see_the_sampling_claims_index_page
 
     when_i_click_to_view_the_sampling_claim
-    then_i_see_the_sampling_reason
+    then_i_see_the_approve_claim_button
 
     when_i_click_on_approve_claim
     then_i_see_the_confirm_approval_page
@@ -42,8 +42,7 @@ RSpec.describe "Support user approves a claim", service: :claims, type: :system 
   def given_claims_exist
     @sampling_claim = create(:claim,
                              :submitted,
-                             status: :sampling_in_progress,
-                             sampling_reason: "Randomly selected for audit")
+                             status: :sampling_provider_not_approved)
 
     @paid_claim = create(:claim,
                          :submitted,
@@ -100,21 +99,14 @@ RSpec.describe "Support user approves a claim", service: :claims, type: :system 
     )
     expect(page).to have_element(:p, text: "Auditing - Claim #{@sampling_claim.reference}", class: "govuk-caption-l")
     expect(page).to have_h1(@sampling_claim.school.name)
-    expect(page).to have_element(:strong, text: "Audit requested", class: "govuk-tag govuk-tag--yellow")
+    expect(page).to have_element(:strong, text: "Rejected by provider", class: "govuk-tag govuk-tag--teal")
   end
 
   def when_i_click_on_back
     click_on "Back"
   end
 
-  def then_i_see_the_sampling_reason
-    inset_text = page.find("div.govuk-inset-text")
-
-    within(inset_text) do
-      expect(page).to have_h3("Reason claim is being audited")
-      expect(page).to have_element(:p, text: "Randomly selected for audit", class: "govuk-body")
-    end
-
+  def then_i_see_the_approve_claim_button
     expect(page).to have_link("Approve claim", href: "/support/claims/sampling/claims/#{@sampling_claim.id}/confirm_approval")
   end
 

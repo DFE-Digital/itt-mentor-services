@@ -14,11 +14,6 @@ class Claims::Support::Claim::ActionsComponentPreview < ApplicationComponentPrev
     render Claims::Support::Claim::ActionsComponent.new(claim:)
   end
 
-  def with_sampling_in_progress_claim
-    claim = FactoryBot.build_stubbed(:claim, :sampling_in_progress)
-    render Claims::Support::Claim::ActionsComponent.new(claim:)
-  end
-
   def with_sampling_provider_not_approved_claim
     claim = FactoryBot.build_stubbed(:claim, :sampling_provider_not_approved)
     render Claims::Support::Claim::ActionsComponent.new(claim:)

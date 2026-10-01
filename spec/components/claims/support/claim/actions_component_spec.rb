@@ -58,14 +58,8 @@ RSpec.describe Claims::Support::Claim::ActionsComponent, type: :component do
   context "when claim status is sampling in progress" do
     let(:claim) { create(:claim, :audit_requested, sampling_reason: "Reason") }
 
-    it "renders actions" do
-      expect(page).to have_element(:div, class: "claim-actions")
-
-      expect(page).to have_element(:a, text: "Approve claim", class: "govuk-button")
-      expect(page).to have_link("Approve claim", href: "/support/claims/sampling/claims/#{claim.id}/confirm_approval")
-
-      expect(page).to have_element(:a, text: "Confirm provider rejected claim")
-      expect(page).to have_link("Confirm provider rejected claim", href: "/support/claims/sampling/claims/#{claim.id}/provider_rejected/new")
+    it "does not render actions" do
+      expect(page).not_to have_element(:div, class: "claim-actions")
     end
   end
 
