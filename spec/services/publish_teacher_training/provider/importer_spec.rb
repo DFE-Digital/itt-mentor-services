@@ -73,6 +73,18 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
     end
   end
 
+  context "with accredited providers which no longer appear in the API response" do
+    let!(:missing_provider) { create(:provider, :accredited) }
+
+    before do
+      non_existing_providers_request
+    end
+
+    it "sets accredited to false for the missing providers" do
+      expect { importer }.to change { missing_provider.reload.accredited }.from(true).to(false)
+    end
+  end
+
   context "with invalid providers in API response" do
     before do
       with_invalid_providers_request
