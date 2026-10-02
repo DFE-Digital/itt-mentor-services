@@ -22,8 +22,8 @@ class Claims::ProviderMailer < Claims::ApplicationMailer
                  body: t(
                    ".body",
                    provider_name: @provider_sampling.provider_name,
-                   download_csv_url: claims_sampling_claims_url(token:, utm_source: "email", utm_medium: "notification", utm_campaign: "provider"),
-                   support_email:, service_name:, completion_date:, service_url: claims_root_url(utm_source: "email", utm_medium: "notification", utm_campaign: "provider")
+                   number_of_claims: number_of_claims(provider_sampling.claims.sampling_in_progress),
+                   support_email:, service_url: claims_root_url(utm_source: "email", utm_medium: "notification", utm_campaign: "provider")
                  )
   end
 
@@ -50,12 +50,8 @@ class Claims::ProviderMailer < Claims::ApplicationMailer
 
   attr_reader :provider_sampling, :provider_user
 
-  def token
-    Claims::DownloadAccessToken.create!(activity_record: provider_sampling, email_address: provider_user.email).generate_token_for(:csv_download)
-  end
-
-  def number_of_claims
-    count = provider_sampling.claims.count
+  def number_of_claims(claims = provider_sampling.claims)
+    count = claims.count
     "#{count} #{"claim".pluralize(count)}"
   end
 
