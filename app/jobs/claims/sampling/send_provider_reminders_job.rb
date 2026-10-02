@@ -7,7 +7,7 @@ class Claims::Sampling::SendProviderRemindersJob < ApplicationJob
     provider_samplings.find_in_batches(batch_size: 100) do |batch|
       batch.each do |provider_sampling|
         provider_sampling.provider_users.each do |provider_user|
-          Claims::ProviderMailer.sampling_checks_required(provider_sampling, provider_user).deliver_later(wait: wait_time)
+          Claims::ProviderMailer.resend_sampling_checks_required(provider_sampling, provider_user).deliver_later(wait: wait_time)
         end
       end
 

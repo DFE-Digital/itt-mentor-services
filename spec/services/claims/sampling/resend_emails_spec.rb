@@ -23,10 +23,10 @@ describe Claims::Sampling::ResendEmails do
       let(:provider_users) { [provider_user, provider_user_2, provider_user_3] }
 
       it "enqueues the delivery of an email to each provider user" do
-        expect { resend_emails }.to enqueue_mail(Claims::ProviderMailer, :resend_sampling_checks_required).exactly(3)
-        .and enqueue_mail(Claims::ProviderMailer, :resend_sampling_checks_required).with(provider_sampling, provider_user)
-        .and enqueue_mail(Claims::ProviderMailer, :resend_sampling_checks_required).with(provider_sampling, provider_user_2)
-        .and enqueue_mail(Claims::ProviderMailer, :resend_sampling_checks_required).with(provider_sampling, provider_user_3)
+        expect { resend_emails }.to enqueue_mail(Claims::ProviderMailer, :sampling_checks_required).exactly(3)
+        .and enqueue_mail(Claims::ProviderMailer, :sampling_checks_required).with(provider_sampling, provider_user)
+        .and enqueue_mail(Claims::ProviderMailer, :sampling_checks_required).with(provider_sampling, provider_user_2)
+        .and enqueue_mail(Claims::ProviderMailer, :sampling_checks_required).with(provider_sampling, provider_user_3)
       end
 
       it "destroys all download access tokens for the given provider users" do
@@ -39,7 +39,7 @@ describe Claims::Sampling::ResendEmails do
 
       it "raises an invalid provider users error" do
         expect { resend_emails }.to raise_error(Claims::Sampling::ResendEmails::InvalidProviderUsersError)
-        .and not_enqueue_mail(Claims::ProviderMailer, :resend_sampling_checks_required)
+        .and not_enqueue_mail(Claims::ProviderMailer, :sampling_checks_required)
       end
     end
   end

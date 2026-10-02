@@ -63,7 +63,7 @@ notify_claims_users_they_have_invalid_provider_claims:
   description: "Reminds users to address claims with invalid providers"
 
 remind_providers_to_respond_to_sampling:
-    cron: "0 10 * * MON" # Every monday at 10:00
+    cron: "0 9 * * MON" # Every monday at 09:00
     class: "Claims::Sampling::SendProviderRemindersJob"
     description: "Reminds providers to respond to audit requests"
 
