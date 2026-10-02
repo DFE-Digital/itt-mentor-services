@@ -216,7 +216,6 @@ scope module: :claims, as: :claims, constraints: {
       resources :claim_activities, path: "activity", only: %i[index show] do
         member do
           get :resend_payer_email
-          get :resend_provider_email
         end
       end
     end
@@ -300,9 +299,6 @@ scope module: :claims, as: :claims, constraints: {
       collection do
         get "schools_not_submitted_claims", to: "claims_reminders#schools_not_submitted_claims", as: :schools_not_submitted_claims
         post "schools_not_submitted_claims", to: "claims_reminders#send_schools_not_submitted_claims", as: :send_schools_not_submitted_claims
-
-        get "providers_not_submitted_claims", to: "claims_reminders#providers_not_submitted_claims", as: :providers_not_submitted_claims
-        post "providers_not_submitted_claims", to: "claims_reminders#send_providers_not_submitted_claims", as: :send_providers_not_submitted_claims
 
         get "schools_not_signed_in", to: "claims_reminders#schools_not_signed_in", as: :schools_not_signed_in
         post "schools_not_signed_in", to: "claims_reminders#send_schools_not_signed_in", as: :send_schools_not_signed_in

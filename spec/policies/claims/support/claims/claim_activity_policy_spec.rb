@@ -5,7 +5,7 @@ describe Claims::Support::Claims::ClaimActivityPolicy do
 
   let(:support_user) { build(:claims_support_user) }
 
-  permissions :resend_payer_email?, :resend_provider_email? do
+  permissions :resend_payer_email? do
     it { is_expected.to permit(support_user, Claims::ClaimActivity) }
   end
 end

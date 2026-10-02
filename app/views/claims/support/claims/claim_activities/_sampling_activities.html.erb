@@ -7,9 +7,6 @@
 
   <div class="govuk-button-group">
     <%= govuk_button_link_to t(".download_csv"), provider_sampling.csv_file, secondary: true %>
-    <% unless claim_activity.action == "sampling_response_uploaded" %>
-      <%= govuk_button_link_to t(".resend_email_to_provider"), resend_provider_email_claims_support_claims_claim_activity_path(claim_activity, provider_sampling_id: provider_sampling.id), secondary: true %>
-    <% end %>
   </div>
 
   <%= govuk_table do |table| %>

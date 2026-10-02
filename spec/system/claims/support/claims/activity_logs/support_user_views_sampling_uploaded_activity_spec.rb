@@ -15,9 +15,6 @@ RSpec.describe "Support user views sampling uploaded activity spec", service: :c
     when_i_click_on_view_details
     then_i_see_the_activity_details
 
-    when_i_click_on_resend_email_to_provider
-    then_i_see_the_email_sent_success_message
-
     when_i_click_on_download_csv
     then_i_receive_a_csv_file
   end
@@ -81,15 +78,6 @@ RSpec.describe "Support user views sampling uploaded activity spec", service: :c
       "Claim amount" => "£#{@claim.amount}",
     })
     expect(page).to have_link("12345678", href: claims_support_claim_path(@claim))
-    expect(page).to have_link("Resend email to provider", href: resend_provider_email_claims_support_claims_claim_activity_path(@activity_log, provider_sampling_id: @provider_sampling.id))
-  end
-
-  def when_i_click_on_resend_email_to_provider
-    click_on("Resend email to provider")
-  end
-
-  def then_i_see_the_email_sent_success_message
-    expect(page).to have_success_banner("An email has been sent to Best Practice Network")
   end
 
   def when_i_click_on_download_csv

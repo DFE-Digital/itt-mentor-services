@@ -18,7 +18,6 @@ en:
           sampling_activities:
             providers: Providers
             download_csv: Download CSV
-            resend_email_to_provider: Resend email to provider
             claim_reference: Claim reference
             number_of_mentors: Number of mentors
             claim_amount: Claim amount
@@ -38,5 +37,3 @@ en:
             download_csv: Download CSV
           resend_payer_email:
             success: An email has been sent to the payer
-          resend_provider_email:
-            success: An email has been sent to %{provider_name}

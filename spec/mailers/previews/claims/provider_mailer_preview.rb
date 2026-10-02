@@ -9,18 +9,10 @@ class Claims::ProviderMailerPreview < ActionMailer::Preview
     Claims::ProviderMailer.resend_sampling_checks_required(provider_sampling, provider_user)
   end
 
-  def claims_have_not_been_submitted
-    Claims::ProviderMailer.claims_have_not_been_submitted(user_membership)
-  end
-
   private
 
   def provider_sampling
     @provider_sampling ||= Claims::ProviderSampling.new(id: stubbed_id, provider:)
-  end
-
-  def user_membership
-    @user_membership ||= UserMembership.new(id: stubbed_id, user: provider_user, organisation: provider)
   end
 
   def provider_user

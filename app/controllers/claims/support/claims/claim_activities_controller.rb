@@ -44,13 +44,6 @@ class Claims::Support::Claims::ClaimActivitiesController < Claims::Support::Appl
     redirect_to claims_support_claims_claim_activity_path(claim_activity), flash: { success: true, heading: t(".success") }
   end
 
-  def resend_provider_email
-    authorize [:claims, claim_activity]
-    Claims::Sampling::ResendEmails.call(provider_sampling:)
-
-    redirect_to claims_support_claims_claim_activity_path(claim_activity), flash: { success: true, heading: t(".success", provider_name: provider_sampling.provider_name) }
-  end
-
   private
 
   def claim_activity

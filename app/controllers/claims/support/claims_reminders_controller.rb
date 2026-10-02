@@ -2,7 +2,6 @@ class Claims::Support::ClaimsRemindersController < Claims::Support::ApplicationC
   before_action :skip_authorization
   before_action :set_claim_window
   before_action :set_schools, only: %i[schools_not_submitted_claims send_schools_not_submitted_claims]
-  before_action :set_providers, only: %i[providers_not_submitted_claims send_providers_not_submitted_claims]
   before_action :schools_without_sign_in, only: %i[schools_not_signed_in send_schools_not_signed_in]
   before_action :schools_with_sign_ins_without_claims, only: %i[school_has_signed_in_but_not_claimed send_your_school_has_signed_in_but_not_claimed]
 
@@ -18,24 +17,6 @@ class Claims::Support::ClaimsRemindersController < Claims::Support::ApplicationC
     )
 
     redirect_to schools_not_submitted_claims_claims_support_claims_reminders_path, flash: {
-      heading: t(".success"),
-      body: t(".success_body"),
-    }
-  end
-
-  def providers_not_submitted_claims; end
-
-  def send_providers_not_submitted_claims
-    user_memberships_to_notify = UserMembership.includes(:user, :organisation)
-                                               .where(organisation: @providers, user: Claims::ProviderUser.all)
-
-    NotifyRateLimiter.call(
-      collection: user_memberships_to_notify,
-      mailer: "Claims::ProviderMailer",
-      mailer_method: :claims_have_not_been_submitted,
-    )
-
-    redirect_to providers_not_submitted_claims_claims_support_claims_reminders_path, flash: {
       heading: t(".success"),
       body: t(".success_body"),
     }
@@ -93,16 +74,6 @@ class Claims::Support::ClaimsRemindersController < Claims::Support::ApplicationC
     @schools = Claims::School.includes(:eligible_claim_windows)
                              .where(eligible_claim_windows: { id: eligible_claim_windows.ids })
                              .where.missing(:claims)
-  end
-
-  def set_providers
-    @providers = Claims::Provider.accredited.left_outer_joins(:claims)
-                                 .where(claims: { id: nil })
-                                 .or(
-                                   Claims::Provider.left_outer_joins(:claims)
-                                                   .where.not(claims: { claim_window_id: Claims::ClaimWindow.current.id }),
-                                 )
-                                 .distinct
   end
 
   def schools_without_sign_in
