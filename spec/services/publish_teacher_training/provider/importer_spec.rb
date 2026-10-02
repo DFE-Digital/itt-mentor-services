@@ -85,6 +85,18 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
     end
   end
 
+  context "with no providers in the API response" do
+    let!(:accredited_provider) { create(:provider, :accredited) }
+
+    before do
+      stub_request(:get, publish_url).to_return(status: 200, body: { "data" => [] }.to_json)
+    end
+
+    it "does not change the accredited status of existing providers" do
+      expect { importer }.not_to(change { accredited_provider.reload.accredited })
+    end
+  end
+
   context "with invalid providers in API response" do
     before do
       with_invalid_providers_request
@@ -96,6 +108,26 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
       expect { importer }.to change(Provider, :count).by(1)
       expect(Provider.find_by(name: "Provider 1", code: "Prov1", provider_type: :scitt)).to be_present
       expect(Provider.find_by(name: "Invalid Provider", code: "Inv")).not_to be_present
+    end
+  end
+
+  context "with a provider in the API response which has no code" do
+    let!(:accredited_provider) { create(:provider, :accredited) }
+
+    before do
+      stub_request(:get, publish_url).to_return(
+        status: 200,
+        body: {
+          "data" => [
+            { "id" => 789, "attributes" => { "name" => "No Code", "code" => nil, "provider_type" => "scitt" } },
+          ],
+        }.to_json,
+      )
+    end
+
+    it "does not create the provider, and does not unaccredit anything" do
+      expect { importer }.not_to change(Provider, :count)
+      expect(accredited_provider.reload.accredited).to be(true)
     end
   end
 
