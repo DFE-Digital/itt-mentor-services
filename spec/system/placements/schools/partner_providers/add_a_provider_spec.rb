@@ -255,19 +255,9 @@ RSpec.describe "School user adds a provider to their list of providers",
   end
 
   def when_i_click_on_the_dropdown_item_for(provider_name)
-    attempts = 0
-
-    begin
-      attempts += 1
-      within(".autocomplete__wrapper") do
-        expect(page).to have_css(".autocomplete__option", text: provider_name, wait: 10)
-        all(".autocomplete__option", text: provider_name, minimum: 1).first.click
-      end
-    rescue Selenium::WebDriver::Error::UnknownError, Selenium::WebDriver::Error::StaleElementReferenceError => e
-      stale_node_error = e.message.include?("Node with given id does not belong to the document")
-      raise unless attempts < 3 && stale_node_error
-
-      retry
+    within(".autocomplete__wrapper") do
+      expect(page).to have_css(".autocomplete__option", text: provider_name, wait: 10)
+      all(".autocomplete__option", text: provider_name, minimum: 1).first.click
     end
   end
 

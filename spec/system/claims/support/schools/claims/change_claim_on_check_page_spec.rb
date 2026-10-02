@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Change claim on check page", :js, service: :claims, skip: "flaky", type: :system do
+RSpec.describe "Change claim on check page", :js, service: :claims, type: :system do
   let!(:claim_window) { create(:claim_window, :current) }
   let!(:eligibility) { create(:eligibility, claim_window:) }
   let!(:school) do
@@ -79,8 +79,8 @@ RSpec.describe "Change claim on check page", :js, service: :claims, skip: "flaky
     then_i_expect_the_training_hours_for(12, mentor2)
 
     when_i_click("Continue") # Mentors 2 step
-    then_i_see_the_confirmation_page
-    when_i_check_the_confirmation_box
+    then_i_see_the_confirmation_page(niot)
+    when_i_check_the_confirmation_box(niot)
     when_i_click("Continue")
     then_i_check_my_answers(niot, [mentor1, mentor2], [20, 12])
     when_i_click("Accept and submit")
@@ -168,7 +168,10 @@ RSpec.describe "Change claim on check page", :js, service: :claims, skip: "flaky
 
   scenario "Collin click the back link on the check page" do
     when_i_click("Back")
-    then_i_expect_the_training_hours_for(20, mentor2)
+    then_i_see_the_confirmation_page
+
+    when_i_click("Back")
+    then_i_expect_the_training_hours_for(12, mentor2)
   end
 
   private
@@ -255,13 +258,13 @@ RSpec.describe "Change claim on check page", :js, service: :claims, skip: "flaky
     then_i_expect_the_training_hours_to_be_selected(hours)
   end
 
-  def then_i_see_the_confirmation_page
-    expect(page).to have_h1("Confirmation")
+  def then_i_see_the_confirmation_page(provider = bpn)
+    expect(page).to have_h1("Confirm training hours with #{provider.name}")
     expect(page).to have_button("Continue")
   end
 
-  def when_i_check_the_confirmation_box
-    check "I confirm that the school has verified the number of hours of training with Best Practice Network"
+  def when_i_check_the_confirmation_box(provider = bpn)
+    check "I have confirmed the number of training hours recorded in this claim with #{provider.name}"
   end
 
   def then_i_check_my_answers(provider, mentors, mentor_hours)
