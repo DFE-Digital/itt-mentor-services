@@ -73,8 +73,8 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
     end
 
     before do
-      create_list(:claims_provider_sampling_claim, 2, provider_sampling:)
       Timecop.freeze(Time.zone.parse("#{current_date} 00:00"))
+      create_list(:claims_provider_sampling_claim, 2, provider_sampling:)
     end
 
     after do
@@ -118,13 +118,16 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
     subject(:resend_sampling_checks_required_email) { described_class.resend_sampling_checks_required(provider_sampling, provider_user) }
 
     let(:number_of_claims) { "2 claims" }
+    let(:completion_date) { "19 February 2025" }
     let(:expected_body) do
       <<~EMAIL
         #{provider.name},
 
         This is a reminder that you still have #{number_of_claims} for initial teacher training (ITT) general mentor funding waiting to be audited.
 
-        You are required by the Department for Education (DfE) to audit these claims. If you do not audit them, we may escalate the audit process. This can include removing funding from schools you worked with.
+        # You must audit claims by #{completion_date}
+
+        If you do not audit these claims by 11:59pm on #{completion_date}, we may escalate the audit process. This can include removing funding from schools you worked with.
 
         ------------
 
@@ -155,15 +158,18 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
     end
 
     before do
+      Timecop.freeze(Time.zone.parse("20/01/2025 00:00"))
       create_list(:claim, 2, status: :sampling_in_progress, provider:).each do |claim|
         create(:claims_provider_sampling_claim, claim:, provider_sampling:)
       end
       create(:claims_provider_sampling_claim, provider_sampling:, claim: create(:claim, :submitted, provider:))
     end
 
+    after { Timecop.return }
+
     it "sends the audit reminder email" do
       expect(resend_sampling_checks_required_email.to).to contain_exactly(provider_user.email)
-      expect(resend_sampling_checks_required_email.subject).to eq("Reminder - ITT mentor claims are waiting to be audited")
+      expect(resend_sampling_checks_required_email.subject).to eq("Deadline #{completion_date}: ITT mentor claims are waiting to be audited")
       expect(resend_sampling_checks_required_email.body.to_s.squish).to eq(expected_body.squish)
     end
 
