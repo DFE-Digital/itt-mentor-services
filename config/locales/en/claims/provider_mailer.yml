@@ -53,13 +53,15 @@ en:
 
           Claim funding for mentor training team
       resend_sampling_checks_required:
-        subject: Reminder - ITT mentor claims are waiting to be audited
+        subject: "Deadline %{completion_date}: ITT mentor claims are waiting to be audited"
         body: |
           %{provider_name},
 
           This is a reminder that you still have %{number_of_claims} for initial teacher training (ITT) general mentor funding waiting to be audited.
 
-          You are required by the Department for Education (DfE) to audit these claims. If you do not audit them, we may escalate the audit process. This can include removing funding from schools you worked with.
+          # You must audit claims by %{completion_date}
+
+          If you do not audit these claims by 11:59pm on %{completion_date}, we may escalate the audit process. This can include removing funding from schools you worked with.
 
           ------------
 

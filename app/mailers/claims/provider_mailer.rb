@@ -18,12 +18,12 @@ class Claims::ProviderMailer < Claims::ApplicationMailer
     @provider_sampling = provider_sampling
 
     notify_email to: provider_user.email,
-                 subject: t(".subject"),
+                 subject: t(".subject", completion_date:),
                  body: t(
                    ".body",
                    provider_name: @provider_sampling.provider_name,
                    number_of_claims: number_of_claims(provider_sampling.claims.sampling_in_progress),
-                   support_email:, service_url: claims_root_url(utm_source: "email", utm_medium: "notification", utm_campaign: "provider")
+                   support_email:, completion_date:, service_url: claims_root_url(utm_source: "email", utm_medium: "notification", utm_campaign: "provider")
                  )
   end
 
@@ -37,7 +37,7 @@ class Claims::ProviderMailer < Claims::ApplicationMailer
   end
 
   def completion_date
-    date = Date.current + 30.days
+    date = provider_sampling.created_at.to_date + 30.days
     date = date.next_weekday if date.on_weekend?
     date.strftime("%d %B %Y")
   end
