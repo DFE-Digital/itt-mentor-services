@@ -3,7 +3,7 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
   before_action :authorize_school
 
   def index
-    @pagy, @schools = pagy(schools)
+    @pagy, @organisations = pagy_array(organisations)
   end
 
   def show; end
@@ -37,12 +37,21 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
     @school ||= school_form.school.decorate
   end
 
+  def organisations
+    @organisations ||= (schools + providers).sort_by { |organisation| organisation.name.downcase }
+  end
+
   def schools
-    @schools ||= if params[:name_urn_or_postcode].blank?
-                   Claims::School.order(:name)
-                 else
-                   Claims::School.search_name_urn_postcode(params[:name_urn_or_postcode]).order(:name)
-                 end
+    return Claims::School.order(:name) if params[:name_urn_or_postcode].blank?
+
+    Claims::School.search_name_urn_postcode(params[:name_urn_or_postcode]).order(:name)
+  end
+
+  def providers
+    scope = Claims::Provider.accredited
+    return scope if params[:name_urn_or_postcode].blank?
+
+    scope.search_name_urn_ukprn_postcode(params[:name_urn_or_postcode])
   end
 
   def set_school

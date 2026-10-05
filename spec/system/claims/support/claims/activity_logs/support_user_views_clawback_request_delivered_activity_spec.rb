@@ -44,8 +44,8 @@ RSpec.describe "Support user views clawback request delivered activity spec",
   end
 
   def then_i_see_the_organisations_page
-    expect(page).to have_title("Organisations (2) - Claim funding for mentor training - GOV.UK")
-    expect(page).to have_h1("Organisations (2)")
+    expect(page).to have_title("Organisations (4) - Claim funding for mentor training - GOV.UK")
+    expect(page).to have_h1("Organisations (4)")
   end
 
   def when_i_click_on_claims

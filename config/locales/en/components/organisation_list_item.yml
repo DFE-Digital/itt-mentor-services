@@ -6,3 +6,6 @@ en:
       scitt: SCITT
       university: University
       lead_school: Lead partner
+      tag:
+        school: School
+        provider: Provider

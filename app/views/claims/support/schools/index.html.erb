@@ -17,12 +17,13 @@
         clear_search_url: claims_support_schools_path,
       } %>
 
-    <% if @schools.any? %>
+    <% if @organisations.any? %>
       <ul class="organisation-search-results">
-        <% @schools.each do |school| %>
+        <% @organisations.each do |organisation| %>
           <%= render(OrganisationListItem.new(
-            organisation: school,
-            organisation_url: claims_school_claims_path(school),
+            organisation:,
+            organisation_url: organisation.is_a?(Provider) ? claims_provider_claims_path(organisation) : claims_school_claims_path(organisation),
+            show_tag: true,
           )) %>
         <% end %>
           <%= render PaginationComponent.new(pagy: @pagy) %>

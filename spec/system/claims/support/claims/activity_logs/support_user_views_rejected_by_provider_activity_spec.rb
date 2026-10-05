@@ -30,8 +30,8 @@ RSpec.describe "Support user views rejected by provider activity spec", service:
   end
 
   def then_i_see_the_organisations_page
-    expect(page).to have_title("Organisations (1) - Claim funding for mentor training - GOV.UK")
-    expect(page).to have_h1("Organisations (1)")
+    expect(page).to have_title("Organisations (2) - Claim funding for mentor training - GOV.UK")
+    expect(page).to have_h1("Organisations (2)")
   end
 
   def when_i_click_on_claims

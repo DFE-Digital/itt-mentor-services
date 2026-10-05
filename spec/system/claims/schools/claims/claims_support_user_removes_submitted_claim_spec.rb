@@ -48,8 +48,8 @@ RSpec.describe "Claims support user removes submitted claim", service: :claims, 
   end
 
   def then_i_see_the_organisations_index_page
-    expect(page).to have_title("Organisations (2) - Claim funding for mentor training - GOV.UK")
-    expect(page).to have_h1("Organisations (2)")
+    expect(page).to have_title("Organisations (3) - Claim funding for mentor training - GOV.UK")
+    expect(page).to have_h1("Organisations (3)")
     within(".organisation-search-results") do
       expect(page).to have_link("Shelbyville Elementary")
     end
