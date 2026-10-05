@@ -1,4 +1,19 @@
 <% content_for(:primary_navigation_content) do %>
+  <% if current_user.support_user? %>
+    <%= content_for(:header_content) do %>
+      <%= render(ContentHeaderComponent.new(
+        title: provider.name,
+        actions: [
+          govuk_link_to(
+            t(".change_organisation"),
+            claims_support_schools_path,
+            no_visited_state: true,
+          ),
+        ],
+      )) %>
+    <% end %>
+  <% end %>
+
   <%= render PrimaryNavigationComponent.new(
         context: :claims_provider,
         current_user: current_user,

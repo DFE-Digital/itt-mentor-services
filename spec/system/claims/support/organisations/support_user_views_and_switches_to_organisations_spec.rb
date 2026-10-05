@@ -18,6 +18,8 @@ RSpec.describe "Support user views and switches to organisations", service: :cla
     then_i_see_only_the_provider
     when_i_click_on("London Provider")
     then_i_see_the_provider_claims_page
+    when_i_click_on("Change organisation")
+    then_i_see_the_organisations_list
   end
 
   scenario "I switch to a school" do
@@ -65,6 +67,11 @@ RSpec.describe "Support user views and switches to organisations", service: :cla
 
   def then_i_see_the_provider_claims_page
     expect(page).to have_current_path(claims_provider_claims_path(provider), ignore_query: true)
+  end
+
+  def then_i_see_the_organisations_list
+    expect(page).to have_current_path(claims_support_schools_path)
+    expect(page).to have_content("Organisations (3)")
   end
 
   def then_i_see_the_school_claims_page
