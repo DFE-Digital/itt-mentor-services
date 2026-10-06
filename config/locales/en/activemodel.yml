@@ -138,6 +138,44 @@ en:
             id:
               already_added: "%{school_name} has already been added. Try another school"
               blank: Select a school
+        claims/add_exceptional_claim_wizard/exceptional_circumstances_step:
+          attributes:
+            confirmed:
+              blank: Confirm that this claim is being made under exceptional circumstances
+              accepted: Confirm that this claim is being made under exceptional circumstances
+        claims/add_exceptional_claim_wizard/claim_window_step:
+          attributes:
+            id:
+              inclusion: Select a claim window
+        claims/add_exceptional_claim_wizard/mentor_step:
+          attributes:
+            mentor_ids:
+              blank: Select a mentor
+              inclusion: Select a mentor
+        claims/add_exceptional_claim_wizard/claim_status_step:
+          attributes:
+            status:
+              inclusion: Select a claim status
+            paid_to_la:
+              inclusion: Select who the claim was paid to
+            date_paid:
+              blank: Enter the date the claim was paid
+              invalid: Enter a real date the claim was paid
+              future: The date paid must be in the past
+              before_claim_window: The date paid must not be before the claim window opened
+        claims/add_exceptional_claim_wizard/school_step:
+          attributes:
+            id:
+              blank: Enter a school name, unique reference number (URN) or postcode
+        claims/add_exceptional_claim_wizard/school_options_step:
+          attributes:
+            id:
+              blank: Select a school
+        claims/add_exceptional_claim_wizard/eligibility_step:
+          attributes:
+            confirmed:
+              blank: Confirm that the school should be made eligible to claim
+              accepted: Confirm that the school should be made eligible to claim
         claims/add_claim_wizard/provider_step:
           attributes:
             id:
