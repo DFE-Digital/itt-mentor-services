@@ -123,7 +123,7 @@ RSpec.describe BaseWizard do
     let(:current_step) { :this_step_does_not_exist }
 
     it "raises an error" do
-      expect { wizard }.to raise_error 'The step "this_step_does_not_exist" does not exist'
+      expect { wizard }.to raise_error(BaseWizard::StepNotFoundError, 'The step "this_step_does_not_exist" does not exist')
     end
   end
 
