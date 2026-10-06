@@ -565,4 +565,76 @@ describe Claims::Support::ClaimPolicy do
       end
     end
   end
+
+  permissions :create_exceptional? do
+    let(:past_claim_window) { create(:claim_window, :historic) }
+    let(:eligible_school) { create(:claims_school, eligibilities: [build(:eligibility, claim_window: past_claim_window)]) }
+    let(:claim) { build(:claim, school: eligible_school, claim_window: past_claim_window) }
+
+    context "when the user is a support user and the claim window is in the past" do
+      it "grants access" do
+        expect(claim_policy).to permit(support_user, claim)
+      end
+    end
+
+    context "when checking the claim class rather than a claim" do
+      it "grants access to support users" do
+        expect(claim_policy).to permit(support_user, Claims::Claim)
+      end
+
+      it "denies access to other users" do
+        expect(claim_policy).not_to permit(user, Claims::Claim)
+      end
+    end
+
+    context "when the user is not a support user" do
+      it "denies access" do
+        expect(claim_policy).not_to permit(user, claim)
+      end
+    end
+
+    context "when the claim has no claim window" do
+      let(:claim) { build(:claim, school: eligible_school, claim_window: nil) }
+
+      it "denies access" do
+        expect(claim_policy).not_to permit(support_user, claim)
+      end
+    end
+
+    context "when the claim window ended yesterday" do
+      let(:past_claim_window) do
+        build(:claim_window, starts_on: 10.days.ago.to_date, ends_on: Date.yesterday, academic_year: AcademicYear.for_date(Date.yesterday)).tap { |window| window.save!(validate: false) }
+      end
+
+      it "grants access" do
+        expect(claim_policy).to permit(support_user, claim)
+      end
+    end
+
+    context "when the claim window ends today" do
+      let(:past_claim_window) do
+        build(:claim_window, starts_on: 10.days.ago.to_date, ends_on: Date.current, academic_year: AcademicYear.for_date(Date.current)).tap { |window| window.save!(validate: false) }
+      end
+
+      it "denies access because the window is still open" do
+        expect(claim_policy).not_to permit(support_user, claim)
+      end
+    end
+
+    context "when the claim window has not ended" do
+      let(:past_claim_window) { Claims::ClaimWindow.current || create(:claim_window, :current) }
+
+      it "denies access" do
+        expect(claim_policy).not_to permit(support_user, claim)
+      end
+    end
+
+    context "when the school is not yet eligible for the claim window" do
+      let(:eligible_school) { create(:claims_school) }
+
+      it "grants access because the wizard makes the school eligible with explicit confirmation" do
+        expect(claim_policy).to permit(support_user, claim)
+      end
+    end
+  end
 end

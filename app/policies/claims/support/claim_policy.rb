@@ -3,6 +3,13 @@ class Claims::Support::ClaimPolicy < Claims::ApplicationPolicy
     current_claim_window?
   end
 
+  def create_exceptional?
+    return false unless user.support_user?
+    return true if record.is_a?(Class)
+
+    record.claim_window.present? && record.claim_window.past?
+  end
+
   def edit?
     claim_claim_window_current? && record.in_draft?
   end
