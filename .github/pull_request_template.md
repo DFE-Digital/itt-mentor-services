@@ -10,10 +10,10 @@
 
 <!-- How could someone else check this work? Which parts do you want more feedback on? -->
 
-## Link to Trello card
+## Link to Jira card
 
-<!-- http://trello.com/123-example-card -->
+<!-- https://dfedigital.atlassian.net/browse/FPSCFMT-000 -->
 
 ## Screenshots
 
-<!-- Sceenshots to aid with reviewing if needed-->
+<!-- Screenshots to aid with reviewing if needed-->
