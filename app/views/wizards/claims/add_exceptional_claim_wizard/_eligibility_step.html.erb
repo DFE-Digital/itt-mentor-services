@@ -1,0 +1,25 @@
+<% content_for :page_title, title_with_error_prefix(
+  t(".page_title", school_name: current_step.school_name, contextual_text:),
+  error: current_step.errors.any?,
+) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= contextual_text %></span>
+      <h1 class="govuk-heading-l"><%= t(".title", school_name: current_step.school_name) %></h1>
+
+      <p class="govuk-body"><%= t(current_step.school_requires_onboarding? ? ".not_onboarded" : ".not_eligible", school_name: current_step.school_name, academic_year: current_step.academic_year_name) %></p>
+
+      <%= govuk_warning_text(text: t(".warning")) %>
+
+      <%= f.govuk_check_boxes_fieldset :confirmed, multiple: false, legend: { text: t(".legend"), hidden: true } do %>
+        <%= f.govuk_check_box :confirmed, true, false, multiple: false, label: { text: t(current_step.school_requires_onboarding? ? ".label_onboarding" : ".label", school_name: current_step.school_name, academic_year: current_step.academic_year_name) }, link_errors: true %>
+      <% end %>
+
+      <%= f.govuk_submit t(".continue") %>
+    </div>
+  </div>
+<% end %>

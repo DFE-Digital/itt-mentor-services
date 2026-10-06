@@ -215,6 +215,16 @@ scope module: :claims, as: :claims, constraints: {
     resources :claims, only: %i[index show] do
       get :download_csv, on: :collection
 
+      collection do
+        get "new", to: "claims/add_claim#new", as: :new_add_claim
+        get "new/:state_key/:step", to: "claims/add_claim#edit", as: :add_claim
+        put "new/:state_key/:step", to: "claims/add_claim#update"
+
+        get "new/:claim_state_key/mentors/new", to: "claims/add_claim/add_mentor#new", as: :new_add_claim_add_mentor
+        get "new/:claim_state_key/mentors/new/:state_key/:step", to: "claims/add_claim/add_mentor#edit", as: :add_claim_add_mentor
+        put "new/:claim_state_key/mentors/new/:state_key/:step", to: "claims/add_claim/add_mentor#update"
+      end
+
       member do
         get "support_details/new", to: "claims/support_details#new", as: :new_support_details
         get "support_details/new/:state_key/:step", to: "claims/support_details#edit", as: :support_details

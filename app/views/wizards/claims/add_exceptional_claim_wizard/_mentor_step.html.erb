@@ -1,0 +1,33 @@
+<% content_for :page_title, title_with_error_prefix(
+  t(".page_title", contextual_text:, provider_name: @wizard.provider_name),
+  error: current_step.errors.any?,
+) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= contextual_text %> - <%= @wizard.school_name %></span>
+
+      <%= f.govuk_collection_check_boxes(
+        :mentor_ids,
+        current_step.mentors_with_claimable_hours,
+        :id, :full_name, :trn,
+        legend: {
+          size: "l",
+          text: t(".heading", provider_name: @wizard.provider_name),
+          tag: "h1",
+        },
+        hint: { text: t(".select_all_that_apply") }
+      ) %>
+
+      <p class="govuk-body"><%= t(".mentor_not_listed_hint") %></p>
+      <p class="govuk-body">
+        <%= t(".add_mentor_html", link: govuk_link_to(t(".add_mentor"), add_mentor_path, no_visited_state: true)) %>
+      </p>
+
+      <%= f.govuk_submit t(".continue") %>
+    </div>
+  </div>
+<% end %>

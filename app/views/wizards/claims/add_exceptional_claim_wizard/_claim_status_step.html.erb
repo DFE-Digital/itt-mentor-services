@@ -1,0 +1,35 @@
+<% content_for :page_title, title_with_error_prefix(t(".page_title", contextual_text:), error: current_step.errors.any?) %>
+
+<%= form_for(current_step, url: current_step_path, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-l"><%= contextual_text %></span>
+
+      <%= f.govuk_radio_buttons_fieldset(
+        :status,
+        legend: { text: t(".title"), tag: "h1", size: "l" },
+        hint: { text: t(".hint") },
+      ) do %>
+        <%= f.govuk_radio_button :status, Claims::AddExceptionalClaimWizard::ClaimStatusStep::SUBMITTED,
+                                 label: { text: t(".submitted") }, hint: { text: t(".submitted_hint") }, link_errors: true %>
+
+        <%= f.govuk_radio_button :status, Claims::AddExceptionalClaimWizard::ClaimStatusStep::PAID,
+                                 label: { text: t(".paid") }, hint: { text: t(".paid_hint") } do %>
+          <%= f.govuk_radio_buttons_fieldset :paid_to_la, legend: { text: t(".paid_to_la"), size: "s" } do %>
+            <%= f.govuk_radio_button :paid_to_la, "true", label: { text: t(".local_authority") }, link_errors: true %>
+            <%= f.govuk_radio_button :paid_to_la, "false", label: { text: t(".academy") } %>
+          <% end %>
+
+          <%= f.govuk_date_field :date_paid,
+                                 maxlength_enabled: true,
+                                 legend: { text: t(".date_paid"), size: "s" },
+                                 hint: { text: t(".date_paid_hint") } %>
+        <% end %>
+      <% end %>
+
+      <%= f.govuk_submit t(".continue") %>
+    </div>
+  </div>
+<% end %>
