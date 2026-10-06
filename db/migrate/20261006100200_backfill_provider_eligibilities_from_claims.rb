@@ -1,23 +1,19 @@
-# We have no record of which providers were eligible in previous academic years, so a provider
-# is made eligible for every academic year in which a claim has been assigned to it.
-# Claims flagged as having an invalid provider are ignored, as that status means the provider
-# was no longer eligible to be claimed against.
 class BackfillProviderEligibilitiesFromClaims < ActiveRecord::Migration[8.0]
   def up
-    safety_assured do
-      execute <<~SQL.squish
-        INSERT INTO provider_eligibilities (id, provider_id, academic_year_id, created_at, updated_at)
-        SELECT gen_random_uuid(), claim_providers.provider_id, claim_providers.academic_year_id, NOW(), NOW()
-        FROM (
-          SELECT DISTINCT claims.provider_id, claim_windows.academic_year_id
-          FROM claims
-          INNER JOIN claim_windows ON claim_windows.id = claims.claim_window_id
-          WHERE claims.provider_id IS NOT NULL
-            AND claims.status <> 'invalid_provider'
-        ) AS claim_providers
-        ON CONFLICT (provider_id, academic_year_id) DO NOTHING
-      SQL
-    end
+    academic_year_ids = Claims::ClaimWindow.unscoped.pluck(:id, :academic_year_id).to_h
+
+    Claims::Claim
+      .where.not(status: :invalid_provider)
+      .where.not(provider_id: nil)
+      .distinct
+      .pluck(:provider_id, :claim_window_id)
+      .map { |provider_id, claim_window_id| [provider_id, academic_year_ids[claim_window_id]] }
+      .uniq
+      .each do |provider_id, academic_year_id|
+        next if academic_year_id.nil?
+
+        Claims::ProviderEligibility.find_or_create_by!(provider_id:, academic_year_id:)
+      end
   end
 
   def down

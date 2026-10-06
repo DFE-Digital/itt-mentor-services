@@ -111,6 +111,16 @@ RSpec.describe "Provider eligibility backfill migrations" do
       expect(Claims::ProviderEligibility.count).to eq(Claims::Claim.statuses.keys.size - 1)
     end
 
+    it "includes claims in discarded claim windows" do
+      create_claim(provider: provider_a, academic_year: older_year)
+      Claims::ClaimWindow.find_by(academic_year: older_year).discard
+      Claims::ProviderEligibility.delete_all
+
+      migrate
+
+      expect(eligibilities).to contain_exactly([provider_a.id, older_year.id])
+    end
+
     it "ignores claims flagged as having an invalid provider" do
       create_claim(provider: provider_a, academic_year: current_year, status: :invalid_provider)
       Claims::ProviderEligibility.delete_all
