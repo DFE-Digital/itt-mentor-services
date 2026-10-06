@@ -7,7 +7,7 @@ class Claims::Sampling::SendSchoolRemindersJob < ApplicationJob
         batch_size: 1,
         collection: claim.school_users,
         mailer: "Claims::UserMailer",
-        mailer_method: :claim_rejected_by_provider,
+        mailer_method: :claim_rejected_by_provider_reminder,
         mailer_args: [claim.decorate],
       )
     end
@@ -16,6 +16,9 @@ class Claims::Sampling::SendSchoolRemindersJob < ApplicationJob
   private
 
   def outstanding_claims
-    @outstanding_claims ||= Claims::Claim.sampling_provider_not_approved
+    Claims::Claim
+      .sampling_provider_not_approved
+      .where.not(amendment_notification_sent_at: nil)
+      .select { |claim| claim.amendment_evidence_deadline >= Date.current }
   end
 end
