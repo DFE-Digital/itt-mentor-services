@@ -1,4 +1,6 @@
 class BaseWizard
+  class StepNotFoundError < RuntimeError; end
+
   attr_reader :state, :params, :current_step, :steps
 
   def self.generate_state_key
@@ -14,7 +16,7 @@ class BaseWizard
     @steps = {}
     define_steps
     @current_step ||= first_step
-    raise "The step \"#{@current_step}\" does not exist" unless steps.key?(@current_step)
+    raise StepNotFoundError, "The step \"#{@current_step}\" does not exist" unless steps.key?(@current_step)
   end
 
   def define_steps
