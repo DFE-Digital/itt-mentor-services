@@ -30,6 +30,10 @@ RSpec.describe "Provider suggestions", type: :request do
     describe "when requested from the claims service", service: :claims do
       let(:claims_user) { create(:claims_user) }
 
+      before do
+        Provider.find_each { |provider| Claims::ProviderEligibility.find_or_create_by!(provider:, academic_year: AcademicYear.current) }
+      end
+
       it "does not return additional NIoT providers" do
         sign_in_as claims_user
 
@@ -79,35 +83,72 @@ RSpec.describe "Provider suggestions", type: :request do
     end
   end
 
-  describe "filtering accredited providers" do
-    let!(:accredited_provider) { create(:provider, :accredited, name: "Accredited provider", code: "AC1") }
-    let!(:unaccredited_provider) { create(:provider, name: "Unaccredited provider", code: "UA2") }
+  describe "filtering by eligibility for an academic year" do
+    let(:academic_year) { AcademicYear.current }
+    let(:other_academic_year) { AcademicYear.for_date(academic_year.ends_on + 1.day) }
+    let!(:eligible_provider) { create(:provider, name: "Eligible provider", code: "EL1", accredited: false) }
+    let!(:eligible_next_year_provider) { create(:provider, name: "Next year provider", code: "NY2", accredited: false) }
+    let!(:accredited_only_provider) { create(:provider, name: "Accredited only provider", code: "AO3", accredited: true) }
+
+    before do
+      create(:provider, name: "Ineligible provider", code: "IN4")
+      Claims::ProviderEligibility.create!(provider: eligible_provider, academic_year:)
+      Claims::ProviderEligibility.create!(provider: eligible_next_year_provider, academic_year: other_academic_year)
+      accredited_only_provider.eligibilities.destroy_all
+    end
+
+    def suggestions(path)
+      get path
+      JSON.parse(response.body).pluck("name")
+    end
 
     describe "when requested from the claims service", service: :claims do
       let(:claims_user) { create(:claims_user) }
 
-      it "does not return only accredited providers" do
-        sign_in_as claims_user
+      before { sign_in_as claims_user }
 
-        get "/api/provider_suggestions?query=provider"
+      it "only returns providers eligible for the current academic year" do
+        expect(suggestions("/api/provider_suggestions?query=provider")).to contain_exactly("Eligible provider")
+      end
 
-        json = JSON.parse(response.body)
-        expect(json).to contain_exactly({ "code" => "AC1", "id" => accredited_provider.id, "name" => "Accredited provider", "postcode" => nil })
+      it "does not depend on the accredited flag" do
+        expect(suggestions("/api/provider_suggestions?query=accredited")).to be_empty
+        expect(suggestions("/api/provider_suggestions?query=eligible")).to include("Eligible provider")
+      end
+
+      it "returns the providers eligible for the academic year in the path" do
+        expect(suggestions("/api/academic_years/#{other_academic_year.id}/provider_suggestions?query=provider"))
+          .to contain_exactly("Next year provider")
+        expect(suggestions("/api/academic_years/#{academic_year.id}/provider_suggestions?query=provider"))
+          .to contain_exactly("Eligible provider")
+      end
+
+      it "returns the same fields as the unscoped endpoint" do
+        get "/api/academic_years/#{academic_year.id}/provider_suggestions?query=eligible"
+
+        expect(JSON.parse(response.body).first).to eq({ "code" => "EL1", "id" => eligible_provider.id, "name" => "Eligible provider", "postcode" => nil })
+      end
+
+      it "returns nothing for an academic year with no eligible providers" do
+        empty_year = AcademicYear.for_date(other_academic_year.ends_on + 1.day)
+
+        expect(suggestions("/api/academic_years/#{empty_year.id}/provider_suggestions?query=provider")).to be_empty
+      end
+
+      it "responds as not found for an academic year that does not exist" do
+        expect { get "/api/academic_years/#{SecureRandom.uuid}/provider_suggestions?query=provider" }
+          .to raise_error(ActiveRecord::RecordNotFound)
       end
     end
 
     describe "when requested from the placements service", service: :placements do
       let(:placements_user) { create(:placements_user) }
 
-      it "does not return only accredited providers" do
+      it "returns all providers regardless of eligibility" do
         sign_in_as placements_user
 
-        get "/api/provider_suggestions?query=provider"
-
-        json = JSON.parse(response.body)
-        expect(json).to contain_exactly(
-          { "code" => "AC1", "id" => accredited_provider.id, "name" => "Accredited provider", "postcode" => nil },
-          { "code" => "UA2", "id" => unaccredited_provider.id, "name" => "Unaccredited provider", "postcode" => nil },
+        expect(suggestions("/api/provider_suggestions?query=provider")).to contain_exactly(
+          "Eligible provider", "Next year provider", "Accredited only provider", "Ineligible provider"
         )
       end
     end

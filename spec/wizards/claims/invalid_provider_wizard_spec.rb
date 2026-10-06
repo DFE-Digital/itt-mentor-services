@@ -37,6 +37,48 @@ RSpec.describe Claims::InvalidProviderWizard do
 
   before { mentor_1_training }
 
+  describe "#academic_year" do
+    it "is the academic year of the current claim window" do
+      expect(wizard.academic_year).to eq(Claims::ClaimWindow.current.academic_year)
+    end
+
+    context "when there is no current claim window" do
+      before { allow(Claims::ClaimWindow).to receive(:current).and_return(nil) }
+
+      it "is the academic year of the claim" do
+        expect(wizard.academic_year).to eq(claim.claim_window.academic_year)
+      end
+    end
+  end
+
+  describe "provider selection" do
+    let(:state) { { "provider" => { "id" => selected_provider.id } } }
+    let(:selected_provider) { eligible_provider }
+    let(:eligible_provider) { create(:claims_provider, :best_practice_network, accredited: false) }
+    let(:ineligible_provider) { create(:claims_provider, name: "Ineligible provider", accredited: true) }
+
+    before do
+      Claims::ProviderEligibility.create!(provider: eligible_provider, academic_year: Claims::ClaimWindow.current.academic_year)
+      ineligible_provider.eligibilities.destroy_all
+    end
+
+    it "accepts a provider that is eligible for the academic year, even if it is not accredited" do
+      expect(wizard.steps.fetch(:provider).provider).to eq(eligible_provider)
+    end
+
+    context "when the provider is accredited but not eligible for the academic year" do
+      let(:selected_provider) { ineligible_provider }
+
+      it "does not accept the provider" do
+        expect(wizard.steps.fetch(:provider).provider).to be_nil
+      end
+    end
+
+    it "uses the academic year in the provider suggestions path" do
+      expect(wizard.steps.fetch(:provider).autocomplete_path_value).to eq("/api/academic_years/#{wizard.academic_year.id}/provider_suggestions")
+    end
+  end
+
   describe "#steps" do
     subject { wizard.steps.keys }
 

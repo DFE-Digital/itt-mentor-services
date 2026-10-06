@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   namespace :api do
     resources :school_suggestions, only: [:index]
     resources :provider_suggestions, only: [:index]
+    get "academic_years/:academic_year_id/provider_suggestions", to: "provider_suggestions#index", as: :academic_year_provider_suggestions
   end
 
   draw :placements

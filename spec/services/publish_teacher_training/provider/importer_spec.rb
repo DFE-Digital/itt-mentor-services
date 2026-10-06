@@ -131,6 +131,96 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
     end
   end
 
+  describe "provider eligibilities" do
+    let(:academic_year) { AcademicYear.current }
+
+    def accredited_body_response(providers)
+      stub_request(:get, publish_url).to_return(
+        status: 200,
+        body: {
+          "data" => providers.map do |code, accredited_body|
+            { "id" => code, "attributes" => { "name" => "Provider #{code}", "code" => code, "provider_type" => "scitt", "accredited_body" => accredited_body } }
+          end,
+        }.to_json,
+      )
+    end
+
+    it "makes accredited body providers in the sync eligible for the current academic year" do
+      accredited_body_response([["AB1", true], ["AB2", true]])
+
+      expect { importer }.to change(Claims::ProviderEligibility, :count).by(2)
+
+      expect(Provider.where(code: %w[AB1 AB2]).map { |provider| provider.eligible_for_academic_year?(academic_year) }).to all(be(true))
+    end
+
+    it "does not make providers that are not accredited bodies eligible" do
+      accredited_body_response([["AB1", true], ["LS1", false], ["LS2", nil]])
+
+      expect { importer }.to change(Claims::ProviderEligibility, :count).by(1)
+
+      expect(Provider.find_by(code: "LS1").eligible_for_academic_year?(academic_year)).to be(false)
+      expect(Provider.find_by(code: "LS2").eligible_for_academic_year?(academic_year)).to be(false)
+    end
+
+    it "skips providers that are already eligible for the current academic year" do
+      existing = create(:provider, code: "AB1")
+      Claims::ProviderEligibility.create!(provider: existing, academic_year:)
+      accredited_body_response([["AB1", true], ["AB2", true]])
+
+      expect { importer }.to change(Claims::ProviderEligibility, :count).by(1)
+      expect(existing.eligibilities.where(academic_year:).count).to eq(1)
+    end
+
+    it "does not create duplicates when the sync runs again" do
+      accredited_body_response([["AB1", true]])
+      importer
+
+      expect { described_class.call }.not_to change(Claims::ProviderEligibility, :count)
+    end
+
+    it "does not change eligibilities for previous academic years" do
+      previous_year = AcademicYear.for_date(academic_year.starts_on - 1.day)
+      existing = create(:provider, code: "AB1")
+      Claims::ProviderEligibility.create!(provider: existing, academic_year: previous_year)
+      accredited_body_response([["AB1", true]])
+
+      importer
+
+      expect(existing.eligibilities.map(&:academic_year)).to contain_exactly(previous_year, academic_year)
+    end
+
+    it "does not remove the eligibility of providers that are no longer in the sync" do
+      missing = create(:provider, code: "GONE")
+      Claims::ProviderEligibility.create!(provider: missing, academic_year:)
+      accredited_body_response([["AB1", true]])
+
+      expect { importer }.not_to(change { missing.eligibilities.count })
+    end
+
+    it "does not create eligibilities for invalid providers" do
+      stub_request(:get, publish_url).to_return(
+        status: 200,
+        body: { "data" => [{ "id" => 1, "attributes" => { "name" => "", "code" => "BAD", "provider_type" => "scitt", "accredited_body" => true } }] }.to_json,
+      )
+
+      expect { importer }.not_to change(Claims::ProviderEligibility, :count)
+    end
+
+    it "creates eligibilities for providers on every page of the sync" do
+      first_page_request
+      second_page_request
+
+      expect { importer }.not_to raise_error
+      expect(Claims::ProviderEligibility.count).to eq(Provider.where(accredited: true).count)
+    end
+
+    it "makes no eligibilities when nothing is returned" do
+      stub_request(:get, publish_url).to_return(status: 200, body: { "data" => [] }.to_json)
+
+      expect { importer }.not_to change(Claims::ProviderEligibility, :count)
+    end
+  end
+
   context "with additional pages" do
     before do
       first_page_request

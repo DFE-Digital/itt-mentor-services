@@ -47,6 +47,7 @@ RSpec.describe "Claims user edits a draft claim", service: :claims, type: :syste
     @mentor_barry = build(:claims_mentor, first_name: "Barry", last_name: "Garlow", trn: "8888888")
     @provider = build(:claims_provider, :best_practice_network)
     @claim_window = build(:claim_window, :current)
+    @provider.eligibilities.build(academic_year: @claim_window.academic_year)
     @eligibility = build(:eligibility, claim_window: @claim_window)
     @date_completed = @claim_window.starts_on + 1.day
     @shelbyville_school = build(

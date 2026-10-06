@@ -7,6 +7,10 @@ class Api::ProviderSuggestionsController < ApplicationController
 
   private
 
+  def academic_year
+    @academic_year ||= params[:academic_year_id].present? ? AcademicYear.find(params[:academic_year_id]) : AcademicYear.current
+  end
+
   def query_params
     params.require(:query)&.downcase
   end
@@ -16,7 +20,7 @@ class Api::ProviderSuggestionsController < ApplicationController
   end
 
   def claims_providers_scope
-    @claims_providers_scope ||= Provider.excluding_niot_providers.accredited
+    @claims_providers_scope ||= Provider.excluding_niot_providers.eligible_for_academic_year(academic_year)
   end
 
   def placements_providers_scope

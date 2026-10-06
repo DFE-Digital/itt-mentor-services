@@ -77,6 +77,14 @@ FactoryBot.define do
       email_addresses { [] }
     end
 
+    after(:create) do |provider|
+      next unless provider.accredited?
+
+      AcademicYear.find_each do |academic_year|
+        Claims::ProviderEligibility.find_or_create_by!(provider:, academic_year:)
+      end
+    end
+
     after(:create) do |provider, evaluator|
       if evaluator.email_addresses.present?
         evaluator.email_addresses.each_with_index do |email_address, i|

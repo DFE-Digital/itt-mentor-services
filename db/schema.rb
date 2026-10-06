@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_09_21_150000) do
+ActiveRecord::Schema[8.0].define(version: 2026_10_06_100200) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -454,6 +454,16 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_21_150000) do
     t.index ["year_group"], name: "index_placements_on_year_group"
   end
 
+  create_table "provider_eligibilities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "provider_id", null: false
+    t.uuid "academic_year_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["academic_year_id"], name: "index_provider_eligibilities_on_academic_year_id"
+    t.index ["provider_id", "academic_year_id"], name: "index_provider_eligibilities_on_provider_and_academic_year", unique: true
+    t.index ["provider_id"], name: "index_provider_eligibilities_on_provider_id"
+  end
+
   create_table "provider_email_addresses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email_address"
     t.uuid "provider_id", null: false
@@ -713,6 +723,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_21_150000) do
   add_foreign_key "placements", "providers"
   add_foreign_key "placements", "schools"
   add_foreign_key "placements", "subjects"
+  add_foreign_key "provider_eligibilities", "academic_years"
+  add_foreign_key "provider_eligibilities", "providers"
   add_foreign_key "provider_email_addresses", "providers"
   add_foreign_key "provider_sampling_claims", "claims"
   add_foreign_key "provider_sampling_claims", "provider_samplings"

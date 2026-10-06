@@ -15,6 +15,6 @@ class Claims::Support::ProvidersController < Claims::Support::ApplicationControl
   end
 
   def default_claims
-    @default_claims ||= Claims::Provider.accredited.excluding_niot_providers
+    @default_claims ||= Claims::Provider.eligible_in_any_academic_year.excluding_niot_providers
   end
 end

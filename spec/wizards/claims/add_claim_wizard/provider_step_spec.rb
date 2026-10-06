@@ -5,12 +5,19 @@ RSpec.describe Claims::AddClaimWizard::ProviderStep, type: :model do
 
   let(:attributes) { nil }
   let(:created_by) { create(:claims_user) }
-  let!(:niot_provider) { create(:claims_provider, :niot) }
+  let!(:niot_provider) { make_eligible(create(:claims_provider, :niot)) }
 
   let(:mock_wizard) do
-    instance_double(Claims::AddClaimWizard).tap do |mock_wizard|
+    instance_double(Claims::AddClaimWizard, academic_year:).tap do |mock_wizard|
       allow(mock_wizard).to receive(:created_by).and_return(created_by)
     end
+  end
+  let(:academic_year) { AcademicYear.current }
+  let(:other_academic_year) { AcademicYear.for_date(academic_year.ends_on + 1.day) }
+
+  def make_eligible(provider, year = academic_year)
+    Claims::ProviderEligibility.find_or_create_by!(provider:, academic_year: year)
+    provider
   end
 
   describe "attributes" do
@@ -31,6 +38,12 @@ RSpec.describe Claims::AddClaimWizard::ProviderStep, type: :model do
         it { is_expected.to eq(niot_provider) }
       end
 
+      context "when the provider is only eligible for a different academic year" do
+        let(:attributes) { { id: make_eligible(create(:claims_provider, accredited: false), other_academic_year).id } }
+
+        it { is_expected.to be_nil }
+      end
+
       context "when the provider is not a valid provider id" do
         let(:attributes) { { id: "123" } }
 
@@ -48,7 +61,7 @@ RSpec.describe Claims::AddClaimWizard::ProviderStep, type: :model do
   describe "#autocomplete_path_value" do
     subject { step.autocomplete_path_value }
 
-    it { is_expected.to eq("/api/provider_suggestions") }
+    it { is_expected.to eq("/api/academic_years/#{academic_year.id}/provider_suggestions") }
   end
 
   describe "#autocomplete_return_attributes_value" do

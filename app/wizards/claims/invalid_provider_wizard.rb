@@ -26,6 +26,10 @@ module Claims
       steps.fetch(:provider).provider
     end
 
+    def academic_year
+      (Claims::ClaimWindow.current || claim.claim_window).academic_year
+    end
+
     private
 
     def updated_claim

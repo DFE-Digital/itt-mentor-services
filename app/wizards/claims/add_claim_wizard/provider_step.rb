@@ -4,7 +4,7 @@ class Claims::AddClaimWizard::ProviderStep < Claims::AddClaimWizard::ProviderSel
   delegate :provider_name, to: :wizard
 
   def autocomplete_path_value
-    "/api/provider_suggestions"
+    "/api/academic_years/#{wizard.academic_year.id}/provider_suggestions"
   end
 
   def autocomplete_return_attributes_value
