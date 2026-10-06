@@ -5,7 +5,6 @@ module PublishTeacherTraining
         @invalid_records = []
         @records = []
         @email_details = []
-        @synced_codes = []
         @eligible_codes = []
 
         fetch_providers
@@ -20,7 +19,6 @@ module PublishTeacherTraining
             upsert_emails_attributes,
             unique_by: :unique_provider_email,
           )
-          unaccredit_missing_providers
           make_providers_eligible
         end
 
@@ -38,7 +36,6 @@ module PublishTeacherTraining
         providers = ::PublishTeacherTraining::Provider::Api.call(link:)
         providers.fetch("data").each do |provider_details|
           provider_attributes = provider_details["attributes"]
-          @synced_codes << provider_attributes["code"] if provider_attributes["code"].present?
           @invalid_records << "Provider with code #{provider_attributes["code"]} is invalid" if invalid?(provider_attributes)
           next if invalid?(provider_attributes)
 
@@ -73,12 +70,6 @@ module PublishTeacherTraining
         if providers.dig("links", "next").present?
           fetch_providers(providers.dig("links", "next"))
         end
-      end
-
-      def unaccredit_missing_providers
-        return if @synced_codes.empty?
-
-        ::Provider.accredited.where.not(code: @synced_codes).update_all(accredited: false)
       end
 
       def make_providers_eligible
