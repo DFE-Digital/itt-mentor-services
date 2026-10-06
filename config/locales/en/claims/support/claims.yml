@@ -2,6 +2,22 @@ en:
   claims:
     support:
       claims:
+        add_claim:
+          edit:
+            caption: Add claim - exceptional circumstances
+            save: Accept and submit claim
+            cancel: Cancel
+          update:
+            success_heading: Claim added
+            success_body: Claim %{reference} has been submitted on behalf of %{school_name}.
+            invalid: Some of the answers for this claim are no longer valid. Check your answers and try again
+          add_mentor:
+            edit:
+              caption: Add mentor - exceptional circumstances
+              cancel: Cancel
+            update:
+              success_heading: Mentor added
+              success_body: "%{mentor_name} has been added to the school and can now be selected for this claim."
         request_clawback:
           edit:
             caption: Clawbacks - Claim %{reference}
@@ -12,6 +28,7 @@ en:
             cancel: Cancel
         index:
           heading: Claims
+          add_claim: Add exceptional claim
           sub_heading: Claims (%{count})
           download_csv: Download CSV
           search_label: Search by claim reference

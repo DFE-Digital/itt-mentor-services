@@ -1,0 +1,19 @@
+<% content_for :page_title, title_with_error_prefix(t(".page_title", contextual_text:), error: current_step.errors.any?) %>
+
+<%= render AutocompleteSelectFormComponent.new(
+  model: current_step,
+  scope: current_step.scope,
+  url: current_step_path,
+  method: :put,
+  data: {
+    autocomplete_path_value: current_step.autocomplete_path_value,
+    autocomplete_return_attributes_value: current_step.autocomplete_return_attributes_value,
+  },
+  input: {
+    value: current_step.school_name,
+    label: t(".title"),
+    caption: contextual_text,
+    hint: t(".hint", academic_year: @wizard.academic_year_name),
+    previous_search: current_step.id,
+  },
+) %>

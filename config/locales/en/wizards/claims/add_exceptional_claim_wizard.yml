@@ -1,0 +1,89 @@
+en:
+  wizards:
+    claims:
+      add_exceptional_claim_wizard:
+        exceptional_circumstances_step:
+          page_title: Exceptional circumstances - %{contextual_text}
+          title: Only add a claim for a school in exceptional circumstances
+          warning: This tool is only for adding claims outside of a claim window. Do not use it for claims that the school can submit themselves.
+          only_use_when: Before you continue, make sure that
+          outside_claim_window: the school is unable to claim in an open claim window and there are exceptional circumstances for adding the claim
+          same_rules: the claim still has to follow all of the usual rules, including school eligibility, accredited providers, mentors and the hours available to claim
+          recorded: you have the approval and evidence required for this exception, and the claim will be recorded as submitted by you
+          legend: Confirmation
+          label: I confirm that this claim is being added under exceptional circumstances
+          continue: Continue
+        claim_window_step:
+          page_title: Select a claim window - %{contextual_text}
+          title: Select a claim window
+          hint: Only claim windows that have already closed can be selected.
+          none: There are no closed claim windows to add a claim to.
+          claim_window_label: "%{academic_year} academic year"
+          claim_window_hint: Claim window %{starts_on} to %{ends_on}
+          continue: Continue
+        school_step:
+          page_title: Enter the school for this claim - %{contextual_text}
+          title: Enter the school for this claim
+          hint: Enter a school name, unique reference number (URN) or postcode
+        eligibility_step:
+          page_title: "%{school_name} is not eligible to claim - %{contextual_text}"
+          title: "%{school_name} is not eligible to claim"
+          not_eligible: "%{school_name} is not eligible to claim for the %{academic_year} academic year."
+          not_onboarded: "%{school_name} has not been onboarded to the claims service and is not eligible to claim for the %{academic_year} academic year."
+          warning: Making a school eligible changes who can claim funding. Only do this if you have the approval to do so.
+          legend: Confirmation
+          label: I confirm that %{school_name} should be made eligible to claim for the %{academic_year} academic year
+          label_onboarding: I confirm that %{school_name} should be onboarded to the claims service and made eligible to claim for the %{academic_year} academic year
+          continue: Continue
+        school_options_step:
+          title: "%{school_count} results found for ‘%{search_param}’ - %{contextual_text}"
+        mentor_step:
+          page_title: Select mentors that trained with %{provider_name} - %{contextual_text}
+          heading: Select mentors that trained with %{provider_name}
+          select_all_that_apply: Select all teachers that completed training to be initial teacher training (ITT) mentors.
+          mentor_not_listed_hint: Mentors only appear if they have hours left to claim with this provider in this academic year.
+          add_mentor_html: "Mentor not listed? %{link}. You can add as many mentors as you need."
+          add_mentor: Add a mentor to the school
+          continue: Continue
+        no_mentors_step:
+          page_title: No mentors for %{provider_name} - %{contextual_text}
+          heading_empty: No mentors for %{provider_name}
+          no_mentors_with_claimable_hours: "%{school_name} has no mentors with hours left to claim with %{provider_name} in the %{academic_year} academic year."
+          add_mentor: Add a mentor to the school
+          change_provider: Change the accredited provider
+        claim_status_step:
+          page_title: Claim status - %{contextual_text}
+          title: What is the status of this claim?
+          hint: Choose submitted if the claim still needs to go through the normal payment process.
+          submitted: Submitted
+          submitted_hint: The claim will be paid in the next payment run.
+          paid: Paid
+          paid_hint: The claim has already been paid.
+          paid_to_la: Who was the claim paid to?
+          local_authority: Local authority
+          academy: Academy
+          date_paid: Date paid
+          date_paid_hint: For example, 31 3 2025
+          continue: Continue
+        check_your_answers_step:
+          page_title: Check your answers before submitting the claim - %{contextual_text}
+          title: Check your answers before submitting the claim
+          warning: This claim will be submitted on behalf of the school and cannot be changed once submitted.
+          details: Details
+          eligibility: Eligibility
+          claim_status: Claim status
+          status_submitted: Submitted
+          status_paid: Paid
+          date_paid: Date paid
+          paid_to: Paid to
+          local_authority: Local authority
+          academy: Academy
+          eligibility_value: "%{school_name} will be made eligible for the %{academic_year} academic year"
+          eligibility_value_onboarding: "%{school_name} will be onboarded to the claims service and made eligible for the %{academic_year} academic year"
+          claim_window: claim window
+          claim_window_value: "%{academic_year} (closed %{ends_on})"
+          hours_of_training: Hours of training
+          hour: hour
+          grant_funding: Grant funding
+          total_hours: Total hours
+          hourly_rate: Hourly rate
