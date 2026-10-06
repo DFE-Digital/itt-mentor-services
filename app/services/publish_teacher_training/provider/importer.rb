@@ -6,6 +6,7 @@ module PublishTeacherTraining
         @records = []
         @email_details = []
         @synced_codes = []
+        @eligible_codes = []
 
         fetch_providers
 
@@ -20,6 +21,7 @@ module PublishTeacherTraining
             unique_by: :unique_provider_email,
           )
           unaccredit_missing_providers
+          make_providers_eligible
         end
 
         Rails.logger.info "Done!"
@@ -40,6 +42,7 @@ module PublishTeacherTraining
           @invalid_records << "Provider with code #{provider_attributes["code"]} is invalid" if invalid?(provider_attributes)
           next if invalid?(provider_attributes)
 
+          @eligible_codes << provider_attributes["code"] if provider_attributes["accredited_body"] == true
           @records << {
             code: provider_attributes["code"],
             name: provider_attributes["name"],
@@ -76,6 +79,19 @@ module PublishTeacherTraining
         return if @synced_codes.empty?
 
         ::Provider.accredited.where.not(code: @synced_codes).update_all(accredited: false)
+      end
+
+      def make_providers_eligible
+        return if @eligible_codes.empty?
+
+        academic_year = ::AcademicYear.current
+
+        ::Claims::ProviderEligibility.insert_all(
+          ::Provider.where(code: @eligible_codes).pluck(:id).map do |provider_id|
+            { provider_id:, academic_year_id: academic_year.id }
+          end,
+          unique_by: :index_provider_eligibilities_on_provider_and_academic_year,
+        )
       end
 
       def upsert_emails_attributes

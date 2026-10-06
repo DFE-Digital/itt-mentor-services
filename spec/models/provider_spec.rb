@@ -70,6 +70,37 @@ RSpec.describe Provider, type: :model do
     it { is_expected.to allow_values(:scitt, :lead_school, :university).for(:provider_type) }
   end
 
+  context "with eligibilities" do
+    let(:provider) { create(:provider) }
+    let(:academic_year) { AcademicYear.current }
+
+    it { is_expected.to have_many(:eligibilities).class_name("Claims::ProviderEligibility").dependent(:destroy) }
+
+    describe "#eligible_for_academic_year?" do
+      it "is true when the provider has an eligibility for the academic year" do
+        Claims::ProviderEligibility.create!(provider:, academic_year:)
+
+        expect(provider.eligible_for_academic_year?(academic_year)).to be(true)
+      end
+
+      it "is false when the provider is only eligible for another academic year" do
+        Claims::ProviderEligibility.create!(provider:, academic_year: AcademicYear.for_date(academic_year.ends_on + 1.day))
+
+        expect(provider.eligible_for_academic_year?(academic_year)).to be(false)
+      end
+
+      it "is false when the provider has no eligibilities, even if accredited" do
+        provider.update!(accredited: true)
+
+        expect(provider.eligible_for_academic_year?(academic_year)).to be(false)
+      end
+
+      it "is false without an academic year" do
+        expect(provider.eligible_for_academic_year?(nil)).to be(false)
+      end
+    end
+  end
+
   context "with scopes" do
     describe "#accredited" do
       let!(:accredited_provider) { create(:provider, accredited: true) }
@@ -78,6 +109,47 @@ RSpec.describe Provider, type: :model do
       it "only returns the providers which have been onboarded (placements: true)" do
         expect(described_class.accredited).to contain_exactly(accredited_provider)
         expect(described_class.accredited).not_to include(non_accredited_provider)
+      end
+    end
+
+    describe "#eligible_for_academic_year" do
+      let(:academic_year) { AcademicYear.current }
+      let(:other_academic_year) { AcademicYear.for_date(academic_year.ends_on + 1.day) }
+      let!(:eligible_provider) { create(:provider).tap { |provider| Claims::ProviderEligibility.create!(provider:, academic_year:) } }
+      let!(:eligible_next_year_provider) { create(:provider).tap { |provider| Claims::ProviderEligibility.create!(provider:, academic_year: other_academic_year) } }
+      let!(:ineligible_provider) { create(:provider) }
+
+      it "only returns providers that are eligible for the academic year" do
+        expect(described_class.eligible_for_academic_year(academic_year)).to contain_exactly(eligible_provider)
+        expect(described_class.eligible_for_academic_year(other_academic_year)).to contain_exactly(eligible_next_year_provider)
+      end
+
+      it "does not depend on the accredited flag" do
+        eligible_provider.update!(accredited: false)
+        ineligible_provider.update!(accredited: true)
+
+        expect(described_class.eligible_for_academic_year(academic_year)).to contain_exactly(eligible_provider)
+      end
+
+      it "returns no providers when there is no academic year" do
+        expect(described_class.eligible_for_academic_year(nil)).to be_empty
+      end
+
+      it "can be chained with other scopes" do
+        expect(described_class.excluding_niot_providers.eligible_for_academic_year(academic_year)).to contain_exactly(eligible_provider)
+      end
+    end
+
+    describe "#eligible_in_any_academic_year" do
+      it "returns each provider that is eligible for at least one academic year once" do
+        academic_year = AcademicYear.current
+        eligible_provider = create(:provider)
+        create(:provider)
+        [academic_year, AcademicYear.for_date(academic_year.ends_on + 1.day)].each do |year|
+          Claims::ProviderEligibility.create!(provider: eligible_provider, academic_year: year)
+        end
+
+        expect(described_class.eligible_in_any_academic_year).to contain_exactly(eligible_provider)
       end
     end
 

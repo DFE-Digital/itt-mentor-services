@@ -23,6 +23,12 @@ FactoryBot.define do
   factory :claim_window, class: "Claims::ClaimWindow" do
     academic_year { AcademicYear.for_date(Date.new(2024, 1, 1)) }
 
+    after(:create) do |claim_window|
+      Provider.accredited.find_each do |provider|
+        Claims::ProviderEligibility.find_or_create_by!(provider:, academic_year: claim_window.academic_year)
+      end
+    end
+
     trait :current do
       starts_on { 2.days.ago }
       ends_on { 2.days.from_now }

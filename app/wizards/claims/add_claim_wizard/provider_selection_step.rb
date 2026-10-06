@@ -6,7 +6,7 @@ class Claims::AddClaimWizard::ProviderSelectionStep < BaseStep
   def provider
     @provider ||= Claims::Provider
       .excluding_niot_providers
-      .accredited
+      .eligible_for_academic_year(wizard.academic_year)
       .find_by(id:)
   end
 

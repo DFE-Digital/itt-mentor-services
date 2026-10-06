@@ -37,6 +37,7 @@
 #  fk_rails_...  (provider_id => providers.id)
 #  fk_rails_...  (school_id => schools.id)
 #
+
 FactoryBot.define do
   factory :claim, class: "Claims::Claim" do
     association :school, factory: :claims_school
@@ -46,6 +47,12 @@ FactoryBot.define do
     claim_window { Claims::ClaimWindow.current || create(:claim_window, :current) }
 
     status { :internal_draft }
+
+    after(:create) do |claim|
+      next if claim.invalid_provider? || claim.provider.blank? || claim.claim_window.blank?
+
+      Claims::ProviderEligibility.find_or_create_by!(provider_id: claim.provider_id, academic_year_id: claim.claim_window.academic_year_id)
+    end
 
     trait :draft do
       status { :draft }

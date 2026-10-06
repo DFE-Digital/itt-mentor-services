@@ -44,6 +44,7 @@ RSpec.describe "Claims user creates a claim for a mentor with a previous year cl
     @mentor = build(:claims_mentor, first_name: "Barry", last_name: "Garlow", trn: "8888888")
     @provider = build(:claims_provider, :best_practice_network)
     @current_claim_window = create(:claim_window, :current)
+    @provider.eligibilities.build(academic_year: @current_claim_window.academic_year)
     @historic_claim_window = build(:claim_window, :historic)
     @date_submitted = @historic_claim_window.starts_on + 1.day
     @eligibility = build(:eligibility, academic_year: @current_claim_window.academic_year)

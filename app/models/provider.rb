@@ -60,7 +60,13 @@ class Provider < ApplicationRecord
   validates :code, :name, presence: true
   validates :code, uniqueness: { case_sensitive: false }
 
+  has_many :eligibilities, class_name: "Claims::ProviderEligibility", dependent: :destroy
+
   scope :accredited, -> { where accredited: true }
+  scope :eligible_for_academic_year, lambda { |academic_year|
+    where(id: Claims::ProviderEligibility.where(academic_year:).select(:provider_id))
+  }
+  scope :eligible_in_any_academic_year, -> { where(id: Claims::ProviderEligibility.select(:provider_id)) }
   scope :placements_service, -> { where placements_service: true }
 
   # This scope removes the additional NIoT provider records that exist in the publish API. The NIoT HQ is still included and should be the only NIoT result for the Claims service.
@@ -100,5 +106,11 @@ class Provider < ApplicationRecord
       *attributes.slice(*ADDRESS_FIELDS).values,
       "United Kingdom",
     ].compact.join(", ")
+  end
+
+  def eligible_for_academic_year?(academic_year)
+    return false if academic_year.blank?
+
+    eligibilities.exists?(academic_year:)
   end
 end

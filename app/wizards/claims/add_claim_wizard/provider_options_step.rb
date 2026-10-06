@@ -4,7 +4,7 @@ class Claims::AddClaimWizard::ProviderOptionsStep < Claims::AddClaimWizard::Prov
   def providers
     @providers ||= Claims::Provider
       .excluding_niot_providers
-      .accredited
+      .eligible_for_academic_year(wizard.academic_year)
       .search_name_urn_ukprn_postcode(
         search_param.downcase,
       ).decorate

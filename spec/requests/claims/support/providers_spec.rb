@@ -99,12 +99,17 @@ RSpec.describe "Providers", type: :request do
         )
       end
 
-      it "returns only accredited providers" do
+      it "returns only providers that are eligible for an academic year" do
         claims_user = create(:claims_support_user)
         sign_in_as claims_user
 
         provider1 = create(:claims_provider, name: "Test Provider 1")
-        _provider2 = create(:claims_provider, name: "Test Provider 2", accredited: false)
+        provider2 = create(:claims_provider, name: "Test Provider 2", accredited: false)
+        provider3 = create(:claims_provider, name: "Test Provider 3", accredited: true)
+        provider1.eligibilities.destroy_all
+        provider3.eligibilities.destroy_all
+        Claims::ProviderEligibility.create!(provider: provider1, academic_year: AcademicYear.current)
+        Claims::ProviderEligibility.create!(provider: provider2, academic_year: AcademicYear.for_date(AcademicYear.current.starts_on - 1.day))
 
         get search_path
 
@@ -112,6 +117,7 @@ RSpec.describe "Providers", type: :request do
         json_response = JSON.parse(response.body)
         expect(json_response).to contain_exactly(
           { "id" => provider1.id, "name" => provider1.name },
+          { "id" => provider2.id, "name" => provider2.name },
         )
       end
 

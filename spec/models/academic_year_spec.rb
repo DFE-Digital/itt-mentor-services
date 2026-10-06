@@ -16,6 +16,8 @@ RSpec.describe AcademicYear, type: :model do
     it { is_expected.to have_many(:claim_windows).class_name("Claims::ClaimWindow") }
     it { is_expected.to have_many(:eligibilities).class_name("Claims::Eligibility") }
     it { is_expected.to have_many(:eligible_schools).through(:eligibilities).source(:school) }
+    it { is_expected.to have_many(:provider_eligibilities).class_name("Claims::ProviderEligibility") }
+    it { is_expected.to have_many(:eligible_providers).through(:provider_eligibilities).source(:provider) }
   end
 
   describe "with validations" do

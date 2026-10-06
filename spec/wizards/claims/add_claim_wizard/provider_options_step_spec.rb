@@ -4,22 +4,30 @@ RSpec.describe Claims::AddClaimWizard::ProviderOptionsStep, type: :model do
   subject(:step) { described_class.new(wizard: mock_wizard, attributes:) }
 
   let(:attributes) { nil }
-  let!(:niot_provider) { create(:claims_provider, :niot) }
-
-  let(:mock_wizard) do
-    instance_double(Claims::AddClaimWizard).tap do |mock_wizard|
-      allow(mock_wizard).to receive_messages(
-        steps: { provider: mock_provider_step },
-      )
-    end
-  end
-
   let(:mock_provider_step) do
     instance_double(Claims::AddClaimWizard::ProviderStep).tap do |mock_provider_step|
       allow(mock_provider_step).to receive(:id).and_return(provider_search_name)
     end
   end
   let(:provider_search_name) { nil }
+  let!(:niot_provider) { make_eligible(create(:claims_provider, :niot)) }
+
+  let(:mock_wizard) do
+    instance_double(Claims::AddClaimWizard).tap do |mock_wizard|
+      allow(mock_wizard).to receive_messages(
+        steps: { provider: mock_provider_step },
+        academic_year:,
+      )
+    end
+  end
+
+  let(:academic_year) { AcademicYear.current }
+  let(:other_academic_year) { AcademicYear.for_date(academic_year.ends_on + 1.day) }
+
+  def make_eligible(provider, year = academic_year)
+    Claims::ProviderEligibility.find_or_create_by!(provider:, academic_year: year)
+    provider
+  end
 
   describe "attributes" do
     it { is_expected.to have_attributes(id: nil, search_param: nil) }
@@ -55,9 +63,9 @@ RSpec.describe Claims::AddClaimWizard::ProviderOptionsStep, type: :model do
 
   describe "providers" do
     let(:provider_search_name) { "York" }
-    let(:liverpool_provider) { create(:claims_provider, name: "Liverpool provider") }
-    let!(:york_provider) { create(:claims_provider, name: "York provider") }
-    let!(:yorkshire_provider) { create(:claims_provider, name: "Yorkshire provider") }
+    let(:liverpool_provider) { make_eligible(create(:claims_provider, name: "Liverpool provider")) }
+    let!(:york_provider) { make_eligible(create(:claims_provider, name: "York provider")) }
+    let!(:yorkshire_provider) { make_eligible(create(:claims_provider, name: "Yorkshire provider")) }
     let(:york_school) { create(:claims_school, name: "York school") }
 
     before do
@@ -66,6 +74,13 @@ RSpec.describe Claims::AddClaimWizard::ProviderOptionsStep, type: :model do
     end
 
     it "returns a list of providers with names similar to the search params" do
+      expect(step.providers).to contain_exactly(york_provider, yorkshire_provider)
+    end
+
+    it "only returns providers that are eligible for the academic year" do
+      make_eligible(create(:claims_provider, name: "York next year provider", accredited: false), other_academic_year)
+      create(:claims_provider, name: "York ineligible provider", accredited: true).eligibilities.destroy_all
+
       expect(step.providers).to contain_exactly(york_provider, yorkshire_provider)
     end
   end
