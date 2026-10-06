@@ -20,6 +20,7 @@ class Claims::Claim::Sampling::ProviderNotApproved < ApplicationService
       end
       claim.update!(
         status: :sampling_provider_not_approved,
+        amendment_notification_sent_at: Time.current,
       )
       notify_school
     end

@@ -122,6 +122,11 @@ class Claims::Claim < ApplicationRecord
     end
   end
 
+  def amendment_evidence_deadline
+    date = (amendment_notification_sent_at || Time.current).to_date + 30.days
+    date.on_weekend? ? date.next_weekday : date
+  end
+
   def submitted_on
     submitted_at&.to_date
   end

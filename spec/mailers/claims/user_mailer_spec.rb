@@ -609,7 +609,9 @@ RSpec.describe Claims::UserMailer, type: :mailer do
 
     let(:user) { create(:claims_user) }
     let(:school) { build(:claims_school) }
-    let(:claim) { build(:claim, reference: "123", school:).decorate }
+    let(:claim) do
+      build(:claim, reference: "123", school:, amendment_notification_sent_at: Time.zone.local(2026, 10, 5, 9)).decorate
+    end
     let(:mentor_1) { build(:claims_mentor, schools: [school], first_name: "Jane", last_name: "Doe") }
     let(:mentor_2) { build(:claims_mentor, schools: [school], first_name: "John", last_name: "Smith") }
     let(:mentor_training_1) do
@@ -617,6 +619,8 @@ RSpec.describe Claims::UserMailer, type: :mailer do
              :not_assured,
              claim:,
              mentor: mentor_1,
+             hours_completed: 20,
+             hours_clawed_back: 6,
              reason_not_assured: "ECT Mentor")
     end
     let(:mentor_training_2) do
@@ -624,6 +628,8 @@ RSpec.describe Claims::UserMailer, type: :mailer do
              :not_assured,
              claim:,
              mentor: mentor_2,
+             hours_completed: 12,
+             hours_clawed_back: 12,
              reason_not_assured: "Mentor not recognised")
     end
 
@@ -632,25 +638,124 @@ RSpec.describe Claims::UserMailer, type: :mailer do
       mentor_training_2
     end
 
-    it "sends the claim rejected by provider email" do
+    it "sends the claim amended by provider email" do
       expect(claim_rejected_by_provider.to).to contain_exactly(user.email)
-      expect(claim_rejected_by_provider.subject).to eq(
-        "Provider has indicated a school has an invalid claim: Claim funding for ITT Mentor training",
-      )
+      expect(claim_rejected_by_provider.subject).to eq("Your ITT mentor funding claim has been amended")
       expect(claim_rejected_by_provider.body.to_s.squish).to eq(<<~EMAIL.squish)
         Dear #{user.first_name},
 
-        Your claim with reference 123 has failed the provider audit.
+        #{claim.provider_name} has amended your initial teacher training (ITT) general mentor funding claim as part of an audit.
 
-        #{claim.provider_name} has indicated that:
+        Claim reference: 123
 
-        - Jane Doe: ECT Mentor
-        - John Smith: Mentor not recognised
+        # Details of the amendments
 
-        If you agree that the provider is correct, please forward this email onto us at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk), with the response “accept”. We will then begin the clawback (refund) process for the inaccurately claimed funds.
+        Mentor: Jane Doe
 
-        If you disagree, please forward this email onto us at [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk), providing supporting evidence.
-        Please provide this evidence within 5 working days, upon receiving the evidence, we will review it and respond back within 5 working days.
+        Original hours claimed: 20
+
+        Amended hours: 14
+
+        Reason provided by #{claim.provider_name}: ECT Mentor
+
+        Mentor: John Smith
+
+        Original hours claimed: 12
+
+        Amended hours: 0
+
+        Reason provided by #{claim.provider_name}: Mentor not recognised
+
+        # What you need to do
+
+        If you agree with the amendment, you do not need to do anything.
+
+        If you have questions about the amendment or would like further information, contact #{claim.provider_name} directly.
+
+        If you disagree with the amendment, you must email [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk) with evidence to support your original claim by 4 November 2026.
+
+        If we do not receive evidence by 4 November 2026, the amended claim will remain in place and any excess funding paid as part of the original claim will be recovered.
+
+        We will review any evidence you send and contact you with the outcome.
+
+        Kind regards,
+
+        Claim funding for mentor training team
+      EMAIL
+    end
+
+    context "when the evidence deadline falls on a weekend" do
+      let(:claim) do
+        build(:claim, reference: "123", school:, amendment_notification_sent_at: Time.zone.local(2026, 10, 1, 9)).decorate
+      end
+
+      it "moves the evidence deadline to the next weekday" do
+        expect(claim_rejected_by_provider.body.to_s).to include("by 2 November 2026.")
+      end
+    end
+
+    context "when the school has not yet been recorded as notified" do
+      let(:claim) { build(:claim, reference: "123", school:, amendment_notification_sent_at: nil).decorate }
+
+      it "calculates the evidence deadline from the current date" do
+        Timecop.freeze(Time.zone.local(2026, 10, 5, 9)) do
+          expect(claim_rejected_by_provider.body.to_s).to include("by 4 November 2026.")
+        end
+      end
+    end
+  end
+
+  describe "#claim_rejected_by_provider_reminder" do
+    subject(:reminder_email) { described_class.claim_rejected_by_provider_reminder(user, claim) }
+
+    let(:user) { create(:claims_user) }
+    let(:school) { build(:claims_school) }
+    let(:claim) do
+      build(:claim, reference: "123", school:, amendment_notification_sent_at: Time.zone.local(2026, 10, 5, 9)).decorate
+    end
+    let(:mentor) { build(:claims_mentor, schools: [school], first_name: "Jane", last_name: "Doe") }
+
+    before do
+      create(:mentor_training,
+             :not_assured,
+             claim:,
+             mentor:,
+             hours_completed: 20,
+             hours_clawed_back: 6,
+             reason_not_assured: "ECT Mentor")
+    end
+
+    it "sends the claim amended by provider reminder email" do
+      expect(reminder_email.to).to contain_exactly(user.email)
+      expect(reminder_email.subject).to eq("Reminder: your ITT mentor funding claim has been amended")
+      expect(reminder_email.body.to_s.squish).to eq(<<~EMAIL.squish)
+        Dear #{user.first_name},
+
+        #{claim.provider_name} has amended your initial teacher training (ITT) general mentor funding claim as part of an audit.
+
+        Claim reference: 123
+
+        # Details of the amendments
+
+        Mentor: Jane Doe
+
+        Original hours claimed: 20
+
+        Amended hours: 14
+
+        Reason provided by #{claim.provider_name}: ECT Mentor
+
+        # What you need to do
+
+        If you agree with the amendment, you do not need to do anything.
+
+        If you have questions about the amendment or the reasons provided, contact #{claim.provider_name} directly.
+
+        If you disagree with the amendment, you must email [ittmentor.funding@education.gov.uk](mailto:ittmentor.funding@education.gov.uk) with evidence to support your original claim by 4 November 2026.
+
+        If we do not receive evidence by 4 November 2026, the amended claim will remain in place and any excess funding paid as part of the original claim will be recovered.
+
+        If you have already sent us evidence, you do not need to send it again.
 
         Kind regards,
 
