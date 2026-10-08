@@ -204,11 +204,10 @@ RSpec.describe "View claims", service: :claims, type: :system do
     my_selection = page.find("#claims-support-claims-filter-form-school-ids-#{school_2.id}-field", visible: :all)
     expect(my_selection.present?).to be(true)
 
-    # Wait for the JS filter to remove the non-matching option rather than
-    # racing it with a non-waiting `find_all(wait: false)`.
+    # The JS filter hides non-matching items with `display: none` rather than
+    # removing them from the DOM, so wait for the option's (visible) label to go.
     expect(page).to have_no_css(
-      "#claims-support-claims-filter-form-school-ids-#{school_1.id}-field",
-      visible: :all,
+      "label[for='claims-support-claims-filter-form-school-ids-#{school_1.id}-field']",
     )
   end
 
