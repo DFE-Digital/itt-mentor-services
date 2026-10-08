@@ -1,0 +1,5 @@
+en:
+  components:
+    claim:
+      status_tag_component:
+        past_deadline: Past deadline

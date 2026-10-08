@@ -1,3 +1,13 @@
+<% if claim.sampling_provider_not_approved? && claim.amendment_notification_sent_at.present? %>
+  <%= govuk_inset_text(classes: "claim-responses") do %>
+    <h3 class="govuk-heading-s"><%= t(".evidence_deadline") %></h3>
+    <p class="govuk-body"><%= l(claim.amendment_evidence_deadline, format: :long) %></p>
+    <% if claim.amendment_deadline_passed? %>
+      <p class="govuk-body"><strong class="govuk-tag govuk-tag--red"><%= t(".past_deadline") %></strong> <%= t(".deadline_passed") %></p>
+    <% end %>
+  <% end %>
+<% end %>
+
 <% if claim.payment_actionable? && claim.unpaid_reason.present? %>
   <%= govuk_inset_text(classes: "claim-responses") do %>
     <h3 class="govuk-heading-s"><%= t(".unpaid_reason_header") %></h2>

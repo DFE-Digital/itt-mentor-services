@@ -115,6 +115,39 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
       end
     end
 
+    context "when the claim status is sampling_provider_not_approved and the school was notified" do
+      let(:claim) do
+        build(
+          :claim,
+          :audit_requested,
+          status: :sampling_provider_not_approved,
+          amendment_notification_sent_at: Time.zone.local(2026, 10, 5, 9),
+        )
+      end
+
+      around { |example| Timecop.freeze(example_time) { example.run } }
+
+      context "when the evidence deadline has not passed" do
+        let(:example_time) { Time.zone.local(2026, 10, 8, 9) }
+
+        it "renders the deadline sent to the school" do
+          expect(page).to have_element(:h3, text: "Evidence deadline", class: "govuk-heading-s")
+          expect(page).to have_element(:p, text: "4 November 2026", class: "govuk-body")
+          expect(page).not_to have_content("The deadline for the school to send evidence has passed")
+        end
+      end
+
+      context "when the evidence deadline has passed" do
+        let(:example_time) { Time.zone.local(2026, 11, 10, 9) }
+
+        it "renders the deadline and says it has passed" do
+          expect(page).to have_element(:h3, text: "Evidence deadline", class: "govuk-heading-s")
+          expect(page).to have_element(:p, text: "4 November 2026", class: "govuk-body")
+          expect(page).to have_content("The deadline for the school to send evidence has passed")
+        end
+      end
+    end
+
     context "when the claim status is sampling_not_approved" do
       let(:mentor_1) { build(:claims_mentor, first_name: "Joe", last_name: "Bloggs") }
       let(:mentor_training_1) do

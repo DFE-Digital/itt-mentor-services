@@ -243,6 +243,49 @@ RSpec.describe Claims::Claim, type: :model do
     end
   end
 
+  describe "#amendment_deadline_passed?" do
+    let(:claim) do
+      build(
+        :claim,
+        status:,
+        amendment_notification_sent_at: Time.zone.local(2026, 10, 5, 9),
+      )
+    end
+    let(:status) { :sampling_provider_not_approved }
+
+    it "returns false up to and including the evidence deadline" do
+      Timecop.freeze(Time.zone.local(2026, 11, 4, 12)) do
+        expect(claim.amendment_deadline_passed?).to be(false)
+      end
+    end
+
+    it "returns true the day after the evidence deadline" do
+      Timecop.freeze(Time.zone.local(2026, 11, 5, 9)) do
+        expect(claim.amendment_deadline_passed?).to be(true)
+      end
+    end
+
+    context "when the school has not been notified" do
+      let(:claim) { build(:claim, status:, amendment_notification_sent_at: nil) }
+
+      it "returns false" do
+        Timecop.freeze(Time.zone.local(2027, 1, 1, 9)) do
+          expect(claim.amendment_deadline_passed?).to be(false)
+        end
+      end
+    end
+
+    context "when the claim is no longer rejected by the provider" do
+      let(:status) { :paid }
+
+      it "returns false" do
+        Timecop.freeze(Time.zone.local(2027, 1, 1, 9)) do
+          expect(claim.amendment_deadline_passed?).to be(false)
+        end
+      end
+    end
+  end
+
   describe "#submitted_on" do
     it "returns the submitted_at in date format" do
       claim = build(:claim, submitted_at: Time.zone.local(2024, 2, 4, 10, 10))

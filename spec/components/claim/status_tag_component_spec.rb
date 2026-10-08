@@ -79,14 +79,6 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
     end
   end
 
-  context "when the claim's status is 'sampling_provider_not_approved'" do
-    let(:claim) { build(:claim, status: :sampling_provider_not_approved) }
-
-    it "renders a teal tag" do
-      expect(page).to have_css(".govuk-tag--teal", text: "Rejected by provider")
-    end
-  end
-
   context "when the claim's status is 'sampling_not_approved'" do
     let(:claim) { build(:claim, status: :sampling_not_approved) }
 
@@ -116,6 +108,37 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
 
     it "renders a blue tag" do
       expect(page).to have_css(".govuk-tag--blue", text: "Clawback complete")
+    end
+  end
+
+  context "when the claim's status is 'sampling_provider_not_approved'" do
+    let(:amendment_notification_sent_at) { nil }
+    let(:claim) do
+      build(:claim, status: :sampling_provider_not_approved, amendment_notification_sent_at:)
+    end
+
+    context "when the school has not been notified" do
+      it "renders a teal tag" do
+        expect(page).to have_css(".govuk-tag--teal", text: "Rejected by provider")
+      end
+    end
+
+    context "when the evidence deadline has not passed" do
+      let(:amendment_notification_sent_at) { Time.current }
+
+      it "renders only the rejected by provider tag" do
+        expect(page).to have_css(".govuk-tag--teal", text: "Rejected by provider")
+        expect(page).not_to have_css(".govuk-tag--red", text: "Past deadline")
+      end
+    end
+
+    context "when the evidence deadline has passed" do
+      let(:amendment_notification_sent_at) { 40.days.ago }
+
+      it "renders the rejected by provider tag and a red past deadline tag" do
+        expect(page).to have_css(".govuk-tag--teal", text: "Rejected by provider")
+        expect(page).to have_css(".govuk-tag--red", text: "Past deadline")
+      end
     end
   end
 

@@ -127,6 +127,12 @@ class Claims::Claim < ApplicationRecord
     date.on_weekend? ? date.next_weekday : date
   end
 
+  def amendment_deadline_passed?
+    sampling_provider_not_approved? &&
+      amendment_notification_sent_at.present? &&
+      amendment_evidence_deadline < Date.current
+  end
+
   def submitted_on
     submitted_at&.to_date
   end
