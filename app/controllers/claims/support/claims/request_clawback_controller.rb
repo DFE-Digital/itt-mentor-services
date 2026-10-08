@@ -2,6 +2,7 @@ class Claims::Support::Claims::RequestClawbackController < Claims::ApplicationCo
   include WizardController
   before_action :skip_authorization
   before_action :set_claim
+  before_action :require_deadline_passed
   before_action :set_wizard
 
   def new
@@ -29,6 +30,12 @@ class Claims::Support::Claims::RequestClawbackController < Claims::ApplicationCo
 
   def set_claim
     @claim = Claims::Claim.find(params[:claim_id])
+  end
+
+  def require_deadline_passed
+    return unless @claim.sampling_provider_not_approved? && !@claim.amendment_deadline_passed?
+
+    redirect_to claims_support_claims_sampling_path(@claim)
   end
 
   def set_wizard

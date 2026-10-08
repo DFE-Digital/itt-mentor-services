@@ -170,10 +170,6 @@ scope module: :claims, as: :claims, constraints: {
         member do
           get :confirm_approval
           put :update
-
-          get "reject/new", to: "samplings/reject#new", as: :new_rejected
-          get "reject/new/:state_key/:step", to: "samplings/reject#edit", as: :reject
-          put "reject/new/:state_key/:step", to: "samplings/reject#update"
         end
 
         collection do

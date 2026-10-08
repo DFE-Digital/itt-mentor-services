@@ -62,25 +62,6 @@ RSpec.describe Claims::MentorTraining, type: :model do
         end
       end
     end
-
-    describe "rejected" do
-      context "when rejected is true" do
-        let(:mentor_training) { build(:mentor_training, rejected: true) }
-
-        it "validates that the rejected reason is present" do
-          expect(mentor_training.valid?).to be(false)
-          expect(mentor_training.errors["reason_rejected"]).to include("can't be blank")
-        end
-      end
-
-      context "when rejected is false" do
-        let(:mentor_training) { build(:mentor_training, rejected: false) }
-
-        it "confirms the mentor training is valid" do
-          expect(mentor_training.valid?).to be(true)
-        end
-      end
-    end
   end
 
   describe "auditing" do

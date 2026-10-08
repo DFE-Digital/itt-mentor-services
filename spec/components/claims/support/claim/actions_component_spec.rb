@@ -64,16 +64,42 @@ RSpec.describe Claims::Support::Claim::ActionsComponent, type: :component do
   end
 
   context "when claim status is sampling provider not approved" do
-    let(:claim) { create(:claim, status: :sampling_provider_not_approved) }
+    let(:claim) { create(:claim, status: :sampling_provider_not_approved, amendment_notification_sent_at:) }
 
-    it "renders actions" do
-      expect(page).to have_element(:div, class: "claim-actions")
+    context "when the evidence deadline has not passed" do
+      let(:amendment_notification_sent_at) { 1.day.ago }
 
-      expect(page).to have_element(:a, text: "Approve claim", class: "govuk-button")
-      expect(page).to have_link("Approve claim", href: "/support/claims/sampling/claims/#{claim.id}/confirm_approval")
+      it "renders the approve button but not the request clawback button" do
+        expect(page).to have_element(:div, class: "claim-actions")
 
-      expect(page).to have_element(:a, text: "Reject claim", class: "govuk-button")
-      expect(page).to have_link("Reject claim", href: "/support/claims/sampling/claims/#{claim.id}/reject/new")
+        expect(page).to have_element(:a, text: "Approve claim", class: "govuk-button")
+        expect(page).to have_link("Approve claim", href: "/support/claims/sampling/claims/#{claim.id}/confirm_approval")
+
+        expect(page).not_to have_link("Request clawback")
+      end
+    end
+
+    context "when the school has not been notified" do
+      let(:amendment_notification_sent_at) { nil }
+
+      it "renders the approve button but not the request clawback button" do
+        expect(page).to have_link("Approve claim")
+        expect(page).not_to have_link("Request clawback")
+      end
+    end
+
+    context "when the evidence deadline has passed" do
+      let(:amendment_notification_sent_at) { 60.days.ago }
+
+      it "renders both the approve and request clawback buttons" do
+        expect(page).to have_element(:div, class: "claim-actions")
+
+        expect(page).to have_element(:a, text: "Approve claim", class: "govuk-button")
+        expect(page).to have_link("Approve claim", href: "/support/claims/sampling/claims/#{claim.id}/confirm_approval")
+
+        expect(page).to have_element(:a, text: "Request clawback", class: "govuk-button")
+        expect(page).to have_link("Request clawback", href: "/support/claims/clawbacks/claims/new/#{claim.id}")
+      end
     end
   end
 
