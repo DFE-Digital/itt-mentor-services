@@ -10,8 +10,10 @@
           <p class="govuk-heading-s"><%= t(".comments_from_provider", provider_name: current_step.claim.provider_name) %></p>
           <p class="govuk-body"><%= sanitize(current_step.reason_not_assured) %></p>
 
-          <p class="govuk-heading-s"><%= t(".comments_from_school", school_name: current_step.claim.school_name) %></p>
-          <p class="govuk-body"><%= sanitize(current_step.reason_rejected) %></p>
+          <% if current_step.reason_rejected.present? %>
+            <p class="govuk-heading-s"><%= t(".comments_from_school", school_name: current_step.claim.school_name) %></p>
+            <p class="govuk-body"><%= sanitize(current_step.reason_rejected) %></p>
+          <% end %>
         <% end %>
 
         <div class="govuk-form-group">

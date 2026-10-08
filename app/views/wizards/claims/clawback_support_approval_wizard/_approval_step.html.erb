@@ -49,9 +49,11 @@
           <% row.with_value(text: current_step.claim.school_name) %>
         <% end %>
 
-        <% summary_list.with_row do |row| %>
-          <% row.with_key(text: t(".school_comments")) %>
-          <% row.with_value(text: current_step.mentor_training.reason_rejected) %>
+        <% if current_step.mentor_training.reason_rejected.present? %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".school_comments")) %>
+            <% row.with_value(text: current_step.mentor_training.reason_rejected) %>
+          <% end %>
         <% end %>
 
         <% summary_list.with_row do |row| %>
