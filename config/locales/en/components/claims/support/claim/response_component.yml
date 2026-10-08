@@ -5,6 +5,9 @@ en:
         claim:
           responses_component:
             provider_response: Provider response
+            original_hours: Original hours claimed
+            amended_hours: Amended hours
+            reason_for_amendment: Reason for amendment
             evidence_deadline: Evidence deadline
             past_deadline: Past deadline
             deadline_passed: The deadline for the school to send evidence has passed.

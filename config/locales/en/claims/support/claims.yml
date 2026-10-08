@@ -110,6 +110,8 @@ en:
           clawback_amount: Clawback amount
           adjusted_total: Adjusted grant funding total
           mentor_worked_hours: Mentor worked hours
+          funding_reduction: Funding reduction
+          amended_total: Amended grant funding total
           rate: Hourly rate
           notice: No clawback required
           no_hours_clawed_back: This mentor will not have any hours clawed back
