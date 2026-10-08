@@ -787,6 +787,11 @@
             "fieldPath": [
               "paid_notification_sent_at"
             ]
+          },
+          {
+            "fieldPath": [
+              "amendment_notification_sent_at"
+            ]
           }
         ]
       },
