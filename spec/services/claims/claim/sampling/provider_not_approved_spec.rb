@@ -21,7 +21,7 @@ describe Claims::Claim::Sampling::ProviderNotApproved do
       end
 
       it "records when the school was notified of the amendment" do
-        Timecop.freeze(Time.current.change(usec: 0)) do
+        Timecop.freeze do
           expect { call }.to change(claim, :amendment_notification_sent_at).from(nil).to(Time.current)
         end
       end
