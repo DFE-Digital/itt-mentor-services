@@ -8,7 +8,10 @@ class Claim::StatusTagComponent < ApplicationComponent
   end
 
   def call
-    govuk_tag(text: Claims::Claim.human_attribute_name("status.#{claim.status}"), colour:)
+    status_tag = govuk_tag(text: Claims::Claim.human_attribute_name("status.#{claim.status}"), colour:)
+    return status_tag unless claim.amendment_deadline_passed?
+
+    safe_join([status_tag, govuk_tag(text: t(".past_deadline"), colour: "red")], " ")
   end
 
   private

@@ -5,3 +5,4 @@ en:
         claim_title: "%{reference} - %{school_name}"
         clawback_amount: Clawback 
         support_user: Support user
+        evidence_deadline: "Evidence deadline: %{date}"

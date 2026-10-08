@@ -46,6 +46,47 @@ RSpec.describe Claim::CardComponent, type: :component do
     end
   end
 
+  context "when the claim has been rejected by the provider" do
+    let(:status) { :sampling_provider_not_approved }
+    let(:clawback_requested_by) { nil }
+    let(:clawback_approved_by) { nil }
+
+    before do
+      claim.update!(amendment_notification_sent_at:)
+      render_inline(component)
+    end
+
+    context "when the evidence deadline is in the future" do
+      let(:amendment_notification_sent_at) { Time.zone.local(2026, 10, 5, 9) }
+
+      around { |example| Timecop.freeze(Time.zone.local(2026, 10, 8, 9)) { example.run } }
+
+      it "shows the evidence deadline without the past deadline tag" do
+        expect(page).to have_content("Evidence deadline: 4 November 2026")
+        expect(page).not_to have_content("Past deadline")
+      end
+    end
+
+    context "when the evidence deadline has passed" do
+      let(:amendment_notification_sent_at) { Time.zone.local(2026, 10, 5, 9) }
+
+      around { |example| Timecop.freeze(Time.zone.local(2026, 11, 10, 9)) { example.run } }
+
+      it "shows the evidence deadline and the past deadline tag" do
+        expect(page).to have_content("Evidence deadline: 4 November 2026")
+        expect(page).to have_css(".govuk-tag--red", text: "Past deadline")
+      end
+    end
+  end
+
+  context "when the claim has not been rejected by the provider" do
+    it "does not show an evidence deadline" do
+      render_inline(component)
+
+      expect(page).not_to have_content("Evidence deadline")
+    end
+  end
+
   context "when current user is a support user" do
     let(:current_user) { support_user }
 

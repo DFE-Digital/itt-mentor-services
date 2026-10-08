@@ -5,6 +5,9 @@ en:
         claim:
           responses_component:
             provider_response: Provider response
+            evidence_deadline: Evidence deadline
+            past_deadline: Past deadline
+            deadline_passed: The deadline for the school to send evidence has passed.
             reason: Reason claim is being audited
             unpaid_reason_header: Reason claim was not paid
             comments_from_provider: Provider comments - %{provider_name}
