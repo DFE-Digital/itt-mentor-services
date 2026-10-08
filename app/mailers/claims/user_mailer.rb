@@ -186,6 +186,7 @@ class Claims::UserMailer < Claims::ApplicationMailer
   end
 
   def claim_rejected_by_provider(user, claim)
+    link_to_claim = claims_school_claim_url(id: claim.id, school_id: claim.school.id, utm_source: "email", utm_medium: "notification", utm_campaign: "school")
     claim = claim.decorate
 
     notify_email to: user.email,
@@ -194,25 +195,11 @@ class Claims::UserMailer < Claims::ApplicationMailer
                          user_name: user.first_name,
                          claim_reference: claim.reference,
                          provider_name: claim.provider_name,
-                         amendment_details: amendment_details(claim),
-                         evidence_deadline: evidence_deadline(claim),
+                         provider_response: claim.provider_responses,
+                         link_to_claim:,
                          support_email:,
-                         service_name:)
-  end
-
-  def claim_rejected_by_provider_reminder(user, claim)
-    claim = claim.decorate
-
-    notify_email to: user.email,
-                 subject: t(".subject"),
-                 body: t(".body",
-                         user_name: user.first_name,
-                         claim_reference: claim.reference,
-                         provider_name: claim.provider_name,
-                         amendment_details: amendment_details(claim),
-                         evidence_deadline: evidence_deadline(claim),
-                         support_email:,
-                         service_name:)
+                         service_name:,
+                         service_url: claims_root_url(utm_source: "email", utm_medium: "notification", utm_campaign: "school"))
   end
 
   def your_school_is_eligible_to_claim(user, school)
@@ -226,25 +213,6 @@ class Claims::UserMailer < Claims::ApplicationMailer
   end
 
   private
-
-  def amendment_details(claim)
-    mentor_trainings = claim.mentor_trainings.not_assured.order_by_mentor_full_name
-
-    mentor_trainings.map { |mentor_training|
-      t(
-        "claims.user_mailer.claim_rejected_by_provider.mentor_amendment",
-        mentor_name: mentor_training.mentor_full_name,
-        original_hours: mentor_training.hours_completed,
-        amended_hours: mentor_training.corrected_hours_completed,
-        provider_name: claim.provider_name,
-        provider_comment: mentor_training.reason_not_assured,
-      )
-    }.join("\n\n")
-  end
-
-  def evidence_deadline(claim)
-    l(claim.amendment_evidence_deadline, format: :long)
-  end
 
   def claim_window
     @claim_window ||= Claims::ClaimWindow.current

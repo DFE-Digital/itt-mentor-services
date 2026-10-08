@@ -105,7 +105,6 @@ shared:
     - paid_to_la
     - date_paid
     - paid_notification_sent_at
-    - amendment_notification_sent_at
   :provider_samplings:
     - id
     - sampling_id

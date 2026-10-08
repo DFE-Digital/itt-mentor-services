@@ -356,65 +356,20 @@ en:
 
           %{service_name} team
       claim_rejected_by_provider:
-        subject: Your ITT mentor funding claim has been amended
-        mentor_amendment: |
-          Mentor: %{mentor_name}
-
-          Original hours claimed: %{original_hours}
-
-          Amended hours: %{amended_hours}
-
-          Reason provided by %{provider_name}: %{provider_comment}
+        subject: "Provider has indicated a school has an invalid claim: Claim funding for ITT Mentor training"
         body: |
           Dear %{user_name},
+          
+          Your claim with reference %{claim_reference} has failed the provider audit.
 
-          %{provider_name} has amended your initial teacher training (ITT) general mentor funding claim as part of an audit.
+          %{provider_name} has indicated that:
 
-          Claim reference: %{claim_reference}
+          %{provider_response}
 
-          # Details of the amendments
+          If you agree that the provider is correct, please forward this email onto us at [%{support_email}](mailto:%{support_email}), with the response “accept”. We will then begin the clawback (refund) process for the inaccurately claimed funds.
 
-          %{amendment_details}
-
-          # What you need to do
-
-          If you agree with the amendment, you do not need to do anything.
-
-          If you have questions about the amendment or would like further information, contact %{provider_name} directly.
-
-          If you disagree with the amendment, you must email [%{support_email}](mailto:%{support_email}) with evidence to support your original claim by %{evidence_deadline}.
-
-          If we do not receive evidence by %{evidence_deadline}, the amended claim will remain in place and any excess funding paid as part of the original claim will be recovered.
-
-          We will review any evidence you send and contact you with the outcome.
-
-          Kind regards,
-
-          %{service_name} team
-      claim_rejected_by_provider_reminder:
-        subject: "Reminder: your ITT mentor funding claim has been amended"
-        body: |
-          Dear %{user_name},
-
-          %{provider_name} has amended your initial teacher training (ITT) general mentor funding claim as part of an audit.
-
-          Claim reference: %{claim_reference}
-
-          # Details of the amendments
-
-          %{amendment_details}
-
-          # What you need to do
-
-          If you agree with the amendment, you do not need to do anything.
-
-          If you have questions about the amendment or the reasons provided, contact %{provider_name} directly.
-
-          If you disagree with the amendment, you must email [%{support_email}](mailto:%{support_email}) with evidence to support your original claim by %{evidence_deadline}.
-
-          If we do not receive evidence by %{evidence_deadline}, the amended claim will remain in place and any excess funding paid as part of the original claim will be recovered.
-
-          If you have already sent us evidence, you do not need to send it again.
+          If you disagree, please forward this email onto us at [%{support_email}](mailto:%{support_email}), providing supporting evidence.
+          Please provide this evidence within 5 working days, upon receiving the evidence, we will review it and respond back within 5 working days.
 
           Kind regards,
 
