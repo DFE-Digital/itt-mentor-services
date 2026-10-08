@@ -176,7 +176,7 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
     context "when the provider has a single outstanding claim" do
       let(:number_of_claims) { "1 claim" }
 
-      before { provider_sampling.claims.sampling_in_progress.first.destroy! }
+      before { provider_sampling.provider_sampling_claims.find_by!(claim: provider_sampling.claims.sampling_in_progress.first).destroy! }
 
       it "uses the singular form of claim" do
         expect(resend_sampling_checks_required_email.body.to_s.squish).to eq(expected_body.squish)
