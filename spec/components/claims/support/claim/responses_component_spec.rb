@@ -103,15 +103,17 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
                mentor_trainings: [mentor_training_1, mentor_training_2])
       end
 
-      it "renders the provider's response" do
+      it "renders a card of amended hours for each mentor" do
         expect(page).to have_element(:div, class: "claim-responses")
 
         expect(page).to have_element(:h3, text: "Provider response", class: "govuk-heading-s")
-        expect(page).to have_element(
-          :ul,
-          text: "Joe Bloggs: Incorrect number of hoursSarah Doe: Invalid mentor",
-          class: "govuk-list",
-        )
+        expect(page).to have_css(".govuk-summary-card", count: 2)
+        expect(page).to have_element(:div, text: "Joe Bloggs", class: "govuk-summary-card__title-wrapper")
+        expect(page).to have_element(:div, text: "Sarah Doe", class: "govuk-summary-card__title-wrapper")
+        expect(page).to have_content("Incorrect number of hours")
+        expect(page).to have_content("Invalid mentor")
+        expect(page).to have_content("Original hours claimed")
+        expect(page).to have_content("Amended hours")
       end
     end
 

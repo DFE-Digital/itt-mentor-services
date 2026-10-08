@@ -190,25 +190,27 @@
 
 <div id="grant_funding">
   <h2 class="govuk-heading-m"><%= t(".grant_funding") %></h2>
-  <% if claim.in_clawback? %>
+  <% if claim.in_clawback? || claim.sampling_provider_not_approved? %>
     <%= govuk_summary_list(actions: false) do |summary_list| %>
       <% summary_list.with_row do |row| %>
         <% row.with_key(text: t(".original_amount")) %>
         <% row.with_value(text: humanized_money_with_symbol(claim.amount)) %>
       <% end %>
 
-      <% summary_list.with_row do |row| %>
-        <% row.with_key(text: t(".hours_clawed_back")) %>
-        <% row.with_value(text: pluralize(claim.mentor_trainings.sum(:hours_clawed_back), t(".hour"))) %>
+      <% unless claim.sampling_provider_not_approved? %>
+        <% summary_list.with_row do |row| %>
+          <% row.with_key(text: t(".hours_clawed_back")) %>
+          <% row.with_value(text: pluralize(claim.mentor_trainings.sum(:hours_clawed_back), t(".hour"))) %>
+        <% end %>
       <% end %>
 
       <% summary_list.with_row do |row| %>
-        <% row.with_key(text: t(".clawback_amount")) %>
+        <% row.with_key(text: claim.sampling_provider_not_approved? ? t(".funding_reduction") : t(".clawback_amount")) %>
         <% row.with_value(text: humanized_money_with_symbol(claim.total_clawback_amount)) %>
       <% end %>
 
       <% summary_list.with_row do |row| %>
-        <% row.with_key(text: t(".adjusted_total")) %>
+        <% row.with_key(text: claim.sampling_provider_not_approved? ? t(".amended_total") : t(".adjusted_total")) %>
         <% row.with_value(text: humanized_money_with_symbol(claim.amount_after_clawback)) %>
       <% end %>
     <% end %>

@@ -340,6 +340,14 @@ RSpec.describe Claims::Claim, type: :model do
       end
     end
 
+    context "when a not_assured mentor training has no hours clawed back yet" do
+      it "treats the hours as zero" do
+        create(:mentor_training, claim:, hours_clawed_back: nil, not_assured: true, reason_not_assured: "reason")
+
+        expect(claim.total_clawback_amount).to eq(0)
+      end
+    end
+
     context "when one mentor training is not_assured" do
       it "returns the total clawback amount for the claim from the not_assured mentor" do
         create(:mentor_training, claim:, hours_clawed_back: 10, not_assured: false)

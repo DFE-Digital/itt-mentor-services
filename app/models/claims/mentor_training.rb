@@ -67,11 +67,11 @@ class Claims::MentorTraining < ApplicationRecord
   end
 
   def corrected_hours_completed
-    hours_completed - hours_clawed_back.to_i
+    hours_completed.to_i - hours_clawed_back.to_i
   end
 
   def clawback_amount
-    hours_clawed_back * region_funding_available_per_hour
+    hours_clawed_back.to_i * region_funding_available_per_hour
   end
 
   private

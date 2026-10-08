@@ -150,7 +150,7 @@ class Claims::Claim < ApplicationRecord
   end
 
   def total_clawback_amount
-    mentor_trainings.not_assured.sum { |mt| mt.hours_clawed_back * school.region_funding_available_per_hour }
+    mentor_trainings.not_assured.sum { |mt| mt.hours_clawed_back.to_i * school.region_funding_available_per_hour }
   end
 
   def in_draft?

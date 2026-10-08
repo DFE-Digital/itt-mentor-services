@@ -21,7 +21,26 @@
 <% elsif claim.sampling_provider_not_approved? && provider_response_exists? %>
   <%= govuk_inset_text(classes: "claim-responses") do %>
     <h3 class="govuk-heading-s"><%= t(".provider_response") %></h3>
-    <p class="govuk-body"><%= provider_response %></p>
+    <% amended_mentor_trainings.each do |mentor_training| %>
+      <%= govuk_summary_card(title: mentor_training.mentor_full_name) do |card| %>
+        <% card.with_summary_list(actions: false) do |summary_list| %>
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".original_hours")) %>
+            <% row.with_value(text: pluralize(mentor_training.hours_completed, "hour")) %>
+          <% end %>
+
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".amended_hours")) %>
+            <% row.with_value(text: pluralize(mentor_training.corrected_hours_completed, "hour")) %>
+          <% end %>
+
+          <% summary_list.with_row do |row| %>
+            <% row.with_key(text: t(".reason_for_amendment")) %>
+            <% row.with_value(text: mentor_training.reason_not_assured) %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
   <% end %>
 <% elsif (claim.sampling_not_approved? || claim.in_clawback?) &&
    (provider_response_exists? || school_response_exists?) %>

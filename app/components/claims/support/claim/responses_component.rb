@@ -19,6 +19,10 @@ class Claims::Support::Claim::ResponsesComponent < ApplicationComponent
     end
   end
 
+  def amended_mentor_trainings
+    not_assured_mentor_trainings.order_by_mentor_full_name
+  end
+
   def school_response_exists?
     rejected_mentor_trainings.pluck(:reason_rejected).present?
   end
