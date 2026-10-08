@@ -138,7 +138,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_10_06_100200) do
     t.boolean "paid_to_la"
     t.datetime "date_paid"
     t.datetime "paid_notification_sent_at"
-    t.datetime "amendment_notification_sent_at"
     t.index ["claim_window_id"], name: "index_claims_on_claim_window_id"
     t.index ["clawback_approved_by_id"], name: "index_claims_on_clawback_approved_by_id"
     t.index ["clawback_requested_by_id"], name: "index_claims_on_clawback_requested_by_id"

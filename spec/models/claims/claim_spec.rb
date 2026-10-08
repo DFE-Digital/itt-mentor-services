@@ -221,28 +221,6 @@ RSpec.describe Claims::Claim, type: :model do
     end
   end
 
-  describe "#amendment_evidence_deadline" do
-    it "returns 30 days after the school was notified of the amendment" do
-      claim = build(:claim, amendment_notification_sent_at: Time.zone.local(2026, 10, 5, 9))
-
-      expect(claim.amendment_evidence_deadline).to eq(Date.new(2026, 11, 4))
-    end
-
-    it "moves a weekend deadline to the next weekday" do
-      claim = build(:claim, amendment_notification_sent_at: Time.zone.local(2026, 10, 1, 9))
-
-      expect(claim.amendment_evidence_deadline).to eq(Date.new(2026, 11, 2))
-    end
-
-    it "falls back to the current date when the school has not been notified" do
-      claim = build(:claim, amendment_notification_sent_at: nil)
-
-      Timecop.freeze(Time.zone.local(2026, 10, 5, 9)) do
-        expect(claim.amendment_evidence_deadline).to eq(Date.new(2026, 11, 4))
-      end
-    end
-  end
-
   describe "#submitted_on" do
     it "returns the submitted_at in date format" do
       claim = build(:claim, submitted_at: Time.zone.local(2024, 2, 4, 10, 10))

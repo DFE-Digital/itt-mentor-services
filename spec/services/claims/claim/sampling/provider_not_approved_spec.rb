@@ -20,12 +20,6 @@ describe Claims::Claim::Sampling::ProviderNotApproved do
           .to("sampling_provider_not_approved")
       end
 
-      it "records when the school was notified of the amendment" do
-        Timecop.freeze do
-          expect { call }.to change(claim, :amendment_notification_sent_at).from(nil).to(Time.current)
-        end
-      end
-
       it "dispatches an email to the school users" do
         expect { call }.to have_enqueued_job(
           NotifyRateLimiterJob,
