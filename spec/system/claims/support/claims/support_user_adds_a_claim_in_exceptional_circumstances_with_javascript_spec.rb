@@ -55,7 +55,7 @@ RSpec.describe "Support user adds a claim in exceptional circumstances with java
 
   def and_i_am_signed_in
     sign_in_claims_support_user
-    expect(page).to have_h1("Organisations (1)")
+    expect(page).to have_h1("Organisations (3)")
   end
 
   def and_i_have_reached_the_school_step
