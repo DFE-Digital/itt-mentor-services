@@ -241,6 +241,15 @@ Claims::School.all.find_each do |school|
   end
 end
 
+Claims::Claim.sampling_in_progress.order(:reference).first(2).zip([60.days.ago, 1.day.ago]) do |claim, notified_at|
+  claim.update!(status: :sampling_provider_not_approved, amendment_notification_sent_at: notified_at)
+  claim.mentor_trainings.first&.update!(
+    not_assured: true,
+    reason_not_assured: "Incorrect number of hours",
+    hours_clawed_back: 1,
+  )
+end
+
 # Test providers for UR
 Provider.create!(name: "Test Provider 123", code: "TEST 123")
 Provider.create!(name: "Test Provider 456", code: "TEST 456")
