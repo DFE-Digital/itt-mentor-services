@@ -48,7 +48,7 @@ class Claims::Support::ClaimPolicy < Claims::ApplicationPolicy
   end
 
   def approve_clawback?
-    record.clawback_requires_approval? && user.support_user? && record.clawback_requested_by != user
+    record.clawback_requires_approval? && user.support_user?
   end
 
   private
