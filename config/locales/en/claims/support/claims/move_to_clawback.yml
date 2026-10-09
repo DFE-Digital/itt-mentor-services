@@ -1,0 +1,7 @@
+en:
+  claims:
+    support:
+      claims:
+        move_to_clawback:
+          create:
+            success: Clawback requested

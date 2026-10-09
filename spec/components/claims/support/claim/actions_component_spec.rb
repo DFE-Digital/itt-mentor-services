@@ -75,7 +75,7 @@ RSpec.describe Claims::Support::Claim::ActionsComponent, type: :component do
         expect(page).to have_element(:a, text: "Approve claim", class: "govuk-button")
         expect(page).to have_link("Approve claim", href: "/support/claims/sampling/claims/#{claim.id}/confirm_approval")
 
-        expect(page).not_to have_link("Request clawback")
+        expect(page).not_to have_button("Request clawback")
       end
     end
 
@@ -84,7 +84,7 @@ RSpec.describe Claims::Support::Claim::ActionsComponent, type: :component do
 
       it "renders the approve button but not the request clawback button" do
         expect(page).to have_link("Approve claim")
-        expect(page).not_to have_link("Request clawback")
+        expect(page).not_to have_button("Request clawback")
       end
     end
 
@@ -97,8 +97,8 @@ RSpec.describe Claims::Support::Claim::ActionsComponent, type: :component do
         expect(page).to have_element(:a, text: "Approve claim", class: "govuk-button")
         expect(page).to have_link("Approve claim", href: "/support/claims/sampling/claims/#{claim.id}/confirm_approval")
 
-        expect(page).to have_element(:a, text: "Request clawback", class: "govuk-button")
-        expect(page).to have_link("Request clawback", href: "/support/claims/clawbacks/claims/new/#{claim.id}")
+        expect(page).to have_button("Request clawback", class: "govuk-button")
+        expect(page).to have_element(:form, action: "/support/claims/clawbacks/claims/move_to_clawback/#{claim.id}", method: "post")
       end
     end
   end
