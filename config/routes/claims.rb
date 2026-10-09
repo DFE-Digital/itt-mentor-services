@@ -190,6 +190,7 @@ scope module: :claims, as: :claims, constraints: {
         end
 
         collection do
+          post "move_to_clawback/:claim_id", to: "move_to_clawback#create", as: :move_to_clawback
           get "new/:claim_id", to: "request_clawback#new", as: :new_request_clawback
           get "new/:state_key/:claim_id/:step", to: "request_clawback#edit", as: :request_clawback
           put "new/:state_key/:claim_id/:step", to: "request_clawback#update"

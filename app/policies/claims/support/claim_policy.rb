@@ -51,6 +51,10 @@ class Claims::Support::ClaimPolicy < Claims::ApplicationPolicy
     record.clawback_requires_approval? && user.support_user?
   end
 
+  def move_to_clawback?
+    user.support_user? && record.sampling_provider_not_approved? && record.amendment_deadline_passed?
+  end
+
   private
 
   def current_claim_window?
