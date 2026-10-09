@@ -1,0 +1,4 @@
+// Lets a button_to form sit in a .govuk-button-group as if the button were a direct child
+.app-claim-actions__form {
+  display: contents;
+}

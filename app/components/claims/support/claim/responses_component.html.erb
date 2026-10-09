@@ -55,10 +55,5 @@
       <p class="govuk-heading-s"><%= t(".reasons_for_clawback") %></p>
       <p class="govuk-body"><%= reasons_clawed_back %></p>
     <% end %>
-
-    <% if claim.clawback_rejected? %>
-      <p class="govuk-heading-s"><%= t(".reasons_clawback_rejected") %></p>
-      <p class="govuk-body"><%= reason_clawback_rejected %></p>
-    <% end %>
   <% end %>
 <% end %>

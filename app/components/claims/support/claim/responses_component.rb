@@ -47,14 +47,6 @@ class Claims::Support::Claim::ResponsesComponent < ApplicationComponent
     end
   end
 
-  def reason_clawback_rejected
-    return "" if clawback_rejected_mentor_trainings.blank?
-
-    list_of(clawback_rejected_mentor_trainings) do |mentor_training|
-      "#{mentor_training.mentor_full_name}: #{mentor_training.reason_clawback_rejected}"
-    end
-  end
-
   private
 
   def list_of(mentor_trainings)
@@ -79,9 +71,5 @@ class Claims::Support::Claim::ResponsesComponent < ApplicationComponent
 
   def clawed_back_mentor_trainings
     @clawed_back_mentor_trainings ||= mentor_trainings.where.not(reason_clawed_back: nil)
-  end
-
-  def clawback_rejected_mentor_trainings
-    @clawback_rejected_mentor_trainings ||= mentor_trainings.where.not(reason_clawback_rejected: nil)
   end
 end
