@@ -553,8 +553,8 @@ describe Claims::Support::ClaimPolicy do
           clawback_requires_approval_claim.update!(clawback_requested_by: support_user)
         end
 
-        it "denies access" do
-          expect(claim_policy).not_to permit(support_user, clawback_requires_approval_claim)
+        it "grants access" do
+          expect(claim_policy).to permit(support_user, clawback_requires_approval_claim)
         end
       end
 
