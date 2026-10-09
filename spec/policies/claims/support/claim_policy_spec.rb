@@ -553,8 +553,8 @@ describe Claims::Support::ClaimPolicy do
           clawback_requires_approval_claim.update!(clawback_requested_by: support_user)
         end
 
-        it "denies access" do
-          expect(claim_policy).not_to permit(support_user, clawback_requires_approval_claim)
+        it "grants access" do
+          expect(claim_policy).to permit(support_user, clawback_requires_approval_claim)
         end
       end
 
@@ -562,6 +562,38 @@ describe Claims::Support::ClaimPolicy do
         it "grants access" do
           expect(claim_policy).to permit(support_user, clawback_requires_approval_claim)
         end
+      end
+    end
+  end
+
+  permissions :move_to_clawback? do
+    let(:deadline_passed_claim) do
+      create(:claim, :submitted, status: :sampling_provider_not_approved, amendment_notification_sent_at: 60.days.ago)
+    end
+
+    context "when user is not a support user" do
+      it "denies access" do
+        expect(claim_policy).not_to permit(user, deadline_passed_claim)
+      end
+    end
+
+    context "when the claim is rejected by the provider and the evidence deadline has passed" do
+      it "grants access" do
+        expect(claim_policy).to permit(support_user, deadline_passed_claim)
+      end
+    end
+
+    context "when the evidence deadline has not passed" do
+      it "denies access" do
+        deadline_passed_claim.update!(amendment_notification_sent_at: 1.day.ago)
+
+        expect(claim_policy).not_to permit(support_user, deadline_passed_claim)
+      end
+    end
+
+    context "when the claim is not rejected by the provider" do
+      it "denies access" do
+        expect(claim_policy).not_to permit(support_user, clawback_requires_approval_claim)
       end
     end
   end
