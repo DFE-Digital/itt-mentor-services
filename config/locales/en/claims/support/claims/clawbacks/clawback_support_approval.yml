@@ -4,12 +4,23 @@ en:
       claims:
         clawbacks:
           clawback_support_approval:
-            edit:
+            new:
+              page_title: Review clawback - Claim - %{reference}
+              caption: Claim - %{reference}
+              title: Review clawback
+              summary: Summary
+              approve: Approve clawback
               cancel: Cancel
-            update:
+              hour: hour
+              original: Original hours claimed
+              mentor_worked_hours: Mentor worked hours
+              hours_clawed_back: Hours clawed back
+              rate: Hourly rate
+              clawback_amount: Clawback amount
+              reason_clawed_back: Reason for clawback
+              original_amount: Original claim amount
+              adjusted_total: Adjusted grant funding total
+            create:
               approved:
                 heading: Clawback approved
                 body: This clawback can now be sent to the Payer.
-              rejected:
-                heading: Clawback rejected
-                body: Please inform %{support_user_name} that this clawback has been rejected.

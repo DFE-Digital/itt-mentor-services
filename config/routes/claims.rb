@@ -186,8 +186,7 @@ scope module: :claims, as: :claims, constraints: {
           put "edit/:state_key/:claim_id/:mentor_training_id/:step", to: "edit_request_clawback#update"
 
           get "approval", to: "clawbacks/clawback_support_approval#new", as: :new_clawback_support_approval
-          get "approval/:state_key/:step", to: "clawbacks/clawback_support_approval#edit", as: :clawback_support_approval
-          put "approval/:state_key/:step", to: "clawbacks/clawback_support_approval#update"
+          post "approval", to: "clawbacks/clawback_support_approval#create"
         end
 
         collection do
