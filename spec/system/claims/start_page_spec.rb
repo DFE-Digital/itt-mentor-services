@@ -2,12 +2,20 @@ require "rails_helper"
 
 RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :system do
   scenario "User visits the start page" do
+    create(:claim_window, starts_on: Date.new(2024, 7, 15), ends_on: Date.new(2024, 8, 15))
     given_i_am_on_the_start_page
     then_i_can_see_the_start_page
     then_i_see_the_related_content
 
     when_i_click_start_now
     then_i_land_on_the_sign_in_page
+  end
+
+  context "when there is no active claim window" do
+    scenario "User visits the start page" do
+      given_i_am_on_the_start_page
+      then_i_see_the_claim_window_is_closed
+    end
   end
 
   context "when signed in as a single-org user" do
@@ -83,9 +91,19 @@ RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :sy
     expect(page).to have_content("This funding is not available for training early career framework (ECF) mentors. To claim for ECF mentors, you need a different service.")
 
     expect(page).to have_content(
-      "When to submit a claim\n"\
-      "For the school year starting September 2025:\n"\
-      "you can add your ITT mentor training hours and submit a claim from April 2026 "\
+      "Accredited ITT providers\n"\
+      "You can use this service when claims involving your organisation are selected for audit.\n"\
+      "You can:\n"\
+      "review claims selected for audit "\
+      "approve claims supported by your records "\
+      "identify discrepancies where training records do not support all or part of a claim "\
+      "submit audit responses through the service",
+    )
+
+    expect(page).to have_content(
+      "When schools can submit a claim\n"\
+      "For the school year starting September 2023:\n"\
+      "you can add your ITT mentor training hours and submit a claim from July 2024 "\
       "when you are registered in the service, we will email you reminders of claim opening dates and deadlines",\
     )
 
@@ -107,6 +125,13 @@ RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :sy
       "Find out what a teacher reference number (TRN) is and how to find or request a TRN",
       href: "https://www.gov.uk/guidance/teacher-reference-number-trn",
     )
+  end
+
+  def then_i_see_the_claim_window_is_closed
+    expect(page).to have_content("The claim window for the current academic year has now closed. Schools cannot submit new claims at this time.")
+    expect(page).to have_content("Accredited ITT providers can continue to access the service to complete audit activities where required.")
+    expect(page).to have_content("Information about future claim windows will be published when available.")
+    expect(page).not_to have_content("you can add your ITT mentor training hours and submit a claim from July 2024")
   end
 
   def when_i_click_start_now

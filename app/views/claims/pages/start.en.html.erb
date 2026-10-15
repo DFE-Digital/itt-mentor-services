@@ -27,13 +27,34 @@
         This funding is not available for training early career framework (ECF) mentors. To claim for ECF mentors, <%= govuk_link_to "you need a different service", "https://manage-training-for-early-career-teachers.education.gov.uk" %>.
       <% end %>
 
-      <h2 class="govuk-heading-m">When to submit a claim</h2>
+      <h2 class="govuk-heading-m">Accredited ITT providers</h2>
 
-      <p class="govuk-body">For the school year starting September 2025:</p>
+      <p class="govuk-body">You can use this service when claims involving your organisation are selected for audit.</p>
+
+      <p class="govuk-body">You can:</p>
 
       <%= govuk_list type: :bullet do %>
-        <li>you can add your ITT mentor training hours and submit a claim from April 2026</li>
-        <li>when you are registered in the service, we will email you reminders of claim opening dates and deadlines</li>
+        <li>review claims selected for audit</li>
+        <li>approve claims supported by your records</li>
+        <li>identify discrepancies where training records do not support all or part of a claim</li>
+        <li>submit audit responses through the service</li>
+      <% end %>
+
+      <h2 class="govuk-heading-m">When schools can submit a claim</h2>
+
+      <% if claim_window_open? %>
+        <p class="govuk-body">For the school year starting <%= l(academic_year.starts_on, format: "%B %Y") %>:</p>
+
+        <%= govuk_list type: :bullet do %>
+          <li>you can add your ITT mentor training hours and submit a claim from <%= l(claim_window.starts_on, format: "%B %Y") %></li>
+          <li>when you are registered in the service, we will email you reminders of claim opening dates and deadlines</li>
+        <% end %>
+      <% else %>
+        <p class="govuk-body">The claim window for the current academic year has now closed. Schools cannot submit new claims at this time.</p>
+
+        <p class="govuk-body">Accredited ITT providers can continue to access the service to complete audit activities where required.</p>
+
+        <p class="govuk-body">Information about future claim windows will be published when available.</p>
       <% end %>
 
       <h2 class="govuk-heading-m">Before you start</h2>
