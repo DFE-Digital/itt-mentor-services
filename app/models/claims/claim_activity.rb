@@ -33,6 +33,7 @@ class Claims::ClaimActivity < ApplicationRecord
     provider_approved_audit: "provider_approved_audit",
     rejected_by_provider: "rejected_by_provider",
     rejected_by_school: "rejected_by_school",
+    amended_by_support: "amended_by_support",
     approved_by_school: "approved_by_school",
     clawback_requested: "clawback_requested",
     rejected_by_payer: "rejected_by_payer",
@@ -44,7 +45,7 @@ class Claims::ClaimActivity < ApplicationRecord
 
   PAYMENT_AND_CLAWBACK_ACTIONS = %w[payment_request_delivered clawback_request_delivered clawback_response_uploaded].freeze
   SAMPLING_ACTIONS = %w[sampling_uploaded sampling_response_uploaded].freeze
-  MANUAL_ACTIONS = %w[provider_approved_audit rejected_by_provider rejected_by_school clawback_requested rejected_by_payer paid_by_payer information_sent_to_payer].freeze
+  MANUAL_ACTIONS = %w[provider_approved_audit rejected_by_provider rejected_by_school amended_by_support clawback_requested rejected_by_payer paid_by_payer information_sent_to_payer].freeze
 
   def claims_by_provider
     return {} unless record.respond_to?(:claims)

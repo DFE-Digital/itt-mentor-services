@@ -19,6 +19,8 @@ class Claims::ClaimActivityDecorator < Draper::Decorator
       I18n.t("#{translation_path}.provider_approved_audit", provider_name: record.provider_name, claim_reference: record.reference)
     when "rejected_by_provider"
       I18n.t("#{translation_path}.rejected_by_provider", provider_name: record.provider_name, claim_reference: record.reference)
+    when "amended_by_support"
+      I18n.t("#{translation_path}.amended_by_support", claim_reference: record.reference)
     when "rejected_by_school"
       I18n.t("#{translation_path}.rejected_by_school", school_name: record.school_name, claim_reference: record.reference)
     when "approved_by_school"

@@ -44,6 +44,7 @@ en:
           other: "%{count} claims sent to payer for payment"
         payment_response_uploaded: Payer payment response uploaded
         rejected_by_provider: Provider %{provider_name} rejected audit for claim %{claim_reference}
+        amended_by_support: Support overrode the hours of training for claim %{claim_reference}
         rejected_by_school: School %{school_name} rejected audit for claim %{claim_reference}
         provider_approved_audit: Provider %{provider_name} approved audit for claim %{claim_reference}
         sampling_uploaded:
