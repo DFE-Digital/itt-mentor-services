@@ -176,6 +176,15 @@ RSpec.describe Claims::ClaimActivityDecorator do
       end
     end
 
+    context "when the claim activity action is amended_by_support" do
+      let(:record) { create(:claim, reference: "12345678") }
+      let(:claim_activity) { create(:claim_activity, action: "amended_by_support", record:) }
+
+      it "returns the translation for amended_by_support" do
+        expect(decorated_claim_activity.title).to eq("Support overrode the hours of training for claim 12345678")
+      end
+    end
+
     context "when the claim activity action is rejected_by_school" do
       let(:record) { create(:claim, reference: "12345678") }
       let(:claim_activity) { create(:claim_activity, :rejected_by_school, record:) }
