@@ -63,6 +63,6 @@ class Claims::Providers::ApproveRejectSamplingClaimWizard::MentorTrainingStep < 
   end
 
   def reject_action?
-    wizard.action == "reject"
+    %w[reject override].include?(wizard.action)
   end
 end

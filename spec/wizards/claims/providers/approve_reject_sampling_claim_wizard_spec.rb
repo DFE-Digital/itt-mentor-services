@@ -59,6 +59,35 @@ RSpec.describe Claims::Providers::ApproveRejectSamplingClaimWizard, type: :model
         "mentor_training_#{mentor_john.id}" => { mentor_id: mentor_john.id },
       )
     end
+
+    context "when the action is override" do
+      let(:action) { "override" }
+
+      before { mentor_training_jane.update!(not_assured: true, reason_not_assured: "Provider reason", hours_clawed_back: 4) }
+
+      it "preselects the mentors amended by the provider" do
+        wizard.setup_state
+
+        expect(state["mentor"]).to eq(mentor_ids: [mentor_jane.id])
+      end
+
+      it "prefills the hours and reason from the provider's amendment" do
+        wizard.setup_state
+
+        expect(state["mentor_training_#{mentor_jane.id}"]).to include(
+          hours_option: "custom",
+          custom_hours: 6,
+          reason_not_assured: "Provider reason",
+        )
+      end
+
+      it "prefills removing all hours when the provider removed every hour" do
+        mentor_training_jane.update!(hours_clawed_back: 10)
+        wizard.setup_state
+
+        expect(state["mentor_training_#{mentor_jane.id}"]).to include(hours_option: "remove_all")
+      end
+    end
   end
 
   describe "#process_submission" do
@@ -114,6 +143,52 @@ RSpec.describe Claims::Providers::ApproveRejectSamplingClaimWizard, type: :model
           expect { wizard.process_submission }
             .to change { Claims::ClaimActivity.where(action: "rejected_by_provider", record: claim).count }
             .by(1)
+        end
+      end
+    end
+
+    context "when the action is override" do
+      let(:action) { "override" }
+      let(:current_user) { create(:claims_support_user) }
+
+      before { claim.update!(status: :sampling_provider_not_approved, amendment_notification_sent_at: 2.days.ago) }
+
+      it "overrides the hours and requests a clawback" do
+        wizard.process_submission
+
+        expect(claim.reload).to have_attributes(status: "clawback_requires_approval", clawback_requested_by: current_user)
+        expect(mentor_training_jane.reload.hours_clawed_back).to eq(2)
+        expect(mentor_training_jane.reason_clawed_back).to eq("Insufficient evidence")
+      end
+
+      it "records amended by support and clawback requested activities" do
+        expect { wizard.process_submission }
+          .to change { Claims::ClaimActivity.where(record: claim, action: %w[amended_by_support clawback_requested]).count }
+          .by(2)
+      end
+
+      it "notifies the school users" do
+        create(:claims_user, schools: [school])
+
+        expect { wizard.process_submission }.to have_enqueued_job(NotifyRateLimiterJob)
+      end
+
+      context "when no hours are clawed back" do
+        let(:state) do
+          {
+            "mentor" => { "mentor_ids" => [mentor_jane.id] },
+            "mentor_training_#{mentor_jane.id}" => {
+              "mentor_id" => mentor_jane.id,
+              "hours_option" => "custom",
+              "custom_hours" => "10",
+              "reason_not_assured" => "Evidence shows all hours",
+            },
+          }
+        end
+
+        it "moves the claim to paid without notifying the school" do
+          expect { wizard.process_submission }.not_to have_enqueued_job(NotifyRateLimiterJob)
+          expect(claim.reload).to be_paid
         end
       end
     end
