@@ -79,6 +79,15 @@ RSpec.describe Claims::Support::Claim::ActionsComponent, type: :component do
       end
     end
 
+    context "when the claim has been rejected by the provider" do
+      let(:amendment_notification_sent_at) { 1.day.ago }
+
+      it "renders a secondary override hours button" do
+        expect(page).to have_element(:a, text: "Override hours", class: "govuk-button govuk-button--secondary")
+        expect(page).to have_link("Override hours", href: "/support/claims/sampling/claims/#{claim.id}/override/new")
+      end
+    end
+
     context "when the school has not been notified" do
       let(:amendment_notification_sent_at) { nil }
 
@@ -99,6 +108,7 @@ RSpec.describe Claims::Support::Claim::ActionsComponent, type: :component do
 
         expect(page).to have_button("Request clawback", class: "govuk-button")
         expect(page).to have_element(:form, action: "/support/claims/clawbacks/claims/move_to_clawback/#{claim.id}", method: "post")
+        expect(page).to have_link("Override hours", class: "govuk-button")
       end
     end
   end

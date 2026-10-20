@@ -5,6 +5,7 @@ en:
         claim:
           actions_component:
             buttons:
+              override_hours: Override hours
               approve: Approve claim
               request_clawback: Request clawback
               information_sent: Confirm information sent
