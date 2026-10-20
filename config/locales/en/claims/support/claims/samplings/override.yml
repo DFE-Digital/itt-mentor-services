@@ -1,0 +1,11 @@
+en:
+  claims:
+    support:
+      claims:
+        samplings:
+          override:
+            edit:
+              cancel: Cancel
+            update:
+              clawback_requested: Hours of training overridden and clawback requested
+              no_clawback_required: Hours of training overridden. Claim has been moved to the paid status

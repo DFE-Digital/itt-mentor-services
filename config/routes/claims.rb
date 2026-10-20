@@ -170,6 +170,10 @@ scope module: :claims, as: :claims, constraints: {
         member do
           get :confirm_approval
           put :update
+
+          get "override/new", to: "samplings/override#new", as: :new_override
+          get "override/new/:state_key/:step", to: "samplings/override#edit", as: :override
+          put "override/new/:state_key/:step", to: "samplings/override#update"
         end
 
         collection do
