@@ -20,10 +20,10 @@
         },
         legend: {
           size: "l",
-          text: t(".heading"),
+          text: t(@wizard.action == "override" ? ".override_heading" : ".heading"),
           tag: "h1",
         },
-        hint: { text: t(".hint") },
+        hint: { text: t(@wizard.action == "override" ? ".override_hint" : ".hint") },
       ) %>
 
       <%= f.govuk_submit t(".continue") %>

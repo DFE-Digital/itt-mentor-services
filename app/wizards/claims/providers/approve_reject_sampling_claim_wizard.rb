@@ -25,15 +25,18 @@ module Claims
       def process_submission
         raise "Invalid wizard state" unless valid?
 
-        if action == "approve"
+        case action
+        when "approve"
           ::Claims::Claim::Sampling::Paid.call(claim:)
           create_claim_activity(:provider_approved_audit)
-        elsif action == "reject"
+        when "reject"
           ::Claims::Claim::Sampling::ProviderNotApproved.call(
             claim:,
             provider_responses: provider_responses_for_mentor_trainings,
           )
           create_claim_activity(:rejected_by_provider)
+        when "override"
+          override_hours
         end
       end
 
@@ -48,13 +51,50 @@ module Claims
             mentor_id: mentor_training.mentor_id,
           }
         end
+
+        prefill_existing_amendments if action == "override"
       end
 
       def step_name_for_mentor(mentor)
         step_name(MentorTrainingStep, mentor.id)
       end
 
+      def clawback_requested?
+        claim.reload.clawback_requires_approval?
+      end
+
       private
+
+      def override_hours
+        ::Claims::Claim::Sampling::HoursOverridden.call(
+          claim:,
+          current_user:,
+          provider_responses: provider_responses_for_mentor_trainings,
+        )
+        create_claim_activity(:amended_by_support)
+      end
+
+      def prefill_existing_amendments
+        amended_trainings = mentor_trainings.select(&:not_assured)
+        state["mentor"] = { mentor_ids: amended_trainings.map(&:mentor_id) }
+
+        amended_trainings.each do |mentor_training|
+          step_name = "mentor_training_#{mentor_training.mentor_id}"
+          state[step_name].merge!(existing_amendment_attributes(mentor_training))
+        end
+      end
+
+      def existing_amendment_attributes(mentor_training)
+        completed_hours = mentor_training.corrected_hours_completed
+        hours_attributes =
+          if completed_hours.positive?
+            { hours_option: MentorTrainingStep::CUSTOM_HOURS, custom_hours: completed_hours }
+          else
+            { hours_option: MentorTrainingStep::REMOVE_ALL_HOURS }
+          end
+
+        hours_attributes.merge(reason_not_assured: mentor_training.reason_not_assured)
+      end
 
       def create_claim_activity(action_name)
         return unless current_user.is_a?(::Claims::SupportUser)

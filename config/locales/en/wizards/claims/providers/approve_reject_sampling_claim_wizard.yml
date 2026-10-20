@@ -9,6 +9,8 @@ en:
             heading: Which mentors do you want to review?
             continue: Continue
             hint: Before amending any hours of training, check with the school to confirm how many hours of training each mentor completed. Select the mentors whose hours of training you want to amend.
+            override_heading: Which mentors do you want to override the hours for?
+            override_hint: Select the mentors whose hours of training you want to override based on the evidence provided by the school. Mentors you deselect will go back to the hours originally claimed.
           mentor_training_step:
             page_title: Hours of training for %{mentor_full_name} - %{contextual_text}
             caption: "%{school_name}"
@@ -24,11 +26,14 @@ en:
             reason_label: Why are you amending this?
             reason_hint: Provide a reason for amending this mentor’s hours. This reason will be shared with the school and should explain why the originally claimed hours are being changed.
             continue: Continue
+            override_reason_label: Why are you overriding this?
+            override_reason_hint: Provide a reason for overriding this mentor’s hours. This reason will be shared with the school.
           check_your_answers_step:
             page_title: Check your answers - %{contextual_text}
             caption: "%{school_name}"
             approve_title: Approve this claim
             reject_title: Amend this claim
+            override_title: Override the hours of training for this claim
             details: Details
             school: School
             mentor_hours: Hours of training to amend
@@ -36,4 +41,5 @@ en:
             completed_hours: Actual hours of training
             approve_warning: Once you approve this claim, the status will be updated to 'Approved'.
             reject_warning: Once you amend this claim, the status will be updated to 'Amended' and the school will receive an email with the next steps.
+            override_warning: Once you confirm, the hours of training on this claim will be updated and a clawback will be requested. The claim will be sent for approval by another support user and the school will receive an email.
             submit: Confirm

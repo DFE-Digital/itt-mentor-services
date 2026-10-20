@@ -6,7 +6,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l"><%= t(".caption", school_name: @wizard.school_name) %></span>
-      <h1 class="govuk-heading-l"><%= @wizard.action == "approve" ? t(".approve_title") : t(".reject_title") %></h1>
+      <h1 class="govuk-heading-l"><%= t(".#{@wizard.action}_title") %></h1>
 
       <h2 class="govuk-heading-m"><%= t(".details") %></h2>
 
@@ -51,11 +51,7 @@
       <% end %>
 
       <%= govuk_warning_text do %>
-        <% if @wizard.action == "approve" %>
-          <%= t(".approve_warning") %>
-        <% else %>
-          <%= t(".reject_warning") %>
-        <% end %>
+        <%= t(".#{@wizard.action}_warning") %>
       <% end %>
 
       <div class="govuk-button-group">
