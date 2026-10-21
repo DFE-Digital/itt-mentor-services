@@ -7,27 +7,30 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <p class="govuk-body">
-        Use this service to make a claim for the time spent becoming an initial teacher training (ITT) mentor.
-      </p>
+      <p class="govuk-body">Use this service to:</p>
+
+      <%= govuk_list type: :bullet do %>
+        <li>claim funding for eligible initial teacher training (ITT) mentor training</li>
+        <li>review mentor training claims selected for audit</li>
+      <% end %>
 
       <h2 class="govuk-heading-m">Who can use this service</h2>
 
-      <p class="govuk-body">
-        You can use this service if you are a school or education organisation that:
-      </p>
+      <h3 class="govuk-heading-s">Schools and educational organisations</h3>
+
+      <p class="govuk-body">You can use this service if your organisation:</p>
 
       <%= govuk_list type: :bullet do %>
         <li>offers ITT placements with an accredited provider</li>
-        <li>has at least one team member who has started or is due to start their ITT mentor training</li>
-        <li>is registered with <%= govuk_link_to "Get information about schools (GIAS)", "https://get-information-schools.service.gov.uk" %></li>
+        <li>has at least one team member who has started or is due to start ITT mentor training</li>
+        <li>is registered with <%= govuk_link_to "Get Information About Schools (GIAS)", "https://get-information-schools.service.gov.uk" %></li>
       <% end %>
 
       <%= govuk_inset_text do %>
         This funding is not available for training early career framework (ECF) mentors. To claim for ECF mentors, <%= govuk_link_to "you need a different service", "https://manage-training-for-early-career-teachers.education.gov.uk" %>.
       <% end %>
 
-      <h2 class="govuk-heading-m">Accredited ITT providers</h2>
+      <h3 class="govuk-heading-s">Accredited ITT providers</h3>
 
       <p class="govuk-body">You can use this service when claims involving your organisation are selected for audit.</p>
 
@@ -46,29 +49,29 @@
         <p class="govuk-body">For the school year starting <%= l(academic_year.starts_on, format: "%B %Y") %>:</p>
 
         <%= govuk_list type: :bullet do %>
-          <li>you can add your ITT mentor training hours and submit a claim from <%= l(claim_window.starts_on, format: "%B %Y") %></li>
-          <li>when you are registered in the service, we will email you reminders of claim opening dates and deadlines</li>
+          <li>schools can add ITT mentor training hours and submit a claim from <%= l(claim_window.starts_on, format: "%B %Y") %></li>
+          <li>registered users will receive email reminders about claim opening dates and deadlines</li>
         <% end %>
       <% else %>
-        <p class="govuk-body">The claim window for the current academic year has now closed. Schools cannot submit new claims at this time.</p>
-
-        <p class="govuk-body">Accredited ITT providers can continue to access the service to complete audit activities where required.</p>
+        <p class="govuk-body">The claim window for the current academic year has now closed. Schools cannot submit new claims at this time. Accredited ITT providers can continue to access the service to complete audit activities where required.</p>
 
         <p class="govuk-body">Information about future claim windows will be published when available.</p>
       <% end %>
 
-      <h2 class="govuk-heading-m">Before you start</h2>
+      <h2 class="govuk-heading-m">Before schools start a claim</h2>
 
-      <p class="govuk-body">You will be asked for:</p>
+      <p class="govuk-body">You will need:</p>
 
       <%= govuk_list type: :bullet do %>
         <li>the name of your accredited ITT provider</li>
         <li>your mentors’ teacher reference numbers (TRN)</li>
         <li>your mentors’ dates of birth</li>
-        <li>completed training hours - you should check these with your provider</li>
+        <li>completed training hours, which should be checked with your provider</li>
       <% end %>
 
-      <p class="govuk-body">To access this service, you will be asked to sign in or create a Department for Education (DfE) Sign-in account. DfE Sign-in is how schools and other education organisations access DfE online services.</p>
+      <h2 class="govuk-heading-m">Sign in</h2>
+
+      <p class="govuk-body">To access this service, you will be asked to sign in or create a Department for Education (DfE) Sign-in account. DfE Sign-in is how schools, accredited providers and other education organisations access DfE online services.</p>
 
       <%= govuk_start_button text: "Start now", href: sign_in_path, classes: "govuk-!-margin-top-4" %>
 
@@ -85,24 +88,6 @@
       <p class="govuk-body">
         If your organisation is eligible but has not been set up with an account, send an email to <%= mail_to t("claims.support_email"), t("claims.support_email_html") %>. You will get a response within 5 working days.
       </p>
-    </div>
-
-    <div class="govuk-grid-column-one-third">
-      <aside class="app-related" role="complementary">
-        <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Related content</h2>
-
-        <%= govuk_list do %>
-          <li class="app-related__list-item">
-            <%= govuk_link_to "Initial teacher training reform funding guidance - GOV.UK", "https://www.gov.uk/government/publications/initial-teacher-training-reform-funding-guidance" %>
-          </li>
-          <li class="app-related__list-item">
-            <%= govuk_link_to "Guidance for providers on initial teacher training (ITT)", "https://www.gov.uk/government/collections/initial-teacher-training" %>
-          </li>
-          <li class="app-related__list-item">
-            <%= govuk_link_to "Find out what a teacher reference number (TRN) is and how to find or request a TRN", "https://www.gov.uk/guidance/teacher-reference-number-trn" %>
-          </li>
-        <% end %>
-      </aside>
     </div>
   </div>
 </div>
