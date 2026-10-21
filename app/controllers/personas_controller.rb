@@ -5,6 +5,7 @@ class PersonasController < ApplicationController
     @personas = User.where(email: PERSONA_EMAILS)
       .where(type: persona_types)
       .order(:created_at)
+      .uniq(&:email)
   end
 
   private

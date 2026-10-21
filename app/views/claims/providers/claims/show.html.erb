@@ -11,7 +11,9 @@
       <p class="govuk-caption-l"><%= @claim.school_name %></p>
       <h1 class="govuk-heading-l"><%= t(".claim_reference", reference: @claim.reference) %></h1>
 
-      <% if @claim.sampling_in_progress? %>
+      <% if @claim.sampling_in_progress? && policy(@claim).own_claim? %>
+        <%= govuk_warning_text(text: t(".own_claim_warning")) %>
+      <% elsif policy(@claim).approve? %>
         <div class="govuk-button-group">
           <%= govuk_button_link_to(
             t(".approve_claim"),

@@ -5,6 +5,15 @@ class Claims::Providers::ApplicationController < Claims::ApplicationController
 
   private
 
+  # A person with both a school and a provider record acts as their provider
+  # user on provider pages, so provider memberships and policies apply.
+  def current_user
+    @current_user ||= begin
+      user = super
+      user.instance_of?(Claims::User) ? sign_in_user.provider_user || user : user
+    end
+  end
+
   def authorize_user!
     return if current_user.support_user? || current_user.is_a?(Claims::ProviderUser)
 

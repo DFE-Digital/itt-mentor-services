@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 
   default_form_builder(GOVUKDesignSystemFormBuilder::FormBuilder)
 
-  helper_method :current_user, :support_controller?, :policy_scope
+  helper_method :current_user, :support_controller?, :policy_scope, :claims_change_organisation_path
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
@@ -22,6 +22,32 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @current_user ||= sign_in_user&.user
+  end
+
+  # Where a claims user goes to choose between their organisations, or nil when
+  # they only belong to one. Counts only organisations the user is a member of.
+  def claims_change_organisation_path
+    schools = claims_school_choices.count
+    providers = claims_provider_choices.count
+    return unless schools + providers > 1
+
+    providers.positive? && schools.zero? ? claims_providers_path : claims_schools_path
+  end
+
+  # The organisations a person can choose between. Each comes from the policy
+  # scope of the user record of that type, so only memberships are returned.
+  def claims_school_choices
+    school_user = sign_in_user.school_user
+    return Claims::School.none unless school_user
+
+    Claims::SchoolPolicy::Scope.new(school_user, Claims::School).resolve
+  end
+
+  def claims_provider_choices
+    provider_user = sign_in_user.provider_user
+    return Claims::Provider.none unless provider_user
+
+    Claims::Providers::ProviderPolicy::Scope.new(provider_user, Claims::Provider).resolve
   end
 
   def user_signed_in?

@@ -31,6 +31,30 @@ RSpec.describe Claims::Providers::ClaimPolicy do
     it { is_expected.not_to permit(school_user, Claims::Claim) }
   end
 
+  permissions :approve?, :reject? do
+    let(:sampling_claim) { create(:claim, :submitted, provider: assigned_provider, status: :sampling_in_progress) }
+    let(:own_claim) do
+      creator = create(:claims_user, email: provider_user.email, dfe_sign_in_uid: provider_user.dfe_sign_in_uid)
+      create(:claim, :submitted, provider: assigned_provider, status: :sampling_in_progress, created_by: creator)
+    end
+
+    it { is_expected.to permit(provider_user, sampling_claim) }
+    it { is_expected.not_to permit(provider_user, own_claim) }
+    it { is_expected.not_to permit(provider_user, create(:claim, :submitted, provider: assigned_provider, status: :paid)) }
+    it { is_expected.not_to permit(provider_user, create(:claim, :submitted, provider: other_provider, status: :sampling_in_progress)) }
+    it { is_expected.not_to permit(school_user, sampling_claim) }
+  end
+
+  describe "#own_claim?" do
+    it "is true only when the claim was created by the same person" do
+      creator = create(:claims_user, email: provider_user.email, dfe_sign_in_uid: provider_user.dfe_sign_in_uid)
+      own_claim = create(:claim, provider: assigned_provider, created_by: creator)
+
+      expect(described_class.new(provider_user, own_claim)).to be_own_claim
+      expect(described_class.new(provider_user, assigned_claim)).not_to be_own_claim
+    end
+  end
+
   permissions :create?, :destroy?, :update? do
     it { is_expected.to permit(support_user, assigned_claim) }
     it { is_expected.not_to permit(provider_user, assigned_claim) }

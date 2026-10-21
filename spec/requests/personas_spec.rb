@@ -20,6 +20,17 @@ RSpec.describe "Personas", type: :request do
       expect(response).to have_http_status(:success)
     end
 
+    context "when claims service", service: :claims do
+      it "shows a persona with both a school and a provider record only once" do
+        create(:claims_user, :mary)
+        create(:claims_provider_user, :mary)
+
+        get "/personas"
+
+        expect(response.body.scan("Sign in as Mary").size).to eq(1)
+      end
+    end
+
     context "when placements service", service: :placements do
       it "returns http success" do
         get "/personas"

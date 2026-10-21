@@ -3,6 +3,8 @@ en:
     schools:
       index:
         organisations: Organisations
+        schools: Schools
+        providers: Providers
       show:
         heading: Organisation details
         unknown: Unknown
