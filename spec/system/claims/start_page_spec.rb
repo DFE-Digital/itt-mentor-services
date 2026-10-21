@@ -4,7 +4,6 @@ RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :sy
   scenario "User visits the start page" do
     given_i_am_on_the_start_page
     then_i_can_see_the_start_page
-    then_i_see_the_related_content
 
     when_i_click_start_now
     then_i_land_on_the_sign_in_page
@@ -77,14 +76,19 @@ RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :sy
       )
     end
 
-    expect(page).to have_content("Use this service to make a claim for the time spent becoming an initial teacher training (ITT) mentor.")
+    expect(page).to have_content(
+      "Use this service to:\n"\
+      "claim funding for eligible initial teacher training (ITT) mentor training "\
+      "review mentor training claims selected for audit",
+    )
 
     expect(page).to have_content(
       "Who can use this service\n"\
-      "You can use this service if you are a school or education organisation that:\n"\
+      "Schools and educational organisations\n"\
+      "You can use this service if your organisation:\n"\
       "offers ITT placements with an accredited provider "\
-      "has at least one team member who has started or is due to start their ITT mentor training "\
-      "is registered with Get information about schools (GIAS)",
+      "has at least one team member who has started or is due to start ITT mentor training "\
+      "is registered with Get Information About Schools (GIAS)",
     )
 
     expect(page).to have_content("This funding is not available for training early career framework (ECF) mentors. To claim for ECF mentors, you need a different service.")
@@ -102,27 +106,23 @@ RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :sy
     expect(page).to have_content(
       "When schools can submit a claim\n"\
       "For the school year starting September 2023:\n"\
-      "you can add your ITT mentor training hours and submit a claim from May 2024 "\
-      "when you are registered in the service, we will email you reminders of claim opening dates and deadlines",\
+      "schools can add ITT mentor training hours and submit a claim from May 2024 "\
+      "registered users will receive email reminders about claim opening dates and deadlines",
     )
 
     expect(page).to have_content(
-      "Before you start\n"\
-      "You will be asked for:\n"\
+      "Before schools start a claim\n"\
+      "You will need:\n"\
       "the name of your accredited ITT provider "\
       "your mentors’ teacher reference numbers (TRN) "\
       "your mentors’ dates of birth "\
-      "completed training hours - you should check these with your provider",
+      "completed training hours, which should be checked with your provider",
     )
 
-    expect(page).to have_content("Related content")
-    expect(page).to have_link(
-      "Guidance for providers on initial teacher training (ITT)",
-      href: "https://www.gov.uk/government/collections/initial-teacher-training",
-    )
-    expect(page).to have_link(
-      "Find out what a teacher reference number (TRN) is and how to find or request a TRN",
-      href: "https://www.gov.uk/guidance/teacher-reference-number-trn",
+    expect(page).to have_content(
+      "Sign in\n"\
+      "To access this service, you will be asked to sign in or create a Department for Education (DfE) Sign-in account. "\
+      "DfE Sign-in is how schools, accredited providers and other education organisations access DfE online services.",
     )
   end
 
@@ -130,7 +130,7 @@ RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :sy
     expect(page).to have_content("The claim window for the current academic year has now closed. Schools cannot submit new claims at this time.")
     expect(page).to have_content("Accredited ITT providers can continue to access the service to complete audit activities where required.")
     expect(page).to have_content("Information about future claim windows will be published when available.")
-    expect(page).not_to have_content("you can add your ITT mentor training hours and submit a claim from May 2024")
+    expect(page).not_to have_content("schools can add ITT mentor training hours and submit a claim from May 2024")
   end
 
   def when_i_click_start_now
@@ -151,12 +151,5 @@ RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :sy
 
   def then_i_am_redirected_to_the_support_school_list_page
     expect(page.current_url).to eq("http://claims.localhost/support/schools")
-  end
-
-  def then_i_see_the_related_content
-    expect(page).to have_link(
-      "Initial teacher training reform funding guidance - GOV.UK",
-      href: "https://www.gov.uk/government/publications/initial-teacher-training-reform-funding-guidance",
-    )
   end
 end
