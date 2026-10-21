@@ -4,6 +4,7 @@ RSpec.describe "Provider user views claims", service: :claims, type: :system do
   let!(:provider) { create(:claims_provider, name: "North Star SCITT") }
   let!(:other_provider) { create(:claims_provider, name: "Other Provider") }
   let!(:provider_user) { create(:claims_provider_user, :patricia) }
+  let!(:school_user) { create(:claims_user, :anne) }
 
   let!(:school) do
     create(
@@ -34,8 +35,8 @@ RSpec.describe "Provider user views claims", service: :claims, type: :system do
       status: :sampling_in_progress,
       provider:,
       school:,
-      created_by: provider_user,
-      submitted_by: provider_user,
+      created_by: school_user,
+      submitted_by: school_user,
       reference: "9000001",
       created_at: Time.zone.local(2026, 1, 10, 9, 0, 0),
     )
@@ -48,8 +49,8 @@ RSpec.describe "Provider user views claims", service: :claims, type: :system do
       status: :paid,
       provider:,
       school: second_school,
-      created_by: provider_user,
-      submitted_by: provider_user,
+      created_by: school_user,
+      submitted_by: school_user,
       reference: "9000003",
       created_at: Time.zone.local(2026, 1, 11, 9, 0, 0),
     )
@@ -62,8 +63,8 @@ RSpec.describe "Provider user views claims", service: :claims, type: :system do
       status: :submitted,
       provider:,
       school:,
-      created_by: provider_user,
-      submitted_by: provider_user,
+      created_by: school_user,
+      submitted_by: school_user,
       reference: "9000004",
       created_at: Time.zone.local(2026, 1, 12, 9, 0, 0),
     )

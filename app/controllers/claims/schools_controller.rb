@@ -6,6 +6,7 @@ class Claims::SchoolsController < Claims::ApplicationController
 
   def index
     @schools = policy_scope(Claims::School.order_by_name)
+    @providers = provider_memberships
   end
 
   def show; end
@@ -18,9 +19,16 @@ class Claims::SchoolsController < Claims::ApplicationController
   end
 
   def redirect_to_school_claims_when_belongs_to_one_school
-    if policy_scope(Claims::School).one?
+    if policy_scope(Claims::School).one? && provider_memberships.none?
       redirect_to claims_school_claims_path(current_user.schools.first)
     end
+  end
+
+  # Providers the user is a member of, when they also have a provider user record.
+  def provider_memberships
+    return Claims::Provider.none if current_user.support_user?
+
+    @provider_memberships ||= claims_provider_choices.order_by_name
   end
 
   def authorize_school

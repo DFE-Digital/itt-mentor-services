@@ -45,6 +45,18 @@ class User < ApplicationRecord
     false
   end
 
+  # Whether two user records belong to the same person. Matches on the DfE Sign
+  # In uid when both records have one (set on first sign in), otherwise on email.
+  def same_person_as?(other)
+    return false if other.nil?
+
+    if dfe_sign_in_uid.present? && other.dfe_sign_in_uid.present?
+      dfe_sign_in_uid == other.dfe_sign_in_uid
+    else
+      email.present? && email == other.email
+    end
+  end
+
   # Extracts the namespace of the class as a symbol to determine the service
   # e.g.
   # - Placements::User => :placements

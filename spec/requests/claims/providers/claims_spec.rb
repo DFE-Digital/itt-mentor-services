@@ -49,6 +49,34 @@ RSpec.describe "Provider claims", service: :claims, type: :request do
     end
   end
 
+  context "when the claim was created by the signed in person's own school user record" do
+    let(:own_claim) do
+      creator = create(:claims_user, email: provider_user.email, dfe_sign_in_uid: provider_user.dfe_sign_in_uid)
+      create(:claim, :submitted, provider:, school:, status: "sampling_in_progress", created_by: creator)
+    end
+
+    it "hides the audit buttons and shows a warning" do
+      get claims_provider_claim_path(provider, own_claim)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).not_to include("Approve claim")
+      expect(response.body).not_to include("Amend claim")
+      expect(response.body).to include("you created this claim")
+    end
+
+    it "does not allow the claim to be approved" do
+      post approve_claims_provider_claim_path(provider, own_claim)
+
+      expect(own_claim.reload.status).to eq("sampling_in_progress")
+    end
+
+    it "does not allow the claim to be amended" do
+      get new_reject_claims_provider_claim_path(provider, own_claim)
+
+      expect(response).not_to redirect_to(/reject\/new\/.*\/mentor/)
+    end
+  end
+
   describe "GET /providers/:provider_id/claims/:id/approve/new" do
     it "renders the approval confirmation page" do
       get new_approve_claims_provider_claim_path(provider, claim)

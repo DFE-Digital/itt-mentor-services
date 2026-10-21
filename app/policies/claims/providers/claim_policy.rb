@@ -21,8 +21,14 @@ class Claims::Providers::ClaimPolicy < Claims::Providers::ApplicationPolicy
     user.providers.exists?(id: record.provider_id)
   end
 
+  # Someone cannot audit a claim they created themselves, so another provider
+  # user has to do it.
   def approve?
-    read? && record.sampling_in_progress?
+    read? && record.sampling_in_progress? && !own_claim?
+  end
+
+  def own_claim?
+    user.same_person_as?(record.created_by)
   end
 
   def reject?

@@ -17,6 +17,7 @@ en:
           hours_claimed: Hours claimed
           approve_claim: Approve claim
           amend_claim: Amend claim
+          own_claim_warning: You cannot approve or amend this claim because you created this claim. Another provider user will need to do this.
           mentors_with_amended_hours: Mentors with amended hours
           hours_originally_claimed: Hours originally claimed
           training_hours_completed: Training hours mentor completed

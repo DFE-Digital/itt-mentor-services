@@ -67,11 +67,33 @@ class DfESignInUser
       .first
   end
 
+  # A person can have both a Claims::User and a Claims::ProviderUser record.
+  # These return the record of each type, if any, regardless of which one
+  # `user` resolves to.
+  def school_user
+    claims_user_of(Claims::User)
+  end
+
+  def provider_user
+    claims_user_of(Claims::ProviderUser)
+  end
+
   def self.end_session!(session)
     session.clear
   end
 
   private
+
+  def claims_user_of(klass)
+    return unless service == :claims
+
+    # Match on the DfE Sign In uid where the record has one (it is set on first
+    # sign in), and only fall back to email for records without a uid.
+    by_email = klass.where(dfe_sign_in_uid: nil, email:)
+    candidates = dfe_sign_in_uid.present? ? klass.where(dfe_sign_in_uid:).or(by_email) : by_email
+
+    candidates.order(Arel.sql("dfe_sign_in_uid IS NULL"), :created_at).first
+  end
 
   def support_user_klass
     case service

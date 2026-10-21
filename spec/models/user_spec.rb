@@ -97,4 +97,36 @@ RSpec.describe User, type: :model do
       expect(user.service).to eq(:claims)
     end
   end
+
+  describe "#same_person_as?" do
+    let(:user) { create(:claims_user, email: "pat@example.com", dfe_sign_in_uid: "uid-1") }
+
+    it "is true when both records have the same uid" do
+      other = build(:claims_provider_user, email: "different@example.com", dfe_sign_in_uid: "uid-1")
+
+      expect(user).to be_same_person_as(other)
+    end
+
+    it "is false when both records have uids and they differ, even with the same email" do
+      other = build(:claims_provider_user, email: "pat@example.com", dfe_sign_in_uid: "uid-2")
+
+      expect(user).not_to be_same_person_as(other)
+    end
+
+    it "falls back to email when either record has no uid" do
+      other = build(:claims_provider_user, email: "PAT@example.com", dfe_sign_in_uid: nil)
+
+      expect(user).to be_same_person_as(other)
+    end
+
+    it "is false when either record has no uid and the emails differ" do
+      other = build(:claims_provider_user, email: "someone.else@example.com", dfe_sign_in_uid: nil)
+
+      expect(user).not_to be_same_person_as(other)
+    end
+
+    it "is false for nil" do
+      expect(user).not_to be_same_person_as(nil)
+    end
+  end
 end

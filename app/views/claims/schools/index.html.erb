@@ -4,9 +4,21 @@
       <h1 class="govuk-heading-xl"><%= t(".organisations") %></h1>
 
       <% if @schools.any? %>
+        <% if @providers.any? %>
+          <h2 class="govuk-heading-m"><%= t(".schools") %></h2>
+        <% end %>
         <%= govuk_list spaced: true do %>
           <% @schools.each do |school| %>
             <%= tag.li govuk_link_to(school.name, claims_school_claims_path(school), no_visited_state: true) %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <% if @providers.any? %>
+        <h2 class="govuk-heading-m"><%= t(".providers") %></h2>
+        <%= govuk_list spaced: true do %>
+          <% @providers.each do |provider| %>
+            <%= tag.li govuk_link_to(provider.name, claims_provider_claims_path(provider), no_visited_state: true) %>
           <% end %>
         <% end %>
       <% end %>

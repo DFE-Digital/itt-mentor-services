@@ -114,11 +114,17 @@ placements_patrica.user_memberships.find_or_create_by!(organisation: provider)
 claims_anne = Claims::User.find_by!(email: "anne_wilson@example.org")
 claims_anne.user_memberships.find_or_create_by!(organisation: Claims::School.first)
 
-# Multi-school Mary
+# Multi-school Mary (also a provider user, below)
 claims_mary = Claims::User.find_by!(email: "mary@example.com")
 schools = Claims::School.all
 schools.each do |school|
   claims_mary.user_memberships.find_or_create_by!(organisation: school)
+end
+
+# Mary is also a provider user, so she can switch between her schools and providers
+claims_mary_provider_user = Claims::ProviderUser.find_by!(email: "mary@example.com")
+Claims::Provider.private_beta_providers.order_by_name.first(2).each do |provider|
+  claims_mary_provider_user.user_memberships.find_or_create_by!(organisation: provider)
 end
 
 # Provider Patricia
@@ -225,7 +231,7 @@ Claims::School.all.find_each do |school|
   patricia_providers.each do |claim_provider|
     create_claim(school:,
                  provider: claim_provider,
-                 created_by: claims_patricia,
+                 created_by: claims_anne,
                  reference:,
                  status: :paid)
 
@@ -233,13 +239,20 @@ Claims::School.all.find_each do |school|
 
     create_claim(school:,
                  provider: claim_provider,
-                 created_by: claims_patricia,
+                 created_by: claims_anne,
                  reference:,
                  status: :sampling_in_progress)
 
     reference += 1
   end
 end
+
+# A claim Mary created as a school user. As a provider user she cannot audit it herself.
+create_claim(school: Claims::School.first,
+             provider: claims_mary_provider_user.providers.order_by_name.first,
+             created_by: claims_mary,
+             reference:,
+             status: :sampling_in_progress)
 
 Claims::Claim.sampling_in_progress.order(:reference).first(2).zip([60.days.ago, 1.day.ago]) do |claim, notified_at|
   claim.update!(status: :sampling_provider_not_approved, amendment_notification_sent_at: notified_at)

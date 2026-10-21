@@ -118,6 +118,92 @@ describe DfESignInUser do
     end
   end
 
+  describe "#provider_user" do
+    def sign_in_user_for(user, service: :claims)
+      described_class.new(
+        email: user.email,
+        dfe_sign_in_uid: user.dfe_sign_in_uid,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        service:,
+      )
+    end
+
+    it "returns the Claims::ProviderUser sharing the email or DfE Sign In uid" do
+      claims_user = create(:claims_user)
+      provider_user = create(:claims_provider_user, email: claims_user.email, dfe_sign_in_uid: claims_user.dfe_sign_in_uid)
+
+      expect(sign_in_user_for(claims_user).provider_user).to eq provider_user
+    end
+
+    it "returns nil when there is no matching Claims::ProviderUser" do
+      claims_user = create(:claims_user)
+      create(:claims_provider_user)
+
+      expect(sign_in_user_for(claims_user).provider_user).to be_nil
+    end
+
+    it "matches on uid when the record has one, even if the email differs" do
+      claims_user = create(:claims_user)
+      provider_user = create(:claims_provider_user, email: "changed@example.com", dfe_sign_in_uid: claims_user.dfe_sign_in_uid)
+
+      expect(sign_in_user_for(claims_user).provider_user).to eq provider_user
+    end
+
+    it "falls back to email when the record has no uid yet" do
+      claims_user = create(:claims_user)
+      provider_user = create(:claims_provider_user, email: claims_user.email, dfe_sign_in_uid: nil)
+
+      expect(sign_in_user_for(claims_user).provider_user).to eq provider_user
+    end
+
+    it "does not match on email when the record has a different uid" do
+      claims_user = create(:claims_user)
+      create(:claims_provider_user, email: claims_user.email, dfe_sign_in_uid: "another-persons-uid")
+
+      expect(sign_in_user_for(claims_user).provider_user).to be_nil
+    end
+
+    it "prefers a uid match over an email-only match" do
+      claims_user = create(:claims_user)
+      create(:claims_provider_user, email: claims_user.email, dfe_sign_in_uid: nil, created_at: 1.day.ago)
+      uid_match = create(:claims_provider_user, email: "other@example.com", dfe_sign_in_uid: claims_user.dfe_sign_in_uid)
+
+      expect(sign_in_user_for(claims_user).provider_user).to eq uid_match
+    end
+
+    it "only matches records with no uid by email when the sign in has no uid" do
+      claims_user = create(:claims_user)
+      create(:claims_provider_user, email: claims_user.email, dfe_sign_in_uid: "some-uid")
+      no_uid = create(:claims_provider_user, email: "no.uid@example.com", dfe_sign_in_uid: nil)
+
+      sign_in = described_class.new(email: "no.uid@example.com", dfe_sign_in_uid: nil, first_name: "A", last_name: "B", service: :claims)
+      expect(sign_in.provider_user).to eq no_uid
+      expect(described_class.new(email: claims_user.email, dfe_sign_in_uid: nil, first_name: "A", last_name: "B", service: :claims).provider_user).to be_nil
+    end
+
+    it "ignores a discarded Claims::ProviderUser" do
+      claims_user = create(:claims_user)
+      create(:claims_provider_user, :discarded, email: claims_user.email, dfe_sign_in_uid: claims_user.dfe_sign_in_uid)
+
+      expect(sign_in_user_for(claims_user).provider_user).to be_nil
+    end
+
+    it "ignores a Claims::ProviderUser belonging to someone else" do
+      claims_user = create(:claims_user)
+      create(:claims_provider_user, email: "someone.else@example.com", dfe_sign_in_uid: "someone-else")
+
+      expect(sign_in_user_for(claims_user).provider_user).to be_nil
+    end
+
+    it "returns nil for the placements service" do
+      placements_user = create(:placements_user)
+      create(:claims_provider_user, email: placements_user.email)
+
+      expect(sign_in_user_for(placements_user, service: :placements).provider_user).to be_nil
+    end
+  end
+
   describe "#user" do
     describe "claims service" do
       it "returns the current Claims::User" do

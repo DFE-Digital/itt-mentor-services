@@ -21,8 +21,8 @@ module ApplicationHelper
     if claims_service?
       items << { text: t("layouts.application.your_account"), href: account_path, current: current_page?(account_path) }
 
-      if current_user.is_a?(Claims::ProviderUser) && current_user.providers.many?
-        items << { text: t("layouts.application.change_organisation"), href: claims_providers_path, current: current_page?(claims_providers_path) }
+      if current_user.is_a?(Claims::ProviderUser) && (path = claims_change_organisation_path)
+        items << { text: t("layouts.application.change_organisation"), href: path, current: current_page?(path) }
       end
     elsif current_user.support_user?
       items << { text: t("placements.support.header_navigation.organisations"), href: support_organisations_path }
