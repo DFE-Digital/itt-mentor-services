@@ -15,20 +15,115 @@ def create_claim(school:, provider:, created_by:, reference:, status:)
     reference:,
     created_by:,
     status:,
-    submitted_at: Time.current,
-    submitted_by: created_by,
+    submitted_at: (Time.current unless Claims::Claim::DRAFT_STATUSES.include?(status)),
+    submitted_by: (created_by unless Claims::Claim::DRAFT_STATUSES.include?(status)),
   )
 
   assign_mentors(claim:, school:)
+  claim
 end
 
-def assign_mentors(claim:, school:)
-  school.mentors.each do |mentor|
-    hours_completed = hours_completed(mentor:, provider: claim.provider)
-    next if hours_completed.zero?
+SEED_FIXTURE_PATH = Rails.root.join("spec/fixtures/files")
 
-    create_mentor_training(mentor:, claim:, hours_completed:)
+def attach_csv(record, filename)
+  record.csv_file.attach(
+    io: File.open(SEED_FIXTURE_PATH.join(filename)),
+    filename:,
+    content_type: "text/csv",
+  )
+end
+
+def log_claim_activity(action:, user:, record:)
+  Claims::ClaimActivity.create!(action:, user:, record:)
+end
+
+PAYMENT_STATUSES = %w[payment_in_progress payment_information_requested payment_information_sent paid payment_not_approved].freeze
+SAMPLING_STATUSES = %w[sampling_in_progress sampling_provider_not_approved sampling_not_approved].freeze
+CLAWBACK_STATUSES = %w[clawback_requires_approval clawback_rejected clawback_requested clawback_in_progress clawback_complete].freeze
+
+# Adds the records and fields the support and provider pages expect for each status
+def seed_status_details(status:, claims:, support_user:)
+  claims.each_with_index do |claim, index|
+    case status
+    when *PAYMENT_STATUSES then seed_payment_details(claim:, status:, index:)
+    when *SAMPLING_STATUSES then seed_sampling_details(claim:, status:, index:)
+    when *CLAWBACK_STATUSES then seed_clawback_details(claim:, status:, support_user:)
+    end
   end
+
+  seed_payment_record(claims:, support_user:) if PAYMENT_STATUSES.include?(status)
+  seed_sampling_record(claims:, support_user:) if SAMPLING_STATUSES.include?(status)
+  seed_clawback_record(claims:, support_user:) if %w[clawback_in_progress clawback_complete].include?(status)
+end
+
+def seed_payment_details(claim:, status:, index:)
+  attributes = { payment_in_progress_at: (index + 1).days.ago }
+  attributes[:unpaid_reason] = "Seeded reason: payer needs more information" if %w[payment_information_requested payment_information_sent payment_not_approved].include?(status)
+  attributes.merge!(paid_to_la: index.odd?, date_paid: (index + 1).days.ago) if status == "paid"
+  claim.update!(attributes)
+end
+
+def seed_sampling_details(claim:, status:, index:)
+  claim.update!(sampling_reason: "Seeded sampling reason #{index + 1}")
+  return if status == "sampling_in_progress"
+
+  claim.update!(amendment_notification_sent_at: index.even? ? 60.days.ago : 1.day.ago) if status == "sampling_provider_not_approved"
+  claim.mentor_trainings.each do |mentor_training|
+    mentor_training.update!(
+      not_assured: true,
+      reason_not_assured: "Incorrect number of hours",
+      hours_clawed_back: 1,
+    )
+  end
+end
+
+def seed_clawback_details(claim:, status:, support_user:)
+  claim.mentor_trainings.each do |mentor_training|
+    mentor_training.update!(
+      not_assured: true,
+      reason_not_assured: "Incorrect number of hours",
+      hours_clawed_back: 1,
+      reason_clawed_back: "Seeded clawback reason",
+      reason_clawback_rejected: (status == "clawback_rejected" ? "Seeded reason clawback was rejected" : nil),
+    )
+  end
+
+  attributes = { clawback_requested_by: support_user }
+  attributes[:clawback_approved_by] = support_user if %w[clawback_requested clawback_in_progress clawback_complete].include?(status)
+  claim.update!(attributes)
+end
+
+def seed_payment_record(claims:, support_user:)
+  payment = Claims::Payment.create!(sent_by: support_user, claims:, downloaded_at: Time.current)
+  attach_csv(payment, "example-payments.csv")
+  log_claim_activity(action: :payment_request_delivered, user: support_user, record: payment)
+end
+
+def seed_sampling_record(claims:, support_user:)
+  sampling = Claims::Sampling.create!
+  claims.group_by(&:provider).each do |provider, provider_claims|
+    provider_sampling = Claims::ProviderSampling.create!(sampling:, provider:, claims: provider_claims)
+    attach_csv(provider_sampling, "example-sampling.csv")
+  end
+  log_claim_activity(action: :sampling_uploaded, user: support_user, record: sampling)
+end
+
+def seed_clawback_record(claims:, support_user:)
+  clawback = Claims::Clawback.create!(claims:, downloaded_at: Time.current)
+  attach_csv(clawback, "example-clawbacks.csv")
+  log_claim_activity(action: :clawback_request_delivered, user: support_user, record: clawback)
+end
+
+# Each seeded claim uses a single mentor (the one with the most hours left),
+# as mentors share one training allowance per provider across all schools
+def assign_mentors(claim:, school:)
+  allowances = school.mentors.map do |mentor|
+    [mentor, Claims::TrainingAllowance.new(mentor:, provider: claim.provider, academic_year: claim.claim_window.academic_year, claim_to_exclude: claim)]
+  end
+  mentor, allowance = allowances.max_by { |_mentor, training_allowance| training_allowance.remaining_hours }
+  return if allowance.blank? || allowance.remaining_hours.zero?
+
+  create_mentor_training(mentor:, claim:, hours_completed: 1)
 end
 
 def mentor_remaining_hours(school:, provider:)
@@ -49,18 +144,6 @@ def create_mentor_training(mentor:, claim:, hours_completed:)
     hours_completed:,
     date_completed: Time.current,
   )
-end
-
-def hours_completed(mentor:, provider:)
-  training_allowance = Claims::TrainingAllowance.new(
-    mentor:,
-    provider:,
-    academic_year: Claims::ClaimWindow.current.academic_year,
-  )
-
-  return 0 if training_allowance.remaining_hours.zero?
-
-  rand(1..training_allowance.remaining_hours)
 end
 
 Rails.logger.debug "Creating Personas"
@@ -219,35 +302,31 @@ Placements::School.find_each do |school|
 end
 
 # Generate claims
+# Seeds at least CLAIMS_PER_STATUS claims of every status for accessibility testing
 
+CLAIMS_PER_STATUS = 4
+
+school_provider_pairs = Claims::School.all.to_a.product(patricia_providers.to_a)
 reference = 12_345_678
-Claims::School.all.find_each do |school|
-  patricia_providers.each do |claim_provider|
-    create_claim(school:,
-                 provider: claim_provider,
-                 created_by: claims_patricia,
-                 reference:,
-                 status: :paid)
+claim_count = 0
 
+claims_support_user = Claims::SupportUser.find_by!(email: "colin.chapman@education.gov.uk")
+
+Claims::Claim.statuses.each_key do |status|
+  claims = Array.new(CLAIMS_PER_STATUS) do
+    school, claim_provider = school_provider_pairs[claim_count % school_provider_pairs.size]
+    claim_count += 1
+
+    claim = create_claim(school:,
+                         provider: claim_provider,
+                         created_by: claims_patricia,
+                         reference:,
+                         status:)
     reference += 1
-
-    create_claim(school:,
-                 provider: claim_provider,
-                 created_by: claims_patricia,
-                 reference:,
-                 status: :sampling_in_progress)
-
-    reference += 1
+    claim
   end
-end
 
-Claims::Claim.sampling_in_progress.order(:reference).first(2).zip([60.days.ago, 1.day.ago]) do |claim, notified_at|
-  claim.update!(status: :sampling_provider_not_approved, amendment_notification_sent_at: notified_at)
-  claim.mentor_trainings.first&.update!(
-    not_assured: true,
-    reason_not_assured: "Incorrect number of hours",
-    hours_clawed_back: 1,
-  )
+  seed_status_details(status:, claims: claims.compact, support_user: claims_support_user)
 end
 
 # Test providers for UR
