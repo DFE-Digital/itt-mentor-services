@@ -288,6 +288,7 @@ scope module: :claims, as: :claims, constraints: {
     end
 
     get :settings, to: "settings#index"
+    get :forecast, to: "forecasts#show"
 
     resources :mailers, only: :index
 
