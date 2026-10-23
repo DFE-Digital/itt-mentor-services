@@ -17,6 +17,7 @@ en:
           onboard_providers: Invite providers to the service
           onboard_schools: Make schools eligible to submit claims
           manually_onboarded_schools: View manually onboarded schools
+          forecast: View claim forecast
           service_management: Service management
           service_information: Service information
           developer_tools: Developer tools
