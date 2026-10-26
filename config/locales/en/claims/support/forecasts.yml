@@ -6,9 +6,11 @@ en:
           heading: Claim forecast
           claim_window: Claim window
           submit: View forecast
-          table:
-            type_of_establishment: Type of establishment
-            amount: Amount
-            group_total: Group total
-            all_groups: All groups
-            total: Total
+          forecast: Forecast
+          total_claims: Total claims
+        forecast:
+          type_of_establishment: Type of establishment
+          amount: Amount
+          group_total: Group total
+          all_groups: All groups
+          total: Total

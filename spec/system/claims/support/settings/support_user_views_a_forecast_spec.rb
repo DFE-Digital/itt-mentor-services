@@ -13,6 +13,7 @@ RSpec.describe "Support user views a forecast for a claim window", service: :cla
     when_i_select_the_historic_claim_window
     and_i_click_on_view_forecast
     then_i_see_the_forecast_for_the_historic_claim_window
+    and_i_see_the_total_claims_for_the_historic_claim_window
   end
 
   private
@@ -26,10 +27,11 @@ RSpec.describe "Support user views a forecast for a claim window", service: :cla
 
     @community_claim = create(:claim, :submitted, school: @community_school, claim_window: @historic_claim_window)
     @academy_claim = create(:claim, :submitted, school: @academy, claim_window: @historic_claim_window)
+    @paid_claim = create(:claim, :submitted, status: :paid, school: @academy, claim_window: @historic_claim_window)
     @current_claim = create(:claim, :submitted, school: @academy, claim_window: @current_claim_window)
     create(:claim, :draft, school: @academy, claim_window: @historic_claim_window)
 
-    [@community_claim, @academy_claim, @current_claim].each do |claim|
+    [@community_claim, @academy_claim, @paid_claim, @current_claim].each do |claim|
       create(:mentor_training, claim:, hours_completed: 10)
     end
   end
@@ -69,10 +71,25 @@ RSpec.describe "Support user views a forecast for a claim window", service: :cla
   def then_i_see_the_forecast_for_the_historic_claim_window
     expect(page).to have_checked_field("#{I18n.l(@historic_claim_window.starts_on, format: :long)} to #{I18n.l(@historic_claim_window.ends_on, format: :long)}")
     expect(page).to have_unchecked_field("#{I18n.l(@current_claim_window.starts_on, format: :long)} to #{I18n.l(@current_claim_window.ends_on, format: :long)}")
-    expect(page).to have_h2("Academies")
-    expect(page).to have_table_row({ "Type of establishment" => "Academy converter", "Amount" => @academy_claim.amount.format })
-    expect(page).to have_h2("Local authority maintained schools")
-    expect(page).to have_table_row({ "Type of establishment" => "Community school", "Amount" => @community_claim.amount.format })
-    expect(page).to have_table_row({ "All groups" => "Total", "Amount" => (@academy_claim.amount + @community_claim.amount).format })
+    expect(page).to have_link("Forecast", href: "#forecast")
+    expect(page).to have_link("Total claims", href: "#total-claims")
+
+    within("#forecast") do
+      expect(page).to have_h2("Academies")
+      expect(page).to have_table_row({ "Type of establishment" => "Academy converter", "Amount" => @academy_claim.amount.format })
+      expect(page).to have_h2("Local authority maintained schools")
+      expect(page).to have_table_row({ "Type of establishment" => "Community school", "Amount" => @community_claim.amount.format })
+      expect(page).to have_table_row({ "All groups" => "Total", "Amount" => (@academy_claim.amount + @community_claim.amount).format })
+    end
+  end
+
+  def and_i_see_the_total_claims_for_the_historic_claim_window
+    within("#total-claims") do
+      expect(page).to have_h2("Academies")
+      expect(page).to have_table_row({ "Type of establishment" => "Academy converter", "Amount" => (@academy_claim.amount + @paid_claim.amount).format })
+      expect(page).to have_h2("Local authority maintained schools")
+      expect(page).to have_table_row({ "Type of establishment" => "Community school", "Amount" => @community_claim.amount.format })
+      expect(page).to have_table_row({ "All groups" => "Total", "Amount" => (@academy_claim.amount + @paid_claim.amount + @community_claim.amount).format })
+    end
   end
 end
