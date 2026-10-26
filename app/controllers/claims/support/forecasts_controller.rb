@@ -4,6 +4,9 @@ class Claims::Support::ForecastsController < Claims::Support::ApplicationControl
   def show
     @claim_windows = Claims::ClaimWindow.order(starts_on: :desc).decorate
     @claim_window = Claims::ClaimWindow.find_by(id: params[:claim_window_id])
-    @forecast = Claims::Claim::Forecast.call(claim_window: @claim_window) if @claim_window
+    return unless @claim_window
+
+    @forecast = Claims::Claim::Forecast.call(claim_window: @claim_window, status: :submitted)
+    @total_claims = Claims::Claim::Forecast.call(claim_window: @claim_window)
   end
 end

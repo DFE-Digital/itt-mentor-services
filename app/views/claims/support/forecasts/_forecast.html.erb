@@ -1,0 +1,38 @@
+<% forecast.groups.each do |group| %>
+  <h2 class="govuk-heading-m"><%= group.name %></h2>
+  <%= govuk_table do |table| %>
+    <% table.with_head do |head| %>
+      <% head.with_row do |row| %>
+        <% row.with_cell text: t(".type_of_establishment") %>
+        <% row.with_cell text: t(".amount"), numeric: true %>
+      <% end %>
+    <% end %>
+    <% table.with_body do |body| %>
+      <% group.rows.each do |group_row| %>
+        <% body.with_row do |row| %>
+          <% row.with_cell text: group_row.type_of_establishment %>
+          <% row.with_cell text: group_row.total.format, numeric: true %>
+        <% end %>
+      <% end %>
+      <% body.with_row do |row| %>
+        <% row.with_cell text: t(".group_total"), classes: "govuk-!-font-weight-bold" %>
+        <% row.with_cell text: group.total.format, numeric: true, classes: "govuk-!-font-weight-bold" %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= govuk_table do |table| %>
+  <% table.with_head do |head| %>
+    <% head.with_row do |row| %>
+      <% row.with_cell text: t(".all_groups") %>
+      <% row.with_cell text: t(".amount"), numeric: true %>
+    <% end %>
+  <% end %>
+  <% table.with_body do |body| %>
+    <% body.with_row do |row| %>
+      <% row.with_cell text: t(".total"), classes: "govuk-!-font-weight-bold" %>
+      <% row.with_cell text: forecast.total.format, numeric: true, classes: "govuk-!-font-weight-bold" %>
+    <% end %>
+  <% end %>
+<% end %>

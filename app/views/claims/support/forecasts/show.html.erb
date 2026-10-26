@@ -24,42 +24,12 @@
   <% if @forecast %>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <% @forecast.groups.each do |group| %>
-          <h2 class="govuk-heading-m"><%= group.name %></h2>
-          <%= govuk_table do |table| %>
-            <% table.with_head do |head| %>
-              <% head.with_row do |row| %>
-                <% row.with_cell text: t(".table.type_of_establishment") %>
-                <% row.with_cell text: t(".table.amount"), numeric: true %>
-              <% end %>
-            <% end %>
-            <% table.with_body do |body| %>
-              <% group.rows.each do |group_row| %>
-                <% body.with_row do |row| %>
-                  <% row.with_cell text: group_row.type_of_establishment %>
-                  <% row.with_cell text: group_row.total.format, numeric: true %>
-                <% end %>
-              <% end %>
-              <% body.with_row do |row| %>
-                <% row.with_cell text: t(".table.group_total"), classes: "govuk-!-font-weight-bold" %>
-                <% row.with_cell text: group.total.format, numeric: true, classes: "govuk-!-font-weight-bold" %>
-              <% end %>
-            <% end %>
+        <%= govuk_tabs do |tabs| %>
+          <% tabs.with_tab(label: t(".forecast")) do %>
+            <%= render "forecast", forecast: @forecast %>
           <% end %>
-        <% end %>
-
-        <%= govuk_table do |table| %>
-          <% table.with_head do |head| %>
-            <% head.with_row do |row| %>
-              <% row.with_cell text: t(".table.all_groups") %>
-              <% row.with_cell text: t(".table.amount"), numeric: true %>
-            <% end %>
-          <% end %>
-          <% table.with_body do |body| %>
-            <% body.with_row do |row| %>
-              <% row.with_cell text: t(".table.total"), classes: "govuk-!-font-weight-bold" %>
-              <% row.with_cell text: @forecast.total.format, numeric: true, classes: "govuk-!-font-weight-bold" %>
-            <% end %>
+          <% tabs.with_tab(label: t(".total_claims")) do %>
+            <%= render "forecast", forecast: @total_claims %>
           <% end %>
         <% end %>
       </div>
