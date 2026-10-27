@@ -20,7 +20,8 @@ RUN apk add --update --no-cache tzdata && \
 # yarn: node package manager
 # postgresql-dev: postgres driver and libraries
 # git: to install dfe-analytics
-RUN apk add --no-cache build-base yarn postgresql-dev git
+# yaml-dev: libyaml headers to build psych
+RUN apk add --no-cache build-base yarn postgresql-dev git yaml-dev
 
 # Install gems defined in Gemfile
 COPY .ruby-version Gemfile Gemfile.lock ./
