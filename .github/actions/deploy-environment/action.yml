@@ -71,7 +71,9 @@ runs:
       with:
         bundler-cache: true
       env:
-        # Build rugged (via undercover) against the runner's libgit2
+        # bundle install includes the test group, so it installs undercover and
+        # its rugged dependency. rugged's bundled libgit2 fails to build on
+        # ubuntu-26.04 runners, so link it against libgit2-dev installed above.
         RUGGED_USE_SYSTEM_LIBRARIES: "1"
 
     - name: Run Smoke Tests
