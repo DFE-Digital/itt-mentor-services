@@ -37,7 +37,11 @@ RUN bundler -v && \
 # Install node packages defined in package.json
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn/releases ./.yarn/releases
-RUN yarn install --immutable
+COPY package.json yarn.lock .yarnrc.yml ./
+RUN npm install -g corepack@0.35.0  \
+    && corepack enable  \
+    && yarn install --immutable \
+    && yarn cache clean
 
 # Copy all files to /app (except what is defined in .dockerignore)
 COPY . .

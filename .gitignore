@@ -32,7 +32,13 @@ tmp/pids/*
 coverage/
 
 .yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
 !.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
 # Ignore terraform files
 .terraform
 terraform/application/vendor
