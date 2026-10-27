@@ -17,11 +17,11 @@ RUN apk add --update --no-cache tzdata && \
   echo "Europe/London" > /etc/timezone
 
 # build-base: dependencies for bundle
-# yarn: node package manager
+# nodejs, npm: to install corepack, which provides yarn
 # postgresql-dev: postgres driver and libraries
 # git: to install dfe-analytics
 # yaml-dev: libyaml headers to build psych
-RUN apk add --no-cache build-base yarn postgresql-dev git yaml-dev
+RUN apk add --no-cache build-base nodejs npm postgresql-dev git yaml-dev
 
 # Install gems defined in Gemfile
 COPY .ruby-version Gemfile Gemfile.lock ./
@@ -37,7 +37,6 @@ RUN bundler -v && \
 # Install node packages defined in package.json
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn/releases ./.yarn/releases
-COPY package.json yarn.lock .yarnrc.yml ./
 RUN npm install -g corepack@0.35.0  \
     && corepack enable  \
     && yarn install --immutable \
