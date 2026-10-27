@@ -1,6 +1,6 @@
 # App dependencies
 nodejs    22.15.1
-ruby      3.4.1
+ruby      3.4.12
 yarn      1.22.1
 caddy     2.9.1
 
