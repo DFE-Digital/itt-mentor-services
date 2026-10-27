@@ -4,7 +4,10 @@ concurrency: build_and_test_${{ github.ref_name }}
 on: push
 
 env:
-  # Build rugged (via undercover) against the runner's libgit2
+  # undercover (test group) checks spec coverage of changed lines and depends
+  # on rugged, which compiles a bundled libgit2 on install. That build fails on
+  # ubuntu-26.04 runners, so each job installs libgit2-dev and rugged links
+  # against it instead.
   RUGGED_USE_SYSTEM_LIBRARIES: "1"
 
 jobs:
