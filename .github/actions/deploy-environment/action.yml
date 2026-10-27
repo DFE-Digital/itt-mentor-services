@@ -60,10 +60,19 @@ runs:
         output=$(terraform -chdir=terraform/application output -json ingress_hostnames)
         echo "HOSTNAMES=$output" >> $GITHUB_ENV
 
+    - name: Install libgit2
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install libgit2-dev
+
     - name: Set up Ruby 3.4.12
       uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true
+      env:
+        # Build rugged (via undercover) against the runner's libgit2
+        RUGGED_USE_SYSTEM_LIBRARIES: "1"
 
     - name: Run Smoke Tests
       shell: bash
