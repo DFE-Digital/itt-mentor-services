@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "private": "true",
+  "private": true,
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "accessible-autocomplete": "^3.0.2",
@@ -12,5 +12,6 @@
   "scripts": {
     "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --quiet",
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets"
-  }
+  },
+  "packageManager": "yarn@4.18.1"
 }

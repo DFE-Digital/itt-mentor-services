@@ -34,8 +34,9 @@ RUN bundler -v && \
   rm -rf /usr/local/bundle/cache
 
 # Install node packages defined in package.json
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile --check-files
+COPY package.json yarn.lock .yarnrc.yml ./
+COPY .yarn/releases ./.yarn/releases
+RUN yarn install --immutable
 
 # Copy all files to /app (except what is defined in .dockerignore)
 COPY . .
