@@ -122,6 +122,12 @@ class Claims::Claim < ApplicationRecord
     end
   end
 
+  def provider_amendment_audit
+    audits.updates.reorder(version: :desc).find do |audit|
+      Array(audit.audited_changes["status"]).last == "sampling_provider_not_approved"
+    end
+  end
+
   def amendment_evidence_deadline
     date = (amendment_notification_sent_at || Time.current).to_date + 30.days
     date.on_weekend? ? date.next_weekday : date

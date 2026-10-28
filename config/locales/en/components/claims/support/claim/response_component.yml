@@ -5,6 +5,7 @@ en:
         claim:
           responses_component:
             provider_response: Provider response
+            amended_by: Amended by %{name} on %{date}.
             original_hours: Original hours claimed
             amended_hours: Amended hours
             reason_for_amendment: Reason for amendment
