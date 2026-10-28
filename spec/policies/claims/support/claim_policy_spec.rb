@@ -669,4 +669,26 @@ describe Claims::Support::ClaimPolicy do
       end
     end
   end
+
+  permissions :change_provider? do
+    it "denies access to non support users" do
+      expect(claim_policy).not_to permit(user, submitted_claim)
+    end
+
+    it "denies access to draft claims" do
+      expect(claim_policy).not_to permit(support_user, internal_draft_claim)
+      expect(claim_policy).not_to permit(support_user, draft_claim)
+    end
+
+    it "denies access to claims with an invalid provider" do
+      expect(claim_policy).not_to permit(support_user, build(:claim, :submitted, status: :invalid_provider))
+    end
+
+    it "grants access to submitted claims" do
+      expect(claim_policy).to permit(support_user, submitted_claim)
+      expect(claim_policy).to permit(support_user, paid_claim)
+      expect(claim_policy).to permit(support_user, sampling_in_progress_claim)
+      expect(claim_policy).to permit(support_user, sampling_provider_not_approved_claim)
+    end
+  end
 end
