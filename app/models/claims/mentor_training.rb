@@ -65,6 +65,16 @@ class Claims::MentorTraining < ApplicationRecord
     self.training_type = training_allowance.training_type
   end
 
+  def claimable_hours_with(provider)
+    allowance = Claims::TrainingAllowance.new(
+      mentor:,
+      provider:,
+      academic_year: claim.claim_window.academic_year,
+      claim_to_exclude: claim,
+    )
+    [hours_completed.to_i, allowance.remaining_hours].min.clamp(0..)
+  end
+
   def corrected_hours_completed
     hours_completed.to_i - hours_clawed_back.to_i
   end
