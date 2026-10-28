@@ -229,6 +229,10 @@ scope module: :claims, as: :claims, constraints: {
         get "support_details/new", to: "claims/support_details#new", as: :new_support_details
         get "support_details/new/:state_key/:step", to: "claims/support_details#edit", as: :support_details
         put "support_details/new/:state_key/:step", to: "claims/support_details#update"
+
+        get "change_provider/new", to: "claims/change_provider#new", as: :new_change_provider
+        get "change_provider/new/:state_key/:step", to: "claims/change_provider#edit", as: :change_provider
+        put "change_provider/new/:state_key/:step", to: "claims/change_provider#update"
       end
     end
 

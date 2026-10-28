@@ -1,0 +1,10 @@
+en:
+  claims:
+    support:
+      claims:
+        change_provider:
+          edit:
+            caption: Claim %{reference}
+            cancel: Cancel
+          update:
+            success_heading: Accredited provider changed

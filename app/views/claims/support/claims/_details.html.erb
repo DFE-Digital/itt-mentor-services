@@ -29,8 +29,9 @@
   <% end %>
 <% end %>
 
+<% can_change_provider = Claims::Support::ClaimPolicy.new(current_user, claim).change_provider? %>
 <h2 class="govuk-heading-m"><%= t(".claim_details") %></h2>
-<%= govuk_summary_list(actions: policy(claim).edit?) do |summary_list| %>
+<%= govuk_summary_list(actions: policy(claim).edit? || can_change_provider) do |summary_list| %>
   <% summary_list.with_row do |row| %>
     <% row.with_key(text: Claims::Claim.human_attribute_name(:school)) %>
     <% row.with_value(text: claim.school_name) %>
@@ -52,6 +53,13 @@
                              html_attributes: {
                            class: "govuk-link--no-visited-state",
                            }) %>
+        <% elsif can_change_provider %>
+          <% row.with_action(text: t("change"),
+                             href: new_change_provider_claims_support_claim_path(claim),
+                             visually_hidden_text: Claims::Claim.human_attribute_name(:accredited_provider),
+                             html_attributes: {
+                               class: "govuk-link--no-visited-state",
+                             }) %>
       <% end %>
     <% end %>
   <% else %>
