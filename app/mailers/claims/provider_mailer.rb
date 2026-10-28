@@ -22,7 +22,7 @@ class Claims::ProviderMailer < Claims::ApplicationMailer
                  body: t(
                    ".body",
                    provider_name: @provider_sampling.provider_name,
-                   number_of_claims: number_of_claims(provider_sampling.claims.sampling_in_progress),
+                   number_of_claims: number_of_claims(provider_sampling.claims.sampling_in_progress.where(provider: provider_sampling.provider)),
                    support_email:, completion_date:, service_url: claims_root_url(utm_source: "email", utm_medium: "notification", utm_campaign: "provider")
                  )
   end
