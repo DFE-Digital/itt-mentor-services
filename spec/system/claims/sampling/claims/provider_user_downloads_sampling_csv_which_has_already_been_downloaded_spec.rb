@@ -12,7 +12,7 @@ RSpec.describe "Provider user downloads a sampling CSV with expired token", serv
   private
 
   def given_one_of_my_claims_has_been_sampled
-    @provider_sampling = create(:provider_sampling, downloaded_at: Time.current)
+    @provider_sampling = create(:provider_sampling, :with_csv_file, downloaded_at: Time.current)
     @download_access_token = create(:download_access_token, activity_record: @provider_sampling, email_address: @provider_sampling.provider.primary_email_address)
   end
 

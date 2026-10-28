@@ -23,7 +23,7 @@ RSpec.describe "Support user views sampling response uploaded activity spec", se
     @colin = build(:claims_support_user, :colin)
     @provider = build(:claims_provider, name: "Best Practice Network")
     @claim = build(:claim, :audit_requested, submitted_at: 1.day.ago, reference: "12345678", provider: @provider)
-    @provider_sampling = build(:provider_sampling, provider: @provider, claims: [@claim])
+    @provider_sampling = build(:provider_sampling, :with_csv_file, provider: @provider, claims: [@claim])
     @sampling = build(:claims_sampling, provider_samplings: [@provider_sampling])
     @activity_log = create(:claim_activity, :sampling_response_uploaded, user: @colin, record: @sampling)
   end

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Support user views sampling uploaded activity spec", service: :claims, type: :system do
-  scenario do
+  scenario "the audit has a CSV file" do
     given_sampling_uploaded_activity_exists
     and_i_am_signed_in
     then_i_see_the_organisations_page
@@ -19,7 +19,25 @@ RSpec.describe "Support user views sampling uploaded activity spec", service: :c
     then_i_receive_a_csv_file
   end
 
+  scenario "the audit does not have a CSV file" do
+    given_sampling_uploaded_activity_without_a_csv_file_exists
+    and_i_am_signed_in
+
+    when_i_visit_the_activity
+    then_i_see_the_activity_details
+    and_i_do_not_see_a_download_csv_button
+  end
+
   def given_sampling_uploaded_activity_exists
+    @colin = build(:claims_support_user, :colin)
+    @provider = build(:claims_provider, name: "Best Practice Network")
+    @claim = build(:claim, :audit_requested, submitted_at: 1.day.ago, reference: "12345678", provider: @provider)
+    @provider_sampling = build(:provider_sampling, :with_csv_file, provider: @provider, claims: [@claim])
+    @sampling = build(:claims_sampling, provider_samplings: [@provider_sampling])
+    @activity_log = create(:claim_activity, :sampling_uploaded, user: @colin, record: @sampling)
+  end
+
+  def given_sampling_uploaded_activity_without_a_csv_file_exists
     @colin = build(:claims_support_user, :colin)
     @provider = build(:claims_provider, name: "Best Practice Network")
     @claim = build(:claim, :audit_requested, submitted_at: 1.day.ago, reference: "12345678", provider: @provider)
@@ -87,5 +105,13 @@ RSpec.describe "Support user views sampling uploaded activity spec", service: :c
   def then_i_receive_a_csv_file
     expect(page.response_headers["Content-Type"]).to eq("text/csv")
     expect(page.response_headers["Content-Disposition"]).to eq("attachment; filename=\"example-sampling-response.csv\"; filename*=UTF-8''example-sampling-response.csv")
+  end
+
+  def when_i_visit_the_activity
+    visit claims_support_claims_claim_activity_path(@activity_log)
+  end
+
+  def and_i_do_not_see_a_download_csv_button
+    expect(page).not_to have_link("Download CSV")
   end
 end

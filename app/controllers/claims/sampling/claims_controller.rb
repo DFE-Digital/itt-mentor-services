@@ -14,6 +14,7 @@ class Claims::Sampling::ClaimsController < Claims::ApplicationController
 
   def set_provider_sampling
     @provider_sampling = download_access_token.activity_record
+    render "error" unless @provider_sampling.csv_file.attached?
   rescue ActiveRecord::RecordNotFound, ActiveSupport::MessageVerifier::InvalidSignature
     render "error"
   end
