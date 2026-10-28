@@ -356,6 +356,18 @@ en:
           attributes:
             id:
               blank: Select a provider
+        claims/change_provider_wizard/provider_step:
+          attributes:
+            id:
+              blank: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode
+              same_provider: Select a different accredited provider
+              no_claimable_hours: None of the mentors on this claim have hours left to claim with %{provider_name}
+        claims/change_provider_wizard/provider_options_step:
+          attributes:
+            id:
+              blank: Select a provider
+              same_provider: Select a different accredited provider
+              no_claimable_hours: None of the mentors on this claim have hours left to claim with %{provider_name}
         claims/onboard_multiple_schools_wizard/upload_step:
           attributes:
             csv_upload:
