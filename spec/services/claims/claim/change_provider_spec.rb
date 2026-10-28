@@ -110,6 +110,17 @@ describe Claims::Claim::ChangeProvider do
     end
   end
 
+  context "when the claim requires an audit but has no previous provider sampling" do
+    let(:status) { :sampling_in_progress }
+
+    it "creates a provider sampling for the new provider in a new sampling" do
+      expect { call }.to change(Claims::Sampling, :count).by(1)
+
+      provider_sampling = Claims::ProviderSampling.find_by!(provider: new_provider)
+      expect(provider_sampling.claims).to contain_exactly(claim)
+    end
+  end
+
   context "when the claim has been amended by the provider" do
     let(:status) { :sampling_provider_not_approved }
 
