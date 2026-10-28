@@ -31,7 +31,7 @@ en:
             view_details: View details
           confirm_approval:
             page_caption: Auditing - Claim %{reference}
-            page_title: Are you sure you want to approve the claim?
+            page_title: Are you sure you want to move the claim to paid?
             mark_as_paid: This will mark the claim as 'Paid'.
             approve: Move claim to paid
             cancel: Cancel
