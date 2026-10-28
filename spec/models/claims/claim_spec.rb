@@ -681,4 +681,46 @@ RSpec.describe Claims::Claim, type: :model do
       end
     end
   end
+
+  describe "#provider_amendment_audit" do
+    let(:claim) { create(:claim, :audit_requested) }
+    let(:provider_user) { create(:claims_provider_user, :patricia) }
+
+    context "when the provider has not amended the claim" do
+      it "returns nil" do
+        expect(claim.provider_amendment_audit).to be_nil
+      end
+    end
+
+    context "when the provider has amended the claim" do
+      before do
+        Audited.audit_class.as_user(provider_user) do
+          claim.update!(status: :sampling_provider_not_approved)
+        end
+        claim.update!(status: :sampling_not_approved)
+      end
+
+      it "returns the audit of the amendment" do
+        expect(claim.provider_amendment_audit.user).to eq(provider_user)
+      end
+    end
+
+    context "when the claim has been amended more than once" do
+      let(:other_provider_user) { create(:claims_provider_user, :mary) }
+
+      before do
+        Audited.audit_class.as_user(other_provider_user) do
+          claim.update!(status: :sampling_provider_not_approved)
+        end
+        claim.update!(status: :sampling_in_progress)
+        Audited.audit_class.as_user(provider_user) do
+          claim.update!(status: :sampling_provider_not_approved)
+        end
+      end
+
+      it "returns the audit of the most recent amendment" do
+        expect(claim.provider_amendment_audit.user).to eq(provider_user)
+      end
+    end
+  end
 end

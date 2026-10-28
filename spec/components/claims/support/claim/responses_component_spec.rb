@@ -115,6 +115,27 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
         expect(page).to have_content("Original hours claimed")
         expect(page).to have_content("Amended hours")
       end
+
+      it "does not render who amended the claim" do
+        expect(page).not_to have_content("Amended by")
+      end
+    end
+
+    context "when the claim status is sampling_provider_not_approved and the amendment was audited" do
+      let(:provider_user) { create(:claims_provider_user, :patricia) }
+      let(:claim) do
+        create(:claim, :audit_requested, mentor_trainings: [build(:mentor_training, :not_assured, reason_not_assured: "Incorrect number of hours")]).tap do |claim|
+          Timecop.freeze(Time.zone.local(2026, 10, 5, 9)) do
+            Audited.audit_class.as_user(provider_user) do
+              claim.update!(status: :sampling_provider_not_approved)
+            end
+          end
+        end
+      end
+
+      it "renders who amended the claim" do
+        expect(page).to have_element(:p, text: "Amended by Patricia Adebayo on 5 October 2026.", class: "govuk-body")
+      end
     end
 
     context "when the claim status is sampling_provider_not_approved and the school was notified" do

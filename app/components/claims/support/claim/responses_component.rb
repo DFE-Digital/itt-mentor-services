@@ -23,6 +23,13 @@ class Claims::Support::Claim::ResponsesComponent < ApplicationComponent
     not_assured_mentor_trainings.order_by_mentor_full_name
   end
 
+  def amended_by
+    audit = claim.provider_amendment_audit
+    return if audit&.user.blank?
+
+    t(".amended_by", name: audit.user.full_name, date: l(audit.created_at.to_date, format: :long))
+  end
+
   def school_response_exists?
     rejected_mentor_trainings.pluck(:reason_rejected).present?
   end

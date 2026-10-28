@@ -21,6 +21,9 @@
 <% elsif claim.sampling_provider_not_approved? && provider_response_exists? %>
   <%= govuk_inset_text(classes: "claim-responses") do %>
     <h3 class="govuk-heading-s"><%= t(".provider_response") %></h3>
+    <% if amended_by.present? %>
+      <p class="govuk-body"><%= amended_by %></p>
+    <% end %>
     <% amended_mentor_trainings.each do |mentor_training| %>
       <%= govuk_summary_card(title: mentor_training.mentor_full_name) do |card| %>
         <% card.with_summary_list(actions: false) do |summary_list| %>
