@@ -28,6 +28,26 @@ RSpec.describe Claims::Sampling::SendProviderRemindersJob, type: :job do
       expect(mail).to have_received(:deliver_later).twice.with(wait: wait_time)
     end
 
+    context "when the claim has been moved to a different provider" do
+      let(:new_provider) { create(:claims_provider) }
+      let(:new_provider_user) { create(:claims_provider_user, providers: [new_provider]) }
+      let(:new_provider_sampling) { build(:provider_sampling, provider: new_provider) }
+
+      before do
+        provider_user
+        new_provider_user
+        provider_sampling_claim.update!(created_at: 1.day.ago)
+        create(:claims_provider_sampling_claim, claim:, provider_sampling: new_provider_sampling)
+        claim.update!(provider: new_provider)
+      end
+
+      it "only sends emails to the users of the provider the claim was most recently sent to" do
+        send_reminders_job.perform
+        expect(Claims::ProviderMailer).to have_received(:resend_sampling_checks_required).once.with(new_provider_sampling, new_provider_user)
+        expect(Claims::ProviderMailer).not_to have_received(:resend_sampling_checks_required).with(provider_sampling, provider_user)
+      end
+    end
+
     context "when provider has no users" do
       it "does not send any emails" do
         send_reminders_job.perform
