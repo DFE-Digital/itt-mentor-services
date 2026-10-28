@@ -19,6 +19,12 @@ describe Claims::Sampling::CreateAndDeliver do
         .and change { Claims::Claim.pluck(:sampling_reason).uniq }.from([nil]).to(%w[ABCD])
         .and enqueue_mail(Claims::ProviderMailer, :sampling_checks_required).with(an_instance_of(Claims::ProviderSampling), provider_user)
       end
+
+      it "does not attach a CSV file to the provider sampling" do
+        create_and_deliver
+
+        expect(Claims::ProviderSampling.last.csv_file).not_to be_attached
+      end
     end
   end
 end

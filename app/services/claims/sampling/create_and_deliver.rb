@@ -14,7 +14,7 @@ class Claims::Sampling::CreateAndDeliver < ApplicationService
           Claims::Claim::Sampling::InProgress.call(claim:, sampling_reason: sampling_reason(claim))
         end
 
-        provider_sampling = Claims::ProviderSampling.create!(provider:, claims: provider_claims, sampling:, csv_file: File.open(csv_for_provider(provider_claims, provider.name).to_io))
+        provider_sampling = Claims::ProviderSampling.create!(provider:, claims: provider_claims, sampling:)
 
         transaction.after_commit do
           provider_sampling.provider_users.each do |provider_user|
@@ -28,10 +28,6 @@ class Claims::Sampling::CreateAndDeliver < ApplicationService
   end
 
   private
-
-  def csv_for_provider(claims, provider_name)
-    Claims::Sampling::GenerateCSVFile.call(claims:, provider_name:)
-  end
 
   def sampling
     @sampling ||= Claims::Sampling.new
