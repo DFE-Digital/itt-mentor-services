@@ -28,11 +28,11 @@
       hint: { text: form_description },
     ) do %>
 
-      <% records.first(OPTIONS_PER_PAGE).each do |record| %>
+      <% records.first(OPTIONS_PER_PAGE).each_with_index do |record, index| %>
         <%= f.govuk_radio_button input_field_name,
           record.id,
           label: { text: record.name },
-          link_errors: true,
+          link_errors: index.zero?,
           hint: { text: record.organisation_identifier_hint(support_user) } %>
       <% end %>
     <% end %>
