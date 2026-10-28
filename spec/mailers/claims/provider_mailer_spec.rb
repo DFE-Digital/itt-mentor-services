@@ -182,5 +182,15 @@ RSpec.describe Claims::ProviderMailer, type: :mailer do
         expect(resend_sampling_checks_required_email.body.to_s.squish).to eq(expected_body.squish)
       end
     end
+
+    context "when one of the claims has been moved to a different provider" do
+      let(:number_of_claims) { "1 claim" }
+
+      before { provider_sampling.claims.sampling_in_progress.first.update!(provider: create(:claims_provider)) }
+
+      it "does not count the moved claim" do
+        expect(resend_sampling_checks_required_email.body.to_s.squish).to eq(expected_body.squish)
+      end
+    end
   end
 end
