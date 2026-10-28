@@ -116,11 +116,11 @@ RSpec.describe "Support user approves a claim", service: :claims, type: :system 
   alias_method :and_i_click_approve_claim_on_the_confirm_approval_page, :when_i_click_on_approve_claim
 
   def then_i_see_the_confirm_approval_page
-    expect(page).to have_title("Are you sure you want to approve the claim? - Claim funding for mentor training - GOV.UK")
+    expect(page).to have_title("Are you sure you want to move the claim to paid? - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Claims")
 
     expect(page).to have_element(:p, text: "Auditing - Claim #{@sampling_claim.reference}", class: "govuk-caption-l")
-    expect(page).to have_h1("Are you sure you want to approve the claim?")
+    expect(page).to have_h1("Are you sure you want to move the claim to paid?")
     expect(page).to have_element(:p, text: "This will mark the claim as 'Paid'.", class: "govuk-body")
     expect(page).to have_button("Move claim to paid")
     expect(page).to have_link("Cancel", href: "/support/claims/sampling/claims/#{@sampling_claim.id}")

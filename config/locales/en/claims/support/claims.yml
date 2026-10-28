@@ -53,7 +53,6 @@ en:
           page_caption: Claim %{reference}
           page_title: "%{school_name} - Claim %{reference}"
           reason: Reason claim is being audited
-          approve: Approve claim
           confirm_provider_reject: Confirm provider rejected claim
           status: Status
           provider: Accredited provider
