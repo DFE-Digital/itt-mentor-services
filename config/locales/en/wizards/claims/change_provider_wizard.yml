@@ -1,0 +1,27 @@
+en:
+  wizards:
+    claims:
+      change_provider_wizard:
+        provider_step:
+          page_title: Enter the new accredited provider - %{contextual_text}
+          title: Enter the new accredited provider
+          hint: Enter a provider name, United Kingdom provider number (UKPRN), unique reference number (URN) or postcode
+        provider_options_step:
+          title: "%{provider_count} results found for ‘%{search_param}’ - %{contextual_text}"
+        check_your_answers_step:
+          page_title: Check your answers - %{contextual_text}
+          title: Check your answers
+          current_provider: Current accredited provider
+          new_provider: New accredited provider
+          audit_warning: >-
+            %{provider_name} will be emailed and asked to audit this claim.
+            The claim will be set to audit requested and the provider will have 30 days to respond.
+          submit: Change accredited provider
+          mentor_changes: Changes to mentors
+          mentor_changes_description: Mentors can only claim up to their maximum training hours with each accredited provider.
+          mentor_removed: Removed from the claim (no hours left to claim with %{provider_name})
+          hours_reduced: Hours reduced from %{from} to %{to}
+        success:
+          audit_requested: "%{provider_name} has been emailed and asked to audit this claim."
+          mentor_removed: "%{mentor_name} has been removed from the claim."
+          hours_reduced: "%{mentor_name}’s hours have been reduced to %{hours}."
