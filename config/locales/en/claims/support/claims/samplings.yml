@@ -33,7 +33,7 @@ en:
             page_caption: Auditing - Claim %{reference}
             page_title: Are you sure you want to approve the claim?
             mark_as_paid: This will mark the claim as 'Paid'.
-            approve: Approve claim
+            approve: Move claim to paid
             cancel: Cancel
           update:
             success_heading: Claim updated

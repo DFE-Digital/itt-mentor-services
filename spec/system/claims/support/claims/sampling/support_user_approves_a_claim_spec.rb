@@ -107,11 +107,11 @@ RSpec.describe "Support user approves a claim", service: :claims, type: :system 
   end
 
   def then_i_see_the_approve_claim_button
-    expect(page).to have_link("Approve claim", href: "/support/claims/sampling/claims/#{@sampling_claim.id}/confirm_approval")
+    expect(page).to have_link("Move claim to paid", href: "/support/claims/sampling/claims/#{@sampling_claim.id}/confirm_approval")
   end
 
   def when_i_click_on_approve_claim
-    click_on "Approve claim"
+    click_on "Move claim to paid"
   end
   alias_method :and_i_click_approve_claim_on_the_confirm_approval_page, :when_i_click_on_approve_claim
 
@@ -122,7 +122,7 @@ RSpec.describe "Support user approves a claim", service: :claims, type: :system 
     expect(page).to have_element(:p, text: "Auditing - Claim #{@sampling_claim.reference}", class: "govuk-caption-l")
     expect(page).to have_h1("Are you sure you want to approve the claim?")
     expect(page).to have_element(:p, text: "This will mark the claim as 'Paid'.", class: "govuk-body")
-    expect(page).to have_button("Approve claim")
+    expect(page).to have_button("Move claim to paid")
     expect(page).to have_link("Cancel", href: "/support/claims/sampling/claims/#{@sampling_claim.id}")
   end
 
