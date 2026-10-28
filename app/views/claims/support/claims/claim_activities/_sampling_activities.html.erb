@@ -5,9 +5,11 @@
 <% provider_samplings.each do |provider_sampling| %>
   <h3 class="govuk-heading-s"><%= provider_sampling.provider_name %></h3>
 
-  <div class="govuk-button-group">
-    <%= govuk_button_link_to t(".download_csv"), provider_sampling.csv_file, secondary: true %>
-  </div>
+  <% if provider_sampling.csv_file.attached? %>
+    <div class="govuk-button-group">
+      <%= govuk_button_link_to t(".download_csv"), provider_sampling.csv_file, secondary: true %>
+    </div>
+  <% end %>
 
   <%= govuk_table do |table| %>
     <% table.with_head do |head| %>

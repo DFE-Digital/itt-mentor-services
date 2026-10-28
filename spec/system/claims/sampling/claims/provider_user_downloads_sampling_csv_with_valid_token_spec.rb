@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Provider user downloads sampling CSV with valid token", service: :claims, type: :system do
-  scenario do
+  scenario "the audit has a CSV file" do
     given_one_of_my_claims_has_been_sampled
     and_the_token_is_valid
 
@@ -13,9 +13,22 @@ RSpec.describe "Provider user downloads sampling CSV with valid token", service:
     and_the_sampling_is_marked_as_downloaded
   end
 
+  scenario "the audit does not have a CSV file" do
+    given_one_of_my_claims_has_been_sampled_without_a_csv_file
+    and_the_token_is_valid
+
+    when_i_visit_the_download_link_in_the_email
+    then_i_see_the_error_page
+  end
+
   private
 
   def given_one_of_my_claims_has_been_sampled
+    @provider_sampling = create(:provider_sampling, :with_csv_file)
+    @download_access_token = create(:download_access_token, activity_record: @provider_sampling, email_address: @provider_sampling.provider.primary_email_address)
+  end
+
+  def given_one_of_my_claims_has_been_sampled_without_a_csv_file
     @provider_sampling = create(:provider_sampling)
     @download_access_token = create(:download_access_token, activity_record: @provider_sampling, email_address: @provider_sampling.provider.primary_email_address)
   end
@@ -49,5 +62,10 @@ RSpec.describe "Provider user downloads sampling CSV with valid token", service:
 
   def and_the_sampling_is_marked_as_downloaded
     expect(@provider_sampling.reload.downloaded?).to be(true)
+  end
+
+  def then_i_see_the_error_page
+    expect(page).to have_title("Sorry, there is a problem with the download link - Claim funding for mentor training - GOV.UK")
+    expect(page).to have_h1("Sorry, there is a problem with the download link")
   end
 end
