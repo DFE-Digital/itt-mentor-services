@@ -37,7 +37,7 @@ RSpec.describe "Support user cannot move a provider rejected claim to clawback b
   end
 
   def then_i_see_the_approve_button_but_not_the_request_clawback_button
-    expect(page).to have_link("Approve claim")
+    expect(page).to have_link("Move claim to paid")
     expect(page).not_to have_button("Request clawback")
   end
 
