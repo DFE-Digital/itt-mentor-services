@@ -25,7 +25,8 @@ class Claims::Sampling::SendProviderRemindersJob < ApplicationJob
     @provider_samplings ||= Claims::ProviderSampling
                               .where(
                                 id: Claims::ProviderSamplingClaim.where(claim: outstanding_claims)
-                                                                 .select("DISTINCT ON (claim_id) provider_sampling_id"),
+                                                                 .select("DISTINCT ON (claim_id) provider_sampling_id")
+                                                                 .order(:claim_id, created_at: :desc),
                               )
                               .order("provider_id, created_at DESC")
   end
