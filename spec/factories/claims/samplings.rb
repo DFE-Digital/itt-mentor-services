@@ -10,6 +10,10 @@ FactoryBot.define do
   factory :claims_sampling, class: "Claims::Sampling" do
     provider_samplings { build_list(:provider_sampling, 7, sampling: nil) }
 
+    to_create do |sampling|
+      Claims::AuditContext.set(actor: Claims::AuditContext.actor || FactoryBot.create(:claims_support_user)) { sampling.save! }
+    end
+
     transient do
       claims_for_link { [] }
     end

@@ -1,5 +1,25 @@
 ---
 shared:
+  :claim_status_changes:
+    - id
+    - claim_id
+    - from_status
+    - to_status
+    - occurred_at
+    - actor_id
+    - actor_type
+    - actor_name
+    - actor_kind
+    - system_operation
+    - source_id
+    - source_type
+    - operation_id
+    - sequence
+    - legacy_audit_id
+    - details
+    - imported
+    - created_at
+    - updated_at
   :audits:
     - id
     - auditable_id

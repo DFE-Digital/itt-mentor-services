@@ -48,6 +48,12 @@ FactoryBot.define do
 
     status { :internal_draft }
 
+    to_create do |claim|
+      actor = Claims::AuditContext.actor || claim.submitted_by || claim.created_by
+      actor.save! if Claims::AuditContext.actor.nil? && actor&.new_record?
+      Claims::AuditContext.set(actor:) { claim.save! }
+    end
+
     after(:create) do |claim|
       next if claim.invalid_provider? || claim.provider.blank? || claim.claim_window.blank?
 
