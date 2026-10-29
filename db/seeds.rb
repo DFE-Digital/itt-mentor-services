@@ -8,16 +8,16 @@ def create_claim(school:, provider:, created_by:, reference:, status:)
   Claims::Eligibility.find_or_create_by!(school:, academic_year:)
   return unless mentor_remaining_hours(school:, provider:).any?
 
-  claim = Claims::Claim.create!(
+  claim = Claims::Claim.new(
     claim_window:,
     school:,
     provider:,
     reference:,
     created_by:,
-    status:,
     submitted_at: Time.current,
     submitted_by: created_by,
   )
+  Claims::Claim::ChangeStatus.call(claim:, attributes: { status: }, system_operation: "seed demo claims")
 
   assign_mentors(claim:, school:)
 end
@@ -255,7 +255,11 @@ create_claim(school: Claims::School.first,
              status: :sampling_in_progress)
 
 Claims::Claim.sampling_in_progress.order(:reference).first(2).zip([60.days.ago, 1.day.ago]) do |claim, notified_at|
-  claim.update!(status: :sampling_provider_not_approved, amendment_notification_sent_at: notified_at)
+  Claims::Claim::ChangeStatus.call(
+    claim:,
+    system_operation: "seed demo amendments",
+    attributes: { status: :sampling_provider_not_approved, amendment_notification_sent_at: notified_at },
+  )
   claim.mentor_trainings.first&.update!(
     not_assured: true,
     reason_not_assured: "Incorrect number of hours",

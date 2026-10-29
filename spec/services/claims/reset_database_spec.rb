@@ -22,5 +22,11 @@ RSpec.describe Claims::ResetDatabase do
         .and not_change(Claims::MentorMembership, :count)
         .and(not_change { school.reload.claims_grant_conditions_accepted_at })
     end
+
+    it "explicitly clears lifecycle history only as part of the non-production teardown" do
+      create(:claim, :submitted)
+      expect { described_class.call }.to change(Claims::ClaimStatusChange, :count).by(-1)
+      expect(Claims::Claim.count).to eq(0)
+    end
   end
 end
