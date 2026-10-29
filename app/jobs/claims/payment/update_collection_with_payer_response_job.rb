@@ -1,7 +1,7 @@
 class Claims::Payment::UpdateCollectionWithPayerResponseJob < ApplicationJob
   queue_as :default
 
-  def perform(claim_update_details)
+  def perform(claim_update_details, response: nil)
     notification_schedule = NotifyRateLimiter::Schedule.new
 
     payment_in_progress_claims(claim_update_details.pluck(:id)).find_in_batches do |batch|
@@ -15,7 +15,7 @@ class Claims::Payment::UpdateCollectionWithPayerResponseJob < ApplicationJob
                                    0.minutes
                                  end
 
-        Claims::Payment::UpdateClaimWithPayerResponseJob.perform_later(updated_details_for_claim, notification_wait_time:)
+        Claims::Payment::UpdateClaimWithPayerResponseJob.perform_later(updated_details_for_claim, notification_wait_time:, response:)
       end
     end
   end

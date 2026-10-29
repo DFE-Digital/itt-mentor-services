@@ -23,6 +23,7 @@ class Claims::Payment < ApplicationRecord
   has_many :claims, through: :payment_claims, class_name: "Claims::Claim"
 
   has_one_attached :csv_file
+  has_many :status_changes, as: :source, class_name: "Claims::ClaimStatusChange", dependent: :restrict_with_exception
 
   def downloaded?
     downloaded_at.present?

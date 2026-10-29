@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Claims::Payment::UpdateClaimWithPayerResponseJob, type: :job do
+  include_context "with an attributed claim operation"
   let(:claim) { create(:claim, :payment_in_progress) }
   let(:claim_update_details) { { id: claim.id, status:, unpaid_reason: } }
   let(:status) { "paid" }
@@ -28,9 +29,18 @@ RSpec.describe Claims::Payment::UpdateClaimWithPayerResponseJob, type: :job do
     context "when the updated status is payment_in_progress" do
       let(:status) { "payment_in_progress" }
 
-      it "does not change the claim status" do
-        perform
+      it "rejects the unsupported response without changing the claim status" do
+        expect { perform }.to raise_error(ArgumentError, "Unsupported payer response status")
         expect(claim.reload.status).to eq("payment_in_progress")
+      end
+    end
+
+    context "when the claim is no longer awaiting a response" do
+      let(:claim) { create(:claim, :paid) }
+
+      it "rejects a stale response without adding a transition" do
+        expect { perform }.to raise_error(Claims::Claim::ChangeStatus::StaleStatus)
+        expect(claim.reload.status).to eq("paid")
       end
     end
 

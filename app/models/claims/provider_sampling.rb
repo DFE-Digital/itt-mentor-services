@@ -28,6 +28,7 @@ class Claims::ProviderSampling < ApplicationRecord
   has_many :download_access_tokens, as: :activity_record, dependent: :destroy
 
   has_one_attached :csv_file
+  has_many :status_changes, as: :source, class_name: "Claims::ClaimStatusChange", dependent: :restrict_with_exception
 
   scope :order_by_provider_name, -> { joins(:provider).order(providers: { name: :asc }) }
 
