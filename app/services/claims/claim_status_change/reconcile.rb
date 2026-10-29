@@ -228,22 +228,23 @@ class Claims::ClaimStatusChange
       all_events = Claims::ClaimStatusChange.all
       all_events = all_events.where(claim_id: @claim_id) if @claim_id
       referenced_events = all_events.where.not(legacy_audit_id: nil)
-      referenced_source_ids = referenced_events.pluck(:legacy_audit_id)
-      source_audits = Audited::Audit.where(
-        id: referenced_source_ids,
-        auditable_type: Claims::Claim.name,
-      ).index_by(&:id)
-      referenced_events.find_each do |event|
-        audit = source_audits[event.legacy_audit_id]
-        unless audit
-          errors << "Status change #{event.id} references missing source audit #{event.legacy_audit_id}"
-          next
-        end
+      referenced_events.find_in_batches do |batch|
+        source_audits = Audited::Audit.where(
+          id: batch.map(&:legacy_audit_id),
+          auditable_type: Claims::Claim.name,
+        ).index_by(&:id)
+        batch.each do |event|
+          audit = source_audits[event.legacy_audit_id]
+          unless audit
+            errors << "Status change #{event.id} references missing source audit #{event.legacy_audit_id}"
+            next
+          end
 
-        transition = LegacyAudit.transition_for(audit)
-        unless transition[:classification] == :status_transition &&
-            LegacyAudit.event_matches_audit?(event, audit, transition)
-          errors << "Status change payload mismatch for event #{event.id}"
+          transition = LegacyAudit.transition_for(audit)
+          unless transition[:classification] == :status_transition &&
+              LegacyAudit.event_matches_audit?(event, audit, transition)
+            errors << "Status change payload mismatch for event #{event.id}"
+          end
         end
       end
 
@@ -317,28 +318,33 @@ class Claims::ClaimStatusChange
       claims = Claims::Claim.where(id: claims_with_events)
       claims = claims.where(id: @claim_id) if @claim_id
 
-      claims.find_each do |claim|
-        events = Claims::ClaimStatusChange.where(claim_id: claim.id)
-        if events.where(occurred_at: nil).exists?
-          classified_gaps[:current_state_order_unknown] += 1
+      claims.find_in_batches do |batch|
+        events = Claims::ClaimStatusChange.where(claim_id: batch.map(&:id))
+        unknown_time_ids = events.where(occurred_at: nil).distinct.pluck(:claim_id).to_set
+        latest_events = events.select("DISTINCT ON (claim_id) claim_status_changes.*")
+          .order(:claim_id, Arel.sql("occurred_at DESC, sequence DESC, id DESC")).index_by(&:claim_id)
+        batch.each do |claim|
+          if unknown_time_ids.include?(claim.id)
+            classified_gaps[:current_state_order_unknown] += 1
+            gaps << {
+              claim_id: claim.id,
+              current_status: claim.status,
+              reason: "event_occurrence_time_unknown",
+            }
+            next
+          end
+
+          latest_event = latest_events.fetch(claim.id)
+          next if latest_event.to_status == claim.status
+
+          classified_gaps[:current_status_mismatch] += 1
           gaps << {
             claim_id: claim.id,
             current_status: claim.status,
-            reason: "event_occurrence_time_unknown",
+            latest_event_status: latest_event.to_status,
+            reason: "current_status_not_represented",
           }
-          next
         end
-
-        latest_event = events.order(Arel.sql("occurred_at DESC, sequence DESC, id DESC")).first
-        next if latest_event.to_status == claim.status
-
-        classified_gaps[:current_status_mismatch] += 1
-        gaps << {
-          claim_id: claim.id,
-          current_status: claim.status,
-          latest_event_status: latest_event.to_status,
-          reason: "current_status_not_represented",
-        }
       end
 
       draft_statuses = Claims::ClaimStatusChange::LegacyAudit::DRAFT_STATUSES
