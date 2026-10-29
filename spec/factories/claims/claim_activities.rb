@@ -23,6 +23,10 @@ FactoryBot.define do
   factory :claim_activity, class: "Claims::ClaimActivity" do
     association :user, factory: :claims_support_user
 
+    to_create do |activity|
+      Claims::AuditContext.set(actor: Claims::AuditContext.actor || activity.user) { activity.save! }
+    end
+
     trait :payment_request_delivered do
       action { "payment_request_delivered" }
 

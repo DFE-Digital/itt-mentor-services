@@ -36,6 +36,12 @@ FactoryBot.define do
     association :mentor, factory: :claims_mentor
     association :provider, factory: :claims_provider
 
+    to_create do |training|
+      actor = Claims::AuditContext.actor || training.claim&.submitted_by || training.claim&.created_by
+      actor.save! if Claims::AuditContext.actor.nil? && actor&.new_record?
+      Claims::AuditContext.set(actor:) { training.save! }
+    end
+
     trait :submitted do
       claim { create(:claim, :submitted) }
     end

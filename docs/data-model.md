@@ -46,6 +46,26 @@ erDiagram
     uuid claim_window_id FK
   }
 
+  ClaimStatusChange {
+    uuid id PK
+    uuid claim_id
+    string from_status
+    string to_status
+    datetime occurred_at "Nullable when historical time is unknown"
+    uuid actor_id "Nullable polymorphic actor"
+    string actor_type "Nullable polymorphic actor type"
+    string actor_name "Nullable historical name snapshot"
+    string actor_kind "user, system or unknown"
+    string system_operation "Named operation for system actors"
+    uuid source_id "Nullable polymorphic source"
+    string source_type "Nullable polymorphic source type"
+    string operation_id
+    bigint sequence "Per claim"
+    bigint legacy_audit_id UK "Nullable unique source-audit provenance"
+    jsonb details
+    bool imported
+  }
+
   MentorMembership {
     uuid id PK
     string type "This is used to define which service this particular membership belongs to. Placements::MentorMembership or Claims::MentorMembership"
@@ -218,6 +238,7 @@ erDiagram
   Claim }|--|| ClaimWindow : "belongs to"
   Claim }|--|| Provider : "belongs to"
   Claim }|--|| School : "belongs to"
+  ClaimStatusChange }|--|| Claim : "belongs to"
   MentorMembership }|--|| Mentor : "belongs to"
   MentorMembership }|--|| School : "belongs to"
   MentorTraining }|--|| Claim : "belongs to"
@@ -241,6 +262,8 @@ erDiagram
   UserMembership }|--o| Provider : "belongs to (polymorphic)"
   UserMembership }|--o| School : "belongs to (polymorphic)"
 ```
+
+`ClaimStatusChange.claim_id` intentionally has no database foreign key so immutable transitions survive removal of their claim. An event can be associated with the claim while it exists; historical events for removed claims remain classified as orphaned evidence.
 
 ## Onboarding Schools and Providers into the services
 

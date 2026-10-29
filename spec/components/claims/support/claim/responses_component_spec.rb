@@ -127,7 +127,7 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
         create(:claim, :audit_requested, mentor_trainings: [build(:mentor_training, :not_assured, reason_not_assured: "Incorrect number of hours")]).tap do |claim|
           Timecop.freeze(Time.zone.local(2026, 10, 5, 9)) do
             Audited.audit_class.as_user(provider_user) do
-              claim.update!(status: :sampling_provider_not_approved)
+              Claims::AuditContext.set(actor: provider_user) { claim.update!(status: :sampling_provider_not_approved) }
             end
           end
         end

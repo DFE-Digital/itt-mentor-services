@@ -1,9 +1,14 @@
 class Claims::Clawback::UpdateClaimWithESFAResponseJob < ApplicationJob
   queue_as :default
 
-  def perform(claim)
-    Claims::Claim::Clawback::Complete.call(
-      claim:,
-    )
+  def perform(claim, response: nil, actor: Claims::AuditContext.actor)
+    Claims::AuditContext.set(actor:, source: response, operation_id: response ? "clawback-response:#{response.id}" : nil) do
+      claim.with_status_lock do |current_status|
+        next if Claims::AuditContext.operation_id && claim.status_changes.exists?(operation_id: Claims::AuditContext.operation_id)
+        raise Claims::Claim::ChangeStatus::StaleStatus, "Claim is no longer awaiting a clawback response" unless current_status == "clawback_in_progress"
+
+        Claims::Claim::Clawback::Complete.call(claim:)
+      end
+    end
   end
 end

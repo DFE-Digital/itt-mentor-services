@@ -23,6 +23,10 @@ FactoryBot.define do
     claims { build_list(:claim, 3, :submitted) }
     csv_file { file_fixture("example-payments.csv") }
 
+    to_create do |payment|
+      Claims::AuditContext.set(actor: Claims::AuditContext.actor || payment.sent_by) { payment.save! }
+    end
+
     transient do
       claims_for_link { [] }
     end

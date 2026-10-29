@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_07_100000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_29_140000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -101,6 +101,36 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_07_100000) do
     t.datetime "updated_at", null: false
     t.index ["record_type", "record_id"], name: "index_claim_activities_on_record"
     t.index ["user_id"], name: "index_claim_activities_on_user_id"
+  end
+
+  create_table "claim_status_changes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "actor_id"
+    t.string "actor_kind", null: false
+    t.string "actor_name"
+    t.string "actor_type"
+    t.uuid "claim_id", null: false
+    t.datetime "created_at", null: false
+    t.jsonb "details", default: {}, null: false
+    t.string "from_status"
+    t.boolean "imported", default: false, null: false
+    t.bigint "legacy_audit_id"
+    t.datetime "occurred_at"
+    t.string "operation_id"
+    t.bigint "sequence", null: false
+    t.uuid "source_id"
+    t.string "source_type"
+    t.string "system_operation"
+    t.string "to_status", null: false
+    t.datetime "updated_at", null: false
+    t.index ["actor_type", "actor_id"], name: "index_claim_status_changes_on_actor"
+    t.index ["claim_id", "operation_id"], name: "index_claim_status_changes_on_claim_id_and_operation_id", unique: true
+    t.index ["claim_id", "sequence"], name: "index_claim_status_changes_on_claim_id_and_sequence", unique: true
+    t.index ["claim_id"], name: "index_claim_status_changes_on_claim_id"
+    t.index ["legacy_audit_id"], name: "index_claim_status_changes_on_legacy_audit_id", unique: true
+    t.index ["source_type", "source_id"], name: "index_claim_status_changes_on_source"
+    t.check_constraint "(actor_kind::text = ANY (ARRAY['user'::character varying, 'system'::character varying, 'unknown'::character varying]::text[])) AND (imported OR occurred_at IS NOT NULL AND (actor_kind::text = 'user'::text AND actor_id IS NOT NULL AND actor_type IS NOT NULL OR actor_kind::text = 'system'::text AND system_operation IS NOT NULL AND length(TRIM(BOTH FROM system_operation)) > 0))", name: "claim_status_changes_attribution"
+    t.check_constraint "from_status IS NULL OR from_status::text <> to_status::text", name: "claim_status_changes_real_transition"
+    t.check_constraint "sequence > 0", name: "claim_status_changes_positive_sequence"
   end
 
   create_table "claim_windows", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

@@ -7,15 +7,18 @@ class Claims::Claim::Payment::Paid < ApplicationService
   end
 
   def call
-    claim.update!(status: :paid, paid_to_la:, date_paid:)
-
-    NotifyRateLimiter.call(
-      collection: claim.school_users,
-      mailer: "Claims::UserMailer",
-      mailer_method: :claim_payment_in_progress_notification,
-      mailer_args: [claim],
-      initial_wait_time: notification_wait_time,
-    )
+    claim.transaction do |transaction|
+      Claims::Claim::ChangeStatus.call(claim:, attributes: { status: :paid, paid_to_la:, date_paid: })
+      transaction.after_commit do
+        NotifyRateLimiter.call(
+          collection: claim.school_users,
+          mailer: "Claims::UserMailer",
+          mailer_method: :claim_payment_in_progress_notification,
+          mailer_args: [claim],
+          initial_wait_time: notification_wait_time,
+        )
+      end
+    end
   end
 
   private

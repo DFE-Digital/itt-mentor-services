@@ -12,6 +12,7 @@ class Claims::Clawback < ApplicationRecord
   has_many :claims, through: :clawback_claims
 
   has_one_attached :csv_file
+  has_many :status_changes, as: :source, class_name: "Claims::ClaimStatusChange", dependent: :restrict_with_exception
 
   def downloaded?
     downloaded_at.present?

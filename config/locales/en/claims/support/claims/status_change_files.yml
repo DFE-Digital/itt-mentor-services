@@ -1,0 +1,7 @@
+en:
+  claims:
+    support:
+      claims:
+        status_change_files:
+          show:
+            unavailable: Latest batch CSV is unavailable

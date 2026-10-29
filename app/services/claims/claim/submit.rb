@@ -7,7 +7,17 @@ class Claims::Claim::Submit < ApplicationService
   end
 
   def call
-    updated_claim.save!
+    Claims::Claim::ChangeStatus.call(
+      claim:,
+      actor: user,
+      attributes: {
+        status: :submitted,
+        submitted_at: Time.current,
+        submitted_by: user,
+        reference: claim.reference || generate_reference,
+        claim_window:,
+      },
+    )
 
     if status_changed_to_submitted?
       send_claim_submitted_notification_email
@@ -24,18 +34,7 @@ class Claims::Claim::Submit < ApplicationService
   end
 
   def status_changed_to_submitted?
-    updated_claim.saved_change_to_status? && updated_claim.submitted?
-  end
-
-  def updated_claim
-    @updated_claim ||= begin
-      claim.status = :submitted
-      claim.submitted_at = Time.current
-      claim.submitted_by = user
-      claim.reference = generate_reference if claim.reference.nil?
-      claim.claim_window = claim_window
-      claim
-    end
+    claim.saved_change_to_status? && claim.submitted?
   end
 
   def claim_window

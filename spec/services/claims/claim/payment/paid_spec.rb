@@ -1,6 +1,7 @@
 require "rails_helper"
 
 describe Claims::Claim::Payment::Paid do
+  include_context "with an attributed claim operation"
   let(:school) { create(:claims_school) }
   let!(:school_user) { create(:claims_user, schools: [school]) }
   let!(:claim) { create(:claim, :payment_in_progress, school:) }

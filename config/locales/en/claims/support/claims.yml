@@ -63,8 +63,23 @@ en:
           school_details: School details
           school_users: School users
           history: History
+        operational_history:
+          no_activity: There is no activity.
+          byline: "%{user} on %{time}"
+          view_details: View details
         history:
           sub_heading: History
+          legacy_archive: Legacy audit archive
+          transition: "%{from} → %{to}"
+          unknown_status: Previous status unknown
+          unknown_actor: Historical actor unknown
+          unknown_date: Historical date unknown
+          system_actor: "System operation: %{operation}"
+          unknown_operation: Historical operation unknown
+          latest_csv: Latest batch CSV
+          latest_csv_explanation: This is the latest file for the batch and may differ from the file at the time of this status change.
+          unavailable_csv: Latest batch CSV is unavailable
+          no_status_changes: There are no status changes.
           no_activity: There is no activity.
           byline: "%{user} on %{time}"
           showing: "Showing %{count} of %{total_count} files"

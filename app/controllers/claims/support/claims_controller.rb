@@ -13,9 +13,7 @@ class Claims::Support::ClaimsController < Claims::Support::ApplicationController
   end
 
   def show
-    claim_activities = Claims::ClaimActivitiesForClaimQuery.call(claim: @claim)
-    @pagy, @claim_activities = pagy(claim_activities)
-    @claim_activities = claim_activities.decorate
+    load_claim_history
   end
 
   def download_csv

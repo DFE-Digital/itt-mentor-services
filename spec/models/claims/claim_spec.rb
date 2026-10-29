@@ -683,6 +683,7 @@ RSpec.describe Claims::Claim, type: :model do
   end
 
   describe "#provider_amendment_audit" do
+    include_context "with an attributed claim operation"
     let(:claim) { create(:claim, :audit_requested) }
     let(:provider_user) { create(:claims_provider_user, :patricia) }
 
