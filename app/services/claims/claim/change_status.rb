@@ -13,8 +13,7 @@ class Claims::Claim::ChangeStatus < ApplicationService
   end
 
   def call
-    claim.class.transaction do
-      current_status = claim.persisted? ? claim.class.lock.find(claim.id).status : claim.status
+    claim.with_status_lock do |current_status|
       persist(current_status:)
     end
   end

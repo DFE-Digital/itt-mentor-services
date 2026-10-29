@@ -62,5 +62,13 @@ RSpec.describe Claims::Payment::UpdateCollectionWithPayerResponseJob, type: :job
         described_class.perform_later(claim_update_details)
       }.to have_enqueued_job(described_class).on_queue("default")
     end
+
+    it "preserves the first response for duplicate claim IDs when indexing a collection" do
+      details = claim_update_details + [{ id: claims[0].id, status: "paid" }]
+
+      expect { described_class.perform_now(details) }
+        .to have_enqueued_job(Claims::Payment::UpdateClaimWithPayerResponseJob)
+        .with(claim_update_details.first, notification_wait_time: 0.minutes, response: nil)
+    end
   end
 end

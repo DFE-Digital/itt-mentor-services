@@ -8,18 +8,37 @@ module Claims::RecordsStatusChanges
     after_save :record_status_change
   end
 
+  def with_status_lock
+    self.class.transaction do
+      locked_claim = Claims::AuditContext.locked_claim
+      if locked_claim&.id == id && persisted?
+        yield locked_claim.status
+      else
+        locked_claim = persisted? ? self.class.select(:id, :status).lock.find(id) : self
+        Claims::AuditContext.set(locked_claim:) { yield locked_claim.status }
+      end
+    end
+  end
+
   private
 
   def prepare_status_change
+    @record_status_change = false
     return unless will_save_change_to_status?
 
     if persisted?
-      persisted_status = self.class.lock.find(id).status
+      locked_claim = Claims::AuditContext.locked_claim
+      persisted_status = if locked_claim&.id == id
+                           locked_claim.status
+                         else
+                           self.class.where(id:).lock.pick(:status)
+                         end
       if persisted_status != status_in_database
         raise ActiveRecord::StaleObjectError.new(self, "change status")
       end
     end
-    return unless audited_lifecycle_change?
+    @record_status_change = audited_lifecycle_change?
+    return unless @record_status_change
 
     Claims::AuditContext.validate!
   end
@@ -33,12 +52,11 @@ module Claims::RecordsStatusChanges
 
   def record_status_change
     return unless saved_change_to_status?
-    return if status.in?(self.class::DRAFT_STATUSES.map(&:to_s)) &&
-      (status_before_last_save.nil? || status_before_last_save.in?(self.class::DRAFT_STATUSES.map(&:to_s))) &&
-      !lifecycle_started?
 
     context = Claims::AuditContext
-    context.validate!
+    context.locked_claim.status = status if context.locked_claim&.id == id
+    return unless @record_status_change
+
     actor = context.actor
     audit = audits.reorder(version: :desc).first if auditing_enabled
 

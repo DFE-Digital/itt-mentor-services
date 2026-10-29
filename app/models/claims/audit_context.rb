@@ -1,7 +1,7 @@
 class Claims::AuditContext < ActiveSupport::CurrentAttributes
   class MissingActor < StandardError; end
 
-  attribute :actor, :system_operation, :source, :operation_id
+  attribute :actor, :system_operation, :source, :operation_id, :locked_claim
 
   def self.validate!
     return if actor&.persisted? && !actor.destroyed? && actor.class.exists?(actor.id)

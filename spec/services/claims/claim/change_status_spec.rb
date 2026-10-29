@@ -31,6 +31,25 @@ RSpec.describe Claims::Claim::ChangeStatus do
     expect(claim.status_changes.order(:sequence).pluck(:to_status)).to eq(%w[submitted draft internal_draft])
   end
 
+  it "reuses a lock only within its transaction and tracks successive changes" do
+    claim.with_status_lock do
+      change_status(:submitted)
+      change_status(:paid)
+    end
+    expect(Claims::AuditContext.locked_claim).to be_nil
+    expect(claim.status_changes.order(:sequence).pluck(:to_status)).to eq(%w[submitted paid])
+  end
+
+  it "clears lock context after failure and rejects a deleted actor on a later operation" do
+    expect { change_status(:not_a_status) }.to raise_error(ActiveRecord::RecordInvalid)
+    expect(Claims::AuditContext.locked_claim).to be_nil
+    change_status(:submitted)
+    actor.destroy!
+    expect { change_status(:paid) }.to raise_error(Claims::AuditContext::MissingActor)
+    expect(Claims::AuditContext.locked_claim).to be_nil
+    expect(claim.reload.status).to eq("submitted")
+  end
+
   it "does not invent intermediate states for an exceptional paid claim" do
     change_status(:paid)
     expect(claim.status_changes.sole).to have_attributes(from_status: "draft", to_status: "paid")
