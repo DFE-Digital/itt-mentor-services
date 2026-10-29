@@ -2,6 +2,14 @@
 
 This runbook covers additive legacy backfill and read cutover for `Claims::ClaimStatusChange`. It does not authorize or perform a production migration, data review, rollout or operational approval.
 
+## Support history preview
+
+These screenshots use synthetic system-test fixtures, including deliberately incomplete historical evidence. They are illustrative UI states, not one continuous real claim lifecycle.
+
+| Existing operational history (flag off) | Unified status history (flag on) |
+| --- | --- |
+| ![Existing operational history](images/legacy-operational-history.png) | ![Unified status history](images/unified-audit-history.png) |
+
 ## Safety and evidence
 
 - Keep the original Audited rows (including associated mentor-training audits), `ClaimActivity` rows, source/batch rows, attachment metadata and existing files. Backfill and reconciliation must not update or delete them.
