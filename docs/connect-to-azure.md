@@ -5,9 +5,9 @@ This Rails app runs on the [Teacher Services Cloud](https://github.com/DFE-Digit
 Follow these instructions to [run a Rake task](#run-a-rake-task) or [open a Rails console](#open-a-rails-console).
 
 > [!NOTE]
-> These instructions are for connecting to the `test` Kubernetes cluster which powers our **QA and PR review environments**.
+> The commands below target **QA on the test cluster**. Production and sandbox use the production cluster; staging also has its own namespace. See the [environment inventory](claims/deployment.md#environment-inventory).
 >
-> We don't have a production environment yet – but when we do, we should update these instructions accordingly.
+> Request production access through the service PM and activate it through Azure Privileged Identity Management (PIM). Confirm permissions and change/incident approval before using a console or executing tasks. Do not copy QA commands into another environment without checking cluster, namespace and deployment.
 
 ## 1. Authenticate to the Kubernetes cluster
 
@@ -51,6 +51,15 @@ You'll need to configure your command line console so it can connect to the Kube
 
 ## 2. Get the Kubernetes Deployment name
 
+Before selecting a deployment, check the current context:
+
+```sh
+kubectl config current-context
+kubectl -n bat-qa get deployments
+```
+
+Confirm these match the intended QA cluster and deployment. Stop if they do not. Sandbox and production share a namespace, so namespace alone is not sufficient identification.
+
 Multiple instances of the app run on the `test` cluster. There's one for the QA environment, and one for each Pull Request that has a `deploy` label. Each one is a Kubernetes [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) resource.
 
 To connect to the **QA environment**, the deployment name is:
@@ -82,6 +91,8 @@ These commands will connect to the QA environment. Change the deployment name ac
 
 ### Open a Rails console
 
+An interactive console can modify data and send notifications. Prefer read-only diagnostics. For approved writes, record the target, expected impact and verification/reversal plan.
+
 Open an interactive Rails console using this command:
 
 ```
@@ -97,6 +108,8 @@ $ kubectl -n bat-qa exec -it deployment/itt-mentor-services-qa -- sh
 ```
 
 ### Run a Rake task
+
+Inspect the task and obtain approval for its side effects first. Do not run imports, deletion tasks or financial jobs simply to test connectivity.
 
 Run Rake tasks using this command:
 
