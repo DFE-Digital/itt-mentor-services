@@ -1,8 +1,11 @@
 # School region calculations
 
+[Claims documentation](README.md) / [Current data model](data-model.md)
+
 Within the claims application, we have a need to calculate a schools funding per hour. This is so when a mentor completes their training we have a way to calculate their hourly rate, which they then can recoup.
 
 ```ruby
+  region = claim.school.region
   claims_funding_available_per_hour_pence = region.claims_funding_available_per_hour_pence
 
   total_hours_completed = claim.mentor_trainings.sum(:hours_completed)
@@ -10,9 +13,11 @@ Within the claims application, we have a need to calculate a schools funding per
   amount_in_pence = claims_funding_available_per_hour_pence * total_hours_completed
 ```
 
+The implementation is [Claims::Claim::CalculateAmount](../../app/services/claims/claim/calculate_amount.rb). It sums non-nil training hours, multiplies by the school's region rate in pence, and returns GBP `Money`. The rate is read from the associated region at calculation time, not stored as an immutable claim amount.
+
 ## Data model
 
-We have a data model in place where a [School](https://github.com/DFE-Digital/itt-mentor-services/blob/main/db/schema.rb#L281) belongs to a [Region](https://github.com/DFE-Digital/itt-mentor-services/blob/main/db/schema.rb#L263), a Region can have many schools associated to it.
+The [schema](../../db/schema.rb) links schools to regions. Each region can have many schools. This is a focused conceptual diagram; see the [claims ERDs](data-model.md) for schema nullability and enforcement.
 
 ```mermaid
 erDiagram
@@ -39,11 +44,13 @@ erDiagram
 | claims.id | mentor_trainings.id | regions.claims_funding_available_per_hour_pence | mentor_trainings.hours_completed |
 |-----------|---------------------|---------------------------------------------------|----------------------------------|
 | 1         | 1                   | 4530                                             | 10                               |
-| 1         | 2                   | 5890                                             | 5                                |
+| 1         | 2                   | 4530                                             | 5                                |
 
 | claims.id | total_amount |
 |-----------|--------------|
-| 1         | 74,750       |
+| 1         | 67,950       |
+
+`total_amount` above is in pence: 15 hours at 4,530 pence per hour is GBP 679.50. Both training rows use the same school's region rate.
 
 ## Associating Schools to Regions
 
@@ -51,4 +58,4 @@ We have an overnight process which syncs across schools from GIAS, in this proce
 
 ## Calculating the hourly rate
 
-Once all associating has taken place we can then query what the hourly rate will be by doing `school.region.funding_available_per_hour` [here](https://github.com/DFE-Digital/itt-mentor-services/blob/main/app/models/region.rb) which will then derive the funding per hour.
+Once association has taken place, `school.region.funding_available_per_hour` returns the hourly rate through the [Region model](../../app/models/region.rb). Training eligibility and available hours are separate rules, described in the [claim lifecycle](claim-lifecycle.md).

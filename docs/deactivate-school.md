@@ -4,7 +4,12 @@
 This document describes how to 'deactivate' a school from either the claims and/or placements service. 
 This is not a process which can be performed within either live service. This code will need to be executed within the `rails console` on an Azure server running this service.
 
-To connect to the Azure server, please follow the instructions [Connect to an instance running in Azure](/docs/connect-to-azure)
+To connect to the Azure server, please follow [Connect to an instance running in Azure](connect-to-azure.md).
+
+> [!CAUTION]
+> This is destructive data deletion, not a reversible account-disable operation. Obtain approval, confirm the environment and school identity, inspect associated data and agree recovery before running it. Do not execute it to validate this guide.
+>
+> The source of truth is [SupportHelper](../app/support_tools/support_helper.rb). Its claims guard accepts only `draft` and `submitted` claims. It also rejects `internal_draft` or any other status. Never bypass that guard by changing statuses.
 
 ## Deactivating the school from the claims service
 
@@ -22,6 +27,8 @@ Executing this code will perform the following:
 - Update the `claims_service` attribute on the `school` to `false`.
 
 This will effectively deactivate the school from the claims service.
+
+After an approved change, verify the school's `claims_service` flag is false and the scoped claims, eligibility and membership records were removed as expected. Check unintended side effects before closing the support request. If results differ, stop and escalate; do not retry deletion blindly.
 
 :warning: Warning :warning:
 If the `school` has associated `claims`, which are not in either the `draft` or `submitted` state. 

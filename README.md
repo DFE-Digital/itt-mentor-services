@@ -6,16 +6,24 @@ This application has one service:
 
 - Claim funding for mentor training: A service for placement partners to claim funding for their general mentors’ training.
 
+## Documentation
+
+Start with the [claims documentation index](docs/claims/README.md) for developer onboarding, architecture, Mermaid diagrams, APIs and operational guides.
+
+The [handover document](handover-document.md) summarises run-state ownership. The [documentation audit](docs/claims/documentation-audit.md) records evidence and outstanding team-input gaps.
+
 ## Live Environments
 
 ### Claim funding for mentor training
 
 | Name       | URL                                                                           | Purpose                                                                | AKS Namespace  |
 | ---------- | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------- |
-| Production | [www](https://claim-funding-for-mentor-training.education.gov.uk)             | Public site                                                            | bat-production |
-| Sandbox    | [sandbox](https://sandbox.claim-funding-for-mentor-training.education.gov.uk) | Demo environment for end-users                                         | bat-production |
-| Staging    | [staging](https://staging.claim-funding-for-mentor-training.education.gov.uk) | For internal use by DfE for testing - Production-like environment      | bat-staging    |
-| QA         | [qa](https://qa.claim-funding-for-mentor-training.education.gov.uk)           | For internal use by DfE for testing - Automatically deployed from main | bat-qa         |
+| Production | [www](https://claim-funding-for-itt-mentor-training.service.gov.uk)             | Public site                                                            | bat-production |
+| Sandbox    | [sandbox](https://sandbox.claim-funding-for-itt-mentor-training.service.gov.uk) | Demo environment for end-users                                         | bat-production |
+| Staging    | [staging](https://staging.claim-funding-for-itt-mentor-training.service.gov.uk) | For internal use by DfE for testing - Production-like environment      | bat-staging    |
+| QA         | [qa](https://qa.claim-funding-for-itt-mentor-training.service.gov.uk)           | For internal use by DfE for testing - Automatically deployed from main | bat-qa         |
+
+The canonical production [sign-in](https://claim-funding-for-itt-mentor-training.service.gov.uk/sign-in) was confirmed at handover. The former `education.gov.uk` address is not a supported alias. See the [deployment guide](docs/claims/deployment.md) for the remaining legacy-domain configuration discrepancy.
 
 ## Setup
 
@@ -101,15 +109,19 @@ Once you have access, navigate to [API integration](https://www.notifications.se
 
 Name your key in a sensible and identifiable way, e.g. `[YOUR-NAME] Local Test Key` and set the type of key to **Test**.
 
-Create your key and then add it to `.env.test` and `.env.development` where it says `GOVUK_NOTIFY_API_KEY=`.
+Add your test key as `GOVUK_NOTIFY_API_KEY` in the ignored local overrides `.env.development.local` and, when needed, `.env.test.local`. Do not put keys in tracked environment files.
 
-You will also need to create a `.env` file in the same directory as `.env.test` and `.env.development`. The contents of the new `.env` file should be a copy of `.env.example`.
+`bin/setup` copies `.env.example` to `.env.development.local` if that local file does not exist. You can create it from the example before setup to configure your local database and test key.
 
 ### Running the app
 
 To run the application locally:
 
-1. Run `bin/setup` to install dependencies, set up the database and launch the app on <http://placements.localhost:3000> or <http://claims.localhost:3000>.
+1. Run `yarn install --immutable` to install JavaScript dependencies.
+2. Check that the environment points to a local development database.
+3. Run `bin/setup` to install Ruby dependencies, set up the database and launch the app on <http://claims.localhost:3000>. The repository also retains placements development routes.
+
+See [developer onboarding](docs/claims/development.md) for setup side effects, test commands and current wizard/service interfaces.
 
 ### Seed Data
 
