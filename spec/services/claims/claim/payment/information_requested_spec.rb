@@ -1,6 +1,7 @@
 require "rails_helper"
 
 describe Claims::Claim::Payment::InformationRequested do
+  include_context "with an attributed claim operation"
   let!(:claim) { create(:claim, :payment_in_progress) }
   let(:unpaid_reason) { "Some reason" }
 

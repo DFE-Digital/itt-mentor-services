@@ -10,11 +10,13 @@ class Claims::Sampling::CreateAndDeliver < ApplicationService
   def call
     claims.includes(:provider, :mentor_trainings, school: :region).group_by(&:provider).each do |provider, provider_claims|
       ActiveRecord::Base.transaction do |transaction|
-        provider_claims.each do |claim|
-          Claims::Claim::Sampling::InProgress.call(claim:, sampling_reason: sampling_reason(claim))
-        end
-
         provider_sampling = Claims::ProviderSampling.create!(provider:, claims: provider_claims, sampling:)
+
+        Claims::AuditContext.set(actor: current_user, source: provider_sampling) do
+          provider_claims.each do |claim|
+            Claims::Claim::Sampling::InProgress.call(claim:, sampling_reason: sampling_reason(claim))
+          end
+        end
 
         transaction.after_commit do
           provider_sampling.provider_users.each do |provider_user|

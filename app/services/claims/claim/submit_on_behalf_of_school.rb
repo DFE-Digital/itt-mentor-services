@@ -14,12 +14,14 @@ class Claims::Claim::SubmitOnBehalfOfSchool < ApplicationService
   def call
     validate_arguments!
 
-    claim.status = status
-    claim.submitted_at = Time.current
-    claim.submitted_by = support_user
-    claim.reference = generate_reference if claim.reference.nil?
-    mark_as_paid if paid?
-    claim.save!
+    attributes = {
+      status:,
+      submitted_at: Time.current,
+      submitted_by: support_user,
+      reference: claim.reference || generate_reference,
+    }
+    attributes.merge!(date_paid:, paid_to_la:, paid_notification_sent_at: Time.current) if paid?
+    Claims::Claim::ChangeStatus.call(claim:, attributes:, actor: support_user)
   end
 
   private
@@ -28,14 +30,6 @@ class Claims::Claim::SubmitOnBehalfOfSchool < ApplicationService
 
   def paid?
     status == :paid
-  end
-
-  # The school is not emailed about claims created on its behalf, so the paid
-  # notification is recorded as already sent.
-  def mark_as_paid
-    claim.date_paid = date_paid
-    claim.paid_to_la = paid_to_la
-    claim.paid_notification_sent_at = Time.current
   end
 
   def validate_arguments!

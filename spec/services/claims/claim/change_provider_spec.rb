@@ -3,6 +3,8 @@ require "rails_helper"
 describe Claims::Claim::ChangeProvider do
   subject(:call) { described_class.call(claim:, provider: new_provider) }
 
+  include_context "with an attributed claim operation"
+
   let(:old_provider) { create(:claims_provider, name: "Old Provider") }
   let(:new_provider) { create(:claims_provider, name: "New Provider") }
   let!(:new_provider_user) { create(:claims_provider_user, providers: [new_provider]) }

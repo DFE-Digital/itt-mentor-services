@@ -5,7 +5,7 @@ class Claims::Claim::Sampling::InProgress < ApplicationService
   end
 
   def call
-    claim.update!(status: :sampling_in_progress, sampling_reason:)
+    Claims::Claim::ChangeStatus.call(claim:, attributes: { status: :sampling_in_progress, sampling_reason: })
   end
 
   private

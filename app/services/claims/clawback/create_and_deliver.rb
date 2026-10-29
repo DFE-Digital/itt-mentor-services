@@ -8,13 +8,16 @@ class Claims::Clawback::CreateAndDeliver < ApplicationService
     return if clawback_requested_claims.none?
 
     ActiveRecord::Base.transaction do |transaction|
-      clawback_requested_claims.each do |claim|
-        claim.update!(status: :clawback_in_progress)
-      end
-
       csv_file = Claims::Clawback::GenerateCSVFile.call(claim_ids: clawback_requested_claims.ids)
 
       clawback = Claims::Clawback.create!(claims: clawback_requested_claims, csv_file: File.open(csv_file.to_io))
+
+      clawback_requested_claims.each do |claim|
+        Claims::Claim::ChangeStatus.call(
+          claim:, actor: current_user, source: clawback, expected_status: :clawback_requested,
+          attributes: { status: :clawback_in_progress }
+        )
+      end
 
       Claims::ClaimActivity.create!(action: :clawback_request_delivered, user: current_user, record: clawback)
 

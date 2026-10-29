@@ -1,6 +1,7 @@
 require "rails_helper"
 
 describe Claims::Claim::Clawback::ClawbackNotRequired do
+  include_context "with an attributed claim operation"
   let!(:claim) { create(:claim, :submitted, status: :sampling_not_approved) }
 
   describe "#call" do
