@@ -5,16 +5,14 @@ class Claims::Support::Claims::Payments::ClaimsController < Claims::Support::App
   before_action :authorize_claim
 
   def show
-    claim_activities = Claims::ClaimActivitiesForClaimQuery.call(claim: @claim)
-    @pagy, @claim_activities = pagy(claim_activities)
-    @claim_activities = claim_activities.decorate
+    load_claim_history
   end
 
   def confirm_information_sent; end
 
   def information_sent
     @claim.transaction do
-      @claim.payment_information_sent!
+      Claims::Claim::ChangeStatus.call(claim: @claim, attributes: { status: :payment_information_sent })
       Claims::ClaimActivity.create!(action: "information_sent_to_payer", user: current_user, record: @claim)
     end
 
@@ -25,7 +23,7 @@ class Claims::Support::Claims::Payments::ClaimsController < Claims::Support::App
 
   def paid
     @claim.transaction do
-      @claim.paid!
+      Claims::Claim::ChangeStatus.call(claim: @claim, attributes: { status: :paid })
       Claims::ClaimActivity.create!(action: "paid_by_payer", user: current_user, record: @claim)
     end
 
@@ -36,7 +34,7 @@ class Claims::Support::Claims::Payments::ClaimsController < Claims::Support::App
 
   def reject
     @claim.transaction do
-      @claim.payment_not_approved!
+      Claims::Claim::ChangeStatus.call(claim: @claim, attributes: { status: :payment_not_approved })
       Claims::ClaimActivity.create!(action: "rejected_by_payer", user: current_user, record: @claim)
     end
 

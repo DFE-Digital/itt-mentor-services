@@ -214,6 +214,8 @@ scope module: :claims, as: :claims, constraints: {
 
     resources :claims, only: %i[index show] do
       get :download_csv, on: :collection
+      get "legacy-history", to: "claims/legacy_history#show", as: :legacy_history
+      get "status-changes/:status_change_id/file", to: "claims/status_change_files#show", as: :status_change_file
 
       collection do
         get "new", to: "claims/add_claim#new", as: :new_add_claim

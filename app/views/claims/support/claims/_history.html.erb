@@ -1,27 +1,46 @@
 <h2 class="govuk-heading-l"><%= t(".sub_heading") %></h2>
 
-<% if @claim_activities.any? %>
-  <div class="app-timeline">
-    <% @claim_activities.each do |claim_activity| %>
-      <div class="app-timeline__item">
-        <div class="app-timeline__header">
-          <h3 class="app-timeline__title">
-            <%= claim_activity.title %>
-          </h3>
+<% if @claim_status_history_enabled %>
+  <p class="govuk-body"><%= govuk_link_to t(".legacy_archive"), claims_support_claim_legacy_history_path(claim) %></p>
 
-          <p class="app-timeline__byline">
-            <%= t(".byline", user: claim_activity.user_full_name, time: l(claim_activity.created_at, format: :date_at_time)) %>
-          </p>
+  <% if @claim_status_changes.any? %>
+    <div class="app-timeline">
+      <% @claim_status_changes.each do |event| %>
+        <div class="app-timeline__item">
+          <div class="app-timeline__header">
+            <h3 class="app-timeline__title">
+              <%= t(".transition",
+                    from: event.from_status.present? ? Claims::Claim.human_attribute_name("status.#{event.from_status}") : t(".unknown_status"),
+                    to: Claims::Claim.human_attribute_name("status.#{event.to_status}")) %>
+            </h3>
+
+            <p class="app-timeline__byline">
+              <% actor = case event.actor_kind
+                         when "user" then event.actor_name.presence || event.actor&.full_name || t(".unknown_actor")
+                         when "system" then t(".system_actor", operation: event.system_operation.presence || t(".unknown_operation"))
+                         else t(".unknown_actor")
+                         end %>
+              <%= t(".byline", user: actor, time: event.occurred_at.present? ? l(event.occurred_at, format: :date_at_time) : t(".unknown_date")) %>
+            </p>
+          </div>
+
+          <div class="app-timeline__description">
+            <% source = event.source %>
+            <% if source.respond_to?(:csv_file) && source.csv_file.attached? %>
+              <%= govuk_link_to t(".latest_csv"), claims_support_claim_status_change_file_path(claim, status_change_id: event.id) %>
+              <p class="govuk-body"><%= t(".latest_csv_explanation") %></p>
+            <% else %>
+              <p class="govuk-body"><%= t(".unavailable_csv") %></p>
+            <% end %>
+          </div>
         </div>
+      <% end %>
+    </div>
 
-        <div class="app-timeline__description">
-          <%= govuk_link_to t(".view_details"), claims_support_claims_claim_activity_path(claim_activity) %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-
-  <%= render PaginationComponent.new(pagy: @pagy) %>
+    <%= render PaginationComponent.new(pagy: @pagy) %>
+  <% else %>
+    <p class="govuk-body"><%= t(".no_status_changes") %></p>
+  <% end %>
 <% else %>
-  <p class="govuk-body"><%= t(".no_activity") %></p>
+  <%= render "claims/support/claims/operational_history" %>
 <% end %>

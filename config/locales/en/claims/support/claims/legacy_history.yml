@@ -1,0 +1,17 @@
+en:
+  claims:
+    support:
+      claims:
+        legacy_history:
+          show:
+            page_title: Legacy audit archive - Claim %{reference}
+            caption: Claim %{reference}
+            heading: Legacy audit archive
+            description: Original audit records include draft and non-status changes. Raw evidence and metadata are retained as recorded and may contain historical gaps.
+            audits: Original claim and mentor training audits
+            audit: "Audit %{id}: %{action}"
+            no_audits: There are no legacy audits.
+            activities: Operational activities
+            activity_details: View activity details
+            raw_activity: Raw activity and source metadata
+            no_activities: There are no operational activities.
