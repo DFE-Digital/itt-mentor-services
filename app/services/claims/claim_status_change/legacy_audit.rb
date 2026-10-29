@@ -24,7 +24,7 @@ class Claims::ClaimStatusChange
 
     module_function
 
-    def transition_for(audit)
+    def transition_for(audit, lifecycle_started: nil)
       changes = audit.audited_changes
       return { classification: :unclassified_status_audit } unless changes.is_a?(Hash)
 
@@ -48,7 +48,11 @@ class Claims::ClaimStatusChange
       to_status = to_status&.to_s
       return { classification: :unclassified_status_audit } if to_status.blank?
       return { classification: :unchanged_status_audit } if from_status == to_status
-      return { classification: :draft_history } if draft_history?(from_status, to_status)
+
+      if draft_history?(from_status, to_status)
+        lifecycle_started = lifecycle_started_before?(audit) if lifecycle_started.nil?
+        return { classification: :draft_history } unless lifecycle_started
+      end
 
       { classification: :status_transition, from_status:, to_status: }
     rescue ArgumentError, TypeError, Psych::Exception
@@ -58,6 +62,15 @@ class Claims::ClaimStatusChange
     def draft_history?(from_status, to_status)
       DRAFT_STATUSES.include?(to_status) &&
         (from_status.nil? || DRAFT_STATUSES.include?(from_status))
+    end
+
+    def lifecycle_started_before?(audit)
+      return false unless audit.is_a?(Audited::Audit) && audit.persisted?
+
+      Audited::Audit.where(auditable_type: audit.auditable_type, auditable_id: audit.auditable_id)
+        .where("id < ?", audit.id).where(action: %w[create update]).find_each.any? do |previous|
+          transition_for(previous, lifecycle_started: false)[:classification] == :status_transition
+        end
     end
 
     def checksum(record)
@@ -159,13 +172,13 @@ class Claims::ClaimStatusChange
       event.claim_id == (claim&.id || audit.auditable_id) &&
         event.from_status == transition[:from_status] &&
         event.to_status == transition[:to_status] &&
-        event.occurred_at == audit.created_at &&
-        event.actor_id == audit.user_id &&
-        event.actor_type == audit.user_type &&
         event.legacy_audit_id == audit.id &&
         (
           !event.imported? ||
           (
+            event.occurred_at == audit.created_at &&
+            event.actor_id == audit.user_id &&
+            event.actor_type == audit.user_type &&
             event.actor_name == audit.username &&
             event.actor_kind == (audit.user_id.present? && audit.user_type.present? ? "user" : "unknown") &&
             event.operation_id == "legacy-audit-#{audit.id}" &&

@@ -13,7 +13,7 @@ class Claims::ClaimStatusChange
     def call
       validate_options!
       scope = audit_scope
-      high_water_mark = @high_water_mark || scope.maximum(:id)
+      high_water_mark = @high_water_mark || LegacyAudit.audit_source_scope.maximum(:id)
       source_snapshot = LegacyAudit.source_snapshot(high_water_mark:) if @dry_run
       audits = page(scope, high_water_mark)
       classifications = Hash.new(0)
@@ -23,9 +23,12 @@ class Claims::ClaimStatusChange
       unclassified_audits = []
       unknown_actor_count = 0
       unknown_occurrence_time_count = 0
+      lifecycle_started = {}
 
       audits.each do |audit|
-        transition = LegacyAudit.transition_for(audit)
+        transition = LegacyAudit.transition_for(audit, lifecycle_started: lifecycle_started[audit.auditable_id])
+        lifecycle_started[audit.auditable_id] = true if transition[:classification] == :status_transition
+        lifecycle_started[audit.auditable_id] = false if transition[:classification] == :draft_history
         classifications[transition[:classification]] += 1
         if transition[:classification] == :unclassified_status_audit
           unclassified_audits << audit.id
@@ -78,7 +81,7 @@ class Claims::ClaimStatusChange
 
       raise UnclassifiedAuditError, "Unclassified or mismatched claim status audits: #{unclassified_audits.join(", ")}" if unclassified_audits.any?
 
-      last_audit_id = audits.last&.id || @after_audit_id || high_water_mark
+      last_audit_id = audits.last&.id || [@after_audit_id, high_water_mark].compact.max
       {
         dry_run: @dry_run,
         imported_count:,

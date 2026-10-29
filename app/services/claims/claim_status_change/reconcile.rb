@@ -113,11 +113,14 @@ class Claims::ClaimStatusChange
     def reconcile_claim_audits(errors, classified_gaps)
       total = 0
       mapped = 0
+      lifecycle_started = {}
 
       claim_audit_scope.order(:auditable_id, :version, :id).find_each do |audit|
         total += 1
-        transition = LegacyAudit.transition_for(audit)
+        transition = LegacyAudit.transition_for(audit, lifecycle_started: lifecycle_started[audit.auditable_id])
         classification = transition[:classification]
+        lifecycle_started[audit.auditable_id] = true if classification == :status_transition
+        lifecycle_started[audit.auditable_id] = false if classification == :draft_history
 
         case classification
         when :status_transition
