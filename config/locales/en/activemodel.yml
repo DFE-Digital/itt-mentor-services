@@ -431,19 +431,6 @@ en:
               blank: Please enter a telephone number for the organisation
             website:
               blank: Please enter a website address for the organisation
-        placements/convert_potential_placement_wizard/convert_placement_step:
-          attributes:
-            convert:
-              blank: Please select if you would like to convert your current information
-              inclusion: Please select if you would like to convert your current information
-        placements/convert_potential_placement_wizard/select_placement_step:
-          attributes:
-            year_groups:
-              blank: Primary placements can't be blank
-            subject_ids:
-              blank: Secondary placements can't be blank
-            key_stage_ids:
-              blank: SEND placements can't be blank
         placements/multi_placement_wizard/key_stage_selection_step:
           attributes:
             key_stage_ids:
