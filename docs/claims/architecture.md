@@ -70,3 +70,11 @@ Ruby, Rails, Postgres, Stimulus, GOV.UK components, Sass and esbuild are declare
 Wizards hold journey state in the session. An `internal_draft` status and cleanup job also remain in the application. Inspect the specific journey rather than inferring its persistence behaviour from the general wizard ADR.
 
 Read [conventions](../conventions.md), the [ADR index](../../adr/README.md), [data model](data-model.md) and [claim lifecycle](claim-lifecycle.md) next.
+
+## Placements retirement
+
+Individual placement creation, including its pre-publication preview, is retired. Bulk placement creation, hosting-interest submission and conversion remain separate flows for later removal.
+
+`Placements::AddPlacementWizard` remains only as the namespace for year-group, mentor and term steps used by [placement editing](../../app/wizards/placements/edit_placement_wizard.rb). Their templates and translations remain. Notification services and mailers are retained for other callers and queued work; this slice changes no models, stored placements, shared claims data or database schema.
+
+The exclusive placement-created Slack notifier is removed with its only caller. The [generic Slack delivery job](../../lib/slack_notifier.rb) remains: it stores the rendered endpoint, text and blocks, not the removed notifier class.

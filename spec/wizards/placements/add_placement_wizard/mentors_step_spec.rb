@@ -4,7 +4,7 @@ RSpec.describe Placements::AddPlacementWizard::MentorsStep, type: :model do
   subject(:step) { described_class.new(wizard: mock_wizard, attributes:) }
 
   let(:mock_wizard) do
-    instance_double(Placements::AddPlacementWizard).tap do |mock_wizard|
+    instance_double(Placements::EditPlacementWizard).tap do |mock_wizard|
       allow(mock_wizard).to receive(:school).and_return(school)
     end
   end

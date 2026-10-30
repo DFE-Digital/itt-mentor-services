@@ -17,12 +17,6 @@ class Placements::AddPlacementWizard::MentorsStep < BaseStep
     mentors_for_selection.where(id: mentor_ids)
   end
 
-  def mentor_names
-    return if mentor_ids == NOT_KNOWN
-
-    mentors.map(&:full_name).to_sentence
-  end
-
   private
 
   NOT_KNOWN = %w[not_known].freeze
