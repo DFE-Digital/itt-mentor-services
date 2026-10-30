@@ -16,18 +16,6 @@
 
         <%= render Placements::Schools::InterestTagComponent.new(school: @school, academic_year: current_user.selected_academic_year) %>
 
-        <% if @hosting_interest.present? %>
-          <p class="govuk-body">
-            <%= embedded_link_text(
-              t(".if_your_circumstances_change",
-                link: govuk_link_to(
-                  t(".change_your_status"),
-                  new_edit_hosting_interest_placements_school_hosting_interest_path(@school, @hosting_interest),
-                  no_visited_state: true,
-                )),
-            ) %>
-          </p>
-        <% end %>
       </div>
 
       <div class="govuk-grid-column-full">
