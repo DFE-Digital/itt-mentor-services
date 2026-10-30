@@ -102,6 +102,7 @@ RSpec.describe "School user updates their school's primary potential placement d
     expect(page).to have_title("Placements - Manage school placements - GOV.UK")
     expect(page).to have_h1("Placements you may be able to offer", class: "govuk-heading-l")
     expect(page).to have_h2("Your potential placements", class: "govuk-heading-m")
+    expect(page).not_to have_link("add your placements")
 
     expect(page).to have_element(:h3, text: "Education phases", class: "govuk-heading-s")
     expect(page).to have_summary_list_row("Potential phases", "Primary Secondary")

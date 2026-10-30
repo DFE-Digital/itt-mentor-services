@@ -8,6 +8,8 @@ Claim funding for mentor training lets schools claim funding for mentor training
 
 The [README](../../README.md) identifies claims as the current service. The repository retains placements routes, classes and tables from the historical shared-codebase design. Do not remove or assume isolation from that code when changing shared models. See [ADR 2](../../adr/00002-use-single-code-base-for-two-services.md).
 
+Placements is being removed in non-destructive feature slices. Potential-placement conversion and its entry point have been removed; interest editing and manual placement creation remain until their own removal. This does not remove stored potential-placement details, placements records or shared school, provider and mentor data. Data deletion and schema contraction require separate review and approval.
+
 ```mermaid
 flowchart LR
     School["School users"] --> Claims["Claim funding for mentor training"]
