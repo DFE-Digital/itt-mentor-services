@@ -8,39 +8,68 @@ Accepted
 
 ## Context
 
-Claim status history is currently reconstructed from generic Audited rows and operational activities. The sources differ in actor attribution and file relationships, and activities do not consistently represent persisted status changes. Historical data also includes draft preparation, associated mentor-training audits, unlinked activities, batch records and attachments. A new timeline must not turn incomplete evidence into invented transitions or remove the evidence that supports existing operational and business behaviour.
+A claim passes through several stages, from submission to payment and, sometimes, checks and repayment. Support staff need to understand what happened to a claim, who made each change and which files were used.
+
+Today, that information is spread across several logs. They record different details, and some record an action without showing whether the claim's status actually changed. This makes it difficult to explain a claim's history with confidence.
+
+We also need to keep the evidence we already hold. Some older records do not identify who made a change or when it happened. Bringing those records together must not lose information or fill gaps with guesses.
 
 ## Decision
 
-Add `Claims::ClaimStatusChange` as the canonical record for persisted claim status changes. Keep Audited and the existing activity, batch and file records unchanged and available as the legacy evidence archive.
+Create one consistent history of claim status changes, starting with submission. Each entry will show the previous and new status, who made the change and when it happened. Changes made by an automated process will name that process. Where we have a recorded link to a relevant file, support staff will be able to access it from the history.
 
-Each event records actual old/new status values, its claim, per-claim sequence, occurrence time when known, actor identity/name snapshot when known, an explicit `user`, `system` or `unknown` actor kind, operation/source provenance, import flag and structured details. Historical unknown actors and times remain explicitly unknown. They do not weaken live attribution validation. Import events reference their exact legacy audit through the unique `legacy_audit_id`; retries therefore cannot duplicate the same source transition.
+This is the best fit because it gives support staff a clear account of a claim's progress without replacing the detailed records that other parts of the service still use. Recording the status change and its history entry together also prevents a change from being saved without its audit record.
 
-Status and event persistence must be atomic through the application write boundary. Direct SQL, `update_all` or callback-skipping writes that change status without that boundary are unsupported. Approved seed/maintenance work must use an explicit named system operation; historical writes without enough provenance remain reported gaps.
+Keep the existing logs and files unchanged in a separate archive. Copy confirmed historical status changes into the new history, showing missing names or dates as unknown. Do not treat other recorded actions as proof of a status change.
 
-The backfill derives transitions only from explicit claim status changes in Audited records. It excludes draft-only history before submission, retains returns to draft after submission, and does not infer a transition from a manual activity, batch, CSV content, current claim status or time proximity. Audited's deserializer is used to read historical payloads. Original audits, associated mentor-training audits, activities, source/batch rows, attachment metadata and files are not updated or deleted. Reconciliation checks source payload fingerprints, event provenance, attachment associations, stored checksums and file existence; unresolved historical gaps are classified and reported.
+The history and archive are for support users only. They include changes made by school and provider users as well as support staff and automated processes.
 
-The legacy archive continues to expose original claim/associated audits and existing activity records. Payment-response activities with no exact persisted claim/source identity remain globally available and are reported as unlinked; CSV/time matching is not a migration rule.
+## Alternatives considered
 
-The support timeline cutover is gated by the `:claim_status_history` Flipper flag, which remains off until backfill and reconciliation pass. The legacy archive and support-authorized event-source file endpoints remain available independently of that flag.
-
-The event stores the claim UUID without a database foreign key and has an optional association to the live claim. This is deliberate: removing a submitted claim must preserve its immutable transition rows, as Audited already preserves its audit rows. A status audit for a deleted claim is retained and classified as orphaned rather than used to invent a replacement claim. Non-production reset tooling explicitly removes status events before resetting data.
-
-We considered:
-
-1. **Extending Audited for lifecycle history.** This would reuse an existing library but couples status semantics to generic field changes and does not solve activity, batch or file evidence relationships.
-2. **Adding a dedicated status-change model while retaining Audited.** This gives status transitions a stable queryable contract and allows source provenance while retaining detailed audits and existing consumers. This is the chosen option.
-3. **Database triggers.** Triggers could observe direct SQL writes but cannot reliably identify initiating users, named system operations or request/source context. They also move domain validation outside the application. Status writes must instead use the audited application write boundary.
-
-Historical batch files remain latest-file only where the existing source replaces its attachment. A pre-cutover baseline detects file loss or corruption during the migration window; after cutover, a normal resend may replace a batch's previous latest attachment. This decision does not recreate unavailable historical file versions, infer CSV-to-claim links, or promise tamper evidence against database administrators.
+1. **Build the history from the existing general-purpose audit log.** This would reuse the Audited library, which records changes to individual fields. However, we would still need rules to distinguish claim progress from other edits and connect it to users, actions and files. A separate status history makes those requirements explicit while keeping the detailed field log.
+2. **Add a dedicated status history and retain the existing logs.** This is the chosen option. It gives support staff a consistent view while preserving existing evidence and the service features that depend on it. The trade-off is an additional record to store and maintain for each status change.
+3. **Record changes automatically in the database.** Database triggers could catch changes made outside the application. However, the application would still need to supply the user, automated process and reason for the change. We chose to keep these checks together in the application rather than split responsibility between application code and database triggers.
 
 ## Consequences
 
-- Status writers must persist the claim change and its attributed event atomically; unsupported direct status writes must not bypass the writer.
-- Generic Audited rows remain useful for detailed field history and existing domain behaviour; they are not removed during this migration.
-- Support users can inspect a unified status timeline and a separate legacy archive without presenting activities as status changes.
-- Backfill is additive, dry-run-capable, paginated and restartable using an audit high-water mark and cursor. Reconciliation is read-only and must pass against the retained dry-run baseline before enabling the timeline flag.
-- Production backfill, gap review, rollout timing and approval are operational responsibilities outside this code change. Keep the legacy sources and schema through the agreed rollback window.
-- Rollback may disable the new timeline flag, but must not disable status recording while writes continue. Do not delete imported events or original evidence as part of rollback.
-- The source and file inventory is emitted as a report; reports contain source identifiers and checksums and must be retained in an approved restricted location.
-- Claim removal does not cascade to status events. The non-production reset path must explicitly delete them before clearing claim data.
+- Support staff can follow a claim's status changes in one place and consult the original records when they need more detail.
+- Preparing an initial draft does not appear in the new history. Once a claim has been submitted, later status changes are recorded, including returns to draft. Edits that do not change status remain in the detailed logs.
+- New status changes require an identified user or a named automated process. Older gaps stay visible rather than being presented as facts.
+- Keeping both the new history and the original records adds storage and maintenance costs. Recording each change also adds work to claim processing; the measured impact and limits are described in the [performance assessment](../docs/claims/claim-audit-performance.md).
+- Deployment replaces the support history view directly, without a feature flag. During the deployment window, the team must import and check historical records before reopening support access.
+- The new history does not recover missing files or keep every version of a file that has been replaced. Where a batch holds only its latest file, that remains the case.
+- Removing a claim must not remove its audit history. This does not introduce a new retention policy.
+
+## Implementation notes
+
+These notes describe the technical safeguards behind the decision. Operational commands and release checks are in the [backfill and rollout runbook](../docs/claims/claim-audit-backfill-runbook.md).
+
+### Recording new changes
+
+- `Claims::ClaimStatusChange` is the authoritative record of saved claim status changes. Audited continues to record detailed field changes for existing service behaviour.
+- Each entry stores the claim ID, old and new statuses, a sequence number within the claim, occurrence time, actor identity and name snapshot, and an actor kind of `user`, `system` or `unknown`. It also stores the source and operation identifiers, whether it was imported, and structured details.
+- Save the status change and its history entry in the same database transaction: either both succeed or neither does. Direct SQL, `update_all` and other writes that skip the recording callbacks are not supported ways to change status.
+- Approved seed and maintenance operations must name the system operation. Missing historical attribution does not relax the checks for new changes.
+
+### Importing and preserving older records
+
+- Import only explicit claim status changes from Audited. Exclude draft-only history before submission and retain later returns to draft. Do not infer changes from manual activities, batches, CSV contents, current status or nearby timestamps.
+- Read historical data using Audited's deserializer. Imported entries reference their exact source audit through a unique `legacy_audit_id`, so retrying the import does not duplicate that transition.
+- Do not update or delete original claim audits, associated mentor-training audits, activities, source and batch rows, attachment metadata or files. The archive exposes the original claim and mentor-training audits and existing activity records.
+- Keep activities that cannot be linked to a particular claim available through the existing service-wide or source views. Report the missing link; do not create one by matching CSV contents or timestamps.
+- The historical import, or backfill, supports dry runs and restartable pages. A fixed upper audit ID and the last processed ID define the range and restart point.
+- Reconciliation compares the import with the original evidence. It checks record contents, source links, attachment associations, file existence and checksums, which detect changed file contents. Classify and report unresolved gaps.
+- Store comparison reports in an approved restricted location because they contain source identifiers and checksums.
+
+### Display, rollout and recovery
+
+- Deployment immediately replaces the history view on all four support claim-detail pages. There is no feature flag or old-view fallback. Pause affected writes and support access during the deployment window, then complete backfill, reconciliation and gap review before reopening. Production execution, timing and approval are separate operational responsibilities.
+- The timeline, archive and file download routes all require support access.
+- There is no flag-based rollback. If the new view needs to be withdrawn, deploy a corrective release that preserves status recording. Keep affected writes paused if recording cannot be guaranteed. Do not delete imported entries or original evidence, and retain the existing sources and schema through the agreed rollback window.
+- A comparison captured before migration detects file loss or corruption during that migration. It does not preserve old file versions: a later batch resend may legitimately replace the latest attachment.
+
+### Deleted claims and limits
+
+- Store the claim UUID without a database foreign key, with an optional association to the live claim. Deleting a submitted claim must leave its status history intact, matching Audited's existing behaviour.
+- Classify records whose claim has been deleted as orphaned evidence; do not attach them to a replacement claim. Non-production reset tooling explicitly deletes status entries before clearing claim data.
+- This design does not recover unavailable historical file versions or protect audit evidence against changes made by a database administrator.

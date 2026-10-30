@@ -1,55 +1,65 @@
-# Claim status history backfill and cutover
+# Importing existing claim history and deploying the new view
 
-This runbook covers additive legacy backfill and read cutover for `Claims::ClaimStatusChange`. It does not authorize or perform a production migration, data review, rollout or operational approval.
+Use this runbook to copy confirmed status changes from the existing logs into the new claim history and check that no evidence has been lost. The import is called a **backfill**. The checks that compare the result with the original records are called **reconciliation**.
+
+Deployment replaces the support history view immediately. There is no feature flag or fallback to the old view. Plan a deployment window that pauses affected changes and support access while the team imports and checks the older records. Reopen access only when the checks below pass and the responsible team has reviewed any gaps.
+
+This document provides instructions, not approval to run them in production. Production work needs separate operational approval.
 
 ## Support history preview
 
-These screenshots use synthetic system-test fixtures, including deliberately incomplete historical evidence. They are illustrative UI states, not one continuous real claim lifecycle.
+These screenshots use test data, including examples with missing historical details. They show the old and new views, not one real claim's history.
 
-| Existing operational history (flag off) | Unified status history (flag on) |
+| Before deployment: activity history | After deployment: status history |
 | --- | --- |
 | ![Existing operational history](images/legacy-operational-history.png) | ![Unified status history](images/unified-audit-history.png) |
 
-## Safety and evidence
+## What must be preserved
 
-- Keep the original Audited rows (including associated mentor-training audits), `ClaimActivity` rows, source/batch rows, attachment metadata and existing files. Backfill and reconciliation must not update or delete them.
-- Do not infer actors, occurrence times, transitions, batch relationships or claim links from current values, timestamps, or ambiguous CSV rows. Only explicit claim status audits produce canonical imported transitions.
-- Draft-only status history before first submission is excluded from the canonical timeline and remains in the archive. Post-submission returns to draft are included.
-- Unlinked activities and batch/file evidence remain available at their existing global/source surfaces and are classified by reconciliation. A source/activity is attached to a transition only where its persisted source identity proves the association.
-- The per-claim legacy archive exposes the original claim and associated mentor-training audits with their serialized payload/metadata, plus the existing activity records and attributes. An activity or response with no exact claim/source association remains globally retained and reported as unlinked; CSV contents and timestamp proximity are not used to invent a per-claim link.
-- The dry-run report contains source IDs and SHA-256 fingerprints plus attachment IDs, stored checksums, sizes and existence. Retain it in an approved restricted location; do not put it in a public artifact or an ephemeral temp directory.
-- Reconciliation streams every available source file to verify its bytes against the Active Storage checksum. Missing files present in the baseline and checksum mismatches fail reconciliation. Files already missing at baseline are reported as historical gaps, not claimed as recovered.
-- This migration intentionally does not archive immutable versions of replaced batch files. Existing latest-file semantics remain.
-- The event table intentionally has no database foreign key to `claims`: removing a submitted claim keeps its immutable transition rows, matching Audited retention. Orphaned event/audit evidence is classified, not attached to a replacement claim. Non-production reset code explicitly clears events before resetting claims.
+- Keep all original records and files: claim and mentor-training audits, activity logs, payment and other batch records, and attachment details. Neither the import nor its checks may update or delete them.
+- Import only recorded claim status changes. Do not guess who made a change, when it happened or which file belongs to it from nearby timestamps, current values or CSV contents.
+- Leave initial draft preparation in the archive. Include later returns to draft once a claim has been submitted.
+- Keep activities and files that cannot be linked to a particular claim available through the existing service-wide or source views. Report the missing link rather than inventing one.
+- Keep the original claim and mentor-training audit contents and activity details available in each claim's legacy archive.
+- Keep audit history when a claim is deleted. Report records whose claim has been removed as orphaned evidence; do not attach them to a replacement claim. Non-production reset tooling explicitly clears these records before resetting claims.
+- Keep the existing file-replacement behaviour. If a batch stores only its latest file, this change does not recover or preserve earlier versions.
 
-## Expand and prepare
+## Prepare the deployment window
 
-1. Deploy the additive schema and code while the `:claim_status_history` Flipper flag remains **off**. With the flag off, all four support claim-detail surfaces continue to show the existing operational activity history; the new timeline is not queried.
-2. Confirm writer code is active and old status-writing workers/queues are drained or compatible. Schedule a controlled window that pauses affected status/source/file writes for the baseline, apply and final reconciliation. The app must not permit unaudited status changes during any rollback.
-3. Use a restored representative dataset to estimate volume, page size and storage verification time. Review access controls and retention for the restricted report. Production execution requires separate operational approval.
+1. Rehearse on a restored, representative dataset. Estimate the number of records, page size and time needed to check files. Agree who will review gaps and where the reports will be stored.
+2. Pause affected status changes, related record and file updates, and support access. Drain old status-writing jobs or confirm they are compatible with the new recording requirements.
+3. Deploy the new schema and code. The new history replaces the old view on all four support claim-detail pages as soon as the release is serving requests; there is no separate activation step.
+4. Confirm status recording is available. Keep affected writes and support access paused while capturing the baseline, importing history and running the final checks. Do not allow status changes without audit recording.
 
 ## Capture a baseline
 
-Run a dry run with a fixed page size. Preserve the complete JSON output at a restricted, durable location approved by the service team:
+A baseline is a saved description of the original evidence, used to check the import later. Run a dry run with a fixed page size and save its complete JSON output in a durable, restricted location approved by the service team:
 
 ```sh
 bundle exec rake claims:claim_auditing:backfill DRY_RUN=true LIMIT=500
 ```
 
-The report includes a `high_water_mark`, `last_audit_id`, classifications and `source_snapshot`. The high-water mark bounds the audit set while status writers are active. A dry run performs no database writes.
+The dry run does not write to the database. Its report includes:
 
-If investigating one claim, use `CLAIM_ID=<uuid>` consistently for dry run, apply and reconciliation. The full-service release gate must also reconcile the entire bounded dataset; a single-claim report is not a substitute.
+- `high_water_mark`: the highest audit ID included, which fixes the range for the import.
+- `last_audit_id`: the point from which a later page can resume.
+- Classifications of the records found and a `source_snapshot` describing the evidence.
+- Record identifiers and SHA-256 fingerprints, which detect changed record contents, plus attachment IDs, checksums, sizes and whether files exist.
 
-## Apply the resumable backfill
+The report contains internal record identifiers and must not be stored in public artifacts or temporary storage that may be cleared.
 
-Start at the beginning of the captured range, using its exact high-water mark:
+For a single-claim investigation, use `CLAIM_ID=<uuid>` consistently for the dry run, import and checks. Before reopening the service after deployment, check the whole captured dataset; one claim is not enough.
+
+## Import the older status changes
+
+Start at the beginning of the captured range, using the exact `high_water_mark` from the baseline:
 
 ```sh
 bundle exec rake claims:claim_auditing:backfill \
   DRY_RUN=false LIMIT=500 HIGH_WATER_MARK=<captured-high-water-mark>
 ```
 
-For each subsequent page, pass the same high-water mark and the prior page's `last_audit_id`:
+For each later page, use the same upper audit ID and the previous page's `last_audit_id`:
 
 ```sh
 bundle exec rake claims:claim_auditing:backfill \
@@ -57,36 +67,42 @@ bundle exec rake claims:claim_auditing:backfill \
   HIGH_WATER_MARK=<captured-high-water-mark>
 ```
 
-The unique `legacy_audit_id` makes retries safe. A retry that finds an existing matching live event is treated as already present; a provenance/payload mismatch or unclassified status audit raises instead of being silently imported. Do not edit the source audits to make a run pass.
+Each imported entry keeps a unique link to its original audit in `legacy_audit_id`, so retries do not duplicate it. An existing matching entry is treated as already present. If an entry disagrees with its source, or a status audit cannot be classified, the import raises an error. Investigate the error; do not edit the original audits to make the import pass.
 
-After the final page, repeat the bounded backfill from the beginning. It must report no additional imports. Retain page reports with the original dry-run report.
+After the final page, repeat the import from the beginning with the same upper audit ID. It must add no further entries. Keep the page reports with the original dry-run report.
 
-## Reconcile and release gate
+## Check the result before reopening access
 
-Supply the retained dry-run JSON report as `BASELINE_FILE`:
+Run reconciliation using the saved dry-run JSON report:
 
 ```sh
 bundle exec rake claims:claim_auditing:reconcile \
   BASELINE_FILE=<restricted-dry-run-report.json>
 ```
 
-Reconciliation is read-only. It verifies source audit mappings and raw metadata fingerprints, transition payloads, duplicate provenance/operations, source row fingerprints, activity/batch classifications, attachment relationships, blob existence and file checksums. It fails on unexplained omissions, altered source metadata, missing baseline files, corruption and unclassified exceptions. Unknown historical actor/time, draft history, orphaned or unlinked evidence, unrepresented current statuses, and files missing in the baseline are reported as classified gaps for review; they are not fabricated into events.
+These checks do not change data. They compare the imported entries with the original audits, check for duplicates, compare source records and attachment links, and read each available file to check its contents against its stored Active Storage checksum.
 
-Do not enable the new timeline until all of these are true:
+The command fails if it finds unexplained omissions, altered original records, files lost since the baseline, changed file contents or unclassified exceptions. A file already missing when the baseline was captured is reported as an existing gap, not as recovered.
+
+Missing historical names or dates, initial draft history, records for deleted claims, unlinked evidence and current statuses not represented in the history are reported for review. The checks do not invent entries to fill those gaps.
+
+Reopen affected writes and support access only when all of these are true:
 
 - The second backfill adds zero events.
 - Reconciliation exits successfully against the retained baseline.
-- There are zero unexplained source omissions, event duplicates, source payload mismatches, missing baseline files or checksum failures.
-- Classified historical gaps have been reviewed and recorded by the responsible operational team.
-- Current claim status mismatches or non-draft claims with no event have been explicitly reviewed as gaps rather than "fixed" by synthesizing transitions.
-- The legacy archive and event-source file endpoints have been checked with support authorization.
+- There are no unexplained missing records, duplicate entries, disagreements with source records, files lost since the baseline or failed file checksums.
+- The responsible operational team has reviewed and recorded the reported historical gaps.
+- Any disagreement with a claim's current status, or a non-draft claim with no history entry, has been reviewed as a gap rather than "fixed" by inventing a change.
+- Support users can see the timeline, legacy archive and linked files, and other users cannot access them.
 
-Only after that gate, enable `:claim_status_history` for the support timeline. The legacy archive and event-source file endpoints remain support-authorized independently of the flag. Keep the report and source evidence access-controlled.
+There is no feature flag to enable. The deployed release already uses the new view. Keep the reports and original evidence access-controlled.
 
-The retained baseline is a migration-window comparison, not a forever-pinned file version. After cutover, normal batch resends may replace the latest attachment; do not reconcile that expected replacement against a stale pre-cutover snapshot and describe it as a migration loss. If a later reconciliation is required, capture a new approved baseline at its operational boundary and classify the existing latest-only replacement semantics.
+The baseline checks what happened during this deployment window; it is not a permanent copy of each file version. Later batch resends may legitimately replace a file. For later checks, capture a new approved baseline at the agreed starting point and account for normal file replacements. Do not describe those replacements as files lost during migration.
 
 ## Rollback and retention
 
-If the timeline is incorrect, turn the flag off to restore the existing operational activity history on the four support surfaces. Keep the new writer enabled while claim status changes continue; disabling event recording would permit unaudited writes. Do not drop the new table, remove imported events, or delete/rewrite original audits, activities, batches or files. Reconcile any post-cutover writes before changing writers or rolling back code. Retain legacy sources through the agreed rollback window and follow existing data-retention policy.
+If the timeline is incorrect, keep support access paused or restrict it again while deploying a correction. There is no flag or old-view fallback. Do not roll back to code that permits unaudited status changes: keep recording active, or pause affected writes until it can be guaranteed.
 
-No production backfill, reconciliation or flag change has been performed as part of this code change.
+Do not drop the new table, remove imported entries, or delete or rewrite original audits, activities, batches or files. Check changes made since deployment before changing the recording code or rolling back a release. Retain the original evidence through the agreed rollback window and follow the existing data-retention policy.
+
+These are deployment instructions. Adding them does not run a production import, perform checks or grant operational approval.

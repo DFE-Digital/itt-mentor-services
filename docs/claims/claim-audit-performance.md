@@ -1,16 +1,18 @@
-# Claim audit performance
+# How claim auditing affects performance
 
 ## Summary
 
-Lifecycle recording adds synchronous database work to each status change. The timeline flag only controls reads: turning it off does **not** disable this overhead.
+Recording a claim's history adds database work each time its status changes. The claim update waits for this work to finish, so processing takes longer than before.
 
-The performance pass removes duplicate row locks and actor-existence checks, changes response collection matching from quadratic to linear, and batches reconciliation lookups. It retains transactional recording, per-claim serialization, stale-write detection and operation idempotency; it does not bypass callbacks or bulk-insert live events.
+The performance improvements remove repeated checks and make matching responses to claims much faster. In the local 5,000-claim test, the improved version was about **25% faster** than the first implementation, but still about **59% slower** than the previous recording approach. These are local measurements, not a prediction of production capacity.
+
+The safety checks remain: a status change and its history entry succeed together, concurrent changes to the same claim are handled in order, and retries do not repeat the same operation. The technical details and measurement limits are below.
 
 ## Local measurements
 
-Measured on an Apple M3 Pro with Ruby 3.4.12, Rails 8.1.3.1 and local PostgreSQL 17.10. Three samples were taken per size and implementation. Values below are medians, not production throughput commitments.
+The tests ran on an Apple M3 Pro with Ruby 3.4.12, Rails 8.1.3.1 and local PostgreSQL 17.10. Each combination of batch size and implementation ran three times. The table shows the middle result, or median, rather than a promised production processing rate.
 
-The workload processes distinct claims from `payment_in_progress` to `payment_information_requested` through the payer-response child job body. The baseline uses the equivalent successful-path status update with generic Audited enabled but the new recorder disabled. Setup is outside the measurement. Every sample verifies the expected generic-audit and lifecycle-event counts, then rolls back its isolated test-data transaction.
+Each test processes unpaid responses for different claims, moving them from `payment_in_progress` to `payment_information_requested`. It measures the work inside the individual claim jobs, not the whole uploaded-batch journey. The comparison with the previous approach keeps the existing Audited field log but disables the new status recorder in the benchmark. Setup is not timed. Each run checks the expected audit and history-entry counts, then rolls back its test-data transaction.
 
 | Claims | Legacy status write | Initial implementation | Optimized implementation |
 | ---: | ---: | ---: | ---: |
@@ -18,9 +20,7 @@ The workload processes distinct claims from `payment_in_progress` to `payment_in
 | 1,000 | 3.769 s | 9.037 s | 6.834 s |
 | 5,000 | 17.177 s | 36.568 s | 27.357 s |
 
-At 5,000 claims, the optimization reduced measured time by approximately **25%** versus the initial implementation. The optimized workload was approximately **59% slower** than the legacy baseline in this local run.
-
-Timing was noisy on the shared development machine: the 5,000-claim samples ranged from 11.071-29.283 s for legacy, 36.470-39.393 s initially and 26.322-29.118 s after optimization. Database query counts are the more reliable comparison:
+Times varied on the shared development machine. At 5,000 claims, runs ranged from 11.071-29.283 seconds for the previous approach, 36.470-39.393 seconds for the first implementation and 26.322-29.118 seconds after improvements. The number of database statements is a more reliable comparison:
 
 | Per successful claim | Legacy | Initial | Optimized |
 | --- | ---: | ---: | ---: |
@@ -29,23 +29,25 @@ Timing was noisy on the shared development machine: the 5,000-claim samples rang
 | Actor-existence checks | 0 | 3 | 1 |
 | Additional lifecycle event inserts | 0 | 1 | 1 |
 
-For 5,000 claims this is **70,000 to 50,000 statements**, including **15,000 to 5,000 explicit lock reads**. The remaining six statements above the legacy baseline enforce the lock, operation lookup, attribution, generic-audit linkage, event sequence and event insert. Lookup keys are indexed.
+For 5,000 claims, the improvements reduce the measured work from **70,000 to 50,000 statements**, including **15,000 to 5,000 explicit lock reads**. A row lock prevents two processes from changing the same claim at the same time. The remaining six statements above the previous approach cover that lock, retry detection, checking the user, linking the original audit, ordering entries and saving the new entry. The lookup fields have database indexes.
 
 ### Measurement limitations
 
-- These are sequential worker-body measurements with an already-loaded response and actor. They exclude queue latency, Active Job serialization/deserialization, source/actor reloads, network database latency and worker concurrency.
-- Samples run inside a rolled-back outer transaction, so they do not measure an individual durable commit/fsync per child job. They are not end-to-end uploaded-batch timings.
-- All rows use the unpaid path. Paid responses additionally perform existing school-user queries and notification scheduling; large exports additionally generate CSVs and upload attachments.
-- The fixture claims have no reference or previous generic audits, so they omit the reference-uniqueness query. Query counts exclude cache hits and schema introspection. Real jobs also incur transaction control and can have additional uncached/reloaded queries. Claims with long histories and production-sized indexes can behave differently.
-- Absolute times and percentage overhead must therefore be remeasured on representative staging data before setting an operational capacity target.
+- The jobs run one at a time, with the response and user already loaded. The tests exclude queue waits, preparing and reloading queued jobs, database network delays and multiple workers running at once.
+- Each sample runs inside one transaction that is rolled back. It does not measure the cost of committing each job separately to durable storage.
+- Only unpaid responses are measured. Paid responses also look up school users and schedule notifications. Exports also generate CSV files and upload attachments.
+- The test claims have no reference or previous field audits, so they omit the reference-uniqueness query. Statement counts exclude cached queries and database schema lookups. Real jobs also manage transactions and may make more queries. Claims with long histories and larger production indexes may behave differently.
+- Repeat measurements with representative staging data before setting a processing target or maximum batch size.
 
-## Larger-job behavior
+## What happens with larger jobs
 
 ### Response dispatch
 
-Previously each child lookup searched the full response array with `find`: processing all rows performs roughly `N * (N + 1) / 2` comparisons. A first-response-preserving hash now indexes the payload once, with constant-time lookup per claim. Both approaches retain the existing payload in memory; the hash adds one reference per distinct claim.
+Previously, finding each claim's response meant searching the response list again. As the batch grew, the same work was repeated more often. The parent job now builds a lookup table once and uses it to find each response directly. If a claim appears more than once, it still uses the first response, preserving the previous behaviour.
 
-A separate Ruby-only lookup benchmark, including hash construction and three samples per size, measured:
+For developers: the old `find` loop performs roughly `N * (N + 1) / 2` comparisons. The new hash lookup makes the overall matching work grow in proportion to batch size. Both keep the response data in memory; the hash adds one reference per distinct claim.
+
+A separate test of just the Ruby matching code, including building the lookup table, gave these median results from three runs at each size:
 
 | Response rows | Previous lookup median | Indexed lookup median |
 | ---: | ---: | ---: |
@@ -53,26 +55,26 @@ A separate Ruby-only lookup benchmark, including hash construction and three sam
 | 5,000 | 554.894 ms | 1.269 ms |
 | 10,000 | 2,064.481 ms | 2.506 ms |
 
-This is only the matching portion of the parent job, not the database queries or enqueue work. Children remain individually queued and retryable; no global batch lock was introduced.
+This measures only matching, not database queries or putting jobs on the queue. Each claim still has its own queued job and can be retried separately. No lock is held across the whole batch.
 
 ### Live recording and exports
 
-- Successful recording remains linear in the number of transitions. Each adds one event row plus its indexes, alongside the existing generic audit. Files are referenced, not duplicated.
-- The child job, status service and callback share **one transaction-scoped row lock**. Distinct claims can be processed independently. Concurrent changes to the same claim intentionally serialize.
-- Attribution is checked once **per transition**, not cached across a whole batch. A deleted actor cannot remain trusted for later changes.
-- Export services retain their existing outer transaction: affected rows remain locked until batch creation commits. The extra writes extend that transaction, so very large exports still warrant staging measurements of lock waits and transaction duration.
-- No extra storage downloads or checksums run during normal status recording. CSV generation/attachment upload remains batch work.
+- Each status change adds one history record and its index entries alongside the existing field audit. Files are linked, not copied.
+- The job, status service and recording callback share **one row lock for the transaction**. Different claims can be processed independently; changes to the same claim must wait their turn.
+- The user is checked once **per status change**, not once for the whole batch. If a user is deleted during processing, later changes cannot continue relying on an earlier check.
+- Exports still keep affected claim rows locked until the batch transaction commits. The extra audit writes lengthen that transaction. Measure lock waits and transaction duration for very large exports in staging.
+- Normal status recording does not download files or check their contents. Generating and uploading CSV files remains part of batch processing.
 
 ### Backfill and reconciliation
 
-- Backfill remains explicitly paginated. Resumed pages inspect preceding claim evidence when necessary to distinguish initial drafts from post-submission draft transitions, with lifecycle state reused within the page.
-- Reconciliation fetches source audits in batches of at most 1,000 referenced events rather than materializing every referenced audit at once.
-- Current-state reconciliation uses two event queries per claim batch instead of two per claim. Regression tests assert a fixed query count while the number of claims grows within one batch.
-- Full source snapshots, classifications and attachment verification are intentionally comprehensive. The snapshot/report still grows with the evidence count; some classification passes still perform per-record association lookups. File verification streams bytes, but storage latency and total file volume can dominate runtime.
-- Run migration reconciliation separately from interactive requests and normal response processing. It is not a cheap health check. Retain the controlled-write window and release gates in the [backfill runbook](claim-audit-backfill-runbook.md).
+- The historical import, or backfill, processes a page at a time. When resuming, it may need to read earlier records to distinguish initial draft preparation from a return to draft after submission. It reuses that information within the page.
+- Reconciliation checks the import against the original evidence. It loads original audits for at most 1,000 history entries at a time, rather than loading them all at once.
+- Comparing history with current claim statuses uses two history queries per claim batch rather than two per claim. Tests check that adding claims within a batch does not add more of these queries.
+- The report still grows with the number of records. Some checks still look up related data for each record. Files are read in streams rather than loaded whole, but storage delays and total file size can still account for much of the running time.
+- Run these checks separately from normal claim processing and page requests. They are too expensive for a routine health check. Follow the paused-write deployment window and reopening checks in the [deployment runbook](claim-audit-backfill-runbook.md).
 
 ## Operational checks
 
-Before production cutover, use representative staging batch sizes and worker concurrency to measure wall-clock completion, queue depth, database CPU/I/O, row-lock waits, transaction duration, peak worker memory and storage latency. Include paid responses, exports, retries and contention on the same claim.
+Before production deployment, test realistic batch sizes with the expected number of workers in staging. Measure total completion time, queue length, database processor and disk use, lock waits, transaction duration, peak worker memory and storage delays. Include paid responses, exports, retries and competing changes to the same claim.
 
-The local pass demonstrates reduced avoidable work and linear response matching; it does not establish a production maximum batch size or justify raising worker concurrency without measurement.
+The local tests show that repeated work has been reduced. They do not establish a safe production maximum batch size or justify running more workers without further measurement.

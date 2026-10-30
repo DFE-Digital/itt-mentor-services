@@ -51,17 +51,17 @@ erDiagram
     uuid claim_id
     string from_status
     string to_status
-    datetime occurred_at "Nullable when historical time is unknown"
-    uuid actor_id "Nullable polymorphic actor"
-    string actor_type "Nullable polymorphic actor type"
-    string actor_name "Nullable historical name snapshot"
+    datetime occurred_at "Empty if the historical time is unknown"
+    uuid actor_id "User ID, if known"
+    string actor_type "User model, if known"
+    string actor_name "Name recorded when the change was made, if known"
     string actor_kind "user, system or unknown"
-    string system_operation "Named operation for system actors"
-    uuid source_id "Nullable polymorphic source"
-    string source_type "Nullable polymorphic source type"
+    string system_operation "Name of the automated process"
+    uuid source_id "Related record ID, if known"
+    string source_type "Related record model, if known"
     string operation_id
-    bigint sequence "Per claim"
-    bigint legacy_audit_id UK "Nullable unique source-audit provenance"
+    bigint sequence "Order of changes within a claim"
+    bigint legacy_audit_id UK "Original audit ID, if imported"
     jsonb details
     bool imported
   }
@@ -263,7 +263,9 @@ erDiagram
   UserMembership }|--o| School : "belongs to (polymorphic)"
 ```
 
-`ClaimStatusChange.claim_id` intentionally has no database foreign key so immutable transitions survive removal of their claim. An event can be associated with the claim while it exists; historical events for removed claims remain classified as orphaned evidence.
+`ClaimStatusChange` records a claim's status changes. Each entry identifies the previous and new status, when the change happened, and the user or automated process responsible. Older records may have missing details; these stay unknown rather than being guessed.
+
+Deleting a claim does not delete its status history. For this reason, `ClaimStatusChange.claim_id` has no database foreign key. When the claim no longer exists, checks report its history as orphaned evidence, meaning records whose claim has been removed. The records are kept, not attached to another claim.
 
 ## Onboarding Schools and Providers into the services
 

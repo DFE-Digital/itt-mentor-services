@@ -1,5 +1,5 @@
 # Contents
 
 - [School region calculations](school_region_calulations.md)
-- [Claim status history backfill and cutover](claim-audit-backfill-runbook.md)
-- [Claim audit performance and larger-job measurements](claim-audit-performance.md)
+- [Importing existing claim history and deploying the new view](claim-audit-backfill-runbook.md)
+- [How claim auditing affects performance](claim-audit-performance.md)

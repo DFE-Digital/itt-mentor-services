@@ -6,13 +6,7 @@ class Claims::Support::ApplicationController < Claims::ApplicationController
   private
 
   def load_claim_history
-    @claim_status_history_enabled = Flipper.enabled?(:claim_status_history)
-    if @claim_status_history_enabled
-      @pagy, @claim_status_changes = pagy(Claims::ClaimStatusChangesQuery.call(claim: @claim))
-    else
-      @pagy, @claim_activities = pagy(Claims::ClaimActivitiesForClaimQuery.call(claim: @claim))
-      @claim_activities = @claim_activities.decorate
-    end
+    @pagy, @claim_status_changes = pagy(Claims::ClaimStatusChangesQuery.call(claim: @claim))
   end
 
   def authorize_user!

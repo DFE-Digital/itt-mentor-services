@@ -1,11 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Support user views claim lifecycle history and legacy evidence", service: :claims, type: :system do
-  after { Flipper.disable(:claim_status_history) }
-
   scenario do
     given_a_claim_has_transitions_and_legacy_evidence
-    and_given_lifecycle_history_is_enabled
     and_given_i_am_signed_in_as_a_claims_support_user
 
     when_i_view_the_claim_history
@@ -17,7 +14,6 @@ RSpec.describe "Support user views claim lifecycle history and legacy evidence",
 
   scenario "all four claim detail surfaces share the lifecycle timeline" do
     given_a_claim_has_transitions_and_legacy_evidence
-    and_given_lifecycle_history_is_enabled
     and_given_i_am_signed_in_as_a_claims_support_user
 
     when_i_view_each_support_claim_surface
@@ -26,20 +22,10 @@ RSpec.describe "Support user views claim lifecycle history and legacy evidence",
 
   scenario "a claim without transitions has explicit empty history" do
     given_a_claim_without_transitions
-    and_given_lifecycle_history_is_enabled
     and_given_i_am_signed_in_as_a_claims_support_user
 
     when_i_view_the_claim_history
     then_i_see_an_empty_history_and_archive_link
-  end
-
-  scenario "all four surfaces retain operational history before the reconciled cutover" do
-    given_a_claim_has_transitions_and_legacy_evidence
-    and_given_lifecycle_history_is_disabled
-    and_given_i_am_signed_in_as_a_claims_support_user
-
-    when_i_view_each_support_claim_surface
-    then_every_surface_keeps_the_operational_history
   end
 
   private
@@ -48,7 +34,7 @@ RSpec.describe "Support user views claim lifecycle history and legacy evidence",
     @claim = create(:claim, :submitted, school: create(:claims_school, name: "Shelbyville Elementary", region: regions(:inner_london)))
     @claim.update!(zendesk_url: "https://example.com/12345")
     @payment = create(:claims_payment, claims: [])
-    @activity = create(:claim_activity, action: :rejected_by_payer, record: @claim)
+    create(:claim_activity, action: :rejected_by_payer, record: @claim)
     event(sequence: 1, from_status: "draft", to_status: "submitted", actor_kind: "user", actor_name: "Anne Wilson", source: @payment)
     event(sequence: 2, from_status: "submitted", to_status: "paid", actor_kind: "system", system_operation: "Reconcile payment response")
     event(sequence: 3, from_status: "paid", to_status: "submitted", actor_kind: "unknown", occurred_at: nil)
@@ -60,14 +46,6 @@ RSpec.describe "Support user views claim lifecycle history and legacy evidence",
   def event(**attributes)
     attributes[:sequence] += 10
     Claims::ClaimStatusChange.create!(claim: @claim, imported: true, occurred_at: Time.zone.parse("2024-06-10 12:00"), **attributes)
-  end
-
-  def and_given_lifecycle_history_is_enabled
-    Flipper.enable(:claim_status_history)
-  end
-
-  def and_given_lifecycle_history_is_disabled
-    Flipper.disable(:claim_status_history)
   end
 
   def and_given_i_am_signed_in_as_a_claims_support_user
@@ -134,16 +112,5 @@ RSpec.describe "Support user views claim lifecycle history and legacy evidence",
     expect(page).to have_title("#{@claim.school_name} - Claim #{@claim.reference} - Claim funding for mentor training - GOV.UK")
     expect(page).to have_content("There are no status changes.")
     expect(page).to have_link("Legacy audit archive")
-  end
-
-  def then_every_surface_keeps_the_operational_history
-    expect(Claims::ClaimStatusChangesQuery).not_to receive(:call)
-    @surfaces.each do |path, title_prefix|
-      visit path
-      expect(page).to have_title("#{title_prefix} #{@claim.reference} - Claim funding for mentor training - GOV.UK")
-      expect(page).to have_link("View details", href: claims_support_claims_claim_activity_path(@activity))
-      expect(page).not_to have_link("Legacy audit archive")
-      expect(page).not_to have_link("Latest batch CSV")
-    end
   end
 end
