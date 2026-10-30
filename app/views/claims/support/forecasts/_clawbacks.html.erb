@@ -1,0 +1,13 @@
+<p class="govuk-body"><%= t(".description") %></p>
+
+<section id="pending-clawbacks" aria-labelledby="pending-clawbacks-heading">
+  <h2 id="pending-clawbacks-heading" class="govuk-heading-l"><%= t(".pending") %></h2>
+  <p class="govuk-body"><%= t(".pending_description") %></p>
+  <%= render "forecast", forecast: pending, group_heading: :h3 %>
+</section>
+
+<section id="completed-clawbacks" aria-labelledby="completed-clawbacks-heading">
+  <h2 id="completed-clawbacks-heading" class="govuk-heading-l"><%= t(".completed") %></h2>
+  <p class="govuk-body"><%= t(".completed_description") %></p>
+  <%= render "forecast", forecast: completed, group_heading: :h3 %>
+</section>

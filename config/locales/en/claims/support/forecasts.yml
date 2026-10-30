@@ -8,6 +8,13 @@ en:
           submit: View forecast
           forecast: Forecast
           total_claims: Total claims
+          clawbacks: Clawbacks
+        clawbacks:
+          description: Amounts to be recovered or already recovered for the selected claim window. Figures reflect the latest recorded claim statuses when this page is loaded or refreshed.
+          pending: Pending clawbacks
+          pending_description: Includes clawbacks awaiting approval, requested and in progress. Amounts awaiting approval are provisional.
+          completed: Completed clawbacks
+          completed_description: Includes clawbacks recorded as complete.
         forecast:
           type_of_establishment: Type of establishment
           amount: Amount

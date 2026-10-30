@@ -1,5 +1,5 @@
 <% forecast.groups.each do |group| %>
-  <h2 class="govuk-heading-m"><%= group.name %></h2>
+  <%= content_tag(local_assigns.fetch(:group_heading, :h2), group.name, class: "govuk-heading-m") %>
   <%= govuk_table do |table| %>
     <% table.with_head do |head| %>
       <% head.with_row do |row| %>

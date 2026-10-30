@@ -8,5 +8,11 @@ class Claims::Support::ForecastsController < Claims::Support::ApplicationControl
 
     @forecast = Claims::Claim::Forecast.call(claim_window: @claim_window, status: :submitted)
     @total_claims = Claims::Claim::Forecast.call(claim_window: @claim_window)
+    @pending_clawbacks = Claims::Claim::Forecast.call(
+      claim_window: @claim_window,
+      status: %i[clawback_requires_approval clawback_requested clawback_in_progress],
+      clawback: true,
+    )
+    @completed_clawbacks = Claims::Claim::Forecast.call(claim_window: @claim_window, status: :clawback_complete, clawback: true)
   end
 end
