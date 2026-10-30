@@ -55,12 +55,6 @@ RSpec.describe "School user does not enter a placement quantity",
   alias_method :then_i_am_on_the_placements_index_page,
                :when_i_am_on_the_placements_index_page
 
-  def when_i_click_on_bulk_add_placements
-    click_on "Bulk add placements"
-  end
-  alias_method :and_i_click_on_bulk_add_placements,
-               :when_i_click_on_bulk_add_placements
-
   def when_i_visit_the_add_hosting_interest_page
     visit new_add_hosting_interest_placements_school_hosting_interests_path(@school)
   end
