@@ -71,11 +71,11 @@ class Placements::SchoolsQuery < ApplicationQuery
     end
 
     if hosting_interests.include?("unfilled_placements")
-      conditions << scope.where(hosting_interests: { appetite: "actively_looking" }, placements: { academic_year_id: academic_year.id, provider: nil })
+      conditions << actively_looking_schools(scope).where(placements: { academic_year_id: academic_year.id, provider: nil })
     end
 
     if hosting_interests.include?("filled_placements")
-      conditions << scope.where(hosting_interests: { appetite: "actively_looking" }, placements: { academic_year_id: academic_year.id })
+      conditions << actively_looking_schools(scope).where(placements: { academic_year_id: academic_year.id })
         .excluding(scope.where(placements: { academic_year_id: academic_year.id, provider: nil }))
     end
 
@@ -134,7 +134,14 @@ class Placements::SchoolsQuery < ApplicationQuery
   def schools_to_show_condition(scope)
     return scope if filter_params[:schools_to_show] == "all"
 
-    scope.where(expression_of_interest_completed: true).or(scope.where.associated(:hosting_interests))
+    scope.where(expression_of_interest_completed: true)
+      .or(scope.where.associated(:hosting_interests))
+      .or(scope.where(placements: { academic_year_id: academic_year.id }))
+  end
+
+  def actively_looking_schools(scope)
+    scope.where(hosting_interests: { appetite: "actively_looking" })
+      .or(scope.where.not(id: Placements::HostingInterest.where(academic_year:).select(:school_id)))
   end
 
   def send_condition(scope)

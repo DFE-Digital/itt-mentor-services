@@ -36,6 +36,38 @@ describe Placements::SchoolsQuery do
   end
 
   describe "#call" do
+    context "when an interest-free school has published placements" do
+      before { query_school.update!(expression_of_interest_completed: false) }
+
+      it "includes the school for the selected academic year" do
+        placement
+        expect(query.call).to include(query_school)
+      end
+
+      it "does not include a school solely for a previous year's placement" do
+        placement.update!(academic_year: academic_year.previous)
+        expect(query.call).not_to include(query_school)
+      end
+
+      context "when filtering available placements" do
+        let(:params) { { filters: { itt_statuses: %w[unfilled_placements] } } }
+
+        it "includes an unassigned placement without an interest" do
+          placement
+          expect(query.call).to include(query_school)
+        end
+      end
+
+      context "when filtering filled placements" do
+        let(:params) { { filters: { itt_statuses: %w[filled_placements] } } }
+
+        it "includes an assigned placement without an interest" do
+          placement.update!(provider:)
+          expect(query.call).to include(query_school)
+        end
+      end
+    end
+
     it "returns all schools" do
       expect(query.call).to include(query_school)
       expect(query.call).to include(non_query_school)
