@@ -8,16 +8,6 @@
 
       <p class="govuk-body govuk-!-margin-top-6"><%= t(".providers_can_see_information") %></p>
 
-      <p class="govuk-body">
-        <%= embedded_link_text(
-          t(".once_you_are_sure",
-            link: govuk_link_to(
-              t(".add_your_placements"),
-              new_convert_potential_placements_placements_school_potential_placements_path(school),
-            )),
-        ) %>
-      </p>
-
       <h2 class="govuk-heading-m"><%= t(".your_potential_placements") %></h2>
 
       <h3 class="govuk-heading-s"><%= t(".education_phases") %></h3>
