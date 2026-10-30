@@ -241,11 +241,7 @@ RSpec.describe "School user enters another reason why they are not hosting",
       text: "We will ask in the next academic year whether you are able to offer placements for trainee teachers.",
       class: "govuk-body",
     )
-    expect(page).to have_element(
-      :p,
-      text: "If you would like to host placements this year, update your placement preferences to let providers know you’re interested.",
-      class: "govuk-body",
-    )
-    expect(page).to have_link("update your placement preferences", href: placements_school_path(@school))
+    expect(page).not_to have_text("If you would like to host placements this year")
+    expect(page).not_to have_link("update your placement preferences")
   end
 end

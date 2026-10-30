@@ -73,4 +73,4 @@ Read [conventions](../conventions.md), the [ADR index](../../adr/README.md), [da
 
 ## Placements retirement
 
-Placements hosting-status editing and its entry points have been removed. Existing hosting interests remain visible; initial interest submission, potential-placement editing and manual placement creation remain until their own removal. This is a code-only retirement slice: hosting interests, placements and shared school, provider and mentor data are preserved. Data deletion and schema contraction require separate review and approval.
+Placements hosting-status editing and its entry points have been removed. The retained not-hosting confirmation no longer invites schools to update preferences through the now read-only organisation details page. Existing hosting interests remain visible; initial interest submission, potential-placement editing and manual placement creation remain until their own removal. This is a code-only retirement slice: hosting interests, placements and shared school, provider and mentor data are preserved. Data deletion and schema contraction require separate review and approval.
