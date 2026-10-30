@@ -16,7 +16,7 @@ RSpec.describe "Support user views a forecast for a claim window", service: :cla
     then_i_see_the_forecast_for_the_historic_claim_window
     and_i_see_the_total_claims_for_the_historic_claim_window
     and_i_see_pending_and_completed_clawbacks
-    and_the_reports_use_four_aggregate_queries
+    and_the_reports_use_three_aggregate_queries
 
     when_a_pending_clawback_is_completed
     and_i_reload_the_forecast
@@ -141,8 +141,8 @@ RSpec.describe "Support user views a forecast for a claim window", service: :cla
     end
   end
 
-  def and_the_reports_use_four_aggregate_queries
-    expect(@report_queries.grep(/SUM\(.*regions\.claims_funding_available_per_hour_pence/i).size).to eq(4)
+  def and_the_reports_use_three_aggregate_queries
+    expect(@report_queries.grep(/SUM\(.*regions\.claims_funding_available_per_hour_pence/i).size).to eq(3)
     expect(@report_queries.grep(/SELECT "(?:claims|mentor_trainings)"\.\*/i)).to be_empty
   end
 
