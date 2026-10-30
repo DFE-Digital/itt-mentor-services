@@ -269,9 +269,7 @@ RSpec.describe "School user converts their potential SEND placements",
 
   def and_i_see_my_hosting_interest_is_placements_available
     expect(page).to have_tag("Placements available", "green")
-    expect(page).to have_paragraph(
-      "If your circumstances change and you are no longer able to offer placements, change your status.",
-    )
+    expect(page).not_to have_link("change your status")
     expect(page).to have_paragraph(
       "Providers can see your placements and will email placement_coordinator@example.school if they have suitable trainees.",
     )

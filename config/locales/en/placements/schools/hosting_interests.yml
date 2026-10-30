@@ -2,9 +2,6 @@ en:
   placements:
     schools:
       hosting_interests:
-        edit_hosting_interest:
-          edit:
-            cancel: Cancel
         add_hosting_interest:
           edit:
             cancel: Cancel
@@ -19,9 +16,6 @@ en:
               what_happens_next: What happens next?
               we_will_ask_you_again:
                 We will ask in the next academic year whether you are able to offer placements for trainee teachers.
-              if_you_would_like_to_host_placements:
-                If you would like to host placements this year, %{link} to let providers know you’re interested.
-              update_your_placement_preferences: update your placement preferences
             interested:
               panel_title: Information added
               panel_text: Providers can see that you may offer placements
