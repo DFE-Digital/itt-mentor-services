@@ -22,7 +22,7 @@ RSpec.describe "Signed in user authenticates and accesses the service", service:
     expect(page).to have_element(:span, text: "Hogwarts", class: "govuk-heading-s")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
-    expect(page).to have_link("Add placement")
+    expect(page).not_to have_link("Add placement", exact: true)
     expect(page).to have_link("Add multiple placements")
   end
 end

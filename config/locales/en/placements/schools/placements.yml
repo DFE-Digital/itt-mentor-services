@@ -40,10 +40,6 @@ en:
           mentor_not_assigned: Mentor not assigned
           date_not_added: Date not added
           provider_not_assigned: Provider not assigned
-        add_placement:
-          edit:
-            cancel: Cancel
-            placement_details: Placement details
         add_multiple_placements:
           edit:
             cancel: Cancel
@@ -101,11 +97,7 @@ en:
             placements: Placements
             this_year: This year (%{academic_year_name})
             next_year: Next year (%{academic_year_name})
-            add_placement: Add placement
             bulk_add_placements: Add multiple placements
-            you_must_add_itt_placement_contact: |
-              Before you add a placement, you must %{link_to} so that the teacher training providers can contact you.
-            add_itt_placement_contact: add a placement contact
             placement: Placement
             mentor: Mentor
             expected_date: Expected date

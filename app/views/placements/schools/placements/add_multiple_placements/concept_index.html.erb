@@ -7,27 +7,7 @@
 
       <p><%= t(".add_and_edit_placements") %></p>
 
-      <% if @school.school_contact.present? %>
-        <div class="govuk-button-group">
-          <%= govuk_button_link_to(t(".add_placement"), new_add_placement_placements_school_placements_path) %>
-          <%= govuk_button_link_to(t(".bulk_add_placements"), new_add_multiple_placements_placements_school_placements_path, secondary: true) %>
-        </div>
-      <% else %>
-        <%= govuk_inset_text(
-          text: embedded_link_text(
-            t(
-              ".you_must_add_itt_placement_contact",
-              link_to: govuk_link_to(
-                t(".add_itt_placement_contact"),
-                new_add_school_contact_placements_school_school_contacts_path,
-                no_visited_state: true,
-              ),
-            ),
-          ),
-        ) %>
-
-        <%= govuk_button_link_to(t(".bulk_add_placements"), new_add_multiple_placements_placements_school_placements_path) %>
-      <% end %>
+      <%= govuk_button_link_to(t(".bulk_add_placements"), new_add_multiple_placements_placements_school_placements_path) %>
 
       <h2 class="govuk-heading-m"><%= t(".placement_count", count: @pagy.count) %></h2>
 

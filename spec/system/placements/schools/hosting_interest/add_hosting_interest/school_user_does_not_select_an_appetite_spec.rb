@@ -33,7 +33,7 @@ RSpec.describe "School user does not select an appetite",
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
     expect(secondary_navigation).to have_current_item("This year (#{@current_academic_year_name}")
-    expect(page).to have_link("Add placement")
+    expect(page).not_to have_link("Add placement", exact: true)
     expect(page).to have_link("Bulk add placements")
   end
   alias_method :then_i_am_on_the_placements_index_page,
