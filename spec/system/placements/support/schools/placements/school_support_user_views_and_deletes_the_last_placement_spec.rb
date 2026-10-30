@@ -21,7 +21,7 @@ RSpec.describe "School support user views and deletes a placement", service: :pl
 
     when_i_click_on_the_delete_placement_link
     and_i_click_on_the_delete_placement_button
-    then_i_see_the_expression_of_interest_page
+    then_i_see_the_empty_placements_page
     and_i_see_a_success_message
   end
 
@@ -140,22 +140,16 @@ RSpec.describe "School support user views and deletes a placement", service: :pl
     expect(page).to have_link("Add placement", class: "govuk-button")
   end
 
-  def then_i_see_the_expression_of_interest_page
-    expect(page).to have_title(
-      "Can your school offer placements for trainee teachers in the academic year #{@next_academic_year_name}? - Manage school placements - GOV.UK",
-    )
+  def then_i_see_the_empty_placements_page
+    expect(page).to have_title("Placements - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_element(
-      :legend,
-      text: "Can your school offer placements for trainee teachers in the academic year #{@next_academic_year_name}?",
-      class: "govuk-fieldset__legend",
-    )
-    expect(page).to have_field("Yes - I can offer placements", type: :radio)
-    expect(page).to have_field("Maybe - I’m not sure yet", type: :radio)
-    expect(page).to have_field("No - I can’t offer placements", type: :radio)
+    expect(page).to have_h1("Placements")
+    expect(page).to have_current_path(placements_school_placements_path(@springfield_elementary_school))
+    expect(page).to have_content("0 placements")
+    expect(@springfield_elementary_school.placements).to be_empty
   end
 
   def and_i_see_a_success_message
-    expect(page).to have_success_banner("Placement deleted", "You no longer have placement information available. Confirm your placement availability so providers know whether to contact you.")
+    expect(page).to have_success_banner("Placement deleted", "You no longer have placement information available.")
   end
 end

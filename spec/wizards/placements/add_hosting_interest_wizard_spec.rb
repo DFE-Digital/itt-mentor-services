@@ -441,6 +441,70 @@ RSpec.describe Placements::AddHostingInterestWizard do
     end
   end
 
+  describe "retained interested wizard behavior" do
+    let(:english) { create(:subject, :secondary, name: "English") }
+    let(:key_stage) { create(:key_stage, name: "Key stage 2") }
+    let(:state) do
+      {
+        "appetite" => { "appetite" => "interested" },
+        "phase" => { "phases" => ["Primary", "Secondary", Placements::MultiPlacementWizard::PhaseStep::SEND] },
+        "year_group_selection" => { "year_groups" => %w[year_2] },
+        "year_group_placement_quantity_known" => { "quantity_known" => "No" },
+        "secondary_subject_selection" => { "subject_ids" => [english.id] },
+        "secondary_placement_quantity_known" => { "quantity_known" => "No" },
+        "key_stage_selection" => { "key_stage_ids" => [key_stage.id] },
+        "key_stage_placement_quantity_known" => { "quantity_known" => "No" },
+        "note_to_providers" => { "note" => "Please contact us." },
+        "school_contact" => {
+          "first_name" => "Joe",
+          "last_name" => "Bloggs",
+          "email_address" => "joe_bloggs@example.com",
+        },
+      }
+    end
+
+    it "preserves selections without inventing unknown quantities" do
+      wizard.update_hosting_interest
+
+      expect(school.reload.potential_placement_details).to include(
+        "year_group_selection" => { "year_groups" => %w[year_2] },
+        "secondary_subject_selection" => { "subject_ids" => [english.id] },
+        "key_stage_selection" => { "key_stage_ids" => [key_stage.id] },
+        "note_to_providers" => { "note" => "Please contact us." },
+      )
+      expect(school.potential_placement_details.keys).not_to include(
+        "year_group_placement_quantity", "secondary_placement_quantity", "key_stage_placement_quantity"
+      )
+      expect(wizard.placement_quantity_for_year_group("year_2")).to eq(0)
+      expect(wizard.placement_quantity_for_subject(english)).to eq(0)
+      expect(wizard.placement_quantity_for_key_stage(key_stage)).to eq(0)
+      expect(wizard.steps.fetch(:confirm).school_contact_first_name).to eq("Joe")
+    end
+
+    context "when the selections are unknown" do
+      before do
+        state["year_group_selection"] = { "year_groups" => %w[unknown] }
+        state["secondary_subject_selection"] = { "subject_ids" => %w[unknown] }
+        state["key_stage_selection"] = { "key_stage_ids" => %w[unknown] }
+      end
+
+      it "preserves unknown selections without adding quantity steps" do
+        wizard.update_hosting_interest
+
+        expect(wizard.selected_secondary_subjects).to eq(%w[unknown])
+        expect(wizard.selected_key_stages).to eq(%w[unknown])
+        expect(wizard.steps.keys).not_to include(
+          :year_group_placement_quantity_known, :secondary_placement_quantity_known, :key_stage_placement_quantity_known
+        )
+        expect(school.reload.potential_placement_details).to include(
+          "year_group_selection" => { "year_groups" => %w[unknown] },
+          "secondary_subject_selection" => { "subject_ids" => %w[unknown] },
+          "key_stage_selection" => { "key_stage_ids" => %w[unknown] },
+        )
+      end
+    end
+  end
+
   describe "#academic_year" do
     subject(:academic_year) { wizard.academic_year }
 

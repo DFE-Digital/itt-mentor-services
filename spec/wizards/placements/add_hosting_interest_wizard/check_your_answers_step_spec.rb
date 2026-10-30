@@ -39,6 +39,10 @@ RSpec.describe Placements::AddHostingInterestWizard::CheckYourAnswersStep, type:
   let(:selected_phases) { %w[Primary Secondary] }
 
   describe "delegations" do
+    it "reads the school contact from the wizard step" do
+      expect(step.school_contact_first_name).to eq(first_name)
+    end
+
     it { is_expected.to delegate_method(:phases).to(:phase_step) }
     it { is_expected.to delegate_method(:year_groups).to(:wizard) }
     it { is_expected.to delegate_method(:selected_secondary_subjects).to(:wizard) }
