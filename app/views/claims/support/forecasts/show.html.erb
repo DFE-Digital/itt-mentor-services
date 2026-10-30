@@ -31,6 +31,9 @@
           <% tabs.with_tab(label: t(".total_claims")) do %>
             <%= render "forecast", forecast: @total_claims %>
           <% end %>
+          <% tabs.with_tab(label: t(".clawbacks")) do %>
+            <%= render "clawbacks", pending: @pending_clawbacks, completed: @completed_clawbacks %>
+          <% end %>
         <% end %>
       </div>
     </div>

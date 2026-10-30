@@ -22,6 +22,7 @@ This index covers claims and its shared dependencies. Placements-only behaviour 
 - [Troubleshooting](troubleshooting.md)
 - [Azure connection](../connect-to-azure.md), [environment variables](../environment-variables-in-azure.md), [feature flags](../feature-flags.md), [school deactivation](../deactivate-school.md)
 - [School region calculations](school_region_calulations.md)
+- [Forecast and clawback reporting](forecast-reporting.md)
 - [Documentation audit and team-input gaps](documentation-audit.md)
 
 ## Maintaining this pack
