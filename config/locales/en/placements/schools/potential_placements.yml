@@ -2,9 +2,16 @@ en:
   placements:
     schools:
       potential_placements:
-        edit_potential_placements:
+        convert_potential_placements:
           edit:
             cancel: Cancel
+          update:
+            success:
+              heading: "Information added"
+              body_html:
+                Your school has available placements.
+                <br><br>
+                Add further placements if you can offer more.
         details:
           placements_you_may_be_able_to_offer: Placements you may be able to offer
           providers_can_see_information:
@@ -17,4 +24,3 @@ en:
           potential_send_placements: Potential SEND placements
           additional_information: Additional information
           message_to_providers: Message to providers
-          change: Change
