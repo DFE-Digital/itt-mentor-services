@@ -34,7 +34,7 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
     authorize @placement
 
     if @school.last_placement_for_school?(placement: @placement)
-      @school.current_hosting_interest(academic_year: academic_year_scope).destroy!
+      @school.current_hosting_interest(academic_year: academic_year_scope)&.destroy!
       @placement.destroy!
       redirect_to index_path, flash: {
         heading: t(".placement_deleted"),

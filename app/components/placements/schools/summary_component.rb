@@ -54,7 +54,8 @@ class Placements::Schools::SummaryComponent < ApplicationComponent
   end
 
   def open_to_hosting?
-    current_hosting_interest_appetite == "actively_looking"
+    current_hosting_interest_appetite == "actively_looking" ||
+      (current_hosting_interest_appetite.nil? && academic_year_placements.exists?)
   end
 
   def placement_availability_unknown?
