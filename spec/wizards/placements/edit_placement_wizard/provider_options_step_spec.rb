@@ -19,7 +19,7 @@ RSpec.describe Placements::EditPlacementWizard::ProviderOptionsStep, type: :mode
 
   let!(:school) { create(:placements_school, name: "School 1", phase: "Primary", partner_providers: [partner_provider]) }
 
-  let(:partner_provider) { build(:provider, :scitt) }
+  let(:partner_provider) { build(:provider, :scitt, name: "Partner provider") }
   let(:lead_school_provider) { create(:placements_provider, :lead_school) }
 
   describe "attributes" do
