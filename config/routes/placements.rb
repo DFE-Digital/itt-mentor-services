@@ -116,13 +116,6 @@ scope module: :placements,
           get "new", to: "placements/add_placement#new", as: :new_add_placement
           get "new/:state_key/:step", to: "placements/add_placement#edit", as: :add_placement
           put "new/:state_key/:step", to: "placements/add_placement#update"
-
-          get "multiple", to: "placements/add_multiple_placements#new", as: :new_add_multiple_placements
-          get "multiple/:state_key/:step", to: "placements/add_multiple_placements#edit", as: :add_multiple_placements
-          put "multiple/:state_key/:step", to: "placements/add_multiple_placements#update"
-
-          get "whats_next", to: "placements/add_multiple_placements#whats_next", as: :whats_next
-          get "concept_index", to: "placements/add_multiple_placements#concept_index", as: :concept_index
         end
       end
 

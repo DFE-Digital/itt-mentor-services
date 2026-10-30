@@ -23,6 +23,6 @@ RSpec.describe "Signed in user authenticates and accesses the service", service:
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
     expect(page).to have_link("Add placement")
-    expect(page).to have_link("Add multiple placements")
+    expect(page).not_to have_link("Add multiple placements")
   end
 end

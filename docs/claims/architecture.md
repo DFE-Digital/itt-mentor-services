@@ -70,3 +70,9 @@ Ruby, Rails, Postgres, Stimulus, GOV.UK components, Sass and esbuild are declare
 Wizards hold journey state in the session. An `internal_draft` status and cleanup job also remain in the application. Inspect the specific journey rather than inferring its persistence behaviour from the general wizard ADR.
 
 Read [conventions](../conventions.md), the [ADR index](../../adr/README.md), [data model](data-model.md) and [claim lifecycle](claim-lifecycle.md) next.
+
+## Placements retirement
+
+Standalone bulk placement creation is retired. Schools and support users can still add individual placements; schools without a placement contact must add one first.
+
+`Placements::MultiPlacementWizard` remains only as the namespace for shared step classes. The [shared creation concern](../../app/wizards/concerns/placements/multi_placement_creatable.rb) and its steps remain in use by hosting-interest and potential-placement conversion journeys. This slice does not change those flows, notifications used by single-placement creation, stored placements, shared claims data or database schema.

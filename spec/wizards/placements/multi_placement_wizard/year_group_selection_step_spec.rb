@@ -4,7 +4,7 @@ RSpec.describe Placements::MultiPlacementWizard::YearGroupSelectionStep, type: :
   subject(:step) { described_class.new(wizard: mock_wizard, attributes:) }
 
   let(:mock_wizard) do
-    instance_double(Placements::MultiPlacementWizard).tap do |mock_wizard|
+    instance_double(Placements::AddHostingInterestWizard).tap do |mock_wizard|
       allow(mock_wizard).to receive_messages(
         school:,
       )
