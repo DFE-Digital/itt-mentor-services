@@ -2,9 +2,6 @@ en:
   placements:
     schools:
       hosting_interests:
-        edit_hosting_interest:
-          edit:
-            cancel: Cancel
         add_hosting_interest:
           edit:
             cancel: Cancel

@@ -7,6 +7,9 @@ RSpec.describe "School user views the placements index when not hosting placemen
     given_a_school_exists_with_a_hosting_interest_not_open_to_hosting
     and_i_am_signed_in
     then_i_see_the_school_is_not_hosting_placements
+
+    when_i_view_organisation_details
+    then_i_see_the_existing_hosting_status_without_an_edit_link
   end
 
   private
@@ -55,15 +58,20 @@ RSpec.describe "School user views the placements index when not hosting placemen
     expect(page).to have_paragraph(
       "We will email you next year to check whether your placement availability has changed.",
     )
-    expect(page).to have_paragraph(
-      "If you think you can offer placements, change your status to add placement information.",
-    )
-    expect(page).to have_link(
-      "change your status",
-      href: new_edit_hosting_interest_placements_school_hosting_interest_path(
-        @springfield_elementary_school,
-        @hosting_interest,
-      ),
-    )
+    expect(page).not_to have_link("change your status")
+  end
+
+  def when_i_view_organisation_details
+    click_on "Organisation details"
+  end
+
+  def then_i_see_the_existing_hosting_status_without_an_edit_link
+    expect(page).to have_title("Organisation details - Manage school placements - GOV.UK")
+    expect(primary_navigation).to have_current_item("Organisation details")
+    within("#hosting_interest") do
+      expect(page).to have_summary_list_row("Status", "Not open")
+      expect(page).not_to have_link("Change")
+    end
+    expect(@hosting_interest.reload.appetite).to eq("not_open")
   end
 end

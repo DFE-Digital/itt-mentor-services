@@ -119,12 +119,9 @@ en:
             placements_available: placements available
             providers_can_see_your_placements: Providers can see your placements and will email %{contact_email} if they have suitable trainees.
             edit_placements: Edit placements to let providers know more details, such as the expected date.
-            change_your_status: change your status
             when_you_know_the_providers:
               When you know the providers you want to work with, assign them to your placements.
               This will prevent other providers getting in contact with you about them.
-            if_your_circumstances_change:
-              If your circumstances change and you are no longer able to offer placements, %{link}.
         show:
           any_time: Any time in the academic year
           providers_can_see_your_placements: Providers can see your placements and will email %{contact_email} if they have suitable trainees.
@@ -191,6 +188,3 @@ en:
             Providers will see that you are not offering placements and your contact information will be hidden.
           we_will_email_you:
             We will email you next year to check whether your placement availability has changed.
-          if_you_can_offer_placements:
-            If you think you can offer placements, %{link} to add placement information.
-          change_your_status: change your status
