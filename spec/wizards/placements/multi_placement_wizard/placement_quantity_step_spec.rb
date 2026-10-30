@@ -4,7 +4,7 @@ RSpec.describe Placements::MultiPlacementWizard::PlacementQuantityStep, type: :m
   subject(:step) { described_class.new(wizard: mock_wizard, attributes:) }
 
   let(:mock_wizard) do
-    instance_double(Placements::MultiPlacementWizard).tap do |mock_wizard|
+    instance_double(Placements::AddHostingInterestWizard).tap do |mock_wizard|
       allow(mock_wizard).to receive(:school).and_return(school)
     end
   end
