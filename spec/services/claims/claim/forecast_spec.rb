@@ -5,6 +5,70 @@ describe Claims::Claim::Forecast do
     let(:params) { { claim_window: create(:claim_window, :current) } }
   end
 
+  describe ".clawbacks" do
+    it "combines pending statuses and keeps completed recoveries separate in one aggregate query" do
+      claim_window = create(:claim_window, :current)
+      school = create(:claims_school, group: "Academies", type_of_establishment: "Academy converter")
+      statuses = %i[clawback_requires_approval clawback_requested clawback_in_progress clawback_complete clawback_rejected paid]
+      statuses.each do |status|
+        claim = create(:claim, :submitted, school:, claim_window:, status:)
+        create(:mentor_training, :not_assured, claim:, hours_completed: 10, hours_clawed_back: 2)
+        create(:mentor_training, claim:, hours_completed: 10, hours_clawed_back: 5)
+      end
+      other_claim = create(:claim, :submitted, school:, status: :clawback_complete, claim_window: create(:claim_window, :historic))
+      create(:mentor_training, :not_assured, claim: other_claim, hours_completed: 10, hours_clawed_back: 10)
+      queries = []
+      record_query = ->(event) { queries << event.payload[:sql] if event.payload[:sql].match?(/\ASELECT/i) && event.payload[:name] != "SCHEMA" }
+
+      result = ActiveSupport::Notifications.subscribed(record_query, "sql.active_record") do
+        described_class.clawbacks(claim_window:)
+      end
+
+      expect(queries.size).to eq(1)
+      expect(queries.first).to include('"claims"."status"')
+      expect(result.pending.total).to eq(school.region_funding_available_per_hour * 6)
+      expect(result.completed.total).to eq(school.region_funding_available_per_hour * 2)
+      expect(result.pending.groups.first.rows.first.total).to eq(result.pending.total)
+      expect(result.completed.groups.first.rows.first.total).to eq(result.completed.total)
+    end
+
+    it "does not count a recovery twice when completion occurs immediately after the aggregate is read" do
+      claim_window = create(:claim_window, :current)
+      school = create(:claims_school, group: "Academies", type_of_establishment: "Academy converter")
+      claim = create(:claim, :submitted, school:, claim_window:, status: :clawback_in_progress)
+      create(:mentor_training, :not_assured, claim:, hours_completed: 10, hours_clawed_back: 3)
+      amount = claim.total_clawback_amount
+      complete_after_read = lambda do |event|
+        if event.payload[:sql].match?(/\ASELECT SUM\(/i)
+          claim.update!(status: :clawback_complete)
+        end
+      end
+
+      result = ActiveSupport::Notifications.subscribed(complete_after_read, "sql.active_record") do
+        described_class.clawbacks(claim_window:)
+      end
+
+      expect(claim.reload).to be_clawback_complete
+      expect(result.pending.total).to eq(amount)
+      expect(result.completed.total).to eq(Money.new(0, "GBP"))
+      expect(result.pending.total + result.completed.total).to eq(amount)
+
+      refreshed = described_class.clawbacks(claim_window:)
+
+      expect(refreshed.pending.total).to eq(Money.new(0, "GBP"))
+      expect(refreshed.completed.total).to eq(amount)
+    end
+
+    it "returns zero GBP totals for both reports when there are no clawbacks" do
+      result = described_class.clawbacks(claim_window: create(:claim_window, :current))
+
+      expect(result.pending.groups).to be_empty
+      expect(result.completed.groups).to be_empty
+      expect(result.pending.total).to eq(Money.new(0, "GBP"))
+      expect(result.completed.total).to eq(Money.new(0, "GBP"))
+    end
+  end
+
   describe "#call" do
     it "totals non-draft claims by group and type of establishment for the claim window" do
       claim_window = create(:claim_window, :current)
