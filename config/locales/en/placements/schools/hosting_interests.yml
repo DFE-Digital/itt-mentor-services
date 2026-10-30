@@ -6,8 +6,6 @@ en:
           edit:
             cancel: Cancel
         add_hosting_interest:
-          edit:
-            cancel: Cancel
           whats_next:
             return_to_placements: Return to placements list
             return_to_organisation_details: Return to organisation details

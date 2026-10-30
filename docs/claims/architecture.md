@@ -70,3 +70,9 @@ Ruby, Rails, Postgres, Stimulus, GOV.UK components, Sass and esbuild are declare
 Wizards hold journey state in the session. An `internal_draft` status and cleanup job also remain in the application. Inspect the specific journey rather than inferring its persistence behaviour from the general wizard ADR.
 
 Read [conventions](../conventions.md), the [ADR index](../../adr/README.md), [data model](data-model.md) and [claim lifecycle](claim-lifecycle.md) next.
+
+## Placements retirement
+
+Initial hosting-interest submission is retired. School sign-in and navigation now lead to the placements index without changing completion flags or creating hosting interests. Deleting the last placement still performs the existing deletions but returns to the index rather than asking for a new interest.
+
+Confirmation pages and the shared initial-interest wizard implementation remain temporarily because hosting-interest and potential-placement editing still depend on them. Their removal follows those callers. This slice performs no data cleanup or schema contraction; existing hosting interests and shared claims data are preserved.

@@ -71,7 +71,7 @@ class PrimaryNavigationComponent < ApplicationComponent
 
   def placements_school_navigation_items
     [
-      build_item(:placements, href: placements_school_placements_path_for_org, key: :placements),
+      build_item(:placements, href: placements_school_placements_path(organisation), key: :placements),
       build_item(:mentors, href: placements_school_mentors_path(organisation), key: :mentors),
       partner_providers_navigation_item,
       build_item(:users, href: placements_school_users_path(organisation), key: :users),
@@ -104,14 +104,6 @@ class PrimaryNavigationComponent < ApplicationComponent
   def partner_providers_navigation_item
     if feature_enabled?(:school_partner_providers)
       build_item(:providers, href: placements_school_partner_providers_path(organisation), key: :partner_providers)
-    end
-  end
-
-  def placements_school_placements_path_for_org
-    if organisation.expression_of_interest_completed?
-      placements_school_placements_path(organisation)
-    else
-      new_add_hosting_interest_placements_school_hosting_interests_path(organisation)
     end
   end
 
