@@ -70,3 +70,7 @@ Ruby, Rails, Postgres, Stimulus, GOV.UK components, Sass and esbuild are declare
 Wizards hold journey state in the session. An `internal_draft` status and cleanup job also remain in the application. Inspect the specific journey rather than inferring its persistence behaviour from the general wizard ADR.
 
 Read [conventions](../conventions.md), the [ADR index](../../adr/README.md), [data model](data-model.md) and [claim lifecycle](claim-lifecycle.md) next.
+
+## Placements retirement
+
+Potential-placement editing and its summary-list actions have been removed. Stored potential-placement details remain visible; initial hosting-interest submission and potential-placement conversion remain until their own removal. The school policy permission used by conversion is retained. No stored placements or shared school, provider and mentor data are removed; data deletion and schema contraction require separate review and approval.

@@ -22,7 +22,7 @@
 
       <h3 class="govuk-heading-s"><%= t(".education_phases") %></h3>
 
-      <%= govuk_summary_list(html_attributes: { id: "education_phases" }) do |summary_list| %>
+      <%= govuk_summary_list(html_attributes: { id: "education_phases" }, actions: false) do |summary_list| %>
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t(".potential_phases")) %>
           <% row.with_value do %>
@@ -32,12 +32,6 @@
               <% end %>
             <% end %>
           <% end %>
-          <% row.with_action(
-            text: t(".change"),
-            href: new_edit_potential_placements_placements_school_potential_placements_path(school),
-            visually_hidden_text: t(".potential_phases"),
-            html_attributes: { class: "govuk-link--no-visited-state" },
-          ) %>
         <% end %>
       <% end %>
 
@@ -48,12 +42,7 @@
           </h3>
 
           <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/primary_placements_list",
-            placement_details: placement_details,
-            action_link: edit_potential_placements_placements_school_potential_placements_path(
-              school,
-              step: :year_group_selection,
-              state_key: :year_group_selection,
-            ) %>
+            placement_details: placement_details %>
         <% end %>
 
         <% if potential_placement_subject_id_selection(placement_details).present? %>
@@ -62,12 +51,7 @@
           </h3>
 
           <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/secondary_placements_list",
-            placement_details: placement_details,
-            action_link: edit_potential_placements_placements_school_potential_placements_path(
-              school,
-              step: :secondary_subject_selection,
-              state_key: :secondary_subject_selection,
-            ) %>
+            placement_details: placement_details %>
         <% end %>
 
         <% if potential_placement_key_stage_id_selection(placement_details).present? %>
@@ -76,31 +60,16 @@
           </h3>
 
           <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/send_placements_list",
-            placement_details: placement_details,
-            action_link: edit_potential_placements_placements_school_potential_placements_path(
-              school,
-              step: :key_stage_selection,
-              state_key: :key_stage_selection,
-            ) %>
+            placement_details: placement_details %>
         <% end %>
       <% end %>
 
       <h3 class="govuk-heading-s"><%= t(".additional_information") %></h3>
 
-      <%= govuk_summary_list(html_attributes: { id: "message_to_providers" }) do |summary_list| %>
+      <%= govuk_summary_list(html_attributes: { id: "message_to_providers" }, actions: false) do |summary_list| %>
         <% summary_list.with_row do |row| %>
           <% row.with_key(text: t(".message_to_providers")) %>
           <% row.with_value(text: placement_details.dig("note_to_providers", "note")) %>
-          <% row.with_action(
-            text: t(".change"),
-            href: edit_potential_placements_placements_school_potential_placements_path(
-              school,
-              step: :note_to_providers,
-              state_key: :note_to_providers,
-            ),
-            visually_hidden_text: t(".message_to_providers"),
-            classes: ["govuk-link--no-visited-state"],
-          ) %>
         <% end %>
       <% end %>
 

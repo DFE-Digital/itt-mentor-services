@@ -2,9 +2,6 @@ en:
   placements:
     schools:
       potential_placements:
-        edit_potential_placements:
-          edit:
-            cancel: Cancel
         convert_potential_placements:
           edit:
             cancel: Cancel
@@ -30,6 +27,5 @@ en:
           potential_send_placements: Potential SEND placements
           additional_information: Additional information
           message_to_providers: Message to providers
-          change: Change
           if_you_can_no_longer_offer: If you can no longer offer placements this academic year, %{link}.
           update_your_status: update your status
