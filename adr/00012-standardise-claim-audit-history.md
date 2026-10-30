@@ -8,19 +8,29 @@ Accepted
 
 ## Context
 
-A claim passes through several stages, from submission to payment and, sometimes, checks and repayment. Support staff need to understand what happened to a claim, who made each change and which files were used.
+A claim passes through several stages, from submission to payment and, sometimes, checks and repayment. Support staff need to follow that progress as changes happen so they can answer questions about a claim.
 
-Today, that information is spread across several logs. They record different details, and some record an action without showing whether the claim's status actually changed. This makes it difficult to explain a claim's history with confidence.
+They cannot do this reliably today. Some stages are not audited, others are recorded in different ways, and some records are not visible to support staff. There are frequent questions about who performed an action and when, but the available logs do not consistently provide the answers.
 
-We also need to keep the evidence we already hold. Some older records do not identify who made a change or when it happened. Bringing those records together must not lose information or fill gaps with guesses.
+We need a single source of truth for claim status history that support staff can read and understand. Its purpose is to track claims and help resolve support queries, not to provide a legal audit trail.
+
+We cannot reconstruct a complete history for older claims because some of the information was never recorded. We must preserve what we do have without presenting guesses as facts.
 
 ## Decision
 
 Create one consistent history of claim status changes, starting with submission. Each entry will show the previous and new status, who made the change and when it happened. Changes made by an automated process will name that process. Where we have a recorded link to a relevant file, support staff will be able to access it from the history.
 
-This is the best fit because it gives support staff a clear account of a claim's progress without replacing the detailed records that other parts of the service still use. Recording the status change and its history entry together also prevents a change from being saved without its audit record.
+### Why this approach
 
-Keep the existing logs and files unchanged in a separate archive. Copy confirmed historical status changes into the new history, showing missing names or dates as unknown. Do not treat other recorded actions as proof of a status change.
+A dedicated status history gives every stage the same recording rules and gives support staff one place to follow a claim. This is a better fit than continuing to piece together different logs, which cannot supply information that was never captured. Recording each new status change and its history entry together prevents further gaps caused by saving a change without its audit record.
+
+The main value is a clear, consistent answer to support questions: what happened to this claim, who made the change and when? Support staff should not need to understand how different parts of the service keep their records to find those answers.
+
+### Existing records
+
+Keep the existing logs and files unchanged in a separate archive for now. Copy confirmed historical status changes into the new history, showing missing names or dates as unknown. This imports what is known; it does not fill the gaps in older claims. Do not treat other recorded actions as proof of a status change.
+
+Separating the new history from the older logs also gives us a path to retire those logs when we are confident they are no longer needed. Removing them is not part of this change: it requires a separate decision about their remaining uses and retention.
 
 The history and archive are for support users only. They include changes made by school and provider users as well as support staff and automated processes.
 
@@ -28,17 +38,19 @@ The history and archive are for support users only. They include changes made by
 
 1. **Build the history from the existing general-purpose audit log.** This would reuse the Audited library, which records changes to individual fields. However, we would still need rules to distinguish claim progress from other edits and connect it to users, actions and files. A separate status history makes those requirements explicit while keeping the detailed field log.
 2. **Add a dedicated status history and retain the existing logs.** This is the chosen option. It gives support staff a consistent view while preserving existing evidence and the service features that depend on it. The trade-off is an additional record to store and maintain for each status change.
-3. **Record changes automatically in the database.** Database triggers could catch changes made outside the application. However, the application would still need to supply the user, automated process and reason for the change. We chose to keep these checks together in the application rather than split responsibility between application code and database triggers.
+3. **Record changes automatically in the database.** Database triggers could catch changes made outside the application. However, the application would still need to supply the user or automated process responsible and any related file information. Keeping these checks together in the application avoids splitting responsibility between application code and database triggers.
 
 ## Consequences
 
 - Support staff can follow a claim's status changes in one place and consult the original records when they need more detail.
 - Preparing an initial draft does not appear in the new history. Once a claim has been submitted, later status changes are recorded, including returns to draft. Edits that do not change status remain in the detailed logs.
 - New status changes require an identified user or a named automated process. Older gaps stay visible rather than being presented as facts.
+- Support staff will have consistent information for new status changes, but some questions about older claims will remain unanswered because the data was never recorded.
 - Keeping both the new history and the original records adds storage and maintenance costs. Recording each change also adds work to claim processing; the measured impact and limits are described in the [performance assessment](../docs/claims/claim-audit-performance.md).
 - Deployment replaces the support history view directly, without a feature flag. During the deployment window, the team must import and check historical records before reopening support access.
 - The new history does not recover missing files or keep every version of a file that has been replaced. Where a batch holds only its latest file, that remains the case.
 - Removing a claim must not remove its audit history. This does not introduce a new retention policy.
+- Retiring the legacy logs later requires a separate review of the service features that still use them and the information we need to retain.
 
 ## Implementation notes
 
