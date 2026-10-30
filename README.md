@@ -34,12 +34,13 @@ This project depends on:
 - [Ruby](https://www.ruby-lang.org/)
 - [Ruby on Rails](https://rubyonrails.org/)
 - [NodeJS](https://nodejs.org/)
-- [Yarn](https://yarnpkg.com/)
+- [Yarn](https://yarnpkg.com/) (managed with Corepack)
 - [Postgres](https://www.postgresql.org/)
 
 ### asdf
 
 Most dependencies are defined in the `.tool-versions` file and can be installed using [asdf](https://asdf-vm.com/) (or a compatible alternative like [mise](https://mise.jdx.dev/)).
+Yarn is managed separately by Corepack.
 
 To install them with asdf, run:
 
@@ -48,7 +49,6 @@ To install them with asdf, run:
 brew install asdf # Mac-specific
 asdf plugin add nodejs
 asdf plugin add ruby
-asdf plugin add yarn
 asdf plugin add caddy
 asdf plugin add azure-cli
 asdf plugin add jq
@@ -60,6 +60,16 @@ asdf plugin add terraform
 # To install (or update, following a change to .tool-versions)
 asdf install
 ```
+
+### Yarn and Corepack
+
+The project pins Yarn 4.18.1 in `package.json` and selects the committed Yarn release through `.yarnrc.yml`. Do not install Yarn with asdf. After installing Node, enable Corepack's Yarn command once:
+
+```sh
+corepack enable
+```
+
+In this repository, `yarn --version` should report `4.18.1`.
 
 ### Homebrew
 
@@ -73,20 +83,25 @@ brew bundle
 
 This will install the packages listed in [Brewfile](Brewfile).
 
-Finally, you will need a running Postgres 16 server. You can install it with Homebrew by running:
+Finally, you will need a running Postgres 17 server. You can install it with Homebrew by running:
 
 ```sh
-brew install postgresql@16
+brew install postgresql@17
 ```
 
 or you may prefer to use [Postgres.app](https://postgresapp.com/), [Docker](https://hub.docker.com/_/postgres), or some other [installation method](https://www.postgresql.org/download/).
 
+The local Docker Compose database also uses PostgreSQL 17. If you have data in an existing PostgreSQL 16 Compose volume, export it before switching versions; PostgreSQL major-version data directories cannot be reused directly. Start PostgreSQL 17 with a fresh volume and restore a dump if you need to keep that data.
+
 ### Linting
 
-To run the linters:
+`bin/lint` runs RuboCop with `--autocorrect-all` and ERB Lint with `--autocorrect`, so it can modify files. Review its diff before keeping any corrections.
+
+For check-only linting that does not enable autocorrection, run:
 
 ```bash
-bin/lint
+bundle exec rubocop
+bundle exec erb_lint app
 ```
 
 ## How the application works

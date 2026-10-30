@@ -1,7 +1,6 @@
 # App dependencies
-nodejs    22.15.1
+nodejs    24.13.0
 ruby      3.4.12
-yarn      1.22.1
 caddy     2.9.1
 
 # Cloud infrastructure dependencies
