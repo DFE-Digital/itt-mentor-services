@@ -167,7 +167,7 @@ RSpec.describe "Primary school user edits a placement with javascript disabled",
     expect(page).to have_title("Placements - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
-    expect(page).to have_element(:a, text: "Add placement", class: "govuk-button")
+    expect(page).not_to have_link("Add placement", exact: true)
   end
 
   alias_method :then_i_see_the_placements_index_page, :when_i_am_on_the_placements_index_page

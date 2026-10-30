@@ -27,8 +27,8 @@ RSpec.describe "School user logs in after completing expression of interest", se
     expect(page).to have_title("Placements - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
-    expect(page).to have_link("Add placement")
     expect(page).not_to have_link("Add multiple placements")
+    expect(page).not_to have_link("Add placement", exact: true)
   end
 
   def when_i_click_on_the_users_tab

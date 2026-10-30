@@ -4,7 +4,7 @@ RSpec.describe Placements::AddPlacementWizard::TermsStep, type: :model do
   subject(:step) { described_class.new(wizard: mock_wizard, attributes:) }
 
   let(:mock_wizard) do
-    instance_double(Placements::AddPlacementWizard).tap do |mock_wizard|
+    instance_double(Placements::EditPlacementWizard).tap do |mock_wizard|
       allow(mock_wizard).to receive(:school).and_return(school)
     end
   end
@@ -57,6 +57,15 @@ RSpec.describe Placements::AddPlacementWizard::TermsStep, type: :model do
       it "returns nil" do
         expect(step.term_names).to be_nil
       end
+    end
+  end
+
+  describe "#terms" do
+    it "returns an empty relation when any term is acceptable" do
+      step.term_ids = %w[any_term]
+
+      expect(step.terms).to be_empty
+      expect(step.terms).to be_a(ActiveRecord::Relation)
     end
   end
 

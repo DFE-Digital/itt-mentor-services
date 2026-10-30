@@ -20,27 +20,10 @@ en:
           attributes:
             mentor_ids:
               blank: Select a mentor or not yet known
-        placements/add_placement_wizard/academic_year_step:
-          attributes:
-            academic_year_id:
-              blank: Select an academic year
         placements/add_placement_wizard/terms_step:
           attributes:
             term_ids:
               blank: Select a term or any time in the academic year
-        placements/add_placement_wizard/phase_step:
-          attributes:
-            phase:
-              blank: Select a phase
-        placements/add_placement_wizard/secondary_subject_selection_step:
-          attributes:
-            subject_id:
-              blank: Select a subject
-        placements/add_placement_wizard/additional_subjects_step:
-          attributes:
-            additional_subject_ids:
-              blank: Select an additional subject
-              invalid: Select a valid additional subject
         placements/add_placement_wizard/year_group_step:
           attributes:
             year_group:

@@ -81,12 +81,6 @@ scope module: :placements,
           put "edit/:state_key/:step", to: "placements/edit_placement#update"
           get "preview", to: "placements#preview", as: :preview_placement
         end
-
-        collection do
-          get "new", to: "placements/add_placement#new", as: :new_add_placement
-          get "new/:state_key/:step", to: "placements/add_placement#edit", as: :add_placement
-          put "new/:state_key/:step", to: "placements/add_placement#update"
-        end
       end
 
       resources :school_contacts, only: [] do

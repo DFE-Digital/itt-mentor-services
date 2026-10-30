@@ -77,8 +77,14 @@ Read [conventions](../conventions.md), the [ADR index](../../adr/README.md), [da
 
 Placements hosting-status editing, potential-placement editing and initial hosting-interest submission and their entry points have been removed. School sign-in and navigation now lead to the placements index without changing completion flags or creating hosting interests. The retained not-hosting confirmation no longer invites schools to update preferences through the now read-only organisation details page. Deleting the last placement still performs the existing placement and hosting-interest deletions but returns to the index rather than asking for a new interest.
 
-Existing hosting interests and potential-placement details remain visible; individual placement creation remains available, and schools must add a contact before doing so. The unused bulk and potential-placement conversion wizard routes and their step code have been removed.
+Existing hosting interests and potential-placement details remain visible. Bulk creation, potential-placement conversion and individual placement creation are retired; placement editing, assignment and deletion remain available.
 
 Publishing without a hosting interest is supported: provider search includes schools with placements in the selected academic year, and provider detail/navigation/status paths do not require an interest record. Deleting the last placement removes its hosting interest only if one exists, so replacement placements can be deleted safely.
+
+Individual placement creation, including its pre-publication preview, is retired. The bulk and potential-placement conversion routes and wizard implementation were removed in the preceding slice.
+
+`Placements::AddPlacementWizard` remains only as the namespace for year-group, mentor and term steps used by [placement editing](../../app/wizards/placements/edit_placement_wizard.rb). Their templates and translations remain. Notification services and mailers are retained for other callers and queued work; this slice changes no models, stored placements, shared claims data or database schema.
+
+The exclusive placement-created Slack notifier is removed with its only caller. The [generic Slack delivery job](../../lib/slack_notifier.rb) remains: it stores the rendered endpoint, text and blocks, not the removed notifier class.
 
 This is a code-only retirement slice: hosting interests, placements and shared school, provider, mentor and claims data are preserved. Data deletion and schema contraction require separate review and approval.

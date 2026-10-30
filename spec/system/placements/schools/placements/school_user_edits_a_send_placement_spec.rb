@@ -57,7 +57,7 @@ RSpec.describe "Primary school user edits a placement", service: :placements, ty
     expect(page).to have_title("Placements - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
-    expect(page).to have_element(:a, text: "Add placement", class: "govuk-button")
+    expect(page).not_to have_link("Add placement", exact: true)
   end
 
   def then_i_see_my_placement
