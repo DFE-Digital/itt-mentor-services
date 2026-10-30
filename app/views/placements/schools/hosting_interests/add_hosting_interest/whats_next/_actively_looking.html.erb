@@ -55,7 +55,7 @@
     </h3>
 
     <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/primary_placements_list",
-      placement_details: placement_details, action_link: nil %>
+      placement_details: placement_details %>
   <% end %>
 
   <% if potential_placement_subject_id_selection(placement_details).present? %>
@@ -64,7 +64,7 @@
     </h3>
 
     <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/secondary_placements_list",
-      placement_details: placement_details, action_link: nil %>
+      placement_details: placement_details %>
   <% end %>
 
   <% if potential_placement_key_stage_id_selection(placement_details).present? %>
@@ -73,6 +73,6 @@
     </h3>
 
     <%= render "placements/schools/hosting_interests/add_hosting_interest/whats_next/send_placements_list",
-      placement_details: placement_details, action_link: nil %>
+      placement_details: placement_details %>
   <% end %>
 <% end %>
