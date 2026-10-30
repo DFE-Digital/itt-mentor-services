@@ -128,10 +128,6 @@ RSpec.describe "School user edits their hosting interest and bulk adds placement
   alias_method :and_i_click_on_continue,
                :when_i_click_on_continue
 
-  def when_i_visit_the_add_hosting_interest_page
-    visit new_add_hosting_interest_placements_school_hosting_interests_path(@school)
-  end
-
   def then_i_see_the_phase_form
     expect(page).to have_title(
       "What education phase can your placements be? - Manage school placements - GOV.UK",

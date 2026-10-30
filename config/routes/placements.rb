@@ -73,7 +73,7 @@ scope module: :placements,
         end
       end
 
-      resources :hosting_interests do
+      resources :hosting_interests, only: [] do
         member do
           get "edit", to: "hosting_interests/edit_hosting_interest#new", as: :new_edit_hosting_interest
           get "edit/:state_key/:step", to: "hosting_interests/edit_hosting_interest#edit", as: :edit_hosting_interest
@@ -81,10 +81,6 @@ scope module: :placements,
         end
 
         collection do
-          get "new", to: "hosting_interests/add_hosting_interest#new", as: :new_add_hosting_interest
-          get "new/:state_key/:step", to: "hosting_interests/add_hosting_interest#edit", as: :add_hosting_interest
-          put "new/:state_key/:step", to: "hosting_interests/add_hosting_interest#update"
-
           get "whats_next", to: "hosting_interests/add_hosting_interest#whats_next", as: :whats_next
         end
       end

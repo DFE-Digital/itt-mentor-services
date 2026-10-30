@@ -230,6 +230,26 @@ RSpec.describe School, type: :model do
     end
   end
 
+  describe "#new_hosting_interest_required?" do
+    let(:school) { create(:placements_school, with_hosting_interest: false) }
+    let(:academic_year) { Placements::AcademicYear.current.next }
+
+    it "requires an interest when none is recorded for the academic year" do
+      expect(school.new_hosting_interest_required?(academic_year:)).to be(true)
+    end
+
+    it "does not require another completed interest for the same academic year" do
+      create(:hosting_interest, school:, academic_year:)
+      expect(school.new_hosting_interest_required?(academic_year:)).to be(false)
+    end
+
+    it "requires an interest when the completion flag is false" do
+      create(:hosting_interest, school:, academic_year:)
+      school.expression_of_interest_completed = false
+      expect(school.new_hosting_interest_required?(academic_year:)).to be(true)
+    end
+  end
+
   describe "#last_placement_for_school?" do
     let(:school) { create(:placements_school) }
     let(:current_academic_year) { create(:placements_academic_year, :current) }

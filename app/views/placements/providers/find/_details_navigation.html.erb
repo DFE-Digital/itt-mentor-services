@@ -16,7 +16,7 @@
 <div class="govuk-!-margin-bottom-2"></div>
 
 <%= render SecondaryNavigationComponent.new do |component| %>
-  <% if (unfilled_placements.any? || filled_placements.any?) && school.current_hosting_interest(academic_year:).actively_looking? %>
+  <% if (unfilled_placements.any? || filled_placements.any?) && (school.current_hosting_interest(academic_year:).nil? || school.current_hosting_interest(academic_year:).actively_looking?) %>
     <% component.with_navigation_item t(".placements"), placements_placements_provider_find_path %>
     <% component.with_navigation_item t(".placement_contact"), placement_contact_placements_provider_find_path %>
     <% component.with_navigation_item t(".school_details"), school_details_placements_provider_find_path %>

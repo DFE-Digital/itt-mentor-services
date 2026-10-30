@@ -13,6 +13,13 @@ RSpec.describe Placements::AddHostingInterestWizard::AreYouSureStep, type: :mode
   let!(:school) { create(:placements_school) }
 
   describe "delegations" do
+    it "reads the school contact from the wizard step" do
+      contact = instance_double(Placements::AddHostingInterestWizard::SchoolContactStep, first_name: "Joe")
+      allow(mock_wizard).to receive(:steps).and_return(school_contact: contact)
+
+      expect(step.school_contact_first_name).to eq("Joe")
+    end
+
     it { is_expected.to delegate_method(:reasons_not_hosting).to(:reason_not_hosting_step) }
     it { is_expected.to delegate_method(:other_reason_not_hosting).to(:reason_not_hosting_step) }
     it { is_expected.to delegate_method(:first_name).to(:school_contact_step).with_prefix(:school_contact) }
