@@ -69,6 +69,8 @@ The project pins Yarn 4.18.1 in `package.json` and selects the committed Yarn re
 corepack enable
 ```
 
+If you installed Node with asdf, run `asdf reshim nodejs` after enabling Corepack so asdf can find the Yarn command.
+
 In this repository, `yarn --version` should report `4.18.1`.
 
 ### Homebrew
