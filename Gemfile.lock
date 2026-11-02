@@ -530,8 +530,10 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.4.2)
-    rbs (3.9.4)
+    rbs (4.2.0)
       logger
+      prism (>= 1.6.0)
+      tsort
     rdoc (7.2.0)
       erb
       psych (>= 4.0.0)
@@ -610,11 +612,11 @@ GEM
       rubocop (~> 1.81)
     ruby-graphviz (1.2.5)
       rexml
-    ruby-lsp (0.26.1)
+    ruby-lsp (0.26.11)
       language_server-protocol (~> 3.17.0)
       prism (>= 1.2, < 2.0)
       rbs (>= 3, < 5)
-    ruby-lsp-rspec (0.1.27)
+    ruby-lsp-rspec (0.1.29)
       ruby-lsp (~> 0.26.0)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
