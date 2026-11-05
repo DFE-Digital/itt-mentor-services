@@ -2,6 +2,8 @@ module Placements
   class MultiPlacementWizard < BaseWizard
     include ::Placements::MultiPlacementCreatable
 
+    UNKNOWN_OPTION = "unknown".freeze
+
     attr_reader :school, :current_user, :created_placements
 
     delegate :school_contact, to: :school
