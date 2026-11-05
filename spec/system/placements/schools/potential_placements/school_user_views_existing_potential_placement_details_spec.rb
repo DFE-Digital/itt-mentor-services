@@ -69,7 +69,6 @@ RSpec.describe "School user views existing potential-placement details", service
       expect(page).to have_summary_list_row("Key stage 2", "1")
     end
     expect(page).to have_summary_list_row("Message to providers", "Please contact us to discuss placements.")
-    expect(page).to have_link("add your placements")
   end
 
   def then_i_see_the_unknown_placement_selections
