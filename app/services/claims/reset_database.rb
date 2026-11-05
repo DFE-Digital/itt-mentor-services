@@ -6,10 +6,7 @@ class Claims::ResetDatabase < ApplicationService
       Claims::Claim.destroy_all
       Claims::MentorMembership.destroy_all
 
-      Claims::School.update_all(
-        claims_grant_conditions_accepted_at: nil,
-        claims_grant_conditions_accepted_by_id: nil,
-      )
+      Claims::GrantConditionsAcceptance.delete_all
     end
   end
 end

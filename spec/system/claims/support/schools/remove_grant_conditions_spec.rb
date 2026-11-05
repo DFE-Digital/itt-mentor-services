@@ -4,10 +4,11 @@ RSpec.describe "Remove a users agreement to the grant conditions for a school", 
   let!(:support_user) { create(:claims_support_user, :colin) }
   let!(:claims_user) { create(:claims_user, first_name: "George", last_name: "Barlow") }
 
-  let!(:school) { create(:claims_school, claims_grant_conditions_accepted_at: Time.zone.now, claims_grant_conditions_accepted_by_id: claims_user.id) }
+  let!(:school) { create(:claims_school, grant_conditions_accepted: false) }
 
   before do
     school.users << claims_user
+    create(:grant_conditions_acceptance, school:, academic_year: school.grant_conditions_academic_year, accepted_by: claims_user)
   end
 
   scenario "When a support user removes a schools agreement to grant conditions" do
