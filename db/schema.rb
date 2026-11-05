@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_07_100000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_03_100100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -298,6 +298,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_07_100000) do
     t.index ["queue_name"], name: "index_good_jobs_on_queue_name"
     t.index ["scheduled_at", "queue_name"], name: "index_good_jobs_on_scheduled_at_and_queue_name"
     t.index ["scheduled_at"], name: "index_good_jobs_on_scheduled_at", where: "(finished_at IS NULL)"
+  end
+
+  create_table "grant_conditions_acceptances", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "school_id", null: false
+    t.uuid "academic_year_id", null: false
+    t.uuid "accepted_by_id", null: false
+    t.datetime "accepted_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["academic_year_id"], name: "index_grant_conditions_acceptances_on_academic_year_id"
+    t.index ["accepted_by_id"], name: "index_grant_conditions_acceptances_on_accepted_by_id"
+    t.index ["school_id", "academic_year_id"], name: "index_grant_conditions_acceptances_on_school_and_academic_year", unique: true
+    t.index ["school_id"], name: "index_grant_conditions_acceptances_on_school_id"
   end
 
   create_table "hosting_interests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -701,6 +714,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_07_100000) do
   add_foreign_key "clawback_claims", "clawbacks"
   add_foreign_key "eligibilities", "academic_years", validate: false
   add_foreign_key "eligibilities", "schools"
+  add_foreign_key "grant_conditions_acceptances", "academic_years"
+  add_foreign_key "grant_conditions_acceptances", "schools"
+  add_foreign_key "grant_conditions_acceptances", "users", column: "accepted_by_id"
   add_foreign_key "hosting_interests", "academic_years"
   add_foreign_key "hosting_interests", "schools"
   add_foreign_key "mentor_memberships", "mentors"

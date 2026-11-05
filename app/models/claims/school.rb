@@ -84,12 +84,26 @@ class Claims::School < School
   has_many :eligible_academic_years, through: :eligibilities, source: :academic_year
   has_many :eligible_claim_windows, -> { distinct }, through: :eligible_academic_years, source: :claim_windows
 
-  belongs_to :claims_grant_conditions_accepted_by, class_name: "User", optional: true
+  has_many :grant_conditions_acceptances, class_name: "Claims::GrantConditionsAcceptance", dependent: :destroy
 
   delegate :funding_available_per_hour, :name, to: :region, prefix: true, allow_nil: true
 
-  def grant_conditions_accepted?
-    claims_grant_conditions_accepted_at?
+  # Grant conditions must be accepted once the first claim window of an academic
+  # year opens, and stay valid until a claim window for a later year opens.
+  def grant_conditions_academic_year
+    AcademicYear.for_latest_claim_window
+  end
+
+  def grant_conditions_accepted?(academic_year: grant_conditions_academic_year)
+    grant_conditions_acceptances.exists?(academic_year:)
+  end
+
+  def current_grant_conditions_acceptance
+    grant_conditions_acceptances.find_by(academic_year: grant_conditions_academic_year)
+  end
+
+  def latest_grant_conditions_acceptance
+    grant_conditions_acceptances.order_by_latest.first
   end
 
   def eligible_for_claim_window?(claim_window)

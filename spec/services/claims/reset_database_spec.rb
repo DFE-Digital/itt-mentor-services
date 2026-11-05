@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Claims::ResetDatabase do
   describe "#call" do
-    let(:school) { create(:claims_school, claims_grant_conditions_accepted_at: Time.current) }
+    let(:school) { create(:claims_school) }
 
     before do
       create(:claim, school:)
@@ -12,7 +12,7 @@ RSpec.describe Claims::ResetDatabase do
     it "removes all claims and mentor memberships and resets all grant conditions acceptances for all schools" do
       expect { described_class.call }.to change(Claims::Claim, :count).by(-1)
         .and change(Claims::MentorMembership, :count).by(-1)
-        .and change { school.reload.claims_grant_conditions_accepted_at }.to(nil)
+        .and change(Claims::GrantConditionsAcceptance, :count).to(0)
     end
 
     it "does nothing in Production" do
@@ -20,7 +20,7 @@ RSpec.describe Claims::ResetDatabase do
 
       expect { described_class.call }.to not_change(Claims::Claim, :count)
         .and not_change(Claims::MentorMembership, :count)
-        .and(not_change { school.reload.claims_grant_conditions_accepted_at })
+        .and not_change(Claims::GrantConditionsAcceptance, :count)
     end
   end
 end

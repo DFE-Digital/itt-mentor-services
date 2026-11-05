@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "View a school", service: :claims, type: :system do
   let!(:support_user) { create(:claims_support_user, :colin) }
   let!(:school) { create(:school, :claims, name: "Hilltop Primary School") }
-  let!(:school_not_accepted_grant_conditions) { create(:school, :claims, name: "Sir Thomas Wharton Academy", claims_grant_conditions_accepted_at: nil, claims_grant_conditions_accepted_by_id: nil) }
+  let!(:school_not_accepted_grant_conditions) { create(:claims_school, name: "Sir Thomas Wharton Academy", grant_conditions_accepted: false) }
 
   scenario "View a school's details as a support user" do
     given_i_sign_in_as(support_user)

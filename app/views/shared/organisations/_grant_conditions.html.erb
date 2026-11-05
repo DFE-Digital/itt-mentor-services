@@ -1,16 +1,23 @@
-<% if organisation.claims_grant_conditions_accepted_at %>
+<% grant_conditions_acceptance = organisation.latest_grant_conditions_acceptance %>
+<% if grant_conditions_acceptance %>
   <%= govuk_summary_list(html_attributes: { id: "grant-conditions" }, actions: false) do |summary_list| %>
     <% summary_list.with_row do |row| %>
+      <% row.with_key(text: t(".agreed_for")) %>
+      <% row.with_value(**summary_row_value(value: t(".agreed_for_academic_year", academic_year: grant_conditions_acceptance.academic_year.name))) %>
+    <% end %>
+    <% summary_list.with_row do |row| %>
       <% row.with_key(text: t(".agreed_by")) %>
-      <% row.with_value(**summary_row_value(value: organisation.claims_grant_conditions_accepted_by&.full_name)) %>
+      <% row.with_value(**summary_row_value(value: grant_conditions_acceptance.accepted_by.full_name)) %>
     <% end %>
     <% summary_list.with_row do |row| %>
       <% row.with_key(text: t(".agreed_on")) %>
-      <% row.with_value(**summary_row_value(value: l(organisation.claims_grant_conditions_accepted_at.to_date, format: :long))) %>
+      <% row.with_value(**summary_row_value(value: l(grant_conditions_acceptance.accepted_at.to_date, format: :long))) %>
     <% end %>
   <% end %>
   <% if current_user.support_user? %>
-    <%= govuk_link_to t(".remove_agreement_text"), remove_grant_conditions_acceptance_check_claims_support_school_path(organisation), class: "app-link app-link--destructive" %>
+    <% if organisation.grant_conditions_accepted? %>
+      <%= govuk_link_to t(".remove_agreement_text"), remove_grant_conditions_acceptance_check_claims_support_school_path(organisation), class: "app-link app-link--destructive" %>
+    <% end %>
   <% else %>
     <p class="govuk-body"><%= govuk_link_to(t(".funding_link_text"), claims_grant_conditions_path) %></p>
   <% end %>
