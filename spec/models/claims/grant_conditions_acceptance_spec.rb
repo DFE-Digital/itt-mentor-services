@@ -21,7 +21,7 @@
 #
 #  fk_rails_...  (academic_year_id => academic_years.id)
 #  fk_rails_...  (accepted_by_id => users.id)
-#  fk_rails_...  (school_id => schools.id)
+#  fk_rails_...  (school_id => schools.id) ON DELETE => cascade
 #
 require "rails_helper"
 
@@ -69,6 +69,14 @@ RSpec.describe Claims::GrantConditionsAcceptance, type: :model do
     duplicate = build(:grant_conditions_acceptance, school: existing.school, academic_year: existing.academic_year)
 
     expect { duplicate.save!(validate: false) }.to raise_error(ActiveRecord::RecordNotUnique)
+  end
+
+  it "is deleted along with its school at the database level" do
+    acceptance = create(:grant_conditions_acceptance)
+
+    School.where(id: acceptance.school_id).delete_all
+
+    expect(described_class.exists?(acceptance.id)).to be(false)
   end
 
   describe ".order_by_latest" do

@@ -21,6 +21,19 @@ RSpec.describe BackfillGrantConditionsAcceptances do
     expect(Claims::GrantConditionsAcceptance.last.accepted_at).to be_within(1.second).of(accepted_at)
   end
 
+  context "when accepted after a new academic year started but before its first claim window opened" do
+    it "records the acceptance for the academic year of the latest claim window opened at the time" do
+      create(:claim_window, academic_year: previous_year, starts_on: previous_year.starts_on + 7.months, ends_on: previous_year.starts_on + 9.months)
+      create(:claim_window, academic_year: AcademicYear.current, starts_on: AcademicYear.current.starts_on + 7.months, ends_on: AcademicYear.current.starts_on + 9.months)
+      accepted_at = AcademicYear.current.starts_on.to_time + 1.month
+      school = create(:claims_school, grant_conditions_accepted: false, claims_grant_conditions_accepted_at: accepted_at, claims_grant_conditions_accepted_by_id: user.id)
+
+      migrate
+
+      expect(acceptances).to contain_exactly([school.id, previous_year.id, user.id])
+    end
+  end
+
   it "does not record an acceptance for schools that have not accepted the grant conditions" do
     create(:claims_school, grant_conditions_accepted: false, claims_grant_conditions_accepted_at: nil, claims_grant_conditions_accepted_by_id: nil)
 

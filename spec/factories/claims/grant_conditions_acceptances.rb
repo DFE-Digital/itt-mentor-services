@@ -21,7 +21,7 @@
 #
 #  fk_rails_...  (academic_year_id => academic_years.id)
 #  fk_rails_...  (accepted_by_id => users.id)
-#  fk_rails_...  (school_id => schools.id)
+#  fk_rails_...  (school_id => schools.id) ON DELETE => cascade
 #
 FactoryBot.define do
   factory :grant_conditions_acceptance, class: "Claims::GrantConditionsAcceptance" do

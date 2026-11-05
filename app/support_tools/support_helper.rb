@@ -8,6 +8,7 @@ class SupportHelper
         else
           claims_school.claims.destroy_all
           claims_school.eligibilities.destroy_all
+          claims_school.grant_conditions_acceptances.destroy_all
           claims_school.mentor_memberships.destroy_all
           claims_school.user_memberships.destroy_all
 

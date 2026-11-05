@@ -27,6 +27,7 @@ RSpec.describe SupportHelper do
         create(:user_membership, user: claims_user, organisation: school)
         create(:mentor_membership, :claims, mentor: claims_mentor, school: claims_school)
         create(:eligibility, school: claims_school, claim_window:)
+        create(:grant_conditions_acceptance, school: claims_school)
       end
 
       context "when the school has claims only in draft or submitted statuses" do
@@ -35,6 +36,7 @@ RSpec.describe SupportHelper do
             .and change { UserMembership.where(organisation: claims_school).count }.from(1).to(0)
             .and change { Claims::MentorMembership.where(school: claims_school).count }.from(1).to(0)
             .and change { Claims::Eligibility.where(school: claims_school).count }.from(1).to(0)
+            .and change { Claims::GrantConditionsAcceptance.where(school: claims_school).count }.from(1).to(0)
             .and change(school, :claims_service).from(true).to(false)
         end
 

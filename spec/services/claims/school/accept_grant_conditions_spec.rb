@@ -34,6 +34,14 @@ describe Claims::School::AcceptGrantConditions do
     expect(acceptance.accepted_at).to eq(Time.zone.parse("25 April 2024 12:00"))
   end
 
+  it "locks the school so concurrent acceptances do not conflict" do
+    allow(school).to receive(:with_lock).and_call_original
+
+    grant_conditions
+
+    expect(school).to have_received(:with_lock)
+  end
+
   context "when the latest claim window to open was for a previous academic year" do
     let(:previous_academic_year) { AcademicYear.current.previous }
 
