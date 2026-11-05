@@ -304,31 +304,6 @@ en:
             support_user_id: 
               blank: Please select a support agent
               inclusion: Please select a support agent
-        placements/multi_placement_wizard/phase_step:
-          attributes:
-            phases: 
-              blank: Please select which phase you are looking to host placements at
-              inclusion: Please select which phase you are looking to host placements at
-        placements/multi_placement_wizard/year_group_selection_step:
-          attributes:
-            year_groups: 
-              blank: Please select which year groups you are looking to host placements at
-              inclusion: Please select which year groups you are looking to host placements at
-        placements/multi_placement_wizard/primary_subject_selection_step:
-          attributes:
-            subject_ids: 
-              blank: Please select a primary subject
-              inclusion: Please select a primary subject
-        placements/multi_placement_wizard/secondary_subject_selection_step:
-          attributes:
-            subject_ids: 
-              blank: Please select a secondary subject
-              inclusion: Please select a secondary subject
-        placements/multi_placement_wizard/secondary_child_subject_placement_selection_step:
-          attributes:
-            child_subject_ids: 
-              blank: Please select a subject
-              inclusion: Please select a subject
         claims/add_claim_wizard/provider_options_step:
           attributes:
             id:
@@ -408,10 +383,6 @@ en:
               blank: Please enter a telephone number for the organisation
             website:
               blank: Please enter a website address for the organisation
-        placements/multi_placement_wizard/key_stage_selection_step:
-          attributes:
-            key_stage_ids:
-               blank: Please select a key stage
         claims/submit_claims_to_be_paid_wizard/select_claim_window_step:
           attributes:
             claim_window:

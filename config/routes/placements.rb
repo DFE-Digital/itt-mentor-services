@@ -71,20 +71,6 @@ scope module: :placements,
         end
       end
 
-      resources :hosting_interests, only: [] do
-        collection do
-          get "whats_next", to: "hosting_interests/add_hosting_interest#whats_next", as: :whats_next
-        end
-      end
-
-      resources :potential_placements, only: [] do
-        collection do
-          get "convert", to: "potential_placements/convert_potential_placements#new", as: :new_convert_potential_placements
-          get "convert/:state_key/:step", to: "potential_placements/convert_potential_placements#edit", as: :convert_potential_placements
-          put "convert/:state_key/:step", to: "potential_placements/convert_potential_placements#update"
-        end
-      end
-
       resources :placements, only: %i[index show destroy] do
         member do
           get :confirm_unassign_provider

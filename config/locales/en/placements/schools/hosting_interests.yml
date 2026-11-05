@@ -4,30 +4,6 @@ en:
       hosting_interests:
         add_hosting_interest:
           whats_next:
-            return_to_placements: Return to placements list
-            return_to_organisation_details: Return to organisation details
-            what_happens_next: What happens next?
-            teaching_school_hub_url: https://www.gov.uk/guidance/teaching-school-hubs
-            not_open:
-              panel_title: You are not offering placements this year
-              panel_text: Your contact details will not be shown to providers
-              what_happens_next: What happens next?
-              we_will_ask_you_again:
-                We will ask in the next academic year whether you are able to offer placements for trainee teachers.
-            interested:
-              panel_title: Information added
-              panel_text: Providers can see that you may offer placements
-              what_happens_next: What happens next
-              providers_can_contact_you:
-                Providers who are looking for schools to work with can contact you on %{mailto}.
-              you_do_not_need_to_take_any_further_action: You do not need to take any further action until providers contact you.
-              once_you_know_which_placements:
-                Once you are sure which placements your school can offer, %{link}. Doing so will mean you will be able to assign providers to them.
-              add_placements: add your placements
-              potential_placement_information: Your potential placements
-              potential_primary_placements: Potential primary school placements
-              potential_secondary_placements: Potential secondary school placements
-              potential_send_placements: Potential SEND placements
             primary_placements_list:
               year_group: Year group
               number_of_placements: Number of placements
@@ -43,26 +19,3 @@ en:
               number_of_placements: Number of placements
               unknown: I don’t know
               not_entered: Not entered
-            actively_looking:
-              panel_title: Placement information added
-              panel_text: Providers can see that you have placements available
-              what_happens_next: What happens next?
-              providers_can_contact_you:
-                Providers will be able to contact you on %{mailto} about your placement offers.
-              you_do_not_need_to_take_any_further_action:
-                You do not need to take any further action until providers contact you. After discussions with one or more providers, you can then decide whether to assign providers to your placements.
-              your_placements_offers: Your placements offers
-              primary_placements: Primary placements
-              secondary_placements: Secondary placements
-              send_placements: SEND placements
-              manage_your_placements: Manage your placements
-              you_can_edit_placements: "%{link} to change or remove information."
-              edit_your_placements: Edit your placements
-              editing_them: "For each individual placement, you can:"
-              editing_options:
-                - add an expected date
-                - assign a provider
-                - assign a mentor - only your school will be able to see mentor information
-              assigning_a_provider_is_not_contractual:
-                Assigning a provider to a placement in this service is not a contractual agreement for a trainee to be placed in your school.
-                An agreement must be made between you and the provider outside this service. 

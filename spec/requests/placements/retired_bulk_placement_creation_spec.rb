@@ -21,4 +21,12 @@ RSpec.describe "Retired standalone bulk placement creation", service: :placement
       expect { get "#{placements_path}/#{retired_path}" }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
+
+  it "does not expose the hosting-interest completion page" do
+    expect { get "/schools/#{school.id}/hosting_interests/whats_next" }.to raise_error(ActionController::RoutingError)
+  end
+
+  it "does not expose potential-placement conversion" do
+    expect { get "/schools/#{school.id}/potential_placements/convert" }.to raise_error(ActionController::RoutingError)
+  end
 end

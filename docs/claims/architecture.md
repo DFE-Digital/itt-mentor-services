@@ -77,7 +77,7 @@ Read [conventions](../conventions.md), the [ADR index](../../adr/README.md), [da
 
 Placements hosting-status editing, potential-placement editing and initial hosting-interest submission and their entry points have been removed. School sign-in and navigation now lead to the placements index without changing completion flags or creating hosting interests. The retained not-hosting confirmation no longer invites schools to update preferences through the now read-only organisation details page. Deleting the last placement still performs the existing placement and hosting-interest deletions but returns to the index rather than asking for a new interest.
 
-Existing hosting interests and potential-placement details remain visible; potential-placement conversion and individual placement creation remain until their own removal. The school policy permission used by conversion is retained. Standalone bulk placement creation is now retired; schools can still add individual placements and must add a contact before doing so.
+Existing hosting interests and potential-placement details remain visible; individual placement creation remains available, and schools must add a contact before doing so. The unused bulk and potential-placement conversion wizard routes and their step code have been removed.
 
 Publishing without a hosting interest is supported: provider search includes schools with placements in the selected academic year, and provider detail/navigation/status paths do not require an interest record. Deleting the last placement removes its hosting interest only if one exists, so replacement placements can be deleted safely.
 
