@@ -1,7 +1,7 @@
 class CreateGrantConditionsAcceptances < ActiveRecord::Migration[8.0]
   def change
     create_table :grant_conditions_acceptances, id: :uuid do |t|
-      t.references :school, type: :uuid, null: false, foreign_key: true
+      t.references :school, type: :uuid, null: false, foreign_key: { on_delete: :cascade }
       t.references :academic_year, type: :uuid, null: false, foreign_key: true
       t.references :accepted_by, type: :uuid, null: false, foreign_key: { to_table: :users }
       t.datetime :accepted_at, null: false

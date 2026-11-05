@@ -715,7 +715,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_03_100100) do
   add_foreign_key "eligibilities", "academic_years", validate: false
   add_foreign_key "eligibilities", "schools"
   add_foreign_key "grant_conditions_acceptances", "academic_years"
-  add_foreign_key "grant_conditions_acceptances", "schools"
+  add_foreign_key "grant_conditions_acceptances", "schools", on_delete: :cascade
   add_foreign_key "grant_conditions_acceptances", "users", column: "accepted_by_id"
   add_foreign_key "hosting_interests", "academic_years"
   add_foreign_key "hosting_interests", "schools"
