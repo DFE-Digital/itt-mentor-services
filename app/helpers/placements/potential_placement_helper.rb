@@ -1,4 +1,6 @@
 module Placements::PotentialPlacementHelper
+  UNKNOWN_OPTION = "unknown".freeze
+
   def potential_placement_details_viewable?(placement_details)
     @potential_placement_details_viewable ||= potential_placement_year_group_selection(placement_details).present? ||
       potential_placement_subject_id_selection(placement_details).present? ||
@@ -9,19 +11,19 @@ module Placements::PotentialPlacementHelper
     case phase
     when :primary
       if placement_detail_unknown(potential_placement_year_group_selection(placement_details))
-        Placements::MultiPlacementWizard::UNKNOWN_OPTION
+        UNKNOWN_OPTION
       else
         potential_placement_year_group_selection(placement_details)
       end
     when :secondary
       if placement_detail_unknown(potential_placement_subject_id_selection(placement_details))
-        Placements::MultiPlacementWizard::UNKNOWN_OPTION
+        UNKNOWN_OPTION
       else
         Subject.where(id: potential_placement_subject_id_selection(placement_details))
       end
     when :send
       if placement_detail_unknown(potential_placement_key_stage_id_selection(placement_details))
-        Placements::MultiPlacementWizard::UNKNOWN_OPTION
+        UNKNOWN_OPTION
       else
         Placements::KeyStage.where(id: potential_placement_key_stage_id_selection(placement_details))
       end
@@ -43,6 +45,6 @@ module Placements::PotentialPlacementHelper
   end
 
   def placement_detail_unknown(value)
-    value.include?(Placements::MultiPlacementWizard::UNKNOWN_OPTION)
+    value.include?(UNKNOWN_OPTION)
   end
 end
