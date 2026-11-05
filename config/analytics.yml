@@ -278,6 +278,14 @@ shared:
     - record_id
     - created_at
     - updated_at
+  :grant_conditions_acceptances:
+    - id
+    - school_id
+    - academic_year_id
+    - accepted_by_id
+    - accepted_at
+    - created_at
+    - updated_at
   :hosting_interests:
     - id
     - academic_year_id

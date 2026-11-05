@@ -1,6 +1,7 @@
 class Claims::Support::SchoolsController < Claims::Support::ApplicationController
   before_action :set_school, only: %i[show remove_grant_conditions_acceptance_check remove_grant_conditions_acceptance]
   before_action :authorize_school
+  before_action :set_grant_conditions_acceptance, only: %i[remove_grant_conditions_acceptance_check remove_grant_conditions_acceptance]
 
   def index
     @pagy, @organisations = pagy_array(organisations)
@@ -19,7 +20,7 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
   def remove_grant_conditions_acceptance_check; end
 
   def remove_grant_conditions_acceptance
-    @school.update!(claims_grant_conditions_accepted_at: nil, claims_grant_conditions_accepted_by: nil)
+    @grant_conditions_acceptance.destroy!
     redirect_to claims_school_path(@school), flash: {
       heading: t(".success"),
     }
@@ -56,6 +57,10 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
 
   def set_school
     @school = Claims::School.find(params.require(:id)).decorate
+  end
+
+  def set_grant_conditions_acceptance
+    @grant_conditions_acceptance = @school.current_grant_conditions_acceptance || raise(ActiveRecord::RecordNotFound)
   end
 
   def authorize_school
