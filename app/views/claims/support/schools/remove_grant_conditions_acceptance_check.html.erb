@@ -1,4 +1,4 @@
-<% content_for :page_title, t(".page_title", user_name: @school.claims_grant_conditions_accepted_by.full_name) %>
+<% content_for :page_title, t(".page_title", user_name: @grant_conditions_acceptance.accepted_by.full_name) %>
 
 <% content_for(:before_content) do %>
   <%= govuk_back_link(href: claims_support_school_path(@school)) %>
@@ -8,7 +8,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l"><%= t(".agreement") %></span>
-      <h1 class="govuk-heading-l"><%= t(".page_title", user_name: @school.claims_grant_conditions_accepted_by.full_name) %></h1>
+      <h1 class="govuk-heading-l"><%= t(".page_title", user_name: @grant_conditions_acceptance.accepted_by.full_name) %></h1>
     </div>
   </div>
 
