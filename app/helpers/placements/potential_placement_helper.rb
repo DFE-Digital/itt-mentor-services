@@ -9,19 +9,19 @@ module Placements::PotentialPlacementHelper
     case phase
     when :primary
       if placement_detail_unknown(potential_placement_year_group_selection(placement_details))
-        Placements::AddHostingInterestWizard::UNKNOWN_OPTION
+        Placements::MultiPlacementWizard::UNKNOWN_OPTION
       else
         potential_placement_year_group_selection(placement_details)
       end
     when :secondary
       if placement_detail_unknown(potential_placement_subject_id_selection(placement_details))
-        Placements::AddHostingInterestWizard::UNKNOWN_OPTION
+        Placements::MultiPlacementWizard::UNKNOWN_OPTION
       else
         Subject.where(id: potential_placement_subject_id_selection(placement_details))
       end
     when :send
       if placement_detail_unknown(potential_placement_key_stage_id_selection(placement_details))
-        Placements::AddHostingInterestWizard::UNKNOWN_OPTION
+        Placements::MultiPlacementWizard::UNKNOWN_OPTION
       else
         Placements::KeyStage.where(id: potential_placement_key_stage_id_selection(placement_details))
       end
@@ -43,6 +43,6 @@ module Placements::PotentialPlacementHelper
   end
 
   def placement_detail_unknown(value)
-    value.include?(Placements::AddHostingInterestWizard::UNKNOWN_OPTION)
+    value.include?(Placements::MultiPlacementWizard::UNKNOWN_OPTION)
   end
 end
