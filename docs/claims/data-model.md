@@ -15,6 +15,9 @@ erDiagram
     schools ||--o{ eligibilities : eligible_in
     academic_years ||--o{ provider_eligibilities : provider_eligibility
     providers ||--o{ provider_eligibilities : eligible_in
+    academic_years ||--o{ grant_conditions_acceptances : accepted_for
+    schools ||--o{ grant_conditions_acceptances : accepted_in
+    users ||--o{ grant_conditions_acceptances : accepted_by
     schools ||--o{ claims : claims
     providers |o--o{ claims : provider
     claim_windows |o..o{ claims : application_link
@@ -93,6 +96,7 @@ All domain tables shown use UUID primary keys. Framework tables such as sessions
 | `claim_windows` / `Claims::ClaimWindow` | Required year and start/end dates. Rails rejects overlapping windows. Current includes both boundary dates. Discarded windows are hidden by default. |
 | `eligibilities` / `Claims::Eligibility` | School eligibility for an academic year, not a direct school-to-window join. `academic_year_id` is nullable in the schema; its foreign key is declared with `validate: false`. |
 | `provider_eligibilities` | Required provider/year pair with a unique composite index. Provider suggestions use this, not just `accredited`. |
+| `grant_conditions_acceptances` / `Claims::GrantConditionsAcceptance` | A school's acceptance of the grant conditions for an academic year, with the accepting user and time. `(school_id, academic_year_id)` is unique; re-accepting in the same year updates the row. Schools must accept for the academic year of the latest claim window to open (`AcademicYear.for_latest_claim_window`) before using the service, so a new acceptance is needed when the first window of a new academic year opens. The legacy `schools.claims_grant_conditions_accepted_*` columns are no longer read. |
 | `schools` / `Claims::School` | Shared school records; URN has a unique index. Claims default scope selects claims-onboarded schools. Region holds the hourly funding rate. |
 | `providers` / `Claims::Provider` | Shared provider records; `code` is uniquely indexed. Do not confuse provider eligibility with the placements onboarding flag. |
 | `mentors` / `Claims::Mentor` | Shared mentor records with required, uniquely indexed TRN. Service subclasses do not imply a separate table or a `type` column. |

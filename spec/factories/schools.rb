@@ -78,9 +78,31 @@ FactoryBot.define do
     name { Faker::Educator.primary_school }
 
     trait :claims do
-      claims_grant_conditions_accepted_at { Time.zone.now }
-      claims_grant_conditions_accepted_by_id { User.first }
+      # When no user exists the acceptance is recorded by a discarded user, which
+      # keeps it out of user lists and counts.
+      transient do
+        grant_conditions_accepted { true }
+      end
+
       claims_service { true }
+
+      after(:build) do |school, evaluator|
+        next unless evaluator.grant_conditions_accepted && school.is_a?(Claims::School)
+
+        academic_year = school.grant_conditions_academic_year
+        next if school.grant_conditions_acceptances.any? { |acceptance| acceptance.academic_year == academic_year }
+
+        school.grant_conditions_acceptances.build(academic_year:, accepted_by: User.first || build(:claims_user, :discarded), accepted_at: Time.current)
+      end
+
+      after(:create) do |school, evaluator|
+        next if !evaluator.grant_conditions_accepted || school.is_a?(Claims::School)
+
+        claims_school = school.becomes(Claims::School)
+        next if claims_school.grant_conditions_accepted?
+
+        create(:grant_conditions_acceptance, school: claims_school, academic_year: claims_school.grant_conditions_academic_year, accepted_by: User.first || create(:claims_user, :discarded))
+      end
     end
 
     trait :placements do

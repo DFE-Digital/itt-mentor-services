@@ -82,7 +82,7 @@ RSpec.describe Claims::School do
     it { is_expected.to have_many(:eligible_academic_years).through(:eligibilities) }
     it { is_expected.to have_many(:eligible_claim_windows).through(:eligible_academic_years) }
 
-    it { is_expected.to belong_to(:claims_grant_conditions_accepted_by).class_name("User").optional }
+    it { is_expected.to have_many(:grant_conditions_acceptances).dependent(:destroy) }
 
     describe "#users" do
       it { is_expected.to have_many(:users).through(:user_memberships) }
@@ -106,18 +106,95 @@ RSpec.describe Claims::School do
   end
 
   describe "#grant_conditions_accepted?" do
-    it "returns true if the grant conditions have been accepted" do
-      claims_user = create(:claims_user)
-      claims_school = create(:claims_school, claims_grant_conditions_accepted_at: Time.zone.now, claims_grant_conditions_accepted_by_id: claims_user.id)
-
-      expect(claims_school.grant_conditions_accepted?).to be(true)
-    end
+    let(:claims_school) { create(:claims_school, grant_conditions_accepted: false) }
+    let(:current_academic_year) { AcademicYear.current }
+    let(:previous_academic_year) { current_academic_year.previous }
 
     it "returns false if the grant conditions have NOT been accepted" do
-      create(:claims_user)
-      claims_school = create(:claims_school, claims_grant_conditions_accepted_at: nil, claims_grant_conditions_accepted_by_id: nil)
-
       expect(claims_school.grant_conditions_accepted?).to be(false)
+    end
+
+    it "checks against the given academic year" do
+      create(:grant_conditions_acceptance, school: claims_school, academic_year: previous_academic_year)
+
+      expect(claims_school.grant_conditions_accepted?(academic_year: previous_academic_year)).to be(true)
+    end
+
+    context "when a claim window has opened for the current academic year" do
+      before { create(:claim_window, :current, academic_year: current_academic_year) }
+
+      it "returns true if the grant conditions have been accepted for the current academic year" do
+        create(:grant_conditions_acceptance, school: claims_school, academic_year: current_academic_year)
+
+        expect(claims_school.grant_conditions_accepted?).to be(true)
+      end
+
+      it "returns false if the grant conditions were only accepted for a previous academic year" do
+        create(:grant_conditions_acceptance, school: claims_school, academic_year: previous_academic_year)
+
+        expect(claims_school.grant_conditions_accepted?).to be(false)
+      end
+    end
+
+    context "when the latest claim window to open was for a previous academic year" do
+      before do
+        create(:claim_window, :historic, academic_year: previous_academic_year)
+        create(:claim_window, :upcoming, academic_year: current_academic_year)
+      end
+
+      it "returns true if the grant conditions have been accepted for the previous academic year" do
+        create(:grant_conditions_acceptance, school: claims_school, academic_year: previous_academic_year)
+
+        expect(claims_school.grant_conditions_accepted?).to be(true)
+      end
+
+      it "returns false if the grant conditions were only accepted for the upcoming academic year" do
+        create(:grant_conditions_acceptance, school: claims_school, academic_year: current_academic_year)
+
+        expect(claims_school.grant_conditions_accepted?).to be(false)
+      end
+    end
+  end
+
+  describe "#grant_conditions_academic_year" do
+    it "returns the academic year of the latest claim window to open" do
+      previous_academic_year = AcademicYear.current.previous
+      create(:claim_window, :historic, academic_year: previous_academic_year)
+      create(:claim_window, :upcoming, academic_year: AcademicYear.current)
+
+      expect(create(:claims_school).grant_conditions_academic_year).to eq(previous_academic_year)
+    end
+  end
+
+  describe "#current_grant_conditions_acceptance" do
+    let(:claims_school) { create(:claims_school, grant_conditions_accepted: false) }
+
+    it "returns the acceptance for the grant conditions academic year" do
+      create(:grant_conditions_acceptance, school: claims_school, academic_year: AcademicYear.current.previous)
+      acceptance = create(:grant_conditions_acceptance, school: claims_school, academic_year: AcademicYear.current)
+
+      expect(claims_school.current_grant_conditions_acceptance).to eq(acceptance)
+    end
+
+    it "returns nil if the grant conditions have not been accepted for the grant conditions academic year" do
+      create(:grant_conditions_acceptance, school: claims_school, academic_year: AcademicYear.current.previous)
+
+      expect(claims_school.current_grant_conditions_acceptance).to be_nil
+    end
+  end
+
+  describe "#latest_grant_conditions_acceptance" do
+    let(:claims_school) { create(:claims_school, grant_conditions_accepted: false) }
+
+    it "returns nil if the grant conditions have never been accepted" do
+      expect(claims_school.latest_grant_conditions_acceptance).to be_nil
+    end
+
+    it "returns the most recently signed acceptance" do
+      create(:grant_conditions_acceptance, school: claims_school, academic_year: AcademicYear.current.previous, accepted_at: 1.year.ago)
+      latest = create(:grant_conditions_acceptance, school: claims_school, academic_year: AcademicYear.current, accepted_at: 1.day.ago)
+
+      expect(claims_school.latest_grant_conditions_acceptance).to eq(latest)
     end
   end
 
