@@ -62,6 +62,11 @@
 
     <main class="govuk-main-wrapper" id="main-content" role="main">
       <div class="govuk-width-container">
+        <%= govuk_notification_banner(title_text: "Important") do |banner| %>
+          <% banner.with_heading(text: "We are aware that the global Microsoft outage is affecting your ability to log in.") %>
+          <p class="govuk-body">We are actively monitoring this issue.</p>
+        <% end %>
+
         <% unless flash.empty? %>
           <%= render "layouts/notification_banner" %>
         <% end %>
