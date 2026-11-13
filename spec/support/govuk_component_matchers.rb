@@ -181,7 +181,7 @@ module GovukComponentMatchers
 
   matcher :have_important_banner do |text|
     match do |page|
-      page.within(".govuk-notification-banner", text:) do
+      page.within(".govuk-notification-banner") do
         page.find(".govuk-notification-banner__title", text: "Important")
         page.find(".govuk-notification-banner__heading", text:)
       end
