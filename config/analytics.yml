@@ -196,7 +196,6 @@ shared:
     - city
     - county
     - postcode
-    - accredited
   :placements:
     - id
     - school_id

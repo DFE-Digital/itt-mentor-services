@@ -45,6 +45,12 @@ FactoryBot.define do
     name { Faker::University.name }
     provider_type { Provider.provider_types.keys.sample }
 
+    transient do
+      email_addresses { [] }
+      # Accredited providers are made eligible for every academic year
+      accredited { false }
+    end
+
     trait :scitt do
       provider_type { :scitt }
     end
@@ -73,15 +79,11 @@ FactoryBot.define do
       accredited { true }
     end
 
-    transient do
-      email_addresses { [] }
-    end
-
-    after(:create) do |provider|
-      next unless provider.accredited?
+    after(:build) do |provider, evaluator|
+      next unless evaluator.accredited
 
       AcademicYear.find_each do |academic_year|
-        Claims::ProviderEligibility.find_or_create_by!(provider:, academic_year:)
+        provider.eligibilities.build(academic_year:)
       end
     end
 

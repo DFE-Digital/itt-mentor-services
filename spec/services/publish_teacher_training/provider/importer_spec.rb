@@ -184,7 +184,7 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
       second_page_request
 
       expect { importer }.not_to raise_error
-      expect(Claims::ProviderEligibility.count).to eq(Provider.where(accredited: true).count)
+      expect(Claims::ProviderEligibility.count).to eq(Provider.count)
     end
 
     it "makes no eligibilities when nothing is returned" do
@@ -299,7 +299,7 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
               "city" => existing_provider.city,
               "county" => existing_provider.county,
               "postcode" => existing_provider.postcode,
-              "accredited_body" => existing_provider.accredited,
+              "accredited_body" => true,
               "latitude" => existing_provider.latitude,
               "longitude" => existing_provider.longitude,
             },
@@ -334,6 +334,7 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
               "name" => "Provider 1",
               "code" => "Prov1",
               "provider_type" => "scitt",
+              "accredited_body" => true,
             },
           },
           {
@@ -363,6 +364,7 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
               "name" => "Page 1 Provider",
               "code" => "Pg1",
               "provider_type" => "scitt",
+              "accredited_body" => true,
             },
           },
         ],
@@ -387,6 +389,7 @@ RSpec.describe PublishTeacherTraining::Provider::Importer do
               "name" => "Page 2 Provider",
               "code" => "Pg2",
               "provider_type" => "scitt",
+              "accredited_body" => true,
             },
           },
         ],

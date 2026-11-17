@@ -1,5 +1,4 @@
 require "rails_helper"
-require Rails.root.join("db/migrate/20261006100100_backfill_current_year_provider_eligibilities")
 require Rails.root.join("db/migrate/20261006100200_backfill_provider_eligibilities_from_claims")
 
 RSpec.describe "Provider eligibility backfill migrations" do
@@ -18,50 +17,6 @@ RSpec.describe "Provider eligibility backfill migrations" do
 
   def create_claim(provider:, academic_year:, status: :submitted)
     create(:claim, provider:, claim_window: window_for(academic_year), status:)
-  end
-
-  describe BackfillCurrentYearProviderEligibilities do
-    subject(:migrate) { described_class.new.up }
-
-    let!(:accredited_provider) { create(:provider, accredited: true) }
-    let!(:unaccredited_provider) { create(:provider, accredited: false) }
-
-    before { Claims::ProviderEligibility.delete_all }
-
-    it "makes accredited providers eligible for the current academic year" do
-      migrate
-
-      expect(eligibilities).to contain_exactly([accredited_provider.id, current_year.id])
-    end
-
-    it "does not make providers that are not accredited eligible" do
-      migrate
-
-      expect(Claims::ProviderEligibility.where(provider: unaccredited_provider)).to be_empty
-    end
-
-    it "does not create eligibilities for other academic years" do
-      previous_year
-      migrate
-
-      expect(Claims::ProviderEligibility.where.not(academic_year: current_year)).to be_empty
-    end
-
-    it "skips providers that are already eligible" do
-      Claims::ProviderEligibility.create!(provider: accredited_provider, academic_year: current_year)
-
-      expect { migrate }.not_to change(Claims::ProviderEligibility, :count)
-    end
-
-    it "is safe to run twice" do
-      migrate
-
-      expect { described_class.new.up }.not_to change(Claims::ProviderEligibility, :count)
-    end
-
-    it "cannot be reversed" do
-      expect { described_class.new.down }.to raise_error(ActiveRecord::IrreversibleMigration)
-    end
   end
 
   describe BackfillProviderEligibilitiesFromClaims do

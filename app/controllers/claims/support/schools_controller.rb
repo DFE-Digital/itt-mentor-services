@@ -49,7 +49,7 @@ class Claims::Support::SchoolsController < Claims::Support::ApplicationControlle
   end
 
   def providers
-    scope = Claims::Provider.accredited
+    scope = Claims::Provider.eligible_in_any_academic_year
     return scope if params[:name_urn_or_postcode].blank?
 
     scope.search_name_urn_ukprn_postcode(params[:name_urn_or_postcode])
