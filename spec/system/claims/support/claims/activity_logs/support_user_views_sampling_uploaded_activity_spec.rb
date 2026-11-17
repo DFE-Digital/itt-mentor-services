@@ -30,7 +30,7 @@ RSpec.describe "Support user views sampling uploaded activity spec", service: :c
 
   def given_sampling_uploaded_activity_exists
     @colin = build(:claims_support_user, :colin)
-    @provider = build(:claims_provider, name: "Best Practice Network")
+    @provider = create(:claims_provider, name: "Best Practice Network")
     @claim = build(:claim, :audit_requested, submitted_at: 1.day.ago, reference: "12345678", provider: @provider)
     @provider_sampling = build(:provider_sampling, :with_csv_file, provider: @provider, claims: [@claim])
     @sampling = build(:claims_sampling, provider_samplings: [@provider_sampling])
@@ -39,7 +39,7 @@ RSpec.describe "Support user views sampling uploaded activity spec", service: :c
 
   def given_sampling_uploaded_activity_without_a_csv_file_exists
     @colin = build(:claims_support_user, :colin)
-    @provider = build(:claims_provider, name: "Best Practice Network")
+    @provider = create(:claims_provider, name: "Best Practice Network")
     @claim = build(:claim, :audit_requested, submitted_at: 1.day.ago, reference: "12345678", provider: @provider)
     @provider_sampling = build(:provider_sampling, provider: @provider, claims: [@claim])
     @sampling = build(:claims_sampling, provider_samplings: [@provider_sampling])
