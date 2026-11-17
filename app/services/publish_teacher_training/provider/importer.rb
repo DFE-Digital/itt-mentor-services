@@ -54,7 +54,6 @@ module PublishTeacherTraining
             city: provider_attributes["city"],
             county: provider_attributes["county"],
             postcode: provider_attributes["postcode"],
-            accredited: provider_attributes["accredited_body"],
             latitude: provider_attributes["latitude"],
             longitude: provider_attributes["longitude"],
           }

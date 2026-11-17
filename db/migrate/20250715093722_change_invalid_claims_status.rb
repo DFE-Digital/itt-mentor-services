@@ -1,6 +1,6 @@
 class ChangeInvalidClaimsStatus < ActiveRecord::Migration[8.0]
   def up
-    accredited_providers = Claims::Provider.accredited
+    accredited_providers = Claims::Provider.where(accredited: true)
     invalid_claims = Claims::Claim.where.not(provider: accredited_providers)
 
     # We want this to be reflected in Big Query, so we're using callbacks despite the performance hit
