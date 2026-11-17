@@ -79,11 +79,11 @@ FactoryBot.define do
       accredited { true }
     end
 
-    after(:build) do |provider, evaluator|
+    after(:create) do |provider, evaluator|
       next unless evaluator.accredited
 
       AcademicYear.find_each do |academic_year|
-        provider.eligibilities.build(academic_year:)
+        Claims::ProviderEligibility.find_or_create_by!(provider:, academic_year:)
       end
     end
 

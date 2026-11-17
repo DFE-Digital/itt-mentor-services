@@ -22,10 +22,10 @@ RSpec.describe "Support user views clawback response uploaded activity spec", se
   def given_clawback_response_uploaded_activity_exists
     @colin = build(:claims_support_user, :colin)
 
-    @best_practice_network = build(:claims_provider, name: "Best Practice Network")
+    @best_practice_network = create(:claims_provider, name: "Best Practice Network")
     @best_practice_network_claim = build(:claim, :payment_in_progress, submitted_at: 1.day.ago, reference: "12345678", provider: @best_practice_network)
 
-    @niot = build(:claims_provider, name: "National Institute of Technology")
+    @niot = create(:claims_provider, name: "National Institute of Technology")
     @niot_claim = build(:claim, :payment_in_progress, submitted_at: 1.day.ago, reference: "87654321", provider: @niot)
 
     @clawback = build(:clawback, claims: [@best_practice_network_claim, @niot_claim])
