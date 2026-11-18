@@ -792,6 +792,11 @@
             "fieldPath": [
               "amendment_notification_sent_at"
             ]
+          },
+          {
+            "fieldPath": [
+              "amendment_deadline_notification_sent_at"
+            ]
           }
         ]
       },
