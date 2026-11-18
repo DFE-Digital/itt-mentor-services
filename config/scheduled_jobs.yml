@@ -72,6 +72,11 @@ remind_schools_to_respond_to_sampling:
     class: "Claims::Sampling::SendSchoolRemindersJob"
     description: "Reminds schools to respond to audit requests"
 
+notify_claim_creators_of_expired_evidence_deadlines:
+    cron: "0 9 * * *" # Every day at 09:00
+    class: "Claims::Sampling::SendEvidenceDeadlineNotificationsJob"
+    description: "Notifies claim creators once their amendment evidence deadline has passed"
+
 sync_bank_holidays:
     cron: "0 0 1 * *" # Every month on the 1st at 00:00
     class: "BankHolidays::SyncJob"

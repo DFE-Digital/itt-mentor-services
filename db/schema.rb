@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_03_100100) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_18_110918) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -139,6 +139,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_03_100100) do
     t.datetime "date_paid"
     t.datetime "paid_notification_sent_at"
     t.datetime "amendment_notification_sent_at"
+    t.datetime "amendment_deadline_notification_sent_at"
     t.index ["claim_window_id"], name: "index_claims_on_claim_window_id"
     t.index ["clawback_approved_by_id"], name: "index_claims_on_clawback_approved_by_id"
     t.index ["clawback_requested_by_id"], name: "index_claims_on_clawback_requested_by_id"

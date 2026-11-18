@@ -31,6 +31,12 @@ name-of-job:
 
 Read the [GoodJob documentation](https://github.com/bensheldon/good_job?tab=readme-ov-file#cron-style-repeatingrecurring-jobs) for details of all supported config keys.
 
+### Amendment evidence deadline notifications
+
+`Claims::Sampling::SendEvidenceDeadlineNotificationsJob` runs daily at 09:00. It emails the claim's `created_by` user when a provider-amended claim is still `sampling_provider_not_approved` and its evidence deadline has passed. Evidence remains accepted throughout the deadline day, including any weekend extension.
+
+The job records `amendment_deadline_notification_sent_at` after successfully enqueueing the email. It locks and rechecks each claim so subsequent or overlapping runs do not enqueue the notification again. Existing overdue claims without this timestamp are included. The timestamp is retained if a claim changes status, so the notification is only scheduled once per claim. Normal claims email bank-holiday deferral still applies.
+
 ### Manually running a scheduled job
 
 You can manually trigger a scheduled job by heading to the "Cron" section of the admin dashboard and clicking the ⏭️ icon next to the job.
