@@ -32,6 +32,19 @@ RSpec.describe Claims::Sampling::SendEvidenceDeadlineNotificationsJob, type: :jo
     end
   end
 
+  it "does not enqueue the email when another worker notifies the claim before it is locked" do
+    notified_at = 1.minute.ago
+
+    allow(Claims::Claim).to receive(:transaction).and_wrap_original do |transaction, **options, &block|
+      # The selected record is stale until with_lock reloads it from the database.
+      claim.update_column(:amendment_deadline_notification_sent_at, notified_at)
+      transaction.call(**options, &block)
+    end
+
+    expect { notify_creators }.not_to have_enqueued_mail(Claims::UserMailer)
+    expect(claim.reload.amendment_deadline_notification_sent_at).to eq(notified_at)
+  end
+
   it "does not enqueue the email again after the claim leaves and returns to the amended status" do
     notify_creators
     claim.update!(status: :sampling_in_progress)
