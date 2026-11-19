@@ -87,4 +87,6 @@ Individual placement creation, including its pre-publication preview, is retired
 
 The exclusive placement-created Slack notifier is removed with its only caller. The [generic Slack delivery job](../../lib/slack_notifier.rb) remains: it stores the rendered endpoint, text and blocks, not the removed notifier class.
 
+School and support users can no longer unassign a provider from a placement. Existing assignments remain visible and continue to prevent placement deletion; assigning and editing placements remain available. The action-specific notification services are removed, while the removal notification mailers, templates and previews remain available for previously queued work.
+
 This is a code-only retirement slice: hosting interests, placements and shared school, provider, mentor and claims data are preserved. Data deletion and schema contraction require separate review and approval.

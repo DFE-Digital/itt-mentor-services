@@ -86,18 +86,13 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
     then_i_see_the_placement_details_page_with_aes_sedai_trust
     and_i_see_a_provider_updated_success_message
 
-    when_i_click_on_remove
-    then_i_see_the_confirmation_page
-
-    when_i_click_on_remove_provider
-    then_i_see_the_provider_was_successfully_removed
-    and_i_see_the_placement_details_page_with_jane_doe
+    then_i_cannot_remove_the_provider
 
     when_i_click_on_preview_this_placement
     then_i_see_the_preview_placement_page
 
     when_i_click_on_the_back_link
-    then_i_see_the_placement_details_page_with_jane_doe
+    then_i_see_the_placement_details_page_with_aes_sedai_trust
   end
 
   private
@@ -453,46 +448,9 @@ RSpec.describe "Primary school user edits a placement", :js, service: :placement
     expect(page).to have_success_banner("Provider updated")
   end
 
-  def when_i_click_on_remove
-    click_on("Remove")
-  end
-
-  def when_i_click_on_remove_provider
-    click_on("Remove provider")
-  end
-
-  def then_i_see_the_confirmation_page
-    expect(page).to have_title(
-      "Are you sure you want to remove Aes Sedai Trust from this placement? - Primary (Year 2) - Manage school placements - GOV.UK",
-    )
-    expect(page).to have_element(
-      :span,
-      text: "Primary (Year 2)",
-      class: "govuk-caption-l",
-    )
-    expect(page).to have_h1(
-      "Are you sure you want to remove Aes Sedai Trust from this placement?",
-    )
-    expect(page).to have_element(
-      :p,
-      text: "We will send an email to let them know they should no longer arrange for a trainee to undertake this placement.",
-      class: "govuk-body",
-    )
-    expect(page).to have_element(
-      :p,
-      text: "It is your responsibility to contact the provider separately and tell them this placement is no longer available to them.",
-      class: "govuk-body",
-    )
-    expect(page).to have_element(
-      :p,
-      text: "You can assign a new provider once you have removed the current provider.",
-      class: "govuk-body",
-    )
-    expect(page).to have_button("Remove provider", class: "govuk-button--warning")
-  end
-
-  def then_i_see_the_provider_was_successfully_removed
-    expect(page).to have_success_banner("Provider removed")
+  def then_i_cannot_remove_the_provider
+    expect(page).not_to have_link("Remove", exact: true)
+    expect(@placement.reload.provider_id).to eq(@aes_sedai_provider.id)
   end
 
   def when_i_select_the_ashaman_trust
