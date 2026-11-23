@@ -13,7 +13,7 @@ GIT
 
 GIT
   remote: https://github.com/citizensadvice/capybara_accessible_selectors
-  revision: 81f532549af768b2cb1beecca690017abba60b68
+  revision: 8fde306de5c13d29a8be86fc0b849d6f3b1cea10
   branch: main
   specs:
     capybara_accessible_selectors (0.15.0)
@@ -106,7 +106,7 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
-    addressable (2.9.2)
+    addressable (2.10.0)
       public_suffix (>= 2.0.2, < 8.0)
     aes_key_wrap (1.1.0)
     amazing_print (3.0.0)
@@ -472,7 +472,7 @@ GEM
       activesupport (>= 3.0.0)
     raabro (1.5.0)
     racc (1.8.1)
-    rack (3.2.8)
+    rack (3.2.9)
     rack-oauth2 (2.2.1)
       activesupport
       attr_required
@@ -546,7 +546,7 @@ GEM
       psych (>= 4.0.0)
       tsort
     redcarpet (3.6.1)
-    regexp_parser (2.13.0)
+    regexp_parser (2.13.4)
     reline (0.7.0)
       io-console (~> 0.5)
     representable (3.3.1)
