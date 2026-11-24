@@ -257,7 +257,7 @@ RSpec.describe "School user adds a provider to their list of providers",
   def when_i_click_on_the_dropdown_item_for(provider_name)
     within(".autocomplete__wrapper") do
       expect(page).to have_css(".autocomplete__option", text: provider_name, wait: 10)
-      all(".autocomplete__option", text: provider_name, minimum: 1).first.click
+      first(".autocomplete__option", text: provider_name, minimum: 1).click
     end
   end
 

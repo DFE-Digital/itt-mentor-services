@@ -46,17 +46,17 @@ RSpec.describe "View claims", service: :claims, type: :system do
   end
 
   def then_i_can_see_the_details_of_a_submitted_claim
-    expect(page).to have_content("Claim #{claim.reference}")
-    expect(page).to have_content("School#{claim.school_name}")
-    expect(page).to have_content("Academic year#{claim.academic_year_name}")
-    expect(page).to have_content("Submitted")
-    expect(page).to have_content("Submitted by #{user.full_name} on 5 March 2024.")
-    expect(page).to have_content("Accredited provider#{provider.name}")
-    expect(page).to have_content("Mentors\n#{mentor.full_name}")
-    expect(page).to have_content("Hours of training")
-    expect(page).to have_content("#{mentor.full_name}#{mentor_training.hours_completed} hours")
-    expect(page).to have_content("Total hours6 hours")
-    expect(page).to have_content("Hourly rate£53.60")
-    expect(page).to have_content("Claim amount£321.60")
+    expect(page).to have_text("Claim #{claim.reference}")
+    expect(page).to have_text("School#{claim.school_name}")
+    expect(page).to have_text("Academic year#{claim.academic_year_name}")
+    expect(page).to have_text("Submitted")
+    expect(page).to have_text("Submitted by #{user.full_name} on 5 March 2024.")
+    expect(page).to have_text("Accredited provider#{provider.name}")
+    expect(page).to have_text("Mentors\n#{mentor.full_name}")
+    expect(page).to have_text("Hours of training")
+    expect(page).to have_text("#{mentor.full_name}#{mentor_training.hours_completed} hours")
+    expect(page).to have_text("Total hours6 hours")
+    expect(page).to have_text("Hourly rate£53.60")
+    expect(page).to have_text("Claim amount£321.60")
   end
 end

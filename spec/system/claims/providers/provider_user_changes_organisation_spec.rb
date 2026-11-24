@@ -33,6 +33,6 @@ RSpec.describe "Provider user changes organisation", service: :claims, type: :sy
   end
 
   def then_i_do_not_see_the_change_organisation_link
-    expect(page).not_to have_link("Change organisation")
+    expect(page).to have_no_link("Change organisation")
   end
 end

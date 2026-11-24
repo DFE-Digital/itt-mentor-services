@@ -94,7 +94,7 @@ RSpec.describe "Provider user filters schools by subject", service: :placements,
     expect(page).to have_filter_tag("Mathematics")
     expect(page).to have_checked_field("Mathematics")
     expect(page).not_to have_filter_tag("English")
-    expect(page).not_to have_checked_field("English")
+    expect(page).to have_no_checked_field("English")
   end
 
   def when_i_select_english_from_the_subject_filter
@@ -124,7 +124,7 @@ RSpec.describe "Provider user filters schools by subject", service: :placements,
 
   def and_i_do_not_see_the_primary_with_maths_subject_filter
     expect(page).not_to have_filter_tag("Mathematics")
-    expect(page).not_to have_checked_field("Mathematics")
+    expect(page).to have_no_checked_field("Mathematics")
     expect(page).to have_filter_tag("English")
     expect(page).to have_checked_field("English")
   end
@@ -137,8 +137,8 @@ RSpec.describe "Provider user filters schools by subject", service: :placements,
 
   def and_i_do_not_see_any_selected_subject_filters
     expect(page).not_to have_filter_tag("Mathematics")
-    expect(page).not_to have_checked_field("Mathematics")
+    expect(page).to have_no_checked_field("Mathematics")
     expect(page).not_to have_filter_tag("English")
-    expect(page).not_to have_checked_field("English")
+    expect(page).to have_no_checked_field("English")
   end
 end

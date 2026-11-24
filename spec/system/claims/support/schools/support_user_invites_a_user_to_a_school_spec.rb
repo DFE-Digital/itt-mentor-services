@@ -78,8 +78,8 @@ RSpec.describe "Support user invites a user to a school", service: :claims, type
     expect(page).to have_h1("Organisations (1)")
     within(".organisation-search-results") do
       expect(page).to have_link("Shelbyville Elementary")
-      expect(page).not_to have_link("Sherborne School")
-      expect(page).not_to have_link("Royal Grammar School Guildford")
+      expect(page).to have_no_link("Sherborne School")
+      expect(page).to have_no_link("Royal Grammar School Guildford")
     end
   end
 

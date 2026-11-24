@@ -125,7 +125,7 @@ RSpec.describe "Claims user edits a draft claim", service: :claims, type: :syste
     expect(primary_navigation).to have_current_item("Claims")
     expect(page).to have_hint("Select all teachers that completed training to be initial teacher training (ITT) mentors.")
     expect(page).to have_checked_field("James Jameson")
-    expect(page).not_to have_checked_field("Barry Garlow")
+    expect(page).to have_no_checked_field("Barry Garlow")
 
     expect(page).to have_button("Continue")
     expect(page).to have_link("Cancel")
@@ -147,8 +147,8 @@ RSpec.describe "Claims user edits a draft claim", service: :claims, type: :syste
     expect(page).to have_title("Select mentors that trained with Best Practice Network - Claim details - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Claims")
     expect(page).to have_hint("Select all teachers that completed training to be initial teacher training (ITT) mentors.")
-    expect(page).not_to have_checked_field("James Jameson")
-    expect(page).not_to have_checked_field("Barry Garlow")
+    expect(page).to have_no_checked_field("James Jameson")
+    expect(page).to have_no_checked_field("Barry Garlow")
     expect(page).to have_validation_error("Select a mentor")
 
     expect(page).to have_button("Continue")

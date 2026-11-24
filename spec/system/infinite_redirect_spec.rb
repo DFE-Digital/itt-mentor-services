@@ -25,7 +25,7 @@ RSpec.describe "Infinite redirect", service: :placements, type: :system do
   end
 
   def then_i_no_longer_have_access_to_the_schools_details
-    expect(page).to have_content("You cannot perform this action")
+    expect(page).to have_text("You cannot perform this action")
   end
 
   def and_i_am_redirected_to_the_root_path

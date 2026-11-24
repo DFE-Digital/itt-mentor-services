@@ -26,11 +26,11 @@ RSpec.describe "View Emails", service: :claims, type: :system do
   end
 
   def then_i_can_see_the_list_of_claims_email_templates
-    expect(page).to have_content("Support User Mailer")
+    expect(page).to have_text("Support User Mailer")
     expect(page).to have_link("support_user_invitation (opens in new tab)", href: "/rails/mailers/claims/support_user_mailer/support_user_invitation")
     expect(page).to have_link("support_user_removal_notification (opens in new tab)", href: "/rails/mailers/claims/support_user_mailer/support_user_removal_notification")
 
-    expect(page).to have_content("User Mailer")
+    expect(page).to have_text("User Mailer")
     expect(page).to have_link("claim_created_support_notification (opens in new tab)", href: "/rails/mailers/claims/user_mailer/claim_created_support_notification")
     expect(page).to have_link("claim_submitted_notification (opens in new tab)", href: "/rails/mailers/claims/user_mailer/claim_submitted_notification")
     expect(page).to have_link("user_membership_created_notification (opens in new tab)", href: "/rails/mailers/claims/user_mailer/user_membership_created_notification")

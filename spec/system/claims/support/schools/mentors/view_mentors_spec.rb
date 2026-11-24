@@ -38,26 +38,26 @@ RSpec.describe "View a school's mentors", service: :claims, type: :system do
   end
 
   def then_i_see_a_list_of_the_schools_mentors
-    expect(page).to have_content("Name")
-    expect(page).to have_content("Teacher reference number (TRN)")
+    expect(page).to have_text("Name")
+    expect(page).to have_text("Teacher reference number (TRN)")
 
     within("tbody tr:nth-child(1)") do
-      expect(page).to have_content(mentor1.full_name)
-      expect(page).to have_content(mentor1.trn)
+      expect(page).to have_text(mentor1.full_name)
+      expect(page).to have_text(mentor1.trn)
     end
 
     within("tbody tr:nth-child(2)") do
-      expect(page).to have_content(mentor2.full_name)
-      expect(page).to have_content(mentor2.trn)
+      expect(page).to have_text(mentor2.full_name)
+      expect(page).to have_text(mentor2.trn)
     end
   end
 
   def and_i_dont_see_mentors_from_another_school
-    expect(page).not_to have_content(mentor3.full_name)
-    expect(page).not_to have_content(mentor3.trn)
+    expect(page).to have_no_text(mentor3.full_name)
+    expect(page).to have_no_text(mentor3.trn)
   end
 
   def then_i_see_no_results
-    expect(page).to have_content("There are no mentors for #{another_school.name}")
+    expect(page).to have_text("There are no mentors for #{another_school.name}")
   end
 end

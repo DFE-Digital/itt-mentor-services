@@ -40,22 +40,22 @@ RSpec.describe "Placements / Providers / View provider details", service: :place
   end
 
   def then_i_see_the_details_for_my_provider
-    expect(page.find(".govuk-heading-l")).to have_content("Organisation detail")
-    expect(page).to have_content("Name")
-    expect(page).to have_content("London Provider")
-    expect(page).to have_content("UK provider reference number (UKPRN)")
-    expect(page).to have_content("456654")
-    expect(page).to have_content("Unique reference number (URN)")
-    expect(page).to have_content("123321")
+    expect(page.find(".govuk-heading-l")).to have_text("Organisation detail")
+    expect(page).to have_text("Name")
+    expect(page).to have_text("London Provider")
+    expect(page).to have_text("UK provider reference number (UKPRN)")
+    expect(page).to have_text("456654")
+    expect(page).to have_text("Unique reference number (URN)")
+    expect(page).to have_text("123321")
     # Contact details
-    expect(page).to have_content("Email address")
-    expect(page).to have_content("contact_london_provider@example.com")
-    expect(page).to have_content("Telephone")
-    expect(page).to have_content("01234 567890")
-    expect(page).to have_content("Website")
-    expect(page).to have_content("london_provider@example.com")
-    expect(page).to have_content("Address")
-    expect(page).to have_content(
+    expect(page).to have_text("Email address")
+    expect(page).to have_text("contact_london_provider@example.com")
+    expect(page).to have_text("Telephone")
+    expect(page).to have_text("01234 567890")
+    expect(page).to have_text("Website")
+    expect(page).to have_text("london_provider@example.com")
+    expect(page).to have_text("Address")
+    expect(page).to have_text(
       "London Provider London City of London LN12 123",
     )
   end

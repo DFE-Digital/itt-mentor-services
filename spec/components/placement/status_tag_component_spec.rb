@@ -18,7 +18,7 @@ RSpec.describe Placement::StatusTagComponent, type: :component do
       it "renders the status as available" do
         render_inline(component)
 
-        expect(page).to have_content("Available")
+        expect(page).to have_text("Available")
       end
 
       it "renders the status as green" do
@@ -34,7 +34,7 @@ RSpec.describe Placement::StatusTagComponent, type: :component do
       it "renders the status as assigned to provider" do
         render_inline(component)
 
-        expect(page).to have_content("Assigned to provider")
+        expect(page).to have_text("Assigned to provider")
       end
 
       it "renders the status as blue" do
@@ -52,7 +52,7 @@ RSpec.describe Placement::StatusTagComponent, type: :component do
       it "renders the status as available" do
         render_inline(component)
 
-        expect(page).to have_content("Available")
+        expect(page).to have_text("Available")
       end
 
       it "renders the status as green" do
@@ -68,7 +68,7 @@ RSpec.describe Placement::StatusTagComponent, type: :component do
       it "renders the status as unavailable" do
         render_inline(component)
 
-        expect(page).to have_content("Unavailable")
+        expect(page).to have_text("Unavailable")
       end
 
       it "renders the status as red" do
@@ -84,7 +84,7 @@ RSpec.describe Placement::StatusTagComponent, type: :component do
       it "renders the status as assigned to you" do
         render_inline(component)
 
-        expect(page).to have_content("Assigned to you")
+        expect(page).to have_text("Assigned to you")
       end
 
       it "renders the status as blue" do

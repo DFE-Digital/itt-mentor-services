@@ -33,16 +33,16 @@ RSpec.describe Claim::CardComponent, type: :component do
       render_inline(component)
 
       expect(page).to have_link(claim.school_name, href: claims_support_claim_path(claim))
-      expect(page).to have_content(claim.reference)
-      expect(page).to have_content("Submitted")
+      expect(page).to have_text(claim.reference)
+      expect(page).to have_text("Submitted")
 
-      expect(page).to have_content(claim.academic_year_name)
-      expect(page).to have_content(claim.provider_name)
-      expect(page).to have_content("8 April 2024")
-      expect(page).to have_content("£1,072.00")
-      expect(page).not_to have_content("Support user: John Smith")
-      expect(page).not_to have_content("Clawback requested by: Jane Doe")
-      expect(page).not_to have_content("Clawback approved by: John Smith")
+      expect(page).to have_text(claim.academic_year_name)
+      expect(page).to have_text(claim.provider_name)
+      expect(page).to have_text("8 April 2024")
+      expect(page).to have_text("£1,072.00")
+      expect(page).to have_no_text("Support user: John Smith")
+      expect(page).to have_no_text("Clawback requested by: Jane Doe")
+      expect(page).to have_no_text("Clawback approved by: John Smith")
     end
   end
 
@@ -62,8 +62,8 @@ RSpec.describe Claim::CardComponent, type: :component do
       around { |example| Timecop.freeze(Time.zone.local(2026, 10, 8, 9)) { example.run } }
 
       it "shows the evidence deadline without the past deadline tag" do
-        expect(page).to have_content("Evidence deadline: 4 November 2026")
-        expect(page).not_to have_content("Past deadline")
+        expect(page).to have_text("Evidence deadline: 4 November 2026")
+        expect(page).to have_no_text("Past deadline")
       end
     end
 
@@ -73,7 +73,7 @@ RSpec.describe Claim::CardComponent, type: :component do
       around { |example| Timecop.freeze(Time.zone.local(2026, 11, 10, 9)) { example.run } }
 
       it "shows the evidence deadline and the past deadline tag" do
-        expect(page).to have_content("Evidence deadline: 4 November 2026")
+        expect(page).to have_text("Evidence deadline: 4 November 2026")
         expect(page).to have_css(".govuk-tag--red", text: "Past deadline")
       end
     end
@@ -83,7 +83,7 @@ RSpec.describe Claim::CardComponent, type: :component do
     it "does not show an evidence deadline" do
       render_inline(component)
 
-      expect(page).not_to have_content("Evidence deadline")
+      expect(page).to have_no_text("Evidence deadline")
     end
   end
 
@@ -98,16 +98,16 @@ RSpec.describe Claim::CardComponent, type: :component do
         render_inline(component)
 
         expect(page).to have_link(claim.school_name, href: claims_support_claim_path(claim))
-        expect(page).to have_content(claim.reference)
-        expect(page).to have_content("Submitted")
+        expect(page).to have_text(claim.reference)
+        expect(page).to have_text("Submitted")
 
-        expect(page).to have_content(claim.academic_year_name)
-        expect(page).to have_content(claim.provider_name)
-        expect(page).to have_content("8 April 2024")
-        expect(page).to have_content("£1,072.00")
-        expect(page).to have_content("Support user: John Smith")
-        expect(page).not_to have_content("Clawback requested by:")
-        expect(page).not_to have_content("Clawback approved by:")
+        expect(page).to have_text(claim.academic_year_name)
+        expect(page).to have_text(claim.provider_name)
+        expect(page).to have_text("8 April 2024")
+        expect(page).to have_text("£1,072.00")
+        expect(page).to have_text("Support user: John Smith")
+        expect(page).to have_no_text("Clawback requested by:")
+        expect(page).to have_no_text("Clawback approved by:")
       end
     end
 
@@ -119,16 +119,16 @@ RSpec.describe Claim::CardComponent, type: :component do
         render_inline(component)
 
         expect(page).to have_link(claim.school_name, href: claims_support_claim_path(claim))
-        expect(page).to have_content(claim.reference)
-        expect(page).to have_content("Clawback requires approval")
+        expect(page).to have_text(claim.reference)
+        expect(page).to have_text("Clawback requires approval")
 
-        expect(page).to have_content(claim.academic_year_name)
-        expect(page).to have_content(claim.provider_name)
-        expect(page).to have_content("8 April 2024")
-        expect(page).to have_content("£1,072.00")
-        expect(page).to have_content("Support user: John Smith")
-        expect(page).to have_content("Clawback requested by: Jane Doe")
-        expect(page).not_to have_content("Clawback approved by:")
+        expect(page).to have_text(claim.academic_year_name)
+        expect(page).to have_text(claim.provider_name)
+        expect(page).to have_text("8 April 2024")
+        expect(page).to have_text("£1,072.00")
+        expect(page).to have_text("Support user: John Smith")
+        expect(page).to have_text("Clawback requested by: Jane Doe")
+        expect(page).to have_no_text("Clawback approved by:")
       end
     end
 
@@ -139,16 +139,16 @@ RSpec.describe Claim::CardComponent, type: :component do
         render_inline(component)
 
         expect(page).to have_link(claim.school_name, href: claims_support_claim_path(claim))
-        expect(page).to have_content(claim.reference)
-        expect(page).to have_content("Ready for clawback")
+        expect(page).to have_text(claim.reference)
+        expect(page).to have_text("Ready for clawback")
 
-        expect(page).to have_content(claim.academic_year_name)
-        expect(page).to have_content(claim.provider_name)
-        expect(page).to have_content("8 April 2024")
-        expect(page).to have_content("£1,072.00")
-        expect(page).to have_content("Support user: John Smith")
-        expect(page).to have_content("Clawback requested by: Jane Doe")
-        expect(page).to have_content("Clawback approved by: John Smith")
+        expect(page).to have_text(claim.academic_year_name)
+        expect(page).to have_text(claim.provider_name)
+        expect(page).to have_text("8 April 2024")
+        expect(page).to have_text("£1,072.00")
+        expect(page).to have_text("Support user: John Smith")
+        expect(page).to have_text("Clawback requested by: Jane Doe")
+        expect(page).to have_text("Clawback approved by: John Smith")
       end
     end
   end

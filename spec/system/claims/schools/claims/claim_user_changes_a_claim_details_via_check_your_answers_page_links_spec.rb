@@ -283,7 +283,7 @@ RSpec.describe "Claims user changes a claim details via check your answers page 
     expect(page).to have_summary_list_row("Provider", "Best Practice Network")
     row = find("dt.govuk-summary-list__key", text: "Mentors").ancestor(".govuk-summary-list__row")
     within(row) do
-      expect(page).to have_selector("ul.govuk-list li", count: 2)
+      expect(page).to have_css("ul.govuk-list li", count: 2)
       expect(page).to have_text("Barry Garlow")
       expect(page).to have_text("James Jameson")
     end
@@ -351,7 +351,7 @@ RSpec.describe "Claims user changes a claim details via check your answers page 
   end
 
   def and_the_provider_is_prefilled_with_best_practice_network
-    expect(page.find("#claims-add-claim-wizard-provider-step-id-field").value).to eq(
+    expect(page.find_by_id("claims-add-claim-wizard-provider-step-id-field").value).to eq(
       "Best Practice Network",
     )
   end
@@ -366,7 +366,7 @@ RSpec.describe "Claims user changes a claim details via check your answers page 
     expect(page).to have_summary_list_row("Provider", "NIoT: National Institute of Teaching, founded by the School-Led Development Trust")
     row = find("dt.govuk-summary-list__key", text: "Mentors").ancestor(".govuk-summary-list__row")
     within(row) do
-      expect(page).to have_selector("ul.govuk-list li", count: 2)
+      expect(page).to have_css("ul.govuk-list li", count: 2)
       expect(page).to have_text("Barry Garlow")
       expect(page).to have_text("James Jameson")
     end

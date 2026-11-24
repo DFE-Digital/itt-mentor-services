@@ -212,17 +212,17 @@ RSpec.describe "Support user filters clawback claims by status", service: :claim
   end
 
   def and_i_do_not_see_clawback_requested_selected_from_the_status_filter
-    expect(page).not_to have_checked_field("Ready for clawback")
+    expect(page).to have_no_checked_field("Ready for clawback")
     expect(page).not_to have_filter_tag("Ready for clawback")
   end
 
   def and_i_do_not_see_sampling_not_approved_selected_from_the_status_filter
-    expect(page).not_to have_checked_field("Clawback complete")
+    expect(page).to have_no_checked_field("Clawback complete")
     expect(page).not_to have_filter_tag("Clawback complete")
   end
 
   def and_i_do_not_see_clawback_in_progress_selected_from_the_status_filter
-    expect(page).not_to have_checked_field("Sent to payer for clawback")
+    expect(page).to have_no_checked_field("Sent to payer for clawback")
     expect(page).not_to have_filter_tag("Sent to payer for clawback")
   end
 

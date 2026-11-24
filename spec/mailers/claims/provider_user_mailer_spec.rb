@@ -10,7 +10,7 @@ RSpec.describe Claims::ProviderUserMailer, type: :mailer do
     it "sends the invitation" do
       expect(invite_email.to).to contain_exactly(user.email)
       expect(invite_email.subject).to eq("Claim funding for mentor training: you have been added to the service")
-      expect(invite_email.body).to have_content <<~EMAIL
+      expect(invite_email.body).to have_text <<~EMAIL
         You have been added to the Claim funding for mentor training service on behalf of Best Practice Network.
 
         The Department for Education is preparing to audit claims for Initial Teacher Training (ITT) general mentor funding.
@@ -48,7 +48,7 @@ RSpec.describe Claims::ProviderUserMailer, type: :mailer do
     it "sends the removal notification" do
       expect(removal_email.to).to contain_exactly(user.email)
       expect(removal_email.subject).to eq("You have been removed from Claim funding for mentor training")
-      expect(removal_email.body).to have_content <<~EMAIL
+      expect(removal_email.body).to have_text <<~EMAIL
         Dear Joe,
 
         You have been removed from the Claim funding for mentor training service for Best Practice Network.

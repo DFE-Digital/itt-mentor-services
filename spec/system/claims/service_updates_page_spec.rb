@@ -19,10 +19,10 @@ RSpec.describe "Service updates page", service: :claims, type: :system do
   end
 
   def then_i_see_all_service_updates
-    expect(page).to have_content("News and updates")
+    expect(page).to have_text("News and updates")
 
-    expect(page).to have_content("Service Update")
-    expect(page).to have_content("2 May 2024")
-    expect(page).to have_content("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+    expect(page).to have_text("Service Update")
+    expect(page).to have_text("2 May 2024")
+    expect(page).to have_text("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
   end
 end

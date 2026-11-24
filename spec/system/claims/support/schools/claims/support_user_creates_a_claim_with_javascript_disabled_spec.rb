@@ -126,7 +126,7 @@ RSpec.describe "School user creates a claim with javascript disabled", service: 
   end
 
   def and_i_do_not_see_a_radio_button_for_niot
-    expect(page).not_to have_field(
+    expect(page).to have_no_field(
       "NIoT: National Institute of Teaching, founded by the School-Led Development Trust",
       type: :radio,
     )

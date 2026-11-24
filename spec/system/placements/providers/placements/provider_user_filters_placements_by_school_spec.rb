@@ -112,7 +112,7 @@ RSpec.describe "Provider user filters placements by school", service: :placement
   def and_i_see_the_spring_field_elementary_selected_school_filter
     expect(page).to have_filter_tag("Springfield Elementary")
     expect(page).to have_checked_field("Springfield Elementary")
-    expect(page).not_to have_checked_field("Hogwarts")
+    expect(page).to have_no_checked_field("Hogwarts")
     expect(page).not_to have_filter_tag("Hogwarts")
   end
 
@@ -151,7 +151,7 @@ RSpec.describe "Provider user filters placements by school", service: :placement
 
   def and_i_do_not_see_the_springfield_elementary_selected_school_filter
     expect(page).not_to have_filter_tag("Springfield Elementary")
-    expect(page).not_to have_checked_field("Springfield Elementary")
+    expect(page).to have_no_checked_field("Springfield Elementary")
   end
 
   def when_i_click_on_the_hogwarts_school_filter_tag
@@ -162,8 +162,8 @@ RSpec.describe "Provider user filters placements by school", service: :placement
 
   def and_i_do_not_see_any_selected_school_filters
     expect(page).not_to have_filter_tag("Springfield Elementary")
-    expect(page).not_to have_checked_field("Springfield Elementary")
+    expect(page).to have_no_checked_field("Springfield Elementary")
     expect(page).not_to have_filter_tag("Hogwarts")
-    expect(page).not_to have_checked_field("Hogwarts")
+    expect(page).to have_no_checked_field("Hogwarts")
   end
 end

@@ -10,7 +10,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
     it "sends invitation email" do
       expect(invite_email.to).to contain_exactly(user.email)
       expect(invite_email.subject).to eq("ACTION NEEDED: Sign-in to the Manage school placements service")
-      expect(invite_email.body).to have_content <<~EMAIL
+      expect(invite_email.body).to have_text <<~EMAIL
         Dear #{user.first_name},
 
         You now have access to the Manage school placements service for #{organisation.name}.
@@ -76,7 +76,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
     it "sends expected message to user" do
       expect(removal_email.to).to contain_exactly user.email
       expect(removal_email.subject).to eq "You have been removed from Manage school placements"
-      expect(removal_email.body).to have_content <<~EMAIL
+      expect(removal_email.body).to have_text <<~EMAIL
         #{user.first_name},
 
         You no longer have access to the Manage school placements service for #{organisation.name}. This is because someone at this school removed you.
@@ -120,7 +120,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
     it "sends a notification email to the user of the school" do
       expect(partnership_created_notification_email.to).to contain_exactly(user.email)
       expect(partnership_created_notification_email.subject).to eq("A provider has added you")
-      expect(partnership_created_notification_email.body).to have_content <<~EMAIL
+      expect(partnership_created_notification_email.body).to have_text <<~EMAIL
         #{user.first_name},
 
         #{source_organisation.name} has added #{partner_organisation.name} as one of the schools they would like to work with.
@@ -154,7 +154,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
         expect(partnership_destroyed_notification_email.subject).to eq(
           "A provider has removed you",
         )
-        expect(partnership_destroyed_notification_email.body).to have_content <<~EMAIL
+        expect(partnership_destroyed_notification_email.body).to have_text <<~EMAIL
           #{user.first_name},
 
           #{source_organisation.name} has deleted #{partner_organisation.name} from the list of schools they work with.
@@ -180,7 +180,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
       it "sends a notification email to the user of the school" do
         expect(partnership_destroyed_notification_email.to).to contain_exactly(user.email)
         expect(partnership_destroyed_notification_email.subject).to eq("A provider has removed you")
-        expect(partnership_destroyed_notification_email.body).to have_content <<~EMAIL
+        expect(partnership_destroyed_notification_email.body).to have_text <<~EMAIL
           #{user.first_name},
 
           #{source_organisation.name} has deleted #{partner_organisation.name} from the list of schools they work with.
@@ -220,7 +220,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
       expect(placement_provider_removed_notification.subject).to eq(
         "You have removed a provider from a placement",
       )
-      expect(placement_provider_removed_notification.body).to have_content <<~EMAIL
+      expect(placement_provider_removed_notification.body).to have_text <<~EMAIL
         #{school_user.first_name},
 
         You removed #{provider.name} from a placement.
@@ -256,7 +256,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
       it "sends a notification email to the user of the school" do
         expect(placement_information_added_notification.to).to contain_exactly(user.email)
         expect(placement_information_added_notification.subject).to eq("You have added placement information to Manage school placements")
-        expect(placement_information_added_notification.body).to have_content <<~EMAIL
+        expect(placement_information_added_notification.body).to have_text <<~EMAIL
           Anne,
 
           You added placements on the Manage school placements service.
@@ -283,7 +283,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
       it "sends a notification email to the user of the school" do
         expect(placement_information_added_notification.to).to contain_exactly(user.email)
         expect(placement_information_added_notification.subject).to eq("You have added placement information to Manage school placements")
-        expect(placement_information_added_notification.body).to have_content <<~EMAIL
+        expect(placement_information_added_notification.body).to have_text <<~EMAIL
           Anne,
 
           You added placements on the Manage school placements service. Providers can see that your school may offer placements.
@@ -315,7 +315,7 @@ RSpec.describe Placements::SchoolUserMailer, type: :mailer do
     it "sends invitation email" do
       expect(future_of_service_notification.to).to contain_exactly(user.email)
       expect(future_of_service_notification.subject).to eq("Future of the Manage School Placements Service")
-      expect(future_of_service_notification.body.raw_source.gsub("\r\n", "\n")).to have_content <<~EMAIL
+      expect(future_of_service_notification.body.raw_source.gsub("\r\n", "\n")).to have_text <<~EMAIL
         Dear Sam,
 
         We are writing to inform you of upcoming changes to the Manage School Placements service and to thank you for participating in the pilot of this digital service.

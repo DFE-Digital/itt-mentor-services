@@ -128,7 +128,7 @@ RSpec.describe "Claims school user tries to remove a mentor associated with a cl
     expect(page).to have_h1("You cannot remove this mentor")
     expect(page).to have_span_caption("James Jameson")
     expect(page).to have_text("You cannot remove this mentor because they are included in an active claim.")
-    expect(page).not_to have_button("Remove mentor")
+    expect(page).to have_no_button("Remove mentor")
     expect(page).to have_link("Cancel")
   end
 
@@ -138,7 +138,7 @@ RSpec.describe "Claims school user tries to remove a mentor associated with a cl
     expect(page).to have_h1("You cannot remove this mentor")
     expect(page).to have_span_caption("Barry Garlow")
     expect(page).to have_text("You cannot remove this mentor because they are included in an active claim.")
-    expect(page).not_to have_button("Remove mentor")
+    expect(page).to have_no_button("Remove mentor")
     expect(page).to have_link("Cancel")
   end
 end

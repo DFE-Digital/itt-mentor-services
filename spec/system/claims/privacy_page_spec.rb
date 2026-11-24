@@ -14,7 +14,7 @@ RSpec.describe "Privacy Page", service: :claims, type: :system do
 
   def then_i_can_see_the_privacy_page
     within(".govuk-heading-l") do
-      expect(page).to have_content("Claim funding for mentor training privacy notice")
+      expect(page).to have_text("Claim funding for mentor training privacy notice")
     end
   end
 end

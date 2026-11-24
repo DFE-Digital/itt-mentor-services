@@ -85,7 +85,7 @@ RSpec.describe Claims::Claim::FilterFormComponent, type: :component do
       render_inline(component)
 
       (non_draft_statuses - filterable_statuses).each do |status|
-        expect(page).not_to have_field("claims_support_claims_filter_form[statuses][]", with: status)
+        expect(page).to have_no_field("claims_support_claims_filter_form[statuses][]", with: status)
       end
     end
   end
@@ -110,7 +110,7 @@ RSpec.describe Claims::Claim::FilterFormComponent, type: :component do
       render_inline(component)
 
       (Claims::Provider.all - filterable_providers).each do |provider|
-        expect(page).not_to have_field("claims_support_claims_filter_form[provider_ids][]", with: provider.id)
+        expect(page).to have_no_field("claims_support_claims_filter_form[provider_ids][]", with: provider.id)
       end
     end
   end

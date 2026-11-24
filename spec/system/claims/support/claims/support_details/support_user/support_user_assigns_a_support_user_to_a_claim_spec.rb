@@ -125,7 +125,7 @@ RSpec.describe "Support user assigns a support user to a claim", service: :claim
 
   def and_i_see_the_support_user_has_been_assigned
     expect(page).to have_success_banner("Support agent assigned")
-    expect(page).not_to have_link("Assign a support agent")
+    expect(page).to have_no_link("Assign a support agent")
     expect(page).to have_summary_list_row("Assigned user", "Joe Bloggs")
   end
 end

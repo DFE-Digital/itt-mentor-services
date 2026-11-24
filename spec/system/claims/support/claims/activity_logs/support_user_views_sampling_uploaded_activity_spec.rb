@@ -112,6 +112,6 @@ RSpec.describe "Support user views sampling uploaded activity spec", service: :c
   end
 
   def and_i_do_not_see_a_download_csv_button
-    expect(page).not_to have_link("Download CSV")
+    expect(page).to have_no_link("Download CSV")
   end
 end

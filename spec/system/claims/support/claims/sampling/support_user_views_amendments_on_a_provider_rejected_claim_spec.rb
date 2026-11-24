@@ -56,12 +56,12 @@ RSpec.describe "Support user views amendments on a provider rejected claim", ser
 
   def and_i_do_not_see_the_unamended_mentor_in_the_provider_response
     within(".claim-responses", text: "Provider response") do
-      expect(page).not_to have_content("Sarah Doe")
+      expect(page).to have_no_text("Sarah Doe")
     end
   end
 
   def and_i_do_not_see_hours_removed
-    expect(page).not_to have_content("Hours removed")
+    expect(page).to have_no_text("Hours removed")
   end
 
   def and_i_see_the_amended_grant_funding

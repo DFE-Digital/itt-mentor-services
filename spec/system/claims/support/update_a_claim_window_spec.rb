@@ -62,7 +62,7 @@ RSpec.describe "Update a claim window", freeze: "17 July 2024", service: :claims
   end
 
   def then_i_see(content)
-    expect(page).to have_content(content)
+    expect(page).to have_text(content)
   end
   alias_method :and_i_see, :then_i_see
 
@@ -70,7 +70,7 @@ RSpec.describe "Update a claim window", freeze: "17 July 2024", service: :claims
   alias_method :when_i_click_on, :click_on
 
   def then_i_see_the_form_to_update_a_claim_window
-    expect(page).to have_content("Change claim window")
+    expect(page).to have_text("Change claim window")
     expect(page).to have_css("legend", text: "Window opens")
     expect(page).to have_css("legend", text: "Window closes")
   end
@@ -94,13 +94,13 @@ RSpec.describe "Update a claim window", freeze: "17 July 2024", service: :claims
   end
 
   def then_i_see_a_form_error(message)
-    expect(page).to have_content(message)
+    expect(page).to have_text(message)
   end
 
   def then_i_see_the_claim_window_details_check_page_with(start_date:, end_date:)
-    expect(page).to have_content("Check your answers")
-    expect(page).to have_content("Window opens#{start_date}")
-    expect(page).to have_content("Window closes#{end_date}")
+    expect(page).to have_text("Check your answers")
+    expect(page).to have_text("Window opens#{start_date}")
+    expect(page).to have_text("Window closes#{end_date}")
   end
 
   def when_i_click_save
@@ -108,8 +108,8 @@ RSpec.describe "Update a claim window", freeze: "17 July 2024", service: :claims
   end
 
   def then_i_see_the_claim_window_created_successfully_with(start_date:, end_date:)
-    expect(page).to have_content("Claim window updated")
-    expect(page).to have_content("#{start_date} to #{end_date}")
+    expect(page).to have_text("Claim window updated")
+    expect(page).to have_text("#{start_date} to #{end_date}")
   end
 
   def when_i_click_on_change

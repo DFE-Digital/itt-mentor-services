@@ -6,7 +6,7 @@ RSpec.describe Claim::ProviderStatusTagComponent, type: :component do
 
     render_inline(described_class.new(claim:))
 
-    expect(page).to have_content("Amended")
+    expect(page).to have_text("Amended")
   end
 
   it "renders the provider-specific status text for approved claims" do
@@ -14,7 +14,7 @@ RSpec.describe Claim::ProviderStatusTagComponent, type: :component do
 
     render_inline(described_class.new(claim:))
 
-    expect(page).to have_content("Approved")
+    expect(page).to have_text("Approved")
   end
 
   it "renders the audit requested status text" do
@@ -22,6 +22,6 @@ RSpec.describe Claim::ProviderStatusTagComponent, type: :component do
 
     render_inline(described_class.new(claim:))
 
-    expect(page).to have_content("Audit requested")
+    expect(page).to have_text("Audit requested")
   end
 end

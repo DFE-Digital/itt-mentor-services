@@ -50,7 +50,7 @@ RSpec.describe "Support user moves a provider rejected claim to clawback", servi
   end
 
   def and_the_clawback_amount_is_calculated_from_the_amended_hours
-    expect(page).to have_content(@mentor_training.reload.clawback_amount.format(symbol: true))
+    expect(page).to have_text(@mentor_training.reload.clawback_amount.format(symbol: true))
   end
 
   def when_i_click_on_review_clawback

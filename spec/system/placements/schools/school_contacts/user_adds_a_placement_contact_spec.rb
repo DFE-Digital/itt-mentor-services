@@ -53,7 +53,7 @@ RSpec.describe "School user adds a placement contact to their school", service: 
   end
 
   def then_i_do_not_see_any_placement_contact_details
-    expect(page).not_to have_css "#school-contact-details"
+    expect(page).to have_no_css "#school-contact-details"
   end
 
   def when_i_click_on_add_placement_contact

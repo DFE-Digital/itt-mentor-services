@@ -234,17 +234,17 @@ RSpec.describe "Support user filters sampled claims by support user", service: :
   end
 
   def and_i_do_not_see_john_smith_selected_from_the_support_user_filter
-    expect(page).not_to have_checked_field("John Smith")
+    expect(page).to have_no_checked_field("John Smith")
     expect(page).not_to have_filter_tag("John Smith")
   end
 
   def and_i_do_not_see_sarah_doe_selected_from_the_support_user_filter
-    expect(page).not_to have_checked_field("Sarah Doe")
+    expect(page).to have_no_checked_field("Sarah Doe")
     expect(page).not_to have_filter_tag("Sarah Doe")
   end
 
   def and_i_do_not_see_unassigned_selected_from_the_support_user_filter
-    expect(page).not_to have_checked_field("Unassigned")
+    expect(page).to have_no_checked_field("Unassigned")
     expect(page).not_to have_filter_tag("Unassigned")
   end
 

@@ -13,7 +13,7 @@ RSpec.describe Placements::OrganisationSwitcherComponent, type: :component do
     it "renders the organisation switcher" do
       render_inline(component)
 
-      expect(page).to have_content(organisation.name)
+      expect(page).to have_text(organisation.name)
       expect(page).to have_link(
         text: "Change",
         href: "/support/organisations",
@@ -29,7 +29,7 @@ RSpec.describe Placements::OrganisationSwitcherComponent, type: :component do
       it "renders the organisation switcher" do
         render_inline(component)
 
-        expect(page).to have_content(organisation.name)
+        expect(page).to have_text(organisation.name)
         expect(page).to have_link(
           text: "Change",
           href: "/organisations",
@@ -43,8 +43,8 @@ RSpec.describe Placements::OrganisationSwitcherComponent, type: :component do
       it "does not render the organisation switcher" do
         render_inline(component)
 
-        expect(page).to have_content(organisation.name)
-        expect(page).not_to have_link(
+        expect(page).to have_text(organisation.name)
+        expect(page).to have_no_link(
           text: "Change",
           href: "/organisations",
         )

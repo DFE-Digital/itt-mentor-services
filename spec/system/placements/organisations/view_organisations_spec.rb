@@ -47,7 +47,7 @@ RSpec.describe "View organisations", service: :placements, type: :system do
   end
 
   def then_i_am_redirected_to_404
-    expect(page).to have_content("ERROR")
+    expect(page).to have_text("ERROR")
   end
 
   def when_i_click_on_school_name
@@ -64,8 +64,8 @@ RSpec.describe "View organisations", service: :placements, type: :system do
     end
 
     within(".govuk-main-wrapper") do
-      expect(page).to have_content school.name
-      expect(page).to have_content "Placements"
+      expect(page).to have_text school.name
+      expect(page).to have_text "Placements"
     end
   end
 
@@ -89,12 +89,12 @@ RSpec.describe "View organisations", service: :placements, type: :system do
   end
 
   def then_i_see_the_one_school
-    expect(page).not_to have_content "Change organisation"
+    expect(page).to have_no_text "Change organisation"
     then_i_see_the_school_page(one_school)
   end
 
   def then_i_see_the_one_provider
-    expect(page).not_to have_content "Change organisation"
+    expect(page).to have_no_text "Change organisation"
     then_i_see_the_placements_search_page(one_provider)
   end
 
@@ -107,15 +107,15 @@ RSpec.describe "View organisations", service: :placements, type: :system do
   end
 
   def and_i_only_see_placement_schools
-    expect(page).to have_content "Placements School"
-    expect(page).to have_content "Provider 1"
+    expect(page).to have_text "Placements School"
+    expect(page).to have_text "Provider 1"
 
-    expect(page).not_to have_content "Claims School"
-    expect(page).not_to have_content "No service school"
+    expect(page).to have_no_text "Claims School"
+    expect(page).to have_no_text "No service school"
   end
 
   def i_am_redirected_to_organisation_index
-    expect(page).to have_content("Organisations")
+    expect(page).to have_text("Organisations")
     expect(page).to have_current_path placements_organisations_path, ignore_query: true
   end
 end

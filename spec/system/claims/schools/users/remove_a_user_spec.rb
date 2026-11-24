@@ -98,7 +98,7 @@ RSpec.describe "Remove a user", service: :claims, type: :system do
     expect(page).to have_summary_list_row("First name", "Anne")
     expect(page).to have_summary_list_row("Last name", "Wilson")
     expect(page).to have_summary_list_row("Email address", "anne_wilson@education.gov.uk")
-    expect(page).not_to have_link(
+    expect(page).to have_no_link(
       text: "Remove user",
       class: "govuk-link app-link app-link--destructive",
     )

@@ -168,12 +168,12 @@ RSpec.describe "Support user filters sampled claims by status", service: :claims
   end
 
   def and_i_do_not_see_sampling_provider_not_approved_selected_from_the_status_filter
-    expect(page).not_to have_checked_field("Rejected by provider")
+    expect(page).to have_no_checked_field("Rejected by provider")
     expect(page).not_to have_filter_tag("Rejected by provider")
   end
 
   def and_i_do_not_see_sampling_in_progress_selected_from_the_status_filter
-    expect(page).not_to have_checked_field("Audit requested")
+    expect(page).to have_no_checked_field("Audit requested")
     expect(page).not_to have_filter_tag("Audit requested")
   end
 

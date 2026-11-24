@@ -53,6 +53,6 @@ RSpec.describe "Support user uploads a provider file with invalid headers", serv
     expect(page).to have_element(:span, text: "Onboard providers", class: "govuk-caption-l")
     expect(page).to have_h1("Upload providers", class: "govuk-heading-l")
     expect(page).to have_element(:h2, text: "There is a problem")
-    expect(page).to have_content("Your file needs a column called 'email'.")
+    expect(page).to have_text("Your file needs a column called 'email'.")
   end
 end

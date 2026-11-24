@@ -31,6 +31,6 @@ RSpec.describe "Reset claims database", service: :claims, type: :system do
   alias_method :when_i_click_on, :click_on
 
   def then_i_see(content)
-    expect(page).to have_content(content)
+    expect(page).to have_text(content)
   end
 end

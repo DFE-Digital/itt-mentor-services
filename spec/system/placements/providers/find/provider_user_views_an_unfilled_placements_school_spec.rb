@@ -74,7 +74,7 @@ RSpec.describe "Provider user views a school which has unfilled placements", ser
   end
 
   def and_i_see_all_schools
-    expect(page).to have_content("Shelbyville High School")
+    expect(page).to have_text("Shelbyville High School")
   end
 
   def when_i_click_on_the_unfilled_placements_school_name

@@ -25,12 +25,12 @@ RSpec.describe "Remove a users agreement to the grant conditions for a school", 
   private
 
   def then_see_the_agreement_has_been_removed
-    expect(page).to have_content("Agreement to grant conditions removed")
-    expect(page).to have_content("This school has not agreed to the grant conditions")
+    expect(page).to have_text("Agreement to grant conditions removed")
+    expect(page).to have_text("This school has not agreed to the grant conditions")
   end
 
   def i_then_see_the_remove_agreement_check_page
-    expect(page).to have_content("Are you sure you want to remove George Barlow's agreement?")
+    expect(page).to have_text("Are you sure you want to remove George Barlow's agreement?")
   end
 
   def and_i_visit_the_school_page(school)
@@ -50,6 +50,6 @@ RSpec.describe "Remove a users agreement to the grant conditions for a school", 
   end
 
   def i_see_the_schools_details_sections_without_grant_conditions_accepted
-    expect(page).to have_content("This school has not agreed to the grant conditions")
+    expect(page).to have_text("This school has not agreed to the grant conditions")
   end
 end

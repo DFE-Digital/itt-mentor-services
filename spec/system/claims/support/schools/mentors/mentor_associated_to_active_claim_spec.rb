@@ -35,6 +35,6 @@ RSpec.describe "When removing a mentor", service: :claims, type: :system do
   end
 
   def then_i_cant_remove_this_mentor
-    expect(page).to have_content("You cannot remove this mentor")
+    expect(page).to have_text("You cannot remove this mentor")
   end
 end

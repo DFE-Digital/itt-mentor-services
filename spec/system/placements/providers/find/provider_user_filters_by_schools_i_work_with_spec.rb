@@ -94,7 +94,7 @@ RSpec.describe "Provider user filters schools by schools I work with", service: 
     expect(page).to have_filter_tag("Springfield Elementary")
     expect(page).to have_checked_field("Springfield Elementary")
     expect(page).not_to have_filter_tag("Hogwarts Elementary")
-    expect(page).not_to have_checked_field("Hogwarts Elementary")
+    expect(page).to have_no_checked_field("Hogwarts Elementary")
   end
 
   def when_i_select_hogwarts_elementary_from_the_schools_i_work_with_filter
@@ -124,7 +124,7 @@ RSpec.describe "Provider user filters schools by schools I work with", service: 
 
   def and_i_do_not_see_the_springfield_elementary_school_filter_tag
     expect(page).not_to have_filter_tag("Springfield Elementary")
-    expect(page).not_to have_checked_field("Springfield Elementary")
+    expect(page).to have_no_checked_field("Springfield Elementary")
     expect(page).to have_filter_tag("Hogwarts Elementary")
     expect(page).to have_checked_field("Hogwarts Elementary")
   end
@@ -137,8 +137,8 @@ RSpec.describe "Provider user filters schools by schools I work with", service: 
 
   def and_i_do_not_see_any_selected_schools_i_work_with_filters
     expect(page).not_to have_filter_tag("Springfield Elementary")
-    expect(page).not_to have_checked_field("Springfield Elementary")
+    expect(page).to have_no_checked_field("Springfield Elementary")
     expect(page).not_to have_filter_tag("Hogwarts Elementary")
-    expect(page).not_to have_checked_field("Hogwarts Elementary")
+    expect(page).to have_no_checked_field("Hogwarts Elementary")
   end
 end

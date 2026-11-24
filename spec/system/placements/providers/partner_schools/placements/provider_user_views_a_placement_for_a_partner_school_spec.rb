@@ -117,7 +117,7 @@ RSpec.describe "Provider user views a placement for a partner school",
     expect(page).to have_link("Back")
     expect(page).to have_h1("Shelbyville Elementary")
     within("table#placements-assigned-to-you") do
-      expect(page).to have_content("Placements assigned to you")
+      expect(page).to have_text("Placements assigned to you")
       expect(page).to have_table_row({ Subject: "English",
                                        Mentors: "Not yet known" })
     end

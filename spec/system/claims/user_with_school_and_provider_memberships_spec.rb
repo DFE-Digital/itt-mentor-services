@@ -32,16 +32,19 @@ RSpec.describe "User with school and provider memberships selects an organisatio
   scenario "A discarded provider record grants no provider access" do
     given_i_am_signed_in_as_a_school_and_provider_user(provider_user_attributes: { discarded_at: Time.current })
     visit claims_schools_path
-    expect(page).not_to have_link("North Star SCITT")
+    expect(page).to have_current_path(claims_school_claims_path(school))
+    expect(page).to have_no_link("North Star SCITT")
     visit claims_provider_claims_path(provider)
-    expect(page).not_to have_current_path(claims_provider_claims_path(provider))
-    expect(page).not_to have_content("North Star SCITT")
+    expect(page).to have_current_path(claims_school_claims_path(school))
+    expect(page).to have_no_current_path(claims_provider_claims_path(provider))
+    expect(page).to have_no_text("North Star SCITT")
   end
 
   scenario "A provider record without memberships grants no provider access" do
     given_i_am_signed_in_as_a_school_and_provider_user(provider_membership: false)
     visit claims_schools_path
-    expect(page).not_to have_link("North Star SCITT")
+    expect(page).to have_current_path(claims_school_claims_path(school))
+    expect(page).to have_no_link("North Star SCITT")
     expect { visit claims_provider_claims_path(provider) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
@@ -54,16 +57,19 @@ RSpec.describe "User with school and provider memberships selects an organisatio
 
     visit claims_providers_path
 
-    expect(page).not_to have_link("North Star SCITT")
+    expect(page).to have_current_path(claims_school_claims_path(school))
+    expect(page).to have_no_link("North Star SCITT")
     visit claims_provider_claims_path(provider)
-    expect(page).not_to have_current_path(claims_provider_claims_path(provider))
-    expect(page).not_to have_content("North Star SCITT")
+    expect(page).to have_current_path(claims_school_claims_path(school))
+    expect(page).to have_no_current_path(claims_provider_claims_path(provider))
+    expect(page).to have_no_text("North Star SCITT")
   end
 
   scenario "Provider memberships do not grant school access" do
     given_i_am_signed_in_as_a_school_and_provider_user(school_membership: false)
     visit claims_schools_path
-    expect(page).not_to have_link("Hogwarts")
+    expect(page).to have_current_path(claims_schools_path)
+    expect(page).to have_no_link("Hogwarts")
     expect { visit claims_school_claims_path(school) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
@@ -71,7 +77,7 @@ RSpec.describe "User with school and provider memberships selects an organisatio
     sign_in_as(create(:claims_support_user))
     visit claims_schools_path
     expect(page).to have_link("Hogwarts")
-    expect(page).not_to have_link("North Star SCITT")
+    expect(page).to have_no_link("North Star SCITT")
   end
 
   private
@@ -101,8 +107,8 @@ RSpec.describe "User with school and provider memberships selects an organisatio
     expect(page).to have_css("h2", text: "Providers")
     expect(page).to have_link("Hogwarts")
     expect(page).to have_link("North Star SCITT")
-    expect(page).not_to have_link("Unconnected School")
-    expect(page).not_to have_link("Unconnected Provider")
+    expect(page).to have_no_link("Unconnected School")
+    expect(page).to have_no_link("Unconnected Provider")
   end
 
   def then_i_see_the_provider_claims_page

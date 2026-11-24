@@ -128,7 +128,7 @@ RSpec.describe Claim::StatusTagComponent, type: :component do
 
       it "renders only the rejected by provider tag" do
         expect(page).to have_css(".govuk-tag--teal", text: "Rejected by provider")
-        expect(page).not_to have_css(".govuk-tag--red", text: "Past deadline")
+        expect(page).to have_no_css(".govuk-tag--red", text: "Past deadline")
       end
     end
 

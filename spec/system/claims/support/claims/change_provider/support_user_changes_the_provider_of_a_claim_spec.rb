@@ -227,7 +227,7 @@ RSpec.describe "Support user changes the provider of a claim", service: :claims,
     expect(page).to have_h2("Changes to mentors")
     expect(page).to have_summary_list_row("Anne Wilson", "Removed from the claim (no hours left to claim with Shelbyville University)")
     expect(page).to have_summary_list_row("Barry Garlow", "Hours reduced from 10 to 5")
-    expect(page).not_to have_element(:dt, text: "James Jameson", class: "govuk-summary-list__key")
+    expect(page).to have_no_element(:dt, text: "James Jameson", class: "govuk-summary-list__key")
   end
 
   def then_i_see_a_validation_error_that_no_mentors_have_hours_left
@@ -254,7 +254,7 @@ RSpec.describe "Support user changes the provider of a claim", service: :claims,
   def and_i_see_the_updated_mentor_hours
     expect(page).to have_summary_list_row("James Jameson", "10 hours")
     expect(page).to have_summary_list_row("Barry Garlow", "5 hours")
-    expect(page).not_to have_element(:dt, text: "Anne Wilson", class: "govuk-summary-list__key")
+    expect(page).to have_no_element(:dt, text: "Anne Wilson", class: "govuk-summary-list__key")
   end
 
   def and_the_claim_is_still_submitted

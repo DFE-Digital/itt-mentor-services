@@ -136,7 +136,7 @@ RSpec.describe "Support user approves a claim", service: :claims, type: :system 
 
   def and_i_see_sampling_claim_is_no_longer_listed
     expect(page).to have_h2("Auditing")
-    expect(page).not_to have_link("#{@sampling_claim.reference} - #{@sampling_claim.school.name}", href: "/support/claims/sampling/#{@sampling_claim.id}")
+    expect(page).to have_no_link("#{@sampling_claim.reference} - #{@sampling_claim.school.name}", href: "/support/claims/sampling/#{@sampling_claim.id}")
   end
 
   def then_i_see_there_are_two_paid_claims

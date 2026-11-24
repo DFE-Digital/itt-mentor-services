@@ -277,9 +277,9 @@ RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
   end
 
   def page_has_user_content(first_name:, last_name:, email:)
-    expect(page).to have_content(first_name)
-    expect(page).to have_content(last_name)
-    expect(page).to have_content(email)
+    expect(page).to have_text(first_name)
+    expect(page).to have_text(last_name)
+    expect(page).to have_text(email)
   end
 
   def and_the_account_page_shows_the_support_navigation
@@ -300,7 +300,7 @@ RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
   end
 
   def i_do_not_have_access_to_the_service
-    expect(page).to have_content("You do not have access to this service")
+    expect(page).to have_text("You do not have access to this service")
   end
 
   def visit_support_page
@@ -308,11 +308,11 @@ RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
   end
 
   def i_do_not_have_access_to_support_page
-    expect(page).to have_content "You cannot perform this action"
+    expect(page).to have_text "You cannot perform this action"
   end
 
   def then_i_am_redirect_to_internal_server_error
-    expect(page).to have_content("Sorry, there’s a problem with the service")
+    expect(page).to have_text("Sorry, there’s a problem with the service")
   end
 
   def then_i_dont_get_redirected_to_support_organisations
@@ -321,13 +321,13 @@ RSpec.describe "Sign In as a Claims User", service: :claims, type: :system do
 
   def then_i_see_a_list_of_organisations
     expect(page).to have_current_path claims_support_schools_path, ignore_query: true
-    expect(page).to have_content("Claims School")
+    expect(page).to have_text("Claims School")
   end
 
   def and_i_see_an_empty_schools_page
     expect(page).to have_current_path(claims_schools_path)
-    expect(page).to have_content("Organisations")
-    expect(find("#main-content")).not_to have_link
+    expect(page).to have_text("Organisations")
+    expect(find_by_id("main-content")).not_to have_link
   end
 
   def then_i_can_see_the_claims_school_claims_page

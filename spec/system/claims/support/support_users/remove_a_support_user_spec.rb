@@ -46,17 +46,17 @@ RSpec.describe "Remove a support user", service: :claims, type: :system do
   alias_method :and_i_click_on_remove, :when_i_click_on_remove
 
   def then_i_see_the_support_user_removal_confirmation(support_user)
-    expect(page).to have_content support_user.full_name
-    expect(page).to have_content "Are you sure you want to remove this user?"
+    expect(page).to have_text support_user.full_name
+    expect(page).to have_text "Are you sure you want to remove this user?"
   end
 
   def then_i_see_the_support_user_has_been_removed(support_user)
-    expect(page).not_to have_content support_user.full_name
-    expect(page).to have_content "User removed"
+    expect(page).to have_no_text support_user.full_name
+    expect(page).to have_text "User removed"
   end
 
   def then_i_can_not_see_a_remove_link
-    expect(page).not_to have_content("Remove user")
+    expect(page).to have_no_text("Remove user")
   end
 
   def then_an_email_is_sent(email)

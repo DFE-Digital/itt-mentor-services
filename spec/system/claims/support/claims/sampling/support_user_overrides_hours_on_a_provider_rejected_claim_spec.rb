@@ -129,7 +129,7 @@ RSpec.describe "Support user overrides hours on a provider rejected claim", serv
   end
 
   def then_i_see_a_reason_error
-    expect(page).to have_content("Please enter a reason")
+    expect(page).to have_text("Please enter a reason")
   end
 
   def and_i_enter_all_of_the_hours_claimed
@@ -161,7 +161,7 @@ RSpec.describe "Support user overrides hours on a provider rejected claim", serv
 
   def then_i_see_the_hours_page_for_james_chess
     expect(page).to have_h1("How many hours of training did James Chess actually complete?")
-    expect(page).to have_content("Hours of training originally claimed: 15")
+    expect(page).to have_text("Hours of training originally claimed: 15")
   end
 
   def and_the_provider_amendment_is_prefilled
@@ -188,10 +188,10 @@ RSpec.describe "Support user overrides hours on a provider rejected claim", serv
   end
 
   def and_i_see_the_overridden_hours
-    expect(page).to have_content("James Chess")
-    expect(page).to have_content("Sarah Doe")
-    expect(page).to have_content("12 hours")
-    expect(page).to have_content("0 hours")
+    expect(page).to have_text("James Chess")
+    expect(page).to have_text("Sarah Doe")
+    expect(page).to have_text("12 hours")
+    expect(page).to have_text("0 hours")
   end
 
   def then_the_clawback_is_requested_with_a_success_message

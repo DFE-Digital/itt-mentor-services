@@ -94,7 +94,7 @@ RSpec.describe "Support user searches for a mentor with no results", service: :p
     expect(page).to have_link("Cancel", href: "/schools/#{@school.id}/mentors")
 
     # to contrast with non-hidden state
-    expect(page).not_to have_element(:div, text: "If you do not know a teacher’s TRN, you can ask them for it. They can find a lost TRN, or apply for a new one by following the instructions in the TRN guidance (opens in new tab).", class: "govuk-details__text")
+    expect(page).to have_no_element(:div, text: "If you do not know a teacher’s TRN, you can ask them for it. They can find a lost TRN, or apply for a new one by following the instructions in the TRN guidance (opens in new tab).", class: "govuk-details__text")
   end
 
   def when_i_click_on_help_with_the_trn

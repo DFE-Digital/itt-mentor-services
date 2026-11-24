@@ -66,22 +66,22 @@ RSpec.describe "School Page", service: :claims, type: :system do
 
   def then_i_see_the_school_details
     within(".govuk-heading-l") do
-      expect(page).to have_content "Organisation details"
+      expect(page).to have_text "Organisation details"
     end
 
-    expect(page).to have_content "Grant funding"
-    expect(page).to have_content "Contact details"
+    expect(page).to have_text "Grant funding"
+    expect(page).to have_text "Contact details"
 
     within("#organisation-details") do
-      expect(page).to have_content "Name"
-      expect(page).to have_content "UK provider reference number (UKPRN)"
-      expect(page).to have_content "Unique reference number (URN)"
+      expect(page).to have_text "Name"
+      expect(page).to have_text "UK provider reference number (UKPRN)"
+      expect(page).to have_text "Unique reference number (URN)"
     end
 
     within("#contact-details") do
-      expect(page).to have_content "Telephone"
-      expect(page).to have_content "Website"
-      expect(page).to have_content "Address"
+      expect(page).to have_text "Telephone"
+      expect(page).to have_text "Website"
+      expect(page).to have_text "Address"
     end
   end
 

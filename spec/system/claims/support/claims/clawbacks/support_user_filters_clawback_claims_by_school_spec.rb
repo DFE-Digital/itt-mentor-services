@@ -177,12 +177,12 @@ RSpec.describe "Support user filters clawback claims by school", service: :claim
   end
 
   def and_i_do_not_see_hogwarts_selected_from_the_school_filter
-    expect(page).not_to have_checked_field("Hogwarts")
+    expect(page).to have_no_checked_field("Hogwarts")
     expect(page).not_to have_filter_tag("Hogwarts")
   end
 
   def and_i_do_not_see_springfield_elementary_selected_from_the_school_filter
-    expect(page).not_to have_checked_field("Springfield Elementary")
+    expect(page).to have_no_checked_field("Springfield Elementary")
     expect(page).not_to have_filter_tag("Springfield Elementary")
   end
 

@@ -63,9 +63,9 @@ RSpec.describe "School user views placements without individual creation", servi
   def then_i_see_no_creation_options
     expect(page).to have_title("Placements - Manage school placements - GOV.UK")
     expect(page).to have_h1("Placements")
-    expect(page).not_to have_link("Add placement", exact: true)
-    expect(page).not_to have_link("Add multiple placements")
-    expect(page).not_to have_text("Before you add a placement, you must")
+    expect(page).to have_no_link("Add placement", exact: true)
+    expect(page).to have_no_link("Add multiple placements")
+    expect(page).to have_no_text("Before you add a placement, you must")
   end
 
   def and_the_school_records_have_not_changed

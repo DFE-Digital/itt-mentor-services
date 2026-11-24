@@ -130,8 +130,8 @@ RSpec.describe "Support user adds a school", :js, service: :claims, type: :syste
     expect(page).to have_h1("Organisations (1)")
     within(".organisation-search-results") do
       expect(page).to have_link("St Champions")
-      expect(page).not_to have_link("Sherborne School")
-      expect(page).not_to have_link("Royal Grammar School Guildford")
+      expect(page).to have_no_link("Sherborne School")
+      expect(page).to have_no_link("Royal Grammar School Guildford")
     end
   end
   alias_method :then_i_see_the_organisations_index_page, :and_i_am_on_the_organisations_index_page
@@ -211,7 +211,7 @@ RSpec.describe "Support user adds a school", :js, service: :claims, type: :syste
   def click_autocomplete_option(name)
     within(".autocomplete__wrapper") do
       expect(page).to have_css(".autocomplete__option", text: name, wait: 10)
-      all(".autocomplete__option", text: name, minimum: 1).first.click
+      first(".autocomplete__option", text: name, minimum: 1).click
     end
   end
 
@@ -264,7 +264,7 @@ RSpec.describe "Support user adds a school", :js, service: :claims, type: :syste
     expect(page).to have_h1("Organisations (2)")
     within(".organisation-search-results") do
       expect(page).to have_link("St Champions")
-      expect(page).not_to have_link("Sherborne School")
+      expect(page).to have_no_link("Sherborne School")
       expect(page).to have_link("Royal Grammar School Guildford")
     end
   end

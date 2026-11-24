@@ -89,25 +89,25 @@ RSpec.describe "Support user filters and searches for organisations", service: :
   end
 
   def then_i_see_organisations_matching_the_postcode_search
-    expect(page).to have_content("A School")
-    expect(page).to have_content("University of Westminster")
+    expect(page).to have_text("A School")
+    expect(page).to have_text("University of Westminster")
 
-    expect(page).not_to have_content("Lead Partner London")
-    expect(page).not_to have_content("School London")
-    expect(page).not_to have_content("1 Primary")
+    expect(page).to have_no_text("Lead Partner London")
+    expect(page).to have_no_text("School London")
+    expect(page).to have_no_text("1 Primary")
   end
 
   def then_i_see_only_the_organisation_with_lead_partner_as_provider_type
-    expect(page).to have_content("Lead Partner London")
+    expect(page).to have_text("Lead Partner London")
 
-    expect(page).not_to have_content("School London")
-    expect(page).not_to have_content("University of Westminster")
-    expect(page).not_to have_content("A School")
-    expect(page).not_to have_content("1 Primary")
+    expect(page).to have_no_text("School London")
+    expect(page).to have_no_text("University of Westminster")
+    expect(page).to have_no_text("A School")
+    expect(page).to have_no_text("1 Primary")
   end
 
   def then_i_see_the_no_results_message(message)
-    expect(page).to have_content message
+    expect(page).to have_text message
   end
 
   def when_i_clear_filters
@@ -116,10 +116,10 @@ RSpec.describe "Support user filters and searches for organisations", service: :
 
   def then_i_see_the_selections_in_filter_list
     within(".app-filter-tags") do
-      expect(page).to have_content "Lead partner"
-      expect(page).to have_content "School"
-      expect(page).to have_content "SCITT"
-      expect(page).to have_content "University"
+      expect(page).to have_text "Lead partner"
+      expect(page).to have_text "School"
+      expect(page).to have_text "SCITT"
+      expect(page).to have_text "University"
     end
   end
 
@@ -131,56 +131,56 @@ RSpec.describe "Support user filters and searches for organisations", service: :
 
   def then_the_other_filters_remain_in_filter_list
     within(".app-filter-tags") do
-      expect(page).to have_content "Lead partner"
-      expect(page).to have_content "SCITT"
-      expect(page).to have_content "University"
+      expect(page).to have_text "Lead partner"
+      expect(page).to have_text "SCITT"
+      expect(page).to have_text "University"
 
-      expect(page).not_to have_content "School"
+      expect(page).to have_no_text "School"
     end
   end
 
   def and_i_do_not_see_schools
-    expect(page).to have_content("University of Westminster")
-    expect(page).to have_content("Lead Partner London")
+    expect(page).to have_text("University of Westminster")
+    expect(page).to have_text("Lead Partner London")
 
-    expect(page).not_to have_content("School London")
-    expect(page).not_to have_content("A School")
-    expect(page).not_to have_content("1 Primary")
+    expect(page).to have_no_text("School London")
+    expect(page).to have_no_text("A School")
+    expect(page).to have_no_text("1 Primary")
   end
 
   def then_i_see_all_organisations
-    expect(page).to have_content("School London")
-    expect(page).to have_content("University of Westminster")
-    expect(page).to have_content("Lead Partner London")
-    expect(page).to have_content("A School")
-    expect(page).to have_content("1 Primary")
+    expect(page).to have_text("School London")
+    expect(page).to have_text("University of Westminster")
+    expect(page).to have_text("Lead Partner London")
+    expect(page).to have_text("A School")
+    expect(page).to have_text("1 Primary")
   end
 
   def then_i_see_the_london_school_only
-    expect(page).to have_content("School London")
+    expect(page).to have_text("School London")
 
-    expect(page).not_to have_content("University of Westminster")
-    expect(page).not_to have_content("Lead Partner London")
-    expect(page).not_to have_content("A School")
-    expect(page).not_to have_content("1 Primary")
+    expect(page).to have_no_text("University of Westminster")
+    expect(page).to have_no_text("Lead Partner London")
+    expect(page).to have_no_text("A School")
+    expect(page).to have_no_text("1 Primary")
   end
 
   def then_i_see_all_london_organisations
-    expect(page).to have_content("School London")
-    expect(page).to have_content("Lead Partner London")
+    expect(page).to have_text("School London")
+    expect(page).to have_text("Lead Partner London")
 
-    expect(page).not_to have_content("University of Westminster")
-    expect(page).not_to have_content("A School")
-    expect(page).not_to have_content("1 Primary")
+    expect(page).to have_no_text("University of Westminster")
+    expect(page).to have_no_text("A School")
+    expect(page).to have_no_text("1 Primary")
   end
 
   def then_i_see_all_schools
-    expect(page).to have_content("School London")
-    expect(page).to have_content("1 Primary")
-    expect(page).to have_content("A School")
+    expect(page).to have_text("School London")
+    expect(page).to have_text("1 Primary")
+    expect(page).to have_text("A School")
 
-    expect(page).not_to have_content("University of Westminster")
-    expect(page).not_to have_content("Lead Partner London")
+    expect(page).to have_no_text("University of Westminster")
+    expect(page).to have_no_text("Lead Partner London")
   end
 
   def then_i_see_support_navigation_with_organisation_selected

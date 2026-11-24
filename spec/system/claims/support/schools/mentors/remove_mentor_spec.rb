@@ -25,17 +25,17 @@ RSpec.describe "Remove a mentor from a school", service: :claims, type: :system 
   end
 
   def then_i_expect_to_see_the_mentor_has_been_removed
-    expect(page).not_to have_content("Bilbo Baggins\n1")
+    expect(page).to have_no_text("Bilbo Baggins\n1")
   end
 
   def when_i_confirm_removal
-    expect(page).to have_content("Are you sure you want to remove this mentor?")
+    expect(page).to have_text("Are you sure you want to remove this mentor?")
     expect(page).to have_warning_text(
       "Bilbo Baggins will be removed as a mentor from your school. " \
       "Bilbo Baggins will still be assigned to any claims that have been submitted.",
     )
     click_on "Remove mentor"
-    expect(page).to have_content("Mentor removed")
+    expect(page).to have_text("Mentor removed")
   end
 
   def when_i_click_on_remove_mentor
@@ -54,17 +54,17 @@ RSpec.describe "Remove a mentor from a school", service: :claims, type: :system 
   end
 
   def when_i_see_a_list_of_the_schools_mentors
-    expect(page).to have_content("Name")
-    expect(page).to have_content("Teacher reference number (TRN)")
+    expect(page).to have_text("Name")
+    expect(page).to have_text("Teacher reference number (TRN)")
 
     within("tbody tr:nth-child(1)") do
-      expect(page).to have_content(mentor1.full_name)
-      expect(page).to have_content(mentor1.trn)
+      expect(page).to have_text(mentor1.full_name)
+      expect(page).to have_text(mentor1.trn)
     end
 
     within("tbody tr:nth-child(2)") do
-      expect(page).to have_content(mentor2.full_name)
-      expect(page).to have_content(mentor2.trn)
+      expect(page).to have_text(mentor2.full_name)
+      expect(page).to have_text(mentor2.trn)
     end
   end
 end

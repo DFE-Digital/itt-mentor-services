@@ -118,9 +118,9 @@ RSpec.describe "Placements / Schools / School Contacts / Edit a school contact",
 
   def then_i_see_the_school_contact_details(first_name:, last_name:, email_address:)
     within("#school-contact-details") do
-      expect(page).to have_content(first_name)
-      expect(page).to have_content(last_name)
-      expect(page).to have_content(email_address)
+      expect(page).to have_text(first_name)
+      expect(page).to have_text(last_name)
+      expect(page).to have_text(email_address)
     end
   end
   alias_method :and_i_see_the_school_contact_details,
@@ -141,29 +141,29 @@ RSpec.describe "Placements / Schools / School Contacts / Edit a school contact",
                :when_i_fill_out_the_school_contact_form
 
   def then_i_return_to_my_organisation_details_page
-    expect(page.find(".govuk-heading-l")).to have_content(school.name)
+    expect(page.find(".govuk-heading-l")).to have_text(school.name)
     expect_organisation_details_to_be_selected_in_primary_navigation
   end
 
   def and_i_see_the_school_contact_details(first_name:, last_name:, email_address:)
     within("#school-contact-details") do
-      expect(page).to have_content(first_name)
-      expect(page).to have_content(last_name)
-      expect(page).to have_content(email_address)
+      expect(page).to have_text(first_name)
+      expect(page).to have_text(last_name)
+      expect(page).to have_text(email_address)
     end
   end
 
   def and_i_see_success_message
-    expect(page).to have_content("Placement contact updated")
+    expect(page).to have_text("Placement contact updated")
   end
 
   def then_i_see_an_error(error_message)
     # Error summary
-    expect(page.find(".govuk-error-summary")).to have_content(
+    expect(page.find(".govuk-error-summary")).to have_text(
       "There is a problem",
     )
-    expect(page.find(".govuk-error-summary")).to have_content(error_message)
+    expect(page.find(".govuk-error-summary")).to have_text(error_message)
     # Error above input
-    expect(page.find(".govuk-error-message")).to have_content(error_message)
+    expect(page.find(".govuk-error-message")).to have_text(error_message)
   end
 end

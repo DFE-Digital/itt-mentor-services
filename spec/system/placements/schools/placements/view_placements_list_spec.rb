@@ -109,11 +109,11 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
   end
 
   def then_i_see_placement(placement)
-    expect(page).to have_content placement.decorate.title
+    expect(page).to have_text placement.decorate.title
   end
 
   def and_i_do_not_see_placement(placement)
-    expect(page).not_to have_content placement.decorate.title
+    expect(page).to have_no_text placement.decorate.title
   end
 
   def then_i_see_the_placements_page
@@ -121,7 +121,7 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
     expect(page).to have_title "Placements"
     expect(page).to have_current_path placements_school_placements_path(school)
     within(".govuk-heading-l") do
-      expect(page).to have_content "Placements"
+      expect(page).to have_text "Placements"
     end
   end
 
@@ -135,12 +135,12 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
   end
 
   def then_i_see_the_empty_state
-    expect(page).to have_content "There are no placements for #{school.name}"
+    expect(page).to have_text "There are no placements for #{school.name}"
   end
 
   def then_i_see_subject_names(names)
     within("tbody tr:nth-child(1) td:nth-child(1)") do
-      expect(page).to have_content names
+      expect(page).to have_text names
     end
   end
 
@@ -148,19 +148,19 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
 
   def then_i_see_mentor_names(names)
     within("tbody tr:nth-child(1) td:nth-child(2)") do
-      expect(page).to have_content names
+      expect(page).to have_text names
     end
   end
 
   def then_i_see_term_name(name)
     within("tbody tr:nth-child(1) td:nth-child(3)") do
-      expect(page).to have_content name
+      expect(page).to have_text name
     end
   end
 
   def then_i_see_the_provider_name(name)
     within("tbody tr:nth-child(1) td:nth-child(4)") do
-      expect(page).to have_content name
+      expect(page).to have_text name
     end
   end
 
@@ -195,9 +195,9 @@ RSpec.describe "Placement school user views a list of placements", service: :pla
 
   def expect_to_see_table_headings
     within(".govuk-table__head") do
-      expect(page).to have_content "Subject"
-      expect(page).to have_content "Mentor"
-      expect(page).to have_content "Start date"
+      expect(page).to have_text "Subject"
+      expect(page).to have_text "Mentor"
+      expect(page).to have_text "Start date"
     end
   end
 

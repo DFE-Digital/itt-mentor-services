@@ -58,7 +58,7 @@ RSpec.describe "School user views the placements index when not hosting placemen
     expect(page).to have_paragraph(
       "We will email you next year to check whether your placement availability has changed.",
     )
-    expect(page).not_to have_link("change your status")
+    expect(page).to have_no_link("change your status")
   end
 
   def when_i_view_organisation_details
@@ -70,7 +70,7 @@ RSpec.describe "School user views the placements index when not hosting placemen
     expect(primary_navigation).to have_current_item("Organisation details")
     within("#hosting_interest") do
       expect(page).to have_summary_list_row("Status", "Not open")
-      expect(page).not_to have_link("Change")
+      expect(page).to have_no_link("Change")
     end
     expect(@hosting_interest.reload.appetite).to eq("not_open")
   end

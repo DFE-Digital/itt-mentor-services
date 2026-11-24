@@ -36,14 +36,14 @@ RSpec.describe "Remove a user", service: :claims, type: :system do
   end
 
   def then_i_am_taken_to_a_removal_confirmation_page(school, user)
-    expect(page).to have_content user.full_name.to_s
-    expect(page).to have_content "#{user.full_name} will be sent an email to tell them you removed them from #{school.name}."
+    expect(page).to have_text user.full_name.to_s
+    expect(page).to have_text "#{user.full_name} will be sent an email to tell them you removed them from #{school.name}."
   end
 
   def then_the_user_has_been_removed_from_the_school(_school, user)
-    expect(page).to have_content "User removed"
+    expect(page).to have_text "User removed"
 
-    expect(page).not_to have_content user.full_name
-    expect(page).not_to have_content user.email
+    expect(page).to have_no_text user.full_name
+    expect(page).to have_no_text user.email
   end
 end

@@ -30,11 +30,11 @@ RSpec.describe "Authentication", service: :claims, type: :system do
   end
 
   def then_i_am_unable_to_access_the_page
-    expect(page).to have_content("Sign in to Claim funding for mentor training")
+    expect(page).to have_text("Sign in to Claim funding for mentor training")
   end
 
   def then_i_am_able_to_access_the_page
-    expect(page).to have_content("NameSchool")
+    expect(page).to have_text("NameSchool")
   end
 
   def when_i_visit_the_sign_in_path

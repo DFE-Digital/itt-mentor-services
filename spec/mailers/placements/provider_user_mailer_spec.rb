@@ -10,7 +10,7 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
     it "sends invitation email" do
       expect(invite_email.to).to contain_exactly(user.email)
       expect(invite_email.subject).to eq("Invitation to join Manage school placements")
-      expect(invite_email.body).to have_content <<~EMAIL
+      expect(invite_email.body).to have_text <<~EMAIL
         #{user.first_name},
 
         You have been invited to join the Manage school placements service for #{organisation.name}.
@@ -57,7 +57,7 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
     it "sends expected message to user" do
       expect(removal_email.to).to contain_exactly user.email
       expect(removal_email.subject).to eq "You have been removed from Manage school placements"
-      expect(removal_email.body).to have_content <<~EMAIL
+      expect(removal_email.body).to have_text <<~EMAIL
         #{user.first_name},
 
         You no longer have access to the Manage school placements service for #{organisation.name}. This is because someone at this organisation removed you.
@@ -104,7 +104,7 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
         "A school has added you",
       )
 
-      expect(partnership_created_notification_email.body).to have_content <<~EMAIL
+      expect(partnership_created_notification_email.body).to have_text <<~EMAIL
         #{user.first_name},
 
         #{source_organisation.name} has added #{partner_organisation.name} as one of the providers they would like to work with.
@@ -137,7 +137,7 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
         expect(partnership_destroyed_notification_email.subject).to eq(
           "A school has removed you",
         )
-        expect(partnership_destroyed_notification_email.body).to have_content <<~EMAIL
+        expect(partnership_destroyed_notification_email.body).to have_text <<~EMAIL
           #{user.first_name},
 
           #{source_organisation.name} has deleted #{partner_organisation.name} from the list of providers they work with.
@@ -165,7 +165,7 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
         expect(partnership_destroyed_notification_email.subject).to eq(
           "A school has removed you",
         )
-        expect(partnership_destroyed_notification_email.body).to have_content <<~EMAIL
+        expect(partnership_destroyed_notification_email.body).to have_text <<~EMAIL
           #{user.first_name},
 
           #{source_organisation.name} has deleted #{partner_organisation.name} from the list of providers they work with.
@@ -197,7 +197,7 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
       it "sends a notification email to the user of the provider" do
         expect(partnership_destroyed_notification_email.to).to contain_exactly(user.email)
         expect(partnership_destroyed_notification_email.subject).to eq("A school has removed you")
-        expect(partnership_destroyed_notification_email.body).to have_content <<~EMAIL
+        expect(partnership_destroyed_notification_email.body).to have_text <<~EMAIL
           #{user.first_name},
 
           #{source_organisation.name} has deleted #{partner_organisation.name} from the list of providers they work with.
@@ -238,7 +238,7 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
       expect(placement_provider_assigned_notification.subject).to eq(
         "A school wants you to place a trainee with them",
       )
-      expect(placement_provider_assigned_notification.body).to have_content <<~EMAIL
+      expect(placement_provider_assigned_notification.body).to have_text <<~EMAIL
         #{provider_user.first_name},
 
         #{school.name} has assigned #{provider.name} to the following placement:
@@ -277,7 +277,7 @@ RSpec.describe Placements::ProviderUserMailer, type: :mailer do
       expect(placement_provider_removed_notification.subject).to eq(
         "A school has removed you from a placement",
       )
-      expect(placement_provider_removed_notification.body).to have_content <<~EMAIL
+      expect(placement_provider_removed_notification.body).to have_text <<~EMAIL
         #{provider_user.first_name},
 
         #{school.name} has removed #{provider.name} from a placement.

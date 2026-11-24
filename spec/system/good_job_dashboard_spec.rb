@@ -25,14 +25,14 @@ RSpec.describe "GoodJob admin dashboard", service: :placements, type: :system do
   end
 
   def then_i_can_see_the_dashboard
-    expect(page).to have_content "you're doing a Good Job"
+    expect(page).to have_text "you're doing a Good Job"
   end
 
   def then_i_cannot_see_the_dashboard
-    expect(page).to have_content "You cannot perform this action"
+    expect(page).to have_text "You cannot perform this action"
   end
 
   def then_i_am_asked_to_sign_in
-    expect(page).to have_content "Sign in to Manage school placements"
+    expect(page).to have_text "Sign in to Manage school placements"
   end
 end

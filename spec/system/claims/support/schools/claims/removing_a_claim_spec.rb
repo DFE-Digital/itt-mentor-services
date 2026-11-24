@@ -84,12 +84,12 @@ RSpec.describe "Create claim", service: :claims, type: :system do
   end
 
   def when_i_confirm_removal
-    expect(page).to have_content("Are you sure you want to remove this claim?")
+    expect(page).to have_text("Are you sure you want to remove this claim?")
     click_on "Remove claim"
   end
 
   def then_the_claim_has_been_deleted
-    expect(page).not_to have_content("111111111")
-    expect(page).to have_content("Claim has been removed")
+    expect(page).to have_no_text("111111111")
+    expect(page).to have_text("Claim has been removed")
   end
 end

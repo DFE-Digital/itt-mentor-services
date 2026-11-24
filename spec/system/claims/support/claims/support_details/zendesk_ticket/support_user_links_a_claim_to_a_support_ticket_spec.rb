@@ -120,7 +120,7 @@ RSpec.describe "Support user links a claim to a support ticket", service: :claim
 
   def and_i_see_the_zendesk_ticket_url_has_been_added
     expect(page).to have_success_banner("Link to Zendesk ticket added")
-    expect(page).not_to have_link("Add link to Zendesk ticket")
+    expect(page).to have_no_link("Add link to Zendesk ticket")
     expect(page).to have_link("Zendesk ticket (opens in new tab)", href: "example.zendesk.com")
   end
 end

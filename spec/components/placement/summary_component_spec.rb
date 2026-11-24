@@ -39,21 +39,21 @@ RSpec.describe Placement::SummaryComponent, type: :component do
       render_inline(component)
 
       # School details
-      expect(page).to have_content("London Primary School", count: 2)
-      expect(page).to have_content("All-through", count: 2)
-      expect(page).to have_content("4 to 11", count: 2)
-      expect(page).to have_content("Local authority maintained schools", count: 2)
-      expect(page).to have_content("Good", count: 2)
+      expect(page).to have_text("London Primary School", count: 2)
+      expect(page).to have_text("All-through", count: 2)
+      expect(page).to have_text("4 to 11", count: 2)
+      expect(page).to have_text("Local authority maintained schools", count: 2)
+      expect(page).to have_text("Good", count: 2)
 
       # Subject details
-      expect(page).to have_content("Biology", count: 1)
-      expect(page).to have_content("Classics", count: 1)
+      expect(page).to have_text("Biology", count: 1)
+      expect(page).to have_text("Classics", count: 1)
 
       # Academic year details
-      expect(page).to have_content(academic_year.name, count: 2)
+      expect(page).to have_text(academic_year.name, count: 2)
 
       # Expected date details
-      expect(page).to have_content("Summer term", count: 2)
+      expect(page).to have_text("Summer term", count: 2)
     end
   end
 
@@ -69,7 +69,7 @@ RSpec.describe Placement::SummaryComponent, type: :component do
         render_inline(component)
 
         # Subject details
-        expect(page).to have_content("Biology")
+        expect(page).to have_text("Biology")
       end
     end
 
@@ -87,7 +87,7 @@ RSpec.describe Placement::SummaryComponent, type: :component do
         render_inline(component)
 
         # Subject details
-        expect(page).to have_content("French")
+        expect(page).to have_text("French")
       end
 
       context "with 2 additional subject do" do
@@ -98,7 +98,7 @@ RSpec.describe Placement::SummaryComponent, type: :component do
           render_inline(component)
 
           # Subject details
-          expect(page).to have_content("French and German")
+          expect(page).to have_text("French and German")
         end
       end
 
@@ -108,7 +108,7 @@ RSpec.describe Placement::SummaryComponent, type: :component do
         it "renders the placement's subjects as a sentence" do
           render_inline(component)
           # Subject details
-          expect(page).to have_content("French, German, and Spanish")
+          expect(page).to have_text("French, German, and Spanish")
         end
       end
     end
@@ -124,7 +124,7 @@ RSpec.describe Placement::SummaryComponent, type: :component do
       render_inline(component)
 
       # Distance details
-      expect(page).to have_content(26.7)
+      expect(page).to have_text(26.7)
     end
   end
 end

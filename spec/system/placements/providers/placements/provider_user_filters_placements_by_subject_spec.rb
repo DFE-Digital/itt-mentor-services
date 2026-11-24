@@ -111,7 +111,7 @@ RSpec.describe "Provider user filters placements by subject", service: :placemen
     expect(page).to have_filter_tag("Primary with mathematics")
     expect(page).to have_checked_field("Primary with mathematics")
     expect(page).not_to have_filter_tag("Primary with english")
-    expect(page).not_to have_checked_field("Primary with english")
+    expect(page).to have_no_checked_field("Primary with english")
   end
 
   def when_i_select_primary_with_english_from_the_subject_filter
@@ -149,7 +149,7 @@ RSpec.describe "Provider user filters placements by subject", service: :placemen
 
   def and_i_do_not_see_the_primary_with_maths_subject_filter
     expect(page).not_to have_filter_tag("Primary with mathematics")
-    expect(page).not_to have_checked_field("Primary with mathematics")
+    expect(page).to have_no_checked_field("Primary with mathematics")
     expect(page).to have_filter_tag("Primary with english")
     expect(page).to have_checked_field("Primary with english")
   end
@@ -162,8 +162,8 @@ RSpec.describe "Provider user filters placements by subject", service: :placemen
 
   def and_i_do_not_see_any_selected_subject_filters
     expect(page).not_to have_filter_tag("Primary with mathematics")
-    expect(page).not_to have_checked_field("Primary with mathematics")
+    expect(page).to have_no_checked_field("Primary with mathematics")
     expect(page).not_to have_filter_tag("Primary with english")
-    expect(page).not_to have_checked_field("Primary with english")
+    expect(page).to have_no_checked_field("Primary with english")
   end
 end

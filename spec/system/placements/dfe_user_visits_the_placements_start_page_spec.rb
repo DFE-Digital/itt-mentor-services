@@ -33,7 +33,7 @@ RSpec.describe "DfE user visits the placements start page", service: :placements
     strip_tags(content).split("\n").each do |paragraph|
       next if paragraph.blank?
 
-      expect(page).to have_content paragraph.strip
+      expect(page).to have_text paragraph.strip
     end
 
     expect(page).to have_h3("Related content")

@@ -238,6 +238,6 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
   end
 
   def then_i_do_not_see_the_request_clawback_button
-    expect(page).not_to have_link("Request clawback")
+    expect(page).to have_no_link("Request clawback")
   end
 end

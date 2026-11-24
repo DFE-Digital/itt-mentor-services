@@ -135,20 +135,20 @@ RSpec.describe "Provider user filters placements by phase", service: :placements
   end
 
   def and_i_no_longer_see_the_primary_year_group_filter
-    expect(page).not_to have_element(:legend, text: "Primary year group", class: "govuk-fieldset__legend")
-    expect(page).not_to have_field("Nursery", type: "checkbox")
+    expect(page).to have_no_element(:legend, text: "Primary year group", class: "govuk-fieldset__legend")
+    expect(page).to have_no_field("Nursery", type: "checkbox")
   end
 
   def and_i_see_only_secondary_subjects_listed_in_the_subjects_filter
     expect(page).to have_element(:legend, text: "Subject", class: "govuk-fieldset__legend")
     expect(page).to have_field("Music", type: "checkbox", checked: false)
 
-    expect(page).not_to have_field("Primary with mathematics", type: "checkbox", checked: false)
+    expect(page).to have_no_field("Primary with mathematics", type: "checkbox", checked: false)
   end
 
   def and_i_see_that_springfield_elementary_is_no_longer_listed_in_the_schools_filter
     expect(page).to have_element(:legend, text: "School", class: "govuk-fieldset__legend")
-    expect(page).not_to have_field("Springfield Elementary", type: "checkbox", checked: false)
+    expect(page).to have_no_field("Springfield Elementary", type: "checkbox", checked: false)
   end
 
   def and_i_see_that_ogdenville_observatoire_is_still_listed_in_the_schools_filter

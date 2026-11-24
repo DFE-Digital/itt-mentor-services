@@ -76,7 +76,7 @@ RSpec.describe "Provider user downloads claim data", service: :claims, type: :sy
 
   def then_i_do_not_see_the_download_claim_data_button
     expect(page).to have_h1("Your account")
-    expect(page).not_to have_link("Download claim data")
+    expect(page).to have_no_link("Download claim data")
   end
 
   def when_i_click_on_download_claim_data

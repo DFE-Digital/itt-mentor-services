@@ -51,8 +51,8 @@ RSpec.describe AutocompleteSelectFormComponent, type: :component do
       it "returns an autocomplete select form" do
         render_inline(component)
 
-        expect(page.find(".govuk-label")).to have_content("Label")
-        expect(page.find(".govuk-caption-l")).to have_content("Caption")
+        expect(page.find(".govuk-label")).to have_text("Label")
+        expect(page.find(".govuk-caption-l")).to have_text("Caption")
         expect(page).to have_field("form-id-field")
         page.find("div[data-input-name='form[name]']")
       end
@@ -91,8 +91,8 @@ RSpec.describe AutocompleteSelectFormComponent, type: :component do
         "[data-autocomplete-path-value='/api/school_suggestions']" \
         "[data-autocomplete-return-attributes-value='[\"town\",\"postcode\"]']",
       )
-      expect(page.find(".govuk-label")).to have_content("Enter a school name, URN or postcode")
-      expect(page.find(".govuk-caption-l")).to have_content("Add organisation")
+      expect(page.find(".govuk-label")).to have_text("Enter a school name, URN or postcode")
+      expect(page.find(".govuk-caption-l")).to have_text("Add organisation")
       expect(page).to have_field("school-id-field")
       page.find("div[data-input-name='school[name]']")
     end
@@ -125,7 +125,7 @@ RSpec.describe AutocompleteSelectFormComponent, type: :component do
     it "displays the warning text" do
       render_inline(component)
 
-      expect(page).to have_content(warning_text)
+      expect(page).to have_text(warning_text)
     end
   end
 end

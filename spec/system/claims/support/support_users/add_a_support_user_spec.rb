@@ -78,11 +78,11 @@ RSpec.describe "Add a support user", service: :claims, type: :system do
   alias_method :and_i_fill_in_the_support_user_form, :when_i_fill_in_the_support_user_form
 
   def then_i_am_redirected_to_check_the_support_user_details
-    expect(page).to have_content "Check your answers"
+    expect(page).to have_text "Check your answers"
 
-    expect(page).to have_content "John"
-    expect(page).to have_content "Doe"
-    expect(page).to have_content "john.doe@education.gov.uk"
+    expect(page).to have_text "John"
+    expect(page).to have_text "Doe"
+    expect(page).to have_text "john.doe@education.gov.uk"
   end
 
   def when_i_click(button)
@@ -90,8 +90,8 @@ RSpec.describe "Add a support user", service: :claims, type: :system do
   end
 
   def then_i_see_the_support_user_has_been_added(email_address:)
-    expect(page).to have_content "User added"
-    expect(page).to have_content email_address
+    expect(page).to have_text "User added"
+    expect(page).to have_text email_address
   end
 
   def and_an_email_is_sent_to_the_support_user(email_address:)
@@ -113,8 +113,8 @@ RSpec.describe "Add a support user", service: :claims, type: :system do
   end
 
   def then_i_see_an_error(message)
-    expect(page).to have_content "There is a problem"
-    expect(page).to have_content message, count: 2
+    expect(page).to have_text "There is a problem"
+    expect(page).to have_text message, count: 2
   end
 
   def and_the_page_title_is(title)

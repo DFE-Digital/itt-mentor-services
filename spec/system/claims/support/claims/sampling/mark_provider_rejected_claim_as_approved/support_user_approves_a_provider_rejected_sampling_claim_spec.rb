@@ -133,7 +133,7 @@ RSpec.describe "Support user approves a provider rejected sampling claim", servi
 
   def and_i_see_provider_rejected_sampling_claim_is_no_longer_listed
     expect(page).to have_h2("Auditing")
-    expect(page).not_to have_link("#{@provider_rejected_sampling_claim.reference} - #{@provider_rejected_sampling_claim.school.name}", href: "/support/claims/sampling/#{@provider_rejected_sampling_claim.id}")
+    expect(page).to have_no_link("#{@provider_rejected_sampling_claim.reference} - #{@provider_rejected_sampling_claim.school.name}", href: "/support/claims/sampling/#{@provider_rejected_sampling_claim.id}")
   end
 
   def then_i_see_there_are_two_paid_claims

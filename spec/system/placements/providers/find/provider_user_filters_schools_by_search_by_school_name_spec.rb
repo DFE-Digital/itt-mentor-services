@@ -57,8 +57,8 @@ RSpec.describe "Provider user filters schools by search by location", service: :
   end
 
   def and_i_see_all_schools
-    expect(page).to have_content(@primary_school.name)
-    expect(page).to have_content(@secondary_school.name)
+    expect(page).to have_text(@primary_school.name)
+    expect(page).to have_text(@secondary_school.name)
   end
 
   def and_i_see_the_search_by_school_name_filter
@@ -94,13 +94,13 @@ RSpec.describe "Provider user filters schools by search by location", service: :
   end
 
   def then_i_see_all_schools
-    expect(page).to have_content(@primary_school.name)
-    expect(page).to have_content(@secondary_school.name)
+    expect(page).to have_text(@primary_school.name)
+    expect(page).to have_text(@secondary_school.name)
   end
 
   def and_i_do_not_see_the_springfield_search_by_name_filter
     expect(page).not_to have_filter_tag("springfield elementary")
-    expect(page).not_to have_field("Enter a school name or URN", type: :search, with: "springfield elementary")
+    expect(page).to have_no_field("Enter a school name or URN", type: :search, with: "springfield elementary")
   end
 
   def when_i_search_for_a_school_that_doesnt_exist
@@ -125,6 +125,6 @@ RSpec.describe "Provider user filters schools by search by location", service: :
 
   def and_i_do_not_see_the_hogwarts_search_by_name_filter
     expect(page).not_to have_filter_tag("Hogwarts")
-    expect(page).not_to have_field("Enter a school name or URN", type: :search, with: "Hogwarts")
+    expect(page).to have_no_field("Enter a school name or URN", type: :search, with: "Hogwarts")
   end
 end
