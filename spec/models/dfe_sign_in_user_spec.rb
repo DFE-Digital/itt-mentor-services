@@ -422,6 +422,51 @@ describe DfESignInUser do
         end
       end
     end
+
+    # A person can be re-added under a new email after their original record
+    # was signed into. Their DfE Sign In uid then matches the original record
+    # and their email matches the unused one.
+    describe "when one record matches the uid and another of the same type matches the email" do
+      def sign_in_user_with(email:, dfe_sign_in_uid:, service:)
+        described_class.new(email:, dfe_sign_in_uid:, first_name: "Anne", last_name: "Wilson", service:)
+      end
+
+      it "returns the Claims::User matching the uid" do
+        create(:claims_user, email: "anne.new@example.com", dfe_sign_in_uid: nil)
+        uid_match = create(:claims_user, email: "anne.old@example.com", dfe_sign_in_uid: "anne-uid")
+
+        sign_in_user = sign_in_user_with(email: "anne.new@example.com", dfe_sign_in_uid: "anne-uid", service: :claims)
+
+        expect(sign_in_user.user).to eq uid_match
+      end
+
+      it "returns the same Claims::User as #school_user" do
+        create(:claims_user, email: "anne.new@example.com", dfe_sign_in_uid: nil)
+        create(:claims_user, email: "anne.old@example.com", dfe_sign_in_uid: "anne-uid")
+
+        sign_in_user = sign_in_user_with(email: "anne.new@example.com", dfe_sign_in_uid: "anne-uid", service: :claims)
+
+        expect(sign_in_user.user).to eq sign_in_user.school_user
+      end
+
+      it "returns the Placements::User matching the uid" do
+        create(:placements_user, email: "anne.new@example.com", dfe_sign_in_uid: nil)
+        uid_match = create(:placements_user, email: "anne.old@example.com", dfe_sign_in_uid: "anne-uid")
+
+        sign_in_user = sign_in_user_with(email: "anne.new@example.com", dfe_sign_in_uid: "anne-uid", service: :placements)
+
+        expect(sign_in_user.user).to eq uid_match
+      end
+
+      it "still returns a support user ahead of a uid match of another type" do
+        create(:claims_user, email: "anne.old@example.com", dfe_sign_in_uid: "anne-uid")
+        support_user = create(:claims_support_user, email: "anne.wilson@education.gov.uk", dfe_sign_in_uid: nil)
+
+        sign_in_user = sign_in_user_with(email: "anne.wilson@education.gov.uk", dfe_sign_in_uid: "anne-uid", service: :claims)
+
+        expect(sign_in_user.user).to eq support_user
+      end
+    end
   end
 
   describe ".end_session" do
