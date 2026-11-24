@@ -106,6 +106,7 @@ shared:
     - date_paid
     - paid_notification_sent_at
     - amendment_notification_sent_at
+    - amendment_deadline_notification_sent_at
   :provider_samplings:
     - id
     - sampling_id
@@ -195,7 +196,6 @@ shared:
     - city
     - county
     - postcode
-    - accredited
   :placements:
     - id
     - school_id
@@ -276,6 +276,14 @@ shared:
     - user_id
     - record_type
     - record_id
+    - created_at
+    - updated_at
+  :grant_conditions_acceptances:
+    - id
+    - school_id
+    - academic_year_id
+    - accepted_by_id
+    - accepted_at
     - created_at
     - updated_at
   :hosting_interests:

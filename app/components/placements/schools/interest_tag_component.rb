@@ -55,7 +55,10 @@ class Placements::Schools::InterestTagComponent < ApplicationComponent
   end
 
   def actively_looking?
-    school.current_hosting_interest(academic_year:)&.appetite == "actively_looking"
+    interest = school.current_hosting_interest(academic_year:)
+    return interest.actively_looking? if interest.present?
+
+    school.placements.where(academic_year:).exists?
   end
 
   def open?

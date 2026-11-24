@@ -215,6 +215,18 @@ class Claims::UserMailer < Claims::ApplicationMailer
                          service_name:)
   end
 
+  def claim_amendment_evidence_deadline_passed_notification(user, claim)
+    notify_email to: user.email,
+                 subject: t(".subject"),
+                 body: t(".body",
+                         user_name: user.first_name,
+                         provider_name: claim.provider_name,
+                         claim_reference: claim.reference,
+                         school_name: claim.school_name,
+                         evidence_deadline: evidence_deadline(claim),
+                         service_name:)
+  end
+
   def your_school_is_eligible_to_claim(user, school)
     notify_email to: user.email,
                  subject: t(".subject"),

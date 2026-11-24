@@ -10,7 +10,7 @@ gem "rails", "~> 8.1.3"
 gem "propshaft"
 
 # Use postgresql as the database for Active Record
-gem "pg", "~> 1.6"
+gem "pg", "~> 1.7"
 
 gem "amazing_print"
 
@@ -103,7 +103,7 @@ gem "geocoder"
 gem "audited"
 
 # BigQuery
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.17"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.16.4"
 
 # Migrations
 gem "strong_migrations"

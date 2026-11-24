@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Placements::AddPlacementWizard::YearGroupStep, type: :model do
   subject(:step) { described_class.new(wizard: mock_wizard, attributes:) }
 
-  let(:mock_wizard) { instance_double(Placements::AddPlacementWizard) }
+  let(:mock_wizard) { instance_double(Placements::EditPlacementWizard) }
   let(:attributes) { nil }
 
   describe "attributes" do

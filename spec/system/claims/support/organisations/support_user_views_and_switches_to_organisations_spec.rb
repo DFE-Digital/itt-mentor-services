@@ -7,13 +7,19 @@ RSpec.describe "Support user views and switches to organisations", service: :cla
   before do
     create(:claims_provider, name: "Excluded Code Provider", code: "1YF")
     create(:claims_provider, name: "Unaccredited Provider", accredited: false)
+    create(:claims_provider, name: "Previous Year Provider", accredited: false).tap do |previous_year_provider|
+      previous_year_provider.eligibilities.create!(academic_year: AcademicYear.current.previous)
+    end
   end
 
   scenario "I view schools and providers together and switch to each" do
     given_i_am_signed_in_as_support_user
     then_i_see_the_school_tagged_as_a_school
     and_i_see_the_provider_tagged_as_a_provider
+    and_i_see_the_provider_accredited_only_in_a_previous_year
     and_i_do_not_see_the_unaccredited_provider
+    when_i_search_for("Previous Year")
+    then_i_see_the_provider_accredited_only_in_a_previous_year_in_the_results
     when_i_search_for("London")
     then_i_see_only_the_provider
     when_i_click_on("London Provider")
@@ -38,13 +44,22 @@ RSpec.describe "Support user views and switches to organisations", service: :cla
   end
 
   def then_i_see_the_school_tagged_as_a_school
-    expect(page).to have_content("Organisations (3)")
+    expect(page).to have_content("Organisations (4)")
     expect(organisation_item("Manchester School")).to have_css(".govuk-tag--yellow", text: "School")
   end
 
   def and_i_see_the_provider_tagged_as_a_provider
     expect(organisation_item("London Provider")).to have_css(".govuk-tag--blue", text: "Provider")
     expect(organisation_item("Excluded Code Provider")).to have_css(".govuk-tag--blue", text: "Provider")
+  end
+
+  def and_i_see_the_provider_accredited_only_in_a_previous_year
+    expect(organisation_item("Previous Year Provider")).to have_css(".govuk-tag--blue", text: "Provider")
+  end
+
+  def then_i_see_the_provider_accredited_only_in_a_previous_year_in_the_results
+    expect(page).to have_content("Previous Year Provider")
+    expect(page).not_to have_content("London Provider")
   end
 
   def and_i_do_not_see_the_unaccredited_provider
@@ -71,7 +86,7 @@ RSpec.describe "Support user views and switches to organisations", service: :cla
 
   def then_i_see_the_organisations_list
     expect(page).to have_current_path(claims_support_schools_path)
-    expect(page).to have_content("Organisations (3)")
+    expect(page).to have_content("Organisations (4)")
   end
 
   def then_i_see_the_school_claims_page

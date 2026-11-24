@@ -1,5 +1,7 @@
 # Environment Variables in Azure
 
+Use the [environment inventory](claims/deployment.md#environment-inventory) to confirm the intended target. Request production access through the service PM and activate it through Azure PIM. Access links and role names below are repository documentation, not proof of current permissions.
+
 There are two ways to set environment variables in the Azure hosting environment. The process depends on whether the value is considered 'secret' or not.
 
 Environment variables that contain passwords, API keys or encryption keys should be considered secret. Most other environment variables can be considered non-secret – for example, hostnames for external API integrations, or runtime configuration such as `RAILS_ENV`.
@@ -79,7 +81,7 @@ From the key vault "Secrets" page:
 3. Enter the secret value and click "Create"
 
 > [!NOTE]  
-> You will need to [re-deploy the app](https://github.com/DFE-Digital/itt-mentor-services/actions/workflows/deploy.yml) for secret changes to be applied.
+> Redeploy the intended environment for secret changes to be applied. The [manual deployment workflow](https://github.com/DFE-Digital/itt-mentor-services/actions/workflows/deploy.yml) offers non-production targets, not production. Use the approved production route and verify web/worker configuration after rollout. See [deployment guidance](claims/deployment.md).
 
 ## Non-secret environment variables
 

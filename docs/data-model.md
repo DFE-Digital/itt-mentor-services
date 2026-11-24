@@ -1,5 +1,8 @@
 # Data model
 
+> [!WARNING]
+> This is a historical, incomplete shared-services design, not the current claims schema or permissions contract. Use the [claims data model and Mermaid ERDs](claims/data-model.md) and [claim lifecycle](claims/claim-lifecycle.md) for current claims behaviour. In particular, provider users now access claims, eligibility relates to academic years, and the claim status set has expanded. The historical placements context below is retained.
+
 > [!NOTE]
 > This is a _draft_ document. It will change as we develop our understanding of the services that this application encapsulates.
 

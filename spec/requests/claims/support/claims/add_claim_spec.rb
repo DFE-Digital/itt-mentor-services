@@ -183,7 +183,6 @@ RSpec.describe "Add claim in exceptional circumstances", service: :claims, type:
       complete_steps_up_to_school
       put_step(:provider, :claims_add_claim_wizard_provider_step, { id: provider.id })
 
-      expect(provider.accredited).to be(false)
       expect(response).to redirect_to("/support/claims/new/#{state_key}/mentor")
     end
 

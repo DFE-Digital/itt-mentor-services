@@ -6,6 +6,8 @@ en:
         hourly_rate: Hourly rate
         funding_link_text: View grant conditions
       grant_conditions:
+        agreed_for: Agreed for
+        agreed_for_academic_year: "%{academic_year} academic year"
         agreed_by: Agreed by
         agreed_on: Agreed on
         funding_link_text: View grant conditions

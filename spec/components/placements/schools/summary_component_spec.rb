@@ -32,6 +32,17 @@ RSpec.describe Placements::Schools::SummaryComponent, type: :component do
     render_inline(component)
   end
 
+  context "when publishing without a hosting interest" do
+    let(:school) { create(:placements_school, with_hosting_interest: false, placements:, name: "Hogwarts") }
+    let(:placements) { [build(:placement, academic_year:)] }
+
+    it "links the school name to its placements" do
+      expect(page).to have_link("Hogwarts", href: "/providers/#{provider.id}/find/#{school.id}/placements")
+      expect(page).to have_content("Placements available")
+      expect(page).to have_link("1 unfilled placement")
+    end
+  end
+
   context "when the school is open to hosting" do
     context "when the school does not have any placements" do
       let(:hosting_interests) { build_list(:hosting_interest, 1, appetite: "interested") }

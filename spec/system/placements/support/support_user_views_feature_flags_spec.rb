@@ -34,7 +34,7 @@ RSpec.describe "Support user views feature flags", :js, service: :placements, ty
     expect(page).to have_h1("Settings")
     expect(page).to have_link("Background jobs (opens in new tab)", href: "/good_job")
     expect(page).to have_link("Feature flags (opens in new tab)", href: "/flipper")
-    expect(page).to have_link("Emails", href: "/support/mailers")
+    expect(page).not_to have_link("Emails")
   end
 
   def when_i_click_on_feature_flags

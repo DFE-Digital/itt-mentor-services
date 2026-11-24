@@ -21,8 +21,6 @@ scope module: :placements,
 
     get :settings, to: "settings#index"
 
-    resources :mailers, only: :index
-
     resources :support_users, only: %i[index show destroy] do
       member { get :remove }
 
@@ -73,34 +71,6 @@ scope module: :placements,
         end
       end
 
-      resources :hosting_interests do
-        member do
-          get "edit", to: "hosting_interests/edit_hosting_interest#new", as: :new_edit_hosting_interest
-          get "edit/:state_key/:step", to: "hosting_interests/edit_hosting_interest#edit", as: :edit_hosting_interest
-          put "edit/:state_key/:step", to: "hosting_interests/edit_hosting_interest#update"
-        end
-
-        collection do
-          get "new", to: "hosting_interests/add_hosting_interest#new", as: :new_add_hosting_interest
-          get "new/:state_key/:step", to: "hosting_interests/add_hosting_interest#edit", as: :add_hosting_interest
-          put "new/:state_key/:step", to: "hosting_interests/add_hosting_interest#update"
-
-          get "whats_next", to: "hosting_interests/add_hosting_interest#whats_next", as: :whats_next
-        end
-      end
-
-      resources :potential_placements do
-        collection do
-          get "edit", to: "potential_placements/edit_potential_placements#new", as: :new_edit_potential_placements
-          get "edit/:state_key/:step", to: "potential_placements/edit_potential_placements#edit", as: :edit_potential_placements
-          put "edit/:state_key/:step", to: "potential_placements/edit_potential_placements#update"
-
-          get "convert", to: "potential_placements/convert_potential_placements#new", as: :new_convert_potential_placements
-          get "convert/:state_key/:step", to: "potential_placements/convert_potential_placements#edit", as: :convert_potential_placements
-          put "convert/:state_key/:step", to: "potential_placements/convert_potential_placements#update"
-        end
-      end
-
       resources :placements, only: %i[index show destroy] do
         member do
           get :confirm_unassign_provider
@@ -110,19 +80,6 @@ scope module: :placements,
           get "edit/:state_key/:step", to: "placements/edit_placement#edit", as: :edit_placement
           put "edit/:state_key/:step", to: "placements/edit_placement#update"
           get "preview", to: "placements#preview", as: :preview_placement
-        end
-
-        collection do
-          get "new", to: "placements/add_placement#new", as: :new_add_placement
-          get "new/:state_key/:step", to: "placements/add_placement#edit", as: :add_placement
-          put "new/:state_key/:step", to: "placements/add_placement#update"
-
-          get "multiple", to: "placements/add_multiple_placements#new", as: :new_add_multiple_placements
-          get "multiple/:state_key/:step", to: "placements/add_multiple_placements#edit", as: :add_multiple_placements
-          put "multiple/:state_key/:step", to: "placements/add_multiple_placements#update"
-
-          get "whats_next", to: "placements/add_multiple_placements#whats_next", as: :whats_next
-          get "concept_index", to: "placements/add_multiple_placements#concept_index", as: :concept_index
         end
       end
 

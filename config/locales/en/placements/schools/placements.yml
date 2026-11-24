@@ -40,18 +40,6 @@ en:
           mentor_not_assigned: Mentor not assigned
           date_not_added: Date not added
           provider_not_assigned: Provider not assigned
-        add_placement:
-          edit:
-            cancel: Cancel
-            placement_details: Placement details
-        add_multiple_placements:
-          edit:
-            cancel: Cancel
-          update:
-            heading: Placements added
-            body_html:
-              Providers can see your placements and may contact you to discuss them.<br><br>
-              You can add details to your placements such as expected date and provider.
         edit_placement:
           update:
             success: 
@@ -101,11 +89,6 @@ en:
             placements: Placements
             this_year: This year (%{academic_year_name})
             next_year: Next year (%{academic_year_name})
-            add_placement: Add placement
-            bulk_add_placements: Add multiple placements
-            you_must_add_itt_placement_contact: |
-              Before you add a placement, you must %{link_to} so that the teacher training providers can contact you.
-            add_itt_placement_contact: add a placement contact
             placement: Placement
             mentor: Mentor
             expected_date: Expected date
@@ -119,12 +102,9 @@ en:
             placements_available: placements available
             providers_can_see_your_placements: Providers can see your placements and will email %{contact_email} if they have suitable trainees.
             edit_placements: Edit placements to let providers know more details, such as the expected date.
-            change_your_status: change your status
             when_you_know_the_providers:
               When you know the providers you want to work with, assign them to your placements.
               This will prevent other providers getting in contact with you about them.
-            if_your_circumstances_change:
-              If your circumstances change and you are no longer able to offer placements, %{link}.
         show:
           any_time: Any time in the academic year
           providers_can_see_your_placements: Providers can see your placements and will email %{contact_email} if they have suitable trainees.
@@ -170,7 +150,7 @@ en:
           description: '%{provider_name} must be removed from the placement before you can delete it.'
         destroy:
           placement_deleted: Placement deleted
-          last_placement_deleted_body: You no longer have placement information available. Confirm your placement availability so providers know whether to contact you.
+          last_placement_deleted_body: You no longer have placement information available.
         confirm_unassign_provider:
           page_title: "Are you sure you want to remove %{provider_name} from this placement? - %{subject_names}"
           are_you_sure: Are you sure you want to remove %{provider_name} from this placement?
@@ -191,6 +171,3 @@ en:
             Providers will see that you are not offering placements and your contact information will be hidden.
           we_will_email_you:
             We will email you next year to check whether your placement availability has changed.
-          if_you_can_offer_placements:
-            If you think you can offer placements, %{link} to add placement information.
-          change_your_status: change your status

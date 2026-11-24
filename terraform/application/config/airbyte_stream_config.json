@@ -792,6 +792,11 @@
             "fieldPath": [
               "amendment_notification_sent_at"
             ]
+          },
+          {
+            "fieldPath": [
+              "amendment_deadline_notification_sent_at"
+            ]
           }
         ]
       },
@@ -2073,6 +2078,70 @@
           {
             "fieldPath": [
               "record_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "grant_conditions_acceptances",
+        "syncMode": "incremental_append",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "school_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "academic_year_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "accepted_by_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "accepted_at"
             ]
           },
           {

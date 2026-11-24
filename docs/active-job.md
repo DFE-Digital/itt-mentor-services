@@ -4,20 +4,17 @@ We use Rails [Active Job](https://guides.rubyonrails.org/active_job_basics.html)
 
 ## Admin dashboard
 
-You can access the GoodJob admin dashboard at the path `/good_job`.
-
-| Service           | Environment | URL                                                                     |
-| ----------------- | ----------- | ----------------------------------------------------------------------- |
-| School Placements | QA          | https://manage-school-placements-qa.test.teacherservices.cloud/good_job |
-| Track & Pay       | QA          | https://track-and-pay-qa.test.teacherservices.cloud/good_job            |
+You can access the GoodJob admin dashboard at `/good_job` on the intended claims environment host. Use the [environment inventory](claims/deployment.md#environment-inventory) or the deployment workflow output, rather than a historical ingress URL.
 
 > [!IMPORTANT]  
 > You must be signed in as a support user. Regular users cannot access the dashboard.
 
 > [!NOTE]  
-> Both services run from a single Rails app and database, so the job queues are shared. Both dashboards will show the same information.
+> Jobs use the application's Postgres database. Shared and service-specific jobs can appear together. Always confirm the environment before changing job state.
 
 From the dashboard, you can see jobs that have been queued and their status. Click in to an individual job to see more details, including its arguments and how long it took to run.
+
+See [claims operations](claims/operations.md#jobs-and-queues) for the schedule inventory and safe retry checks. Development runs jobs in-process; production Rails mode uses external workers and enables cron. This includes hosted non-production environments using the production image. See [GoodJob configuration](../config/initializers/good_job.rb).
 
 ## Scheduled jobs (cron)
 
@@ -34,12 +31,22 @@ name-of-job:
 
 Read the [GoodJob documentation](https://github.com/bensheldon/good_job?tab=readme-ov-file#cron-style-repeatingrecurring-jobs) for details of all supported config keys.
 
+### Amendment evidence deadline notifications
+
+`Claims::Sampling::SendEvidenceDeadlineNotificationsJob` runs daily at 09:00. It emails the claim's `created_by` user when a provider-amended claim is still `sampling_provider_not_approved` and its evidence deadline has passed. Evidence remains accepted throughout the deadline day, including any weekend extension.
+
+The job records `amendment_deadline_notification_sent_at` after successfully enqueueing the email. It locks and rechecks each claim so subsequent or overlapping runs do not enqueue the notification again. Existing overdue claims without this timestamp are included. The timestamp is retained if a claim changes status, so the notification is only scheduled once per claim. Normal claims email bank-holiday deferral still applies.
+
 ### Manually running a scheduled job
 
 You can manually trigger a scheduled job by heading to the "Cron" section of the admin dashboard and clicking the ⏭️ icon next to the job.
+
+Before triggering it, confirm permissions, environment and side effects. Financial exports, imports and email jobs are not guaranteed safe to replay. Inspect existing job results and business activity first.
 
 This is handy if you want to debug a job that usually runs out of business hours, without having to adjust the schedule and re-deploy the config file.
 
 ### Pausing a schedule
 
 To pause a schedule, click the ⏸️ icon against the cron schedule in the admin dashboard.
+
+This does not cancel already-enqueued or running jobs. Record the previous state and verify both the queue and schedule when resuming.

@@ -92,7 +92,24 @@ RSpec.describe Placements::Schools::InterestTagComponent, type: :component do
   end
 
   context "when the school has not specified a hosting interest" do
-    let(:school) { create(:placements_school) }
+    let(:school) { create(:placements_school, with_hosting_interest: false, placements:) }
+    let(:placements) { [] }
+
+    context "with available placements" do
+      let(:placements) { [build(:placement, academic_year:)] }
+
+      it "shows availability" do
+        expect(page).to have_content("Placements available")
+      end
+    end
+
+    context "with only filled placements" do
+      let(:placements) { [build(:placement, academic_year:, provider: build(:placements_provider))] }
+
+      it "shows no availability" do
+        expect(page).to have_content("No placements available")
+      end
+    end
 
     it "renders the correct text" do
       expect(page).to have_content "Placement availability unknown"
