@@ -3,8 +3,6 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
   before_action :set_placement, only: %i[show remove destroy preview]
   before_action :set_decorated_placement, only: %i[show remove preview]
 
-  helper_method :edit_attribute_path, :add_provider_path, :add_mentor_path
-
   def index
     @hosting_interest = @school.current_hosting_interest(
       academic_year: current_user.selected_academic_year,
@@ -70,18 +68,6 @@ class Placements::Schools::PlacementsController < Placements::ApplicationControl
 
   def set_decorated_placement
     @placement = @placement.decorate
-  end
-
-  def edit_attribute_path(attribute)
-    new_edit_placement_placements_school_placement_path(@school, @placement, step: attribute)
-  end
-
-  def add_provider_path
-    placements_school_partner_providers_path
-  end
-
-  def add_mentor_path
-    placements_school_mentors_path
   end
 
   def index_path

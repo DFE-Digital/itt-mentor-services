@@ -7,17 +7,6 @@ en:
             edit:
               cancel: Cancel
               add_placement: Placement details - %{organisation_name}
-          edit_placement:
-            update:
-              success: 
-                mentors: Mentor updated
-                provider: Provider updated
-                year_group: Year group updated
-                terms: Expected date updated
-            edit:
-              edit_placement: Placement details - %{organisation_name}
-              cancel: Cancel
-            success: Placement updated
           index:
             page_title: Placements
             placements: Placements

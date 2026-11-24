@@ -40,20 +40,6 @@ en:
           mentor_not_assigned: Mentor not assigned
           date_not_added: Date not added
           provider_not_assigned: Provider not assigned
-        edit_placement:
-          update:
-            success: 
-              mentors: Mentor updated
-              provider: Provider updated
-              provider_options: Provider updated
-              assign_last_placement: Provider updated
-              year_group: Year group updated
-              terms: Expected date updated
-              key_stage: Key stage updated
-          edit:
-            edit_placement: Placement details
-            cancel: Cancel
-          success: Placement updated
         terms:
           autumn: Autumn
           spring: Spring
@@ -101,16 +87,10 @@ en:
               other: "%{count} placements"
             placements_available: placements available
             providers_can_see_your_placements: Providers can see your placements and will email %{contact_email} if they have suitable trainees.
-            edit_placements: Edit placements to let providers know more details, such as the expected date.
-            when_you_know_the_providers:
-              When you know the providers you want to work with, assign them to your placements.
-              This will prevent other providers getting in contact with you about them.
         show:
           any_time: Any time in the academic year
           providers_can_see_your_placements: Providers can see your placements and will email %{contact_email} if they have suitable trainees.
           your_placement_is_assigned_to_a_provider: Your placement is assigned to a provider. This means that you have agreed with the provider that their trainee will undertake this placement at your school.
-          assign_a_provider: Assign a provider to this placement once you have agreed with them that their trainee will undertake this placement.
-          assign_a_mentor: Add a mentor when you know who it will be. Only your school will see this information.
           delete_placement: Delete placement
           preview_placement: You can %{href} as it appears to providers.
           preview_link: preview this placement
@@ -118,12 +98,8 @@ en:
           important: Important
           this_is_a_preview: This is a preview of how your placement appears to teacher training providers.
         details:
-          select_a_mentor: Select a mentor
-          add_a_mentor: Add a mentor
-          assign_a_provider: Assign a provider
           add_a_partner_provider: Add a partner provider
           not_yet_known: Not yet known
-          change: Change
           attributes:
             placements:
               school_level: School level

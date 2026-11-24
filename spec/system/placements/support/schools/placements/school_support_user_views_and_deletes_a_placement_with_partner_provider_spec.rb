@@ -102,7 +102,7 @@ RSpec.describe "School support user views and deletes a placement with a partner
     expect(page).to have_summary_list_row("Year group", "Year 1")
     expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
     expect(page).to have_summary_list_row("Expected date", "Autumn term")
-    expect(page).to have_summary_list_row("Mentor", "Add a mentor")
+    expect(page).to have_summary_list_row("Mentor", "Not yet known")
     expect(page).to have_summary_list_row("Provider", "Aes Sedai Trust")
     expect(page).to have_element(:div, text: "You can preview this placement as it appears to providers.", class: "govuk-inset-text")
     expect(page).to have_link("Delete placement", href: "/schools/#{@springfield_elementary_school.id}/placements/#{@placement.id}/remove")
@@ -120,64 +120,10 @@ RSpec.describe "School support user views and deletes a placement with a partner
     expect(page).to have_element(:a, text: "Back", class: "govuk-back-link")
   end
 
-  def when_i_click_on_the_back_link
-    click_on "Back"
-  end
-
-  def and_i_click_on_change_provider
-    click_on "Change Provider"
-  end
-
-  def then_i_see_the_select_a_provider_page
-    expect(page).to have_title("Select a provider - Placement details - Manage school placements - GOV.UK")
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_element(:span, text: "Placement details", class: "govuk-caption-l")
-    expect(page).to have_element(:legend, text: "Select a provider", class: "govuk-fieldset__legend")
-    expect(page).to have_element(:span, text: "My provider is not listed", class: "govuk-details__summary-text")
-    expect(page).to have_link("Cancel", href: "/schools/#{@springfield_elementary_school.id}/placements/#{@placement.id}")
-  end
-
-  def when_i_select_not_yet_known
-    choose "Not yet known"
-  end
-
-  def and_i_click_on_continue
-    click_on "Continue"
-  end
-
-  def then_i_see_the_placement_details_page_without_a_provider
-    expect(page).to have_title("Primary with english (Year 1) - Manage school placements - GOV.UK")
-    expect(primary_navigation).to have_current_item("Placements")
-    expect(page).to have_tag("Available", "teal")
-    expect(page).to have_summary_list_row("Subject", "Primary")
-    expect(page).to have_summary_list_row("Year group", "Year 1")
-    expect(page).to have_summary_list_row("Academic year", "Next year (#{@next_academic_year_name})")
-    expect(page).to have_summary_list_row("Expected date", "Autumn term")
-    expect(page).to have_summary_list_row("Mentor", "Add a mentor")
-    expect(page).to have_summary_list_row("Provider", "Assign a provider")
-    expect(page).to have_element(:div, text: "You can preview this placement as it appears to providers.", class: "govuk-inset-text")
-    expect(page).to have_link("Delete placement", href: "/schools/#{@springfield_elementary_school.id}/placements/#{@placement.id}/remove")
-  end
-
-  def and_i_click_on_the_delete_placement_button
-    click_on "Delete placement"
-  end
-
   def then_i_see_the_placements_index_page
     expect(page).to have_title("Placements - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
     expect(page).not_to have_link("Add placement", exact: true)
-  end
-
-  def and_i_see_a_success_message
-    expect(page).to have_success_banner("Placement deleted")
-  end
-
-  def and_my_placement_has_been_deleted
-    expect(page).not_to have_element(:td, text: "Primary with english (Year 1)", class: "govuk-table__cell")
-    expect(page).not_to have_element(:td, text: "Mentor not assigned", class: "govuk-table__cell")
-    expect(page).not_to have_element(:td, text: "Autumn term", class: "govuk-table__cell")
-    expect(page).not_to have_element(:td, text: "Aes Sedai Trust", class: "govuk-table__cell")
   end
 end

@@ -94,15 +94,15 @@ RSpec.describe "Support user views a placement with a mentor assigned", service:
     expect(page).to have_h1("Primary with english (Year 1)")
     expect(page).to have_summary_list_row("Subject", "Primary with english")
     expect(page).to have_summary_list_row("Year group", "Year 1")
-    expect(page).to have_link("Change Year group")
+    expect(page).not_to have_link("Change Year group")
     expect(page).to have_summary_list_row(
       "Academic year",
       "Next year (#{@next_academic_year_name})",
     )
     expect(page).to have_summary_list_row("Expected date", "Any time in the academic year")
-    expect(page).to have_link("Change Expected date")
+    expect(page).not_to have_link("Change Expected date")
     expect(page).to have_summary_list_row("Mentor", "Jane Doe John Smith")
-    expect(page).to have_link("Change Mentor")
-    expect(page).to have_summary_list_row("Provider", "Assign a provider")
+    expect(page).not_to have_link("Change Mentor")
+    expect(page).to have_summary_list_row("Provider", "Not yet known")
   end
 end

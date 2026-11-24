@@ -22,10 +22,6 @@
 
         <p class="govuk-body govuk-!-margin-top-6"><%= t(".providers_can_see_your_placements", contact_email: @school.school_contact_email_address) %></p>
 
-        <p class="govuk-body"><%= t(".when_you_know_the_providers") %></p>
-
-        <p class="govuk-body"><%= t(".edit_placements") %></p>
-
         <h2 class="govuk-heading-m"><%= t(".placement_count", count: @pagy.count) %></h2>
 
         <% if @placements.any? %>
