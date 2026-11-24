@@ -63,7 +63,7 @@ class DfESignInUser
         User.where(dfe_sign_in_uid:).where.not(dfe_sign_in_uid: nil)
           .or(User.where(email:)),
       )
-      .order(Arel.sql(user_type_priority_sql))
+      .order(Arel.sql(user_type_priority_sql), Arel.sql(uid_match_priority_sql), :created_at)
       .first
   end
 
@@ -117,6 +117,12 @@ class DfESignInUser
     # Ensure support users take precedence if duplicate records exist for an email/uid.
     parts = user_klasses.each_with_index.map { |klass, index| "WHEN '#{klass}' THEN #{index}" }
     "CASE type #{parts.join(" ")} ELSE 999 END"
+  end
+
+  # Within a type, a record matching the DfE Sign In uid wins over one that only
+  # matches on email, e.g. when the person was re-added under a new email.
+  def uid_match_priority_sql
+    User.sanitize_sql_array(["CASE WHEN dfe_sign_in_uid = ? THEN 0 ELSE 1 END", dfe_sign_in_uid.to_s])
   end
 
   def signed_in_from_dfe?

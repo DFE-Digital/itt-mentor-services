@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
     DfESignInUser.begin_session!(session, request.env["omniauth.auth"])
 
     if current_user
+      DfESignIn::MergeUnusedUser.call(current_user:, sign_in_user:)
       DfESignIn::UserUpdate.call(current_user:, sign_in_user:)
 
       redirect_to after_sign_in_path
