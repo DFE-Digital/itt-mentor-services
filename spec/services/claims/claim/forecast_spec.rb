@@ -40,7 +40,7 @@ describe Claims::Claim::Forecast do
       amount = claim.total_clawback_amount
       complete_after_read = lambda do |event|
         if event.payload[:sql].match?(/\ASELECT SUM\(/i)
-          claim.update!(status: :clawback_complete)
+          Claims::AuditContext.set(system_operation: "test setup") { claim.update!(status: :clawback_complete) }
         end
       end
 
