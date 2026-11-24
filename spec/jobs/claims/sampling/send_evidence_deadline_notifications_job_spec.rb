@@ -47,8 +47,10 @@ RSpec.describe Claims::Sampling::SendEvidenceDeadlineNotificationsJob, type: :jo
 
   it "does not enqueue the email again after the claim leaves and returns to the amended status" do
     notify_creators
-    claim.update!(status: :sampling_in_progress)
-    claim.update!(status: :sampling_provider_not_approved)
+    Claims::AuditContext.set(system_operation: "test setup") do
+      claim.update!(status: :sampling_in_progress)
+      claim.update!(status: :sampling_provider_not_approved)
+    end
 
     expect { described_class.new.perform }.not_to have_enqueued_mail(Claims::UserMailer)
   end
@@ -86,7 +88,7 @@ RSpec.describe Claims::Sampling::SendEvidenceDeadlineNotificationsJob, type: :jo
   end
 
   it "does not notify claims in other statuses" do
-    claim.update!(status: :clawback_requested)
+    Claims::AuditContext.set(system_operation: "test setup") { claim.update!(status: :clawback_requested) }
 
     expect { notify_creators }.not_to have_enqueued_mail(Claims::UserMailer)
     expect(claim.reload.amendment_deadline_notification_sent_at).to be_nil

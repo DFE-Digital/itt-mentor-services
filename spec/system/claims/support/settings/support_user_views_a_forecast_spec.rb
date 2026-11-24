@@ -147,7 +147,7 @@ RSpec.describe "Support user views a forecast for a claim window", service: :cla
   end
 
   def when_a_pending_clawback_is_completed
-    @in_progress_claim.update!(status: :clawback_complete)
+    Claims::AuditContext.set(system_operation: "test setup") { @in_progress_claim.update!(status: :clawback_complete) }
   end
 
   def and_i_reload_the_forecast

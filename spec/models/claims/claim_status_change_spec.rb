@@ -30,6 +30,7 @@ RSpec.describe Claims::ClaimStatusChange, type: :model do
   it "does not lose live identity if the actor is subsequently deleted" do
     Claims::AuditContext.set(actor:) { claim.submitted! }
     name = actor.full_name
+    Claims::GrantConditionsAcceptance.where(accepted_by: actor).delete_all
     actor.destroy!
     expect(claim.status_changes.sole.reload.actor_name).to eq(name)
   end
