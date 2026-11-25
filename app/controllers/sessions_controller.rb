@@ -8,7 +8,9 @@ class SessionsController < ApplicationController
     DfESignInUser.begin_session!(session, request.env["omniauth.auth"])
 
     if current_user
-      DfESignIn::MergeUnusedUser.call(current_user:, sign_in_user:)
+      [current_user, sign_in_user.school_user, sign_in_user.provider_user].compact.uniq.each do |user|
+        DfESignIn::MergeUnusedUser.call(current_user: user, sign_in_user:)
+      end
       DfESignIn::UserUpdate.call(current_user:, sign_in_user:)
 
       redirect_to after_sign_in_path
