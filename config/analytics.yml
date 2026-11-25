@@ -240,6 +240,13 @@ shared:
     - created_at
     - updated_at
     - discarded_at
+  :deleted_entities:
+    - id
+    - entity_id
+    - entity_name
+    - deleted_records
+    - created_at
+    - updated_at
   :terms:
     - id
     - name
