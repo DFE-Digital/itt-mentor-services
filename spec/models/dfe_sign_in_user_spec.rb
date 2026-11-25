@@ -423,9 +423,6 @@ describe DfESignInUser do
       end
     end
 
-    # A person can be re-added under a new email after their original record
-    # was signed into. Their DfE Sign In uid then matches the original record
-    # and their email matches the unused one.
     describe "when one record matches the uid and another of the same type matches the email" do
       def sign_in_user_with(email:, dfe_sign_in_uid:, service:)
         described_class.new(email:, dfe_sign_in_uid:, first_name: "Anne", last_name: "Wilson", service:)

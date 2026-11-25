@@ -1,14 +1,8 @@
 require "rails_helper"
 
-# When a person is re-added under a new email, the new record is never signed
-# into: they keep signing in with their existing DfE Sign In account, which
-# resolves to their original record. This hands the unused record's
-# memberships to the record they actually sign in as.
 RSpec.describe DfESignIn::MergeUnusedUser do
   subject(:merge) { described_class.call(current_user:, sign_in_user:) }
 
-  # Schools first: the claims_school factory records grant conditions as
-  # accepted by User.first, which would otherwise tie the school to a user here.
   let!(:shelbyville_school) { create(:claims_school, name: "Shelbyville Elementary") }
   let!(:springfield_school) { create(:claims_school, name: "Springfield Elementary") }
   let!(:current_user) { create(:claims_user, email: "anne.old@example.com", dfe_sign_in_uid: "anne-uid") }
@@ -68,8 +62,7 @@ RSpec.describe DfESignIn::MergeUnusedUser do
       it "leaves both records as they were" do
         merge
 
-        expect(unused_user.reload.schools).to contain_exactly(shelbyville_school, springfield_school)
-        expect(current_user.reload.schools).to be_empty
+        expect_nothing_merged
       end
 
       it "reports it to Sentry" do
@@ -80,6 +73,55 @@ RSpec.describe DfESignIn::MergeUnusedUser do
           extra: { user_id: current_user.id, unused_user_id: unused_user.id },
         )
       end
+    end
+
+    context "when the DfE Sign In has no uid" do
+      let(:sign_in_user) do
+        instance_double(DfESignInUser, email: "anne.new@example.com", dfe_sign_in_uid: nil)
+      end
+
+      it "does not merge" do
+        merge
+
+        expect_nothing_merged
+      end
+    end
+
+    context "when the current user has no uid" do
+      let!(:current_user) { create(:claims_user, email: "anne.old@example.com", dfe_sign_in_uid: nil) }
+
+      it "does not merge" do
+        merge
+
+        expect_nothing_merged
+      end
+    end
+
+    context "when the current user's uid is not the DfE Sign In uid" do
+      let!(:current_user) { create(:claims_user, email: "anne.old@example.com", dfe_sign_in_uid: "someone-else") }
+
+      it "does not merge" do
+        merge
+
+        expect_nothing_merged
+      end
+    end
+
+    context "when the DfE Sign In email is not the unused record's email" do
+      let(:sign_in_user) do
+        instance_double(DfESignInUser, email: "anne.new@example.co.uk", dfe_sign_in_uid: "anne-uid")
+      end
+
+      it "does not merge" do
+        merge
+
+        expect_nothing_merged
+      end
+    end
+
+    def expect_nothing_merged
+      expect(unused_user.reload.schools).to contain_exactly(shelbyville_school, springfield_school)
+      expect(current_user.reload.schools).to be_empty
     end
   end
 
@@ -111,6 +153,18 @@ RSpec.describe DfESignIn::MergeUnusedUser do
     end
   end
 
+  context "when the record with the DfE Sign In email has been discarded" do
+    let!(:other_user) do
+      create(:claims_user, :discarded, email: "anne.new@example.com", dfe_sign_in_uid: nil, last_signed_in_at: nil)
+    end
+
+    it "leaves it alone" do
+      merge
+
+      expect(User.unscoped.exists?(other_user.id)).to be(true)
+    end
+  end
+
   context "when the record with the DfE Sign In email is a different type of user" do
     let!(:provider_user) do
       create(:claims_provider_user, email: "anne.new@example.com", dfe_sign_in_uid: nil, last_signed_in_at: nil)
@@ -123,7 +177,7 @@ RSpec.describe DfESignIn::MergeUnusedUser do
   end
 
   context "when the current user already has the DfE Sign In email" do
-    let(:current_user) { create(:claims_user, email: "anne.new@example.com", dfe_sign_in_uid: "anne-uid") }
+    let!(:current_user) { create(:claims_user, email: "anne.new@example.com", dfe_sign_in_uid: "anne-uid") }
 
     it "does nothing" do
       expect { merge }.not_to change(User, :count)
@@ -131,7 +185,7 @@ RSpec.describe DfESignIn::MergeUnusedUser do
   end
 
   context "when the current user is a placements user" do
-    let(:current_user) { create(:placements_user, email: "anne.old@example.com", dfe_sign_in_uid: "anne-uid") }
+    let!(:current_user) { create(:placements_user, email: "anne.old@example.com", dfe_sign_in_uid: "anne-uid") }
     let(:placements_school) { create(:placements_school, name: "Shelbyville Elementary") }
     let!(:unused_user) do
       create(:placements_user, email: "anne.new@example.com", dfe_sign_in_uid: nil, last_signed_in_at: nil)
@@ -148,7 +202,7 @@ RSpec.describe DfESignIn::MergeUnusedUser do
   end
 
   context "when the current user is a support user" do
-    let(:current_user) { create(:claims_support_user, email: "colin.old@education.gov.uk", dfe_sign_in_uid: "colin-uid") }
+    let!(:current_user) { create(:claims_support_user, email: "colin.old@education.gov.uk", dfe_sign_in_uid: "colin-uid") }
     let(:sign_in_user) do
       instance_double(DfESignInUser, email: "colin.new@education.gov.uk", dfe_sign_in_uid: "colin-uid")
     end

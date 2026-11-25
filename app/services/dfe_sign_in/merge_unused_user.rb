@@ -1,8 +1,5 @@
 module DfESignIn
-  # A person re-added under a new email gets a second user record that is never
-  # signed into: their existing DfE Sign In account resolves to the original
-  # record by uid. Hand the unused record's memberships to the record they sign
-  # in as, and delete it so its email is free.
+  # Merges a never-used record into the user, only when the user matched by uid.
   class MergeUnusedUser < ApplicationService
     def initialize(current_user:, sign_in_user:)
       @current_user = current_user
@@ -11,6 +8,7 @@ module DfESignIn
 
     def call
       return if current_user.support_user?
+      return unless uid_match?
       return if unused_user.nil?
 
       ApplicationRecord.transaction do
@@ -27,6 +25,11 @@ module DfESignIn
     private
 
     attr_reader :current_user, :sign_in_user
+
+    def uid_match?
+      sign_in_user.dfe_sign_in_uid.present? &&
+        current_user.dfe_sign_in_uid == sign_in_user.dfe_sign_in_uid.to_s
+    end
 
     def unused_user
       @unused_user ||= current_user.class
