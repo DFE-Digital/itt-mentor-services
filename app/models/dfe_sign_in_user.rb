@@ -119,8 +119,6 @@ class DfESignInUser
     "CASE type #{parts.join(" ")} ELSE 999 END"
   end
 
-  # Within a type, a record matching the DfE Sign In uid wins over one that only
-  # matches on email, e.g. when the person was re-added under a new email.
   def uid_match_priority_sql
     User.sanitize_sql_array(["CASE WHEN dfe_sign_in_uid = ? THEN 0 ELSE 1 END", dfe_sign_in_uid.to_s])
   end

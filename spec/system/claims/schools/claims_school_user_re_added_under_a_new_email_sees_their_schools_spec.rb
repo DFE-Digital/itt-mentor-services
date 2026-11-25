@@ -17,8 +17,6 @@ RSpec.describe "Claims school user re-added under a new email sees their schools
 
   private
 
-  # Created before any users: the claims_school factory records grant conditions
-  # as accepted by User.first.
   def given_two_schools_exist
     @shelbyville_school = create(:claims_school, name: "Shelbyville Elementary")
     @springfield_school = create(:claims_school, name: "Springfield Elementary")

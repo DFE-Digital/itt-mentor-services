@@ -31,9 +31,6 @@ module DfESignIn
       attributes
     end
 
-    # Another record of the same type already has the DfE Sign In email, so the
-    # email can't be updated without breaking uniqueness. Keep the existing email
-    # and record the sign in, and flag it so support can look at the duplicate.
     def email_clash?
       other_user = current_user.class.unscoped
         .where(email: sign_in_user.email)
