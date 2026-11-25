@@ -764,6 +764,38 @@ RSpec.describe Claims::UserMailer, type: :mailer do
     end
   end
 
+  describe "#claim_amendment_evidence_deadline_passed_notification" do
+    subject(:deadline_email) { described_class.claim_amendment_evidence_deadline_passed_notification(user, claim) }
+
+    let(:user) { build(:claims_user, first_name: "Joe") }
+    let(:claim) do
+      build(:claim, reference: "123", amendment_notification_sent_at: Time.zone.local(2026, 10, 5, 9))
+    end
+
+    it "sends the evidence deadline update" do
+      expect(deadline_email.to).to contain_exactly(user.email)
+      expect(deadline_email.subject).to eq("Update on your amended ITT mentor funding claim")
+      expect(deadline_email.body.to_s.squish).to eq(<<~EMAIL.squish)
+        Dear Joe,
+
+        We previously contacted you because #{claim.provider_name} amended your initial teacher training (ITT) general mentor funding claim following an audit.
+
+        Claim reference: 123
+
+        School name: #{claim.school_name}
+
+        The deadline to send us evidence supporting your original claim was 4 November 2026. That deadline has now passed, and we cannot accept any further evidence.
+
+        If you did not submit evidence by the deadline, the amendment made by #{claim.provider_name} will remain in place. Any excess funding paid as part of the original claim will be recovered.
+
+        If you sent evidence by the deadline, you do not need to send it again. We will review it and contact you with the outcome.
+
+        Kind regards,
+        Claim funding for mentor training team
+      EMAIL
+    end
+  end
+
   describe "#your_school_is_eligible_to_claim" do
     subject(:eligibility_email) { described_class.your_school_is_eligible_to_claim(user, school) }
 

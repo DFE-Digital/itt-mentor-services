@@ -391,6 +391,25 @@ en:
           Kind regards,
 
           %{service_name} team
+      claim_amendment_evidence_deadline_passed_notification:
+        subject: Update on your amended ITT mentor funding claim
+        body: |
+          Dear %{user_name},
+
+          We previously contacted you because %{provider_name} amended your initial teacher training (ITT) general mentor funding claim following an audit.
+
+          Claim reference: %{claim_reference}
+
+          School name: %{school_name}
+
+          The deadline to send us evidence supporting your original claim was %{evidence_deadline}. That deadline has now passed, and we cannot accept any further evidence.
+
+          If you did not submit evidence by the deadline, the amendment made by %{provider_name} will remain in place. Any excess funding paid as part of the original claim will be recovered.
+
+          If you sent evidence by the deadline, you do not need to send it again. We will review it and contact you with the outcome.
+
+          Kind regards,
+          %{service_name} team
       claim_rejected_by_provider_reminder:
         subject: "Reminder: your ITT mentor funding claim has been amended"
         body: |

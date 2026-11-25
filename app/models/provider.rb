@@ -40,6 +40,9 @@ class Provider < ApplicationRecord
   include PgSearch::Model
   extend Geocoder::Model::ActiveRecord
 
+  # Accredited status is tracked per academic year in provider eligibilities. Drop the column in a follow-up migration once this is deployed.
+  self.ignored_columns += %w[accredited]
+
   ADDRESS_FIELDS = %w[address1 address2 address3 city county postcode].freeze
 
   # Provider latitudes/longitudes are populated by the PublishTeacherTraining import (see PublishTeacherTraining::Provider::Importer).
@@ -62,7 +65,6 @@ class Provider < ApplicationRecord
 
   has_many :eligibilities, class_name: "Claims::ProviderEligibility", dependent: :destroy
 
-  scope :accredited, -> { where accredited: true }
   scope :eligible_for_academic_year, lambda { |academic_year|
     where(id: Claims::ProviderEligibility.where(academic_year:).select(:provider_id))
   }

@@ -24,7 +24,7 @@ FactoryBot.define do
     academic_year { AcademicYear.for_date(Date.new(2024, 1, 1)) }
 
     after(:create) do |claim_window|
-      Provider.accredited.find_each do |provider|
+      Provider.eligible_in_any_academic_year.find_each do |provider|
         Claims::ProviderEligibility.find_or_create_by!(provider:, academic_year: claim_window.academic_year)
       end
     end

@@ -19,7 +19,7 @@ RSpec.describe "Support user views sampling approved manually activity spec", se
   def given_provider_approved_audit_activity_exists
     @colin = build(:claims_support_user, :colin)
 
-    @best_practice_network = build(:claims_provider, name: "Best Practice Network")
+    @best_practice_network = create(:claims_provider, name: "Best Practice Network")
     @best_practice_network_claim = build(:claim, :payment_in_progress, submitted_at: 1.day.ago, reference: "12345678", provider: @best_practice_network)
 
     @activity_log = create(:claim_activity, :provider_approved_audit, user: @colin, record: @best_practice_network_claim)

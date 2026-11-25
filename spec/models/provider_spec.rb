@@ -89,12 +89,6 @@ RSpec.describe Provider, type: :model do
         expect(provider.eligible_for_academic_year?(academic_year)).to be(false)
       end
 
-      it "is false when the provider has no eligibilities, even if accredited" do
-        provider.update!(accredited: true)
-
-        expect(provider.eligible_for_academic_year?(academic_year)).to be(false)
-      end
-
       it "is false without an academic year" do
         expect(provider.eligible_for_academic_year?(nil)).to be(false)
       end
@@ -102,33 +96,17 @@ RSpec.describe Provider, type: :model do
   end
 
   context "with scopes" do
-    describe "#accredited" do
-      let!(:accredited_provider) { create(:provider, accredited: true) }
-      let!(:non_accredited_provider) { create(:provider) }
-
-      it "only returns the providers which have been onboarded (placements: true)" do
-        expect(described_class.accredited).to contain_exactly(accredited_provider)
-        expect(described_class.accredited).not_to include(non_accredited_provider)
-      end
-    end
-
     describe "#eligible_for_academic_year" do
       let(:academic_year) { AcademicYear.current }
       let(:other_academic_year) { AcademicYear.for_date(academic_year.ends_on + 1.day) }
       let!(:eligible_provider) { create(:provider).tap { |provider| Claims::ProviderEligibility.create!(provider:, academic_year:) } }
       let!(:eligible_next_year_provider) { create(:provider).tap { |provider| Claims::ProviderEligibility.create!(provider:, academic_year: other_academic_year) } }
-      let!(:ineligible_provider) { create(:provider) }
+
+      before { create(:provider) }
 
       it "only returns providers that are eligible for the academic year" do
         expect(described_class.eligible_for_academic_year(academic_year)).to contain_exactly(eligible_provider)
         expect(described_class.eligible_for_academic_year(other_academic_year)).to contain_exactly(eligible_next_year_provider)
-      end
-
-      it "does not depend on the accredited flag" do
-        eligible_provider.update!(accredited: false)
-        ineligible_provider.update!(accredited: true)
-
-        expect(described_class.eligible_for_academic_year(academic_year)).to contain_exactly(eligible_provider)
       end
 
       it "returns no providers when there is no academic year" do
