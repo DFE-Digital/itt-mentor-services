@@ -53,11 +53,8 @@ RSpec.describe DfESignIn::MergeUnusedUser do
       end
     end
 
-    context "when the unused record is referenced by other records" do
-      before do
-        create(:grant_conditions_acceptance, accepted_by: unused_user)
-        allow(Sentry).to receive(:capture_message)
-      end
+    shared_examples "a merge that is not made" do
+      before { allow(Sentry).to receive(:capture_message) }
 
       it "leaves both records as they were" do
         merge
@@ -73,6 +70,51 @@ RSpec.describe DfESignIn::MergeUnusedUser do
           extra: { user_id: current_user.id, unused_user_id: unused_user.id },
         )
       end
+    end
+
+    context "when the unused record accepted grant conditions" do
+      before { create(:grant_conditions_acceptance, accepted_by: unused_user) }
+
+      it_behaves_like "a merge that is not made"
+    end
+
+    context "when the unused record created a claim" do
+      before { create(:claim, school: shelbyville_school, created_by: unused_user) }
+
+      it_behaves_like "a merge that is not made"
+    end
+
+    context "when the unused record submitted a claim" do
+      before { create(:claim, school: shelbyville_school, submitted_by: unused_user) }
+
+      it_behaves_like "a merge that is not made"
+    end
+
+    context "when the unused record created a placement" do
+      before { create(:placement, creator: unused_user) }
+
+      it_behaves_like "a merge that is not made"
+    end
+
+    context "when the unused record onboarded a school" do
+      before { create(:school, manually_onboarded_by: unused_user) }
+
+      it_behaves_like "a merge that is not made"
+    end
+
+    context "when the unused record has made audited changes" do
+      before { Audited::Audit.create!(auditable: shelbyville_school, user: unused_user, action: "update") }
+
+      it_behaves_like "a merge that is not made"
+    end
+
+    it "locks the unused record before merging it" do
+      queries = []
+      callback = ->(*, payload) { queries << payload[:sql] }
+
+      ActiveSupport::Notifications.subscribed(callback, "sql.active_record") { merge }
+
+      expect(queries).to include(a_string_matching(/FROM "users".*FOR UPDATE/m))
     end
 
     context "when the DfE Sign In has no uid" do
