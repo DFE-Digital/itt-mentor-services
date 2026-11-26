@@ -139,12 +139,12 @@ RSpec.describe "Support user filters clawback claims by academic year", service:
   end
 
   def and_i_do_not_see_current_academic_year_selected_from_the_academic_year_filter
-    expect(page).not_to have_checked_field(@current_academic_year.name)
+    expect(page).to have_no_checked_field(@current_academic_year.name)
     expect(page).not_to have_filter_tag(@current_academic_year.name)
   end
 
   def and_i_do_not_see_previous_academic_year_selected_from_the_academic_year_filter
-    expect(page).not_to have_checked_field(@previous_academic_year.name)
+    expect(page).to have_no_checked_field(@previous_academic_year.name)
     expect(page).not_to have_filter_tag(@previous_academic_year.name)
   end
 

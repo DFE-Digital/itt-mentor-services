@@ -76,13 +76,13 @@ RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :sy
       )
     end
 
-    expect(page).to have_content(
+    expect(page).to have_text(
       "Use this service to:\n"\
       "claim funding for eligible initial teacher training (ITT) mentor training "\
       "review mentor training claims selected for audit",
     )
 
-    expect(page).to have_content(
+    expect(page).to have_text(
       "Who can use this service\n"\
       "Schools and educational organisations\n"\
       "You can use this service if your organisation:\n"\
@@ -91,9 +91,9 @@ RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :sy
       "is registered with Get Information About Schools (GIAS)",
     )
 
-    expect(page).to have_content("This funding is not available for training early career framework (ECF) mentors. To claim for ECF mentors, you need a different service.")
+    expect(page).to have_text("This funding is not available for training early career framework (ECF) mentors. To claim for ECF mentors, you need a different service.")
 
-    expect(page).to have_content(
+    expect(page).to have_text(
       "Accredited ITT providers\n"\
       "You can use this service when claims involving your organisation are selected for audit.\n"\
       "You can:\n"\
@@ -103,14 +103,14 @@ RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :sy
       "submit audit responses through the service",
     )
 
-    expect(page).to have_content(
+    expect(page).to have_text(
       "When schools can submit a claim\n"\
       "For the school year starting September 2023:\n"\
       "schools can add ITT mentor training hours and submit a claim from May 2024 "\
       "registered users will receive email reminders about claim opening dates and deadlines",
     )
 
-    expect(page).to have_content(
+    expect(page).to have_text(
       "Before schools start a claim\n"\
       "You will need:\n"\
       "the name of your accredited ITT provider "\
@@ -119,7 +119,7 @@ RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :sy
       "completed training hours, which should be checked with your provider",
     )
 
-    expect(page).to have_content(
+    expect(page).to have_text(
       "Sign in\n"\
       "To access this service, you will be asked to sign in or create a Department for Education (DfE) Sign-in account. "\
       "DfE Sign-in is how schools, accredited providers and other education organisations access DfE online services.",
@@ -127,10 +127,10 @@ RSpec.describe "Start Page", freeze: "17 July 2024", service: :claims, type: :sy
   end
 
   def then_i_see_the_claim_window_is_closed
-    expect(page).to have_content("The claim window for the current academic year has now closed. Schools cannot submit new claims at this time.")
-    expect(page).to have_content("Accredited ITT providers can continue to access the service to complete audit activities where required.")
-    expect(page).to have_content("Information about future claim windows will be published when available.")
-    expect(page).not_to have_content("schools can add ITT mentor training hours and submit a claim from May 2024")
+    expect(page).to have_text("The claim window for the current academic year has now closed. Schools cannot submit new claims at this time.")
+    expect(page).to have_text("Accredited ITT providers can continue to access the service to complete audit activities where required.")
+    expect(page).to have_text("Information about future claim windows will be published when available.")
+    expect(page).to have_no_text("schools can add ITT mentor training hours and submit a claim from May 2024")
   end
 
   def when_i_click_start_now

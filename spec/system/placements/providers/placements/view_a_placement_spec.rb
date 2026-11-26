@@ -85,40 +85,40 @@ RSpec.describe "Placements / Providers / Placements / View a placement",
   end
 
   def then_i_see_the_placement_dates(academic_year, terms)
-    expect(page).to have_content("Placement dates")
-    expect(page).to have_content("Academic year")
-    expect(page).to have_content(academic_year.display_name)
+    expect(page).to have_text("Placement dates")
+    expect(page).to have_text("Academic year")
+    expect(page).to have_text(academic_year.display_name)
 
     terms.each do |term|
-      expect(page).to have_content(term.name)
+      expect(page).to have_text(term.name)
     end
   end
 
   def then_i_see_details_for_the_school
-    expect(page).to have_content("Placement - London Secondary School")
-    expect(page).to have_content("Secondary")
-    expect(page).to have_content("Mixed")
-    expect(page).to have_content("4 to 11")
-    expect(page).to have_content("Jewish")
-    expect(page).to have_content("(England/Wales) Urban city and town")
-    expect(page).to have_content("Not applicable")
-    expect(page).to have_content("11")
-    expect(page).to have_content("Good")
+    expect(page).to have_text("Placement - London Secondary School")
+    expect(page).to have_text("Secondary")
+    expect(page).to have_text("Mixed")
+    expect(page).to have_text("4 to 11")
+    expect(page).to have_text("Jewish")
+    expect(page).to have_text("(England/Wales) Urban city and town")
+    expect(page).to have_text("Not applicable")
+    expect(page).to have_text("11")
+    expect(page).to have_text("Good")
   end
 
   def and_i_see_location_details_for_the_school
-    expect(page).to have_content("Location")
-    expect(page).to have_content("London Secondary School London City of London LN01 2LN")
+    expect(page).to have_text("Location")
+    expect(page).to have_text("London Secondary School London City of London LN01 2LN")
   end
 
   def and_i_see_the_itt_placement_contact_details_for_the_school
-    expect(page).to have_content("Placement contact")
-    expect(page).to have_content(school.school_contact.first_name)
-    expect(page).to have_content(school.school_contact.last_name)
-    expect(page).to have_content(school.school_contact.email_address)
+    expect(page).to have_text("Placement contact")
+    expect(page).to have_text(school.school_contact.first_name)
+    expect(page).to have_text(school.school_contact.last_name)
+    expect(page).to have_text(school.school_contact.email_address)
   end
 
   def and_i_see_the_subject_name(subject_name)
-    expect(page.find(".govuk-heading-l")).to have_content(subject_name)
+    expect(page.find(".govuk-heading-l")).to have_text(subject_name)
   end
 end

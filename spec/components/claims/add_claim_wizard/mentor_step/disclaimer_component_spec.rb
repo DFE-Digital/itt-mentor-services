@@ -18,7 +18,7 @@ RSpec.describe Claims::AddClaimWizard::MentorStep::DisclaimerComponent, type: :c
     it "does not render" do
       render_inline described_class.new(mentor_step:)
 
-      expect(page).not_to have_css(".govuk-inset-text")
+      expect(page).to have_no_css(".govuk-inset-text")
     end
   end
 
@@ -29,8 +29,8 @@ RSpec.describe Claims::AddClaimWizard::MentorStep::DisclaimerComponent, type: :c
       render_inline described_class.new(mentor_step:)
 
       expect(page).to have_css(".govuk-details")
-      expect(page).to have_content "If a mentor you have added is not showing in the list, they have already claimed 20 hours with #{claim.provider_name}."
-      expect(page).to have_content "If you think this is a mistake, contact ittmentor.funding@education.gov.uk."
+      expect(page).to have_text "If a mentor you have added is not showing in the list, they have already claimed 20 hours with #{claim.provider_name}."
+      expect(page).to have_text "If you think this is a mistake, contact ittmentor.funding@education.gov.uk."
     end
   end
 end

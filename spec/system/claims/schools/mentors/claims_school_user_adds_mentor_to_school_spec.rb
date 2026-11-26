@@ -65,8 +65,8 @@ RSpec.describe "Claims school user adds mentors to schools", service: :claims, t
 
   def given_an_eligible_school_exists_with_an_assigned_mentor_and_an_unassigned_one
     @user_anne = build(:claims_user, first_name: "Anne", last_name: "Wilson", email: "anne_wilson@education.gov.uk")
-    @mentor_james =  build(:claims_mentor, first_name: "James", last_name: "Jameson", trn: "4230187")
-    @mentor_barry =  build(:claims_mentor, first_name: "Barry", last_name: "Garlow", trn: "3078146")
+    @mentor_james = build(:claims_mentor, first_name: "James", last_name: "Jameson", trn: "4230187")
+    @mentor_barry = build(:claims_mentor, first_name: "Barry", last_name: "Garlow", trn: "3078146")
     @mentor_sam = build(:claims_mentor, first_name: "Sam", last_name: "Pete")
     @claim_window = build(:claim_window, :current)
     @eligibility = build(:eligibility, claim_window: @claim_window)

@@ -47,17 +47,17 @@ RSpec.describe "View a claim", service: :claims, type: :system do
   end
 
   def then_i_can_then_see_the_claim_details
-    expect(page).to have_content("Claim - 12345678")
-    expect(page).to have_content("SchoolA School")
-    expect(page).to have_content("Submitted")
-    expect(page).to have_content("Submitted by #{colin.full_name} on 5 March 2024.")
-    expect(page).to have_content("Accredited providerBest Practice Network")
-    expect(page).to have_content("Mentors\nBarry Garlow")
-    expect(page).to have_content("Hours of training")
-    expect(page).to have_content("Barry Garlow#{mentor_training.hours_completed} hours")
-    expect(page).to have_content("Total hours6 hours")
-    expect(page).to have_content("Hourly rate£53.60")
-    expect(page).to have_content("Claim amount£321.60")
+    expect(page).to have_text("Claim - 12345678")
+    expect(page).to have_text("SchoolA School")
+    expect(page).to have_text("Submitted")
+    expect(page).to have_text("Submitted by #{colin.full_name} on 5 March 2024.")
+    expect(page).to have_text("Accredited providerBest Practice Network")
+    expect(page).to have_text("Mentors\nBarry Garlow")
+    expect(page).to have_text("Hours of training")
+    expect(page).to have_text("Barry Garlow#{mentor_training.hours_completed} hours")
+    expect(page).to have_text("Total hours6 hours")
+    expect(page).to have_text("Hourly rate£53.60")
+    expect(page).to have_text("Claim amount£321.60")
   end
 
   def given_i_sign_in

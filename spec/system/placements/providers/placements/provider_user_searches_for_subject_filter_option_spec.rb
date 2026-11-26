@@ -57,7 +57,7 @@ RSpec.describe "Provider user searchers for a subject filter option", :js, servi
   end
 
   def and_i_do_not_see_primary_with_mathematics_in_the_subject_filter
-    expect(page).not_to have_element(:label, text: "Primary with mathematics")
+    expect(page).to have_no_element(:label, text: "Primary with mathematics")
   end
 
   def when_i_clear_the_search_in_the_subject_filter

@@ -62,7 +62,7 @@ RSpec.describe "View a school's latest grant conditions acceptance", service: :c
   end
 
   def and_i_do_not_see_the_previous_grant_conditions_acceptance
-    expect(page).not_to have_content("George Barlow")
+    expect(page).to have_no_text("George Barlow")
   end
 
   def then_i_see_the_previous_grant_conditions_acceptance
@@ -72,6 +72,6 @@ RSpec.describe "View a school's latest grant conditions acceptance", service: :c
   end
 
   def and_i_do_not_see_the_option_to_remove_the_agreement
-    expect(page).not_to have_link("Remove user's agreement to the grant conditions")
+    expect(page).to have_no_link("Remove user's agreement to the grant conditions")
   end
 end

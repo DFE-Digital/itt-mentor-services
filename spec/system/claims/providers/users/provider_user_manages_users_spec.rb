@@ -174,7 +174,7 @@ RSpec.describe "Provider user manages users", service: :claims, type: :system do
 
   def then_i_see_my_own_details_page_without_a_remove_link
     expect(page).to have_h1("Anne Wilson")
-    expect(page).not_to have_link("Remove user")
+    expect(page).to have_no_link("Remove user")
   end
 
   def and_i_click_on_barry_garlow
@@ -196,7 +196,7 @@ RSpec.describe "Provider user manages users", service: :claims, type: :system do
   def then_i_see_the_users_page_without_barry_garlow
     expect(page).to have_success_banner("User removed")
     expect(page).to have_table_row("Full name" => "Anne Wilson", "Email address" => "anne_wilson@education.gov.uk")
-    expect(page).not_to have_content("Barry Garlow")
+    expect(page).to have_no_text("Barry Garlow")
   end
 
   def and_barry_garlow_has_been_sent_a_removal_email

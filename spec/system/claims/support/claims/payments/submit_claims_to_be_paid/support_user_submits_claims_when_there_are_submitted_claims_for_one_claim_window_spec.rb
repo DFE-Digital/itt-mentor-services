@@ -67,6 +67,6 @@ RSpec.describe "Support user submits claims when there are submitted claims for 
   end
 
   def and_i_do_not_see_the_historic_claim_window_option
-    expect(page).not_to have_field(@historic_claim_window.name, type: :radio)
+    expect(page).to have_no_field(@historic_claim_window.name, type: :radio)
   end
 end

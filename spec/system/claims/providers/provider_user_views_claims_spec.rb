@@ -91,13 +91,13 @@ RSpec.describe "Provider user views claims", service: :claims, type: :system do
     click_on "North Star SCITT"
 
     expect(page).to have_current_path(claims_provider_claims_path(provider))
-    expect(page).to have_content("Claims")
-    expect(page).to have_content("Riverbank Primary")
-    expect(page).to have_content("Hilltop Secondary")
-    expect(page).to have_content("Claim reference: #{claim_for_provider.reference}")
-    expect(page).to have_content("Claim reference: #{approved_claim_for_provider.reference}")
-    expect(page).to have_no_content("Claim reference: #{claim_for_other_provider.reference}")
-    expect(page).to have_no_content("Claim reference: #{unsupported_status_claim_for_provider.reference}")
+    expect(page).to have_text("Claims")
+    expect(page).to have_text("Riverbank Primary")
+    expect(page).to have_text("Hilltop Secondary")
+    expect(page).to have_text("Claim reference: #{claim_for_provider.reference}")
+    expect(page).to have_text("Claim reference: #{approved_claim_for_provider.reference}")
+    expect(page).to have_no_text("Claim reference: #{claim_for_other_provider.reference}")
+    expect(page).to have_no_text("Claim reference: #{unsupported_status_claim_for_provider.reference}")
     expect(page).to have_link("Change organisation", href: claims_providers_path)
     within(".govuk-service-navigation") do
       expect(page).to have_link("Claims", current: "page")
@@ -110,8 +110,8 @@ RSpec.describe "Provider user views claims", service: :claims, type: :system do
       claims_provider_claims_path(provider, params: { claims_providers_claims_filter_form: { school_ids: [school.id] } }),
       ignore_query: false,
     )
-    expect(page).to have_content("Claim reference: #{claim_for_provider.reference}")
-    expect(page).to have_no_content("Claim reference: #{approved_claim_for_provider.reference}")
+    expect(page).to have_text("Claim reference: #{claim_for_provider.reference}")
+    expect(page).to have_no_text("Claim reference: #{approved_claim_for_provider.reference}")
 
     click_on "Clear filters"
 
@@ -120,9 +120,9 @@ RSpec.describe "Provider user views claims", service: :claims, type: :system do
     click_on "Riverbank Primary"
 
     expect(page).to have_current_path(claims_provider_claim_path(provider, claim_for_provider))
-    expect(page).to have_content("Claim reference #{claim_for_provider.reference}")
-    expect(page).to have_content("Submitted")
-    expect(page).to have_content("Mentors")
+    expect(page).to have_text("Claim reference #{claim_for_provider.reference}")
+    expect(page).to have_text("Submitted")
+    expect(page).to have_text("Mentors")
     expect(page).to have_link("Approve claim")
     expect(page).to have_link("Amend claim")
 

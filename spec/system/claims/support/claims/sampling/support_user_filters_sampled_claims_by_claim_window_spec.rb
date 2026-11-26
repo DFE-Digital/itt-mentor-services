@@ -186,12 +186,12 @@ RSpec.describe "Support user filters sampled claims by mentor", service: :claims
   end
 
   def and_i_do_not_see_the_claim_window_for_111111_selected
-    expect(page).not_to have_checked_field(@claim_window_short_name)
+    expect(page).to have_no_checked_field(@claim_window_short_name)
     expect(page).not_to have_filter_tag(@claim_window_short_name)
   end
 
   def and_i_do_not_see_the_claim_window_for_222222_selected
-    expect(page).not_to have_checked_field(@historic_claim_window_short_name)
+    expect(page).to have_no_checked_field(@historic_claim_window_short_name)
     expect(page).not_to have_filter_tag(@historic_claim_window_short_name)
   end
 

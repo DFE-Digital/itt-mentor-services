@@ -219,12 +219,12 @@ RSpec.describe "Claims support user adds mentors to schools", service: :claims, 
 
   def then_i_see_check_page_for(mentor)
     expect(primary_navigation).to have_current_item("Mentors")
-    expect(page).to have_content "Mentor details"
-    expect(page).to have_content "Confirm mentor details"
-    name_row = page.all(".govuk-summary-list__row")[0]
+    expect(page).to have_text "Mentor details"
+    expect(page).to have_text "Confirm mentor details"
+    name_row = page.first(".govuk-summary-list__row")
     within(name_row) do
-      expect(page).to have_content "First name"
-      expect(page).to have_content mentor.first_name
+      expect(page).to have_text "First name"
+      expect(page).to have_text mentor.first_name
     end
   end
 
@@ -237,9 +237,9 @@ RSpec.describe "Claims support user adds mentors to schools", service: :claims, 
 
   def then_mentor_is_added(mentor_name)
     within(".govuk-notification-banner--success") do
-      expect(page).to have_content "Mentor added"
+      expect(page).to have_text "Mentor added"
     end
-    expect(page).to have_content mentor_name
+    expect(page).to have_text mentor_name
   end
 
   def when_i_enter_trn(trn)
@@ -261,12 +261,12 @@ RSpec.describe "Claims support user adds mentors to schools", service: :claims, 
   def then_i_see_errors(errors)
     expect(page).to have_title "Error: Enter a teacher reference number (TRN)"
     within(".govuk-error-summary") do
-      expect(page).to have_content errors.join("")
+      expect(page).to have_text errors.join("")
     end
 
     errors.each_with_index do |error, index|
       within("div.govuk-form-group--error:nth(#{index + 1})") do
-        expect(page).to have_content error
+        expect(page).to have_text error
       end
     end
   end
@@ -283,8 +283,8 @@ RSpec.describe "Claims support user adds mentors to schools", service: :claims, 
 
   def then_i_see_no_results_page(_school_name, trn)
     expect(page).to have_title "No results found for ‘#{trn}’"
-    expect(page).to have_content "Mentor details"
-    expect(page).to have_content "No results found for ‘#{trn}’"
+    expect(page).to have_text "Mentor details"
+    expect(page).to have_text "No results found for ‘#{trn}’"
   end
 
   def teaching_record_valid_response(mentor, date_of_birth)
@@ -298,7 +298,7 @@ RSpec.describe "Claims support user adds mentors to schools", service: :claims, 
   end
 
   def then_i_see_link_to_trn_guidance
-    expect(page).to have_content "If your mentor does not have a TRN, share the teacher reference number (TRN) guidance (opens in new tab) to find a lost TRN, or apply for one."
+    expect(page).to have_text "If your mentor does not have a TRN, share the teacher reference number (TRN) guidance (opens in new tab) to find a lost TRN, or apply for one."
     expect(page).to have_link("teacher reference number (TRN) guidance (opens in new tab)", href: "https://www.gov.uk/guidance/teacher-reference-number-trn")
   end
 

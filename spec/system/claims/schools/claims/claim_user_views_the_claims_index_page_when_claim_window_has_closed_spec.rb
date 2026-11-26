@@ -33,7 +33,7 @@ RSpec.describe "Claims user views the claims index page when claim window has cl
     expect(page).to have_title("Claims - Claim funding for mentor training - GOV.UK")
     expect(primary_navigation).to have_current_item("Claims")
     expect(page).to have_h1("Claims")
-    expect(page).not_to have_link("Add claim", href: "/schools/#{@shelbyville_school.id}/claims/new")
+    expect(page).to have_no_link("Add claim", href: "/schools/#{@shelbyville_school.id}/claims/new")
     expect(page).to have_text("There are no claims for Shelbyville Elementary.")
   end
 

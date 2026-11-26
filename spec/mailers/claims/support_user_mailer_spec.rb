@@ -9,7 +9,7 @@ RSpec.describe Claims::SupportUserMailer, type: :mailer do
     it "is addressed to the user's email and contains a link to the claims sign in url" do
       expect(invite_email.to).to contain_exactly(user.email)
       expect(invite_email.subject).to eq("Invitation to join Claim funding for mentor training")
-      expect(invite_email.body).to have_content <<~EMAIL
+      expect(invite_email.body).to have_text <<~EMAIL
         Dear John,
 
         You have been invited to join the Claim funding for mentor training service
@@ -63,7 +63,7 @@ RSpec.describe Claims::SupportUserMailer, type: :mailer do
     it "is addressed to the user's email and contains a link to the claims sign in url" do
       expect(removal_email.to).to contain_exactly(user.email)
       expect(removal_email.subject).to eq("You have been removed from Claim funding for mentor training")
-      expect(removal_email.body).to have_content <<~EMAIL
+      expect(removal_email.body).to have_text <<~EMAIL
         Dear John,
 
         You have been removed from the Claim funding for mentor training service.

@@ -59,7 +59,7 @@ RSpec.describe "View claims", service: :claims, type: :system do
     within(".claim-card:nth-child(1)") do
       click_link(claim_4.reference)
     end
-    expect(page).to have_content(claim_4.reference)
+    expect(page).to have_text(claim_4.reference)
 
     # Use the back link (which should include session filter)
     click_link("Back")
@@ -123,19 +123,19 @@ RSpec.describe "View claims", service: :claims, type: :system do
 
     claims.each_with_index do |claim, index|
       within(".claim-card:nth-child(#{index + 1})") do
-        expect(page).to have_content(claim.school_name)
-        expect(page).to have_content(claim.reference)
-        expect(page).to have_content("Submitted")
-        expect(page).to have_content(claim.provider_name)
-        expect(page).to have_content(I18n.l(claim.submitted_at.to_date, format: :long))
-        expect(page).to have_content(claim.amount.format(no_cents_if_whole: true))
+        expect(page).to have_text(claim.school_name)
+        expect(page).to have_text(claim.reference)
+        expect(page).to have_text("Submitted")
+        expect(page).to have_text(claim.provider_name)
+        expect(page).to have_text(I18n.l(claim.submitted_at.to_date, format: :long))
+        expect(page).to have_text(claim.amount.format(no_cents_if_whole: true))
       end
     end
     expect(claims.count).to eq(page.find_all(".claim-card").count)
   end
 
   def and_i_see_no_draft_claims
-    expect(page).not_to have_content(claim_1.reference)
+    expect(page).to have_no_text(claim_1.reference)
   end
 
   def when_i_check_school_filter(school)

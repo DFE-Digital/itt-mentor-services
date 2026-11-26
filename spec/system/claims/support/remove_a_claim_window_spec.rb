@@ -42,16 +42,16 @@ RSpec.describe "Remove a claim window", freeze: "17 July 2024", service: :claims
   alias_method :when_i_click_on, :click_on
 
   def then_i_see(content)
-    expect(page).to have_content(content)
+    expect(page).to have_text(content)
   end
 
   def then_i_see_a_confirmation_page
-    expect(page).to have_content("18 July 2024 to 31 July 2024")
-    expect(page).to have_content("Are you sure you want to remove this claim window?")
+    expect(page).to have_text("18 July 2024 to 31 July 2024")
+    expect(page).to have_text("Are you sure you want to remove this claim window?")
   end
 
   def then_i_see_the_claim_window_removed_successfully_without(start_date:, end_date:)
-    expect(page).to have_content("Claim window removed")
-    expect(page).not_to have_content("#{start_date} to #{end_date}")
+    expect(page).to have_text("Claim window removed")
+    expect(page).to have_no_text("#{start_date} to #{end_date}")
   end
 end

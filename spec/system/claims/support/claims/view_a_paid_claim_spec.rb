@@ -60,12 +60,12 @@ RSpec.describe "View a paid claim", service: :claims, type: :system do
   end
 
   def then_i_can_see_the_payment_details
-    expect(page).to have_content("Payment details")
-    expect(page).to have_content("Date paid21 September 2026")
-    expect(page).to have_content("Paid toLocal authority")
+    expect(page).to have_text("Payment details")
+    expect(page).to have_text("Date paid21 September 2026")
+    expect(page).to have_text("Paid toLocal authority")
   end
 
   def then_i_can_see_the_claim_was_paid_to_an_academy
-    expect(page).to have_content("Paid toAcademy")
+    expect(page).to have_text("Paid toAcademy")
   end
 end

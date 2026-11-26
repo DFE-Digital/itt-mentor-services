@@ -20,7 +20,7 @@ RSpec.describe Placements::Schools::InterestTagComponent, type: :component do
       let(:placements) { [build(:placement)] }
 
       it "renders the correct text" do
-        expect(page).to have_content "Placements available"
+        expect(page).to have_text "Placements available"
       end
 
       it "renders the correct tag" do
@@ -32,7 +32,7 @@ RSpec.describe Placements::Schools::InterestTagComponent, type: :component do
       let(:placements) { [build(:placement), build(:placement, provider: build(:provider))] }
 
       it "renders the correct text" do
-        expect(page).to have_content "Placements available"
+        expect(page).to have_text "Placements available"
       end
 
       it "renders the correct tag" do
@@ -44,7 +44,7 @@ RSpec.describe Placements::Schools::InterestTagComponent, type: :component do
       let(:placements) { [build(:placement, provider: build(:provider))] }
 
       it "renders the correct text" do
-        expect(page).to have_content "No placements available"
+        expect(page).to have_text "No placements available"
       end
 
       it "renders the correct tag" do
@@ -56,7 +56,7 @@ RSpec.describe Placements::Schools::InterestTagComponent, type: :component do
       let(:placements) { [] }
 
       it "renders the correct text" do
-        expect(page).to have_content "Placement availability unknown"
+        expect(page).to have_text "Placement availability unknown"
       end
 
       it "renders the correct tag" do
@@ -70,7 +70,7 @@ RSpec.describe Placements::Schools::InterestTagComponent, type: :component do
     let(:placements) { [] }
 
     it "renders the correct text" do
-      expect(page).to have_content "May offer placements"
+      expect(page).to have_text "May offer placements"
     end
 
     it "renders the correct tag" do
@@ -83,7 +83,7 @@ RSpec.describe Placements::Schools::InterestTagComponent, type: :component do
     let(:placements) { [] }
 
     it "renders the correct text" do
-      expect(page).to have_content "Not offering placements"
+      expect(page).to have_text "Not offering placements"
     end
 
     it "renders the correct tag" do
@@ -99,7 +99,7 @@ RSpec.describe Placements::Schools::InterestTagComponent, type: :component do
       let(:placements) { [build(:placement, academic_year:)] }
 
       it "shows availability" do
-        expect(page).to have_content("Placements available")
+        expect(page).to have_text("Placements available")
       end
     end
 
@@ -107,12 +107,12 @@ RSpec.describe Placements::Schools::InterestTagComponent, type: :component do
       let(:placements) { [build(:placement, academic_year:, provider: build(:placements_provider))] }
 
       it "shows no availability" do
-        expect(page).to have_content("No placements available")
+        expect(page).to have_text("No placements available")
       end
     end
 
     it "renders the correct text" do
-      expect(page).to have_content "Placement availability unknown"
+      expect(page).to have_text "Placement availability unknown"
     end
 
     it "renders the correct tag" do

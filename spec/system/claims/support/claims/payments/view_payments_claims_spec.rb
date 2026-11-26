@@ -63,7 +63,7 @@ RSpec.describe "View payments claims", service: :claims, type: :system do
   end
 
   def then_i_see(message)
-    expect(page).to have_content(message)
+    expect(page).to have_text(message)
   end
 
   def and_i_see_an_information_requested_claim

@@ -30,7 +30,7 @@ class Claims::ClaimActivitiesForClaimQuery < ApplicationQuery
   end
 
   def for_payments(scope)
-    scope.or(Claims::ClaimActivity.where(record_type: "Claims::Payment",  record_id: payment_ids))
+    scope.or(Claims::ClaimActivity.where(record_type: "Claims::Payment", record_id: payment_ids))
   end
 
   def sampling_ids

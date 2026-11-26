@@ -100,19 +100,19 @@ RSpec.describe "Provider user filters schools by year groups", service: :placeme
     expect(page).to have_checked_field("Year 1")
 
     expect(page).not_to have_filter_tag("Nursery")
-    expect(page).not_to have_checked_field("Nursery")
+    expect(page).to have_no_checked_field("Nursery")
     expect(page).not_to have_filter_tag("Reception")
-    expect(page).not_to have_checked_field("Reception")
+    expect(page).to have_no_checked_field("Reception")
     expect(page).not_to have_filter_tag("Year 2")
-    expect(page).not_to have_checked_field("Year 2")
+    expect(page).to have_no_checked_field("Year 2")
     expect(page).not_to have_filter_tag("Year 3")
-    expect(page).not_to have_checked_field("Year 3")
+    expect(page).to have_no_checked_field("Year 3")
     expect(page).not_to have_filter_tag("Year 4")
-    expect(page).not_to have_checked_field("Year 4")
+    expect(page).to have_no_checked_field("Year 4")
     expect(page).not_to have_filter_tag("Year 5")
-    expect(page).not_to have_checked_field("Year 5")
+    expect(page).to have_no_checked_field("Year 5")
     expect(page).not_to have_filter_tag("Mixed year groups")
-    expect(page).not_to have_checked_field("Mixed year groups")
+    expect(page).to have_no_checked_field("Mixed year groups")
   end
 
   def when_i_select_year_2_from_the_from_the_year_group
@@ -126,17 +126,17 @@ RSpec.describe "Provider user filters schools by year groups", service: :placeme
     expect(page).to have_checked_field("Year 2")
 
     expect(page).not_to have_filter_tag("Nursery")
-    expect(page).not_to have_checked_field("Nursery")
+    expect(page).to have_no_checked_field("Nursery")
     expect(page).not_to have_filter_tag("Reception")
-    expect(page).not_to have_checked_field("Reception")
+    expect(page).to have_no_checked_field("Reception")
     expect(page).not_to have_filter_tag("Year 3")
-    expect(page).not_to have_checked_field("Year 3")
+    expect(page).to have_no_checked_field("Year 3")
     expect(page).not_to have_filter_tag("Year 4")
-    expect(page).not_to have_checked_field("Year 4")
+    expect(page).to have_no_checked_field("Year 4")
     expect(page).not_to have_filter_tag("Year 5")
-    expect(page).not_to have_checked_field("Year 5")
+    expect(page).to have_no_checked_field("Year 5")
     expect(page).not_to have_filter_tag("Mixed year groups")
-    expect(page).not_to have_checked_field("Mixed year groups")
+    expect(page).to have_no_checked_field("Mixed year groups")
   end
 
   def and_i_see_my_selected_schools_i_work_with_filters
@@ -168,15 +168,15 @@ RSpec.describe "Provider user filters schools by year groups", service: :placeme
 
   def and_i_do_not_see_the_year_1_filter_tag
     expect(page).not_to have_filter_tag("Year 1")
-    expect(page).not_to have_checked_field("Year 1")
+    expect(page).to have_no_checked_field("Year 1")
     expect(page).to have_filter_tag("Year 2")
     expect(page).to have_checked_field("Year 2")
   end
 
   def and_i_do_not_see_any_year_group_filters
     expect(page).not_to have_filter_tag("Year 1")
-    expect(page).not_to have_checked_field("Year 1")
+    expect(page).to have_no_checked_field("Year 1")
     expect(page).not_to have_filter_tag("Year 2")
-    expect(page).not_to have_checked_field("Year 2")
+    expect(page).to have_no_checked_field("Year 2")
   end
 end

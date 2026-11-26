@@ -116,7 +116,7 @@ RSpec.describe "Support user onboards multiple schools when only a upcoming clai
 
     expect(page).to have_field(@upcoming_claim_window.name, type: :radio)
 
-    expect(page).not_to have_element(:div, text: "Current", class: "govuk-radios__hint")
+    expect(page).to have_no_element(:div, text: "Current", class: "govuk-radios__hint")
   end
 
   def when_i_select_the_upcoming_claim_window

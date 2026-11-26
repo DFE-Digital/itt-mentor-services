@@ -29,8 +29,8 @@ RSpec.describe "Reject claim payment", service: :claims, type: :system do
   end
 
   def then_i_see_a_confirmation_page
-    expect(page).to have_content("Are you sure you want to reject the claim?")
-    expect(page).to have_content("This will result in this claim not being paid.")
+    expect(page).to have_text("Are you sure you want to reject the claim?")
+    expect(page).to have_text("This will result in this claim not being paid.")
   end
 
   def when_i_click_on_reject_claim
@@ -38,10 +38,10 @@ RSpec.describe "Reject claim payment", service: :claims, type: :system do
   end
 
   def then_i_see_the_claim_rejected
-    expect(page).to have_content("Claim rejected")
+    expect(page).to have_text("Claim rejected")
 
     within("h1.govuk-heading-l .govuk-tag") do
-      expect(page).to have_content("Rejected by payer")
+      expect(page).to have_text("Rejected by payer")
     end
   end
 end

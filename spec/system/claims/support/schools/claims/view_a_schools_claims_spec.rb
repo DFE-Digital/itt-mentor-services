@@ -55,6 +55,6 @@ RSpec.describe "View a schools claims", service: :claims, type: :system do
   end
 
   def i_dont_see_claims_from_other_schools
-    expect(page).not_to have_content("#{claim_from_another_school.id}\nDraft")
+    expect(page).to have_no_text("#{claim_from_another_school.id}\nDraft")
   end
 end

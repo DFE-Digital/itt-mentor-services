@@ -25,7 +25,7 @@ RSpec.describe "Accepting grant conditions", service: :claims, type: :system do
     given_i_sign_in
     then_i_can_see_the_schools_claims_page
     click_on "Organisation details"
-    expect(page).to have_content("Organisation details")
+    expect(page).to have_text("Organisation details")
   end
 
   scenario "School has NOT accepted the grant conditions" do
@@ -88,7 +88,7 @@ RSpec.describe "Accepting grant conditions", service: :claims, type: :system do
 
   def then_i_can_see_the_schools_claims_page
     expect(page).to have_current_path(claims_school_claims_path(school_id: grant_conditons_accepted_school), ignore_query: true)
-    expect(page).to have_content("Claims")
+    expect(page).to have_text("Claims")
   end
 
   def given_a_claim_window_for_a_future_academic_year_has_been_created
@@ -103,12 +103,12 @@ RSpec.describe "Accepting grant conditions", service: :claims, type: :system do
 
   def then_i_can_see_the_grant_conditions_page_for(school)
     expect(page).to have_current_path(claims_school_grant_conditions_path(school_id: school), ignore_query: true)
-    expect(page).to have_content("Grant conditions")
+    expect(page).to have_text("Grant conditions")
   end
 
   def then_i_can_see_the_grant_conditions_page
     expect(page).to have_current_path(claims_school_grant_conditions_path(school_id: grant_conditons_not_accepted_school), ignore_query: true)
-    expect(page).to have_content("Grant conditions")
+    expect(page).to have_text("Grant conditions")
   end
 
   def given_the_school_accepted_the_grant_conditions_last_academic_year
@@ -129,6 +129,6 @@ RSpec.describe "Accepting grant conditions", service: :claims, type: :system do
 
   def then_i_accept_the_grant_conditions
     click_on "Accept grant conditions"
-    expect(page).to have_content("Claims")
+    expect(page).to have_text("Claims")
   end
 end

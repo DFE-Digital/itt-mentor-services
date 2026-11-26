@@ -385,7 +385,7 @@ RSpec.describe "Support user adds a claim in exceptional circumstances", service
     expect(page).to have_element(:h1, text: "Select a claim window", class: "govuk-fieldset__heading")
     expect(page).to have_hint("Only claim windows that have already closed can be selected.")
     expect(page).to have_field("#{@past_claim_window.academic_year_name} academic year", type: :radio)
-    expect(page).not_to have_field("#{@current_claim_window.academic_year_name} academic year", type: :radio)
+    expect(page).to have_no_field("#{@current_claim_window.academic_year_name} academic year", type: :radio)
   end
 
   def then_i_see_a_validation_error_that_i_must_select_a_claim_window
@@ -400,7 +400,7 @@ RSpec.describe "Support user adds a claim in exceptional circumstances", service
   def then_i_see_the_school_page
     expect(page).to have_element(:label, text: "Enter the school for this claim", class: "govuk-label govuk-label--l")
     expect(page).to have_hint("Enter a school name, unique reference number (URN) or postcode")
-    expect(page).not_to have_text("must be eligible")
+    expect(page).to have_no_text("must be eligible")
     expect(page).to have_span_caption("Add claim - exceptional circumstances")
   end
 
@@ -652,7 +652,7 @@ RSpec.describe "Support user adds a claim in exceptional circumstances", service
 
   def then_i_see_the_add_exceptional_claim_button
     expect(page).to have_link("Add exceptional claim", href: "/support/claims/new")
-    expect(page).not_to have_link("Add claim")
+    expect(page).to have_no_link("Add claim")
   end
 
   def and_a_provider_exists_which_is_only_eligible_for_the_current_academic_year
@@ -667,7 +667,7 @@ RSpec.describe "Support user adds a claim in exceptional circumstances", service
 
   def then_i_see_no_provider_results
     expect(page).to have_text("No results found for 'Current Year Provider'")
-    expect(page).not_to have_field("Current Year Provider", type: :radio)
+    expect(page).to have_no_field("Current Year Provider", type: :radio)
   end
 
   def then_i_see_the_provider_eligible_for_the_past_academic_year
@@ -814,7 +814,7 @@ RSpec.describe "Support user adds a claim in exceptional circumstances", service
     expect(page).to have_summary_list_row("Ned Flanders", "20 hours")
     expect(page).to have_summary_list_row("Total hours", "46 hours")
     expect(page).to have_summary_list_row("Claim status", "Submitted")
-    expect(page).not_to have_text("Date paid")
+    expect(page).to have_no_text("Date paid")
     expect(page).to have_button("Accept and submit claim")
   end
 

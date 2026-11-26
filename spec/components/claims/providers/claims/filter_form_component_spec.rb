@@ -18,8 +18,8 @@ RSpec.describe Claims::Providers::Claims::FilterFormComponent, type: :component 
     render_inline(component)
 
     expect(page).to have_field("claims_providers_claims_filter_form[school_ids][]", with: school.id)
-    expect(page).not_to have_field("claims_providers_claims_filter_form[statuses][]")
-    expect(page).not_to have_field("claims_providers_claims_filter_form[search]")
-    expect(page).not_to have_field("claims_providers_claims_filter_form[provider_ids][]")
+    expect(page).to have_no_field("claims_providers_claims_filter_form[statuses][]")
+    expect(page).to have_no_field("claims_providers_claims_filter_form[search]")
+    expect(page).to have_no_field("claims_providers_claims_filter_form[provider_ids][]")
   end
 end

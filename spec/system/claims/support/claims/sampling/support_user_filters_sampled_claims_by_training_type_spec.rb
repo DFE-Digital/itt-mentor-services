@@ -183,12 +183,12 @@ RSpec.describe "Support user filters sampled claims by training type", service: 
   end
 
   def and_i_do_not_see_initial_selected_from_the_training_type_filter
-    expect(page).not_to have_checked_field("Initial")
+    expect(page).to have_no_checked_field("Initial")
     expect(page).not_to have_filter_tag("Initial")
   end
 
   def and_i_do_not_see_refresher_selected_from_the_training_type_filter
-    expect(page).not_to have_checked_field("Refresher")
+    expect(page).to have_no_checked_field("Refresher")
     expect(page).not_to have_filter_tag("Refresher")
   end
 

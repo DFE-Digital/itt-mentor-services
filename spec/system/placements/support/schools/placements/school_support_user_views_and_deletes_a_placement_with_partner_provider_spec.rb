@@ -78,7 +78,7 @@ RSpec.describe "School support user views and deletes a placement with a partner
     expect(page).to have_title("Placements - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
-    expect(page).not_to have_link("Add placement", exact: true)
+    expect(page).to have_no_link("Add placement", exact: true)
   end
 
   alias_method :then_i_see_the_placements_index_page, :when_i_am_on_the_placements_index_page
@@ -167,7 +167,7 @@ RSpec.describe "School support user views and deletes a placement with a partner
     expect(page).to have_title("Placements - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("Placements")
-    expect(page).not_to have_link("Add placement", exact: true)
+    expect(page).to have_no_link("Add placement", exact: true)
   end
 
   def and_i_see_a_success_message
@@ -175,9 +175,9 @@ RSpec.describe "School support user views and deletes a placement with a partner
   end
 
   def and_my_placement_has_been_deleted
-    expect(page).not_to have_element(:td, text: "Primary with english (Year 1)", class: "govuk-table__cell")
-    expect(page).not_to have_element(:td, text: "Mentor not assigned", class: "govuk-table__cell")
-    expect(page).not_to have_element(:td, text: "Autumn term", class: "govuk-table__cell")
-    expect(page).not_to have_element(:td, text: "Aes Sedai Trust", class: "govuk-table__cell")
+    expect(page).to have_no_element(:td, text: "Primary with english (Year 1)", class: "govuk-table__cell")
+    expect(page).to have_no_element(:td, text: "Mentor not assigned", class: "govuk-table__cell")
+    expect(page).to have_no_element(:td, text: "Autumn term", class: "govuk-table__cell")
+    expect(page).to have_no_element(:td, text: "Aes Sedai Trust", class: "govuk-table__cell")
   end
 end

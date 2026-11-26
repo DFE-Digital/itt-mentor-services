@@ -261,7 +261,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
   end
 
   def then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor)
-    expect(page).to have_content("How many hours of training did #{mentor.full_name} complete?")
+    expect(page).to have_text("How many hours of training did #{mentor.full_name} complete?")
   end
 
   def when_i_add_training_hours(radio_button)
@@ -309,16 +309,16 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
   end
 
   def then_i_expect_the_training_hours_for(_hours, mentor)
-    expect(page).to have_content("How many hours of training did #{mentor.full_name} complete?")
-    find("#claims-add-claim-wizard-mentor-training-step-hours-to-claim-maximum-field", visible: :all).checked?
+    expect(page).to have_text("How many hours of training did #{mentor.full_name} complete?")
+    find_by_id("claims-add-claim-wizard-mentor-training-step-hours-to-claim-maximum-field", visible: :all).checked?
   end
 
   def then_i_see_the_new_claim
     within(".govuk-notification-banner--success") do
-      expect(page).to have_content "Claim added"
+      expect(page).to have_text "Claim added"
     end
 
-    expect(page).to have_content(Claims::Claim.draft.first.reference)
+    expect(page).to have_text(Claims::Claim.draft.first.reference)
   end
 
   def then_i_see_the_error(message)
@@ -333,15 +333,15 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
   end
 
   def then_i_get_the_reject_page
-    expect(page).to have_content "You cannot submit the claim"
+    expect(page).to have_text "You cannot submit the claim"
   end
 
   def then_i_should_see_the_message(message)
-    expect(page).to have_content(message)
+    expect(page).to have_text(message)
   end
 
   def then_i_should_land_on_the_check_page
-    expect(page).to have_content "Check your answers before submitting your claim"
+    expect(page).to have_text "Check your answers before submitting your claim"
   end
 
   def then_i_expect_the_mentors_to_be_checked(mentors)
@@ -371,7 +371,7 @@ RSpec.describe "Create claim", :js, service: :claims, type: :system do
   end
 
   def then_i_expect_the_provider_to_be_prefilled_with_best_practice_network
-    expect(page.find("#claims-add-claim-wizard-provider-step-id-field").value).to eq(
+    expect(page.find_by_id("claims-add-claim-wizard-provider-step-id-field").value).to eq(
       "Best Practice Network",
     )
   end

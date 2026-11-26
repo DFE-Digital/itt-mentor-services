@@ -34,6 +34,6 @@ RSpec.describe "View support console as a non support user", service: :claims, t
   end
 
   def then_i_am_unable_to_access_the_page
-    expect(page).to have_content("You cannot perform this action")
+    expect(page).to have_text("You cannot perform this action")
   end
 end

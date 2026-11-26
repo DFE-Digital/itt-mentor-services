@@ -96,6 +96,6 @@ RSpec.describe "Provider user filters schools by SEND placements", service: :pla
 
   def and_i_do_not_see_the_show_only_schools_with_sends_specific_placements_filter_tag
     expect(page).not_to have_filter_tag("Show only schools with SEND specific placements")
-    expect(page).not_to have_checked_field("Show only schools with SEND specific placements")
+    expect(page).to have_no_checked_field("Show only schools with SEND specific placements")
   end
 end

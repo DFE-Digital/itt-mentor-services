@@ -23,10 +23,10 @@ RSpec.describe "View a support user", service: :claims, type: :system do
   end
 
   def i_see_the_details_of_the_support_user(_support_user)
-    expect(page).to have_selector("h1", text: "Colin Chapman")
+    expect(page).to have_css("h1", text: "Colin Chapman")
 
-    expect(page).to have_content "Colin"
-    expect(page).to have_content "Chapman"
-    expect(page).to have_content "colin.chapman@education.gov.uk"
+    expect(page).to have_text "Colin"
+    expect(page).to have_text "Chapman"
+    expect(page).to have_text "colin.chapman@education.gov.uk"
   end
 end

@@ -44,7 +44,7 @@ RSpec.describe "Support user views and switches to organisations", service: :cla
   end
 
   def then_i_see_the_school_tagged_as_a_school
-    expect(page).to have_content("Organisations (4)")
+    expect(page).to have_text("Organisations (4)")
     expect(organisation_item("Manchester School")).to have_css(".govuk-tag--yellow", text: "School")
   end
 
@@ -58,12 +58,12 @@ RSpec.describe "Support user views and switches to organisations", service: :cla
   end
 
   def then_i_see_the_provider_accredited_only_in_a_previous_year_in_the_results
-    expect(page).to have_content("Previous Year Provider")
-    expect(page).not_to have_content("London Provider")
+    expect(page).to have_text("Previous Year Provider")
+    expect(page).to have_no_text("London Provider")
   end
 
   def and_i_do_not_see_the_unaccredited_provider
-    expect(page).not_to have_content("Unaccredited Provider")
+    expect(page).to have_no_text("Unaccredited Provider")
   end
 
   def when_i_search_for(term)
@@ -72,8 +72,8 @@ RSpec.describe "Support user views and switches to organisations", service: :cla
   end
 
   def then_i_see_only_the_provider
-    expect(page).to have_content("London Provider")
-    expect(page).not_to have_content("Manchester School")
+    expect(page).to have_text("London Provider")
+    expect(page).to have_no_text("Manchester School")
   end
 
   def when_i_click_on(name)
@@ -86,7 +86,7 @@ RSpec.describe "Support user views and switches to organisations", service: :cla
 
   def then_i_see_the_organisations_list
     expect(page).to have_current_path(claims_support_schools_path)
-    expect(page).to have_content("Organisations (4)")
+    expect(page).to have_text("Organisations (4)")
   end
 
   def then_i_see_the_school_claims_page

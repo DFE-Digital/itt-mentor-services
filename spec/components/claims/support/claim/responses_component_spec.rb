@@ -24,9 +24,9 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
         let(:unpaid_reason) { nil }
 
         it "does not render the unpaid reason" do
-          expect(page).not_to have_element(:div, class: "claim-responses")
+          expect(page).to have_no_element(:div, class: "claim-responses")
 
-          expect(page).not_to have_element(:h3, text: "Reason claim was not paid", class: "govuk-heading-s")
+          expect(page).to have_no_element(:h3, text: "Reason claim was not paid", class: "govuk-heading-s")
         end
       end
     end
@@ -49,9 +49,9 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
         let(:unpaid_reason) { nil }
 
         it "does not render the response" do
-          expect(page).not_to have_element(:div, class: "claim-responses")
+          expect(page).to have_no_element(:div, class: "claim-responses")
 
-          expect(page).not_to have_element(:h3, text: "Reason claim was not paid", class: "govuk-heading-s")
+          expect(page).to have_no_element(:h3, text: "Reason claim was not paid", class: "govuk-heading-s")
         end
       end
     end
@@ -74,9 +74,9 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
         let(:sampling_reason) { nil }
 
         it "does not render the sampling reason" do
-          expect(page).not_to have_element(:div, class: "claim-responses")
+          expect(page).to have_no_element(:div, class: "claim-responses")
 
-          expect(page).not_to have_element(:h3, text: "Reason claim is being audited", class: "govuk-heading-s")
+          expect(page).to have_no_element(:h3, text: "Reason claim is being audited", class: "govuk-heading-s")
         end
       end
     end
@@ -110,14 +110,14 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
         expect(page).to have_css(".govuk-summary-card", count: 2)
         expect(page).to have_element(:div, text: "Joe Bloggs", class: "govuk-summary-card__title-wrapper")
         expect(page).to have_element(:div, text: "Sarah Doe", class: "govuk-summary-card__title-wrapper")
-        expect(page).to have_content("Incorrect number of hours")
-        expect(page).to have_content("Invalid mentor")
-        expect(page).to have_content("Original hours claimed")
-        expect(page).to have_content("Amended hours")
+        expect(page).to have_text("Incorrect number of hours")
+        expect(page).to have_text("Invalid mentor")
+        expect(page).to have_text("Original hours claimed")
+        expect(page).to have_text("Amended hours")
       end
 
       it "does not render who amended the claim" do
-        expect(page).not_to have_content("Amended by")
+        expect(page).to have_no_text("Amended by")
       end
     end
 
@@ -156,7 +156,7 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
         it "renders the deadline sent to the school" do
           expect(page).to have_element(:h3, text: "Evidence deadline", class: "govuk-heading-s")
           expect(page).to have_element(:p, text: "4 November 2026", class: "govuk-body")
-          expect(page).not_to have_content("The deadline for the school to send evidence has passed")
+          expect(page).to have_no_text("The deadline for the school to send evidence has passed")
         end
       end
 
@@ -166,7 +166,7 @@ RSpec.describe Claims::Support::Claim::ResponsesComponent, type: :component do
         it "renders the deadline and says it has passed" do
           expect(page).to have_element(:h3, text: "Evidence deadline", class: "govuk-heading-s")
           expect(page).to have_element(:p, text: "4 November 2026", class: "govuk-body")
-          expect(page).to have_content("The deadline for the school to send evidence has passed")
+          expect(page).to have_text("The deadline for the school to send evidence has passed")
         end
       end
     end

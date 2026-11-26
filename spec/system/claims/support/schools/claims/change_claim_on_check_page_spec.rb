@@ -177,9 +177,9 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
   private
 
   def then_i_see_the_list_of_mentors
-    expect(page).to have_content("#{mentor1.full_name}\n#{mentor1.trn}")
-    expect(page).to have_content("#{mentor2.full_name}\n#{mentor2.trn}")
-    expect(page).to have_content("#{mentor3.full_name}\n#{mentor3.trn}")
+    expect(page).to have_text("#{mentor1.full_name}\n#{mentor1.trn}")
+    expect(page).to have_text("#{mentor2.full_name}\n#{mentor2.trn}")
+    expect(page).to have_text("#{mentor3.full_name}\n#{mentor3.trn}")
   end
 
   def given_i_sign_in
@@ -247,14 +247,14 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
 
   def then_i_expect_the_training_hours_to_be_selected(hours)
     if hours == 20
-      find("#claims-add-claim-wizard-mentor-training-step-hours-to-claim-maximum-field", visible: :all).checked?
+      find_by_id("claims-add-claim-wizard-mentor-training-step-hours-to-claim-maximum-field", visible: :all).checked?
     else
-      find("#claims-add-claim-wizard-mentor-training-step-hours-to-claim-custom-field", visible: :all).checked?
+      find_by_id("claims-add-claim-wizard-mentor-training-step-hours-to-claim-custom-field", visible: :all).checked?
     end
   end
 
   def then_i_expect_the_training_hours_for(hours, mentor)
-    expect(page).to have_content("How many hours of training did #{mentor.full_name} complete?")
+    expect(page).to have_text("How many hours of training did #{mentor.full_name} complete?")
     then_i_expect_the_training_hours_to_be_selected(hours)
   end
 
@@ -291,22 +291,22 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
   end
 
   def then_i_cant_see_the_mentor(mentor)
-    expect(page).not_to have_content(mentor.full_name)
+    expect(page).to have_no_text(mentor.full_name)
   end
 
   def then_i_see_the_error(message)
     within(".govuk-error-summary") do
-      expect(page).to have_content message
+      expect(page).to have_text message
     end
 
     within(".govuk-form-group--error") do
-      expect(page).to have_content message
+      expect(page).to have_text message
     end
   end
 
   def then_i_am_redirected_to_index_page
     within(".govuk-notification-banner--success") do
-      expect(page).to have_content "Claim added"
+      expect(page).to have_text "Claim added"
     end
   end
 
@@ -325,7 +325,7 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
   end
 
   def then_i_expect_to_be_able_to_add_training_hours_to_mentor(mentor)
-    expect(page).to have_content("How many hours of training did #{mentor.full_name} complete?")
+    expect(page).to have_text("How many hours of training did #{mentor.full_name} complete?")
   end
 
   def and_i_enter_a_provider_named_best_practice_network
@@ -341,7 +341,7 @@ RSpec.describe "Change claim on check page", :js, service: :claims, type: :syste
   end
 
   def then_i_expect_the_provider_to_be_prefilled_with_best_practice_network
-    expect(page.find("#claims-add-claim-wizard-provider-step-id-field").value).to eq(
+    expect(page.find_by_id("claims-add-claim-wizard-provider-step-id-field").value).to eq(
       "Best Practice Network",
     )
   end

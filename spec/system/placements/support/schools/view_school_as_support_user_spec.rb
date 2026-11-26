@@ -27,14 +27,14 @@ RSpec.describe "Placements / Organisations / Support user views a School", type:
 
   def then_i_see_the_provider_details
     within("#organisation-details") do
-      expect(page).to have_content university.name
-      expect(page).to have_content "Name"
-      expect(page).to have_content "UK provider reference number (UKPRN)"
-      expect(page).to have_content "Unique reference number (URN)"
-      expect(page).to have_content "Email address"
-      expect(page).to have_content "Telephone"
-      expect(page).to have_content "Website"
-      expect(page).to have_content "Address"
+      expect(page).to have_text university.name
+      expect(page).to have_text "Name"
+      expect(page).to have_text "UK provider reference number (UKPRN)"
+      expect(page).to have_text "Unique reference number (URN)"
+      expect(page).to have_text "Email address"
+      expect(page).to have_text "Telephone"
+      expect(page).to have_text "Website"
+      expect(page).to have_text "Address"
     end
   end
 
@@ -46,46 +46,46 @@ RSpec.describe "Placements / Organisations / Support user views a School", type:
 
   def then_i_see_the_school_details
     within(".govuk-heading-l") do
-      expect(page).to have_content school.name
+      expect(page).to have_text school.name
     end
 
-    expect(page).to have_content "Additional details"
-    expect(page).to have_content "Special educational needs and disabilities (SEND)"
-    expect(page).to have_content "Ofsted"
+    expect(page).to have_text "Additional details"
+    expect(page).to have_text "Special educational needs and disabilities (SEND)"
+    expect(page).to have_text "Ofsted"
 
     within("#organisation-details") do
-      expect(page).to have_content "Name"
-      expect(page).to have_content "UK provider reference number (UKPRN)"
-      expect(page).to have_content "Unique reference number (URN)"
-      expect(page).to have_content "Email address"
-      expect(page).to have_content "Telephone number"
-      expect(page).to have_content "Website"
-      expect(page).to have_content "Address"
+      expect(page).to have_text "Name"
+      expect(page).to have_text "UK provider reference number (UKPRN)"
+      expect(page).to have_text "Unique reference number (URN)"
+      expect(page).to have_text "Email address"
+      expect(page).to have_text "Telephone number"
+      expect(page).to have_text "Website"
+      expect(page).to have_text "Address"
     end
 
     within("#additional-details") do
-      expect(page).to have_content "Establishment group"
-      expect(page).to have_content "Phase"
-      expect(page).to have_content "Gender"
-      expect(page).to have_content "Age range"
-      expect(page).to have_content "Religious character"
-      expect(page).to have_content "Admissions policy"
-      expect(page).to have_content "Urban or rural"
-      expect(page).to have_content "School capacity"
-      expect(page).to have_content "Total pupils"
-      expect(page).to have_content "Total girls"
-      expect(page).to have_content "Total boys"
-      expect(page).to have_content "Percentage free school meals"
+      expect(page).to have_text "Establishment group"
+      expect(page).to have_text "Phase"
+      expect(page).to have_text "Gender"
+      expect(page).to have_text "Age range"
+      expect(page).to have_text "Religious character"
+      expect(page).to have_text "Admissions policy"
+      expect(page).to have_text "Urban or rural"
+      expect(page).to have_text "School capacity"
+      expect(page).to have_text "Total pupils"
+      expect(page).to have_text "Total girls"
+      expect(page).to have_text "Total boys"
+      expect(page).to have_text "Percentage free school meals"
     end
 
     within("#send-details") do
-      expect(page).to have_content "Special classes"
-      expect(page).to have_content "SEND provision"
+      expect(page).to have_text "Special classes"
+      expect(page).to have_text "SEND provision"
     end
 
     within("#ofsted-details") do
-      expect(page).to have_content "Rating"
-      expect(page).to have_content "Last inspection date"
+      expect(page).to have_text "Rating"
+      expect(page).to have_text "Last inspection date"
     end
   end
 

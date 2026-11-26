@@ -119,8 +119,8 @@ RSpec.describe "Support user adds a provider", :js, service: :placements, type: 
     expect(page).to have_h1("Organisations (1)")
     within(".organisation-search-results") do
       expect(page).to have_link("University of Banana")
-      expect(page).not_to have_link("Apple Academy")
-      expect(page).not_to have_link("Pineapple University")
+      expect(page).to have_no_link("Apple Academy")
+      expect(page).to have_no_link("Pineapple University")
     end
   end
   alias_method :then_i_see_the_organisations_index_page, :and_i_am_on_the_organisations_index_page
@@ -256,7 +256,7 @@ RSpec.describe "Support user adds a provider", :js, service: :placements, type: 
     within(".organisation-search-results") do
       expect(page).to have_link("University of Banana")
       expect(page).to have_link("Apple Academy")
-      expect(page).not_to have_link("Pineapple University")
+      expect(page).to have_no_link("Pineapple University")
     end
   end
 end

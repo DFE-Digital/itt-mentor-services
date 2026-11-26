@@ -71,7 +71,7 @@ RSpec.describe "Support user edits a clawback request on a claim", service: :cla
     expect(page).to have_element(:span, text: "Clawbacks - Claim 11111111", class: "govuk-caption-l")
     expect(page).to have_h1(@claim_one.school_name)
     expect(page).to have_element(:strong, text: "Clawback requires approval", class: "govuk-tag govuk-tag--orange")
-    expect(page).not_to have_link("Request clawback", href: "/support/claims/clawbacks/claims/new/#{@claim_one.id}", class: "govuk-link govuk-button")
+    expect(page).to have_no_link("Request clawback", href: "/support/claims/clawbacks/claims/new/#{@claim_one.id}", class: "govuk-link govuk-button")
     expect(page).to have_summary_list_row("School", @claim_one.school_name)
     expect(page).to have_summary_list_row("Academic year", @claim_one.academic_year_name)
     expect(page).to have_summary_list_row("Accredited provider", @claim_one.provider.name)

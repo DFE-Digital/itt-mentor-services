@@ -66,6 +66,6 @@ RSpec.describe "Provider user removes themselves from the provider", service: :p
   end
 
   def and_i_do_not_see_the_delete_user_link
-    expect(page).not_to have_link("Delete user", class: "app-link--destructive")
+    expect(page).to have_no_link("Delete user", class: "app-link--destructive")
   end
 end

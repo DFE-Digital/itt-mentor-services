@@ -14,7 +14,7 @@ RSpec.describe "Cookies Page", service: :claims, type: :system do
 
   def then_i_can_see_the_cookies_page
     within(".govuk-heading-l") do
-      expect(page).to have_content("Cookies on Claim funding for mentor training")
+      expect(page).to have_text("Cookies on Claim funding for mentor training")
     end
   end
 end

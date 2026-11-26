@@ -13,8 +13,8 @@ RSpec.describe "Claims school user views a schools mentor list", service: :claim
 
   def given_an_eligible_school_exists_with_mentors
     @user_anne = build(:claims_user, first_name: "Anne", last_name: "Wilson", email: "anne_wilson@education.gov.uk")
-    @mentor_james =  build(:claims_mentor, first_name: "James", last_name: "Jameson")
-    @mentor_barry =  build(:claims_mentor, first_name: "Barry", last_name: "Garlow")
+    @mentor_james = build(:claims_mentor, first_name: "James", last_name: "Jameson")
+    @mentor_barry = build(:claims_mentor, first_name: "Barry", last_name: "Garlow")
     @mentor_sam = build(:claims_mentor, first_name: "Sam", last_name: "Pete")
     @claim_window = build(:claim_window, :current)
     @eligibility = build(:eligibility, claim_window: @claim_window)

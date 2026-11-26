@@ -240,7 +240,7 @@ RSpec.describe "Claims user creates a claim", :js, service: :claims, type: :syst
     expect(page).to have_summary_list_row("Provider", "Best Practice Network")
     row = find("dt.govuk-summary-list__key", text: "Mentors").ancestor(".govuk-summary-list__row")
     within(row) do
-      expect(page).to have_selector("ul.govuk-list li", count: 2)
+      expect(page).to have_css("ul.govuk-list li", count: 2)
       expect(page).to have_text("Barry Garlow")
       expect(page).to have_text("James Jameson")
     end

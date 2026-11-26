@@ -46,13 +46,13 @@ RSpec.describe "View a school", service: :claims, type: :system do
   end
 
   def i_see_the_schools_details_sections
-    expect(page).to have_selector("h2", text: "Grant conditions")
-    expect(page).to have_selector("h2", text: "Grant funding")
-    expect(page).to have_selector("h2", text: "Contact details")
+    expect(page).to have_css("h2", text: "Grant conditions")
+    expect(page).to have_css("h2", text: "Grant funding")
+    expect(page).to have_css("h2", text: "Contact details")
   end
 
   def i_see_the_schools_details_sections_without_grant_conditions_accepted
-    expect(page).to have_content("This school has not agreed to the grant conditions")
+    expect(page).to have_text("This school has not agreed to the grant conditions")
   end
 
   def and_i_click_on_organsation_details

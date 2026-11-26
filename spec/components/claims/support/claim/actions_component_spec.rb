@@ -7,7 +7,7 @@ RSpec.describe Claims::Support::Claim::ActionsComponent, type: :component do
     let(:claim) { create(:claim, :submitted) }
 
     it "does not render actions" do
-      expect(page).not_to have_element(:div, class: "claim-actions")
+      expect(page).to have_no_element(:div, class: "claim-actions")
     end
   end
 
@@ -15,7 +15,7 @@ RSpec.describe Claims::Support::Claim::ActionsComponent, type: :component do
     let(:claim) { create(:claim, :paid) }
 
     it "does not renders actions" do
-      expect(page).not_to have_element(:div, class: "claim-actions")
+      expect(page).to have_no_element(:div, class: "claim-actions")
     end
   end
 
@@ -51,7 +51,7 @@ RSpec.describe Claims::Support::Claim::ActionsComponent, type: :component do
     let(:claim) { create(:claim, :payment_not_approved) }
 
     it "does not renders actions" do
-      expect(page).not_to have_element(:div, class: "claim-actions")
+      expect(page).to have_no_element(:div, class: "claim-actions")
     end
   end
 
@@ -59,7 +59,7 @@ RSpec.describe Claims::Support::Claim::ActionsComponent, type: :component do
     let(:claim) { create(:claim, :audit_requested, sampling_reason: "Reason") }
 
     it "does not render actions" do
-      expect(page).not_to have_element(:div, class: "claim-actions")
+      expect(page).to have_no_element(:div, class: "claim-actions")
     end
   end
 
@@ -75,7 +75,7 @@ RSpec.describe Claims::Support::Claim::ActionsComponent, type: :component do
         expect(page).to have_element(:a, text: "Move claim to paid", class: "govuk-button")
         expect(page).to have_link("Move claim to paid", href: "/support/claims/sampling/claims/#{claim.id}/confirm_approval")
 
-        expect(page).not_to have_button("Request clawback")
+        expect(page).to have_no_button("Request clawback")
       end
     end
 
@@ -93,7 +93,7 @@ RSpec.describe Claims::Support::Claim::ActionsComponent, type: :component do
 
       it "renders the approve button but not the request clawback button" do
         expect(page).to have_link("Move claim to paid")
-        expect(page).not_to have_button("Request clawback")
+        expect(page).to have_no_button("Request clawback")
       end
     end
 
@@ -128,7 +128,7 @@ RSpec.describe Claims::Support::Claim::ActionsComponent, type: :component do
     let(:claim) { create(:claim, :audit_requested, status: :clawback_requested) }
 
     it "does not renders actions" do
-      expect(page).not_to have_element(:div, class: "claim-actions")
+      expect(page).to have_no_element(:div, class: "claim-actions")
     end
   end
 
@@ -136,7 +136,7 @@ RSpec.describe Claims::Support::Claim::ActionsComponent, type: :component do
     let(:claim) { create(:claim, :audit_requested, status: :clawback_in_progress) }
 
     it "does not renders actions" do
-      expect(page).not_to have_element(:div, class: "claim-actions")
+      expect(page).to have_no_element(:div, class: "claim-actions")
     end
   end
 
@@ -144,7 +144,7 @@ RSpec.describe Claims::Support::Claim::ActionsComponent, type: :component do
     let(:claim) { create(:claim, :audit_requested, status: :clawback_complete) }
 
     it "does not renders actions" do
-      expect(page).not_to have_element(:div, class: "claim-actions")
+      expect(page).to have_no_element(:div, class: "claim-actions")
     end
   end
 

@@ -163,8 +163,8 @@ RSpec.describe "Support user adds a school without JavaScript", service: :placem
     expect(page).to have_h1("Organisations (1)")
     within(".organisation-search-results") do
       expect(page).to have_link("St Champions")
-      expect(page).not_to have_link("Sherborne School")
-      expect(page).not_to have_link("Royal Grammar School Guildford")
+      expect(page).to have_no_link("Sherborne School")
+      expect(page).to have_no_link("Royal Grammar School Guildford")
     end
   end
   alias_method :then_i_see_the_organisations_index_page, :and_i_am_on_the_organisations_index_page
@@ -361,7 +361,7 @@ RSpec.describe "Support user adds a school without JavaScript", service: :placem
     expect(page).to have_h1("Organisations (2)")
     within(".organisation-search-results") do
       expect(page).to have_link("St Champions")
-      expect(page).not_to have_link("Sherborne School")
+      expect(page).to have_no_link("Sherborne School")
       expect(page).to have_link("Royal Grammar School Guildford")
     end
   end

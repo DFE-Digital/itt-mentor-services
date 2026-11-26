@@ -165,7 +165,7 @@ RSpec.describe "School user adds a provider to their list of providers",
   def then_i_see_a_list_of_search_results_for_spring
     expect(page).to have_field("Springfield University", type: :radio)
     expect(page).to have_field("Springfield Polytechnic", type: :radio)
-    expect(page).not_to have_field("Springfield Grammar", type: :radio)
+    expect(page).to have_no_field("Springfield Grammar", type: :radio)
   end
 
   def and_i_choose_springfield_university
@@ -237,7 +237,7 @@ RSpec.describe "School user adds a provider to their list of providers",
   def then_i_see_a_list_of_search_results_for_shelb
     expect(page).to have_field("Shelbyville University", type: :radio)
     expect(page).to have_field("Shelbyville College", type: :radio)
-    expect(page).not_to have_field("Shelbyville Grammar", type: :radio)
+    expect(page).to have_no_field("Shelbyville Grammar", type: :radio)
   end
 
   def when_i_choose_shelbyville_university
@@ -255,7 +255,7 @@ RSpec.describe "School user adds a provider to their list of providers",
   def then_i_see_a_list_of_search_results_for_ogden
     expect(page).to have_field("Ogdenville University", type: :radio)
     expect(page).to have_field("Ogdenville Teacher Training Centre", type: :radio)
-    expect(page).not_to have_field("Ogdenville Grammar", type: :radio)
+    expect(page).to have_no_field("Ogdenville Grammar", type: :radio)
   end
 
   def when_i_choose_ogdenville_university

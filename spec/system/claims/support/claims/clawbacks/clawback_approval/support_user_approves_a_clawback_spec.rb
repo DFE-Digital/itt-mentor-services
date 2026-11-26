@@ -80,7 +80,7 @@ RSpec.describe "Support user approves a clawback", service: :claims, type: :syst
   end
 
   def and_i_do_not_see_a_card_for_the_unaltered_mentor
-    expect(page).not_to have_content("Jane Roe")
+    expect(page).to have_no_text("Jane Roe")
   end
 
   def and_i_see_the_summary_of_the_clawback
@@ -94,7 +94,7 @@ RSpec.describe "Support user approves a clawback", service: :claims, type: :syst
   end
 
   def and_i_see_the_approve_button
-    expect(page).not_to have_field("No", type: :radio)
+    expect(page).to have_no_field("No", type: :radio)
     expect(page).to have_button("Approve clawback")
     expect(page).to have_link("Cancel", href: "/support/claims/clawbacks/claims/#{@claim.id}")
   end

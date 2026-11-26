@@ -6,9 +6,9 @@ class Claims::ClaimWindow::Build < ApplicationService
 
   def call
     self.claim_window ||= Claims::ClaimWindow.new
-    self.claim_window.assign_attributes(claim_window_params)
-    self.claim_window.academic_year = find_academic_year
-    self.claim_window
+    claim_window.assign_attributes(claim_window_params)
+    claim_window.academic_year = find_academic_year
+    claim_window
   end
 
   private

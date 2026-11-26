@@ -29,8 +29,8 @@ RSpec.describe "Confirm claim payment paid", service: :claims, type: :system do
   end
 
   def then_i_see_a_confirmation_page
-    expect(page).to have_content("Are you sure you want to update the claim?")
-    expect(page).to have_content("This will mark the claim as ‘Paid’.")
+    expect(page).to have_text("Are you sure you want to update the claim?")
+    expect(page).to have_text("This will mark the claim as ‘Paid’.")
   end
 
   def when_i_click_on_update_claim
@@ -38,10 +38,10 @@ RSpec.describe "Confirm claim payment paid", service: :claims, type: :system do
   end
 
   def then_i_see_the_claim_updated
-    expect(page).to have_content("Claim updated")
+    expect(page).to have_text("Claim updated")
 
     within("h1.govuk-heading-l .govuk-tag") do
-      expect(page).to have_content("Paid")
+      expect(page).to have_text("Paid")
     end
   end
 end

@@ -15,8 +15,8 @@ RSpec.describe Claims::ClaimWindowWarningBannerComponent, freeze: "1 July 2025",
     it "does not render the banner" do
       render_inline(component)
 
-      expect(page).not_to have_css(".govuk-notification-banner")
-      expect(page).not_to have_content("Important")
+      expect(page).to have_no_css(".govuk-notification-banner")
+      expect(page).to have_no_text("Important")
     end
   end
 
@@ -28,8 +28,8 @@ RSpec.describe Claims::ClaimWindowWarningBannerComponent, freeze: "1 July 2025",
         render_inline(component)
 
         expect(page).to have_css(".govuk-notification-banner")
-        expect(page).to have_content("Important")
-        expect(page).to have_content("There are 7 days remaining to claim for ITT general mentor training before the claim window closes.")
+        expect(page).to have_text("Important")
+        expect(page).to have_text("There are 7 days remaining to claim for ITT general mentor training before the claim window closes.")
       end
     end
 
@@ -40,8 +40,8 @@ RSpec.describe Claims::ClaimWindowWarningBannerComponent, freeze: "1 July 2025",
         render_inline(component)
 
         expect(page).to have_css(".govuk-notification-banner")
-        expect(page).to have_content("Important")
-        expect(page).to have_content("There is 1 day remaining to claim for ITT general mentor training before the claim window closes.")
+        expect(page).to have_text("Important")
+        expect(page).to have_text("There is 1 day remaining to claim for ITT general mentor training before the claim window closes.")
       end
     end
   end
@@ -54,8 +54,8 @@ RSpec.describe Claims::ClaimWindowWarningBannerComponent, freeze: "1 July 2025",
         Timecop.travel(Time.zone.local(2025, 7, 3, 0, 54, 50)) do
           render_inline(component)
           expect(page).to have_css(".govuk-notification-banner")
-          expect(page).to have_content("Important")
-          expect(page).to have_content("There are 23 hours and 5 minutes remaining to claim for ITT general mentor training before the claim window closes.")
+          expect(page).to have_text("Important")
+          expect(page).to have_text("There are 23 hours and 5 minutes remaining to claim for ITT general mentor training before the claim window closes.")
         end
       end
     end
@@ -66,8 +66,8 @@ RSpec.describe Claims::ClaimWindowWarningBannerComponent, freeze: "1 July 2025",
           render_inline(component)
 
           expect(page).to have_css(".govuk-notification-banner")
-          expect(page).to have_content("Important")
-          expect(page).to have_content("There is 1 hour and 5 minutes remaining to claim for ITT general mentor training before the claim window closes.")
+          expect(page).to have_text("Important")
+          expect(page).to have_text("There is 1 hour and 5 minutes remaining to claim for ITT general mentor training before the claim window closes.")
         end
       end
     end
@@ -78,8 +78,8 @@ RSpec.describe Claims::ClaimWindowWarningBannerComponent, freeze: "1 July 2025",
           render_inline(component)
 
           expect(page).to have_css(".govuk-notification-banner")
-          expect(page).to have_content("Important")
-          expect(page).to have_content("There are 15 minutes remaining to claim for ITT general mentor training before the claim window closes.")
+          expect(page).to have_text("Important")
+          expect(page).to have_text("There are 15 minutes remaining to claim for ITT general mentor training before the claim window closes.")
         end
       end
     end

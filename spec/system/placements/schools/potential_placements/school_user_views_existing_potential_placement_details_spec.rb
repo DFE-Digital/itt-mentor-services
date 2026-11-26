@@ -83,7 +83,7 @@ RSpec.describe "School user views existing potential-placement details", service
   def and_i_cannot_edit_the_potential_placement_details
     %w[education_phases primary_placements secondary_placements send_placements message_to_providers].each do |id|
       within("##{id}") do
-        expect(page).not_to have_link("Change")
+        expect(page).to have_no_link("Change")
       end
     end
   end

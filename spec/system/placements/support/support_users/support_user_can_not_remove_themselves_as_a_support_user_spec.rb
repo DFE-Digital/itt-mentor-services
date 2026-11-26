@@ -60,6 +60,6 @@ RSpec.describe "Support user views a support user", service: :placements, type: 
   end
 
   def and_i_do_not_see_a_link_to_remove_me_as_a_support_user
-    expect(page).not_to have_link("Remove support user")
+    expect(page).to have_no_link("Remove support user")
   end
 end

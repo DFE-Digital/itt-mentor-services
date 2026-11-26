@@ -59,7 +59,7 @@ RSpec.describe "Provider user searchers for a school filter option", :js, servic
   end
 
   def and_i_do_not_see_springfield_elementary_in_the_school_filter
-    expect(page).not_to have_element(:label, text: "Springfield Elementary")
+    expect(page).to have_no_element(:label, text: "Springfield Elementary")
   end
 
   def when_i_clear_the_search_in_the_school_filter

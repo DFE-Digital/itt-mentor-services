@@ -31,6 +31,6 @@ RSpec.describe "Non-support user signs in when associated with multiple organisa
   end
 
   def and_it_is_not_the_support_organisations_page
-    expect(page).not_to have_current_path(placements_support_organisations_path)
+    expect(page).to have_no_current_path(placements_support_organisations_path)
   end
 end

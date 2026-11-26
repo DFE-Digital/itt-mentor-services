@@ -98,7 +98,7 @@ RSpec.describe "Claims user views and submits claim", service: :claims, type: :s
   end
 
   def and_i_cant_see_submit_claim_link
-    expect(page).not_to have_link("Submit claim")
+    expect(page).to have_no_link("Submit claim")
   end
 
   def when_i_click_on_the_claim_reference

@@ -106,7 +106,7 @@ RSpec.describe "Provider user filters schools by search by location", service: :
 
   def and_i_do_not_see_my_guildford_search_by_location_filter
     expect(page).not_to have_filter_tag("Guildford")
-    expect(page).not_to have_field("Enter a town, city or postcode", type: :search, with: "Guildford")
+    expect(page).to have_no_field("Enter a town, city or postcode", type: :search, with: "Guildford")
   end
 
   def when_i_click_on_the_made_up_location_search_by_location_filter_tag
@@ -117,7 +117,7 @@ RSpec.describe "Provider user filters schools by search by location", service: :
 
   def and_i_do_not_see_any_selected_search_by_location_filters
     expect(page).not_to have_filter_tag("Guildford")
-    expect(page).not_to have_field("Enter a town, city or postcode", type: :search, with: "Guildford")
+    expect(page).to have_no_field("Enter a town, city or postcode", type: :search, with: "Guildford")
     expect(page).not_to have_result_detail_row("Distance", "0.0 mi")
     expect(page).not_to have_result_detail_row("Travel time", "42 minutes by public transport, 42 minutes drive, 42 minutes walk")
   end

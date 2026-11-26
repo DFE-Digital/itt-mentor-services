@@ -9,7 +9,7 @@ RSpec.describe Placements::SupportUserMailer, type: :mailer do
     it "is addressed to the user's email and contains a link to the placements sign in url" do
       expect(invite_email.to).to contain_exactly(user.email)
       expect(invite_email.subject).to eq("Your invite to the Manage school placements service")
-      expect(invite_email.body).to have_content <<~EMAIL
+      expect(invite_email.body).to have_text <<~EMAIL
         John,
 
         You have been invited to join the Manage school placements service as a support user.
@@ -51,7 +51,7 @@ RSpec.describe Placements::SupportUserMailer, type: :mailer do
     it "is addressed to the user's email and contains a link to the placements sign in url" do
       expect(removal_email.to).to contain_exactly(user.email)
       expect(removal_email.subject).to eq("You have been removed from Manage school placements")
-      expect(removal_email.body).to have_content <<~EMAIL
+      expect(removal_email.body).to have_text <<~EMAIL
         John,
 
         You have been removed from the Manage school placements service.

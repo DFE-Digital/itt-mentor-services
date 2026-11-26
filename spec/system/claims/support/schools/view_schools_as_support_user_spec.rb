@@ -40,10 +40,10 @@ RSpec.describe "View schools as support user", service: :claims, type: :system d
   end
 
   def then_i_see_all_schools_in_claims
-    expect(page).to have_content("Organisations (#{schools.count})")
+    expect(page).to have_text("Organisations (#{schools.count})")
 
     schools.each do |school|
-      expect(page).to have_content(school.name)
+      expect(page).to have_text(school.name)
     end
   end
 
@@ -53,8 +53,8 @@ RSpec.describe "View schools as support user", service: :claims, type: :system d
   end
 
   def then_i_see_only_the_manchester_school
-    expect(page).to have_content("Manchester School")
-    expect(page).not_to have_content("London School")
+    expect(page).to have_text("Manchester School")
+    expect(page).to have_no_text("London School")
   end
 
   def when_i_clear_search
@@ -62,6 +62,6 @@ RSpec.describe "View schools as support user", service: :claims, type: :system d
   end
 
   def then_i_see_no_results_page(search_string)
-    expect(page).to have_content("There are no results for '#{search_string}'")
+    expect(page).to have_text("There are no results for '#{search_string}'")
   end
 end

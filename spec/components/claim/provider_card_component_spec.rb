@@ -33,13 +33,13 @@ RSpec.describe Claim::ProviderCardComponent, type: :component do
   it "renders the provider claim card content" do
     render_inline(component)
 
-    expect(page).to have_content("#{claim.school_urn},")
+    expect(page).to have_text("#{claim.school_urn},")
     expect(page).to have_link(claim.school_name, href:)
-    expect(page).to have_content("Amended")
-    expect(page).to have_content("1 High Street")
-    expect(page).to have_content("Date submitted: 8 April 2024")
-    expect(page).to have_content("Claim reference: #{claim.reference}")
-    expect(page).to have_content("£1,072.00")
+    expect(page).to have_text("Amended")
+    expect(page).to have_text("1 High Street")
+    expect(page).to have_text("Date submitted: 8 April 2024")
+    expect(page).to have_text("Claim reference: #{claim.reference}")
+    expect(page).to have_text("£1,072.00")
   end
 
   context "when the claim has been approved" do
@@ -48,7 +48,7 @@ RSpec.describe Claim::ProviderCardComponent, type: :component do
     it "renders the provider status text as approved" do
       render_inline(component)
 
-      expect(page).to have_content("Approved")
+      expect(page).to have_text("Approved")
     end
   end
 end

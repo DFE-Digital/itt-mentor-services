@@ -114,8 +114,8 @@ RSpec.describe "Provider user filters placements with multiple filters", service
 
   def and_i_do_not_see_any_selected_filters
     expect(page).not_to have_filter_tag("Hogwarts")
-    expect(page).not_to have_checked_field("Hogwarts")
+    expect(page).to have_no_checked_field("Hogwarts")
     expect(page).not_to have_filter_tag("English")
-    expect(page).not_to have_checked_field("English")
+    expect(page).to have_no_checked_field("English")
   end
 end

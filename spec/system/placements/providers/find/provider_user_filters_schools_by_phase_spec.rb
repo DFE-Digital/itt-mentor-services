@@ -162,8 +162,8 @@ RSpec.describe "Provider user filters schools by phase", service: :placements, t
   end
 
   def and_i_do_not_see_any_selected_phase_checkboxes
-    expect(page).not_to have_field("Primary", type: "checkbox", checked: true)
-    expect(page).not_to have_field("Secondary", type: "checkbox", checked: true)
+    expect(page).to have_no_field("Primary", type: "checkbox", checked: true)
+    expect(page).to have_no_field("Secondary", type: "checkbox", checked: true)
   end
 
   def and_i_do_not_see_any_phase_filter_tags

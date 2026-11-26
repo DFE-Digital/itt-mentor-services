@@ -177,12 +177,12 @@ RSpec.describe "Support user filters clawback claims by provider", service: :cla
   end
 
   def and_i_do_not_see_provider_bpn_selected_from_the_provider_filter
-    expect(page).not_to have_checked_field(@provider_bpn.name)
+    expect(page).to have_no_checked_field(@provider_bpn.name)
     expect(page).not_to have_filter_tag(@provider_bpn.name)
   end
 
   def and_i_do_not_see_provider_niot_selected_from_the_provider_filter
-    expect(page).not_to have_checked_field(@provider_niot.name)
+    expect(page).to have_no_checked_field(@provider_niot.name)
     expect(page).not_to have_filter_tag(@provider_niot.name)
   end
 

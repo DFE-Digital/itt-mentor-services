@@ -11,7 +11,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
     it "sends the invitation" do
       expect(invite_email.to).to contain_exactly(user.email)
       expect(invite_email.subject).to eq("Invitation to join Claim funding for mentor training")
-      expect(invite_email.body).to have_content <<~EMAIL
+      expect(invite_email.body).to have_text <<~EMAIL
         Dear Joe,
 
         You have been invited to join the Claim funding for mentor training service for Shelbyville Elementary because you are a [DfE-sign approver](https://edd-help.signin.education.gov.uk/contact/create-account#:~:text=An%20approver%20is%20someone%20at%20your%20organisation%20responsible,person%2C%20such%20as%20an%20administrator%2C%20manager%2C%20or%20headteacher) for your organisation.
@@ -81,7 +81,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
     it "sends expected message to user" do
       expect(removal_email.to).to contain_exactly user.email
       expect(removal_email.subject).to eq "You have been removed from Claim funding for mentor training"
-      expect(removal_email.body).to have_content <<~EMAIL
+      expect(removal_email.body).to have_text <<~EMAIL
         Dear #{user.first_name},
 
         You have been removed from the Claim funding for mentor training service for #{organisation.name}.
@@ -805,7 +805,7 @@ RSpec.describe Claims::UserMailer, type: :mailer do
     it "sends the eligibility email" do
       expect(eligibility_email.to).to contain_exactly(user.email)
       expect(eligibility_email.subject).to eq("Onboarding update to Claim funding for mentor training")
-      expect(eligibility_email.body).to have_content <<~EMAIL
+      expect(eligibility_email.body).to have_text <<~EMAIL
         Dear Joe,
 
         You have been onboarded to the Claim funding for mentor training service to submit claims for initial teacher training (ITT) general mentor funding for the academic year 2025/26.

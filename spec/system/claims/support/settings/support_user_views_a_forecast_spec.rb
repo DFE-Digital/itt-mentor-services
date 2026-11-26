@@ -79,7 +79,7 @@ RSpec.describe "Support user views a forecast for a claim window", service: :cla
     expect(page).to have_h1("Claim forecast", class: "govuk-heading-l")
     expect(page).to have_field("#{I18n.l(@current_claim_window.starts_on, format: :long)} to #{I18n.l(@current_claim_window.ends_on, format: :long)}")
     expect(page).to have_field("#{I18n.l(@historic_claim_window.starts_on, format: :long)} to #{I18n.l(@historic_claim_window.ends_on, format: :long)}")
-    expect(page).not_to have_link("Clawbacks", href: "#clawbacks")
+    expect(page).to have_no_link("Clawbacks", href: "#clawbacks")
   end
 
   def when_i_select_the_historic_claim_window

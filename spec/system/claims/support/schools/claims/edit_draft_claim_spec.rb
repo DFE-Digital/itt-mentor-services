@@ -123,9 +123,9 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
   private
 
   def then_i_update_the_claim(mentor)
-    expect(page).to have_content("Claim updated")
-    expect(page).to have_content(mentor.full_name)
-    expect(page).to have_content(
+    expect(page).to have_text("Claim updated")
+    expect(page).to have_text(mentor.full_name)
+    expect(page).to have_text(
       "NIoT: National Institute of Teaching, founded by the "\
       "School-Led Development Trust",
     )
@@ -144,7 +144,7 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
   end
 
   def and_i_edit_the_provider(current_provider:)
-    expect(page).to have_content(current_provider.name)
+    expect(page).to have_text(current_provider.name)
     click_on "Change Accredited provider"
     when_i_enter_a_provider_named_niot
     then_i_see_a_dropdown_item_for_niot
@@ -156,8 +156,8 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
 
     expect(page).to have_h1("Claim - #{draft_claim.reference}", class: "govuk-heading-l")
     expect(page).to have_summary_list_row("School", "A School")
-    expect(page).to have_content("Draft")
-    expect(page).not_to have_content("Submitted by")
+    expect(page).to have_text("Draft")
+    expect(page).to have_no_text("Submitted by")
     expect(page).to have_summary_list_row("Accredited provider", "Best Practice Network")
 
     expect(page).to have_summary_list_row("Mentors", "Barry Garlow")
@@ -179,8 +179,8 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
   def then_i_cant_edit_the_submitted_claim
     click_on submitted_claim.reference
 
-    expect(page).not_to have_link("Change Accredited provider")
-    expect(page).not_to have_link("Change Mentors")
+    expect(page).to have_no_link("Change Accredited provider")
+    expect(page).to have_no_link("Change Mentors")
   end
 
   def when_i_select_a_school
@@ -257,7 +257,7 @@ RSpec.describe "Edit a draft claim", service: :claims, type: :system do
 
   def then_i_see_i_can_not_submit_the_claim
     expect(page).to have_h1("You cannot submit the claim")
-    expect(page).to have_content("You cannot submit the claim because your mentors’ information has recently changed.")
+    expect(page).to have_text("You cannot submit the claim because your mentors’ information has recently changed.")
   end
 
   def then_i_see_the_confirmation_page
