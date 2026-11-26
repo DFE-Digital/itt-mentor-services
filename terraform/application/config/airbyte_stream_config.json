@@ -1695,6 +1695,65 @@
         ]
       },
       {
+        "name": "deleted_entities",
+        "syncMode": "incremental_append",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "entity_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "entity_name"
+            ]
+          },
+          {
+            "fieldPath": [
+              "deleted_records"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
         "name": "claim_windows",
         "syncMode": "incremental_append",
         "cursorField": [
