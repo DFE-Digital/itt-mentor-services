@@ -93,6 +93,14 @@ shared:
     - error_backtrace
     - process_id
     - duration
+  :good_job_concurrency_claims:
+    - id
+    - created_at
+    - updated_at
+    - job_id
+    - locked_by_id
+    - state
+    - key
   :good_job_batches:
     - id
     - created_at
