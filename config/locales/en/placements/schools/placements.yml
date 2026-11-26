@@ -121,7 +121,6 @@ en:
           select_a_mentor: Select a mentor
           add_a_mentor: Add a mentor
           assign_a_provider: Assign a provider
-          remove: Remove
           add_a_partner_provider: Add a partner provider
           not_yet_known: Not yet known
           change: Change
@@ -147,23 +146,10 @@ en:
         can_not_remove:
           page_title: "You cannot delete this placement - %{subject_names}"
           title: You cannot delete this placement
-          description: '%{provider_name} must be removed from the placement before you can delete it.'
+          description: 'This placement is assigned to %{provider_name} and cannot be deleted.'
         destroy:
           placement_deleted: Placement deleted
           last_placement_deleted_body: You no longer have placement information available.
-        confirm_unassign_provider:
-          page_title: "Are you sure you want to remove %{provider_name} from this placement? - %{subject_names}"
-          are_you_sure: Are you sure you want to remove %{provider_name} from this placement?
-          unassign_provider: Remove provider
-          cancel: Cancel
-          provider_will_be_sent_an_email:
-            We will send an email to let them know they should no longer arrange for a trainee to undertake this placement.
-          it_is_your_responsibility:
-            It is your responsibility to contact the provider separately and tell them this placement is no longer available to them.
-          assign_a_new_provider:
-            You can assign a new provider once you have removed the current provider.
-        unassign_provider:
-          success: Provider removed
         not_offering:
           placements: Placements
           you_are_not_offering_placements: You are not offering placements this academic year.

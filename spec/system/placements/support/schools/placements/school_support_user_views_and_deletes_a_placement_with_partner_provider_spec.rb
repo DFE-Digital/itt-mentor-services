@@ -116,7 +116,7 @@ RSpec.describe "School support user views and deletes a placement with a partner
     expect(page).to have_title("You cannot delete this placement - Primary with english (Year 1) - Manage school placements - GOV.UK")
     expect(primary_navigation).to have_current_item("Placements")
     expect(page).to have_h1("You cannot delete this placement")
-    expect(page).to have_element(:p, text: "Aes Sedai Trust must be removed from the placement before you can delete it.")
+    expect(page).to have_element(:p, text: "This placement is assigned to Aes Sedai Trust and cannot be deleted.")
     expect(page).to have_element(:a, text: "Back", class: "govuk-back-link")
   end
 
