@@ -48,13 +48,14 @@ Expressions below are copied from [scheduled_jobs.yml](../../config/scheduled_jo
 | `0 01 * * *` | `Claims::User::NotifyUsersOfPaidClaimsJob`: paid notifications |
 | `30 0 * * *` | `DfE::Analytics::EntityTableCheckJob`: entity-table checks |
 | `15 * * * *` | `TrimExpiredSessionsJob`: session cleanup |
-| `0 16 * * *` | `Claims::Slack::DailyRoundupJob`: Slack roundup |
 | `0 9 * * MON` | `Claims::User::NotifyUsersOfInvalidProviderClaimsJob`: invalid-provider reminders |
 | `0 9 * * MON` | `Claims::Sampling::SendProviderRemindersJob`: sampling reminders |
 | `0 10 * * TUE` | `Claims::Sampling::SendSchoolRemindersJob`: school sampling reminders |
 | `0 0 1 * *` | `BankHolidays::SyncJob`: refresh holidays |
 
 See [Active Job](../active-job.md) for dashboard controls. Pausing cron does not cancel already-enqueued jobs.
+
+The daily claims Slack roundup has been removed because its reporting caused memory spikes and alerts. Before deploying this removal, pause its cron entry and discard any pending `Claims::Slack::DailyRoundupJob` jobs in GoodJob; the job class is no longer available to execute or retry.
 
 ### Investigate or retry a job
 
